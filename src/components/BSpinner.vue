@@ -7,8 +7,6 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-type ClassObject = Array<string | Record<string, boolean>>;
-
 export default defineComponent({
     props: {
         grow: { type: Boolean, default: false },
