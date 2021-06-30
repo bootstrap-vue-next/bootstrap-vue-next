@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 type ClassObject = Array<string | Record<string, boolean>>;
 
@@ -15,23 +15,18 @@ export default defineComponent({
         variant: { type: String },
         small: { type: Boolean, default: false }
     },
-    computed: {
-        classes(): ClassObject {
-            const classes: ClassObject = [
-                {
-                    'spinner-border': !this.grow,
-                    'spinner-border-sm': !this.grow && this.small,
-                    'spinner-grow': this.grow,
-                    'spinner-grow-sm': this.grow && this.small,
-                }
-            ]
+    setup(props) {
+        const classes = computed(() => ({
+            'spinner-border': !props.grow,
+            'spinner-border-sm': !props.grow && props.small,
+            'spinner-grow': props.grow,
+            'spinner-grow-sm': props.grow && props.small,
+            [`text-${props.variant}`]: !!props.variant,
+        }));
 
-            if (this.variant) {
-                classes.push(`text-${this.variant}`);
-            }
-
-            return classes;
+        return {
+            classes,
         }
-    }
+    },
 })
 </script>
