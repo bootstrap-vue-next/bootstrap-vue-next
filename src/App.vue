@@ -1,5 +1,123 @@
 <template>
 <div class="container">
+  <h1 class="bd-title" id="content">List group</h1>
+  <p class="bd-lead">List groups are a flexible and powerful component for displaying a series of content. Modify and extend them to support just about any content within.</p>
+
+  <b-list-group>
+    <b-list-group-item>An item</b-list-group-item>
+    <b-list-group-item>A second item</b-list-group-item>
+    <b-list-group-item>A third item</b-list-group-item>
+    <b-list-group-item>A fourth item</b-list-group-item>
+    <b-list-group-item>And a fifth one</b-list-group-item>
+  </b-list-group>
+
+  <h2>Active items</h2>
+
+  <b-list-group>
+    <b-list-group-item active>An active item</b-list-group-item>
+    <b-list-group-item>A second item</b-list-group-item>
+    <b-list-group-item>A third item</b-list-group-item>
+    <b-list-group-item>A fourth item</b-list-group-item>
+    <b-list-group-item>And a fifth one</b-list-group-item>
+  </b-list-group>
+
+  <h2>Disabled items</h2>
+
+  <b-list-group>
+    <b-list-group-item disabled>A disabled item</b-list-group-item>
+    <b-list-group-item>A second item</b-list-group-item>
+    <b-list-group-item>A third item</b-list-group-item>
+    <b-list-group-item>A fourth item</b-list-group-item>
+    <b-list-group-item>And a fifth one</b-list-group-item>
+  </b-list-group>
+
+  <h2>Flush</h2>
+
+  <b-list-group flush>
+    <b-list-group-item>An item</b-list-group-item>
+    <b-list-group-item>A second item</b-list-group-item>
+    <b-list-group-item>A third item</b-list-group-item>
+    <b-list-group-item>A fourth item</b-list-group-item>
+    <b-list-group-item>And a fifth one</b-list-group-item>
+  </b-list-group>
+
+  <h2>Numbered</h2>
+
+  <b-list-group numbered>
+    <b-list-group-item>An item</b-list-group-item>
+    <b-list-group-item>A second item</b-list-group-item>
+    <b-list-group-item>A third item</b-list-group-item>
+    <b-list-group-item>A fourth item</b-list-group-item>
+    <b-list-group-item>And a fifth one</b-list-group-item>
+  </b-list-group>
+
+  <h2>Horizontal</h2>
+
+  <b-list-group horizontal>
+    <b-list-group-item>An item</b-list-group-item>
+    <b-list-group-item>A second item</b-list-group-item>
+    <b-list-group-item>A third item</b-list-group-item>
+    <b-list-group-item>A fourth item</b-list-group-item>
+    <b-list-group-item>And a fifth one</b-list-group-item>
+  </b-list-group>
+
+  <hr/>
+
+  <h1 class="bd-title" id="content">Card</h1>
+  <p class="bd-lead">Bootstrap’s cards provide a flexible and extensible content container with multiple variants and options.</p>
+
+  <b-card title="Card title">
+    <b-card-text>Some quick example text to build on the card title and make up the bulk of the card's content.</b-card-text>
+    <b-button variant="primary">Go somewhere</b-button>
+  </b-card>
+  
+  <b-card title="Card title" class="mt-4" subtitle="Card subtitle">
+    <b-card-text>Some quick example text to build on the card title and make up the bulk of the card's content.</b-card-text>
+    <b-button variant="primary">Go somewhere</b-button>
+  </b-card>
+
+  <hr />
+
+  <h1 class="bd-title" id="content">Badge</h1>
+  <p class="bd-lead">Documentation and examples for badges, our small count and labeling component.</p>
+
+  <h1>Example heading <b-badge>New</b-badge></h1>
+  <h2>Example heading <b-badge>New</b-badge></h2>
+  <h3>Example heading <b-badge>New</b-badge></h3>
+  <h4>Example heading <b-badge>New</b-badge></h4>
+  <h5>Example heading <b-badge>New</b-badge></h5>
+  <h6>Example heading <b-badge>New</b-badge></h6>
+
+  <h3>Buttons</h3>
+
+  <b-button variant="primary">
+    Notifications <b-badge>4</b-badge>
+  </b-button>
+
+  <h3>Background colors</h3>
+
+  <b-badge variant="primary">Primary</b-badge>
+  <b-badge variant="secondary">Secondary</b-badge>
+  <b-badge variant="success">Success</b-badge>
+  <b-badge variant="danger">Danger</b-badge>
+  <b-badge variant="warning">Warning</b-badge>
+  <b-badge variant="info">Info</b-badge>
+  <b-badge variant="light">Light</b-badge>
+  <b-badge variant="dark">Dark</b-badge>
+
+  <h3>Pill badges</h3>
+
+  <b-badge pill variant="primary">Primary</b-badge>
+  <b-badge pill variant="secondary">Secondary</b-badge>
+  <b-badge pill variant="success">Success</b-badge>
+  <b-badge pill variant="danger">Danger</b-badge>
+  <b-badge pill variant="warning">Warning</b-badge>
+  <b-badge pill variant="info">Info</b-badge>
+  <b-badge pill variant="light">Light</b-badge>
+  <b-badge pill variant="dark">Dark</b-badge>
+  
+  <hr />
+  
   <h1 class="bd-title" id="content">Spinner</h1>
   <p class="bd-lead">Indicate the loading state of a component or page with Bootstrap spinners, built entirely with HTML, CSS, and no JavaScript.</p>
 
@@ -94,12 +212,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import BAccordion from './components/BAccordion.vue';
-import BButton from './components/BButton.vue';
-import BSpinner from './components/BSpinner.vue';
 
 export default defineComponent({
-  components: { BAccordion, BButton, BSpinner },
   name: 'App',
 });
 </script>
