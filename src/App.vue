@@ -1,7 +1,36 @@
 <template>
 <div class="container">
+  <h1 class="bd-title" id="content">Spinner</h1>
+  <p class="bd-lead">Indicate the loading state of a component or page with Bootstrap spinners, built entirely with HTML, CSS, and no JavaScript.</p>
+
+  <b-spinner />
+  <b-spinner variant="primary" />
+  <b-spinner grow />
+  <b-spinner variant="primary" grow />
+
+  <hr/>
+  
+  <b-spinner small />
+  <b-spinner small variant="primary" />
+  <b-spinner small grow />
+  <b-spinner small variant="primary" grow />
+
+  <hr/>
+
+  <b-button variant="primary" disabled>
+    <b-spinner grow small />
+  </b-button>
+  
+  <b-button variant="primary" disabled>
+    <b-spinner grow small />
+    Loading...
+  </b-button>
+  
+  <hr />
+  
   <h1 class="bd-title" id="content">Accordion</h1>
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
+
   <b-accordion id="accordionExample">
     <b-accordion-item id="collapseOne" header="Accordion Item #1" show>
       <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
@@ -66,9 +95,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import BAccordion from './components/BAccordion.vue';
+import BButton from './components/BButton.vue';
+import BSpinner from './components/BSpinner.vue';
 
 export default defineComponent({
-  components: { BAccordion },
+  components: { BAccordion, BButton, BSpinner },
   name: 'App',
 });
 </script>
