@@ -12,6 +12,7 @@
 <script lang="ts">
 import { BreadcrumbItem } from '@/types';
 import { defineComponent, PropType } from 'vue'
+import { useBreadcrumb } from '@/composables/useBreadcrumb';
 import BBreadcrumbItem from './BBreadcrumbItem.vue';
 
 export default defineComponent({
@@ -19,10 +20,14 @@ export default defineComponent({
         BBreadcrumbItem,
     },
     props: {
-        items: { type: Array as PropType<BreadcrumbItem[]>, default: [] },
+        items: { type: Array as PropType<BreadcrumbItem[]> },
     },
-    setup() {
-        
+    setup(props) {
+        const breadcrumb = useBreadcrumb();
+
+        return {
+            items: props.items || breadcrumb.items || [],
+        }
     },
 })
 </script>

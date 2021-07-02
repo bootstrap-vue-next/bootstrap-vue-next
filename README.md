@@ -31,13 +31,18 @@ Early version of:
 - [ ] Progress
 - [ ] Scrollspy
 - [x] Spinners
-- [ ] Toats
+- [ ] Toasts
 - [ ] Tooltips
 
 # Directives
 
 - [x] v-b-toggle
 - [x] v-b-modal
+
+# Composables
+
+- [x] useBreadcrumb: A first attempt to have the breadcrumb's items in one place across the aplication.
+- [ ] useModal: The goal is to emulate the same behaviour as boostrap-vue progamatic modals.
 
 # License
 
