@@ -13,6 +13,8 @@ import BCollapse from './BCollapse.vue';
 import BListGroup from './BListGroup.vue';
 import BListGroupItem from './BListGroupItem.vue';
 import BModal from './BModal.vue';
+import BProgress from './BProgress.vue';
+import BProgressBar from './BProgressBar.vue';
 import BSpinner from './BSpinner.vue';
 
 export default {
@@ -31,5 +33,7 @@ export default {
     BListGroup,
     BListGroupItem,
     BModal,
+    BProgress,
+    BProgressBar,
     BSpinner,
 }

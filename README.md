@@ -28,7 +28,7 @@ Early version of:
 - [ ] Offcanvas
 - [ ] Pagination
 - [ ] Popovers
-- [ ] Progress
+- [x] Progress
 - [ ] Scrollspy
 - [x] Spinners
 - [ ] Toasts
