@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import ColorVariant from '@/types/ColorVariant';
+import { ColorVariant } from '@/types';
 
 export default defineComponent({
     props: {

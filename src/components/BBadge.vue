@@ -5,12 +5,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
+import { ColorVariant } from '@/types';
 
 export default defineComponent({
     props: {
         pill: { type: Boolean, default: false },
-        variant: { type: String, default: 'secondary' }
+        variant: { type: String as PropType<ColorVariant>, default: 'secondary' }
     },
     setup(props) {
         const classes = computed(() => ({

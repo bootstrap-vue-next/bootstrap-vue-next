@@ -6,11 +6,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import ColorVariant from '@/types/ColorVariant';
+import { ButtonVariant } from '@/types';
 
 export default defineComponent({
     props: {
-        variant: { type: String as PropType<ColorVariant>, default: 'secondary' },
+        variant: { type: String as PropType<ButtonVariant>, default: 'secondary' },
     }
 })
 </script>
