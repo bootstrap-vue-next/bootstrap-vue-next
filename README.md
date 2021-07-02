@@ -10,14 +10,14 @@ Early version of:
 - [x] Accortion Item
 - [x] Alert
 - [x] Badge
-- [ ] Breadcrumb
+- [x] Breadcrumb
 - [x] Button
 - [ ] Button group
 - [x] Card
 - [x] CardBody
 - [x] CardText
 - [ ] Carousel
-- [ ] Close button
+- [x] Close button
 - [x] Collapse
 - [ ] Dropdowns
 - [x] ListGroup
