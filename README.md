@@ -1,19 +1,44 @@
 # BoostrapVue 3
 
-## Project setup
-```
-yarn install
-```
+Bootstrap 5 + Vue 3 + Typescript
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+# Components
 
-### Compiles and minifies for production
-```
-yarn build
-```
+Early version of:
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [x] Accordion
+- [x] Accortion Item
+- [x] Alert
+- [x] Badge
+- [ ] Breadcrumb
+- [x] Button
+- [ ] Button group
+- [x] Card
+- [x] CardBody
+- [x] CardText
+- [ ] Carousel
+- [ ] Close button
+- [x] Collapse
+- [ ] Dropdowns
+- [x] ListGroup
+- [x] ListGroupItem
+- [x] Modal
+- [ ] Navs & tabs
+- [ ] Navbar
+- [ ] Offcanvas
+- [ ] Pagination
+- [ ] Popovers
+- [ ] Progress
+- [ ] Scrollspy
+- [x] Spinners
+- [ ] Toats
+- [ ] Tooltips
+
+# Directives
+
+- [x] v-b-toggle
+- [x] v-b-modal
+
+# License
+
+MIT
