@@ -32,7 +32,13 @@ export default defineComponent({
         variant: { type: String as PropType<ColorVariant> },
     },
     setup(props) {
-        provide('max', props.max);
+        provide('parentProps', {
+            animated: props.animated,
+            max: props.max,
+            showProgress: props.showProgress,
+            showValue: props.showValue,
+            striped: props.striped,
+        });
     },
 })
 </script>

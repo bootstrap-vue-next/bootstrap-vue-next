@@ -5,16 +5,16 @@
         role="progressbar"
         :aria-valuenow="value"
         aria-valuemin="0"
-        aria-valuemax="100"
+        :aria-valuemax="max"
         :style="{ width }"
     >
-        <slot>{{ localLabel }}</slot>
+        <slot>{{ computedLabel }}</slot>
     </div>
 </template>
 
 <script lang="ts">
 import { ColorVariant } from '@/types'
-import { computed, defineComponent, h, inject, PropType } from 'vue'
+import { computed, defineComponent, inject, PropType } from 'vue'
 
 export default defineComponent({
     props: {
@@ -30,22 +30,26 @@ export default defineComponent({
         variant: { type: String as PropType<ColorVariant> },
     },
     setup(props) {
-        const max = inject('max');
+        const parent = inject<Record<string, any>>('parentProps');
 
         const classes = computed(() => ({
-            'progress-bar-animated': props.animated,
-            'progress-bar-striped': props.striped,
+            'progress-bar-animated': props.animated || parent?.animated,
+            'progress-bar-striped': props.striped || props.animated || parent?.striped,
             [`bg-${props.variant}`]: props.variant,
         }));
 
-        const localLabel = computed(() => {           
-            if (props.showValue) {
+        const computedLabel = computed(() => {
+            // if (props.labelHtml) {
+            //     return props.labelHtml;
+            // }
+
+            if (props.showValue || parent?.showValue) {
                 return parseFloat(props.value as string).toFixed(props.precision as number);
             }
 
 
-            if (props.showProgress && props.max) {
-                const progress = ((props.value as number * 100) / parseInt(props.max as string)).toString();
+            if (props.showProgress || parent?.showProgress) {
+                const progress = ((props.value as number * 100) / parseInt((props.max || 100) as string)).toString();
                 return parseFloat(progress).toFixed(props.precision as number);
             }
 
@@ -53,8 +57,8 @@ export default defineComponent({
         });
 
         const width = computed(() => {
-            if (props.max || max) {
-                   return `${(props.value as number * 100 )/ parseInt((props.max || max) as string)}%`;
+            if (props.max || parent?.max) {
+                   return `${(props.value as number * 100 )/ parseInt((props.max || parent?.max) as string)}%`;
             }
 
             return typeof props.value === 'string' ? props.value : `${props.value}%`
@@ -62,7 +66,7 @@ export default defineComponent({
 
         return {
             classes,
-            localLabel,
+            computedLabel,
             width
         }
     },
