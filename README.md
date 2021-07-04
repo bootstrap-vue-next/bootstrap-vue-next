@@ -12,7 +12,8 @@ Early version of:
 - [x] Badge
 - [x] Breadcrumb
 - [x] Button
-- [ ] Button group
+- [x] Button group
+- [x] Button toolbar
 - [x] Card
 - [x] CardBody
 - [x] CardText
