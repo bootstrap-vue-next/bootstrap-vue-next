@@ -5,6 +5,8 @@ import BBadge from './BBadge.vue';
 import BBreadcrumb from './BBreadcrumb.vue';
 import BBreadcrumbItem from './BBreadcrumbItem.vue';
 import BButton from './BButton.vue';
+import BButtonGroup from './BButtonGroup.vue';
+import BButtonToolbar from './BButtonToolbar.vue';
 import BCard from './BCard.vue';
 import BCardBody from './BCardBody.vue';
 import BCardText from './BCardText.vue';
@@ -25,6 +27,8 @@ export default {
     BBreadcrumb,
     BBreadcrumbItem,
     BButton,
+    BButtonGroup,
+    BButtonToolbar,
     BCard,
     BCardBody,
     BCardText,
