@@ -1,6 +1,6 @@
 <template>
     <div :class="classes" role="status">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">{{ label }}</span>
     </div>
 </template>
 
@@ -11,8 +11,9 @@ import { ColorVariant } from '@/types';
 export default defineComponent({
     props: {
         grow: { type: Boolean, default: false },
+        label: { type: String, default: 'Loading...'},
         variant: { type: String as PropType<ColorVariant> },
-        small: { type: Boolean, default: false }
+        small: { type: Boolean, default: false },
     },
     setup(props) {
         const classes = computed(() => ({
