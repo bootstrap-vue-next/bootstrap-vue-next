@@ -33,7 +33,7 @@ Early version of:
 - [ ] Scrollspy
 - [x] Spinners
 - [ ] Toasts
-- [ ] Tooltips
+- [x] Tooltips
 
 # Directives
 
