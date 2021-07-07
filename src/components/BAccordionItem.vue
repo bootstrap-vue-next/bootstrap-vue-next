@@ -1,11 +1,11 @@
 <template>
   <div class="accordion-item">
-    <h2 class="accordion-header" :id="`heading${localID}`">
-      <button class="accordion-button" :class="{ collapsed: !show }" type="button" v-b-toggle:[localID] :aria-expanded="show ? 'true' : 'false'" :aria-controls="localID">
+    <h2 class="accordion-header" :id="`heading${computedId}`">
+      <button class="accordion-button" :class="{ collapsed: !show }" type="button" v-b-toggle:[computedId] :aria-expanded="show ? 'true' : 'false'" :aria-controls="computedId">
         {{ header }}
       </button>
     </h2>
-    <b-collapse :id="localID" class="accordion-collapse" :show="show" :parent="parent" :aria-labelledby="`heading${localID}`">
+    <b-collapse :id="computedId" class="accordion-collapse" :show="show" :parent="parent" :aria-labelledby="`heading${computedId}`">
       <div class="accordion-body">
         <slot />
       </div>
@@ -33,7 +33,7 @@ export default defineComponent({
         show: { type: Boolean, default: false }
     },
     setup(props) {
-      const localID = computed(() => {
+      const computedId = computed(() => {
         return props.id || getID();
       })
 
@@ -41,7 +41,7 @@ export default defineComponent({
 
       return {
         parent,
-        localID
+        computedId
       }
     },
 })

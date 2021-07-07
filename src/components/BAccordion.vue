@@ -1,5 +1,5 @@
 <template>
-    <div class="accordion" :class="{ 'accordion-flush': flush }" :id="localID">
+    <div class="accordion" :class="{ 'accordion-flush': flush }" :id="computedId">
         <slot />
     </div>
 </template>
@@ -14,14 +14,14 @@ export default defineComponent({
         id: { type: String }
     },
     setup(props) {
-        const localID = computed(() => {
+        const computedId = computed(() => {
             return props.id || getID();
         })
 
-        provide('parent', `#${localID.value}`);
+        provide('parent', `#${computedId.value}`);
 
         return {
-            localID
+            computedId
         }
     },
 })

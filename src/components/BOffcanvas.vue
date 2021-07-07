@@ -16,10 +16,12 @@ import { Offcanvas } from "bootstrap";
 
 export default defineComponent({
     emits: [
-        'update:modelValue'
+        'update:modelValue',
+        'show',
+        'hide'
     ],
     props: {
-        modelValue: { type: Boolean },
+        modelValue: { type: Boolean, default: false },
         bodyScrolling: { type: Boolean, default: false },
         backdrop: { type: Boolean, default: true },
         placement: { type: String, default: 'start' },
@@ -33,10 +35,12 @@ export default defineComponent({
             instance.value = new Offcanvas(element.value!);
 
             element.value?.addEventListener('show.bs.offcanvas', () => {
+                emit('show');
                 emit('update:modelValue', true);
             })
             
             element.value?.addEventListener('hide.bs.offcanvas', () => {
+                emit('hide');
                 emit('update:modelValue', false);
             })
 

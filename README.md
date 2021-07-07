@@ -21,7 +21,7 @@ Early versions of:
 - [x] Card sub title
 - [x] Card Text
 - [x] Card Title
-- [ ] Carousel
+- [x] Carousel
 - [x] Close button
 - [x] Collapse
 - [x] Dropdowns

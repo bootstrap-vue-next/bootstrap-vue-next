@@ -4,7 +4,7 @@
       class="btn"
       :class="buttonClasses"
       type="button"
-      :id="localID"
+      :id="computedId"
       :data-bs-toggle="split ? null : 'dropdown'"
       :data-bs-auto-close="split ? null : autoClose"
       :data-bs-offset="split || !offset ? null : offset"
@@ -28,7 +28,7 @@
     <ul
       class="dropdown-menu"
       :class="dropdownMenuClasses"
-      :aria-labelledby="localID"
+      :aria-labelledby="computedId"
     >
       <slot />
     </ul>
@@ -59,7 +59,7 @@ export default defineComponent({
     variant: { type: String as PropType<ButtonVariant>, default: "secondary" },
   },
   setup(props) {
-    const localID = computed(() => {
+    const computedId = computed(() => {
       return props.id || getID();
     });
 
@@ -92,7 +92,7 @@ export default defineComponent({
     }));
 
     return {
-      localID,
+      computedId,
       classes,
       buttonClasses,
       splitClasses,
