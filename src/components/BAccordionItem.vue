@@ -1,7 +1,7 @@
 <template>
   <div class="accordion-item">
     <h2 class="accordion-header" :id="`heading${localID}`">
-      <button class="accordion-button" :class="{ collapsed: !show }" type="button" v-b-collapse:[localID] :aria-expanded="show ? 'true' : 'false'" :aria-controls="localID">
+      <button class="accordion-button" :class="{ collapsed: !show }" type="button" v-b-toggle:[localID] :aria-expanded="show ? 'true' : 'false'" :aria-controls="localID">
         {{ header }}
       </button>
     </h2>
@@ -16,7 +16,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from 'vue'
 import BCollapse from './BCollapse.vue';
-import BCollapseDirective from '../directives/BCollapse';
+import BToggle from '../directives/BToggle';
 import getID from '../utils/getID';
 
 export default defineComponent({
@@ -25,7 +25,7 @@ export default defineComponent({
       BCollapse
     },
     directives: {
-      BCollapse: BCollapseDirective
+      BToggle
     },
     props: {
         header: { type: String },

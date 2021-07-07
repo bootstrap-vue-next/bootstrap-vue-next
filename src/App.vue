@@ -92,7 +92,7 @@
   </div>
   <b-breadcrumb />
 
-  <b-button variant="primary" class="mb-3" v-b-collapse:collapseExample>Toggle collapse</b-button>
+  <b-button variant="primary" class="mb-3" v-b-toggle:collapseExample>Toggle collapse</b-button>
   <b-collapse id="collapseExample" show>
     <div class="card card-body">
       Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
@@ -101,7 +101,7 @@
 
   <hr />
   
-  <b-button v-b-collapse:myCollapse2>Collapse</b-button>
+  <b-button v-b-toggle:myCollapse2>Collapse</b-button>
   <b-collapse id="myCollapse2">holaaa</b-collapse>
 
   <hr />

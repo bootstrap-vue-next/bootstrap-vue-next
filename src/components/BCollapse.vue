@@ -13,7 +13,7 @@ export default defineComponent({
         'update:modelValue'
     ],
     props: {
-        modelValue: { type: Boolean },
+        modelValue: { type: Boolean, default: false },
         parent: { type: String, default: '' },
         show: { type: Boolean, default: false },
         toggle: { type: Boolean, default: false }
