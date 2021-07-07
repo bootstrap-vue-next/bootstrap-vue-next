@@ -1,11 +1,11 @@
 <template>
-    <div ref="element" class="collapse" :class="{ show }" :data-bs-parent="parent || null">
+    <div ref="element" class="collapse" :class="classes" :data-bs-parent="parent || null">
         <slot/>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import { Collapse } from "bootstrap";
 
 export default defineComponent({
@@ -15,16 +15,19 @@ export default defineComponent({
     props: {
         modelValue: { type: Boolean, default: false },
         parent: { type: String, default: '' },
-        show: { type: Boolean, default: false },
-        toggle: { type: Boolean, default: false }
+        toggle: { type: Boolean, default: false },
+        visible: { type: Boolean, default: false },
     },
     setup(props, { emit }) {
         const element = ref<HTMLElement>();
         const instance = ref<Collapse>();
+        const classes = computed(() => ({
+            show: props.visible,
+        }))
 
         onMounted(() => {
-            if (props.show) {
-                emit('update:modelValue', props.show);
+            if (props.visible) {
+                emit('update:modelValue', props.visible);
             }
 
             instance.value = new Collapse(element.value!, {
@@ -51,6 +54,7 @@ export default defineComponent({
 
         return {
             element,
+            classes,
         }
     }
 })

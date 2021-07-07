@@ -16,8 +16,8 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from 'vue'
 import BCollapse from './BCollapse.vue';
-import BToggle from '../directives/BToggle';
-import getID from '../utils/getID';
+import BToggle from '@/directives/BToggle';
+import getID from '@/utils/getID';
 
 export default defineComponent({
     inheritAttrs: false,

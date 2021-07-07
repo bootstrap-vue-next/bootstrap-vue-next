@@ -38,7 +38,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { ButtonVariant, Size } from "@/types";
-import getID from "../utils/getID";
+import getID from "@/utils/getID";
 
 export default defineComponent({
   props: {

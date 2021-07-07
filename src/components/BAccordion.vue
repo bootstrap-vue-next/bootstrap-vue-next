@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, provide } from 'vue';
-import getID from '../utils/getID';
+import getID from '@/utils/getID';
 
 export default defineComponent({
     props: {

@@ -14,7 +14,7 @@
       <b-card-sub-title>Card subtitle</b-card-sub-title>
     </b-card-body>
     <b-accordion flush>
-      <b-accordion-item header="Accordion Item #1" show>
+      <b-accordion-item header="Accordion Item #1" visible>
         <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
       </b-accordion-item>
 
@@ -93,7 +93,7 @@
   <b-breadcrumb />
 
   <b-button variant="primary" class="mb-3" v-b-toggle:collapseExample>Toggle collapse</b-button>
-  <b-collapse id="collapseExample" show>
+  <b-collapse id="collapseExample" visible>
     <div class="card card-body">
       Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
     </div>
@@ -110,7 +110,7 @@
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
 
   <b-accordion id="accordionExample">
-    <b-accordion-item id="collapseOne" header="Accordion Item #1" show>
+    <b-accordion-item id="collapseOne" header="Accordion Item #1" visible>
       <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
     </b-accordion-item>
 
@@ -272,7 +272,7 @@
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
 
   <b-accordion id="accordionExample">
-    <b-accordion-item id="collapseOne" header="Accordion Item #1" show>
+    <b-accordion-item id="collapseOne" header="Accordion Item #1" visible>
       <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
     </b-accordion-item>
 
@@ -315,7 +315,7 @@
 
   <div class="row">
     <div class="col">
-      <BCollapse class="multi-collapse" id="multiCollapseExample1" show>
+      <BCollapse class="multi-collapse" id="multiCollapseExample1" visible>
         <div class="card card-body">
           Some placeholder content for the first collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
         </div>
