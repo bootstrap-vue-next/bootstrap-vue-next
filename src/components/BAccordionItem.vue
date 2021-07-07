@@ -1,28 +1,48 @@
 <template>
-    <div class="accordion-item">
-    <h2 class="accordion-header" :id="`heading${id}`">
-      <button class="accordion-button" :class="{ collapsed: !show }" type="button" data-bs-toggle="collapse" :data-bs-target="`#${id}`" :aria-expanded="show ? 'true' : 'false'" :aria-controls="id">
+  <div class="accordion-item">
+    <h2 class="accordion-header" :id="`heading${localID}`">
+      <button class="accordion-button" :class="{ collapsed: !show }" type="button" v-b-collapse:[localID] :aria-expanded="show ? 'true' : 'false'" :aria-controls="localID">
         {{ header }}
       </button>
     </h2>
-    <div :id="id" class="accordion-collapse collapse" :class="{ show }" :aria-labelledby="`heading${id}`" :data-bs-parent="parent ? `#${parent}` : null">
+    <b-collapse :id="localID" class="accordion-collapse" :show="show" :parent="parent" :aria-labelledby="`heading${localID}`">
       <div class="accordion-body">
         <slot />
       </div>
-    </div>
+    </b-collapse>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
+import BCollapse from './BCollapse.vue';
+import BCollapseDirective from '../directives/BCollapse';
+import getID from '../utils/getID';
 
 export default defineComponent({
     inheritAttrs: false,
+    components: {
+      BCollapse
+    },
+    directives: {
+      BCollapse: BCollapseDirective
+    },
     props: {
         header: { type: String },
-        id: { type: String, required: true },
+        id: { type: String },
         show: { type: Boolean, default: false }
     },
-    inject: [ 'parent' ],
+    setup(props) {
+      const localID = computed(() => {
+        return props.id || getID();
+      })
+
+      const parent = inject('parent');
+
+      return {
+        parent,
+        localID
+      }
+    },
 })
 </script>

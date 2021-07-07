@@ -4,7 +4,7 @@
       class="btn"
       :class="buttonClasses"
       type="button"
-      :id="id"
+      :id="localID"
       :data-bs-toggle="split ? null : 'dropdown'"
       :data-bs-auto-close="split ? null : autoClose"
       :data-bs-offset="split || !offset ? null : offset"
@@ -28,7 +28,7 @@
     <ul
       class="dropdown-menu"
       :class="dropdownMenuClasses"
-      :aria-labelledby="id"
+      :aria-labelledby="localID"
     >
       <slot />
     </ul>
@@ -38,6 +38,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { ButtonVariant, Size } from "@/types";
+import getID from "../utils/getID";
 
 export default defineComponent({
   props: {
@@ -58,33 +59,40 @@ export default defineComponent({
     variant: { type: String as PropType<ButtonVariant>, default: "secondary" },
   },
   setup(props) {
-      const classes = computed(() => ({
-          'btn-group': props.split,
-          'dropdown': !props.split,
-          'dropup': props.dropup,
-          'dropend': props.dropright,
-          'dropstart': props.dropleft,
-      }));
+    const localID = computed(() => {
+      return props.id || getID();
+    });
+
+    const classes = computed(() => ({
+      "btn-group": props.split,
+      dropdown: !props.split,
+      dropup: props.dropup,
+      dropend: props.dropright,
+      dropstart: props.dropleft,
+    }));
 
     const buttonClasses = computed(() => ({
       [`btn-${props.variant}`]: props.variant,
       [`btn-${props.size}`]: props.size,
-      'dropdown-toggle': !props.split,
+      "dropdown-toggle": !props.split,
     }));
-    
+
     const splitClasses = computed(() => ({
-      [`btn-${props.splitVariant || props.variant}`]: props.splitVariant || props.variant,
+      [`btn-${props.splitVariant || props.variant}`]:
+        props.splitVariant || props.variant,
       [`btn-${props.size}`]: props.size,
     }));
 
     const dropdownMenuClasses = computed(() => ({
-      'dropdown-menu-dark': props.dark,
-      'dropdown-menu-end': typeof props.right === 'boolean' ? props.right : false,
-      [`dropdown-menu-${props.left}-start`]: typeof props.left === 'string',
-      [`dropdown-menu-${props.right}-end`]: typeof props.right === 'string',
+      "dropdown-menu-dark": props.dark,
+      "dropdown-menu-end":
+        typeof props.right === "boolean" ? props.right : false,
+      [`dropdown-menu-${props.left}-start`]: typeof props.left === "string",
+      [`dropdown-menu-${props.right}-end`]: typeof props.right === "string",
     }));
 
     return {
+      localID,
       classes,
       buttonClasses,
       splitClasses,
