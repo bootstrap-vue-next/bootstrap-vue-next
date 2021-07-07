@@ -4,7 +4,7 @@ Bootstrap 5 + Vue 3 + Typescript
 
 # Components
 
-Early version of:
+Early versions of:
 
 - [x] Accordion
 - [x] Accortion Item
@@ -20,7 +20,7 @@ Early version of:
 - [ ] Carousel
 - [x] Close button
 - [x] Collapse
-- [ ] Dropdowns
+- [x] Dropdowns
 - [x] ListGroup
 - [x] ListGroupItem
 - [x] Modal
