@@ -9,7 +9,11 @@ import BButtonGroup from './BButtonGroup.vue';
 import BButtonToolbar from './BButtonToolbar.vue';
 import BCard from './BCard.vue';
 import BCardBody from './BCardBody.vue';
+import BCardFooter from './BCardFooter.vue';
+import BCardHeader from './BCardHeader.vue';
+import BCardSubTitle from './BCardSubTitle.vue';
 import BCardText from './BCardText.vue';
+import BCardTitle from './BCardTitle.vue';
 import BCloseButton from './BCloseButton.vue';
 import BCollapse from './BCollapse.vue';
 import BDropdown from './BDropdown.vue';
@@ -40,7 +44,11 @@ export default {
     BButtonToolbar,
     BCard,
     BCardBody,
+    BCardFooter,
+    BCardHeader,
+    BCardSubTitle,
     BCardText,
+    BCardTitle,
     BCloseButton,
     BCollapse,
     BDropdown,

@@ -7,7 +7,7 @@ Bootstrap 5 + Vue 3 + Typescript
 Early versions of:
 
 - [x] Accordion
-- [x] Accortion Item
+- [x] Accordion item
 - [x] Alert
 - [x] Badge
 - [x] Breadcrumb
@@ -15,23 +15,28 @@ Early versions of:
 - [x] Button group
 - [x] Button toolbar
 - [x] Card
-- [x] CardBody
-- [x] CardText
+- [x] Card body
+- [x] Card footer
+- [x] Card header
+- [x] Card sub title
+- [x] Card Text
+- [x] Card Title
 - [ ] Carousel
 - [x] Close button
 - [x] Collapse
 - [x] Dropdowns
 - [x] ListGroup
-- [x] ListGroupItem
+- [x] ListGroup item
 - [x] Modal
-- [ ] Navs & tabs
+- [ ] Navs
 - [ ] Navbar
-- [ ] Offcanvas
+- [x] Offcanvas
 - [ ] Pagination
 - [ ] Popovers
 - [x] Progress
 - [ ] Scrollspy
 - [x] Spinners
+- [ ] Tabs
 - [ ] Toasts
 - [x] Tooltips
 
