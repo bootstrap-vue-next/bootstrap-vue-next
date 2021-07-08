@@ -27,12 +27,15 @@ import BDropdownText from './BDropdownText.vue';
 import BListGroup from './BListGroup.vue';
 import BListGroupItem from './BListGroupItem.vue';
 import BModal from './BModal.vue';
+// import BNav from './BNav.vue';
+// import BNavItem from './BNavItem.vue';
+// import BNavItemDropdown from './BNavItemDropdown.vue';
 import BOffcanvas from './BOffcanvas.vue';
 import BProgress from './BProgress.vue';
 import BProgressBar from './BProgressBar.vue';
 import BSpinner from './BSpinner.vue';
-// import BTabs from './BTabs.vue';
-// import BTab from './BTab.vue';
+import BTabs from './BTabs.vue';
+import BTab from './BTab.vue';
 
 export default {
     BAccordion,
@@ -64,6 +67,9 @@ export default {
     BListGroup,
     BListGroupItem,
     BModal,
+    // BNav,
+    // BNavItem,
+    // BNavItemDropdown,
     BOffcanvas,
     BProgress,
     BProgressBar,

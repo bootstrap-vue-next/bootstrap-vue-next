@@ -18,7 +18,9 @@ export default defineComponent({
     emits: [
         'update:modelValue',
         'show',
-        'hide'
+        'shown',
+        'hide',
+        'hidden'
     ],
     props: {
         modelValue: { type: Boolean, default: false },
@@ -33,6 +35,9 @@ export default defineComponent({
 
         onMounted(() => {
             instance.value = new Offcanvas(element.value!);
+
+            element.value?.addEventListener('shown.bs.offcanvas', () => emit('shown'))
+            element.value?.addEventListener('hidden.bs.offcanvas', () => emit('hidden'))
 
             element.value?.addEventListener('show.bs.offcanvas', () => {
                 emit('show');

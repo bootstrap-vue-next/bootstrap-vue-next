@@ -51,7 +51,7 @@ export default defineComponent({
         const element = ref<HTMLElement>();
         const instance = ref<Carousel>();
         const computedId = computed(() => {
-            return props.id || getID();
+            return props.id || getID('accordion');
         })
         const slides = ref<any>([]);
 

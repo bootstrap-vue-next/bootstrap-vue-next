@@ -10,7 +10,11 @@ import { Collapse } from "bootstrap";
 
 export default defineComponent({
     emits: [
-        'update:modelValue'
+        'update:modelValue',
+        'show',
+        'shown',
+        'hide',
+        'hidden'
     ],
     props: {
         modelValue: { type: Boolean, default: false },
@@ -35,11 +39,16 @@ export default defineComponent({
                 toggle: props.toggle
             })
 
+            element.value?.addEventListener('shown.bs.collapse', () => emit('shown'))
+            element.value?.addEventListener('hidden.bs.collapse', () => emit('hidden'))
+
             element.value?.addEventListener('show.bs.collapse', () => {
+                emit('show');
                 emit('update:modelValue', true);
             })
             
             element.value?.addEventListener('hide.bs.collapse', () => {
+                emit('hide')
                 emit('update:modelValue', false);
             })
         });

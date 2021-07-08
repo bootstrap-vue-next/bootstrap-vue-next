@@ -15,7 +15,7 @@ export default defineComponent({
     },
     setup(props) {
         const computedId = computed(() => {
-            return props.id || getID();
+            return props.id || getID('accordion');
         })
 
         provide('parent', `#${computedId.value}`);

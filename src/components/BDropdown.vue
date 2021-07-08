@@ -60,7 +60,7 @@ export default defineComponent({
   },
   setup(props) {
     const computedId = computed(() => {
-      return props.id || getID();
+      return props.id || getID('dropdown');
     });
 
     const classes = computed(() => ({

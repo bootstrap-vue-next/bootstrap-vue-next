@@ -1,54 +1,27 @@
 <template>
 <div class="container mt-4">
-  <b-carousel
-      :interval="4000"
-      controls
-      indicators
-      background="#ababab"
-      img-width="1024"
-      img-height="480"
-      style="text-shadow: 1px 1px 2px #333;"
+  <!-- <b-nav pills>
+    <b-nav-item active>Active</b-nav-item>
+    <b-nav-item>Link</b-nav-item>
+    <b-nav-item-dropdown
+      id="my-nav-dropdown"
+      text="Dropdown"
+      toggle-class="nav-link-custom"
+      right
     >
-      <!-- Text slides with image -->
-      <b-carousel-slide
-        active
-        caption="First slide"
-        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-        img-src="https://picsum.photos/1024/480/?image=52"
-      ></b-carousel-slide>
+      <b-dropdown-item>One</b-dropdown-item>
+      <b-dropdown-item>Two</b-dropdown-item>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item>Three</b-dropdown-item>
+    </b-nav-item-dropdown>
+  </b-nav> -->
+  <!-- <b-tabs class="mt-3">
+    <b-tab title="First" active><p>I'm the first tab</p></b-tab>
+    <b-tab title="Second"><p>I'm the second tab</p></b-tab>
+    <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
+  </b-tabs> -->
 
-      <!-- Slides with custom text -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-        <h1>Hello world!</h1>
-      </b-carousel-slide>
-
-      <!-- Slides with image only -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-
-      <!-- Slides with img slot -->
-      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-      <b-carousel-slide>
-        <template #img>
-          <img
-            class="d-block w-100"
-            width="1024"
-            height="480"
-            src="https://picsum.photos/1024/480/?image=55"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide>
-
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-          a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-        </p>
-      </b-carousel-slide>
-    </b-carousel>
-
-  <!-- <h1 class="bd-title" id="content">Accordion</h1>
+  <h1 class="bd-title" id="content">Accordion</h1>
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
 
   <b-card no-body title="holaprop" sub-title="sdf" header="hola" footer="chau">
@@ -73,7 +46,8 @@
         <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
       </b-accordion-item>
     </b-accordion>
-  </b-card> -->
+  </b-card>
+
   <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
   <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
   <b-collapse id="my-collapse" v-model="collapse">
