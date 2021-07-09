@@ -1,5 +1,6 @@
 <template>
 <div class="container mt-4">
+ 
   <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
   {{ showModal }}
   <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
@@ -47,6 +48,8 @@
   <b-form-floating-label label="Email address">
     <b-form-input placeholder=" " />
   </b-form-floating-label>
+
+  <button v-b-popover.hover.top="'And here\'s some amazing content. It\'s very engaging. Right?'" type="button" class="btn btn-lg btn-danger" title="Popover title">Click to toggle popover</button>
 
   <h1 class="bd-title" id="content">Accordion</h1>
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>

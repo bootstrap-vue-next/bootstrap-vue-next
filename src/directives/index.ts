@@ -1,9 +1,11 @@
+import BModal from './BModal';
+import BPopover from './BPopover';
 import BToggle from './BToggle';
 import BTooltip from './BTooltip';
-import BModal from './BModal';
 
 export default {
+    BModal,
+    BPopover,
     BToggle,
     BTooltip,
-    BModal
 }

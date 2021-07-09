@@ -1,12 +1,10 @@
-import { Directive, triggerRef } from 'vue';
+import { Directive } from 'vue';
 import { Tooltip } from 'bootstrap';
-
-type Trigger = "click" | "hover" | "manual" | "focus" | "hover focus" | "click hover" | "click focus" | "click hover focus" | undefined;
 
 const BTooltip: Directive<HTMLElement> = {
     mounted: function(el, binding) {
         let placement = 'top';
-        let trigger = [];
+        let trigger: string[] = [];
         const html = (/<(\"[^\"]*\"|'[^']*'|[^'\">])*>/.test(el.title)).toString();
 
         if (binding.modifiers.manual) {
@@ -35,11 +33,11 @@ const BTooltip: Directive<HTMLElement> = {
         }
         
         el.setAttribute('data-bs-toogle', 'tooltip');
-        el.setAttribute('data-bs-placement', placement);
         el.setAttribute('data-bs-html', html);
         
         new Tooltip(el, {
-            trigger: trigger.length === 0 ? 'hover focus' : trigger.join(' ') as Trigger,
+            trigger: trigger.length === 0 ? 'hover focus' : trigger.join(' ') as Tooltip.Options['trigger'],
+            placement: placement as Tooltip.Options['placement'],
         });
         
         el.title = '';
