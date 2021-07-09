@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide } from 'vue';
-import getID from '@/utils/getID';
+import { defineComponent, provide } from 'vue';
+import useId from '@/composables/useId';
 
 export default defineComponent({
     props: {
@@ -14,9 +14,7 @@ export default defineComponent({
         id: { type: String }
     },
     setup(props) {
-        const computedId = computed(() => {
-            return props.id || getID('accordion');
-        })
+        const computedId = useId(props.id, 'accordion');
 
         provide('parent', `#${computedId.value}`);
 

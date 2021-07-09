@@ -4,7 +4,8 @@
         :class="classes" 
         :disabled="disabled" 
         :data-bs-toggle="active || toggle ? 'button' : null"
-        :aria-pressed="active || toggle ? active : null">
+        :aria-pressed="active || toggle ? active : null"
+    >
         <slot/>
     </button>
 </template>

@@ -1,5 +1,9 @@
 <template>
 <div class="container mt-4">
+  <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
+  {{ showModal }}
+  <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
+  <b-modal no-backdrop fullscreen="sm" size="xl" v-model="showModal" title="Modal title" fade id="exampleModal">...</b-modal>
   <!-- <b-nav pills>
     <b-nav-item active>Active</b-nav-item>
     <b-nav-item>Link</b-nav-item>
@@ -20,6 +24,29 @@
     <b-tab title="Second"><p>I'm the second tab</p></b-tab>
     <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
   </b-tabs> -->
+  <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">@</span>
+  <b-form-floating-label label="Email address">
+    <b-form-input placeholder=" " />
+  </b-form-floating-label>
+  <span class="input-group-text">.00</span>
+  </div>
+  
+  <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">@</span>
+  <b-form-input v-model="city" :list="['San Francisco',
+  'New York',
+  'Seattle',
+  'Los Angeles',
+  'Chicago']" />
+  <span class="input-group-text">.00</span>
+  </div>
+
+  {{ city }}
+
+  <b-form-floating-label label="Email address">
+    <b-form-input placeholder=" " />
+  </b-form-floating-label>
 
   <h1 class="bd-title" id="content">Accordion</h1>
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
@@ -367,6 +394,8 @@ export default defineComponent({
       max: 100}
   },
   setup() {
+    const showModal = ref(false);
+    const city = ref('');
     const { items } = useBreadcrumb();
     const collapse = ref(false);
     const offcanvas = ref(false);
@@ -383,6 +412,8 @@ export default defineComponent({
     })
 
     return {
+      showModal,
+      city,
       collapse,
       offcanvas,
     }

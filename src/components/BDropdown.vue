@@ -38,7 +38,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { ButtonVariant, Size } from "@/types";
-import getID from "@/utils/getID";
+import useId from "@/composables/useId";
 
 export default defineComponent({
   props: {
@@ -59,9 +59,7 @@ export default defineComponent({
     variant: { type: String as PropType<ButtonVariant>, default: "secondary" },
   },
   setup(props) {
-    const computedId = computed(() => {
-      return props.id || getID('dropdown');
-    });
+    const computedId = useId(props.id, 'dropdown');
 
     const classes = computed(() => ({
       "btn-group": props.split,

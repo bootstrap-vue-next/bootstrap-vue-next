@@ -33,7 +33,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, provide, ref } from 'vue'
 import { Carousel } from 'bootstrap';
-import getID from '@/utils/getID';
+import useId from '@/composables/useId';
 
 export default defineComponent({
     props: {
@@ -50,9 +50,7 @@ export default defineComponent({
     setup(props, { slots }) {
         const element = ref<HTMLElement>();
         const instance = ref<Carousel>();
-        const computedId = computed(() => {
-            return props.id || getID('accordion');
-        })
+        const computedId = useId(props.id, 'accordion');
         const slides = ref<any>([]);
 
         onMounted(() => {

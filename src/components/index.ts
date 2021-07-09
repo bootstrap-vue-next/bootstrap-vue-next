@@ -24,12 +24,14 @@ import BDropdownForm from './BDropdownForm.vue';
 import BDropdownHeader from './BDropdownHeader.vue';
 import BDropdownItem from './BDropdownItem.vue';
 import BDropdownText from './BDropdownText.vue';
+import BFormInput from './BFormInput.vue';
+import BFormFloatingLabel from './BFormFloatingLabel.vue';
 import BListGroup from './BListGroup.vue';
 import BListGroupItem from './BListGroupItem.vue';
 import BModal from './BModal.vue';
-// import BNav from './BNav.vue';
-// import BNavItem from './BNavItem.vue';
-// import BNavItemDropdown from './BNavItemDropdown.vue';
+import BNav from './BNav.vue';
+import BNavItem from './BNavItem.vue';
+import BNavItemDropdown from './BNavItemDropdown.vue';
 import BOffcanvas from './BOffcanvas.vue';
 import BProgress from './BProgress.vue';
 import BProgressBar from './BProgressBar.vue';
@@ -64,6 +66,8 @@ export default {
     BDropdownHeader,
     BDropdownItem,
     BDropdownText,
+    BFormFloatingLabel,
+    BFormInput,
     BListGroup,
     BListGroupItem,
     BModal,
