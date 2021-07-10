@@ -49,7 +49,17 @@
     <b-form-input placeholder=" " />
   </b-form-floating-label>
 
-  <button v-b-popover.hover.top="'And here\'s some amazing content. It\'s very engaging. Right?'" type="button" class="btn btn-lg btn-danger" title="Popover title">Click to toggle popover</button>
+  <b-button id="popover-target-1">
+    Hover Me
+  </b-button>
+  <b-popover target="popover-target-1" triggers="click" placement="top">
+    <template #title>Popover <em>Title</em></template>
+    I am popover <b>component</b> content!
+    <b-button>456</b-button>
+  </b-popover>
+
+  <button v-b-popover.top="'And here\'s some amazing content. It\'s very engaging. Right?'" type="button" class="btn btn-lg btn-danger" title="Popover title">Click to toggle popover</button>
+  <button v-b-popover.left="'I\'m another popover!'" type="button" class="btn btn-lg btn-success" title="Popover title 2">Click to toggle popover</button>
 
   <h1 class="bd-title" id="content">Accordion</h1>
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
