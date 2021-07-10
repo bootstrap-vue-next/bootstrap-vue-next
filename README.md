@@ -55,7 +55,7 @@ Early versions of:
 - [x] v-b-toggle
 - [x] v-b-modal
 - [x] v-b-tooltip
-- [x] v-b-popupover
+- [x] v-b-popover
 
 # Composables
 
