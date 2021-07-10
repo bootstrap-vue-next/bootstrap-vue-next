@@ -1,10 +1,11 @@
 <template>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
+            <slot name="prepend" />
             <b-breadcrumb-item v-for="(item, i) in items" :key="i" v-bind="item">
                 {{ item.text }}
             </b-breadcrumb-item>
-            <slot />
+            <slot name="append" />
         </ol>
     </nav>
 </template>

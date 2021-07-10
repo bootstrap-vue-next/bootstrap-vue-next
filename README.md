@@ -7,10 +7,24 @@ Bootstrap 5 + Vue 3 + Typescript
 Early versions of:
 
 - [x] Accordion
+- Props: flush
+- Slots: default
 - [x] Accordion item
+- Props: title, visible
+- Events: `b-collapse` events
+- Slots: default, title
+ 
 - [x] Alert
+- Props: dismissible, fade, show, variant
+- Slots: default
+
 - [x] Badge
+- Props: dot-indicator, text-indicator, pill, variant
+
 - [x] Breadcrumb
+- Props: items
+- Slots: prepend, append
+
 - [x] Button
 - [x] Button group
 - [x] Button toolbar
@@ -24,26 +38,39 @@ Early versions of:
 - [x] Carousel
 - [x] Close button
 - [x] Collapse
+- Props: modelValue (`v-model`), parent, toggle, visible
+- Events: show, shown, hide, hidden
+- Slots: default
 - [x] Dropdowns
 - [x] ListGroup
 - [x] ListGroup item
 - [x] Modal
+- Props: modelValue, no-backdrop, centered, fade, fullscreen, title, scrollable, show, size, static-backdrop
+- Events: show, shown, hide, hidden, hide-prevented
+- Slots: default, title
 - [ ] Navs
 - [ ] Navbar
 - [x] Offcanvas
+- Props: modelValue (`v-model`), body-scrolling, backdrop, placement, title
+- Events: show, shown, hide, hidden
+- Slots: default, title
 - [ ] Pagination
-- [ ] Popovers
+- [ ] Popover
+- - [x] Directive
 - [x] Progress
 - [ ] Scrollspy
 - [x] Spinners
 - [ ] Tabs
 - [ ] Toasts
-- [x] Tooltips
+- [ ] Tooltip
+- - [x] Directive
 
 # Directives
 
 - [x] v-b-toggle
 - [x] v-b-modal
+- [x] v-b-tooltip
+- [x] v-b-popover
 
 # Composables
 
