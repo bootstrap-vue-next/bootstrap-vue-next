@@ -32,18 +32,30 @@ Early versions of:
 - [ ] Navbar
 - [x] Offcanvas
 - [ ] Pagination
-- [ ] Popovers
+- [ ] Popover
+- - [x] Directive
+- - [ ] Component
+- - - [ ] Props
+- - - [ ] Events
+- - - [ ] Slots
 - [x] Progress
 - [ ] Scrollspy
 - [x] Spinners
 - [ ] Tabs
 - [ ] Toasts
-- [x] Tooltips
+- [ ] Tooltip
+- - [x] Directive
+- - [ ] Component
+- - - [ ] Props
+- - - [ ] Events
+- - - [ ] Slots
 
 # Directives
 
 - [x] v-b-toggle
 - [x] v-b-modal
+- [x] v-b-tooltip
+- [x] v-b-popupover
 
 # Composables
 
