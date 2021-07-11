@@ -1,46 +1,61 @@
-import { Directive } from 'vue';
+import { Directive, DirectiveBinding } from 'vue';
 import { Tooltip } from 'bootstrap';
+
+function resolveTrigger(modifiers: DirectiveBinding['modifiers']): Tooltip.Options['trigger'] {
+    if (modifiers.manual) {
+        return 'manual';
+    }
+
+    let trigger: string[] = [];
+
+    if (modifiers.click) {
+        trigger.push('click');
+    }
+
+    if (modifiers.hover) {
+        trigger.push('hover');
+    }
+
+    if (modifiers.focus) {
+        trigger.push('focus');
+    }
+
+    if (trigger.length > 0) {
+        return trigger.join(' ') as Tooltip.Options['trigger'];
+    }
+
+    return 'hover focus';
+}
+
+function resolvePlacement(modifiers: DirectiveBinding['modifiers']): Tooltip.Options['placement'] {
+    if (modifiers.left) {
+        return 'left';
+    }
+    
+    if (modifiers.right) {
+        return 'right';
+    }
+    
+    if (modifiers.bottom) {
+        return 'bottom';
+    }
+
+    return 'top';
+}
 
 const BTooltip: Directive<HTMLElement> = {
     mounted: function(el, binding) {
-        let placement = 'top';
-        let trigger: string[] = [];
-        const html = (/<(\"[^\"]*\"|'[^']*'|[^'\">])*>/.test(el.title)).toString();
-
-        if (binding.modifiers.manual) {
-            trigger.push('manual')
-        } else {
-            if (binding.modifiers.click) {
-                trigger.push('click');
-            }
-    
-            if (binding.modifiers.hover) {
-                trigger.push('hover')
-            }
-    
-            if (binding.modifiers.focus) {
-                trigger.push('focus')
-            }
-        }
-
-
-        if (binding.modifiers.left) {
-            placement = 'left';
-        } else if (binding.modifiers.right) {
-            placement = 'right';
-        } else if (binding.modifiers.bottom) {
-            placement = 'bottom';
-        }
-        
         el.setAttribute('data-bs-toogle', 'tooltip');
-        el.setAttribute('data-bs-html', html);
-        
+
+        const isHtml = /<(\"[^\"]*\"|'[^']*'|[^'\">])*>/.test(el.title);
+        const trigger = resolveTrigger(binding.modifiers);
+        const placement = resolvePlacement(binding.modifiers)
+
         new Tooltip(el, {
-            trigger: trigger.length === 0 ? 'hover focus' : trigger.join(' ') as Tooltip.Options['trigger'],
-            placement: placement as Tooltip.Options['placement'],
+            trigger,
+            placement,
+            html: isHtml
         });
-        
-        el.title = '';
     }
 }
 

@@ -49,13 +49,18 @@
     <b-form-input placeholder=" " />
   </b-form-floating-label>
 
+  <b-button title="Tooltip on <em>top</em>" v-b-tooltip.top>Tolltip on top</b-button>
+  <b-button title="Tooltip on left" v-b-tooltip.left>Tolltip on left</b-button>
+  <b-button title="Tooltip on right" v-b-tooltip.right.click>Tolltip on right</b-button>
+  <b-button title="Tooltip on bottom" v-b-tooltip.bottom>Tolltip on bottom</b-button>
+
   <b-button id="popover-target-1">
     Hover Me
   </b-button>
   <b-popover target="popover-target-1" triggers="click" placement="top">
     <template #title>Popover <em>Title</em></template>
-    I am popover <b>component</b> content!
     <b-button>456</b-button>
+    I am popover <b>component</b> content!
   </b-popover>
 
   <button v-b-popover.top="'And here\'s some amazing content. It\'s very engaging. Right?'" type="button" class="btn btn-lg btn-danger" title="Popover title">Click to toggle popover</button>
@@ -98,12 +103,7 @@
     <b-tab title="Home" active>1</b-tab>
     <b-tab title="Profile">2</b-tab>
     <b-tab title="Contact">3</b-tab>
-  </b-tabs>
-
-  <b-button title="Tooltip on <em>top</em>" v-b-tooltip.top>Tolltip on top</b-button>
-  <b-button title="Tooltip on left" v-b-tooltip.left>Tolltip on left</b-button>
-  <b-button title="Tooltip on right" v-b-tooltip.right.click>Tolltip on right</b-button>
-  <b-button title="Tooltip on bottom" v-b-tooltip.bottom>Tolltip on bottom</b-button> -->
+  </b-tabs> -->
   <!-- <b-progress :value="50" striped animated />
 
   <b-progress class="mt-2" :value="50" showValue/>

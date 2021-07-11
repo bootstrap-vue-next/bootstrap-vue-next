@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, provide, ref } from 'vue'
+import { defineComponent, onMounted, provide, ref } from 'vue'
 import { Carousel } from 'bootstrap';
 import useId from '@/composables/useId';
 
@@ -47,7 +47,7 @@ export default defineComponent({
         noTouch: { type: Boolean, default: false },
         noWrap: { type: Boolean, default: false },
     },
-    setup(props, { slots }) {
+    setup(props, { slots, emit }) {
         const element = ref<HTMLElement>();
         const instance = ref<Carousel>();
         const computedId = useId(props.id, 'accordion');
@@ -60,6 +60,9 @@ export default defineComponent({
                 touch: !props.noTouch,
                 slide: 'carousel'
             });
+
+            element.value?.addEventListener('slide.bs.carousel', payload => emit('slide', payload))
+            element.value?.addEventListener('slid.bs.carousel', payload => emit('slid', payload))
 
             if (slots.default) {
                 slides.value = slots.default().filter((child: any) => {

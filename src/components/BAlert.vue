@@ -1,12 +1,13 @@
 <template>
-    <div class="alert" role="alert" :class="classes">
+    <div ref="element" class="alert" role="alert" :class="classes">
         <slot />
         <button v-if="dismissible" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { Alert } from 'bootstrap';
 import { ColorVariant } from '@/types';
 
 export default defineComponent({
@@ -16,7 +17,9 @@ export default defineComponent({
         show: { type: Boolean, default: false },
         variant: { type: String as PropType<ColorVariant>, default: 'info' },
     },
-    setup(props) {
+    setup(props, { emit }) {
+        const element = ref<HTMLElement>();
+        const instance = ref<Alert>();
         const classes = computed(() => ({
             [`alert-${props.variant}`]: props.variant,
             show: props.show,
@@ -24,7 +27,16 @@ export default defineComponent({
             fade: props.show
         }))
 
+        onMounted(() => {
+            instance.value = new Alert(element.value!);
+            
+            element.value?.addEventListener('close.bs.alert', () => emit('close'))
+            element.value?.addEventListener('closed.bs.alert', () => emit('closed'))
+        })
+
+
         return {
+            element,
             classes,
         }
     }

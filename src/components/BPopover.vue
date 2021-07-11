@@ -1,6 +1,18 @@
+
+<template>
+  <div ref="element">
+    <div ref="title">
+      <slot name="title">{{ title }}</slot>
+    </div>
+    <div ref="content">
+      <slot/>
+    </div>
+  </div>
+</template>
+
 <script lang="ts">
 import { Popover } from "bootstrap";
-import { defineComponent, onMounted, PropType, ref, Slot, VNode } from "vue";
+import { defineComponent, onMounted, PropType, ref, Slot } from "vue";
 
 export default defineComponent({
   props: {
@@ -11,32 +23,31 @@ export default defineComponent({
     title: { type: String },
     placement: { type: String as PropType<Popover.Options["placement"]> },
   },
-  setup(props, { slots }) {
+  setup(props) {
+      const element = ref<HTMLElement>();
       const instance = ref<Popover>();
-
-      const getHtmlFromSlot = (slot?: Slot): string => {
-          if (slot) {
-              return slot().map(item => typeof item.type !== 'symbol' ? `<${item.type}>${item.children}</${item.type}>` : item.children).join(' ')
-          }
-
-          return '';
-      }
+      const title = ref<HTMLElement>();
+      const content = ref<HTMLElement>();
 
       onMounted(() => {
-            const target = document.getElementById(props.target);
-
-            console.log(slots.default && slots.default());
-
-            instance.value = new Popover(target!, {    
+            instance.value = new Popover(`#${props.target}`, {    
                 container: 'body',
                 trigger: props.triggers,
                 placement: props.placement,
-                title: getHtmlFromSlot(slots.title),
-                content: getHtmlFromSlot(slots.default),
-                html: true
+                title: title.value?.innerHTML,
+                content: content.value?.innerHTML,
+                html: true,
+                sanitize: false
             });
+
+            element.value?.parentNode?.removeChild(element.value);
       });
+
+      return {
+        element,
+        title,
+        content
+      }
   },
-  render: () => null,
 });
 </script>
