@@ -1,5 +1,14 @@
 <template>
 <div class="container mt-4">
+  <details class="accordion-item">
+    <summary class="accordion-header">
+      <div class="details-button">Accordion Item #1</div>
+    </summary>
+    <div class="accordion-body">
+      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+    </div>
+  </details>
+
  
   <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
   {{ showModal }}
@@ -79,15 +88,15 @@
       <b-card-sub-title>Card subtitle</b-card-sub-title>
     </b-card-body>
     <b-accordion flush>
-      <b-accordion-item header="Accordion Item #1" visible>
+      <b-accordion-item title="Accordion Item #1" visible>
         <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
       </b-accordion-item>
 
-      <b-accordion-item header="Accordion Item #2">
+      <b-accordion-item title="Accordion Item #2">
         <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
       </b-accordion-item>
 
-      <b-accordion-item header="Accordion Item #3">
+      <b-accordion-item title="Accordion Item #3">
         <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
       </b-accordion-item>
     </b-accordion>
@@ -433,3 +442,47 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+details.accordion-item summary {
+  list-style-type: none;
+}
+details.accordion-item[open] .details-button {
+	color: #0c63e4;
+	background-color: #e7f1ff;
+	box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+}
+
+details.accordion-item .details-button {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: 1rem 1.25rem;
+	font-size: 1rem;
+	color: #212529;
+	text-align: left;
+	background-color: #fff;
+	border: 0;
+	border-radius: 0;
+	overflow-anchor: none;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,border-radius .15s ease;
+}
+
+details.accordion-item .details-button::after {
+	flex-shrink: 0;
+	width: 1.25rem;
+	height: 1.25rem;
+	margin-left: auto;
+	content: "";
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-size: 1.25rem;
+	transition: transform .2s ease-in-out;
+}
+
+details.accordion-item[open] .details-button::after {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+	transform: rotate(-180deg);
+}
+</style>

@@ -1,5 +1,8 @@
 <template>
-  <div :class="classes">
+  <div 
+    ref="element"
+    :class="classes"
+  >
     <button
       class="btn"
       :class="buttonClasses"
@@ -36,9 +39,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
 import { ButtonVariant, Size } from "@/types";
 import useId from "@/composables/useId";
+import useAddEventListener from '@/composables/useAddEventListener';
 
 export default defineComponent({
   props: {
@@ -58,8 +62,14 @@ export default defineComponent({
     size: { type: String as PropType<Size> },
     variant: { type: String as PropType<ButtonVariant>, default: "secondary" },
   },
-  setup(props) {
+  setup(props, { emit }) {
+    const element = ref<HTMLElement>();
     const computedId = useId(props.id, 'dropdown');
+
+    useAddEventListener(element, 'show.bs.dropdown', () => emit('show'));
+    useAddEventListener(element, 'shown.bs.dropdown', () => emit('shown'));
+    useAddEventListener(element, 'hide.bs.dropdown', () => emit('hide'));
+    useAddEventListener(element, 'hidden.bs.dropdown', () => emit('hidden'));
 
     const classes = computed(() => ({
       "btn-group": props.split,
@@ -90,6 +100,7 @@ export default defineComponent({
     }));
 
     return {
+      element,
       computedId,
       classes,
       buttonClasses,
