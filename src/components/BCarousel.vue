@@ -1,7 +1,7 @@
 <template>
     <div ref="element" :id="computedId" class="carousel slide" data-bs-ride="carousel">
         <div v-if="indicators" class="carousel-indicators">
-            <button 
+            <button
                 v-for="(slide, i) of slides"
                 :key="i"
                 type="button"
@@ -12,11 +12,11 @@
                 :aria-label="`Slide ${i}`"
             ></button>
         </div>
-        
+
         <div class="carousel-inner">
             <slot />
         </div>
-        
+
         <template v-if="controls">
             <button class="carousel-control-prev" type="button" :data-bs-target="`#${computedId}`" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -33,7 +33,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, provide, ref } from 'vue'
 import { Carousel } from 'bootstrap';
-import useId from '@/composables/useId';
+import useId from '../composables/useId';
 
 export default defineComponent({
     props: {
@@ -79,7 +79,7 @@ export default defineComponent({
         return {
             computedId,
             slides,
-        }        
+        }
     },
 })
 </script>

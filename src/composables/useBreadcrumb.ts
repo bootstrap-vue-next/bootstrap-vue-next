@@ -1,5 +1,5 @@
 import { reactive, inject, App } from 'vue';
-import BreadcrumbItemObject from '@/types/BreadcrumbItemObject';
+import BreadcrumbItemObject from '../types/BreadcrumbItemObject';
 
 const BREADCRUMB_SYMBOL = Symbol();
 

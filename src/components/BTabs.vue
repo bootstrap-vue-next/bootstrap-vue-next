@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import getID from "@/utils/getID";
+import getID from "../utils/getID";
 
 export default defineComponent({
     props: {
@@ -59,7 +59,7 @@ export default defineComponent({
     const classes = computed(() => ({
         'd-flex align-items-start': props.vertical,
     }));
-    
+
     const navTabsClasses = computed(() => ({
         'nav-pills': props.pills,
         'flex-column me-3': props.vertical,
