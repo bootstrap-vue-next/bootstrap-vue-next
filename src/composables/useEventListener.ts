@@ -1,6 +1,6 @@
 import { onBeforeUnmount, onMounted, Ref } from "vue";
 
-function useAddEventsListeners(element: Ref<HTMLElement | undefined>, event: string, callback: EventListener) {
+function useEventListener(element: Ref<HTMLElement | undefined>, event: string, callback: EventListener) {
     onMounted(() => {
         element.value!.addEventListener(event, callback);
     })
@@ -10,4 +10,4 @@ function useAddEventsListeners(element: Ref<HTMLElement | undefined>, event: str
     })
 }
 
-export default useAddEventsListeners;
+export default useEventListener;

@@ -58,7 +58,8 @@
     <b-form-input placeholder=" " />
   </b-form-floating-label>
 
-  <b-button title="Tooltip on <em>top</em>" v-b-tooltip.top>Tolltip on top</b-button>
+  <b-button :title="tooltip" v-b-tooltip.top>Tolltip on top</b-button>
+  <b-button @click="tooltip = `${new Date()} <strong>fechaaa</strong>`">Change tooltip</b-button>
   <b-button title="Tooltip on left" v-b-tooltip.left>Tolltip on left</b-button>
   <b-button title="Tooltip on right" v-b-tooltip.right.click>Tolltip on right</b-button>
   <b-button title="Tooltip on bottom" v-b-tooltip.bottom>Tolltip on bottom</b-button>
@@ -68,7 +69,7 @@
   </b-button>
   <b-popover target="popover-target-1" triggers="click" placement="top">
     <template #title>Popover <em>Title</em></template>
-    <b-button>456</b-button>
+    <b-button @click="consoleLog">456</b-button>
     I am popover <b>component</b> content!
   </b-popover>
 
@@ -416,11 +417,14 @@ export default defineComponent({
       max: 100}
   },
   setup() {
+    const tooltip = ref('Tooltip on <em>top</em>');
     const showModal = ref(false);
     const city = ref('');
     const { items } = useBreadcrumb();
     const collapse = ref(false);
     const offcanvas = ref(false);
+
+    const consoleLog = () => console.log('button clicked!');
 
     onMounted(() => {
       items.push({
@@ -434,6 +438,8 @@ export default defineComponent({
     })
 
     return {
+      consoleLog,
+      tooltip,
       showModal,
       city,
       collapse,

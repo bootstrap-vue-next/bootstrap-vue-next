@@ -42,7 +42,7 @@
 import { computed, defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
 import { ButtonVariant, Size } from "@/types";
 import useId from "@/composables/useId";
-import useAddEventListener from '@/composables/useAddEventListener';
+import useEventListener from '@/composables/useEventListener';
 
 export default defineComponent({
   props: {
@@ -66,10 +66,10 @@ export default defineComponent({
     const element = ref<HTMLElement>();
     const computedId = useId(props.id, 'dropdown');
 
-    useAddEventListener(element, 'show.bs.dropdown', () => emit('show'));
-    useAddEventListener(element, 'shown.bs.dropdown', () => emit('shown'));
-    useAddEventListener(element, 'hide.bs.dropdown', () => emit('hide'));
-    useAddEventListener(element, 'hidden.bs.dropdown', () => emit('hidden'));
+    useEventListener(element, 'show.bs.dropdown', () => emit('show'));
+    useEventListener(element, 'shown.bs.dropdown', () => emit('shown'));
+    useEventListener(element, 'hide.bs.dropdown', () => emit('hide'));
+    useEventListener(element, 'hidden.bs.dropdown', () => emit('hidden'));
 
     const classes = computed(() => ({
       "btn-group": props.split,

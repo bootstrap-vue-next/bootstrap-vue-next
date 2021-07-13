@@ -1,8 +1,8 @@
-import { DirectiveBinding } from "vue";
+import { Directive } from "vue";
 import { Popover } from "bootstrap";
 
-export default {
-    mounted: function(el: HTMLElement, binding: DirectiveBinding) {
+const BPopover: Directive<HTMLElement> = {
+    mounted: function(el, binding) {
         let placement: Popover.Options['placement'] = 'auto';
         let trigger: string[] = [];
 
@@ -39,5 +39,11 @@ export default {
             placement,
             content: binding.value,
         });
+    },
+    unmounted: function(el) {
+        const instance = Popover.getInstance(el);
+        instance?.dispose();
     }
 }
+
+export default BPopover;

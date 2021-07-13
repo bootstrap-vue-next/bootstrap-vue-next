@@ -56,6 +56,17 @@ const BTooltip: Directive<HTMLElement> = {
             placement,
             html: isHtml
         });
+    },
+    updated: function(el) {
+        const instance = Tooltip.getInstance(el);
+        instance?.hide();
+        const title = el.getAttribute('title');
+        el.setAttribute('data-bs-original-title', title!);
+        el.setAttribute('title', '');
+    },
+    unmounted: function(el) {
+        const instance = Tooltip.getInstance(el);
+        instance?.dispose();
     }
 }
 

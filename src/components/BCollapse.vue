@@ -7,6 +7,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import { Collapse } from "bootstrap";
+import useEventListener from '@/composables/useEventListener';
 
 export default defineComponent({
     emits: [
@@ -29,6 +30,19 @@ export default defineComponent({
             show: props.visible,
         }))
 
+        useEventListener(element, 'show.bs.collapse', () => {
+            emit('show');
+            emit('update:modelValue', true);
+        });
+        
+        useEventListener(element, 'hide.bs.collapse', () => {
+            emit('show');
+            emit('update:modelValue', true);
+        });
+
+        useEventListener(element, 'shown.bs.collapse', () => emit('shown'));
+        useEventListener(element, 'hidden.bs.collapse', () => emit('hidden'));
+
         onMounted(() => {
             if (props.visible) {
                 emit('update:modelValue', props.visible);
@@ -37,20 +51,7 @@ export default defineComponent({
             instance.value = new Collapse(element.value!, {
                 parent: props.parent,
                 toggle: props.toggle
-            })
-
-            element.value?.addEventListener('shown.bs.collapse', () => emit('shown'))
-            element.value?.addEventListener('hidden.bs.collapse', () => emit('hidden'))
-
-            element.value?.addEventListener('show.bs.collapse', () => {
-                emit('show');
-                emit('update:modelValue', true);
-            })
-            
-            element.value?.addEventListener('hide.bs.collapse', () => {
-                emit('hide')
-                emit('update:modelValue', false);
-            })
+            });
         });
 
         watch(() => props.modelValue, (value) => {
