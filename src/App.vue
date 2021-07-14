@@ -9,7 +9,7 @@
     </div>
   </details>
 
- 
+
   <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
   {{ showModal }}
   <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
@@ -41,7 +41,7 @@
   </b-form-floating-label>
   <span class="input-group-text">.00</span>
   </div>
-  
+
   <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">@</span>
   <b-form-input v-model="city" :list="['San Francisco',
@@ -83,7 +83,7 @@
     <template #footer>
         <em>Footer Slot</em>
       </template>
-      
+
     <b-card-body>
       <b-card-title>Card title</b-card-title>
       <b-card-sub-title>Card subtitle</b-card-sub-title>
@@ -132,7 +132,7 @@
 
   <b-offcanvas v-model="offcanvas" title="Menú" id="offcanvas">HOlaa</b-offcanvas> -->
 
-  
+
 
   <!-- <div>
     <b-button-group>
@@ -171,7 +171,7 @@
   </b-collapse>
 
   <hr />
-  
+
   <b-button v-b-toggle:myCollapse2>Collapse</b-button>
   <b-collapse id="myCollapse2">holaaa</b-collapse>
 
@@ -263,7 +263,7 @@
     <b-card-text>Some quick example text to build on the card title and make up the bulk of the card's content.</b-card-text>
     <b-button variant="primary">Go somewhere</b-button>
   </b-card>
-  
+
   <b-card title="Card title" class="mt-4" subtitle="Card subtitle">
     <b-card-text>Some quick example text to build on the card title and make up the bulk of the card's content.</b-card-text>
     <b-button variant="primary">Go somewhere</b-button>
@@ -308,9 +308,9 @@
   <b-badge pill variant="info">Info</b-badge>
   <b-badge pill variant="light">Light</b-badge>
   <b-badge pill variant="dark">Dark</b-badge>
-  
+
   <hr />
-  
+
   <h1 class="bd-title" id="content">Spinner</h1>
   <p class="bd-lead">Indicate the loading state of a component or page with Bootstrap spinners, built entirely with HTML, CSS, and no JavaScript.</p>
 
@@ -320,7 +320,7 @@
   <b-spinner variant="primary" grow />
 
   <hr/>
-  
+
   <b-spinner small />
   <b-spinner small variant="primary" />
   <b-spinner small grow />
@@ -331,14 +331,14 @@
   <b-button variant="primary" disabled>
     <b-spinner grow small />
   </b-button>
-  
+
   <b-button variant="primary" disabled>
     <b-spinner grow small />
     Loading...
   </b-button>
-  
+
   <hr />
-  
+
   <h1 class="bd-title" id="content">Accordion</h1>
   <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
 
@@ -406,7 +406,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import BCollapse from './components/BCollapse.vue';
-import { useBreadcrumb } from '@/composables/useBreadcrumb';
+import { useBreadcrumb } from './composables/useBreadcrumb';
 import BProgress from './components/BProgress.vue';
 
 export default defineComponent({

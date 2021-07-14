@@ -1,4 +1,4 @@
-import getID from "@/utils/getID";
+import getID from "../utils/getID";
 import { computed } from "vue";
 
 function useId(id?: string, suffix?: string) {

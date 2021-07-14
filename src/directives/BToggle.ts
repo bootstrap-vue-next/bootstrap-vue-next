@@ -1,6 +1,6 @@
 import { DirectiveBinding } from "vue";
 
-function getToggleType(el: HTMLElement): string {
+function resolveToggleType(el: HTMLElement): string {
     if (el.classList.contains('offcanvas')) {
         return 'offcanvas';
     }
@@ -9,20 +9,22 @@ function getToggleType(el: HTMLElement): string {
         return 'collapse';
     }
 
-    return '';
+    throw Error('Couldn\'t resolve toggle type');
 }
 
 export default {
-    mounted: function(el: HTMLElement, binding: DirectiveBinding) {
-        const target = document.getElementById(binding.arg as string);  
+    mounted: function(el: HTMLElement, binding: DirectiveBinding<string>) {
+        const target = document.getElementById(binding.arg!);  
         let targetAttr = 'data-bs-target';
-        el.setAttribute('data-bs-toggle', getToggleType(target!));
+        el.setAttribute('data-bs-toggle', resolveToggleType(target!));
         
         if (el.tagName === 'a') {
             targetAttr = 'href'
         }
 
         el.setAttribute(targetAttr, `#${binding.arg}`)
+
+        // TODO support class selector
 
         // if (binding.arg) {
         //     let toggle = 'collapse';

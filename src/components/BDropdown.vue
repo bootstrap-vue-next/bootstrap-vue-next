@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     ref="element"
     :class="classes"
   >
