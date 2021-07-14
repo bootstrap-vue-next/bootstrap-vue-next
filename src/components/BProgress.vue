@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { ColorVariant } from '@/types'
+import { ColorVariant } from '../types'
 import { defineComponent, PropType, provide } from 'vue'
 
 export default defineComponent({

@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     ref="element"
     :class="classes"
   >
@@ -40,9 +40,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
-import { ButtonVariant, Size } from "@/types";
-import useId from "@/composables/useId";
-import useAddEventListener from '@/composables/useAddEventListener';
+import { ButtonVariant, Size } from "../types";
+import useId from "../composables/useId";
+import useAddEventListener from '../composables/useAddEventListener';
 
 export default defineComponent({
   props: {
