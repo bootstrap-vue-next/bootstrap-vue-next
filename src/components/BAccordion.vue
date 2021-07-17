@@ -5,8 +5,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide } from 'vue';
+import { defineComponent, provide, InjectionKey } from 'vue';
 import useId from '../composables/useId';
+
+export const injectionKey: InjectionKey<string> = Symbol();
 
 export default defineComponent({
     props: {
@@ -16,7 +18,7 @@ export default defineComponent({
     setup(props) {
         const computedId = useId(props.id, 'accordion');
 
-        provide('parent', `#${computedId.value}`);
+        provide(injectionKey, `#${computedId.value}`);
 
         return {
             computedId

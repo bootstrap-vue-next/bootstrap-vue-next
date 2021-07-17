@@ -15,6 +15,7 @@
 <script lang="ts">
 import { ColorVariant } from '../types'
 import { computed, defineComponent, inject, PropType } from 'vue'
+import { injectionKey, ParentData } from './BProgress.vue';
 
 export default defineComponent({
     props: {
@@ -30,7 +31,7 @@ export default defineComponent({
         variant: { type: String as PropType<ColorVariant> },
     },
     setup(props) {
-        const parent = inject<Record<string, any>>('parentProps');
+        const parent = inject<ParentData>(injectionKey);
 
         const classes = computed(() => ({
             'progress-bar-animated': props.animated || parent?.animated,

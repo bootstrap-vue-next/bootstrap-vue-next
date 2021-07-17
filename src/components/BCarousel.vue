@@ -31,9 +31,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, provide, ref } from 'vue'
+import { defineComponent, InjectionKey, onMounted, provide, ref } from 'vue'
 import { Carousel } from 'bootstrap';
 import useId from '../composables/useId';
+
+export interface ParentData {
+    width?: string,
+    height?: string,
+}
+
+export const injectionKey: InjectionKey<ParentData> = Symbol();
 
 export default defineComponent({
     props: {
@@ -71,7 +78,7 @@ export default defineComponent({
             }
         });
 
-        provide('parent-data', {
+        provide(injectionKey, {
             width: props.imgWidth,
             height: props.imgHeight
         });

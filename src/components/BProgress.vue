@@ -17,7 +17,18 @@
 
 <script lang="ts">
 import { ColorVariant } from '../types'
-import { defineComponent, PropType, provide } from 'vue'
+import { defineComponent, InjectionKey, PropType, provide } from 'vue'
+
+export interface ParentData {
+    animated: boolean,
+    max: number | string,
+    showProgress: boolean,
+    showValue: boolean,
+    striped: boolean,
+}
+
+export const injectionKey: InjectionKey<ParentData> = Symbol();
+
 
 export default defineComponent({
     props: {
@@ -32,7 +43,7 @@ export default defineComponent({
         variant: { type: String as PropType<ColorVariant> },
     },
     setup(props) {
-        provide('parentProps', {
+        provide(injectionKey, {
             animated: props.animated,
             max: props.max,
             showProgress: props.showProgress,

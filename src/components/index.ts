@@ -26,6 +26,7 @@ import BDropdownItem from './BDropdownItem.vue';
 import BDropdownText from './BDropdownText.vue';
 import BFormInput from './BFormInput.vue';
 import BFormFloatingLabel from './BFormFloatingLabel.vue';
+import BIcon from './BIcon.vue';
 import BListGroup from './BListGroup.vue';
 import BListGroupItem from './BListGroupItem.vue';
 import BModal from './BModal.vue';
@@ -68,6 +69,7 @@ export default {
     BDropdownItem,
     BDropdownText,
     BFormFloatingLabel,
+    // BIcon,
     BFormInput,
     BListGroup,
     BListGroupItem,

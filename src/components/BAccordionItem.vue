@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue'
+import { injectionKey } from './BAccordion.vue';
 import BCollapse from './BCollapse.vue';
 import BToggle from '../directives/BToggle';
 import useId from '../composables/useId';
@@ -34,8 +35,7 @@ export default defineComponent({
     },
     setup(props) {
       const computedId = useId(props.id, 'accordion_item');
-
-      const parent = inject('parent');
+      const parent = inject(injectionKey);
 
       return {
         parent,
