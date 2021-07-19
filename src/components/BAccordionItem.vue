@@ -17,8 +17,8 @@
 import { defineComponent, inject } from 'vue'
 import { injectionKey } from './BAccordion.vue';
 import BCollapse from './BCollapse.vue';
-import BToggle from '@/directives/BToggle';
-import useId from '@/composables/useId';
+import BToggle from '../directives/BToggle';
+import useId from '../composables/useId';
 
 export default defineComponent({
     inheritAttrs: false,

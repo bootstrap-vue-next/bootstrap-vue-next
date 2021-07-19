@@ -7,7 +7,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import { Collapse } from "bootstrap";
-import useEventListener from '@/composables/useEventListener';
+import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
     emits: [

@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, provide, InjectionKey } from 'vue';
-import useId from '@/composables/useId';
+import useId from '../composables/useId';
 
 export const injectionKey: InjectionKey<string> = Symbol();
 

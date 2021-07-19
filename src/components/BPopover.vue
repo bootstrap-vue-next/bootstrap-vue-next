@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Popover } from "bootstrap";
 import { defineComponent, onMounted, PropType, ref } from "vue";
-import useEventListener from '@/composables/useEventListener';
+import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
   props: {

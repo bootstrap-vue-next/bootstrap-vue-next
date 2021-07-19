@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { ButtonVariant } from '@/types';
+import { ButtonVariant } from '../types';
 
 export default defineComponent({
     props: {

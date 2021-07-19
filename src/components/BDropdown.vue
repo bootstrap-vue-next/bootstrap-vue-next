@@ -40,9 +40,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
-import { ButtonVariant, Size } from "@/types";
-import useId from "@/composables/useId";
-import useEventListener from '@/composables/useEventListener';
+import { ButtonVariant, Size } from "../types";
+import useId from "../composables/useId";
+import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
   props: {

@@ -8,8 +8,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import { Alert } from 'bootstrap';
-import useEventListener from '@/composables/useEventListener';
-import { ColorVariant } from '@/types';
+import useEventListener from '../composables/useEventListener';
+import { ColorVariant } from '../types';
 
 export default defineComponent({
     props: {

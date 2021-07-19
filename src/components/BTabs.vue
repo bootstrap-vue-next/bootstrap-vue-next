@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import getID from '@/utils/getID';
+import getID from '../utils/getID';
 
 export default defineComponent({
     props: {

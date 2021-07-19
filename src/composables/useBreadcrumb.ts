@@ -1,5 +1,5 @@
 import { reactive, inject, App, InjectionKey } from 'vue';
-import BreadcrumbItemObject from '@/types/BreadcrumbItemObject';
+import BreadcrumbItemObject from '../types/BreadcrumbItemObject';
 
 interface BreadcrumbI {
     items: BreadcrumbItemObject[],
