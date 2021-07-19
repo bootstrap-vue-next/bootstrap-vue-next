@@ -25,6 +25,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { Modal } from 'bootstrap';
+import useEventListener from '@/composables/useEventListener';
 
 export default defineComponent({
     emits: [
@@ -65,6 +66,20 @@ export default defineComponent({
             'modal-dialog-scrollable': props.scrollable
         }))
 
+        useEventListener(element, 'shown.bs.modal', () => emit('shown'))
+        useEventListener(element, 'hidden.bs.modal', () => emit('hidden'))
+        useEventListener(element, 'hidePrevented.bs.modal', () => emit('hide-prevented'))
+
+        useEventListener(element, 'show.bs.modal', () => {
+            emit('show');
+            emit('update:modelValue', true);
+        })
+        
+        useEventListener(element, 'hide.bs.modal', () => {
+            emit('hide')
+            emit('update:modelValue', false);
+        })
+
         onMounted(() => {
             instance.value = new Modal(element.value!, {
                 backdrop: props.staticBackdrop ? 'static' : !props.noBackdrop,
@@ -74,20 +89,6 @@ export default defineComponent({
             if (props.modelValue) {
                 instance.value?.show();
             }
-
-            element.value?.addEventListener('shown.bs.modal', () => emit('shown'))
-            element.value?.addEventListener('hidden.bs.modal', () => emit('hidden'))
-            element.value?.addEventListener('hidePrevented.bs.modal', () => emit('hide-prevented'))
-
-            element.value?.addEventListener('show.bs.modal', () => {
-                emit('show');
-                emit('update:modelValue', true);
-            })
-            
-            element.value?.addEventListener('hide.bs.modal', () => {
-                emit('hide')
-                emit('update:modelValue', false);
-            })
         });
 
         watch(() => props.modelValue, (value) => {

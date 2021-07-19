@@ -8,7 +8,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import { Alert } from 'bootstrap';
-import { ColorVariant } from '../types';
+import useEventListener from '@/composables/useEventListener';
+import { ColorVariant } from '@/types';
 
 export default defineComponent({
     props: {
@@ -27,13 +28,12 @@ export default defineComponent({
             fade: props.show
         }))
 
+        useEventListener(element, 'close.bs.alert', () => emit('close'));
+        useEventListener(element, 'closed.bs.alert', () => emit('closed'));
+
         onMounted(() => {
             instance.value = new Alert(element.value!);
-
-            element.value?.addEventListener('close.bs.alert', () => emit('close'))
-            element.value?.addEventListener('closed.bs.alert', () => emit('closed'))
         })
-
 
         return {
             element,

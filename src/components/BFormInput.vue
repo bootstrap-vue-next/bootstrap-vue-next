@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import useId from '../composables/useId';
+import useId from '@/composables/useId';
 
 export default defineComponent({
     props: {

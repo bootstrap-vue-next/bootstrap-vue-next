@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { ColorVariant } from '../types'
+import { ColorVariant } from '@/types'
 import { computed, defineComponent, inject, PropType } from 'vue'
 import { injectionKey, ParentData } from './BProgress.vue';
 

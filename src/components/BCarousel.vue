@@ -31,9 +31,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, InjectionKey, onMounted, provide, ref } from 'vue'
+import { defineComponent, InjectionKey, onMounted, provide, ref, VNode } from 'vue'
 import { Carousel } from 'bootstrap';
-import useId from '../composables/useId';
+import useEventListener from '@/composables/useEventListener';
+import useId from '@/composables/useId';
 
 export interface ParentData {
     width?: string,
@@ -58,7 +59,10 @@ export default defineComponent({
         const element = ref<HTMLElement>();
         const instance = ref<Carousel>();
         const computedId = useId(props.id, 'accordion');
-        const slides = ref<any>([]);
+        const slides = ref<VNode[]>([]);
+
+        useEventListener(element, 'slide.bs.carousel', payload => emit('slide', payload));
+        useEventListener(element, 'slid.bs.carousel', payload => emit('slid', payload));
 
         onMounted(() => {
             instance.value = new Carousel(element.value!, {
@@ -67,9 +71,6 @@ export default defineComponent({
                 touch: !props.noTouch,
                 slide: 'carousel'
             });
-
-            element.value?.addEventListener('slide.bs.carousel', payload => emit('slide', payload))
-            element.value?.addEventListener('slid.bs.carousel', payload => emit('slid', payload))
 
             if (slots.default) {
                 slides.value = slots.default().filter((child: any) => {

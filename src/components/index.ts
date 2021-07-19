@@ -69,7 +69,7 @@ export default {
     BDropdownItem,
     BDropdownText,
     BFormFloatingLabel,
-    // BIcon,
+    BIcon,
     BFormInput,
     BListGroup,
     BListGroupItem,

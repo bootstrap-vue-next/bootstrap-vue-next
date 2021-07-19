@@ -15,6 +15,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { Offcanvas } from "bootstrap";
+import useEventListener from '@/composables/useEventListener';
 
 export default defineComponent({
     emits: [
@@ -35,21 +36,21 @@ export default defineComponent({
         const element = ref<HTMLElement>();
         const instance = ref<Offcanvas>();
 
+        useEventListener(element, 'shown.bs.offcanvas', () => emit('shown'))
+        useEventListener(element, 'hidden.bs.offcanvas', () => emit('hidden'))
+
+        useEventListener(element, 'show.bs.offcanvas', () => {
+            emit('show');
+            emit('update:modelValue', true);
+        })
+        
+        useEventListener(element, 'hide.bs.offcanvas', () => {
+            emit('hide');
+            emit('update:modelValue', false);
+        })
+
         onMounted(() => {
             instance.value = new Offcanvas(element.value!);
-
-            element.value?.addEventListener('shown.bs.offcanvas', () => emit('shown'))
-            element.value?.addEventListener('hidden.bs.offcanvas', () => emit('hidden'))
-
-            element.value?.addEventListener('show.bs.offcanvas', () => {
-                emit('show');
-                emit('update:modelValue', true);
-            })
-            
-            element.value?.addEventListener('hide.bs.offcanvas', () => {
-                emit('hide');
-                emit('update:modelValue', false);
-            })
 
             if (props.modelValue) {
                 instance.value?.show(element.value!);
