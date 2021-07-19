@@ -3,7 +3,7 @@ import BreadcrumbItemObject from '@/types/BreadcrumbItemObject';
 
 interface BreadcrumbI {
     items: BreadcrumbItemObject[],
-    reset: () => ([])
+    reset: () => BreadcrumbItemObject[],
 }
 
 const BREADCRUMB_SYMBOL: InjectionKey<BreadcrumbI> = Symbol();
@@ -23,7 +23,7 @@ export function useBreadcrumb() {
     
     if (!context) {
       return {
-          items: [],
+          items: [] as BreadcrumbItemObject[],
       };
     }
     
