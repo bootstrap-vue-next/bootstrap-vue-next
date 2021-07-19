@@ -69,7 +69,6 @@ export default defineComponent({
                 wrap: !props.noTouch,
                 interval: props.interval,
                 touch: !props.noTouch,
-                slide: 'carousel'
             });
 
             if (slots.default) {
@@ -85,6 +84,7 @@ export default defineComponent({
         });
 
         return {
+            element,
             computedId,
             slides,
         }
