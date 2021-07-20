@@ -1,5 +1,7 @@
 <template>
 <div class="container mt-4">
+  <b-form-input v-model="name" type="range" />
+  {{ name }}
   <b-table
     :items="items"
   >
@@ -513,6 +515,7 @@ export default defineComponent({
           { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
           { age: 38, first_name: 'Jami', last_name: 'Carney' }
         ];
+    const name = ref('');
 
     const consoleLog = () => console.log('button clicked!');
 
@@ -528,6 +531,7 @@ export default defineComponent({
     })
 
     return {
+      name,
       consoleLog,
       tooltip,
       showModal,
