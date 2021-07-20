@@ -1,5 +1,12 @@
 <template>
 <div class="container mt-4">
+  <b-table
+    :items="items"
+  >
+    <template #cell(first_name)="data">
+      <a href="#">{{ data.value }}</a>
+    </template>
+  </b-table>
   <b-carousel
       id="carousel-1"
       :interval="4000"
@@ -500,6 +507,12 @@ export default defineComponent({
     const { items } = useBreadcrumb();
     const collapse = ref(false);
     const offcanvas = ref(false);
+    const tableItems = [
+          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+          { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+          { age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ];
 
     const consoleLog = () => console.log('button clicked!');
 
@@ -521,6 +534,7 @@ export default defineComponent({
       city,
       collapse,
       offcanvas,
+      items: tableItems,
     }
   }
 });

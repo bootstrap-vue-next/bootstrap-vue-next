@@ -38,6 +38,7 @@ import BPopover from './BPopover.vue';
 import BProgress from './BProgress.vue';
 import BProgressBar from './BProgressBar.vue';
 import BSpinner from './BSpinner.vue';
+import BTable from './BTable.vue';
 import BTabs from './BTabs.vue';
 import BTab from './BTab.vue';
 
@@ -82,6 +83,7 @@ export default {
     BProgress,
     BProgressBar,
     BSpinner,
+    BTable,
     // BTabs,
     // BTab,
 }
