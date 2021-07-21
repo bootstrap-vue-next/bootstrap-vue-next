@@ -2,8 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import BootstrapVue from './BootstrapVue';
 
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles/styles.css';
 
 const app = createApp(App);
 app.use(BootstrapVue);
