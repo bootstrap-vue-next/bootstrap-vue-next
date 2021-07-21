@@ -4,9 +4,9 @@
   <b-form-input v-model="name" type="range" />
   {{ name }}
   <b-table
-  responsive="xs"    
+  responsive="xs"
     caption="List of users"
-    
+
     :items="items"
     striped hover
     foot-clone
@@ -195,6 +195,22 @@
     </b-accordion>
   </b-card>
 
+    <b-input-group sm class="mb-3 mt-3">
+      <b-input-group-text tag="label">small</b-input-group-text>
+      <b-form-input placeholder="input"></b-form-input>
+      <b-button>button</b-button>
+    </b-input-group>
+    <b-input-group class="mb-3">
+      <b-input-group-text>medium</b-input-group-text>
+      <b-form-input placeholder="input"></b-form-input>
+      <b-button>button</b-button>
+    </b-input-group>
+    <b-input-group lg class="mb-3">
+      <b-input-group-text>large</b-input-group-text>
+      <b-form-input placeholder="input"></b-form-input>
+      <b-button>button</b-button>
+    </b-input-group>
+
   <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
   <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
   <b-collapse id="my-collapse" v-model="collapse">
@@ -253,7 +269,7 @@
       <b-close-button white />
       <b-close-button white disabled />
   </div>
-  
+
 
   <b-button variant="primary" class="mb-3" v-b-toggle:collapseExample>Toggle collapse</b-button>
   <b-collapse id="collapseExample" visible>
@@ -497,12 +513,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-import BCollapse from './components/BCollapse.vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
-import BProgress from './components/BProgress.vue';
 
 export default defineComponent({
-  components: { BCollapse, BProgress },
   name: 'App',
   data() {
       return{values: [15, 30, 20],
