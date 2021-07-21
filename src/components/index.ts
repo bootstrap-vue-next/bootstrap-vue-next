@@ -18,6 +18,7 @@ import BCarousel from './BCarousel.vue';
 import BCarouselSlide from './BCarouselSlide.vue';
 import BCloseButton from './BCloseButton.vue';
 import BCollapse from './BCollapse.vue';
+import BContainer from './BContainer.vue';
 import BDropdown from './BDropdown.vue';
 import BDropdownDivider from './BDropdownDivider.vue';
 import BDropdownForm from './BDropdownForm.vue';
@@ -63,6 +64,7 @@ export default {
     BCarouselSlide,
     BCloseButton,
     BCollapse,
+    BContainer,
     BDropdown,
     BDropdownDivider,
     BDropdownForm,

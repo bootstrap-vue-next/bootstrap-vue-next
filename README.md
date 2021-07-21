@@ -41,6 +41,11 @@ Early versions of:
 - Props: modelValue (`v-model`), parent, toggle, visible
 - Events: show, shown, hide, hidden
 - Slots: default
+
+- [x] Container
+- Props: fluid (boolean / string)
+- Slots: default
+
 - [x] Dropdowns
 - [x] ListGroup
 - [x] ListGroup item
