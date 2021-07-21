@@ -196,7 +196,7 @@
   </b-card>
 
     <b-input-group sm class="mb-3 mt-3">
-      <b-input-group-text tag="label">small</b-input-group-text>
+      <b-input-group-text>small</b-input-group-text>
       <b-form-input placeholder="input"></b-form-input>
       <b-button>button</b-button>
     </b-input-group>

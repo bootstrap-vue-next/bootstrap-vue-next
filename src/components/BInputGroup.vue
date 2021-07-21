@@ -1,5 +1,5 @@
 <template>
-    <div class="input-group" :class="classes" v-bind="attrs">
+    <div class="input-group" :class="classes">
         <slot />
     </div>
 </template>
@@ -12,15 +12,14 @@ export default defineComponent({
         sm: { type: Boolean, default: false },
         lg: { type: Boolean, default: false },
     },
-    setup(props, { attrs }) {
+    setup(props) {
         const classes = computed(() => ({
             'input-group-sm': props.sm,
             'input-group-lg': !props.sm && props.lg,
         }));
 
         return {
-            classes,
-            attrs
+            classes
         }
     },
 })
