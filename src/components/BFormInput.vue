@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { InputType } from '@/types';
+import { InputType } from '../types';
 import { computed, defineComponent, PropType } from 'vue'
 import useId from '../composables/useId';
 
@@ -31,7 +31,7 @@ export default defineComponent({
             'form-control': props.type !== 'range',
             'form-control-color': props.type === 'color',
             'form-range': props.type === 'range',
-            
+
         }));
 
         return {

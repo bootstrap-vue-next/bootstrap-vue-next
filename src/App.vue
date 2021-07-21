@@ -4,9 +4,9 @@
   <b-form-input v-model="name" type="range" />
   {{ name }}
   <b-table
-  responsive="xs"    
+  responsive="xs"
     caption="List of users"
-    
+
     :items="items"
     striped hover
     foot-clone
@@ -170,6 +170,22 @@
     </b-accordion>
   </b-card>
 
+  <b-input-group sm class="mb-3 mt-3">
+    <b-input-group-text>small</b-input-group-text>
+    <b-form-input placeholder="input" />
+    <b-button>button</b-button>
+  </b-input-group>
+  <b-input-group class="mb-3">
+    <b-input-group-text>medium</b-input-group-text>
+    <b-form-input placeholder="input"/>
+    <b-button>button</b-button>
+  </b-input-group>
+  <b-input-group lg class="mb-3">
+    <b-input-group-text>large</b-input-group-text>
+    <b-form-input placeholder="input"/>
+    <b-button>button</b-button>
+  </b-input-group>
+
   <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
   <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
   <b-collapse id="my-collapse" v-model="collapse">
@@ -228,7 +244,7 @@
       <b-close-button white />
       <b-close-button white disabled />
   </div>
-  
+
 
   <b-button variant="primary" class="mb-3" v-b-toggle:collapseExample>Toggle collapse</b-button>
   <b-collapse id="collapseExample" visible>
