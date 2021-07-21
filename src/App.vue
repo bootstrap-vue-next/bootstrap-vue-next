@@ -197,17 +197,17 @@
 
     <b-input-group sm class="mb-3 mt-3">
       <b-input-group-text>small</b-input-group-text>
-      <b-form-input placeholder="input"></b-form-input>
+      <b-form-input placeholder="input" />
       <b-button>button</b-button>
     </b-input-group>
     <b-input-group class="mb-3">
       <b-input-group-text>medium</b-input-group-text>
-      <b-form-input placeholder="input"></b-form-input>
+      <b-form-input placeholder="input"/>
       <b-button>button</b-button>
     </b-input-group>
     <b-input-group lg class="mb-3">
       <b-input-group-text>large</b-input-group-text>
-      <b-form-input placeholder="input"></b-form-input>
+      <b-form-input placeholder="input"/>
       <b-button>button</b-button>
     </b-input-group>
 
