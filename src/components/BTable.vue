@@ -57,7 +57,7 @@ export default defineComponent({
     striped: { type: Boolean, default: false },
     variant: { type: String as PropType<ColorVariant> },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const classes = computed(() => ({
       [`align-${props.align}`]: props.align,
       [`table-${props.variant}`]: props.variant,
@@ -98,7 +98,18 @@ export default defineComponent({
           props.items.map((tr) =>
             h(
               'tr',
-              Object.keys(tr).map((cell) => h('td', tr[cell]))
+              Object.keys(tr).map((cell) => {
+                let tdContent = tr[cell];
+
+                if (slots[`cell(${cell})`]) {
+                  tdContent = slots[`cell(${cell})`]!({
+                    value: tr[cell],
+                    items: props.items
+                  });
+                }
+
+                return h('td', tdContent);
+              })
             )
           )
         ),

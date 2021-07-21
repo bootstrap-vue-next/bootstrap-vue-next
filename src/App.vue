@@ -1,5 +1,5 @@
 <template>
-<div class="container mt-4">
+<b-container class="mt-4" fluid="sm">
   <b-breadcrumb />
   <b-form-input v-model="name" type="range" />
   {{ name }}
@@ -80,7 +80,7 @@
   <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
   {{ showModal }}
   <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
-  <b-modal no-backdrop fullscreen="sm" size="xl" v-model="showModal" title="Modal title" fade id="exampleModal">...</b-modal>
+  <b-modal size="xl" v-model="showModal" title="Modal title" fade id="exampleModal">...</b-modal>
   <!-- <b-nav pills>
     <b-nav-item active>Active</b-nav-item>
     <b-nav-item>Link</b-nav-item>
@@ -170,31 +170,6 @@
     </b-accordion>
   </b-card>
 
-
-<b-card no-body title="holaprop" sub-title="sdf" header="hola" footer="chau">
-    <template #footer>
-        <em>Footer Slot</em>
-      </template>
-
-    <b-card-body>
-      <b-card-title>Card title</b-card-title>
-      <b-card-sub-title>Card subtitle</b-card-sub-title>
-    </b-card-body>
-    <b-accordion flush>
-      <b-accordion-item title="Accordion Item #1" visible>
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </b-accordion-item>
-
-      <b-accordion-item title="Accordion Item #2">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </b-accordion-item>
-
-      <b-accordion-item title="Accordion Item #3">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </b-accordion-item>
-    </b-accordion>
-  </b-card>
-
   <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
   <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
   <b-collapse id="my-collapse" v-model="collapse">
@@ -222,7 +197,7 @@
 
   {{ offcanvas }}
 
-  <b-offcanvas v-model="offcanvas" title="Menú" id="offcanvas">HOlaa</b-offcanvas> -->
+  <b-offcanvas v-model="offcanvas" title="Menú" id="offcanvas">Hello</b-offcanvas> -->
 
 
 
@@ -265,7 +240,7 @@
   <hr />
 
   <b-button v-b-toggle:myCollapse2>Collapse</b-button>
-  <b-collapse id="myCollapse2">holaaa</b-collapse>
+  <b-collapse id="myCollapse2">Hello</b-collapse>
 
   <hr />
 
@@ -492,7 +467,7 @@
       </BCollapse>
     </div>
   </div> -->
-</div>
+</b-container>
 </template>
 
 <script lang="ts">
@@ -527,12 +502,12 @@ export default defineComponent({
 
     onMounted(() => {
       items.push({
-        text: 'Inicio',
+        text: 'Home',
         href: '/home'
       });
 
       items.push({
-        text: 'hola'
+        text: 'Hello'
       })
     })
 
