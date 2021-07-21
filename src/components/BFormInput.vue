@@ -3,6 +3,7 @@
         :class="classes"
         :type="type"
         :value="modelValue"
+        :placeholder="placeholder"
         :list="list ? computedId : null"
         @input="$emit('update:modelValue', $event.target.value)"
     >
@@ -22,6 +23,7 @@ export default defineComponent({
         id: { type: String },
         type: { type: String as PropType<InputType>, default: 'text' },
         list: { type: Array as PropType<string[]> },
+        placeholder: { type: String },
     },
     setup(props) {
         const computedId = useId(props.id, 'input');

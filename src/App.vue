@@ -1,9 +1,15 @@
 <template>
 <div class="container mt-4">
+  <b-breadcrumb />
   <b-form-input v-model="name" type="range" />
   {{ name }}
   <b-table
+  responsive="xs"    
+    caption="List of users"
+    
     :items="items"
+    striped hover
+    foot-clone
   >
     <template #cell(first_name)="data">
       <a href="#">{{ data.value }}</a>
@@ -247,7 +253,7 @@
       <b-close-button white />
       <b-close-button white disabled />
   </div>
-  <b-breadcrumb />
+  
 
   <b-button variant="primary" class="mb-3" v-b-toggle:collapseExample>Toggle collapse</b-button>
   <b-collapse id="collapseExample" visible>
