@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import { BreadcrumbItem } from '../types';
 import { defineComponent, PropType } from 'vue'
 import { useBreadcrumb } from '../composables/useBreadcrumb';
+import { BreadcrumbItem } from '../types';
 import BBreadcrumbItem from './BBreadcrumbItem.vue';
 
 export default defineComponent({
