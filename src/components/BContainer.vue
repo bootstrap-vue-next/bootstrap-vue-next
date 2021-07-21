@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Breakpoint } from '@/types'
+import { Breakpoint } from '../types'
 import { computed, defineComponent, PropType, h } from 'vue'
 
 export default defineComponent({
