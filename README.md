@@ -34,6 +34,10 @@ Early versions of:
 - Props: dismissible, fade, show, variant
 - Slots: default
 
+- [x] Avatar
+- Props: src, text, icon, alt, variant, iconVariant, textVariant, size, square, rounded, button, buttonType
+- Slots: default
+
 - [x] Badge
 - Props: dot-indicator, text-indicator, pill, variant
 
@@ -63,6 +67,9 @@ Early versions of:
 - Slots: default
 
 - [x] Dropdowns
+- [x] Icon
+- Props: icon, size, variant
+
 - [x] ListGroup
 - [x] ListGroup item
 - [x] Modal
