@@ -570,11 +570,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
-import BImg from "@/components/BImg.vue";
-import BAvatar from "@/components/BAvatar.vue";
 
 export default defineComponent({
-  components: {BAvatar, BImg},
   name: 'App',
   data() {
       return{values: [15, 30, 20],
