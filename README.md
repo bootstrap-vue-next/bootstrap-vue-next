@@ -1,10 +1,8 @@
 <p align="center">
   <a href="https://cdmoro.github.io/bootstrap-vue-3/">
-    <img src="https://github.com/cdmoro/bootstrap-vue-3/raw/master/static/logo.png" width="300">
+    <img src="https://raw.githubusercontent.com/cdmoro/bootstrap-vue-3/main/static/logo.png" width="300">
   </a>
 </p>
-
-<br>
 
 <h1 align="center">BootstrapVue 3</h1>
 <p align="center">Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript</p>
