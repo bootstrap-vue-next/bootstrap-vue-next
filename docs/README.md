@@ -4,8 +4,9 @@ heroImage: /logo.png
 heroAlt: Logo image
 heroText: BootstrapVue 3
 tagline: Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript
-actionText: Get Started
-actionLink: /guide/
+actions:
+  - text: Get Started
+    link: /getting-started/
 features:
   - title: Simplicity First
     details: Minimal setup with markdown-centered project structure helps you focus on writing.

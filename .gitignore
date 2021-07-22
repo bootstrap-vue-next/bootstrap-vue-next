@@ -21,6 +21,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-# Vitepress files
+# Vuepress files
 .temp
 .cache
+docs/.vuepress/dist
