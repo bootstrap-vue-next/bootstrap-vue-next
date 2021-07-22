@@ -1,9 +1,9 @@
 import BootstrapVueOptions from './BootstrapVueOptions';
 import BreadcrumbItem from './BreadcrumbItem';
-// import BreadcrumbItemObject from './BreadcrumbItemObject';
 import Breakpoint from './Breakpoint';
 import ButtonVariant from "./ButtonVariant";
 import ColorVariant from "./ColorVariant";
+import InputSize from "./InputSize";
 import InputType from "./InputType";
 import Size from "./Size";
 import TableField from "./TableField";
@@ -13,10 +13,10 @@ import VerticalAlign from './VerticalAlign';
 export {
     BootstrapVueOptions,
     BreadcrumbItem,
-    // BreadcrumbItemObject,
     Breakpoint,
     ButtonVariant,
     ColorVariant,
+    InputSize,
     InputType,
     Size,
     TableField,
