@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { InputSize } from '@/types';
+import { InputSize } from '../types';
 import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
