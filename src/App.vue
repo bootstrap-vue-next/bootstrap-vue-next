@@ -1,29 +1,60 @@
 <template>
 <b-container class="mt-4" fluid="sm">
   <div>
+    <h5>Small image with <code>fluid</code>:</h5>
+    <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
+
+    <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
+    <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
+    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded alt="Rounded image"></b-img>
+    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="top" alt="Top-rounded image"></b-img>
+    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="right" alt="Right-rounded image"></b-img>
+    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="bottom" alt="Bottom-rounded image"></b-img>
+    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="left" alt="Left-rounded image"></b-img>
+    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="circle" alt="Circle image"></b-img>
+    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="0" alt="Not rounded image"></b-img>
+  </div>
+  <div>
+    <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
+  </div>
+  <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
+  <div class="clearfix">
+    <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
+    <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
+  </div>
+  <div>
+    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" alt="Transparent image"></b-img>
+    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
+    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="red" alt="Named color image (red)"></b-img>
+    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="black" alt="Named color image (black)"></b-img>
+    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="#338833" alt="HEX color image"></b-img>
+    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
+    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
+  </div>
+  <div>
     <b-input-group prepend="@" class="mb-3">
       <b-form-input placeholder="Username" />
     </b-input-group>
-    
+
     <b-input-group append="@example.com" class="mb-3">
       <b-form-input placeholder="Recipient's username" />
     </b-input-group>
-    
+
     <label>Your vanity URL</label>
     <b-input-group prepend="https://example.com/users/" class="mb-3">
       <b-form-input />
     </b-input-group>
-    
+
     <b-input-group prepend="$" append=".00" class="mb-3">
       <b-form-input />
     </b-input-group>
-    
+
     <b-input-group class="mb-3">
       <b-form-input placeholder="Username" />
       <b-input-group-text>@</b-input-group-text>
       <b-form-input placeholder="Server" />
     </b-input-group>
-    
+
     <b-input-group class="mb-3" prepend="With textarea">
       <textarea class="form-control" />
     </b-input-group>
@@ -33,15 +64,15 @@
     <b-input-group prepend="Small" size="sm" class="mb-3">
       <b-form-input />
     </b-input-group>
-    
+
     <b-input-group prepend="Default" class="mb-3">
       <b-form-input />
     </b-input-group>
-    
+
     <b-input-group prepend="Large" size="lg" class="mb-3">
       <b-form-input />
     </b-input-group>
-    
+
   </div>
   <b-breadcrumb />
   <b-form-input v-model="name" type="range" />
@@ -518,9 +549,10 @@ import { defineComponent, onMounted, ref } from 'vue';
 import BCollapse from './components/BCollapse.vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
 import BProgress from './components/BProgress.vue';
+import BImg from "@/components/BImg.vue";
 
 export default defineComponent({
-  components: { BCollapse, BProgress },
+  components: {BImg, BCollapse, BProgress },
   name: 'App',
   data() {
       return{values: [15, 30, 20],
