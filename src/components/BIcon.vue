@@ -1,26 +1,48 @@
 <template>
-    <img :src="icon" alt="Bootstrap" width="32" height="32">
+  <svg class="bi" :class="classes">
+    <g>
+      <use v-bind:xlink:href="`${BootstrapIcons}#${icon}`" />
+    </g>
+  </svg>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import {computed, defineComponent, PropType} from 'vue'
+import {ColorVariant, InputSize} from '../types'
+const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
 
 export default defineComponent({
     props: {
         icon: { type: String },
+        variant: {type: String as PropType<ColorVariant>, default: 'dark'},
+        size: {type: String as PropType<InputSize>},
     },
     setup(props) {
-        const icon = ref('');
+      const classes = computed(() => ({
+         [`text-${props.variant}`]: props.variant,
+         [`bi-${props.size}`]: props.size,
+      }));
 
-        onMounted(async () => {
-            const response = await import(`bootstrap-icons/icons/${props.icon}.svg`);
-
-            icon.value = response.default
-        })
-
-        return {
-            icon
-        }
+      return {
+        BootstrapIcons,
+        classes
+      }
     },
 })
 </script>
+
+<style lang="scss">
+  .bi {
+    width: 24px;
+    height: 24px;
+
+    &.bi-sm {
+      width: 16px;
+      height: 16px;
+    }
+    &.bi-lg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+</style>

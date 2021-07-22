@@ -1,6 +1,7 @@
 import BAccordion from './BAccordion.vue';
 import BAccordionItem from './BAccordionItem.vue';
 import BAlert from './BAlert.vue';
+import BAvatar from './BAvatar.vue';
 import BBadge from './BBadge.vue';
 import BBreadcrumb from './BBreadcrumb.vue';
 import BBreadcrumbItem from './BBreadcrumbItem.vue';
@@ -50,6 +51,7 @@ export default {
     BAccordion,
     BAccordionItem,
     BAlert,
+    BAvatar,
     BBadge,
     BBreadcrumb,
     BBreadcrumbItem,

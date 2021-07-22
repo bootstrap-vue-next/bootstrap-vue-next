@@ -1,6 +1,29 @@
 <template>
 <b-container class="mt-4" fluid="sm">
   <div>
+  <b-avatar button class="me-1" icon="person-fill" variant="secondary" />
+  <b-avatar button class="me-1" text="BV" />
+  <b-avatar button class="me-5" src="https://placekitten.com/300/300" />
+
+  <b-avatar class="me-2" icon="person-fill" size="sm" square iconVariant="dark" />
+  <b-avatar class="me-2" icon="person-fill" variant="success" rounded />
+  <b-avatar class="me-5" icon="person-fill" variant="warning" iconVariant="danger" size="lg" />
+
+  <b-avatar class="me-2" text="ED" size="sm" square textVariant="dark" />
+  <b-avatar class="me-2" text="ED" variant="success"  rounded />
+  <b-avatar class="me-5" text="ED" variant="warning" textVariant="danger" size="lg" />
+
+  <b-avatar class="me-2" src="https://placekitten.com/300/300" button size="sm" square />
+  <b-avatar class="me-2" src="https://placekitten.com/300/300" button rounded />
+  <b-avatar class="me-5" src="https://placekitten.com/300/300" button size="lg" />
+
+  <b-avatar class="me-2" size="lg">
+    <span class="fw-bold">custom</span>
+  </b-avatar>
+  <hr>
+
+  </div>
+  <div>
     <h5>Small image with <code>fluid</code>:</h5>
     <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
 
@@ -546,13 +569,12 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-import BCollapse from './components/BCollapse.vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
-import BProgress from './components/BProgress.vue';
 import BImg from "@/components/BImg.vue";
+import BAvatar from "@/components/BAvatar.vue";
 
 export default defineComponent({
-  components: {BImg, BCollapse, BProgress },
+  components: {BAvatar, BImg},
   name: 'App',
   data() {
       return{values: [15, 30, 20],

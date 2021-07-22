@@ -41,6 +41,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "typescript": "~4.1.5",
     "vitepress": "^0.15.6",
-    "vue-loader": "^16.3.0"
+    "vue-loader": "^16.3.0",
+    "sass": "^1.34.1",
+    "sass-loader": "^10.2.0"
   }
 }
