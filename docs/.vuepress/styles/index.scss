@@ -1,0 +1,32 @@
+body {
+    font-family: var(--font-family) !important;
+    background-color: var(--c-bg) !important;
+    color: var(--c-text) !important;
+    font-size: 16px !important;
+}
+
+a {
+    color: var(--c-text-accent) !important;
+}
+
+.nav-link:not(.sidebar-item) {
+    padding: 0 !important;
+}
+
+.badge {
+    height: auto;
+}
+
+.theme-container > .navbar {
+    position: fixed;
+}
+
+.theme-container > .navbar > span > a {
+    text-decoration: none;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+    font-size: 0.85em !important;
+    font-family: var(--font-family-code) !important;
+    line-height: 1.58 !important;
+}
