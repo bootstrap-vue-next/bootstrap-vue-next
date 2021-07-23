@@ -1,7 +1,11 @@
 <template>
-    <div class="btn-toolbar" role="toolbar" :aria-label="ariaRole">
-        <slot />
-    </div>
+  <div
+    class="btn-toolbar"
+    role="toolbar"
+    :aria-label="ariaRole"
+  >
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">

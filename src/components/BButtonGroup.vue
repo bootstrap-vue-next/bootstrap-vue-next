@@ -1,7 +1,12 @@
 <template>
-    <component :is="tag" :class="classes" role="group" :aria-role="ariaRole">
-        <slot />
-    </component>
+  <component
+    :is="tag"
+    :class="classes"
+    role="group"
+    :aria-role="ariaRole"
+  >
+    <slot />
+  </component>
 </template>
 
 <script lang="ts">

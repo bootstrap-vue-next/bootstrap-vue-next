@@ -1,13 +1,13 @@
 <template>
-    <button
-        class="btn"
-        :class="classes"
-        :disabled="disabled"
-        :data-bs-toggle="active || toggle ? 'button' : null"
-        :aria-pressed="active || toggle ? active : null"
-    >
-        <slot/>
-    </button>
+  <button
+    class="btn"
+    :class="classes"
+    :disabled="disabled"
+    :data-bs-toggle="active || toggle ? 'button' : null"
+    :aria-pressed="active || toggle ? active : null"
+  >
+    <slot />
+  </button>
 </template>
 
 <script lang="ts">

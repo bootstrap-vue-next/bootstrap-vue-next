@@ -1,7 +1,10 @@
 <template>
-    <div :class="classes" role="status">
-        <span class="visually-hidden">{{ label }}</span>
-    </div>
+  <div
+    :class="classes"
+    role="status"
+  >
+    <span class="visually-hidden">{{ label }}</span>
+  </div>
 </template>
 
 <script lang="ts">

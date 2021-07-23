@@ -1,7 +1,10 @@
 <template>
-    <ul class="nav" :class="classes">
-        <slot />
-    </ul>
+  <ul
+    class="nav"
+    :class="classes"
+  >
+    <slot />
+  </ul>
 </template>
 
 <script lang="ts">

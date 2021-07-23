@@ -1,11 +1,13 @@
 
 <template>
   <div ref="element">
-    <div ref="title">
-      <slot name="title">{{ title }}</slot>
+    <div ref="titleRef">
+      <slot name="title">
+        {{ title }}
+      </slot>
     </div>
-    <div ref="content">
-      <slot/>
+    <div ref="contentRef">
+      <slot />
     </div>
   </div>
 </template>
@@ -24,20 +26,27 @@ export default defineComponent({
     title: { type: String },
     placement: { type: String as PropType<Popover.Options["placement"]> },
   },
+  emits: [
+    'show',
+    'shown',
+    'hide',
+    'hidden',
+    'inserted'
+  ],
   setup(props, { emit }) {
       const element = ref<HTMLElement>();
       const target = ref<HTMLElement>();
       const instance = ref<Popover>();
-      const title = ref<HTMLElement>();
-      const content = ref<HTMLElement>();
+      const titleRef = ref<HTMLElement>();
+      const contentRef = ref<HTMLElement>();
 
       onMounted(() => {
             instance.value = new Popover(`#${props.target}`, {
                 container: 'body',
                 trigger: props.triggers,
                 placement: props.placement,
-                title: title.value,
-                content: content.value,
+                title: titleRef.value,
+                content: contentRef.value,
                 html: true,
             });
 
@@ -56,8 +65,8 @@ export default defineComponent({
 
       return {
         element,
-        title,
-        content
+        titleRef,
+        contentRef,
       }
   },
 });

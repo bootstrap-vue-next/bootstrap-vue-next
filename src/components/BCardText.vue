@@ -1,5 +1,5 @@
 <template>
-    <p class="card-text">
-        <slot />
-    </p>
+  <p class="card-text">
+    <slot />
+  </p>
 </template>

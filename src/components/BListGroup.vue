@@ -1,7 +1,11 @@
 <template>
-    <component :is="numbered ? 'ol' : 'ul'" class="list-group" :class="classes">
-        <slot />
-    </component>
+  <component
+    :is="numbered ? 'ol' : 'ul'"
+    class="list-group"
+    :class="classes"
+  >
+    <slot />
+  </component>
 </template>
 
 <script lang="ts">

@@ -1,9 +1,17 @@
 <template>
-    <li class="nav-item" :class="classes">
-        <a href="#" class="nav-link" :tabindex="disabled ? -1 : null" :aria-disabled="disabled ? true : null">
-            <slot />
-        </a>
-    </li>
+  <li
+    class="nav-item"
+    :class="classes"
+  >
+    <a
+      href="#"
+      class="nav-link"
+      :tabindex="disabled ? -1 : null"
+      :aria-disabled="disabled ? true : null"
+    >
+      <slot />
+    </a>
+  </li>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,10 @@
 <template>
-    <component :is="tag" class="input-group-text">
-        <slot />
-    </component>
+  <component
+    :is="tag"
+    class="input-group-text"
+  >
+    <slot />
+  </component>
 </template>
 
 <script lang="ts">

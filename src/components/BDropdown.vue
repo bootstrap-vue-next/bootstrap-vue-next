@@ -4,10 +4,10 @@
     :class="classes"
   >
     <button
+      :id="computedId"
       class="btn"
       :class="buttonClasses"
       type="button"
-      :id="computedId"
       :data-bs-toggle="split ? null : 'dropdown'"
       :data-bs-auto-close="split ? null : autoClose"
       :data-bs-offset="split || !offset ? null : offset"
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import { ButtonVariant, Size } from "../types";
 import useId from "../composables/useId";
 import useEventListener from '../composables/useEventListener';
@@ -62,6 +62,12 @@ export default defineComponent({
     size: { type: String as PropType<Size> },
     variant: { type: String as PropType<ButtonVariant>, default: "secondary" },
   },
+  emits: [
+    'show',
+    'shown',
+    'hide',
+    'hidden',
+  ],
   setup(props, { emit }) {
     const element = ref<HTMLElement>();
     const computedId = useId(props.id, 'dropdown');

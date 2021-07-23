@@ -1,7 +1,12 @@
 <template>
-    <div class="tab-pane fade" :class="{ active, show: active }" role="tabpanel" aria-labelledby="profile-tab">
-        <slot />
-    </div>
+  <div
+    class="tab-pane fade"
+    :class="{ active, show: active }"
+    role="tabpanel"
+    aria-labelledby="profile-tab"
+  >
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,9 +17,6 @@ export default defineComponent({
     props: {
         active: { type: Boolean, default: false },
         title: { type: String },
-    },
-    setup() {
-        
     },
 })
 </script>

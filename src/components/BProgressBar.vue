@@ -1,15 +1,15 @@
 <template>
-    <div
-        class="progress-bar"
-        :class="classes"
-        role="progressbar"
-        :aria-valuenow="value"
-        aria-valuemin="0"
-        :aria-valuemax="max"
-        :style="{ width }"
-    >
-        <slot>{{ computedLabel }}</slot>
-    </div>
+  <div
+    class="progress-bar"
+    :class="classes"
+    role="progressbar"
+    :aria-valuenow="value"
+    aria-valuemin="0"
+    :aria-valuemax="max"
+    :style="{ width }"
+  >
+    <slot>{{ computedLabel }}</slot>
+  </div>
 </template>
 
 <script lang="ts">

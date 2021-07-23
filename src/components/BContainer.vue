@@ -1,22 +1,28 @@
+<template>
+  <div :class="classes">
+    <slot />
+  </div>
+</template>
+
 <script lang="ts">
 import { Breakpoint } from '../types'
-import { computed, defineComponent, PropType, h } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
     props: {
-        fluid: { type: [Boolean, String] as PropType<Boolean | Breakpoint>, default: false },
+        fluid: { type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false },
 
     },
-    setup(props, { slots }) {
+    setup(props) {
         const classes = computed(() => ({
             container: !props.fluid,
             [`container-fluid`]: typeof props.fluid === 'boolean' && props.fluid,
             [`container-${props.fluid}`]: typeof props.fluid === 'string',
         }))
 
-        return () => h('div', {
-            class: classes.value
-        }, slots.default!())
+        return {
+            classes,
+        }
     },
 })
 </script>

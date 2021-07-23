@@ -1,11 +1,29 @@
 <template>
   <div class="accordion-item">
-    <h2 class="accordion-header" :id="`heading${computedId}`">
-      <button class="accordion-button" :class="{ collapsed: !visible }" type="button" v-b-toggle:[computedId] :aria-expanded="visible ? 'true' : 'false'" :aria-controls="computedId">
-        <slot name="title">{{ title }}</slot>
+    <h2
+      :id="`heading${computedId}`"
+      class="accordion-header"
+    >
+      <button
+        v-b-toggle:[computedId]
+        class="accordion-button"
+        :class="{ collapsed: !visible }"
+        type="button"
+        :aria-expanded="visible ? 'true' : 'false'"
+        :aria-controls="computedId"
+      >
+        <slot name="title">
+          {{ title }}
+        </slot>
       </button>
     </h2>
-    <b-collapse :id="computedId" class="accordion-collapse" :visible="visible" :parent="parent" :aria-labelledby="`heading${computedId}`">
+    <b-collapse
+      :id="computedId"
+      class="accordion-collapse"
+      :visible="visible"
+      :parent="parent"
+      :aria-labelledby="`heading${computedId}`"
+    >
       <div class="accordion-body">
         <slot />
       </div>
@@ -21,13 +39,13 @@ import BToggle from '../directives/BToggle';
 import useId from '../composables/useId';
 
 export default defineComponent({
-    inheritAttrs: false,
     components: {
       BCollapse
     },
     directives: {
       BToggle
     },
+    inheritAttrs: false,
     props: {
         title: { type: String },
         id: { type: String },

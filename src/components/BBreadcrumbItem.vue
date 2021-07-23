@@ -1,10 +1,16 @@
 <template>
-    <li class="breadcrumb-item" :class="classes">
-        <a v-if="href" :href="href">
-            <slot />
-        </a>
-        <slot v-else />
-    </li>
+  <li
+    class="breadcrumb-item"
+    :class="classes"
+  >
+    <a
+      v-if="href"
+      :href="href"
+    >
+      <slot />
+    </a>
+    <slot v-else />
+  </li>
 </template>
 
 <script lang="ts">

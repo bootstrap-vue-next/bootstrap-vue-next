@@ -1,29 +1,45 @@
 <template>
-  <div class="tabs" :class="classes">
-      <div :class="{ 'card-header': card }">
-        <ul class="nav nav-tabs" :class="navTabsClasses" role="tablist">
-            <li v-for="(tab, i) in tabs" :key="i">
-            <button
-                class="nav-link"
-                :class="{ active: tab.tab.props.active === '' }"
-                :id="`${tab.tab.props.id || tab.id}-tab`"
-                data-bs-toggle="tab"
-                :data-bs-target="tab.tab.props.id || tab.id"
-                type="button"
-                role="tab"
-                :aria-controls="tab.tab.props.id || tab.id"
-                aria-selected="true"
-            >
-                {{ tab.tab.props.title }}
-            </button>
-            </li>
-        </ul>
-      </div>
-      <div class="tab-content">
-        <template v-for="(tab, i) in tabs" :key="i">
-          <component :id="tab.tab.props.id || tab.id" :is="tab.tab" />
-        </template>
-      </div>
+  <div
+    class="tabs"
+    :class="classes"
+  >
+    <div :class="{ 'card-header': card }">
+      <ul
+        class="nav nav-tabs"
+        :class="navTabsClasses"
+        role="tablist"
+      >
+        <li
+          v-for="(tab, i) in tabs"
+          :key="i"
+        >
+          <button
+            :id="`${tab.tab.props.id || tab.id}-tab`"
+            class="nav-link"
+            :class="{ active: tab.tab.props.active === '' }"
+            data-bs-toggle="tab"
+            :data-bs-target="tab.tab.props.id || tab.id"
+            type="button"
+            role="tab"
+            :aria-controls="tab.tab.props.id || tab.id"
+            aria-selected="true"
+          >
+            {{ tab.tab.props.title }}
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content">
+      <template
+        v-for="(tab, i) in tabs"
+        :key="i"
+      >
+        <component
+          :is="tab.tab"
+          :id="tab.tab.props.id || tab.id"
+        />
+      </template>
+    </div>
   </div>
 </template>
 
@@ -44,9 +60,7 @@ export default defineComponent({
       if (slots.default) {
         tabs = slots
           .default()
-          .filter((child: any) => {
-            return child.type.name === "BTab";
-          })
+          .filter((child: any) => child.type.name === "BTab")
           .map((tab) => ({
             id: getID('tab'),
             tab,

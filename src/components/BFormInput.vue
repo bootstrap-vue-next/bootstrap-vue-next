@@ -1,15 +1,22 @@
 <template>
-    <input
-        :class="classes"
-        :type="type"
-        :value="modelValue"
-        :placeholder="placeholder"
-        :list="list ? computedId : null"
-        @input="$emit('update:modelValue', $event.target.value)"
-    >
-    <datalist v-if="list" :id="computedId">
-        <option v-for="item in list" :key="item" :value="item"></option>
-    </datalist>
+  <input
+    :class="classes"
+    :type="type"
+    :value="modelValue"
+    :placeholder="placeholder"
+    :list="list ? computedId : null"
+    @input="$emit('update:modelValue', $event.target.value)"
+  >
+  <datalist
+    v-if="list"
+    :id="computedId"
+  >
+    <option
+      v-for="item in list"
+      :key="item"
+      :value="item"
+    />
+  </datalist>
 </template>
 
 <script lang="ts">
@@ -25,6 +32,9 @@ export default defineComponent({
         list: { type: Array as PropType<string[]> },
         placeholder: { type: String },
     },
+    emits: [
+      'update:modelValue'
+    ],
     setup(props) {
         const computedId = useId(props.id, 'input');
         const classes = computed(() => ({

@@ -1,25 +1,55 @@
 <template>
-    <teleport to="body">
-        <div ref="element" class="modal" :id="id" :class="classes" tabindex="-1">
-            <div class="modal-dialog" :class="modalDialogClasses">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <slot name="title">{{ title }}</slot>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <slot />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('cancel')">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="$emit('ok')">OK</button>
-                </div>
-                </div>
-            </div>
+  <teleport to="body">
+    <div
+      :id="id"
+      ref="element"
+      class="modal"
+      :class="classes"
+      tabindex="-1"
+    >
+      <div
+        class="modal-dialog"
+        :class="modalDialogClasses"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <slot name="title">
+                {{ title }}
+              </slot>
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            />
+          </div>
+          <div class="modal-body">
+            <slot />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              @click="$emit('cancel')"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="$emit('ok')"
+            >
+              OK
+            </button>
+          </div>
         </div>
-    </teleport>
+      </div>
+    </div>
+  </teleport>
 </template>
 
 <script lang="ts">
@@ -28,16 +58,6 @@ import { Modal } from 'bootstrap';
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
-    emits: [
-        'update:modelValue',
-        'show',
-        'shown',
-        'hide',
-        'hidden',
-        'hide-prevented',
-        'ok',
-        'cancel',
-    ],
     props: {
         modelValue: { type: Boolean, default: false },
         noBackdrop: { type: Boolean, default: false },
@@ -51,6 +71,16 @@ export default defineComponent({
         size: { type: String },
         staticBackdrop: { type: Boolean },
     },
+    emits: [
+        'update:modelValue',
+        'show',
+        'shown',
+        'hide',
+        'hidden',
+        'hide-prevented',
+        'ok',
+        'cancel',
+    ],
     setup(props, { emit }) {
         const element = ref<HTMLElement>();
         const instance = ref<Modal>();

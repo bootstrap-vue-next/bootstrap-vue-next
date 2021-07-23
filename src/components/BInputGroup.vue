@@ -1,15 +1,25 @@
 <template>
-    <div class="input-group" :class="classes" role="group">
-        <slot name="prepend">
-            <span v-if="prepend" class="input-group-text">{{ prepend }}</span>
-        </slot>
+  <div
+    class="input-group"
+    :class="classes"
+    role="group"
+  >
+    <slot name="prepend">
+      <span
+        v-if="prepend"
+        class="input-group-text"
+      >{{ prepend }}</span>
+    </slot>
 
-        <slot />
+    <slot />
 
-        <slot name="append">
-            <span v-if="append" class="input-group-text">{{ append }}</span>
-        </slot>
-    </div>
+    <slot name="append">
+      <span
+        v-if="append"
+        class="input-group-text"
+      >{{ append }}</span>
+    </slot>
+  </div>
 </template>
 
 <script lang="ts">

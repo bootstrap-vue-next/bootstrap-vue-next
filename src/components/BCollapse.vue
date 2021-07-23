@@ -1,7 +1,12 @@
 <template>
-    <div ref="element" class="collapse" :class="classes" :data-bs-parent="parent || null">
-        <slot/>
-    </div>
+  <div
+    ref="element"
+    class="collapse"
+    :class="classes"
+    :data-bs-parent="parent || null"
+  >
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,6 +15,12 @@ import { Collapse } from "bootstrap";
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
+    props: {
+        modelValue: { type: Boolean, default: false },
+        parent: { type: String, default: '' },
+        toggle: { type: Boolean, default: false },
+        visible: { type: Boolean, default: false },
+    },
     emits: [
         'update:modelValue',
         'show',
@@ -17,12 +28,6 @@ export default defineComponent({
         'hide',
         'hidden'
     ],
-    props: {
-        modelValue: { type: Boolean, default: false },
-        parent: { type: String, default: '' },
-        toggle: { type: Boolean, default: false },
-        visible: { type: Boolean, default: false },
-    },
     setup(props, { emit }) {
         const element = ref<HTMLElement>();
         const instance = ref<Collapse>();

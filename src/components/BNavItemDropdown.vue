@@ -1,9 +1,9 @@
 <template>
-    <li class="nav-item dropdown">
-        <b-dropdown v-bind="$props">
-            <slot />
-        </b-dropdown>
-    </li>
+  <li class="nav-item dropdown">
+    <b-dropdown v-bind="$props">
+      <slot />
+    </b-dropdown>
+  </li>
 </template>
 
 <script lang="ts">

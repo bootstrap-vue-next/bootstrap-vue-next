@@ -1,5 +1,8 @@
 <template>
-    <img :class="classes" v-bind="attrs">
+  <img
+    :class="classes"
+    v-bind="attrs"
+  >
 </template>
 
 <script lang="ts">
@@ -42,21 +45,21 @@ export default defineComponent({
     },
     setup(props) {
         const attrs = computed(() => {
-            let src = props.src;
+            let {src} = props;
             let width = (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) || null;
             let height = (typeof props.height === 'number' ? props.height : parseInt(props.height as string, 10)) || null;
 
             let srcset = '';
             if (typeof props.srcset === 'string')
-                srcset = props.srcset.split(',').filter(x => x).join(',');
+                srcset = props.srcset.split(',').filter((x) => x).join(',');
             else if (Array.isArray(props.srcset))
-                srcset = props.srcset.filter(x => x).join(',');
+                srcset = props.srcset.filter((x) => x).join(',');
 
-            let sizes: string = '';
+            let sizes = '';
             if (typeof props.sizes === 'string')
-                sizes = props.sizes.split(',').filter(x => x).join(',');
+                sizes = props.sizes.split(',').filter((x) => x).join(',');
             else if (Array.isArray(props.sizes))
-                sizes = props.sizes.filter(x => x).join(',');
+                sizes = props.sizes.filter((x) => x).join(',');
 
             if (props.blank) {
                 if (!height && width) {
@@ -86,7 +89,7 @@ export default defineComponent({
 
         const classes = computed(() => {
             let align = '';
-            let block = props.block;
+            let {block} = props;
             if (props.left) {
                 align = 'float-left';
             } else if (props.right) {

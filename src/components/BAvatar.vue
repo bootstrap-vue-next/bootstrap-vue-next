@@ -1,12 +1,35 @@
 <template>
-    <component :is="tag" class="b-avatar" :class="classes">
-      <img v-if="src" :src="src" :alt="alt" class="b-avatar-img" />
-      <b-icon v-else-if="icon" :icon="icon" aria-hidden="true" :alt="alt" :variant="iconVariant" :size="size" />
-      <span v-else-if="text" class="b-avatar-text" :class="textClasses">{{text}}</span>
-      <span v-else class="b-avatar-custom" >
-        <slot />
-      </span>
-    </component>
+  <component
+    :is="tag"
+    class="b-avatar"
+    :class="classes"
+  >
+    <img
+      v-if="src"
+      :src="src"
+      :alt="alt"
+      class="b-avatar-img"
+    >
+    <b-icon
+      v-else-if="icon"
+      :icon="icon"
+      aria-hidden="true"
+      :alt="alt"
+      :variant="iconVariant"
+      :size="size"
+    />
+    <span
+      v-else-if="text"
+      class="b-avatar-text"
+      :class="textClasses"
+    >{{ text }}</span>
+    <span
+      v-else
+      class="b-avatar-custom"
+    >
+      <slot />
+    </span>
+  </component>
 </template>
 
 <script lang="ts">
@@ -41,9 +64,7 @@ export default defineComponent({
           [`text-${props.textVariant}`]: props.textVariant
       }));
 
-      const tag = computed(() => {
-        return props.button ? props.buttonType : 'span'
-      });
+      const tag = computed(() => props.button ? props.buttonType : 'span');
 
       return {
         classes,

@@ -1,7 +1,12 @@
 <template>
-    <li class="list-group-item" :class="classes" :aria-current="active ? true : null" :aria-disabled="disabled ? true : null">
-        <slot />
-    </li>
+  <li
+    class="list-group-item"
+    :class="classes"
+    :aria-current="active ? true : null"
+    :aria-disabled="disabled ? true : null"
+  >
+    <slot />
+  </li>
 </template>
 
 <script lang="ts">

@@ -1,8 +1,8 @@
 <template>
-    <div class="form-floating">
-        <slot />
-        <label :for="labelFor">{{ label }}</label>
-    </div>
+  <div class="form-floating">
+    <slot />
+    <label :for="labelFor">{{ label }}</label>
+  </div>
 </template>
 
 <script lang="ts">

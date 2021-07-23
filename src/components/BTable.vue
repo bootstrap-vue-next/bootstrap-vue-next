@@ -1,5 +1,8 @@
 <template>
-  <table class="table" :class="classes">
+  <table
+    class="table"
+    :class="classes"
+  >
     <caption v-if="caption">
       {{
         caption
@@ -7,7 +10,11 @@
     </caption>
     <thead>
       <tr>
-        <th scope="col" v-for="(th, i) in headerTable" :key="i">
+        <th
+          v-for="(th, i) in headerTable"
+          :key="i"
+          scope="col"
+        >
           {{ th }}
         </th>
       </tr>
@@ -18,16 +25,28 @@
         :key="i"
         :class="{ [`table-${tr._rowVariant}`]: tr._rowVariant }"
       >
-        <td v-for="(value, key, index) in tr" :key="index">
-          <slot :name="`cell(${key})`" v-bind="{ value, items }">{{
-            value
-          }}</slot>
+        <td
+          v-for="(value, key, index) in tr"
+          :key="index"
+        >
+          <slot
+            :name="`cell(${key})`"
+            v-bind="{ value, items }"
+          >
+            {{
+              value
+            }}
+          </slot>
         </td>
       </tr>
     </tbody>
     <tfoot v-if="footClone">
       <tr>
-        <th scope="col" v-for="(th, i) in headerTable" :key="i">
+        <th
+          v-for="(th, i) in headerTable"
+          :key="i"
+          scope="col"
+        >
           {{ th }}
         </th>
       </tr>
@@ -36,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, h } from 'vue';
+import { computed, defineComponent, h, PropType } from 'vue';
 import { Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign } from '../types';
 
 export default defineComponent({
@@ -52,7 +71,7 @@ export default defineComponent({
     footClone: { type: Boolean, default: false },
     hover: { type: Boolean, default: false },
     items: { type: Array as PropType<TableItem[]>, default: () => [] },
-    responsive: { type: [Boolean, String] as PropType<Boolean | Breakpoint>, default: false },
+    responsive: { type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false },
     small: { type: Boolean, default: false },
     striped: { type: Boolean, default: false },
     variant: { type: String as PropType<ColorVariant> },

@@ -1,11 +1,15 @@
 <template>
-    <div class="accordion" :class="{ 'accordion-flush': flush }" :id="computedId">
-        <slot />
-    </div>
+  <div
+    :id="computedId"
+    class="accordion"
+    :class="classes"
+  >
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, provide, InjectionKey } from 'vue';
+import { computed, defineComponent, InjectionKey, provide } from 'vue';
 import useId from '../composables/useId';
 
 export const injectionKey: InjectionKey<string> = Symbol();
@@ -17,11 +21,15 @@ export default defineComponent({
     },
     setup(props) {
         const computedId = useId(props.id, 'accordion');
+        const classes = computed(() => ({
+          'accordion-flush': props.flush
+        }))
 
         provide(injectionKey, `#${computedId.value}`);
 
         return {
-            computedId
+            computedId,
+            classes,
         }
     },
 })

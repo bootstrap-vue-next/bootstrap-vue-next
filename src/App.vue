@@ -1,118 +1,298 @@
 <template>
-<b-container class="mt-4" fluid="sm">
-  <div>
-  <b-avatar button class="me-1" icon="person-fill" variant="secondary" />
-  <b-avatar button class="me-1" text="BV" />
-  <b-avatar button class="me-5" src="https://placekitten.com/300/300" />
-
-  <b-avatar class="me-2" icon="person-fill" size="sm" square iconVariant="dark" />
-  <b-avatar class="me-2" icon="person-fill" variant="success" rounded />
-  <b-avatar class="me-5" icon="person-fill" variant="warning" iconVariant="danger" size="lg" />
-
-  <b-avatar class="me-2" text="ED" size="sm" square textVariant="dark" />
-  <b-avatar class="me-2" text="ED" variant="success"  rounded />
-  <b-avatar class="me-5" text="ED" variant="warning" textVariant="danger" size="lg" />
-
-  <b-avatar class="me-2" src="https://placekitten.com/300/300" button size="sm" square />
-  <b-avatar class="me-2" src="https://placekitten.com/300/300" button rounded />
-  <b-avatar class="me-5" src="https://placekitten.com/300/300" button size="lg" />
-
-  <b-avatar class="me-2" size="lg">
-    <span class="fw-bold">custom</span>
-  </b-avatar>
-  <hr>
-
-  </div>
-  <div>
-    <h5>Small image with <code>fluid</code>:</h5>
-    <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
-
-    <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
-    <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
-    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded alt="Rounded image"></b-img>
-    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="top" alt="Top-rounded image"></b-img>
-    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="right" alt="Right-rounded image"></b-img>
-    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="bottom" alt="Bottom-rounded image"></b-img>
-    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="left" alt="Left-rounded image"></b-img>
-    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="circle" alt="Circle image"></b-img>
-    <b-img v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }" rounded="0" alt="Not rounded image"></b-img>
-  </div>
-  <div>
-    <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
-  </div>
-  <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
-  <div class="clearfix">
-    <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
-    <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
-  </div>
-  <div>
-    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" alt="Transparent image"></b-img>
-    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
-    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="red" alt="Named color image (red)"></b-img>
-    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="black" alt="Named color image (black)"></b-img>
-    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="#338833" alt="HEX color image"></b-img>
-    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
-    <b-img v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
-  </div>
-  <div>
-    <b-input-group prepend="@" class="mb-3">
-      <b-form-input placeholder="Username" />
-    </b-input-group>
-
-    <b-input-group append="@example.com" class="mb-3">
-      <b-form-input placeholder="Recipient's username" />
-    </b-input-group>
-
-    <label>Your vanity URL</label>
-    <b-input-group prepend="https://example.com/users/" class="mb-3">
-      <b-form-input />
-    </b-input-group>
-
-    <b-input-group prepend="$" append=".00" class="mb-3">
-      <b-form-input />
-    </b-input-group>
-
-    <b-input-group class="mb-3">
-      <b-form-input placeholder="Username" />
-      <b-input-group-text>@</b-input-group-text>
-      <b-form-input placeholder="Server" />
-    </b-input-group>
-
-    <b-input-group class="mb-3" prepend="With textarea">
-      <textarea class="form-control" />
-    </b-input-group>
-
-    <hr>
-
-    <b-input-group prepend="Small" size="sm" class="mb-3">
-      <b-form-input />
-    </b-input-group>
-
-    <b-input-group prepend="Default" class="mb-3">
-      <b-form-input />
-    </b-input-group>
-
-    <b-input-group prepend="Large" size="lg" class="mb-3">
-      <b-form-input />
-    </b-input-group>
-
-  </div>
-  <b-breadcrumb />
-  <b-form-input v-model="name" type="range" />
-  {{ name }}
-  <b-table
-  responsive="xs"
-    caption="List of users"
-
-    :items="items"
-    striped hover
-    foot-clone
+  <b-container
+    class="mt-4"
+    fluid="sm"
   >
-    <template #cell(first_name)="data">
-      <a href="#">{{ data.value }}</a>
-    </template>
-  </b-table>
-  <b-carousel
+    <div>
+      <b-avatar
+        button
+        class="me-1"
+        icon="person-fill"
+        variant="secondary"
+      />
+      <b-avatar
+        button
+        class="me-1"
+        text="BV"
+      />
+      <b-avatar
+        button
+        class="me-5"
+        src="https://placekitten.com/300/300"
+      />
+
+      <b-avatar
+        class="me-2"
+        icon="person-fill"
+        size="sm"
+        square
+        icon-variant="dark"
+      />
+      <b-avatar
+        class="me-2"
+        icon="person-fill"
+        variant="success"
+        rounded
+      />
+      <b-avatar
+        class="me-5"
+        icon="person-fill"
+        variant="warning"
+        icon-variant="danger"
+        size="lg"
+      />
+
+      <b-avatar
+        class="me-2"
+        text="ED"
+        size="sm"
+        square
+        text-variant="dark"
+      />
+      <b-avatar
+        class="me-2"
+        text="ED"
+        variant="success"
+        rounded
+      />
+      <b-avatar
+        class="me-5"
+        text="ED"
+        variant="warning"
+        text-variant="danger"
+        size="lg"
+      />
+
+      <b-avatar
+        class="me-2"
+        src="https://placekitten.com/300/300"
+        button
+        size="sm"
+        square
+      />
+      <b-avatar
+        class="me-2"
+        src="https://placekitten.com/300/300"
+        button
+        rounded
+      />
+      <b-avatar
+        class="me-5"
+        src="https://placekitten.com/300/300"
+        button
+        size="lg"
+      />
+
+      <b-avatar
+        class="me-2"
+        size="lg"
+      >
+        <span class="fw-bold">custom</span>
+      </b-avatar>
+      <hr>
+    </div>
+    <div>
+      <h5>Small image with <code>fluid</code>:</h5>
+      <b-img
+        src="https://picsum.photos/300/150/?image=41"
+        fluid
+        alt="Fluid image"
+      />
+
+      <h5 class="my-3">
+        Small image with <code>fluid-grow</code>:
+      </h5>
+      <b-img
+        src="https://picsum.photos/300/150/?image=41"
+        fluid-grow
+        alt="Fluid-grow image"
+      />
+      <b-img
+        v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }"
+        rounded
+        alt="Rounded image"
+      />
+      <b-img
+        v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }"
+        rounded="top"
+        alt="Top-rounded image"
+      />
+      <b-img
+        v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }"
+        rounded="right"
+        alt="Right-rounded image"
+      />
+      <b-img
+        v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }"
+        rounded="bottom"
+        alt="Bottom-rounded image"
+      />
+      <b-img
+        v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }"
+        rounded="left"
+        alt="Left-rounded image"
+      />
+      <b-img
+        v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }"
+        rounded="circle"
+        alt="Circle image"
+      />
+      <b-img
+        v-bind="{ blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }"
+        rounded="0"
+        alt="Not rounded image"
+      />
+    </div>
+    <div>
+      <b-img
+        thumbnail
+        fluid
+        src="https://picsum.photos/250/250/?image=54"
+        alt="Image 1"
+      />
+    </div>
+    <b-img
+      center
+      src="https://picsum.photos/125/125/?image=58"
+      alt="Center image"
+    />
+    <div class="clearfix">
+      <b-img
+        left
+        src="https://picsum.photos/125/125/?image=58"
+        alt="Left image"
+      />
+      <b-img
+        right
+        src="https://picsum.photos/125/125/?image=58"
+        alt="Right image"
+      />
+    </div>
+    <div>
+      <b-img
+        v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }"
+        alt="Transparent image"
+      />
+      <b-img
+        v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }"
+        blank-color="#777"
+        alt="HEX shorthand color image (#777)"
+      />
+      <b-img
+        v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }"
+        blank-color="red"
+        alt="Named color image (red)"
+      />
+      <b-img
+        v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }"
+        blank-color="black"
+        alt="Named color image (black)"
+      />
+      <b-img
+        v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }"
+        blank-color="#338833"
+        alt="HEX color image"
+      />
+      <b-img
+        v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }"
+        blank-color="rgba(128, 255, 255, 0.5)"
+        alt="RGBa color image"
+      />
+      <b-img
+        v-bind="{ blank: true, width: 75, height: 75, class: 'm1' }"
+        blank-color="#88f"
+        alt="HEX shorthand color (#88f)"
+      />
+    </div>
+    <div>
+      <b-input-group
+        prepend="@"
+        class="mb-3"
+      >
+        <b-form-input placeholder="Username" />
+      </b-input-group>
+
+      <b-input-group
+        append="@example.com"
+        class="mb-3"
+      >
+        <b-form-input placeholder="Recipient's username" />
+      </b-input-group>
+
+      <label>Your vanity URL</label>
+      <b-input-group
+        prepend="https://example.com/users/"
+        class="mb-3"
+      >
+        <b-form-input />
+      </b-input-group>
+
+      <b-input-group
+        prepend="$"
+        append=".00"
+        class="mb-3"
+      >
+        <b-form-input />
+      </b-input-group>
+
+      <b-input-group class="mb-3">
+        <b-form-input placeholder="Username" />
+        <b-input-group-text>@</b-input-group-text>
+        <b-form-input placeholder="Server" />
+      </b-input-group>
+
+      <b-input-group
+        class="mb-3"
+        prepend="With textarea"
+      >
+        <textarea class="form-control" />
+      </b-input-group>
+
+      <hr>
+
+      <b-input-group
+        prepend="Small"
+        size="sm"
+        class="mb-3"
+      >
+        <b-form-input />
+      </b-input-group>
+
+      <b-input-group
+        prepend="Default"
+        class="mb-3"
+      >
+        <b-form-input />
+      </b-input-group>
+
+      <b-input-group
+        prepend="Large"
+        size="lg"
+        class="mb-3"
+      >
+        <b-form-input />
+      </b-input-group>
+    </div>
+    <b-breadcrumb />
+    <b-form-input
+      v-model="name"
+      type="range"
+    />
+    {{ name }}
+    <b-table
+      responsive="xs"
+      caption="List of users"
+
+      :items="items"
+      striped
+      hover
+      foot-clone
+    >
+      <template #cell(first_name)="data">
+        <a href="#">{{ data.value }}</a>
+      </template>
+    </b-table>
+    <b-carousel
       id="carousel-1"
       :interval="4000"
       controls
@@ -124,11 +304,11 @@
     >
       <!-- Text slides with image -->
       <b-carousel-slide
-      active
+        active
         caption="First slide"
         text="Nulla vitae elit libero, a pharetra augue mollis interdum."
         img-src="https://picsum.photos/1024/480/?image=52"
-      ></b-carousel-slide>
+      />
 
       <!-- Slides with custom text -->
       <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
@@ -136,7 +316,7 @@
       </b-carousel-slide>
 
       <!-- Slides with image only -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58" />
 
       <!-- Slides with img slot -->
       <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
@@ -152,7 +332,11 @@
       </b-carousel-slide>
 
       <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+      <b-carousel-slide
+        caption="Blank Image"
+        img-blank
+        img-alt="Blank image"
+      >
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
           a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
@@ -160,25 +344,37 @@
       </b-carousel-slide>
     </b-carousel>
 
-  <details class="accordion-item">
-    <summary class="accordion-header">
-      <div class="details-button">Accordion Item #1</div>
-    </summary>
-    <div class="accordion-body">
-      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+    <details class="accordion-item">
+      <summary class="accordion-header">
+        <div class="details-button">
+          Accordion Item #1
+        </div>
+      </summary>
+      <div class="accordion-body">
+        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </details>
+
+    <div class="text-danger">
+      <b-icon icon="exclamation-circle-fill" />
     </div>
-  </details>
-
-  <div class="text-danger">
-  <b-icon icon="exclamation-circle-fill" />
-  </div>
 
 
-  <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
-  {{ showModal }}
-  <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
-  <b-modal size="xl" v-model="showModal" title="Modal title" fade id="exampleModal">...</b-modal>
-  <!-- <b-nav pills>
+    <b-button @click="showModal = !showModal">
+      Toggle modal v-model
+    </b-button>
+    {{ showModal }}
+    <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
+    <b-modal
+      id="exampleModal"
+      v-model="showModal"
+      size="xl"
+      title="Modal title"
+      fade
+    >
+      ...
+    </b-modal>
+    <!-- <b-nav pills>
     <b-nav-item active>Active</b-nav-item>
     <b-nav-item>Link</b-nav-item>
     <b-nav-item-dropdown
@@ -193,79 +389,148 @@
       <b-dropdown-item>Three</b-dropdown-item>
     </b-nav-item-dropdown>
   </b-nav> -->
-  <!-- <b-tabs class="mt-3">
+    <!-- <b-tabs class="mt-3">
     <b-tab title="First" active><p>I'm the first tab</p></b-tab>
     <b-tab title="Second"><p>I'm the second tab</p></b-tab>
     <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
   </b-tabs> -->
-  <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">@</span>
-  <b-form-floating-label label="Email address">
-    <b-form-input placeholder=" " />
-  </b-form-floating-label>
-  <span class="input-group-text">.00</span>
-  </div>
+    <div class="input-group mb-3">
+      <span
+        id="basic-addon1"
+        class="input-group-text"
+      >@</span>
+      <b-form-floating-label label="Email address">
+        <b-form-input placeholder=" " />
+      </b-form-floating-label>
+      <span class="input-group-text">.00</span>
+    </div>
 
-  <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">@</span>
-  <b-form-input v-model="city" :list="['San Francisco',
-  'New York',
-  'Seattle',
-  'Los Angeles',
-  'Chicago']" />
-  <span class="input-group-text">.00</span>
-  </div>
+    <div class="input-group mb-3">
+      <span
+        id="basic-addon1"
+        class="input-group-text"
+      >@</span>
+      <b-form-input
+        v-model="city"
+        :list="['San Francisco',
+                'New York',
+                'Seattle',
+                'Los Angeles',
+                'Chicago']"
+      />
+      <span class="input-group-text">.00</span>
+    </div>
 
-  {{ city }}
+    {{ city }}
 
-  <b-form-floating-label label="Email address">
-    <b-form-input placeholder=" " />
-  </b-form-floating-label>
+    <b-form-floating-label label="Email address">
+      <b-form-input placeholder=" " />
+    </b-form-floating-label>
 
-  <b-button :title="tooltip" v-b-tooltip.top>Tolltip on top</b-button>
-  <b-button @click="tooltip = `${new Date()} <strong>fechaaa</strong>`">Change tooltip</b-button>
-  <b-button title="Tooltip on left" v-b-tooltip.left>Tolltip on left</b-button>
-  <b-button title="Tooltip on right" v-b-tooltip.right.click>Tolltip on right</b-button>
-  <b-button title="Tooltip on bottom" v-b-tooltip.bottom>Tolltip on bottom</b-button>
+    <b-button
+      v-b-tooltip.top
+      :title="tooltip"
+    >
+      Tolltip on top
+    </b-button>
+    <b-button @click="tooltip = `${new Date()} <strong>fechaaa</strong>`">
+      Change tooltip
+    </b-button>
+    <b-button
+      v-b-tooltip.left
+      title="Tooltip on left"
+    >
+      Tolltip on left
+    </b-button>
+    <b-button
+      v-b-tooltip.right.click
+      title="Tooltip on right"
+    >
+      Tolltip on right
+    </b-button>
+    <b-button
+      v-b-tooltip.bottom
+      title="Tooltip on bottom"
+    >
+      Tolltip on bottom
+    </b-button>
 
-  <b-button id="popover-target-1">
-    Hover Me
-  </b-button>
-  <b-popover target="popover-target-1" triggers="click" placement="top">
-    <template #title>Popover <em>Title</em></template>
-    <b-button @click="consoleLog">456</b-button>
-    I am popover <b>component</b> content!
-  </b-popover>
+    <b-button id="popover-target-1">
+      Hover Me
+    </b-button>
+    <b-popover
+      target="popover-target-1"
+      triggers="click"
+      placement="top"
+    >
+      <template #title>
+        Popover <em>Title</em>
+      </template>
+      <b-button @click="consoleLog">
+        456
+      </b-button>
+      I am popover <b>component</b> content!
+    </b-popover>
 
-  <button v-b-popover.top="'And here\'s some amazing content. It\'s very engaging. Right?'" type="button" class="btn btn-lg btn-danger" title="Popover title">Click to toggle popover</button>
-  <button v-b-popover.left="'I\'m another popover!'" type="button" class="btn btn-lg btn-success" title="Popover title 2">Click to toggle popover</button>
+    <button
+      v-b-popover.top="'And here\'s some amazing content. It\'s very engaging. Right?'"
+      type="button"
+      class="btn btn-lg btn-danger"
+      title="Popover title"
+    >
+      Click to toggle popover
+    </button>
+    <button
+      v-b-popover.left="'I\'m another popover!'"
+      type="button"
+      class="btn btn-lg btn-success"
+      title="Popover title 2"
+    >
+      Click to toggle popover
+    </button>
 
-  <h1 class="bd-title" id="content">Accordion</h1>
-  <p class="bd-lead">Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.</p>
+    <h1
+      id="content"
+      class="bd-title"
+    >
+      Accordion
+    </h1>
+    <p class="bd-lead">
+      Build vertically collapsing accordions in combination with our Collapse JavaScript plugin.
+    </p>
 
-  <b-card no-body title="holaprop" sub-title="sdf" header="hola" footer="chau">
-    <template #footer>
+    <b-card
+      no-body
+      title="holaprop"
+      sub-title="sdf"
+      header="hola"
+      footer="chau"
+    >
+      <template #footer>
         <em>Footer Slot</em>
       </template>
 
-    <b-card-body>
-      <b-card-title>Card title</b-card-title>
-      <b-card-sub-title>Card subtitle</b-card-sub-title>
-    </b-card-body>
-    <b-accordion flush>
-      <b-accordion-item title="Accordion Item #1" visible>
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </b-accordion-item>
+      <b-card-body>
+        <b-card-title>Card title</b-card-title>
+        <b-card-sub-title>Card subtitle</b-card-sub-title>
+      </b-card-body>
+      <b-accordion flush>
+        <b-accordion-item
+          title="Accordion Item #1"
+          visible
+        >
+          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </b-accordion-item>
 
-      <b-accordion-item title="Accordion Item #2">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </b-accordion-item>
+        <b-accordion-item title="Accordion Item #2">
+          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </b-accordion-item>
 
-      <b-accordion-item title="Accordion Item #3">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </b-accordion-item>
-    </b-accordion>
-  </b-card>
+        <b-accordion-item title="Accordion Item #3">
+          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </b-accordion-item>
+      </b-accordion>
+    </b-card>
 
   <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
   <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
@@ -564,7 +829,7 @@
       </BCollapse>
     </div>
   </div> -->
-</b-container>
+  </b-container>
 </template>
 
 <script lang="ts">
@@ -573,15 +838,11 @@ import { useBreadcrumb } from './composables/useBreadcrumb';
 
 export default defineComponent({
   name: 'App',
-  data() {
-      return{values: [15, 30, 20],
-      max: 100}
-  },
   setup() {
     const tooltip = ref('Tooltip on <em>top</em>');
     const showModal = ref(false);
     const city = ref('');
-    const { items } = useBreadcrumb();
+    const breadcrumb = useBreadcrumb();
     const collapse = ref(false);
     const offcanvas = ref(false);
     const tableItems = [
@@ -595,12 +856,12 @@ export default defineComponent({
     const consoleLog = () => console.log('button clicked!');
 
     onMounted(() => {
-      items.push({
+      breadcrumb.items.push({
         text: 'Home',
         href: '/home'
       });
 
-      items.push({
+      breadcrumb.items.push({
         text: 'Hello'
       })
     })
@@ -615,6 +876,10 @@ export default defineComponent({
       offcanvas,
       items: tableItems,
     }
+  },
+  data() {
+      return{values: [15, 30, 20],
+      max: 100}
   }
 });
 </script>

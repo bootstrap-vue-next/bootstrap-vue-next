@@ -1,7 +1,10 @@
 <template>
-    <span class="badge" :class="classes">
-        <slot />
-    </span>
+  <span
+    class="badge"
+    :class="classes"
+  >
+    <slot />
+  </span>
 </template>
 
 <script lang="ts">

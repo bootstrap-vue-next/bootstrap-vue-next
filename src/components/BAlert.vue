@@ -1,8 +1,19 @@
 <template>
-    <div ref="element" class="alert" role="alert" :class="classes">
-        <slot />
-        <button v-if="dismissible" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+  <div
+    ref="element"
+    class="alert"
+    role="alert"
+    :class="classes"
+  >
+    <slot />
+    <button
+      v-if="dismissible"
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,6 +29,10 @@ export default defineComponent({
         show: { type: Boolean, default: false },
         variant: { type: String as PropType<ColorVariant>, default: 'info' },
     },
+    emits: [
+      'close',
+      'closed'
+    ],
     setup(props, { emit }) {
         const element = ref<HTMLElement>();
         const instance = ref<Alert>();

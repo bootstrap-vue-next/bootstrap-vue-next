@@ -1,19 +1,42 @@
 <template>
-    <component :is="tag" class="card">
-        <div v-if="header" class="card-header">
-            <slot name="header">{{ header }}</slot>
-        </div>
+  <component
+    :is="tag"
+    class="card"
+  >
+    <div
+      v-if="header"
+      class="card-header"
+    >
+      <slot name="header">
+        {{ header }}
+      </slot>
+    </div>
         
-        <div :class="{'card-body': !noBody}">
-            <h5 v-if="title && !noBody" class="card-title">{{ title }}</h5>
-            <h6 v-if="subTitle && !noBody" class="card-subtitle mb-2 text-muted">{{ subTitle }}</h6>
-            <slot />
-        </div>
+    <div :class="{'card-body': !noBody}">
+      <h5
+        v-if="title && !noBody"
+        class="card-title"
+      >
+        {{ title }}
+      </h5>
+      <h6
+        v-if="subTitle && !noBody"
+        class="card-subtitle mb-2 text-muted"
+      >
+        {{ subTitle }}
+      </h6>
+      <slot />
+    </div>
         
-        <div v-if="footer" class="card-footer">
-            <slot name="footer">{{ footer }}</slot>
-        </div>
-    </component>
+    <div
+      v-if="footer"
+      class="card-footer"
+    >
+      <slot name="footer">
+        {{ footer }}
+      </slot>
+    </div>
+  </component>
 </template>
 
 <script lang="ts">

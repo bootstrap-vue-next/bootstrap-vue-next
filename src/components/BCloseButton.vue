@@ -1,5 +1,11 @@
 <template>
-    <button type="button" class="btn-close" :disabled="disabled" :class="classes" aria-label="Close"></button>
+  <button
+    type="button"
+    class="btn-close"
+    :disabled="disabled"
+    :class="classes"
+    aria-label="Close"
+  />
 </template>
 
 <script lang="ts">

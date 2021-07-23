@@ -1,15 +1,33 @@
 <template>
-    <div ref="element" class="offcanvas" :class="classes" tabindex="-1" aria-labelledby="offcanvasLabel" :data-bs-backdrop="backdrop" :data-bs-scroll="bodyScrolling">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasLabel">
-                <slot name="title">{{ title }}</slot>
-            </h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <slot />
-        </div>
+  <div
+    ref="element"
+    class="offcanvas"
+    :class="classes"
+    tabindex="-1"
+    aria-labelledby="offcanvasLabel"
+    :data-bs-backdrop="backdrop"
+    :data-bs-scroll="bodyScrolling"
+  >
+    <div class="offcanvas-header">
+      <h5
+        id="offcanvasLabel"
+        class="offcanvas-title"
+      >
+        <slot name="title">
+          {{ title }}
+        </slot>
+      </h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      />
     </div>
+    <div class="offcanvas-body">
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,13 +36,6 @@ import { Offcanvas } from "bootstrap";
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
-    emits: [
-        'update:modelValue',
-        'show',
-        'shown',
-        'hide',
-        'hidden'
-    ],
     props: {
         modelValue: { type: Boolean, default: false },
         bodyScrolling: { type: Boolean, default: false },
@@ -32,6 +43,13 @@ export default defineComponent({
         placement: { type: String, default: 'start' },
         title: { type: String, required: true }
     },
+    emits: [
+        'update:modelValue',
+        'show',
+        'shown',
+        'hide',
+        'hidden'
+    ],
     setup(props, { emit }) {
         const element = ref<HTMLElement>();
         const instance = ref<Offcanvas>();

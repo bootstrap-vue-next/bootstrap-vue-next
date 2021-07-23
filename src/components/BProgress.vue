@@ -1,18 +1,23 @@
 <template>
-    <div class="progress" :style="{ height }">
-        <slot>
-            <b-progress-bar v-bind="{
-                animated,
-                max,
-                precision,
-                showProgress,
-                showValue,
-                striped,
-                value,
-                variant
-            }" />
-        </slot>
-    </div>
+  <div
+    class="progress"
+    :style="{ height }"
+  >
+    <slot>
+      <b-progress-bar
+        v-bind="{
+          animated,
+          max,
+          precision,
+          showProgress,
+          showValue,
+          striped,
+          value,
+          variant
+        }"
+      />
+    </slot>
+  </div>
 </template>
 
 <script lang="ts">

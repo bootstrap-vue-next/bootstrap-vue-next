@@ -1,9 +1,14 @@
 <template>
-    <li role="presentation">
-        <component :is="tag" class="dropdown-item" :class="classes" v-bind="attrs">
-            <slot />
-        </component>
-    </li>
+  <li role="presentation">
+    <component
+      :is="tag"
+      class="dropdown-item"
+      :class="classes"
+      v-bind="attrs"
+    >
+      <slot />
+    </component>
+  </li>
 </template>
 
 <script lang="ts">
@@ -22,9 +27,7 @@ export default defineComponent({
             disabled: props.disabled,
         }))
 
-        const tag = computed(() => {
-            return props.href ? 'a' : 'button'
-        });
+        const tag = computed(() => props.href ? 'a' : 'button');
 
         const attrs = computed(() => ({
             href: tag.value === 'a' ? props.href : null,
