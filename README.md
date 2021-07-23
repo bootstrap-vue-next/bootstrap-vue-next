@@ -52,7 +52,7 @@ Early versions of:
 - [x] Card body
 - [x] Card footer
 - [x] Card header
-- [x] Card sub title
+- [x] Card sub-title
 - [x] Card Text
 - [x] Card Title
 - [x] Carousel
@@ -70,6 +70,9 @@ Early versions of:
 - [x] Icon
 - Props: icon, size, variant
 
+- [x] Img
+- [x] Input group
+- [x] Input group text
 - [x] ListGroup
 - [x] ListGroup item
 - [x] Modal
