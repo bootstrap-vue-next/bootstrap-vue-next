@@ -17,6 +17,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BBreadcrumbItem',
     props: {
         active: { type: Boolean, default: false },
         href: { type: String },
@@ -26,7 +27,7 @@ export default defineComponent({
     },
     setup(props) {
         const classes = computed(() => ({
-            active: props.active,            
+            active: props.active,
         }))
 
         return {

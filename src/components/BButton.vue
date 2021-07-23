@@ -15,6 +15,7 @@ import { computed, defineComponent, PropType } from 'vue'
 import { ButtonVariant } from '../types';
 
 export default defineComponent({
+    name: 'BButton',
     props: {
         active: { type: Boolean, default: false },
         disabled: { type: Boolean, default: false },

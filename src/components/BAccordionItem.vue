@@ -39,6 +39,7 @@ import BToggle from '../directives/BToggle';
 import useId from '../composables/useId';
 
 export default defineComponent({
+    name: 'BAccordionItem',
     components: {
       BCollapse
     },

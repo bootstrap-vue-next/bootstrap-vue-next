@@ -34,8 +34,8 @@ export interface ParentData {
 
 export const injectionKey: InjectionKey<ParentData> = Symbol();
 
-
 export default defineComponent({
+    name: 'BProgress',
     props: {
         animated: { type: Boolean, default: false },
         max: { type: [Number, String] },

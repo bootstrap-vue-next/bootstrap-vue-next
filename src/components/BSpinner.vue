@@ -12,6 +12,7 @@ import { computed, defineComponent, PropType } from 'vue'
 import { ColorVariant } from '../types';
 
 export default defineComponent({
+    name: 'BSpinner',
     props: {
         grow: { type: Boolean, default: false },
         label: { type: String, default: 'Loading...'},

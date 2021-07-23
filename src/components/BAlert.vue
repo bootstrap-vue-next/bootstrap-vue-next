@@ -23,6 +23,7 @@ import useEventListener from '../composables/useEventListener';
 import { ColorVariant } from '../types';
 
 export default defineComponent({
+    name: 'BAlert',
     props: {
         dismissible: { type: Boolean, default: false },
         fade: { type: Boolean, default: false },

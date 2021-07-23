@@ -18,6 +18,7 @@ import { defineComponent, onMounted, PropType, ref } from "vue";
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
+  name: 'BPopover',
   props: {
     content: { type: String },
     id: { type: String },

@@ -9,6 +9,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BFormFloatingLabel',
     props: {
         labelFor: { type: String },
         label: { type: String }

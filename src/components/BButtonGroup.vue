@@ -13,6 +13,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BButtonGroup',
     props: {
         ariaRole: { type: String, default: 'group' },
         size: { type: String },
