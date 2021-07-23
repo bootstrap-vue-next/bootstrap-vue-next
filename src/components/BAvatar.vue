@@ -33,45 +33,46 @@
 </template>
 
 <script lang="ts">
-import {ColorVariant, InputSize} from '../types';
 import { computed, defineComponent, PropType } from 'vue'
+import { ColorVariant, InputSize } from '../types';
 
 export default defineComponent({
-  props: {
-    src: {type: String},
-    text: {type: String},
-    icon: {type: String},
-    alt: {type: String, default: 'avatar'},
-    variant: {type: String as PropType<ColorVariant>, default: 'info'},
-    iconVariant: {type: String as PropType<ColorVariant>, default: 'light'}, // not standard BootstrapVue props
-    textVariant: {type: String as PropType<ColorVariant>, default: 'light'}, // not standard BootstrapVue props
-    size: {type: String as PropType<InputSize>},
-    square: {type: Boolean, default: false},
-    rounded: {type: [Boolean, String], default: 'circle'},
-    button: {type: Boolean, default: false},
-    buttonType: {type: String, default: 'button'},
-  },
-  setup(props) {
-      const classes = computed(() => ({
-          [`b-avatar-${props.size}`]: props.size,
-          [`bg-${props.variant}`]: props.variant,
-          rounded: props.rounded === '' || props.rounded === true,
-          [`rounded-${(props.square) ? '0' : props.rounded}`]: props.square || (typeof props.rounded === 'string' && props.rounded !== ''),
-          'btn': props.button
-      }));
+    name: 'BAvatar',
+    props: {
+        src: {type: String},
+        text: {type: String},
+        icon: {type: String},
+        alt: {type: String, default: 'avatar'},
+        variant: {type: String as PropType<ColorVariant>, default: 'info'},
+        iconVariant: {type: String as PropType<ColorVariant>, default: 'light'}, // not standard BootstrapVue props
+        textVariant: {type: String as PropType<ColorVariant>, default: 'light'}, // not standard BootstrapVue props
+        size: {type: String as PropType<InputSize>},
+        square: {type: Boolean, default: false},
+        rounded: {type: [Boolean, String], default: 'circle'},
+        button: {type: Boolean, default: false},
+        buttonType: {type: String, default: 'button'},
+    },
+    setup(props) {
+        const classes = computed(() => ({
+            [`b-avatar-${props.size}`]: props.size,
+            [`bg-${props.variant}`]: props.variant,
+            rounded: props.rounded === '' || props.rounded === true,
+            [`rounded-${(props.square) ? '0' : props.rounded}`]: props.square || (typeof props.rounded === 'string' && props.rounded !== ''),
+            'btn': props.button
+        }));
 
-      const textClasses = computed(() => ({
-          [`text-${props.textVariant}`]: props.textVariant
-      }));
+        const textClasses = computed(() => ({
+            [`text-${props.textVariant}`]: props.textVariant
+        }));
 
-      const tag = computed(() => props.button ? props.buttonType : 'span');
+        const tag = computed(() => props.button ? props.buttonType : 'span');
 
-      return {
-        classes,
-        tag,
-        textClasses
-      }
-  }
+        return {
+            classes,
+            tag,
+            textClasses
+        }
+    }
 })
 </script>
 

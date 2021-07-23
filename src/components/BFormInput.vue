@@ -25,6 +25,7 @@ import { computed, defineComponent, PropType } from 'vue'
 import useId from '../composables/useId';
 
 export default defineComponent({
+    name: 'BFormInput',
     props: {
         modelValue: { type: String },
         id: { type: String },

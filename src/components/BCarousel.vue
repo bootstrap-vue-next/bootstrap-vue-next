@@ -68,6 +68,7 @@ export interface ParentData {
 export const injectionKey: InjectionKey<ParentData> = Symbol();
 
 export default defineComponent({
+    name: 'BCarousel',
     props: {
         modelValue: { type: Boolean, default: false },
         controls: { type: Boolean, default: false },

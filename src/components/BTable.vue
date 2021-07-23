@@ -59,6 +59,7 @@ import { computed, defineComponent, h, PropType } from 'vue';
 import { Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign } from '../types';
 
 export default defineComponent({
+  name: 'BTable',
   props: {
     align: { type: String as PropType<VerticalAlign> },
     caption: { type: String },

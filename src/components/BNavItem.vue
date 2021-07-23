@@ -18,6 +18,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BNavItem',
     props: {
         active: { type: Boolean, default: false },
         disabled: { type: Boolean, default: false },

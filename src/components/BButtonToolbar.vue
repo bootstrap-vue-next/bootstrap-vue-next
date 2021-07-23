@@ -12,6 +12,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BButtonToolbar',
     props: {
         ariaRole: { type: String, default: 'group' },
     },

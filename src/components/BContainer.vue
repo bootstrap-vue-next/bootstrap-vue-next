@@ -9,9 +9,9 @@ import { Breakpoint } from '../types'
 import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
+    name: 'BContainer',
     props: {
         fluid: { type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false },
-
     },
     setup(props) {
         const classes = computed(() => ({

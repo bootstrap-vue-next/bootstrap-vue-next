@@ -12,6 +12,7 @@ import { computed, defineComponent, PropType } from 'vue'
 import { ColorVariant } from '../types';
 
 export default defineComponent({
+    name: 'BBadge',
     props: {
         textIndicator: { type: Boolean, default: false },
         dotIndicator: { type: Boolean, default: false },

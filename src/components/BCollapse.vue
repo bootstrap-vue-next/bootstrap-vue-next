@@ -15,6 +15,7 @@ import { Collapse } from "bootstrap";
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
+    name: 'BCollapse',
     props: {
         modelValue: { type: Boolean, default: false },
         parent: { type: String, default: '' },
@@ -39,7 +40,7 @@ export default defineComponent({
             emit('show');
             emit('update:modelValue', true);
         });
-        
+
         useEventListener(element, 'hide.bs.collapse', () => {
             emit('show');
             emit('update:modelValue', true);

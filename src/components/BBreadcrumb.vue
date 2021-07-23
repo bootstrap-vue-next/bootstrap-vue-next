@@ -21,6 +21,7 @@ import { BreadcrumbItem } from '../types';
 import BBreadcrumbItem from './BBreadcrumbItem.vue';
 
 export default defineComponent({
+    name: 'BBreadcrumb',
     components: {
         BBreadcrumbItem,
     },

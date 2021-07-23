@@ -36,6 +36,7 @@ import { Offcanvas } from "bootstrap";
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
+    name: 'BOffcanvas',
     props: {
         modelValue: { type: Boolean, default: false },
         bodyScrolling: { type: Boolean, default: false },
@@ -61,7 +62,7 @@ export default defineComponent({
             emit('show');
             emit('update:modelValue', true);
         })
-        
+
         useEventListener(element, 'hide.bs.offcanvas', () => {
             emit('hide');
             emit('update:modelValue', false);

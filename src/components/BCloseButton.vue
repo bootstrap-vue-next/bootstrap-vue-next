@@ -12,6 +12,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BCloseButton',
     props: {
         disabled: { type: Boolean, default: false },
         white: { type: Boolean, default: false },

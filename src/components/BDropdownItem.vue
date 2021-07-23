@@ -15,6 +15,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BDropdownItem',
     inheritAttrs: false,
     props: {
         active: { type: Boolean, default: false },
