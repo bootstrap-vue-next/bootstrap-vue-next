@@ -55,6 +55,7 @@ module.exports = {
     "yield-star-spacing": "warn",
     yoda: "warn",
     "@typescript-eslint/no-explicit-any": "off",
-    "vue/no-dupe-keys": "warn"
+    "vue/no-dupe-keys": "warn",
+    "vue/require-default-prop": "off"
   },
 };
