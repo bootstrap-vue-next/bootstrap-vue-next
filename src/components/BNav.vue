@@ -11,6 +11,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BNav',
     props: {
         align: { type: String },
         fill: { type: Boolean, default: false },

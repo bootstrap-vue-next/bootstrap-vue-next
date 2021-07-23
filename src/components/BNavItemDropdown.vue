@@ -12,6 +12,7 @@ import { defineComponent, PropType } from 'vue'
 import BDropdown from './BDropdown.vue';
 
 export default defineComponent({
+    name: 'BNavItemDropdown',
     components: {
         BDropdown,
     },

@@ -15,6 +15,7 @@ import useId from '../composables/useId';
 export const injectionKey: InjectionKey<string> = Symbol();
 
 export default defineComponent({
+    name: 'BAccordion',
     props: {
         flush: { type: Boolean, default: false },
         id: { type: String }

@@ -45,6 +45,7 @@ import useId from "../composables/useId";
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
+  name: 'BDropdown',
   props: {
     autoClose: { type: String, default: "true" },
     id: { type: String },

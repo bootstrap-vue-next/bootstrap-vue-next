@@ -12,6 +12,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BListGroup',
     props: {
         flush: { type: Boolean, default: false },
         horizontal: { type: Boolean, default: false },

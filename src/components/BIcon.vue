@@ -15,6 +15,7 @@ import {ColorVariant, InputSize} from '../types'
 // const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
 
 export default defineComponent({
+    name: 'BIcon',
     props: {
         icon: { type: String },
         variant: {type: String as PropType<ColorVariant>, default: 'dark'},

@@ -48,6 +48,7 @@ import { computed, defineComponent } from 'vue';
 import getID from '../utils/getID';
 
 export default defineComponent({
+    name: 'BTabs',
     props: {
         card: { type: Boolean, default: false },
         pills: { type: Boolean, default: false },

@@ -27,6 +27,7 @@ import { InputSize } from '../types';
 import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
+    name: 'BInputGroup',
     props: {
         size: { type: String as PropType<InputSize> },
         append: { type: String },

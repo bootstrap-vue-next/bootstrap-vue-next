@@ -18,6 +18,7 @@ import { computed, defineComponent, inject, PropType } from 'vue'
 import { injectionKey, ParentData } from './BProgress.vue';
 
 export default defineComponent({
+    name: 'BProgressBar',
     props: {
         animated: { type: Boolean, default: false },
         label: { type: String },

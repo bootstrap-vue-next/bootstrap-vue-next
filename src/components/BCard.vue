@@ -11,7 +11,7 @@
         {{ header }}
       </slot>
     </div>
-        
+
     <div :class="{'card-body': !noBody}">
       <h5
         v-if="title && !noBody"
@@ -27,7 +27,7 @@
       </h6>
       <slot />
     </div>
-        
+
     <div
       v-if="footer"
       class="card-footer"
@@ -43,6 +43,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+    name: 'BCard',
     props: {
         footer: { type: String },
         header: { type: String },

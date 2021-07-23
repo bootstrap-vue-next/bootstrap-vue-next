@@ -58,6 +58,7 @@ import { Modal } from 'bootstrap';
 import useEventListener from '../composables/useEventListener';
 
 export default defineComponent({
+    name: 'BModal',
     props: {
         modelValue: { type: Boolean, default: false },
         noBackdrop: { type: Boolean, default: false },
@@ -104,7 +105,7 @@ export default defineComponent({
             emit('show');
             emit('update:modelValue', true);
         })
-        
+
         useEventListener(element, 'hide.bs.modal', () => {
             emit('hide')
             emit('update:modelValue', false);
