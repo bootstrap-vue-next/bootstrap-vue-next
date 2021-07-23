@@ -6,13 +6,10 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-storybook": "build-storybook",
-    "deploy-storybook": "storybook-to-ghpages",
     "docs:build": "vitepress build docs",
     "docs:deploy": "./scripts/deploy.sh",
     "docs:dev": "vitepress dev docs",
     "docs:serve": "vitepress serve docs",
-    "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
     "bootstrap": "^5.0.2",
@@ -22,11 +19,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
-    "@storybook/addon-actions": "^6.3.4",
-    "@storybook/addon-essentials": "^6.3.4",
-    "@storybook/addon-links": "^6.3.4",
-    "@storybook/storybook-deployer": "^2.8.10",
-    "@storybook/vue3": "^6.3.4",
     "@types/bootstrap": "^5.0.16",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
