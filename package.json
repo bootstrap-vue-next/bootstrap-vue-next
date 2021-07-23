@@ -9,7 +9,7 @@
     "docs:build": "vitepress build docs",
     "docs:deploy": "./scripts/deploy.sh",
     "docs:dev": "vitepress dev docs",
-    "docs:serve": "vitepress serve docs",
+    "docs:serve": "vitepress serve docs"
   },
   "dependencies": {
     "bootstrap": "^5.0.2",
