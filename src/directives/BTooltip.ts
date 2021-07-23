@@ -6,7 +6,7 @@ function resolveTrigger(modifiers: DirectiveBinding['modifiers']): Tooltip.Optio
         return 'manual';
     }
 
-    let trigger: string[] = [];
+    const trigger: string[] = [];
 
     if (modifiers.click) {
         trigger.push('click');
@@ -44,10 +44,10 @@ function resolvePlacement(modifiers: DirectiveBinding['modifiers']): Tooltip.Opt
 }
 
 const BTooltip: Directive<HTMLElement> = {
-    mounted: function(el, binding) {
+    mounted(el, binding) {
         el.setAttribute('data-bs-toogle', 'tooltip');
 
-        const isHtml = /<(\"[^\"]*\"|'[^']*'|[^'\">])*>/.test(el.title);
+        const isHtml = /<("[^"]*"|'[^']*'|[^'">])*>/.test(el.title);
         const trigger = resolveTrigger(binding.modifiers);
         const placement = resolvePlacement(binding.modifiers)
 
@@ -57,14 +57,14 @@ const BTooltip: Directive<HTMLElement> = {
             html: isHtml
         });
     },
-    updated: function(el) {
+    updated(el) {
         const instance = Tooltip.getInstance(el);
         instance?.hide();
         const title = el.getAttribute('title');
-        el.setAttribute('data-bs-original-title', title!);
+        el.setAttribute('data-bs-original-title', title || '');
         el.setAttribute('title', '');
     },
-    unmounted: function(el) {
+    unmounted(el) {
         const instance = Tooltip.getInstance(el);
         instance?.dispose();
     }

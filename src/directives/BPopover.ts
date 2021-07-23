@@ -2,9 +2,9 @@ import { Directive } from "vue";
 import { Popover } from "bootstrap";
 
 const BPopover: Directive<HTMLElement> = {
-    mounted: function(el, binding) {
+    mounted(el, binding) {
         let placement: Popover.Options['placement'] = 'auto';
-        let trigger: string[] = [];
+        const trigger: string[] = [];
 
         if (binding.modifiers.left) {
             placement = 'left';
@@ -40,7 +40,7 @@ const BPopover: Directive<HTMLElement> = {
             content: binding.value,
         });
     },
-    unmounted: function(el) {
+    unmounted(el) {
         const instance = Popover.getInstance(el);
         instance?.dispose();
     }

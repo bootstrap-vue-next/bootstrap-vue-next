@@ -13,16 +13,21 @@ function resolveToggleType(el: HTMLElement): string {
 }
 
 export default {
-    mounted: function(el: HTMLElement, binding: DirectiveBinding<string>) {
-        const target = document.getElementById(binding.arg!);  
-        let targetAttr = 'data-bs-target';
-        el.setAttribute('data-bs-toggle', resolveToggleType(target!));
-        
-        if (el.tagName === 'a') {
-            targetAttr = 'href'
-        }
+    mounted(el: HTMLElement, binding: DirectiveBinding<string>): void {
+        if (typeof binding.arg === 'string') {
+            const target = document.getElementById(binding.arg);  
+            let targetAttr = 'data-bs-target';
 
-        el.setAttribute(targetAttr, `#${binding.arg}`)
+            if (target) {
+                el.setAttribute('data-bs-toggle', resolveToggleType(target));
+                
+                if (el.tagName === 'a') {
+                    targetAttr = 'href'
+                }
+
+                el.setAttribute(targetAttr, `#${binding.arg}`);
+            }
+        }
 
         // TODO support class selector
 

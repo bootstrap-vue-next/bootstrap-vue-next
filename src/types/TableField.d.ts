@@ -11,10 +11,10 @@ interface TableFieldObject {
     sortByFormatted?: boolean,
     filterByFormatted?: boolean,
     tdClass?: string,
-    thStyle?: object,
+    thStyle?: Record<string, unknown>,
     variant?: string,
-    tdAttr: object,
-    thAttr: object,
+    tdAttr: Record<string, unknown>,
+    thAttr: Record<string, unknown>,
     isRowHeader: boolean,
     stickyColumn: boolean
 }
