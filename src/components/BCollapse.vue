@@ -54,7 +54,7 @@ export default defineComponent({
                 emit('update:modelValue', props.visible);
             }
 
-            instance.value = new Collapse(element.value!, {
+            instance.value = new Collapse(element.value as HTMLElement, {
                 parent: props.parent,
                 toggle: props.toggle
             });

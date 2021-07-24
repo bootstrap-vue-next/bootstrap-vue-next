@@ -69,10 +69,10 @@ export default defineComponent({
         })
 
         onMounted(() => {
-            instance.value = new Offcanvas(element.value!);
+            instance.value = new Offcanvas(element.value as HTMLElement);
 
             if (props.modelValue) {
-                instance.value?.show(element.value!);
+                instance.value?.show(element.value as HTMLElement);
             }
         })
 
@@ -82,7 +82,7 @@ export default defineComponent({
 
         watch(() => props.modelValue, (value) => {
             if (value) {
-                instance.value?.show(element.value!);
+                instance.value?.show(element.value as HTMLElement);
             } else {
                 instance.value?.hide();
             }

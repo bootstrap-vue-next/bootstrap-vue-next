@@ -112,7 +112,7 @@ export default defineComponent({
         })
 
         onMounted(() => {
-            instance.value = new Modal(element.value!, {
+            instance.value = new Modal(element.value as HTMLElement, {
                 backdrop: props.staticBackdrop ? 'static' : !props.noBackdrop,
                 keyboard: !props.staticBackdrop
             });

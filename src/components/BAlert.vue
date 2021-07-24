@@ -48,7 +48,7 @@ export default defineComponent({
         useEventListener(element, 'closed.bs.alert', () => emit('closed'));
 
         onMounted(() => {
-            instance.value = new Alert(element.value!);
+            instance.value = new Alert(element.value as HTMLElement);
         })
 
         return {

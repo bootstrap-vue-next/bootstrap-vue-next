@@ -94,7 +94,7 @@ export default defineComponent({
         useEventListener(element, 'slid.bs.carousel', (payload) => emit('slid', payload));
 
         onMounted(() => {
-            instance.value = new Carousel(element.value!, {
+            instance.value = new Carousel(element.value as HTMLElement, {
                 wrap: !props.noTouch,
                 interval: props.interval,
                 touch: !props.noTouch,

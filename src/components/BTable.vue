@@ -119,10 +119,11 @@ export default defineComponent({
             h(
               'tr',
               Object.keys(tr).map((cell) => {
+                const slotName = `cell(${cell})`;
                 let tdContent = tr[cell];
 
-                if (slots[`cell(${cell})`]) {
-                  tdContent = slots[`cell(${cell})`]!({
+                if (slots[slotName]) {
+                  tdContent = slots[slotName]?.({
                     value: tr[cell],
                     items: props.items
                   });
