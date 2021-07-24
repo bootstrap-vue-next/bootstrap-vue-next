@@ -15,7 +15,7 @@ function resolveToggleType(el: HTMLElement): string {
 export default {
     mounted(el: HTMLElement, binding: DirectiveBinding<string>): void {
         if (typeof binding.arg === 'string') {
-            const target = document.getElementById(binding.arg);  
+            const target = document.getElementById(binding.arg);
             let targetAttr = 'data-bs-target';
 
             if (target) {

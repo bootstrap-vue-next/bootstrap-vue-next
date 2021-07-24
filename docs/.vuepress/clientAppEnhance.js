@@ -1,6 +1,6 @@
 import { defineClientAppEnhance } from '@vuepress/client'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import '../../src/styles/styles.css';
+import '../../dist/bootstrap-vue-3.css';
 
 
 export default defineClientAppEnhance(async ({ app, router, siteData }) => {
