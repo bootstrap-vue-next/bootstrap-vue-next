@@ -5,11 +5,11 @@ body {
     font-size: 16px !important;
 }
 
-a {
+a:not(.action-button) {
     color: var(--c-text-accent) !important;
 }
 
-.nav-link:not(.sidebar-item) {
+.nav-link:not(.sidebar-item):not(.action-button) {
     padding: 0 !important;
 }
 
@@ -29,4 +29,8 @@ code[class*="language-"], pre[class*="language-"] {
     font-size: 0.85em !important;
     font-family: var(--font-family-code) !important;
     line-height: 1.58 !important;
+}
+
+p:not(.hero .description) {
+    margin: 1rem 0 !important;
 }

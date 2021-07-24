@@ -21,8 +21,8 @@ export default defineUserConfig<DefaultThemeOptions>({
           {
             text: 'Components',
             children: [
-              './Badge.md',
-              // './InputGroup.md'
+              '/components/README.md',
+              '/components/Badge.md',
             ]
           }
         ]
