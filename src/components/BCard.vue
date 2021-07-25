@@ -4,7 +4,7 @@
     class="card"
   >
     <div
-      v-if="header"
+      v-if="header || $slots.header"
       class="card-header"
     >
       <slot name="header">
@@ -29,7 +29,7 @@
     </div>
 
     <div
-      v-if="footer"
+      v-if="footer || $slots.footer"
       class="card-footer"
     >
       <slot name="footer">
