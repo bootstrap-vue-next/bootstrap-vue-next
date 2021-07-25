@@ -3,6 +3,9 @@
 # abort on errors
 set -e
 
+# build library
+yarn run build
+
 # build
 yarn run docs:build
 
