@@ -35,14 +35,14 @@ Badges can be used as part of links or buttons to provide a counter.
 <ClientOnly>
     <b-card>
         <b-button variant="primary">
-            Notifications <b-badge>4</b-badge>
+            Notifications <b-badge variant="light">4</b-badge>
         </b-button>
     </b-card>
 </ClientOnly>
 
 ``` html
 <b-button variant="primary">
-    Notifications <b-badge>4</b-badge>
+    Notifications <b-badge variant="light">4</b-badge>
 </b-button>
 ```
 
@@ -100,7 +100,7 @@ You can also replace the `.badge` class with a few more utilities without a coun
 
 ## Background colors
 
-Use our background utility classes to quickly change the appearance of a badge. Please note that when using Bootstrap’s default .bg-light, you’ll likely need a text color utility like .text-dark for proper styling. This is because background utilities do not set anything but background-color.
+Add any of the following variants via the `variant` prop to change the appearance of a `<b-badge>`: `default`, `primary`, `success`, `warning`, `info`, and `danger`. If no variant is specified `default` will be used.
 
 <ClientOnly>
     <b-card>
@@ -125,6 +125,10 @@ Use our background utility classes to quickly change the appearance of a badge. 
 <b-badge variant="light">Light</b-badge>
 <b-badge variant="dark">Dark</b-badge>
 ```
+
+::: tip Conveying meaning to assistive technologies
+Using color to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (e.g. the visible text), or is included through alternative means, such as additional text hidden with the `.visually-hidden` class. 
+:::
 
 ## Pill badges
 
@@ -153,3 +157,20 @@ Use the `pill` prop to make badges more rounded with a larger border-radius.
 <b-badge variant="light" pill>Light</b-badge>
 <b-badge variant="dark" pill>Dark</b-badge>
 ```
+
+## Component reference
+
+### Properties
+
+| Property | Type | Default | Description
+| --- | --- | --- | --- |
+| `dot-indicator` | `Boolean` | `false` | 
+| `text-indicator` | `Boolean` | `false` | 
+| `pill` | `Boolean` | `false` | When set to 'true', renders the badge in pill style
+| `variant` | `String` | `'secondary'` | Applies one of the Bootstrap theme color variants to the component
+
+### Slots
+
+| Name  | Description |
+| --- | --- |
+| `default`  | Content to place in the badge |

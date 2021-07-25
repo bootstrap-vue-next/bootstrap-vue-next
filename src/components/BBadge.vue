@@ -1,10 +1,11 @@
 <template>
-  <span
+  <component
+    :is="tag"
     class="badge"
     :class="classes"
   >
     <slot />
-  </span>
+  </component>
 </template>
 
 <script lang="ts">
@@ -17,6 +18,7 @@ export default defineComponent({
         textIndicator: { type: Boolean, default: false },
         dotIndicator: { type: Boolean, default: false },
         pill: { type: Boolean, default: false },
+        tag: { type: String, default: 'span' },
         variant: { type: String as PropType<ColorVariant>, default: 'secondary' }
     },
     setup(props) {

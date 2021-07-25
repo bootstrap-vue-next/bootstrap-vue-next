@@ -34,3 +34,13 @@ code[class*="language-"], pre[class*="language-"] {
 p:not(.hero .description) {
     margin: 1rem 0 !important;
 }
+
+table:not(.table) td,
+table:not(.table) th {
+	border: 1px solid var(--c-border);
+	padding: 6px 13px;
+}
+
+table:not(.table) tr:nth-child(2n) {
+	background-color: var(--c-bg-lighter);
+}
