@@ -32,6 +32,7 @@ import BIcon from './BIcon.vue';
 import BImg from './BImg.vue';
 import BInputGroup from './BInputGroup.vue';
 import BInputGroupText from './BInputGroupText.vue';
+import BLink from './BLink.vue';
 import BListGroup from './BListGroup.vue';
 import BListGroupItem from './BListGroupItem.vue';
 import BModal from './BModal.vue';
@@ -83,6 +84,7 @@ export default {
     BInputGroup,
     BInputGroupText,
     BFormInput,
+    BLink,
     BListGroup,
     BListGroupItem,
     BModal,
