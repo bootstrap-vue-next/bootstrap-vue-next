@@ -1,25 +1,12 @@
-import BootstrapVueOptions from './BootstrapVueOptions';
-import BreadcrumbItem from './BreadcrumbItem';
-import Breakpoint from './Breakpoint';
-import ButtonVariant from "./ButtonVariant";
-import ColorVariant from "./ColorVariant";
-import InputSize from "./InputSize";
-import InputType from "./InputType";
-import Size from "./Size";
-import TableField from "./TableField";
-import TableItem from "./TableItem";
-import VerticalAlign from './VerticalAlign';
-
-export {
-    BootstrapVueOptions,
-    BreadcrumbItem,
-    Breakpoint,
-    ButtonVariant,
-    ColorVariant,
-    InputSize,
-    InputType,
-    Size,
-    TableField,
-    TableItem,
-    VerticalAlign
-}
+export { default as BootstrapVueOptions }from './BootstrapVueOptions';
+export { default as BreadcrumbItem } from './BreadcrumbItem';
+export { default as Breakpoint } from './Breakpoint';
+export { default as ButtonVariant } from "./ButtonVariant";
+export { default as ColorVariant } from "./ColorVariant";
+export { default as InputSize } from "./InputSize";
+export { default as InputType } from "./InputType";
+export { default as Size } from "./Size";
+export { default as SpinnerType } from "./SpinnerType";
+export { default as TableField } from "./TableField";
+export { default as TableItem } from "./TableItem";
+export { default as VerticalAlign } from './VerticalAlign';

@@ -1,30 +1,39 @@
 <template>
-  <div
+  <component
+    :is="tag"
     :class="classes"
-    role="status"
+    :role="label || $slots.label ? role : null"
+    :aria-hidden="label || $slots.label ? null : true"
   >
-    <span class="visually-hidden">{{ label }}</span>
-  </div>
+    <span
+      v-if="label || $slots.label"
+      class="visually-hidden"
+    >
+      <slot name="label">{{ label }}</slot>
+    </span>
+  </component>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { ColorVariant } from '../types';
+import { ColorVariant, SpinnerType } from '../types';
 
 export default defineComponent({
     name: 'BSpinner',
     props: {
-        grow: { type: Boolean, default: false },
-        label: { type: String, default: 'Loading...'},
-        variant: { type: String as PropType<ColorVariant> },
+        label: { type: String },
+        role: { type: String, default: 'status'},
         small: { type: Boolean, default: false },
+        tag: { type: String, default: 'span' },
+        type: { type: String as PropType<SpinnerType>, default: 'border' },
+        variant: { type: String as PropType<ColorVariant> },
     },
     setup(props) {
         const classes = computed(() => ({
-            'spinner-border': !props.grow,
-            'spinner-border-sm': !props.grow && props.small,
-            'spinner-grow': props.grow,
-            'spinner-grow-sm': props.grow && props.small,
+            'spinner-border': props.type === 'border',
+            'spinner-border-sm': props.type === 'border' && props.small,
+            'spinner-grow': props.type === 'grow',
+            'spinner-grow-sm': props.type === 'grow' && props.small,
             [`text-${props.variant}`]: !!props.variant,
         }));
 
