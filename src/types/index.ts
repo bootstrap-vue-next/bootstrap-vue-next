@@ -1,3 +1,4 @@
+export { default as Alignment }from './Alignment';
 export { default as BootstrapVueOptions }from './BootstrapVueOptions';
 export { default as BreadcrumbItem } from './BreadcrumbItem';
 export { default as Breakpoint } from './Breakpoint';
