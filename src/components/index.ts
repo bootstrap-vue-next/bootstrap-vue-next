@@ -32,6 +32,7 @@ import BIcon from './BIcon.vue';
 import BImg from './BImg.vue';
 import BInputGroup from './BInputGroup.vue';
 import BInputGroupText from './BInputGroupText.vue';
+import BLink from './BLink.vue';
 import BListGroup from './BListGroup.vue';
 import BListGroupItem from './BListGroupItem.vue';
 import BModal from './BModal.vue';
@@ -42,6 +43,7 @@ import BOffcanvas from './BOffcanvas.vue';
 import BPopover from './BPopover.vue';
 import BProgress from './BProgress.vue';
 import BProgressBar from './BProgressBar.vue';
+import BRow from './BRow.vue';
 import BSpinner from './BSpinner.vue';
 import BTable from './BTable.vue';
 // import BTabs from './BTabs.vue';
@@ -82,6 +84,7 @@ export default {
     BInputGroup,
     BInputGroupText,
     BFormInput,
+    BLink,
     BListGroup,
     BListGroupItem,
     BModal,
@@ -92,6 +95,7 @@ export default {
     BPopover,
     BProgress,
     BProgressBar,
+    BRow,
     BSpinner,
     BTable,
     // BTabs,

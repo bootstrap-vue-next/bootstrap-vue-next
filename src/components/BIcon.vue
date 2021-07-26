@@ -12,7 +12,9 @@
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
 import {ColorVariant, InputSize} from '../types'
-// const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
 
 export default defineComponent({
     name: 'BIcon',
@@ -28,7 +30,7 @@ export default defineComponent({
       }));
 
       return {
-        BootstrapIcons: '',
+        BootstrapIcons,
         classes
       }
     },
