@@ -12,6 +12,8 @@
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
 import {ColorVariant, InputSize} from '../types'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
 
 export default defineComponent({
