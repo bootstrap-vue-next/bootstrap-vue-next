@@ -4,6 +4,86 @@
     fluid="sm"
   >
     <div>
+      <h5 class="my-3">
+        Basic layout
+      </h5>
+      <div class="bd-example-row">
+        <b-row>
+          <div class="col">
+            1 of 2
+          </div>
+          <div class="col">
+            2 of 2
+          </div>
+        </b-row>
+        <b-row>
+          <div class="col">
+            1 of 3
+          </div>
+          <div class="col">
+            2 of 3
+          </div>
+          <div class="col">
+            3 of 3
+          </div>
+        </b-row>
+      </div>
+
+      <h5 class="my-3">
+        Row columns
+      </h5>
+      <div class="bd-example-row">
+        <b-row
+          cols="1"
+          cols-sm="2"
+          cols-md="4"
+        >
+          <div class="col">
+            Column
+          </div>
+          <div class="col">
+            Column
+          </div>
+          <div class="col">
+            Column
+          </div>
+          <div class="col">
+            Column
+          </div>
+        </b-row>
+      </div>
+
+      <h5 class="my-3">
+        Variable width content
+      </h5>
+      <div class="bd-example-row">
+        <b-row align-h="md-center">
+          <div class="col col-lg-2">
+            1 of 3
+          </div>
+          <div class="col-md-auto">
+            Variable width content
+          </div>
+          <div class="col col-lg-2">
+            3 of 3
+          </div>
+        </b-row>
+        <b-row>
+          <div class="col">
+            1 of 3
+          </div>
+          <div class="col-md-auto">
+            Variable width content
+          </div>
+          <div class="col col-lg-2">
+            3 of 3
+          </div>
+        </b-row>
+      </div>
+      <hr>
+    </div>
+    <div>
+      <h5>Avatars</h5>
       <b-avatar
         button
         class="me-1"
@@ -835,9 +915,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
+import BRow from "@/components/BRow.vue";
 
 export default defineComponent({
   name: 'App',
+  components: {BRow},
   setup() {
     const tooltip = ref('Tooltip on <em>top</em>');
     const showModal = ref(false);
@@ -925,5 +1007,12 @@ details.accordion-item .details-button::after {
 details.accordion-item[open] .details-button::after {
 	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 	transform: rotate(-180deg);
+}
+
+.bd-example-row .row>.col, .bd-example-row .row>[class^="col-"] {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    background-color: rgba(39,41,43,0.03);
+    border: 1px solid rgba(39,41,43,0.1);
 }
 </style>
