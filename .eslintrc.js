@@ -34,7 +34,7 @@ module.exports = {
     "no-useless-constructor": "warn",
     "no-useless-rename": "warn",
     "no-useless-return": "warn",
-    "no-var": "error",
+    "no-var": "warn",
     "object-shorthand": "warn",
     "prefer-const": "warn",
     "prefer-destructuring": "warn",
