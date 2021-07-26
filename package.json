@@ -2,7 +2,7 @@
   "name": "bootstrap-vue-3",
   "displayName": "BootstrapVue3",
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "main": "dist/bootstrap-vue-3.common.js",
   "private": false,
@@ -14,17 +14,18 @@
     "docs:build": "vuepress build docs",
     "docs:deploy": "./scripts/deploy.sh"
   },
+  "types": "src/index.d.ts",
   "files": [
     "dist",
-    "src/types"
+    "src"
   ],
   "dependencies": {
-    "bootstrap": "^5.0.2",
-    "bootstrap-icons": "^1.5.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "bootstrap": "^5.0.2",
+    "bootstrap-icons": "^1.5.0",
     "@babel/core": "^7.14.6",
     "@types/bootstrap": "^5.0.16",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
