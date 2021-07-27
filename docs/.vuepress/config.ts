@@ -23,6 +23,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             children: [
               '/components/README.md',
               '/components/Badge.md',
+              '/components/Progress.md',
               '/components/Spinners.md',
             ]
           }
