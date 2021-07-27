@@ -10,16 +10,11 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
+import getBreakpointProps from '../utils/getBreakpointProps';
+import getClasses from '../utils/getClasses';
+import Alignment from '../types/Alignment';
 
-type CommonAlignment = 'start' | 'end' | 'center';
-const breakpoints =  ['sm', 'md', 'lg', 'xl', 'xxl'];
-
-const rowColsProps = [''].concat(breakpoints).reduce((props, breakpoint) => {
-          props[`cols${breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)}`] = {type: [String, Number], default: null}
-          return props
-        }, Object.create(null));
-
-const  rowColsPropList = Object.keys(rowColsProps);
+const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], default: null})
 
 export default defineComponent({
     name: 'BRow',
@@ -27,23 +22,13 @@ export default defineComponent({
         tag: { type: String, default: 'div' },
         gutterX: { type: String, default: null },
         gutterY: { type: String, default: null },
-        alignV: { type: String as PropType<CommonAlignment | 'baseline' | 'stretch'>, default: null },
-        alignH: { type: String as PropType<CommonAlignment | 'between' | 'around'>, default: null },
-        alignContent: { type: String as PropType<CommonAlignment | 'between' | 'around' | 'stretch'>, default: null },
+        alignV: { type: String as PropType<Alignment.Vertical>, default: null },
+        alignH: { type: String as PropType<Alignment.Horizontal>, default: null },
+        alignContent: { type: String as PropType<Alignment.Content>, default: null },
         ...rowColsProps
     },
     setup(props) {
-      const rowColsClasses = rowColsPropList.reduce((arr : string[], prop) => {
-          if (!props[prop]) return arr;
-
-          arr.push(
-               ['row-cols', prop.replace('cols', ''), props[prop]]
-                   .filter((e) => e)
-                   .join('-')
-                   .toLowerCase()
-          )
-          return arr;
-      }, [])
+      const rowColsClasses = getClasses(props, rowColsProps, 'cols', 'row-cols')
 
       const classes = computed(() => ({
           [`gx-${props.gutterX}`]: props.gutterX !== null,

@@ -20,12 +20,11 @@
     "src"
   ],
   "dependencies": {
+    "bootstrap-icons": "^1.5.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "bootstrap": "^5.0.2",
-    "bootstrap-icons": "^1.5.0",
     "@babel/core": "^7.14.6",
     "@types/bootstrap": "^5.0.16",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
@@ -37,6 +36,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-loader": "^8.2.2",
+    "bootstrap": "^5.0.2",
     "esbuild-loader": "^2.13.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
@@ -62,6 +62,6 @@
     "vue",
     "component-library",
     "bootstrapvue",
-    "vue3" 
+    "vue3"
   ]
 }
