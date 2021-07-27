@@ -58,13 +58,13 @@
       </h5>
       <div class="bd-example-row">
         <b-row align-h="md-center">
-          <b-col cols-lg="2">
+          <b-col lg="2">
             1 of 3
           </b-col>
-          <b-col cols-md="auto">
+          <b-col md="auto">
             Variable width content
           </b-col>
-          <b-col cols-lg="2">
+          <b-col lg="2">
             3 of 3
           </b-col>
         </b-row>
@@ -72,10 +72,10 @@
           <b-col>
             1 of 3
           </b-col>
-          <b-col cols-md="auto">
+          <b-col md="auto">
             Variable width content
           </b-col>
-          <b-col cols-lg="2">
+          <b-col lg="2">
             3 of 3
           </b-col>
         </b-row>

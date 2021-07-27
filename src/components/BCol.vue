@@ -13,7 +13,7 @@ import Alignment from '../types/Alignment';
 import getBreakpointProps from '../utils/getBreakpointProps';
 import getClasses from '../utils/getClasses';
 
-const breakpointCol = getBreakpointProps('cols', [], {type: [Boolean, String, Number], default: false})
+const breakpointCol = getBreakpointProps('', [], {type: [Boolean, String, Number], default: false})
 const breakpointOffset = getBreakpointProps('offset', [''], {type: [String, Number], default: null})
 const breakpointOrder = getBreakpointProps('order', [''], {type: [String, Number], default: null})
 
