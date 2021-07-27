@@ -5,6 +5,7 @@
     :value="modelValue"
     :placeholder="placeholder"
     :list="list ? computedId : null"
+    v-bind="$attrs"
     @input="$emit('update:modelValue', $event.target.value)"
   >
   <datalist
