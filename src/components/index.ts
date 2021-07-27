@@ -18,6 +18,7 @@ import BCardTitle from './BCardTitle.vue';
 import BCarousel from './BCarousel.vue';
 import BCarouselSlide from './BCarouselSlide.vue';
 import BCloseButton from './BCloseButton.vue';
+import BCol from './BCol.vue';
 import BCollapse from './BCollapse.vue';
 import BContainer from './BContainer.vue';
 import BDropdown from './BDropdown.vue';
@@ -70,6 +71,7 @@ export default {
     BCarousel,
     BCarouselSlide,
     BCloseButton,
+    BCol,
     BCollapse,
     BContainer,
     BDropdown,

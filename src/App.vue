@@ -9,23 +9,23 @@
       </h5>
       <div class="bd-example-row">
         <b-row>
-          <div class="col">
+          <b-col>
             1 of 2
-          </div>
-          <div class="col">
+          </b-col>
+          <b-col>
             2 of 2
-          </div>
+          </b-col>
         </b-row>
         <b-row>
-          <div class="col">
+          <b-col>
             1 of 3
-          </div>
-          <div class="col">
+          </b-col>
+          <b-col>
             2 of 3
-          </div>
-          <div class="col">
+          </b-col>
+          <b-col>
             3 of 3
-          </div>
+          </b-col>
         </b-row>
       </div>
 
@@ -38,18 +38,18 @@
           cols-sm="2"
           cols-md="4"
         >
-          <div class="col">
+          <b-col>
             Column
-          </div>
-          <div class="col">
+          </b-col>
+          <b-col>
             Column
-          </div>
-          <div class="col">
+          </b-col>
+          <b-col>
             Column
-          </div>
-          <div class="col">
+          </b-col>
+          <b-col>
             Column
-          </div>
+          </b-col>
         </b-row>
       </div>
 
@@ -58,26 +58,26 @@
       </h5>
       <div class="bd-example-row">
         <b-row align-h="md-center">
-          <div class="col col-lg-2">
+          <b-col cols-lg="2">
             1 of 3
-          </div>
-          <div class="col-md-auto">
+          </b-col>
+          <b-col cols-md="auto">
             Variable width content
-          </div>
-          <div class="col col-lg-2">
+          </b-col>
+          <b-col cols-lg="2">
             3 of 3
-          </div>
+          </b-col>
         </b-row>
         <b-row>
-          <div class="col">
+          <b-col>
             1 of 3
-          </div>
-          <div class="col-md-auto">
+          </b-col>
+          <b-col cols-md="auto">
             Variable width content
-          </div>
-          <div class="col col-lg-2">
+          </b-col>
+          <b-col cols-lg="2">
             3 of 3
-          </div>
+          </b-col>
         </b-row>
       </div>
       <hr>
@@ -916,10 +916,12 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
 import BRow from "@/components/BRow.vue";
+import BContainer from "@/components/BContainer.vue";
+import BCol from "@/components/BCol.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {BRow},
+  components: {BCol, BContainer, BRow},
   setup() {
     const tooltip = ref('Tooltip on <em>top</em>');
     const showModal = ref(false);
