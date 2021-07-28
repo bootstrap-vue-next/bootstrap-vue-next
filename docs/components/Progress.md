@@ -62,7 +62,49 @@ Add labels to your progress bars by either enabling `show-progress` (percentage 
 <b-progress :value="33.3333" :max="50" :precision="2" show-progress></b-progress>
 ```
 
-# Height
+### Custom progress label
+
+Need more control over the label? Provide your own label by using the default slot within a `<b-progress-bar>` sub-component, or by using the `label` or `label-html` property on `<b-progress-bar>`:
+
+<ClientOnly>
+    <b-card class="text-dark">
+        <h5>Custom label via default slot</h5>
+        <b-progress :max="50" height="2rem">
+          <b-progress-bar :value="33.333333">
+            <span>Progress: <strong>{{ (33.333333).toFixed(2) }} / {{ 50 }}</strong></span>
+          </b-progress-bar>
+        </b-progress>
+        <h5 class="mt-3">Custom label via property</h5>
+        <b-progress :max="50">
+          <b-progress-bar :value="33.333333" :label="`${((33.333333 / 50) * 100).toFixed(2)}%`"></b-progress-bar>
+        </b-progress>
+        <h5 class="mt-3">Custom label via property (HTML support)</h5>
+        <b-progress :max="50">
+          <b-progress-bar :value="33.333333" :label-html="`<del>${33.333333}</del>`"></b-progress-bar>
+        </b-progress>
+    </b-card>
+</ClientOnly>
+
+``` html
+<h5>Custom label via default slot</h5>
+<b-progress :max="50" height="2rem">
+    <b-progress-bar :value="33.333333">
+    <span>Progress: <strong>{{ (33.333333).toFixed(2) }} / {{ 50 }}</strong></span>
+    </b-progress-bar>
+</b-progress>
+
+<h5 class="mt-3">Custom label via property</h5>
+<b-progress :max="50">
+    <b-progress-bar :value="33.333333" :label="`${((33.333333 / 50) * 100).toFixed(2)}%`"></b-progress-bar>
+</b-progress>
+
+<h5 class="mt-3">Custom label via property (HTML support)</h5>
+<b-progress :max="50">
+    <b-progress-bar :value="33.333333" :label-html="`<del>${33.333333}</del>`"></b-progress-bar>
+</b-progress>
+```
+
+## Height
 
 The height of the progress bar can be controlled with the height prop. The height value should be a standard CSS dimension (px, rem, em, etc.). The default height is 1rem.
 
@@ -159,13 +201,45 @@ The striped gradient can also be animated by setting the `animated` prop.
 
 #### Properties
 
+| Property | Type | Default | Description
+| --- | --- | --- | --- |
+| `animated` | `Boolean` | `false`  | Enable the animated background. Also automatically sets 'striped'
+| `max` | `Number` or `String` | `100` | Set the maximum value
+| `precision` | `Number` or `String` | 0 | The number of digits after the decimal to round the value to
+| `show-progress` | `Boolean` | `false` | Displays the current progress value as a percentage
+| `show-value` | `Boolean` | `false` | Displays the current progress value
+| `striped` | `Boolean` | `false` | Enable the striped background
+| `value` | `Number` or `String` | 0 | The current value of the progress bar
+| `variant` | `String` | | Applies one of the Bootstrap theme color variants to the component
+
 #### Slots
+
+| Name  | Description |
+| --- | --- |
+| `default`  | Content (progress bars) to place in the progress element |
 
 ### `<b-progress-bar>`
 
 #### Properties
 
+| Property | Type | Default | Description
+| --- | --- | --- | --- |
+| `animated` | `Boolean` | `false`  | Enable the animated background. Also automatically sets 'striped'
+| `label` | `String` |  | Text string to explicitly set the label as
+| `label-html`<br><badge class="text-dark" type="warning">Use with caution</badge> | `String` |  | HTML string to explicitly set the label as
+| `max` | `Number` or `String` | `100` | Set the maximum value
+| `precision` | `Number` or `String` | 0 | The number of digits after the decimal to round the value to
+| `show-progress` | `Boolean` | `false` | Displays the current progress value as a percentage
+| `show-value` | `Boolean` | `false` | Displays the current progress value
+| `striped` | `Boolean` | `false` | Enable the striped background
+| `value` | `Number` or `String` | 0 | The current value of the progress bar
+| `variant` | `String` | | Applies one of the Bootstrap theme color variants to the component
+
 #### Slots
+
+| Name  | Description |
+| --- | --- |
+| `default`  | Content to place in the progress bar. Overrides the `label`, `label-html`, `show-progress` and `show-value` props |
 
 <script>
 import { ref } from 'vue';
