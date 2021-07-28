@@ -1,3 +1,7 @@
+:root {
+    --content-width: 960px;
+}
+
 body {
     font-family: var(--font-family) !important;
     background-color: var(--c-bg) !important;
@@ -35,6 +39,10 @@ p:not(.hero .description) {
     margin: 1rem 0 !important;
 }
 
+table:not(.table) {
+    font-size: 0.85em;
+}
+
 table:not(.table) td,
 table:not(.table) th {
 	border: 1px solid var(--c-border);
@@ -43,4 +51,9 @@ table:not(.table) th {
 
 table:not(.table) tr:nth-child(2n) {
 	background-color: var(--c-bg-lighter);
+}
+
+code {
+    background: transparent;
+    padding: 0;
 }
