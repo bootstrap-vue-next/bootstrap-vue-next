@@ -14,7 +14,7 @@
     "docs:build": "vuepress build docs",
     "docs:deploy": "./scripts/deploy.sh"
   },
-  "types": "src/index.d.ts",
+  "types": "src/BootstrapVue.d.ts",
   "files": [
     "dist",
     "src"
