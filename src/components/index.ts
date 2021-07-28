@@ -47,8 +47,8 @@ import BProgressBar from './BProgressBar.vue';
 import BRow from './BRow.vue';
 import BSpinner from './BSpinner.vue';
 import BTable from './BTable.vue';
-// import BTabs from './BTabs.vue';
-// import BTab from './BTab.vue';
+import BTabs from './BTabs.vue';
+import BTab from './BTab.vue';
 
 export default {
     BAccordion,
@@ -100,6 +100,6 @@ export default {
     BRow,
     BSpinner,
     BTable,
-    // BTabs,
-    // BTab,
+    BTabs,
+    BTab,
 }

@@ -16,13 +16,13 @@
           <button
             :id="`${tab.tab.props.id || tab.id}-tab`"
             class="nav-link"
-            :class="{ active: tab.tab.props.active === '' }"
+            :class="{ active: tab.tab.props.active === '', disabled: tab.tab.props.disabled === '' }"
             data-bs-toggle="tab"
-            :data-bs-target="tab.tab.props.id || tab.id"
+            :data-bs-target="`#${tab.tab.props.id || tab.id}`"
             type="button"
             role="tab"
             :aria-controls="tab.tab.props.id || tab.id"
-            aria-selected="true"
+            aria-selected="tab.tab.props.active === ''"
           >
             {{ tab.tab.props.title }}
           </button>

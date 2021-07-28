@@ -4,6 +4,16 @@
     fluid="sm"
   >
     <div>
+       <h5 class="my-3">
+         Tabs
+       </h5>
+      <b-tabs class="mt-3">
+        <b-tab title="First" active><p>I'm the first tab</p></b-tab>
+        <b-tab title="Second"><p>I'm the second tab</p></b-tab>
+        <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
+      </b-tabs>
+    </div>
+    <div>
       <h5 class="my-3">
         Basic layout
       </h5>
@@ -469,11 +479,6 @@
       <b-dropdown-item>Three</b-dropdown-item>
     </b-nav-item-dropdown>
   </b-nav> -->
-    <!-- <b-tabs class="mt-3">
-    <b-tab title="First" active><p>I'm the first tab</p></b-tab>
-    <b-tab title="Second"><p>I'm the second tab</p></b-tab>
-    <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
-  </b-tabs> -->
     <div class="input-group mb-3">
       <span
         id="basic-addon1"
