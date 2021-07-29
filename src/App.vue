@@ -7,11 +7,22 @@
        <h5 class="my-3">
          Tabs
        </h5>
-      <b-tabs class="mt-3">
-        <b-tab title="First" active><p>I'm the first tab</p></b-tab>
+      <b-tabs small v-model="tabIndex">
+        <b-tab title="First"><p>I'm the first tab</p></b-tab>
         <b-tab title="Second"><p>I'm the second tab</p></b-tab>
-        <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
+        <b-tab title="Third" disabled><p>I'm a disabled tab!</p></b-tab>
+        <b-tab title="Fourth" disabled><p>I'm a disabled tab!</p></b-tab>
+        <b-tab title="Fifth"><p>I'm the fifth tab</p></b-tab>
       </b-tabs>
+
+    <div class="text-center">
+      <b-button-group class="mt-2">
+        <b-button @click="tabIndex--">Previous</b-button>
+        <b-button @click="tabIndex++">Next</b-button>
+      </b-button-group>
+
+      <div class="text-muted">Current Tab: {{ tabIndex }}</div>
+    </div>
     </div>
     <div>
       <h5 class="my-3">
@@ -967,8 +978,11 @@ export default defineComponent({
     }
   },
   data() {
-      return{values: [15, 30, 20],
-      max: 100}
+      return{
+        tabIndex: 1,
+        values: [15, 30, 20],
+        max: 100
+      }
   }
 });
 </script>
