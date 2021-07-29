@@ -1,28 +1,27 @@
 <template>
-  <form
+  <component
+    :is="tag"
     :id="id"
-    :novalidate="novalidate"
+    class="form-text"
     :class="classes"
   >
     <slot />
-  </form>
+  </component>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'BForm',
+  name: 'BFormText',
   props: {
     id: { type: String },
-    floating: { type: Boolean, default: false },
-    novalidate: { type: Boolean, default: false },
-    validated: { type: Boolean, default: false }
+    tag: { type: String, default: 'small' },
+    textVariant: { type: String, default: 'muted' },
   },
   setup(props) {
     const classes = computed(() => ({
-      'form-floating': props.floating,
-      'was-validated': props.validated,
+      [`text-${props.textVariant}`]: props.textVariant ? props.textVariant : null,
     }));
 
     return {
