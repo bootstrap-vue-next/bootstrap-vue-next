@@ -27,8 +27,10 @@ import BDropdownForm from './BDropdownForm.vue';
 import BDropdownHeader from './BDropdownHeader.vue';
 import BDropdownItem from './BDropdownItem.vue';
 import BDropdownText from './BDropdownText.vue';
+import BForm from './BForm.vue';
 import BFormInput from './BFormInput.vue';
 import BFormFloatingLabel from './BFormFloatingLabel.vue';
+import BFormText from './BFormText.vue';
 import BIcon from './BIcon.vue';
 import BImg from './BImg.vue';
 import BInputGroup from './BInputGroup.vue';
@@ -47,8 +49,8 @@ import BProgressBar from './BProgressBar.vue';
 import BRow from './BRow.vue';
 import BSpinner from './BSpinner.vue';
 import BTable from './BTable.vue';
-// import BTabs from './BTabs.vue';
-// import BTab from './BTab.vue';
+import BTabs from './BTabs.vue';
+import BTab from './BTab.vue';
 
 export default {
     BAccordion,
@@ -80,12 +82,14 @@ export default {
     BDropdownHeader,
     BDropdownItem,
     BDropdownText,
+    BForm,
     BFormFloatingLabel,
+    BFormInput,
+    BFormText,
     BIcon,
     BImg,
     BInputGroup,
     BInputGroupText,
-    BFormInput,
     BLink,
     BListGroup,
     BListGroupItem,
@@ -100,6 +104,6 @@ export default {
     BRow,
     BSpinner,
     BTable,
-    // BTabs,
-    // BTab,
+    BTabs,
+    BTab,
 }

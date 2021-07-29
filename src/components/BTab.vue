@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tab-pane fade"
+    class="tab-pane"
     :class="{ active, show: active }"
     role="tabpanel"
     aria-labelledby="profile-tab"
