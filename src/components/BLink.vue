@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import type { LinkTarget } from '@/types';
 import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
@@ -22,7 +23,7 @@ export default defineComponent({
         disabled: { type: Boolean, default: false },
         href: { type: String, default: null },
         rel: { type: String, default: null },
-        target: { type: String as PropType<'_self' | '_blank' | '_parent' | '_top'>, default: '_self' },
+        target: { type: String as PropType<LinkTarget>, default: '_self' },
         // <router-link> specific props
         activeClass: { type: String },
         append: { type: Boolean, default: false },
