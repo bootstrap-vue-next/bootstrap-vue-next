@@ -44,13 +44,13 @@ function resolvePlacement(modifiers: DirectiveBinding['modifiers']): Tooltip.Opt
 }
 
 const BTooltip: Directive<HTMLElement> = {
-    mounted(el, binding) {
+    beforeMount(el, binding) {
         el.setAttribute('data-bs-toogle', 'tooltip');
-
+        
         const isHtml = /<("[^"]*"|'[^']*'|[^'">])*>/.test(el.title);
         const trigger = resolveTrigger(binding.modifiers);
         const placement = resolvePlacement(binding.modifiers)
-
+        
         new Tooltip(el, {
             trigger,
             placement,
@@ -58,11 +58,14 @@ const BTooltip: Directive<HTMLElement> = {
         });
     },
     updated(el) {
-        const instance = Tooltip.getInstance(el);
-        instance?.hide();
         const title = el.getAttribute('title');
-        el.setAttribute('data-bs-original-title', title || '');
-        el.setAttribute('title', '');
+        
+        if (title !== '') {
+            const instance = Tooltip.getInstance(el);
+            instance?.hide();
+            el.setAttribute('data-bs-original-title', title || '');
+            el.setAttribute('title', '');
+        }
     },
     unmounted(el) {
         const instance = Tooltip.getInstance(el);
