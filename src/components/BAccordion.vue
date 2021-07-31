@@ -17,16 +17,19 @@ export const injectionKey: InjectionKey<string> = Symbol();
 export default defineComponent({
     name: 'BAccordion',
     props: {
-        flush: { type: Boolean, default: false },
-        id: { type: String }
+      flush: { type: Boolean, default: false },
+      free: { type: Boolean, default: false },
+      id: { type: String, default: undefined }
     },
     setup(props) {
         const computedId = useId(props.id, 'accordion');
         const classes = computed(() => ({
           'accordion-flush': props.flush
-        }))
+        }));
 
-        provide(injectionKey, `#${computedId.value}`);
+        if (!props.free) {
+          provide(injectionKey, `#${computedId.value}`);
+        }
 
         return {
             computedId,
