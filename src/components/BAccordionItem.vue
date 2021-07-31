@@ -54,7 +54,7 @@ export default defineComponent({
     },
     setup(props) {
       const computedId = useId(props.id, 'accordion_item');
-      const parent = inject(injectionKey);
+      const parent = inject(injectionKey, '');
 
       return {
         parent,
