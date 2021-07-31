@@ -16,6 +16,13 @@
   <a href="https://v3.vuejs.org/">
     <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
   </a>
+  
+  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
+    <img src="https://flat.badgen.net/npm/dt/bootstrap-vue-3" alt="npm downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
+    <img src="https://flat.badgen.net/npm/dw/bootstrap-vue-3" alt="npm weekly downloads">
+  </a>
 </p>
 
 # Links
