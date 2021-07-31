@@ -5,6 +5,9 @@ BootstrapVue 3 components
 <ClientOnly>
     <b-list-group>
         <b-list-group-item>
+            <RouterLink to="./Accordion.html">Accordion</RouterLink> — Easily toggle content visibility on your pages. Includes support for making accordions.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Badge.html">Badge</RouterLink> — Small and adaptive tag for adding context to just about any content.
         </b-list-group-item>
         <b-list-group-item>
