@@ -16,7 +16,20 @@
   <a href="https://v3.vuejs.org/">
     <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
   </a>
+  
+  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
+    <img src="https://flat.badgen.net/npm/dt/bootstrap-vue-3" alt="npm downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
+    <img src="https://flat.badgen.net/npm/dw/bootstrap-vue-3" alt="npm weekly downloads">
+  </a>
 </p>
+
+# Why BootstrapVue3?
+
+BootstrapVue3 is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
+
+As you may suppose, this library is heavily inspired by [BootstrapVue](https://bootstrap-vue.org/), as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with BootstrapVue, so it will be easy to switch between libraries.
 
 # Links
 

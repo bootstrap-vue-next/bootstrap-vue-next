@@ -306,6 +306,35 @@
       />
     </div>
     <div>
+      <b-form @submit.stop.prevent>
+        <label for="text-password">Password</label>
+        <b-form-input type="password" id="text-password" aria-describedby="password-help-block" aria-invalid=""></b-form-input>
+        <b-form-text id="password-help-block">
+          Your password must be 8-20 characters long, contain letters and numbers, and must not
+          contain spaces, special characters, or emoji.
+        </b-form-text>
+      </b-form>
+    </div>
+    <div>
+      <b-form-input type="text" />
+      <b-form-input type="number" />
+      <b-form-input type="email" />
+      <b-form-input type="password" />
+      <b-form-input type="search" />
+      <b-form-input type="url" />
+      <b-form-input type="tel" />
+      <b-form-input type="date" />
+      <b-form-input type="time" />
+      <b-form-input type="range" min="0" max="5" step="0.5" />
+      <b-form-input type="color" />
+      <b-form-input type="text" size="sm" />
+      <b-form-input type="text" size="lg" />
+      <b-form-input type="text" :state="null" />
+      <b-form-input type="text" :state="true" />
+      <b-form-input type="text" :state="false" />
+      <b-form-input type="text" plaintext value="a" />
+    </div>
+    <div>
       <b-input-group
         prepend="@"
         class="mb-3"
