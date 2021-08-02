@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import type { LinkTarget } from '@/types';
+import type { LinkTarget } from '../types';
 import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
