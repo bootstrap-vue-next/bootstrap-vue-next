@@ -546,6 +546,22 @@
       <span class="input-group-text">.00</span>
     </div>
 
+    <div>
+      <h2>SELECT</h2>
+      <b-form-select v-model="selected" :options="options"></b-form-select>
+      <b-form-select v-model="selected" :options="options" size="sm" class="mt-3" plain></b-form-select>
+      <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+    </div>
+    <div>
+      <b-form-select v-model="selected" :options="options" class="mb-3" multiple>
+        <template #first>
+          <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
+        </template>
+        <b-form-select-option value="C">Option C</b-form-select-option>
+        <b-form-select-option value="D">Option D</b-form-select-option>
+      </b-form-select>
+    </div>
+
     {{ city }}
 
     <b-form-floating-label label="Email address">
@@ -1010,7 +1026,23 @@ export default defineComponent({
       return{
         tabIndex: 1,
         values: [15, 30, 20],
-        max: 100
+        max: 100,
+        selected: null,
+        options: [
+          { value: null, text: 'Please select an option' },
+          { text: 'Item 1', value: 'first' },
+          { text: 'Item 2', value: 'second' },
+          { html: '<b>Item</b> 3', value: 'third', disabled: true },
+          { text: 'Item 4' },
+          { text: 'Item 5', value: { foo: 'bar', baz: true } },
+          {
+            label: 'Grouped options',
+            options: [
+              { value: { C: '3PO' }, text: 'Option with object value' },
+              { value: { R: '2D2' }, text: 'Another option with object value' }
+            ]
+          }
+        ]
       }
   }
 });

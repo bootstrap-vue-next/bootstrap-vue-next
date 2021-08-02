@@ -28,8 +28,11 @@ import BDropdownHeader from './BDropdownHeader.vue';
 import BDropdownItem from './BDropdownItem.vue';
 import BDropdownText from './BDropdownText.vue';
 import BForm from './BForm.vue';
-import BFormInput from './BFormInput.vue';
 import BFormFloatingLabel from './BFormFloatingLabel.vue';
+import BFormInput from './BFormInput.vue';
+import BFormSelect from './BFormSelect.vue';
+import BFormSelectOption from './BFormSelectOption.vue';
+import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue';
 import BFormText from './BFormText.vue';
 import BIcon from './BIcon.vue';
 import BImg from './BImg.vue';
@@ -85,6 +88,9 @@ export default {
     BForm,
     BFormFloatingLabel,
     BFormInput,
+    BFormSelect,
+    BFormSelectOption,
+    BFormSelectOptionGroup,
     BFormText,
     BIcon,
     BImg,
