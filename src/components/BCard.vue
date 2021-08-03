@@ -125,7 +125,7 @@ export default defineComponent({
         [`text-${props.align}`]: props.align,
         [`text-${props.textVariant}`]: props.textVariant,
         [`bg-${props.bgVariant}`]: props.bgVariant,
-        [`border-${props.borderVariant}`]: !!props.borderVariant,
+        [`border-${props.borderVariant}`]: props.borderVariant,
         'flex-row': props.imgLeft || props.imgStart,
         'flex-row-reverse': props.imgEnd || props.imgRight
       }));
