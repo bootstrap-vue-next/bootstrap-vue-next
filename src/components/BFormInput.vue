@@ -1,7 +1,7 @@
 <template>
   <input
     :id="id"
-    ref="element"
+    ref="input"
     :class="classes"
     :name="name || null"
     :form="form || null"
@@ -76,14 +76,14 @@ export default defineComponent({
     'blur',
   ],
   setup(props, { emit }) {
-    const element = ref<HTMLElement>();
+    const input = ref<HTMLElement>();
     const computedId = useId(props.id, 'input');
 
     // lifecycle events
     const handleAutofocus = () => {
       nextTick(() => {
         if (props.autofocus)
-          element.value?.focus();
+          input.value?.focus();
       })
     };
     onMounted(handleAutofocus);
@@ -158,7 +158,7 @@ export default defineComponent({
     // /methods
 
     return {
-      element,
+      input,
       computedId,
       computedAriaInvalid,
       classes,
