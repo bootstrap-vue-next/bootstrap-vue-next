@@ -2,11 +2,13 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    "jest/globals": true
   },
   extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "@vue/typescript/recommended"],
   parserOptions: {
     ecmaVersion: 2021,
   },
+  plugins: ["jest"],
   rules: {
     "no-alert": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
