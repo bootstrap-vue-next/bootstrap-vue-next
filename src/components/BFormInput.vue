@@ -19,7 +19,9 @@
     :aria-required="required ? 'true' : null"
     :aria-invalid="computedAriaInvalid"
     v-bind="$attrs"
-    @input="$emit('update:modelValue', $event.target.value)"
+    @input="onInput($event)"
+    @change="onChange($event)"
+    @blur="onBlur($event)"
   >
   <datalist
     v-if="Array.isArray(list) && list.length"
@@ -35,7 +37,7 @@
 
 <script lang="ts">
 import { InputType, Size } from '../types';
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, nextTick, onActivated, onMounted, PropType, ref } from 'vue'
 import useId from '../composables/useId';
 
 export default defineComponent({
@@ -46,14 +48,18 @@ export default defineComponent({
       default: false
     },
     autocomplete: { type: String },
+    autofocus: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     form: { type: String },
+    formatter: { type: Function },
     id: { type: String },
+    lazyFormatter: { type: Boolean, default: false },
     list: { type: Array as PropType<string[]> },
     max: { type: [String, Number] },
     min: { type: [String, Number] },
     modelValue: { type: [String, Number], default: '' },
     name: { type: String },
+    number: { type: Boolean, default: false },
     placeholder: { type: String },
     plaintext: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
@@ -61,13 +67,30 @@ export default defineComponent({
     size: { type: String as PropType<Size> },
     step: { type: [String, Number] },
     state: { type: Boolean as PropType<boolean | null | undefined>, default: null },
+    trim: { type: Boolean, default: false },
     type: { type: String as PropType<InputType>, default: 'text' },
   },
   emits: [
-    'update:modelValue'
+    'update:modelValue',
+    'change',
+    'blur',
   ],
-  setup(props) {
+  setup(props, { emit }) {
+    const input = ref<HTMLElement>();
     const computedId = useId(props.id, 'input');
+
+    // lifecycle events
+    const handleAutofocus = () => {
+      nextTick(() => {
+        if (props.autofocus)
+          input.value?.focus();
+      })
+    };
+    onMounted(handleAutofocus);
+    onActivated(handleAutofocus);
+    // /lifecycle events
+
+    // computed
     const classes = computed(() => {
       const { plaintext, size, state, type } = props;
       const isRange = type === 'range';
@@ -90,11 +113,58 @@ export default defineComponent({
       }
       return state === false ? 'true' : ariaInvalid;
     });
+    // /computed
+
+    // methods
+    const formatValue = (value: unknown, evt: any, force = false) => {
+      const { formatter, lazyFormatter } = props;
+      value = String(value);
+      if (typeof formatter === 'function' && (!lazyFormatter || force)) {
+        value = formatter(value, evt);
+      }
+      return value;
+    }
+
+    const onInput = (evt: any) => {
+      const { value } = evt.target;
+      const formattedValue = formatValue(value, evt);
+      if (formattedValue === false || evt.defaultPrevented) {
+        evt.preventDefault();
+        return;
+      }
+      emit('update:modelValue', value);
+    }
+
+    const onChange = (evt: any) => {
+      const { value } = evt.target;
+      const formattedValue = formatValue(value, evt);
+      if (formattedValue === false || evt.defaultPrevented) {
+        evt.preventDefault();
+        return;
+      }
+      emit('change', formattedValue);
+    }
+
+    const onBlur = (evt: any) => {
+      const { value } = evt.target;
+      const { trim, number } = props;
+      let formattedValue = formatValue(value, evt, true);
+      if (formattedValue !== false) {
+        if (trim) formattedValue = value.trim();
+        if (number) formattedValue = String(parseFloat(value));
+      }
+      emit('blur', evt);
+    }
+    // /methods
 
     return {
+      input,
       computedId,
       computedAriaInvalid,
       classes,
+      onInput,
+      onChange,
+      onBlur,
     }
   },
 })

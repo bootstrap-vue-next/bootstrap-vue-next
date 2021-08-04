@@ -1,9 +1,9 @@
 <template>
   <component
     :is="tag"
+    :id="id"
     class="tabs"
     :class="classes"
-    :id="id"
   >
     <div :class="[navWrapperClass, { 'card-header': card }]">
       <ul
@@ -12,35 +12,40 @@
         role="tablist"
       >
         <li
-          class="nav-item"
-          v-for="({tab, id, navItemClasses, active, target}, i) in tabs"
+          v-for="({tab, buttonId, contentId, navItemClasses, active, target}, i) in tabs"
           :key="i"
+          class="nav-item"
+          :class="tab.props['title-item-class']"
         >
           <a
-            :id="`${id}-tab`"
+            :id="buttonId"
             class="nav-link"
             :class="navItemClasses"
             data-bs-toggle="tab"
             :data-bs-target="target"
             href="#"
             role="tab"
-            :aria-controls="id"
+            :aria-controls="contentId"
             :aria-selected="active"
-             @click="tabIndex = i"
+            v-bind="tab.props['title-link-attributes']"
+            @click="$emit('click', $event); tabIndex = i"
           >
             {{ tab.props.title }}
           </a>
         </li>
       </ul>
     </div>
-    <div class="tab-content" :class="contentClass">
+    <div
+      class="tab-content"
+      :class="contentClass"
+    >
       <template
-        v-for="({tab, id, tabClasses, active}, i) in tabs"
+        v-for="({tab, contentId, tabClasses, active}, i) in tabs"
         :key="i"
       >
         <component
           :is="tab"
-          :id="id"
+          :id="contentId"
           :class="tabClasses"
           :active="active"
         />
@@ -76,8 +81,12 @@ export default defineComponent({
         small: { type: Boolean, default: false },
         tag: { type: String, default: 'div' },
         vertical: { type: Boolean, default: false },
-        modelValue: { type: Number, default: 0 },
+        modelValue: { type: Number, default: -1 },
     },
+    emits: [
+      'update:modelValue',
+      'click'
+    ],
     setup(props, { slots, emit }) {
       const tabs = computed(() => {
         let tabs: any[] = [];
@@ -87,18 +96,21 @@ export default defineComponent({
             .default()
             .filter((child: any) => child.type.name === "BTab")
             .map((tab: any, idx) => {
-              const id = tab.props.id || getID('tab');
-              const active = idx === props.modelValue
+              const buttonId = tab.props['button-id'] || getID('tab');
+              const contentId = tab.props.id || getID();
+              const active = (props.modelValue > -1) ? idx === props.modelValue : tab.props.active === ''
 
               return {
-                id,
+                buttonId,
+                contentId,
                 active,
                 navItemClasses: [
                     {
                       active,
                       disabled: tab.props.disabled === ''
                     },
-                  (active && props.activeNavItemClass) ? props.activeNavItemClass : null
+                  (active && props.activeNavItemClass) ? props.activeNavItemClass : null,
+                  tab.props['title-link-class']
                 ],
                 tabClasses: [
                     {
@@ -106,7 +118,7 @@ export default defineComponent({
                     },
                     (active && props.activeTabClass) ? props.activeTabClass : null
                 ],
-                target: `#${id}`,
+                target: `#${contentId}`,
                 tab,
               }
             });
