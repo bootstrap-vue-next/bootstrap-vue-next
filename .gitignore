@@ -25,3 +25,4 @@ pnpm-debug.log*
 .temp
 .cache
 docs/.vuepress/dist
+/coverage/
