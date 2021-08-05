@@ -28,7 +28,7 @@
             :aria-controls="contentId"
             :aria-selected="active"
             v-bind="tab.props['title-link-attributes']"
-            @click="$emit('click', $event); tabIndex = i"
+            @click.stop="$emit('click', $event); tabIndex = i"
           >
             {{ tab.props.title }}
           </a>
