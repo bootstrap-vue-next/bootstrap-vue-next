@@ -12,6 +12,7 @@ import BCard from './BCard.vue';
 import BCardBody from './BCardBody.vue';
 import BCardFooter from './BCardFooter.vue';
 import BCardHeader from './BCardHeader.vue';
+import BCardImg from './BCardImg.vue';
 import BCardSubTitle from './BCardSubTitle.vue';
 import BCardText from './BCardText.vue';
 import BCardTitle from './BCardTitle.vue';
@@ -70,6 +71,7 @@ export default {
     BCardBody,
     BCardFooter,
     BCardHeader,
+    BCardImg,
     BCardSubTitle,
     BCardText,
     BCardTitle,

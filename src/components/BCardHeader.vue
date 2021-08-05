@@ -1,11 +1,14 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <component
     :is="headerTag"
     class="card-header"
     :class="[headerClass, classes]"
   >
-    <!-- eslint-disable-next-line vue/no-v-html vue/max-attributes-per-line -->
-    <div v-if="!!headerHtml" v-html="headerHtml" />
+    <div
+      v-if="!!headerHtml"
+      v-html="headerHtml"
+    />
     <slot v-else>
       {{ header }}
     </slot>
@@ -24,7 +27,7 @@ export default defineComponent({
         headerBorderVariant: { type: String as PropType<ColorVariant> },
         headerClass: { type: [Array, Object, String] },
         headerHtml: { type: String },
-        headerTag: { type: String, default: 'h4' },
+        headerTag: { type: String, default: 'div' },
         headerTextVariant: { type: String as PropType<ColorVariant> },
     },
     setup(props) {

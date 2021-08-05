@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <component
     :is="tag"
@@ -14,8 +15,10 @@
       class="card-header"
       :class="[headerClass, headerClasses]"
     >
-      <!-- eslint-disable-next-line vue/no-v-html vue/max-attributes-per-line -->
-      <div v-if="!!headerHtml" v-html="headerHtml" />
+      <div
+        v-if="!!headerHtml"
+        v-html="headerHtml"
+      />
       <slot
         v-else
         name="header"
@@ -52,8 +55,10 @@
       class="card-footer"
       :class="[footerClass, footerClasses]"
     >
-      <!-- eslint-disable-next-line vue/no-v-html vue/max-attributes-per-line -->
-      <div v-if="!!footerHtml" v-html="footerHtml" />
+      <div
+        v-if="!!footerHtml"
+        v-html="footerHtml"
+      />
       <slot
         v-else
         name="footer"

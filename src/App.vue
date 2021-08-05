@@ -1,32 +1,90 @@
+<!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container
     class="mt-4"
     fluid="sm"
   >
+    <h5 class="my-3">
+      Cards
+    </h5>
+    <b-row>
+      <b-col>
+        <b-card
+          no-body
+          style="max-width: 20rem;"
+          img-src="https://placekitten.com/380/200"
+          img-alt="Image"
+          img-top
+        >
+          <template #header>
+            <h4 class="mb-0">Hello World</h4>
+          </template>
+
+          <b-card-body>
+            <b-card-title>Card Title</b-card-title>
+            <b-card-sub-title class="mb-2">Card Sub Title</b-card-sub-title>
+            <b-card-text>
+              Some quick example text to build on the card title and make up the bulk of the card's
+              content.
+            </b-card-text>
+          </b-card-body>
+
+          <b-list-group flush>
+            <b-list-group-item>Cras justo odio</b-list-group-item>
+            <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
+            <b-list-group-item>Vestibulum at eros</b-list-group-item>
+          </b-list-group>
+
+          <b-card-body>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+          </b-card-body>
+
+          <b-card-footer>This is a footer</b-card-footer>
+
+          <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
+        </b-card>
+      </b-col>
+      <b-col>
+        <b-card
+          title="Card Title"
+          img-src="https://picsum.photos/600/300/?image=25"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="mb-2"
+        >
+          <b-card-text>
+            Some quick example text to build on the card title and make up the bulk of the card's content.
+          </b-card-text>
+
+          <b-button href="#" variant="primary">Go somewhere</b-button>
+        </b-card>
+      </b-col>
+      <b-col cols="6">
+        <b-card no-body class="overflow-hidden" style="max-width: 540px;">
+          <b-row no-gutters>
+            <b-col md="6">
+              <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0" />
+            </b-col>
+            <b-col md="6">
+              <b-card-body title="Horizontal Card">
+                <b-card-text>
+                  This is a wider card with supporting text as a natural lead-in to additional content.
+                  This content is a little bit longer.
+                </b-card-text>
+              </b-card-body>
+            </b-col>
+          </b-row>
+        </b-card>
+      </b-col>
+    </b-row>
     <div>
       <h5 class="my-3">
-        Cards
+        Tabs
       </h5>
-      <b-card
-        title="Card Title"
-        img-src="https://picsum.photos/600/300/?image=25"
-        img-alt="Image"
-        img-top
-        tag="article"
-        style="max-width: 20rem;"
-        class="mb-2"
-      >
-        <b-card-text>
-          Some quick example text to build on the card title and make up the bulk of the card's content.
-        </b-card-text>
-
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-      </b-card>
-
-      <h5 class="my-3">
-         Tabs
-       </h5>
-      <b-tabs small v-model="tabIndex">
+      <b-tabs v-model="tabIndex" small>
         <b-tab title="First"><p>I'm the first tab</p></b-tab>
         <b-tab title="Second"><p>I'm the second tab</p></b-tab>
         <b-tab title="Third" disabled><p>I'm a disabled tab!</p></b-tab>
@@ -34,14 +92,14 @@
         <b-tab title="Fifth"><p>I'm the fifth tab</p></b-tab>
       </b-tabs>
 
-    <div class="text-center">
-      <b-button-group class="mt-2">
-        <b-button @click="tabIndex--">Previous</b-button>
-        <b-button @click="tabIndex++">Next</b-button>
-      </b-button-group>
+      <div class="text-center">
+        <b-button-group class="mt-2">
+          <b-button @click="tabIndex--">Previous</b-button>
+          <b-button @click="tabIndex++">Next</b-button>
+        </b-button-group>
 
-      <div class="text-muted">Current Tab: {{ tabIndex }}</div>
-    </div>
+        <div class="text-muted">Current Tab: {{ tabIndex }}</div>
+      </div>
     </div>
     <div>
       <h5 class="my-3">
@@ -327,7 +385,7 @@
     <div>
       <b-form @submit.stop.prevent>
         <label for="text-password">Password</label>
-        <b-form-input type="password" id="text-password" aria-describedby="password-help-block" aria-invalid=""></b-form-input>
+        <b-form-input id="text-password" type="password" aria-describedby="password-help-block" aria-invalid="" />
         <b-form-text id="password-help-block">
           Your password must be 8-20 characters long, contain letters and numbers, and must not
           contain spaces, special characters, or emoji.
@@ -567,8 +625,8 @@
 
     <div>
       <h2>SELECT</h2>
-      <b-form-select v-model="selected" :options="options"></b-form-select>
-      <b-form-select v-model="selected" :options="options" size="sm" class="mt-3" plain></b-form-select>
+      <b-form-select v-model="selected" :options="options" />
+      <b-form-select v-model="selected" :options="options" size="sm" class="mt-3" plain />
       <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
     </div>
     <div>
