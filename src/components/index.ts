@@ -11,6 +11,7 @@ import BButtonToolbar from './BButtonToolbar.vue';
 import BCard from './BCard.vue';
 import BCardBody from './BCardBody.vue';
 import BCardFooter from './BCardFooter.vue';
+import BCardGroup from './BCardGroup.vue';
 import BCardHeader from './BCardHeader.vue';
 import BCardImg from './BCardImg.vue';
 import BCardSubTitle from './BCardSubTitle.vue';
@@ -70,6 +71,7 @@ export default {
     BCard,
     BCardBody,
     BCardFooter,
+    BCardGroup,
     BCardHeader,
     BCardImg,
     BCardSubTitle,
