@@ -3,7 +3,7 @@ import { Popover } from "bootstrap";
 
 const BPopover: Directive<HTMLElement> = {
     mounted(el, binding) {
-        let placement: Popover.Options['placement'] = 'auto';
+        let placement: Popover.Options['placement'] = 'right';
         const trigger: string[] = [];
 
         if (binding.modifiers.left) {
@@ -13,27 +13,27 @@ const BPopover: Directive<HTMLElement> = {
         } else if (binding.modifiers.bottom) {
             placement = 'bottom';
         } else if(binding.modifiers.top) {
-            placement = 'top'
+            placement = 'top';
         }
 
         if (binding.modifiers.manual) {
-            trigger.push('manual')
+            trigger.push('manual');
         } else {
             if (binding.modifiers.click) {
                 trigger.push('click');
             }
-    
+
             if (binding.modifiers.hover) {
-                trigger.push('hover')
+                trigger.push('hover');
             }
-    
+
             if (binding.modifiers.focus) {
-                trigger.push('focus')
+                trigger.push('focus');
             }
         }
-        
+
         el.setAttribute('data-bs-toggle', 'popover');
-        
+
         new Popover(el, {
             trigger: trigger.length === 0 ? 'click' : trigger.join(' ') as Popover.Options['trigger'],
             placement,
