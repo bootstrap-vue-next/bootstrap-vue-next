@@ -19,36 +19,36 @@ const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
 export default defineComponent({
     name: 'BIcon',
     props: {
-        icon: { type: String },
+        icon: {type: String},
         variant: {type: String as PropType<ColorVariant>, default: 'dark'},
         size: {type: String as PropType<InputSize>},
     },
     setup(props) {
-      const classes = computed(() => ({
-         [`text-${props.variant}`]: props.variant,
-         [`bi-${props.size}`]: props.size,
-      }));
+        const classes = computed(() => ({
+            [`text-${props.variant}`]: props.variant,
+            [`bi-${props.size}`]: props.size,
+        }))
 
-      return {
-        BootstrapIcons,
-        classes
-      }
+        return {
+            BootstrapIcons,
+            classes
+        }
     },
 })
 </script>
 
 <style lang="scss">
-  .bi {
+.bi {
     width: 24px;
     height: 24px;
 
     &.bi-sm {
-      width: 16px;
-      height: 16px;
+        width: 16px;
+        height: 16px;
     }
     &.bi-lg {
-      width: 32px;
-      height: 32px;
+        width: 32px;
+        height: 32px;
     }
-  }
+}
 </style>
