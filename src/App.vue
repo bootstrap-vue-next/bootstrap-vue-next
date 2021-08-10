@@ -750,12 +750,47 @@
       </b-accordion>
     </b-card>
 
-  <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
-  <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
-  <b-collapse id="my-collapse" v-model="collapse">
-    <b-card>hola</b-card>
-  </b-collapse>
-  {{ collapse }} -->
+    <div>
+      <h1>Checkbox form</h1>
+      <b-form-checkbox>Default</b-form-checkbox>
+      <b-form-checkbox button>
+        Button format
+      </b-form-checkbox>
+      <b-form-checkbox required>
+        Required
+      </b-form-checkbox>
+      <b-form-checkbox disabled>
+        Disabled
+      </b-form-checkbox>
+      <b-form-checkbox indeterminate>
+        Indeterminate
+      </b-form-checkbox>
+    </div>
+
+    <div>
+      <h1>Radio form</h1>
+      <b-form-radio>Default</b-form-radio>
+      <b-form-radio button>
+        Button format
+      </b-form-radio>
+      <b-form-radio required>
+        Required
+      </b-form-radio>
+      <b-form-radio disabled>
+        Disabled
+      </b-form-radio>
+      <b-form-radio indeterminate>
+        Indeterminate
+      </b-form-radio>
+    </div>
+
+
+    <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
+    <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
+    <b-collapse id="my-collapse" v-model="collapse">
+      <b-card>hola</b-card>
+    </b-collapse>
+    {{ collapse }} -->
   <!-- <b-tabs>
     <b-tab title="Home" active>1</b-tab>
     <b-tab title="Profile">2</b-tab>
