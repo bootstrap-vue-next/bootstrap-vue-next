@@ -1,3 +1,3 @@
-type InputSize = 'sm' | 'lg';
+type InputSize = 'sm' | 'md' | 'lg';
 
 export default InputSize;
