@@ -102,10 +102,10 @@ export default defineComponent({
       };
     });
 
-    const computedSelectSize = () => {
-      const { plain, selectSize } = props;
-      return !plain && selectSize === 0 ? null : selectSize;
-    }
+    const computedSelectSize = ref(null);
+    if (props.selectSize) {
+    	computedSelectSize.value = props.selectSize
+    } 
 
     const computedAriaInvalid = computed(() => {
       const { ariaInvalid, state } = props;
