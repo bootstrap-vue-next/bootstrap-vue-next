@@ -62,7 +62,7 @@ export default defineComponent({
     size: {type: String},
     state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
     uncheckedValue: {type: [String, Boolean], default: false},
-    value: {type: [String, Boolean, Object], default: null}
+    value: {type: [String, Boolean, Object], default: false}
   },
   emits: ["update:modelValue", "input", "change"],
 

@@ -47,3 +47,6 @@ jobs:
 
       - name: Build
         run: yarn run build
+
+      - name: Build with Vue-Cli
+        run: yarn run build-cli

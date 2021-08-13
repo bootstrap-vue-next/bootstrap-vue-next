@@ -42,7 +42,7 @@ import {InputSize} from "../../types";
 export default defineComponent({
   name: "BFormCheckbox",
   props: {
-    id: { type: String },
+    id: { type: String, default: undefined },
     ariaLabel: { type: String },
     ariaLabelledBy: { type: String },
     autofocus: { type: Boolean, default: false },
@@ -60,7 +60,7 @@ export default defineComponent({
     size: { type: String as PropType<InputSize>, default: "md" },
     state: { type: Boolean, default: null },
     uncheckedValue: { type: [String, Boolean], default: false },
-    value: { type: [String, Boolean, Object], default: null }
+    value: { type: [String, Boolean, Object], default: false }
   },
   emits: ["update:modelValue", "input", "change"],
   setup(props, {emit}: SetupContext) {
