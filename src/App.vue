@@ -784,6 +784,11 @@
       </b-form-radio>
     </div>
 
+    <div>
+      <div v-b-visible.once="handleVisible">Handle Visible Test</div>
+      <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
+    </div>
+
 
     <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
     <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
@@ -1154,8 +1159,14 @@ export default defineComponent({
               { value: { R: '2D2' }, text: 'Another option with object value' }
             ]
           }
-        ]
+        ],
+        handledVisible: false
       }
+  },
+  methods: {
+    handleVisible() {
+      this.handledVisible = true;
+    }
   }
 });
 </script>
