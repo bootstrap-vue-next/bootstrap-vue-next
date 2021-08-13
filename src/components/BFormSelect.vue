@@ -12,6 +12,7 @@
     :aria-required="required ? 'true' : null"
     :aria-invalid="computedAriaInvalid"
     v-bind="$attrs"
+    :value="modelValue"
     @change="onChange($event)"
   >
     <slot name="first" />
