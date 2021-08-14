@@ -30,6 +30,7 @@ import BDropdownHeader from "./BDropdownHeader.vue";
 import BDropdownItem from "./BDropdownItem.vue";
 import BDropdownText from "./BDropdownText.vue";
 import BForm from "./BForm.vue";
+import BFormCheckbox from "./BFormCheckbox/BFormCheckbox.vue";
 import BFormRadio from "./BFormRadio";
 import BFormInput from "./BFormInput.vue";
 import BFormFloatingLabel from "./BFormFloatingLabel.vue";
@@ -37,7 +38,7 @@ import BFormSelect from "./BFormSelect.vue";
 import BFormSelectOption from "./BFormSelectOption.vue";
 import BFormSelectOptionGroup from "./BFormSelectOptionGroup.vue";
 import BFormText from "./BFormText.vue";
-import BIcon from "./BIcon.vue";
+// import BIcon from "./BIcon.vue";
 import BImg from "./BImg.vue";
 import BInputGroup from "./BInputGroup.vue";
 import BInputGroupText from "./BInputGroupText.vue";
@@ -57,7 +58,6 @@ import BSpinner from "./BSpinner.vue";
 import BTable from "./BTable.vue";
 import BTabs from "./BTabs.vue";
 import BTab from "./BTab.vue";
-import BFormCheckbox from "./BFormCheckBox/BFormCheckbox.vue";
 
 export default {
   BAccordion,
@@ -92,10 +92,13 @@ export default {
   BDropdownItem,
   BDropdownText,
   BForm,
+  BFormSelect,
+  BFormSelectOption,
+  BFormSelectOptionGroup,
   BFormFloatingLabel,
   BFormInput,
   BFormText,
-  BIcon,
+  // BIcon,
   BImg,
   BInputGroup,
   BInputGroupText,
