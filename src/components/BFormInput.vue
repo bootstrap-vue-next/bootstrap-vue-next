@@ -155,9 +155,14 @@ export default defineComponent({
       }
       emit('blur', evt);
     }
+
+    const focus = () => {
+      input.value?.focus();
+    }
     // /methods
 
     return {
+      focus,
       input,
       computedId,
       computedAriaInvalid,

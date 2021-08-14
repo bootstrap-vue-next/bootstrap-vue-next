@@ -4,6 +4,7 @@
     class="mt-4"
     fluid="sm"
   >
+    <b-form-input ref="input" type="text" />
     <h5 class="my-3">
       Cards
     </h5>
@@ -1098,6 +1099,7 @@ import { useBreadcrumb } from './composables/useBreadcrumb';
 export default defineComponent({
   name: 'App',
   setup() {
+    const input = ref();
     const tooltip = ref('Tooltip on <em>top</em>');
     const showModal = ref(false);
     const city = ref('');
@@ -1115,6 +1117,7 @@ export default defineComponent({
     const consoleLog = () => console.log('button clicked!');
 
     onMounted(() => {
+      input.value?.focus();
       breadcrumb.items.push({
         text: 'Home',
         href: '/home'
@@ -1126,6 +1129,7 @@ export default defineComponent({
     })
 
     return {
+      input,
       name,
       consoleLog,
       tooltip,
