@@ -24,6 +24,8 @@
     <img src="https://flat.badgen.net/github/status/cdmoro/bootstrap-vue-3" alt="Build status">
   </a>
   
+  <br>
+  
   <a href="https://github.com/cdmoro/bootstrap-vue-3">
     <img src="https://flat.badgen.net/david/dep/cdmoro/bootstrap-vue-3" alt="Dependencies status">
   </a>
