@@ -1093,13 +1093,9 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
-import BRow from "@/components/BRow.vue";
-import BContainer from "@/components/BContainer.vue";
-import BCol from "@/components/BCol.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {BCol, BContainer, BRow},
   setup() {
     const tooltip = ref('Tooltip on <em>top</em>');
     const showModal = ref(false);
