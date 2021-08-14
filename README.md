@@ -10,11 +10,22 @@
 <br>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
+    <img src="https://flat.badgen.net/npm/v/bootstrap-vue-3" alt="Current version">
+  </a>
   <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">
     <img src="https://flat.badgen.net/badge/bootstrap/5.0.x/563d7c" alt="Bootstrap version">
   </a>
   <a href="https://v3.vuejs.org/">
     <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
+  </a>
+  
+  <a href="https://github.com/bootstrap-vue/bootstrap-vue/actions?workflow=Tests">
+    <img src="https://flat.badgen.net/github/status/bootstrap-vue/bootstrap-vue" alt="Build status">
+  </a>
+  
+  <a href="https://github.com/bootstrap-vue/bootstrap-vue">
+    <img src="https://flat.badgen.net/david/dep/bootstrap-vue/bootstrap-vue" alt="Dependencies status">
   </a>
   
   <a href="https://www.npmjs.com/package/bootstrap-vue-3">
