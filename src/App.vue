@@ -562,9 +562,10 @@
       </div>
     </details>
 
-    <div class="text-danger">
+    <!-- TODO: Refactor BIcon component -->
+    <!-- <div class="text-danger">
       <b-icon icon="exclamation-circle-fill" />
-    </div>
+    </div> -->
 
 
     <b-button @click="showModal = !showModal">
