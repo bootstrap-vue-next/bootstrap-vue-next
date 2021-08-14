@@ -40,9 +40,9 @@
 
 # Why BootstrapVue3?
 
-BootstrapVue3 is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
+BootstrapVue3 is an attempt to have <a href="https://bootstrap-vue.org/" target="_blank" rel="noopener">Bootstrap</a> components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
 
-As you may suppose, this library is heavily inspired by [BootstrapVue](https://bootstrap-vue.org/), as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with BootstrapVue, so it will be easy to switch between libraries.
+As you may suppose, this library is heavily inspired by <a href="https://bootstrap-vue.org/" target="_blank" rel="noopener">Bootstrap</a>, as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with BootstrapVue, so it will be easy to switch between libraries.
 
 # Links
 
