@@ -25,7 +25,7 @@
   </a>
   
   <a href="https://github.com/cdmoro/bootstrap-vue-3">
-    <img src="https://flat.badgen.net/david/dep/bootstrap-vue/bootstrap-vue" alt="Dependencies status">
+    <img src="https://flat.badgen.net/david/dep/cdmoro/bootstrap-vue-3" alt="Dependencies status">
   </a>
   
   <a href="https://www.npmjs.com/package/bootstrap-vue-3">
