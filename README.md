@@ -20,11 +20,11 @@
     <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
   </a>
   
-  <a href="https://github.com/bootstrap-vue/bootstrap-vue/actions?workflow=Tests">
-    <img src="https://flat.badgen.net/github/status/bootstrap-vue/bootstrap-vue" alt="Build status">
+  <a href="https://github.com/cdmoro/bootstrap-vue-3/actions?workflow=Tests">
+    <img src="https://flat.badgen.net/github/status/cdmoro/bootstrap-vue-3" alt="Build status">
   </a>
   
-  <a href="https://github.com/bootstrap-vue/bootstrap-vue">
+  <a href="https://github.com/cdmoro/bootstrap-vue-3">
     <img src="https://flat.badgen.net/david/dep/bootstrap-vue/bootstrap-vue" alt="Dependencies status">
   </a>
   
