@@ -10,11 +10,24 @@
 <br>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
+    <img src="https://flat.badgen.net/npm/v/bootstrap-vue-3" alt="Current version">
+  </a>
   <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">
     <img src="https://flat.badgen.net/badge/bootstrap/5.0.x/563d7c" alt="Bootstrap version">
   </a>
   <a href="https://v3.vuejs.org/">
     <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
+  </a>
+  
+  <a href="https://github.com/cdmoro/bootstrap-vue-3/actions?workflow=Tests">
+    <img src="https://flat.badgen.net/github/status/cdmoro/bootstrap-vue-3" alt="Build status">
+  </a>
+  
+  <br>
+  
+  <a href="https://github.com/cdmoro/bootstrap-vue-3">
+    <img src="https://flat.badgen.net/david/dep/cdmoro/bootstrap-vue-3" alt="Dependencies status">
   </a>
   
   <a href="https://www.npmjs.com/package/bootstrap-vue-3">
@@ -27,9 +40,13 @@
 
 # Why BootstrapVue3?
 
-BootstrapVue3 is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
+BootstrapVue3 is an attempt to have [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
 
-As you may suppose, this library is heavily inspired by [BootstrapVue](https://bootstrap-vue.org/), as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with BootstrapVue, so it will be easy to switch between libraries.
+As you may suppose, this library is heavily inspired by **BootstrapVue**, as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with **BootstrapVue**, so it will be easy to switch between libraries.
+
+# Warning ⚠️
+
+This project is still in **alpha version**. There is a lot of work to do, if you want to contribute you can use it and submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues) or even better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls) 😄.
 
 # Links
 

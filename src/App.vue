@@ -4,6 +4,7 @@
     class="mt-4"
     fluid="sm"
   >
+    <b-form-input ref="input" type="text" />
     <h5 class="my-3">
       Cards
     </h5>
@@ -562,9 +563,10 @@
       </div>
     </details>
 
-    <div class="text-danger">
+    <!-- TODO: Refactor BIcon component -->
+    <!-- <div class="text-danger">
       <b-icon icon="exclamation-circle-fill" />
-    </div>
+    </div> -->
 
 
     <b-button @click="showModal = !showModal">
@@ -782,6 +784,11 @@
       <b-form-radio indeterminate>
         Indeterminate
       </b-form-radio>
+    </div>
+
+    <div>
+      <div v-b-visible.once="handleVisible">Handle Visible Test</div>
+      <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
 
 
@@ -1088,14 +1095,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
-import BRow from "@/components/BRow.vue";
-import BContainer from "@/components/BContainer.vue";
-import BCol from "@/components/BCol.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {BCol, BContainer, BRow},
   setup() {
+    const input = ref();
     const tooltip = ref('Tooltip on <em>top</em>');
     const showModal = ref(false);
     const city = ref('');
@@ -1113,6 +1117,7 @@ export default defineComponent({
     const consoleLog = () => console.log('button clicked!');
 
     onMounted(() => {
+      input.value?.focus();
       breadcrumb.items.push({
         text: 'Home',
         href: '/home'
@@ -1124,6 +1129,7 @@ export default defineComponent({
     })
 
     return {
+      input,
       name,
       consoleLog,
       tooltip,
@@ -1154,8 +1160,14 @@ export default defineComponent({
               { value: { R: '2D2' }, text: 'Another option with object value' }
             ]
           }
-        ]
+        ],
+        handledVisible: false
       }
+  },
+  methods: {
+    handleVisible() {
+      this.handledVisible = true;
+    }
   }
 });
 </script>

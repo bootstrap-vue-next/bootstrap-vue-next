@@ -14,7 +14,11 @@ export default defineUserConfig<DefaultThemeOptions>({
       navbar: [
         { text: 'Home', link: '/' },
         { text: 'Docs', link: '/getting-started/' },
-        { text: 'Components', link: '/components/' },
+        { text: 'Reference', children: [
+          { text: 'Components', link: '/components/' },
+          { text: 'Types', link: '/reference/types.md' },
+          { text: 'Comparision with BootstrapVue', link: '/reference/parityList.md'}
+        ]}
       ],
       sidebar: {
         '/components/': [

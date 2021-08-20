@@ -7,7 +7,7 @@ sidebar: auto
 Get started with BootstrapVue3 and Bootstrap v5, the world’s most popular framework for building responsive, mobile-first sites.
 
 ::: danger NOT PRODUCTION READY
-This project is still in alpha version. There is a lot work to do, if you want to contribute you can use it and submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues) or even better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls).
+This project is still in **alpha version**. There is a lot of work to do, if you want to contribute you can use it and submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues) or even better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls) 😄.
 :::
 ## Why BootstrapVue3?
 
@@ -68,11 +68,12 @@ app.mount('#app');
 
 As we said, we based this project in [BootstrapVue](https://bootstrap-vue.org/). We consider BootstrapVue as the best implementation of Bootstrap `v4`, so a good approach is to replicate every BootstrapVue component, as well their props, events, etc. and add the new features of Bootstrap `v5`.
 
-To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet.
+<!-- To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet. -->
+You can view the full list in the following [section](../reference/parityList.md).
 
 ## Types
 
-`BootstrapVue3` born with Typescript in mind. This is a list of types we use to build BootstrapVue3:
+`BootstrapVue3` born with Typescript in mind. This is a list of types we use in this library and you can use too:
 
 - Alignment
 - BreadcrumbItem

@@ -10,14 +10,15 @@
       :alt="alt"
       class="b-avatar-img"
     >
-    <b-icon
+    <!-- TODO: Refactor BIcon component -->
+    <!-- <b-icon
       v-else-if="icon"
       :icon="icon"
       aria-hidden="true"
       :alt="alt"
       :variant="iconVariant"
       :size="size"
-    />
+    /> -->
     <span
       v-else-if="text"
       class="b-avatar-text"

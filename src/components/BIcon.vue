@@ -4,7 +4,7 @@
     :class="classes"
   >
     <g>
-      <use :xlink:href="`${BootstrapIcons}#${icon}`" />
+      <!-- <use :xlink:href="`${BootstrapIcons}#${icon}`" /> -->
     </g>
   </svg>
 </template>
@@ -14,7 +14,7 @@ import {computed, defineComponent, PropType} from 'vue'
 import {ColorVariant, InputSize} from '../types'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
+// const BootstrapIcons = require("bootstrap-icons/bootstrap-icons.svg") as string
 
 export default defineComponent({
     name: 'BIcon',
@@ -30,7 +30,7 @@ export default defineComponent({
         }))
 
         return {
-            BootstrapIcons,
+            // BootstrapIcons,
             classes
         }
     },
