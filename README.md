@@ -44,9 +44,19 @@ BootstrapVue3 is an attempt to have [BootstrapVue](https://bootstrap-vue.org/) c
 
 As you may suppose, this library is heavily inspired by **BootstrapVue**, as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with **BootstrapVue**, so it will be easy to switch between libraries.
 
-# Warning ⚠️
+# Contribute & support 🙌
 
-This project is still in **alpha version**. There is a lot of work to do, if you want to contribute you can use it and submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues) or even better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls) 😄.
+This project is still in **alpha version** so there is a lot of work to do. If you want to contribute you can:
+- submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues/new)
+- or better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls)
+- or even better, visit [my patreon page](https://patreon.com/cdmoro) and support me 😄
+
+## One-time donations
+
+Or if you prefer you can make a one-time donation through these channels:
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/cdmoro)
+[![Invitame un café en cafecito.app](https://cdn.cafecito.app/imgs/buttons/button_2.svg)](https://cafecito.app/cdmoro)
 
 # Links
 
