@@ -647,6 +647,9 @@
       <b-form-input placeholder=" " />
     </b-form-floating-label>
 
+    <b-button v-model:pressed="isPressed" variant="primary" class="mt-3">Toggle Me</b-button>
+    <p>Pressed State: <strong>{{ isPressed }}</strong></p>
+
     <b-button
       v-b-tooltip.top
       :title="tooltip"
@@ -1161,7 +1164,8 @@ export default defineComponent({
             ]
           }
         ],
-        handledVisible: false
+        handledVisible: false,
+        isPressed: false,
       }
   },
   methods: {
