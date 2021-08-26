@@ -4,6 +4,116 @@
     class="mt-4"
     fluid="sm"
   >
+    <h5 class="my-3">
+      Dropdown
+    </h5>
+
+    <h6 class="m-2">Sizes</h6>
+    <div class="d-flex">
+      <b-dropdown text="Small" class="m-2" size="sm">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown text="Medium" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown text="Large" class="m-2" size="lg">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+    </div>
+
+    <h6 class="m-2">Split & variant</h6>
+    <div class="d-flex">
+      <b-dropdown split text="Split variant" class="m-2" variant="outline-primary" split-variant="primary">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+    </div>
+
+    <h6 class="m-2">Direction & variant</h6>
+    <div class="d-flex">
+      <b-dropdown dropup right text="Up Left" variant="dark" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown dropup text="Up Right" variant="success" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown dropright text="Right" variant="info" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown text="Bottom Right" variant="warning" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown right text="Bottom Left" variant="light" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown dropleft text="Left" variant="outline-primary" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+    </div>
+
+    <h6 class="m-2">Flip</h6>
+    <div class="d-flex">
+      <b-dropdown dropup text="Flip enabled" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown dropup text="Flip disabled" class="m-2" no-flip>
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+    </div>
+
+    <h6 class="m-2">Misc</h6>
+    <div class="d-flex">
+      <b-dropdown offset="50" text="Offset" class="m-2">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown text="Dark" class="m-2" dark>
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown text="Auto close inside" class="m-2" auto-close="inside">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+
+      <b-dropdown text="Auto close outside" class="m-2" auto-close="outside">
+        <b-dropdown-item href="#">Action</b-dropdown-item>
+      </b-dropdown>
+    </div>
+
+    <h6 class="m-2">Block</h6>
+    <b-dropdown text="Block" class="m-2" block variant="primary">
+      <b-dropdown-item href="#">Action</b-dropdown-item>
+    </b-dropdown>
+
+    <h6 class="m-2">Custom popper config</h6>
+    <b-dropdown text="Open up, offset & no flip" class="m-2" variant="success" :popper-opts="{
+      placement: 'top-end',
+      modifiers: [{
+        name: 'flip',
+        options: {
+          fallbackPlacements: []
+        }
+      }, {
+        name: 'offset',
+        options: {
+          offset: [20, 30],
+        },
+      }]
+    }"
+    >
+      <b-dropdown-item href="#">Action</b-dropdown-item>
+    </b-dropdown>
+
+    <h5 class="my-3">
+      Form input
+    </h5>
     <b-form-input ref="input" type="text" />
     <h5 class="my-3">
       Cards
@@ -1120,7 +1230,7 @@ export default defineComponent({
     const consoleLog = () => console.log('button clicked!');
 
     onMounted(() => {
-      input.value?.focus();
+      // input.value?.focus();
       breadcrumb.items.push({
         text: 'Home',
         href: '/home'

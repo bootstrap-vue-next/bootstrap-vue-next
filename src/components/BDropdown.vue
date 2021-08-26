@@ -1,33 +1,28 @@
 <template>
   <div
-    ref="element"
+    ref="parent"
     :class="classes"
   >
-    <button
+    <b-button
       :id="computedId"
-      class="btn"
+      :variant="variant"
+      :size="size"
       :class="buttonClasses"
-      type="button"
-      :data-bs-toggle="split ? null : 'dropdown'"
-      :data-bs-auto-close="split ? null : autoClose"
-      :data-bs-offset="split || !offset ? null : offset"
-      :aria-expanded="split ? null : false"
+      v-bind="buttonAttr"
     >
       {{ text }}
-    </button>
-    <button
+    </b-button>
+    <b-button
       v-if="split"
-      type="button"
-      class="btn dropdown-toggle-split dropdown-toggle"
-      :class="splitClasses"
+      :variant="splitVariant || variant"
+      :size="size"
+      v-bind="splitAttr"
+      class="dropdown-toggle-split dropdown-toggle"
       data-bs-toggle="dropdown"
       aria-expanded="false"
-      :data-bs-auto-close="autoClose"
-      :data-bs-offset="!offset ? null : offset"
-      :data-bs-referent="offsetParent ? 'parent' : null"
     >
       <span class="visually-hidden">Toggle Dropdown</span>
-    </button>
+    </b-button>
     <ul
       class="dropdown-menu"
       :class="dropdownMenuClasses"
@@ -39,29 +34,34 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
-import { ButtonVariant, Size } from "../types";
+import {Dropdown} from 'bootstrap';
+import {computed, defineComponent, onMounted, PropType, ref} from "vue";
+import {ButtonVariant, Size} from "../types";
+import mergeDeep from "../utils/mergeDeep";
 import useId from "../composables/useId";
 import useEventListener from '../composables/useEventListener';
+
 
 export default defineComponent({
   name: 'BDropdown',
   props: {
-    autoClose: { type: String, default: "true" },
-    id: { type: String },
-    dark: { type: Boolean, default: false },
-    dropleft: { type: Boolean, default: false },
-    dropright: { type: Boolean, default: false },
-    dropup: { type: Boolean, default: false },
-    right: { type: [Boolean, String], default: false },
-    left: { type: [Boolean, String], default: false },
-    text: { type: String },
-    offset: { type: String },
-    offsetParent: { type: Boolean, default: false },
-    split: { type: Boolean, default: false },
-    splitVariant: { type: String as PropType<ButtonVariant> },
-    size: { type: String as PropType<Size> },
-    variant: { type: String as PropType<ButtonVariant>, default: "secondary" },
+    autoClose: {type: [Boolean, String], default: true},
+    block: {type: Boolean, default: false},
+    boundary: {type: [String, HTMLElement], default: 'clippingParents'},
+    dark: {type: Boolean, default: false},
+    dropup: {type: Boolean, default: false},
+    dropright: {type: Boolean, default: false},
+    dropleft: {type: Boolean, default: false},
+    id: {type: String},
+    noFlip: {type: Boolean, default: false},
+    offset: {type: [Number, String], default: 0},
+    popperOpts: {type: Object, default: () => ({})},
+    right: {type: Boolean, default: false},
+    size: {type: String as PropType<Size>},
+    split: {type: Boolean, default: false},
+    splitVariant: {type: String as PropType<ButtonVariant>},
+    text: {type: String},
+    variant: {type: String as PropType<ButtonVariant>, default: "secondary"},
   },
   emits: [
     'show',
@@ -69,50 +69,89 @@ export default defineComponent({
     'hide',
     'hidden',
   ],
-  setup(props, { emit }) {
-    const element = ref<HTMLElement>();
+  setup(props, {emit}) {
+    const parent = ref<HTMLElement>();
+    const dropdown = ref<HTMLElement>();
+    const instance = ref<Dropdown>();
     const computedId = useId(props.id, 'dropdown');
 
-    useEventListener(element, 'show.bs.dropdown', () => emit('show'));
-    useEventListener(element, 'shown.bs.dropdown', () => emit('shown'));
-    useEventListener(element, 'hide.bs.dropdown', () => emit('hide'));
-    useEventListener(element, 'hidden.bs.dropdown', () => emit('hidden'));
+    useEventListener(parent, 'show.bs.dropdown', () => emit('show'));
+    useEventListener(parent, 'shown.bs.dropdown', () => emit('shown'));
+    useEventListener(parent, 'hide.bs.dropdown', () => emit('hide'));
+    useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'));
 
     const classes = computed(() => ({
       "btn-group": props.split,
-      dropdown: !props.split,
-      dropup: props.dropup,
-      dropend: props.dropright,
-      dropstart: props.dropleft,
+      "dropdown": !props.split,
+      "d-grid": props.block
     }));
 
     const buttonClasses = computed(() => ({
-      [`btn-${props.variant}`]: props.variant,
-      [`btn-${props.size}`]: props.size,
       "dropdown-toggle": !props.split,
     }));
 
-    const splitClasses = computed(() => ({
-      [`btn-${props.splitVariant || props.variant}`]:
-        props.splitVariant || props.variant,
-      [`btn-${props.size}`]: props.size,
+    const dropdownMenuClasses = computed(() => ({
+      "dropdown-menu-dark": props.dark
     }));
 
-    const dropdownMenuClasses = computed(() => ({
-      "dropdown-menu-dark": props.dark,
-      "dropdown-menu-end":
-        typeof props.right === "boolean" ? props.right : false,
-      [`dropdown-menu-${props.left}-start`]: typeof props.left === "string",
-      [`dropdown-menu-${props.right}-end`]: typeof props.right === "string",
+    const buttonAttr = computed(() => ({
+      'data-bs-toggle': (props.split) ? null : 'dropdown',
+      'aria-expanded': (props.split) ? null : false,
+      'ref': (props.split) ? null : dropdown
     }));
+
+    const splitAttr = computed(() => ({
+      'ref': (props.split) ? dropdown : null
+    }));
+
+    onMounted(() => {
+      instance.value = new Dropdown(dropdown.value.$el, {
+        autoClose: props.autoClose,
+        boundary: props.boundary,
+        offset: props.offset.toString(),
+        reference: (props.offset || props.split) ? 'parent' : 'toggle',
+        popperConfig (defaultConfig) {
+          const dropDownConfig = {
+            placement: 'bottom-start',
+            modifiers: []
+          }
+
+          if (props.dropup) {
+            dropDownConfig.placement = (props.right) ? 'top-end' : 'top-start'
+          }
+          else if (props.dropright) {
+            dropDownConfig.placement = 'right-start'
+          }
+          else if (props.dropleft) {
+            dropDownConfig.placement = 'left-start'
+          }
+          else if (props.right) {
+            dropDownConfig.placement = 'bottom-end'
+          }
+
+          if (props.noFlip) {
+            dropDownConfig.modifiers.push({
+              name: "flip",
+              options: {
+                fallbackPlacements: []
+              }
+            })
+          }
+
+          return mergeDeep(defaultConfig, mergeDeep(dropDownConfig, props.popperOpts));
+        }
+      });
+    })
 
     return {
-      element,
+      parent,
       computedId,
       classes,
       buttonClasses,
-      splitClasses,
+      buttonAttr,
+      splitAttr,
       dropdownMenuClasses,
+      dropdown,
     };
   },
 });
