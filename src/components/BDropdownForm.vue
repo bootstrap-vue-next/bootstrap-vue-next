@@ -1,5 +1,5 @@
 <template>
-  <li role="presentation">
+  <li role="presentation" v-bind="$attrs">
     <form class="px-4 py-3">
       <slot />
     </form>

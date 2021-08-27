@@ -1,5 +1,5 @@
 <template>
-  <li class="nav-item dropdown">
+  <li class="nav-item dropdown" v-bind="$attrs">
     <b-dropdown v-bind="$props">
       <slot />
     </b-dropdown>

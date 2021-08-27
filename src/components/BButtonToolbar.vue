@@ -3,6 +3,7 @@
     class="btn-toolbar"
     role="toolbar"
     :aria-label="ariaRole"
+    v-bind="$attrs"
   >
     <slot />
   </div>

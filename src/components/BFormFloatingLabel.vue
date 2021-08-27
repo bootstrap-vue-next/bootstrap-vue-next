@@ -1,5 +1,5 @@
 <template>
-  <div class="form-floating">
+  <div class="form-floating" v-bind="$attrs">
     <slot />
     <label :for="labelFor">{{ label }}</label>
   </div>

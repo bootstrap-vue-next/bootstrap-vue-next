@@ -1,5 +1,5 @@
 <template>
-  <div class="accordion-item">
+  <div class="accordion-item" v-bind="$attrs">
     <h2
       :id="`heading${computedId}`"
       class="accordion-header"

@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="breadcrumb">
+  <nav aria-label="breadcrumb" v-bind="$attrs">
     <ol class="breadcrumb">
       <slot name="prepend" />
       <b-breadcrumb-item

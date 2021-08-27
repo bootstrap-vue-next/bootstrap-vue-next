@@ -4,6 +4,7 @@
     :id="id"
     class="form-text"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot />
   </component>

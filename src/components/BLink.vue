@@ -7,6 +7,7 @@
     :tabindex=" disabled ? '-1' : typeof $attrs.tabindex === 'undefined' ? null : $attrs.tabindex"
     :aria-disabled="disabled ? 'true' : null"
     :class="{ active, disabled }"
+    v-bind="$attrs"
   >
     <slot />
   </component>

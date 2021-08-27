@@ -2,6 +2,7 @@
   <option
     :value="value"
     :disabled="disabled"
+    v-bind="$attrs"
   >
     <slot />
   </option>

@@ -2,6 +2,7 @@
   <component
     :is="tag"
     :class="[classes, classList]"
+    v-bind="$attrs"
   >
     <slot />
   </component>

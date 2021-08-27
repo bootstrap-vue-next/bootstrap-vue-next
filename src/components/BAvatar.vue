@@ -3,6 +3,7 @@
     :is="tag"
     class="b-avatar"
     :class="classes"
+    v-bind="$attrs"
   >
     <img
       v-if="src"

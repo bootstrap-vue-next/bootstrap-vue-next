@@ -3,6 +3,7 @@
     :is="tag"
     class="list-group"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot />
   </component>

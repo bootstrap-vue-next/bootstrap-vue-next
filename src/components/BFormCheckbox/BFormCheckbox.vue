@@ -1,6 +1,7 @@
 <template>
   <div
     :class="classes"
+    v-bind="$attrs"
   >
     <input
       :id="id"

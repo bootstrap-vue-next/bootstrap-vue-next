@@ -2,6 +2,7 @@
   <li
     class="breadcrumb-item"
     :class="classes"
+    v-bind="$attrs"
   >
     <a
       v-if="href"

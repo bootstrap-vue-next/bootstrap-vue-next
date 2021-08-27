@@ -4,6 +4,7 @@
     :id="id"
     class="tabs"
     :class="classes"
+    v-bind="$attrs"
   >
     <div :class="[navWrapperClass, { 'card-header': card }]">
       <ul

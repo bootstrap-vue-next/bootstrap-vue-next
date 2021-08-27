@@ -2,6 +2,7 @@
   <li
     class="nav-item"
     :class="classes"
+    v-bind="$attrs"
   >
     <a
       href="#"

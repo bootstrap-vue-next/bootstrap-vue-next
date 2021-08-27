@@ -4,6 +4,7 @@
     :is="headerTag"
     class="card-header"
     :class="[headerClass, classes]"
+    v-bind="$attrs"
   >
     <div
       v-if="!!headerHtml"

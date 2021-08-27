@@ -3,6 +3,7 @@
     ref="element"
     class="collapse"
     :class="classes"
+    v-bind="$attrs"
     :data-bs-parent="parent || null"
   >
     <slot />

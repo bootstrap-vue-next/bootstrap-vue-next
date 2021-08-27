@@ -1,5 +1,5 @@
 <template>
-  <div ref="element" class="popover b-popover" :class="classes" :id="id" role="tooltip" tabindex="-1">
+  <div ref="element" class="popover b-popover" :class="classes" :id="id" role="tooltip" tabindex="-1" v-bind="$attrs">
     <div ref="titleRef">
       <slot name="title">
         {{ title }}

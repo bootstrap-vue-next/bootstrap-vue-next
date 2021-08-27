@@ -4,6 +4,7 @@
     :id="id"
     class="tab-pane"
     :class="classes"
+    v-bind="$attrs"
     role="tabpanel"
     aria-labelledby="profile-tab"
   >

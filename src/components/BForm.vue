@@ -3,6 +3,7 @@
     :id="id"
     :novalidate="novalidate"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot />
   </form>

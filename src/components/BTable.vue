@@ -2,6 +2,7 @@
   <table
     class="table"
     :class="classes"
+    v-bind="$attrs"
   >
     <caption v-if="caption">
       {{

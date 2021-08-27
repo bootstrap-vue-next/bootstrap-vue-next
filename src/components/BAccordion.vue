@@ -3,6 +3,7 @@
     :id="computedId"
     class="accordion"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot />
   </div>

@@ -504,23 +504,23 @@
       </b-form>
     </div>
     <div>
-      <b-form-input type="text" />
-      <b-form-input type="number" />
-      <b-form-input type="email" />
-      <b-form-input type="password" />
-      <b-form-input type="search" />
-      <b-form-input type="url" />
-      <b-form-input type="tel" />
-      <b-form-input type="date" />
-      <b-form-input type="time" />
-      <b-form-input type="range" min="0" max="5" step="0.5" />
-      <b-form-input type="color" />
-      <b-form-input type="text" size="sm" />
-      <b-form-input type="text" size="lg" />
-      <b-form-input type="text" :state="null" />
-      <b-form-input type="text" :state="true" />
-      <b-form-input type="text" :state="false" />
-      <b-form-input type="text" plaintext value="a" />
+      <b-form-input type="text" class="m-2"/>
+      <b-form-input type="number" class="m-2" />
+      <b-form-input type="email" class="m-2" />
+      <b-form-input type="password" class="m-2" />
+      <b-form-input type="search" class="m-2" />
+      <b-form-input type="url" class="m-2" />
+      <b-form-input type="tel" class="m-2" />
+      <b-form-input type="date" class="m-2" />
+      <b-form-input type="time" class="m-2" />
+      <b-form-input type="range" min="0" max="5" step="0.5" class="m-2" />
+      <b-form-input type="color" class="m-2" />
+      <b-form-input type="text" size="sm" class="m-2" />
+      <b-form-input type="text" size="lg" class="m-2" />
+      <b-form-input type="text" :state="null" class="m-2" />
+      <b-form-input type="text" :state="true" class="m-2" />
+      <b-form-input type="text" :state="false" class="m-2" />
+      <b-form-input type="text" plaintext value="a" class="m-2" />
     </div>
     <div>
       <b-input-group

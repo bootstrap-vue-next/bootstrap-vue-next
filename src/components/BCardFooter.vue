@@ -4,6 +4,7 @@
     :is="footerTag"
     class="card-footer"
     :class="[footerClass, classes]"
+    v-bind="$attrs"
   >
     <div
       v-if="!!footerHtml"

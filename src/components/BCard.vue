@@ -4,6 +4,7 @@
     :is="tag"
     class="card"
     :class="classes"
+    v-bind="$attrs"
   >
     <img
       v-if="imgSrc && !imgBottom"

@@ -3,6 +3,7 @@
     :is="tag"
     class="badge"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot />
   </component>

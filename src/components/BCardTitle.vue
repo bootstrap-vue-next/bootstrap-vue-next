@@ -2,6 +2,7 @@
   <component
     :is="titleTag"
     class="card-title"
+    v-bind="$attrs"
   >
     <slot>
       {{ title }}

@@ -2,6 +2,7 @@
   <component
     :is="tag"
     class="input-group-text"
+    v-bind="$attrs"
   >
     <slot />
   </component>

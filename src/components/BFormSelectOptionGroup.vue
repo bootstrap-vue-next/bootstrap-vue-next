@@ -1,5 +1,5 @@
 <template>
-  <optgroup :label="label">
+  <optgroup :label="label" v-bind="$attrs">
     <slot name="first" />
     <b-form-select-option
       v-for="(option, index) in formOptions"

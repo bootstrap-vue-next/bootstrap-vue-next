@@ -2,6 +2,7 @@
   <div
     ref="parent"
     :class="classes"
+    v-bind="$attrs"
   >
     <b-button
       :id="computedId"

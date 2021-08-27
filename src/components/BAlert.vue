@@ -4,6 +4,7 @@
     class="alert"
     role="alert"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot />
     <button

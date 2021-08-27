@@ -1,3 +1,3 @@
 <template>
-  <li><hr class="dropdown-divider"></li>
+  <li v-bind="$attrs"><hr class="dropdown-divider"></li>
 </template>

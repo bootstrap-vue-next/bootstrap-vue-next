@@ -3,7 +3,7 @@
     :is="computedTag"
     class="btn"
     :class="classes"
-    v-bind="attrs"
+    v-bind="{ ...$attrs, ...attrs }"
     @click="clicked"
   >
     <slot />

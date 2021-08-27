@@ -1,7 +1,7 @@
 <template>
   <img
     :class="classes"
-    v-bind="attrs"
+    v-bind="{ ...$attrs, ...attrs }"
   >
 </template>
 

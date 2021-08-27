@@ -5,6 +5,7 @@
     :style="{
       background: 'rgb(171, 171, 171) none repeat scroll 0% 0%',
     }"
+    v-bind="$attrs"
   >
     <slot name="img">
       <img

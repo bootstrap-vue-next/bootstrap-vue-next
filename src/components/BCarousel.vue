@@ -4,6 +4,7 @@
     ref="element"
     class="carousel slide"
     data-bs-ride="carousel"
+    v-bind="$attrs"
   >
     <div
       v-if="indicators"

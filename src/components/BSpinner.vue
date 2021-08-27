@@ -2,6 +2,7 @@
   <component
     :is="tag"
     :class="classes"
+    v-bind="$attrs"
     :role="label || $slots.label ? role : null"
     :aria-hidden="label || $slots.label ? null : true"
   >

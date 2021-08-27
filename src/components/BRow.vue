@@ -3,6 +3,7 @@
     :is="tag"
     class="row"
     :class="[classes, rowColsClasses]"
+    v-bind="$attrs"
   >
     <slot />
   </component>

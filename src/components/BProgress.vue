@@ -2,6 +2,7 @@
   <div
     class="progress"
     :style="{ height }"
+    v-bind="$attrs"
   >
     <slot>
       <b-progress-bar

@@ -2,6 +2,7 @@
   <svg
     class="bi"
     :class="classes"
+    v-bind="$attrs"
   >
     <g>
       <!-- <use :xlink:href="`${BootstrapIcons}#${icon}`" /> -->

@@ -2,6 +2,7 @@
   <ul
     class="nav"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot />
   </ul>

@@ -3,6 +3,7 @@
     :is="bodyTag"
     class="card-body"
     :class="classes"
+    v-bind="$attrs"
   >
     <b-card-title
       v-if="title"

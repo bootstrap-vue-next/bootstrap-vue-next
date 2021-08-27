@@ -5,6 +5,7 @@
       ref="element"
       class="modal"
       :class="classes"
+    v-bind="$attrs"
       tabindex="-1"
     >
       <div

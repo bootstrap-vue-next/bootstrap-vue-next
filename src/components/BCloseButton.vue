@@ -4,6 +4,7 @@
     class="btn-close"
     :disabled="disabled"
     :class="classes"
+    v-bind="$attrs"
     aria-label="Close"
   />
 </template>

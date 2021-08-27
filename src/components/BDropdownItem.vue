@@ -4,7 +4,7 @@
       :is="tag"
       class="dropdown-item"
       :class="classes"
-      v-bind="attrs"
+      v-bind="{ ...$attrs, ...attrs }"
     >
       <slot />
     </component>

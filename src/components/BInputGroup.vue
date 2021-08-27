@@ -2,6 +2,7 @@
   <div
     class="input-group"
     :class="classes"
+    v-bind="$attrs"
     role="group"
   >
     <slot name="prepend">

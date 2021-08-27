@@ -3,9 +3,9 @@
     :is="tagComputed"
     class="list-group-item"
     :class="classes"
+    v-bind="{ ...$attrs, ...attrs }"
     :aria-current="active ? true : null"
     :aria-disabled="disabled ? true : null"
-    v-bind="attrs"
   >
     <slot />
   </component>

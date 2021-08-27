@@ -2,6 +2,7 @@
   <component
     :is="tag"
     :class="classes"
+    v-bind="$attrs"
     role="group"
     :aria-role="ariaRole"
   >

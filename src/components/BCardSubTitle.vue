@@ -3,6 +3,7 @@
     :is="subTitleTag"
     class="card-subtitle mb-2"
     :class="classes"
+    v-bind="$attrs"
   >
     <slot>
       {{ subTitle }}

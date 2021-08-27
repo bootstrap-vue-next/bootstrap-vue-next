@@ -3,6 +3,7 @@
     ref="element"
     class="offcanvas"
     :class="classes"
+    v-bind="$attrs"
     tabindex="-1"
     aria-labelledby="offcanvasLabel"
     :data-bs-backdrop="backdrop"
