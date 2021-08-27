@@ -8,3 +8,7 @@
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
+
+.dropdown-toggle.dropdown-toggle-no-caret:before, .dropdown-toggle.dropdown-toggle-no-caret:after {
+	display: none!important;
+}
