@@ -11,13 +11,13 @@
       type="button"
       class="btn-close"
       data-bs-dismiss="alert"
-      aria-label="Close"
+      :aria-label="dismissLabel"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, onBeforeUnmount, onMounted, PropType, ref } from 'vue';
 import { Alert } from 'bootstrap';
 import useEventListener from '../composables/useEventListener';
 import { ColorVariant } from '../types';
@@ -25,6 +25,7 @@ import { ColorVariant } from '../types';
 export default defineComponent({
     name: 'BAlert',
     props: {
+        dismissLabel: { type: String, default: 'Close' },
         dismissible: { type: Boolean, default: false },
         fade: { type: Boolean, default: false },
         show: { type: Boolean, default: false },
@@ -49,6 +50,10 @@ export default defineComponent({
 
         onMounted(() => {
             instance.value = new Alert(element.value as HTMLElement);
+        })
+
+        onBeforeUnmount(() => {
+          instance.value?.dispose();
         })
 
         return {

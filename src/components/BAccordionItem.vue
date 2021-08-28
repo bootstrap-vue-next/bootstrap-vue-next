@@ -1,7 +1,7 @@
 <template>
   <div class="accordion-item">
     <h2
-      :id="`heading${computedId}`"
+      :id="`${computedId}heading`"
       class="accordion-header"
     >
       <button
@@ -46,7 +46,6 @@ export default defineComponent({
     directives: {
       BToggle
     },
-    inheritAttrs: false,
     props: {
         title: { type: String },
         id: { type: String },

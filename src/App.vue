@@ -10,6 +10,7 @@
 
     <h6 class="m-2">Sizes</h6>
     <div class="d-flex">
+      <b-alert title="ñdsflkjds" aria-label="aria-label">654</b-alert>
       <b-dropdown text="Small" class="m-2" size="sm">
         <b-dropdown-item href="#">Action</b-dropdown-item>
       </b-dropdown>
@@ -114,7 +115,7 @@
     <h6 class="m-2">Custom Button Icon</h6>
     <b-dropdown text="Custom Button Icon" no-caret class="m-2" variant="link">
       <template #button-content>
-        <img src="@/assets/logo.png" style="height: 1em"/>
+        <img src="@/assets/logo.png" style="height: 1em">
       </template>
       <b-dropdown-item href="#">Action</b-dropdown-item>
     </b-dropdown>
@@ -857,6 +858,7 @@
       </b-card-body>
       <b-accordion flush>
         <b-accordion-item
+          id="iddddd"
           title="Accordion Item #1"
           visible
         >
@@ -1296,7 +1298,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 details.accordion-item summary {
   list-style-type: none;
 }
