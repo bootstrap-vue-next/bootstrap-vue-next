@@ -111,6 +111,14 @@
       <b-dropdown-item href="#">Action</b-dropdown-item>
     </b-dropdown>
 
+    <h6 class="m-2">Custom Button Icon</h6>
+    <b-dropdown text="Custom Button Icon" no-caret class="m-2" variant="link">
+      <template #button-content>
+        <img src="@/assets/logo.png" style="height: 1em"/>
+      </template>
+      <b-dropdown-item href="#">Action</b-dropdown-item>
+    </b-dropdown>
+
     <h5 class="my-3">
       Form input
     </h5>
@@ -1208,9 +1216,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
+import BDropdown from "@/components/BDropdown.vue";
 
 export default defineComponent({
   name: 'App',
+  components: {BDropdown},
   setup() {
     const input = ref();
     const tooltip = ref('Tooltip on <em>top</em>');

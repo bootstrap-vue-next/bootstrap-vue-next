@@ -11,6 +11,10 @@
       v-bind="buttonAttr"
     >
       {{ text }}
+      <slot
+          v-if="noCaret"
+          name="button-content"
+      />
     </b-button>
     <b-button
       v-if="split"
@@ -59,6 +63,7 @@ export default defineComponent({
     right: {type: Boolean, default: false},
     size: {type: String as PropType<Size>},
     split: {type: Boolean, default: false},
+    noCaret: {type: Boolean, default: false},
     splitVariant: {type: String as PropType<ButtonVariant>},
     text: {type: String},
     variant: {type: String as PropType<ButtonVariant>, default: "secondary"},
@@ -88,6 +93,7 @@ export default defineComponent({
 
     const buttonClasses = computed(() => ({
       "dropdown-toggle": !props.split,
+      "dropdown-toggle-no-caret": props.noCaret
     }));
 
     const dropdownMenuClasses = computed(() => ({
