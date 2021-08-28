@@ -10,7 +10,6 @@
 
     <h6 class="m-2">Sizes</h6>
     <div class="d-flex">
-      <b-alert title="ñdsflkjds" aria-label="aria-label">654</b-alert>
       <b-dropdown text="Small" class="m-2" size="sm">
         <b-dropdown-item href="#">Action</b-dropdown-item>
       </b-dropdown>
