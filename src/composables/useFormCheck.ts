@@ -181,8 +181,10 @@ export function useFormCheck(
   );
 
   const toggleChecked = () => {
-    isChecked.value = !isChecked.value;
-    handleUpdate(isChecked, checked, value, uncheckedValue, localChecked, emit);
+    if (!disabled) {
+      isChecked.value = !isChecked.value;
+      handleUpdate(isChecked, checked, value, uncheckedValue, localChecked, emit);
+    }
   };
   const isRequired = computed(() => {
     if (!formName) {
