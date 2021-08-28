@@ -3,7 +3,7 @@
     :class="classes"
   >
     <input
-      :id="id"
+      :id="computedId"
       v-bind="$attrs"
       ref="input"
       :class="inputClasses"
@@ -24,10 +24,8 @@
     >
     <label
       v-if="$slots.default || !plain"
+      :for="computedId"
       :class="labelClasses"
-      @click="toggleChecked()"
-      @focus="focus()"
-      @blur="blur()"
     >
       <slot />
     </label>

@@ -404,6 +404,105 @@ describe("form-checkbox", () => {
     wrapper.unmount();
   });
 
+  it("has id attribute on input when id prop set", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        checked: false,
+        id: "test"
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    const $input = wrapper.find("input");
+    expect($input.attributes("id")).toBeDefined();
+    expect($input.attributes("id")).toEqual("test");
+
+    wrapper.unmount();
+  });
+
+  it("default has id attribute on input", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        checked: false,
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    const $input = wrapper.find("input");
+    expect($input.attributes("id")).toBeDefined();
+
+    wrapper.unmount();
+  });
+
+  it("has for attribute on label when id prop set", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        checked: false,
+        id: "test"
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    const $label = wrapper.find("label");
+    expect($label.attributes("for")).toBeDefined();
+    expect($label.attributes("for")).toEqual("test");
+
+    wrapper.unmount();
+  });
+
+  it("default has for attribute on label equal to id property of input", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        checked: false,
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    const $input = wrapper.find("input");
+    expect($input.attributes("id")).toBeDefined();
+
+    const $label = wrapper.find("label");
+    expect($label.attributes("for")).toBeDefined();
+    expect($input.attributes("id")).toEqual($label.attributes("for"));
+  
+    wrapper.unmount();
+  });
+
+  it("default has unique id attribute on input", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        checked: false,
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    const wrapper2 = mount(BFormCheckbox, {
+      props: {
+        checked: false,
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    const $input = wrapper.find("input");
+    const $input2 = wrapper2.find("input");
+    expect($input.attributes("id")).toBeDefined();
+    expect($input2.attributes("id")).toBeDefined();
+    expect($input.attributes("id")).not.toEqual($input2.attributes("id"));
+
+    wrapper.unmount();
+  });
   // --- Plain styling ---
 
   it("plain has structure <div><input><label></label></div>", async () => {
@@ -1116,6 +1215,93 @@ describe("form-checkbox", () => {
     expect(wrapper.emitted("change")).toBeDefined();
     expect(wrapper.emitted("change").length).toBe(2);
     expect(wrapper.emitted("change")[1][0]).toEqual("foo");
+
+    wrapper.unmount();
+  });
+
+  it("emits a change event when label clicked", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      attachTo: createContainer(),
+      props: {
+        uncheckedValue: "foo",
+        value: "bar"
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    expect(wrapper.vm).toBeDefined();
+    expect(wrapper.vm.localChecked).toBeDefined();
+    expect(wrapper.vm.localChecked).toBe(null);
+    expect(wrapper.emitted("change")).toBeUndefined();
+
+    const $label = wrapper.find("label");
+    expect($label).toBeDefined();
+
+    await $label.trigger("click");
+    expect(wrapper.emitted("change")).toBeDefined();
+    expect(wrapper.emitted("change").length).toBe(1);
+    expect(wrapper.emitted("change")[0][0]).toEqual("bar");
+
+    await $label.trigger("click");
+    expect(wrapper.emitted("change")).toBeDefined();
+    expect(wrapper.emitted("change").length).toBe(2);
+    expect(wrapper.emitted("change")[1][0]).toEqual("foo");
+
+    wrapper.unmount();
+  });
+
+  it("does not emit a change event when clicked if disabled", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      attachTo: createContainer(),
+      props: {
+        uncheckedValue: "foo",
+        value: "bar",
+        disabled: true,
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    expect(wrapper.vm).toBeDefined();
+    expect(wrapper.vm.localChecked).toBeDefined();
+    expect(wrapper.vm.localChecked).toBe(null);
+    expect(wrapper.emitted("change")).toBeUndefined();
+
+    const $input = wrapper.find("input");
+    expect($input).toBeDefined();
+
+    await $input.trigger("click");
+    expect(wrapper.emitted("change")).toBeUndefined();
+
+    wrapper.unmount();
+  });
+
+  it("does not emit a change event when label clicked if disabled", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      attachTo: createContainer(),
+      props: {
+        uncheckedValue: "foo",
+        value: "bar",
+        disabled: true,
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    expect(wrapper.vm).toBeDefined();
+    expect(wrapper.vm.localChecked).toBeDefined();
+    expect(wrapper.vm.localChecked).toBe(null);
+    expect(wrapper.emitted("change")).toBeUndefined();
+
+    const $label = wrapper.find("label");
+    expect($label).toBeDefined();
+
+    await $label.trigger("click");
+    expect(wrapper.emitted("change")).toBeUndefined();
 
     wrapper.unmount();
   });
