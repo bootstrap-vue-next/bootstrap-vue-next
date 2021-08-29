@@ -4,16 +4,21 @@
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
   "version": "0.0.1-alpha.4",
   "license": "MIT",
-  "main": "dist/bootstrap-vue-3.common.js",
+  "main": "dist/bootstrap-vue-3.umd.js",
+  "module": "./dist/bootstrap-vue-3.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/bootstrap-vue-3.es.js",
+      "require": "./dist/bootstrap-vue-3.umd.js"
+    }
+  },
   "private": false,
   "scripts": {
     "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "serve-cli": "vue-cli-service serve",
-    "build-cli": "vue-cli-service build --target lib -name bootstrap-vue-3 src/BootstrapVue.ts",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint src",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "./scripts/deploy.sh",
@@ -37,10 +42,6 @@
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vitejs/plugin-vue": "1.x.x",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-rc.11",

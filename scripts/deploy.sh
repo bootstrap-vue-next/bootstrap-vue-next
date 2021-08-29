@@ -4,7 +4,7 @@
 set -e
 
 # build library
-yarn run build-cli
+yarn run build
 
 # build
 yarn run docs:build
