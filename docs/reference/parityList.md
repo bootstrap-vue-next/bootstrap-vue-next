@@ -78,6 +78,30 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Form Checkbox
 
+### Properties
+
+| Property | Status | Observations
+| --- | --- | --- |
+| `aria-label` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `aria-labeledby` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `autofocus` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `button` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `button-variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `checked` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `disabled` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `form` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `id` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `indeterminate` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `inline` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `name` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `plain` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | reverse behavior compared with bootstrap-vue
+| `required` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `size` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0)
+| `state` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `switch` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `unchecked-value` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `value` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+
 ## Form Datepicker
 
 This is a <Badge type="warning" text="non-standard" /> component.
