@@ -11,6 +11,9 @@ BootstrapVue 3 components
             <RouterLink to="./Badge.html">Badge</RouterLink> — Small and adaptive tag for adding context to just about any content.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./FormCheckbox.html">Form Checkbox</RouterLink> — Custom checkbox input and checkbox group to replace the browser default checkbox input, built on top of semantic and accessible markup. Optionally supports switch styling.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Progress.html">Progress</RouterLink> — A custom progress component for displaying simple or complex progress bars, featuring support for horizontally stacked bars, animated backgrounds, and text labels.
         </b-list-group-item>
         <b-list-group-item>

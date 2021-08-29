@@ -28,6 +28,7 @@ export default defineUserConfig<DefaultThemeOptions>({
               '/components/README.md',
               '/components/Accordion.md',
               '/components/Badge.md',
+              '/components/FormCheckbox.md',
               '/components/Progress.md',
               '/components/Spinners.md',
             ]
