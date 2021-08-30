@@ -138,6 +138,15 @@ export default defineComponent({
 
       const tableContent = [tHead, tBody];
 
+      if(slots['table-caption']) {
+        tableContent.push(h('caption', slots['table-caption']()));
+      } else { 
+        if(props.caption) {
+          const tCaption = h('caption', props.caption);
+          tableContent.push(tCaption);
+        }
+      }
+
       if (props.footClone) {
         const tFoot = h(
           'tfoot',
