@@ -1,91 +1,91 @@
 {
-    "name": "bootstrap-vue-3",
-    "displayName": "BootstrapVue3",
-    "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
-    "version": "0.0.1-alpha.4",
-    "license": "MIT",
-    "main": "dist/bootstrap-vue-3.umd.js",
-    "module": "./dist/bootstrap-vue-3.es.js",
-    "exports": {
-        ".": {
-            "import": "./dist/bootstrap-vue-3.es.js",
-            "require": "./dist/bootstrap-vue-3.umd.js"
-        }
-    },
-    "private": false,
-    "scripts": {
-        "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
-        "dev": "vite",
-        "build": "vite build",
-        "serve": "vite preview",
-        "lint": "eslint src",
-        "docs:dev": "vuepress dev docs",
-        "docs:build": "vuepress build docs",
-        "docs:deploy": "./scripts/deploy.sh",
-        "test": "yarn run test:lint && yarn run test:unit",
-        "test:lint": "yarn run lint",
-        "test:unit": "vite-jest"
-    },
-    "types": "src/BootstrapVue.d.ts",
-    "files": [
-        "dist",
-        "src"
-    ],
-    "dependencies": {
-        "bootstrap": "^5.0.2",
-        "core-js": "^3.6.5"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.14.6",
-        "@babel/preset-env": "*",
-        "@testing-library/jest-dom": "^5.14.1",
-        "@types/bootstrap": "^5.0.16",
-        "@typescript-eslint/eslint-plugin": "^4.18.0",
-        "@typescript-eslint/parser": "^4.18.0",
-        "@vitejs/plugin-vue": "1.x.x",
-        "@vue/compiler-sfc": "^3.0.0",
-        "@vue/eslint-config-typescript": "^7.0.0",
-        "@vue/test-utils": "^2.0.0-rc.11",
-        "babel-loader": "^8.2.2",
-        "bootstrap-icons": "^1.5.0",
-        "esbuild-loader": "^2.13.1",
-        "eslint": "^7.32.0",
-        "eslint-plugin-jest": "^24.4.0",
-        "eslint-plugin-vue": "^7.0.0",
-        "jest": "^27.0.6",
-        "sass": "^1.34.1",
-        "sass-loader": "^10.2.0",
-        "style-loader": "^3.2.1",
-        "ts-jest": "^27.0.4",
-        "typescript": "~4.1.5",
-        "vite": "2.x.x",
-        "vite-jest": "*",
-        "vue-loader": "^16.3.0",
-        "vue": "^3.0.0",
-        "vue3-jest": "^27.0.0-alpha.2",
-        "vuepress": "^2.0.0-beta.22",
-        "improved-yarn-audit": "^2.3.3"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/cdmoro/bootstrap-vue-3.git"
-    },
-    "bugs": {
-        "url": "https://github.com/cdmoro/bootstrap-vue-3/issues"
-    },
-    "homepage": "https://github.com/cdmoro/bootstrap-vue-3",
-    "keywords": [
-        "bootstrap",
-        "components",
-        "typescript",
-        "vue",
-        "component-library",
-        "bootstrapvue",
-        "vue3"
-    ],
-    "jest": {
-        "moduleNameMapper": {
-            "@(.*)$": "<rootDir>/src/$1"
-        }
+  "name": "bootstrap-vue-3",
+  "displayName": "BootstrapVue3",
+  "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
+  "version": "0.0.1-alpha.4",
+  "license": "MIT",
+  "main": "dist/bootstrap-vue-3.umd.js",
+  "module": "./dist/bootstrap-vue-3.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/bootstrap-vue-3.es.js",
+      "require": "./dist/bootstrap-vue-3.umd.js"
     }
+  },
+  "private": false,
+  "scripts": {
+    "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint src",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "./scripts/deploy.sh",
+    "test": "yarn run test:lint && yarn run test:unit",
+    "test:lint": "yarn run lint",
+    "test:unit": "vite-jest"
+  },
+  "types": "src/BootstrapVue.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "bootstrap": "^5.0.2",
+    "core-js": "^3.6.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "*",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@types/bootstrap": "^5.0.16",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "@vitejs/plugin-vue": "1.x.x",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "@vue/test-utils": "^2.0.0-rc.11",
+    "babel-loader": "^8.2.2",
+    "bootstrap-icons": "^1.5.0",
+    "esbuild-loader": "^2.13.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-vue": "^7.0.0",
+    "jest": "^27.0.6",
+    "sass": "^1.34.1",
+    "sass-loader": "^10.2.0",
+    "style-loader": "^3.2.1",
+    "ts-jest": "^27.0.4",
+    "typescript": "~4.1.5",
+    "vite": "2.x.x",
+    "vite-jest": "*",
+    "vue-loader": "^16.3.0",
+    "vue": "^3.0.0",
+    "vue3-jest": "^27.0.0-alpha.2",
+    "vuepress": "^2.0.0-beta.22",
+    "improved-yarn-audit": "^2.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cdmoro/bootstrap-vue-3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdmoro/bootstrap-vue-3/issues"
+  },
+  "homepage": "https://github.com/cdmoro/bootstrap-vue-3",
+  "keywords": [
+    "bootstrap",
+    "components",
+    "typescript",
+    "vue",
+    "component-library",
+    "bootstrapvue",
+    "vue3"
+  ],
+  "jest": {
+    "moduleNameMapper": {
+      "@(.*)$": "<rootDir>/src/$1"
+    }
+  }
 }
