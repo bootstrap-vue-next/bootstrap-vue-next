@@ -7,12 +7,13 @@
       :id="computedId"
       :variant="variant"
       :size="size"
-      :class="buttonClasses"
+      :class="[buttonClasses, (split) ? splitClass : toggleClass]"
+      :disabled="disabled"
+      :type="splitButtonType"
       v-bind="buttonAttr"
     >
       {{ text }}
       <slot
-          v-if="noCaret"
           name="button-content"
       />
     </b-button>
@@ -20,17 +21,22 @@
       v-if="split"
       :variant="splitVariant || variant"
       :size="size"
+      :disabled="disabled"
       v-bind="splitAttr"
+      :class="toggleClass"
       class="dropdown-toggle-split dropdown-toggle"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      <span class="visually-hidden">Toggle Dropdown</span>
+      <span class="visually-hidden">
+        {{toggleText}}
+      </span>
     </b-button>
     <ul
       class="dropdown-menu"
-      :class="dropdownMenuClasses"
+      :class="[menuClass, dropdownMenuClasses]"
       :aria-labelledby="computedId"
+      :role="role"
     >
       <slot />
     </ul>
@@ -53,19 +59,27 @@ export default defineComponent({
     block: {type: Boolean, default: false},
     boundary: {type: [String, HTMLElement], default: 'clippingParents'},
     dark: {type: Boolean, default: false},
+    disabled: {type: Boolean, default: false},
     dropup: {type: Boolean, default: false},
     dropright: {type: Boolean, default: false},
     dropleft: {type: Boolean, default: false},
     id: {type: String},
+    menuClass: { type: [Array, Object, String] },
     noFlip: {type: Boolean, default: false},
     offset: {type: [Number, String], default: 0},
     popperOpts: {type: Object, default: () => ({})},
     right: {type: Boolean, default: false},
+    role: {type: String, default: 'menu'},
     size: {type: String as PropType<Size>},
     split: {type: Boolean, default: false},
+    splitButtonType: {type: String as PropType<'button' | 'submit' | 'reset'>, default: 'button'},
+    splitClass: { type: [Array, Object, String] },
+    splitHref: {type: String, default: null},
     noCaret: {type: Boolean, default: false},
     splitVariant: {type: String as PropType<ButtonVariant>},
     text: {type: String},
+    toggleClass: { type: [Array, Object, String] },
+    toggleText: { type: String, default: 'Toggle dropdown' },
     variant: {type: String as PropType<ButtonVariant>, default: "secondary"},
   },
   emits: [
@@ -93,7 +107,7 @@ export default defineComponent({
 
     const buttonClasses = computed(() => ({
       "dropdown-toggle": !props.split,
-      "dropdown-toggle-no-caret": props.noCaret
+      "dropdown-toggle-no-caret": props.noCaret && !props.split
     }));
 
     const dropdownMenuClasses = computed(() => ({
@@ -103,7 +117,8 @@ export default defineComponent({
     const buttonAttr = computed(() => ({
       'data-bs-toggle': (props.split) ? null : 'dropdown',
       'aria-expanded': (props.split) ? null : false,
-      'ref': (props.split) ? null : dropdown
+      'ref': (props.split) ? null : dropdown,
+      'href': (props.split) ? props.splitHref : null,
     }));
 
     const splitAttr = computed(() => ({

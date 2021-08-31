@@ -59,6 +59,15 @@ import {computed, defineComponent, PropType, watch} from 'vue';
 import getID from '../utils/getID';
 import Alignment from '../types/Alignment';
 
+const getTabs = (slots) : any[] => {
+    if (!slots || !slots.default) return [];
+
+    const defaultSlots = slots.default();
+
+    return ((defaultSlots.length === 1 && typeof defaultSlots[0].type === 'symbol') ? defaultSlots[0].children : defaultSlots)
+        .filter((child: any) => child.type.name === "BTab");
+}
+
 export default defineComponent({
     name: 'BTabs',
     props: {
@@ -92,9 +101,7 @@ export default defineComponent({
         let tabs: any[] = [];
 
         if (slots.default) {
-          tabs = slots
-            .default()
-            .filter((child: any) => child.type.name === "BTab")
+          tabs = getTabs(slots)
             .map((tab: any, idx) => {
               const buttonId = tab.props['button-id'] || getID('tab');
               const contentId = tab.props.id || getID();
@@ -150,13 +157,13 @@ export default defineComponent({
       })
 
       watch(() => props.modelValue, (newValue, oldValue) => {
-        const defaultSlots = (slots.default) ? slots.default().filter((child: any) => child.type.name === "BTab") : null
-        const disabledSlotsIdx = (defaultSlots) ? defaultSlots.reduce((arr: number[], child: any, idx: number) => {
+        const tabs = (slots.default) ? getTabs(slots) : null
+        const disabledSlotsIdx = (tabs) ? tabs.reduce((arr: number[], child: any, idx: number) => {
           if (child.props.disabled === '') arr.push(idx)
           return arr
         }, []) : []
 
-        const maxIdx = (defaultSlots) ? defaultSlots.length - 1 : 0;
+        const maxIdx = (tabs) ? tabs.length - 1 : 0;
 
         if (disabledSlotsIdx.includes(newValue)) {
           const forward = newValue > oldValue;
