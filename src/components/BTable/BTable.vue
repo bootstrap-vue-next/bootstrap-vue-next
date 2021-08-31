@@ -1,62 +1,11 @@
 <template>
-  <table
-    class="table"
-    :class="classes"
-  >
-    <caption v-if="caption">
-      {{
-        caption
-      }}
-    </caption>
-    <thead>
-      <tr>
-        <th
-          v-for="(th, i) in headerTable"
-          :key="i"
-          scope="col"
-        >
-          {{ th }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="(tr, i) in items"
-        :key="i"
-        :class="{ [`table-${tr._rowVariant}`]: tr._rowVariant }"
-      >
-        <td
-          v-for="(value, key, index) in tr"
-          :key="index"
-        >
-          <slot
-            :name="`cell(${key})`"
-            v-bind="{ value, items }"
-          >
-            {{
-              value
-            }}
-          </slot>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot v-if="footClone">
-      <tr>
-        <th
-          v-for="(th, i) in headerTable"
-          :key="i"
-          scope="col"
-        >
-          {{ th }}
-        </th>
-      </tr>
-    </tfoot>
-  </table>
+  <div />
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, h, PropType } from 'vue';
-import { Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign } from '../types';
+import { Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign } from '../../types';
+import useItemHelper from './itemHelper';
 
 export default defineComponent({
   name: 'BTable',
@@ -91,10 +40,16 @@ export default defineComponent({
       'caption-top': props.captionTop,
     }));
 
+    const itemHelper = useItemHelper();
+    const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items));
+
     const headerTable = computed(() => {
-      if (props.items.length > 0) {
-        return Object.keys(props.items[0]).map((th) => th.replaceAll('_', ' '));
+      if(computedFields.value.length > 0) {
+        return computedFields.value.map((f) => f.label);
       }
+      // if (props.items.length > 0) {
+      //   return Object.keys(props.items[0]).map((th) => th.replaceAll('_', ' '));
+      // }
 
       return [];
     });
@@ -118,17 +73,16 @@ export default defineComponent({
           props.items.map((tr) =>
             h(
               'tr',
-              Object.keys(tr).map((cell) => {
-                const slotName = `cell(${cell})`;
-                let tdContent = tr[cell];
+              computedFields.value.map((field) => {
+                const slotName = `cell(${field.key})`;
+                let tdContent = tr[field.key];
 
                 if (slots[slotName]) {
                   tdContent = slots[slotName]?.({
-                    value: tr[cell],
+                    value: tr[field.key],
                     items: props.items
                   });
                 }
-
                 return h('td', tdContent);
               })
             )
@@ -185,3 +139,5 @@ export default defineComponent({
   },
 });
 </script>
+
+

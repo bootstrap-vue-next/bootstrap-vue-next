@@ -605,6 +605,13 @@
       type="range"
     />
     {{ name }}
+    
+    <h2>Table</h2>
+
+    <h5 class="my-3">
+      Table without field definitions
+    </h5>
+
     <b-table
       responsive="xs"
       caption="List of users"
@@ -618,6 +625,45 @@
         <a href="#">{{ data.value }}</a>
       </template>
     </b-table>
+
+    <h5 class="my-3">
+      Table with string field definitions
+    </h5>
+
+    <b-table
+      responsive="xs"
+      caption="List of users"
+      :items="items"
+      :fields="stringTableDefinitions"
+      striped
+      hover
+      foot-clone
+    >
+      <template #cell(first_name)="data">
+        <a href="#">{{ data.value }}</a>
+      </template>
+    </b-table>
+
+    <h5 class="my-3">
+      Table with object field definitions
+    </h5>
+
+    <b-table
+      responsive="xs"
+      caption="List of users"
+      :items="items"
+      :fields="objectTableDefinitions"
+      striped
+      hover
+      foot-clone
+    >
+      <template #cell(first_name)="data">
+        <a href="#">{{ data.value }}</a>
+      </template>
+    </b-table>
+
+    <h2>Carousel</h2>
+
     <b-carousel
       id="carousel-1"
       :interval="4000"
@@ -1218,6 +1264,7 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
 import BDropdown from "@/components/BDropdown.vue";
+import { TableFieldObject } from './types/TableField';
 
 export default defineComponent({
   name: 'App',
@@ -1236,6 +1283,12 @@ export default defineComponent({
           { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
           { age: 38, first_name: 'Jami', last_name: 'Carney' }
         ];
+    const stringTableDefinitions = ref(['last_name', 'first_name', 'age']);
+    const objectTableDefinitions = ref<TableFieldObject[]>([
+      {key: 'last_name', label: "Family name"},
+      {key: 'first_name', label: "Given name"},
+      ]);
+
     const name = ref('');
 
     const consoleLog = () => console.log('button clicked!');
@@ -1262,6 +1315,8 @@ export default defineComponent({
       collapse,
       offcanvas,
       items: tableItems,
+      stringTableDefinitions,
+      objectTableDefinitions,
     }
   },
   data() {
