@@ -1264,7 +1264,7 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useBreadcrumb } from './composables/useBreadcrumb';
 import BDropdown from "@/components/BDropdown.vue";
-import { TableFieldObject } from './types/TableField';
+import TableField from './types/TableField';
 
 export default defineComponent({
   name: 'App',
@@ -1284,7 +1284,7 @@ export default defineComponent({
       { age: 38, first_name: 'Jami', last_name: 'Carney' }
     ];
     const stringTableDefinitions = ref(['last_name', 'first_name', 'age']);
-    const objectTableDefinitions = ref<TableFieldObject[]>([
+    const objectTableDefinitions = ref<TableField[]>([
       {key: 'last_name', label: 'Family name'},
       {key: 'first_name', label: 'Given name'},
     ]);
