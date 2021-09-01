@@ -7,7 +7,9 @@
         :class="[classes, headerClasses]"
         :role="headerRole"
     >
-      {{ header }}
+      <slot name="header">
+        {{ header }}
+      </slot>
     </component>
     <ul
         :id="id"
