@@ -47,10 +47,6 @@ export default defineComponent({
       if(computedFields.value.length > 0) {
         return computedFields.value.map((f) => f.label);
       }
-      // if (props.items.length > 0) {
-      //   return Object.keys(props.items[0]).map((th) => th.replaceAll('_', ' '));
-      // }
-
       return [];
     });
 

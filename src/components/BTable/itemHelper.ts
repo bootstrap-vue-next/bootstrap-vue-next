@@ -8,11 +8,11 @@ const useItemHelper = () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
     const fields: TableFieldObject[] = [];
 
-    if((! origFields?.length) && items?.length) {
-
-        Object.keys(items[0]).forEach((k) => fields.push({ key: k, label: startCase(k)}));
-        return fields;
+    if (!origFields?.length && items?.length) {
+      Object.keys(items[0]).forEach((k) => fields.push({ key: k, label: startCase(k) }));
+      return fields;
     }
+
     if (Array.isArray(origFields)) {
       origFields.forEach((f) => {
         if (typeof f === "string") {

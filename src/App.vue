@@ -1278,16 +1278,16 @@ export default defineComponent({
     const collapse = ref(false);
     const offcanvas = ref(false);
     const tableItems = [
-          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-          { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-          { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-          { age: 38, first_name: 'Jami', last_name: 'Carney' }
-        ];
+      { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+      { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+      { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+      { age: 38, first_name: 'Jami', last_name: 'Carney' }
+    ];
     const stringTableDefinitions = ref(['last_name', 'first_name', 'age']);
     const objectTableDefinitions = ref<TableFieldObject[]>([
-      {key: 'last_name', label: "Family name"},
-      {key: 'first_name', label: "Given name"},
-      ]);
+      {key: 'last_name', label: 'Family name'},
+      {key: 'first_name', label: 'Given name'},
+    ]);
 
     const name = ref('');
 
