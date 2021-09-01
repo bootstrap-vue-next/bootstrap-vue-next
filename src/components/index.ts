@@ -26,6 +26,7 @@ import BContainer from "./BContainer.vue";
 import BDropdown from "./BDropdown.vue";
 import BDropdownDivider from "./BDropdownDivider.vue";
 import BDropdownForm from "./BDropdownForm.vue";
+import BDropdownGroup from "./BDropdownGroup.vue";
 import BDropdownHeader from "./BDropdownHeader.vue";
 import BDropdownItem from "./BDropdownItem.vue";
 import BDropdownItemButton from "./BDropdownItemButton.vue";
@@ -89,6 +90,7 @@ export default {
   BDropdown,
   BDropdownDivider,
   BDropdownForm,
+  BDropdownGroup,
   BDropdownHeader,
   BDropdownItem,
   BDropdownItemButton,
