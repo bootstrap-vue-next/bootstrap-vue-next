@@ -87,7 +87,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `autofocus` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `button` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `button-variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
-| `checked` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
+| `checked` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) | Use v-model
 | `disabled` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `form` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `id` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
