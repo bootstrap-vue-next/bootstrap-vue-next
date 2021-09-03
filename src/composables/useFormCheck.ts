@@ -90,6 +90,7 @@ export const handleUpdate = (
 
   if (localChecked.value !== checked) {
     emit("input", checked);
+    emit("update:modelValue", checked);
   }
 
   if (!Array.isArray(checked)) {
@@ -221,6 +222,7 @@ export function useFormCheck(
       );
     }
     emit("change", localChecked.value);
+    emit("update:modelValue", localChecked.value);
   };
 
   return {
