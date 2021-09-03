@@ -922,19 +922,52 @@
 
     <div>
       <h1>Checkbox form</h1>
-      <b-form-checkbox>Default</b-form-checkbox>
-      <b-form-checkbox button>
-        Button format
-      </b-form-checkbox>
-      <b-form-checkbox required>
-        Required
-      </b-form-checkbox>
-      <b-form-checkbox disabled>
-        Disabled
-      </b-form-checkbox>
-      <b-form-checkbox indeterminate>
-        Indeterminate
-      </b-form-checkbox>
+      <div class="row">
+        <b-form-checkbox v-model="checkedDefault" class="col-4">Default</b-form-checkbox> 
+        <div class="col-6">Checked: {{ checkedDefault }}</div>
+      </div>
+      <div class="row">
+        <b-form-checkbox v-model="checkedButton" button class="col-4">Button format</b-form-checkbox>
+        <div class="col-6">Checked: {{ checkedButton }}</div>
+      </div>
+      <div class="row">
+        <b-form-checkbox v-model="checkedRequired" required class="col-4">Required</b-form-checkbox> 
+        <div class="col-6">Checked: {{ checkedRequired }}</div>
+      </div>     
+      <div class="row">
+        <b-form-checkbox disabled>Disabled</b-form-checkbox>
+      </div>
+      <div class="row">
+        <b-form-checkbox v-model="checkedIndeterminate" indeterminate class="col-4">Indeterminate</b-form-checkbox> 
+        <div class="col-6">Checked: {{ checkedIndeterminate }}</div>
+      </div>
+      <div class="row">
+        <b-form-checkbox v-model="checkedString" value="correct" unchecked-value="incorrect" class="col-4">Bound to string</b-form-checkbox> 
+        <div class="col-6">Value: {{ checkedString }}</div>
+      </div>
+      <p />
+      <h6>Checkbox bound to array</h6>
+      <div class="row">
+        <div class="col-4"><strong>Select some cars</strong></div>
+        <div class="col-4"><strong>Selected cars</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <b-form-checkbox
+            v-for="(car, index) in checkedAvailableCars"
+            :key="index"
+            v-model="checkedSelectedCars"
+            :value="car"
+          >
+            {{ car }}
+          </b-form-checkbox>
+        </div>
+        <div class="col-8">
+          <ul>
+            <li v-for="(car, index) in checkedSelectedCars" :key="index">{{ car }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div>
@@ -1292,6 +1325,14 @@ export default defineComponent({
     const name = ref('');
 
     const consoleLog = () => console.log('button clicked!');
+    
+    const checkedDefault = ref(false);
+    const checkedButton = ref(false);
+    const checkedRequired = ref(false);
+    const checkedIndeterminate = ref(false);
+    const checkedString = ref('incorrect');
+    const checkedAvailableCars = ['BMW', 'Mercedes', 'Toyota'];
+    const checkedSelectedCars = ref([]);
 
     onMounted(() => {
       // input.value?.focus();
@@ -1317,6 +1358,13 @@ export default defineComponent({
       items: tableItems,
       stringTableDefinitions,
       objectTableDefinitions,
+      checkedDefault,
+      checkedButton,
+      checkedRequired,
+      checkedIndeterminate,
+      checkedString,
+      checkedAvailableCars,
+      checkedSelectedCars,
     }
   },
   data() {

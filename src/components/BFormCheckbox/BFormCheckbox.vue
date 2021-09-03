@@ -44,7 +44,6 @@ export default defineComponent({
     ariaLabel: { type: String },
     ariaLabelledBy: { type: String },
     autofocus: { type: Boolean, default: false },
-    checked: { type: [Boolean, String, Array], default: null },
     plain: { type: Boolean, default: true },
     button: { type: Boolean, default: false },
     switch: { type: Boolean, default: false },
@@ -58,7 +57,8 @@ export default defineComponent({
     size: { type: String as PropType<InputSize>, default: "md" },
     state: { type: Boolean, default: null },
     uncheckedValue: { type: [String, Boolean], default: false },
-    value: { type: [String, Boolean, Object], default: false }
+    value: { type: [String, Boolean, Object], default: false },
+    modelValue: { type: [Boolean, String, Array], default: null },
   },
   emits: ["update:modelValue", "input", "change"],
   setup(props, {emit}: SetupContext) {
@@ -82,7 +82,7 @@ export default defineComponent({
         props.inline,
         props.switch,
         props.state,
-        props.checked,
+        props.modelValue,
         props.value,
         props.buttonVariant,
         props.uncheckedValue,
@@ -91,7 +91,7 @@ export default defineComponent({
         props.disabled,
         emit);
     onUpdated(() => {
-      handleUpdate(isChecked, props.checked, props.value, props.uncheckedValue, localChecked, emit)
+      handleUpdate(isChecked, props.modelValue, props.value, props.uncheckedValue, localChecked, emit)
 
     });
 
