@@ -14,8 +14,24 @@ To pre-check any checkboxes, set the v-model to the value(s) of the checks that 
 
 Note: the unchecked-value prop does not affect the native `<input>`'s `value` attribute, because browsers don't include unchecked boxes in form submissions. To guarantee that one of two values is submitted in a native `<form>` submit (e.g. 'yes' or 'no'), use radio inputs instead. This is the same limitation that Vue has with native checkbox inputs.
 
+<ClientOnly>
+  <b-card>
+    <div>
+      <b-form-checkbox
+        v-for="(car, index) in availableCars"
+        :key="index"
+        v-model="selectedCars"
+        :value="car"
+      >
+        {{ car }}
+      </b-form-checkbox>
+    </div>
+    <div class="mt-2">Selected: <strong>{{ concatSelectedCars}}</strong></div>
+  </b-card>
+</ClientOnly>
+
 ```html
-<div class="row">
+<div>
   <b-form-checkbox
     v-for="(car, index) in availableCars"
     :key="index"
@@ -25,11 +41,18 @@ Note: the unchecked-value prop does not affect the native `<input>`'s `value` at
     {{ car }}
   </b-form-checkbox>
 </div>
-```
+<div class="mt-2">Selected: <strong>{{ concatSelectedCars}}</strong></div>
 
-```typescript
-const availableCars = ['BMW', 'Mercedes', 'Toyota']
-const selectedCars = ref([])
+<script lang="ts" setup>
+  import {ref, computed} from 'vue'
+
+  const availableCars = ['BMW', 'Mercedes', 'Toyota']
+  const selectedCars = ref([])
+
+  const concatSelectedCars = computed(() => {
+    return selectedCars.value.join(', ')
+  })
+</script>
 ```
 
 ### Multiple checkboxes and accessibility
@@ -51,15 +74,30 @@ Change the button variant by setting the button-variant prop to one of the stand
 <ClientOnly>
     <b-card>
         <div class="d-flex flex-row">
-            <b-form-checkbox class="m-2" button>Button Checkbox</b-form-checkbox>
-            <b-form-checkbox class="m-2" button button-variant="danger">Button Checkbox</b-form-checkbox>
+            <b-form-checkbox v-model="button1Checked" class="m-2" button>
+                Button Checkbox (Checked: {{ button1Checked }})
+            </b-form-checkbox>
+            <b-form-checkbox v-model="button2Checked" class="m-2" button button-variant="danger">
+                Button Checkbox (Checked: {{ button2Checked }})
+            </b-form-checkbox>
         </div>
     </b-card>
 </ClientOnly>
 
 ```html
-<b-form-checkbox button>Button Checkbox</b-form-checkbox>
-<b-form-checkbox button button-variant="danger">Button Checkbox</b-form-checkbox>
+<b-form-checkbox v-model="button1Checked" class="m-2" button>
+  Button Checkbox (Checked: {{ button1Checked }})
+</b-form-checkbox>
+<b-form-checkbox v-model="button2Checked" class="m-2" button button-variant="danger">
+  Button Checkbox (Checked: {{ button2Checked }})
+</b-form-checkbox>
+
+<script lang="ts" setup>
+  import {ref} from 'vue'
+
+  const button1Checked = ref(false)
+  const button2Checked = ref(false)
+</script>
 ```
 
 ## Switch style checkboxes
@@ -74,12 +112,18 @@ A single checkbox can be rendered with a switch appearance by setting the prop s
 
 <ClientOnly>
     <b-card>
-        <b-form-checkbox switch>Switch Checkbox</b-form-checkbox>
+        <b-form-checkbox v-model="switchChecked" switch>Switch Checkbox <strong>(Checked: {{ switchChecked }})</strong></b-form-checkbox>
     </b-card>
 </ClientOnly>
 
 ```html
 <b-form-checkbox switch>Switch Checkbox</b-form-checkbox>
+
+<script lang="ts" setup>
+  import {ref} from 'vue'
+
+  const switchChecked = ref(false)
+</script>
 ```
 
 ## Non custom check inputs (plain)
@@ -139,12 +183,21 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 
 <ClientOnly>
     <b-card>
-        <b-form-checkbox :indeterminate="true">Click me to see what happens</b-form-checkbox>
+        <b-form-checkbox v-model="intermChecked" :indeterminate="true">Click me to see what happens</b-form-checkbox>
+        <div class="mt-2">
+            Checked: <strong>{{ intermChecked }}</strong>
+        </div>
     </b-card>
 </ClientOnly>
 
 ```html
 <b-form-checkbox :indeterminate="true">Click me to see what happens</b-form-checkbox>
+
+<script lang="ts" setup>
+  import {ref} from 'vue'
+
+  const intermChecked = ref(true)
+</script>
 ```
 
 ## Component reference
@@ -192,3 +245,17 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 | -------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
 | `change` | `checked` - Value of checkbox(es). When bound to multiple checkboxes, value will be an array | Emitted when selected value(s) is changed due to user interaction |
 | `input`  | `checked` - Value of checkbox(es). When bound to multiple checkboxes, value will be an array | Emitted when selected value(s) is changed                         |
+
+<script lang='ts' setup>
+  import {ref, computed} from 'vue'
+
+  const button1Checked = ref(false);
+  const button2Checked = ref(false);
+  const switchChecked = ref(false);
+  const intermChecked = ref(true);
+
+  const availableCars = ['BMW', 'Mercedes', 'Toyota'];
+  const selectedCars = ref([]);
+ 
+  const concatSelectedCars = computed(() => { return selectedCars.value.join(', ');});
+</script>
