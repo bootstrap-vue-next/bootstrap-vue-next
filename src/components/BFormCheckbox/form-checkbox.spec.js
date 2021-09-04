@@ -8,7 +8,7 @@ describe("form-checkbox", () => {
   it("default has structure <div><input><label></label></div>", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -30,7 +30,7 @@ describe("form-checkbox", () => {
   it("default has wrapper class form-check and custom-checkbox", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -47,7 +47,7 @@ describe("form-checkbox", () => {
   it("default has input type checkbox", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -65,7 +65,7 @@ describe("form-checkbox", () => {
   it("default does not have aria-label attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -80,7 +80,7 @@ describe("form-checkbox", () => {
   it("has aria-label attribute on input when aria-label provided", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         ariaLabel: "bar"
       },
       slots: {
@@ -96,7 +96,7 @@ describe("form-checkbox", () => {
   it("default has input class form-check-input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -114,7 +114,7 @@ describe("form-checkbox", () => {
   it("default has label class form-check-label", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -131,7 +131,7 @@ describe("form-checkbox", () => {
   it("has default slot content in label", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -147,7 +147,7 @@ describe("form-checkbox", () => {
   it("default has no disabled attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -163,7 +163,7 @@ describe("form-checkbox", () => {
   it("has disabled attribute on input when prop disabled set", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         disabled: true
       },
       slots: {
@@ -180,7 +180,7 @@ describe("form-checkbox", () => {
   it("default has no required attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -196,7 +196,7 @@ describe("form-checkbox", () => {
   it("does not have required attribute on input when prop required set and name prop not provided", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         required: true
       },
       slots: {
@@ -213,7 +213,7 @@ describe("form-checkbox", () => {
   it("has required attribute on input when prop required and name set", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         name: "test",
         required: true
       },
@@ -231,7 +231,7 @@ describe("form-checkbox", () => {
   it("default has no name attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -247,7 +247,7 @@ describe("form-checkbox", () => {
   it("has name attribute on input when name prop set", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         name: "test"
       },
       slots: {
@@ -265,7 +265,7 @@ describe("form-checkbox", () => {
   it("default has no form attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -281,7 +281,7 @@ describe("form-checkbox", () => {
   it("has form attribute on input when form prop set", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         form: "test"
       },
       slots: {
@@ -314,7 +314,7 @@ describe("form-checkbox", () => {
   it("default has class form-check-inline when prop inline=true", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         inline: true
       },
       slots: {
@@ -332,7 +332,7 @@ describe("form-checkbox", () => {
   it("default has no input validation classes by default", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -351,7 +351,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         state: null,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -370,7 +370,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         state: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -389,7 +389,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         state: false,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -407,7 +407,7 @@ describe("form-checkbox", () => {
   it("has id attribute on input when id prop set", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         id: "test"
       },
       slots: {
@@ -425,7 +425,7 @@ describe("form-checkbox", () => {
   it("default has id attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
       },
       slots: {
         default: "foobar"
@@ -441,7 +441,7 @@ describe("form-checkbox", () => {
   it("has for attribute on label when id prop set", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         id: "test"
       },
       slots: {
@@ -459,7 +459,7 @@ describe("form-checkbox", () => {
   it("default has for attribute on label equal to id property of input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
       },
       slots: {
         default: "foobar"
@@ -479,7 +479,7 @@ describe("form-checkbox", () => {
   it("default has unique id attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
       },
       slots: {
         default: "foobar"
@@ -488,7 +488,7 @@ describe("form-checkbox", () => {
 
     const wrapper2 = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
       },
       slots: {
         default: "foobar"
@@ -509,7 +509,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -532,7 +532,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -550,7 +550,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -569,7 +569,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -587,7 +587,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -605,7 +605,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -622,7 +622,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -638,7 +638,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: false
+        modelValue: false
       }
     });
 
@@ -651,7 +651,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -671,7 +671,7 @@ describe("form-checkbox", () => {
       props: {
         state: null,
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -691,7 +691,7 @@ describe("form-checkbox", () => {
       props: {
         state: true,
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -711,7 +711,7 @@ describe("form-checkbox", () => {
       props: {
         state: false,
         plain: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -732,7 +732,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         switch: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -755,7 +755,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         switch: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -774,7 +774,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         switch: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -793,7 +793,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         switch: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -811,7 +811,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         switch: true,
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -831,7 +831,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         button: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -854,7 +854,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         button: true,
-        checked: "",
+        modelValue: "",
         value: "a"
       },
       slots: {
@@ -873,7 +873,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         button: true,
-        checked: false,
+        modelValue: false,
         value: "a"
       },
       slots: {
@@ -896,7 +896,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         button: true,
-        checked: "a",
+        modelValue: "a",
         value: "a"
       },
       slots: {
@@ -919,7 +919,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         button: true,
-        checked: false,
+        modelValue: false,
         value: "a"
       },
       slots: {
@@ -952,7 +952,7 @@ describe("form-checkbox", () => {
       attachTo: createContainer(),
       props: {
         button: true,
-        checked: false,
+        modelValue: false,
         value: "a"
       },
       slots: {
@@ -987,7 +987,7 @@ describe("form-checkbox", () => {
       props: {
         button: true,
         buttonVariant: "primary",
-        checked: false,
+        modelValue: false,
         value: "a"
       },
       slots: {
@@ -1012,7 +1012,7 @@ describe("form-checkbox", () => {
   it("does not have input indeterminate set by default", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -1029,7 +1029,7 @@ describe("form-checkbox", () => {
   it("has input indeterminate set by when indeterminate=true", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         indeterminate: true
       },
       slots: {
@@ -1047,7 +1047,7 @@ describe("form-checkbox", () => {
   it("has input indeterminate set by when indeterminate set to true after mount", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false,
+        modelValue: false,
         indeterminate: false
       },
       slots: {
@@ -1073,7 +1073,7 @@ describe("form-checkbox", () => {
   it("default has internal localChecked=false when prop checked=false", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -1090,7 +1090,7 @@ describe("form-checkbox", () => {
   it("default has internal localChecked=true when prop checked=true", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        checked: true
+        modelValue: true
       },
       slots: {
         default: "foobar"
@@ -1127,7 +1127,7 @@ describe("form-checkbox", () => {
       props: {
         uncheckedValue: "foo",
         value: "bar",
-        checked: "foo"
+        modelValue: "foo"
       },
       slots: {
         default: "foobar"
@@ -1146,7 +1146,7 @@ describe("form-checkbox", () => {
       props: {
         uncheckedValue: "foo",
         value: "bar",
-        checked: "bar"
+        modelValue: "bar"
       },
       slots: {
         default: "foobar"
@@ -1175,7 +1175,7 @@ describe("form-checkbox", () => {
     expect(wrapper.vm.localChecked).toBeDefined();
     expect(wrapper.vm.localChecked).toBe(null);
 
-    await wrapper.setProps({ checked: "bar" });
+    await wrapper.setProps({ modelValue: "bar" });
     expect(wrapper.vm.localChecked).toEqual("bar");
     expect(wrapper.emitted("input")).toBeDefined();
 
@@ -1311,7 +1311,7 @@ describe("form-checkbox", () => {
       attachTo: createContainer(),
       props: {
         value: "bar",
-        checked: ["foo"]
+        modelValue: ["foo"]
       },
       slots: {
         default: "foobar"
@@ -1344,7 +1344,7 @@ describe("form-checkbox", () => {
     expect(wrapper.emitted("change").length).toBe(2);
     expect(wrapper.emitted("change")[1][0]).toEqual(["foo"]);
 
-    await wrapper.setProps({ checked: [] });
+    await wrapper.setProps({ modelValue: [] });
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true);
     expect(wrapper.vm.localChecked.length).toBe(0);
     expect(wrapper.emitted("change")).toBeDefined();
@@ -1373,7 +1373,7 @@ describe("form-checkbox", () => {
       attachTo: createContainer(),
       props: {
         value: { bar: 1, baz: 2 },
-        checked: ["foo"]
+        modelValue: ["foo"]
       },
       slots: {
         default: "foobar"
@@ -1407,7 +1407,7 @@ describe("form-checkbox", () => {
     const wrapper = mount(BFormCheckbox, {
       attachTo: createContainer(),
       props: {
-        checked: false
+        modelValue: false
       },
       slots: {
         default: "foobar"
@@ -1464,7 +1464,7 @@ describe("form-checkbox", () => {
       const wrapper = mount(BFormCheckbox, {
         attachTo: createContainer(),
         props: {
-          checked: false,
+          modelValue: false,
           autofocus: true
         },
         slots: {
@@ -1488,7 +1488,7 @@ describe("form-checkbox", () => {
       const wrapper = mount(BFormCheckbox, {
         attachTo: createContainer(),
         props: {
-          checked: false,
+          modelValue: false,
           autofocus: false
         },
         slots: {
