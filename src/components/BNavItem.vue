@@ -1,8 +1,5 @@
 <template>
-  <li
-    class="nav-item"
-    :class="classes"
-  >
+  <li class="nav-item" :class="classes">
     <a
       href="#"
       class="nav-link"
@@ -15,23 +12,23 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import {computed, defineComponent} from 'vue'
 
 export default defineComponent({
-    name: 'BNavItem',
-    props: {
-        active: { type: Boolean, default: false },
-        disabled: { type: Boolean, default: false },
-    },
-    setup(props) {
-        const classes = computed(() => ({
-            active: props.active,
-            disabled: props.disabled,
-        }));
+  name: 'BNavItem',
+  props: {
+    active: {type: Boolean, default: false},
+    disabled: {type: Boolean, default: false},
+  },
+  setup(props) {
+    const classes = computed(() => ({
+      active: props.active,
+      disabled: props.disabled,
+    }))
 
-        return {
-            classes
-        }
-    },
+    return {
+      classes,
+    }
+  },
 })
 </script>

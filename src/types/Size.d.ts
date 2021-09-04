@@ -1,3 +1,3 @@
-type Size = 'sm' | 'lg' | undefined;
+type Size = 'sm' | 'lg' | undefined
 
-export default Size;
+export default Size

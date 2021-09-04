@@ -1,3 +1,3 @@
-import BFormCheckbox from "./BFormCheckbox.vue";
+import BFormCheckbox from './BFormCheckbox.vue'
 
-export default BFormCheckbox;
+export default BFormCheckbox

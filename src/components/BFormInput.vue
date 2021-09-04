@@ -22,79 +22,67 @@
     @input="onInput($event)"
     @change="onChange($event)"
     @blur="onBlur($event)"
-  >
-  <datalist
-    v-if="Array.isArray(list) && list.length"
-    :id="computedId"
-  >
-    <option
-      v-for="item in list"
-      :key="item"
-      :value="item"
-    />
+  />
+  <datalist v-if="Array.isArray(list) && list.length" :id="computedId">
+    <option v-for="item in list" :key="item" :value="item" />
   </datalist>
 </template>
 
 <script lang="ts">
-import { InputType, Size } from '../types';
-import { computed, defineComponent, nextTick, onActivated, onMounted, PropType, ref } from 'vue'
-import useId from '../composables/useId';
+import {InputType, Size} from '../types'
+import {computed, defineComponent, nextTick, onActivated, onMounted, PropType, ref} from 'vue'
+import useId from '../composables/useId'
 
 export default defineComponent({
   name: 'BFormInput',
   props: {
     ariaInvalid: {
       type: [Boolean, String] as PropType<boolean | 'false' | 'true' | 'grammar' | 'spelling'>,
-      default: false
+      default: false,
     },
-    autocomplete: { type: String },
-    autofocus: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    form: { type: String },
-    formatter: { type: Function },
-    id: { type: String },
-    lazyFormatter: { type: Boolean, default: false },
-    list: { type: Array as PropType<string[]> },
-    max: { type: [String, Number] },
-    min: { type: [String, Number] },
-    modelValue: { type: [String, Number], default: '' },
-    name: { type: String },
-    number: { type: Boolean, default: false },
-    placeholder: { type: String },
-    plaintext: { type: Boolean, default: false },
-    readonly: { type: Boolean, default: false },
-    required: { type: Boolean, default: false },
-    size: { type: String as PropType<Size> },
-    step: { type: [String, Number] },
-    state: { type: Boolean as PropType<boolean | null | undefined>, default: null },
-    trim: { type: Boolean, default: false },
-    type: { type: String as PropType<InputType>, default: 'text' },
+    autocomplete: {type: String},
+    autofocus: {type: Boolean, default: false},
+    disabled: {type: Boolean, default: false},
+    form: {type: String},
+    formatter: {type: Function},
+    id: {type: String},
+    lazyFormatter: {type: Boolean, default: false},
+    list: {type: Array as PropType<string[]>},
+    max: {type: [String, Number]},
+    min: {type: [String, Number]},
+    modelValue: {type: [String, Number], default: ''},
+    name: {type: String},
+    number: {type: Boolean, default: false},
+    placeholder: {type: String},
+    plaintext: {type: Boolean, default: false},
+    readonly: {type: Boolean, default: false},
+    required: {type: Boolean, default: false},
+    size: {type: String as PropType<Size>},
+    step: {type: [String, Number]},
+    state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
+    trim: {type: Boolean, default: false},
+    type: {type: String as PropType<InputType>, default: 'text'},
   },
-  emits: [
-    'update:modelValue',
-    'change',
-    'blur',
-  ],
-  setup(props, { emit }) {
-    const input = ref<HTMLElement>();
-    const computedId = useId(props.id, 'input');
+  emits: ['update:modelValue', 'change', 'blur'],
+  setup(props, {emit}) {
+    const input = ref<HTMLElement>()
+    const computedId = useId(props.id, 'input')
 
     // lifecycle events
     const handleAutofocus = () => {
       nextTick(() => {
-        if (props.autofocus)
-          input.value?.focus();
+        if (props.autofocus) input.value?.focus()
       })
-    };
-    onMounted(handleAutofocus);
-    onActivated(handleAutofocus);
+    }
+    onMounted(handleAutofocus)
+    onActivated(handleAutofocus)
     // /lifecycle events
 
     // computed
     const classes = computed(() => {
-      const { plaintext, size, state, type } = props;
-      const isRange = type === 'range';
-      const isColor = type === 'color';
+      const {plaintext, size, state, type} = props
+      const isRange = type === 'range'
+      const isColor = type === 'color'
       return {
         'form-range': isRange,
         'form-control': isColor || (!plaintext && !isRange),
@@ -102,62 +90,62 @@ export default defineComponent({
         'form-control-plaintext': plaintext && !isRange && !isColor,
         [`form-control-${size}`]: size,
         'is-valid': state === true,
-        'is-invalid': state === false
+        'is-invalid': state === false,
       }
-    });
+    })
 
     const computedAriaInvalid = computed(() => {
-      const { ariaInvalid, state } = props;
+      const {ariaInvalid, state} = props
       if (ariaInvalid === true || ariaInvalid === 'true') {
-        return 'true';
+        return 'true'
       }
-      return state === false ? 'true' : ariaInvalid;
-    });
+      return state === false ? 'true' : ariaInvalid
+    })
     // /computed
 
     // methods
     const formatValue = (value: unknown, evt: any, force = false) => {
-      const { formatter, lazyFormatter } = props;
-      value = String(value);
+      const {formatter, lazyFormatter} = props
+      value = String(value)
       if (typeof formatter === 'function' && (!lazyFormatter || force)) {
-        value = formatter(value, evt);
+        value = formatter(value, evt)
       }
-      return value;
+      return value
     }
 
     const onInput = (evt: any) => {
-      const { value } = evt.target;
-      const formattedValue = formatValue(value, evt);
+      const {value} = evt.target
+      const formattedValue = formatValue(value, evt)
       if (formattedValue === false || evt.defaultPrevented) {
-        evt.preventDefault();
-        return;
+        evt.preventDefault()
+        return
       }
-      emit('update:modelValue', value);
+      emit('update:modelValue', value)
     }
 
     const onChange = (evt: any) => {
-      const { value } = evt.target;
-      const formattedValue = formatValue(value, evt);
+      const {value} = evt.target
+      const formattedValue = formatValue(value, evt)
       if (formattedValue === false || evt.defaultPrevented) {
-        evt.preventDefault();
-        return;
+        evt.preventDefault()
+        return
       }
-      emit('change', formattedValue);
+      emit('change', formattedValue)
     }
 
     const onBlur = (evt: any) => {
-      const { value } = evt.target;
-      const { trim, number } = props;
-      let formattedValue = formatValue(value, evt, true);
+      const {value} = evt.target
+      const {trim, number} = props
+      let formattedValue = formatValue(value, evt, true)
       if (formattedValue !== false) {
-        if (trim) formattedValue = value.trim();
-        if (number) formattedValue = String(parseFloat(value));
+        if (trim) formattedValue = value.trim()
+        if (number) formattedValue = String(parseFloat(value))
       }
-      emit('blur', evt);
+      emit('blur', evt)
     }
 
     const focus = () => {
-      input.value?.focus();
+      input.value?.focus()
     }
     // /methods
 

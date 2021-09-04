@@ -18,7 +18,7 @@ Use the border spinners for a lightweight loading indicator.
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-spinner></b-spinner>
 ```
 
@@ -39,7 +39,7 @@ The border spinner uses currentColor for its border-color, meaning you can custo
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-spinner variant="primary"></b-spinner>
 <b-spinner variant="secondary"></b-spinner>
 <b-spinner variant="success"></b-spinner>
@@ -60,7 +60,7 @@ If you don’t fancy a border spinner, switch to the grow spinner. While it does
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-spinner type="grow"></b-spinner>
 ```
 
@@ -77,7 +77,7 @@ If you don’t fancy a border spinner, switch to the grow spinner. While it does
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-spinner type="grow" variant="primary"></b-spinner>
 <b-spinner type="grow" variant="secondary"></b-spinner>
 <b-spinner type="grow" variant="success"></b-spinner>
@@ -102,7 +102,7 @@ Use [margin utilities](https://getbootstrap.com/docs/5.0/utilities/spacing/) lik
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-spinner class="m-5"></b-spinner>
 ```
 
@@ -120,9 +120,9 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <div class="d-flex justify-content-center">
-    <b-spinner></b-spinner>
+  <b-spinner></b-spinner>
 </div>
 ```
 
@@ -135,10 +135,10 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <div class="d-flex align-items-center">
-    <strong>Loading...</strong>
-    <b-spinner class="ms-auto"></b-spinner>
+  <strong>Loading...</strong>
+  <b-spinner class="ms-auto"></b-spinner>
 </div>
 ```
 
@@ -152,9 +152,9 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <div class="clearfix">
-    <b-spinner class="float-end"></b-spinner>
+  <b-spinner class="float-end"></b-spinner>
 </div>
 ```
 
@@ -168,9 +168,9 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <div class="text-center">
-    <b-spinner></b-spinner>
+  <b-spinner></b-spinner>
 </div>
 ```
 
@@ -186,7 +186,7 @@ Set the prop `small` to `true` to make a smaller spinner that can quickly be use
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-spinner small label="Small spinner"></b-spinner>
 <b-spinner small label="Small spinner" type="grow"></b-spinner>
 ```
@@ -201,7 +201,7 @@ Or, use custom CSS or inline styles to change the dimensions as needed.
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
 <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow"></b-spinner>
 ```
@@ -224,15 +224,15 @@ Use spinners within buttons to indicate an action is currently processing or tak
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-button variant="primary" disabled>
-    <b-spinner small></b-spinner>
-    <span class="sr-only">Loading...</span>
+  <b-spinner small></b-spinner>
+  <span class="sr-only">Loading...</span>
 </b-button>
 
 <b-button variant="primary" disabled>
-    <b-spinner small></b-spinner>
-    Loading...
+  <b-spinner small></b-spinner>
+  Loading...
 </b-button>
 ```
 
@@ -250,15 +250,15 @@ Use spinners within buttons to indicate an action is currently processing or tak
     </b-card>
 </ClientOnly>
 
-``` html
+```html
 <b-button variant="primary" disabled>
-    <b-spinner small type="grow"></b-spinner>
-    <span class="sr-only">Loading...</span>
+  <b-spinner small type="grow"></b-spinner>
+  <span class="sr-only">Loading...</span>
 </b-button>
 
 <b-button variant="primary" disabled>
-    <b-spinner small type="grow"></b-spinner>
-    Loading...
+  <b-spinner small type="grow"></b-spinner>
+  Loading...
 </b-button>
 ```
 
@@ -274,17 +274,17 @@ As well, when no label is provided, the spinner will automatically have the attr
 
 ### Properties
 
-| Property | Type | Default | Description
-| --- | --- | --- | --- |
-| `label` | `String` |  | Text content to place in the visually-hidden label
-| `role` | `String` | `'status'` | Sets the ARIA attribute `role` to a specific value
-| `small` | `Boolean` | `false` | When set, rendered a smaller spinner suitable for placing in buttons
-| `tag` | `String` | `'span'` | Specify the HTML tag to render instead of the default tag
-| `type` | `String` | `'border'` | Type of spinner to show. Current supported types are 'border' and 'grow'
-| `variant` | `String` | | Applies one of the Bootstrap theme color variants to the component
+| Property  | Type      | Default    | Description                                                              |
+| --------- | --------- | ---------- | ------------------------------------------------------------------------ |
+| `label`   | `String`  |            | Text content to place in the visually-hidden label                       |
+| `role`    | `String`  | `'status'` | Sets the ARIA attribute `role` to a specific value                       |
+| `small`   | `Boolean` | `false`    | When set, rendered a smaller spinner suitable for placing in buttons     |
+| `tag`     | `String`  | `'span'`   | Specify the HTML tag to render instead of the default tag                |
+| `type`    | `String`  | `'border'` | Type of spinner to show. Current supported types are 'border' and 'grow' |
+| `variant` | `String`  |            | Applies one of the Bootstrap theme color variants to the component       |
 
 ### Slots
 
-| Name  | Description |
-| --- | --- |
-| `label`  | Content to place in the visually-hidden label |
+| Name    | Description                                   |
+| ------- | --------------------------------------------- |
+| `label` | Content to place in the visually-hidden label |

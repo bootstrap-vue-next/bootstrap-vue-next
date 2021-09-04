@@ -1,0 +1,13 @@
+bracketSpacing: false
+printWidth: 100
+quoteProps: 'consistent'
+semi: false
+singleQuote: true
+trailingComma: 'es5'
+overrides:
+  - files:
+      - '**/*.css'
+      - '**/*.scss'
+      - '**/*.html'
+    options:
+      singleQuote: false

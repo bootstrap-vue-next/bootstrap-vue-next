@@ -1,3 +1,3 @@
-type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
-export default Breakpoint;
+export default Breakpoint

@@ -47,6 +47,7 @@ As you may suppose, this library is heavily inspired by **BootstrapVue**, as wel
 # Contribute & support 🙌
 
 This project is still in **alpha version** so there is a lot of work to do. If you want to contribute you can:
+
 - submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues/new)
 - or better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls)
 - or even better, visit [my patreon page](https://patreon.com/cdmoro) and support me 😄

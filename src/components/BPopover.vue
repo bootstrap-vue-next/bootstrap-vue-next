@@ -1,5 +1,12 @@
 <template>
-  <div ref="element" class="popover b-popover" :class="classes" :id="id" role="tooltip" tabindex="-1">
+  <div
+    :id="id"
+    ref="element"
+    class="popover b-popover"
+    :class="classes"
+    role="tooltip"
+    tabindex="-1"
+  >
     <div ref="titleRef">
       <slot name="title">
         {{ title }}
@@ -14,77 +21,74 @@
 </template>
 
 <script lang="ts">
-import { Popover } from "bootstrap";
-import { computed, defineComponent, onMounted, PropType, ref, watch } from "vue";
-import useEventListener from '../composables/useEventListener';
-import { ColorVariant } from '../types';
+import {Popover} from 'bootstrap'
+import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
+import useEventListener from '../composables/useEventListener'
+import {ColorVariant} from '../types'
 
 export default defineComponent({
   name: 'BPopover',
   props: {
-    content: { type: String },
-    id: { type: String },
-    noninteractive: { type: Boolean, default: false },
-    placement: { type: String as PropType<Popover.Options["placement"]>, default: "right" },
-    target: { type: String, required: true },
-    title: { type: String },
-    triggers: { type: String as PropType<Popover.Options["trigger"]>, default: "click" },
-    show: { type: Boolean, default: false },
-    variant: { type: String as PropType<ColorVariant>, default: undefined },
+    content: {type: String},
+    id: {type: String},
+    noninteractive: {type: Boolean, default: false},
+    placement: {type: String as PropType<Popover.Options['placement']>, default: 'right'},
+    target: {type: String, required: true},
+    title: {type: String},
+    triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
+    show: {type: Boolean, default: false},
+    variant: {type: String as PropType<ColorVariant>, default: undefined},
   },
-  emits: [
-    'show',
-    'shown',
-    'hide',
-    'hidden',
-    'inserted',
-  ],
-  setup(props, { emit }) {
-    const element = ref<HTMLElement>();
-    const target = ref<HTMLElement>();
-    const instance = ref<Popover>();
-    const titleRef = ref<HTMLElement>();
-    const contentRef = ref<HTMLElement>();
+  emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
+  setup(props, {emit}) {
+    const element = ref<HTMLElement>()
+    const target = ref<HTMLElement>()
+    const instance = ref<Popover>()
+    const titleRef = ref<HTMLElement>()
+    const contentRef = ref<HTMLElement>()
     const classes = computed(() => ({
-      [`b-popover-${props.variant}`]: props.variant
-    }));
+      [`b-popover-${props.variant}`]: props.variant,
+    }))
 
     onMounted(() => {
       instance.value = new Popover(`#${props.target}`, {
-          container: 'body',
-          trigger: props.triggers,
-          placement: props.placement,
-          title: titleRef.value?.innerHTML || '',
-          content: contentRef.value?.innerHTML || '',
-          html: true,
-      });
+        container: 'body',
+        trigger: props.triggers,
+        placement: props.placement,
+        title: titleRef.value?.innerHTML || '',
+        content: contentRef.value?.innerHTML || '',
+        html: true,
+      })
 
       if (document.getElementById(props.target)) {
-        target.value = document.getElementById(props.target) as HTMLElement;
+        target.value = document.getElementById(props.target) as HTMLElement
       }
 
-      element.value?.parentNode?.removeChild(element.value);
+      element.value?.parentNode?.removeChild(element.value)
 
       if (props.show) {
-        instance.value.show();
+        instance.value.show()
       }
-    });
+    })
 
-    watch(() => props.show, (show, oldVal) => {
-      if (show !== oldVal) {
-        if (show) {
-          instance.value?.show();
-        } else {
-          instance.value?.hide();
+    watch(
+      () => props.show,
+      (show, oldVal) => {
+        if (show !== oldVal) {
+          if (show) {
+            instance.value?.show()
+          } else {
+            instance.value?.hide()
+          }
         }
       }
-    });
+    )
 
-    useEventListener(target, 'show.bs.popover', () => emit('show'));
-    useEventListener(target, 'shown.bs.popover', () => emit('shown'));
-    useEventListener(target, 'hide.bs.popover', () => emit('hide'));
-    useEventListener(target, 'hidden.bs.popover', () => emit('hidden'));
-    useEventListener(target, 'inserted.bs.popover', () => emit('inserted'));
+    useEventListener(target, 'show.bs.popover', () => emit('show'))
+    useEventListener(target, 'shown.bs.popover', () => emit('shown'))
+    useEventListener(target, 'hide.bs.popover', () => emit('hide'))
+    useEventListener(target, 'hidden.bs.popover', () => emit('hidden'))
+    useEventListener(target, 'inserted.bs.popover', () => emit('inserted'))
 
     return {
       element,
@@ -93,5 +97,5 @@ export default defineComponent({
       classes,
     }
   },
-});
+})
 </script>
