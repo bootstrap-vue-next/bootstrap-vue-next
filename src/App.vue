@@ -945,6 +945,10 @@
         <b-form-checkbox v-model="checkedString" value="correct" unchecked-value="incorrect" class="col-4">Bound to string</b-form-checkbox> 
         <div class="col-6">Value: {{ checkedString }}</div>
       </div>
+      <div class="row">
+        <b-form-checkbox v-model="checkedPlain" plain class="col-4">Plain</b-form-checkbox> 
+        <div class="col-6">Checked: {{ checkedPlain }}</div>
+      </div>
       <p />
       <h6>Checkbox bound to array</h6>
       <div class="row">
@@ -969,7 +973,7 @@
         </div>
       </div>
     </div>
-
+    <p />
     <div>
       <h1>Radio form</h1>
       <b-form-radio>Default</b-form-radio>
@@ -985,6 +989,7 @@
       <b-form-radio indeterminate>
         Indeterminate
       </b-form-radio>
+      <b-form-radio plain>Plain</b-form-radio>
     </div>
 
     <div>
@@ -1331,6 +1336,7 @@ export default defineComponent({
     const checkedRequired = ref(false);
     const checkedIndeterminate = ref(false);
     const checkedString = ref('incorrect');
+    const checkedPlain = ref(false);
     const checkedAvailableCars = ['BMW', 'Mercedes', 'Toyota'];
     const checkedSelectedCars = ref([]);
 
@@ -1363,6 +1369,7 @@ export default defineComponent({
       checkedRequired,
       checkedIndeterminate,
       checkedString,
+      checkedPlain,
       checkedAvailableCars,
       checkedSelectedCars,
     }

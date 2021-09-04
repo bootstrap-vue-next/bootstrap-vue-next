@@ -44,7 +44,7 @@ export default defineComponent({
     ariaLabel: { type: String },
     ariaLabelledBy: { type: String },
     autofocus: { type: Boolean, default: false },
-    plain: { type: Boolean, default: true },
+    plain: { type: Boolean, default: false },
     button: { type: Boolean, default: false },
     switch: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },

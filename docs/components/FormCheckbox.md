@@ -74,16 +74,16 @@ A single checkbox can be rendered with a switch appearance by setting the prop s
     <b-form-checkbox switch>Switch Checkbox</b-form-checkbox>
 ```
 ## Non custom check inputs (plain)
-You can have `<b-form-checkbox>` render a browser native checkbox input by setting the plain prop to `false`.
+You can have `<b-form-checkbox>` render a browser native checkbox input by setting the plain prop.
 
 <ClientOnly>
     <b-card>
-        <b-form-checkbox :plain="false">Plain Checkbox</b-form-checkbox>
+        <b-form-checkbox plain>Plain Checkbox</b-form-checkbox>
     </b-card>
 </ClientOnly>
 
 ``` html
-    <b-form-checkbox :plain="false">Plain Checkbox</b-form-checkbox>
+    <b-form-checkbox plain>Plain Checkbox</b-form-checkbox>
 ```
 
 ## Contextual states
@@ -149,7 +149,7 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 | `indeterminate` | `Boolean` | `false` | Renders the checkbox in an indeterminate state. | 
 | `inline` | `Boolean` | `false` | When set, renders the checkbox as an inline element rather than as a 100% width block | 
 | `name` | `String` |  | Sets the value of the `name` attribute on the form control | 
-| `plain` | `Boolean` | `true` | When false, renders the form control in plain mode, rather than custom styled mode | 
+| `plain` | `Boolean` | `false` | Renders the form control in plain mode, rather than custom styled mode | 
 | `required` | `Boolean` |  | Adds the `required` attribute to the form control when `name` is also filled in. | 
 | ~~`size`~~ | `String` | `md` | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg' | 
 | `state` | `Boolean` |  | Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state | 

@@ -48,7 +48,7 @@ export default defineComponent({
     ariaLabelledBy: {type: String},
     autofocus: {type: Boolean, default: false},
     checked: {type: [Boolean, String, Array], default: null},
-    plain: {type: Boolean, default: true},
+    plain: {type: Boolean, default: false},
     button: {type: Boolean, default: false},
     switch: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},

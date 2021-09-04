@@ -390,7 +390,7 @@ describe('form-radio', () => {
         wrapper.unmount()
     })
 
-    it('plain has wrapper class form-check', async () => {
+    it('plain has no wrapper class form-check', async () => {
         const wrapper = mount(BFormRadio, {
             props: {
                 plain: true,
@@ -401,8 +401,8 @@ describe('form-radio', () => {
                 default: 'foobar'
             }
         })
-        expect(wrapper.classes().length).toEqual(1)
-        expect(wrapper.classes()).toContain('form-check')
+        expect(wrapper.classes().length).toEqual(0)
+        expect(wrapper.classes()).not.toContain('form-check')
 
         wrapper.unmount()
     })
@@ -425,7 +425,7 @@ describe('form-radio', () => {
         wrapper.unmount()
     })
 
-    it('plain has input class form-check-input', async () => {
+    it('plain has no input class form-check-input', async () => {
         const wrapper = mount(BFormRadio, {
             props: {
                 plain: true,
@@ -437,13 +437,13 @@ describe('form-radio', () => {
             }
         })
         const input = wrapper.find('input')
-        expect(input.classes().length).toEqual(1)
-        expect(input.classes()).toContain('form-check-input')
+        expect(input.classes()).not.toContain('form-check-input')
+        expect(input.classes().length).toEqual(0)
 
         wrapper.unmount()
     })
 
-    it('plain has label class form-check-label', async () => {
+    it('plain has no label class form-check-label', async () => {
         const wrapper = mount(BFormRadio, {
             props: {
                 plain: true,
@@ -455,8 +455,8 @@ describe('form-radio', () => {
             }
         })
         const input = wrapper.find('label')
-        expect(input.classes().length).toEqual(1)
-        expect(input.classes()).toContain('form-check-label')
+        expect(input.classes()).not.toContain('form-check-label')
+        expect(input.classes().length).toEqual(0)
 
         wrapper.unmount()
     })
