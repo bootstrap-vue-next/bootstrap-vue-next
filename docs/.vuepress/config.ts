@@ -10,6 +10,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
     editLink: true,
+    contributors: false,
     lastUpdated: true,
     navbar: [
       {text: 'Home', link: '/'},
