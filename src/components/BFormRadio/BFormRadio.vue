@@ -2,33 +2,25 @@
   <div :class="classes">
     <input
       :id="computedId"
+      v-bind="$attrs"
       ref="input"
       :class="inputClasses"
       type="radio"
-      :name="name"
-      :form="form"
-      :value="value"
-      :checked="isChecked"
       :disabled="disabled"
       :required="isRequired"
-      :aria-required="required ? 'true' : null"
+      :name="name"
+      :form="form"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
-      :indeterminate="indeterminate"
-      v-bind="$attrs"
+      :value="value"
+      :checked="isChecked"
+      :aria-required="required ? 'true' : null"
       @click="toggleChecked()"
       @focus="focus()"
       @blur="blur()"
       @input="(event) => onInput(event)"
     />
-    <label
-      v-if="$slots.default || !plain"
-      :class="labelClasses"
-      :for="id"
-      @click="toggleChecked()"
-      @focus="focus()"
-      @blur="blur()"
-    >
+    <label v-if="$slots.default || !plain" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </div>
@@ -44,7 +36,7 @@ export default defineComponent({
     ariaLabel: {type: String},
     ariaLabelledBy: {type: String},
     autofocus: {type: Boolean, default: false},
-    checked: {type: [Boolean, String, Array], default: null},
+    modelValue: {type: [Boolean, String, Array], default: null},
     plain: {type: Boolean, default: false},
     button: {type: Boolean, default: false},
     switch: {type: Boolean, default: false},
@@ -52,7 +44,6 @@ export default defineComponent({
     buttonVariant: {type: String, default: 'secondary'},
     form: {type: String},
     id: {type: String},
-    indeterminate: {type: Boolean},
     inline: {type: Boolean, default: false},
     name: {type: String},
     required: {type: Boolean, default: false},
@@ -85,7 +76,7 @@ export default defineComponent({
       props.inline,
       props.switch,
       props.state,
-      props.checked,
+      props.modelValue,
       props.value,
       props.buttonVariant,
       props.uncheckedValue,
@@ -95,7 +86,14 @@ export default defineComponent({
       emit
     )
     onUpdated(() => {
-      handleUpdate(isChecked, props.checked, props.value, props.uncheckedValue, localChecked, emit)
+      handleUpdate(
+        isChecked,
+        props.modelValue,
+        props.value,
+        props.uncheckedValue,
+        localChecked,
+        emit
+      )
     })
 
     return {

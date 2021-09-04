@@ -8,7 +8,7 @@ describe('form-radio', () => {
   it('default has structure <div><input><label></label></div>', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -28,7 +28,7 @@ describe('form-radio', () => {
   it('default has wrapper class form-check', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -44,7 +44,7 @@ describe('form-radio', () => {
   it('default has input type radio', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -61,7 +61,7 @@ describe('form-radio', () => {
   it('default has input class form-check-input', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -78,7 +78,7 @@ describe('form-radio', () => {
   it('default has label class form-check-label', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: false,
+        modelValue: false,
         value: 'a',
       },
       slots: {
@@ -95,7 +95,7 @@ describe('form-radio', () => {
   it('has default slot content in label', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -111,7 +111,7 @@ describe('form-radio', () => {
   it('default has no disabled attribute on input', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -127,7 +127,7 @@ describe('form-radio', () => {
   it('has disabled attribute on input when prop disabled set', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
         disabled: true,
       },
@@ -144,7 +144,7 @@ describe('form-radio', () => {
   it('default has no required attribute on input', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -160,7 +160,7 @@ describe('form-radio', () => {
   it('does not have required attribute on input when prop required set and name prop not provided', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
         required: true,
       },
@@ -177,7 +177,7 @@ describe('form-radio', () => {
   it('has required attribute on input when prop required and name set', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
         name: 'test',
         required: true,
@@ -195,7 +195,7 @@ describe('form-radio', () => {
   it('default has no name attribute on input', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -211,7 +211,7 @@ describe('form-radio', () => {
   it('has name attribute on input when name prop set', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
         name: 'test',
       },
@@ -229,7 +229,7 @@ describe('form-radio', () => {
   it('default has no form attribute on input', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -245,7 +245,7 @@ describe('form-radio', () => {
   it('has form attribute on input when form prop set', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
         form: 'test',
       },
@@ -277,7 +277,7 @@ describe('form-radio', () => {
   it('default has class form-check-inline when prop inline=true', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
         inline: true,
       },
@@ -295,7 +295,7 @@ describe('form-radio', () => {
   it('default has no input validation classes by default', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -314,7 +314,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: null,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -333,7 +333,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -352,7 +352,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: false,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -367,13 +367,112 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
+  it('has id attribute on input when id prop set', async () => {
+    const wrapper = mount(BFormRadio, {
+      props: {
+        modelValue: false,
+        id: 'test',
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    const $input = wrapper.find('input')
+    expect($input.attributes('id')).toBeDefined()
+    expect($input.attributes('id')).toEqual('test')
+
+    wrapper.unmount()
+  })
+
+  it('default has id attribute on input', async () => {
+    const wrapper = mount(BFormRadio, {
+      props: {
+        modelValue: false,
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    const $input = wrapper.find('input')
+    expect($input.attributes('id')).toBeDefined()
+
+    wrapper.unmount()
+  })
+
+  it('has for attribute on label when id prop set', async () => {
+    const wrapper = mount(BFormRadio, {
+      props: {
+        modelValue: false,
+        id: 'test',
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    const $label = wrapper.find('label')
+    expect($label.attributes('for')).toBeDefined()
+    expect($label.attributes('for')).toEqual('test')
+
+    wrapper.unmount()
+  })
+
+  it('default has for attribute on label equal to id property of input', async () => {
+    const wrapper = mount(BFormRadio, {
+      props: {
+        modelValue: false,
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    const $input = wrapper.find('input')
+    expect($input.attributes('id')).toBeDefined()
+
+    const $label = wrapper.find('label')
+    expect($label.attributes('for')).toBeDefined()
+    expect($input.attributes('id')).toEqual($label.attributes('for'))
+
+    wrapper.unmount()
+  })
+
+  it('default has unique id attribute on input', async () => {
+    const wrapper = mount(BFormRadio, {
+      props: {
+        modelValue: false,
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    const wrapper2 = mount(BFormRadio, {
+      props: {
+        modelValue: false,
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    const $input = wrapper.find('input')
+    const $input2 = wrapper2.find('input')
+    expect($input.attributes('id')).toBeDefined()
+    expect($input2.attributes('id')).toBeDefined()
+    expect($input.attributes('id')).not.toEqual($input2.attributes('id'))
+
+    wrapper.unmount()
+  })
   // --- Plain styling ---
 
   it('plain has structure <div><input><label></label></div>', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -394,7 +493,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -411,7 +510,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -429,7 +528,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -447,7 +546,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
-        checked: false,
+        modelValue: false,
         value: 'a',
       },
       slots: {
@@ -465,7 +564,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -482,7 +581,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -502,7 +601,7 @@ describe('form-radio', () => {
       props: {
         state: null,
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -522,7 +621,7 @@ describe('form-radio', () => {
       props: {
         state: true,
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -542,7 +641,7 @@ describe('form-radio', () => {
       props: {
         state: false,
         plain: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -563,7 +662,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -585,7 +684,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -603,7 +702,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
-        checked: false,
+        modelValue: false,
         value: 'a',
       },
       slots: {
@@ -625,7 +724,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
-        checked: 'a',
+        modelValue: 'a',
         value: 'a',
       },
       slots: {
@@ -647,7 +746,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
-        checked: false,
+        modelValue: false,
         value: 'a',
       },
       slots: {
@@ -678,7 +777,7 @@ describe('form-radio', () => {
       attachTo: createContainer(),
       props: {
         button: true,
-        checked: false,
+        modelValue: false,
         value: 'a',
       },
       slots: {
@@ -713,7 +812,7 @@ describe('form-radio', () => {
       props: {
         button: true,
         buttonVariant: 'primary',
-        checked: false,
+        modelValue: false,
         value: 'a',
       },
       slots: {
@@ -737,7 +836,7 @@ describe('form-radio', () => {
   it.skip('default has internal localChecked="" when prop checked=""', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: '',
+        modelValue: '',
         value: 'a',
       },
       slots: {
@@ -755,7 +854,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         value: 'bar',
-        checked: 'bar',
+        modelValue: 'bar',
       },
       slots: {
         default: 'foobar',
@@ -771,7 +870,7 @@ describe('form-radio', () => {
   it('default has internal localChecked set to value when checked changed to value', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        checked: false,
+        modelValue: false,
         value: 'bar',
       },
       slots: {
@@ -782,7 +881,7 @@ describe('form-radio', () => {
     expect(wrapper.vm.localChecked).toBeDefined()
     expect(wrapper.vm.localChecked).toBe(false)
     await wrapper.setProps({
-      checked: 'bar',
+      modelValue: 'bar',
     })
     expect(wrapper.vm.localChecked).toEqual('bar')
     expect(wrapper.emitted('input')).toBeDefined()
@@ -797,7 +896,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        checked: false,
+        modelValue: false,
         value: 'bar',
       },
       slots: {
@@ -821,12 +920,161 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
+  it('emits a change event when label clicked', async () => {
+    const wrapper = mount(BFormRadio, {
+      attachTo: createContainer(),
+      props: {
+        uncheckedValue: 'foo',
+        value: 'bar',
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+    expect(wrapper.vm.localChecked).toBeDefined()
+    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.emitted('change')).toBeUndefined()
+
+    const $label = wrapper.find('label')
+    expect($label).toBeDefined()
+
+    await $label.trigger('click')
+    expect(wrapper.emitted('change')).toBeDefined()
+    expect(wrapper.emitted('change').length).toBe(1)
+    expect(wrapper.emitted('change')[0][0]).toEqual('bar')
+
+    await $label.trigger('click') // unchecking should not emit change
+    expect(wrapper.emitted('change')).toBeDefined()
+    expect(wrapper.emitted('change').length).toBe(1)
+    expect(wrapper.emitted('change')[0][0]).toEqual('bar')
+
+    wrapper.unmount()
+  })
+
+  it('does not emit a change event when clicked if disabled', async () => {
+    const wrapper = mount(BFormRadio, {
+      attachTo: createContainer(),
+      props: {
+        uncheckedValue: 'foo',
+        value: 'bar',
+        disabled: true,
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+    expect(wrapper.vm.localChecked).toBeDefined()
+    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.emitted('change')).toBeUndefined()
+
+    const $input = wrapper.find('input')
+    expect($input).toBeDefined()
+
+    await $input.trigger('click')
+    expect(wrapper.emitted('change')).toBeUndefined()
+
+    wrapper.unmount()
+  })
+
+  it('does not emit a change event when label clicked if disabled', async () => {
+    const wrapper = mount(BFormRadio, {
+      attachTo: createContainer(),
+      props: {
+        uncheckedValue: 'foo',
+        value: 'bar',
+        disabled: true,
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+    expect(wrapper.vm.localChecked).toBeDefined()
+    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.emitted('change')).toBeUndefined()
+
+    const $label = wrapper.find('label')
+    expect($label).toBeDefined()
+
+    await $label.trigger('click')
+    expect(wrapper.emitted('change')).toBeUndefined()
+
+    wrapper.unmount()
+  })
+
+  it('works when v-model bound to an array', async () => {
+    const wrapper = mount(BFormRadio, {
+      attachTo: createContainer(),
+      props: {
+        value: 'bar',
+        modelValue: ['foo'],
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+    expect(wrapper.vm.localChecked).toBeDefined()
+    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
+    expect(wrapper.vm.localChecked.length).toBe(1)
+    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+
+    const $input = wrapper.find('input')
+    expect($input).toBeDefined()
+
+    await $input.trigger('click')
+    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
+    expect(wrapper.vm.localChecked.length).toBe(2)
+    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+    expect(wrapper.vm.localChecked[1]).toEqual('bar')
+    expect(wrapper.emitted('change')).toBeDefined()
+    expect(wrapper.emitted('change').length).toBe(1)
+    expect(wrapper.emitted('change')[0][0]).toEqual(['foo', 'bar'])
+
+    await $input.trigger('click') // Todo checkbox doesn't trigger oninput event for unchecking and thus chenge is not emitted
+    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
+    expect(wrapper.vm.localChecked.length).toBe(1)
+    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+    expect(wrapper.emitted('change')).toBeDefined()
+    expect(wrapper.emitted('change').length).toBe(1)
+    expect(wrapper.emitted('change')[0][0]).toEqual(['foo'])
+
+    await wrapper.setProps({modelValue: []})
+    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
+    expect(wrapper.vm.localChecked.length).toBe(0)
+    expect(wrapper.emitted('change')).toBeDefined()
+    expect(wrapper.emitted('change').length).toBe(1)
+
+    await $input.trigger('click')
+    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
+    expect(wrapper.vm.localChecked.length).toBe(1)
+    expect(wrapper.vm.localChecked[0]).toEqual('bar')
+    expect(wrapper.emitted('change')).toBeDefined()
+    expect(wrapper.emitted('change').length).toBe(2)
+    expect(wrapper.emitted('change')[1][0]).toEqual(['bar'])
+
+    await $input.trigger('click')
+    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
+    expect(wrapper.vm.localChecked.length).toBe(0)
+    expect(wrapper.emitted('change')).toBeDefined()
+    expect(wrapper.emitted('change').length).toBe(2)
+    expect(wrapper.emitted('change')[1][0]).toEqual([])
+
+    wrapper.unmount()
+  })
+
   it('works when value is an object', async () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
         value: {bar: 1, baz: 2},
-        checked: false,
+        modelValue: false,
       },
       slots: {
         default: 'foobar',
@@ -850,7 +1098,7 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        checked: false,
+        modelValue: false,
       },
       slots: {
         default: 'foobar',
@@ -906,7 +1154,7 @@ describe('form-radio', () => {
       const wrapper = mount(BFormRadio, {
         attachTo: createContainer(),
         props: {
-          checked: false,
+          modelValue: false,
           autofocus: true,
         },
         slots: {
@@ -929,7 +1177,7 @@ describe('form-radio', () => {
       const wrapper = mount(BFormRadio, {
         attachTo: createContainer(),
         props: {
-          checked: false,
+          modelValue: false,
         },
         slots: {
           default: 'foobar',
