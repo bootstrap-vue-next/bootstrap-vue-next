@@ -14,6 +14,7 @@
       :form="form"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
+      :aria-required="required ? 'true' : null"
       :value="value"
       :indeterminate="indeterminate"
       :checked="isChecked"

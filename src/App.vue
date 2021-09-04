@@ -933,7 +933,7 @@
       <div class="row">
         <b-form-checkbox v-model="checkedRequired" required class="col-4">Required</b-form-checkbox> 
         <div class="col-6">Checked: {{ checkedRequired }}</div>
-      </div>     
+      </div>
       <div class="row">
         <b-form-checkbox disabled>Disabled</b-form-checkbox>
       </div>
@@ -976,22 +976,65 @@
     <p />
     <div>
       <h1>Radio form</h1>
-      <b-form-radio>Default</b-form-radio>
-      <b-form-radio button>
-        Button format
-      </b-form-radio>
-      <b-form-radio required>
-        Required
-      </b-form-radio>
-      <b-form-radio disabled>
-        Disabled
-      </b-form-radio>
-      <b-form-radio indeterminate>
-        Indeterminate
-      </b-form-radio>
-      <b-form-radio plain>Plain</b-form-radio>
+      <div class="row">
+        <b-form-radio v-model="radioDefault" class="col-4">Default</b-form-radio> 
+        <div class="col-6">Checked: {{ radioDefault }}</div>
+      </div>
+      <div class="row">
+        <b-form-radio v-model="radioButton" button class="col-4">Button format</b-form-radio>
+        <div class="col-6">Checked: {{ radioButton }}</div>
+      </div>
+      <div class="row">
+        <b-form-radio v-model="radioRequired" required class="col-4">Required</b-form-radio> 
+        <div class="col-6">Checked: {{ radioRequired }}</div>
+      </div>
+      <div class="row">
+        <b-form-radio disabled>Disabled</b-form-radio>
+      </div>
+      <div class="row">
+        <b-form-radio v-model="radioIndeterminate" indeterminate class="col-4">Indeterminate</b-form-radio> 
+        <div class="col-6">Checked: {{ radioIndeterminate }}</div>
+      </div>
+      <div class="row">
+        <b-form-radio v-model="radioString" value="correct" unchecked-value="incorrect" class="col-4">Bound to string</b-form-radio> 
+        <div class="col-6">Value: {{ radioString }}</div>
+      </div>
+      <div class="row">
+        <b-form-radio v-model="radioPlain" plain class="col-4">Plain</b-form-radio> 
+        <div class="col-6">Checked: {{ radioPlain }}</div>
+      </div>
+      <h6>Individual radios grouped</h6>
+      <div class="form-group">
+        <b-form-radio v-model="radioSelected" name="some-radios" value="A">Option A</b-form-radio>
+        <b-form-radio v-model="radioSelected" name="some-radios" value="B">Option B</b-form-radio>
+      </div>
+      <div class="mt-3">Selected: <strong>{{ radioSelected }}</strong></div>
+      <p />
+      <h6>Radio bound to array</h6>
+      <div class="row">
+        <div class="col-4"><strong>Select some cars</strong></div>
+        <div class="col-4"><strong>Selected cars</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <b-form-radio
+            v-for="(car, index) in radioAvailableCars"
+            :key="index"
+            v-model="radioSelectedCars"
+            :value="car"
+          >
+            {{ car }}
+          </b-form-radio>
+        </div>
+        <div class="col-8">
+          <ul>
+            <li v-for="(car, index) in radioSelectedCars" :key="index">{{ car }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
+    <p />
     <div>
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
@@ -1340,7 +1383,17 @@ export default defineComponent({
     const checkedAvailableCars = ['BMW', 'Mercedes', 'Toyota'];
     const checkedSelectedCars = ref([]);
 
-    onMounted(() => {
+    const radioDefault = ref(false);
+    const radioButton = ref(false);
+    const radioRequired = ref(false);
+    const radioIndeterminate = ref(false);
+    const radioString = ref('incorrect');
+    const radioPlain = ref(false);
+    const radioAvailableCars = ['BMW', 'Mercedes', 'Toyota'];
+    const radioSelectedCars = ref([]);
+    const radioSelected = ref();
+
+onMounted(() => {
       // input.value?.focus();
       breadcrumb.items.push({
         text: 'Home',
@@ -1372,6 +1425,15 @@ export default defineComponent({
       checkedPlain,
       checkedAvailableCars,
       checkedSelectedCars,
+      radioDefault,
+      radioButton,
+      radioRequired,
+      radioIndeterminate,
+      radioString,
+      radioPlain,
+      radioSelected,
+      radioAvailableCars,
+      radioSelectedCars,
     }
   },
   data() {
