@@ -1,12 +1,6 @@
 <template>
-  <li
-    class="breadcrumb-item"
-    :class="classes"
-  >
-    <a
-      v-if="href"
-      :href="href"
-    >
+  <li class="breadcrumb-item" :class="classes">
+    <a v-if="href" :href="href">
       <slot />
     </a>
     <slot v-else />
@@ -14,25 +8,25 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import {computed, defineComponent} from 'vue'
 
 export default defineComponent({
-    name: 'BBreadcrumbItem',
-    props: {
-        active: { type: Boolean, default: false },
-        href: { type: String },
-        text: { type: String },
-        disabled: { type: Boolean, default: false },
-        to: { type: String }
-    },
-    setup(props) {
-        const classes = computed(() => ({
-            active: props.active,
-        }))
+  name: 'BBreadcrumbItem',
+  props: {
+    active: {type: Boolean, default: false},
+    href: {type: String},
+    text: {type: String},
+    disabled: {type: Boolean, default: false},
+    to: {type: String},
+  },
+  setup(props) {
+    const classes = computed(() => ({
+      active: props.active,
+    }))
 
-        return {
-            classes
-        }
-    },
+    return {
+      classes,
+    }
+  },
 })
 </script>

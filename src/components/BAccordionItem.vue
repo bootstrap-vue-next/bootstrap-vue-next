@@ -1,13 +1,10 @@
 <template>
   <div class="accordion-item">
-    <h2
-      :id="`${computedId}heading`"
-      class="accordion-header"
-    >
+    <h2 :id="`${computedId}heading`" class="accordion-header">
       <button
         v-b-toggle:[computedId]
         class="accordion-button"
-        :class="{ collapsed: !visible }"
+        :class="{collapsed: !visible}"
         type="button"
         :aria-expanded="visible ? 'true' : 'false'"
         :aria-controls="computedId"
@@ -32,33 +29,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue'
-import { injectionKey } from './BAccordion.vue';
-import BCollapse from './BCollapse.vue';
-import BToggle from '../directives/BToggle';
-import useId from '../composables/useId';
+import {defineComponent, inject} from 'vue'
+import {injectionKey} from './BAccordion.vue'
+import BCollapse from './BCollapse.vue'
+import BToggle from '../directives/BToggle'
+import useId from '../composables/useId'
 
 export default defineComponent({
-    name: 'BAccordionItem',
-    components: {
-      BCollapse
-    },
-    directives: {
-      BToggle
-    },
-    props: {
-        title: { type: String },
-        id: { type: String },
-        visible: { type: Boolean, default: false }
-    },
-    setup(props) {
-      const computedId = useId(props.id, 'accordion_item');
-      const parent = inject(injectionKey, '');
+  name: 'BAccordionItem',
+  components: {
+    BCollapse,
+  },
+  directives: {
+    BToggle,
+  },
+  props: {
+    title: {type: String},
+    id: {type: String},
+    visible: {type: Boolean, default: false},
+  },
+  setup(props) {
+    const computedId = useId(props.id, 'accordion_item')
+    const parent = inject(injectionKey, '')
 
-      return {
-        parent,
-        computedId
-      }
-    },
+    return {
+      parent,
+      computedId,
+    }
+  },
 })
 </script>

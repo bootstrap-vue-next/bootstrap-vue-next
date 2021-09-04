@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="classes"
-  >
+  <div :class="classes">
     <input
       :id="computedId"
       ref="input"
@@ -22,7 +20,7 @@
       @focus="focus()"
       @blur="blur()"
       @input="(event) => onInput(event)"
-    >
+    />
     <label
       v-if="$slots.default || !plain"
       :class="labelClasses"
@@ -37,12 +35,11 @@
 </template>
 
 <script lang="ts">
-import {handleUpdate, useFormCheck} from "@/composables/useFormCheck";
-import {defineComponent, onUpdated, PropType, SetupContext} from "vue";
-
+import {handleUpdate, useFormCheck} from '@/composables/useFormCheck'
+import {defineComponent, onUpdated, PropType, SetupContext} from 'vue'
 
 export default defineComponent({
-  name: "BFormRadio",
+  name: 'BFormRadio',
   props: {
     ariaLabel: {type: String},
     ariaLabelledBy: {type: String},
@@ -52,7 +49,7 @@ export default defineComponent({
     button: {type: Boolean, default: false},
     switch: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
-    buttonVariant: {type: String, default: "secondary"},
+    buttonVariant: {type: String, default: 'secondary'},
     form: {type: String},
     id: {type: String},
     indeterminate: {type: Boolean},
@@ -62,44 +59,44 @@ export default defineComponent({
     size: {type: String},
     state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
     uncheckedValue: {type: [String, Boolean], default: false},
-    value: {type: [String, Boolean, Object], default: false}
+    value: {type: [String, Boolean, Object], default: false},
   },
-  emits: ["update:modelValue", "input", "change"],
-
+  emits: ['update:modelValue', 'input', 'change'],
 
   setup(props, {emit}: SetupContext) {
     const {
       computedId,
       classes,
       inputClasses,
-      labelClasses, isChecked,
+      labelClasses,
+      isChecked,
       isRequired,
       toggleChecked,
       focus,
       blur,
       onInput,
       localChecked,
-      input
+      input,
     } = useFormCheck(
-        props.id,
-        props.autofocus,
-        props.plain,
-        props.button,
-        props.inline,
-        props.switch,
-        props.state,
-        props.checked,
-        props.value,
-        props.buttonVariant,
-        props.uncheckedValue,
-        props.name,
-        props.required,
-        props.disabled,
-        emit);
+      props.id,
+      props.autofocus,
+      props.plain,
+      props.button,
+      props.inline,
+      props.switch,
+      props.state,
+      props.checked,
+      props.value,
+      props.buttonVariant,
+      props.uncheckedValue,
+      props.name,
+      props.required,
+      props.disabled,
+      emit
+    )
     onUpdated(() => {
       handleUpdate(isChecked, props.checked, props.value, props.uncheckedValue, localChecked, emit)
-
-    });
+    })
 
     return {
       computedId,
@@ -113,8 +110,8 @@ export default defineComponent({
       toggleChecked,
       input,
       isChecked,
-      localChecked
+      localChecked,
     }
-  }
+  },
 })
 </script>

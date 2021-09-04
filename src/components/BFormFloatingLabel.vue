@@ -6,13 +6,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
 
 export default defineComponent({
-    name: 'BFormFloatingLabel',
-    props: {
-        labelFor: { type: String },
-        label: { type: String }
-    },
+  name: 'BFormFloatingLabel',
+  props: {
+    labelFor: {type: String},
+    label: {type: String},
+  },
 })
 </script>

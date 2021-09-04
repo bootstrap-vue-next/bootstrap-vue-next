@@ -1,10 +1,10 @@
-import getID from '../utils/getID';
-import { computed, ComputedRef } from 'vue';
+import getID from '../utils/getID'
+import {computed, ComputedRef} from 'vue'
 
 function useId(id?: string, suffix?: string): ComputedRef<string> {
-    const computedId = computed(() => id || getID(suffix));
+  const computedId = computed(() => id || getID(suffix))
 
-    return computedId;
+  return computedId
 }
 
-export default useId;
+export default useId

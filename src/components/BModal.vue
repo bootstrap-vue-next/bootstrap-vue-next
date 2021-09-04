@@ -1,16 +1,7 @@
 <template>
   <teleport to="body">
-    <div
-      :id="id"
-      ref="element"
-      class="modal"
-      :class="classes"
-      tabindex="-1"
-    >
-      <div
-        class="modal-dialog"
-        :class="modalDialogClasses"
-      >
+    <div :id="id" ref="element" class="modal" :class="classes" tabindex="-1">
+      <div class="modal-dialog" :class="modalDialogClasses">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">
@@ -18,12 +9,7 @@
                 {{ title }}
               </slot>
             </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            />
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
           </div>
           <div class="modal-body">
             <slot />
@@ -53,88 +39,83 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { Modal } from 'bootstrap';
-import useEventListener from '../composables/useEventListener';
+import {computed, defineComponent, onMounted, ref, watch} from 'vue'
+import {Modal} from 'bootstrap'
+import useEventListener from '../composables/useEventListener'
 
 export default defineComponent({
-    name: 'BModal',
-    props: {
-        modelValue: { type: Boolean, default: false },
-        noBackdrop: { type: Boolean, default: false },
-        centered: { type: Boolean, default: false },
-        fade: { type: Boolean, default: false },
-        fullscreen: { type: [Boolean, String], default: false },
-        id: { type: String },
-        title: { type: String },
-        scrollable: { type: Boolean, default: false },
-        show: { type: Boolean, default: false },
-        size: { type: String },
-        staticBackdrop: { type: Boolean },
-    },
-    emits: [
-        'update:modelValue',
-        'show',
-        'shown',
-        'hide',
-        'hidden',
-        'hide-prevented',
-        'ok',
-        'cancel',
-    ],
-    setup(props, { emit }) {
-        const element = ref<HTMLElement>();
-        const instance = ref<Modal>();
-        const classes = computed(() => ({
-            fade: props.fade,
-            show: props.show,
-        }))
-        const modalDialogClasses = computed(() => ({
-            'modal-fullscreen': typeof props.fullscreen === 'boolean' ? props.fullscreen : false,
-            [`modal-fullscreen-${props.fullscreen}-down`]: typeof props.fullscreen === 'string' ? props.fullscreen : false,
-            [`modal-${props.size}`]: props.size,
-            'modal-dialog-centered': props.centered,
-            'modal-dialog-scrollable': props.scrollable
-        }))
+  name: 'BModal',
+  props: {
+    modelValue: {type: Boolean, default: false},
+    noBackdrop: {type: Boolean, default: false},
+    centered: {type: Boolean, default: false},
+    fade: {type: Boolean, default: false},
+    fullscreen: {type: [Boolean, String], default: false},
+    id: {type: String},
+    title: {type: String},
+    scrollable: {type: Boolean, default: false},
+    show: {type: Boolean, default: false},
+    size: {type: String},
+    staticBackdrop: {type: Boolean},
+  },
+  emits: ['update:modelValue', 'show', 'shown', 'hide', 'hidden', 'hide-prevented', 'ok', 'cancel'],
+  setup(props, {emit}) {
+    const element = ref<HTMLElement>()
+    const instance = ref<Modal>()
+    const classes = computed(() => ({
+      fade: props.fade,
+      show: props.show,
+    }))
+    const modalDialogClasses = computed(() => ({
+      'modal-fullscreen': typeof props.fullscreen === 'boolean' ? props.fullscreen : false,
+      [`modal-fullscreen-${props.fullscreen}-down`]:
+        typeof props.fullscreen === 'string' ? props.fullscreen : false,
+      [`modal-${props.size}`]: props.size,
+      'modal-dialog-centered': props.centered,
+      'modal-dialog-scrollable': props.scrollable,
+    }))
 
-        useEventListener(element, 'shown.bs.modal', () => emit('shown'))
-        useEventListener(element, 'hidden.bs.modal', () => emit('hidden'))
-        useEventListener(element, 'hidePrevented.bs.modal', () => emit('hide-prevented'))
+    useEventListener(element, 'shown.bs.modal', () => emit('shown'))
+    useEventListener(element, 'hidden.bs.modal', () => emit('hidden'))
+    useEventListener(element, 'hidePrevented.bs.modal', () => emit('hide-prevented'))
 
-        useEventListener(element, 'show.bs.modal', () => {
-            emit('show');
-            emit('update:modelValue', true);
-        })
+    useEventListener(element, 'show.bs.modal', () => {
+      emit('show')
+      emit('update:modelValue', true)
+    })
 
-        useEventListener(element, 'hide.bs.modal', () => {
-            emit('hide')
-            emit('update:modelValue', false);
-        })
+    useEventListener(element, 'hide.bs.modal', () => {
+      emit('hide')
+      emit('update:modelValue', false)
+    })
 
-        onMounted(() => {
-            instance.value = new Modal(element.value as HTMLElement, {
-                backdrop: props.staticBackdrop ? 'static' : !props.noBackdrop,
-                keyboard: !props.staticBackdrop
-            });
+    onMounted(() => {
+      instance.value = new Modal(element.value as HTMLElement, {
+        backdrop: props.staticBackdrop ? 'static' : !props.noBackdrop,
+        keyboard: !props.staticBackdrop,
+      })
 
-            if (props.modelValue) {
-                instance.value?.show();
-            }
-        });
+      if (props.modelValue) {
+        instance.value?.show()
+      }
+    })
 
-        watch(() => props.modelValue, (value) => {
-            if (value) {
-                instance.value?.show();
-            } else {
-                instance.value?.hide();
-            }
-        })
-
-        return {
-            element,
-            classes,
-            modalDialogClasses
+    watch(
+      () => props.modelValue,
+      (value) => {
+        if (value) {
+          instance.value?.show()
+        } else {
+          instance.value?.hide()
         }
-    },
+      }
+    )
+
+    return {
+      element,
+      classes,
+      modalDialogClasses,
+    }
+  },
 })
 </script>
