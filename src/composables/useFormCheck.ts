@@ -150,13 +150,13 @@ export function useFormCheck(
 
   // computed
   const classes = computed(() => ({
-    "form-check": plain && !button,
-    "form-check-inline": plain && inline,
+    "form-check": !plain && !button,
+    "form-check-inline": !plain && inline,
     "form-switch": switchCheck,
   }));
 
   const inputClasses = computed(() => ({
-    "form-check-input": plain && !button,
+    "form-check-input": !plain && !button,
     "is-valid": state === true,
     "is-invalid": state === false,
     "btn-check": button,
@@ -171,7 +171,7 @@ export function useFormCheck(
   const labelClasses = computed(
     (): Record<string, boolean | undefined> => {
       const classes: Record<string, boolean | undefined> = {
-        "form-check-label": plain && !button,
+        "form-check-label": !plain && !button,
         btn: button,
         active: isChecked.value,
         focus: isFocused.value,

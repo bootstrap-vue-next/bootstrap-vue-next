@@ -144,6 +144,19 @@ describe("form-checkbox", () => {
     wrapper.unmount();
   });
 
+  it("has default has label when slot content not set", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        modelValue: false
+      }
+    });
+
+    const $label = wrapper.find("label");
+    expect($label.text()).toEqual("");
+
+    wrapper.unmount();
+  });
+
   it("default has no disabled attribute on input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
@@ -503,7 +516,7 @@ describe("form-checkbox", () => {
 
     wrapper.unmount();
   });
-  // --- Plain styling ---
+  // --- plain styling ---
 
   it("plain has structure <div><input><label></label></div>", async () => {
     const wrapper = mount(BFormCheckbox, {
@@ -528,7 +541,7 @@ describe("form-checkbox", () => {
     wrapper.unmount();
   });
 
-  it("plain has wrapper class form-check", async () => {
+  it("plain has no wrapper class form-check", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
@@ -540,8 +553,8 @@ describe("form-checkbox", () => {
       }
     });
 
-    expect(wrapper.classes().length).toEqual(1);
-    expect(wrapper.classes()).toContain("form-check");
+    expect(wrapper.classes().length).toEqual(0);
+    expect(wrapper.classes()).not.toContain("form-check");
 
     wrapper.unmount();
   });
@@ -565,7 +578,7 @@ describe("form-checkbox", () => {
     wrapper.unmount();
   });
 
-  it("plain has input class form-check-input", async () => {
+  it("plain has no input class form-check-input", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
@@ -577,13 +590,13 @@ describe("form-checkbox", () => {
     });
 
     const $input = wrapper.find("input");
-    expect($input.classes().length).toEqual(1);
-    expect($input.classes()).toContain("form-check-input");
+    expect($input.classes().length).toEqual(0);
+    expect($input.classes()).not.toContain("form-check-input");
 
     wrapper.unmount();
   });
 
-  it("plain has label class form-check-label", async () => {
+  it("plain has no label class form-check-label", async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         plain: true,
@@ -595,8 +608,8 @@ describe("form-checkbox", () => {
     });
 
     const $label = wrapper.find("label");
-    expect($label.classes().length).toEqual(1);
-    expect($label.classes()).toContain("form-check-label");
+    expect($label.classes()).not.toContain("form-check-label");
+    expect($label.classes().length).toEqual(0);
 
     wrapper.unmount();
   });
@@ -641,7 +654,6 @@ describe("form-checkbox", () => {
         modelValue: false
       }
     });
-
     expect(wrapper.find("label").exists()).toBe(false);
 
     wrapper.unmount();
@@ -1003,6 +1015,26 @@ describe("form-checkbox", () => {
     expect($label.classes()).not.toContain("btn-secondary");
     expect($label.classes()).toContain("btn");
     expect($label.classes()).toContain("btn-primary");
+
+    wrapper.unmount();
+  });
+
+  it("plain has no effect on stand-alone button", async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        button: true,
+        plain: true,
+        modelValue: "",
+        value: "a"
+      },
+      slots: {
+        default: "foobar"
+      }
+    });
+
+    const $input = wrapper.find("input");
+    expect($input.classes().length).toEqual(1);
+    expect($input.classes()).toContain("btn-check");
 
     wrapper.unmount();
   });

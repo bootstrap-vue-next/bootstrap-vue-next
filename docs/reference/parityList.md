@@ -94,7 +94,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `indeterminate` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `inline` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `name` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
-| `plain` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | reverse behavior compared with bootstrap-vue
+| `plain` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `required` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
 | `size` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0)
 | `state` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed
