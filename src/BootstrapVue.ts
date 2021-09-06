@@ -3,7 +3,7 @@ import Components from './components'
 import Directives from './directives'
 import {BootstrapVueOptions} from './types'
 import {createBreadcrumb} from './composables/useBreadcrumb'
-import './styles/styles.css'
+import './styles/styles.scss'
 
 const plugin: Plugin = {
   // TODO: use options in the future
