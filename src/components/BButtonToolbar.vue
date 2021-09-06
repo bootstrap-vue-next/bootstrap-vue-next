@@ -3,6 +3,7 @@
       :class="classes"
       class="btn-toolbar"
       role="toolbar"
+      :aria-label="ariaRole"
   >
     <slot/>
   </div>
@@ -14,6 +15,7 @@ import {computed, defineComponent} from 'vue'
 export default defineComponent({
   name: 'BButtonToolbar',
   props: {
+    ariaRole: {type: String, default: 'group'},
     justify: {type: Boolean, default: false},
     // keyNav: {type: Boolean, default: false},
   },

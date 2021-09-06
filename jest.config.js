@@ -1,18 +1,18 @@
 module.exports = {
-  testRegex: "spec.js$",
-  moduleFileExtensions: ["js", "vue", "ts"],
+  testRegex: 'spec.js$',
+  moduleFileExtensions: ['js', 'vue', 'ts'],
   transform: {
-    "^.+\\.js$": "babel-jest",
-    "^.+\\.ts$": "ts-jest",
-    ".*\\.(vue)$": "vue3-jest"
+    '^.+\\.js$': 'babel-jest',
+    '^.+\\.ts$': 'ts-jest',
+    '.*\\.(vue)$': 'vue3-jest',
   },
-  coverageDirectory: "./coverage/",
+  coverageDirectory: './coverage/',
   testEnvironmentOptions: {
-    pretendToBeVisual: true
+    pretendToBeVisual: true,
   },
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["./tests/setup.ts"],
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['./tests/setup.ts'],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1"
-  }
-};
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+}

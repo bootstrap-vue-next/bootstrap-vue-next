@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'BForm',
@@ -18,11 +18,8 @@ export default defineComponent({
     id: {type: String},
     floating: {type: Boolean, default: false},
     novalidate: {type: Boolean, default: false},
-    validated: {type: Boolean, default: false}
+    validated: {type: Boolean, default: false},
   },
-  emits: [
-    'submit',
-  ],
   setup(props) {
     const classes = computed(() => ({
       'form-floating': props.floating,

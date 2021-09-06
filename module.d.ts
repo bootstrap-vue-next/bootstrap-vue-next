@@ -1,1 +1,1 @@
-declare module 'bootstrap-vue-3';
+declare module 'bootstrap-vue-3'

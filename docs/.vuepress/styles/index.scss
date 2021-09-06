@@ -1,64 +1,65 @@
 :root {
-    --content-width: 1200px;
+  --content-width: 1200px;
 }
 
 body {
-    font-family: var(--font-family) !important;
-    background-color: var(--c-bg) !important;
-    color: var(--c-text) !important;
-    font-size: 16px !important;
+  font-family: var(--font-family) !important;
+  background-color: var(--c-bg) !important;
+  color: var(--c-text) !important;
+  font-size: 16px !important;
 }
 
 a:not(.action-button) {
-    color: var(--c-text-accent) !important;
+  color: var(--c-text-accent) !important;
 }
 
 .nav-link:not(.sidebar-item):not(.action-button) {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .badge {
-    height: auto;
+  height: auto;
 }
 
 .theme-container > .navbar {
-    position: fixed;
+  position: fixed;
 }
 
 .theme-container > .navbar > span > a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-code[class*="language-"], pre[class*="language-"] {
-    font-size: 0.85em !important;
-    font-family: var(--font-family-code) !important;
-    line-height: 1.58 !important;
+code[class*="language-"],
+pre[class*="language-"] {
+  font-size: 0.85em !important;
+  font-family: var(--font-family-code) !important;
+  line-height: 1.58 !important;
 }
 
 p:not(.hero .description) {
-    margin: 1rem 0 !important;
+  margin: 1rem 0 !important;
 }
 
 table:not(.table) {
-    font-size: 0.85em;
+  font-size: 0.85em;
 }
 
 table:not(.table) td,
 table:not(.table) th {
-	border: 1px solid var(--c-border);
-	padding: 6px 13px;
+  border: 1px solid var(--c-border);
+  padding: 6px 13px;
 }
 
 table:not(.table) tr:nth-child(2n) {
-	background-color: var(--c-bg-lighter);
+  background-color: var(--c-bg-lighter);
 }
 
 code {
-    background: transparent;
-    padding: 0;
+  background: transparent;
+  padding: 0;
 }
 
 h2.accordion-header {
-    border-bottom: none;
-    padding-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
 }

@@ -9,6 +9,7 @@ Get started with BootstrapVue3 and Bootstrap v5, the world’s most popular fram
 ::: danger NOT PRODUCTION READY
 This project is still in **alpha version**. There is a lot of work to do, if you want to contribute you can use it and submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues) or even better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls) 😄.
 :::
+
 ## Why BootstrapVue3?
 
 BootstrapVue3 is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
@@ -48,9 +49,9 @@ npm install bootstrap bootstrap-vue-3
 
 And in your `main.js/ts`:
 
-``` javascript
-import { createApp } from 'vue'
-import BootstrapVue3 from 'bootstrap-vue-3';
+```javascript
+import {createApp} from 'vue'
+import BootstrapVue3 from 'bootstrap-vue-3'
 
 // Optional, since every component import their Bootstrap funcionality
 // the following line is not necessary
@@ -59,9 +60,9 @@ import BootstrapVue3 from 'bootstrap-vue-3';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 
-const app = createApp(App);
-app.use(BootstrapVue3);
-app.mount('#app');
+const app = createApp(App)
+app.use(BootstrapVue3)
+app.mount('#app')
 ```
 
 ## Comparision with BoostrapVue
@@ -69,6 +70,7 @@ app.mount('#app');
 As we said, we based this project in [BootstrapVue](https://bootstrap-vue.org/). We consider BootstrapVue as the best implementation of Bootstrap `v4`, so a good approach is to replicate every BootstrapVue component, as well their props, events, etc. and add the new features of Bootstrap `v5`.
 
 <!-- To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet. -->
+
 You can view the full list in the following [section](../reference/parityList.md).
 
 ## Types
