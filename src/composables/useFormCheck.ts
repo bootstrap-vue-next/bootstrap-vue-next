@@ -122,6 +122,7 @@ export function useFormCheck(
   formName: string | undefined,
   required: boolean | undefined,
   disabled: boolean,
+  size: string | undefined,
   emit: EmitFn
 ): UseFormCheck {
   const input: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
@@ -138,6 +139,7 @@ export function useFormCheck(
     'form-check': !plain && !button,
     'form-check-inline': !plain && inline,
     'form-switch': switchCheck,
+    [`form-control-${size}`]: size !== 'md'
   }))
 
   const inputClasses = computed(() => ({
@@ -215,4 +217,36 @@ export function useFormCheck(
     localChecked,
     input,
   }
+}
+
+const getClasses = (props: any): ComputedRef => {
+  return computed(() => ({
+    'form-check': !props.plain && !props.button,
+    'form-check-inline': !props.plain && props.inline,
+    'form-switch': props.switchCheck,
+    [`form-control-${props.size}`]: props.size !== 'md'
+  }))
+}
+
+const getInputClasses = (props: any): ComputedRef => {
+  return computed(() => ({
+    'form-check-input': !props.plain && !props.button,
+    'is-valid': props.state === true,
+    'is-invalid': props.state === false,
+    'btn-check': props.button,
+  }))
+}
+
+const getLabelClasses = (props: any): ComputedRef => {
+  return computed(() => ({
+    'form-check-label': !props.plain && !props.button,
+    'btn': props.button,
+    [`btn-${props.buttonVariant}`]: props.button
+  }))
+}
+
+export {
+  getClasses,
+  getInputClasses,
+  getLabelClasses
 }

@@ -1,6 +1,46 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container class="mt-4" fluid="sm">
+    <h5 class="my-3">Checkboxes</h5>
+    <h6 class="m-2">Simple</h6>
+    <div class="m-4">
+      <b-form-checkbox
+          id="checkbox-1"
+          v-model="checkboxes.status"
+          name="checkbox-1"
+          value="accepted"
+          unchecked-value="not_accepted"
+      >
+        I accept the terms and use
+      </b-form-checkbox>
+      <div>State: <strong>{{ checkboxes.status }}</strong></div>
+    </div>
+
+    <h6 class="m-2">Grouped</h6>
+    <div class="m-4">
+      <span><b>With options</b></span>
+      <b-form-checkbox-group
+          id="checkbox-group-1"
+          v-model="checkboxes.selected"
+          :options="checkboxes.options"
+      />
+      <br>
+      <span><b>With slots</b></span>
+      <b-form-checkbox-group
+          id="checkbox-group-2"
+          v-model="checkboxes.selected"
+      >
+        <b-form-checkbox value="orange">Orange</b-form-checkbox>
+        <b-form-checkbox value="apple">Apple</b-form-checkbox>
+        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
+        <b-form-checkbox value="grape">Grape</b-form-checkbox>
+      </b-form-checkbox-group>
+      <br>
+      <div>Selected: <strong>{{ checkboxes.selected }}</strong></div>
+      <b-button class="me-2" v-on:click="checkboxes.selected = ['orange']">Orange only</b-button>
+      <b-button class="me-2" v-on:click="checkboxes.selected = ['grape']">Grape only</b-button>
+    </div>
+
     <h5 class="my-3">Dropdown</h5>
 
     <h6 class="m-2">Sizes</h6>
@@ -1264,6 +1304,16 @@ export default defineComponent({
       ],
       handledVisible: false,
       isPressed: false,
+      checkboxes: {
+        status: 'accepted',
+        selected: ['pineapple'],
+        options: [
+          {text: 'Orange', value: 'orange'},
+          {text: 'Apple', value: 'apple'},
+          {text: 'Pineapple', value: 'pineapple'},
+          {html: '<b>Grape</b> (html content)', value: 'grape'}
+        ]
+      }
     }
   },
   methods: {

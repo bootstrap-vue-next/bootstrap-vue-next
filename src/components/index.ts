@@ -31,6 +31,7 @@ import BDropdownItem from './BDropdownItem.vue'
 import BDropdownText from './BDropdownText.vue'
 import BForm from './BForm.vue'
 import BFormCheckbox from './BFormCheckbox/BFormCheckbox.vue'
+import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
 import BFormRadio from './BFormRadio'
 import BFormInput from './BFormInput.vue'
 import BFormFloatingLabel from './BFormFloatingLabel.vue'
@@ -119,5 +120,6 @@ export default {
   BTabs,
   BTab,
   BFormCheckbox,
+  BFormCheckboxGroup,
   BFormRadio,
 }

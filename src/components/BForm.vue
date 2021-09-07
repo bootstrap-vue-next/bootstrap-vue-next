@@ -1,11 +1,16 @@
 <template>
-  <form :id="id" :novalidate="novalidate" :class="classes">
-    <slot />
+  <form
+      :id="id"
+      :novalidate="novalidate"
+      :class="classes"
+      @submit.prevent="$emit('submit', $event)"
+  >
+    <slot/>
   </form>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'BForm',
@@ -19,7 +24,7 @@ export default defineComponent({
     const classes = computed(() => ({
       'form-floating': props.floating,
       'was-validated': props.validated,
-    }))
+    }));
 
     return {
       classes,
