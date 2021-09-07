@@ -86,6 +86,7 @@ export default defineComponent({
         props.name,
         props.required,
         props.disabled,
+        props.size,
         emit
     )
 

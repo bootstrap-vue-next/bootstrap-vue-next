@@ -122,6 +122,7 @@ export function useFormCheck(
   formName: string | undefined,
   required: boolean | undefined,
   disabled: boolean,
+  size: string | undefined,
   emit: EmitFn
 ): UseFormCheck {
   const input: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
@@ -138,6 +139,7 @@ export function useFormCheck(
     'form-check': !plain && !button,
     'form-check-inline': !plain && inline,
     'form-switch': switchCheck,
+    [`form-control-${size}`]: size !== 'md'
   }))
 
   const inputClasses = computed(() => ({

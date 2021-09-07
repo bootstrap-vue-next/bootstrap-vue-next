@@ -13,34 +13,28 @@
       >
         I accept the terms and use
       </b-form-checkbox>
-
       <div>State: <strong>{{ checkboxes.status }}</strong></div>
     </div>
 
     <h6 class="m-2">Grouped</h6>
     <div class="m-4">
-      <b-row>
-        <b-col>
-           <span><b>With options</b></span>
-          <b-form-checkbox-group
-              id="checkbox-group-1"
-              v-model="checkboxes.selected"
-              :options="checkboxes.options"
-          />
-        </b-col>
-        <b-col>
-           <span><b>With slots</b></span>
-          <b-form-checkbox-group
-              id="checkbox-group-2"
-              v-model="checkboxes.selected"
-          >
-            <b-form-checkbox value="orange">Orange</b-form-checkbox>
-            <b-form-checkbox value="apple">Apple</b-form-checkbox>
-            <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
-            <b-form-checkbox value="grape">Grape</b-form-checkbox>
-          </b-form-checkbox-group>
-        </b-col>
-      </b-row>
+      <span><b>With options</b></span>
+      <b-form-checkbox-group
+          id="checkbox-group-1"
+          v-model="checkboxes.selected"
+          :options="checkboxes.options"
+      />
+      <br>
+      <span><b>With slots</b></span>
+      <b-form-checkbox-group
+          id="checkbox-group-2"
+          v-model="checkboxes.selected"
+      >
+        <b-form-checkbox value="orange">Orange</b-form-checkbox>
+        <b-form-checkbox value="apple">Apple</b-form-checkbox>
+        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
+        <b-form-checkbox value="grape">Grape</b-form-checkbox>
+      </b-form-checkbox-group>
       <br>
       <div>Selected: <strong>{{ checkboxes.selected }}</strong></div>
       <b-button class="me-2" v-on:click="checkboxes.selected = ['orange']">Orange only</b-button>
@@ -1317,7 +1311,7 @@ export default defineComponent({
           {text: 'Orange', value: 'orange'},
           {text: 'Apple', value: 'apple'},
           {text: 'Pineapple', value: 'pineapple'},
-          {text: 'Grape', value: 'grape'}
+          {html: '<b>Grape</b> (html content)', value: 'grape'}
         ]
       }
     }
