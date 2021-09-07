@@ -26,9 +26,10 @@
 </template>
 
 <script lang="ts">
-import {useFormCheck} from '../../composables/useFormCheck'
+import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
 import {computed, defineComponent, PropType} from 'vue'
 import {InputSize} from '../../types'
+import useId from "../../composables/useId";
 
 export default defineComponent({
   name: 'BFormCheckbox',
@@ -55,6 +56,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'input', 'change'],
   setup(props, {emit}) {
+    const computedId = useId(props.id, 'form-check')
 
     const checkedVal = computed({
       get: () => props.modelValue,
@@ -66,29 +68,9 @@ export default defineComponent({
 
     const isChecked = computed(() => props.modelValue === props.value);
 
-    const {
-      computedId,
-      classes,
-      inputClasses,
-      labelClasses
-    } = useFormCheck(
-        props.id,
-        props.autofocus,
-        props.plain,
-        props.button,
-        props.inline,
-        props.switch,
-        props.state,
-        props.modelValue,
-        props.value,
-        props.buttonVariant,
-        props.uncheckedValue,
-        props.name,
-        props.required,
-        props.disabled,
-        props.size,
-        emit
-    )
+    const classes = getClasses(props);
+    const inputClasses = getInputClasses(props);
+    const labelClasses = getLabelClasses(props);
 
     return {
       computedId,
