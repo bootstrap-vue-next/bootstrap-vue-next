@@ -5,10 +5,9 @@
   >
     <template v-for="item in checkboxList">
       <b-form-checkbox
-          :is-group="true"
           v-bind="item.props"
           v-model="item.model"
-          @childUpdated="childUpdated"
+          @change="childUpdated($event, item.props?.value)"
       >
         {{ item.text }}
       </b-form-checkbox>
@@ -50,13 +49,13 @@ export default defineComponent({
           }
         }))
         .map(e => Object.assign(e, {
-          model: (props.modelValue.find(mv => e.props.value === mv)) ? e.props.value : false
+          model: (props.modelValue.find(mv => e.props?.value === mv)) ? e.props?.value : false
         }))
     )
 
-    const childUpdated = (msg) => {
-      let resp = props.modelValue.filter(e => e !== msg.checkedValue)
-      if (msg.checked) resp.push(msg.checkedValue);
+    const childUpdated = (newValue: any, checkedValue: any) => {
+      let resp = props.modelValue.filter(e => JSON.stringify(e) !== JSON.stringify(checkedValue))
+      if (JSON.stringify(newValue) === JSON.stringify(checkedValue)) resp.push(newValue);
       emit('update:modelValue', resp)
     }
 

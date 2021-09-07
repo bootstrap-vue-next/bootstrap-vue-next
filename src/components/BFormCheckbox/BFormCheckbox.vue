@@ -33,7 +33,6 @@ import {InputSize} from '../../types'
 export default defineComponent({
   name: 'BFormCheckbox',
   props: {
-    isGroup: { type: Boolean, default: false },
     id: { type: String, default: undefined },
     ariaLabel: { type: String },
     ariaLabelledBy: { type: String },
@@ -54,14 +53,14 @@ export default defineComponent({
     value: {type: [String, Boolean, Object], default: false},
     modelValue: {type: [Boolean, String, Array], default: null},
   },
-  emits: ['update:modelValue', 'input', 'change', 'childUpdated'],
+  emits: ['update:modelValue', 'input', 'change'],
   setup(props, {emit}) {
 
     const checkedVal = computed({
       get: () => props.modelValue,
       set: (newValue: any) => {
         emit('update:modelValue', newValue);
-        if (props.isGroup) emit('childUpdated', {checkedValue: props.value, checked: newValue === props.value})
+        emit('change', newValue)
       }
     })
 
