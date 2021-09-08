@@ -54,7 +54,10 @@ export default defineComponent({
     value: {type: [String, Boolean, Object], default: true},
     modelValue: {type: [Boolean, String, Array], default: null},
   },
-  emits: ['update:modelValue', 'change'],
+  emits: [
+    'update:modelValue',
+    'change'
+  ],
   setup(props, {emit}) {
     const computedId = useId(props.id, 'form-check')
 

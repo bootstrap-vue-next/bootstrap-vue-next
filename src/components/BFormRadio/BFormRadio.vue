@@ -31,6 +31,10 @@ import useId from "../../composables/useId";
 
 export default defineComponent({
   name: 'BFormRadio',
+  emits: [
+    'update:modelValue',
+    'change'
+  ],
   props: {
     ariaLabel: {type: String},
     ariaLabelledBy: {type: String},
@@ -47,10 +51,8 @@ export default defineComponent({
     size: {type: String},
     state: {type: Boolean, default: null},
     value: {type: [String, Boolean, Object, Number]}, // any
-    modelValue: {type: [Boolean, String, Array], default: null},
+    modelValue: {type: [Boolean, String, Array, Object], default: null},
   },
-  emits: ['update:modelValue', 'change'],
-
   setup(props, {emit}) {
      const computedId = useId(props.id, 'form-check')
 
