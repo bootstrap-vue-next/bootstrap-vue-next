@@ -1,6 +1,16 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container class="mt-4" fluid="sm">
+    <h5 class="my-3">Radios</h5>
+    <h6 class="m-2">Simple</h6>
+    <div class="m-4">
+      <b-form-radio v-model="radios.selected" name="some-radios" value="A">Option A</b-form-radio>
+      <b-form-radio v-model="radios.selected" name="some-radios" value="B">Option B</b-form-radio>
+
+      <div class="mt-3">Selected: <strong>{{ radios.selected }}</strong></div>
+    </div>
+
+
     <h5 class="my-3">Checkboxes</h5>
     <h6 class="m-2">Simple</h6>
     <div class="m-4">
@@ -747,142 +757,6 @@
         </b-accordion-item>
       </b-accordion>
     </b-card>
-
-    <div>
-      <h1>Checkbox form</h1>
-      <div class="row">
-        <b-form-checkbox v-model="checkedDefault" class="col-4">Default</b-form-checkbox>
-        <div class="col-6">Checked: {{ checkedDefault }}</div>
-      </div>
-      <div class="row">
-        <b-form-checkbox v-model="checkedButton" button class="col-4"
-          >Button format</b-form-checkbox
-        >
-        <div class="col-6">Checked: {{ checkedButton }}</div>
-      </div>
-      <div class="row">
-        <b-form-checkbox v-model="checkedRequired" required class="col-4">Required</b-form-checkbox>
-        <div class="col-6">Checked: {{ checkedRequired }}</div>
-      </div>
-      <div class="row">
-        <b-form-checkbox disabled>Disabled</b-form-checkbox>
-      </div>
-      <div class="row">
-        <b-form-checkbox v-model="checkedIndeterminate" indeterminate class="col-4"
-          >Indeterminate</b-form-checkbox
-        >
-        <div class="col-6">Checked: {{ checkedIndeterminate }}</div>
-      </div>
-      <div class="row">
-        <b-form-checkbox
-          v-model="checkedString"
-          value="correct"
-          unchecked-value="incorrect"
-          class="col-4"
-          >Bound to string</b-form-checkbox
-        >
-        <div class="col-6">Value: {{ checkedString }}</div>
-      </div>
-      <div class="row">
-        <b-form-checkbox v-model="checkedPlain" plain class="col-4">Plain</b-form-checkbox>
-        <div class="col-6">Checked: {{ checkedPlain }}</div>
-      </div>
-      <p />
-      <h6>Checkbox bound to array</h6>
-      <div class="row">
-        <div class="col-4"><strong>Select some cars</strong></div>
-        <div class="col-4"><strong>Selected cars</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <b-form-checkbox
-            v-for="(car, index) in checkedAvailableCars"
-            :key="index"
-            v-model="checkedSelectedCars"
-            :value="car"
-          >
-            {{ car }}
-          </b-form-checkbox>
-        </div>
-        <div class="col-8">
-          <ul>
-            <li v-for="(car, index) in checkedSelectedCars" :key="index">{{ car }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <p />
-    <div>
-      <h1>Radio form</h1>
-      <div class="row">
-        <b-form-radio v-model="radioDefault" class="col-4">Default</b-form-radio>
-        <div class="col-6">Checked: {{ radioDefault }}</div>
-      </div>
-      <div class="row">
-        <b-form-radio v-model="radioButton" button class="col-4">Button format</b-form-radio>
-        <div class="col-6">Checked: {{ radioButton }}</div>
-      </div>
-      <div class="row">
-        <b-form-radio v-model="radioRequired" required class="col-4">Required</b-form-radio>
-        <div class="col-6">Checked: {{ radioRequired }}</div>
-      </div>
-      <div class="row">
-        <b-form-radio disabled>Disabled</b-form-radio>
-      </div>
-      <div class="row">
-        <b-form-radio v-model="radioIndeterminate" indeterminate class="col-4"
-          >Indeterminate</b-form-radio
-        >
-        <div class="col-6">Checked: {{ radioIndeterminate }}</div>
-      </div>
-      <div class="row">
-        <b-form-radio
-          v-model="radioString"
-          value="correct"
-          unchecked-value="incorrect"
-          class="col-4"
-          >Bound to string</b-form-radio
-        >
-        <div class="col-6">Value: {{ radioString }}</div>
-      </div>
-      <div class="row">
-        <b-form-radio v-model="radioPlain" plain class="col-4">Plain</b-form-radio>
-        <div class="col-6">Checked: {{ radioPlain }}</div>
-      </div>
-      <h6>Individual radios grouped</h6>
-      <div class="form-group">
-        <b-form-radio v-model="radioSelected" name="some-radios" value="A">Option A</b-form-radio>
-        <b-form-radio v-model="radioSelected" name="some-radios" value="B">Option B</b-form-radio>
-      </div>
-      <div class="mt-3">
-        Selected: <strong>{{ radioSelected }}</strong>
-      </div>
-      <p />
-      <h6>Radio bound to array</h6>
-      <div class="row">
-        <div class="col-4"><strong>Select some cars</strong></div>
-        <div class="col-4"><strong>Selected cars</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <b-form-radio
-            v-for="(car, index) in radioAvailableCars"
-            :key="index"
-            v-model="radioSelectedCars"
-            :value="car"
-          >
-            {{ car }}
-          </b-form-radio>
-        </div>
-        <div class="col-8">
-          <ul>
-            <li v-for="(car, index) in radioSelectedCars" :key="index">{{ car }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <p />
     <div>
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
@@ -1219,25 +1093,6 @@ export default defineComponent({
 
     const consoleLog = () => console.log('button clicked!')
 
-    const checkedDefault = ref(false)
-    const checkedButton = ref(false)
-    const checkedRequired = ref(false)
-    const checkedIndeterminate = ref(false)
-    const checkedString = ref('incorrect')
-    const checkedPlain = ref(false)
-    const checkedAvailableCars = ['BMW', 'Mercedes', 'Toyota']
-    const checkedSelectedCars = ref([])
-
-    const radioDefault = ref(false)
-    const radioButton = ref(false)
-    const radioRequired = ref(false)
-    const radioIndeterminate = ref(false)
-    const radioString = ref('incorrect')
-    const radioPlain = ref(false)
-    const radioAvailableCars = ['BMW', 'Mercedes', 'Toyota']
-    const radioSelectedCars = ref([])
-    const radioSelected = ref()
-
     onMounted(() => {
       // input.value?.focus();
       breadcrumb.items.push({
@@ -1262,23 +1117,6 @@ export default defineComponent({
       items: tableItems,
       stringTableDefinitions,
       objectTableDefinitions,
-      checkedDefault,
-      checkedButton,
-      checkedRequired,
-      checkedIndeterminate,
-      checkedString,
-      checkedPlain,
-      checkedAvailableCars,
-      checkedSelectedCars,
-      radioDefault,
-      radioButton,
-      radioRequired,
-      radioIndeterminate,
-      radioString,
-      radioPlain,
-      radioSelected,
-      radioAvailableCars,
-      radioSelectedCars,
     }
   },
   data() {
@@ -1313,6 +1151,9 @@ export default defineComponent({
           {text: 'Pineapple', value: 'pineapple'},
           {html: '<b>Grape</b> (html content)', value: 'grape'}
         ]
+      },
+      radios: {
+          selected: 'B',
       }
     }
   },
