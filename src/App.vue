@@ -1,46 +1,6 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container class="mt-4" fluid="sm">
-    <h5 class="my-3">Checkboxes</h5>
-    <h6 class="m-2">Simple</h6>
-    <div class="m-4">
-      <b-form-checkbox
-          id="checkbox-1"
-          v-model="checkboxes.status"
-          name="checkbox-1"
-          value="accepted"
-          unchecked-value="not_accepted"
-      >
-        I accept the terms and use
-      </b-form-checkbox>
-      <div>State: <strong>{{ checkboxes.status }}</strong></div>
-    </div>
-
-    <h6 class="m-2">Grouped</h6>
-    <div class="m-4">
-      <span><b>With options</b></span>
-      <b-form-checkbox-group
-          id="checkbox-group-1"
-          v-model="checkboxes.selected"
-          :options="checkboxes.options"
-      />
-      <br>
-      <span><b>With slots</b></span>
-      <b-form-checkbox-group
-          id="checkbox-group-2"
-          v-model="checkboxes.selected"
-      >
-        <b-form-checkbox value="orange">Orange</b-form-checkbox>
-        <b-form-checkbox value="apple">Apple</b-form-checkbox>
-        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
-        <b-form-checkbox value="grape">Grape</b-form-checkbox>
-      </b-form-checkbox-group>
-      <br>
-      <div>Selected: <strong>{{ checkboxes.selected }}</strong></div>
-      <b-button class="me-2" v-on:click="checkboxes.selected = ['orange']">Orange only</b-button>
-      <b-button class="me-2" v-on:click="checkboxes.selected = ['grape']">Grape only</b-button>
-    </div>
-
     <h5 class="my-3">Dropdown</h5>
 
     <h6 class="m-2">Sizes</h6>
@@ -749,31 +709,47 @@
     </b-card>
 
     <div>
-      <h1>Checkbox form</h1>
-      <div class="row">
+      <h1>Form Checkbox</h1>
+      <h6 class="m-2">Simple</h6>
+      <div class="m-4">
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="checkboxes.status"
+          name="checkbox-1"
+          value="accepted"
+          unchecked-value="not_accepted"
+        >
+          I accept the terms and use
+        </b-form-checkbox>
+        <div>
+          State: <strong>{{ checkboxes.status }}</strong>
+        </div>
+      </div>
+      <h6 class="m-2">Individual</h6>
+      <div class="row mx-4">
         <b-form-checkbox v-model="checkedDefault" class="col-4">Default</b-form-checkbox>
         <div class="col-6">Checked: {{ checkedDefault }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-checkbox v-model="checkedButton" button class="col-4"
           >Button format</b-form-checkbox
         >
         <div class="col-6">Checked: {{ checkedButton }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-checkbox v-model="checkedRequired" required class="col-4">Required</b-form-checkbox>
         <div class="col-6">Checked: {{ checkedRequired }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-checkbox disabled>Disabled</b-form-checkbox>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-checkbox v-model="checkedIndeterminate" indeterminate class="col-4"
           >Indeterminate</b-form-checkbox
         >
         <div class="col-6">Checked: {{ checkedIndeterminate }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-checkbox
           v-model="checkedString"
           value="correct"
@@ -783,17 +759,23 @@
         >
         <div class="col-6">Value: {{ checkedString }}</div>
       </div>
-      <div class="row">
-        <b-form-checkbox v-model="checkedPlain" plain class="col-4">Plain</b-form-checkbox>
-        <div class="col-6">Checked: {{ checkedPlain }}</div>
+      <div class="mx-4 my-1">
+        <button class="btn btn-primary mx-1" @click="checkedString = 'correct'">Set correct</button>
+        <button class="btn btn-primary mx-1" @click="checkedString = 'incorrect'">
+          Set incorrect
+        </button>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-checkbox v-model="checkedPlain" class="col-4" plain>Plain</b-form-checkbox>
+        <div class="col-6 ml-2">Checked: {{ checkedPlain }}</div>
       </div>
       <p />
       <h6>Checkbox bound to array</h6>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <div class="col-4"><strong>Select some cars</strong></div>
         <div class="col-4"><strong>Selected cars</strong></div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <div class="col-4">
           <b-form-checkbox
             v-for="(car, index) in checkedAvailableCars"
@@ -812,30 +794,55 @@
       </div>
     </div>
     <p />
+    <h1 class="m-2">Form Checkbox Group</h1>
+    <div class="m-4">
+      <span><b>With options</b></span>
+      <b-form-checkbox-group
+        id="checkbox-group-1"
+        v-model="checkboxes.selected"
+        :options="checkboxes.options"
+      />
+      <br />
+      <span><b>With slots</b></span>
+      <b-form-checkbox-group id="checkbox-group-2" v-model="checkboxes.selected">
+        <b-form-checkbox value="orange">Orange</b-form-checkbox>
+        <b-form-checkbox value="apple">Apple</b-form-checkbox>
+        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
+        <b-form-checkbox value="grape">Grape</b-form-checkbox>
+      </b-form-checkbox-group>
+      <br />
+      <div>
+        Selected: <strong>{{ checkboxes.selected }}</strong>
+      </div>
+      <b-button class="me-2" @click="checkboxes.selected = ['orange']">Orange only</b-button>
+      <b-button class="me-2" @click="checkboxes.selected = ['grape']">Grape only</b-button>
+    </div>
+
     <div>
       <h1>Radio form</h1>
-      <div class="row">
+      <h6 class="m-2">Individual</h6>
+      <div class="row mx-4 my-1">
         <b-form-radio v-model="radioDefault" class="col-4">Default</b-form-radio>
         <div class="col-6">Checked: {{ radioDefault }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-radio v-model="radioButton" button class="col-4">Button format</b-form-radio>
         <div class="col-6">Checked: {{ radioButton }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-radio v-model="radioRequired" required class="col-4">Required</b-form-radio>
         <div class="col-6">Checked: {{ radioRequired }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-radio disabled>Disabled</b-form-radio>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-radio v-model="radioIndeterminate" indeterminate class="col-4"
           >Indeterminate</b-form-radio
         >
         <div class="col-6">Checked: {{ radioIndeterminate }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-radio
           v-model="radioString"
           value="correct"
@@ -845,25 +852,29 @@
         >
         <div class="col-6">Value: {{ radioString }}</div>
       </div>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <b-form-radio v-model="radioPlain" plain class="col-4">Plain</b-form-radio>
         <div class="col-6">Checked: {{ radioPlain }}</div>
       </div>
       <h6>Individual radios grouped</h6>
-      <div class="form-group">
+      <div class="form-group mx-4 my-1">
         <b-form-radio v-model="radioSelected" name="some-radios" value="A">Option A</b-form-radio>
         <b-form-radio v-model="radioSelected" name="some-radios" value="B">Option B</b-form-radio>
       </div>
-      <div class="mt-3">
+      <div class="mt-3 mx-4">
         Selected: <strong>{{ radioSelected }}</strong>
+      </div>
+      <div class="mx-4 my-1">
+        <button class="btn btn-primary mx-1" @click="radioSelected = 'A'">Set value A</button>
+        <button class="btn btn-primary mx-1" @click="radioSelected = 'B'">Set value B</button>
       </div>
       <p />
       <h6>Radio bound to array</h6>
-      <div class="row">
+      <div class="row mx-4 my-1">
         <div class="col-4"><strong>Select some cars</strong></div>
         <div class="col-4"><strong>Selected cars</strong></div>
       </div>
-      <div class="row">
+      <div class="row mx-4">
         <div class="col-4">
           <b-form-radio
             v-for="(car, index) in radioAvailableCars"
@@ -1331,9 +1342,9 @@ export default defineComponent({
           {text: 'Orange', value: 'orange'},
           {text: 'Apple', value: 'apple'},
           {text: 'Pineapple', value: 'pineapple'},
-          {html: '<b>Grape</b> (html content)', value: 'grape'}
-        ]
-      }
+          {html: '<b>Grape</b> (html content)', value: 'grape'},
+        ],
+      },
     }
   },
   methods: {
