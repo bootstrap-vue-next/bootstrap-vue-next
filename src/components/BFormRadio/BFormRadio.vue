@@ -15,7 +15,6 @@
       :value="value"
       :checked="isChecked"
       :aria-required="required ? 'true' : null"
-      @click="toggleChecked()"
       @focus="focus()"
       @blur="blur()"
       @input="(event) => onInput(event)"
@@ -62,7 +61,6 @@ export default defineComponent({
       labelClasses,
       isChecked,
       isRequired,
-      toggleChecked,
       focus,
       blur,
       onInput,
@@ -106,7 +104,6 @@ export default defineComponent({
       focus,
       blur,
       onInput,
-      toggleChecked,
       input,
       isChecked,
       localChecked,

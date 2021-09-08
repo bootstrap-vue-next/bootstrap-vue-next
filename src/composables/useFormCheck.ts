@@ -44,7 +44,7 @@ export const computeIsChecked = (
   propsChecked: CheckType,
   value: CheckType
 ): boolean | undefined => {
-  if (checked) return checked
+  if (Array.isArray(propsChecked) && checked) return checked
   if (propsChecked === false) {
     return false
   }
@@ -58,7 +58,6 @@ interface UseFormCheck {
   labelClasses: ComputedRef<Record<string, boolean | undefined>>
   isChecked: Ref<boolean | undefined>
   isRequired: ComputedRef<boolean | undefined>
-  toggleChecked: () => void
   focus: () => void
   blur: () => void
   onInput: (event: Event) => void
@@ -139,7 +138,7 @@ export function useFormCheck(
     'form-check': !plain && !button,
     'form-check-inline': !plain && inline,
     'form-switch': switchCheck,
-    [`form-control-${size}`]: size !== 'md'
+    [`form-control-${size}`]: size !== 'md',
   }))
 
   const inputClasses = computed(() => ({
@@ -164,12 +163,6 @@ export function useFormCheck(
     return classes
   })
 
-  const toggleChecked = () => {
-    if (!disabled) {
-      isChecked.value = !isChecked.value
-      handleUpdate(isChecked, checked, value, uncheckedValue, localChecked, emit)
-    }
-  }
   const isRequired = computed(() => {
     if (!formName) {
       return undefined
@@ -210,7 +203,6 @@ export function useFormCheck(
     labelClasses,
     isChecked,
     isRequired,
-    toggleChecked,
     focus,
     blur,
     onInput,
@@ -224,7 +216,7 @@ const getClasses = (props: any): ComputedRef => {
     'form-check': !props.plain && !props.button,
     'form-check-inline': !props.plain && props.inline,
     'form-switch': props.switchCheck,
-    [`form-control-${props.size}`]: props.size !== 'md'
+    [`form-control-${props.size}`]: props.size !== 'md',
   }))
 }
 
@@ -241,12 +233,8 @@ const getLabelClasses = (props: any): ComputedRef => {
   return computed(() => ({
     'form-check-label': !props.plain && !props.button,
     'btn': props.button,
-    [`btn-${props.buttonVariant}`]: props.button
+    [`btn-${props.buttonVariant}`]: props.button,
   }))
 }
 
-export {
-  getClasses,
-  getInputClasses,
-  getLabelClasses
-}
+export {getClasses, getInputClasses, getLabelClasses}
