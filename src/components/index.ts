@@ -40,7 +40,7 @@ import BFormSelect from './BFormSelect.vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import BFormText from './BFormText.vue'
-// import BIcon from "./BIcon.vue";
+import BIcon from "./BIcon.vue";
 import BImg from './BImg.vue'
 import BInputGroup from './BInputGroup.vue'
 import BInputGroupText from './BInputGroupText.vue'
@@ -100,7 +100,7 @@ export default {
   BFormFloatingLabel,
   BFormInput,
   BFormText,
-  // BIcon,
+  BIcon,
   BImg,
   BInputGroup,
   BInputGroupText,

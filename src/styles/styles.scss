@@ -1,0 +1,173 @@
+.input-group
+  > .form-floating:not(:first-child)
+  > :not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  margin-left: 0px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group:not(.has-validation)
+  > .form-floating:not(:last-child)
+  > :not(.dropdown-toggle):not(.dropdown-menu) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dropdown-toggle.dropdown-toggle-no-caret:before,
+.dropdown-toggle.dropdown-toggle-no-caret:after {
+  display: none !important;
+}
+
+.bootstrap-icon {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  font-size: 1em;
+  margin-bottom: 0.125em;
+  vertical-align: middle;
+
+  &--variant {
+    &-success {
+      color: var(--bs-success);
+    }
+
+    &-warning {
+      color: var(--bs-warning);
+    }
+
+    &-danger {
+      color: var(--bs-danger);
+    }
+
+    &-info {
+      color: var(--bs-info);
+    }
+
+    &-primary {
+      color: var(--bs-primary);
+    }
+
+    &-secondary {
+      color: var(--bs-secondary);
+    }
+
+    &-dark {
+      color: var(--bs-dark);
+    }
+
+    &-light {
+      color: var(--bs-light);
+    }
+  }
+
+  &--size {
+    &-sm {
+      font-size: 0.75em;
+    }
+
+    &-md {
+      font-size: 1.25rem;
+    }
+
+    &-lg {
+      font-size: 1.33333333rem;
+    }
+
+    &-2x {
+      font-size: 2rem;
+    }
+
+    &-3x {
+      font-size: 3rem;
+    }
+
+    &-4x {
+      font-size: 4rem;
+    }
+
+    &-5x {
+      font-size: 5rem;
+    }
+  }
+
+  &--animation {
+    &-cylon {
+      animation: bootstrap-icon-animation-cylon 0.75s ease-in-out infinite alternate;
+    }
+
+    &-cylon-vertical {
+      animation: bootstrap-icon-animation-cylon-vertical 0.75s ease-in-out infinite alternate;
+    }
+
+    &-fade {
+      animation: bootstrap-icon-animation-fade 0.75s ease-in-out infinite alternate;
+    }
+
+    &-spin {
+      animation: bootstrap-icon-animation-spin 2s linear infinite normal;
+    }
+
+    &-spin-reverse {
+      animation: bootstrap-icon-animation-spin 2s linear infinite reverse;
+    }
+
+    &-spin-pulse {
+      animation: bootstrap-icon-animation-spin 1s steps(8) infinite normal;
+    }
+
+    &-spin-reverse-pulse {
+      animation: bootstrap-icon-animation-spin 1s steps(8) infinite reverse;
+    }
+
+    &-throb {
+      animation: bootstrap-icon-animation-throb 0.75s ease-in-out infinite alternate;
+    }
+  }
+}
+
+@keyframes bootstrap-icon-animation-cylon {
+  0% {
+    transform: translateX(-25%);
+  }
+  100% {
+    transform: translateX(25%);
+  }
+}
+
+@keyframes bootstrap-icon-animation-cylon-vertical {
+  0% {
+    transform: translateY(25%);
+  }
+  100% {
+    transform: translateY(-25%);
+  }
+}
+
+@keyframes bootstrap-icon-animation-fade {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bootstrap-icon-animation-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes bootstrap-icon-animation-throb {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -826,6 +826,27 @@
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
 
+    <h5 class="my-3">Icons</h5>
+    <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
+
+    <h6>Variants</h6>
+    <b-icon icon="exclamation-circle-fill" variant="success" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" variant="warning" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" variant="danger" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" variant="info" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" variant="primary" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" variant="secondary" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" variant="dark" class="m-2"></b-icon>
+
+    <h6>Sizes</h6>
+    <b-icon icon="exclamation-circle-fill" size="sm" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" size="md" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" size="lg" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" size="2x" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" size="3x" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" size="4x" class="m-2"></b-icon>
+    <b-icon icon="exclamation-circle-fill" size="5x" class="m-2"></b-icon>
+
     <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
     <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
     <b-collapse id="my-collapse" v-model="collapse">
@@ -1158,7 +1179,6 @@ export default defineComponent({
     const consoleLog = () => console.log('button clicked!')
 
     onMounted(() => {
-      // input.value?.focus();
       breadcrumb.items.push({
         text: 'Home',
         href: '/home',
