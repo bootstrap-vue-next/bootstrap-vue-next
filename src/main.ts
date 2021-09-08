@@ -4,7 +4,7 @@ import BootstrapVue from './BootstrapVue'
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './styles/styles.css'
+import './styles/styles.scss'
 
 const app = createApp(App)
 app.use(BootstrapVue)
