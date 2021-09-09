@@ -1,120 +1,6 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container class="mt-4" fluid="sm">
-    <h5 class="my-3">Radios</h5>
-    <h6 class="m-2">Individual</h6>
-    <div class="m-4">
-      <b-form-radio v-model="radios.ex1.selected" name="some-radios" value="A">Option A</b-form-radio>
-      <b-form-radio v-model="radios.ex1.selected" name="some-radios" value="B">Option B</b-form-radio>
-      <div class="mt-3">Selected: <strong>{{ radios.ex1.selected }}</strong></div>
-    </div>
-
-    <h6 class="m-2">Grouped</h6>
-    <div class="m-4">
-        <b-form-radio-group
-            id="radio-group-1"
-            v-model="radios.ex2.selected"
-            :options="radios.ex2.options"
-            name="radio-options"
-        ></b-form-radio-group>
-
-        <b-form-radio-group
-            id="radio-group-2"
-            v-model="radios.ex2.selected"
-            name="radio-sub-component"
-        >
-          <b-form-radio value="first">Toggle this custom radio</b-form-radio>
-          <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
-          <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
-          <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
-        </b-form-radio-group>
-
-      <div class="mt-3">Selected: <strong>{{ radios.ex2.selected }}</strong></div>
-    </div>
-
-    <h6 class="m-2">Changing the option field names</h6>
-    <div class="m-4">
-      <b-form-radio-group
-          v-model="radios.ex3.selected"
-          :options="radios.ex3.options"
-          class="mb-3"
-          value-field="item"
-          text-field="name"
-          disabled-field="notEnabled"
-      ></b-form-radio-group>
-      <div class="mt-3">Selected: <strong>{{ radios.ex3.selected }}</strong></div>
-    </div>
-
-    <h6 class="m-2">Button styles radios</h6>
-    <div class="m-4">
-        <b-form-radio-group
-            id="btn-radios-1"
-            v-model="radios.ex4.selected"
-            :options="radios.ex4.options"
-            name="radios-btn-default"
-            buttons
-        ></b-form-radio-group>
-
-      <b-form-radio-group
-          id="btn-radios-2"
-          v-model="radios.ex4.selected"
-          :options="radios.ex4.options"
-          button-variant="outline-primary"
-          size="lg"
-          name="radio-btn-outline"
-          buttons
-      ></b-form-radio-group>
-
-      <b-form-radio-group
-          id="btn-radios-3"
-          v-model="radios.ex4.selected"
-          :options="radios.ex4.options"
-          name="radio-btn-stacked"
-          buttons
-          stacked
-      ></b-form-radio-group>
-    </div>
-
-    <h5 class="my-3">Checkboxes</h5>
-    <h6 class="m-2">Simple</h6>
-    <div class="m-4">
-      <b-form-checkbox
-          id="checkbox-1"
-          v-model="checkboxes.status"
-          name="checkbox-1"
-          value="accepted"
-          unchecked-value="not_accepted"
-      >
-        I accept the terms and use
-      </b-form-checkbox>
-      <div>State: <strong>{{ checkboxes.status }}</strong></div>
-    </div>
-
-    <h6 class="m-2">Grouped</h6>
-    <div class="m-4">
-      <span><b>With options</b></span>
-      <b-form-checkbox-group
-          id="checkbox-group-1"
-          v-model="checkboxes.selected"
-          :options="checkboxes.options"
-      />
-      <br>
-      <span><b>With slots</b></span>
-      <b-form-checkbox-group
-          id="checkbox-group-2"
-          v-model="checkboxes.selected"
-      >
-        <b-form-checkbox value="orange">Orange</b-form-checkbox>
-        <b-form-checkbox value="apple">Apple</b-form-checkbox>
-        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
-        <b-form-checkbox value="grape">Grape</b-form-checkbox>
-      </b-form-checkbox-group>
-      <br>
-      <div>Selected: <strong>{{ checkboxes.selected }}</strong></div>
-      <b-button class="me-2" v-on:click="checkboxes.selected = ['orange']">Orange only</b-button>
-      <b-button class="me-2" v-on:click="checkboxes.selected = ['grape']">Grape only</b-button>
-    </div>
-
     <h5 class="my-3">Dropdown</h5>
 
     <h6 class="m-2">Sizes</h6>
@@ -821,6 +707,193 @@
         </b-accordion-item>
       </b-accordion>
     </b-card>
+
+    <div>
+      <h1>Form Checkbox</h1>
+      <h6 class="m-2">Simple</h6>
+      <div class="m-4">
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="checkboxes.status"
+          name="checkbox-1"
+          value="accepted"
+          unchecked-value="not_accepted"
+        >
+          I accept the terms and use
+        </b-form-checkbox>
+        <div>
+          State: <strong>{{ checkboxes.status }}</strong>
+        </div>
+      </div>
+      <h6 class="m-2">Individual</h6>
+      <div class="row mx-4">
+        <b-form-checkbox v-model="checkedDefault" class="col-4">Default</b-form-checkbox>
+        <div class="col-6">Checked: {{ checkedDefault }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-checkbox v-model="checkedButton" button class="col-4"
+          >Button format</b-form-checkbox
+        >
+        <div class="col-6">Checked: {{ checkedButton }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-checkbox v-model="checkedRequired" required class="col-4">Required</b-form-checkbox>
+        <div class="col-6">Checked: {{ checkedRequired }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-checkbox disabled>Disabled</b-form-checkbox>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-checkbox v-model="checkedIndeterminate" indeterminate class="col-4"
+          >Indeterminate</b-form-checkbox
+        >
+        <div class="col-6">Checked: {{ checkedIndeterminate }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-checkbox
+          v-model="checkedString"
+          value="correct"
+          unchecked-value="incorrect"
+          class="col-4"
+          >Bound to string</b-form-checkbox
+        >
+        <div class="col-6">Value: {{ checkedString }}</div>
+      </div>
+      <div class="mx-4 my-1">
+        <button class="btn btn-primary mx-1" @click="checkedString = 'correct'">Set correct</button>
+        <button class="btn btn-primary mx-1" @click="checkedString = 'incorrect'">
+          Set incorrect
+        </button>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-checkbox v-model="checkedPlain" class="col-4" plain>Plain</b-form-checkbox>
+        <div class="col-6 ml-2">Checked: {{ checkedPlain }}</div>
+      </div>
+      <p />
+      <h6>Checkbox bound to array</h6>
+      <div class="row mx-4 my-1">
+        <div class="col-4"><strong>Select some cars</strong></div>
+        <div class="col-4"><strong>Selected cars</strong></div>
+      </div>
+      <div class="row mx-4 my-1">
+        <div class="col-4">
+          <b-form-checkbox
+            v-for="(car, index) in checkedAvailableCars"
+            :key="index"
+            v-model="checkedSelectedCars"
+            :value="car"
+          >
+            {{ car }}
+          </b-form-checkbox>
+        </div>
+        <div class="col-8">
+          <ul>
+            <li v-for="(car, index) in checkedSelectedCars" :key="index">{{ car }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p />
+    <h1 class="m-2">Form Checkbox Group</h1>
+    <div class="m-4">
+      <span><b>With options</b></span>
+      <b-form-checkbox-group
+        id="checkbox-group-1"
+        v-model="checkboxes.selected"
+        :options="checkboxes.options"
+      />
+      <br />
+      <span><b>With slots</b></span>
+      <b-form-checkbox-group id="checkbox-group-2" v-model="checkboxes.selected">
+        <b-form-checkbox value="orange">Orange</b-form-checkbox>
+        <b-form-checkbox value="apple">Apple</b-form-checkbox>
+        <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
+        <b-form-checkbox value="grape">Grape</b-form-checkbox>
+      </b-form-checkbox-group>
+      <br />
+      <div>
+        Selected: <strong>{{ checkboxes.selected }}</strong>
+      </div>
+      <b-button class="me-2" @click="checkboxes.selected = ['orange']">Orange only</b-button>
+      <b-button class="me-2" @click="checkboxes.selected = ['grape']">Grape only</b-button>
+    </div>
+
+    <div>
+      <h1>Radio form</h1>
+      <h6 class="m-2">Individual</h6>
+      <div class="row mx-4 my-1">
+        <b-form-radio v-model="radioDefault" class="col-4">Default</b-form-radio>
+        <div class="col-6">Checked: {{ radioDefault }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-radio v-model="radioButton" button class="col-4">Button format</b-form-radio>
+        <div class="col-6">Checked: {{ radioButton }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-radio v-model="radioRequired" required class="col-4">Required</b-form-radio>
+        <div class="col-6">Checked: {{ radioRequired }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-radio disabled>Disabled</b-form-radio>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-radio v-model="radioIndeterminate" indeterminate class="col-4"
+          >Indeterminate</b-form-radio
+        >
+        <div class="col-6">Checked: {{ radioIndeterminate }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-radio
+          v-model="radioString"
+          value="correct"
+          unchecked-value="incorrect"
+          class="col-4"
+          >Bound to string</b-form-radio
+        >
+        <div class="col-6">Value: {{ radioString }}</div>
+      </div>
+      <div class="row mx-4 my-1">
+        <b-form-radio v-model="radioPlain" plain class="col-4">Plain</b-form-radio>
+        <div class="col-6">Checked: {{ radioPlain }}</div>
+      </div>
+      <h6>Individual radios grouped</h6>
+      <div class="form-group mx-4 my-1">
+        <b-form-radio v-model="radioSelected" name="some-radios" value="A">Option A</b-form-radio>
+        <b-form-radio v-model="radioSelected" name="some-radios" value="B">Option B</b-form-radio>
+      </div>
+      <div class="mt-3 mx-4">
+        Selected: <strong>{{ radioSelected }}</strong>
+      </div>
+      <div class="mx-4 my-1">
+        <button class="btn btn-primary mx-1" @click="radioSelected = 'A'">Set value A</button>
+        <button class="btn btn-primary mx-1" @click="radioSelected = 'B'">Set value B</button>
+      </div>
+      <p />
+      <h6>Radio bound to array</h6>
+      <div class="row mx-4 my-1">
+        <div class="col-4"><strong>Select some cars</strong></div>
+        <div class="col-4"><strong>Selected cars</strong></div>
+      </div>
+      <div class="row mx-4">
+        <div class="col-4">
+          <b-form-radio
+            v-for="(car, index) in radioAvailableCars"
+            :key="index"
+            v-model="radioSelectedCars"
+            :value="car"
+          >
+            {{ car }}
+          </b-form-radio>
+        </div>
+        <div class="col-8">
+          <ul>
+            <li v-for="(car, index) in radioSelectedCars" :key="index">{{ car }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p />
     <div>
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
@@ -1178,6 +1251,25 @@ export default defineComponent({
 
     const consoleLog = () => console.log('button clicked!')
 
+    const checkedDefault = ref(false)
+    const checkedButton = ref(false)
+    const checkedRequired = ref(false)
+    const checkedIndeterminate = ref(false)
+    const checkedString = ref('incorrect')
+    const checkedPlain = ref(false)
+    const checkedAvailableCars = ['BMW', 'Mercedes', 'Toyota']
+    const checkedSelectedCars = ref([])
+
+    const radioDefault = ref(false)
+    const radioButton = ref(false)
+    const radioRequired = ref(false)
+    const radioIndeterminate = ref(false)
+    const radioString = ref('incorrect')
+    const radioPlain = ref(false)
+    const radioAvailableCars = ['BMW', 'Mercedes', 'Toyota']
+    const radioSelectedCars = ref([])
+    const radioSelected = ref()
+
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1201,6 +1293,23 @@ export default defineComponent({
       items: tableItems,
       stringTableDefinitions,
       objectTableDefinitions,
+      checkedDefault,
+      checkedButton,
+      checkedRequired,
+      checkedIndeterminate,
+      checkedString,
+      checkedPlain,
+      checkedAvailableCars,
+      checkedSelectedCars,
+      radioDefault,
+      radioButton,
+      radioRequired,
+      radioIndeterminate,
+      radioString,
+      radioPlain,
+      radioSelected,
+      radioAvailableCars,
+      radioSelectedCars,
     }
   },
   data() {
@@ -1238,9 +1347,6 @@ export default defineComponent({
       },
       radios: {
         ex1: {
-           selected: 'B'
-        },
-        ex2: {
           selected: 'first',
           options: [
             {text: 'Toggle this custom radio', value: 'first'},
@@ -1249,7 +1355,7 @@ export default defineComponent({
             {text: 'This is the 4th radio', value: {fourth: 4}}
           ]
         },
-        ex3: {
+        ex2: {
           selected: 'A',
           options: [
             {item: 'A', name: 'Option A'},
@@ -1258,7 +1364,7 @@ export default defineComponent({
             {item: {d: 1}, name: 'Option D'}
           ]
         },
-        ex4: {
+        ex3: {
           selected: 'radio1',
           options: [
             {text: 'Radio 1', value: 'radio1'},

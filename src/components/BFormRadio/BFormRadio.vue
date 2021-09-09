@@ -15,8 +15,10 @@
       :value="value"
       :checked="isChecked"
       :aria-required="required ? 'true' : null"
-      v-focus="autofocus"
-      @click.stop="checkedVal = ($event.target.checked) ? value : null"
+      @focus="focus()"
+      @blur="blur()"
+      @input="(event) => onInput(event)"
+      @click="toggleChecked()"
     />
     <label v-if="$slots.default || !plain" :for="computedId" :class="labelClasses">
       <slot />
@@ -25,58 +27,87 @@
 </template>
 
 <script lang="ts">
-import { getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
-import {computed, defineComponent} from 'vue'
-import useId from "../../composables/useId";
+import {handleUpdate, useFormCheck, getClasses, getInputClasses } from '../../composables/useFormCheck'
+import {defineComponent, onUpdated, PropType, SetupContext} from 'vue'
 
 export default defineComponent({
   name: 'BFormRadio',
-  emits: [
-    'update:modelValue',
-    'change'
-  ],
   props: {
     ariaLabel: {type: String},
     ariaLabelledBy: {type: String},
     autofocus: {type: Boolean, default: false},
+    modelValue: {type: [Boolean, String, Array], default: null},
+    plain: {type: Boolean, default: false},
     button: {type: Boolean, default: false},
-    buttonVariant: {type: String},
+    switch: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
+    buttonVariant: {type: String, default: 'secondary'},
     form: {type: String},
     id: {type: String},
     inline: {type: Boolean, default: false},
     name: {type: String},
-    plain: {type: Boolean, default: false},
     required: {type: Boolean, default: false},
     size: {type: String},
-    state: {type: Boolean, default: null},
-    value: {type: [String, Boolean, Object, Number]}, // any
-    modelValue: {type: [Boolean, String, Array, Object], default: null},
+    state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
+    uncheckedValue: {type: [String, Boolean], default: false},
+    value: {type: [String, Boolean, Object], default: false},
   },
-  setup(props, {emit}) {
-     const computedId = useId(props.id, 'form-check')
+  emits: ['update:modelValue', 'input', 'change'],
 
-     const checkedVal = computed({
-      get: () => props.modelValue,
-      set: (newValue: any) => {
-        emit('update:modelValue', newValue);
-        emit('change', newValue)
-      }
+  setup(props, {emit}: SetupContext) {
+    const {
+      computedId,
+      labelClasses,
+      toggleChecked,
+      isChecked,
+      isRequired,
+      focus,
+      blur,
+      onInput,
+      localChecked,
+      input,
+    } = useFormCheck(
+      props.id,
+      props.autofocus,
+      props.plain,
+      props.button,
+      props.modelValue,
+      props.value,
+      props.buttonVariant,
+      props.uncheckedValue,
+      props.name,
+      props.required,
+      props.disabled,
+      props.size,
+      emit
+    )
+    onUpdated(() => {
+      handleUpdate(
+        isChecked,
+        props.modelValue,
+        props.value,
+        props.uncheckedValue,
+        localChecked,
+        emit
+      )
     })
 
-    const isChecked = computed(() => props.modelValue !== null);
-
-    const classes = getClasses(props);
-    const inputClasses = getInputClasses(props);
-    const labelClasses = getLabelClasses(props);
+    const classes = getClasses(props)
+    const inputClasses = getInputClasses(props)
 
     return {
-      checkedVal,
       computedId,
       classes,
       inputClasses,
       labelClasses,
-      isChecked
+      isRequired,
+      focus,
+      blur,
+      onInput,
+      input,
+      isChecked,
+      toggleChecked,
+      localChecked,
     }
   },
 })
