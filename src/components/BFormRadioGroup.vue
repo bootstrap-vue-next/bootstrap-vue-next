@@ -22,22 +22,8 @@
 <script lang="ts">
 import {defineComponent, computed, PropType} from 'vue'
 import {ColorVariant, Size} from "../types";
+import {getGroupAttr, getGroupClasses, optionToElement, slotsToElements} from '../composables/useFormCheck'
 
-const slotToElements = (slots, disabled) => {
-  return slots
-      .filter(e => e.type.name === "BFormRadio")
-      .map(e => {
-        const txtChild = e.children?.default().find(e => e.type.toString() === 'Symbol(Text)')
-
-        return {
-          props: {
-            disabled: disabled,
-            ...e.props,
-          },
-          text: (txtChild) ? txtChild.children : '',
-        }
-      })
-}
 
 export default defineComponent({
   name: 'BFormRadioGroup',
@@ -65,72 +51,39 @@ export default defineComponent({
     valueField: {type: String, default: 'value'},
   },
   setup(props, {emit, slots}) {
+    const slotsName = 'BFormRadio'
     const checkboxList = computed(() => {
-      const {modelValue, buttonVariant, form, name, buttons, state, plain, size, stacked, disabled, options, textField, htmlField, disabledField, valueField} = props
+      const {modelValue, buttonVariant, form, name, buttons, state, plain, size, stacked, disabled, options} = props
 
-      return ((slots.first) ? slotToElements(slots.first(), disabled) : [])
+      return ((slots.first) ? slotsToElements(slots.first(), slotsName, disabled) : [])
+          .concat(options.map(e => optionToElement(e, props)))
           .concat(
-            options.map(option => {
-              return {
-                props: {
-                  value: option[valueField],
-                  disabled: disabled || option[disabledField]
-                },
-                text: option[textField],
-                html: option[htmlField]
+              (slots.default) ? slotsToElements(slots.default(), slotsName, disabled) : []
+          )
+          .map(e => {
+            return Object.assign(e, {
+              model: (JSON.stringify(modelValue) === JSON.stringify(e.props?.value)) ? e.props?.value : null,
+              props: {
+                ...e.props,
+                'button-variant': buttonVariant,
+                form: form,
+                name: name,
+                button: buttons,
+                state: state,
+                plain: plain,
+                size: size,
+                inline: !stacked
               }
             })
-        )
-        .concat(
-            (slots.default) ? slotToElements(slots.default(), disabled) : []
-        )
-        .map(e => {
-          return Object.assign(e, {
-            model: (JSON.stringify(modelValue) === JSON.stringify(e.props?.value)) ? e.props?.value : null,
-            props: {
-              ...e.props,
-              'button-variant': buttonVariant,
-              form: form,
-              name: name,
-              button: buttons,
-              state: state,
-              plain: plain,
-              size: size,
-              inline: !stacked
-            }
           })
-        })
     })
 
     const childUpdated = (newValue: any) => {
       emit('update:modelValue', newValue)
     }
 
-    const computedAriaInvalid = computed(() => {
-      const {ariaInvalid} = props
-      if (ariaInvalid === true || ariaInvalid === 'true' || ariaInvalid === '') {
-        return 'true'
-      }
-      return (computedState.value === false) ? 'true' : ariaInvalid
-    })
-
-    const computedState = computed(() => {
-      const {state} = props
-      return (typeof state === 'boolean') ? props.state : null
-    })
-
-    const attrs = computed(() => {
-      return {
-        'aria-invalid': computedAriaInvalid.value,
-        'aria-required': props.required
-      }
-    })
-
-    const classes = computed(() => {
-      return {
-        'was-validated': props.validated
-      }
-    })
+    const attrs = getGroupAttr(props)
+    const classes = getGroupClasses(props)
 
     return {
       attrs,

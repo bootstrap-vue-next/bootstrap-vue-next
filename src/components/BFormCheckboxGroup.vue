@@ -22,6 +22,7 @@
 <script lang="ts">
 import {defineComponent, computed, PropType} from 'vue'
 import {ColorVariant, Size} from "../types";
+import {getGroupAttr, getGroupClasses, slotsToElements, optionToElement} from "../composables/useFormCheck";
 
 export default defineComponent({
   name: 'BFormCheckboxGroup',
@@ -50,32 +51,15 @@ export default defineComponent({
     valueField: {type: String, default: 'value'},
   },
   setup(props, {emit, slots}) {
+    const slotsName = 'BFormCheckbox'
     const checkboxList = computed(() => {
-      const {modelValue, buttonVariant, form, name, buttons, state, plain, size, stacked, switches, disabled, options, textField, htmlField, disabledField, valueField} = props
+      const {modelValue, buttonVariant, form, name, buttons, state, plain, size, stacked, switches, disabled, options} = props
 
-      return (slots.default ? slots.default() : [])
-          .filter(e => e.type.name === "BFormCheckbox")
-          .map(e => {
-            const txtChild = e.children?.default().find(e => e.type.toString() === 'Symbol(Text)')
-
-            return {
-              props: {
-                disabled: disabled,
-                ...e.props,
-              },
-              text: (txtChild) ? txtChild.children : '',
-            }
-          })
-          .concat(options.map(option => {
-            return {
-              props: {
-                value: option[valueField],
-                disabled: disabled || option[disabledField]
-              },
-              text: option[textField],
-              html: option[htmlField]
-            }
-          }))
+      return ((slots.first) ? slotsToElements(slots.first(), slotsName, disabled) : [])
+          .concat(options.map(e => optionToElement(e, props)))
+          .concat(
+              (slots.default) ? slotsToElements(slots.default(), slotsName, disabled) : []
+          )
           .map(e => {
             return Object.assign(e, {
               model: (modelValue.find(mv => e.props?.value === mv)) ? e.props?.value : false,
@@ -101,31 +85,8 @@ export default defineComponent({
       emit('update:modelValue', resp)
     }
 
-    const computedAriaInvalid = computed(() => {
-      const {ariaInvalid} = props
-      if (ariaInvalid === true || ariaInvalid === 'true' || ariaInvalid === '') {
-        return 'true'
-      }
-      return (computedState.value === false) ? 'true' : ariaInvalid
-    })
-
-    const computedState = computed(() => {
-      const {state} = props
-      return (typeof state === 'boolean') ? props.state : null
-    })
-
-    const attrs = computed(() => {
-      return {
-        'aria-invalid': computedAriaInvalid.value,
-        'aria-required': props.required
-      }
-    })
-
-    const classes = computed(() => {
-      return {
-        'was-validated': props.validated
-      }
-    })
+    const attrs = getGroupAttr(props)
+    const classes = getGroupClasses(props)
 
     return {
       attrs,
