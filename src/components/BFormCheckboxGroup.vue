@@ -1,18 +1,14 @@
 <template>
-  <div
-      role="group"
-      v-focus="autofocus"
-      v-bind="attrs"
-      :id="id"
-      :class="classes"
-  >
-    <template v-for="item in checkboxList">
+  <div v-bind="attrs" :id="id" v-focus="autofocus" role="group" :class="classes">
+    <template v-for="(item, key) in checkboxList" :key="key">
       <b-form-checkbox
-          v-bind="item.props"
-          v-model="item.model"
-          @change="childUpdated($event, item.props?.value)"
+        v-model="item.model"
+        v-bind="item.props"
+        @change="childUpdated($event, item.props?.value)"
       >
+        <!-- eslint-disable vue/no-v-html -->
         <span v-if="item.html" v-html="item.html" />
+        <!--eslint-enable-->
         <span v-else v-text="item.text" />
       </b-form-checkbox>
     </template>
@@ -20,15 +16,19 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, computed, PropType} from 'vue'
-import {ColorVariant, Size} from "../types";
-import {getGroupAttr, getGroupClasses, slotsToElements, optionToElement} from "../composables/useFormCheck";
+import {computed, defineComponent, PropType} from 'vue'
+import {ColorVariant, Size} from '../types'
+import {
+  getGroupAttr,
+  getGroupClasses,
+  optionToElement,
+  slotsToElements,
+} from '../composables/useFormCheck'
 
 export default defineComponent({
   name: 'BFormCheckboxGroup',
-  emits: ['update:modelValue'],
   props: {
-    modelValue: {type: Array, default: []},
+    modelValue: {type: Array, default: () => []},
     ariaInvalid: {type: [Boolean, String], default: false},
     autofocus: {type: Boolean, default: false},
     buttonVariant: {type: String as PropType<ColorVariant>, default: 'secondary'},
@@ -39,7 +39,7 @@ export default defineComponent({
     htmlField: {type: String, default: 'html'},
     id: {type: String},
     name: {type: String},
-    options: {type: Array, default: []},  // Objects are not supported yet
+    options: {type: Array, default: () => []}, // Objects are not supported yet
     plain: {type: Boolean, default: false},
     required: {type: Boolean, default: false},
     size: {type: String as PropType<Size>},
@@ -50,38 +50,52 @@ export default defineComponent({
     validated: {type: Boolean, default: false},
     valueField: {type: String, default: 'value'},
   },
+  emits: ['update:modelValue'],
   setup(props, {emit, slots}) {
     const slotsName = 'BFormCheckbox'
     const checkboxList = computed(() => {
-      const {modelValue, buttonVariant, form, name, buttons, state, plain, size, stacked, switches, disabled, options} = props
+      const {
+        modelValue,
+        buttonVariant,
+        form,
+        name,
+        buttons,
+        state,
+        plain,
+        size,
+        stacked,
+        switches,
+        disabled,
+        options,
+      } = props
 
-      return ((slots.first) ? slotsToElements(slots.first(), slotsName, disabled) : [])
-          .concat(options.map(e => optionToElement(e, props)))
-          .concat(
-              (slots.default) ? slotsToElements(slots.default(), slotsName, disabled) : []
-          )
-          .map(e => {
-            return Object.assign(e, {
-              model: (modelValue.find(mv => e.props?.value === mv)) ? e.props?.value : false,
-              props: {
-                ...e.props,
-                'button-variant': buttonVariant,
-                form: form,
-                name: name,
-                button: buttons,
-                state: state,
-                plain: plain,
-                size: size,
-                inline: !stacked,
-                switch: switches
-              }
-            })
+      return (slots.first ? slotsToElements(slots.first(), slotsName, disabled) : [])
+        .concat(options.map((e) => optionToElement(e, props)))
+        .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabled) : [])
+        .map((e) =>
+          Object.assign(e, {
+            model: modelValue.find((mv) => e.props?.value === mv) ? e.props?.value : false,
+            props: {
+              ...e.props,
+              'button-variant': buttonVariant,
+              form,
+              name,
+              'button': buttons,
+              state,
+              plain,
+              size,
+              'inline': !stacked,
+              'switch': switches,
+            },
           })
+        )
     })
 
     const childUpdated = (newValue: any, checkedValue: any) => {
-      let resp = props.modelValue.filter(e => JSON.stringify(e) !== JSON.stringify(checkedValue))
-      if (JSON.stringify(newValue) === JSON.stringify(checkedValue)) resp.push(newValue);
+      const resp = props.modelValue.filter(
+        (e) => JSON.stringify(e) !== JSON.stringify(checkedValue)
+      )
+      if (JSON.stringify(newValue) === JSON.stringify(checkedValue)) resp.push(newValue)
       emit('update:modelValue', resp)
     }
 
@@ -92,7 +106,7 @@ export default defineComponent({
       attrs,
       classes,
       checkboxList,
-      childUpdated
+      childUpdated,
     }
   },
 })

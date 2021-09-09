@@ -1,31 +1,31 @@
 <template>
   <li role="presentation">
     <component
-        :is="headerTag"
-        :id="headerId"
-        class="dropdown-header"
-        :class="[classes, headerClasses]"
-        :role="headerRole"
+      :is="headerTag"
+      :id="headerId"
+      class="dropdown-header"
+      :class="[classes, headerClasses]"
+      :role="headerRole"
     >
       <slot name="header">
         {{ header }}
       </slot>
     </component>
     <ul
-        :id="id"
-        role="group"
-        class="list-unstyled"
-        v-bind="$attrs"
-        :aria-describedby="ariaDescribedby || headerId"
+      :id="id"
+      role="group"
+      class="list-unstyled"
+      v-bind="$attrs"
+      :aria-describedby="ariaDescribedby || headerId"
     >
-      <slot/>
+      <slot />
     </ul>
   </li>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from "../types";
+import {ColorVariant} from '../types'
 
 export default defineComponent({
   name: 'BDropdownGroup',
@@ -39,16 +39,12 @@ export default defineComponent({
     id: {type: String},
   },
   setup(props) {
-    const headerId = computed(() => {
-      return (props.id) ? [props.id, "group_dd_header"].join('_') : null;
-    })
+    const headerId = computed(() => (props.id ? [props.id, 'group_dd_header'].join('_') : null))
 
-    const headerRole = computed(() => {
-      return (props.headerTag === 'header') ? null : 'heading'
-    })
+    const headerRole = computed(() => (props.headerTag === 'header' ? null : 'heading'))
 
     const classes = computed(() => ({
-      [`text-${props.headerVariant}`]: props.headerVariant
+      [`text-${props.headerVariant}`]: props.headerVariant,
     }))
 
     return {

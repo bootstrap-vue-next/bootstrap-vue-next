@@ -1,6 +1,7 @@
 <template>
   <optgroup :label="label">
     <slot name="first" />
+    <!-- eslint-disable vue/no-v-html -->
     <b-form-select-option
       v-for="(option, index) in formOptions"
       :key="`option_${index}`"
@@ -10,6 +11,7 @@
       v-text="option.text"
       v-html="option.html"
     />
+    <!--eslint-enable-->
     <slot />
   </optgroup>
 </template>

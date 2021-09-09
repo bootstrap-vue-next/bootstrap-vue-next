@@ -27,7 +27,12 @@
 </template>
 
 <script lang="ts">
-import {handleUpdate, useFormCheck, getClasses, getInputClasses } from '../../composables/useFormCheck'
+import {
+  getClasses,
+  getInputClasses,
+  handleUpdate,
+  useFormCheck,
+} from '../../composables/useFormCheck'
 import {defineComponent, onUpdated, PropType, SetupContext} from 'vue'
 
 export default defineComponent({
