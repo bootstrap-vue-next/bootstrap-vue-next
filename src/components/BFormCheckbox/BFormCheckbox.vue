@@ -20,7 +20,11 @@
       @focus="focus()"
       @blur="blur()"
     />
-    <label v-if="$slots.default || !plain" :for="computedId" :class="[labelClasses, {'active': isChecked, 'focus': isFocused}]">
+    <label
+      v-if="$slots.default || !plain"
+      :for="computedId"
+      :class="[labelClasses, {active: isChecked, focus: isFocused}]"
+    >
       <slot />
     </label>
   </div>
@@ -31,7 +35,7 @@ import {getClasses, getInputClasses, getLabelClasses} from '../../composables/us
 import {computed, defineComponent, onMounted, PropType, Ref, ref, watch} from 'vue'
 import {InputSize} from '../../types'
 import useId from '../../composables/useId'
-import {attemptBlur, attemptFocus} from "../../utils/dom";
+import {attemptBlur, attemptFocus} from '../../utils/dom'
 
 export default defineComponent({
   name: 'BFormCheckbox',
@@ -71,16 +75,21 @@ export default defineComponent({
       },
     })
 
-    const isChecked = computed(() => JSON.stringify(props.modelValue) === JSON.stringify(props.value))
+    const isChecked = computed(
+      () => JSON.stringify(props.modelValue) === JSON.stringify(props.value)
+    )
 
     const classes = getClasses(props)
     const inputClasses = getInputClasses(props)
     const labelClasses = getLabelClasses(props)
 
-    watch(() => props.modelValue, (newValue) => {
-      emit('input', newValue)
-      emit('update:modelValue', newValue)
-    })
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        emit('input', newValue)
+        emit('update:modelValue', newValue)
+      }
+    )
 
     const focus = () => {
       isFocused.value = true
@@ -96,19 +105,17 @@ export default defineComponent({
       }
     }
 
-    const handleClick = (checked: any) => {
+    const handleClick = (checked: boolean) => {
       if (!Array.isArray(props.modelValue)) {
-        localChecked.value = (checked) ? props.value : props.uncheckedValue
-      }
-      else {
+        localChecked.value = checked ? props.value : props.uncheckedValue
+      } else {
         const tempArray = props.modelValue
         if (checked) {
           const index = tempArray.indexOf(props.value)
           if (index < 0) {
             tempArray.push(props.value)
           }
-        }
-        else {
+        } else {
           const index = tempArray.indexOf(props.value)
           if (index > -1) {
             tempArray.splice(index, 1)

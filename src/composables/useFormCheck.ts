@@ -79,7 +79,6 @@ export const handleUpdate = (
   localChecked: Ref<unknown>,
   emit: EmitFn
 ): void => {
-
   isChecked.value = computeIsChecked(isChecked.value, checked, value)
 
   if (localChecked.value !== checked) {
@@ -145,8 +144,9 @@ export function useFormCheck(
   })
 
   const toggleChecked = () => {
-    isChecked.value = !isChecked.value;
-    handleUpdate(isChecked, checked, value, uncheckedValue, localChecked, emit);
+    if (isChecked.value && !Array.isArray(localChecked.value)) return
+    isChecked.value = !isChecked.value
+    handleUpdate(isChecked, checked, value, uncheckedValue, localChecked, emit)
   }
 
   const isRequired = computed(() => {
@@ -195,17 +195,16 @@ export function useFormCheck(
   }
 }
 
-
 const _getComputedAriaInvalid = (props: any): ComputedRef => {
   return computed(() => {
-      const {ariaInvalid, state} = props
-      if (ariaInvalid === true || ariaInvalid === 'true' || ariaInvalid === '') {
-        return 'true'
-      }
+    const {ariaInvalid, state} = props
+    if (ariaInvalid === true || ariaInvalid === 'true' || ariaInvalid === '') {
+      return 'true'
+    }
 
-      const computedState = (typeof state === 'boolean') ? props.state : null
-      return (computedState === false) ? 'true' : ariaInvalid
-    })
+    const computedState = typeof state === 'boolean' ? props.state : null
+    return computedState === false ? 'true' : ariaInvalid
+  })
 }
 
 const getClasses = (props: any): ComputedRef => {
@@ -213,7 +212,7 @@ const getClasses = (props: any): ComputedRef => {
     'form-check': !props.plain && !props.button,
     'form-check-inline': !props.plain && props.inline,
     'form-switch': props.switch,
-    [`form-control-${props.size}`]: props.size  && props.size !== 'md'
+    [`form-control-${props.size}`]: props.size && props.size !== 'md',
   }))
 }
 
@@ -230,37 +229,37 @@ const getLabelClasses = (props: any): ComputedRef => {
   return computed(() => ({
     'form-check-label': !props.plain && !props.button,
     'btn': props.button,
-    [`btn-${props.buttonVariant}`]: props.button
+    [`btn-${props.buttonVariant}`]: props.button,
   }))
 }
 
 const getGroupAttr = (props: any): ComputedRef => {
   return computed(() => ({
     'aria-invalid': _getComputedAriaInvalid(props).value,
-    'aria-required': props.required
+    'aria-required': props.required,
   }))
 }
 
 const getGroupClasses = (props: any): ComputedRef => {
   return computed(() => ({
-   'was-validated': props.validated
+    'was-validated': props.validated,
   }))
 }
 
 const slotsToElements = (slots: Array<any>, nodeType: String, disabled: Boolean) => {
   return slots
-      .filter((e: any) => e.type.name === nodeType)
-      .map((e: any) => {
-        const txtChild = e.children.default().find((e: any) => e.type.toString() === 'Symbol(Text)')
+    .filter((e: any) => e.type.name === nodeType)
+    .map((e: any) => {
+      const txtChild = e.children.default().find((e: any) => e.type.toString() === 'Symbol(Text)')
 
-        return {
-          props: {
-            disabled: disabled,
-            ...e.props,
-          },
-          text: (txtChild) ? txtChild.children : '',
-        }
-      })
+      return {
+        props: {
+          disabled: disabled,
+          ...e.props,
+        },
+        text: txtChild ? txtChild.children : '',
+      }
+    })
 }
 
 const optionToElement = (option: any, props: any) => {
@@ -268,10 +267,10 @@ const optionToElement = (option: any, props: any) => {
   return {
     props: {
       value: option[valueField],
-      disabled: disabled || option[disabledField]
+      disabled: disabled || option[disabledField],
     },
     text: option[textField],
-    html: option[htmlField]
+    html: option[htmlField],
   }
 }
 
@@ -282,5 +281,5 @@ export {
   getGroupAttr,
   getGroupClasses,
   slotsToElements,
-  optionToElement
+  optionToElement,
 }
