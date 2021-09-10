@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import {mount} from '@vue/test-utils'
 import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
 import BFormRadio from './BFormRadio'
@@ -745,9 +746,10 @@ describe('form-radio', () => {
   it('stand-alone button has label class active when clicked (checked)', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        button: true,
-        modelValue: false,
-        value: 'a',
+        'button': true,
+        'modelValue': false,
+        'value': 'a',
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -924,8 +926,9 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        uncheckedValue: 'foo',
-        value: 'bar',
+        'uncheckedValue': 'foo',
+        'value': 'bar',
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -1011,8 +1014,9 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        value: 'bar',
-        modelValue: ['foo'],
+        'value': 'bar',
+        'modelValue': ['foo'],
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -1073,8 +1077,9 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        value: {bar: 1, baz: 2},
-        modelValue: false,
+        'value': {bar: 1, baz: 2},
+        'modelValue': false,
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
