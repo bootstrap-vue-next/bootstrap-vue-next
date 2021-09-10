@@ -87,7 +87,7 @@ export default defineComponent({
       if (Array.isArray(modelValue)) {
         return modelValue.find((e) => e === value)
       }
-      return modelValue === value
+      return JSON.stringify(modelValue) === JSON.stringify(value)
     })
 
     const classes = getClasses(props)
