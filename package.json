@@ -6,12 +6,10 @@
   "license": "MIT",
   "main": "dist/bootstrap-vue-3.umd.js",
   "module": "./dist/bootstrap-vue-3.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/bootstrap-vue-3.es.js",
-      "require": "./dist/bootstrap-vue-3.umd.js"
-    }
-  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "private": false,
   "scripts": {
     "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
