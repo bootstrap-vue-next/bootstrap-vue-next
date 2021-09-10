@@ -96,7 +96,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `name`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `plain`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `required`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
-| `size`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0)             |
+| `size`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `state`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `switch`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `unchecked-value` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
