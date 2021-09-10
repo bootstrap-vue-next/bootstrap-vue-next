@@ -35,7 +35,6 @@ import {getClasses, getInputClasses, getLabelClasses} from '../../composables/us
 import {computed, defineComponent, onMounted, PropType, Ref, ref, watch} from 'vue'
 import {InputSize} from '../../types'
 import useId from '../../composables/useId'
-import {attemptBlur, attemptFocus} from '../../utils/dom'
 
 export default defineComponent({
   name: 'BFormCheckbox',
@@ -87,21 +86,18 @@ export default defineComponent({
       () => props.modelValue,
       (newValue) => {
         emit('input', newValue)
-        emit('update:modelValue', newValue)
       }
     )
 
     const focus = () => {
       isFocused.value = true
-      if (!props.disabled) {
-        attemptFocus(input.value)
-      }
+      if (!props.disabled) input.value.focus()
     }
 
     const blur = () => {
       isFocused.value = false
       if (!props.disabled) {
-        attemptBlur(input.value as unknown as HTMLElement)
+        input.value.blur()
       }
     }
 
@@ -128,7 +124,7 @@ export default defineComponent({
     // TODO: make jest tests compatible with the v-focus directive
     if (props.autofocus) {
       onMounted(() => {
-        attemptFocus(input.value)
+        input.value.focus()
       })
     }
 
