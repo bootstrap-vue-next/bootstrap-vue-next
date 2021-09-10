@@ -2,7 +2,7 @@
   "name": "bootstrap-vue-3",
   "displayName": "BootstrapVue3",
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "main": "dist/bootstrap-vue-3.umd.js",
   "module": "./dist/bootstrap-vue-3.es.js",
@@ -27,10 +27,6 @@
     "prepare": "husky install"
   },
   "types": "src/BootstrapVue.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "dependencies": {
     "bootstrap": "^5.0.2",
     "core-js": "^3.6.5"
