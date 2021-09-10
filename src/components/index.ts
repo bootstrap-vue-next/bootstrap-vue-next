@@ -33,6 +33,7 @@ import BForm from './BForm.vue'
 import BFormCheckbox from './BFormCheckbox/BFormCheckbox.vue'
 import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
 import BFormRadio from './BFormRadio'
+import BFormRadioGroup from './BFormRadioGroup.vue'
 import BFormInput from './BFormInput.vue'
 import BFormFloatingLabel from './BFormFloatingLabel.vue'
 import BFormSelect from './BFormSelect.vue'
@@ -122,4 +123,5 @@ export default {
   BFormCheckbox,
   BFormCheckboxGroup,
   BFormRadio,
+  BFormRadioGroup,
 }

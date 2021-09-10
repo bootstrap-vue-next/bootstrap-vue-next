@@ -4,7 +4,6 @@
       :id="computedId"
       v-bind="$attrs"
       ref="input"
-      v-focus="autofocus"
       :class="inputClasses"
       type="checkbox"
       :disabled="disabled"
@@ -18,8 +17,14 @@
       :indeterminate="indeterminate"
       :checked="isChecked"
       @click.stop="handleClick($event.target.checked)"
+      @focus="focus()"
+      @blur="blur()"
     />
-    <label v-if="$slots.default || !plain" :for="computedId" :class="labelClasses">
+    <label
+      v-if="$slots.default || !plain"
+      :for="computedId"
+      :class="[labelClasses, {active: isChecked, focus: isFocused}]"
+    >
       <slot />
     </label>
   </div>
@@ -27,7 +32,7 @@
 
 <script lang="ts">
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
-import {computed, defineComponent, PropType} from 'vue'
+import {computed, defineComponent, onMounted, PropType, Ref, ref, watch} from 'vue'
 import {InputSize} from '../../types'
 import useId from '../../composables/useId'
 
@@ -57,24 +62,48 @@ export default defineComponent({
   emits: ['update:modelValue', 'input', 'change'],
   setup(props, {emit}) {
     const computedId = useId(props.id, 'form-check')
+    const input: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
+    const isFocused = ref(false)
 
-    const checkedVal = computed({
+    const localChecked = computed({
       get: () => props.modelValue,
       set: (newValue: any) => {
+        emit('input', newValue)
         emit('update:modelValue', newValue)
         emit('change', newValue)
       },
     })
 
-    const isChecked = computed(() => props.modelValue === props.value)
+    const isChecked = computed(
+      () => JSON.stringify(props.modelValue) === JSON.stringify(props.value)
+    )
 
     const classes = getClasses(props)
     const inputClasses = getInputClasses(props)
     const labelClasses = getLabelClasses(props)
 
-    const handleClick = (checked: any) => {
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        emit('input', newValue)
+      }
+    )
+
+    const focus = () => {
+      isFocused.value = true
+      if (!props.disabled) input.value.focus()
+    }
+
+    const blur = () => {
+      isFocused.value = false
+      if (!props.disabled) {
+        input.value.blur()
+      }
+    }
+
+    const handleClick = (checked: boolean) => {
       if (!Array.isArray(props.modelValue)) {
-        checkedVal.value = checked ? props.value : props.uncheckedValue
+        localChecked.value = checked ? props.value : props.uncheckedValue
       } else {
         const tempArray = props.modelValue
         if (checked) {
@@ -88,17 +117,29 @@ export default defineComponent({
             tempArray.splice(index, 1)
           }
         }
-        checkedVal.value = tempArray
+        localChecked.value = tempArray
       }
     }
+
+    // TODO: make jest tests compatible with the v-focus directive
+    if (props.autofocus) {
+      onMounted(() => {
+        input.value.focus()
+      })
+    }
+
     return {
+      input,
       computedId,
       classes,
       inputClasses,
       labelClasses,
-      checkedVal,
+      localChecked,
       isChecked,
+      isFocused,
       handleClick,
+      focus,
+      blur,
     }
   },
 })

@@ -1,16 +1,12 @@
 <template>
   <div v-bind="attrs" :id="id" v-focus="autofocus" role="group" :class="classes">
     <template v-for="(item, key) in checkboxList" :key="key">
-      <b-form-checkbox
-        v-model="item.model"
-        v-bind="item.props"
-        @change="childUpdated($event, item.props?.value)"
-      >
+      <b-form-radio v-model="item.model" v-bind="item.props" @change="childUpdated">
         <!-- eslint-disable vue/no-v-html -->
         <span v-if="item.html" v-html="item.html" />
         <!--eslint-enable-->
         <span v-else v-text="item.text" />
-      </b-form-checkbox>
+      </b-form-radio>
     </template>
   </div>
 </template>
@@ -26,9 +22,9 @@ import {
 } from '../composables/useFormCheck'
 
 export default defineComponent({
-  name: 'BFormCheckboxGroup',
+  name: 'BFormRadioGroup',
   props: {
-    modelValue: {type: Array, default: () => []},
+    modelValue: {type: [Boolean, String, Array, Object], default: ''},
     ariaInvalid: {type: [Boolean, String], default: false},
     autofocus: {type: Boolean, default: false},
     buttonVariant: {type: String as PropType<ColorVariant>, default: 'secondary'},
@@ -45,14 +41,13 @@ export default defineComponent({
     size: {type: String as PropType<Size>},
     stacked: {type: Boolean, default: false},
     state: {type: Boolean, default: null},
-    switches: {type: Boolean, default: false},
     textField: {type: String, default: 'text'},
     validated: {type: Boolean, default: false},
     valueField: {type: String, default: 'value'},
   },
   emits: ['update:modelValue'],
   setup(props, {emit, slots}) {
-    const slotsName = 'BFormCheckbox'
+    const slotsName = 'BFormRadio'
     const checkboxList = computed(() => {
       const {
         modelValue,
@@ -64,7 +59,6 @@ export default defineComponent({
         plain,
         size,
         stacked,
-        switches,
         disabled,
         options,
       } = props
@@ -74,7 +68,8 @@ export default defineComponent({
         .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabled) : [])
         .map((e) =>
           Object.assign(e, {
-            model: modelValue.find((mv) => e.props?.value === mv) ? e.props?.value : false,
+            model:
+              JSON.stringify(modelValue) === JSON.stringify(e.props?.value) ? e.props?.value : null,
             props: {
               ...e.props,
               'button-variant': buttonVariant,
@@ -85,18 +80,13 @@ export default defineComponent({
               plain,
               size,
               'inline': !stacked,
-              'switch': switches,
             },
           })
         )
     })
 
-    const childUpdated = (newValue: any, checkedValue: any) => {
-      const resp = props.modelValue.filter(
-        (e) => JSON.stringify(e) !== JSON.stringify(checkedValue)
-      )
-      if (JSON.stringify(newValue) === JSON.stringify(checkedValue)) resp.push(newValue)
-      emit('update:modelValue', resp)
+    const childUpdated = (newValue: any) => {
+      emit('update:modelValue', newValue)
     }
 
     const attrs = getGroupAttr(props)
