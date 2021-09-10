@@ -31,14 +31,16 @@ import BDropdownItem from './BDropdownItem.vue'
 import BDropdownText from './BDropdownText.vue'
 import BForm from './BForm.vue'
 import BFormCheckbox from './BFormCheckbox/BFormCheckbox.vue'
+import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
 import BFormRadio from './BFormRadio'
+import BFormRadioGroup from './BFormRadioGroup.vue'
 import BFormInput from './BFormInput.vue'
 import BFormFloatingLabel from './BFormFloatingLabel.vue'
 import BFormSelect from './BFormSelect.vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import BFormText from './BFormText.vue'
-// import BIcon from "./BIcon.vue";
+import BIcon from "./BIcon.vue";
 import BImg from './BImg.vue'
 import BInputGroup from './BInputGroup.vue'
 import BInputGroupText from './BInputGroupText.vue'
@@ -98,7 +100,7 @@ export default {
   BFormFloatingLabel,
   BFormInput,
   BFormText,
-  // BIcon,
+  BIcon,
   BImg,
   BInputGroup,
   BInputGroupText,
@@ -119,5 +121,7 @@ export default {
   BTabs,
   BTab,
   BFormCheckbox,
+  BFormCheckboxGroup,
   BFormRadio,
+  BFormRadioGroup,
 }

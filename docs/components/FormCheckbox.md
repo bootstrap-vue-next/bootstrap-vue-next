@@ -59,6 +59,93 @@ Note: the unchecked-value prop does not affect the native `<input>`'s `value` at
 
 When binding multiple checkboxes together, you must set the name prop to the same value for all `<b-form-checkbox>`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
 
+## Inline and stacked checkboxes
+
+`<b-form-checkbox>` renders block-level (stacked) checkboxes.
+Set the inline prop on `<b-form-checkbox>` not inside a `<b-form-checkbox-group>` to place the checkboxes next to each other.
+
+<ClientOnly>
+  <b-card>
+    <div>
+      <div class="my-2">
+        <label>Individual stacked checkboxes (default)</label>
+      </div>
+      <b-form-checkbox
+        v-for="(car, index) in availableCars"
+        :key="index"
+        v-model="selectedCars"
+        :value="car"
+      >
+        {{ car }}
+      </b-form-checkbox>
+    </div>
+    <div>
+      <div class="my-2">
+          <label>Individual inline checkboxes</label>
+      </div>
+      <b-form-checkbox
+        v-for="(car, index) in availableCars"
+        :key="index"
+        v-model="selectedCars"
+        :value="car"
+        inline
+      >
+        {{ car }}
+      </b-form-checkbox>
+    </div>
+  </b-card>
+</ClientOnly>
+
+```html
+<div>
+  <div>
+    <label>Individual stacked checkboxes (default)</label>
+  </div>
+  <b-form-checkbox
+    v-for="(car, index) in availableCars"
+    :key="index"
+    v-model="selectedCars"
+    :value="car"
+  >
+    {{ car }}
+  </b-form-checkbox>
+</div>
+<div>
+  <label>Individual inline checkboxes</label>
+  <b-form-checkbox
+    v-for="(car, index) in availableCars"
+    :key="index"
+    v-model="selectedCars"
+    :value="car"
+    inline
+  >
+    {{ car }}
+  </b-form-checkbox>
+</div>
+```
+
+## Control sizing
+
+Use the `size` prop to control the size of the checkbox. The default size is medium. Supported size values are `sm` (small) and `lg` (large).
+
+<ClientOnly>
+    <b-card>
+        <div>
+            <b-form-checkbox size="sm">Small</b-form-checkbox>
+            <b-form-checkbox>Default</b-form-checkbox>
+            <b-form-checkbox size="lg">Large</b-form-checkbox>
+        </div>
+    </b-card>
+</ClientOnly>
+
+```html
+<div>
+  <b-form-checkbox size="sm">Small</b-form-checkbox>
+  <b-form-checkbox>Default</b-form-checkbox>
+  <b-form-checkbox size="lg">Large</b-form-checkbox>
+</div>
+```
+
 ## Button style checkboxes
 
 You can optionally render checkboxes to appear as buttons, either individually, or in a group.
@@ -221,7 +308,7 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 | `name`                                                     | `String`                     |             | Sets the value of the `name` attribute on the form control                                                                                                                |
 | `plain`                                                    | `Boolean`                    | `false`     | Renders the form control in plain mode, rather than custom styled mode                                                                                                    |
 | `required`                                                 | `Boolean`                    |             | Adds the `required` attribute to the form control when `name` is also filled in.                                                                                          |
-| ~~`size`~~                                                 | `String`                     | `md`        | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                                                                 |
+| `size`                                                     | `String`                     | `md`        | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                                                                 |
 | `state`                                                    | `Boolean`                    |             | Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state                                       |
 | `switch`                                                   | `Boolean`                    | `false`     | When set, renders the checkbox with the appearance of a switch                                                                                                            |
 | <span style="white-space:nowrap;">`unchecked-value`</span> | `String`,`Boolean`           | `false`     | Value returned when this checkbox is unchecked.                                                                                                                           |
