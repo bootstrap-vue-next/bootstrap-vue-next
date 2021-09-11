@@ -792,6 +792,11 @@
           </ul>
         </div>
       </div>
+      <div class="row mx-4">
+        <button class="btn btn-primary col-4" @click="setCheckedSelectedCars">
+          Set selected cars to Mercedes and Toyota
+        </button>
+      </div>
     </div>
     <p />
     <h1 class="m-2">Form Checkbox Group</h1>
@@ -1328,8 +1333,10 @@ export default defineComponent({
     const checkedString = ref('incorrect')
     const checkedPlain = ref(false)
     const checkedAvailableCars = ['BMW', 'Mercedes', 'Toyota']
-    const checkedSelectedCars = ref([])
-
+    const checkedSelectedCars = ref<string[]>([])
+    const setCheckedSelectedCars = () => {
+      checkedSelectedCars.value = ['Mercedes', 'Toyota']
+    }
     const radioDefault = ref(false)
     const radioButton = ref(false)
     const radioRequired = ref(false)
@@ -1371,6 +1378,7 @@ export default defineComponent({
       checkedPlain,
       checkedAvailableCars,
       checkedSelectedCars,
+      setCheckedSelectedCars,
       radioDefault,
       radioButton,
       radioRequired,
