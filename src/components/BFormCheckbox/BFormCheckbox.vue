@@ -74,9 +74,12 @@ export default defineComponent({
       },
     })
 
-    const isChecked = computed(
-      () => JSON.stringify(props.modelValue) === JSON.stringify(props.value)
-    )
+    const isChecked = computed(() => {
+      if (Array.isArray(props.modelValue)) {
+        return props.modelValue.indexOf(props.value) > -1
+      }
+      return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
+    })
 
     const classes = getClasses(props)
     const inputClasses = getInputClasses(props)
