@@ -14,7 +14,7 @@
       :aria-labelledby="ariaLabelledBy"
       :value="value"
       :checked="isChecked"
-      :aria-required="required ? 'true' : null"
+      :aria-required="name && required ? 'true' : null"
       @click.stop="handleClick($event.target.checked)"
       @focus="focus"
       @blur="blur"
