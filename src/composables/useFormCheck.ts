@@ -32,6 +32,7 @@ const getLabelClasses = (props: any): ComputedRef =>
     'form-check-label': !props.plain && !props.button,
     'btn': props.button,
     [`btn-${props.buttonVariant}`]: props.button,
+    [`btn-${props.size}`]: props.button && props.size && props.size !== 'md',
   }))
 
 const getGroupAttr = (props: any): ComputedRef =>

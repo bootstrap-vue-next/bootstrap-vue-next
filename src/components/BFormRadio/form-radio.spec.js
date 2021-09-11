@@ -721,6 +721,30 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
+  it('stand-alone button has label classes btn and btn-size when size property set', async () => {
+    const wrapper = mount(BFormRadio, {
+      props: {
+        button: true,
+        modelValue: false,
+        value: 'a',
+        size: 'lg',
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+    const label = wrapper.find('label')
+    expect(label).toBeDefined()
+    expect(label.classes().length).toEqual(3)
+    expect(label.classes()).not.toContain('active')
+    expect(label.classes()).not.toContain('focus')
+    expect(label.classes()).toContain('btn')
+    expect(label.classes()).toContain('btn-secondary')
+    expect(label.classes()).toContain('btn-lg')
+
+    wrapper.unmount()
+  })
+
   it('stand-alone button has label classes btn, btn-secondary and active when checked by default', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
