@@ -171,6 +171,7 @@ describe('form-radio', () => {
     })
     const input = wrapper.find('input')
     expect(input.attributes('required')).toBeUndefined()
+    expect(input.attributes('aria-required')).toBeUndefined()
 
     wrapper.unmount()
   })
@@ -189,6 +190,7 @@ describe('form-radio', () => {
     })
     const input = wrapper.find('input')
     expect(input.attributes('required')).toBeDefined()
+    expect(input.attributes('aria-required')).toBeDefined()
 
     wrapper.unmount()
   })
