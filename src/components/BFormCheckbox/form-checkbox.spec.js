@@ -659,6 +659,23 @@ describe('form-checkbox', () => {
     wrapper.unmount()
   })
 
+  it('plain has class form-check-inline when prop inline=true', async () => {
+    const wrapper = mount(BFormCheckbox, {
+      props: {
+        plain: true,
+        modelValue: false,
+        inline: true,
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+
+    expect(wrapper.classes()).toContain('form-check-inline')
+
+    wrapper.unmount()
+  })
+
   it('plain has no input validation classes by default', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
