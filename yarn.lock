@@ -1657,10 +1657,10 @@
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.2.3.tgz"
   integrity sha512-1f8kyoabSgoga0E89itGIoaCo2Ayr6i6jQq/kHhhYrrBxoK7LNNwuWQghW0k/bapimyIzQiN891XzquYP78aqg==
 
-"@vue/test-utils@^2.0.0-rc.11":
-  version "2.0.0-rc.12"
-  resolved "https://registry.npmjs.org/@vue/test-utils/-/test-utils-2.0.0-rc.12.tgz"
-  integrity sha512-G9BGRYlfwWjhorGjnpniC3hcYn1pCG2NqKG68fdUpk3DgWKordZ+BsEFD/SAmKdTZVMCY1huFwY3XAbPc+AgRw==
+"@vue/test-utils@^2.0.0-rc.14":
+  version "2.0.0-rc.14"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.0-rc.14.tgz#9da1be7b0e365ff5f945677da17bf6c8a7a83abd"
+  integrity sha512-gmaeKqRCCMfxUtWN2L9fb9mYW5YocNc9KPj6F5uwlyXevlKELi40Oaz0PICYjzHI+7+dC4bV5Dg6Vjnf51VjvQ==
 
 "@vuepress/bundler-webpack@2.0.0-beta.24":
   version "2.0.0-beta.24"

@@ -1,5 +1,12 @@
 <template>
-  <div v-bind="attrs" :id="computedId" v-focus="autofocus" role="group" :class="classes">
+  <div
+    v-bind="attrs"
+    :id="computedId"
+    role="group"
+    :class="classes"
+    class="bv-no-focus-ring"
+    tabindex="-1"
+  >
     <template v-for="(item, key) in checkboxList" :key="key">
       <b-form-checkbox
         v-model="item.model"
@@ -16,21 +23,21 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant, Size} from '../types'
-import useId from '../composables/useId'
+import {computed, defineComponent, PropType, watch} from 'vue'
+import {ColorVariant, Size} from '../../types'
+import useId from '../../composables/useId'
 import {
   getGroupAttr,
   getGroupClasses,
   optionToElement,
   slotsToElements,
-} from '../composables/useFormCheck'
+} from '../../composables/useFormCheck'
 
 export default defineComponent({
   name: 'BFormCheckboxGroup',
   props: {
     modelValue: {type: Array, default: () => []},
-    ariaInvalid: {type: [Boolean, String], default: false},
+    ariaInvalid: {type: [Boolean, String], default: null},
     autofocus: {type: Boolean, default: false},
     buttonVariant: {type: String as PropType<ColorVariant>, default: 'secondary'},
     buttons: {type: Boolean, default: false},
@@ -51,11 +58,22 @@ export default defineComponent({
     validated: {type: Boolean, default: false},
     valueField: {type: String, default: 'value'},
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change', 'input'],
   setup(props, {emit, slots}) {
     const slotsName = 'BFormCheckbox'
     const computedId = useId(props.id, 'checkbox')
     const computedName = useId(props.name, 'checkbox')
+
+    const localChecked = computed({
+      get: () => props.modelValue,
+      set: (newValue: any) => {
+        if (JSON.stringify(newValue) === JSON.stringify(props.modelValue)) return
+        emit('input', newValue)
+        emit('update:modelValue', newValue)
+        emit('change', newValue)
+      },
+    })
+
     const checkboxList = computed(() => {
       const {
         modelValue,
@@ -79,7 +97,6 @@ export default defineComponent({
           Object.assign(e, {
             model: modelValue.find((mv) => e.props?.value === mv) ? e.props?.value : false,
             props: {
-              ...e.props,
               'button-variant': buttonVariant,
               form,
               'name': computedName.value,
@@ -91,6 +108,7 @@ export default defineComponent({
               'inline': !stacked,
               'switch': switches,
               required,
+              ...e.props,
             },
           })
         )
@@ -102,10 +120,18 @@ export default defineComponent({
       )
       if (JSON.stringify(newValue) === JSON.stringify(checkedValue)) resp.push(newValue)
       emit('update:modelValue', resp)
+      emit('change', resp)
     }
 
     const attrs = getGroupAttr(props)
     const classes = getGroupClasses(props)
+
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        emit('input', newValue)
+      }
+    )
 
     return {
       attrs,
@@ -113,6 +139,7 @@ export default defineComponent({
       checkboxList,
       childUpdated,
       computedId,
+      localChecked,
     }
   },
 })

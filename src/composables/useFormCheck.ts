@@ -38,12 +38,15 @@ const getLabelClasses = (props: any): ComputedRef =>
 const getGroupAttr = (props: any): ComputedRef =>
   computed(() => ({
     'aria-invalid': _getComputedAriaInvalid(props).value,
-    'aria-required': props.required,
+    'aria-required': props.required.toString() === 'true' ? 'true' : null,
   }))
 
 const getGroupClasses = (props: any): ComputedRef =>
   computed(() => ({
     'was-validated': props.validated,
+    'btn-group': props.buttons && !props.stacked,
+    'btn-group-vertical': props.stacked,
+    [`btn-group-${props.size}`]: props.size,
   }))
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -51,7 +54,9 @@ const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean)
   slots
     .filter((e: any) => e.type.name === nodeType)
     .map((e: any) => {
-      const txtChild = e.children.default().find((e: any) => e.type.toString() === 'Symbol(Text)')
+      const txtChild = (e.children.default ? e.children.default() : []).find(
+        (e: any) => e.type.toString() === 'Symbol(Text)'
+      )
 
       return {
         props: {
@@ -64,10 +69,22 @@ const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean)
 
 const optionToElement = (option: any, props: any) => {
   const {valueField, disabled, disabledField, textField, htmlField} = props
+
+  if (typeof option === 'string') {
+    return {
+      props: {
+        value: option,
+        disabled: disabled,
+      },
+      text: option,
+    }
+  }
+
   return {
     props: {
       value: option[valueField],
       disabled: disabled || option[disabledField],
+      ...option.props,
     },
     text: option[textField],
     html: option[htmlField],
