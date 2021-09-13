@@ -950,7 +950,7 @@ describe('form-checkbox', () => {
         'button': true,
         'modelValue': false,
         'value': 'a',
-        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
