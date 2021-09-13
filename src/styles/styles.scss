@@ -171,3 +171,8 @@
     transform: scale(1);
   }
 }
+
+// No focus outline helper (use sparingly)
+.bv-no-focus-ring:focus {
+  outline: none;
+}
