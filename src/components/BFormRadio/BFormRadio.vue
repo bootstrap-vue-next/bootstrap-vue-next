@@ -97,14 +97,12 @@ export default defineComponent({
     const handleClick = async (checked: boolean) => {
       const {modelValue, value} = props
 
-      if (!Array.isArray(modelValue)) {
-        if (checked && modelValue !== value) {
-          localChecked.value = value
+      if (Array.isArray(modelValue)) {
+        if (modelValue[0] !== value) {
+          localChecked.value = [value]
         }
-      } else if (Array.isArray(modelValue)) {
-        localChecked.value = modelValue.find((e) => e === value)
-          ? modelValue.filter((e) => e !== value)
-          : modelValue.concat(value)
+      } else if (checked && modelValue !== value) {
+        localChecked.value = value
       }
     }
 
