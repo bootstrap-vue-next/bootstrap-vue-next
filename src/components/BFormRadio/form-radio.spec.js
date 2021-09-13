@@ -1060,20 +1060,19 @@ describe('form-radio', () => {
 
     await $input.trigger('click')
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(2)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
-    expect(wrapper.vm.localChecked[1]).toEqual('bar')
+    expect(wrapper.vm.localChecked.length).toBe(1)
+    expect(wrapper.vm.localChecked[0]).toEqual('bar')
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
-    expect(wrapper.emitted('change')[0][0]).toEqual(['foo', 'bar'])
+    expect(wrapper.emitted('change')[0][0]).toEqual(['bar'])
 
-    await $input.trigger('click') // Todo checkbox doesn't trigger oninput event for unchecking and thus chenge is not emitted
+    await $input.trigger('click')
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
     expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+    expect(wrapper.vm.localChecked[0]).toEqual('bar')
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
-    expect(wrapper.emitted('change')[0][0]).toEqual(['foo'])
+    expect(wrapper.emitted('change')[0][0]).toEqual(['bar'])
 
     await wrapper.setProps({modelValue: []})
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
@@ -1091,10 +1090,10 @@ describe('form-radio', () => {
 
     await $input.trigger('click')
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(0)
+    expect(wrapper.vm.localChecked.length).toBe(1)
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
-    expect(wrapper.emitted('change')[1][0]).toEqual([])
+    expect(wrapper.emitted('change')[1][0]).toEqual(['bar'])
 
     wrapper.unmount()
   })

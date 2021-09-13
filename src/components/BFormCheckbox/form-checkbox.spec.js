@@ -947,9 +947,10 @@ describe('form-checkbox', () => {
   it('stand-alone button has label class active when clicked (checked)', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        button: true,
-        modelValue: false,
-        value: 'a',
+        'button': true,
+        'modelValue': false,
+        'value': 'a',
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -968,15 +969,11 @@ describe('form-checkbox', () => {
     expect($label.classes()).toContain('btn-secondary')
 
     await $input.trigger('click')
-    /*
-      works in the browser
-      TODO: find a way to make this test work
+    expect($label.classes().length).toEqual(3)
+    expect($label.classes()).toContain('active')
+    expect($label.classes()).toContain('btn')
+    expect($label.classes()).toContain('btn-secondary')
 
-      expect($label.classes().length).toEqual(3)
-      expect($label.classes()).toContain('active')
-      expect($label.classes()).toContain('btn')
-      expect($label.classes()).toContain('btn-secondary')
-    */
     wrapper.unmount()
   })
 

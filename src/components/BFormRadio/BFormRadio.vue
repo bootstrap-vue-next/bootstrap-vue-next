@@ -40,7 +40,7 @@ export default defineComponent({
     ariaLabel: {type: String},
     ariaLabelledBy: {type: String},
     autofocus: {type: Boolean, default: false},
-    modelValue: {type: [Boolean, String, Array], default: null},
+    modelValue: {type: [Boolean, String, Array, Object], default: null},
     plain: {type: Boolean, default: false},
     button: {type: Boolean, default: false},
     switch: {type: Boolean, default: false},
@@ -61,7 +61,7 @@ export default defineComponent({
     const input: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
     const isFocused = ref(false)
 
-    const localChecked = computed({
+    const localChecked: any = computed({
       get: () => props.modelValue,
       set: (newValue: any) => {
         emit('input', newValue)
@@ -84,8 +84,9 @@ export default defineComponent({
 
     const isChecked = computed(() => {
       const {value, modelValue} = props
+
       if (Array.isArray(modelValue)) {
-        return modelValue.find((e) => e === value)
+        return (modelValue || []).find((e) => e === value)
       }
       return JSON.stringify(modelValue) === JSON.stringify(value)
     })
@@ -97,14 +98,12 @@ export default defineComponent({
     const handleClick = async (checked: boolean) => {
       const {modelValue, value} = props
 
-      if (!Array.isArray(modelValue)) {
-        if (checked && modelValue !== value) {
-          localChecked.value = value
+      if (Array.isArray(modelValue)) {
+        if ((modelValue || [])[0] !== value) {
+          localChecked.value = [value]
         }
-      } else if (Array.isArray(modelValue)) {
-        localChecked.value = modelValue.find((e) => e === value)
-          ? modelValue.filter((e) => e !== value)
-          : modelValue.concat(value)
+      } else if (checked && modelValue !== value) {
+        localChecked.value = value
       }
     }
 
