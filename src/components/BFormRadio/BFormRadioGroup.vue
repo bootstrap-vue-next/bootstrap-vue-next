@@ -1,5 +1,12 @@
 <template>
-  <div v-bind="attrs" :id="id" v-focus="autofocus" role="group" :class="classes">
+  <div
+    v-bind="attrs"
+    :id="computedId"
+    role="radiogroup"
+    :class="classes"
+    class="bv-no-focus-ring"
+    tabindex="-1"
+  >
     <template v-for="(item, key) in checkboxList" :key="key">
       <b-form-radio v-model="item.model" v-bind="item.props" @change="childUpdated">
         <!-- eslint-disable vue/no-v-html -->
@@ -13,19 +20,21 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant, Size} from '../types'
+import {ColorVariant, Size} from '../../types'
 import {
+  bindGroupProps,
   getGroupAttr,
   getGroupClasses,
   optionToElement,
   slotsToElements,
-} from '../composables/useFormCheck'
+} from '../../composables/useFormCheck'
+import useId from '../../composables/useId'
 
 export default defineComponent({
   name: 'BFormRadioGroup',
   props: {
-    modelValue: {type: [Boolean, String, Array, Object], default: ''},
-    ariaInvalid: {type: [Boolean, String], default: false},
+    modelValue: {type: [String, Boolean, Array, Object], default: ''},
+    ariaInvalid: {type: [Boolean, String], default: null},
     autofocus: {type: Boolean, default: false},
     buttonVariant: {type: String as PropType<ColorVariant>, default: 'secondary'},
     buttons: {type: Boolean, default: false},
@@ -45,58 +54,52 @@ export default defineComponent({
     validated: {type: Boolean, default: false},
     valueField: {type: String, default: 'value'},
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'input', 'change'],
   setup(props, {emit, slots}) {
     const slotsName = 'BFormRadio'
+    const computedId = useId(props.id, 'radio')
+    const computedName = useId(props.name, 'checkbox')
+
+    const localChecked = computed({
+      get: () => props.modelValue,
+      set: (newValue: any) => {
+        emit('input', newValue)
+        emit('update:modelValue', newValue)
+        emit('change', newValue)
+      },
+    })
+
     const checkboxList = computed(() => {
-      const {
-        modelValue,
-        buttonVariant,
-        form,
-        name,
-        buttons,
-        state,
-        plain,
-        size,
-        stacked,
-        disabled,
-        options,
-      } = props
+      const {modelValue, disabled, options} = props
 
       return (slots.first ? slotsToElements(slots.first(), slotsName, disabled) : [])
         .concat(options.map((e) => optionToElement(e, props)))
         .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabled) : [])
-        .map((e) =>
-          Object.assign(e, {
-            model:
-              JSON.stringify(modelValue) === JSON.stringify(e.props?.value) ? e.props?.value : null,
-            props: {
-              ...e.props,
-              'button-variant': buttonVariant,
-              form,
-              name,
-              'button': buttons,
-              state,
-              plain,
-              size,
-              'inline': !stacked,
-            },
-          })
-        )
+        .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
+        .map((e) => ({
+          ...e,
+          model:
+            JSON.stringify(modelValue) === JSON.stringify(e.props?.value) ? e.props?.value : null,
+        }))
     })
 
     const childUpdated = (newValue: any) => {
+      emit('change', newValue)
       emit('update:modelValue', newValue)
     }
 
     const attrs = getGroupAttr(props)
     const classes = getGroupClasses(props)
 
+    // TODO: make jest tests compatible with the v-focus directive
+
     return {
       attrs,
       classes,
       checkboxList,
       childUpdated,
+      computedId,
+      localChecked,
     }
   },
 })
