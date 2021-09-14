@@ -91,6 +91,33 @@ const optionToElement = (option: any, props: any) => {
   }
 }
 
+const bindGroupProps = (
+  el: any,
+  idx: number,
+  props: any,
+  computedName: ComputedRef,
+  computedId: ComputedRef
+) => {
+  const {buttonVariant, buttons, stacked, form, state, plain, size, required} = props
+
+  return {
+    ...el,
+    props: {
+      'button-variant': buttonVariant,
+      form,
+      'name': computedName.value,
+      'id': `${computedId.value}_option_${idx}`,
+      'button': buttons,
+      state,
+      plain,
+      size,
+      'inline': !stacked,
+      required,
+      ...el.props,
+    },
+  }
+}
+
 export {
   getClasses,
   getInputClasses,
@@ -99,4 +126,5 @@ export {
   getGroupClasses,
   slotsToElements,
   optionToElement,
+  bindGroupProps,
 }

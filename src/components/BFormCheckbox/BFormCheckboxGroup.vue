@@ -27,6 +27,7 @@ import {computed, defineComponent, PropType, watch} from 'vue'
 import {ColorVariant, Size} from '../../types'
 import useId from '../../composables/useId'
 import {
+  bindGroupProps,
   getGroupAttr,
   getGroupClasses,
   optionToElement,
@@ -75,43 +76,20 @@ export default defineComponent({
     })
 
     const checkboxList = computed(() => {
-      const {
-        modelValue,
-        buttonVariant,
-        form,
-        buttons,
-        state,
-        plain,
-        size,
-        stacked,
-        switches,
-        disabled,
-        required,
-        options,
-      } = props
+      const {modelValue, switches, disabled, options} = props
 
       return (slots.first ? slotsToElements(slots.first(), slotsName, disabled) : [])
         .concat(options.map((e) => optionToElement(e, props)))
         .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabled) : [])
-        .map((e, idx) =>
-          Object.assign(e, {
-            model: modelValue.find((mv) => e.props?.value === mv) ? e.props?.value : false,
-            props: {
-              'button-variant': buttonVariant,
-              form,
-              'name': computedName.value,
-              'id': `${computedId.value}_option_${idx}`,
-              'button': buttons,
-              state,
-              plain,
-              size,
-              'inline': !stacked,
-              'switch': switches,
-              required,
-              ...e.props,
-            },
-          })
-        )
+        .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
+        .map((e) => ({
+          ...e,
+          model: modelValue.find((mv) => e.props?.value === mv) ? e.props?.value : false,
+          props: {
+            switch: switches,
+            ...e.props,
+          },
+        }))
     })
 
     const childUpdated = (newValue: any, checkedValue: any) => {
@@ -132,6 +110,8 @@ export default defineComponent({
         emit('input', newValue)
       }
     )
+
+    // TODO: make jest tests compatible with the v-focus directive
 
     return {
       attrs,
