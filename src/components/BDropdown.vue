@@ -1,5 +1,5 @@
 <template>
-  <div ref="parent" :class="classes">
+  <div ref="parent" :class="classes" class="btn-group">
     <b-button
       :id="computedId"
       :variant="variant"
@@ -93,8 +93,6 @@ export default defineComponent({
     useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'))
 
     const classes = computed(() => ({
-      'btn-group': props.split,
-      'dropdown': !props.split,
       'd-grid': props.block,
     }))
 
