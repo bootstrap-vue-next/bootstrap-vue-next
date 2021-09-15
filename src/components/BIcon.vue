@@ -47,7 +47,7 @@ export default /* #__PURE__ */ defineComponent({
   },
 
   computed: {
-    cssClasses() {
+    cssClasses(): string[] {
       const classes = []
 
       if (this.variant) classes.push(`bootstrap-icon--variant-${this.variant}`)
@@ -57,7 +57,7 @@ export default /* #__PURE__ */ defineComponent({
       return classes
     },
 
-    svgTransform() {
+    svgTransform(): string {
       if (!this.flipH && !this.flipV && !this.rotate) return ''
 
       let scale

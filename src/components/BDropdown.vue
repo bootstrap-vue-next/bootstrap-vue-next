@@ -39,8 +39,9 @@
 </template>
 
 <script lang="ts">
+import * as Popper from '@popperjs/core'
 import {Dropdown} from 'bootstrap'
-import {computed, defineComponent, onMounted, PropType, ref} from 'vue'
+import {ComponentPublicInstance, computed, defineComponent, onMounted, PropType, ref} from 'vue'
 import {ButtonVariant, Size} from '../types'
 import mergeDeep from '../utils/mergeDeep'
 import useId from '../composables/useId'
@@ -51,7 +52,10 @@ export default defineComponent({
   props: {
     autoClose: {type: [Boolean, String], default: true},
     block: {type: Boolean, default: false},
-    boundary: {type: [String, HTMLElement], default: 'clippingParents'},
+    boundary: {
+      type: [HTMLElement, String] as PropType<Popper.Boundary>,
+      default: 'clippingParents',
+    },
     dark: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
     dropup: {type: Boolean, default: false},
@@ -79,7 +83,7 @@ export default defineComponent({
   emits: ['show', 'shown', 'hide', 'hidden'],
   setup(props, {emit}) {
     const parent = ref<HTMLElement>()
-    const dropdown = ref<HTMLElement>()
+    const dropdown = ref<ComponentPublicInstance<HTMLElement>>()
     const instance = ref<Dropdown>()
     const computedId = useId(props.id, 'dropdown')
 
@@ -115,15 +119,24 @@ export default defineComponent({
     }))
 
     onMounted(() => {
-      instance.value = new Dropdown(dropdown.value.$el, {
-        autoClose: props.autoClose,
+      instance.value = new Dropdown(dropdown.value?.$el, {
+        // autoClose: props.autoClose,
         boundary: props.boundary,
         offset: props.offset.toString(),
         reference: props.offset || props.split ? 'parent' : 'toggle',
-        popperConfig(defaultConfig) {
+        popperConfig: (defaultConfig?: Partial<Popper.Options>) => {
           const dropDownConfig = {
             placement: 'bottom-start',
-            modifiers: [],
+            modifiers: !props.noFlip
+              ? []
+              : [
+                  {
+                    name: 'flip',
+                    options: {
+                      fallbackPlacements: [],
+                    },
+                  },
+                ],
           }
 
           if (props.dropup) {
@@ -135,16 +148,6 @@ export default defineComponent({
           } else if (props.right) {
             dropDownConfig.placement = 'bottom-end'
           }
-
-          if (props.noFlip) {
-            dropDownConfig.modifiers.push({
-              name: 'flip',
-              options: {
-                fallbackPlacements: [],
-              },
-            })
-          }
-
           return mergeDeep(defaultConfig, mergeDeep(dropDownConfig, props.popperOpts))
         },
       })
