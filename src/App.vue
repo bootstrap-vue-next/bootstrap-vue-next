@@ -122,7 +122,7 @@
     <h6 class="m-2">Custom Button Icon</h6>
     <b-dropdown text="Custom Button Icon" no-caret class="m-2" variant="link">
       <template #button-content>
-        <img src="@/assets/logo.png" style="height: 1em" />
+        <img src="./assets/logo.png" style="height: 1em" />
       </template>
       <b-dropdown-item href="#">Action</b-dropdown-item>
     </b-dropdown>
@@ -1296,7 +1296,7 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
-import BDropdown from '@/components/BDropdown.vue'
+import BDropdown from './components/BDropdown.vue'
 import TableField from './types/TableField'
 
 export default defineComponent({

@@ -1,3 +1,3 @@
-import BFormRadio from '@/components/BFormRadio/BFormRadio.vue'
+import BFormRadio from './BFormRadio.vue'
 
 export default BFormRadio
