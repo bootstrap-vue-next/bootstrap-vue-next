@@ -49,6 +49,21 @@ export default defineComponent({
 
     const element = ref<HTMLElement>()
 
+    const startNumber = ref(1)
+
+    //Calculate the number of links considering limit
+    const numberOfLinks = computed(() => {
+      const limit = unref(pLimit)
+      const numberofPages = unref(numberOfPages)
+
+      let n: number = limit
+
+      if (numberOfPages.value <= limit) {
+        n = numberOfPages
+      }
+      return n
+    })
+
     const pagination = reactive<Pagination>({
       perPage: sanitizePerPage(props.perPage),
       totalRows: sanitizeTotalRows(props.totalRows),
@@ -90,16 +105,54 @@ export default defineComponent({
 
     //Render Helper Functions
     const pages = computed(() =>
-      Array.apply(null, {length: pLimit.value}).map((_, i) => ({number: 0 + i, classes: null}))
+      Array.apply(null, {length: numberOfLinks.value}).map((_, i) => ({
+        number: startNumber.value + i,
+        classes: null,
+      }))
     )
 
-    return {pageClick, pages}
+    return {pageClick, pages, numberOfPages, numberOfLinks}
   },
   computed: {},
   render() {
     const buttons = []
+    const isActivePage: boolean = (pageNumber) => pageNumber === this.currentPage
 
-    const isActivePage = (pageNumber) => pageNumber === this.currentPage
+    const noCurrentPage: boolean = this.currentPage < 1
+    const makeEndBtn = (linkTo: number, btnText: string, pageTest: number) => {
+      const isDisabled: boolean =
+        isActivePage(pageTest) || noCurrentPage || linkTo < 1 || linkTo > this.numberOfPages
+      const pageNumber: number =
+        linkTo < 1 ? 1 : linkTo > this.numberOfPages ? this.numberOfPages : linkTo
+
+      return h(
+        'li',
+        {
+          class: ['page-item', {disabled: isDisabled}],
+        },
+        // render inner content
+        h(
+          isDisabled ? 'span' : 'button',
+          {
+            class: ['page-link'],
+            onClick: (event) => {
+              if (isDisabled) {
+                return
+              }
+              this.pageClick(event, pageNumber)
+            },
+          },
+          btnText
+        )
+      )
+    }
+    //Previous Button
+
+    const previousButton = makeEndBtn(this.currentPage - 1, 'Previous', 1)
+
+    buttons.push(previousButton)
+
+    //End Previous Button
 
     this.pages.forEach((page) => {
       const active: boolean = isActivePage(page.number)
@@ -124,6 +177,11 @@ export default defineComponent({
       )
       buttons.push(button)
     })
+
+    //Next Button
+    const nextButton = makeEndBtn(this.currentPage + 1, 'Next', this.numberOfPages)
+
+    buttons.push(nextButton)
 
     return h('nav', {}, h('ul', {class: 'pagination'}, buttons))
   },
