@@ -72,38 +72,38 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ### Properties
 
-| Property            | Status                                                                               | Observations         |
-| ------------------- | ------------------------------------------------------------------------------------ | -------------------- |
-| `auto-close`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                      |
-| `block`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `boundary`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `dark`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | n/a in bootstrap-vue |
-| `disabled`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `dropleft`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `dropright`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `html`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                      |
-| `id`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `lazy`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                      |
-| `menu-class`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `no-caret`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `no-flip`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `offset`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `popper-opts`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `popper-opts`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `right`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `role`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `size`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `split`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `split-button-type` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `split-class`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `split-href`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `split-to`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                      |
-| `split-variant`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `text`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `toggle-class`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `toggle-tag`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                      |
-| `toggle-text`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
-| `variant`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                      |
+| Property            | Status                                                                               | Observations                                  |
+| ------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------- |
+| `auto-close`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/80) Completed  | esc closes the dropdown when auto-close=false |
+| `block`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `boundary`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `dark`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | n/a in bootstrap-vue                          |
+| `disabled`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `dropleft`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `dropright`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `html`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                               |
+| `id`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `lazy`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                               |
+| `menu-class`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `no-caret`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `no-flip`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `offset`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `popper-opts`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `popper-opts`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `right`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `role`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `size`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `split`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `split-button-type` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `split-class`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `split-href`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `split-to`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                               |
+| `split-variant`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `text`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `toggle-class`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `toggle-tag`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                               |
+| `toggle-text`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
+| `variant`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                               |
 
 ### Slots
 
