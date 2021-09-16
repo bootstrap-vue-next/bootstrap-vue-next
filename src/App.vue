@@ -847,7 +847,8 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
-
+    <b-pagination v-model:currentPage="paginationPageNumber" :limit="paginationLimt"></b-pagination>
+    {{ paginationPageNumber }}
     <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
     <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
     <b-collapse id="my-collapse" v-model="collapse">
@@ -1198,6 +1199,8 @@ export default defineComponent({
     const radioSelectedCars = ref([])
     const radioSelected = ref()
 
+    const paginationPageNumber = ref(1.1)
+    const paginationLimt = ref(6)
     onMounted(() => {
       // input.value?.focus();
       breadcrumb.items.push({
@@ -1230,6 +1233,8 @@ export default defineComponent({
       checkedPlain,
       checkedAvailableCars,
       checkedSelectedCars,
+      paginationPageNumber,
+      paginationLimt,
       radioDefault,
       radioButton,
       radioRequired,
