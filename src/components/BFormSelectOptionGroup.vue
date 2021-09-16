@@ -32,7 +32,7 @@ export default defineComponent({
     valueField: {type: String, default: 'value'},
   },
   setup(props) {
-    const formOptions = computed(() => normalizeOptions(props.options))
+    const formOptions = computed(() => normalizeOptions(props.options as any))
 
     const normalizeOption = (option: any, key = null) => {
       if (Object.prototype.toString.call(option) === '[object Object]') {

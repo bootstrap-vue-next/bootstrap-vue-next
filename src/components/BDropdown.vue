@@ -117,38 +117,41 @@ export default defineComponent({
     }))
 
     onMounted(() => {
-      instance.value = new Dropdown(dropdown.value?.$el, {
-        // autoClose: props.autoClose,
-        boundary: props.boundary,
-        offset: props.offset.toString(),
-        reference: props.offset || props.split ? 'parent' : 'toggle',
-        popperConfig: (defaultConfig?: Partial<Popper.Options>) => {
-          const dropDownConfig = {
-            placement: 'bottom-start',
-            modifiers: !props.noFlip
-              ? []
-              : [
-                  {
-                    name: 'flip',
-                    options: {
-                      fallbackPlacements: [],
+      instance.value = new Dropdown(
+        dropdown.value?.$el,
+        {
+          autoClose: props.autoClose,
+          boundary: props.boundary,
+          offset: props.offset.toString(),
+          reference: props.offset || props.split ? 'parent' : 'toggle',
+          popperConfig: (defaultConfig?: Partial<Popper.Options>) => {
+            const dropDownConfig = {
+              placement: 'bottom-start',
+              modifiers: !props.noFlip
+                ? []
+                : [
+                    {
+                      name: 'flip',
+                      options: {
+                        fallbackPlacements: [],
+                      },
                     },
-                  },
-                ],
-          }
+                  ],
+            }
 
-          if (props.dropup) {
-            dropDownConfig.placement = props.right ? 'top-end' : 'top-start'
-          } else if (props.dropright) {
-            dropDownConfig.placement = 'right-start'
-          } else if (props.dropleft) {
-            dropDownConfig.placement = 'left-start'
-          } else if (props.right) {
-            dropDownConfig.placement = 'bottom-end'
-          }
-          return mergeDeep(defaultConfig, mergeDeep(dropDownConfig, props.popperOpts))
-        },
-      })
+            if (props.dropup) {
+              dropDownConfig.placement = props.right ? 'top-end' : 'top-start'
+            } else if (props.dropright) {
+              dropDownConfig.placement = 'right-start'
+            } else if (props.dropleft) {
+              dropDownConfig.placement = 'left-start'
+            } else if (props.right) {
+              dropDownConfig.placement = 'bottom-end'
+            }
+            return mergeDeep(defaultConfig, mergeDeep(dropDownConfig, props.popperOpts))
+          },
+        } as unknown as Dropdown.Options /* TODO: remove when added in Dropdown options by https://www.npmjs.com/package/@types/bootstrap */
+      )
     })
 
     return {
