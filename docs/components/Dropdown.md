@@ -272,6 +272,83 @@ to "break-out" of its scroll container. In some situations this may affect your 
 positioning of the dropdown trigger button. In these cases you may need to wrap your dropdown inside
 another element.
 
+### Dropdown auto close behavior
+
+By default, the dropdown menu is closed when clicking inside or outside the dropdown menu. You can use the `auto-close` property to change this behavior of the dropdown.
+The `auto-close`property has 4 options
+
+- `true` : the dropdown will be closed by clicking outside or inside the dropdown menu.
+- `false` : the dropdown will be closed by clicking the toggle button and manually calling hide method. (Also will not be closed by pressing <kbd>esc</kbd> key)
+- `inside` : the dropdown will be closed (only) by clicking inside the dropdown menu.
+- `outside` : the dropdown will be closed (only) by clicking outside the dropdown menu.
+
+<ClientOnly>
+  <b-card>
+    <div>
+      <b-dropdown id="dropdown-default" text="Default Dropdown" class="m-2">
+        <b-dropdown-item-button>Action</b-dropdown-item-button>
+        <b-dropdown-item-button>Another action</b-dropdown-item-button>
+        <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+      </b-dropdown>
+      <b-dropdown id="dropdown-inside" text="Clickable outside (auto-close=inside)" auto-close="inside" class="m-2">
+        <b-dropdown-item-button>Action</b-dropdown-item-button>
+        <b-dropdown-item-button>Another action</b-dropdown-item-button>
+        <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+      </b-dropdown>
+      <b-dropdown id="dropdown-outside" text="Clickable inside (auto-close=outside)" auto-close="outside" class="m-2">
+        <b-dropdown-item-button>Action</b-dropdown-item-button>
+        <b-dropdown-item-button>Another action</b-dropdown-item-button>
+        <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+      </b-dropdown>
+      <b-dropdown id="dropdown-false" text="Manual close (auto-close=false)" :auto-close="false" class="m-2">
+        <b-dropdown-item-button>Action</b-dropdown-item-button>
+        <b-dropdown-item-button>Another action</b-dropdown-item-button>
+        <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+      </b-dropdown>
+    </div>
+  </b-card>
+</ClientOnly>
+
+```html
+<div>
+  <b-dropdown id="dropdown-default" text="Default Dropdown" class="m-2">
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+  <b-dropdown
+    id="dropdown-inside"
+    text="Clickable outside (auto-close=inside)"
+    auto-close="inside"
+    class="m-2"
+  >
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+  <b-dropdown
+    id="dropdown-outside"
+    text="Clickable inside (auto-close=outside)"
+    auto-close="outside"
+    class="m-2"
+  >
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+  <b-dropdown
+    id="dropdown-false"
+    text="Manual close (auto-close=false)"
+    :auto-close="false"
+    class="m-2"
+  >
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+</div>
+```
+
 ### Advanced Popper.js configuration
 
 If you need some advanced Popper.js configuration to make dropdowns behave to your needs, you can
@@ -985,33 +1062,33 @@ the dropdown menu, ensure they are wrapped with a plain `<li>`.
 
 #### Properties
 
-| Property                                                     | Type                            | Default           | Description                                                                                                                   |
-| ------------------------------------------------------------ | ------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `auto-close`                                                 | `Boolean`                       | `true`            | Auto close the dropdown when an item is clicked.                                                                              |
-| `block`                                                      | `Boolean`                       | `false`           | Renders a 100% width toggle button (expands to the width of its parent container)                                             |
-| `boundary`                                                   | `HTMLElement ` or `String`      | `'scrollParent'`  | The boundary constraint of the menu: 'scrollParent', 'window', 'viewport', or a reference to an HTMLElement                   |
-| `dark`                                                       | `Boolean`                       | `false`           | Renders the dropdown menu items in dark mode                                                                                  |
-| `disabled`                                                   | `Boolean`                       | `false`           | When set to `true`, disables the component's functionality and places it in a disabled state                                  |
-| `dropleft`                                                   | `Boolean`                       | `false`           | When set, positions the menu to the left of the button                                                                        |
-| `dropright`                                                  | `Boolean`                       | `false`           | When set, positions the menu to the right of the button                                                                       |
-| `id`                                                         | `String`                        |                   | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
-| `menu-class`                                                 | `Array` or `Object` or `String` |                   | CSS class (or classes) to add to the menu container                                                                           |
-| `no-caret`                                                   | `Boolean`                       | `false`           | Hide the caret indicator on the toggle button                                                                                 |
-| `no-flip`                                                    | `Boolean`                       | `false`           | Prevent the menu from auto flipping positions                                                                                 |
-| `offset`                                                     | `Number` or `String`            | `0`               | Specify the number of pixels to shift the menu by. Negative values supported                                                  |
-| `popper-opts`                                                | `Object`                        | `{}`              | Additional configuration to pass to Popper.js                                                                                 |
-| `right`                                                      | `Boolean`                       | `false`           | Align the right edge of the menu with the right of the button                                                                 |
-| `role`                                                       | `String`                        | `menu`            | Sets the ARIA attribute `role` to a specific value                                                                            |
-| `size`                                                       | `String`                        |                   | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                     |
-| `split`                                                      | `Boolean`                       | `false`           | When set, renders a split button dropdown                                                                                     |
-| <span style="white-space:nowrap;">`split-button-type`</span> | `String`                        | `button`          | Value to place in the 'type' attribute on the split button: 'button', 'submit', 'reset'                                       |
-| `split-class`                                                | `Array` or `Object` or `String` |                   | CSS class (or classes) to add to the split button                                                                             |
-| `split-href`                                                 | `String`                        |                   | Denotes the target URL of the link for the split button                                                                       |
-| `split-variant`                                              | `String`                        |                   | Applies one of the Bootstrap theme color variants to the split button. Defaults to the `variant` prop value                   |
-| `text`                                                       | `String`                        |                   | Text to place in the toggle button, or in the split button is split mode                                                      |
-| `toggle-class`                                               | `Array` or `Object` or `String` |                   | CSS class (or classes) to add to the toggle button                                                                            |
-| `toggle-text`                                                | `String`                        | `Toggle dropdown` | ARIA label (sr-only) to set on the toggle when in split mode                                                                  |
-| `variant`                                                    | `String`                        | `secondary`       | Applies one of the Bootstrap theme color variants to the component                                                            |
+| Property                                                     | Type                            | Default           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------------------------------------------------ | ------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auto-close`                                                 | `Boolean`                       | `true`            | Configure the auto close behavior of the dropdown: <br/> - `true` - the dropdown will be closed by clicking outside or inside the dropdown menu. <br/> - `false`- the dropdown will be closed by clicking the toggle button and manually calling hide or toggle method. (Also will not be closed by pressing <kbd>esc</kbd> key) <br/> `'inside'` - the dropdown will be closed (only) by clicking inside the dropdown menu. <br/> `'outside'` - the dropdown will be closed (only) by clicking outside the dropdown menu. |
+| `block`                                                      | `Boolean`                       | `false`           | Renders a 100% width toggle button (expands to the width of its parent container)                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `boundary`                                                   | `HTMLElement ` or `String`      | `'scrollParent'`  | The boundary constraint of the menu: 'scrollParent', 'window', 'viewport', or a reference to an HTMLElement                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `dark`                                                       | `Boolean`                       | `false`           | Renders the dropdown menu items in dark mode                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `disabled`                                                   | `Boolean`                       | `false`           | When set to `true`, disables the component's functionality and places it in a disabled state                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `dropleft`                                                   | `Boolean`                       | `false`           | When set, positions the menu to the left of the button                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `dropright`                                                  | `Boolean`                       | `false`           | When set, positions the menu to the right of the button                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `id`                                                         | `String`                        |                   | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed                                                                                                                                                                                                                                                                                                                                                                                              |
+| `menu-class`                                                 | `Array` or `Object` or `String` |                   | CSS class (or classes) to add to the menu container                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `no-caret`                                                   | `Boolean`                       | `false`           | Hide the caret indicator on the toggle button                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `no-flip`                                                    | `Boolean`                       | `false`           | Prevent the menu from auto flipping positions                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `offset`                                                     | `Number` or `String`            | `0`               | Specify the number of pixels to shift the menu by. Negative values supported                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `popper-opts`                                                | `Object`                        | `{}`              | Additional configuration to pass to Popper.js                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `right`                                                      | `Boolean`                       | `false`           | Align the right edge of the menu with the right of the button                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `role`                                                       | `String`                        | `menu`            | Sets the ARIA attribute `role` to a specific value                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `size`                                                       | `String`                        |                   | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `split`                                                      | `Boolean`                       | `false`           | When set, renders a split button dropdown                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| <span style="white-space:nowrap;">`split-button-type`</span> | `String`                        | `button`          | Value to place in the 'type' attribute on the split button: 'button', 'submit', 'reset'                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `split-class`                                                | `Array` or `Object` or `String` |                   | CSS class (or classes) to add to the split button                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `split-href`                                                 | `String`                        |                   | Denotes the target URL of the link for the split button                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `split-variant`                                              | `String`                        |                   | Applies one of the Bootstrap theme color variants to the split button. Defaults to the `variant` prop value                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `text`                                                       | `String`                        |                   | Text to place in the toggle button, or in the split button is split mode                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `toggle-class`                                               | `Array` or `Object` or `String` |                   | CSS class (or classes) to add to the toggle button                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `toggle-text`                                                | `String`                        | `Toggle dropdown` | ARIA label (sr-only) to set on the toggle when in split mode                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `variant`                                                    | `String`                        | `secondary`       | Applies one of the Bootstrap theme color variants to the component                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 #### Slots
 
