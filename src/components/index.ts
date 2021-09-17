@@ -26,19 +26,23 @@ import BContainer from './BContainer.vue'
 import BDropdown from './BDropdown.vue'
 import BDropdownDivider from './BDropdownDivider.vue'
 import BDropdownForm from './BDropdownForm.vue'
+import BDropdownGroup from './BDropdownGroup.vue'
 import BDropdownHeader from './BDropdownHeader.vue'
 import BDropdownItem from './BDropdownItem.vue'
+import BDropdownItemButton from './BDropdownItemButton.vue'
 import BDropdownText from './BDropdownText.vue'
 import BForm from './BForm.vue'
 import BFormCheckbox from './BFormCheckbox/BFormCheckbox.vue'
+import BFormCheckboxGroup from './BFormCheckbox/BFormCheckboxGroup.vue'
 import BFormRadio from './BFormRadio'
+import BFormRadioGroup from './BFormRadio/BFormRadioGroup.vue'
 import BFormInput from './BFormInput.vue'
 import BFormFloatingLabel from './BFormFloatingLabel.vue'
 import BFormSelect from './BFormSelect.vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import BFormText from './BFormText.vue'
-// import BIcon from "./BIcon.vue";
+import BIcon from './BIcon.vue'
 import BImg from './BImg.vue'
 import BInputGroup from './BInputGroup.vue'
 import BInputGroupText from './BInputGroupText.vue'
@@ -89,8 +93,10 @@ export default {
   BDropdown,
   BDropdownDivider,
   BDropdownForm,
+  BDropdownGroup,
   BDropdownHeader,
   BDropdownItem,
+  BDropdownItemButton,
   BDropdownText,
   BForm,
   BFormSelect,
@@ -99,7 +105,7 @@ export default {
   BFormFloatingLabel,
   BFormInput,
   BFormText,
-  // BIcon,
+  BIcon,
   BImg,
   BInputGroup,
   BInputGroupText,
@@ -121,5 +127,7 @@ export default {
   BTabs,
   BTab,
   BFormCheckbox,
+  BFormCheckboxGroup,
   BFormRadio,
+  BFormRadioGroup,
 }

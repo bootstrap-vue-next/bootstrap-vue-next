@@ -1,4 +1,4 @@
-import {RX_FIRST_START_SPACE_WORD, RX_LOWER_UPPER, RX_UNDERSCORE} from '@/constants/regex'
+import {RX_FIRST_START_SPACE_WORD, RX_LOWER_UPPER, RX_UNDERSCORE} from '../constants/regex'
 
 export const startCase: (str: string) => string = (str) =>
   str

@@ -7,30 +7,34 @@
       :class="inputClasses"
       type="checkbox"
       :disabled="disabled"
-      :required="isRequired"
+      :required="name && required"
       :name="name"
       :form="form"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
-      :aria-required="required ? 'true' : null"
+      :aria-required="name && required ? 'true' : null"
       :value="value"
       :indeterminate="indeterminate"
       :checked="isChecked"
-      @click="toggleChecked()"
+      @click.stop="handleClick($event.target.checked)"
       @focus="focus()"
       @blur="blur()"
-      @input="(event) => onInput(event)"
     />
-    <label v-if="$slots.default || !plain" :for="computedId" :class="labelClasses">
+    <label
+      v-if="$slots.default || !plain"
+      :for="computedId"
+      :class="[labelClasses, {active: isChecked, focus: isFocused}]"
+    >
       <slot />
     </label>
   </div>
 </template>
 
 <script lang="ts">
-import {handleUpdate, useFormCheck} from '@/composables/useFormCheck'
-import {defineComponent, onUpdated, PropType, SetupContext} from 'vue'
+import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
+import {computed, defineComponent, onMounted, PropType, Ref, ref, watch} from 'vue'
 import {InputSize} from '../../types'
+import useId from '../../composables/useId'
 
 export default defineComponent({
   name: 'BFormCheckbox',
@@ -51,66 +55,94 @@ export default defineComponent({
     required: {type: Boolean, default: undefined},
     size: {type: String as PropType<InputSize>, default: 'md'},
     state: {type: Boolean, default: null},
-    uncheckedValue: {type: [String, Boolean], default: false},
-    value: {type: [String, Boolean, Object], default: false},
-    modelValue: {type: [Boolean, String, Array], default: null},
+    uncheckedValue: {type: [Boolean, String, Array, Object], default: false},
+    value: {type: [Boolean, String, Array, Object], default: true},
+    modelValue: {type: [Boolean, String, Array, Object], default: null},
   },
   emits: ['update:modelValue', 'input', 'change'],
-  setup(props, {emit}: SetupContext) {
-    const {
-      computedId,
-      classes,
-      inputClasses,
-      labelClasses,
-      isChecked,
-      isRequired,
-      toggleChecked,
-      focus,
-      blur,
-      onInput,
-      localChecked,
-      input,
-    } = useFormCheck(
-      props.id,
-      props.autofocus,
-      props.plain,
-      props.button,
-      props.inline,
-      props.switch,
-      props.state,
-      props.modelValue,
-      props.value,
-      props.buttonVariant,
-      props.uncheckedValue,
-      props.name,
-      props.required,
-      props.disabled,
-      emit
-    )
-    onUpdated(() => {
-      handleUpdate(
-        isChecked,
-        props.modelValue,
-        props.value,
-        props.uncheckedValue,
-        localChecked,
-        emit
-      )
+  setup(props, {emit}) {
+    const computedId = useId(props.id, 'form-check')
+    const input: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
+    const isFocused = ref(false)
+
+    const localChecked = computed({
+      get: () => props.modelValue,
+      set: (newValue: any) => {
+        emit('input', newValue)
+        emit('update:modelValue', newValue)
+        emit('change', newValue)
+      },
     })
 
+    const isChecked = computed(() => {
+      if (Array.isArray(props.modelValue)) {
+        return props.modelValue.indexOf(props.value) > -1
+      }
+      return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
+    })
+
+    const classes = getClasses(props)
+    const inputClasses = getInputClasses(props)
+    const labelClasses = getLabelClasses(props)
+
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        emit('input', newValue)
+      }
+    )
+
+    const focus = () => {
+      isFocused.value = true
+      if (!props.disabled) input.value.focus()
+    }
+
+    const blur = () => {
+      isFocused.value = false
+      if (!props.disabled) {
+        input.value.blur()
+      }
+    }
+
+    const handleClick = (checked: boolean) => {
+      if (!Array.isArray(props.modelValue)) {
+        localChecked.value = checked ? props.value : props.uncheckedValue
+      } else {
+        const tempArray = props.modelValue
+        if (checked) {
+          const index = tempArray.indexOf(props.value)
+          if (index < 0) {
+            tempArray.push(props.value)
+          }
+        } else {
+          const index = tempArray.indexOf(props.value)
+          if (index > -1) {
+            tempArray.splice(index, 1)
+          }
+        }
+        localChecked.value = tempArray
+      }
+    }
+
+    // TODO: make jest tests compatible with the v-focus directive
+    if (props.autofocus) {
+      onMounted(() => {
+        input.value.focus()
+      })
+    }
+
     return {
+      input,
       computedId,
       classes,
       inputClasses,
       labelClasses,
-      isRequired,
+      localChecked,
+      isChecked,
+      isFocused,
+      handleClick,
       focus,
       blur,
-      onInput,
-      toggleChecked,
-      input,
-      isChecked,
-      localChecked,
     }
   },
 })

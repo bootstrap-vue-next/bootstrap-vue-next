@@ -23,6 +23,7 @@
         :label="option.label"
         :options="option.options"
       />
+      <!-- eslint-disable vue/no-v-html -->
       <b-form-select-option
         v-else
         :key="`option_${index}`"
@@ -31,6 +32,7 @@
         v-text="option.text"
         v-html="option.html"
       />
+      <!--eslint-enable-->
     </template>
     <slot />
   </select>

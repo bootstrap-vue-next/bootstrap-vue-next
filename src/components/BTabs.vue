@@ -19,7 +19,12 @@
             :aria-controls="contentId"
             :aria-selected="active"
             v-bind="tab.props['title-link-attributes']"
-            @click.stop="(e) => { $emit('click', e); tabIndex = i }"
+            @click.stop="
+              (e) => {
+                $emit('click', e)
+                tabIndex = i
+              }
+            "
           >
             {{ tab.props.title }}
           </a>
@@ -39,7 +44,7 @@ import {computed, defineComponent, PropType, watch} from 'vue'
 import getID from '../utils/getID'
 import Alignment from '../types/Alignment'
 
-const getTabs = (slots): any[] => {
+const getTabs = (slots: any): any[] => {
   if (!slots || !slots.default) return []
 
   const defaultSlots = slots.default()

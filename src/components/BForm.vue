@@ -1,5 +1,10 @@
 <template>
-  <form :id="id" :novalidate="novalidate" :class="classes">
+  <form
+    :id="id"
+    :novalidate="novalidate"
+    :class="classes"
+    @submit.prevent="$emit('submit', $event)"
+  >
     <slot />
   </form>
 </template>
@@ -15,6 +20,7 @@ export default defineComponent({
     novalidate: {type: Boolean, default: false},
     validated: {type: Boolean, default: false},
   },
+  emits: ['submit'],
   setup(props) {
     const classes = computed(() => ({
       'form-floating': props.floating,

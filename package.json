@@ -2,16 +2,14 @@
   "name": "bootstrap-vue-3",
   "displayName": "BootstrapVue3",
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.3",
   "license": "MIT",
   "main": "dist/bootstrap-vue-3.umd.js",
   "module": "./dist/bootstrap-vue-3.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/bootstrap-vue-3.es.js",
-      "require": "./dist/bootstrap-vue-3.umd.js"
-    }
-  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "private": false,
   "scripts": {
     "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
@@ -29,18 +27,14 @@
     "prepare": "husky install"
   },
   "types": "src/BootstrapVue.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.15.0",
-    "@babel/preset-env": "^7.15.4",
     "bootstrap": "^5.0.2",
     "core-js": "^3.6.5"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.4",
     "@testing-library/jest-dom": "^5.14.1",
     "@types/bootstrap": "^5.0.16",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
@@ -48,7 +42,7 @@
     "@vitejs/plugin-vue": "1.x.x",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
-    "@vue/test-utils": "^2.0.0-rc.11",
+    "@vue/test-utils": "^2.0.0-rc.14",
     "babel-loader": "^8.2.2",
     "bootstrap-icons": "^1.5.0",
     "esbuild-loader": "^2.13.1",

@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import {mount} from '@vue/test-utils'
 import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
 import BFormRadio from './BFormRadio'
@@ -170,6 +171,7 @@ describe('form-radio', () => {
     })
     const input = wrapper.find('input')
     expect(input.attributes('required')).toBeUndefined()
+    expect(input.attributes('aria-required')).toBeUndefined()
 
     wrapper.unmount()
   })
@@ -188,6 +190,7 @@ describe('form-radio', () => {
     })
     const input = wrapper.find('input')
     expect(input.attributes('required')).toBeDefined()
+    expect(input.attributes('aria-required')).toBeDefined()
 
     wrapper.unmount()
   })
@@ -720,6 +723,30 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
+  it('stand-alone button has label classes btn and btn-size when size property set', async () => {
+    const wrapper = mount(BFormRadio, {
+      props: {
+        button: true,
+        modelValue: false,
+        value: 'a',
+        size: 'lg',
+      },
+      slots: {
+        default: 'foobar',
+      },
+    })
+    const label = wrapper.find('label')
+    expect(label).toBeDefined()
+    expect(label.classes().length).toEqual(3)
+    expect(label.classes()).not.toContain('active')
+    expect(label.classes()).not.toContain('focus')
+    expect(label.classes()).toContain('btn')
+    expect(label.classes()).toContain('btn-secondary')
+    expect(label.classes()).toContain('btn-lg')
+
+    wrapper.unmount()
+  })
+
   it('stand-alone button has label classes btn, btn-secondary and active when checked by default', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
@@ -745,9 +772,10 @@ describe('form-radio', () => {
   it('stand-alone button has label class active when clicked (checked)', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        button: true,
-        modelValue: false,
-        value: 'a',
+        'button': true,
+        'modelValue': false,
+        'value': 'a',
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -924,8 +952,9 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        uncheckedValue: 'foo',
-        value: 'bar',
+        'uncheckedValue': 'foo',
+        'value': 'bar',
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -1011,8 +1040,9 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        value: 'bar',
-        modelValue: ['foo'],
+        'value': 'bar',
+        'modelValue': ['foo'],
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -1030,20 +1060,19 @@ describe('form-radio', () => {
 
     await $input.trigger('click')
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(2)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
-    expect(wrapper.vm.localChecked[1]).toEqual('bar')
+    expect(wrapper.vm.localChecked.length).toBe(1)
+    expect(wrapper.vm.localChecked[0]).toEqual('bar')
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
-    expect(wrapper.emitted('change')[0][0]).toEqual(['foo', 'bar'])
+    expect(wrapper.emitted('change')[0][0]).toEqual(['bar'])
 
-    await $input.trigger('click') // Todo checkbox doesn't trigger oninput event for unchecking and thus chenge is not emitted
+    await $input.trigger('click')
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
     expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+    expect(wrapper.vm.localChecked[0]).toEqual('bar')
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
-    expect(wrapper.emitted('change')[0][0]).toEqual(['foo'])
+    expect(wrapper.emitted('change')[0][0]).toEqual(['bar'])
 
     await wrapper.setProps({modelValue: []})
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
@@ -1061,10 +1090,10 @@ describe('form-radio', () => {
 
     await $input.trigger('click')
     expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(0)
+    expect(wrapper.vm.localChecked.length).toBe(1)
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
-    expect(wrapper.emitted('change')[1][0]).toEqual([])
+    expect(wrapper.emitted('change')[1][0]).toEqual(['bar'])
 
     wrapper.unmount()
   })
@@ -1073,8 +1102,9 @@ describe('form-radio', () => {
     const wrapper = mount(BFormRadio, {
       attachTo: createContainer(),
       props: {
-        value: {bar: 1, baz: 2},
-        modelValue: false,
+        'value': {bar: 1, baz: 2},
+        'modelValue': false,
+        'onUpdate:modelValue': async (modelValue) => await wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',

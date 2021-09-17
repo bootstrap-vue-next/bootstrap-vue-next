@@ -1,6 +1,7 @@
 <template>
   <optgroup :label="label">
     <slot name="first" />
+    <!-- eslint-disable vue/no-v-html -->
     <b-form-select-option
       v-for="(option, index) in formOptions"
       :key="`option_${index}`"
@@ -10,6 +11,7 @@
       v-text="option.text"
       v-html="option.html"
     />
+    <!--eslint-enable-->
     <slot />
   </optgroup>
 </template>
@@ -30,7 +32,7 @@ export default defineComponent({
     valueField: {type: String, default: 'value'},
   },
   setup(props) {
-    const formOptions = computed(() => normalizeOptions(props.options))
+    const formOptions = computed(() => normalizeOptions(props.options as any))
 
     const normalizeOption = (option: any, key = null) => {
       if (Object.prototype.toString.call(option) === '[object Object]') {
