@@ -25,6 +25,9 @@ const DEFAULT_LIMIT = 5
 const DEFAULT_PER_PAGE = 20
 const DEFAULT_TOTAL_ROWS = 0
 
+// Threshold of limit size when we start/stop showing ellipsis
+const ELLIPSIS_THRESHOLD = 3
+
 const sanitizePerPage: number = (value) => Math.max(toInteger(value) || DEFAULT_PER_PAGE, 1)
 const sanitizeTotalRows: number = (value) => Math.max(toInteger(value) || DEFAULT_TOTAL_ROWS, 0)
 
@@ -35,6 +38,8 @@ export default defineComponent({
     perPage: {type: Number, default: DEFAULT_PER_PAGE},
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
     limit: {type: Number, default: DEFAULT_LIMIT},
+    firstNumber: {type: Boolean, default: false},
+    hideEllipsis: {type: Boolean, default: false},
   },
   emits: ['update:modelValue', 'update:current-page'],
   setup(props, {emit, slots}) {
@@ -44,22 +49,48 @@ export default defineComponent({
     )
 
     const currentPage = toRef(props, 'currentPage')
-
     const pLimit = toRef(props, 'limit')
 
     const element = ref<HTMLElement>()
 
-    const startNumber = ref(1)
+    const startNumber = computed(() => {
+      let lStartNumber = 1
+      const cLimit: number = unref(pLimit)
+      const cNumberOfPages: number = unref(numberOfPages)
+      const cNumberOfLinks: number = unref(numberOfLinks)
+      const cCurrentPage: number = unref(currentPage)
+      const showFirstDots = false
+      const pagesLeft: number = cNumberOfPages - cCurrentPage
+
+      if (pagesLeft + 2 < cLimit && cLimit > ELLIPSIS_THRESHOLD) {
+        // End of Pagination
+        lStartNumber = cNumberOfPages - cNumberOfLinks + 1
+      } else {
+        // Middle and beginnig calculation.
+        lStartNumber = cCurrentPage - Math.floor(cNumberOfLinks / 2)
+      }
+      // Negative due at times
+      if (lStartNumber < 1) {
+        lStartNumber = 1
+      } else if (lStartNumber > cNumberOfPages - cNumberOfLinks) {
+        lStartNumber = cNumberOfPages - cNumberOfLinks + 1
+      }
+
+      if (showFirstDots && lStartNumber && lStartNumber < 4) {
+        lStartNumber = 1
+      }
+      return lStartNumber
+    })
 
     //Calculate the number of links considering limit
     const numberOfLinks = computed(() => {
-      const limit = unref(pLimit)
-      const numberofPages = unref(numberOfPages)
+      const cLimit: number = unref(pLimit)
+      const cNumberOfPages: number = unref(numberOfPages)
 
-      let n: number = limit
+      let n: number = cLimit
 
-      if (numberOfPages.value <= limit) {
-        n = numberOfPages
+      if (cNumberOfPages <= cLimit) {
+        n = cNumberOfPages
       }
       return n
     })
@@ -111,14 +142,14 @@ export default defineComponent({
       }))
     )
 
-    return {pageClick, pages, numberOfPages, numberOfLinks}
+    return {pageClick, pages, numberOfPages, numberOfLinks, startNumber}
   },
   computed: {},
   render() {
     const buttons = []
     const isActivePage: boolean = (pageNumber) => pageNumber === this.currentPage
-
     const noCurrentPage: boolean = this.currentPage < 1
+
     const makeEndBtn = (linkTo: number, btnText: string, pageTest: number) => {
       const isDisabled: boolean =
         isActivePage(pageTest) || noCurrentPage || linkTo < 1 || linkTo > this.numberOfPages

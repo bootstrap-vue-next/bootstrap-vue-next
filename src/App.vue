@@ -849,9 +849,9 @@
     </div>
     <b-pagination
       v-model:currentPage="paginationPageNumber"
-      :limit="paginationLimt"
-      totalRows="20"
-      perPage="5"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
     ></b-pagination>
     {{ paginationPageNumber }}
     <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
@@ -1205,7 +1205,9 @@ export default defineComponent({
     const radioSelected = ref()
 
     const paginationPageNumber = ref(1)
-    const paginationLimt = ref(6)
+    const paginationLimit = ref(3)
+    const paginationPerPage = ref(2)
+    const paginationRows = ref(40)
     onMounted(() => {
       // input.value?.focus();
       breadcrumb.items.push({
@@ -1239,7 +1241,9 @@ export default defineComponent({
       checkedAvailableCars,
       checkedSelectedCars,
       paginationPageNumber,
-      paginationLimt,
+      paginationLimit,
+      paginationPerPage,
+      paginationRows,
       radioDefault,
       radioButton,
       radioRequired,
