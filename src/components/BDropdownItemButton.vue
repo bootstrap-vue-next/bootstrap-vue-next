@@ -13,38 +13,36 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from "../types";
+import {ColorVariant} from '../types'
 
 export default defineComponent({
-    name: 'BDropdownItemButton',
-    inheritAttrs: false,
-    props: {
-      active: { type: Boolean, default: false },
-      activeClass: { type: String, default: 'active'},
-      buttonClass: { type: [String, Array, Object] },
-      disabled: { type: Boolean, default: false },
-      variant: { type: String as PropType<ColorVariant>, default: null },
-    },
-    emits: [
-      'click',
-    ],
-    setup(props) {
-        const classes = computed(() => ({
-            [props.activeClass]: props.active,
-            disabled: props.disabled,
-            [`text-${props.variant}`]: props.variant
-        }))
+  name: 'BDropdownItemButton',
+  inheritAttrs: false,
+  props: {
+    active: {type: Boolean, default: false},
+    activeClass: {type: String, default: 'active'},
+    buttonClass: {type: [String, Array, Object]},
+    disabled: {type: Boolean, default: false},
+    variant: {type: String as PropType<ColorVariant>, default: null},
+  },
+  emits: ['click'],
+  setup(props) {
+    const classes = computed(() => ({
+      [props.activeClass]: props.active,
+      disabled: props.disabled,
+      [`text-${props.variant}`]: props.variant,
+    }))
 
-        const attrs = computed(() => ({
-          role: 'menuitem',
-          type: 'button',
-          disabled: props.disabled
-        }));
+    const attrs = computed(() => ({
+      role: 'menuitem',
+      type: 'button',
+      disabled: props.disabled,
+    }))
 
-        return {
-            classes,
-            attrs
-        }
-    },
+    return {
+      classes,
+      attrs,
+    }
+  },
 })
 </script>

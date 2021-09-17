@@ -1,11 +1,6 @@
 <template>
   <li role="presentation">
-    <component
-        :is="tag"
-        class="dropdown-divider"
-        role="separator"
-        aria-orientation="horizontal"
-    />
+    <component :is="tag" class="dropdown-divider" role="separator" aria-orientation="horizontal" />
   </li>
 </template>
 
@@ -16,6 +11,6 @@ export default defineComponent({
   name: 'BDropdownDivider',
   props: {
     tag: {type: String, default: 'hr'},
-  }
+  },
 })
 </script>

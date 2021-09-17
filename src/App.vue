@@ -973,6 +973,12 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
+    <b-pagination
+      v-model:currentPage="paginationPageNumber"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+    ></b-pagination>
 
     <h5 class="my-3">Icons</h5>
     <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
@@ -1347,6 +1353,10 @@ export default defineComponent({
     const radioSelectedCars = ref([])
     const radioSelected = ref()
 
+    const paginationPageNumber = ref(1)
+    const paginationLimit = ref(3)
+    const paginationPerPage = ref(2)
+    const paginationRows = ref(40)
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1378,6 +1388,10 @@ export default defineComponent({
       checkedPlain,
       checkedAvailableCars,
       checkedSelectedCars,
+      paginationPageNumber,
+      paginationLimit,
+      paginationPerPage,
+      paginationRows,
       setCheckedSelectedCars,
       radioDefault,
       radioButton,

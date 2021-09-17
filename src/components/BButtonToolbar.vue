@@ -1,11 +1,6 @@
 <template>
-  <div
-      :class="classes"
-      class="btn-toolbar"
-      role="toolbar"
-      :aria-label="ariaRole"
-  >
-    <slot/>
+  <div :class="classes" class="btn-toolbar" role="toolbar" :aria-label="ariaRole">
+    <slot />
   </div>
 </template>
 
@@ -25,7 +20,7 @@ export default defineComponent({
     }))
 
     return {
-      classes
+      classes,
     }
   },
 })
