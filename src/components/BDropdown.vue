@@ -2,7 +2,7 @@
   <div ref="parent" :class="classes" class="btn-group">
     <b-button
       :id="computedId"
-      :variant="variant"
+      :variant="splitVariant || variant"
       :size="size"
       :class="[buttonClasses, split ? splitClass : toggleClass]"
       :disabled="disabled"
@@ -14,7 +14,7 @@
     </b-button>
     <b-button
       v-if="split"
-      :variant="splitVariant || variant"
+      :variant="variant"
       :size="size"
       :disabled="disabled"
       v-bind="splitAttr"
@@ -94,11 +94,13 @@ export default defineComponent({
 
     const classes = computed(() => ({
       'd-grid': props.block,
+      'd-flex': props.block && props.split,
     }))
 
     const buttonClasses = computed(() => ({
       'dropdown-toggle': !props.split,
       'dropdown-toggle-no-caret': props.noCaret && !props.split,
+      'w-100': props.split && props.block,
     }))
 
     const dropdownMenuClasses = computed(() => ({
