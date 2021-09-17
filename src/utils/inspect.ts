@@ -5,3 +5,9 @@
 // Note object could be a complex type like array, Date, etc.
 export const isObject = (obj: any): boolean => obj !== null && typeof obj === 'object'
 export const isString = (value: any): boolean => typeof value === 'string'
+
+export const isUndefined = (value: any) => value === undefined
+
+export const isNull = (value: any) => value === null
+
+export const isUndefinedOrNull = (value: any) => isUndefined(value) || isNull(value)
