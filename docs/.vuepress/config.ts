@@ -32,6 +32,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/README.md',
             '/components/Accordion.md',
             '/components/Badge.md',
+            '/components/Breadcrumb.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
             '/components/FormRadio.md',

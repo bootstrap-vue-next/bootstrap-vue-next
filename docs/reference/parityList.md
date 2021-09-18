@@ -52,6 +52,42 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Breadcrumb
 
+### Properties
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| items    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Breadcrumb-Item
+
+### Properties
+
+| Property              | Status                                                                               | Observations |
+| --------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| active                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| active-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| append                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| aria-current          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| disabled              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| exact                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| exact-active-class    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| href                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| html                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| no-prefetch           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| prefetch              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| rel                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| replace               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| router-component-name | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| target                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| text                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| to                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+
+### Events
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| click    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Button
 
 ## Button Group
