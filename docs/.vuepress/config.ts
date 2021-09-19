@@ -31,6 +31,7 @@ export default defineUserConfig<DefaultThemeOptions>({
           children: [
             '/components/README.md',
             '/components/Accordion.md',
+            '/components/Alert.md',
             '/components/Badge.md',
             '/components/Breadcrumb.md',
             '/components/Dropdown.md',

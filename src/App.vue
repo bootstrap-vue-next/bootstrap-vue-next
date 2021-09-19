@@ -267,6 +267,13 @@
       <hr />
     </div>
     <div>
+      <h5>Alerts</h5>
+      <b-alert variant="primary" show>A simple primary alert—check it out!</b-alert>
+      <b-alert variant="warning" show dismissible>
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+      </b-alert>
+    </div>
+    <div>
       <h5>Avatars</h5>
       <b-avatar button class="me-1" icon="person-fill" variant="secondary" />
       <b-avatar button class="me-1" text="BV" />

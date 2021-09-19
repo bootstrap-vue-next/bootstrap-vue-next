@@ -12,12 +12,12 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 
 ### Properties
 
-| Property        | Status                                                                               | Observations |
-| --------------- | ------------------------------------------------------------------------------------ | ------------ |
-| `dismiss-label` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0)             |
+| Property        | Status                                                                               | Observations                                         |
+| --------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| `dismiss-label` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `dismissible`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
-| `fade`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
-| `show`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `fade`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `show`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Only boolean. show property is no longer the v-model |
 | `variant`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 
 ### Slots
@@ -29,11 +29,11 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 
 ### Events
 
-| Event                | Status                                                                               | Observations                                 |
-| -------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------- |
-| `dismiss-count-down` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0)             |
-| `dismissed`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | In Bootstrap v5 this event is named `closed` |
-| `input`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0)             |
+| Event                | Status                                                                               | Observations                                      |
+| -------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| `dismiss-count-down` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100)           |
+| `dismissed`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | In Bootstrap v5 this event is named `closed`      |
+| `input`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100)           | In vue3 this event is now named update:modelValue |
 
 ### Bootstrap v5 new features
 
@@ -42,7 +42,6 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | Event    | Status                                                                               | Observations |
 | -------- | ------------------------------------------------------------------------------------ | ------------ |
 | `closed` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
-| `close`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 
 ## Avatar
 
