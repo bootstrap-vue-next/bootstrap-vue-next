@@ -142,7 +142,7 @@ export default defineComponent({
         if (!cHideEllipsis || cLastNumber) {
           n = cLimit - (cFirstNumber ? 0 : 1)
         }
-        n = Math.Min(n, cLimit)
+        n = Math.min(n, cLimit)
       } else if (cNumberOfPages - currentPage.value + 2 < cLimit && cLimit > ELLIPSIS_THRESHOLD) {
         if (!cHideEllipsis || cFirstNumber) {
           n = cLimit - (cLastNumber ? 0 : 1)
