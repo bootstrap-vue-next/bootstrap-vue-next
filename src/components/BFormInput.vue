@@ -14,7 +14,6 @@
     :min="min"
     :max="max"
     :step="step"
-    :value="modelValue"
     :list="Array.isArray(list) && list.length ? computedId : null"
     :aria-required="required ? 'true' : null"
     :aria-invalid="computedAriaInvalid"
@@ -50,7 +49,7 @@ export default defineComponent({
     list: {type: Array as PropType<string[]>},
     max: {type: [String, Number]},
     min: {type: [String, Number]},
-    modelValue: {type: [String, Number], default: ''},
+    modelValue: {type: [String, Number] as PropType<string | number>, default: ''},
     name: {type: String},
     number: {type: Boolean, default: false},
     placeholder: {type: String},
@@ -65,7 +64,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur'],
   setup(props, {emit}) {
-    const input = ref<HTMLElement>()
+    const input = ref<HTMLInputElement>()
     const computedId = useId(props.id, 'input')
 
     // lifecycle events
@@ -75,6 +74,11 @@ export default defineComponent({
       })
     }
     onMounted(handleAutofocus)
+    onMounted(() => {
+      if (input.value) {
+        input.value.value = props.modelValue as string
+      }
+    })
     onActivated(handleAutofocus)
     // /lifecycle events
 
