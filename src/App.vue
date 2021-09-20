@@ -978,7 +978,8 @@
       :limit="paginationLimit"
       :total-rows="paginationRows"
       :per-page="paginationPerPage"
-    ></b-pagination>
+    >
+    </b-pagination>
 
     <h5 class="my-3">Icons</h5>
     <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
@@ -1353,8 +1354,8 @@ export default defineComponent({
     const radioSelectedCars = ref([])
     const radioSelected = ref()
 
-    const paginationPageNumber = ref(1)
-    const paginationLimit = ref(3)
+    const paginationPageNumber = ref(19)
+    const paginationLimit = ref(5)
     const paginationPerPage = ref(2)
     const paginationRows = ref(40)
     onMounted(() => {
