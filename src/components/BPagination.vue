@@ -39,6 +39,7 @@ export default defineComponent({
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
     limit: {type: Number, default: DEFAULT_LIMIT},
     firstNumber: {type: Boolean, default: false},
+    lastNumber: {type: Boolean, default: false},
     hideEllipsis: {type: Boolean, default: false},
   },
   emits: ['update:modelValue', 'update:current-page'],
@@ -50,6 +51,9 @@ export default defineComponent({
 
     const currentPage = toRef(props, 'currentPage')
     const pLimit = toRef(props, 'limit')
+    const pHideEllipsis = toRef(props, 'hideEllipsis')
+    const pfirstNumber = toRef(props, 'pfirstNumber')
+    const pLastNumber = toRef(props, 'pfirstNumber')
 
     const element = ref<HTMLElement>()
 
@@ -59,7 +63,8 @@ export default defineComponent({
       const cNumberOfPages: number = unref(numberOfPages)
       const cNumberOfLinks: number = unref(numberOfLinks)
       const cCurrentPage: number = unref(currentPage)
-      const showFirstDots = false
+      const cfirstNumber: boolean = unref(pfirstNumber)
+      const cLastNumber: boolean = unref(pLastNumber)
       const pagesLeft: number = cNumberOfPages - cCurrentPage
 
       if (pagesLeft + 2 < cLimit && cLimit > ELLIPSIS_THRESHOLD) {
@@ -75,13 +80,52 @@ export default defineComponent({
       } else if (lStartNumber > cNumberOfPages - cNumberOfLinks) {
         lStartNumber = cNumberOfPages - cNumberOfLinks + 1
       }
-
-      if (showFirstDots && lStartNumber && lStartNumber < 4) {
+      if (showFirstDots.value && lStartNumber && lStartNumber < 4) {
         lStartNumber = 1
+      }
+      const lastPageNumber = lStartNumber + cNumberOfLinks - 1
+
+      // Special handling for lower limits (where ellipsis are never shown)
+      if (cLimit <= ELLIPSIS_THRESHOLD) {
+        if (cLastNumber && cNumberOfPages === lStartNumber + cNumberOfLinks - 1) {
+          lStartNumber = Math.max(lStartNumber - 1, 1)
+        }
       }
       return lStartNumber
     })
 
+    const showFirstDots = computed(() => {
+      const cLimit: number = unref(pLimit)
+      const cNumberOfPages: number = unref(numberOfPages)
+      const cNumberOfLinks: number = unref(numberOfLinks)
+      const cCurrentPage: number = unref(currentPage)
+      const cHideEllipsis: boolean = unref(pHideEllipsis)
+      const cFirstNumber: boolean = unref(pfirstNumber)
+      const pagesLeft: number = cNumberOfPages - cCurrentPage
+
+      let rShowDots: number = false
+
+      if (pagesLeft + 2 < cLimit && cLimit > ELLIPSIS_THRESHOLD) {
+        if (!cHideEllipsis || cFirstNumber) {
+          rShowDots = true
+        }
+      } else {
+        // We are somewhere in the middle of the page list
+        if (cLimit > ELLIPSIS_THRESHOLD) {
+          rShowDots = !!(!cHideEllipsis || cFirstNumber)
+        }
+      }
+
+      if (startNumber.value < 1) {
+        rShowDots = false
+      }
+
+      if (rShowDots && cFirstNumber && startNumber.value < 4) {
+        rShowDots = false
+      }
+
+      return rShowDots
+    })
     //Calculate the number of links considering limit
     const numberOfLinks = computed(() => {
       const cLimit: number = unref(pLimit)
