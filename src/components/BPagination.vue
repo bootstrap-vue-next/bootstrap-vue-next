@@ -83,9 +83,10 @@ export default defineComponent({
       } else if (lStartNumber > cNumberOfPages - cNumberOfLinks) {
         lStartNumber = cNumberOfPages - cNumberOfLinks + 1
       }
-      if (showFirstDots.value && cfirstNumber && lStartNumber < 4) {
-        lStartNumber = 1
-      }
+      //why check for this?
+      // if (showFirstDots.value && cfirstNumber && lStartNumber < 4) {
+      //   lStartNumber = 1
+      // }
       const lastPageNumber = lStartNumber + cNumberOfLinks - 1
 
       // Special handling for lower limits (where ellipsis are never shown)
@@ -116,7 +117,6 @@ export default defineComponent({
           rShowDots = !!(!cHideEllipsis || cFirstNumber)
         }
       }
-
       if (startNumber.value <= 1) {
         rShowDots = false
       }
@@ -124,6 +124,7 @@ export default defineComponent({
       if (rShowDots && cFirstNumber && startNumber.value < 4) {
         rShowDots = false
       }
+
       return rShowDots
     })
     //Calculate the number of links considering limit
@@ -164,6 +165,7 @@ export default defineComponent({
       const cFirstNumber: boolean = unref(pFirstNumber)
       const cLastNumber: boolean = unref(pLastNumber)
       let n: number = unref(numberOfLinks)
+
       if (showFirstDots.value && cFirstNumber && startNumber.value < 4) {
         n = n + 2
       }
@@ -184,7 +186,7 @@ export default defineComponent({
       const cHideEllipsis: boolean = unref(pHideEllipsis)
       const cLastNumber: boolean = unref(pLastNumber)
       const cFirstNumber: boolean = unref(pFirstNumber)
-      const pagesLeft: number = cNumberOfPages - cCurrentPage
+      const paginationWindowEnd: number = cNumberOfPages - cNumberOfLinks // The start of the last window of page links
 
       let rShowDots: number = false
 
@@ -197,7 +199,7 @@ export default defineComponent({
           rShowDots = !!(!cHideEllipsis || cLastNumber)
         }
       }
-      if (startNumber.value > cNumberOfPages - cNumberOfLinks) {
+      if (startNumber.value > paginationWindowEnd) {
         rShowDots = false
       }
       const lastPageNumber = startNumber.value + cNumberOfLinks - 1
@@ -205,6 +207,7 @@ export default defineComponent({
       if (rShowDots && cLastNumber && lastPageNumber > cNumberOfPages - 3) {
         rShowDots = false
       }
+
       return rShowDots
     })
 
@@ -269,6 +272,7 @@ export default defineComponent({
   computed: {},
   render() {
     const buttons = []
+    const pageNumbers = this.pages.map((p) => p.number) // array of numbers.. Used in first and last number comparisions
     const isActivePage: boolean = (pageNumber) => pageNumber === this.currentPage
     const noCurrentPage: boolean = this.currentPage < 1
     const fill = this.align === 'fill'
@@ -369,6 +373,11 @@ export default defineComponent({
     buttons.push(previousButton)
 
     //End Previous Button
+
+    // First Page Number Button
+    // if(this.firstNumber && pageNumbers[0] !== 1){
+    //   buttons.push(makePageButton({ number: 1 }, 0))
+    // }
 
     // first Ellipsis
     if (this.showFirstDots) {
