@@ -375,9 +375,9 @@ export default defineComponent({
     //End Previous Button
 
     // First Page Number Button
-    // if(this.firstNumber && pageNumbers[0] !== 1){
-    //   buttons.push(makePageButton({ number: 1 }, 0))
-    // }
+    if (this.firstNumber && pageNumbers[0] !== 1) {
+      buttons.push(makePageButton({number: 1}, 0))
+    }
 
     // first Ellipsis
     if (this.showFirstDots) {
@@ -416,6 +416,9 @@ export default defineComponent({
       buttons.push(makeEllipsis(true))
     }
 
+    if (this.lastNumber && pageNumbers[pageNumbers.length - 1] !== this.numberOfPages) {
+      buttons.push(makePageButton({number: this.numberOfPages}, -1))
+    }
     buttons.push(nextButton)
 
     return h('nav', {}, h('ul', {class: 'pagination'}, buttons))

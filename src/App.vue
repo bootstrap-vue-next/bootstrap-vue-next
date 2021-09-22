@@ -978,6 +978,8 @@
       :limit="paginationLimit"
       :total-rows="paginationRows"
       :per-page="paginationPerPage"
+      first-number
+      last-number
     >
     </b-pagination>
 
