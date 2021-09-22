@@ -1355,7 +1355,7 @@ export default defineComponent({
     const radioSelected = ref()
 
     const paginationPageNumber = ref(19)
-    const paginationLimit = ref(4)
+    const paginationLimit = ref(8)
     const paginationPerPage = ref(2)
     const paginationRows = ref(40)
     onMounted(() => {

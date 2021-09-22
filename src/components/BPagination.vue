@@ -326,6 +326,42 @@ export default defineComponent({
       )
     }
 
+    const makePageButton = (page, idx) => {
+      const active: boolean = isActivePage(page.number)
+      const buttonContent: string = page.number
+      const tabIndex = this.disabled ? null : active || (noCurrentPage && idx === 0) ? '0' : '-1'
+
+      const inner = h(
+        this.disabled ? 'span' : 'button',
+        {
+          class: ['page-link', {'flex-grow-1': !this.disabled && fill}],
+          onClick: (event) => {
+            this.pageClick(event, page.number)
+          },
+        },
+        page.number
+      )
+
+      return h(
+        'li',
+        {
+          class: [
+            'page-item',
+            {
+              'disabled': this.disabled,
+              active,
+              'flex-fill': fill,
+              'd-flex': fill && !this.disabled,
+            },
+            // page.classes,
+            // this.pageClass
+          ],
+          key: `page-${page.number}`,
+        },
+        inner
+      )
+    }
+
     //Previous Button
 
     const previousButton = makeEndBtn(this.currentPage - 1, 'Previous', 1)
