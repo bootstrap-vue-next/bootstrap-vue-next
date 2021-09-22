@@ -47,13 +47,17 @@ import Alignment from '../types/Alignment'
 const getTabs = (slots: any): any[] => {
   if (!slots || !slots.default) return []
 
-  const defaultSlots = slots.default()
-
-  return (
-    defaultSlots.length === 1 && typeof defaultSlots[0].type === 'symbol'
-      ? defaultSlots[0].children
-      : defaultSlots
-  ).filter((child: any) => child.type.name === 'BTab')
+  return slots
+    .default()
+    .reduce((arr: number[], slot: any) => {
+      if (typeof slot.type === 'symbol') {
+        arr = arr.concat(slot.children)
+      } else {
+        arr.push(slot)
+      }
+      return arr
+    }, [])
+    .filter((child: any) => child.type.name === 'BTab')
 }
 
 export default defineComponent({

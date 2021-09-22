@@ -1,6 +1,12 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container class="mt-4" fluid="sm">
+    <b-form-input v-model="password" :type="showPassword ? 'text' : 'password'" />
+    <b-form-input :type="showPassword ? 'text' : 'password'" />
+    <b-form-input :disabled="showPassword" />
+    <b-form-checkbox v-model="showPassword">Show password</b-form-checkbox>
+    {{ password }}
+
     <h5 class="my-3">Dropdown</h5>
 
     <h6 class="m-2">Sizes</h6>
@@ -265,6 +271,13 @@
         </b-row>
       </div>
       <hr />
+    </div>
+    <div>
+      <h5>Alerts</h5>
+      <b-alert variant="primary" show>A simple primary alert—check it out!</b-alert>
+      <b-alert variant="warning" show dismissible>
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+      </b-alert>
     </div>
     <div>
       <h5>Avatars</h5>
@@ -1307,11 +1320,14 @@ import {defineComponent, onMounted, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import BDropdown from './components/BDropdown.vue'
 import TableField from './types/TableField'
+import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {BDropdown},
+  components: {BDropdown, BFormCheckbox},
   setup() {
+    const password = ref('123')
+    const showPassword = ref(false)
     const input = ref()
     const tooltip = ref('Tooltip on <em>top</em>')
     const showModal = ref(false)
@@ -1372,6 +1388,8 @@ export default defineComponent({
     })
 
     return {
+      password,
+      showPassword,
       input,
       name,
       consoleLog,
