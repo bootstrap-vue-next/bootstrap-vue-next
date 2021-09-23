@@ -27,7 +27,7 @@ export default defineComponent({
       disabled: props.disabled,
     }))
 
-    const clicked = function (e: PointerEvent) {
+    const clicked = function (e: MouseEvent) {
       if (!props.disabled) emit('click', e)
     }
     return {
