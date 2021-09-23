@@ -33,7 +33,7 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | -------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------- |
 | `dismiss-count-down` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100)           |
 | `dismissed`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | In Bootstrap v5 this event is named `closed`      |
-| `input`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100)           | In vue3 this event is now named update:modelValue |
+| `input`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | In vue3 this event is now named update:modelValue |
 
 ### Bootstrap v5 new features
 
@@ -45,7 +45,54 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 
 ## Avatar
 
-This is a <Badge type="warning" text="non-standard" /> component.
+### Properties
+
+| Property               | Status                                                                               | Observations           |
+| ---------------------- | ------------------------------------------------------------------------------------ | ---------------------- |
+| `active-class`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `alt`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `append`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `aria-label`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `badge`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `badge-left`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `badge-offset`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `badge-top`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `badge-variant`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `button`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `button-type`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `disabled`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `exact`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `exact-active-class`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `href`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `icon`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `icon-variant`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3 |
+| `no-prefetch`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `prefetch`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `rel`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `replace`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `rounded`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `route-component-name` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `size`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `square`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `src`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `target`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `text`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `to`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
+| `variant`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `badge`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### Events
+
+| Event       | Status                                                                               | Observations |
+| ----------- | ------------------------------------------------------------------------------------ | ------------ |
+| `click`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `img-error` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ## Badge
 

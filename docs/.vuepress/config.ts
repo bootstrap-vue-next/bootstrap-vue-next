@@ -12,6 +12,9 @@ export default defineUserConfig<DefaultThemeOptions>({
     editLink: true,
     contributors: false,
     lastUpdated: true,
+    themePlugins: {
+      mediumZoom: false,
+    },
     navbar: [
       {text: 'Home', link: '/'},
       {text: 'Docs', link: '/getting-started/'},
@@ -32,6 +35,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/README.md',
             '/components/Accordion.md',
             '/components/Alert.md',
+            '/components/Avatar.md',
             '/components/Badge.md',
             '/components/Breadcrumb.md',
             '/components/Dropdown.md',
