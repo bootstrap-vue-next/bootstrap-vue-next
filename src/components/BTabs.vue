@@ -26,7 +26,10 @@
               }
             "
           >
-            {{ tab.props.title }}
+            <component :is="tab.children.title" v-if="tab.children && tab.children.title" />
+            <template v-else>
+              {{ tab.props.title }}
+            </template>
           </a>
         </li>
       </ul>
@@ -91,6 +94,8 @@ export default defineComponent({
 
       if (slots.default) {
         tabs = getTabs(slots).map((tab: any, idx) => {
+          if (!tab.props) tab.props = {}
+
           const buttonId = tab.props['button-id'] || getID('tab')
           const contentId = tab.props.id || getID()
           const active = props.modelValue > -1 ? idx === props.modelValue : tab.props.active === ''
