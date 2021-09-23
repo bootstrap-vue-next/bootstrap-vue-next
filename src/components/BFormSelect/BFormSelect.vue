@@ -42,8 +42,17 @@
 import {computed, defineComponent, nextTick, onActivated, onMounted, PropType, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import useId from '../composables/useId'
-import {Size} from '../types'
+import useId from '../../composables/useId'
+import {Size} from '../../types'
+
+const getNested = (obj: any, path: string): any => {
+  if (!obj) return obj
+  if (path in obj) return obj[path]
+
+  const paths = path.split('.')
+
+  return getNested(obj[paths[0]], paths.splice(1).join('.'))
+}
 
 export default defineComponent({
   name: 'BFormSelect',
@@ -62,7 +71,7 @@ export default defineComponent({
     labelField: {type: String, default: 'label'},
     multiple: {type: Boolean, default: false},
     name: {type: String},
-    options: {type: Array, default: () => []},
+    options: {type: [Array, Object], default: () => []},
     optionsField: {type: String, default: 'options'},
     plain: {type: Boolean, default: false},
     required: {type: Boolean, default: false},
@@ -74,7 +83,7 @@ export default defineComponent({
     },
     textField: {type: String, default: 'text'},
     valueField: {type: String, default: 'value'},
-    modelValue: {type: [String, Array], default: ''},
+    modelValue: {type: [String, Array, Object], default: ''},
   },
   emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
@@ -105,42 +114,47 @@ export default defineComponent({
     })
 
     const computedSelectSize = computed(() => {
-      if (props.selectSize) {
+      if (props.selectSize || props.plain) {
         return props.selectSize
       }
-
       return null
     })
 
     const computedAriaInvalid = computed(() => {
       const {ariaInvalid, state} = props
-      if (ariaInvalid === true || ariaInvalid === 'true') {
-        return 'true'
+
+      if (ariaInvalid) {
+        return ariaInvalid.toString()
       }
-      return state === false ? 'true' : ariaInvalid
+      return state === false ? 'true' : null
     })
 
     const formOptions = computed(() => normalizeOptions(props.options))
     // /computed
 
     // methods
-    const normalizeOption = (option: any, key = null) => {
+    const normalizeOption = (option: any, key: string | null = null) => {
       if (Object.prototype.toString.call(option) === '[object Object]') {
         const {valueField, textField, optionsField, labelField, htmlField, disabledField} = props
-        const value = option[valueField]
-        const text = option[textField]
+
+        const value = getNested(option, valueField)
+        const text = getNested(option, textField)
+        const html = getNested(option, htmlField)
+        const disabled = getNested(option, disabledField)
+
         const options = option[optionsField] || null
         if (options !== null) {
           return {
-            label: String(option[labelField] || text),
+            label: String(getNested(option, labelField) || text),
             options: normalizeOptions(options),
           }
         }
+
         return {
           value: typeof value === 'undefined' ? key || text : value,
           text: String(typeof value === 'undefined' ? key : text),
-          html: option[htmlField],
-          disabled: Boolean(option[disabledField]),
+          html,
+          disabled: Boolean(disabled),
         }
       }
       return {
@@ -152,7 +166,22 @@ export default defineComponent({
     const normalizeOptions = (options: any[]): any => {
       if (Array.isArray(options)) {
         return options.map((option) => normalizeOption(option))
+      } else if (Object.prototype.toString.call(options) === '[object Object]') {
+        console.warn(
+          '[BootstrapVue warn]: BFormSelect - Setting prop "options" to an object is deprecated. Use the array format instead.'
+        )
+
+        return Object.keys(options).map((key: string) => {
+          const el: any = options[key]
+          switch (typeof el) {
+            case 'object':
+              return normalizeOption(el.text, String(el.value))
+            default:
+              return normalizeOption(el, String(key))
+          }
+        })
       }
+
       return []
     }
 
@@ -166,6 +195,16 @@ export default defineComponent({
         emit('update:modelValue', target.multiple ? selectedVal : selectedVal[0])
       })
     }
+
+    const focus = () => {
+      if (!props.disabled) input.value?.focus()
+    }
+
+    const blur = () => {
+      if (!props.disabled) {
+        input.value?.blur()
+      }
+    }
     // /methods
 
     return {
@@ -174,8 +213,10 @@ export default defineComponent({
       computedSelectSize,
       computedAriaInvalid,
       classes,
-      onChange,
       formOptions,
+      onChange,
+      focus,
+      blur,
     }
   },
 })
