@@ -78,7 +78,6 @@ export default defineComponent({
       const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value
       return isNumber(calcValue) ? `${calcValue}px` : calcValue || null
     }
-
     const computeContrastVariant = (colorVariant: ColorVariant): ColorVariant => {
       if (colorVariant === 'light') return 'dark'
       if (colorVariant === 'warning') return 'dark'
@@ -138,6 +137,21 @@ export default defineComponent({
       () => props.iconVariant || computeContrastVariant(props.variant)
     )
 
+    const badgeStyle = computed((): StyleValue => {
+      const offset = props.badgeOffset || '0px'
+      const fontSize =
+        SIZES.indexOf(computedSize.value || null) === -1
+          ? `calc(${computedSize.value} * ${BADGE_FONT_SIZE_SCALE})`
+          : ''
+      return {
+        fontSize: fontSize || '',
+        top: props.badgeTop ? offset : '',
+        bottom: props.badgeTop ? '' : offset,
+        left: props.badgeLeft ? offset : '',
+        right: props.badgeLeft ? '' : offset,
+      }
+    })
+
     const fontStyle = computed((): StyleValue => {
       const fontSize =
         SIZES.indexOf(computedSize.value || null) === -1
@@ -146,34 +160,19 @@ export default defineComponent({
       return fontSize ? {fontSize} : {}
     })
 
-    const badgeStyle = computed((): StyleValue => {
-      const offset = props.badgeOffset || '0px'
-      const fontSize =
-        SIZES.indexOf(computedSize.value || null) === -1
-          ? `calc(${computedSize.value} * ${BADGE_FONT_SIZE_SCALE})`
-          : ''
-      const result = {
-        fontSize: fontSize || null,
-        top: props.badgeTop ? offset : null,
-        bottom: props.badgeTop ? null : offset,
-        left: props.badgeLeft ? offset : null,
-        right: props.badgeLeft ? null : offset,
-      }
-      return result
-    })
-
     const marginStyle = computed(() => {
       const overlapScale = 0
       const value = computedSize.value ? `calc(${computedSize.value} * -${overlapScale})` : null
       return value ? {marginLeft: value, marginRight: value} : {}
     })
 
+    const tag = computed(() => (props.button ? props.buttonType : 'span'))
     const tagStyle = computed(() => ({
       ...marginStyle.value,
       width: computedSize.value,
       height: computedSize.value,
     }))
-    const tag = computed(() => (props.button ? props.buttonType : 'span'))
+
     const clicked = function (e: PointerEvent) {
       if (!props.disabled && props.button) emit('click', e)
     }
