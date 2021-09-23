@@ -39,6 +39,7 @@ export default defineComponent({
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
     limit: {type: Number, default: DEFAULT_LIMIT},
     firstNumber: {type: Boolean, default: false},
+    disabled: {type: Boolean, default: false},
     lastNumber: {type: Boolean, default: false},
     hideEllipsis: {type: Boolean, default: false},
     ellipsisClass: {type: Array, default: () => []},
@@ -127,7 +128,8 @@ export default defineComponent({
 
       return rShowDots
     })
-    //Calculate the number of links considering limit
+
+    //Calculate the number of links considering the limit
     const numberOfLinks = computed(() => {
       const cLimit: number = unref(pLimit)
       const cNumberOfPages: number = unref(numberOfPages)
@@ -271,13 +273,24 @@ export default defineComponent({
   },
   computed: {},
   render() {
+    // Slot Constants
+    const SLOT_NAME_ELLIPSIS_TEXT = 'ellipsis-text'
+    const SLOT_NAME_PREV_TEXT = 'prev-text'
+    const SLOT_NAME_NEXT_TEXT = 'next-text'
+
     const buttons = []
-    const pageNumbers = this.pages.map((p) => p.number) // array of numbers.. Used in first and last number comparisions
+    const pageNumbers: [number] = this.pages.map((p) => p.number) // array of numbers.. Used in first and last number comparisions
     const isActivePage: boolean = (pageNumber) => pageNumber === this.currentPage
     const noCurrentPage: boolean = this.currentPage < 1
     const fill = this.align === 'fill'
 
-    const makeEndBtn = (linkTo: number, btnText: string, pageTest: number) => {
+    const makeEndBtn = (
+      linkTo: number,
+      ariaLabel: string,
+      btnSlot: string,
+      btnText: string,
+      pageTest: number
+    ) => {
       const isDisabled: boolean =
         isActivePage(pageTest) || noCurrentPage || linkTo < 1 || linkTo > this.numberOfPages
       const pageNumber: number =
@@ -304,9 +317,9 @@ export default defineComponent({
         )
       )
     }
-    const makeEllipsis = (isLast: boolean) => {
-      const SLOT_NAME_ELLIPSIS_TEXT = 'ellipsis-text'
-      return h(
+
+    const makeEllipsis = (isLast: boolean) =>
+      h(
         'li',
         {
           class: [
@@ -323,12 +336,10 @@ export default defineComponent({
           h(
             'span',
             {class: ['page-link']},
-            // this.$slots['ellipsis-text']() || toString(this.ellipsisText)
-            '...'
+            this.$slots[SLOT_NAME_ELLIPSIS_TEXT]?.() || this.ellipsisText
           ),
         ]
       )
-    }
 
     const makePageButton = (page, idx) => {
       const active: boolean = isActivePage(page.number)
@@ -372,8 +383,6 @@ export default defineComponent({
 
     buttons.push(previousButton)
 
-    //End Previous Button
-
     // First Page Number Button
     if (this.firstNumber && pageNumbers[0] !== 1) {
       buttons.push(makePageButton({number: 1}, 0))
@@ -416,6 +425,7 @@ export default defineComponent({
       buttons.push(makeEllipsis(true))
     }
 
+    // last number
     if (this.lastNumber && pageNumbers[pageNumbers.length - 1] !== this.numberOfPages) {
       buttons.push(makePageButton({number: this.numberOfPages}, -1))
     }
