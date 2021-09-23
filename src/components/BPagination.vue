@@ -39,12 +39,17 @@ export default defineComponent({
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
     limit: {type: Number, default: DEFAULT_LIMIT},
     firstNumber: {type: Boolean, default: false},
+    firstClass: {type: Array, default: () => []},
+    nextClass: {type: [Array, String], default: () => []},
+    previousClass: {type: [Array, String], default: () => []},
     disabled: {type: Boolean, default: false},
     lastNumber: {type: Boolean, default: false},
     hideEllipsis: {type: Boolean, default: false},
     ellipsisClass: {type: Array, default: () => []},
     ellipsisText: {type: String, default: '\u2026'},
     align: {type: String, default: 'left'},
+    labelPrevPage: {type: String, default: 'Go to previous page'},
+    labelNextPage: {type: String, default: 'Go to next page'},
   },
   emits: ['update:modelValue', 'update:current-page'],
   setup(props, {emit, slots}) {
@@ -284,11 +289,13 @@ export default defineComponent({
     const noCurrentPage: boolean = this.currentPage < 1
     const fill = this.align === 'fill'
 
+    //TODO maybe use a slot type for further
     const makeEndBtn = (
       linkTo: number,
       ariaLabel: string,
       btnSlot: string,
       btnText: string,
+      btnClass: string | Array,
       pageTest: number
     ) => {
       const isDisabled: boolean =
@@ -299,27 +306,37 @@ export default defineComponent({
       return h(
         'li',
         {
-          class: ['page-item', {disabled: isDisabled}],
+          class: [
+            'page-item',
+            {
+              'disabled': isDisabled,
+              'flex-fill': fill,
+              'd-flex': fill && !isDisabled,
+            },
+            btnClass,
+          ],
         },
         // render inner content
         h(
           isDisabled ? 'span' : 'button',
           {
-            class: ['page-link'],
-            onClick: (event) => {
+            'class': ['page-link', {'flex-grow-1': !isDisabled && fill}],
+            'aria-label': ariaLabel,
+            // 'aria-controls': this.ariaControls || null,
+            'aria-disabled': isDisabled ? 'true' : null,
+            'onClick': (event) => {
               if (isDisabled) {
                 return
               }
               this.pageClick(event, pageNumber)
             },
           },
-          btnText
+          this.$slots[btnSlot]?.() || btnText
         )
       )
     }
 
-    const makeEllipsis = (isLast: boolean) =>
-      h(
+    const makeEllipsis = (isLast: boolean) => h(
         'li',
         {
           class: [
@@ -379,7 +396,14 @@ export default defineComponent({
 
     //Previous Button
 
-    const previousButton = makeEndBtn(this.currentPage - 1, 'Previous', 1)
+    const previousButton = makeEndBtn(
+      this.currentPage - 1,
+      this.labelPrevPage,
+      SLOT_NAME_PREV_TEXT,
+      'Previous',
+      this.previousClass,
+      1
+    )
 
     buttons.push(previousButton)
 
@@ -418,7 +442,15 @@ export default defineComponent({
     })
 
     //Next Button
-    const nextButton = makeEndBtn(this.currentPage + 1, 'Next', this.numberOfPages)
+    console.log(this.nextClass)
+    const nextButton = makeEndBtn(
+      this.currentPage + 1,
+      this.labelNextPage,
+      SLOT_NAME_NEXT_TEXT,
+      'Next',
+      this.nextClass,
+      this.numberOfPages
+    )
 
     // last Ellipsis
     if (this.showLastDots) {
