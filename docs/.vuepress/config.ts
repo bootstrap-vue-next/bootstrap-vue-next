@@ -37,6 +37,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Alert.md',
             '/components/Avatar.md',
             '/components/Badge.md',
+            '/components/Button.md',
             '/components/Breadcrumb.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
