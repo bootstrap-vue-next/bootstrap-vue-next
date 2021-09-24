@@ -94,6 +94,26 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | `click`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `img-error` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
+## Avatar-Group
+
+### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `overlap` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `rounded` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `size`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `square`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+|           |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
 ## Badge
 
 ## Breadcrumb

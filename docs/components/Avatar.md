@@ -605,6 +605,165 @@ inward, while negative values will move the badge outward.
 </b-card>
 ```
 
+## Avatar groups
+
+Group multiple avatars together by wrapping them in a `<b-avatar-group>` component:
+
+<ClientOnly>
+  <b-card>
+    <b-avatar-group size="60px">
+      <b-avatar></b-avatar>
+      <b-avatar text="BV" variant="primary"></b-avatar>
+      <b-avatar src="https://placekitten.com/300/300" variant="info"></b-avatar>
+      <b-avatar text="OK" variant="danger"></b-avatar>
+      <b-avatar variant="warning"></b-avatar>
+      <b-avatar src="https://placekitten.com/320/320" variant="dark"></b-avatar>
+      <b-avatar icon="music-note" variant="success"></b-avatar>
+    </b-avatar-group>
+  </b-card>
+</ClientOnly>
+
+```html
+<b-card>
+  <b-avatar-group size="60px">
+    <b-avatar></b-avatar>
+    <b-avatar text="BV" variant="primary"></b-avatar>
+    <b-avatar src="https://placekitten.com/300/300" variant="info"></b-avatar>
+    <b-avatar text="OK" variant="danger"></b-avatar>
+    <b-avatar variant="warning"></b-avatar>
+    <b-avatar src="https://placekitten.com/320/320" variant="dark"></b-avatar>
+    <b-avatar icon="music-note" variant="success"></b-avatar>
+  </b-avatar-group>
+</b-card>
+```
+
+**Notes:**
+
+- The `variant`, `square` and `rounded` props on `<b-avatar-group>` will take precedence over the
+  respective props on individual avatars.
+
+### Group size
+
+To size the avatars, use the prop `size` on `<b-avatar-group>`. The `size` prop accepts the same
+type of values as the `size` prop on `<b-avatar>`. Note that the `size` prop will be ignored on
+individual avatars when they are placed inside a `<b-avatar-group>`.
+
+<ClientOnly>
+  <b-card>
+    <b-avatar-group size="5rem">
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+    </b-avatar-group>
+  </b-card>
+</ClientOnly>
+
+```html
+<b-card>
+  <b-avatar-group size="5rem">
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+  </b-avatar-group>
+</b-card>
+```
+
+### Group variant
+
+Use the `variant` prop to color all child avatars in the `<b-avatar-group>`. Note that the `variant`
+prop, when set, will override the the `variant` specified on individual avatars.
+
+<ClientOnly>
+  <b-card>
+    <b-avatar-group variant="success">
+      <b-avatar></b-avatar>
+      <b-avatar variant="info"></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+    </b-avatar-group>
+  </b-card>
+</ClientOnly>
+
+```html
+<b-card>
+  <b-avatar-group variant="success">
+    <b-avatar></b-avatar>
+    <b-avatar variant="info"></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+  </b-avatar-group>
+</b-card>
+```
+
+### Group rounding
+
+Similar to the `variant` prop, the `<b-avatar-group>` props `square` and `rounded` take precedence
+over the respective props on individual child avatars.
+
+<ClientOnly>
+  <b-card>
+    <b-avatar-group rounded="lg">
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+    </b-avatar-group>
+  </b-card>
+</ClientOnly>
+
+```html
+<b-card>
+  <b-avatar-group rounded="lg">
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+  </b-avatar-group>
+</b-card>
+```
+
+### Group overlap
+
+By default child avatars inside a `<b-avatar-group>` will overlap by a factor of `0.3` (relative to
+the size of the avatar). You can control the overlap amount by setting the `overlap` prop to a value
+between `0` and `1`, where `0` means no overlap and `1` means 100% overlap.
+
+<ClientOnly>
+  <b-card>
+    <b-avatar-group size="3rem" overlap="0.65">
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+      <b-avatar></b-avatar>
+    </b-avatar-group>
+  </b-card>
+</ClientOnly>
+
+```html
+<b-card>
+  <b-avatar-group size="3rem" overlap="0.65">
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+    <b-avatar></b-avatar>
+  </b-avatar-group>
+</b-card>
+```
+
+**Note:**
+
+`overlap` only has an effect when you explicitly set the `size` property as well.
+
 ## Accessibility
 
 Use the `aria-label` prop to provide an accessible, screen reader friendly, label for your avatar.
@@ -661,6 +820,24 @@ Avatars are based upon `<b-badge>` and `<b-button>` components, and as such, rel
 | ----------- | --------------------------- | ------------------------------------------------------------------------------------------- |
 | `click`     | event - Native Event object | Emitted when the avatar is clicked when rendered as a button or link. Not emitted otherwise |
 | `img-error` | event - Native Event object | Emitted if an image `src` is provided and the image fails to load                           |
+
+### `<b-avatar-group>`
+
+#### Properties
+
+| Property  | Type                  | Default | Description                                                                                                                                     |
+| --------- | --------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `overlap` | `Number` or `String`  | 0.3     | Floating point number specifying the amount of overlap where `0` is no overlap and `1` is 100% overlap. Only has effect when `size` is also set |
+| `rounded` | `Boolean` or `String` | `false` | Specifies the type of rounding to apply to the avatar. The `square` prop takes precedence. Refer to the documentation for details               |
+| `size`    | `Number` or `String`  |         | Size of the avatar. Refer to the documentation for details                                                                                      |
+| `tag`     | `String`              | `div`   | Specify the HTML tag to render instead of the default tag                                                                                       |
+| `variant` | `String`              |         | Applies one of the Bootstrap theme color variants to all child avatars                                                                          |
+
+#### slots
+
+| Property  | Description                                    |
+| --------- | ---------------------------------------------- |
+| `default` | Content (avatars) to place in the avatar group |
 
 <script lang="ts" setup>
   import {ref, Ref} from 'vue';

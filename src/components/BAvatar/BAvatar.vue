@@ -40,10 +40,16 @@
 
 <script lang="ts">
 import {isEmptySlot} from '@/utils/dom'
-import {computed, defineComponent, PropType, StyleValue} from 'vue'
+import {computed, defineComponent, inject, PropType, StyleValue} from 'vue'
 import {ColorVariant, InputSize} from '../../types'
 import {isNumber, isNumeric, isString} from '../../utils/inspect'
 import {toFloat} from '../../utils/number'
+import {injectionKey} from './BAvatarGroup.vue'
+
+export const computeSize = (value: any): string | null => {
+  const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value
+  return isNumber(calcValue) ? `${calcValue}px` : calcValue || null
+}
 
 export default defineComponent({
   name: 'BAvatar',
@@ -61,7 +67,7 @@ export default defineComponent({
     icon: {type: String, required: false},
     iconVariant: {type: String as PropType<ColorVariant>, default: null}, // not standard BootstrapVue props
     rounded: {type: [Boolean, String], default: 'circle'},
-    size: {type: String as PropType<InputSize | string>},
+    size: {type: [String, Number] as PropType<InputSize | string | number>, required: false},
     square: {type: Boolean, default: false},
     src: {type: String, required: false},
     text: {type: String, required: false},
@@ -74,13 +80,13 @@ export default defineComponent({
     const FONT_SIZE_SCALE = 0.4
     const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
-    const computeSize = (value: any) => {
-      const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value
-      return isNumber(calcValue) ? `${calcValue}px` : calcValue || null
-    }
+    const parentData = inject(injectionKey, null)
+
     const computeContrastVariant = (colorVariant: ColorVariant): ColorVariant => {
-      if (colorVariant === 'light') return 'dark'
-      if (colorVariant === 'warning') return 'dark'
+      const variant = colorVariant
+
+      if (variant === 'light') return 'dark'
+      if (variant === 'warning') return 'dark'
       return 'light'
     }
 
@@ -88,7 +94,17 @@ export default defineComponent({
     const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
     const showBadge = computed(() => props.badge || props.badge === '' || hasBadgeSlot.value)
 
-    const computedSize = computed(() => computeSize(props.size))
+    const computedSize = computed(() =>
+      parentData?.size ? parentData.size : computeSize(props.size)
+    )
+
+    const computedVariant = computed(() =>
+      parentData?.variant ? parentData.variant : props.variant
+    )
+
+    const computedRounded = computed(() =>
+      parentData?.rounded ? parentData.rounded : props.rounded
+    )
 
     const attrs = computed(() => ({
       'aria-label': props.ariaLabel || null,
@@ -106,24 +122,24 @@ export default defineComponent({
     })
 
     const classes = computed(() => ({
-      [`b-avatar-${props.size}`]: props.size && SIZES.indexOf(props.size || null) !== -1,
-      [`bg-${props.variant}`]: props.variant,
-      [`badge`]: !props.button && props.variant && hasDefaultSlot.value,
-      rounded: props.rounded === '' || props.rounded === true,
-      [`rounded-circle`]: !props.square && props.rounded === 'circle',
-      [`rounded-0`]: props.square || props.rounded === '0',
-      [`rounded-1`]: !props.square && props.rounded === 'sm',
-      [`rounded-3`]: !props.square && props.rounded === 'lg',
-      [`rounded-top`]: !props.square && props.rounded === 'top',
-      [`rounded-bottom`]: !props.square && props.rounded === 'bottom',
-      [`rounded-start`]: !props.square && props.rounded === 'left',
-      [`rounded-end`]: !props.square && props.rounded === 'right',
+      [`b-avatar-${props.size}`]: props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
+      [`bg-${computedVariant.value}`]: computedVariant.value,
+      [`badge`]: !props.button && computedVariant.value && hasDefaultSlot.value,
+      rounded: computedRounded.value === '' || computedRounded.value === true,
+      [`rounded-circle`]: !props.square && computedRounded.value === 'circle',
+      [`rounded-0`]: props.square || computedRounded.value === '0',
+      [`rounded-1`]: !props.square && computedRounded.value === 'sm',
+      [`rounded-3`]: !props.square && computedRounded.value === 'lg',
+      [`rounded-top`]: !props.square && computedRounded.value === 'top',
+      [`rounded-bottom`]: !props.square && computedRounded.value === 'bottom',
+      [`rounded-start`]: !props.square && computedRounded.value === 'left',
+      [`rounded-end`]: !props.square && computedRounded.value === 'right',
       btn: props.button,
-      [`btn-${props.variant}`]: props.button ? props.variant : null,
+      [`btn-${computedVariant.value}`]: props.button ? computedVariant.value : null,
     }))
 
     const textClasses = computed(() => {
-      const textVariant = props.textVariant || computeContrastVariant(props.variant)
+      const textVariant = props.textVariant || computeContrastVariant(computedVariant.value)
       return `text-${textVariant}`
     })
 
@@ -134,7 +150,7 @@ export default defineComponent({
     })
 
     const computedIconVariant = computed(
-      () => props.iconVariant || computeContrastVariant(props.variant)
+      () => props.iconVariant || computeContrastVariant(computedVariant.value)
     )
 
     const badgeStyle = computed((): StyleValue => {
@@ -161,8 +177,10 @@ export default defineComponent({
     })
 
     const marginStyle = computed(() => {
-      const overlapScale = 0
-      const value = computedSize.value ? `calc(${computedSize.value} * -${overlapScale})` : null
+      const overlapScale = parentData?.overlapScale?.value || 0
+
+      const value =
+        computedSize.value && overlapScale ? `calc(${computedSize.value} * -${overlapScale})` : null
       return value ? {marginLeft: value, marginRight: value} : {}
     })
 
