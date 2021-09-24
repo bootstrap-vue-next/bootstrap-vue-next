@@ -41,10 +41,13 @@ export default defineComponent({
     firstNumber: {type: Boolean, default: false},
     firstClass: {type: Array, default: () => []},
     nextClass: {type: [Array, String], default: () => []},
+    nextText: {type: String, default: '\u203A'}, // '›'
     previousClass: {type: [Array, String], default: () => []},
+    prevText: {type: String, default: '\u2039'},
     disabled: {type: Boolean, default: false},
     lastNumber: {type: Boolean, default: false},
     hideEllipsis: {type: Boolean, default: false},
+    hideGotoEndButtons: {type: Boolean, default: false},
     ellipsisClass: {type: Array, default: () => []},
     ellipsisText: {type: String, default: '\u2026'},
     align: {type: String, default: 'left'},
@@ -336,7 +339,8 @@ export default defineComponent({
       )
     }
 
-    const makeEllipsis = (isLast: boolean) => h(
+    const makeEllipsis = (isLast: boolean) =>
+      h(
         'li',
         {
           class: [
@@ -400,7 +404,7 @@ export default defineComponent({
       this.currentPage - 1,
       this.labelPrevPage,
       SLOT_NAME_PREV_TEXT,
-      'Previous',
+      this.prevText,
       this.previousClass,
       1
     )
@@ -447,7 +451,7 @@ export default defineComponent({
       this.currentPage + 1,
       this.labelNextPage,
       SLOT_NAME_NEXT_TEXT,
-      'Next',
+      this.nextText,
       this.nextClass,
       this.numberOfPages
     )
