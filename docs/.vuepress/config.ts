@@ -37,6 +37,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
             '/components/FormRadio.md',
+            '/components/Pagination.md',
             '/components/Progress.md',
             '/components/Spinners.md',
           ],

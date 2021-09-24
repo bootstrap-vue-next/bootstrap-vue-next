@@ -25,6 +25,8 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
       :limit="paginationLimit"
       :total-rows="paginationRows"
       :per-page="paginationPerPage"
+      next-text="Next"
+      prev-text="Prev"
       first-number
       last-number
     >
@@ -43,7 +45,8 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
       v-model:currentPage="paginationPageNumber"
       :total-rows="paginationRows"
       :per-page="paginationPerPage"
-      :next-text="cow"
+      prev-text="⏪"
+      next-text="⏩"
       :limit="paginationLimit"
     ></b-pagination>
 
@@ -57,3 +60,46 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     const paginationPerPage = ref(2)
     const paginationRows = ref(40)
 </script>
+
+```html
+<!-- Use of Props -->
+<b-pagination
+  v-model:currentPage="paginationPageNumber"
+  :limit="paginationLimit"
+  :total-rows="paginationRows"
+  :per-page="paginationPerPage"
+  next-text="Next"
+  prev-text="Prev"
+  first-number
+  last-number
+>
+</b-pagination>
+<!-- Use of Slots -->
+<b-pagination
+  v-model:currentPage="paginationPageNumber"
+  :limit="paginationLimit"
+  :total-rows="paginationRows"
+  :per-page="paginationPerPage"
+>
+  <template #prev-text><span class="text-danger">Prev</span></template>
+  <template #next-text><span class="text-warning">Next</span></template>
+</b-pagination>
+<!-- Emojis in Props -->
+<b-pagination
+  v-model:currentPage="paginationPageNumber"
+  :total-rows="paginationRows"
+  :per-page="paginationPerPage"
+  prev-text="⏪"
+  next-text="⏩"
+  :limit="paginationLimit"
+></b-pagination>
+
+<script lang="ts" setup>
+  import {ref} from 'vue'
+
+  const paginationPageNumber = ref(1)
+  const paginationLimit = ref(8)
+  const paginationPerPage = ref(2)
+  const paginationRows = ref(40)
+</script>
+```
