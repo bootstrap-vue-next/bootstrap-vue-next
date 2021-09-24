@@ -13,7 +13,7 @@ export default defineComponent({
   props: {
     active: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
-    href: {type: String},
+    href: {type: String, required: false},
     pill: {type: Boolean, default: false},
     pressed: {type: Boolean, default: null},
     rel: {type: String, default: null},
@@ -24,7 +24,7 @@ export default defineComponent({
     type: {type: String, default: 'button'},
     variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
   },
-  emits: ['update:pressed'],
+  emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
     const isToggle = props.pressed !== null
     const isButton = props.tag === 'button' && !props.href
@@ -58,7 +58,7 @@ export default defineComponent({
         e.stopPropagation()
         return
       }
-
+      emit('click', e)
       if (isToggle) {
         emit('update:pressed', !props.pressed)
       }

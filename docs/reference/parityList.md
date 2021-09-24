@@ -148,6 +148,12 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | text                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | to                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
 ### Events
 
 | Property | Status                                                                               | Observations |
@@ -155,6 +161,39 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | click    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ## Button
+
+### Properties
+
+| Property              | Status                                                                               | Observations                                       |
+| --------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| active                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| active-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| append                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| block                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   | No longer supported. Use bootstrap utility classes |
+| disabled              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| exact                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| exact-active-class    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| href                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| no-prefetch           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| pill                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| prefetch              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| pressed               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | vue3 no longers support sync. Use v-model:pressed  |
+| rel                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| replace               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| router-component-name | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| size                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| squared               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| tag                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| target                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| to                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
+| type                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+| variant               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
+
+### Events
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| click    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ## Button Group
 
