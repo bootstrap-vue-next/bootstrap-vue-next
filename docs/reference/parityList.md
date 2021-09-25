@@ -197,6 +197,15 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 
 ## Button Group
 
+### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| aria-role | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| size      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| tag       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| vertical  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Button Toolbar
 
 ## Calendar
