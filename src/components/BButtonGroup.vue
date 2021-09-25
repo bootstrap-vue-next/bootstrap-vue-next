@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'BButtonGroup',
   props: {
     ariaRole: {type: String, default: 'group'},
-    size: {type: String},
+    size: {type: String, required: false},
     tag: {type: String, default: 'div'},
     vertical: {type: Boolean, default: false},
   },
