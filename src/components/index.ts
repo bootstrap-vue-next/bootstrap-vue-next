@@ -9,15 +9,15 @@ import BBreadcrumbItem from './BBreadcrumbItem.vue'
 import BButton from './BButton.vue'
 import BButtonGroup from './BButtonGroup.vue'
 import BButtonToolbar from './BButtonToolbar.vue'
-import BCard from './BCard.vue'
-import BCardBody from './BCardBody.vue'
-import BCardFooter from './BCardFooter.vue'
-import BCardGroup from './BCardGroup.vue'
-import BCardHeader from './BCardHeader.vue'
-import BCardImg from './BCardImg.vue'
-import BCardSubTitle from './BCardSubTitle.vue'
-import BCardText from './BCardText.vue'
-import BCardTitle from './BCardTitle.vue'
+import BCard from './BCard/BCard.vue'
+import BCardBody from './BCard/BCardBody.vue'
+import BCardFooter from './BCard/BCardFooter.vue'
+import BCardGroup from './BCard/BCardGroup.vue'
+import BCardHeader from './BCard/BCardHeader.vue'
+import BCardImg from './BCard/BCardImg.vue'
+import BCardSubTitle from './BCard/BCardSubTitle.vue'
+import BCardText from './BCard/BCardText.vue'
+import BCardTitle from './BCard/BCardTitle.vue'
 import BCarousel from './BCarousel.vue'
 import BCarouselSlide from './BCarouselSlide.vue'
 import BCloseButton from './BCloseButton.vue'
@@ -51,8 +51,8 @@ import BLink from './BLink.vue'
 import BListGroup from './BListGroup.vue'
 import BListGroupItem from './BListGroupItem.vue'
 import BModal from './BModal.vue'
-// import BNav from './BNav.vue';
-// import BNavItem from './BNavItem.vue';
+import BNav from './BNav.vue'
+import BNavItem from './BNavItem.vue'
 // import BNavItemDropdown from './BNavItemDropdown.vue';
 import BOffcanvas from './BOffcanvas.vue'
 import BPagination from './BPagination.vue'
@@ -115,8 +115,8 @@ export default {
   BListGroup,
   BListGroupItem,
   BModal,
-  // BNav,
-  // BNavItem,
+  BNav,
+  BNavItem,
   // BNavItemDropdown,
   BOffcanvas,
   BPagination,

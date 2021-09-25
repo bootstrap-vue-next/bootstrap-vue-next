@@ -2,7 +2,8 @@
 <template>
   <component :is="tag" class="card" :class="classes">
     <img v-if="imgSrc && !imgBottom" v-bind="imgAttr" :class="imgClasses" />
-    <div
+    <component
+      :is="headerTag"
       v-if="header || $slots.header || headerHtml"
       class="card-header"
       :class="[headerClass, headerClasses]"
@@ -11,9 +12,9 @@
       <slot v-else name="header">
         {{ header }}
       </slot>
-    </div>
+    </component>
 
-    <component :is="bodyTag" :class="[bodyClass, bodyClasses]">
+    <component :is="bodyTag" v-if="!noBody" :class="[bodyClass, bodyClasses]">
       <component :is="titleTag" v-if="title && !noBody" class="card-title">
         {{ title }}
       </component>
@@ -27,7 +28,7 @@
       </component>
       <slot />
     </component>
-
+    <slot v-if="noBody" />
     <component
       :is="footerTag"
       v-if="footer || $slots.footer || footerHtml"
@@ -45,52 +46,51 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import Alignment from '../types/Alignment'
-import {ColorVariant} from '../types'
+import Alignment from '../../types/Alignment'
+import {ColorVariant} from '../../types'
 
 export default defineComponent({
   name: 'BCard',
   props: {
-    align: {type: String as PropType<Alignment>},
-    bgVariant: {type: String as PropType<ColorVariant>},
-    bodyBgVariant: {type: String as PropType<ColorVariant>},
-    bodyBorderVariant: {type: String as PropType<ColorVariant>},
-    bodyClass: {type: [Array, Object, String]},
+    align: {type: String as PropType<Alignment>, required: false},
+    bgVariant: {type: String as PropType<ColorVariant>, required: false},
+    bodyBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    bodyClass: {type: [Array, Object, String], required: false},
     bodyTag: {type: String, default: 'div'},
-    bodyTextVariant: {type: String as PropType<ColorVariant>},
-    borderVariant: {type: String as PropType<ColorVariant>},
-    footer: {type: String},
-    footerBgVariant: {type: String as PropType<ColorVariant>},
-    footerBorderVariant: {type: String as PropType<ColorVariant>},
-    footerClass: {type: [Array, Object, String]},
+    bodyTextVariant: {type: String as PropType<ColorVariant>, required: false},
+    borderVariant: {type: String as PropType<ColorVariant>, required: false},
+    footer: {type: String, required: false},
+    footerBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    footerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
+    footerClass: {type: [Array, Object, String], required: false},
     footerHtml: {type: String, default: ''},
     footerTag: {type: String, default: 'div'},
-    footerTextVariant: {type: String as PropType<ColorVariant>},
-    header: {type: String},
-    headerBgVariant: {type: String as PropType<ColorVariant>},
-    headerBorderVariant: {type: String as PropType<ColorVariant>},
-    headerClass: {type: [Array, Object, String]},
+    footerTextVariant: {type: String as PropType<ColorVariant>, required: false},
+    header: {type: String, required: false},
+    headerBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    headerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
+    headerClass: {type: [Array, Object, String], required: false},
     headerHtml: {type: String, default: ''},
     headerTag: {type: String, default: 'div'},
-    headerTextVariant: {type: String as PropType<ColorVariant>},
-    imgAlt: {type: String},
+    headerTextVariant: {type: String as PropType<ColorVariant>, required: false},
+    imgAlt: {type: String, required: false},
     imgBottom: {type: Boolean, default: false},
     imgEnd: {type: Boolean, default: false},
-    imgHeight: {type: [String, Number]},
+    imgHeight: {type: [String, Number], required: false},
     imgLeft: {type: Boolean, default: false},
     imgRight: {type: Boolean, default: false},
-    imgSrc: {type: String},
+    imgSrc: {type: String, required: false},
     imgStart: {type: Boolean, default: false},
     imgTop: {type: Boolean, default: false},
-    imgWidth: {type: [String, Number]},
+    imgWidth: {type: [String, Number], required: false},
     noBody: {type: Boolean, default: false},
     overlay: {type: Boolean, default: false},
-    subTitle: {type: String},
+    subTitle: {type: String, required: false},
     subTitleTag: {type: String, default: 'h6'},
     subTitleTextVariant: {type: String as PropType<ColorVariant>, default: 'muted'},
     tag: {type: String, default: 'div'},
-    textVariant: {type: String as PropType<ColorVariant>},
-    title: {type: String},
+    textVariant: {type: String as PropType<ColorVariant>, required: false},
+    title: {type: String, required: false},
     titleTag: {type: String, default: 'h4'},
   },
   setup(props) {
@@ -107,7 +107,6 @@ export default defineComponent({
       'card-body': !props.noBody,
       'card-img-overlay': props.overlay,
       [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
-      [`border-${props.bodyBorderVariant}`]: props.bodyBorderVariant,
       [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
     }))
 
