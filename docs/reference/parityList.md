@@ -208,6 +208,14 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 
 ## Button Toolbar
 
+### Properties
+
+| Property  | Status                                                                               | Observations           |
+| --------- | ------------------------------------------------------------------------------------ | ---------------------- |
+| aria-role | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3 |
+| justify   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| key-nav   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                        |
+
 ## Calendar
 
 This is a <Badge type="warning" text="non-standard" /> component.

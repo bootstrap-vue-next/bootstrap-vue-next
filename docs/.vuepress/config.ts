@@ -39,6 +39,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Badge.md',
             '/components/Button.md',
             '/components/ButtonGroup.md',
+            '/components/ButtonToolbar.md',
             '/components/Breadcrumb.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
