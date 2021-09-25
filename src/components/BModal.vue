@@ -14,23 +14,25 @@
           <div class="modal-body">
             <slot />
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              @click="$emit('cancel')"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="$emit('ok')"
-            >
-              OK
-            </button>
+          <div v-if="!hideFooter" class="modal-footer">
+            <slot name="footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                @click="$emit('cancel')"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                @click="$emit('ok')"
+              >
+                OK
+              </button>
+            </slot>
           </div>
         </div>
       </div>
@@ -57,6 +59,7 @@ export default defineComponent({
     show: {type: Boolean, default: false},
     size: {type: String},
     staticBackdrop: {type: Boolean},
+    hideFooter: {type: Boolean, default: false},
   },
   emits: ['update:modelValue', 'show', 'shown', 'hide', 'hidden', 'hide-prevented', 'ok', 'cancel'],
   setup(props, {emit}) {
