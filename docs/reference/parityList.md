@@ -222,6 +222,221 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Card
 
+### Properties
+
+| Property               | Status                                                                               | Observations                           |
+| ---------------------- | ------------------------------------------------------------------------------------ | -------------------------------------- |
+| align                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| bg-variant             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| body-bg-variant        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| body-border-variant    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   | removed. Did not work in bootstrap-vue |
+| body-class             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| body-tag               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| body-text-variant      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| border-variant         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| footer                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| footer-bg-variant      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| footer-border-variant  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| footer-class           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| footer-html            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| footer-tag             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| footer-text-variant    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| header                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| header-bg-variant      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| header-border-variant  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| header-class           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| header-html            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| header-tag             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| header-text-variant    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-alt                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-bottom             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-end                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-height             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-left               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-right              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-src                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-start              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-top                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| img-width              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| no-body                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| overlay                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| sub-title              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| sub-title-tag          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| sub-title-text-variant | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| tag                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| text-variant           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| title                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| title-tag              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `footer`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `header`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+## Card Body
+
+### Properties
+
+| Property               | Status                                                                               | Observations                           |
+| ---------------------- | ------------------------------------------------------------------------------------ | -------------------------------------- |
+| body-bg-variant        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| body-border-variant    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   | removed. Did not work in bootstrap-vue |
+| body-class             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| body-tag               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| body-text-variant      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| border-variant         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| overlay                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| sub-title              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| sub-title-tag          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| sub-title-text-variant | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| title                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+| title-tag              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                        |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+## Card Header
+
+### Properties
+
+| Property              | Status                                                                               | Observations |
+| --------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| header                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| header-bg-variant     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| header-border-variant | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| header-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| header-html           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| header-tag            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| header-text-variant   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+## Card Footer
+
+### Properties
+
+| Property              | Status                                                                               | Observations |
+| --------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| footer                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| footer-bg-variant     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| footer-border-variant | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| footer-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| footer-html           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| footer-tag            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| footer-text-variant   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+## Card Title
+
+### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| title     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| title-tag | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+## Card Sub-Title
+
+### Properties
+
+| Property               | Status                                                                               | Observations |
+| ---------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| sub-title              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| sub-title-tag          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| sub-title-text-variant | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+## Card Img
+
+### Properties
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| alt      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| bottom   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| end      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| height   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| left     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| right    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| src      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| start    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| top      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| width    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Card Img Lazy
+
+### Properties
+
+| Property     | Status                                                                             | Observations |
+| ------------ | ---------------------------------------------------------------------------------- | ------------ |
+| blank-height | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| blank-src    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| blank-width  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| bottom       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| end          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| left         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| offset       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| right        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| show         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| start        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| top          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+
+## Card Text
+
+### Properties
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| text-tag | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+## Card Group
+
+### Properties
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| columns  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| deck     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| tag      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
 ## Carousel
 
 ## Collapse

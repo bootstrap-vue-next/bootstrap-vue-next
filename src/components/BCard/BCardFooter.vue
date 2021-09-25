@@ -10,18 +10,18 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../types'
+import {ColorVariant} from '../../types'
 
 export default defineComponent({
   name: 'BCardfooter',
   props: {
     footer: {type: String},
-    footerBgVariant: {type: String as PropType<ColorVariant>},
-    footerBorderVariant: {type: String as PropType<ColorVariant>},
-    footerClass: {type: [Array, Object, String]},
-    footerHtml: {type: String},
+    footerBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    footerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
+    footerClass: {type: [Array, Object, String], required: false},
+    footerHtml: {type: String, required: false},
     footerTag: {type: String, default: 'div'},
-    footerTextVariant: {type: String as PropType<ColorVariant>},
+    footerTextVariant: {type: String as PropType<ColorVariant>, required: false},
   },
   setup(props) {
     const classes = computed(() => ({
