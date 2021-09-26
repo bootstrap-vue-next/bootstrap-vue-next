@@ -1007,7 +1007,7 @@
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
     <b-pagination
-      v-model:currentPage="paginationPageNumber"
+      v-model="paginationPageNumber"
       :limit="paginationLimit"
       :total-rows="paginationRows"
       :per-page="paginationPerPage"
@@ -1015,7 +1015,49 @@
       last-number
     >
     </b-pagination>
+    <b-pagination
+      v-model="paginationPageNumber"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+    >
+    </b-pagination>
+    <b-pagination
+      v-model="paginationPageNumber"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+      prev-text="Prev"
+      next-text="Next"
+      first-text="First"
+      last-text="Last"
+    >
+    </b-pagination>
+    <b-pagination
+      v-model="paginationPageNumber"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+      class="mt-4"
+    >
+      <template #first-text><span class="text-success">First</span></template>
+      <template #prev-text><span class="text-danger">Prev</span></template>
+      <template #next-text><span class="text-warning">Next</span></template>
+      <template #last-text><span class="text-info">Last</span></template>
+      <template #ellipsis-text>
+        <b-spinner small type="grow"></b-spinner>
+        <b-spinner small type="grow"></b-spinner>
+        <b-spinner small type="grow"></b-spinner>
+      </template>
+      <template #page="{page, active}">
+        <b v-if="active">{{ page }}</b>
+        <i v-else>{{ page }}</i>
+      </template>
+    </b-pagination>
 
+    Current page : {{ paginationPageNumber }}
+    <div>
+      <button class="btn btn-primary" @click="paginationPageNumber = 4">Set to page 4</button>
+    </div>
     <h5 class="my-3">Icons</h5>
     <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
 

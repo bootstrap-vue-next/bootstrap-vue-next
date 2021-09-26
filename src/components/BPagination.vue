@@ -1,23 +1,9 @@
-git
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  h,
-  nextTick,
-  onMounted,
-  PropType,
-  reactive,
-  ref,
-  toRef,
-  unref,
-  watch,
-  watchEffect,
-} from 'vue'
+import {normalizeSlot} from '@/utils/normalize-slot'
+import {computed, defineComponent, h, reactive, ref, toRef, unref, watch} from 'vue'
 import {Pagination} from '../types'
 import {isUndefinedOrNull} from '../utils/inspect'
 import {toInteger} from '../utils/number'
-import {attemptFocus, isVisible} from '../utils/dom'
 
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5
@@ -28,70 +14,72 @@ const DEFAULT_TOTAL_ROWS = 0
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
 
-const sanitizePerPage: number = (value) => Math.max(toInteger(value) || DEFAULT_PER_PAGE, 1)
-const sanitizeTotalRows: number = (value) => Math.max(toInteger(value) || DEFAULT_TOTAL_ROWS, 0)
-
+const sanitizePerPage = (value: number): number => Math.max(toInteger(value) || DEFAULT_PER_PAGE, 1)
+const sanitizeTotalRows = (value: number): number =>
+  Math.max(toInteger(value) || DEFAULT_TOTAL_ROWS, 0)
+const sanitizeCurrentPage = (value: number, numberOfPages: number) => {
+  const page = toInteger(value) || 1
+  return page > numberOfPages ? numberOfPages : page < 1 ? 1 : page
+}
 export default defineComponent({
   name: 'BPagination',
   props: {
-    currentPage: {type: Number, default: 1}, // V-model prop
-    perPage: {type: Number, default: DEFAULT_PER_PAGE},
-    totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
-    limit: {type: Number, default: DEFAULT_LIMIT},
-    firstNumber: {type: Boolean, default: false},
-    lastNumber: {type: Boolean, default: false},
-    hideEllipsis: {type: Boolean, default: false},
+    align: {type: String, default: 'left'},
+    disabled: {type: Boolean, default: false},
     ellipsisClass: {type: Array, default: () => []},
     ellipsisText: {type: String, default: '\u2026'},
-    align: {type: String, default: 'left'},
+    firstNumber: {type: Boolean, default: false},
+    firstText: {type: String, default: '\u00AB'},
+    hideEllipsis: {type: Boolean, default: false},
+    hideGotoEndButtons: {type: Boolean, default: false},
+    labelFirstPage: {type: String, default: 'Go to first page'},
+    labelLastPage: {type: String, default: 'Go to last page'},
+    labelNextPage: {type: String, default: 'Go to next page'},
+    labelPrevPage: {type: String, default: 'Go to previous page'},
+    lastNumber: {type: Boolean, default: false},
+    lastText: {type: String, default: '\u00BB'},
+    limit: {type: Number, default: DEFAULT_LIMIT},
+    modelValue: {type: Number, default: 1}, // V-model prop
+    nextText: {type: String, default: '\u203A'},
+    perPage: {type: Number, default: DEFAULT_PER_PAGE},
+    prevText: {type: String, default: '\u2039'},
+    totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
   },
-  emits: ['update:modelValue', 'update:current-page'],
+  emits: ['update:modelValue'],
   setup(props, {emit, slots}) {
     // Use Active to on page-item to denote active tab
     const numberOfPages = computed(() =>
       Math.ceil(sanitizeTotalRows(props.totalRows) / sanitizePerPage(props.perPage))
     )
 
-    const currentPage = toRef(props, 'currentPage')
-    const pLimit = toRef(props, 'limit')
-    const pHideEllipsis = toRef(props, 'hideEllipsis')
-    const pFirstNumber = toRef(props, 'firstNumber')
-    const pLastNumber = toRef(props, 'lastNumber')
-
     const element = ref<HTMLElement>()
 
     const startNumber = computed(() => {
       let lStartNumber = 1
-      const cLimit: number = unref(pLimit)
-      const cNumberOfPages: number = unref(numberOfPages)
-      const cNumberOfLinks: number = unref(numberOfLinks)
-      const cCurrentPage: number = unref(currentPage)
-      const cfirstNumber: boolean = unref(pFirstNumber)
-      const cLastNumber: boolean = unref(pLastNumber)
-      const pagesLeft: number = cNumberOfPages - cCurrentPage
+      const pagesLeft: number = numberOfPages.value - props.modelValue
 
-      if (pagesLeft + 2 < cLimit && cLimit > ELLIPSIS_THRESHOLD) {
+      if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
         // End of Pagination
-        lStartNumber = cNumberOfPages - cNumberOfLinks + 1
+        lStartNumber = numberOfPages.value - numberOfLinks.value + 1
       } else {
         // Middle and beginnig calculation.
-        lStartNumber = cCurrentPage - Math.floor(cNumberOfLinks / 2)
+        lStartNumber = props.modelValue - Math.floor(numberOfLinks.value / 2)
       }
       // Negative due at times
       if (lStartNumber < 1) {
         lStartNumber = 1
-      } else if (lStartNumber > cNumberOfPages - cNumberOfLinks) {
-        lStartNumber = cNumberOfPages - cNumberOfLinks + 1
+      } else if (lStartNumber > numberOfPages.value - numberOfLinks.value) {
+        lStartNumber = numberOfPages.value - numberOfLinks.value + 1
       }
       //why check for this?
       // if (showFirstDots.value && cfirstNumber && lStartNumber < 4) {
       //   lStartNumber = 1
       // }
-      const lastPageNumber = lStartNumber + cNumberOfLinks - 1
+      const lastPageNumber = lStartNumber + numberOfLinks.value - 1
 
       // Special handling for lower limits (where ellipsis are never shown)
-      if (cLimit <= ELLIPSIS_THRESHOLD) {
-        if (cLastNumber && cNumberOfPages === lStartNumber + cNumberOfLinks - 1) {
+      if (props.limit <= ELLIPSIS_THRESHOLD) {
+        if (props.lastNumber && numberOfPages.value === lStartNumber + numberOfLinks.value - 1) {
           lStartNumber = Math.max(lStartNumber - 1, 1)
         }
       }
@@ -99,29 +87,23 @@ export default defineComponent({
     })
 
     const showFirstDots = computed(() => {
-      const cLimit: number = unref(pLimit)
-      const cNumberOfPages: number = unref(numberOfPages)
-      const cNumberOfLinks: number = unref(numberOfLinks)
-      const cCurrentPage: number = unref(currentPage)
-      const cHideEllipsis: boolean = unref(pHideEllipsis)
-      const cFirstNumber: boolean = unref(pFirstNumber)
-      const pagesLeft: number = cNumberOfPages - cCurrentPage
-      let rShowDots: number = false
+      const pagesLeft = numberOfPages.value - props.modelValue
+      let rShowDots = false
 
-      if (pagesLeft + 2 < cLimit && cLimit > ELLIPSIS_THRESHOLD) {
-        if (cLimit > ELLIPSIS_THRESHOLD) {
+      if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
+        if (props.limit > ELLIPSIS_THRESHOLD) {
           rShowDots = true
         }
       } else {
-        if (cLimit > ELLIPSIS_THRESHOLD) {
-          rShowDots = !!(!cHideEllipsis || cFirstNumber)
+        if (props.limit > ELLIPSIS_THRESHOLD) {
+          rShowDots = !!(!props.hideEllipsis || props.firstNumber)
         }
       }
       if (startNumber.value <= 1) {
         rShowDots = false
       }
 
-      if (rShowDots && cFirstNumber && startNumber.value < 4) {
+      if (rShowDots && props.firstNumber && startNumber.value < 4) {
         rShowDots = false
       }
 
@@ -129,82 +111,67 @@ export default defineComponent({
     })
     //Calculate the number of links considering limit
     const numberOfLinks = computed(() => {
-      const cLimit: number = unref(pLimit)
-      const cNumberOfPages: number = unref(numberOfPages)
-      const cHideEllipsis: boolean = unref(pHideEllipsis)
-      const cFirstNumber: boolean = unref(pFirstNumber)
-      const cLastNumber: boolean = unref(pLastNumber)
+      let n: number = props.limit
 
-      let n: number = cLimit
-
-      if (cNumberOfPages <= cLimit) {
-        n = cNumberOfPages
-      } else if (currentPage.value < cLimit - 1 && cLimit > ELLIPSIS_THRESHOLD) {
-        if (!cHideEllipsis || cLastNumber) {
-          n = cLimit - (cFirstNumber ? 0 : 1)
+      if (numberOfPages.value <= props.limit) {
+        n = numberOfPages.value
+      } else if (props.modelValue < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
+        if (!props.hideEllipsis || props.lastNumber) {
+          n = props.limit - (props.firstNumber ? 0 : 1)
         }
-        n = Math.min(n, cLimit)
-      } else if (cNumberOfPages - currentPage.value + 2 < cLimit && cLimit > ELLIPSIS_THRESHOLD) {
-        if (!cHideEllipsis || cFirstNumber) {
-          n = cLimit - (cLastNumber ? 0 : 1)
+        n = Math.min(n, props.limit)
+      } else if (
+        numberOfPages.value - props.modelValue + 2 < props.limit &&
+        props.limit > ELLIPSIS_THRESHOLD
+      ) {
+        if (!props.hideEllipsis || props.firstNumber) {
+          n = props.limit - (props.lastNumber ? 0 : 1)
         }
       } else {
         // We consider ellipsis tabs as their own page links
-        if (cLimit > ELLIPSIS_THRESHOLD) {
-          n = cLimit - (cHideEllipsis ? 0 : 2)
+        if (props.limit > ELLIPSIS_THRESHOLD) {
+          n = props.limit - (props.hideEllipsis ? 0 : 2)
         }
       }
 
       return n
     })
 
-    const pagenumberfinal = computed(() => {
-      const cLimit: number = unref(pLimit)
-      const cNumberOfPages: number = unref(numberOfPages)
-      const cHideEllipsis: boolean = unref(pHideEllipsis)
-      const cFirstNumber: boolean = unref(pFirstNumber)
-      const cLastNumber: boolean = unref(pLastNumber)
+    const pageNumberfinal = computed(() => {
       let n: number = unref(numberOfLinks)
 
-      if (showFirstDots.value && cFirstNumber && startNumber.value < 4) {
+      if (showFirstDots.value && props.firstNumber && startNumber.value < 4) {
         n = n + 2
       }
       const lastPageNumber = startNumber.value + n - 1
 
-      if (showLastDots.value && cLastNumber && lastPageNumber > cNumberOfPages - 3) {
-        n = n + (lastPageNumber === cNumberOfPages - 2 ? 2 : 3)
+      if (showLastDots.value && props.lastNumber && lastPageNumber > numberOfPages.value - 3) {
+        n = n + (lastPageNumber === numberOfPages.value - 2 ? 2 : 3)
       }
-      n = Math.min(n, cNumberOfPages - startNumber.value + 1)
+      n = Math.min(n, numberOfPages.value - startNumber.value + 1)
       return n
     })
 
     const showLastDots = computed(() => {
-      const cLimit: number = unref(pLimit)
-      const cNumberOfPages: number = unref(numberOfPages)
-      const cNumberOfLinks: number = unref(numberOfLinks)
-      const cCurrentPage: number = unref(currentPage)
-      const cHideEllipsis: boolean = unref(pHideEllipsis)
-      const cLastNumber: boolean = unref(pLastNumber)
-      const cFirstNumber: boolean = unref(pFirstNumber)
-      const paginationWindowEnd: number = cNumberOfPages - cNumberOfLinks // The start of the last window of page links
+      const paginationWindowEnd = numberOfPages.value - numberOfLinks.value // The start of the last window of page links
 
-      let rShowDots: number = false
+      let rShowDots = false
 
-      if (cCurrentPage < cLimit - 1 && cLimit > ELLIPSIS_THRESHOLD) {
-        if (!cHideEllipsis || cLastNumber) {
+      if (props.modelValue < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
+        if (!props.hideEllipsis || props.lastNumber) {
           rShowDots = true
         }
       } else {
-        if (cLimit > ELLIPSIS_THRESHOLD) {
-          rShowDots = !!(!cHideEllipsis || cLastNumber)
+        if (props.limit > ELLIPSIS_THRESHOLD) {
+          rShowDots = !!(!props.hideEllipsis || props.lastNumber)
         }
       }
       if (startNumber.value > paginationWindowEnd) {
         rShowDots = false
       }
-      const lastPageNumber = startNumber.value + cNumberOfLinks - 1
+      const lastPageNumber = startNumber.value + numberOfLinks.value - 1
 
-      if (rShowDots && cLastNumber && lastPageNumber > cNumberOfPages - 3) {
+      if (rShowDots && props.lastNumber && lastPageNumber > numberOfPages.value - 3) {
         rShowDots = false
       }
 
@@ -212,19 +179,17 @@ export default defineComponent({
     })
 
     const pagination = reactive<Pagination>({
-      perPage: sanitizePerPage(props.perPage),
+      pageSize: sanitizePerPage(props.perPage),
       totalRows: sanitizeTotalRows(props.totalRows),
-      numberOfPages,
+      numberOfPages: numberOfPages.value,
     })
 
     const pageClick = (event: MouseEvent, pageNumber: number) => {
-      if (pageNumber === currentPage.value) {
+      if (pageNumber === props.modelValue) {
         return
       }
 
-      const {target} = event
-
-      emit('update:current-page', pageNumber)
+      emit('update:modelValue', pageNumber)
       //    nextTick(() => {
       //  if (isVisible(target) && un_element.contains(target)) {
       //  attemptFocus(target)
@@ -234,18 +199,25 @@ export default defineComponent({
       // })
     }
 
+    watch(
+      () => props.modelValue,
+      (newValue: number) => {
+        const calculatedValue = sanitizeCurrentPage(newValue, numberOfPages.value)
+        if (calculatedValue !== props.modelValue) emit('update:modelValue', calculatedValue)
+      }
+    )
     watch(pagination, (oldValue, newValue) => {
       if (!isUndefinedOrNull(oldValue)) {
-        if (newValue.perPage !== oldValue.perPage && newValue.totalRows === oldValue.totalRows) {
+        if (newValue.pageSize !== oldValue.pageSize && newValue.totalRows === oldValue.totalRows) {
           // If the page size changes, reset to page 1
-          currentPage.value = 1
+          emit('update:modelValue', 1)
         } else if (
           newValue.numberOfPages !== oldValue.numberOfPages &&
-          currentPage.value > newValue.numberOfPages
+          props.modelValue > newValue.numberOfPages
         ) {
           // If `numberOfPages` changes and is less than
           // the `currentPage` number, reset to page 1
-          currentPage.value = 1
+          emit('update:modelValue', 1)
         }
       }
     })
@@ -265,23 +237,36 @@ export default defineComponent({
       numberOfLinks,
       startNumber,
       showLastDots,
-      pagenumberfinal,
+      pagenumberfinal: pageNumberfinal,
       showFirstDots,
     }
   },
   computed: {},
   render() {
+    const props = this.$props
     const buttons = []
     const pageNumbers = this.pages.map((p) => p.number) // array of numbers.. Used in first and last number comparisions
-    const isActivePage: boolean = (pageNumber) => pageNumber === this.currentPage
-    const noCurrentPage: boolean = this.currentPage < 1
+    const isActivePage = (pageNumber: number) => pageNumber === props.modelValue
+    const noCurrentPage: boolean = props.modelValue < 1
     const fill = this.align === 'fill'
 
-    const makeEndBtn = (linkTo: number, btnText: string, pageTest: number) => {
+    const makeEndBtn = (
+      linkTo: number,
+      ariaLabel: string,
+      btnSlot: string,
+      btnText: string,
+      pageTest: number
+    ) => {
       const isDisabled: boolean =
-        isActivePage(pageTest) || noCurrentPage || linkTo < 1 || linkTo > this.numberOfPages
+        props.disabled ||
+        isActivePage(pageTest) ||
+        noCurrentPage ||
+        linkTo < 1 ||
+        linkTo > this.numberOfPages
       const pageNumber: number =
         linkTo < 1 ? 1 : linkTo > this.numberOfPages ? this.numberOfPages : linkTo
+      const scope = {disabled: isDisabled, page: pageNumber, index: pageNumber - 1}
+      const btnContent = normalizeSlot(btnSlot, scope, this.$slots) || btnText || ''
 
       return h(
         'li',
@@ -293,18 +278,19 @@ export default defineComponent({
           isDisabled ? 'span' : 'button',
           {
             class: ['page-link'],
-            onClick: (event) => {
+            onClick: (event: MouseEvent) => {
               if (isDisabled) {
                 return
               }
               this.pageClick(event, pageNumber)
             },
           },
-          btnText
+          btnContent
         )
       )
     }
     const makeEllipsis = (isLast: boolean) => {
+      const props = this.$props
       const SLOT_NAME_ELLIPSIS_TEXT = 'ellipsis-text'
       return h(
         'li',
@@ -324,13 +310,13 @@ export default defineComponent({
             'span',
             {class: ['page-link']},
             // this.$slots['ellipsis-text']() || toString(this.ellipsisText)
-            '...'
+            normalizeSlot(SLOT_NAME_ELLIPSIS_TEXT, {}, this.$slots) || props.ellipsisText || '...'
           ),
         ]
       )
     }
 
-    const makePageButton = (page, idx) => {
+    const makePageButton = (page, idx: number) => {
       const active: boolean = isActivePage(page.number)
       const buttonContent: string = page.number
       const tabIndex = this.disabled ? null : active || (noCurrentPage && idx === 0) ? '0' : '-1'
@@ -339,7 +325,7 @@ export default defineComponent({
         this.disabled ? 'span' : 'button',
         {
           class: ['page-link', {'flex-grow-1': !this.disabled && fill}],
-          onClick: (event) => {
+          onClick: (event: MouseEvent) => {
             this.pageClick(event, page.number)
           },
         },
@@ -366,13 +352,27 @@ export default defineComponent({
       )
     }
 
+    // Goto first page button. Don't render button when `hideGotoEndButtons` or `firstNumber` is set
+    if (!props.hideGotoEndButtons && !props.firstNumber) {
+      const gotoFirstPageButton = makeEndBtn(
+        1,
+        props.labelFirstPage,
+        'first-text',
+        props.firstText,
+        1
+      )
+      buttons.push(gotoFirstPageButton)
+    }
+
     //Previous Button
-
-    const previousButton = makeEndBtn(this.currentPage - 1, 'Previous', 1)
-
+    const previousButton = makeEndBtn(
+      props.modelValue - 1,
+      props.labelFirstPage,
+      'prev-text',
+      props.prevText,
+      1
+    )
     buttons.push(previousButton)
-
-    //End Previous Button
 
     // First Page Number Button
     if (this.firstNumber && pageNumbers[0] !== 1) {
@@ -398,7 +398,7 @@ export default defineComponent({
           {
             class: ['page-link'],
             //ref : element,
-            onClick: (event) => {
+            onClick: (event: MouseEvent) => {
               this.pageClick(event, page.number)
             },
           },
@@ -409,7 +409,13 @@ export default defineComponent({
     })
 
     //Next Button
-    const nextButton = makeEndBtn(this.currentPage + 1, 'Next', this.numberOfPages)
+    const nextButton = makeEndBtn(
+      props.modelValue + 1,
+      props.labelNextPage,
+      'next-text',
+      props.nextText,
+      this.numberOfPages
+    )
 
     // last Ellipsis
     if (this.showLastDots) {
@@ -420,6 +426,17 @@ export default defineComponent({
       buttons.push(makePageButton({number: this.numberOfPages}, -1))
     }
     buttons.push(nextButton)
+
+    if (!props.lastNumber && !props.hideGotoEndButtons) {
+      const gotoLastPageButton = makeEndBtn(
+        this.numberOfPages,
+        props.labelLastPage,
+        'last-text',
+        props.lastText,
+        this.numberOfPages
+      )
+      buttons.push(gotoLastPageButton)
+    }
 
     return h('nav', {}, h('ul', {class: 'pagination'}, buttons))
   },
