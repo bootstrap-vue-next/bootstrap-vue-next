@@ -11,13 +11,13 @@ export default defineComponent({
     alt: {type: String, default: null},
     bottom: {type: Boolean, default: false},
     end: {type: Boolean, default: false},
-    height: {type: [Number, String]},
+    height: {type: [Number, String], required: false},
     left: {type: Boolean, default: false},
     right: {type: Boolean, default: false},
-    src: {type: String},
+    src: {type: String, required: false},
     start: {type: Boolean, default: false},
     top: {type: Boolean, default: false},
-    width: {type: [Number, String]},
+    width: {type: [Number, String], required: false},
   },
   setup(props) {
     const attrs = computed(() => {
@@ -26,8 +26,8 @@ export default defineComponent({
       return {
         src,
         alt: props.alt,
-        width: (typeof width === 'number' ? width : parseInt(width as string, 10)) || null,
-        height: (typeof height === 'number' ? height : parseInt(height as string, 10)) || null,
+        width: (typeof width === 'number' ? width : parseInt(width as string, 10)) || undefined,
+        height: (typeof height === 'number' ? height : parseInt(height as string, 10)) || undefined,
       }
     })
 

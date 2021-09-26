@@ -1,0 +1,37 @@
+$b-card-deck-gap: 1.5rem !default;
+$b-card-media-min-width: 576px !default;
+$card-columns-count: 3 !default;
+$card-columns-gap: 1.25rem !default;
+$card-columns-margin: 0.75rem !default;
+
+.card-deck {
+  gap: $b-card-deck-gap;
+  @media (min-width: $b-card-media-min-width) {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  // The child selector allows nested `.card` within `.card-group`
+  // to display properly.
+  > .card {
+    flex: 1 0 0%;
+    margin-bottom: 0;
+  }
+}
+
+.card-columns {
+  .card {
+    margin-bottom: $card-columns-margin;
+  }
+
+  @media (min-width: $b-card-media-min-width) {
+    column-count: $card-columns-count;
+    column-gap: $card-columns-gap;
+    orphans: 1;
+    widows: 1;
+
+    .card {
+      display: inline-block; // Don't let them vertically span multiple columns
+      width: 100%; // Don't let their width change
+    }
+  }
+}
