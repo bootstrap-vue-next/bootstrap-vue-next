@@ -3,8 +3,7 @@ import {App, inject, ComputedRef, computed, reactive} from 'vue'
 import Alignment from '../types/Alignment'
 
 function alignment(props: any): ComputedRef<string> {
-  const {align}: {align: Alignment.Horizontal} = props
-  console.log(props)
+  const {align}: {align: Alignment} = props
   return computed(() => {
     if (align == 'center') {
       return 'justify-content-center'
