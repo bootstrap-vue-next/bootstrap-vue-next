@@ -1,3 +1,6 @@
+@import "../components/BAvatar/avatar";
+@import "../components/BCard/card";
+
 .input-group
   > .form-floating:not(:first-child)
   > :not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {

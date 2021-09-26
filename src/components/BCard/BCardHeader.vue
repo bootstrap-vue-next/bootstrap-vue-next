@@ -10,18 +10,18 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../types'
+import {ColorVariant} from '../../types'
 
 export default defineComponent({
   name: 'BCardHeader',
   props: {
-    header: {type: String},
-    headerBgVariant: {type: String as PropType<ColorVariant>},
-    headerBorderVariant: {type: String as PropType<ColorVariant>},
-    headerClass: {type: [Array, Object, String]},
-    headerHtml: {type: String},
+    header: {type: String, required: false},
+    headerBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    headerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
+    headerClass: {type: [Array, Object, String], required: false},
+    headerHtml: {type: String, required: false},
     headerTag: {type: String, default: 'div'},
-    headerTextVariant: {type: String as PropType<ColorVariant>},
+    headerTextVariant: {type: String as PropType<ColorVariant>, required: false},
   },
   setup(props) {
     const classes = computed(() => ({

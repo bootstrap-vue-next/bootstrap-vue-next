@@ -1,3 +1,5 @@
+import {Slot} from 'vue'
+
 export const isElement = (el: HTMLElement): boolean => !!(el && el.nodeType === Node.ELEMENT_NODE)
 
 export const getBCR = (el: HTMLElement) => (isElement(el) ? el.getBoundingClientRect() : null)
@@ -52,4 +54,23 @@ export const isVisible = (el: HTMLElement): boolean => {
   // Except when we override the getBCR prototype in some tests
   const bcr = getBCR(el)
   return !!(bcr && bcr.height > 0 && bcr.width > 0)
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const isEmptySlot = (slot: Slot | undefined, data?: any) =>
+  !slot || slot(data).filter((vnode) => vnode.type !== Comment).length < 1
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const offset = (el: HTMLElement) => {
+  const _offset = {top: 0, left: 0}
+  if (!isElement(el) || el.getClientRects().length === 0) {
+    return _offset
+  }
+  const bcr = getBCR(el)
+  if (bcr) {
+    const win = el.ownerDocument.defaultView
+    _offset.top = bcr.top + (win?.pageYOffset || 0)
+    _offset.left = bcr.left + (win?.pageXOffset || 0)
+  }
+  return _offset
 }

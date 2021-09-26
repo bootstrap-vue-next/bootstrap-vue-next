@@ -12,6 +12,9 @@ export default defineUserConfig<DefaultThemeOptions>({
     editLink: true,
     contributors: false,
     lastUpdated: true,
+    themePlugins: {
+      mediumZoom: false,
+    },
     navbar: [
       {text: 'Home', link: '/'},
       {text: 'Docs', link: '/getting-started/'},
@@ -29,16 +32,21 @@ export default defineUserConfig<DefaultThemeOptions>({
         {
           text: 'Components',
           children: [
-            '/components/README.md',
             '/components/Accordion.md',
             '/components/Alert.md',
+            '/components/Avatar.md',
             '/components/Badge.md',
             '/components/Breadcrumb.md',
+            '/components/Button.md',
+            '/components/ButtonGroup.md',
+            '/components/ButtonToolbar.md',
+            '/components/Card.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
             '/components/FormRadio.md',
             '/components/Pagination.md',
             '/components/Progress.md',
+            '/components/README.md',
             '/components/Spinners.md',
           ],
         },

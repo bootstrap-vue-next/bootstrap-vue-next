@@ -8,7 +8,25 @@ BootstrapVue 3 components
             <RouterLink to="./Accordion.html">Accordion</RouterLink> — Easily toggle content visibility on your pages. Includes support for making accordions.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Avatar.html">Avatar</RouterLink> — Custom component typically used to display a user profile as a picture, an icon, or short text.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Badge.html">Badge</RouterLink> — Small and adaptive tag for adding context to just about any content.
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./Breadcrumb.html">Breadcrumb</RouterLink> — Indicate the current page's location within a navigational hierarchy.
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./Button.html">Button</RouterLink> — Custom button component for actions in forms, dialogs, and more.
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./ButtonGroup.html">Button Group</RouterLink> — Group a series of buttons together on a single line or stack them in a vertical column.
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./ButtonToolbar.html">Button Toolbar</RouterLink> — Group a series of button-groups and/or input-groups together on a single line.
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./Card.html">Card</RouterLink> — A flexible and extensible content container. It includes options for headers and footers, a wide variety of content.
         </b-list-group-item>
         <b-list-group-item>
             <RouterLink to="./FormCheckbox.html">Form Checkbox</RouterLink> — Custom checkbox input and checkbox group to replace the browser default checkbox input, built on top of semantic and accessible markup. Optionally supports switch styling.

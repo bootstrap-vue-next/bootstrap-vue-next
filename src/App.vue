@@ -234,6 +234,26 @@
       </div>
     </div>
     <div>
+      <h5 class="my-3">Tabs with custom title</h5>
+      <b-tabs>
+        <b-tab active>
+          <template #title>
+            <b-spinner type="grow" small></b-spinner>
+            I'm <i>custom</i> <strong>title</strong>
+          </template>
+          <p class="p-3">Tab contents 1</p>
+        </b-tab>
+
+        <b-tab>
+          <template #title>
+            <b-spinner type="border" small></b-spinner>
+            Tab 2
+          </template>
+          <p class="p-3">Tab contents 2</p>
+        </b-tab>
+      </b-tabs>
+    </div>
+    <div>
       <h5 class="my-3">Basic layout</h5>
       <div class="bd-example-row">
         <b-row>
@@ -645,13 +665,11 @@
       Pressed State: <strong>{{ isPressed }}</strong>
     </p>
 
-    <b-button v-b-tooltip.top :title="tooltip"> Tolltip on top </b-button>
-    <b-button @click="tooltip = `${new Date()} <strong>fechaaa</strong>`">
-      Change tooltip
-    </b-button>
-    <b-button v-b-tooltip.left title="Tooltip on left"> Tolltip on left </b-button>
-    <b-button v-b-tooltip.right.click title="Tooltip on right"> Tolltip on right </b-button>
-    <b-button v-b-tooltip.bottom title="Tooltip on bottom"> Tolltip on bottom </b-button>
+    <b-button v-b-tooltip.top :title="tooltip"> Tooltip on top </b-button>
+    <b-button @click="setTooltip"> Change tooltip </b-button>
+    <b-button v-b-tooltip.left title="Tooltip on left"> Tooltip on left </b-button>
+    <b-button v-b-tooltip.right.click title="Tooltip on right"> Tooltip on right </b-button>
+    <b-button v-b-tooltip.bottom title="Tooltip on bottom"> Tooltip on bottom </b-button>
 
     <b-button id="popover-target-1"> Hover Me </b-button>
     <b-popover target="popover-target-1" triggers="click" placement="top">
@@ -773,7 +791,9 @@
         <div class="col-6">Value: {{ checkedString }}</div>
       </div>
       <div class="mx-4 my-1">
-        <button class="btn btn-primary mx-1" @click="checkedString = 'correct'">Set correct</button>
+        <b-button class="mx-1" variant="primary" @click="checkedString = 'correct'"
+          >Set correct</b-button
+        >
         <button class="btn btn-primary mx-1" @click="checkedString = 'incorrect'">
           Set incorrect
         </button>
@@ -1333,6 +1353,7 @@ export default defineComponent({
     const showPassword = ref(false)
     const input = ref()
     const tooltip = ref('Tooltip on <em>top</em>')
+    const setTooltip = () => (tooltip.value = `${new Date()} <strong>fechaaa</strong>`)
     const showModal = ref(false)
     const city = ref('')
     const breadcrumb = useBreadcrumb()
@@ -1397,6 +1418,7 @@ export default defineComponent({
       name,
       consoleLog,
       tooltip,
+      setTooltip,
       showModal,
       city,
       collapse,
