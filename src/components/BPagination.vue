@@ -14,11 +14,12 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import {Pagination} from '../types'
+import Pagination from '../types/Pagination'
+import Alignment from '../types/Alignment'
 import {isUndefinedOrNull} from '../utils/inspect'
 import {toInteger} from '../utils/number'
 import {attemptFocus, isVisible} from '../utils/dom'
-
+import useAlignment from '../composables/useAlignment'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5
 
@@ -34,6 +35,7 @@ const sanitizeTotalRows: number = (value) => Math.max(toInteger(value) || DEFAUL
 export default defineComponent({
   name: 'BPagination',
   props: {
+    align: {type: String as PropType<Alignment>, default: 'start'},
     currentPage: {type: Number, default: 1}, // V-model prop
     perPage: {type: Number, default: DEFAULT_PER_PAGE},
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
@@ -50,7 +52,6 @@ export default defineComponent({
     hideGotoEndButtons: {type: Boolean, default: false},
     ellipsisClass: {type: Array, default: () => []},
     ellipsisText: {type: String, default: '\u2026'},
-    align: {type: String, default: 'left'},
     labelPrevPage: {type: String, default: 'Go to previous page'},
     labelNextPage: {type: String, default: 'Go to next page'},
   },
@@ -61,6 +62,7 @@ export default defineComponent({
       Math.ceil(sanitizeTotalRows(props.totalRows) / sanitizePerPage(props.perPage))
     )
 
+    const alignment = useAlignment(props)
     const currentPage = toRef(props, 'currentPage')
     const pLimit = toRef(props, 'limit')
     const pHideEllipsis = toRef(props, 'hideEllipsis')
@@ -269,6 +271,7 @@ export default defineComponent({
     )
 
     return {
+      alignment,
       pageClick,
       pages,
       numberOfPages,
@@ -446,7 +449,6 @@ export default defineComponent({
     })
 
     //Next Button
-    console.log(this.nextClass)
     const nextButton = makeEndBtn(
       this.currentPage + 1,
       this.labelNextPage,
@@ -466,8 +468,7 @@ export default defineComponent({
       buttons.push(makePageButton({number: this.numberOfPages}, -1))
     }
     buttons.push(nextButton)
-
-    return h('nav', {}, h('ul', {class: 'pagination'}, buttons))
+    return h('nav', {}, h('ul', {class: ['pagination', this.alignment]}, buttons))
   },
 })
 </script>

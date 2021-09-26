@@ -986,15 +986,18 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
-    <b-pagination
-      v-model:currentPage="paginationPageNumber"
-      :limit="paginationLimit"
-      :total-rows="paginationRows"
-      :per-page="paginationPerPage"
-      first-number
-      last-number
-    >
-    </b-pagination>
+    <div>
+      <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :limit="paginationLimit"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
+        align="center"
+        first-number
+        last-number
+      >
+      </b-pagination>
+    </div>
 
     <h5 class="my-3">Icons</h5>
     <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
