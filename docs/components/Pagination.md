@@ -52,15 +52,6 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
 
 </ClientOnly>
 
-<script lang="ts" setup>
-    import {ref} from 'vue'
-
-    const paginationPageNumber = ref(1)
-    const paginationLimit = ref(8)
-    const paginationPerPage = ref(2)
-    const paginationRows = ref(40)
-</script>
-
 ```html
 <!-- Use of Props -->
 <b-pagination
@@ -117,7 +108,6 @@ use the `first-number` and `last-number` props.
         :total-rows="paginationRows"
         :per-page="paginationPerPage"
         first-number
-        last-number
       ></b-pagination>
     <div class="mt-3">
 
@@ -149,8 +139,8 @@ use the `first-number` and `last-number` props.
       <h6>Goto first button number</h6>
       <b-pagination
         v-model:currentPage="paginationPageNumber"
-        :total-rows="rows"
-        :per-page="perPage"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
         first-number
       ></b-pagination>
     </div>
@@ -159,8 +149,8 @@ use the `first-number` and `last-number` props.
       <h6>Goto last button number</h6>
       <b-pagination
         v-model:currentPage="paginationPageNumber"
-        :total-rows="rows"
-        :per-page="perPage"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
         last-number
       ></b-pagination>
     </div>
@@ -168,9 +158,9 @@ use the `first-number` and `last-number` props.
     <div class="mt-3">
       <h6>Goto first and last button number</h6>
       <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
         first-number
         last-number
       ></b-pagination>
@@ -188,3 +178,82 @@ use the `first-number` and `last-number` props.
 </script>
 
 ```
+
+### Alignment
+
+Since pagination is a flex container, you can use the justify content property.
+By default the pagination component is justified start. Change the alignment to `center`, `end`
+by setting the prop `align` to the appropriate value.
+
+<ClientOnly>
+<div class="overflow-auto">
+    <div>
+        <h6>Start alignment (default)</h6>
+        <b-pagination v-model:currentPage="paginationPageNumber" :per-page="paginationPerPage" :total-rows="paginationRows"></b-pagination>
+    </div>
+    <div class="mt-3">
+        <h6 class="text-center">Center alignment</h6>
+        <b-pagination v-model:currentPage="paginationPageNumber" :per-page="paginationPerPage" :total-rows="paginationRows" align="center"></b-pagination>
+    </div>
+      <div class="mt-3">
+        <h6 class="text-end">End alignment</h6>
+        <b-pagination v-model:currentPage="paginationPageNumber" :per-page="paginationPerPage" :total-rows="paginationRows" align="end"></b-pagination>
+    </div>
+  </div>
+</ClientOnly>
+
+```html
+<template>
+  <div class="overflow-auto">
+    <div>
+      <h6>Start alignment (default)</h6>
+      <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="paginationRows"
+      ></b-pagination>
+    </div>
+
+    <div class="mt-3">
+      <h6 class="text-center">Center alignment</h6>
+      <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="paginationRows"
+        align="center"
+      ></b-pagination>
+    </div>
+
+    <div class="mt-3">
+      <h6 class="text-right">End alignment</h6>
+      <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="paginationRows"
+        align="end"
+      ></b-pagination>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+  import {ref} from 'vue'
+
+  const paginationPageNumber = ref(1)
+  const paginationLimit = ref(8)
+  const paginationPerPage = ref(2)
+  const paginationRows = ref(40)
+</script>
+```
+
+<script lang="ts" setup>
+    import {ref} from 'vue'
+
+    const paginationPageNumber = ref(1)
+    const paginationLimit = ref(8)
+    const paginationPerPage = ref(2)
+    const paginationRows = ref(40)
+</script>
+
+## Component reference
+
+### `<b-pagination>`
+
+#### Properties
