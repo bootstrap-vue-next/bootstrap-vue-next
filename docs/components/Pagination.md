@@ -103,3 +103,88 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
   const paginationRows = ref(40)
 </script>
 ```
+
+### Goto first/last button type
+
+If you prefer to have buttons with the first and last page number to go to the corresponding page,
+use the `first-number` and `last-number` props.
+
+<ClientOnly>
+
+  <h6>Goto first button number</h6>
+  <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
+        first-number
+        last-number
+      ></b-pagination>
+    <div class="mt-3">
+
+  <h6>Goto last button number</h6>
+  <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
+        last-number
+      ></b-pagination>
+</div>
+    <div class="mt-3">
+
+  <h6>Goto first and last button number</h6>
+  <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
+        last-number
+        first-number
+      ></b-pagination>
+</div>
+      
+</ClientOnly>
+
+```html
+  <div class="overflow-auto">
+    <div>
+      <h6>Goto first button number</h6>
+      <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="rows"
+        :per-page="perPage"
+        first-number
+      ></b-pagination>
+    </div>
+
+    <div class="mt-3">
+      <h6>Goto last button number</h6>
+      <b-pagination
+        v-model:currentPage="paginationPageNumber"
+        :total-rows="rows"
+        :per-page="perPage"
+        last-number
+      ></b-pagination>
+    </div>
+
+    <div class="mt-3">
+      <h6>Goto first and last button number</h6>
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        first-number
+        last-number
+      ></b-pagination>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+  import {ref} from 'vue'
+
+  const paginationPageNumber = ref(1)
+  const paginationLimit = ref(8)
+  const paginationPerPage = ref(2)
+  const paginationRows = ref(40)
+</script>
+
+```
