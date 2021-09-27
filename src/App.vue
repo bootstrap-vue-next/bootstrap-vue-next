@@ -1006,6 +1006,7 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
+    <h3>Pagination</h3>
     <b-pagination
       v-model="paginationPageNumber"
       :limit="paginationLimit"
@@ -1053,7 +1054,34 @@
         <i v-else>{{ page }}</i>
       </template>
     </b-pagination>
-
+    <b-pagination
+      v-model="paginationPageNumber"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+      prev-text="Prev"
+      next-text="Next"
+      :first-class="paginationDangerClasses"
+      first-text="First"
+      last-text="Last"
+      last-class="border border-4 border-info"
+      ellipsis-class="border border-3 border-success"
+    >
+    </b-pagination>
+    <div class="overflow-auto">
+      <b-pagination
+        v-model="paginationPageNumber"
+        :limit="paginationLimit"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
+        prev-text="Prev"
+        next-text="Next"
+        first-text="First"
+        last-text="Last"
+        align="end"
+      >
+      </b-pagination>
+    </div>
     Current page : {{ paginationPageNumber }}
     <div>
       <button class="btn btn-primary" @click="paginationPageNumber = 4">Set to page 4</button>
@@ -1439,6 +1467,7 @@ export default defineComponent({
     const paginationLimit = ref(8)
     const paginationPerPage = ref(2)
     const paginationRows = ref(40)
+    const paginationDangerClasses = ref(['border-danger', 'border-5', 'border'])
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1477,6 +1506,7 @@ export default defineComponent({
       paginationLimit,
       paginationPerPage,
       paginationRows,
+      paginationDangerClasses,
       setCheckedSelectedCars,
       radioDefault,
       radioButton,
