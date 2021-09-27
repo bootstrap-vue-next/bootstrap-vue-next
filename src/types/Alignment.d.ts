@@ -1,4 +1,4 @@
-declare type Alignment = 'start' | 'end' | 'center'
+declare type Alignment = 'start' | 'end' | 'center' | 'fill'
 
 declare namespace Alignment {
   type Vertical = Alignment | 'baseline' | 'strech'

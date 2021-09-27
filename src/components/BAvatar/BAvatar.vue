@@ -46,6 +46,7 @@ import {isNumber, isNumeric, isString} from '../../utils/inspect'
 import {toFloat} from '../../utils/number'
 import {injectionKey} from './BAvatarGroup.vue'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const computeSize = (value: any): string | null => {
   const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value
   return isNumber(calcValue) ? `${calcValue}px` : calcValue || null

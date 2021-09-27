@@ -1006,8 +1006,9 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
+    <h3>Pagination</h3>
     <b-pagination
-      v-model:currentPage="paginationPageNumber"
+      v-model="paginationPageNumber"
       :limit="paginationLimit"
       :total-rows="paginationRows"
       :per-page="paginationPerPage"
@@ -1015,7 +1016,76 @@
       last-number
     >
     </b-pagination>
-
+    <b-pagination
+      v-model="paginationPageNumber"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+    >
+    </b-pagination>
+    <b-pagination
+      v-model="paginationPageNumber"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+      prev-text="Prev"
+      next-text="Next"
+      first-text="First"
+      last-text="Last"
+    >
+    </b-pagination>
+    <b-pagination
+      v-model="paginationPageNumber"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+      class="mt-4"
+    >
+      <template #first-text><span class="text-success">First</span></template>
+      <template #prev-text><span class="text-danger">Prev</span></template>
+      <template #next-text><span class="text-warning">Next</span></template>
+      <template #last-text><span class="text-info">Last</span></template>
+      <template #ellipsis-text>
+        <b-spinner small type="grow"></b-spinner>
+        <b-spinner small type="grow"></b-spinner>
+        <b-spinner small type="grow"></b-spinner>
+      </template>
+      <template #page="{page, active}">
+        <b v-if="active">{{ page }}</b>
+        <i v-else>{{ page }}</i>
+      </template>
+    </b-pagination>
+    <b-pagination
+      v-model="paginationPageNumber"
+      :limit="paginationLimit"
+      :total-rows="paginationRows"
+      :per-page="paginationPerPage"
+      prev-text="Prev"
+      next-text="Next"
+      :first-class="paginationDangerClasses"
+      first-text="First"
+      last-text="Last"
+      last-class="border border-4 border-info"
+      ellipsis-class="border border-3 border-success"
+    >
+    </b-pagination>
+    <div class="overflow-auto">
+      <b-pagination
+        v-model="paginationPageNumber"
+        :limit="paginationLimit"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
+        prev-text="Prev"
+        next-text="Next"
+        first-text="First"
+        last-text="Last"
+        align="end"
+      >
+      </b-pagination>
+    </div>
+    Current page : {{ paginationPageNumber }}
+    <div>
+      <button class="btn btn-primary" @click="paginationPageNumber = 4">Set to page 4</button>
+    </div>
     <h5 class="my-3">Icons</h5>
     <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
 
@@ -1397,6 +1467,7 @@ export default defineComponent({
     const paginationLimit = ref(8)
     const paginationPerPage = ref(2)
     const paginationRows = ref(40)
+    const paginationDangerClasses = ref(['border-danger', 'border-5', 'border'])
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1435,6 +1506,7 @@ export default defineComponent({
       paginationLimit,
       paginationPerPage,
       paginationRows,
+      paginationDangerClasses,
       setCheckedSelectedCars,
       radioDefault,
       radioButton,

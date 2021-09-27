@@ -14,3 +14,5 @@ export const isNull = (value: any) => value === null
 export const isUndefinedOrNull = (value: any) => isUndefined(value) || isNull(value)
 export const isNumeric = (value: any) => RX_NUMBER.test(String(value))
 export const isNumber = (value: any) => typeof value === 'number'
+export const toType = (value: any) => typeof value
+export const isFunction = (value: any) => toType(value) === 'function'
