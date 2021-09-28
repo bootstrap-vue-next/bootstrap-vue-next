@@ -44,15 +44,7 @@ import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import useId from '../../composables/useId'
 import {Size} from '../../types'
-
-const getNested = (obj: any, path: string): any => {
-  if (!obj) return obj
-  if (path in obj) return obj[path]
-
-  const paths = path.split('.')
-
-  return getNested(obj[paths[0]], paths.splice(1).join('.'))
-}
+import {normalizeOptions} from '../../composables/useFormSelect'
 
 export default defineComponent({
   name: 'BFormSelect',
@@ -129,61 +121,10 @@ export default defineComponent({
       return state === false ? 'true' : null
     })
 
-    const formOptions = computed(() => normalizeOptions(props.options))
+    const formOptions = computed(() => normalizeOptions(props.options, 'BFormSelect', props))
     // /computed
 
     // methods
-    const normalizeOption = (option: any, key: string | null = null) => {
-      if (Object.prototype.toString.call(option) === '[object Object]') {
-        const {valueField, textField, optionsField, labelField, htmlField, disabledField} = props
-
-        const value = getNested(option, valueField)
-        const text = getNested(option, textField)
-        const html = getNested(option, htmlField)
-        const disabled = getNested(option, disabledField)
-
-        const options = option[optionsField] || null
-        if (options !== null) {
-          return {
-            label: String(getNested(option, labelField) || text),
-            options: normalizeOptions(options),
-          }
-        }
-
-        return {
-          value: typeof value === 'undefined' ? key || text : value,
-          text: String(typeof value === 'undefined' ? key : text),
-          html,
-          disabled: Boolean(disabled),
-        }
-      }
-      return {
-        value: key || option,
-        text: String(option),
-        disabled: false,
-      }
-    }
-    const normalizeOptions = (options: any[]): any => {
-      if (Array.isArray(options)) {
-        return options.map((option) => normalizeOption(option))
-      } else if (Object.prototype.toString.call(options) === '[object Object]') {
-        console.warn(
-          '[BootstrapVue warn]: BFormSelect - Setting prop "options" to an object is deprecated. Use the array format instead.'
-        )
-
-        return Object.keys(options).map((key: string) => {
-          const el: any = options[key]
-          switch (typeof el) {
-            case 'object':
-              return normalizeOption(el.text, String(el.value))
-            default:
-              return normalizeOption(el, String(key))
-          }
-        })
-      }
-
-      return []
-    }
 
     const onChange = (evt: any) => {
       const {target} = evt

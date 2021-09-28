@@ -118,6 +118,10 @@ export default defineComponent({
       ref: props.split ? dropdown : null,
     }))
 
+    const hide = () => {
+      instance.value?.hide()
+    }
+
     onMounted(() => {
       instance.value = new Dropdown(
         dropdown.value?.$el,
@@ -165,6 +169,7 @@ export default defineComponent({
       splitAttr,
       dropdownMenuClasses,
       dropdown,
+      hide,
     }
   },
 })
