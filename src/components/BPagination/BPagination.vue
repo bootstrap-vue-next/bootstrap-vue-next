@@ -5,7 +5,7 @@ import {Alignment, InputSize, Pagination, PaginationPage} from '../../types'
 import {isUndefinedOrNull} from '../../utils/inspect'
 import {toInteger} from '../../utils/number'
 import useAlignment from '../../composables/useAlignment'
-
+import {BvEvent} from '../../utils/bvEvent'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5
 
@@ -57,7 +57,7 @@ export default defineComponent({
     size: {type: String as PropType<InputSize>, required: false},
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'page-click'],
   setup(props, {emit}) {
     const alignment = useAlignment(props)
 
@@ -199,6 +199,19 @@ export default defineComponent({
       if (pageNumber === props.modelValue) {
         return
       }
+
+      const {target} = event
+      // Emit a user-cancelable `page-click` event
+      const clickEvent = new BvEvent('page-click', {
+        cancelable: true,
+        vueTarget: this,
+        target,
+      })
+      emit('page-click', clickEvent, pageNumber)
+      if (clickEvent.defaultPrevented) {
+        return
+      }
+
       emit('update:modelValue', pageNumber)
 
       //    nextTick(() => {
