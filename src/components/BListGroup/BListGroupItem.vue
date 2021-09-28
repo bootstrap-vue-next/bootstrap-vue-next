@@ -5,6 +5,8 @@
     :class="classes"
     :aria-current="active ? true : null"
     :aria-disabled="disabled ? true : null"
+    :target="link ? target : null"
+    :href="!button ? href : null"
     v-bind="attrs"
   >
     <slot />
@@ -13,27 +15,41 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../types'
+import {ColorVariant} from '../../types'
 
 const ACTION_TAGS = ['a', 'router-link', 'button', 'b-link']
 
 export default defineComponent({
   name: 'BListGroupItem',
   props: {
-    action: {type: Boolean, default: null},
+    action: {type: Boolean, default: false},
     active: {type: Boolean, default: false},
-    button: {type: Boolean, default: null},
+    // activeClass: {type: String},
+    // append: {type: Boolean, default: false},
+    button: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
+    // exact: {type: Boolean, default: false},
+    // exactActiveClass: {type: String},
+    href: {type: String},
+    // noPrefetch: {type: Boolean, default: false},
+    // prefetch: {type: Boolean, default: null},
+    // rel: {type: String, default: null},
+    // replace: {type: Boolean, default: false},
+    // routerComponentName: {type: String, default: null},
     tag: {type: String, default: 'div'},
+    target: {type: String, default: '_self'},
+    //to: {type: [String, Object]},
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props, context) {
-    const link = false //!!(props.href || props.to);
-    const tagComputed = computed(() => (props.button ? 'button' : !link ? props.tag : '') /*BLink*/)
+    const link = computed(() => !props.button && props.href)
+    const tagComputed = computed(
+      () => (props.button ? 'button' : !link.value ? props.tag : 'a') /* BLink */
+    )
 
     const classes = computed(() => {
       const {button, variant, active, disabled} = props
-      const action = props.action || link || button || ACTION_TAGS.includes(props.tag)
+      const action = props.action || link.value || button || ACTION_TAGS.includes(props.tag)
       return {
         [`list-group-item-${variant}`]: variant,
         'list-group-item-action': action,
@@ -61,6 +77,7 @@ export default defineComponent({
       tagComputed,
       classes,
       attrs,
+      link,
     }
   },
 })
