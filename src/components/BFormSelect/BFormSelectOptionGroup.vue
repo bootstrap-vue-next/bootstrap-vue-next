@@ -19,6 +19,7 @@
 <script lang="ts">
 import {computed, defineComponent} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
+import {normalizeOptions} from '../../composables/useFormSelect'
 
 export default defineComponent({
   name: 'BFormSelectOptionGroup',
@@ -32,32 +33,9 @@ export default defineComponent({
     valueField: {type: String, default: 'value'},
   },
   setup(props) {
-    const formOptions = computed(() => normalizeOptions(props.options as any))
-
-    const normalizeOption = (option: any, key = null) => {
-      if (Object.prototype.toString.call(option) === '[object Object]') {
-        const {valueField, textField, htmlField, disabledField} = props
-        const value = option[valueField]
-        const text = option[textField]
-        return {
-          value: typeof value === 'undefined' ? key || text : value,
-          text: String(typeof value === 'undefined' ? key : text),
-          html: option[htmlField],
-          disabled: Boolean(option[disabledField]),
-        }
-      }
-      return {
-        value: key || option,
-        text: String(option),
-        disabled: false,
-      }
-    }
-    const normalizeOptions = (options: any[]) => {
-      if (Array.isArray(options)) {
-        return options.map((option) => normalizeOption(option))
-      }
-      return []
-    }
+    const formOptions = computed(() =>
+      normalizeOptions(props.options as any, 'BFormSelectOptionGroup', props)
+    )
 
     return {
       formOptions,
