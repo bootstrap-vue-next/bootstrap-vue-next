@@ -32,6 +32,7 @@ export default defineUserConfig<DefaultThemeOptions>({
         {
           text: 'Components',
           children: [
+            '/components/README.md',
             '/components/Accordion.md',
             '/components/Alert.md',
             '/components/Avatar.md',
@@ -46,7 +47,6 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/FormRadio.md',
             '/components/Progress.md',
             '/components/Pagination.md',
-            '/components/README.md',
             '/components/Spinners.md',
           ],
         },

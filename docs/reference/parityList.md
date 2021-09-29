@@ -783,6 +783,61 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Pagination
 
+### Properties
+
+| Property                | Status                                                                               | Observations |
+| ----------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `align`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `aria-controls`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `aria-label`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `ellipsis-class`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `ellipsis-text`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first-class`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first-number`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first-text`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `hide-ellipsis`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `hide-goto-end-buttons` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-first-page`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-last-page`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-next-page`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-page`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-prev-page`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `last-class`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `last-number`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `last-text`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `limit`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `next-class`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `next-text`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `page-class`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `per-page`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `pills`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `prev-class`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `prev-text`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `size`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `total-rows`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `value`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   | use v-model  |
+
+### Slots
+
+| Property        | Status                                                                               | Observations |
+| --------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `ellipsis-text` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first-text`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `last-text`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `next-text`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `page`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `prev-text`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Property            | Status                                                                               | Observations       |
+| ------------------- | ------------------------------------------------------------------------------------ | ------------------ |
+| `change`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                    |
+| `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                    |
+| `update:modelValue` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | vue3 v-model event |
+| `page-click`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                    |
+
 ## Pagination Nav
 
 ## Popover

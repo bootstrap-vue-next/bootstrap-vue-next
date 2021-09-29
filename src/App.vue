@@ -1007,15 +1007,19 @@
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
     <h3>Pagination</h3>
-    <b-pagination
-      v-model="paginationPageNumber"
-      :limit="paginationLimit"
-      :total-rows="paginationRows"
-      :per-page="paginationPerPage"
-      first-number
-      last-number
-    >
-    </b-pagination>
+    <div class="d-flex">
+      <b-pagination
+        v-model="paginationPageNumber"
+        :limit="paginationLimit"
+        :total-rows="paginationRows"
+        :per-page="paginationPerPage"
+        first-number
+        last-number
+        @page-click="handlePaginationPageClick"
+      >
+      </b-pagination>
+      <span class="mx-3">Select page 7 is prevented</span>
+    </div>
     <b-pagination
       v-model="paginationPageNumber"
       :limit="paginationLimit"
@@ -1411,6 +1415,7 @@ import {useBreadcrumb} from './composables/useBreadcrumb'
 import BDropdown from './components/BDropdown.vue'
 import TableField from './types/TableField'
 import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
+import {BvEvent} from './utils/bvEvent'
 
 export default defineComponent({
   name: 'App',
@@ -1478,7 +1483,14 @@ export default defineComponent({
         text: 'Hello',
       })
     })
+    const handlePaginationPageClick = (event: BvEvent, page: number) => {
+      if (page === 7) {
+        event.preventDefault()
+        return
+      }
 
+      console.log('page click', page)
+    }
     return {
       password,
       showPassword,
@@ -1502,6 +1514,7 @@ export default defineComponent({
       checkedPlain,
       checkedAvailableCars,
       checkedSelectedCars,
+      handlePaginationPageClick,
       paginationPageNumber,
       paginationLimit,
       paginationPerPage,
