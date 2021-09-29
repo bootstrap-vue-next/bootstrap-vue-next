@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {Breakpoint} from '../types'
+import {Breakpoint} from '../../types'
 
 export default defineComponent({
   name: 'BListGroup',

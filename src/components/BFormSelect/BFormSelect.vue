@@ -39,7 +39,16 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, nextTick, onActivated, onMounted, PropType, ref} from 'vue'
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onActivated,
+  onMounted,
+  PropType,
+  ref,
+  watch,
+} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import useId from '../../composables/useId'
@@ -77,7 +86,7 @@ export default defineComponent({
     valueField: {type: String, default: 'value'},
     modelValue: {type: [String, Array, Object], default: ''},
   },
-  emits: ['update:modelValue', 'change'],
+  emits: ['update:modelValue', 'change', 'input'],
   setup(props, {emit}) {
     const input = ref<HTMLElement>()
     const computedId = useId(props.id, 'input')
@@ -147,6 +156,13 @@ export default defineComponent({
       }
     }
     // /methods
+
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        emit('input', newValue)
+      }
+    )
 
     return {
       input,
