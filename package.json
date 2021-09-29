@@ -63,6 +63,7 @@
     "vite": "2.x.x",
     "vue": "^3.0.0",
     "vue-loader": "^16.3.0",
+    "vue-router": "^4.0.8",
     "vue3-jest": "^27.0.0-alpha.2",
     "vuepress": "^2.0.0-beta.22"
   },
