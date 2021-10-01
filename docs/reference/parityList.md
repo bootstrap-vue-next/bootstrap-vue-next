@@ -765,6 +765,52 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## List group
 
+### Properties
+
+| Property     | Status                                                                               | Observations           |
+| ------------ | ------------------------------------------------------------------------------------ | ---------------------- |
+| `flush`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `horizontal` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `numbered`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3 |
+| `tag`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## List group item
+
+### Properties
+
+| Property                | Status                                                                               | Observations |
+| ----------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `action`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `active`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `active-class`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `append`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `button`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `exact`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `exact-active-class`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `href`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-prefetch`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `prefetch`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `rel`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `replace`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `router-component-name` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `tag`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `target`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `to`                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `variant`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Media
 
 This components was suppresed in Boostrap `v5`.

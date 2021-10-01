@@ -14,8 +14,9 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
+import {computed, defineComponent, inject, PropType} from 'vue'
 import {ColorVariant} from '../../types'
+import {injectionKey} from './BListGroup.vue'
 
 const ACTION_TAGS = ['a', 'router-link', 'button', 'b-link']
 
@@ -42,9 +43,18 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props, context) {
+    const parentData = inject(injectionKey, null)
+
     const link = computed(() => !props.button && props.href)
     const tagComputed = computed(
-      () => (props.button ? 'button' : !link.value ? props.tag : 'a') /* BLink */
+      () =>
+        parentData?.numbered
+          ? 'li'
+          : props.button
+          ? 'button'
+          : !link.value
+          ? props.tag
+          : 'a' /* BLink */
     )
 
     const classes = computed(() => {

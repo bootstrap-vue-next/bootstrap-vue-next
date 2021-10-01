@@ -31,6 +31,16 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
+  it('should have tag ol then prop numbered=true', async () => {
+    const wrapper = mount(BListGroup, {
+      props: {tag: 'div', numbered: true},
+    })
+
+    expect(wrapper.element.tagName).toBe('OL')
+
+    wrapper.unmount()
+  })
+
   it('should have class list-group-flush when prop flush=true', async () => {
     const wrapper = mount(BListGroup, {
       props: {flush: true},
