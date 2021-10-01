@@ -1,4 +1,5 @@
 import {mount} from '@vue/test-utils'
+import BListGroup from './BListGroup'
 import BListGroupItem from './BListGroupItem'
 
 describe('list-group > list-group-item', () => {
@@ -244,6 +245,16 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.attributes('disabled')).toBeDefined()
+
+    wrapper.unmount()
+  })
+
+  it('should have tag li when used within b-list-group with mounted=true', async () => {
+    const wrapper = mount(BListGroup, {props: {numbered: true}, slots: {default: BListGroupItem}})
+
+    const $listItem = wrapper.findComponent(BListGroupItem)
+    expect($listItem).toBeDefined()
+    expect($listItem.element.tagName).toBe('LI')
 
     wrapper.unmount()
   })
