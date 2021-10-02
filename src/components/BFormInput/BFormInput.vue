@@ -3,19 +3,19 @@
     :id="computedId"
     ref="input"
     :class="classes"
-    :name="name || null"
-    :form="form || null"
+    :name="name || undefined"
+    :form="form || undefined"
     :type="localType"
     :disabled="disabled"
     :placeholder="placeholder"
     :required="required"
-    :autocomplete="autocomplete || null"
+    :autocomplete="autocomplete || undefined"
     :readonly="readonly || plaintext"
     :min="min"
     :max="max"
     :step="step"
-    :list="type !== 'password' ? list : null"
-    :aria-required="required ? 'true' : null"
+    :list="type !== 'password' ? list : undefined"
+    :aria-required="required ? 'true' : undefined"
     :aria-invalid="computedAriaInvalid"
     v-bind="$attrs"
     @input="onInput($event)"
@@ -59,28 +59,28 @@ export default defineComponent({
       type: [Boolean, String] as PropType<boolean | 'false' | 'true' | 'grammar' | 'spelling'>,
       default: false,
     },
-    autocomplete: {type: String},
+    autocomplete: {type: String, required: false},
     autofocus: {type: Boolean, default: false},
     // debounce: {type: [String, Number], default: 0}, TODO: not implemented yet
     disabled: {type: Boolean, default: false},
-    form: {type: String},
-    formatter: {type: Function},
-    id: {type: String},
+    form: {type: String, required: false},
+    formatter: {type: Function, required: false},
+    id: {type: String, required: false},
     lazy: {type: Boolean, default: false},
     lazyFormatter: {type: Boolean, default: false},
-    list: {type: String},
-    max: {type: [String, Number]},
-    min: {type: [String, Number]},
+    list: {type: String, required: false},
+    max: {type: [String, Number], required: false},
+    min: {type: [String, Number], required: false},
     modelValue: {type: [String, Number] as PropType<string | number>, default: ''},
-    name: {type: String},
+    name: {type: String, required: false},
     // noWheel: {type: Boolean, default: false}, TODO: not implemented yet
     number: {type: Boolean, default: false},
-    placeholder: {type: String},
+    placeholder: {type: String, required: false},
     plaintext: {type: Boolean, default: false},
     readonly: {type: Boolean, default: false},
     required: {type: Boolean, default: false},
-    size: {type: String as PropType<Size>},
-    step: {type: [String, Number]},
+    size: {type: String as PropType<Size>, required: false},
+    step: {type: [String, Number], required: false},
     state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
     trim: {type: Boolean, default: false},
     type: {
@@ -149,7 +149,7 @@ export default defineComponent({
       if (ariaInvalid) {
         return ariaInvalid.toString()
       }
-      return state === false ? 'true' : null
+      return state === false ? 'true' : undefined
     })
 
     const localType = computed(() => (allowedTypes.includes(props.type) ? props.type : 'text'))
