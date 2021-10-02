@@ -1434,7 +1434,7 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
-import BDropdown from './components/BDropdown.vue'
+import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
 import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
 import {BvEvent} from './utils/bvEvent'
