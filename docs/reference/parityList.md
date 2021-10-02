@@ -725,11 +725,85 @@ More information [here](https://getbootstrap.com/docs/5.0/migration/#forms).
 | `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `first`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
+## Form Select
+
+### Properties
+
+| Property         | Status                                                                               | Observations |
+| ---------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `aria-invalid`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `autofocus`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled-field` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `form`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `html-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-field`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `multiple`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `name`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `options`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `options-field`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `plain`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `required`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `select-size`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `size`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `state`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `text-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `value-field`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Property            | Status                                                                               | Observations |
+| ------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `change`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `update:modelValue` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Form Select Option
+
+### Properties
+
+| Property   | Status                                                                               | Observations |
+| ---------- | ------------------------------------------------------------------------------------ | ------------ |
+| `disabled` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `value`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Form Select Option Group
+
+### Properties
+
+| Property         | Status                                                                               | Observations |
+| ---------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `disabled-field` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `html-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `options`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `text-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `value-field`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Form Rating
 
 This is a <Badge type="warning" text="non-standard" /> component.
-
-## Form Select
 
 ## Form Spinbutton
 
