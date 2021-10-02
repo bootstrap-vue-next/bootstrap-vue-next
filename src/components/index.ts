@@ -38,11 +38,13 @@ import BFormCheckboxGroup from './BFormCheckbox/BFormCheckboxGroup.vue'
 import BFormRadio from './BFormRadio'
 import BFormRadioGroup from './BFormRadio/BFormRadioGroup.vue'
 import BFormInput from './BFormInput/BFormInput.vue'
+import BFormInvalidFeedback from './BForm/BFormInvalidFeedback.vue'
 import BFormFloatingLabel from './BFormFloatingLabel.vue'
 import BFormSelect from './BFormSelect/BFormSelect.vue'
 import BFormSelectOption from './BFormSelect/BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelect/BFormSelectOptionGroup.vue'
 import BFormText from './BFormText.vue'
+import BFormValidFeedback from './BForm/BFormValidFeedback.vue'
 import BIcon from './BIcon.vue'
 import BImg from './BImg.vue'
 import BInputGroup from './BInputGroup.vue'
@@ -101,12 +103,14 @@ export default {
   BDropdownItemButton,
   BDropdownText,
   BForm,
+  BFormInput,
+  BFormInvalidFeedback,
   BFormSelect,
   BFormSelectOption,
   BFormSelectOptionGroup,
   BFormFloatingLabel,
-  BFormInput,
   BFormText,
+  BFormValidFeedback,
   BIcon,
   BImg,
   BInputGroup,
