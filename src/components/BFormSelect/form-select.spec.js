@@ -538,6 +538,20 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
+  it('displays option text when value not set', async () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [{text: 'one'}],
+      },
+    })
+
+    const $options = wrapper.findAll('option')
+    expect($options.length).toBe(1)
+    expect($options[0].text()).toBe('one')
+
+    wrapper.unmount()
+  })
+
   it('updates v-model when option selected in single mode', async () => {
     const wrapper = mount(BFormSelect, {
       props: {

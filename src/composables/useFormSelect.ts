@@ -31,7 +31,7 @@ const _normalizeOption = (
 
     return {
       value: typeof value === 'undefined' ? key || text : value,
-      text: String(typeof value === 'undefined' ? key : text),
+      text: String(typeof text === 'undefined' ? key : text),
       html,
       disabled: Boolean(disabled),
     }
