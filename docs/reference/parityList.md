@@ -862,6 +862,27 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 This is a <Badge type="warning" text="non-standard" /> component.
 
+### Properties
+
+| Property      | Status                                                                               | Observations |
+| ------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `alt`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `blank`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `blank-color` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `block`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `center`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fluid`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fluid-grow`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `height`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `left`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `right`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `rounded`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `sizes`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `src`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `srcset`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `thumbnail`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `width`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Input Group
 
 ## Jumbotron

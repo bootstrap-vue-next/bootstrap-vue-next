@@ -23,22 +23,22 @@ const makeBlankImgSrc = (width: any, height: any, color: string) => {
 export default defineComponent({
   name: 'BImg',
   props: {
-    src: {type: String},
-    srcset: {type: [String, Array]},
-    sizes: {type: [String, Array]},
-    alt: {type: String, default: null},
-    width: {type: [Number, String]},
-    height: {type: [Number, String]},
-    block: {type: Boolean, default: false},
-    fluid: {type: Boolean, default: false},
-    fluidGrow: {type: Boolean, default: false},
-    rounded: {type: [Boolean, String], default: false},
-    thumbnail: {type: Boolean, default: false},
-    left: {type: Boolean, default: false},
-    right: {type: Boolean, default: false},
-    center: {type: Boolean, default: false},
+    alt: {type: String, default: undefined},
     blank: {type: Boolean, default: false},
     blankColor: {type: String, default: 'transparent'},
+    block: {type: Boolean, default: false},
+    center: {type: Boolean, default: false},
+    fluid: {type: Boolean, default: false},
+    fluidGrow: {type: Boolean, default: false},
+    height: {type: [Number, String], required: false},
+    left: {type: Boolean, default: false},
+    right: {type: Boolean, default: false},
+    rounded: {type: [Boolean, String], default: false},
+    sizes: {type: [String, Array], required: false},
+    src: {type: String, required: false},
+    srcset: {type: [String, Array], required: false},
+    thumbnail: {type: Boolean, default: false},
+    width: {type: [Number, String], required: false},
   },
   setup(props) {
     const attrs = computed(() => {
@@ -96,9 +96,9 @@ export default defineComponent({
       let align = ''
       let {block} = props
       if (props.left) {
-        align = 'float-left'
+        align = 'float-start'
       } else if (props.right) {
-        align = 'float-right'
+        align = 'float-end'
       } else if (props.center) {
         align = 'mx-auto'
         block = true
