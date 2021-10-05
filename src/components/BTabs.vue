@@ -2,6 +2,7 @@
   <component :is="tag" :id="id" class="tabs" :class="classes">
     <div :class="[navWrapperClass, {'card-header': card}]">
       <ul class="nav" :class="[navTabsClasses, navClass]" role="tablist">
+        <slot name="tabs-start" />
         <li
           v-for="({tab, buttonId, contentId, navItemClasses, active, target}, i) in tabs"
           :key="i"
@@ -32,18 +33,22 @@
             </template>
           </a>
         </li>
+        <slot name="tabs-end" />
       </ul>
     </div>
     <div class="tab-content" :class="contentClass">
       <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
         <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
       </template>
+      <div v-if="showEmpty" key="bv-empty-tab" class="tab-pane active" :class="{'card-body': card}">
+        <slot name="empty" />
+      </div>
     </div>
   </component>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, watch} from 'vue'
+import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
 import getID from '../utils/getID'
 import Alignment from '../types/Alignment'
 
@@ -89,6 +94,8 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'click'],
   setup(props, {slots, emit}) {
+    const _tabIndex = ref(props.modelValue)
+
     const tabs = computed(() => {
       let tabs: any[] = []
 
@@ -98,12 +105,13 @@ export default defineComponent({
 
           const buttonId = tab.props['button-id'] || getID('tab')
           const contentId = tab.props.id || getID()
-          const active = props.modelValue > -1 ? idx === props.modelValue : tab.props.active === ''
+          const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
 
           return {
             buttonId,
             contentId,
             active,
+            disabled: tab.props.disabled === '',
             navItemClasses: [
               {
                 active,
@@ -123,9 +131,10 @@ export default defineComponent({
           }
         })
       }
-
       return tabs
     })
+
+    const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
     const classes = computed(() => ({
       'd-flex align-items-start': props.vertical,
@@ -143,8 +152,9 @@ export default defineComponent({
     }))
 
     const tabIndex = computed({
-      get: () => props.modelValue,
+      get: () => _tabIndex.value,
       set: (value: number) => {
+        _tabIndex.value = value
         emit('update:modelValue', value)
       },
     })
@@ -152,37 +162,67 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       (newValue, oldValue) => {
-        const tabs = slots.default ? getTabs(slots) : null
-        const disabledSlotsIdx = tabs
-          ? tabs.reduce((arr: number[], child: any, idx: number) => {
-              if (child.props.disabled === '') arr.push(idx)
-              return arr
-            }, [])
-          : []
+        if (tabs.value.length <= 0) {
+          tabIndex.value = -1
+          return
+        }
 
-        const maxIdx = tabs ? tabs.length - 1 : 0
+        if (newValue < 0 || newValue > tabs.value.length - 1) {
+          tabIndex.value = oldValue
+          return
+        }
 
-        if (disabledSlotsIdx.includes(newValue)) {
-          const forward = newValue > oldValue
-          let nextIdx = null
-          let i = newValue
+        const goForward = newValue > oldValue
+        let index = newValue
+        const maxIdx = tabs.value.length - 1
+        while (index >= 0 && index <= maxIdx && tabs.value[index].disabled) {
+          index += goForward ? 1 : -1
+        }
 
-          while (i >= 0 || i <= maxIdx) {
-            i += forward ? 1 : -1
-            if (!disabledSlotsIdx.includes(i)) {
-              nextIdx = i
-              break
-            }
-          }
-          emit('update:modelValue', nextIdx !== null ? nextIdx : oldValue)
-        } else if (newValue < 0 || newValue > maxIdx) {
-          emit('update:modelValue', oldValue)
+        if (index < 0 || index > maxIdx) {
+          tabIndex.value = oldValue
+        } else {
+          tabIndex.value = index
         }
       }
     )
 
+    watch(
+      () => tabs.value,
+      () => {
+        // find last active tab
+        let activeTabIndex = tabs.value
+          .map((tab: any) => tab.active && !tab.disabled)
+          .lastIndexOf(true)
+
+        if (activeTabIndex < 0) {
+          if (tabIndex.value >= tabs.value.length) {
+            // handle last tab removed, so find the last non-disabled tab
+            activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).lastIndexOf(true)
+          } else {
+            if (tabs.value[tabIndex.value] && !tabs.value[tabIndex.value].disabled)
+              activeTabIndex = tabIndex.value
+          }
+        }
+        // still no active tab found, find first non-disabled tab
+        if (activeTabIndex < 0) {
+          activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).indexOf(true)
+        }
+        // ensure only one tab active at a time
+        tabs.value.forEach((tab: any, idx: number) => (tab.active = idx === activeTabIndex))
+        if (activeTabIndex !== tabIndex.value) tabIndex.value = activeTabIndex
+      }
+    )
+
+    onMounted(() => {
+      // If there are tabs available, make sure a tab is set active
+      if (tabIndex.value < 0 && tabs.value.length > 0 && !tabs.value.some((tab: any) => tab.active))
+        tabIndex.value = 0
+    })
+
     return {
       tabs,
+      showEmpty,
       classes,
       navTabsClasses,
       tabIndex,
