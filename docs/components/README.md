@@ -58,5 +58,8 @@ BootstrapVue 3 components
         <b-list-group-item>
             <RouterLink to="./Spinners.html">Spinner</RouterLink> — The &lt;b-spinner&gt; component can be used to show the loading state in your projects. They're rendered only with basic HTML and CSS as a lightweight Vue functional component.
         </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./Tabs.html">Tabs</RouterLink> — Create a widget of tabbable panes of local content.
+        </b-list-group-item>
     </b-list-group>
 </ClientOnly>
