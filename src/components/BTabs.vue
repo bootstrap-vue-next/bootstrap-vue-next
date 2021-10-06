@@ -1,6 +1,14 @@
 <template>
   <component :is="tag" :id="id" class="tabs" :class="classes">
-    <div :class="[navWrapperClass, {'card-header': card}]">
+    <div v-if="end" class="tab-content" :class="contentClass">
+      <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
+        <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
+      </template>
+      <div v-if="showEmpty" key="bv-empty-tab" class="tab-pane active" :class="{'card-body': card}">
+        <slot name="empty" />
+      </div>
+    </div>
+    <div :class="[navWrapperClass, {'card-header': card, 'ms-auto': vertical && end}]">
       <ul class="nav" :class="[navTabsClasses, navClass]" role="tablist">
         <slot name="tabs-start" />
         <li
@@ -36,7 +44,7 @@
         <slot name="tabs-end" />
       </ul>
     </div>
-    <div class="tab-content" :class="contentClass">
+    <div v-if="!end" class="tab-content" :class="contentClass">
       <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
         <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
       </template>
@@ -76,7 +84,7 @@ export default defineComponent({
     align: {type: String as PropType<Alignment>, default: null},
     card: {type: Boolean, default: false},
     contentClass: {type: [Array, Object, String], default: null},
-    // end: { type: Boolean, default: false },
+    end: {type: Boolean, default: false},
     fill: {type: Boolean, default: false},
     id: {type: String, default: null},
     justified: {type: Boolean, default: false},
@@ -216,8 +224,14 @@ export default defineComponent({
 
     onMounted(() => {
       // If there are tabs available, make sure a tab is set active
-      if (tabIndex.value < 0 && tabs.value.length > 0 && !tabs.value.some((tab: any) => tab.active))
-        tabIndex.value = 0
+      if (
+        tabIndex.value < 0 &&
+        tabs.value.length > 0 &&
+        !tabs.value.some((tab: any) => tab.active)
+      ) {
+        const firstTab = tabs.value.map((t) => !t.disabled).indexOf(true)
+        tabIndex.value = firstTab >= 0 ? firstTab : -1
+      }
     })
 
     return {
