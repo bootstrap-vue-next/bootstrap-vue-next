@@ -52,6 +52,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Progress.md',
             '/components/Pagination.md',
             '/components/Spinners.md',
+            '/components/Tabs.md',
           ],
         },
       ],

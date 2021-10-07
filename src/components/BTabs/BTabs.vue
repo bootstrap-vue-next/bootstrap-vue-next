@@ -56,9 +56,25 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
-import getID from '../utils/getID'
-import Alignment from '../types/Alignment'
+import {
+  computed,
+  defineComponent,
+  InjectionKey,
+  onMounted,
+  PropType,
+  provide,
+  ref,
+  watch,
+} from 'vue'
+import getID from '../../utils/getID'
+import Alignment from '../../types/Alignment'
+
+export interface ParentData {
+  lazy: boolean
+  card: boolean
+}
+
+export const injectionKey: InjectionKey<ParentData> = Symbol()
 
 const getTabs = (slots: any): any[] => {
   if (!slots || !slots.default) return []
@@ -88,7 +104,7 @@ export default defineComponent({
     fill: {type: Boolean, default: false},
     id: {type: String, default: null},
     justified: {type: Boolean, default: false},
-    // lazy: { type: Boolean, default: false },
+    lazy: {type: Boolean, default: false},
     navClass: {type: [Array, Object, String], default: null},
     navWrapperClass: {type: [Array, Object, String], default: null},
     noFade: {type: Boolean, default: false},
@@ -232,6 +248,11 @@ export default defineComponent({
         const firstTab = tabs.value.map((t) => !t.disabled).indexOf(true)
         tabIndex.value = firstTab >= 0 ? firstTab : -1
       }
+    })
+
+    provide(injectionKey, {
+      lazy: props.lazy,
+      card: props.card,
     })
 
     return {

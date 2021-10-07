@@ -10,7 +10,7 @@ body {
 }
 
 a:not(.action-button) {
-  color: var(--c-text-accent) !important;
+  color: var(--c-text-accent);
 }
 
 .nav-link:not(.sidebar-item):not(.action-button) {
