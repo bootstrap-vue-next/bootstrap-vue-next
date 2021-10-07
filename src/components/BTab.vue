@@ -7,12 +7,13 @@
     role="tabpanel"
     aria-labelledby="profile-tab"
   >
-    <slot />
+    <slot v-if="showSlot" />
   </component>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue'
+import {computed, defineComponent, inject} from 'vue'
+import {injectionKey, ParentData} from './BTabs.vue'
 
 export default defineComponent({
   name: 'BTab',
@@ -21,7 +22,7 @@ export default defineComponent({
     buttonId: {type: String, default: null},
     disabled: {type: Boolean, default: false},
     id: {type: String},
-    // lazy: { type: Boolean, default: false },
+    lazy: {type: Boolean, default: false},
     noBody: {type: [Boolean, String], default: false},
     tag: {type: String, default: 'div'},
     title: {type: String},
@@ -30,14 +31,23 @@ export default defineComponent({
     titleLinkClass: {type: [Array, Object, String], default: null},
   },
   setup(props) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const parentData: ParentData = inject(injectionKey)!
+
+    const computedLazy = computed(() => parentData?.lazy || props.lazy)
+    const computedActive = computed(() => props.active && !props.disabled)
+    const showSlot = computed(() => computedActive.value || !computedLazy.value)
     const classes = computed(() => ({
       'active': props.active,
       'show': props.active,
-      'card-body': props.noBody === false,
+      'card-body': parentData.card && props.noBody === false,
     }))
 
     return {
       classes,
+      computedLazy,
+      computedActive,
+      showSlot,
     }
   },
 })
