@@ -66,8 +66,8 @@ import {
   ref,
   watch,
 } from 'vue'
-import getID from '../utils/getID'
-import Alignment from '../types/Alignment'
+import getID from '../../utils/getID'
+import Alignment from '../../types/Alignment'
 
 export interface ParentData {
   lazy: boolean
