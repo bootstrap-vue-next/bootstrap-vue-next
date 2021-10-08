@@ -1105,7 +1105,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 | Event               | Status                                                                               | Observations |
 | ------------------- | ------------------------------------------------------------------------------------ | ------------ |
-| `activate-tab`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `activate-tab`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `changed`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | `update:modelValue` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |

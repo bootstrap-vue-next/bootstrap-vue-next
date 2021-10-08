@@ -12,8 +12,8 @@
       <ul class="nav" :class="[navTabsClasses, navClass]" role="tablist">
         <slot name="tabs-start" />
         <li
-          v-for="({tab, buttonId, contentId, navItemClasses, active, target}, i) in tabs"
-          :key="i"
+          v-for="({tab, buttonId, contentId, navItemClasses, active, target}, idx) in tabs"
+          :key="idx"
           class="nav-item"
           :class="tab.props['title-item-class']"
         >
@@ -28,12 +28,7 @@
             :aria-controls="contentId"
             :aria-selected="active"
             v-bind="tab.props['title-link-attributes']"
-            @click.stop="
-              (e) => {
-                $emit('click', e)
-                tabIndex = i
-              }
-            "
+            @click.stop="(e) => handleClick(e, idx)"
           >
             <component :is="tab.children.title" v-if="tab.children && tab.children.title" />
             <template v-else>
@@ -68,6 +63,8 @@ import {
 } from 'vue'
 import getID from '../../utils/getID'
 import Alignment from '../../types/Alignment'
+import {BvEvent} from '../../utils/bvEvent'
+import {mathMax} from '@/utils/math'
 
 export interface ParentData {
   lazy: boolean
@@ -116,9 +113,23 @@ export default defineComponent({
     vertical: {type: Boolean, default: false},
     modelValue: {type: Number, default: -1},
   },
-  emits: ['update:modelValue', 'click'],
+  emits: ['update:modelValue', 'activate-tab', 'click'],
   setup(props, {slots, emit}) {
     const _tabIndex = ref(props.modelValue)
+    const _currentTabButton = ref('')
+
+    const tabIndex = computed({
+      get: () => _tabIndex.value,
+      set: (value: number) => {
+        _tabIndex.value = value
+        if (tabs.value.length > 0 && value >= 0 && value < tabs.value.length) {
+          _currentTabButton.value = tabs.value[value].buttonId
+        } else {
+          _currentTabButton.value = ''
+        }
+        emit('update:modelValue', value)
+      },
+    })
 
     const tabs = computed(() => {
       let tabs: any[] = []
@@ -175,24 +186,45 @@ export default defineComponent({
       'small': props.small,
     }))
 
-    const tabIndex = computed({
-      get: () => _tabIndex.value,
-      set: (value: number) => {
-        _tabIndex.value = value
-        emit('update:modelValue', value)
-      },
-    })
+    const activateTab = (index: number): boolean => {
+      let result = false
+      if (index !== undefined) {
+        if (
+          index > -1 &&
+          index < tabs.value.length &&
+          !tabs.value[index].disabled &&
+          (tabIndex.value < 0 || tabs.value[index].buttonId !== _currentTabButton.value)
+        ) {
+          const tabEvent = new BvEvent('activate-tab', {cancelable: true, vueTarget: this})
+          emit('activate-tab', index, tabIndex.value, tabEvent)
+          if (!tabEvent.defaultPrevented) {
+            tabIndex.value = index
+            result = true
+          }
+        }
+      }
+      if (!result && props.modelValue !== tabIndex.value) {
+        emit('update:modelValue', tabIndex.value)
+      }
+      return result
+    }
+
+    const handleClick = (event: MouseEvent, index: number) => {
+      activateTab(index)
+      emit('click', event)
+    }
+
+    activateTab(_tabIndex.value)
 
     watch(
       () => props.modelValue,
       (newValue, oldValue) => {
+        if (newValue === oldValue) return
+        newValue = mathMax(newValue, -1)
+        oldValue = mathMax(oldValue, -1)
+
         if (tabs.value.length <= 0) {
           tabIndex.value = -1
-          return
-        }
-
-        if (newValue < 0 || newValue > tabs.value.length - 1) {
-          tabIndex.value = oldValue
           return
         }
 
@@ -203,11 +235,15 @@ export default defineComponent({
           index += goForward ? 1 : -1
         }
 
-        if (index < 0 || index > maxIdx) {
-          tabIndex.value = oldValue
-        } else {
-          tabIndex.value = index
+        if (index < 0) {
+          activateTab(0)
+          return
         }
+        if (index >= tabs.value.length) {
+          activateTab(tabs.value.length - 1)
+          return
+        }
+        activateTab(index)
       }
     )
 
@@ -234,7 +270,8 @@ export default defineComponent({
         }
         // ensure only one tab active at a time
         tabs.value.forEach((tab: any, idx: number) => (tab.active = idx === activeTabIndex))
-        if (activeTabIndex !== tabIndex.value) tabIndex.value = activeTabIndex
+
+        activateTab(activeTabIndex)
       }
     )
 
@@ -246,7 +283,7 @@ export default defineComponent({
         !tabs.value.some((tab: any) => tab.active)
       ) {
         const firstTab = tabs.value.map((t) => !t.disabled).indexOf(true)
-        tabIndex.value = firstTab >= 0 ? firstTab : -1
+        activateTab(firstTab >= 0 ? firstTab : -1)
       }
     })
 
@@ -261,6 +298,7 @@ export default defineComponent({
       classes,
       navTabsClasses,
       tabIndex,
+      handleClick,
     }
   },
 })
