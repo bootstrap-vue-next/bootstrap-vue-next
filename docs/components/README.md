@@ -50,6 +50,9 @@ BootstrapVue 3 components
             <RouterLink to="./ListGroup.html">List Group</RouterLink> — A flexible and powerful component for displaying a series of content. List Group items can be modified to support just about any content within.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Overlay.html">Overlay</RouterLink> — Visually obscure a particular element or component and its content.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Pagination.html">Pagination</RouterLink> — Quick first, previous, next, last, and page buttons for pagination control of another component.
         </b-list-group-item>
         <b-list-group-item>
