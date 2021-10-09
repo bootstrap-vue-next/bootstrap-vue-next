@@ -57,6 +57,7 @@ import BNav from './BNav.vue'
 import BNavItem from './BNavItem.vue'
 // import BNavItemDropdown from './BNavItemDropdown.vue';
 import BOffcanvas from './BOffcanvas.vue'
+import BOverlay from './BOverlay/BOverlay.vue'
 import BPagination from './BPagination/BPagination.vue'
 import BPopover from './BPopover.vue'
 import BProgress from './BProgress.vue'
@@ -123,6 +124,7 @@ export default {
   BNavItem,
   // BNavItemDropdown,
   BOffcanvas,
+  BOverlay,
   BPagination,
   BPopover,
   BProgress,
