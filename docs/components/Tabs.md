@@ -708,6 +708,23 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
     </b-card>
   </div>
 </template>
+
+<script lang="ts" setup>
+  import {ref, computed} from 'vue'
+
+  const tabs = ref([])
+  const tabCounter = ref(0)
+
+  const closeTab = (x: number) => {
+    for (let i = 0; i < tabs.value.length; i++) {
+      if (tabs.value[i] === x) {
+        tabs.value.splice(i, 1)
+      }
+    }
+  }
+
+  const newTab = () => tabs.value.push(tabCounter.value++)
+</script>
 ```
 
 ## Component reference
@@ -756,9 +773,10 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 
 #### Events
 
-| Name                | Argument                                              | Description                                  |
-| ------------------- | ----------------------------------------------------- | -------------------------------------------- |
-| `update:modelValue` | `tabIndex` - Current active tab index (0-based index) | Emitted when the modelValue value is changed |
+| Name                | Argument                                                                                                                                                                                                                           | Description                                              |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `activate-tab`      | `newTabIndex` - Tab being activated (0-based index)<br/>`prevTabIndex` - Tab that is currently active (0-based index). Will be -1 if no current active tab<br/>`bvEvent` - BvEvent object. Call bvEvent.preventDefault() to cancel | Emitted just before a tab is shown/activated. Cancelable |
+| `update:modelValue` | `tabIndex` - Current active tab index (0-based index)                                                                                                                                                                              | Emitted when the modelValue value is changed             |
 
 ### `<b-tabs>`
 
