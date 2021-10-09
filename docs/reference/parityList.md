@@ -1050,21 +1050,21 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `no-body`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `tag`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `title`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| `title-item-class` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| `title-link-class` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `title-item-class` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `title-link-class` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ### Slots
 
 | Property  | Status                                                                               | Observations |
 | --------- | ------------------------------------------------------------------------------------ | ------------ |
 | `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| `title`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `title`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ### Events
 
-| Event   | Status                                                                             | Observations |
-| ------- | ---------------------------------------------------------------------------------- | ------------ |
-| `click` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| Event   | Status                                                                               | Observations |
+| ------- | ------------------------------------------------------------------------------------ | ------------ |
+| `click` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ## Tabs
 

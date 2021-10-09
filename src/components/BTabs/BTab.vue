@@ -27,7 +27,7 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
     title: {type: String},
     titleItemClass: {type: [Array, Object, String], default: null},
-    titleLinkAttribute: {type: Object, default: null},
+    titleLinkAttributes: {type: Object, default: null},
     titleLinkClass: {type: [Array, Object, String], default: null},
   },
   setup(props) {
