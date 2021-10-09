@@ -778,7 +778,7 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 | `activate-tab`      | `newTabIndex` - Tab being activated (0-based index)<br/>`prevTabIndex` - Tab that is currently active (0-based index). Will be -1 if no current active tab<br/>`bvEvent` - BvEvent object. Call bvEvent.preventDefault() to cancel | Emitted just before a tab is shown/activated. Cancelable |
 | `update:modelValue` | `tabIndex` - Current active tab index (0-based index)                                                                                                                                                                              | Emitted when the modelValue value is changed             |
 
-### `<b-tabs>`
+### `<b-tab>`
 
 #### Properties
 
@@ -801,6 +801,13 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 | Name      | Description                         |
 | --------- | ----------------------------------- |
 | `default` | Content to place in the tab element |
+| `title`   | Slot for custom tab title           |
+
+#### Events
+
+| Name    | Argument                        | Description                   |
+| ------- | ------------------------------- | ----------------------------- |
+| `click` | `event` - Original event object | Emitted when a tab is clicked |
 
 <!-- ------------------------------------------------------------------ -->
 <script lang="ts" setup>

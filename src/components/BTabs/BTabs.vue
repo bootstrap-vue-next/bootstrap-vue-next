@@ -65,6 +65,7 @@ import getID from '../../utils/getID'
 import Alignment from '../../types/Alignment'
 import {BvEvent} from '../../utils/bvEvent'
 import {mathMax} from '@/utils/math'
+import {isFunction} from '@/utils/inspect'
 
 export interface ParentData {
   lazy: boolean
@@ -141,6 +142,8 @@ export default defineComponent({
           const buttonId = tab.props['button-id'] || getID('tab')
           const contentId = tab.props.id || getID()
           const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
+          const titleItemClass = tab.props['title-item-class']
+          const titleLinkAttributes = tab.props['title-link-attributes']
 
           return {
             buttonId,
@@ -162,6 +165,10 @@ export default defineComponent({
               active && props.activeTabClass ? props.activeTabClass : null,
             ],
             target: `#${contentId}`,
+            title: tab.props.title,
+            titleItemClass,
+            titleLinkAttributes,
+            onClick: tab.props.onClick,
             tab,
           }
         })
@@ -211,7 +218,15 @@ export default defineComponent({
 
     const handleClick = (event: MouseEvent, index: number) => {
       activateTab(index)
-      emit('click', event)
+      if (
+        index >= 0 &&
+        !tabs.value[index].disabled &&
+        tabs.value[index]?.onClick &&
+        isFunction(tabs.value[index].onClick)
+      ) {
+        console.log('isfunction', isFunction(tabs.value[index].onClick))
+        tabs.value[index].onClick(event)
+      }
     }
 
     activateTab(_tabIndex.value)
