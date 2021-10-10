@@ -2,7 +2,7 @@
 import TransitionMode from '@/types/TransitionMode'
 import {isPlainObject} from '@/utils/inspect'
 import {normalizeSlot} from '@/utils/normalize-slot'
-import {defineComponent, h, PropType, ref} from 'vue'
+import {defineComponent, h, PropType, ref, Transition} from 'vue'
 
 const NO_FADE_PROPS = {
   name: '',
@@ -49,7 +49,7 @@ export default defineComponent({
       // We always need `css` true
       css: true,
     }
-    return () => h('transition', {...transProps.value}, normalizeSlot('default', {}, slots))
+    return () => h(Transition, {...transProps.value}, normalizeSlot('default', {}, slots))
   },
 })
 </script>
