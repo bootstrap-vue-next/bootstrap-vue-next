@@ -66,6 +66,7 @@ import BSpinner from './BSpinner.vue'
 import BTable from './BTable/BTable.vue'
 import BTabs from './BTabs/BTabs.vue'
 import BTab from './BTabs/BTab.vue'
+import BTransition from './BTransition/BTransition.vue'
 
 export default {
   BAccordion,
@@ -132,6 +133,7 @@ export default {
   BTable,
   BTabs,
   BTab,
+  BTransition,
   BFormCheckbox,
   BFormCheckboxGroup,
   BFormRadio,
