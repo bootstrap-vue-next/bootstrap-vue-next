@@ -686,6 +686,8 @@ interactive elements in the obscured area to prevent reachability via keyboard n
 
 Please refer to the [Accessibility section](#accessibility) for additional details and concerns.
 
+### Loading button
+
 Easily create a loading button:
 
 <ClientOnly>
@@ -765,78 +767,348 @@ Easily create a loading button:
 </script>
 ```
 
+### Form confirmation prompt and upload status
+
+This example is a bit more complex, but shows the use of `no-wrap`, and using the `overlay` slot to
+present the user with a prompt dialog, and once confirmed it shows a uploading status indicator.
+This example also demonstrates additional accessibility markup.
+
+<ClientOnly>
+  <div>
+    <b-form class="position-relative p-3" @submit.prevent="onFormSubmit">
+      <div class="row">
+        <label class="col-lg-2" label-for="form-name">Name</label>
+        <b-form-input id="form-name" class="col" :disabled="formbusy"></b-form-input>
+      </div>
+      <div class="row mt-2">
+        <label class="col-lg-2" label-for="form-mail">Email</label>
+        <b-form-input id="form-email" class="col" type="email" :disabled="formbusy"></b-form-input>
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+         <b-button ref="formsubmit" type="submit" :disabled="formbusy">Submit</b-button>
+      </div>
+      <b-overlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
+        <template #overlay>
+          <div v-if="processing" class="text-center p-4 bg-primary text-light rounded">
+            <b-icon icon="cloud-upload" font-scale="4"></b-icon>
+            <div class="mb-3">Processing...</div>
+            <b-progress
+              min="1"
+              max="20"
+              :value="processingcounter"
+              variant="success"
+              height="3px"
+              class="mx-n4 rounded-0"
+            ></b-progress>
+          </div>
+          <div
+            v-else
+            ref="formdialog"
+            tabindex="-1"
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="form-confirm-label"
+            class="text-center p-3"
+          >
+            <p><strong id="form-confirm-label">Are you sure?</strong></p>
+            <div class="d-flex"  style="column-gap: 5%;">
+              <b-button variant="outline-danger" class="mr-3" @click="onFormCancel">
+                Cancel
+              </b-button>
+              <b-button variant="outline-success" @click="onFormOK">OK</b-button>
+            </div>
+          </div>
+        </template>
+      </b-overlay>
+    </b-form>
+  </div>
+</ClientOnly>
+
+```html
+<template>
+  <div>
+    <b-form class="position-relative p-3" @submit.prevent="onFormSubmit">
+      <div class="row">
+        <label class="col-lg-2" label-for="form-name">Name</label>
+        <b-form-input id="form-name" class="col" :disabled="formbusy"></b-form-input>
+      </div>
+      <div class="row mt-2">
+        <label class="col-lg-2" label-for="form-mail">Email</label>
+        <b-form-input id="form-email" class="col" type="email" :disabled="formbusy"></b-form-input>
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+        <b-button ref="formsubmit" type="submit" :disabled="formbusy">Submit</b-button>
+      </div>
+      <b-overlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
+        <template #overlay>
+          <div v-if="processing" class="text-center p-4 bg-primary text-light rounded">
+            <b-icon icon="cloud-upload" font-scale="4"></b-icon>
+            <div class="mb-3">Processing...</div>
+            <b-progress
+              min="1"
+              max="20"
+              :value="processingcounter"
+              variant="success"
+              height="3px"
+              class="mx-n4 rounded-0"
+            ></b-progress>
+          </div>
+          <div
+            v-else
+            ref="formdialog"
+            tabindex="-1"
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="form-confirm-label"
+            class="text-center p-3"
+          >
+            <p><strong id="form-confirm-label">Are you sure?</strong></p>
+            <div class="d-flex" style="column-gap: 5%;">
+              <b-button variant="outline-danger" class="mr-3" @click="onFormCancel">
+                Cancel
+              </b-button>
+              <b-button variant="outline-success" @click="onFormOK">OK</b-button>
+            </div>
+          </div>
+        </template>
+      </b-overlay>
+    </b-form>
+  </div>
+</template>
+
 <script lang="ts" setup>
-  import {ref} from 'vue';
+  import {ref} from 'vue'
 
-  const showOverlayEx1 = ref(false)
-  const showRoundedEx = ref(false)
+  const formbusy = ref(false)
+  const processing = ref(false)
+  const processingcounter = ref(1)
+  const formdialog = ref(null)
+  const formsubmit = ref(null)
+  let processingInterval = null
 
-  const variant = ref('light')
-  const opacity = ref(0.85)
-  const blur = ref('2px')
-  const variants = [
-          'transparent',
-          'white',
-          'light',
-          'dark',
-          'primary',
-          'secondary',
-          'success',
-          'danger',
-          'warning',
-          'info',
-        ]
-  const blurs = [
-          { text: 'None', value: '' },
-          '1px',
-          '2px',
-          '5px',
-          '0.5em',
-          '1rem'
-        ]
-
-  const showCustomEx = ref(false)
-  const showRef = ref(null)
-  const cancelRef = ref(null)
-
-  const onShown = () => {
-      cancelRef.focus()
-  }
-  const onHidden = () => {
-      showRef.focus()
-  }
-
-  const showNoWrapEx = ref(false)
-  const showNoWrapEx2 = ref(false)
-
-  const loadingBuzy = ref(false)
-  const buzyButton = ref(null)
-  let timeout = null;
-
-  const clearTimer = () => {
-    if (timeout) {
-        clearTimeout(timeout)
-        timeout = null
+  const clearProcessingInterval = () => {
+    if (processingInterval) {
+      clearInterval(processingInterval)
+      processingInterval = null
     }
-  }
-  const setTimer = (callback) => {
-        clearTimer()
-        timeout = setTimeout(() => {
-          clearTimer()
-          callback()
-        }, 5000)
-      }
-  const setBuzyClick = () => {
-    loadingBuzy.value = true
-    // Simulate an async request
-    setTimer(() => {
-        loadingBuzy.value = false
-    })
   }
 
   const onBuzyHidden = () => {
-    // Return focus to the button once hidden
-    buzyButton.focus()
+    // Focus the dialog prompt
+    formdialog.focus()
   }
 
+  const onFormOverlayHidden = () => {
+    // In this case, we return focus to the submit button
+    // You may need to alter this based on your application requirements
+    formsubmit.focus()
+  }
+
+  const onFormSubmit = () => {
+    processing.value = false
+    formbusy.value = true
+  }
+
+  const onFormCancel = () => {
+    formbusy.value = false
+  }
+
+  const onFormOK = () => {
+    processingcounter.value = 1
+    processing.value = true
+    clearProcessingInterval()
+    processingInterval = setInterval(() => {
+      if (processingcounter.value < 20) {
+        processingcounter.value++
+      } else {
+        clearProcessingInterval()
+        nextTick(() => {
+          formbusy.value = false
+          processing.value = false
+        })
+      }
+    }, 350)
+  }
+</script>
+```
+
+### Using in `<b-modal>`
+
+The modal body has `position: relative;` set, so when using `<b-overlay no-wrap ...>` in the modal
+body only the modal body will be obscured. If you wish to obscure the entire modal (including the
+header and footer), you will need to set the `<b-modal>` prop `body-class` to `position-static`, and
+also set the `rounded` prop on `<b-overlay>`.
+
+## Component reference
+
+### `<b-overlay>`
+
+#### Properties
+
+| Property                                                   | Type                  | Default  | Description                                                                                                                                               |
+| ---------------------------------------------------------- | --------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bg-color`                                                 | `String`              |          | CSS color to use as the opaque overlay backdrop color. If set, overrides the `variant` prop                                                               |
+| `blur`                                                     | `String`              | `2px`    | Value for the CSS blur backdrop-filter. Be sure to include the CSS units. Not supported in IE 11. Set to null or an empty string to disable blurring      |
+| `fixed`                                                    | `Boolean`             | `false`  | When prop `no-wrap` is set, will use fixed positioning instead of absolute positioning. Handy if you want to obscure the entire application page          |
+| `no-center`                                                | `Boolean`             | `false`  | When set, disables the vertical and horizontal centering of the overlay content                                                                           |
+| `no-fade`                                                  | `Boolean`             | `false`  | Disables the fade transition of the overlay                                                                                                               |
+| `no-wrap`                                                  | `Boolean`             | `false`  | Disabled generating the wrapper element, and ignored the default slot. Requires that `<b-overlay>` be placed in an element with position relative set     |
+| `opacity`                                                  | `Number` or `String`  | `0.85`   | Opacity of the overlay backdrop. Valid range is `0` to `1`                                                                                                |
+| `overlay-tag`                                              | `String`              | `div`    | Element tag to use as for the overlay element                                                                                                             |
+| `rounded`                                                  | `Boolean` or `String` | `false`  | Apply rounding to the overlay to match your content routing. Valid values are `true`, `'sm'`, `lg`, `circle`, `pill`, `top`, `right`, `bottom`, or `left` |
+| `show`                                                     | `Boolean`             | `false`  | When set, shows the overlay                                                                                                                               |
+| `spinner-small`                                            | `Boolean`             | `false`  | When set, renders the default spinner in a smaller size                                                                                                   |
+| `spinner-type`                                             | `String`              | `border` | Type of the default spinner to show. Current supported types are 'border' and 'grow'                                                                      |
+| <span style="white-space:nowrap;">`spinner-variant`</span> | `String`              |          | Applies one of the Bootstrap theme color variants to the default spinner. Default is to use the current font color                                        |
+| `variant`                                                  | `String`              | `light`  | Background theme color variant to use for the overlay backdrop                                                                                            |
+| `z-index`                                                  | `String`              | `10`     | Element tag to use for the overall wrapper element. Has no effect if prop `no-wrap` is set                                                                |
+| `opacity`                                                  | `Number` or `String`  | `0.85`   | Opacity of the overlay backdrop. Valid range is `0` to `1`                                                                                                |
+
+#### slots
+
+| Property  | Scoped                                                                                             | Description                                                                           |
+| --------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `default` | No                                                                                                 | The content to be overlayed. The default slot is ignored if the prop `no-wrap` is set |
+| `overlay` | <button class="btn btn-outline-info" @click="showOverlaySlotScope">{{ showHideSlotText }}</button> | Custom content to replace the default overlay spinner                                 |
+
+##### overlay slot scope
+
+| Property         | Type      | Description                         |
+| ---------------- | --------- | ----------------------------------- |
+| `spinnerSmall`   | `Boolean` | Value of the `spinner-small` prop   |
+| `spinnerType`    | `String`  | Value of the `spinner-type` prop    |
+| `spinnerVariant` | `String`  | Value of the `spinner-variant` prop |
+
+#### Events
+
+| Name         | Argument                            | Description                              |
+| ------------ | ----------------------------------- | ---------------------------------------- |
+| `click`      | `event` - Native click event object | Emitted when overlay is clicked          |
+| ~~`hidden`~~ |                                     | Emitted when the overlay has been hidden |
+| ~~`shown`~~  |                                     | Emitted when the overlay has been shown  |
+
+<script lang="ts" setup>
+  import {ref, nextTick} from 'vue';
+
+const showOverlayEx1 = ref(false)
+const showRoundedEx = ref(false)
+
+const variant = ref('light')
+const opacity = ref(0.85)
+const blur = ref('2px')
+const variants = [
+'transparent',
+'white',
+'light',
+'dark',
+'primary',
+'secondary',
+'success',
+'danger',
+'warning',
+'info',
+]
+const blurs = [
+{ text: 'None', value: '' },
+'1px',
+'2px',
+'5px',
+'0.5em',
+'1rem'
+]
+
+const showCustomEx = ref(false)
+const showRef = ref(null)
+const cancelRef = ref(null)
+
+const onShown = () => {
+cancelRef.focus()
+}
+const onHidden = () => {
+showRef.focus()
+}
+
+const showNoWrapEx = ref(false)
+const showNoWrapEx2 = ref(false)
+
+const loadingBuzy = ref(false)
+const buzyButton = ref(null)
+let timeout = null;
+
+const clearTimer = () => {
+if (timeout) {
+clearTimeout(timeout)
+timeout = null
+}
+}
+const setTimer = (callback) => {
+clearTimer()
+timeout = setTimeout(() => {
+clearTimer()
+callback()
+}, 5000)
+}
+const setBuzyClick = () => {
+loadingBuzy.value = true
+// Simulate an async request
+setTimer(() => {
+loadingBuzy.value = false
+})
+}
+
+const onFormOverlayShown = () => {
+// Return focus to the button once hidden
+buzyButton.focus()
+}
+
+const formbusy = ref(false)
+const processing = ref(false)
+const processingcounter = ref(1)
+const formdialog = ref(null)
+const formsubmit = ref(null)
+let processingInterval = null;
+
+const clearProcessingInterval = () => {
+if (processingInterval) {
+clearInterval(processingInterval)
+processingInterval = null
+}
+}
+
+const onBuzyHidden = () => {
+// Focus the dialog prompt
+formdialog.focus()
+}
+
+const onFormOverlayHidden = () => {
+// In this case, we return focus to the submit button
+// You may need to alter this based on your application requirements
+formsubmit.focus()
+}
+
+const onFormSubmit = () => {
+processing.value = false
+formbusy.value = true
+}
+
+const onFormCancel = () => {
+formbusy.value = false
+}
+
+const onFormOK = () => {
+processingcounter.value = 1
+processing.value = true
+clearProcessingInterval()
+processingInterval = setInterval(() => {
+if(processingcounter.value < 20) {
+processingcounter.value++
+} else {
+clearProcessingInterval()
+nextTick(() => {
+formbusy.value = false
+processing.value = false
+})
+}
+}, 350)
+}
 </script>

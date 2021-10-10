@@ -961,6 +961,42 @@ More information [here](https://getbootstrap.com/docs/5.0/utilities/flex/#media-
 
 This is a <Badge type="warning" text="non-standard" /> component.
 
+### Properties
+
+| Property          | Status                                                                               | Observations |
+| ----------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `bg-color`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `blur`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fixed`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-center`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-fade`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `no-wrap`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `opacity`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `overlay-tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `rounded`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `show`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `spinner-small`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `spinner-type`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `spinner-variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `variant`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `wrapper-tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `z-index`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `overlay` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| `click`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `hidden` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `shown`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+
 ## Pagination
 
 ### Properties
