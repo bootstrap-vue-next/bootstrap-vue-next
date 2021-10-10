@@ -49,6 +49,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/FormSelect.md',
             '/components/Image.md',
             '/components/ListGroup.md',
+            '/components/Overlay.md',
             '/components/Progress.md',
             '/components/Pagination.md',
             '/components/Spinners.md',

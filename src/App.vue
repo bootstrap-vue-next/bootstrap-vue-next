@@ -1133,6 +1133,20 @@
     <b-icon icon="exclamation-circle-fill" size="4x" class="m-2"></b-icon>
     <b-icon icon="exclamation-circle-fill" size="5x" class="m-2"></b-icon>
 
+    <h5>Overlay</h5>
+    <div>
+      <b-overlay :show="showOverlay" rounded="sm">
+        <b-card title="Card with overlay" :aria-hidden="showOverlay ? 'true' : null">
+          <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
+          <b-card-text>Click the button to toggle the overlay:</b-card-text>
+          <b-button :disabled="showOverlay" variant="primary" @click="showOverlay = true">
+            Show overlay
+          </b-button>
+        </b-card>
+      </b-overlay>
+      <b-button class="mt-3" @click="showOverlay = !showOverlay">Toggle overlay</b-button>
+    </div>
+    <p></p>
     <!-- <b-button v-b-toggle:my-collapse>Collapse</b-button>
     <b-button @click="collapse = !collapse">Toggle collapse v-model</b-button>
     <b-collapse id="my-collapse" v-model="collapse">
@@ -1495,6 +1509,9 @@ export default defineComponent({
     const paginationPerPage = ref(2)
     const paginationRows = ref(40)
     const paginationDangerClasses = ref(['border-danger', 'border-5', 'border'])
+
+    const showOverlay = ref(false)
+
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1552,6 +1569,7 @@ export default defineComponent({
       radioSelected,
       radioAvailableCars,
       radioSelectedCars,
+      showOverlay,
     }
   },
   data() {
