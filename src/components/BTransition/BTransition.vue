@@ -1,7 +1,6 @@
 <script lang="ts">
 import TransitionMode from '@/types/TransitionMode'
 import {isPlainObject} from '@/utils/inspect'
-import {normalizeSlot} from '@/utils/normalize-slot'
 import {defineComponent, h, PropType, ref, Transition} from 'vue'
 
 const NO_FADE_PROPS = {
@@ -28,28 +27,39 @@ export default defineComponent({
     noFade: {type: Boolean, default: false},
     transProps: {type: Object, required: false},
   },
-  setup(props, {slots}) {
-    const transProps = ref(props.transProps)
-    if (!isPlainObject(transProps)) {
-      transProps.value = props.noFade ? NO_FADE_PROPS : FADE_PROPS
+  setup(props) {
+    const transProperties = ref(props.transProps)
+    if (!isPlainObject(transProperties)) {
+      transProperties.value = props.noFade ? NO_FADE_PROPS : FADE_PROPS
       if (props.appear) {
         // Default the appear classes to equal the enter classes
-        transProps.value = {
-          ...transProps.value,
+        transProperties.value = {
+          ...transProperties.value,
           appear: true,
-          appearClass: transProps.value.enterClass,
-          appearActiveClass: transProps.value.enterActiveClass,
-          appearToClass: transProps.value.enterToClass,
+          appearClass: transProperties.value.enterClass,
+          appearActiveClass: transProperties.value.enterActiveClass,
+          appearToClass: transProperties.value.enterToClass,
         }
       }
     }
-    transProps.value = {
+    transProperties.value = {
       mode: props.mode,
-      ...transProps.value,
+      ...transProperties.value,
       // We always need `css` true
       css: true,
     }
-    return () => h(Transition, {...transProps.value}, normalizeSlot('default', {}, slots))
+    return {
+      transProperties,
+    }
+  },
+  render() {
+    return h(
+      Transition,
+      {...this.transProperties},
+      {
+        default: () => (this.$slots.default ? this.$slots.default() : []),
+      }
+    )
   },
 })
 </script>

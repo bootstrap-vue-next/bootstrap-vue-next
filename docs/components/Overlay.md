@@ -352,7 +352,7 @@ Place custom content in the overlay (replacing the default spinner) via the opti
       <b-card title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
         <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
         <b-card-text>Click the button to toggle the overlay:</b-card-text>
-        <b-button ref="showRef" :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
+        <b-button :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
           Show overlay
         </b-button>
       </b-card>
@@ -361,7 +361,6 @@ Place custom content in the overlay (replacing the default spinner) via the opti
           <b-icon icon="stopwatch" font-scale="3" size="lg" animation="cylon"></b-icon>
           <p id="cancel-label">Please wait...</p>
           <b-button
-            ref="cancelRef"
             variant="outline-danger"
             size="sm"
             aria-describedby="cancel-label"
@@ -382,12 +381,7 @@ Place custom content in the overlay (replacing the default spinner) via the opti
       <b-card title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
         <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
         <b-card-text>Click the button to toggle the overlay:</b-card-text>
-        <b-button
-          ref="showRef"
-          :disabled="showCustomEx"
-          variant="primary"
-          @click="showCustomEx = true"
-        >
+        <b-button :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
           Show overlay
         </b-button>
       </b-card>
@@ -396,7 +390,6 @@ Place custom content in the overlay (replacing the default spinner) via the opti
           <b-icon icon="stopwatch" font-scale="3" size="lg" animation="cylon"></b-icon>
           <p id="cancel-label">Please wait...</p>
           <b-button
-            ref="cancelRef"
             variant="outline-danger"
             size="sm"
             aria-describedby="cancel-label"
@@ -414,14 +407,12 @@ Place custom content in the overlay (replacing the default spinner) via the opti
   import {ref} from 'vue'
 
   const showCustomEx = ref(false)
-  const showRef = ref(null)
-  const cancelRef = ref(null)
 
   const onShown = () => {
-    cancelRef.focus()
+    console.log('shown')
   }
   const onHidden = () => {
-    showRef.focus()
+    console.log('hidden)
   }
 </script>
 ```
@@ -762,7 +753,7 @@ Easily create a loading button:
 
   const onBuzyHidden = () => {
     // Return focus to the button once hidden
-    buzyButton.focus()
+    //buzyButton.focus()
   }
 </script>
 ```
@@ -883,7 +874,6 @@ This example also demonstrates additional accessibility markup.
   const processing = ref(false)
   const processingcounter = ref(1)
   const formdialog = ref(null)
-  const formsubmit = ref(null)
   let processingInterval = null
 
   const clearProcessingInterval = () => {
@@ -895,13 +885,12 @@ This example also demonstrates additional accessibility markup.
 
   const onBuzyHidden = () => {
     // Focus the dialog prompt
-    formdialog.focus()
+    //formdialog.focus()
   }
 
   const onFormOverlayHidden = () => {
     // In this case, we return focus to the submit button
     // You may need to alter this based on your application requirements
-    formsubmit.focus()
   }
 
   const onFormSubmit = () => {
@@ -966,10 +955,10 @@ also set the `rounded` prop on `<b-overlay>`.
 
 #### slots
 
-| Property  | Scoped                                                                                             | Description                                                                           |
-| --------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `default` | No                                                                                                 | The content to be overlayed. The default slot is ignored if the prop `no-wrap` is set |
-| `overlay` | <button class="btn btn-outline-info" @click="showOverlaySlotScope">{{ showHideSlotText }}</button> | Custom content to replace the default overlay spinner                                 |
+| Property  | Scoped | Description                                                                           |
+| --------- | ------ | ------------------------------------------------------------------------------------- |
+| `default` | No     | The content to be overlayed. The default slot is ignored if the prop `no-wrap` is set |
+| `overlay` | Yes    | Custom content to replace the default overlay spinner                                 |
 
 ##### overlay slot scope
 
@@ -981,134 +970,131 @@ also set the `rounded` prop on `<b-overlay>`.
 
 #### Events
 
-| Name         | Argument                            | Description                              |
-| ------------ | ----------------------------------- | ---------------------------------------- |
-| `click`      | `event` - Native click event object | Emitted when overlay is clicked          |
-| ~~`hidden`~~ |                                     | Emitted when the overlay has been hidden |
-| ~~`shown`~~  |                                     | Emitted when the overlay has been shown  |
+| Name     | Argument                            | Description                              |
+| -------- | ----------------------------------- | ---------------------------------------- |
+| `click`  | `event` - Native click event object | Emitted when overlay is clicked          |
+| `hidden` |                                     | Emitted when the overlay has been hidden |
+| `shown`  |                                     | Emitted when the overlay has been shown  |
 
 <script lang="ts" setup>
   import {ref, nextTick} from 'vue';
 
-const showOverlayEx1 = ref(false)
-const showRoundedEx = ref(false)
+  const showOverlayEx1 = ref(false)
+  const showRoundedEx = ref(false)
 
-const variant = ref('light')
-const opacity = ref(0.85)
-const blur = ref('2px')
-const variants = [
-'transparent',
-'white',
-'light',
-'dark',
-'primary',
-'secondary',
-'success',
-'danger',
-'warning',
-'info',
-]
-const blurs = [
-{ text: 'None', value: '' },
-'1px',
-'2px',
-'5px',
-'0.5em',
-'1rem'
-]
+  const variant = ref('light')
+  const opacity = ref(0.85)
+  const blur = ref('2px')
+  const variants = [
+    'transparent',
+    'white',
+    'light',
+    'dark',
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+  ]
+  const blurs = [
+    { text: 'None', value: '' },
+    '1px',
+    '2px',
+    '5px',
+    '0.5em',
+    '1rem'
+  ]
 
-const showCustomEx = ref(false)
-const showRef = ref(null)
-const cancelRef = ref(null)
+  const showCustomEx = ref(false)
 
-const onShown = () => {
-cancelRef.focus()
-}
-const onHidden = () => {
-showRef.focus()
-}
+  const onShown = () => {
+    console.log('shown')
+  }
+  const onHidden = () => {
+    console.log('hidden')
+  }
 
-const showNoWrapEx = ref(false)
-const showNoWrapEx2 = ref(false)
+  const showNoWrapEx = ref(false)
+  const showNoWrapEx2 = ref(false)
 
-const loadingBuzy = ref(false)
-const buzyButton = ref(null)
-let timeout = null;
+  const loadingBuzy = ref(false)
+  const buzyButton = ref(null)
+  let timeout = null;
 
-const clearTimer = () => {
-if (timeout) {
-clearTimeout(timeout)
-timeout = null
-}
-}
-const setTimer = (callback) => {
-clearTimer()
-timeout = setTimeout(() => {
-clearTimer()
-callback()
-}, 5000)
-}
-const setBuzyClick = () => {
-loadingBuzy.value = true
-// Simulate an async request
-setTimer(() => {
-loadingBuzy.value = false
-})
-}
+  const clearTimer = () => {
+    if (timeout) {
+      clearTimeout(timeout)
+      timeout = null
+    }
+  }
+  const setTimer = (callback) => {
+    clearTimer()
+    timeout = setTimeout(() => {
+      clearTimer()
+      callback()
+    }, 5000)
+  }
+  const setBuzyClick = () => {
+    loadingBuzy.value = true
+    // Simulate an async request
+    setTimer(() => {
+      loadingBuzy.value = false
+    })
+  }
 
-const onFormOverlayShown = () => {
-// Return focus to the button once hidden
-buzyButton.focus()
-}
+  const onFormOverlayShown = () => {
+    // Return focus to the button once hidden
+    //buzyButton.focus()
+  }
 
-const formbusy = ref(false)
-const processing = ref(false)
-const processingcounter = ref(1)
-const formdialog = ref(null)
-const formsubmit = ref(null)
-let processingInterval = null;
+  const formbusy = ref(false)
+  const processing = ref(false)
+  const processingcounter = ref(1)
+  const formdialog = ref(null)
+  let processingInterval = null;
 
-const clearProcessingInterval = () => {
-if (processingInterval) {
-clearInterval(processingInterval)
-processingInterval = null
-}
-}
+  const clearProcessingInterval = () => {
+    if (processingInterval) {
+      clearInterval(processingInterval)
+      processingInterval = null
+    }
+  }
 
-const onBuzyHidden = () => {
-// Focus the dialog prompt
-formdialog.focus()
-}
+  const onBuzyHidden = () => {
+    // Focus the dialog prompt
+    //formdialog.focus()
+  }
 
-const onFormOverlayHidden = () => {
-// In this case, we return focus to the submit button
-// You may need to alter this based on your application requirements
-formsubmit.focus()
-}
+  const onFormOverlayHidden = () => {
+  // In this case, we return focus to the submit button
+  // You may need to alter this based on your application requirements
+  }
 
-const onFormSubmit = () => {
-processing.value = false
-formbusy.value = true
-}
+  const onFormSubmit = () => {
+    processing.value = false
+    formbusy.value = true
+  }
 
-const onFormCancel = () => {
-formbusy.value = false
-}
+  const onFormCancel = () => {
+    formbusy.value = false
+  }
 
-const onFormOK = () => {
-processingcounter.value = 1
-processing.value = true
-clearProcessingInterval()
-processingInterval = setInterval(() => {
-if(processingcounter.value < 20) {
-processingcounter.value++
-} else {
-clearProcessingInterval()
-nextTick(() => {
-formbusy.value = false
-processing.value = false
-})
-}
-}, 350)
-}
+  const onFormOK = () => {
+    processingcounter.value = 1
+    processing.value = true
+    clearProcessingInterval()
+    processingInterval = setInterval(() => {
+      if(processingcounter.value < 20) {
+        processingcounter.value++
+      } else {
+        clearProcessingInterval()
+        nextTick(() => {
+          formbusy.value = false
+          processing.value = false
+        })
+      }
+    }, 350)
+  }
+
 </script>
