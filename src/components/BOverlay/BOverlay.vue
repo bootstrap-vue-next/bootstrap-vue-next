@@ -19,7 +19,7 @@ interface ISlotScope {
 }
 
 export default defineComponent({
-  name: 'BCard',
+  name: 'BOverlay',
   props: {
     bgColor: {type: String, required: false},
     blur: {type: String, default: '2px'},
