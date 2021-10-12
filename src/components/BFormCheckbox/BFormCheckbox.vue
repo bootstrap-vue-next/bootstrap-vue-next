@@ -35,6 +35,7 @@ import {getClasses, getInputClasses, getLabelClasses} from '../../composables/us
 import {computed, defineComponent, onMounted, PropType, Ref, ref, watch} from 'vue'
 import {InputSize} from '../../types'
 import useId from '../../composables/useId'
+import {HTMLElement} from '../../types/safe-types'
 
 export default defineComponent({
   name: 'BFormCheckbox',
