@@ -1,7 +1,7 @@
 <template>
   <li class="nav-item" :class="classes">
     <a
-      href="#"
+      :href="href"
       class="nav-link"
       :tabindex="disabled ? -1 : null"
       :aria-disabled="disabled ? true : null"
@@ -19,6 +19,7 @@ export default defineComponent({
   props: {
     active: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
+    href: {type: String, required: false},
   },
   setup(props) {
     const classes = computed(() => ({
