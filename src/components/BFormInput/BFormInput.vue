@@ -93,13 +93,14 @@ export default defineComponent({
   setup(props, {emit}) {
     const input = ref<HTMLInputElement>()
     let inputValue: string | null = null
+    let formatterResult: any = null
     const computedId = useId(props.id, 'input')
 
     const _formatValue = (value: unknown, evt: any, force = false) => {
       const {formatter, lazyFormatter} = props
       value = String(value)
       if (typeof formatter === 'function' && (!lazyFormatter || force)) {
-        return formatter(value, evt)
+        return (formatterResult = formatter(value, evt))
       }
       return value
     }
@@ -219,8 +220,8 @@ export default defineComponent({
       () => props.modelValue,
       (newValue) => {
         if (!input.value) return
-        input.value.value = inputValue ? inputValue : (newValue as string)
-        inputValue = null
+        input.value.value = formatterResult || !inputValue ? (newValue as string) : inputValue
+        inputValue = formatterResult = null
       }
     )
 
