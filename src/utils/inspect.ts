@@ -16,3 +16,7 @@ export const isNumeric = (value: any) => RX_NUMBER.test(String(value))
 export const isNumber = (value: any) => typeof value === 'number'
 export const toType = (value: any) => typeof value
 export const isFunction = (value: any) => toType(value) === 'function'
+
+// Strict object type check
+// Only returns true for plain JavaScript objects
+export const isPlainObject = (obj: any) => Object.prototype.toString.call(obj) === '[object Object]'
