@@ -41,8 +41,8 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>, default: undefined},
     nonhtml: {type: Boolean, default: false},
     nonsanitize: {type: Boolean, default: false},
-    /*allowList: {type: Object, default: undefined},
-    sanitizeFn: {type: Function, default: null},*/
+    allowList: {type: Object, default: undefined},
+    sanitizeFn: {type: Function, default: null},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
   setup(props, {emit}) {
