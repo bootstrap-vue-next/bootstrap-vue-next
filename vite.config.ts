@@ -3,6 +3,12 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
+import viteSSR from 'vite-ssr/plugin.js'
+
+export const ssrTransformCustomDir = (): any => ({
+  props: [],
+  needRuntime: true,
+})
 
 const config = defineConfig({
   resolve: {
@@ -35,7 +41,20 @@ const config = defineConfig({
   plugins: [
     vue({
       include: [/\.vue$/, /\.md$/],
+      template: {
+        ssr: true,
+        compilerOptions: {
+          directiveTransforms: {
+            'b-modal': ssrTransformCustomDir,
+            'b-popover': ssrTransformCustomDir,
+            'b-toggle': ssrTransformCustomDir,
+            'b-tooltip': ssrTransformCustomDir,
+            'b-visible': ssrTransformCustomDir,
+          },
+        },
+      },
     }),
+    viteSSR(),
   ],
 
   server: {

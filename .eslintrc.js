@@ -10,12 +10,13 @@ module.exports = {
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
     '@vue/typescript/recommended',
+    'plugin:ssr-friendly/recommended',
     'prettier',
   ],
   parserOptions: {
     ecmaVersion: 2021,
   },
-  plugins: ['jest'],
+  plugins: ['jest', 'ssr-friendly'],
   rules: {
     'no-alert': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

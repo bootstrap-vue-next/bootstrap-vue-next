@@ -63,6 +63,7 @@ export const isVisible = (el: HTMLElement): boolean => {
 export const isEmptySlot = (slot: Slot | undefined, data?: any) =>
   !slot || slot(data).filter((vnode: VNode) => vnode.type !== Comment).length < 1
 
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const offset = (el: HTMLElement) => {
   const _offset = {top: 0, left: 0}
