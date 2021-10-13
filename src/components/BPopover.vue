@@ -29,6 +29,7 @@ import {ColorVariant} from '../types'
 export default defineComponent({
   name: 'BPopover',
   props: {
+    container: {type: String, default: 'body'},
     content: {type: String},
     id: {type: String},
     noninteractive: {type: Boolean, default: false},
@@ -38,6 +39,8 @@ export default defineComponent({
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
+    nonhtml: {type: Boolean, default: false},
+    nonsanitize: {type: Boolean, default: false},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
   setup(props, {emit}) {
@@ -52,12 +55,13 @@ export default defineComponent({
 
     onMounted(() => {
       instance.value = new Popover(`#${props.target}`, {
-        container: 'body',
+        container: props.container,
         trigger: props.triggers,
         placement: props.placement,
         title: titleRef.value?.innerHTML || '',
         content: contentRef.value?.innerHTML || '',
-        html: true,
+        html: !props.nonhtml,
+        sanitize: !props.nonsanitize,
       })
 
       if (document.getElementById(props.target)) {
