@@ -84,12 +84,16 @@ export default defineComponent({
 
     useEventListener(element, 'show.bs.modal', (e) => {
       emit('show', e)
-      emit('update:modelValue', true)
+      if (!e.defaultPrevented) {
+        emit('update:modelValue', true)
+      }
     })
 
     useEventListener(element, 'hide.bs.modal', (e) => {
       emit('hide', e)
-      emit('update:modelValue', false)
+      if (!e.defaultPrevented) {
+        emit('update:modelValue', false)
+      }
     })
 
     onMounted(() => {
