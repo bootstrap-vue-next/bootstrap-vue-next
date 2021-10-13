@@ -39,7 +39,7 @@ export default defineComponent({
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
-    html: {type: Boolean, default: true},
+    nonhtml: {type: Boolean, default: false},
     nonsanitize: {type: Boolean, default: false},
     allowList: {type: Object, default: undefined},
     sanitizeFn: {type: Function, default: null},
@@ -62,7 +62,7 @@ export default defineComponent({
         placement: props.placement,
         title: titleRef.value?.innerHTML || '',
         content: contentRef.value?.innerHTML || '',
-        html: props.html,
+        html: !props.nonhtml,
         sanitize: !props.nonsanitize,
         allowList: props.allowList || Popover.Default.allowList,
         sanitizeFn:
