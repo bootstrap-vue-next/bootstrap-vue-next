@@ -40,7 +40,7 @@ export default defineComponent({
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
     html: {type: Boolean, default: true},
-    sanitize: {type: Boolean, default: true},
+    nonsanitize: {type: Boolean, default: false},
     allowList: {type: Object, default: undefined},
     sanitizeFn: {type: Function, default: null},
   },
@@ -63,7 +63,7 @@ export default defineComponent({
         title: titleRef.value?.innerHTML || '',
         content: contentRef.value?.innerHTML || '',
         html: props.html,
-        sanitize: props.sanitize,
+        sanitize: !props.nonsanitize,
         allowList: props.allowList || Popover.Default.allowList,
         sanitizeFn:
           function () {
