@@ -41,8 +41,6 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>, default: undefined},
     nonhtml: {type: Boolean, default: false},
     nonsanitize: {type: Boolean, default: false},
-    allowList: {type: Object, default: undefined},
-    sanitizeFn: {type: Function, default: null},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
   setup(props, {emit}) {
@@ -64,11 +62,6 @@ export default defineComponent({
         content: contentRef.value?.innerHTML || '',
         html: !props.nonhtml,
         sanitize: !props.nonsanitize,
-        /*allowList: props.allowList || Popover.Default.allowList,
-        sanitizeFn:
-          function () {
-            props.sanitizeFn ? props.sanitizeFn() : null
-          } || null,*/
       })
 
       if (document.getElementById(props.target)) {
