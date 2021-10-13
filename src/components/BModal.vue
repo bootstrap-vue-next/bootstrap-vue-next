@@ -78,17 +78,17 @@ export default defineComponent({
       'modal-dialog-scrollable': props.scrollable,
     }))
 
-    useEventListener(element, 'shown.bs.modal', () => emit('shown'))
-    useEventListener(element, 'hidden.bs.modal', () => emit('hidden'))
-    useEventListener(element, 'hidePrevented.bs.modal', () => emit('hide-prevented'))
+    useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
+    useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
+    useEventListener(element, 'hidePrevented.bs.modal', (e) => emit('hide-prevented', e))
 
-    useEventListener(element, 'show.bs.modal', () => {
-      emit('show')
+    useEventListener(element, 'show.bs.modal', (e) => {
+      emit('show', e)
       emit('update:modelValue', true)
     })
 
-    useEventListener(element, 'hide.bs.modal', () => {
-      emit('hide')
+    useEventListener(element, 'hide.bs.modal', (e) => {
+      emit('hide', e)
       emit('update:modelValue', false)
     })
 
