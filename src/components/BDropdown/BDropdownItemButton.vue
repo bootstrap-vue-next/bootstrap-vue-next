@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../types'
+import {ColorVariant} from '../../types'
 
 export default defineComponent({
   name: 'BDropdownItemButton',

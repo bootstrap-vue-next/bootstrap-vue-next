@@ -668,6 +668,45 @@ More information [here](https://getbootstrap.com/docs/5.0/migration/#forms).
 
 ## Form Input
 
+### Properties
+
+| Property         | Status                                                                               | Observations |
+| ---------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `aria-label`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `autocomplete`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `autocfocus`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `debounce`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `disabled`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `form`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `formatter`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `lazy`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `lazy-formatter` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `list`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `max`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `min`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `name`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-wheel`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `number`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `placeholder`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `plaintext`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `readonly`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `required`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `size`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `state`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `step`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `trim`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `type`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Property            | Status                                                                               | Observations |
+| ------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `blur`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `change`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `update:modelValue` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Form Radio
 
 ### Properties
@@ -725,11 +764,85 @@ More information [here](https://getbootstrap.com/docs/5.0/migration/#forms).
 | `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `first`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
+## Form Select
+
+### Properties
+
+| Property         | Status                                                                               | Observations |
+| ---------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `aria-invalid`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `autofocus`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled-field` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `form`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `html-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-field`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `multiple`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `name`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `options`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `options-field`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `plain`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `required`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `select-size`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `size`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `state`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `text-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `value-field`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Property            | Status                                                                               | Observations |
+| ------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `change`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `update:modelValue` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Form Select Option
+
+### Properties
+
+| Property   | Status                                                                               | Observations |
+| ---------- | ------------------------------------------------------------------------------------ | ------------ |
+| `disabled` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `value`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Form Select Option Group
+
+### Properties
+
+| Property         | Status                                                                               | Observations |
+| ---------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `disabled-field` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `html-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `options`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `text-field`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `value-field`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `first`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Form Rating
 
 This is a <Badge type="warning" text="non-standard" /> component.
-
-## Form Select
 
 ## Form Spinbutton
 
@@ -749,6 +862,27 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 This is a <Badge type="warning" text="non-standard" /> component.
 
+### Properties
+
+| Property      | Status                                                                               | Observations |
+| ------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `alt`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `blank`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `blank-color` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `block`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `center`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fluid`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fluid-grow`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `height`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `left`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `right`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `rounded`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `sizes`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `src`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `srcset`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `thumbnail`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `width`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Input Group
 
 ## Jumbotron
@@ -765,6 +899,52 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## List group
 
+### Properties
+
+| Property     | Status                                                                               | Observations           |
+| ------------ | ------------------------------------------------------------------------------------ | ---------------------- |
+| `flush`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `horizontal` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `numbered`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3 |
+| `tag`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## List group item
+
+### Properties
+
+| Property                | Status                                                                               | Observations |
+| ----------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `action`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `active`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `active-class`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `append`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `button`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `exact`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `exact-active-class`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `href`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-prefetch`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `prefetch`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `rel`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `replace`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `router-component-name` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `tag`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `target`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `to`                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `variant`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Media
 
 This components was suppresed in Boostrap `v5`.
@@ -780,6 +960,42 @@ More information [here](https://getbootstrap.com/docs/5.0/utilities/flex/#media-
 ## Overlay
 
 This is a <Badge type="warning" text="non-standard" /> component.
+
+### Properties
+
+| Property          | Status                                                                               | Observations |
+| ----------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `bg-color`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `blur`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fixed`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-center`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-fade`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `no-wrap`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `opacity`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `overlay-tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `rounded`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `show`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `spinner-small`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `spinner-type`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `spinner-variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `variant`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `wrapper-tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `z-index`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `overlay` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| `click`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `hidden` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `shown`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 
 ## Pagination
 
@@ -831,7 +1047,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ### Events
 
-| Property            | Status                                                                               | Observations       |
+| Event               | Status                                                                               | Observations       |
 | ------------------- | ------------------------------------------------------------------------------------ | ------------------ |
 | `change`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                    |
 | `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                    |
@@ -856,7 +1072,79 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Table
 
+## Tab
+
+### Properties
+
+| Property           | Status                                                                               | Observations |
+| ------------------ | ------------------------------------------------------------------------------------ | ------------ |
+| `active`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `button-id`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `lazy`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-body`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tag`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `title`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `title-item-class` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `title-link-class` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `title`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Event   | Status                                                                               | Observations |
+| ------- | ------------------------------------------------------------------------------------ | ------------ |
+| `click` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Tabs
+
+### Properties
+
+| Property                | Status                                                                               | Observations |
+| ----------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `active-nav-item-class` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `active-tab-class`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `align`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `card`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `content-class`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `end`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fill`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `justified`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `lazy`                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `nav-class`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `nav-wrapper-class`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-fade`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `no-key-nav`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `no-nav-style`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `pills`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `small`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tag`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `vertical`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property     | Status                                                                               | Observations |
+| ------------ | ------------------------------------------------------------------------------------ | ------------ |
+| `default`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `empty`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tabs-end`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tabs-start` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Event               | Status                                                                               | Observations |
+| ------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `activate-tab`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `changed`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `update:modelValue` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ## Time
 
