@@ -431,8 +431,11 @@ describe('form-input', () => {
   it('applies formatter on input when not lazy', async () => {
     const wrapper = mount(BFormInput, {
       props: {
-        formatter(value) {
+        'formatter'(value) {
           return value.toLowerCase()
+        },
+        'onUpdate:modelValue': async (modelValue) => {
+          await wrapper.setProps({modelValue})
         },
       },
       attachTo: createContainer(),
@@ -449,6 +452,8 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')).toBeDefined()
     expect(wrapper.emitted('input').length).toEqual(1)
     expect(wrapper.emitted('input')[0][0]).toEqual('test')
+
+    expect($input.element.value).toEqual('test')
 
     wrapper.unmount()
   })
