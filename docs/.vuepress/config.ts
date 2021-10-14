@@ -1,5 +1,5 @@
-import {defineUserConfig} from 'vuepress'
-import type {DefaultThemeOptions} from 'vuepress'
+import {defineUserConfig} from 'vuepress-vite'
+import type {DefaultThemeOptions} from 'vuepress-vite'
 
 export default defineUserConfig<DefaultThemeOptions>({
   lang: 'en-US',
