@@ -14,6 +14,7 @@
   "scripts": {
     "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
     "dev": "vite",
+    "dev:ssr": "vite-ssr --ssr src/main-server.ts",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
