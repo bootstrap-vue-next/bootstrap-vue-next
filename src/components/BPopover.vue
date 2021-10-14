@@ -39,8 +39,8 @@ export default defineComponent({
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
-    nonhtml: {type: Boolean, default: false},
-    nonsanitize: {type: Boolean, default: false},
+    html: {type: Boolean, default: false},
+    sanitize: {type: Boolean, default: false},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
   setup(props, {emit}) {
@@ -60,8 +60,8 @@ export default defineComponent({
         placement: props.placement,
         title: titleRef.value?.innerHTML || '',
         content: contentRef.value?.innerHTML || '',
-        html: !props.nonhtml,
-        sanitize: !props.nonsanitize,
+        html: props.html,
+        sanitize: props.sanitize,
       })
 
       if (document.getElementById(props.target)) {
