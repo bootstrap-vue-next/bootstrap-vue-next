@@ -1,4 +1,4 @@
-import {Slot} from 'vue'
+import {Comment, Slot, VNode} from 'vue'
 
 export const isElement = (el: HTMLElement): boolean => !!(el && el.nodeType === Node.ELEMENT_NODE)
 
@@ -58,7 +58,7 @@ export const isVisible = (el: HTMLElement): boolean => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const isEmptySlot = (slot: Slot | undefined, data?: any) =>
-  !slot || slot(data).filter((vnode) => vnode.type !== Comment).length < 1
+  !slot || slot(data).filter((vnode: VNode) => vnode.type !== Comment).length < 1
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const offset = (el: HTMLElement) => {
