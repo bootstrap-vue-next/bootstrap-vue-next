@@ -40,7 +40,7 @@ export default defineComponent({
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
     html: {type: Boolean, default: false},
-    sanitize: {type: Boolean, default: false},
+    sanitize: {type: Boolean, default: true},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
   setup(props, {emit}) {
