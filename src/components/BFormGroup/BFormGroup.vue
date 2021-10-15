@@ -11,13 +11,22 @@ import {suffixPropName} from '@/utils/props'
 import {
   computed,
   defineComponent,
+  h,
   nextTick,
   onActivated,
   onMounted,
   PropType,
   ref,
+  resolveComponent,
   watch,
 } from 'vue'
+import useId from '@/composables/useId'
+import {normalizeSlot} from '@/utils/normalize-slot'
+import getID from '@/utils/getID'
+import BCol from '../BCol.vue'
+import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
+import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
+import BFormText from '../BForm/BFormText.vue'
 
 const INPUTS = ['input', 'select', 'textarea']
 // Selector for finding first input in the form group
@@ -26,8 +35,15 @@ const INPUT_SELECTOR = INPUTS.map((v) => `${v}:not([disabled])`).join()
 // A list of interactive elements (tag names) inside `<b-form-group>`'s legend
 const LEGEND_INTERACTIVE_ELEMENTS = [...INPUTS, 'a', 'button', 'label']
 
+export const SLOT_NAME_LABEL = 'label'
+export const SLOT_NAME_INVALID_FEEDBACK = 'invalid-feedback'
+export const SLOT_NAME_VALID_FEEDBACK = 'valid-feedback'
+export const SLOT_NAME_DESCRIPTION = 'description'
+export const SLOT_NAME_DEFAULT = 'default'
+
 export default defineComponent({
-  name: 'BFormInput',
+  name: 'BFormGroup',
+  components: {BCol, BFormInvalidFeedback, BFormText, BFormValidFeedback},
   props: {
     contentCols: {type: [Boolean, String, Number], required: false},
     contentColsLg: {type: [Boolean, String, Number], required: false},
@@ -59,11 +75,11 @@ export default defineComponent({
     validFeedback: {type: String, required: false},
     validated: {type: Boolean, default: false},
   },
-  setup(props, {emit}) {
-    const ariaDescribedby = ''
+  setup(props, {attrs}) {
+    const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['', 'sm', 'md', 'lg', 'xl']
 
-    const getAlignClasses = (props, prefix: string) => {
+    const getAlignClasses = (props: any, prefix: string) => {
       const alignClasses = breakPoints.reduce((result: string[], breakpoint) => {
         const propValue: string = props[suffixPropName(breakpoint, `${prefix}Align`)] || null
         if (propValue) {
@@ -74,9 +90,11 @@ export default defineComponent({
       }, [])
       return alignClasses
     }
-    const getColProps = (props, prefix: string) => {
-      const colProps = breakPoints.reduce((result, breakpoint: string) => {
+
+    const getColProps = (props: any, prefix: string) => {
+      const colProps: any = breakPoints.reduce((result: any, breakpoint: string) => {
         let propValue = props[suffixPropName(breakpoint, `${prefix}Cols`)]
+
         // Handle case where the prop's value is an empty string,
         // which represents `true`
         propValue = propValue === '' ? true : propValue || false
@@ -94,7 +112,8 @@ export default defineComponent({
         if (propValue) {
           result[breakpoint || (isBoolean(propValue) ? 'col' : 'cols')] = propValue
         }
-      })
+        return result
+      }, {})
       return colProps
     }
 
@@ -103,7 +122,7 @@ export default defineComponent({
     // Sets the `aria-describedby` attribute on the input if `labelFor` is set
     // Optionally accepts a string of IDs to remove as the second parameter
     // Preserves any `aria-describedby` value(s) user may have on input
-    const updateAriaDescribedby = (newValue: string, oldValue: string | null = null) => {
+    const updateAriaDescribedby = (newValue: string | null, oldValue: string | null = null) => {
       if (IS_BROWSER && props.labelFor) {
         // We need to escape `labelFor` since it can be user-provided
         const $input = select(`#${cssEscape(props.labelFor)}`, content)
@@ -141,10 +160,24 @@ export default defineComponent({
         // based on the existence of 'content-col' or 'label-col' props
         Object.keys(contentColProps.value).length > 0 || Object.keys(labelColProps.value).length > 0
     )
+    const computedState = computed(() =>
+      // If not a boolean, ensure that value is null
+      isBoolean(props.state) ? props.state : null
+    )
+    const stateClass = computed(() => {
+      const state = computedState.value
+      return state === true ? 'is-valid' : state === false ? 'is-invalid' : null
+    })
+    const computedAriaInvalid = computed(() => {
+      if (attrs.ariaInvalid === true || attrs.ariaInvalid === 'true' || attrs.ariaInvalid === '') {
+        return 'true'
+      }
+      return computedState.value === false ? 'true' : attrs.ariaInvalid
+    })
 
     watch(
       () => ariaDescribedby,
-      (newValue: string, oldValue: string) => {
+      (newValue: string | null, oldValue: string | null) => {
         if (newValue !== oldValue) {
           updateAriaDescribedby(newValue, oldValue)
         }
@@ -181,6 +214,185 @@ export default defineComponent({
         attemptFocus(inputs[0])
       }
     }
+
+    return {
+      ariaDescribedby,
+      computedAriaInvalid,
+      contentColProps,
+      isHorizontal,
+      labelAlignClasses,
+      labelColProps,
+      onLegendClick,
+      stateClass,
+    }
+  },
+  render() {
+    const props = this.$props
+    const slots = this.$slots
+
+    const id = useId()
+    const isFieldset = !props.labelFor
+
+    let $label = null
+    const labelContent = normalizeSlot(SLOT_NAME_LABEL, {}, slots) || props.label
+    const labelId = labelContent ? getID('_BV_label_') : null
+
+    if (labelContent || this.isHorizontal) {
+      const labelTag: string = isFieldset ? 'legend' : 'label'
+      if (props.labelSrOnly) {
+        if (labelContent) {
+          $label = h(
+            labelTag,
+            {
+              class: 'sr-only',
+              id: labelId,
+              for: props.labelFor || null,
+            },
+            labelContent
+          )
+        }
+        const BCol = resolveComponent('b-col')
+        $label = h(
+          this.isHorizontal ? BCol : 'div',
+          this.isHorizontal ? this.labelColProps : {},
+          $label
+        )
+      } else {
+        $label = h(
+          this.isHorizontal ? resolveComponent('b-col') : labelTag,
+          {
+            onClick: isFieldset ? this.onLegendClick : null,
+            ...(this.isHorizontal ? this.labelColProps : {}),
+            tag: this.isHorizontal ? labelTag : null,
+            id: labelId,
+            for: props.labelFor || null,
+            tabIndex: isFieldset ? '-1' : null,
+            class: [
+              {
+                'bv-no-focus-ring': isFieldset,
+                'col-form-label': this.isHorizontal || isFieldset,
+                'pt-0': !this.isHorizontal && isFieldset,
+                'd-block': !this.isHorizontal && !isFieldset,
+                [`col-form-label-${props.labelSize}`]: !!props.labelSize,
+              },
+              this.labelAlignClasses,
+              props.labelClass,
+            ],
+          },
+          labelContent
+        )
+      }
+    }
+
+    let $invalidFeedback = null
+    const invalidFeedbackContent =
+      normalizeSlot(SLOT_NAME_INVALID_FEEDBACK, {}, slots) || this.invalidFeedback
+    const invalidFeedbackId = invalidFeedbackContent ? getID('_BV_feedback_invalid_') : null
+
+    if (invalidFeedbackContent) {
+      $invalidFeedback = h(
+        BFormInvalidFeedback,
+        {
+          ariaLive: props.feedbackAriaLive,
+          id: invalidFeedbackId,
+          state: props.state,
+          tooltip: props.tooltip,
+          tabindex: invalidFeedbackContent ? '-1' : null,
+        },
+        {default: () => invalidFeedbackContent}
+      )
+    }
+
+    let $validFeedback = null
+    const validFeedbackContent =
+      normalizeSlot(SLOT_NAME_VALID_FEEDBACK, {}, slots) || this.validFeedback
+    const validFeedbackId = validFeedbackContent ? getID('_BV_feedback_valid_') : null
+
+    if (validFeedbackContent) {
+      $validFeedback = h(
+        BFormValidFeedback,
+        {
+          ariaLive: props.feedbackAriaLive,
+          id: validFeedbackId,
+          state: props.state,
+          tooltip: props.tooltip,
+          tabindex: validFeedbackContent ? '-1' : null,
+        },
+        {default: () => validFeedbackContent}
+        // validFeedbackContent
+      )
+    }
+
+    let $description = null
+    const descriptionContent = normalizeSlot(SLOT_NAME_DESCRIPTION, {}, slots) || this.description
+    const descriptionId = descriptionContent ? getID('_BV_description_') : null
+    if (descriptionContent) {
+      $description = h(
+        BFormText,
+        {
+          id: descriptionId,
+          tabindex: '-1',
+        },
+        {default: () => descriptionContent}
+      )
+    }
+
+    // Update `ariaDescribedby`
+    // Screen readers will read out any content linked to by `aria-describedby`
+    // even if the content is hidden with `display: none;`, hence we only include
+    // feedback IDs if the form group's state is explicitly valid or invalid
+    const ariaDescribedby = (this.ariaDescribedby =
+      [
+        descriptionId,
+        props.state === false ? invalidFeedbackId : null,
+        props.state === true ? validFeedbackId : null,
+      ]
+        .filter((x) => x)
+        .join(' ') || null)
+
+    const $content = h(
+      this.isHorizontal ? resolveComponent('b-col') : 'div',
+      {
+        ref: 'content',
+        ...(this.isHorizontal ? this.contentColProps : {}),
+      },
+      [
+        h(
+          'span',
+          normalizeSlot(SLOT_NAME_DEFAULT, {ariaDescribedby, descriptionId, id, labelId}, slots)
+        ) || '',
+        $invalidFeedback,
+        $validFeedback,
+        $description,
+      ]
+    )
+
+    // Return it wrapped in a form group
+    // Note: Fieldsets do not support adding `row` or `form-row` directly
+    // to them due to browser specific render issues, so we move the `form-row`
+    // to an inner wrapper div when horizontal and using a fieldset
+    return h(
+      isFieldset ? 'fieldset' : this.isHorizontal ? resolveComponent('b-form-row') : 'div',
+      {
+        'class': [
+          'form-group',
+          this.stateClass,
+          {
+            'was-validated': props.validated,
+          },
+        ],
+        'id': useId(props.id).value,
+        'disabled': isFieldset ? props.disabled : null,
+        'role': isFieldset ? null : 'group',
+        'aria-invalid': this.computedAriaInvalid,
+        // Only apply `aria-labelledby` if we are a horizontal fieldset
+        // as the legend is no longer a direct child of fieldset
+        'aria-labelledby': isFieldset && this.isHorizontal ? labelId : null,
+      },
+      this.isHorizontal && isFieldset
+        ? [h(resolveComponent('b-form-row'), [$label, $content])]
+        : [$label, $content]
+    )
   },
 })
 </script>
