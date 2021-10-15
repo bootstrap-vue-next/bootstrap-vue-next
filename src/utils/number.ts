@@ -4,6 +4,12 @@
 export const toInteger = (value: number, defaultValue = NaN): number => {
   return Number.isInteger(value) ? value : defaultValue
 }
+
+export const stringToInteger = (value: string, defaultValue = NaN): number => {
+  const integer = parseInt(value, 10)
+  return isNaN(integer) ? defaultValue : integer
+}
+
 //Validates a number is a float. If not return NaN
 // export const toFloat = (value: number, defaultValue = NaN): number => {
 //   return !Number.isInteger(value) ? value : defaultValue

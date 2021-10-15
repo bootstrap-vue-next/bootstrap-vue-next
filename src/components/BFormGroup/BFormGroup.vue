@@ -6,7 +6,7 @@ import {cssEscape} from '@/utils/css-escape'
 import {attemptFocus, getAttr, isVisible, removeAttr, select, selectAll, setAttr} from '@/utils/dom'
 import {IS_BROWSER} from '@/utils/env'
 import {isBoolean} from '@/utils/inspect'
-import {toInteger} from '@/utils/number'
+import {stringToInteger} from '@/utils/number'
 import {suffixPropName} from '@/utils/props'
 import {
   computed,
@@ -77,7 +77,7 @@ export default defineComponent({
   },
   setup(props, {attrs}) {
     const ariaDescribedby: string | null = null as string | null
-    const breakPoints = ['', 'sm', 'md', 'lg', 'xl']
+    const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
     const getAlignClasses = (props: any, prefix: string) => {
       const alignClasses = breakPoints.reduce((result: string[], breakpoint) => {
@@ -94,14 +94,13 @@ export default defineComponent({
     const getColProps = (props: any, prefix: string) => {
       const colProps: any = breakPoints.reduce((result: any, breakpoint: string) => {
         let propValue = props[suffixPropName(breakpoint, `${prefix}Cols`)]
-
         // Handle case where the prop's value is an empty string,
         // which represents `true`
         propValue = propValue === '' ? true : propValue || false
 
         if (!isBoolean(propValue) && propValue !== 'auto') {
           // Convert to column size to number
-          propValue = toInteger(propValue, 0)
+          propValue = stringToInteger(propValue, 0)
           // Ensure column size is greater than `0`
           propValue = propValue > 0 ? propValue : false
         }
@@ -357,10 +356,8 @@ export default defineComponent({
         ...(this.isHorizontal ? this.contentColProps : {}),
       },
       [
-        h(
-          'span',
-          normalizeSlot(SLOT_NAME_DEFAULT, {ariaDescribedby, descriptionId, id, labelId}, slots)
-        ) || '',
+        normalizeSlot(SLOT_NAME_DEFAULT, {ariaDescribedby, descriptionId, id, labelId}, slots) ||
+          '',
         $invalidFeedback,
         $validFeedback,
         $description,
@@ -375,7 +372,7 @@ export default defineComponent({
       isFieldset ? 'fieldset' : this.isHorizontal ? resolveComponent('b-form-row') : 'div',
       {
         'class': [
-          'form-group',
+          'mb-3',
           this.stateClass,
           {
             'was-validated': props.validated,

@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="form-row">
+  <component :is="tag" class="row d-flex flex-wrap">
     <slot></slot>
   </component>
 </template>
