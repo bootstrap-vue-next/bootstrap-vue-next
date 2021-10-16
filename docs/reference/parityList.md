@@ -662,9 +662,54 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Form Group
 
-This components was suppresed in Boostrap `v5`.
+### Properties
 
-More information [here](https://getbootstrap.com/docs/5.0/migration/#forms).
+| Property             | Status                                                                               | Observations |
+| -------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `content-cols`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `content-cols-lg`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `content-cols-md`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `content-cols-sm`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `content-cols-xl`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `description`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `disabled`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `feedback-aria-live` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `invalid-feedback`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-align`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-align-lg`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-align-md`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-align-sm`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-align-xl`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-class`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-cols`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-cols-lg`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-cols-md`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-cols-sm`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-cols-xl`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-for`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-size`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label-sr-only`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `state`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tooltip`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `valid-feedback`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `validated`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+Bootstrap 5 removed classes form-group and form-row. More information [here](https://getbootstrap.com/docs/5.0/migration/#forms).
+In the bootstrap-vue-3 implementation, these classes are replaced by mb-1 for form-group and row for form-row.
+
+Bootstrap 5 changed the classes for alignment. Use `start`, `center` and `end` instead of `left`, `center` and `right`
+
+### Slots
+
+| Property           | Status                                                                               | Observations |
+| ------------------ | ------------------------------------------------------------------------------------ | ------------ |
+| `default`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `description`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `invalid-feedback` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `label`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `valid-feedback`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ## Form Input
 
