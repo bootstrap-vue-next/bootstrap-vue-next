@@ -8,13 +8,14 @@ import {IS_BROWSER} from '../../utils/env'
 import {isBoolean} from '../../utils/inspect'
 import {stringToInteger} from '../../utils/number'
 import {suffixPropName} from '../../utils/props'
-import {computed, defineComponent, h, nextTick, onMounted, ref, resolveComponent, watch} from 'vue'
+import {computed, defineComponent, h, nextTick, onMounted, ref, watch} from 'vue'
 import useId from '@/composables/useId'
 import {normalizeSlot} from '@/utils/normalize-slot'
 import getID from '@/utils/getID'
 import BCol from '../BCol.vue'
 import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
+import BFormRow from '../BForm/BFormRow.vue'
 import BFormText from '../BForm/BFormText.vue'
 
 const INPUTS = ['input', 'select', 'textarea']
@@ -32,7 +33,7 @@ export const SLOT_NAME_DEFAULT = 'default'
 
 export default defineComponent({
   name: 'BFormGroup',
-  components: {BCol, BFormInvalidFeedback, BFormText, BFormValidFeedback},
+  components: {BCol, BFormInvalidFeedback, BFormRow, BFormText, BFormValidFeedback},
   props: {
     contentCols: {type: [Boolean, String, Number], required: false},
     contentColsLg: {type: [Boolean, String, Number], required: false},
@@ -221,7 +222,7 @@ export default defineComponent({
     const id = useId()
     const isFieldset = !props.labelFor
 
-    let $label = null
+    let $label: any = null
     const labelContent = normalizeSlot(SLOT_NAME_LABEL, {}, slots) || props.label
     const labelId = labelContent ? getID('_BV_label_') : null
 
@@ -239,36 +240,36 @@ export default defineComponent({
             labelContent
           )
         }
-        const BCol = resolveComponent('b-col')
-        $label = h(
-          this.isHorizontal ? BCol : 'div',
-          this.isHorizontal ? this.labelColProps : {},
-          $label
-        )
+        if (this.isHorizontal) {
+          $label = h(BCol, this.labelColProps, {default: () => $label})
+        } else {
+          $label = h('div', {}, [$label])
+        }
       } else {
-        $label = h(
-          this.isHorizontal ? resolveComponent('b-col') : labelTag,
-          {
-            onClick: isFieldset ? this.onLegendClick : null,
-            ...(this.isHorizontal ? this.labelColProps : {}),
-            tag: this.isHorizontal ? labelTag : null,
-            id: labelId,
-            for: props.labelFor || null,
-            tabIndex: isFieldset ? '-1' : null,
-            class: [
-              {
-                'bv-no-focus-ring': isFieldset,
-                'col-form-label': this.isHorizontal || isFieldset,
-                'pt-0': !this.isHorizontal && isFieldset,
-                'd-block': !this.isHorizontal && !isFieldset,
-                [`col-form-label-${props.labelSize}`]: !!props.labelSize,
-              },
-              this.labelAlignClasses,
-              props.labelClass,
-            ],
-          },
-          labelContent
-        )
+        const renderProps = {
+          onClick: isFieldset ? this.onLegendClick : null,
+          ...(this.isHorizontal ? this.labelColProps : {}),
+          tag: this.isHorizontal ? labelTag : null,
+          id: labelId,
+          for: props.labelFor || null,
+          tabIndex: isFieldset ? '-1' : null,
+          class: [
+            {
+              'bv-no-focus-ring': isFieldset,
+              'col-form-label': this.isHorizontal || isFieldset,
+              'pt-0': !this.isHorizontal && isFieldset,
+              'd-block': !this.isHorizontal && !isFieldset,
+              [`col-form-label-${props.labelSize}`]: !!props.labelSize,
+            },
+            this.labelAlignClasses,
+            props.labelClass,
+          ],
+        }
+        if (this.isHorizontal) {
+          $label = h(BCol, renderProps, {default: () => labelContent})
+        } else {
+          $label = h(labelTag, renderProps, labelContent)
+        }
       }
     }
 
@@ -338,45 +339,54 @@ export default defineComponent({
         .filter((x) => x)
         .join(' ') || null)
 
-    const $content = h(
-      this.isHorizontal ? resolveComponent('b-col') : 'div',
+    const contentBlocks = [
+      normalizeSlot(SLOT_NAME_DEFAULT, {ariaDescribedby, descriptionId, id, labelId}, slots) || '',
+      $invalidFeedback,
+      $validFeedback,
+      $description,
+    ]
+
+    let $content = h(
+      'div',
       {
         ref: 'content',
-        ...(this.isHorizontal ? this.contentColProps : {}),
       },
-      [
-        normalizeSlot(SLOT_NAME_DEFAULT, {ariaDescribedby, descriptionId, id, labelId}, slots) ||
-          '',
-        $invalidFeedback,
-        $validFeedback,
-        $description,
-      ]
+      contentBlocks
     )
+    if (this.isHorizontal) {
+      $content = h(BCol, {ref: 'content', ...this.contentColProps}, {default: () => contentBlocks})
+    }
 
     // Return it wrapped in a form group
     // Note: Fieldsets do not support adding `row` or `form-row` directly
     // to them due to browser specific render issues, so we move the `form-row`
     // to an inner wrapper div when horizontal and using a fieldset
+    const rowProps = {
+      'class': [
+        'mb-3',
+        this.stateClass,
+        {
+          'was-validated': props.validated,
+        },
+      ],
+      'id': useId(props.id).value,
+      'disabled': isFieldset ? props.disabled : null,
+      'role': isFieldset ? null : 'group',
+      'aria-invalid': this.computedAriaInvalid,
+      // Only apply `aria-labelledby` if we are a horizontal fieldset
+      // as the legend is no longer a direct child of fieldset
+      'aria-labelledby': isFieldset && this.isHorizontal ? labelId : null,
+    }
+
+    if (this.isHorizontal && !isFieldset) {
+      return h(BFormRow, rowProps, {default: () => [$label, $content]})
+    }
+
     return h(
-      isFieldset ? 'fieldset' : this.isHorizontal ? resolveComponent('b-form-row') : 'div',
-      {
-        'class': [
-          'mb-3',
-          this.stateClass,
-          {
-            'was-validated': props.validated,
-          },
-        ],
-        'id': useId(props.id).value,
-        'disabled': isFieldset ? props.disabled : null,
-        'role': isFieldset ? null : 'group',
-        'aria-invalid': this.computedAriaInvalid,
-        // Only apply `aria-labelledby` if we are a horizontal fieldset
-        // as the legend is no longer a direct child of fieldset
-        'aria-labelledby': isFieldset && this.isHorizontal ? labelId : null,
-      },
+      isFieldset ? 'fieldset' : 'div',
+      rowProps,
       this.isHorizontal && isFieldset
-        ? [h(resolveComponent('b-form-row'), [$label, $content])]
+        ? [h(BFormRow, {}, {default: () => [$label, $content]})]
         : [$label, $content]
     )
   },
