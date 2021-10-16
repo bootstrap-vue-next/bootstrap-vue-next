@@ -35,7 +35,7 @@ BootstrapVue 3 components
             <RouterLink to="./FormCheckbox.html">Form Checkbox</RouterLink> — Custom checkbox input and checkbox group to replace the browser default checkbox input, built on top of semantic and accessible markup. Optionally supports switch styling.
         </b-list-group-item>
         <b-list-group-item>
-            <RouterLink to="./FormGroup.html">Form Group</RouterLink> — The easiest way to add some structure to forms.. 
+            <RouterLink to="./FormGroup.html">Form Group</RouterLink> — The easiest way to add some structure to forms.
         </b-list-group-item>
         <b-list-group-item>
             <RouterLink to="./FormInput.html">Form Input</RouterLink> — Create various type inputs such as: text, password, number, url, email, search, range, date and more. 
