@@ -1,6 +1,6 @@
 <template>
-  <svg class="bootstrap-icon" :class="cssClasses" v-bind="$attrs">
-    <g :transform="svgTransform" transform-origin="center">
+  <svg class="bootstrap-icon" :class="cssClasses" v-bind="baseAttrs">
+    <g :transform="svgTransform">
       <use :xlink:href="`${svgSprite}#${icon}`" />
     </g>
   </svg>
@@ -8,87 +8,77 @@
 
 <script lang="ts">
 // https://github.com/dvuckovic/vue3-bootstrap-icons
-import {defineComponent, PropType} from 'vue'
+import {computed, defineComponent, PropType} from 'vue'
 import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg'
 import {Animation, ColorVariant, IconSize} from '../types'
+import {mathMax} from '../utils/math'
+import {toFloat} from '../utils/number'
 
 export default /* #__PURE__ */ defineComponent({
   name: 'BIcon',
   props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-
-    variant: {
-      type: String as PropType<ColorVariant>,
-    },
-
-    size: {
-      type: String as PropType<IconSize>,
-    },
-
-    flipH: {
-      type: Boolean,
-    },
-
-    flipV: {
-      type: Boolean,
-    },
-
+    icon: {type: String, required: true},
+    variant: {type: String as PropType<ColorVariant>},
+    size: {type: String as PropType<IconSize>},
+    flipH: {type: Boolean, default: false},
+    flipV: {type: Boolean, default: false},
     rotate: {
       type: [String, Number],
       validator: (value: string | number) => value >= -360 && value <= 360,
     },
-
-    animation: {
-      type: String as PropType<Animation>,
-    },
+    scale: {type: [Number, String], default: 1},
+    animation: {type: String as PropType<Animation>},
   },
+  setup(props) {
+    const computedScale = computed(() => mathMax(toFloat(props.scale, 1), 0) || 1)
+    const hasScale = computed(() => props.flipH || props.flipV || computedScale.value !== 1)
+    const hasTransforms = computed(() => hasScale.value || props.rotate)
 
-  computed: {
-    cssClasses(): string[] {
+    const transforms = computed(() =>
+      [
+        hasTransforms.value ? 'translate(8 8)' : null,
+        hasScale.value
+          ? `scale(${(props.flipH ? -1 : 1) * computedScale.value} ${
+              (props.flipV ? -1 : 1) * computedScale.value
+            })`
+          : null,
+        props.rotate ? `rotate(${props.rotate})` : null,
+        hasTransforms.value ? 'translate(-8 -8)' : null,
+      ].filter((p) => p)
+    )
+
+    const cssClasses = computed((): string[] => {
       const classes = []
 
-      if (this.variant) classes.push(`bootstrap-icon--variant-${this.variant}`)
-      if (this.size) classes.push(`bootstrap-icon--size-${this.size}`)
-      if (this.animation) classes.push(`bootstrap-icon--animation-${this.animation}`)
+      if (props.variant) classes.push(`bootstrap-icon--variant-${props.variant}`)
+      if (props.size) classes.push(`bootstrap-icon--size-${props.size}`)
+      if (props.animation) classes.push(`bootstrap-icon--animation-${props.animation}`)
 
       return classes
-    },
+    })
 
-    svgTransform(): string {
-      if (!this.flipH && !this.flipV && !this.rotate) return ''
+    const baseAttrs = {
+      'viewBox': '0 0 16 16',
+      'focusable': 'false',
+      'role': 'img',
+      'aria-label': 'icon',
+      'xmlns': 'http://www.w3.org/2000/svg',
+    }
 
-      let scale
-      let rotate
+    const svgTransform = computed((): string | undefined => transforms.value.join(' ') || undefined)
+    const svgSprite = computed(() => BootstrapIcons)
 
-      if (this.flipV && this.flipH) {
-        scale = '-1 -1'
-      } else if (this.flipH) {
-        scale = '-1 1'
-      } else if (this.flipV) {
-        scale = '1 -1'
-      }
-
-      if (this.rotate) {
-        // eslint-disable-next-line prefer-destructuring
-        rotate = this.rotate
-      }
-
-      return (scale ? `scale(${scale})` : '') + (rotate ? `rotate(${rotate})` : '')
-    },
-
-    svgSprite() {
-      return BootstrapIcons
-    },
-  },
-
-  methods: {
-    upperFirst(str: string | unknown) {
+    const upperFirst = (str: string | unknown) => {
       if (typeof str !== 'string') return str
       return str.charAt(0).toUpperCase() + str.slice(1)
-    },
+    }
+
+    return {
+      baseAttrs,
+      cssClasses,
+      svgTransform,
+      svgSprite,
+    }
   },
 })
 </script>

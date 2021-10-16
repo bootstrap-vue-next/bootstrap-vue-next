@@ -1113,25 +1113,31 @@
       <button class="btn btn-primary" @click="paginationPageNumber = 4">Set to page 4</button>
     </div>
     <h5 class="my-3">Icons</h5>
-    <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
+    <div class="h3">
+      <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
+    </div>
 
     <h6>Variants</h6>
-    <b-icon icon="exclamation-circle-fill" variant="success" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" variant="warning" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" variant="danger" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" variant="info" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" variant="primary" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" variant="secondary" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" variant="dark" class="m-2"></b-icon>
+    <div class="h3">
+      <b-icon icon="exclamation-circle-fill" variant="success" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" variant="warning" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" variant="danger" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" variant="info" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" variant="primary" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" variant="secondary" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" variant="dark" class="m-2"></b-icon>
+    </div>
 
     <h6>Sizes</h6>
-    <b-icon icon="exclamation-circle-fill" size="sm" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" size="md" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" size="lg" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" size="2x" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" size="3x" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" size="4x" class="m-2"></b-icon>
-    <b-icon icon="exclamation-circle-fill" size="5x" class="m-2"></b-icon>
+    <div class="h3">
+      <b-icon icon="exclamation-circle-fill" size="sm" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" size="md" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" size="lg" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" size="2x" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" size="3x" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" size="4x" class="m-2"></b-icon>
+      <b-icon icon="exclamation-circle-fill" size="5x" class="m-2"></b-icon>
+    </div>
 
     <h5>Overlay</h5>
     <div>
