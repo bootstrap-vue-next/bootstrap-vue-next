@@ -1,36 +1,31 @@
-<template>
-  <svg class="bootstrap-icon" :class="cssClasses" v-bind="baseAttrs">
-    <g :transform="svgTransform">
-      <use :xlink:href="`${svgSprite}#${icon}`" />
-    </g>
-  </svg>
-</template>
-
 <script lang="ts">
 // https://github.com/dvuckovic/vue3-bootstrap-icons
-import {computed, defineComponent, PropType} from 'vue'
+import {computed, defineComponent, h, PropType} from 'vue'
 import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg'
-import {Animation, ColorVariant, IconSize} from '../types'
-import {mathMax} from '../utils/math'
-import {toFloat} from '../utils/number'
+import {Animation, ColorVariant, IconSize} from '../../types'
+import {mathMax} from '../../utils/math'
+import {toFloat} from '../../utils/number'
 
 export default /* #__PURE__ */ defineComponent({
   name: 'BIcon',
   props: {
-    icon: {type: String, required: true},
-    variant: {type: String as PropType<ColorVariant>},
-    size: {type: String as PropType<IconSize>},
+    animation: {type: String as PropType<Animation>},
     flipH: {type: Boolean, default: false},
     flipV: {type: Boolean, default: false},
+    fontScale: {type: [Number, String], default: 1},
+    icon: {type: String, required: true},
     rotate: {
       type: [String, Number],
       validator: (value: string | number) => value >= -360 && value <= 360,
     },
     scale: {type: [Number, String], default: 1},
-    animation: {type: String as PropType<Animation>},
+    size: {type: String as PropType<IconSize>},
+    variant: {type: String as PropType<ColorVariant>},
   },
   setup(props) {
-    const computedScale = computed(() => mathMax(toFloat(props.scale, 1), 0) || 1)
+    const computedFontScale = computed(() => mathMax(toFloat(props.scale, 1), 0) || 1)
+    const computedScale = computed(() => mathMax(toFloat(props.fontScale, 1), 0) || 1)
+
     const hasScale = computed(() => props.flipH || props.flipV || computedScale.value !== 1)
     const hasTransforms = computed(() => hasScale.value || props.rotate)
 
@@ -76,9 +71,36 @@ export default /* #__PURE__ */ defineComponent({
     return {
       baseAttrs,
       cssClasses,
+      computedFontScale,
       svgTransform,
       svgSprite,
     }
+  },
+  render() {
+    const renderIcon = h(
+      'use',
+      {
+        'xlink:href': `${this.svgSprite}#${this.icon}`,
+      },
+      ''
+    )
+    const $inner = h(
+      'g',
+      {
+        transform: this.svgTransform,
+      },
+      renderIcon
+    )
+
+    return h(
+      'svg',
+      {
+        class: ['bootstrap-icon', this.cssClasses],
+        ...this.baseAttrs,
+        fontSize: this.computedFontScale === 1 ? null : `${this.computedFontScale * 100}%`,
+      },
+      $inner
+    )
   },
 })
 </script>
