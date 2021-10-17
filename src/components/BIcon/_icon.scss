@@ -1,8 +1,8 @@
 .bootstrap-icon {
   fill: currentColor;
-  width: 1em;
-  height: 1em;
-  font-size: 1em;
+  //   width: 1em;
+  //   height: 1em;
+  //   font-size: 1em;
   margin-bottom: 0.125em;
   vertical-align: middle;
   overflow: visible;
@@ -39,6 +39,26 @@
     &-light {
       color: var(--bs-light);
     }
+
+    &-white {
+      color: var(--bs-white);
+    }
+
+    &-body {
+      color: var(--bs-body);
+    }
+
+    &-muted {
+      color: var(--bs-muted);
+    }
+
+    &-black-50 {
+      color: var(--bs-black-50);
+    }
+
+    &-white-50 {
+      color: var(--bs-white-50);
+    }
   }
 
   &--size {
@@ -74,34 +94,136 @@
   &--animation {
     &-cylon {
       animation: bootstrap-icon-animation-cylon 0.75s ease-in-out infinite alternate;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     &-cylon-vertical {
       animation: bootstrap-icon-animation-cylon-vertical 0.75s ease-in-out infinite alternate;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     &-fade {
       animation: bootstrap-icon-animation-fade 0.75s ease-in-out infinite alternate;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     &-spin {
       animation: bootstrap-icon-animation-spin 2s linear infinite normal;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     &-spin-reverse {
       animation: bootstrap-icon-animation-spin 2s linear infinite reverse;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     &-spin-pulse {
       animation: bootstrap-icon-animation-spin 1s steps(8) infinite normal;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     &-spin-reverse-pulse {
       animation: bootstrap-icon-animation-spin 1s steps(8) infinite reverse;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     &-throb {
       animation: bootstrap-icon-animation-throb 0.75s ease-in-out infinite alternate;
+      transform-origin: center;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+  }
+}
+
+.b-icon-stack.bootstrap-icon {
+  .bootstrap-icon {
+    &--animation {
+      &-cylon > g {
+        animation: bootstrap-icon-animation-cylon 0.75s ease-in-out infinite alternate;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+
+      &-cylon-vertical > g {
+        animation: bootstrap-icon-animation-cylon-vertical 0.75s ease-in-out infinite alternate;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+
+      &-fade > g {
+        animation: bootstrap-icon-animation-fade 0.75s ease-in-out infinite alternate;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+
+      &-spin > g {
+        animation: bootstrap-icon-animation-spin 2s linear infinite normal;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+
+      &-spin-reverse > g {
+        animation: bootstrap-icon-animation-spin 2s linear infinite reverse;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+
+      &-spin-pulse > g {
+        animation: bootstrap-icon-animation-spin 1s steps(8) infinite normal;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+
+      &-spin-reverse-pulse > g {
+        animation: bootstrap-icon-animation-spin 1s steps(8) infinite reverse;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+
+      &-throb > g {
+        animation: bootstrap-icon-animation-throb 0.75s ease-in-out infinite alternate;
+        transform-origin: center;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
     }
   }
 }
