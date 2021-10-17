@@ -23,8 +23,8 @@ export default /* #__PURE__ */ defineComponent({
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props) {
-    const computedFontScale = computed(() => mathMax(toFloat(props.scale, 1), 0) || 1)
-    const computedScale = computed(() => mathMax(toFloat(props.fontScale, 1), 0) || 1)
+    const computedFontScale = computed(() => mathMax(toFloat(props.fontScale, 1), 0) || 1)
+    const computedScale = computed(() => mathMax(toFloat(props.scale, 1), 0) || 1)
 
     const hasScale = computed(() => props.flipH || props.flipV || computedScale.value !== 1)
     const hasTransforms = computed(() => hasScale.value || props.rotate)
@@ -97,7 +97,9 @@ export default /* #__PURE__ */ defineComponent({
       {
         class: ['bootstrap-icon', this.cssClasses],
         ...this.baseAttrs,
-        fontSize: this.computedFontScale === 1 ? null : `${this.computedFontScale * 100}%`,
+        style: {
+          'font-size': this.computedFontScale === 1 ? null : `${this.computedFontScale * 100}%`,
+        },
       },
       $inner
     )
