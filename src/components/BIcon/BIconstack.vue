@@ -1,6 +1,6 @@
 <script lang="ts">
 import {normalizeSlot} from '../../utils/normalize-slot'
-import {computed, defineComponent, h, PropType} from 'vue'
+import {defineComponent, h, PropType} from 'vue'
 import {Animation, ColorVariant, IconSize} from '../../types'
 import BIconBase from './BIconBase.vue'
 

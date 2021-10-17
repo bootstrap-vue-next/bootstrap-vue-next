@@ -903,6 +903,44 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 This is a <Badge type="warning" text="non-standard" /> component.
 
+## Icon
+
+### Properties
+
+| Property     | Status                                                                               | Observations                                                      |
+| ------------ | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| `animation`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `flip-h`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `flip-v`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `font-scale` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `icon`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | icons are imported as svg-sprites. Individual icons not available |
+| `rotate`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `scale`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `shift-h`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `shift-v`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `size`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3                                            |
+| `stacked`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `title`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+| `variant`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
+
+## IconStack
+
+### Properties
+
+| Property     | Status                                                                               | Observations           |
+| ------------ | ------------------------------------------------------------------------------------ | ---------------------- |
+| `animation`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `flip-h`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `flip-v`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `font-scale` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `rotate`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `scale`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `shift-h`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `shift-v`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `size`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3 |
+| `title`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+| `variant`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
+
 ## Image
 
 This is a <Badge type="warning" text="non-standard" /> component.

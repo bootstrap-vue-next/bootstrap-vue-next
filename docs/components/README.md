@@ -47,6 +47,9 @@ BootstrapVue 3 components
             <RouterLink to="./FormSelect.html">Form Select</RouterLink> — Bootstrap custom select using custom styles. 
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Icon.html">Icon</RouterLink> — Icons designed to work with Bootstrap components, from form controls to navigation. 
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Image.html">Image</RouterLink> — Image component with responsive behavior. 
         </b-list-group-item>
         <b-list-group-item>
