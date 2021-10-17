@@ -19,14 +19,19 @@ export default /* #__PURE__ */ defineComponent({
       validator: (value: string | number) => value >= -360 && value <= 360,
     },
     scale: {type: [Number, String], default: 1},
+    shiftH: {type: [Number, String], default: 0},
+    shiftV: {type: [Number, String], default: 0},
     size: {type: String as PropType<IconSize>},
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props) {
     const computedFontScale = computed(() => mathMax(toFloat(props.fontScale, 1), 0) || 1)
     const computedScale = computed(() => mathMax(toFloat(props.scale, 1), 0) || 1)
+    const computedShiftH = computed(() => toFloat(props.shiftH, 0))
+    const computedShiftV = computed(() => toFloat(props.shiftV, 0))
 
     const hasScale = computed(() => props.flipH || props.flipV || computedScale.value !== 1)
+    const hasShift = computed(() => computedShiftH.value || computedShiftV.value)
     const hasTransforms = computed(() => hasScale.value || props.rotate)
 
     const transforms = computed(() =>
@@ -72,11 +77,16 @@ export default /* #__PURE__ */ defineComponent({
       baseAttrs,
       cssClasses,
       computedFontScale,
+      computedShiftH,
+      computedShiftV,
+      hasShift,
       svgTransform,
       svgSprite,
     }
   },
   render() {
+    const props = this.$props
+
     const renderIcon = h(
       'use',
       {
@@ -84,13 +94,26 @@ export default /* #__PURE__ */ defineComponent({
       },
       ''
     )
-    const $inner = h(
+    let $inner = h(
       'g',
       {
         transform: this.svgTransform,
       },
       renderIcon
     )
+
+    // If needed, we wrap in an additional `<g>` in order to handle the shifting
+    if (this.hasShift) {
+      $inner = h(
+        'g',
+        {
+          transform: `translate(${(16 * this.computedShiftH) / 16} ${
+            (-16 * this.computedShiftV) / 16
+          })`,
+        },
+        [$inner]
+      )
+    }
 
     return h(
       'svg',
