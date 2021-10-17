@@ -47,6 +47,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/FormInput.md',
             '/components/FormRadio.md',
             '/components/FormSelect.md',
+            '/components/Icon.md',
             '/components/Image.md',
             '/components/ListGroup.md',
             '/components/Overlay.md',
