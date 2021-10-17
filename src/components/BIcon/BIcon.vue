@@ -16,13 +16,15 @@ export default /* #__PURE__ */ defineComponent({
     icon: {type: String, required: true},
     rotate: {
       type: [String, Number],
+      required: false,
       validator: (value: string | number) => value >= -360 && value <= 360,
     },
     scale: {type: [Number, String], default: 1},
     shiftH: {type: [Number, String], default: 0},
     shiftV: {type: [Number, String], default: 0},
-    size: {type: String as PropType<IconSize>},
-    variant: {type: String as PropType<ColorVariant>},
+    size: {type: String as PropType<IconSize>, required: false},
+    title: {type: String, required: false},
+    variant: {type: String as PropType<ColorVariant>, required: false},
   },
   setup(props) {
     const computedFontScale = computed(() => mathMax(toFloat(props.fontScale, 1), 0) || 1)
@@ -115,6 +117,9 @@ export default /* #__PURE__ */ defineComponent({
       )
     }
 
+    const $title = props.title ? h('title', props.title) : null
+    const $content = [$title, $inner].filter((p) => p)
+
     return h(
       'svg',
       {
@@ -124,7 +129,7 @@ export default /* #__PURE__ */ defineComponent({
           'font-size': this.computedFontScale === 1 ? null : `${this.computedFontScale * 100}%`,
         },
       },
-      $inner
+      $content
     )
   },
 })
