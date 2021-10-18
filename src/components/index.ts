@@ -50,8 +50,10 @@ import BFormValidFeedback from './BForm/BFormValidFeedback.vue'
 import BIcon from './BIcon/BIcon.vue'
 import BIconstack from './BIcon/BIconstack.vue'
 import BImg from './BImg.vue'
-import BInputGroup from './BInputGroup.vue'
-import BInputGroupText from './BInputGroupText.vue'
+import BInputGroup from './BInputGroup/BInputGroup.vue'
+import BInputGroupAppend from './BInputGroup/BInputGroupAppend.vue'
+import BInputGroupPrepend from './BInputGroup/BInputGroupPrepend.vue'
+import BInputGroupText from './BInputGroup/BInputGroupText.vue'
 import BLink from './BLink/BLink.vue'
 import BListGroup from './BListGroup/BListGroup.vue'
 import BListGroupItem from './BListGroup/BListGroupItem.vue'
@@ -126,6 +128,8 @@ export default {
   BIconstack,
   BImg,
   BInputGroup,
+  BInputGroupAppend,
+  BInputGroupPrepend,
   BInputGroupText,
   BLink,
   BListGroup,

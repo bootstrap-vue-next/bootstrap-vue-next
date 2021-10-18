@@ -233,7 +233,7 @@ export default defineComponent({
           $label = h(
             labelTag,
             {
-              class: 'sr-only',
+              class: 'visually-hidden',
               id: labelId,
               for: props.labelFor || null,
             },
