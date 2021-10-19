@@ -10,7 +10,7 @@ import {defineComponent} from 'vue'
 export default defineComponent({
   name: 'BInputGroupText',
   props: {
-    tag: {type: String, default: 'span'},
+    tag: {type: String, default: 'div'},
   },
 })
 </script>

@@ -53,6 +53,9 @@ BootstrapVue 3 components
             <RouterLink to="./Image.html">Image</RouterLink> — Image component with responsive behavior. 
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./InputGroup.html">Input Group</RouterLink> — Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs. 
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./ListGroup.html">List Group</RouterLink> — A flexible and powerful component for displaying a series of content. List Group items can be modified to support just about any content within.
         </b-list-group-item>
         <b-list-group-item>
