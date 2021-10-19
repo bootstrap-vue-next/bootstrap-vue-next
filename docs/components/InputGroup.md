@@ -523,7 +523,85 @@ input groups. However, the inputs inside the input group do support contextual s
 
 #### Properties
 
-| Property | Type      | Default | Description                                                         |
-| -------- | --------- | ------- | ------------------------------------------------------------------- |
-| `append` | `String`  |         | Text to append to the input group                                   |
-| `append` | `Boolean` | `false` | When set, renders a flush list group with no left and right borders |
+| Property       | Type     | Default | Description                                                                                                                   |
+| -------------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `append`       | `String` |         | Text to append to the input group                                                                                             |
+| `append-html`  | `String` |         | HTML string to append to the input group. Has precedence over 'append' prop                                                   |
+| `id`           | `String` |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `prepend`      | `String` |         | Text to prepend to the input group                                                                                            |
+| `prepend-html` | `String` |         | HTML string to prepend to the input group. Has precedence over 'append' prop                                                  |
+| `size`         | `String` |         | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                     |
+| `tag`          | `String` | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
+
+#### Slots
+
+| Name      | Scoped | Description                         |
+| --------- | ------ | ----------------------------------- |
+| `append`  | No     | Append attachment                   |
+| `default` | No     | Content to place in the input group |
+| `prepend` | No     | Prepend attachment                  |
+
+### `<b-input-group-prepend>`
+
+**Note** Bootstrap 5 dropped `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-prepend>` is added for compatability reasons.
+
+| Property  | Type      | Default | Description                                                                                                                   |
+| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
+| `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
+
+#### Slots
+
+| Name      | Scoped | Description                                 |
+| --------- | ------ | ------------------------------------------- |
+| `default` | No     | Content to place in the input group prepend |
+
+### `<b-input-group-Apppend>`
+
+**Note** Bootstrap 5 dropped `.input-group-append`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-append>` is added for compatability reasons.
+
+| Property  | Type      | Default | Description                                                                                                                   |
+| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
+| `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
+
+#### Slots
+
+| Name      | Scoped | Description                                |
+| --------- | ------ | ------------------------------------------ |
+| `default` | No     | Content to place in the input group append |
+
+### `<b-input-group-text>`
+
+**Note** `<b-input-group-text>` is added for compatability reasons.
+
+| Property | Type     | Default | Description                                               |
+| -------- | -------- | ------- | --------------------------------------------------------- |
+| `tag`    | `String` | `div`   | Specify the HTML tag to render instead of the default tag |
+
+#### Slots
+
+| Name      | Scoped | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| `default` | No     | Content to place in the input group text |
+
+### `<b-input-group-addon>`
+
+**Note** `<b-input-group-addon>` is added for compatability reasons.
+
+#### Properties
+
+| Property  | Type      | Default | Description                                                                                                                   |
+| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `append`  | `Boolean` | `false` | When set to 'true' sets the addon as being appended. defaults to 'false' which is prepended                                   |
+| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
+| `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
+
+#### Slots
+
+| Name      | Scoped | Description                               |
+| --------- | ------ | ----------------------------------------- |
+| `default` | No     | Content to place in the input group addon |

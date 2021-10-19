@@ -30,7 +30,7 @@ export default defineComponent({
     id: {type: String, required: false},
     prepend: {type: String, required: false},
     prependHtml: {type: String, required: false},
-    size: {type: String as PropType<InputSize>},
+    size: {type: String as PropType<InputSize>, required: false},
     tag: {type: String, default: 'div'},
   },
   setup(props) {

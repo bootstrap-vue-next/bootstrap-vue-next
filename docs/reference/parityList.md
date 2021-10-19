@@ -968,6 +968,97 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Input Group
 
+### Properties
+
+| Property       | Status                                                                               | Observations |
+| -------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `append`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `append-html`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `prepend`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `prepend-html` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `size`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tag`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `append`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `prepend` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Input Group Addon
+
+**Note** added for compatability reasons
+
+### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `append`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `is-text` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Input Group Append
+
+**Note** added for compatability reasons
+
+### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `id`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `is-text` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Input Group Prepend
+
+**Note** added for compatability reasons
+
+### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `id`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `is-text` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tag`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+## Input Group Text
+
+**Note** added for compatability reasons
+
+### Properties
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| `tag`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Jumbotron
 
 This components was suppresed in Boostrap `v5`.
