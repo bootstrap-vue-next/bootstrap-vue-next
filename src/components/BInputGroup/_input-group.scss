@@ -1,3 +1,15 @@
+$border-radius-lg: 0.3rem !default;
+$border-radius-sm: 0.2rem !default;
+$font-size-base: 1rem !default;
+
+$font-size-sm: $font-size-base * 0.875 !default;
+$font-size-lg: $font-size-base * 1.25 !default;
+
+$input-padding-x-sm: 0.5rem !default;
+$input-padding-x-lg: 1rem !default;
+$input-padding-y-sm: 0.25rem !default;
+$input-padding-y-lg: 0.5rem !default;
+
 $bv-input-group-dropdown-patched: false !default;
 
 // Make sure to include these style definitions only once
@@ -26,4 +38,30 @@ $bv-input-group-dropdown-patched: false !default;
       }
     }
   }
+}
+
+.input-group-lg .input-group-append > .form-control,
+.input-group-lg .input-group-append > .form-select,
+.input-group-lg .input-group-append > .input-group-text,
+.input-group-lg .input-group-append > .btn,
+.input-group-lg .input-group-prepend > .form-control,
+.input-group-lg .input-group-prepend > .form-select,
+.input-group-lg .input-group-prepend > .input-group-text,
+.input-group-lg .input-group-prepend > .btn {
+  padding: $input-padding-y-lg $input-padding-x-lg;
+  font-size: $font-size-lg;
+  border-radius: $border-radius-lg;
+}
+
+.input-group-sm .input-group-append > .form-control,
+.input-group-sm .input-group-append > .form-select,
+.input-group-sm .input-group-append > .input-group-text,
+.input-group-sm .input-group-append > .btn,
+.input-group-sm .input-group-prepend > .form-control,
+.input-group-sm .input-group-prepend > .form-select,
+.input-group-sm .input-group-prepend > .input-group-text,
+.input-group-sm .input-group-prepend > .btn {
+  padding: $input-padding-y-sm $input-padding-x-sm;
+  font-size: $font-size-sm;
+  border-radius: $border-radius-sm;
 }
