@@ -57,7 +57,7 @@
 
 You can attach addons using either props, named slots and/or sub-components.
 
-**Note** Bootstrap 5 dropped `.input-group-append` and `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. The sub-components are added for compatability reasons.
+**Note** Bootstrap 5 dropped `.input-group-append` and `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. The sub-components are added for compatibility reasons.
 
 ### Using `prepend` and `append` props
 
@@ -543,7 +543,7 @@ input groups. However, the inputs inside the input group do support contextual s
 
 ### `<b-input-group-prepend>`
 
-**Note** Bootstrap 5 dropped `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-prepend>` is added for compatability reasons.
+**Note** Bootstrap 5 dropped `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-prepend>` is added for compatibility reasons.
 
 | Property  | Type      | Default | Description                                                                                                                   |
 | --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -559,7 +559,7 @@ input groups. However, the inputs inside the input group do support contextual s
 
 ### `<b-input-group-Apppend>`
 
-**Note** Bootstrap 5 dropped `.input-group-append`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-append>` is added for compatability reasons.
+**Note** Bootstrap 5 dropped `.input-group-append`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-append>` is added for compatibility reasons.
 
 | Property  | Type      | Default | Description                                                                                                                   |
 | --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -575,7 +575,7 @@ input groups. However, the inputs inside the input group do support contextual s
 
 ### `<b-input-group-text>`
 
-**Note** `<b-input-group-text>` is added for compatability reasons.
+**Note** `<b-input-group-text>` is added for compatibility reasons.
 
 | Property | Type     | Default | Description                                               |
 | -------- | -------- | ------- | --------------------------------------------------------- |
@@ -589,7 +589,7 @@ input groups. However, the inputs inside the input group do support contextual s
 
 ### `<b-input-group-addon>`
 
-**Note** `<b-input-group-addon>` is added for compatability reasons.
+**Note** `<b-input-group-addon>` is added for compatibility reasons.
 
 #### Properties
 
