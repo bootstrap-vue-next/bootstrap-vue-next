@@ -395,7 +395,7 @@ associated with a single input. It is best to use the default rendered markup th
 
 When placing multiple form controls inside a `<b-form-group>` (and you are not nesting
 `<b-form-group>` components), it is recommended to give each control its own associated `label`
-(which may be visually hidden using the `.sr-only` class) and set the labels `for` attribute to the
+(which may be visually hidden using the `.visually-hidden` class) and set the labels `for` attribute to the
 `id` of the associated input control. Alternatively, you can set the `aria-label` attribute on each
 input control instead of using a `label`. For `b-form-radio` and `b-form-checkbox` (or the
 group versions), you do not need to set individual labels, as the rendered markup for these types of

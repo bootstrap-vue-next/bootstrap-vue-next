@@ -1028,21 +1028,21 @@ font scaled by 125%).
         </template>
         <b-dropdown-item-button>
           <b-icon icon="lock-fill" aria-hidden="true"></b-icon>
-          Locked <span class="sr-only">(Click to unlock)</span>
+          Locked <span class="visually-hidden">(Click to unlock)</span>
         </b-dropdown-item-button>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-group header="Choose options" class="small">
           <b-dropdown-item-button>
             <b-icon icon="blank" aria-hidden="true"></b-icon>
-            Option A <span class="sr-only">(Not selected)</span>
+            Option A <span class="visually-hidden">(Not selected)</span>
           </b-dropdown-item-button>
           <b-dropdown-item-button>
             <b-icon icon="check" aria-hidden="true"></b-icon>
-            Option B <span class="sr-only">(Selected)</span>
+            Option B <span class="visually-hidden">(Selected)</span>
           </b-dropdown-item-button>
           <b-dropdown-item-button>
             <b-icon icon="blank" aria-hidden="true"></b-icon>
-            Option C <span class="sr-only">(Not selected)</span>
+            Option C <span class="visually-hidden">(Not selected)</span>
           </b-dropdown-item-button>
         </b-dropdown-group>
         <b-dropdown-divider></b-dropdown-divider>
@@ -1067,21 +1067,21 @@ font scaled by 125%).
       </template>
       <b-dropdown-item-button>
         <b-icon icon="lock-fill" aria-hidden="true"></b-icon>
-        Locked <span class="sr-only">(Click to unlock)</span>
+        Locked <span class="visually-hidden">(Click to unlock)</span>
       </b-dropdown-item-button>
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-group header="Choose options" class="small">
         <b-dropdown-item-button>
           <b-icon icon="blank" aria-hidden="true"></b-icon>
-          Option A <span class="sr-only">(Not selected)</span>
+          Option A <span class="visually-hidden">(Not selected)</span>
         </b-dropdown-item-button>
         <b-dropdown-item-button>
           <b-icon icon="check" aria-hidden="true"></b-icon>
-          Option B <span class="sr-only">(Selected)</span>
+          Option B <span class="visually-hidden">(Selected)</span>
         </b-dropdown-item-button>
         <b-dropdown-item-button>
           <b-icon icon="blank" aria-hidden="true"></b-icon>
-          Option C <span class="sr-only">(Not selected)</span>
+          Option C <span class="visually-hidden">(Not selected)</span>
         </b-dropdown-item-button>
       </b-dropdown-group>
       <b-dropdown-divider></b-dropdown-divider>

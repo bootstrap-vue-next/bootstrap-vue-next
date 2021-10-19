@@ -214,7 +214,7 @@ Use spinners within buttons to indicate an action is currently processing or tak
     <b-card>
       <b-button variant="primary" disabled>
         <b-spinner small></b-spinner>
-        <span class="sr-only">Loading...</span>
+        <span class="visually-hidden">Loading...</span>
       </b-button>
       &nbsp;
       <b-button variant="primary" disabled>
@@ -227,7 +227,7 @@ Use spinners within buttons to indicate an action is currently processing or tak
 ```html
 <b-button variant="primary" disabled>
   <b-spinner small></b-spinner>
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </b-button>
 
 <b-button variant="primary" disabled>
@@ -240,7 +240,7 @@ Use spinners within buttons to indicate an action is currently processing or tak
     <b-card>
       <b-button variant="primary" disabled>
         <b-spinner small type="grow"></b-spinner>
-        <span class="sr-only">Loading...</span>
+        <span class="visually-hidden">Loading...</span>
       </b-button>
       &nbsp;
       <b-button variant="primary" disabled>
@@ -253,7 +253,7 @@ Use spinners within buttons to indicate an action is currently processing or tak
 ```html
 <b-button variant="primary" disabled>
   <b-spinner small type="grow"></b-spinner>
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </b-button>
 
 <b-button variant="primary" disabled>

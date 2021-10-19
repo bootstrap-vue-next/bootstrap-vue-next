@@ -315,7 +315,7 @@ the addon:
 </div>
 ```
 
-In the above example, we have use the `.sr-only` class on a `<span>` to visually hide the custom
+In the above example, we have use the `.visually-hidden` class on a `<span>` to visually hide the custom
 control's label content (while making them still accessible to screen reader users), and used the
 utility class `.mr-n2` to add a negative right margin to compensate for the "gutter" space between
 the control and the hidden label.

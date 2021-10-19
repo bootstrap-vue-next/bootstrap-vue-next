@@ -718,7 +718,7 @@ to `true`. This is useful when the dropdown is to be displayed as an icon.
 <ClientOnly>
   <b-card>
     <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
-      <template #button-content> &#x1f50d;<span class="sr-only">Search</span> </template>
+      <template #button-content> &#x1f50d;<span class="visually-hidden">Search</span> </template>
       <b-dropdown-item href="#">Action</b-dropdown-item>
       <b-dropdown-item href="#">Another action</b-dropdown-item>
       <b-dropdown-item href="#">Something else here...</b-dropdown-item>
@@ -729,7 +729,7 @@ to `true`. This is useful when the dropdown is to be displayed as an icon.
 ```html
 <div>
   <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
-    <template #button-content> &#x1f50d;<span class="sr-only">Search</span> </template>
+    <template #button-content> &#x1f50d;<span class="visually-hidden">Search</span> </template>
     <b-dropdown-item href="#">Action</b-dropdown-item>
     <b-dropdown-item href="#">Another action</b-dropdown-item>
     <b-dropdown-item href="#">Something else here...</b-dropdown-item>
@@ -1087,7 +1087,7 @@ the dropdown menu, ensure they are wrapped with a plain `<li>`.
 | `split-variant`                                              | `String`                        |                   | Applies one of the Bootstrap theme color variants to the split button. Defaults to the `variant` prop value                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `text`                                                       | `String`                        |                   | Text to place in the toggle button, or in the split button is split mode                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `toggle-class`                                               | `Array` or `Object` or `String` |                   | CSS class (or classes) to add to the toggle button                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `toggle-text`                                                | `String`                        | `Toggle dropdown` | ARIA label (sr-only) to set on the toggle when in split mode                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `toggle-text`                                                | `String`                        | `Toggle dropdown` | ARIA label (visually-hidden) to set on the toggle when in split mode                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `variant`                                                    | `String`                        | `secondary`       | Applies one of the Bootstrap theme color variants to the component                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 #### Slots
