@@ -1,5 +1,23 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
+  <b-card>
+    <div>
+      <b-input-group prepend-html="<strong>def</strong>" append-html="<strong>abc</strong>">
+        <b-form-input></b-form-input>
+      </b-input-group>
+
+      <b-input-group prepend="0" append="100" class="mt-3">
+        <b-form-input type="range" min="0" max="100"></b-form-input>
+      </b-input-group>
+    </div>
+  </b-card>
+  <b-card>
+    <div class="input-group mb-3">
+      <span class="input-group-text">$</span>
+      <input id="customRange1" type="range" class="form-range" />
+      <span class="input-group-text">.00</span>
+    </div>
+  </b-card>
   <b-container class="mt-4" fluid="sm">
     <b-form-input v-model="password" :type="showPassword ? 'text' : 'password'" />
     <b-form-input :type="showPassword ? 'text' : 'password'" />
