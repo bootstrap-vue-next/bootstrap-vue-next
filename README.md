@@ -26,9 +26,9 @@
   
   <br>
   
-  <a href="https://github.com/cdmoro/bootstrap-vue-3">
+  <!--a href="https://github.com/cdmoro/bootstrap-vue-3">
     <img src="https://flat.badgen.net/david/dep/cdmoro/bootstrap-vue-3" alt="Dependencies status">
-  </a>
+  </a-->
   
   <a href="https://www.npmjs.com/package/bootstrap-vue-3">
     <img src="https://flat.badgen.net/npm/dt/bootstrap-vue-3" alt="npm downloads">
