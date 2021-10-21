@@ -1256,10 +1256,10 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/bootstrap@^5.0.16":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@types/bootstrap/-/bootstrap-5.1.1.tgz"
-  integrity sha512-W/fEBlqwaJFh+3sCz/H88LPsLt/zLsEECFlrAOkrRPjWuo/ETl8u0JefIerCdc8+WukowQS1f60eIJOwkCBwhg==
+"@types/bootstrap@^5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.1.6.tgz#669a0cd7fb37bca12424e0d68f1f4704cfcdb780"
+  integrity sha512-3L6IvOCKyoVd3e4bgQTH7VBPbuYEOG8IQbRcuZ0AbjfwPdRX+kVf5L/7mVt1EVM+D/BVw4+71rtp7Z8yYROlpQ==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/jquery" "*"
@@ -2505,7 +2505,7 @@ bootstrap-icons@^1.5.0:
   resolved "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.5.0.tgz"
   integrity sha512-44feMc7DE1Ccpsas/1wioN8ewFJNquvi5FewA06wLnqct7CwMdGDVy41ieHaacogzDqLfG8nADIvMNp9e4bfbA==
 
-bootstrap@^5.0.2:
+bootstrap@^5.1.3:
   version "5.1.3"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.1.3.tgz#ba081b0c130f810fa70900acbc1c6d3c28fa8f34"
   integrity sha512-fcQztozJ8jToQWXxVuEyXWW+dSo8AiXWKwiSSrKWsRB/Qt+Ewwza+JWoLKiTuQLaEPhdNAJ7+Dosc9DOIqNy7Q==
@@ -7036,7 +7036,7 @@ vue-eslint-parser@^7.0.0, vue-eslint-parser@^7.10.0:
     lodash "^4.17.21"
     semver "^6.3.0"
 
-vue-loader@^16.3.0, vue-loader@^16.5.0:
+vue-loader@^16.5.0, vue-loader@^16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.8.1.tgz#354f12bc0897954158b71590f800295713a7792d"
   integrity sha512-V53TJbHmzjBhCG5OYI2JWy/aYDspz4oVHKxS43Iy212GjGIG1T3EsB3+GWXFm/1z5VwjdjLmdZUFYM70y77vtQ==
@@ -7064,7 +7064,7 @@ vue3-jest@^27.0.0-alpha.2:
     source-map "0.5.6"
     tsconfig "^7.0.0"
 
-vue@^3.0.0, vue@^3.2.3:
+vue@^3.2.20, vue@^3.2.3:
   version "3.2.20"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.20.tgz#940f8aa8bf3e3be78243ca582bad41fcd45ae3e6"
   integrity sha512-81JjEP4OGk9oO8+CU0h2nFPGgJBm9mNa3kdCX2k6FuRdrWrC+CNe+tOnuIeTg8EWwQuI+wwdra5Q7vSzp7p4Iw==
@@ -7075,7 +7075,7 @@ vue@^3.0.0, vue@^3.2.3:
     "@vue/server-renderer" "3.2.20"
     "@vue/shared" "3.2.20"
 
-vuepress@^2.0.0-beta.22:
+vuepress@^2.0.0-beta.26:
   version "2.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-2.0.0-beta.26.tgz#39fa19b44bea31203828fdc1ae203bf7fab5146a"
   integrity sha512-mh/UMfte9rhzGdRIwhsnDVUUpLsMD1R4DtY8IGruBextMKOFhO+vlwygUpJwR464hzsusCvpt8jzv7TrkJLadA==
