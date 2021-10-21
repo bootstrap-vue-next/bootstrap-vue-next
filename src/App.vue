@@ -695,9 +695,11 @@
 
     <b-button id="popover-target-1"> Hover Me </b-button>
     <b-popover target="popover-target-1" triggers="click" placement="top">
-      <template #title> Popover <em>Title</em> </template>
+      <template #title> Popover <em>Title</em> - {{ popoverInput }} </template>
       <b-button @click="consoleLog"> 456 </b-button>
       I am popover <b>component</b> content!
+      <b-form-input v-model="popoverInput" type="text" />
+      Name: <strong>{{ popoverInput }}</strong>
     </b-popover>
 
     <button
@@ -1480,6 +1482,7 @@ export default defineComponent({
     ])
 
     const name = ref('')
+    const popoverInput = ref('foo')
 
     const consoleLog = () => console.log('button clicked!')
 
@@ -1535,6 +1538,7 @@ export default defineComponent({
       showPassword,
       input,
       name,
+      popoverInput,
       consoleLog,
       tooltip,
       setTooltip,
