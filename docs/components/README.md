@@ -35,6 +35,9 @@ BootstrapVue 3 components
             <RouterLink to="./FormCheckbox.html">Form Checkbox</RouterLink> — Custom checkbox input and checkbox group to replace the browser default checkbox input, built on top of semantic and accessible markup. Optionally supports switch styling.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./FormGroup.html">Form Group</RouterLink> — The easiest way to add some structure to forms.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./FormInput.html">Form Input</RouterLink> — Create various type inputs such as: text, password, number, url, email, search, range, date and more. 
         </b-list-group-item>
         <b-list-group-item>
@@ -44,7 +47,13 @@ BootstrapVue 3 components
             <RouterLink to="./FormSelect.html">Form Select</RouterLink> — Bootstrap custom select using custom styles. 
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Icon.html">Icon</RouterLink> — Icons designed to work with Bootstrap components, from form controls to navigation. 
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Image.html">Image</RouterLink> — Image component with responsive behavior. 
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./InputGroup.html">Input Group</RouterLink> — Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs. 
         </b-list-group-item>
         <b-list-group-item>
             <RouterLink to="./ListGroup.html">List Group</RouterLink> — A flexible and powerful component for displaying a series of content. List Group items can be modified to support just about any content within.

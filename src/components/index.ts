@@ -35,27 +35,33 @@ import BDropdownText from './BDropdown/BDropdownText.vue'
 import BForm from './BForm/BForm.vue'
 import BFormCheckbox from './BFormCheckbox/BFormCheckbox.vue'
 import BFormCheckboxGroup from './BFormCheckbox/BFormCheckboxGroup.vue'
-import BFormRadio from './BFormRadio'
-import BFormRadioGroup from './BFormRadio/BFormRadioGroup.vue'
+import BFormFloatingLabel from './BFormFloatingLabel.vue'
+import BFormGroup from './BFormGroup/BFormGroup.vue'
 import BFormInput from './BFormInput/BFormInput.vue'
 import BFormInvalidFeedback from './BForm/BFormInvalidFeedback.vue'
-import BFormFloatingLabel from './BFormFloatingLabel.vue'
+import BFormRadio from './BFormRadio'
+import BFormRadioGroup from './BFormRadio/BFormRadioGroup.vue'
+import BFormRow from './BForm/BFormRow.vue'
 import BFormSelect from './BFormSelect/BFormSelect.vue'
 import BFormSelectOption from './BFormSelect/BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelect/BFormSelectOptionGroup.vue'
-import BFormText from './BFormText.vue'
+import BFormText from './BForm/BFormText.vue'
 import BFormValidFeedback from './BForm/BFormValidFeedback.vue'
-import BIcon from './BIcon.vue'
+import BIcon from './BIcon/BIcon.vue'
+import BIconstack from './BIcon/BIconstack.vue'
 import BImg from './BImg.vue'
-import BInputGroup from './BInputGroup.vue'
-import BInputGroupText from './BInputGroupText.vue'
+import BInputGroup from './BInputGroup/BInputGroup.vue'
+import BInputGroupAddon from './BInputGroup/BInputGroupAddon.vue'
+import BInputGroupAppend from './BInputGroup/BInputGroupAppend.vue'
+import BInputGroupPrepend from './BInputGroup/BInputGroupPrepend.vue'
+import BInputGroupText from './BInputGroup/BInputGroupText.vue'
 import BLink from './BLink/BLink.vue'
 import BListGroup from './BListGroup/BListGroup.vue'
 import BListGroupItem from './BListGroup/BListGroupItem.vue'
 import BModal from './BModal.vue'
 import BNav from './BNav.vue'
 import BNavItem from './BNavItem.vue'
-// import BNavItemDropdown from './BNavItemDropdown.vue';
+// import BNavItemDropdown from './BNavItemDropdown.vue'
 import BOffcanvas from './BOffcanvas.vue'
 import BOverlay from './BOverlay/BOverlay.vue'
 import BPagination from './BPagination/BPagination.vue'
@@ -64,9 +70,9 @@ import BProgress from './BProgress.vue'
 import BProgressBar from './BProgressBar.vue'
 import BRow from './BRow.vue'
 import BSpinner from './BSpinner.vue'
+import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
 import BTabs from './BTabs/BTabs.vue'
-import BTab from './BTabs/BTab.vue'
 import BTransition from './BTransition/BTransition.vue'
 
 export default {
@@ -105,17 +111,27 @@ export default {
   BDropdownItemButton,
   BDropdownText,
   BForm,
+  BFormCheckbox,
+  BFormCheckboxGroup,
+  BFormFloatingLabel,
+  BFormGroup,
   BFormInput,
   BFormInvalidFeedback,
+  BFormRadio,
+  BFormRadioGroup,
+  BFormRow,
   BFormSelect,
   BFormSelectOption,
   BFormSelectOptionGroup,
-  BFormFloatingLabel,
   BFormText,
   BFormValidFeedback,
   BIcon,
+  BIconstack,
   BImg,
   BInputGroup,
+  BInputGroupAddon,
+  BInputGroupAppend,
+  BInputGroupPrepend,
   BInputGroupText,
   BLink,
   BListGroup,
@@ -132,12 +148,8 @@ export default {
   BProgressBar,
   BRow,
   BSpinner,
+  BTab,
   BTable,
   BTabs,
-  BTab,
   BTransition,
-  BFormCheckbox,
-  BFormCheckboxGroup,
-  BFormRadio,
-  BFormRadioGroup,
 }

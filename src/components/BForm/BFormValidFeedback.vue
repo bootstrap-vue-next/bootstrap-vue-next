@@ -18,7 +18,6 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
     tooltip: {type: Boolean, default: false},
   },
-  emits: ['submit'],
   setup(props) {
     const computedShow = computed(() => props.forceShow === true || props.state === true)
     const classes = computed(() => ({

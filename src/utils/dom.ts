@@ -1,4 +1,6 @@
-import {Slot} from 'vue'
+import {DOCUMENT} from '../types/safe-types'
+import {Comment, Slot, VNode} from 'vue'
+import {from as arrayFrom} from './array'
 
 export const isElement = (el: HTMLElement): boolean => !!(el && el.nodeType === Node.ELEMENT_NODE)
 
@@ -58,7 +60,7 @@ export const isVisible = (el: HTMLElement): boolean => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const isEmptySlot = (slot: Slot | undefined, data?: any) =>
-  !slot || slot(data).filter((vnode) => vnode.type !== Comment).length < 1
+  !slot || slot(data).filter((vnode: VNode) => vnode.type !== Comment).length < 1
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const offset = (el: HTMLElement) => {
@@ -73,4 +75,27 @@ export const offset = (el: HTMLElement) => {
     _offset.left = bcr.left + (win?.pageXOffset || 0)
   }
   return _offset
+}
+
+// Select a single element, returns `null` if not found
+export const select = (selector, root) =>
+  (isElement(root) ? root : DOCUMENT).querySelector(selector) || null
+
+export const selectAll = (selector, root) =>
+  arrayFrom((isElement(root) ? root : DOCUMENT).querySelectorAll(selector))
+
+export const getAttr = (el: HTMLElement, attr: string): string | null =>
+  attr && isElement(el) ? el.getAttribute(attr) : null
+
+export const setAttr = (el: HTMLElement, attr: string, value: string): void => {
+  if (attr && isElement(el)) {
+    el.setAttribute(attr, value)
+  }
+}
+
+// Remove an attribute from an element
+export const removeAttr = (el: HTMLElement, attr: string): void => {
+  if (attr && isElement(el)) {
+    el.removeAttribute(attr)
+  }
 }

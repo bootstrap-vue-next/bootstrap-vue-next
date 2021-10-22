@@ -1,6 +1,6 @@
 <template>
-  <component :is="tag" class="input-group-text">
-    <slot />
+  <component :is="tag" class="row d-flex flex-wrap">
+    <slot></slot>
   </component>
 </template>
 
@@ -8,9 +8,9 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: 'BInputGroupText',
+  name: 'BFormRow',
   props: {
-    tag: {type: String, default: 'span'},
+    tag: {type: String, default: 'div'},
   },
 })
 </script>

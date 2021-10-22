@@ -39,11 +39,11 @@ export default defineComponent({
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
-    nonhtml: {type: Boolean, default: false},
-    nonsanitize: {type: Boolean, default: false},
+    html: {type: Boolean, default: true},
+    sanitize: {type: Boolean, default: false},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
-  setup(props, {emit}) {
+  setup(props, {emit, slots}) {
     const element = ref<HTMLElement>()
     const target = ref<HTMLElement>()
     const instance = ref<Popover>()
@@ -58,10 +58,10 @@ export default defineComponent({
         container: props.container,
         trigger: props.triggers,
         placement: props.placement,
-        title: titleRef.value?.innerHTML || '',
-        content: contentRef.value?.innerHTML || '',
-        html: !props.nonhtml,
-        sanitize: !props.nonsanitize,
+        title: props.title || slots.title ? titleRef.value : '',
+        content: contentRef.value,
+        html: props.html,
+        sanitize: props.sanitize,
       })
 
       if (document.getElementById(props.target)) {

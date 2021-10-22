@@ -2,9 +2,10 @@
  * SSR safe types
  */
 
-import {HAS_WINDOW_SUPPORT} from '../utils/env'
+import {HAS_DOCUMENT_SUPPORT, HAS_WINDOW_SUPPORT} from '../utils/env'
 
 const w = HAS_WINDOW_SUPPORT ? window : {}
+export const DOCUMENT = HAS_DOCUMENT_SUPPORT ? document : {}
 
 export const Element = HAS_WINDOW_SUPPORT ? w.Element : class Element extends Object {}
 
