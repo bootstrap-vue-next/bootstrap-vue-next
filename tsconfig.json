@@ -12,9 +12,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["webpack-env"],
-    "paths": {
-      "@/*": ["src/*"]
-    },
+    "paths": {},
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],

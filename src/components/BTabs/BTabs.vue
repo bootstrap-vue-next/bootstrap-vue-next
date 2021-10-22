@@ -64,8 +64,8 @@ import {
 import getID from '../../utils/getID'
 import Alignment from '../../types/Alignment'
 import {BvEvent} from '../../utils/bvEvent'
-import {mathMax} from '@/utils/math'
-import {isFunction} from '@/utils/inspect'
+import {mathMax} from '../../utils/math'
+import {isFunction} from '../../utils/inspect'
 
 export interface ParentData {
   lazy: boolean

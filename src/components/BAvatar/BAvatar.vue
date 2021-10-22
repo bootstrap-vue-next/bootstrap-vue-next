@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import {isEmptySlot} from '@/utils/dom'
+import {isEmptySlot} from '../../utils/dom'
 import {computed, defineComponent, inject, PropType, StyleValue} from 'vue'
 import {ColorVariant, InputSize} from '../../types'
 import {isNumber, isNumeric, isString} from '../../utils/inspect'
