@@ -6,9 +6,7 @@ import {resolve} from 'path'
 
 const config = defineConfig({
   resolve: {
-    alias: {
-      '@': `${resolve(__dirname, 'src')}`,
-    },
+    alias: {},
   },
 
   build: {

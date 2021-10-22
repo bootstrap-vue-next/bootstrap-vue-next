@@ -1,5 +1,5 @@
 <script lang="ts">
-import {normalizeSlot} from '@/utils/normalize-slot'
+import {normalizeSlot} from '../../utils/normalize-slot'
 import {computed, defineComponent, h, PropType, reactive, watch} from 'vue'
 import {Alignment, InputSize, Pagination, PaginationPage} from '../../types'
 import {isUndefinedOrNull} from '../../utils/inspect'
