@@ -14,6 +14,7 @@ export default defineComponent({
     active: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
     href: {type: String, required: false},
+    to: {type: String, required: false},
     pill: {type: Boolean, default: false},
     pressed: {type: Boolean, default: null},
     rel: {type: String, default: null},
@@ -27,8 +28,8 @@ export default defineComponent({
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
     const isToggle = props.pressed !== null
-    const isButton = props.tag === 'button' && !props.href
-    const hashLink = props.href === '#'
+    const isButton = props.tag === 'button' && !props.href && !props.to
+    const hashLink = props.href === '#' || props.to === '#'
     const nonStandardTag = props.href ? false : !isButton
 
     const classes = computed(() => ({
@@ -46,9 +47,10 @@ export default defineComponent({
       'autocomplete': isToggle ? 'off' : null,
       'disabled': isButton ? props.disabled : null,
       'href': props.href,
-      'rel': props.href ? props.rel : null,
+      'to': props.to,
+      'rel': props.href || props.to ? props.rel : null,
       'role': nonStandardTag || hashLink ? 'button' : null,
-      'target': props.href ? props.target : null,
+      'target': props.href || props.to ? props.target : null,
       'type': isButton ? props.type : null,
     }))
 
@@ -64,7 +66,10 @@ export default defineComponent({
       }
     }
 
-    const computedTag = computed(() => (props.href ? 'a' : props.tag))
+    const computedTag = computed(() => {
+      if (props.to) return 'router-link'
+      return props.href ? 'a' : props.tag
+    })
 
     return {
       classes,
