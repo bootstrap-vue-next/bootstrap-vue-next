@@ -32,6 +32,9 @@ BootstrapVue 3 components
             <RouterLink to="./Dropdown.html">Dropdown</RouterLink> — Toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Form.html">Form</RouterLink> — Form component and helper components that optionally support inline form styles and validation states.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./FormCheckbox.html">Form Checkbox</RouterLink> — Custom checkbox input and checkbox group to replace the browser default checkbox input, built on top of semantic and accessible markup. Optionally supports switch styling.
         </b-list-group-item>
         <b-list-group-item>

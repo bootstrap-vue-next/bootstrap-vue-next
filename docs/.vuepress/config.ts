@@ -43,6 +43,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Card.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
+            '/components/Form.md',
             '/components/FormGroup.md',
             '/components/FormInput.md',
             '/components/FormRadio.md',
