@@ -15,7 +15,7 @@
         valid-feedback="Thank you!"
         :invalid-feedback="invalidFeedback"
         :state="state"
-        label-class="mb-1"
+        label-class="mb-1"     
         >
         <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
       </b-form-group>
@@ -378,6 +378,75 @@ valid) `state` on the `input` alone will **not** trigger the invalid (or valid) 
 set the invalid/valid `state` on `<b-form-group>`. Native browser validation will **not** trigger
 the invalid feedback to show when using one of the above mentioned form controls.
 
+## Floating labels
+
+BFormGroup supports the new and fancy [Floating labels](https://getbootstrap.com/docs/5.0/forms/floating-labels/) feature of Bootstrap 5.
+
+You can make a floating label by setting the property `floating` to true and specify a placeholder on the `<b-form-input>`.
+
+### Example
+
+<ClientOnly>
+  <b-card>
+    <div>
+      <b-form-group
+        id="fieldset-1"
+        description="Let us know your name."
+        label="Name"
+        label-for="input-floating-1"
+        valid-feedback="Thank you!"
+        :invalid-feedback="floatingInvalidFeedback"
+        :state="floatingState"
+        floating     
+        >
+        <b-form-input id="input-floating-1" v-model="floatingName" :state="floatingState" trim placeholder="Enter your name please"></b-form-input>
+      </b-form-group>
+    </div>
+  </b-card>
+</ClientOnly>
+
+```html
+<b-card>
+  <div>
+    <b-form-group
+      id="fieldset-1"
+      description="Let us know your name."
+      label="Name"
+      label-for="input-floating-1"
+      valid-feedback="Thank you!"
+      :invalid-feedback="floatingInvalidFeedback"
+      :state="floatingState"
+      floating
+    >
+      <b-form-input
+        id="input-floating-1"
+        v-model="floatingName"
+        :state="floatingState"
+        trim
+        placeholder="Enter your name please"
+      ></b-form-input>
+    </b-form-group>
+  </div>
+</b-card>
+
+<script lang="ts" setup>
+  import {computed, ref} from 'vue'
+
+  const floatingName = ref('')
+  const floatingState = computed(() => floatingName.value.length >= 4)
+  const floatingInvalidFeedback = computed(() =>
+    floatingName.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
+  )
+</script>
+```
+
+### Restrictions
+
+There are restrictions on the use of floating labels
+
+- floating labels do not work in horizontal layout. Horizontal layout precedes the `floating` property. Do not set any of the `content-cols-` or `label-cols-` properties if you want floating labels.
+- the `<b-form-input>` must have a placeholder property set.
+
 ## Accessibility
 
 By default, when no `label-for` value is provided, `<b-form-group>` renders the input control(s)
@@ -422,6 +491,7 @@ scoped `default` slot.
 | `description`                                                 | `String`                                                                 |             | Text to place in the help text area of the form group                                                                                                           |
 | `disabled`                                                    | `Boolean`                                                                | `false`     | Disabled the fieldset element, which in turn disables the form controls (on browsers that support disabled fieldsets). Has no effect if `label-for` is set      |
 | <span style="white-space:nowrap;">`feedback-aria-live`</span> | `String`                                                                 | `assertive` | Value to use for the `aria-live` attribute on the feedback text                                                                                                 |
+| `floating`                                                    | `Boolean`                                                                | `false`     | When set to true, enables floating labels. Has no effect in horizontal layout.                                                                                  |
 | `id`                                                          | `String`                                                                 |             | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed                                   |
 | `invalid-feedback`                                            | `String`                                                                 |             | Text to show when the form group has an invalid state                                                                                                           |
 | `label`                                                       | `String`                                                                 |             | Text to place in the label/legend of the form group                                                                                                             |
@@ -471,4 +541,11 @@ scoped `default` slot.
   const invalidFeedback = computed(() =>
     name.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
   )
+
+  const floatingName = ref('')
+  const floatingState = computed(() => floatingName.value.length >= 4)
+  const floatingInvalidFeedback = computed(() =>
+    floatingName.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
+  )
+
 </script>
