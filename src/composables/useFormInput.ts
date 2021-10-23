@@ -71,7 +71,7 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
 
   const handleAutofocus = () => {
     nextTick(() => {
-      if (props.autofocus) input.value?.focus()
+      if (props.autofocus) input.value && input.value.focus()
     })
   }
 
@@ -145,12 +145,12 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
   }
 
   const focus = () => {
-    if (!props.disabled) input.value?.focus()
+    if (!props.disabled) input.value && input.value.focus()
   }
 
   const blur = () => {
     if (!props.disabled) {
-      input.value?.blur()
+      input.value && input.value.blur()
     }
   }
 
