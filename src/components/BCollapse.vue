@@ -15,6 +15,7 @@ export default defineComponent({
     modelValue: {type: Boolean, default: false},
     parent: {type: String, default: ''},
     toggle: {type: Boolean, default: false},
+    visible: {type: Boolean, default: false},
   },
   emits: ['update:modelValue', 'show', 'shown', 'hide', 'hidden'],
   setup(props, {emit}) {
@@ -44,6 +45,10 @@ export default defineComponent({
         parent: props.parent,
         toggle: props.toggle,
       })
+      if (props.visible || props.modelValue) {
+        emit('update:modelValue', true)
+        instance.value?.show()
+      }
     })
 
     watch(
@@ -52,6 +57,18 @@ export default defineComponent({
         if (value) {
           instance.value?.show()
         } else {
+          instance.value?.hide()
+        }
+      }
+    )
+    watch(
+      () => props.visible,
+      (value) => {
+        if (value) {
+          emit('update:modelValue', !!value)
+          instance.value?.show()
+        } else {
+          emit('update:modelValue', !!value)
           instance.value?.hide()
         }
       }
