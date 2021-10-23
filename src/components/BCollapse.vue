@@ -1,19 +1,31 @@
 <template>
-  <div ref="element" class="collapse" :class="classes" :data-bs-parent="parent || null">
+  <component
+    :is="tag"
+    :id="id"
+    ref="element"
+    class="collapse"
+    :class="classes"
+    :data-bs-parent="accordion || null"
+  >
     <slot :visible="modelValue" :close="close" />
-  </div>
+  </component>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, ref, watch} from 'vue'
 import {Collapse} from 'bootstrap'
 import useEventListener from '../composables/useEventListener'
+import getID from '../utils/getID'
 
 export default defineComponent({
   name: 'BCollapse',
   props: {
+    accordion: {type: String, required: false},
+    // appear: {type: Boolean, default: false},
+    id: {type: String, default: getID()},
+    // isNav: {type: Boolean, default: false},
     modelValue: {type: Boolean, default: false},
-    parent: {type: String, default: ''},
+    tag: {type: String, default: 'div'},
     toggle: {type: Boolean, default: false},
     visible: {type: Boolean, default: false},
   },
@@ -42,7 +54,7 @@ export default defineComponent({
 
     onMounted(() => {
       instance.value = new Collapse(element.value as HTMLElement, {
-        parent: props.parent,
+        parent: props.accordion,
         toggle: props.toggle,
       })
       if (props.visible || props.modelValue) {
