@@ -1,6 +1,7 @@
 import {DOCUMENT} from '../types/safe-types'
 import {Comment, Slot, VNode} from 'vue'
 import {from as arrayFrom} from './array'
+import {toString} from './stringUtils'
 
 export const isElement = (el: HTMLElement): boolean => !!(el && el.nodeType === Node.ELEMENT_NODE)
 
@@ -99,3 +100,6 @@ export const removeAttr = (el: HTMLElement, attr: string): void => {
     el.removeAttribute(attr)
   }
 }
+
+export const isTag = (tag: any, name: any): boolean =>
+  toString(tag).toLowerCase() === toString(name).toLowerCase()
