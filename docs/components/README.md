@@ -29,6 +29,9 @@ BootstrapVue 3 components
             <RouterLink to="./Card.html">Card</RouterLink> — A flexible and extensible content container. It includes options for headers and footers, a wide variety of content.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Collapse.html">Collapse</RouterLink> — Easily toggle visibility of almost any content on your pages in a vertically collapsing container.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Dropdown.html">Dropdown</RouterLink> — Toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.
         </b-list-group-item>
         <b-list-group-item>

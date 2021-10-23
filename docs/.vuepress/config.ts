@@ -41,6 +41,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/ButtonGroup.md',
             '/components/ButtonToolbar.md',
             '/components/Card.md',
+            '/components/Collapse.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
             '/components/FormGroup.md',

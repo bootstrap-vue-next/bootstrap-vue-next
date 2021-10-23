@@ -441,6 +441,34 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Collapse
 
+### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| accordion | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| appear    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| id        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| is-nav    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| tag       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| visible   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### Events
+
+| Property            | Status                                                                               | Observations |
+| ------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| bv::collapse::state | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| hidden              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| hide                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| show                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| shown               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| update:modelValue   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Dropdown
 
 ### Properties
