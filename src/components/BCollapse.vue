@@ -1,6 +1,6 @@
 <template>
   <div ref="element" class="collapse" :class="classes" :data-bs-parent="parent || null">
-    <slot />
+    <slot :visible="modelValue" :close="close" />
   </div>
 </template>
 
@@ -15,15 +15,16 @@ export default defineComponent({
     modelValue: {type: Boolean, default: false},
     parent: {type: String, default: ''},
     toggle: {type: Boolean, default: false},
-    visible: {type: Boolean, default: false},
   },
   emits: ['update:modelValue', 'show', 'shown', 'hide', 'hidden'],
   setup(props, {emit}) {
     const element = ref<HTMLElement>()
     const instance = ref<Collapse>()
     const classes = computed(() => ({
-      show: props.visible,
+      show: props.modelValue,
     }))
+
+    const close = () => emit('update:modelValue', false)
 
     useEventListener(element, 'show.bs.collapse', () => {
       emit('show')
@@ -31,18 +32,14 @@ export default defineComponent({
     })
 
     useEventListener(element, 'hide.bs.collapse', () => {
-      emit('show')
-      emit('update:modelValue', true)
+      emit('hide')
+      emit('update:modelValue', false)
     })
 
     useEventListener(element, 'shown.bs.collapse', () => emit('shown'))
     useEventListener(element, 'hidden.bs.collapse', () => emit('hidden'))
 
     onMounted(() => {
-      if (props.visible) {
-        emit('update:modelValue', props.visible)
-      }
-
       instance.value = new Collapse(element.value as HTMLElement, {
         parent: props.parent,
         toggle: props.toggle,
@@ -63,6 +60,7 @@ export default defineComponent({
     return {
       element,
       classes,
+      close,
     }
   },
 })
