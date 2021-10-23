@@ -72,6 +72,7 @@ export default defineComponent({
     tooltip: {type: Boolean, default: false},
     validFeedback: {type: String, required: false},
     validated: {type: Boolean, default: false},
+    floating: {type: Boolean, default: false},
   },
   setup(props, {attrs}) {
     const ariaDescribedby: string | null = null as string | null
@@ -353,11 +354,17 @@ export default defineComponent({
       $validFeedback,
       $description,
     ]
+    if (!this.isHorizontal && props.floating) contentBlocks.push($label)
 
     let $content = h(
       'div',
       {
         ref: 'content',
+        class: [
+          {
+            'form-floating': !this.isHorizontal && props.floating,
+          },
+        ],
       },
       contentBlocks
     )
@@ -395,7 +402,9 @@ export default defineComponent({
       rowProps,
       this.isHorizontal && isFieldset
         ? [h(BFormRow, {}, {default: () => [$label, $content]})]
-        : [$label, $content]
+        : this.isHorizontal || !props.floating
+        ? [$label, $content]
+        : [$content]
     )
   },
 })
