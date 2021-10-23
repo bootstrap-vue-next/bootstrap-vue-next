@@ -614,6 +614,27 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Form
 
+### Properties
+
+| Property     | Status                                                                               | Observations                 |
+| ------------ | ------------------------------------------------------------------------------------ | ---------------------------- |
+| `id`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                              |
+| `inline`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   | not supported in Bootstrap 5 |
+| `novalidate` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                              |
+| `validate`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Events
+
+| Property | Status                                                                               | Observations |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| `submit` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Form Checkbox
 
 ### Properties
@@ -780,6 +801,25 @@ Bootstrap 5 changed the classes for alignment. Use `start`, `center` and `end` i
 | `input`             | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `update:modelValue` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
+## Form Invalid Feedback
+
+### Properties
+
+| Property     | Status                                                                               | Observations |
+| ------------ | ------------------------------------------------------------------------------------ | ------------ |
+| `aria-live`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `force-show` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `role`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `state`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tooltip`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Form Radio
 
 ### Properties
@@ -925,11 +965,47 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 This is a <Badge type="warning" text="non-standard" /> component.
 
+## Form Text
+
+### Properties
+
+| Property       | Status                                                                               | Observations      |
+| -------------- | ------------------------------------------------------------------------------------ | ----------------- |
+| `id`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                   |
+| `inline`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | used `.form-text` |
+| `tag`          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                   |
+| `text-variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                   |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
 ## Form Textarea
 
 ## Form Timepicker
 
 This is a <Badge type="warning" text="non-standard" /> component.
+
+## Form Valid Feedback
+
+### Properties
+
+| Property     | Status                                                                               | Observations |
+| ------------ | ------------------------------------------------------------------------------------ | ------------ |
+| `aria-live`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `force-show` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `role`       | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `state`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `tooltip`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+### Slots
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ## Icon
 

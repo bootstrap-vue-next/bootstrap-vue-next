@@ -15,7 +15,7 @@ import {computed, defineComponent} from 'vue'
 export default defineComponent({
   name: 'BForm',
   props: {
-    id: {type: String},
+    id: {type: String, required: false},
     floating: {type: Boolean, default: false},
     novalidate: {type: Boolean, default: false},
     validated: {type: Boolean, default: false},

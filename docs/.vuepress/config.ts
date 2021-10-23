@@ -44,6 +44,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Collapse.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
+            '/components/Form.md',
             '/components/FormGroup.md',
             '/components/FormInput.md',
             '/components/FormRadio.md',
