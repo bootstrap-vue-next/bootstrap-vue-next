@@ -54,7 +54,7 @@ export default defineComponent({
 
     onMounted(() => {
       instance.value = new Collapse(element.value as HTMLElement, {
-        parent: props.accordion,
+        parent: props.accordion ? `#${props.accordion}` : undefined,
         toggle: props.toggle,
       })
       if (props.visible || props.modelValue) {

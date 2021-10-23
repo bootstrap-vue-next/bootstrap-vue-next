@@ -399,7 +399,7 @@ apply those roles for you automatically, as it depends on your final document ma
 
 | Property     | Type      | Default | Description                                                                                                                   |
 | ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `accordion`  | `String`  |         | The name of the accordion group that this collapse belongs to                                                                 |
+| `accordion`  | `String`  |         | The id of the accordion group that this collapse belongs to                                                                   |
 | ~~`appear`~~ | `Boolean` | `false` | When set, and prop 'visible' is true on mount, will animate on initial mount                                                  |
 | `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
 | ~~`isNav`~~  | `Boolean` | `false` | When set, and prop 'visible' is true on mount, will animate on initial mount                                                  |

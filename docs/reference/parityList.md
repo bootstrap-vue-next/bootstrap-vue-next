@@ -445,7 +445,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 | Property  | Status                                                                               | Observations |
 | --------- | ------------------------------------------------------------------------------------ | ------------ |
-| accordion | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| accordion | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | appear    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | id        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | is-nav    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
