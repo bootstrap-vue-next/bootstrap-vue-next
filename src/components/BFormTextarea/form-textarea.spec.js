@@ -2,7 +2,7 @@ import {mount} from '@vue/test-utils'
 import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
 import BFormTextarea from './BFormTextarea'
 
-describe('form-input', () => {
+describe('form-textarea', () => {
   it('has class form-control', async () => {
     const wrapper = mount(BFormTextarea)
 
@@ -316,7 +316,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('applies formatter on input when not lazy', async () => {
+  it('applies formatter on textarea when not lazy', async () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         formatter(value) {
@@ -341,7 +341,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not apply formatter on input when lazy', async () => {
+  it('does not apply formatter on textarea when lazy', async () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         'formatter'(value) {
