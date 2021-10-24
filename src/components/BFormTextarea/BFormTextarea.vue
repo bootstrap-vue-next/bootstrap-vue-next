@@ -14,6 +14,7 @@
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
     :style="computedStyles"
+    :wrap="wrap || undefined"
     v-bind="$attrs"
     @input="onInput($event)"
     @change="onChange($event)"
@@ -31,6 +32,7 @@ export default defineComponent({
     ...COMMON_INPUT_PROPS,
     noResize: {type: Boolean, default: false},
     rows: {type: [String, Number], required: false, default: 2},
+    wrap: {type: String, default: 'soft'},
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
