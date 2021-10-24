@@ -53,6 +53,9 @@ BootstrapVue 3 components
             <RouterLink to="./FormSelect.html">Form Select</RouterLink> — Bootstrap custom select using custom styles. 
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./FormTextArea.html">Form Textarea</RouterLink> — Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states. 
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Icon.html">Icon</RouterLink> — Icons designed to work with Bootstrap components, from form controls to navigation. 
         </b-list-group-item>
         <b-list-group-item>
