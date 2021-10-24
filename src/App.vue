@@ -4,6 +4,7 @@
     <b-form-input v-model="password" :type="showPassword ? 'text' : 'password'" />
     <b-form-input :type="showPassword ? 'text' : 'password'" />
     <b-form-input :disabled="showPassword" />
+    <b-form-textarea v-model="description" class="my-3" />
     <b-form-checkbox v-model="showPassword">Show password</b-form-checkbox>
     {{ password }}
 
@@ -1454,13 +1455,15 @@ import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
 import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
 import {BvEvent} from './utils/bvEvent'
+import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {BDropdown, BFormCheckbox},
+  components: {BDropdown, BFormCheckbox, BFormTextarea},
   setup() {
     const password = ref('123')
     const showPassword = ref(false)
+    const description = ref('This is a description')
     const input = ref()
     const tooltip = ref('Tooltip on <em>top</em>')
     const setTooltip = () => (tooltip.value = `${new Date()} <strong>fechaaa</strong>`)
@@ -1536,6 +1539,7 @@ export default defineComponent({
     return {
       password,
       showPassword,
+      description,
       input,
       name,
       popoverInput,

@@ -1,0 +1,62 @@
+<template>
+  <textarea
+    :id="computedId"
+    ref="input"
+    :class="classes"
+    :name="name || undefined"
+    :form="form || undefined"
+    :disabled="disabled"
+    :placeholder="placeholder"
+    :required="required"
+    :autocomplete="autocomplete || undefined"
+    :readonly="readonly || plaintext"
+    :aria-required="required ? 'true' : undefined"
+    :aria-invalid="computedAriaInvalid"
+    :rows="rows"
+    v-bind="$attrs"
+    @input="onInput($event)"
+    @change="onChange($event)"
+    @blur="onBlur($event)"
+  ></textarea>
+</template>
+
+<script lang="ts">
+import {computed, defineComponent} from 'vue'
+import useFormInput, {COMMON_INPUT_PROPS} from '../../composables/useFormInput'
+
+export default defineComponent({
+  name: 'BFormTextarea',
+  props: {
+    ...COMMON_INPUT_PROPS,
+    rows: {type: [String, Number], required: false, default: 2},
+  },
+  emits: ['update:modelValue', 'change', 'blur', 'input'],
+  setup(props, {emit}) {
+    const classes = computed(() => {
+      const {plaintext, size, state} = props
+      return {
+        'form-control': !plaintext,
+        'form-control-plaintext': plaintext,
+        [`form-control-${size}`]: size,
+        'is-valid': state === true,
+        'is-invalid': state === false,
+      }
+    })
+
+    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
+      useFormInput(props, emit)
+
+    return {
+      input,
+      computedId,
+      computedAriaInvalid,
+      onInput,
+      onChange,
+      onBlur,
+      focus,
+      blur,
+      classes,
+    }
+  },
+})
+</script>
