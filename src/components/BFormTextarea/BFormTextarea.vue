@@ -13,6 +13,7 @@
     :aria-required="required ? 'true' : undefined"
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
+    :style="computedStyles"
     v-bind="$attrs"
     @input="onInput($event)"
     @change="onChange($event)"
@@ -28,6 +29,7 @@ export default defineComponent({
   name: 'BFormTextarea',
   props: {
     ...COMMON_INPUT_PROPS,
+    noResize: {type: Boolean, default: false},
     rows: {type: [String, Number], required: false, default: 2},
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
@@ -43,6 +45,8 @@ export default defineComponent({
       }
     })
 
+    const computedStyles = computed(() => (props.noResize ? {resize: 'none'} : undefined))
+
     const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
       useFormInput(props, emit)
 
@@ -56,6 +60,7 @@ export default defineComponent({
       focus,
       blur,
       classes,
+      computedStyles,
     }
   },
 })
