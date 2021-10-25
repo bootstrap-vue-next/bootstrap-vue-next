@@ -7,14 +7,15 @@
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
 import {ButtonVariant, InputSize} from '../types'
+import {BLINK_PROPS} from './BLink/BLink.vue'
 
 export default defineComponent({
   name: 'BButton',
   props: {
+    ...BLINK_PROPS,
     active: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
     href: {type: String, required: false},
-    to: {type: String, required: false},
     pill: {type: Boolean, default: false},
     pressed: {type: Boolean, default: null},
     rel: {type: String, default: null},
@@ -29,7 +30,8 @@ export default defineComponent({
   setup(props, {emit}) {
     const isToggle = props.pressed !== null
     const isButton = props.tag === 'button' && !props.href && !props.to
-    const hashLink = props.href === '#' || props.to === '#'
+    const isLink = !!(props.href || props.to)
+    const isBLink = !!props.to
     const nonStandardTag = props.href ? false : !isButton
 
     const classes = computed(() => ({
@@ -47,11 +49,19 @@ export default defineComponent({
       'autocomplete': isToggle ? 'off' : null,
       'disabled': isButton ? props.disabled : null,
       'href': props.href,
-      'to': props.to,
-      'rel': props.href || props.to ? props.rel : null,
-      'role': nonStandardTag || hashLink ? 'button' : null,
-      'target': props.href || props.to ? props.target : null,
+      'rel': isLink ? props.rel : null,
+      'role': nonStandardTag || isLink ? 'button' : null,
+      'target': isLink ? props.target : null,
       'type': isButton ? props.type : null,
+      'to': !isButton ? props.to : null,
+      'append': isLink ? props.append : null,
+      'activeClass': isBLink ? props.activeClass : null,
+      'event': isBLink ? props.event : null,
+      'exact': isBLink ? props.exact : null,
+      'exactActiveClass': isBLink ? props.exactActiveClass : null,
+      'replace': isBLink ? props.replace : null,
+      'routerComponentName': isBLink ? props.routerComponentName : null,
+      'routerTag': isBLink ? props.routerTag : null,
     }))
 
     const clicked = function (e: PointerEvent) {
@@ -67,7 +77,7 @@ export default defineComponent({
     }
 
     const computedTag = computed(() => {
-      if (props.to) return 'router-link'
+      if (isBLink) return 'b-link'
       return props.href ? 'a' : props.tag
     })
 

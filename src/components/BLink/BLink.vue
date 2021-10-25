@@ -33,27 +33,30 @@
 <script lang="ts">
 import type {LinkTarget} from '../../types'
 import {computed, defineComponent, getCurrentInstance, PropType, Ref, ref} from 'vue'
+import {RouteLocation, RouteLocationRaw} from 'vue-router'
+
+export const BLINK_PROPS = {
+  active: {type: Boolean, default: false},
+  activeClass: {type: String, default: 'router-link-active'},
+  append: {type: Boolean, default: false},
+  disabled: {type: Boolean, default: false},
+  event: {type: [String, Array], default: 'click'},
+  exact: {type: Boolean, default: false},
+  exactActiveClass: {type: String, default: 'router-link-exact-active'},
+  href: {type: String},
+  // noPrefetch: {type: Boolean, default: false},
+  // prefetch: {type: Boolean, default: null},
+  rel: {type: String, default: null},
+  replace: {type: Boolean, default: false},
+  routerComponentName: {type: String, default: 'router-link'},
+  routerTag: {type: String, default: 'a'},
+  target: {type: String as PropType<LinkTarget>, default: '_self'},
+  to: {type: [String, Object] as PropType<RouteLocationRaw>, default: null},
+}
 
 export default defineComponent({
   name: 'BLink',
-  props: {
-    active: {type: Boolean, default: false},
-    activeClass: {type: String, default: 'router-link-active'},
-    append: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false},
-    event: {type: [String, Array], default: 'click'},
-    exact: {type: Boolean, default: false},
-    exactActiveClass: {type: String, default: 'router-link-exact-active'},
-    href: {type: String},
-    // noPrefetch: {type: Boolean, default: false},
-    // prefetch: {type: Boolean, default: null},
-    rel: {type: String, default: null},
-    replace: {type: Boolean, default: false},
-    routerComponentName: {type: String, default: 'router-link'},
-    routerTag: {type: String, default: 'a'},
-    target: {type: String as PropType<LinkTarget>, default: '_self'},
-    to: {type: [String, Object], default: null},
-  },
+  props: BLINK_PROPS,
   emits: ['click'],
   setup(props, {emit, attrs}) {
     const instance = getCurrentInstance()
@@ -65,7 +68,7 @@ export default defineComponent({
         .split('-')
         .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
         .join('')
-      const hasRouter = instance.appContext.app.component(routerName) !== undefined
+      const hasRouter = instance?.appContext.app.component(routerName) !== undefined
       if (!hasRouter || disabled || !to) {
         return 'a'
       }
@@ -74,10 +77,11 @@ export default defineComponent({
 
     const computedHref = computed(() => {
       const toFallback = '#'
-      const {to, href} = props
-      if (href) return href
+      if (props.href) return props.href
 
-      if (typeof to === 'string') return to || toFallback
+      if (typeof props.to === 'string') return props.to || toFallback
+
+      const to = props.to as RouteLocation
 
       if (
         Object.prototype.toString.call(to) === '[object Object]' &&
