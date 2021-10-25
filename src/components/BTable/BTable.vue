@@ -76,6 +76,7 @@ export default defineComponent({
                 if (slots[slotName]) {
                   tdContent = slots[slotName]?.({
                     value: tr[field.key],
+                    item: tr,
                     items: props.items,
                   })
                 }
