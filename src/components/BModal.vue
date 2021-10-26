@@ -50,6 +50,7 @@ export default defineComponent({
   props: {
     modelValue: {type: Boolean, default: false},
     noBackdrop: {type: Boolean, default: false},
+    noFocus: {type: Boolean, default: false},
     centered: {type: Boolean, default: false},
     fade: {type: Boolean, default: false},
     fullscreen: {type: [Boolean, String], default: false},
@@ -100,6 +101,7 @@ export default defineComponent({
       instance.value = new Modal(element.value as HTMLElement, {
         backdrop: props.staticBackdrop ? 'static' : !props.noBackdrop,
         keyboard: !props.staticBackdrop,
+        focus: !props.noFocus,
       })
 
       if (props.modelValue) {
