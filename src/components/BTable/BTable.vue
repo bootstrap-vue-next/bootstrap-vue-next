@@ -66,7 +66,7 @@ export default defineComponent({
       const tBody = [
         h(
           'tbody',
-          props.items.map((tr) =>
+          props.items.map((tr, index) =>
             h(
               'tr',
               computedFields.value.map((field) => {
@@ -76,6 +76,7 @@ export default defineComponent({
                 if (slots[slotName]) {
                   tdContent = slots[slotName]?.({
                     value: tr[field.key],
+                    index,
                     item: tr,
                     items: props.items,
                   })
