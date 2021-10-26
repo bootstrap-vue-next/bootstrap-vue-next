@@ -4,13 +4,12 @@ import {computed, ComputedRef} from 'vue'
 import Alignment from '../types/Alignment'
 
 function alignment(props: any): ComputedRef<string> {
-  const {align}: {align: Alignment} = props
   return computed(() => {
-    if (align === 'center') {
+    if (props.align === 'center') {
       return 'justify-content-center'
-    } else if (align === 'end') {
+    } else if (props.align === 'end') {
       return 'justify-content-end'
-    } else if (align === 'start') {
+    } else if (props.align === 'start') {
       return 'justify-content-start'
     }
     return 'justify-content-start'

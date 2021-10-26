@@ -51,20 +51,17 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
   const computedId = useId(props.id, 'input')
 
   const _formatValue = (value: unknown, evt: any, force = false) => {
-    const {formatter, lazyFormatter} = props
     value = String(value)
-    if (typeof formatter === 'function' && (!lazyFormatter || force)) {
+    if (typeof props.formatter === 'function' && (!props.lazyFormatter || force)) {
       neverFormatted = false
-      return formatter(value, evt)
+      return props.formatter(value, evt)
     }
     return value
   }
 
   const _getModelValue = (value: any) => {
-    const {trim, number} = props
-
-    if (trim) return value.trim()
-    if (number) return parseFloat(value)
+    if (props.trim) return value.trim()
+    if (props.number) return parseFloat(value)
 
     return value
   }
@@ -85,16 +82,13 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
   onActivated(handleAutofocus)
 
   const computedAriaInvalid = computed(() => {
-    const {ariaInvalid, state} = props
-
-    if (ariaInvalid) {
-      return ariaInvalid.toString()
+    if (props.ariaInvalid) {
+      return props.ariaInvalid.toString()
     }
-    return state === false ? 'true' : undefined
+    return props.state === false ? 'true' : undefined
   })
 
   const onInput = (evt: Event) => {
-    const {lazy, modelValue} = props
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt)
     if (formattedValue === false || evt.defaultPrevented) {
@@ -102,19 +96,18 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
       return
     }
 
-    if (lazy) return
+    if (props.lazy) return
     emit('input', formattedValue)
 
     const nextModel = _getModelValue(formattedValue)
 
-    if (modelValue !== nextModel) {
+    if (props.modelValue !== nextModel) {
       inputValue = value
       emit('update:modelValue', nextModel)
     }
   }
 
   const onChange = (evt: Event) => {
-    const {lazy, modelValue} = props
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt)
     if (formattedValue === false || evt.defaultPrevented) {
@@ -122,20 +115,19 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
       return
     }
 
-    if (!lazy) return
+    if (!props.lazy) return
     inputValue = value
     emit('update:modelValue', formattedValue)
 
     const nextModel = _getModelValue(formattedValue)
-    if (modelValue !== nextModel) {
+    if (props.modelValue !== nextModel) {
       emit('change', formattedValue)
     }
   }
 
   const onBlur = (evt: FocusEvent) => {
-    const {lazy, lazyFormatter} = props
     emit('blur', evt)
-    if (!lazy && !lazyFormatter) return
+    if (!props.lazy && !props.lazyFormatter) return
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)

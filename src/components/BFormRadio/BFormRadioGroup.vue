@@ -69,19 +69,19 @@ export default defineComponent({
       },
     })
 
-    const checkboxList = computed(() => {
-      const {modelValue, disabled, options} = props
-
-      return (slots.first ? slotsToElements(slots.first(), slotsName, disabled) : [])
-        .concat(options.map((e) => optionToElement(e, props)))
-        .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabled) : [])
+    const checkboxList = computed(() =>
+      (slots.first ? slotsToElements(slots.first(), slotsName, props.disabled) : [])
+        .concat(props.options.map((e) => optionToElement(e, props)))
+        .concat(slots.default ? slotsToElements(slots.default(), slotsName, props.disabled) : [])
         .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
         .map((e) => ({
           ...e,
           model:
-            JSON.stringify(modelValue) === JSON.stringify(e.props?.value) ? e.props?.value : null,
+            JSON.stringify(props.modelValue) === JSON.stringify(e.props?.value)
+              ? e.props?.value
+              : null,
         }))
-    })
+    )
 
     const childUpdated = (newValue: any) => {
       emit('change', newValue)

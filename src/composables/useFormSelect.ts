@@ -14,17 +14,15 @@ const _normalizeOption = (
   props: any
 ) => {
   if (Object.prototype.toString.call(option) === '[object Object]') {
-    const {valueField, textField, optionsField, labelField, htmlField, disabledField} = props
+    const value = _getNested(option, props.valueField)
+    const text = _getNested(option, props.textField)
+    const html = _getNested(option, props.htmlField)
+    const disabled = _getNested(option, props.disabledField)
 
-    const value = _getNested(option, valueField)
-    const text = _getNested(option, textField)
-    const html = _getNested(option, htmlField)
-    const disabled = _getNested(option, disabledField)
-
-    const options = option[optionsField] || null
+    const options = option[props.optionsField] || null
     if (options !== null) {
       return {
-        label: String(_getNested(option, labelField) || text),
+        label: String(_getNested(option, props.labelField) || text),
         options: normalizeOptions(options, componentName, props),
       }
     }

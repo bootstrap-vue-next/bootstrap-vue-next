@@ -61,17 +61,16 @@ export default defineComponent({
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
     const classes = computed(() => {
-      const {plaintext, size, state, type} = props
-      const isRange = type === 'range'
-      const isColor = type === 'color'
+      const isRange = props.type === 'range'
+      const isColor = props.type === 'color'
       return {
         'form-range': isRange,
-        'form-control': isColor || (!plaintext && !isRange),
+        'form-control': isColor || (!props.plaintext && !isRange),
         'form-control-color': isColor,
-        'form-control-plaintext': plaintext && !isRange && !isColor,
-        [`form-control-${size}`]: size,
-        'is-valid': state === true,
-        'is-invalid': state === false,
+        'form-control-plaintext': props.plaintext && !isRange && !isColor,
+        [`form-control-${props.size}`]: props.size,
+        'is-valid': props.state === true,
+        'is-invalid': props.state === false,
       }
     })
 

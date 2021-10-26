@@ -42,7 +42,8 @@ export default defineComponent({
   },
   setup(props) {
     const attrs = computed(() => {
-      let {src} = props
+      // eslint-disable-next-line prefer-destructuring
+      let src = props.src
       let width =
         (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
         null
@@ -94,7 +95,8 @@ export default defineComponent({
 
     const classes = computed(() => {
       let align = ''
-      let {block} = props
+      // eslint-disable-next-line prefer-destructuring
+      let block = props.block
       if (props.left) {
         align = 'float-start'
       } else if (props.right) {

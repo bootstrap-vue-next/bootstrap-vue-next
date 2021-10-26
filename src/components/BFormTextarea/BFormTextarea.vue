@@ -36,16 +36,13 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
-    const classes = computed(() => {
-      const {plaintext, size, state} = props
-      return {
-        'form-control': !plaintext,
-        'form-control-plaintext': plaintext,
-        [`form-control-${size}`]: size,
-        'is-valid': state === true,
-        'is-invalid': state === false,
-      }
-    })
+    const classes = computed(() => ({
+      'form-control': !props.plaintext,
+      'form-control-plaintext': props.plaintext,
+      [`form-control-${props.size}`]: props.size,
+      'is-valid': props.state === true,
+      'is-invalid': props.state === false,
+    }))
 
     const computedStyles = computed(() => (props.noResize ? {resize: 'none'} : undefined))
 

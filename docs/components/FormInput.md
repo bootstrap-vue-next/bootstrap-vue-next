@@ -385,7 +385,7 @@ invalid), `true` (for valid), or `null` (no validation state).
 </script>
 ```
 
-> ~~**Tip:** Use the [`<b-form-group>`](/docs/components/form-group) component to automatically generate markup similar to above.~~
+> **Tip:** Use the [`<b-form-group>`](/docs/components/form-group) component to automatically generate markup similar to above.
 
 ### Conveying contextual state to assistive technologies and colorblind users
 
