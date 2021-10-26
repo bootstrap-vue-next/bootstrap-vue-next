@@ -84,7 +84,7 @@ export default defineComponent({
       })
 
       if (slots.default) {
-        slides.value = slots.default().filter((child: any) => child.type.name === 'BCarouselSlide')
+        slides.value = slots.default().filter((child: any) => child.type?.name === 'BCarouselSlide')
       }
     })
 
