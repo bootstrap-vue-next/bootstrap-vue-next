@@ -40,6 +40,16 @@ BootstrapVue3 is an attempt to have [BootstrapVue](https://bootstrap-vue.org/) c
 
 As you may suppose, this library is heavily inspired by **BootstrapVue**, as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with **BootstrapVue**, so it will be easy to switch between libraries.
 
+# Install
+
+``` console
+# Yarn
+yarn add bootstrap bootstrap-vue-3
+
+# NPM
+npm i bootstrap bootstrap-vue-3
+```
+
 # Contribute & support 🙌
 
 This project is still in **alpha version** so there is a lot of work to do. If you want to contribute you can:
