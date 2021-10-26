@@ -63,16 +63,15 @@ export default defineComponent({
     const link: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
 
     const tag = computed(() => {
-      const {to, disabled, routerComponentName} = props
-      const routerName = routerComponentName
+      const routerName = props.routerComponentName
         .split('-')
         .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
         .join('')
       const hasRouter = instance?.appContext.app.component(routerName) !== undefined
-      if (!hasRouter || disabled || !to) {
+      if (!hasRouter || props.disabled || !props.to) {
         return 'a'
       }
-      return routerComponentName
+      return props.routerComponentName
     })
 
     const computedHref = computed(() => {

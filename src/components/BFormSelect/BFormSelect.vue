@@ -102,17 +102,14 @@ export default defineComponent({
     // /lifecycle events
 
     // computed
-    const classes = computed(() => {
-      const {plain, size, state} = props
-      return {
-        'form-control': plain,
-        [`form-control-${size}`]: size && plain,
-        'form-select': !plain,
-        [`form-select-${size}`]: size && !plain,
-        'is-valid': state === true,
-        'is-invalid': state === false,
-      }
-    })
+    const classes = computed(() => ({
+      'form-control': props.plain,
+      [`form-control-${props.size}`]: props.size && props.plain,
+      'form-select': !props.plain,
+      [`form-select-${props.size}`]: props.size && !props.plain,
+      'is-valid': props.state === true,
+      'is-invalid': props.state === false,
+    }))
 
     const computedSelectSize = computed(() => {
       if (props.selectSize || props.plain) {
@@ -122,12 +119,10 @@ export default defineComponent({
     })
 
     const computedAriaInvalid = computed(() => {
-      const {ariaInvalid, state} = props
-
-      if (ariaInvalid) {
-        return ariaInvalid.toString()
+      if (props.ariaInvalid) {
+        return props.ariaInvalid.toString()
       }
-      return state === false ? 'true' : null
+      return props.state === false ? 'true' : null
     })
 
     const formOptions = computed(() => normalizeOptions(props.options, 'BFormSelect', props))
