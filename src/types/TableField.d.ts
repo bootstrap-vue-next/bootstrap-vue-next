@@ -10,7 +10,8 @@ export interface TableFieldObject {
   sortDirection?: string
   sortByFormatted?: boolean
   filterByFormatted?: boolean
-  tdClass?: string
+  tdClass?: string | string[]
+  thClass?: string | string[]
   thStyle?: Record<string, unknown>
   variant?: string
   tdAttr?: Record<string, unknown>

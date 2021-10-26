@@ -43,30 +43,28 @@ export default defineComponent({
     const itemHelper = useItemHelper()
     const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 
-    const headerTable = computed(() => {
-      if (computedFields.value.length > 0) {
-        return computedFields.value.map((f) => f.label)
-      }
-      return []
-    })
-
-    // return {
-    //     classes,
-    //     headerTable
-    // }
     return () => {
       const tHead = h(
         'thead',
         h(
           'tr',
-          headerTable.value.map((th) => h('th', {scope: 'col'}, th))
+          computedFields.value.map((field) =>
+            h(
+              'th',
+              {
+                scope: 'col',
+                class: [field.class, field.thClass],
+              },
+              field.label
+            )
+          )
         )
       )
 
       const tBody = [
         h(
           'tbody',
-          props.items.map((tr) =>
+          props.items.map((tr, index) =>
             h(
               'tr',
               computedFields.value.map((field) => {
@@ -76,11 +74,19 @@ export default defineComponent({
                 if (slots[slotName]) {
                   tdContent = slots[slotName]?.({
                     value: tr[field.key],
+                    index,
                     item: tr,
                     items: props.items,
                   })
                 }
-                return h('td', tdContent)
+
+                return h(
+                  'td',
+                  {
+                    class: [field.class, field.tdClass],
+                  },
+                  tdContent
+                )
               })
             )
           )
@@ -103,7 +109,16 @@ export default defineComponent({
           'tfoot',
           h(
             'tr',
-            headerTable.value.map((th) => h('th', {scope: 'col'}, th))
+            computedFields.value.map((field) =>
+              h(
+                'th',
+                {
+                  scope: 'col',
+                  class: [field.class, field.thClass],
+                },
+                field.label
+              )
+            )
           )
         )
 
