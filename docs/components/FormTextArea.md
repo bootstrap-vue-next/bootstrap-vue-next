@@ -358,7 +358,7 @@ form field styling and preserve the correct text size, margin, padding and heigh
 <ClientOnly>
   <b-card>
   <div>
-    <b-form-textarea id="textarea-plaintext" plaintext v-model="textReadOnly"></b-form-textarea>
+    <b-form-textarea id="textarea-plaintext" plaintext :modelValue="textReadOnly"></b-form-textarea>
   </div>
 
   </b-card>
@@ -368,7 +368,11 @@ form field styling and preserve the correct text size, margin, padding and heigh
 <template>
   <b-card>
     <div>
-      <b-form-textarea id="textarea-plaintext" plaintext :value="textReadOnly"></b-form-textarea>
+      <b-form-textarea
+        id="textarea-plaintext"
+        plaintext
+        :modelValue="textReadOnly"
+      ></b-form-textarea>
     </div>
   </b-card>
 </template>

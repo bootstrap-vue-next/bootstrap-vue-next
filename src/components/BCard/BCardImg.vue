@@ -20,31 +20,29 @@ export default defineComponent({
     width: {type: [Number, String], required: false},
   },
   setup(props) {
-    const attrs = computed(() => {
-      const {src, width, height} = props
-
-      return {
-        src,
-        alt: props.alt,
-        width: (typeof width === 'number' ? width : parseInt(width as string, 10)) || undefined,
-        height: (typeof height === 'number' ? height : parseInt(height as string, 10)) || undefined,
-      }
-    })
+    const attrs = computed(() => ({
+      src: props.src,
+      alt: props.alt,
+      width:
+        (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
+        undefined,
+      height:
+        (typeof props.height === 'number' ? props.height : parseInt(props.height as string, 10)) ||
+        undefined,
+    }))
 
     const classes = computed(() => {
-      const {top, right, end, bottom, left, start} = props
-
-      const align = left ? 'float-left' : right ? 'float-right' : ''
+      const align = props.left ? 'float-left' : props.right ? 'float-right' : ''
 
       let baseClass = 'card-img'
 
       if (top) {
         baseClass += '-top'
-      } else if (right || end) {
+      } else if (props.right || props.end) {
         baseClass += '-right'
-      } else if (bottom) {
+      } else if (props.bottom) {
         baseClass += '-bottom'
-      } else if (left || start) {
+      } else if (props.left || props.start) {
         baseClass += '-left'
       }
 

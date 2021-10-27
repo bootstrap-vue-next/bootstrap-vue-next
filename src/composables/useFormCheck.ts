@@ -2,13 +2,12 @@ import {computed, ComputedRef} from 'vue'
 
 const _getComputedAriaInvalid = (props: any): ComputedRef =>
   computed(() => {
-    const {ariaInvalid, state} = props
-    if (ariaInvalid === true || ariaInvalid === 'true' || ariaInvalid === '') {
+    if (props.ariaInvalid === true || props.ariaInvalid === 'true' || props.ariaInvalid === '') {
       return 'true'
     }
 
-    const computedState = typeof state === 'boolean' ? props.state : null
-    return computedState === false ? 'true' : ariaInvalid
+    const computedState = typeof props.state === 'boolean' ? props.state : null
+    return computedState === false ? 'true' : props.ariaInvalid
   })
 
 const getClasses = (props: any): ComputedRef =>
@@ -67,14 +66,12 @@ const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean)
       }
     })
 
-const optionToElement = (option: any, props: any) => {
-  const {valueField, disabled, disabledField, textField, htmlField} = props
-
+const optionToElement = (option: any, props: any): any => {
   if (typeof option === 'string') {
     return {
       props: {
         value: option,
-        disabled: disabled,
+        disabled: props.disabled,
       },
       text: option,
     }
@@ -82,12 +79,12 @@ const optionToElement = (option: any, props: any) => {
 
   return {
     props: {
-      value: option[valueField],
-      disabled: disabled || option[disabledField],
+      value: option[props.valueField],
+      disabled: props.disabled || option[props.disabledField],
       ...option.props,
     },
-    text: option[textField],
-    html: option[htmlField],
+    text: option[props.textField],
+    html: option[props.htmlField],
   }
 }
 
@@ -97,26 +94,22 @@ const bindGroupProps = (
   props: any,
   computedName: ComputedRef,
   computedId: ComputedRef
-) => {
-  const {buttonVariant, buttons, stacked, form, state, plain, size, required} = props
-
-  return {
-    ...el,
-    props: {
-      'button-variant': buttonVariant,
-      form,
-      'name': computedName.value,
-      'id': `${computedId.value}_option_${idx}`,
-      'button': buttons,
-      state,
-      plain,
-      size,
-      'inline': !stacked,
-      required,
-      ...el.props,
-    },
-  }
-}
+): any => ({
+  ...el,
+  props: {
+    'button-variant': props.buttonVariant,
+    'form': props.form,
+    'name': computedName.value,
+    'id': `${computedId.value}_option_${idx}`,
+    'button': props.buttons,
+    'state': props.state,
+    'plain': props.plain,
+    'size': props.size,
+    'inline': !props.stacked,
+    'required': props.required,
+    ...el.props,
+  },
+})
 
 export {
   getClasses,

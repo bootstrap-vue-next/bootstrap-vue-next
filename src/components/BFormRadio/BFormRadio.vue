@@ -83,12 +83,10 @@ export default defineComponent({
     }
 
     const isChecked = computed(() => {
-      const {value, modelValue} = props
-
-      if (Array.isArray(modelValue)) {
-        return (modelValue || []).find((e) => e === value)
+      if (Array.isArray(props.modelValue)) {
+        return (props.modelValue || []).find((e) => e === props.value)
       }
-      return JSON.stringify(modelValue) === JSON.stringify(value)
+      return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
     })
 
     const classes = getClasses(props)
@@ -96,14 +94,12 @@ export default defineComponent({
     const labelClasses = getLabelClasses(props)
 
     const handleClick = async (checked: boolean) => {
-      const {modelValue, value} = props
-
-      if (Array.isArray(modelValue)) {
-        if ((modelValue || [])[0] !== value) {
-          localChecked.value = [value]
+      if (Array.isArray(props.modelValue)) {
+        if ((props.modelValue || [])[0] !== props.value) {
+          localChecked.value = [props.value]
         }
-      } else if (checked && modelValue !== value) {
-        localChecked.value = value
+      } else if (checked && props.modelValue !== props.value) {
+        localChecked.value = props.value
       }
     }
 

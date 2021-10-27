@@ -58,13 +58,12 @@ export default defineComponent({
     )
 
     const classes = computed(() => {
-      const {button, variant, active, disabled} = props
-      const action = props.action || link.value || button || ACTION_TAGS.includes(props.tag)
+      const action = props.action || link.value || props.button || ACTION_TAGS.includes(props.tag)
       return {
-        [`list-group-item-${variant}`]: variant,
+        [`list-group-item-${props.variant}`]: props.variant,
         'list-group-item-action': action,
-        active,
-        disabled,
+        'active': props.active,
+        'disabled': props.disabled,
       }
     })
 
