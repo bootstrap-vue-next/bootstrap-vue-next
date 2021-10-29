@@ -54,6 +54,8 @@ export default defineComponent({
               {
                 scope: 'col',
                 class: [field.class, field.thClass],
+                title: field.headerTitle,
+                abbr: field.headerAbbr,
               },
               field.label
             )
@@ -115,6 +117,8 @@ export default defineComponent({
                 {
                   scope: 'col',
                   class: [field.class, field.thClass],
+                  title: field.headerTitle,
+                  abbr: field.headerAbbr,
                 },
                 field.label
               )
