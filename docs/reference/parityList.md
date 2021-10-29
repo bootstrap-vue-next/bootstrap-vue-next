@@ -131,22 +131,22 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | Property              | Status                                                                               | Observations |
 | --------------------- | ------------------------------------------------------------------------------------ | ------------ |
 | active                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| active-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| append                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| aria-current          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| active-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| append                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| aria-current          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | disabled              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| exact                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| exact-active-class    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| exact                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| exact-active-class    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | href                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | html                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | no-prefetch           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | prefetch              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| rel                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| replace               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| router-component-name | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| rel                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| replace               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| router-component-name | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | target                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | text                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| to                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| to                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ### Slots
 
