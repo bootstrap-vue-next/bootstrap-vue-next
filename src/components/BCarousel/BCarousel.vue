@@ -43,8 +43,8 @@
 <script lang="ts">
 import {defineComponent, InjectionKey, onMounted, provide, ref, VNode} from 'vue'
 import {Carousel} from 'bootstrap'
-import useEventListener from '../composables/useEventListener'
-import useId from '../composables/useId'
+import useEventListener from '../../composables/useEventListener'
+import useId from '../../composables/useId'
 
 export interface ParentData {
   width?: string
