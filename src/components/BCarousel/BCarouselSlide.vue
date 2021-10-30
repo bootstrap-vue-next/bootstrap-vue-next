@@ -12,11 +12,10 @@
       <h5 v-if="caption">
         {{ caption }}
       </h5>
-      <slot>
-        <p v-if="text">
-          {{ text }}
-        </p>
-      </slot>
+      <p v-if="text">
+        {{ text }}
+      </p>
+      <slot> </slot>
     </div>
   </div>
 </template>
