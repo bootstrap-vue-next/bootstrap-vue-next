@@ -47,6 +47,7 @@ import useEventListener from '../../composables/useEventListener'
 import useId from '../../composables/useId'
 
 export interface ParentData {
+  background?: string
   width?: string
   height?: string
 }
@@ -56,6 +57,7 @@ export const injectionKey: InjectionKey<ParentData> = Symbol()
 export default defineComponent({
   name: 'BCarousel',
   props: {
+    background: {type: String, required: false},
     modelValue: {type: Boolean, default: false},
     controls: {type: Boolean, default: false},
     id: {type: String},
@@ -89,6 +91,7 @@ export default defineComponent({
     })
 
     provide(injectionKey, {
+      background: props.background,
       width: props.imgWidth,
       height: props.imgHeight,
     })

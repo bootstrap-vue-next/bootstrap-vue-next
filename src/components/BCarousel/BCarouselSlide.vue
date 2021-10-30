@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="carousel-item"
-    :class="{active}"
-    :style="{
-      background: 'rgb(171, 171, 171) none repeat scroll 0% 0%',
-    }"
-  >
+  <div class="carousel-item" :class="{active}" :style="computedAttr">
     <slot name="img">
       <img
         class="d-block w-100"
@@ -35,6 +29,7 @@ export default defineComponent({
   name: 'BCarouselSlide',
   props: {
     active: {type: Boolean, default: false},
+    background: {type: String, required: false},
     caption: {type: String},
     imgBlank: {type: Boolean, default: false},
     imgHeight: {type: String},
@@ -50,7 +45,13 @@ export default defineComponent({
 
     const img = computed(() => (props.imgBlank ? imgBlank : props.imgSrc))
 
+    const computedAttr = computed(() => ({
+      background: `${
+        props.background || parentData.background || 'rgb(171, 171, 171)'
+      } none repeat scroll 0% 0%`,
+    }))
     return {
+      computedAttr,
       width: parentData.width,
       height: parentData.height,
       img,
