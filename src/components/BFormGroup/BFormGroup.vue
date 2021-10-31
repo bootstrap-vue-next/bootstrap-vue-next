@@ -74,7 +74,7 @@ export default defineComponent({
     validated: {type: Boolean, default: false},
     floating: {type: Boolean, default: false},
   },
-  setup(props, {slots, attrs}) {
+  setup(props, {attrs, slots}) {
     let ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
