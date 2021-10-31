@@ -8,15 +8,19 @@
         :height="imgHeight || height"
       />
     </slot>
-    <div v-if="caption || text || $slots.default" class="carousel-caption d-none d-md-block">
-      <h5 v-if="caption">
+    <component
+      :is="contentTag"
+      v-if="caption || text || $slots.default"
+      class="carousel-caption d-none d-md-block"
+    >
+      <component :is="captionTag" v-if="caption">
         {{ caption }}
-      </h5>
+      </component>
       <p v-if="text">
         {{ text }}
       </p>
       <slot> </slot>
-    </div>
+    </component>
   </div>
 </template>
 
@@ -29,7 +33,9 @@ export default defineComponent({
   props: {
     active: {type: Boolean, default: false},
     background: {type: String, required: false},
-    caption: {type: String},
+    caption: {type: String, required: false},
+    captionTag: {type: String, default: 'h3'},
+    contentTag: {type: String, default: 'div'},
     imgBlank: {type: Boolean, default: false},
     imgHeight: {type: String},
     imgSrc: {type: String},
