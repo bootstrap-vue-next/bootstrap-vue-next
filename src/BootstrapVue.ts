@@ -100,4 +100,5 @@ const plugin: Plugin = {
   },
 }
 
+export {plugin as BootstrapVue3}
 export default plugin
