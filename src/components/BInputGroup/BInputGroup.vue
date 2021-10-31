@@ -1,3 +1,4 @@
+/* eslint-disable vue/no-v-html */
 <template>
   <component :is="tag" :id="id" class="input-group" :class="classes" role="group">
     <slot name="prepend">

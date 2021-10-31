@@ -26,7 +26,7 @@ export default /* #__PURE__ */ defineComponent({
     title: {type: String, required: false},
     variant: {type: String as PropType<ColorVariant>, required: false},
   },
-  setup(props) {
+  setup() {
     const svgSprite = computed(() => BootstrapIcons)
     return {
       svgSprite,
