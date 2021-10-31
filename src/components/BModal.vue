@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div :id="id" ref="element" class="modal" :class="classes" tabindex="-1">
+    <div :id="id" ref="element" class="modal" :class="classes" tabindex="-1" v-bind="$attrs">
       <div class="modal-dialog" :class="modalDialogClasses">
         <div class="modal-content">
           <div class="modal-header">
@@ -47,9 +47,11 @@ import useEventListener from '../composables/useEventListener'
 
 export default defineComponent({
   name: 'BModal',
+  inheritAttrs: false,
   props: {
     modelValue: {type: Boolean, default: false},
     noBackdrop: {type: Boolean, default: false},
+    noFocus: {type: Boolean, default: false},
     centered: {type: Boolean, default: false},
     fade: {type: Boolean, default: false},
     fullscreen: {type: [Boolean, String], default: false},
@@ -100,6 +102,7 @@ export default defineComponent({
       instance.value = new Modal(element.value as HTMLElement, {
         backdrop: props.staticBackdrop ? 'static' : !props.noBackdrop,
         keyboard: !props.staticBackdrop,
+        focus: !props.noFocus,
       })
 
       if (props.modelValue) {

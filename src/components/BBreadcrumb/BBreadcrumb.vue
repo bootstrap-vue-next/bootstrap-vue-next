@@ -13,8 +13,8 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {useBreadcrumb} from '../composables/useBreadcrumb'
-import {BreadcrumbItem} from '../types'
+import {useBreadcrumb} from '../../composables/useBreadcrumb'
+import {BreadcrumbItem} from '../../types'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 
 export default defineComponent({
