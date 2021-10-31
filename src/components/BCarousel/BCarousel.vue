@@ -58,7 +58,7 @@ export default defineComponent({
   name: 'BCarousel',
   props: {
     background: {type: String, required: false},
-    modelValue: {type: Boolean, default: false},
+    modelValue: {type: Number, default: 0},
     controls: {type: Boolean, default: false},
     id: {type: String},
     imgHeight: {type: String},
@@ -68,15 +68,15 @@ export default defineComponent({
     noTouch: {type: Boolean, default: false},
     noWrap: {type: Boolean, default: false},
   },
-  emits: ['slide', 'slid'],
+  emits: ['sliding-start', 'sliding-end'],
   setup(props, {slots, emit}) {
     const element = ref<HTMLElement>()
     const instance = ref<Carousel>()
     const computedId = useId(props.id, 'accordion')
     const slides = ref<VNode[]>([])
 
-    useEventListener(element, 'slide.bs.carousel', (payload) => emit('slide', payload))
-    useEventListener(element, 'slid.bs.carousel', (payload) => emit('slid', payload))
+    useEventListener(element, 'slide.bs.carousel', (payload) => emit('sliding-start', payload))
+    useEventListener(element, 'slid.bs.carousel', (payload) => emit('sliding-end', payload))
 
     onMounted(() => {
       instance.value = new Carousel(element.value as HTMLElement, {

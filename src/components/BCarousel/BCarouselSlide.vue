@@ -1,30 +1,43 @@
 <template>
-  <div class="carousel-item" :class="{active}" :style="computedAttr">
+  <div
+    :id="computedId"
+    class="carousel-item"
+    :class="{active}"
+    :data-bs-interval="interval"
+    :style="computedAttr"
+  >
     <slot name="img">
-      <img
+      <b-img
         class="d-block w-100"
-        :src="img"
+        :alt="imgAlt"
+        :src="imgSrc"
         :width="imgWidth || width"
         :height="imgHeight || height"
+        :blank="imgBlank"
+        :blank-color="imgBlankColor"
       />
     </slot>
     <component
       :is="contentTag"
-      v-if="caption || text || $slots.default"
-      class="carousel-caption d-none d-md-block"
+      v-if="caption || captionHtml || text || textHtml || $slots.default"
+      class="carousel-caption"
+      :class="computedContentClasses"
     >
-      <component :is="captionTag" v-if="caption">
-        {{ caption }}
+      <component :is="captionTag" v-if="caption || captionHtml">
+        <span v-if="showCaption">{{ caption }}</span>
+        <span v-if="showCaptionAsHtml" v-html="captionHtml"></span>
       </component>
-      <p v-if="text">
-        {{ text }}
-      </p>
+      <component :is="textTag" v-if="text || textHtml">
+        <span v-if="showText">{{ text }}</span>
+        <span v-if="showTextAsHtml" v-html="textHtml"></span>
+      </component>
       <slot> </slot>
     </component>
   </div>
 </template>
 
 <script lang="ts">
+import useId from '../../composables/useId'
 import {computed, defineComponent, inject} from 'vue'
 import {injectionKey, ParentData} from './BCarousel.vue'
 
@@ -34,32 +47,53 @@ export default defineComponent({
     active: {type: Boolean, default: false},
     background: {type: String, required: false},
     caption: {type: String, required: false},
+    captionHtml: {type: String, required: false},
     captionTag: {type: String, default: 'h3'},
     contentTag: {type: String, default: 'div'},
+    contentVisibleUp: {type: String, required: false},
+    id: {type: String, required: false},
+    imgAlt: {type: String, required: false},
     imgBlank: {type: Boolean, default: false},
+    imgBlankColor: {type: String, default: 'transparent'},
     imgHeight: {type: String},
     imgSrc: {type: String},
     imgWidth: {type: String},
-    text: {type: String},
     interval: {type: [String, Number]},
+    text: {type: String, required: false},
+    textHtml: {type: String, required: false},
+    textTag: {type: String, default: 'p'},
   },
   setup(props) {
     const parentData = inject<ParentData>(injectionKey, {})
-    const imgBlank =
-      'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%221024%22%20height%3D%22480%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20%25%7Bw%7D%20%25%7Bh%7D%22%20preserveAspectRatio%3D%22none%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20style%3D%22fill%3Atransparent%3B%22%3E%3C%2Frect%3E%3C%2Fsvg%3E'
-
-    const img = computed(() => (props.imgBlank ? imgBlank : props.imgSrc))
+    const computedId = useId(props.id, 'accordion')
+    const img = computed(() => (props.imgBlank ? props.imgBlank : props.imgSrc))
 
     const computedAttr = computed(() => ({
       background: `${
         props.background || parentData.background || 'rgb(171, 171, 171)'
       } none repeat scroll 0% 0%`,
     }))
+
+    const computedContentClasses = computed(() => ({
+      'd-none': props.contentVisibleUp,
+      [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp,
+    }))
+    const showText = computed(() => props.text && !props.textHtml)
+    const showTextAsHtml = computed(() => props.textHtml)
+    const showCaption = computed(() => props.caption && !props.captionHtml)
+    const showCaptionAsHtml = computed(() => props.captionHtml)
+
     return {
       computedAttr,
-      width: parentData.width,
+      computedContentClasses,
+      computedId,
       height: parentData.height,
       img,
+      showCaption,
+      showCaptionAsHtml,
+      showText,
+      showTextAsHtml,
+      width: parentData.width,
     }
   },
 })
