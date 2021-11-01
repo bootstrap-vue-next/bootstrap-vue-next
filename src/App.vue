@@ -489,7 +489,7 @@
           <h6>Example heading <b-badge>New</b-badge></h6>
         </div>
       </div>
-      <div>
+      <div class="mt-2">
         <h4>Pill badges with color variant</h4>
         <div class="ms-4">
           <b-badge pill variant="primary">Primary</b-badge>
@@ -500,6 +500,19 @@
           <b-badge pill variant="info">Info</b-badge>
           <b-badge pill variant="light">Light</b-badge>
           <b-badge pill variant="dark">Dark</b-badge>
+        </div>
+      </div>
+      <div class="mt-2">
+        <h4>Actionable badges</h4>
+        <div class="ms-4">
+          <b-badge href="#" variant="primary">Primary</b-badge>
+          <b-badge href="#" variant="secondary">Secondary</b-badge>
+          <b-badge href="#" variant="success">Success</b-badge>
+          <b-badge href="#" variant="danger">Danger</b-badge>
+          <b-badge href="#" variant="warning">Warning</b-badge>
+          <b-badge href="#" variant="info">Info</b-badge>
+          <b-badge href="#" variant="light">Light</b-badge>
+          <b-badge href="#" variant="dark">Dark</b-badge>
         </div>
       </div>
     </div>
