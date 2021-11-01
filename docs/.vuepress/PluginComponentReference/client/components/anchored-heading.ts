@@ -13,30 +13,27 @@ export default defineComponent({
       default: 2,
     },
   },
-  setup(props) {
-    return {}
-  },
-  render() {
+  setup(props, {slots}) {
     const blink = resolveComponent('b-link')
     const $anchor = h(
       blink,
       {
         class: 'header-anchor',
-        to: {hash: `#${this.id}`},
+        to: {hash: `#${props.id}`},
         // 'aria-labelledby': this.id || null,
         // 'aria-label': this.id ? null : 'Anchor',
       },
-      '#'
+      () => '#'
     )
 
-    const $content = h('span', {class: ['bd-content-title']}, [this.$slots.default(), $anchor])
-    return h(
-      `h${this.level}`,
-      {
-        id: this.id,
-        tabindex: '-1',
-      },
-      $content
-    )
+    return () =>
+      h(
+        `h${props.level}`,
+        {
+          id: props.id,
+          tabindex: '-1',
+        },
+        h('span', {class: ['bd-content-title']}, [slots.default(), $anchor])
+      )
   },
 })

@@ -14,7 +14,7 @@ export default defineComponent({
   },
   render() {
     return [
-      h(AnchoredHeading, {id: 'component-reference'}, 'Component reference'),
+      h(AnchoredHeading, {id: 'component-reference'}, () => 'Component reference'),
       this.pagedata.componentReference.meta.components.map(
         ({component, events, rootEventListeners, slots, aliases, props: propsMeta, version}) => {
           return h(Compoenentdoc, {
