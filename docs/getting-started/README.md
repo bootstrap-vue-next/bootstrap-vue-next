@@ -68,7 +68,7 @@ And in your `main.js/ts`:
 import {createApp} from 'vue'
 import BootstrapVue3 from 'bootstrap-vue-3'
 
-// Optional, since every component import their Bootstrap funcionality
+// Optional, since every component import their Bootstrap functionality
 // the following line is not necessary
 // import 'bootstrap'
 
@@ -80,7 +80,7 @@ app.use(BootstrapVue3)
 app.mount('#app')
 ```
 
-## Comparision with BoostrapVue
+## Comparison with BoostrapVue
 
 As we said, we based this project in [BootstrapVue](https://bootstrap-vue.org/). We consider BootstrapVue as the best implementation of Bootstrap `v4`, so a good approach is to replicate every BootstrapVue component, as well their props, events, etc. and add the new features of Bootstrap `v5`.
 
@@ -90,7 +90,7 @@ You can view the full list in the following [section](../reference/parityList.md
 
 ## Types
 
-`BootstrapVue3` born with Typescript in mind. This is a list of types we use in this library and you can use too:
+`BootstrapVue3` born with Typescript in mind. This is a list of types we use in this library and that you can use too:
 
 - Alignment
 - BreadcrumbItem

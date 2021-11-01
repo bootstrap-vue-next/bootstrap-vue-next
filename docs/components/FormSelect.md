@@ -330,7 +330,7 @@ If you want to customize the field property names (for example using `name` fiel
 If the initial value of your `v-model` expression does not match any of the options, the
 `<b-form-select>` component (which is a native HTML5 `<select>` under the hood) will render in an
 _unselected_ state. On iOS this will cause the user not being able to select the first item because
-iOS does not fire a change event in this case. It is therefore recommended to provide a disabled
+iOS does not fire a change event in this case. It is therefore recommended providing a disabled
 option with an empty value as your first option.
 
 ```html
@@ -351,7 +351,7 @@ By default, Bootstrap v5's custom select styling is applied.
 
 ### Value in single mode
 
-In non `multiple` mode, `<b-form-select>` returns the a single `value` of the currently selected
+In non `multiple` mode, `<b-form-select>` returns the single `value` of the currently selected
 option.
 
 <ClientOnly>
@@ -480,7 +480,7 @@ an array reference as your `v-model` when in `multiple` mode.
 Set the form-control text size using the `size` prop to `sm` or `lg` for small or large
 respectively.
 
-By default `<b-form-select>` will occupy the full width of the container that it appears in. To
+By default, `<b-form-select>` will occupy the full width of the container that it appears in. To
 control the select width, place the input inside standard Bootstrap grid column.
 
 ## Autofocus

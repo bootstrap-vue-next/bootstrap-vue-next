@@ -340,7 +340,7 @@ These work great with custom content as well.
 </b-card>
 ```
 
-**Note:** When using the numbered property, it supercedes the tag property on `b-list-group` and `b-list-group-item`.
+**Note:** When using the numbered property, it supersedes the tag property on `b-list-group` and `b-list-group-item`.
 With numbered set, the `b-list-group`is always rendered as a `ol`, while the `b-list-group-item` is rendered as a `li`.
 
 ## List Groups inside cards
@@ -414,7 +414,7 @@ prop when using cards with `no-body` to make the sides of the list group flush w
 Set the prop `horizontal` to `true` to change the layout of list group items from vertical to
 horizontal across all breakpoints. Alternatively, set `horizontal` to a responsive breakpoint (`sm`,
 `md`, `lg` or `xl`) to make a list group horizontal starting at that breakpoint's min-width.
-Currently horizontal list groups cannot be combined with `flush` list groups.
+Currently, horizontal list groups cannot be combined with `flush` list groups.
 
 **ProTip:** Want equal-width list group items when horizontal? Add the class `flex-fill` to each
 list group item.

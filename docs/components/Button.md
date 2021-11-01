@@ -79,7 +79,7 @@ Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
 
 Use the `variant` prop to generate the various Bootstrap contextual button variants.
 
-By default `<b-button>` will render with the `secondary` variant.
+By default, `<b-button>` will render with the `secondary` variant.
 
 The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendered button.
 

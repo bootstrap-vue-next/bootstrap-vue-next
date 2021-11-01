@@ -549,7 +549,7 @@ Sizes can be set on individual `<b-form-checkbox>` components, or inherited from
 **Note:** Bootstrap v5.x does not natively support sizes for the custom switch control. However,
 Bootstrap-Vue-3 includes custom SCSS/CSS that adds support for sizing the custom switches.
 
-## Non custom check inputs (plain)
+## Non-custom check inputs (plain)
 
 You can have `<b-form-checkbox-group>` or `<b-form-checkbox>` render a browser native checkbox input
 by setting the `plain` prop.
@@ -720,7 +720,7 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 | `aria-invalid`                                                                                               | `Boolean` or `String`   | `false`     | Sets the 'aria-invalid' attribute value on the wrapper element. When not provided, the 'state' prop will control the attribute                                            |
 | `autofocus`                                                                                                  | `Boolean`               | `false`     | When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control    |
 | `button-variant`                                                                                             | `String`                | `secondary` | Specifies the Bootstrap contextual color theme variant the apply to the button style checkboxes' mode                                                                     |
-| `buttons`                                                                                                    | `Boolean`               | `false`     | When set, renderes the checkboxes in this group with button styling                                                                                                       |
+| `buttons`                                                                                                    | `Boolean`               | `false`     | When set, renders the checkboxes in this group with button styling                                                                                                        |
 | `disabled`                                                                                                   | `Boolean`               | `false`     | When set to `true`, disables the component's functionality and places it in a disabled state                                                                              |
 | `disabled-field`                                                                                             | `String`                | `disabled`  | Field name in the `options` array that should be used for the disabled state                                                                                              |
 | `form`                                                                                                       | `String`                |             | ID of the form that the form control belongs to. Sets the `form` attribute on the control                                                                                 |

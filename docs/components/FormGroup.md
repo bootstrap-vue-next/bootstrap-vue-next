@@ -376,7 +376,7 @@ the feedback so that it shows as a static tooltip when visible, by setting the p
 valid) `state` on the `input` alone will **not** trigger the invalid (or valid) feedback to show
 (due to limitations with the new Bootstrap v4 validation CSS). To get around this, **you must also**
 set the invalid/valid `state` on `<b-form-group>`. Native browser validation will **not** trigger
-the invalid feedback to show when using one of the above mentioned form controls.
+the invalid feedback to show when using one of the above-mentioned form controls.
 
 ## Floating labels
 
@@ -450,7 +450,7 @@ There are restrictions on the use of floating labels
 ## Accessibility
 
 By default, when no `label-for` value is provided, `<b-form-group>` renders the input control(s)
-inside a an HTML `<fieldset>` element with the label content placed inside the fieldset's `<legend>`
+inside an HTML `<fieldset>` element with the label content placed inside the fieldset's `<legend>`
 element. By nature of this markup, the legend content is automatically associated to the containing
 input control(s).
 

@@ -82,7 +82,7 @@ centered beside any adjoining plain text. They also can be used as children of o
 
 ## Avatar types
 
-The avatar content can be either a an image, an icon, or short text string. Avatar content defaults
+The avatar content can be either an image, an icon, or short text string. Avatar content defaults
 to the [`'person-fill'` icon](/docs/icons) when no other content is specified.
 
 You can also supply custom content via the default slot, although you may need to apply additional
@@ -114,12 +114,12 @@ distortion will occur. The image will be scaled up or down to fit within the ava
   [Component img src resolving](/docs/reference/images) reference section for additional details.
 - The `src` prop takes precedence over the `icon` and `text` props.
 - <span class="badge badge-secondary">2.11.0+</span> If the image fails to load, the avatar will
-  fallback to the value of the `icon` or `text` props. If neither the `icon` or `text` props are
+  fall back to the value of the `icon` or `text` props. If neither the `icon` or `text` props are
   provided, then the default avatar icon will be shown. Also, when the image fails to load, the
   `img-error` event will be emitted.
 - [Variant colors](#variants) when using images not normally visible, unless the image fails load.
   The variant will affect the focus styling when the image avatar is also an
-  [actionalble avatar](#actionalble-avatars).
+  [actionable avatar](#actionable-avatars).
 
 ### Icon content
 
@@ -377,12 +377,12 @@ When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 **Notes:**
 
 - The `square` prop takes precedence over the `rounded` prop.
-- Alternatively to to the `square` prop, you can set the `rounded` prop to the string `'0'` to
+- Alternatively to the `square` prop, you can set the `rounded` prop to the string `'0'` to
   achieve a square avatar.
 
 ### Alignment
 
-By default `<b-avatar>` will be vertically centered with its adjoining content. In some cases you
+By default, `<b-avatar>` will be vertically centered with its adjoining content. In some cases you
 may want to alter the alignment, such as ensuring that a text-only avatar aligns its text with the
 adjoining text. Simply set a [vertical alignment utility](/docs/reference/utility-classes) class on
 the component, such as `<b-avatar class="align-baseline" ...>` or
@@ -394,7 +394,7 @@ Easily create avatars that respond to clicks, ~~or avatars that change the URL/r
 Actionable avatars will appear in the document tab sequence, and are accessible for both screen
 reader and keyboard-only users.
 
-Image avatars, when actionalble, employ a basic scale transform on the image when hovered.
+Image avatars, when actionable, employ a basic scale transform on the image when hovered.
 
 ### Button
 
@@ -553,7 +553,7 @@ Add textual content to the badge by supplying a string to the `badge` prop, or u
 
 ### Badge positioning
 
-By default the badge appears on the bottom right of the avatar. You can use the `badge-top` and
+By default, the badge appears on the bottom right of the avatar. You can use the `badge-top` and
 `badge-right` boolean props to switch the sides. Combine both props to move the badge to the top
 right of the avatar.
 
@@ -732,7 +732,7 @@ over the respective props on individual child avatars.
 
 ### Group overlap
 
-By default child avatars inside a `<b-avatar-group>` will overlap by a factor of `0.3` (relative to
+By default, child avatars inside a `<b-avatar-group>` will overlap by a factor of `0.3` (relative to
 the size of the avatar). You can control the overlap amount by setting the `overlap` prop to a value
 between `0` and `1`, where `0` means no overlap and `1` means 100% overlap.
 
@@ -767,11 +767,11 @@ between `0` and `1`, where `0` means no overlap and `1` means 100% overlap.
 ## Accessibility
 
 Use the `aria-label` prop to provide an accessible, screen reader friendly, label for your avatar.
-If you have a badge, it is recommended to add inforation to your aria-label regarding the badge
+If you have a badge, it is recommended to add information to your aria-label regarding the badge
 purpose or content (i.g. `'3 messages'`, `'online'`, etc.).
 
 While the `click` event is emitted regardless if the `button`, `href`, or `to` props are set, it is
-highly recommended to use the `button` prop when the click event should trigger an action (or use
+highly recommended using the `button` prop when the click event should trigger an action (or use
 the `to` or `href` props when changing routes or changing URLs) for accessibility reasons.
 
 ## Implementation notes

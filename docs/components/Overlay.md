@@ -15,7 +15,7 @@ provide additional context to the end user.
 be placed as a descendant of a `position: relative` element
 ([non-wrapping mode](#non-wrapping-mode)).
 
-The overlay visibility is controlled via the `show` prop. By default the overlay is _not_ shown.
+The overlay visibility is controlled via the `show` prop. By default, the overlay is _not_ shown.
 
 <div class="alert alert-info">
   <p class="mb-0">
@@ -432,7 +432,7 @@ document.
 
 ### Overlay content centering
 
-By default the overlay content will be horizontally and vertically centered within the overlay
+By default, the overlay content will be horizontally and vertically centered within the overlay
 region. To disable centering, set the `no-center` prop to `true`.
 
 In the following example, we have set the `no-center` prop, and absolutely positioned the custom
@@ -652,7 +652,7 @@ If you have any links in the obscured content, we recommend using the
 [`<b-link>` component](/docs/components/link), as it supports the `disabled` state, as native links
 (`<a href="...">`) and `<router-link>` components do not support the disabled state.
 
-It is also recommended to add either the `aria-hidden="true"` or `aria-busy="true"` attribute to
+It is also recommended adding either the `aria-hidden="true"` or `aria-busy="true"` attribute to
 your obscured content when the overlay is visible. Just be careful not to add `aria-hidden="true"`
 to the wrapper that contains the `<b-overlay>` component (when using `no-wrap`), as that would hide
 any interactive content in the `overlay` slot for screen reader users.
@@ -761,7 +761,7 @@ Easily create a loading button:
 ### Form confirmation prompt and upload status
 
 This example is a bit more complex, but shows the use of `no-wrap`, and using the `overlay` slot to
-present the user with a prompt dialog, and once confirmed it shows a uploading status indicator.
+present the user with a prompt dialog, and once confirmed it shows an uploading status indicator.
 This example also demonstrates additional accessibility markup.
 
 <ClientOnly>

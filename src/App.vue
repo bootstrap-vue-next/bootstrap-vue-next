@@ -79,7 +79,7 @@
           <b-form-input type="text" :state="true" class="col" />
         </div>
         <div class="row mb-1">
-          <div class="col-1">falsel</div>
+          <div class="col-1">false</div>
           <b-form-input type="text" :state="false" class="col" />
         </div>
       </div>
