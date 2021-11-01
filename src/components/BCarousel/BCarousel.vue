@@ -43,10 +43,11 @@
 <script lang="ts">
 import {defineComponent, InjectionKey, onMounted, provide, ref, VNode} from 'vue'
 import {Carousel} from 'bootstrap'
-import useEventListener from '../composables/useEventListener'
-import useId from '../composables/useId'
+import useEventListener from '../../composables/useEventListener'
+import useId from '../../composables/useId'
 
 export interface ParentData {
+  background?: string
   width?: string
   height?: string
 }
@@ -56,7 +57,8 @@ export const injectionKey: InjectionKey<ParentData> = Symbol()
 export default defineComponent({
   name: 'BCarousel',
   props: {
-    modelValue: {type: Boolean, default: false},
+    background: {type: String, required: false},
+    modelValue: {type: Number, default: 0},
     controls: {type: Boolean, default: false},
     id: {type: String},
     imgHeight: {type: String},
@@ -66,15 +68,15 @@ export default defineComponent({
     noTouch: {type: Boolean, default: false},
     noWrap: {type: Boolean, default: false},
   },
-  emits: ['slide', 'slid'],
+  emits: ['sliding-start', 'sliding-end'],
   setup(props, {slots, emit}) {
     const element = ref<HTMLElement>()
     const instance = ref<Carousel>()
     const computedId = useId(props.id, 'accordion')
     const slides = ref<VNode[]>([])
 
-    useEventListener(element, 'slide.bs.carousel', (payload) => emit('slide', payload))
-    useEventListener(element, 'slid.bs.carousel', (payload) => emit('slid', payload))
+    useEventListener(element, 'slide.bs.carousel', (payload) => emit('sliding-start', payload))
+    useEventListener(element, 'slid.bs.carousel', (payload) => emit('sliding-end', payload))
 
     onMounted(() => {
       instance.value = new Carousel(element.value as HTMLElement, {
@@ -89,6 +91,7 @@ export default defineComponent({
     })
 
     provide(injectionKey, {
+      background: props.background,
       width: props.imgWidth,
       height: props.imgHeight,
     })
