@@ -28,7 +28,7 @@ export default /* #__PURE__ */ defineComponent({
     title: {type: String, required: false},
     variant: {type: String as PropType<TextColorVariant>, required: false},
   },
-  setup(props) {
+  setup(props, {slots}) {
     const computedFontScale = computed(() => mathMax(toFloat(props.fontScale, 1), 0) || 1)
     const computedScale = computed(() => mathMax(toFloat(props.scale, 1), 0) || 1)
     const computedShiftH = computed(() => toFloat(props.shiftH, 0))
@@ -86,62 +86,51 @@ export default /* #__PURE__ */ defineComponent({
 
     const svgTransform = computed((): string | undefined => transforms.value.join(' ') || undefined)
 
-    return {
-      baseAttrs,
-      cssClasses,
-      computedFontScale,
-      computedShiftH,
-      computedShiftV,
-      hasContent,
-      hasShift,
-      svgTransform,
-    }
-  },
-  render() {
-    const props = this.$props
-
-    let $inner = h(
-      'g',
-      {
-        transform: this.svgTransform,
-      },
-      [props.content, normalizeSlot('default', {}, this.$slots)]
-    )
-
-    // If needed, we wrap in an additional `<g>` in order to handle the shifting
-    if (this.hasShift) {
-      $inner = h(
+    return () => {
+      let $inner = h(
         'g',
         {
-          transform: `translate(${(16 * this.computedShiftH) / 16} ${
-            (-16 * this.computedShiftV) / 16
-          })`,
+          transform: svgTransform.value,
         },
-        [$inner]
+        [props.content, normalizeSlot('default', {}, slots)]
+      )
+
+      // If needed, we wrap in an additional `<g>` in order to handle the shifting
+      if (hasShift.value) {
+        $inner = h(
+          'g',
+          {
+            transform: `translate(${(16 * computedShiftH.value) / 16} ${
+              (-16 * computedShiftV.value) / 16
+            })`,
+          },
+          [$inner]
+        )
+      }
+
+      // Wrap in an additional `<g>` for proper animation handling if stacked
+      if (props.stacked) {
+        $inner = h('g', [$inner])
+      }
+
+      const $title = props.title ? h('title', props.title) : null
+      const $content = [$title, $inner].filter((p) => p)
+
+      return h(
+        'svg',
+        {
+          class: ['bootstrap-icon', cssClasses.value, props.class],
+          ...baseAttrs,
+          style: props.stacked
+            ? {}
+            : {
+                'font-size':
+                  computedFontScale.value === 1 ? null : `${computedFontScale.value * 100}%`,
+              },
+        },
+        $content
       )
     }
-
-    // Wrap in an additional `<g>` for proper animation handling if stacked
-    if (props.stacked) {
-      $inner = h('g', [$inner])
-    }
-
-    const $title = props.title ? h('title', props.title) : null
-    const $content = [$title, $inner].filter((p) => p)
-
-    return h(
-      'svg',
-      {
-        class: ['bootstrap-icon', this.cssClasses, props.class],
-        ...this.baseAttrs,
-        style: props.stacked
-          ? {}
-          : {
-              'font-size': this.computedFontScale === 1 ? null : `${this.computedFontScale * 100}%`,
-            },
-      },
-      $content
-    )
   },
 })
 </script>

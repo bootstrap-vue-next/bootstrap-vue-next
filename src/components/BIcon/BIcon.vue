@@ -26,31 +26,29 @@ export default /* #__PURE__ */ defineComponent({
     title: {type: String, required: false},
     variant: {type: String as PropType<ColorVariant>, required: false},
   },
-  setup() {
+  setup(props) {
     const svgSprite = computed(() => BootstrapIcons)
-    return {
-      svgSprite,
-    }
-  },
-  render() {
-    const renderIcon = h(
-      'use',
-      {
-        'xlink:href': `${this.svgSprite}#${this.icon}`,
-      },
-      ''
-    )
 
-    return h(
-      BIconBase,
-      {
-        ...this.$props,
-        content: renderIcon,
-      },
-      {
-        default: () => '',
-      }
-    )
+    return () => {
+      const renderIcon = h(
+        'use',
+        {
+          'xlink:href': `${svgSprite.value}#${props.icon}`,
+        },
+        ''
+      )
+
+      return h(
+        BIconBase,
+        {
+          ...props,
+          content: renderIcon,
+        },
+        {
+          default: () => '',
+        }
+      )
+    }
   },
 })
 </script>
