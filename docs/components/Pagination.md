@@ -453,66 +453,7 @@ recommended unless the content of the button textually conveys its purpose.
 
 To be done
 
-## Component reference
-
-### `<b-pagination>`
-
-#### Properties
-
-| Property                | Type                            | Default               | Description                                                                                                        |
-| ----------------------- | ------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `align`                 | `String`                        | `start`               | Alignment of the page buttons: 'start', 'center', 'end' or 'fill'                                                  |
-| `aria-controls`         | `String`                        |                       | If this component controls another component or element, set this to the ID of the controlled component or element |
-| `aria-label`            | `String`                        | `Pagination`          | Value to place in the 'aria-label' attribute of the pagination control                                             |
-| `disabled`              | `Boolean`                       | `false`               | When set to `true`, disables the component's functionality and places it in a disabled state                       |
-| `ellipsis-class`        | `Array` or `Object` or `String` |                       | Class(es) to apply to the 'ellipsis' placeholders                                                                  |
-| `ellipsis-text`         | `String`                        | `...`                 | Content to place in the ellipsis placeholder                                                                       |
-| `first-class`           | `Array` or `Object` or `String` |                       | Class(es) to apply to the 'Go to first page' button                                                                |
-| `first-number`          | `Boolean`                       | `false`               | Display first page number instead of Goto First button                                                             |
-| `first-text`            | `String`                        | `«`                   | Content to place in the goto first page button                                                                     |
-| `hide-ellipsis`         | `Boolean`                       | `false`               | Do not show ellipsis buttons                                                                                       |
-| `hide-goto-end-buttons` | `Boolean`                       | `false`               | Hides the goto first and goto last page buttons                                                                    |
-| `label-first-page`      | `String`                        | `Go to first page`    | Value to place in the 'aria-label' attribute of the goto first page button                                         |
-| `label-last-page`       | `String`                        | `Go to last page`     | Value to place in the 'aria-label' attribute of the goto last page button                                          |
-| `label-next-page`       | `String`                        | `Go to next page`     | Value to place in the 'aria-label' attribute of the goto next page button                                          |
-| `label-page`            | `String`                        | `Go to page`          | Value to place in the 'aria-label' attribute of the goto page button. Page number will be prepended automatically  |
-| `label-prev-page`       | `String`                        | `Go to previous page` | Value to place in the 'aria-label' attribute of the goto previous page button                                      |
-| `last-class`            | `Array` or `Object` or `String` |                       | Class(es) to apply to the 'Go to last page' button                                                                 |
-| `last-number`           | `Boolean`                       | `false`               | Display last page number instead of Goto Last button                                                               |
-| `last-text`             | `String`                        | `»`                   | Content to place in the goto last page button                                                                      |
-| `limit`                 | `Number` or `String`            | 5                     | Maximum number of buttons to show (including ellipsis if shown, but excluding the bookend buttons)                 |
-| `next-class`            | `Array` or `Object` or `String` |                       | Class(es) to apply to the 'Go to next page' button                                                                 |
-| `next-text`             | `String`                        | `›`                   | Content to place in the goto next page button                                                                      |
-| `page-class`            | `Array` or `Object` or `String` |                       | Class(es) to apply to the 'Go to page #' buttons                                                                   |
-| `per-page`              | `Number` or `String`            | 20                    | Number of rows per page                                                                                            |
-| `pills`                 | `Boolean`                       | `false`               | Applies pill styling to the pagination buttons                                                                     |
-| `prev-class`            | `Array` or `Object` or `String` |                       | Class(es) to apply to the 'Go to previous page' button                                                             |
-| `size`                  | `String`                        |                       | Size of the rendered buttons: 'sm', 'md' (default), or 'lg'                                                        |
-| `total-rows`            | `Number` or `String`            | 0                     | Total number of rows in the dataset                                                                                |
-
-#### v-model
-
-| Property           | Type     | Default | Description                          |
-| ------------------ | -------- | ------- | ------------------------------------ |
-| default modelValue | `Number` |         | Current page number, starting from 1 |
-
-#### Slots
-
-| Name            | Scoped | Description                                                     |
-| --------------- | ------ | --------------------------------------------------------------- |
-| `ellipsis-text` | No     | The '...' indicator content. Overrides the `ellipsis-text` prop |
-| `first-text`    | Yes    | The 'Go to first page' button content                           |
-| `last-text`     | Yes    | The 'Go to last page' button content                            |
-| `next-text`     | Yes    | The 'Go to next page' button content                            |
-| `page`          | Yes    | Page number button content                                      |
-| `prev-text`     | Yes    | The 'Go to previous page' button content                        |
-
-#### Events
-
-| Name                | Argument                                                                                    | Description                                        |
-| ------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| `update:modelValue` | `current page` - Value of he current page                                                   |                                                    |
-| `page-click`        | `bvEvent ` - The `BvEvent` object. Call `bvEvent.preventDefault()` to cancel page selection | Emitted when a page button was clicked. Cancelable |
+<ComponentReference></ComponentReference>
 
 <script lang='ts' setup>
   import {ref, computed} from 'vue'

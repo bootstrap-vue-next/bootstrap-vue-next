@@ -1,3 +1,5 @@
+import ColorVariant from './ColorVariant'
+
 export interface TableFieldObject {
   key: string
   label?: string
@@ -13,7 +15,7 @@ export interface TableFieldObject {
   tdClass?: string | string[]
   thClass?: string | string[]
   thStyle?: Record<string, unknown>
-  variant?: string
+  variant?: ColorVariant
   tdAttr?: Record<string, unknown>
   thAttr?: Record<string, unknown>
   isRowHeader?: boolean
