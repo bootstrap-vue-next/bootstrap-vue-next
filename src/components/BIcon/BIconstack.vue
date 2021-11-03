@@ -25,17 +25,18 @@ export default /* #__PURE__ */ defineComponent({
     title: {type: String, required: false},
     variant: {type: String as PropType<ColorVariant>, required: false},
   },
-  render() {
-    return h(
-      BIconBase,
-      {
-        ...this.$props,
-        class: 'b-icon-stack',
-      },
-      {
-        default: () => normalizeSlot('default', {}, this.$slots) || '',
-      }
-    )
+  setup(props, {slots}) {
+    return () =>
+      h(
+        BIconBase,
+        {
+          ...props,
+          class: 'b-icon-stack',
+        },
+        {
+          default: () => normalizeSlot('default', {}, slots) || '',
+        }
+      )
   },
 })
 </script>

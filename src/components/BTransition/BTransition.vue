@@ -27,7 +27,7 @@ export default defineComponent({
     noFade: {type: Boolean, default: false},
     transProps: {type: Object, required: false},
   },
-  setup(props) {
+  setup(props, {slots}) {
     const transProperties = ref(props.transProps)
     if (!isPlainObject(transProperties)) {
       transProperties.value = props.noFade ? NO_FADE_PROPS : FADE_PROPS
@@ -48,18 +48,14 @@ export default defineComponent({
       // We always need `css` true
       css: true,
     }
-    return {
-      transProperties,
-    }
-  },
-  render() {
-    return h(
-      Transition,
-      {...this.transProperties},
-      {
-        default: () => (this.$slots.default ? this.$slots.default() : []),
-      }
-    )
+    return () =>
+      h(
+        Transition,
+        {...transProperties.value},
+        {
+          default: () => (slots.default ? slots.default() : []),
+        }
+      )
   },
 })
 </script>
