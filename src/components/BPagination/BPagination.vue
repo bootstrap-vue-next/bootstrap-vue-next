@@ -15,6 +15,14 @@ const DEFAULT_TOTAL_ROWS = 0
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
 
+// Slot Constants
+const SLOT_NAME_ELLIPSIS_TEXT = 'ellipsis-text'
+const SLOT_NAME_FIRST_TEXT = 'first-text'
+const SLOT_NAME_LAST_TEXT = 'last-text'
+const SLOT_NAME_NEXT_TEXT = 'next-text'
+const SLOT_NAME_PAGE = 'page'
+const SLOT_NAME_PREV_TEXT = 'prev-text'
+
 const sanitizePerPage = (value: number): number => Math.max(toInteger(value) || DEFAULT_PER_PAGE, 1)
 const sanitizeTotalRows = (value: number): number =>
   Math.max(toInteger(value) || DEFAULT_TOTAL_ROWS, 0)
@@ -58,7 +66,7 @@ export default defineComponent({
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
   },
   emits: ['update:modelValue', 'page-click'],
-  setup(props, {emit}) {
+  setup(props, {emit, slots}) {
     const alignment = useAlignment(props)
 
     // Use Active to on page-item to denote active tab
@@ -259,249 +267,225 @@ export default defineComponent({
       return result
     })
 
-    return {
-      alignment,
-      btnSize,
-      pageClick,
-      pages,
-      numberOfPages,
-      numberOfLinks,
-      startNumber,
-      showLastDots,
-      pagenumberfinal: pageNumberfinal,
-      showFirstDots,
-      styleClass,
-    }
-  },
-  render() {
-    // Slot Constants
-    const SLOT_NAME_ELLIPSIS_TEXT = 'ellipsis-text'
-    const SLOT_NAME_FIRST_TEXT = 'first-text'
-    const SLOT_NAME_LAST_TEXT = 'last-text'
-    const SLOT_NAME_NEXT_TEXT = 'next-text'
-    const SLOT_NAME_PAGE = 'page'
-    const SLOT_NAME_PREV_TEXT = 'prev-text'
+    return () => {
+      const buttons = []
+      const pageNumbers = pages.value.map((p) => p.number) // array of numbers.. Used in first and last number comparisons
+      const isActivePage = (pageNumber: number) => pageNumber === props.modelValue
+      const noCurrentPage: boolean = props.modelValue < 1
+      const fill = props.align === 'fill'
 
-    const props = this.$props
-    const buttons = []
-    const pageNumbers = this.pages.map((p) => p.number) // array of numbers.. Used in first and last number comparisons
-    const isActivePage = (pageNumber: number) => pageNumber === props.modelValue
-    const noCurrentPage: boolean = props.modelValue < 1
-    const fill = props.align === 'fill'
+      const makeEndBtn = (
+        linkTo: number,
+        ariaLabel: string,
+        btnSlot: string,
+        btnText: string,
+        btnClass: string | Array<unknown>,
+        pageTest: number
+      ) => {
+        const isDisabled: boolean =
+          props.disabled ||
+          isActivePage(pageTest) ||
+          noCurrentPage ||
+          linkTo < 1 ||
+          linkTo > numberOfPages.value
+        const pageNumber: number =
+          linkTo < 1 ? 1 : linkTo > numberOfPages.value ? numberOfPages.value : linkTo
+        const scope = {disabled: isDisabled, page: pageNumber, index: pageNumber - 1}
+        const btnContent = normalizeSlot(btnSlot, scope, slots) || btnText || ''
 
-    const makeEndBtn = (
-      linkTo: number,
-      ariaLabel: string,
-      btnSlot: string,
-      btnText: string,
-      btnClass: string | Array<unknown>,
-      pageTest: number
-    ) => {
-      const isDisabled: boolean =
-        props.disabled ||
-        isActivePage(pageTest) ||
-        noCurrentPage ||
-        linkTo < 1 ||
-        linkTo > this.numberOfPages
-      const pageNumber: number =
-        linkTo < 1 ? 1 : linkTo > this.numberOfPages ? this.numberOfPages : linkTo
-      const scope = {disabled: isDisabled, page: pageNumber, index: pageNumber - 1}
-      const btnContent = normalizeSlot(btnSlot, scope, this.$slots) || btnText || ''
-
-      return h(
-        'li',
-        {
-          class: [
-            'page-item',
-            {
-              'disabled': isDisabled,
-              'flex-fill': fill,
-              'd-flex': fill && !isDisabled,
-            },
-            btnClass,
-          ],
-        },
-        // render inner content
-        h(
-          isDisabled ? 'span' : 'button',
+        return h(
+          'li',
           {
-            'class': ['page-link', {'flex-grow-1': !isDisabled && fill}],
-            'aria-label': ariaLabel,
+            class: [
+              'page-item',
+              {
+                'disabled': isDisabled,
+                'flex-fill': fill,
+                'd-flex': fill && !isDisabled,
+              },
+              btnClass,
+            ],
+          },
+          // render inner content
+          h(
+            isDisabled ? 'span' : 'button',
+            {
+              'class': ['page-link', {'flex-grow-1': !isDisabled && fill}],
+              'aria-label': ariaLabel,
+              'aria-controls': props.ariaControls || null,
+              'aria-disabled': isDisabled ? 'true' : null,
+              'role': 'menuitem',
+              'type': isDisabled ? null : 'button',
+              'tabindex': isDisabled ? null : '-1',
+              'onClick': (event: MouseEvent) => {
+                if (isDisabled) {
+                  return
+                }
+                pageClick(event, pageNumber)
+              },
+            },
+            btnContent
+          )
+        )
+      }
+
+      const makeEllipsis = (isLast: boolean) =>
+        h(
+          'li',
+          {
+            class: [
+              'page-item',
+              'disabled',
+              'bv-d-xs-down-none',
+              fill ? 'flex-fill' : '',
+              props.ellipsisClass,
+            ],
+            role: 'separator',
+            key: `ellipsis-${isLast ? 'last' : 'first'}`,
+          },
+          [
+            h(
+              'span',
+              {class: ['page-link']},
+              normalizeSlot(SLOT_NAME_ELLIPSIS_TEXT, {}, slots) || props.ellipsisText || '...'
+            ),
+          ]
+        )
+
+      const makePageButton = (page: PaginationPage, idx: number) => {
+        const active: boolean = isActivePage(page.number) && !noCurrentPage
+        const tabIndex = props.disabled ? null : active || (noCurrentPage && idx === 0) ? '0' : '-1'
+        const scope = {
+          active,
+          disabled: props.disabled,
+          page: page.number,
+          index: page.number - 1,
+          content: page.number,
+        }
+        const btnContent = normalizeSlot(SLOT_NAME_PAGE, scope, slots) || page.number
+        const inner = h(
+          props.disabled ? 'span' : 'button',
+          {
+            'class': ['page-link', {'flex-grow-1': !props.disabled && fill}],
             'aria-controls': props.ariaControls || null,
-            'aria-disabled': isDisabled ? 'true' : null,
-            'role': 'menuitem',
-            'type': isDisabled ? null : 'button',
-            'tabindex': isDisabled ? null : '-1',
+            'aria-disabled': props.disabled ? 'true' : null,
+            'aria-label': props.labelPage ? `${props.labelPage} ${page.number}` : null,
+            'role': 'menuitemradio',
+            'type': props.disabled ? null : 'button',
+            'tabindex': tabIndex,
             'onClick': (event: MouseEvent) => {
-              if (isDisabled) {
-                return
+              if (!props.disabled) {
+                pageClick(event, page.number)
               }
-              this.pageClick(event, pageNumber)
             },
           },
           btnContent
         )
-      )
-    }
 
-    const makeEllipsis = (isLast: boolean) => {
-      const props = this.$props
-      return h(
-        'li',
-        {
-          class: [
-            'page-item',
-            'disabled',
-            'bv-d-xs-down-none',
-            fill ? 'flex-fill' : '',
-            this.ellipsisClass,
-          ],
-          role: 'separator',
-          key: `ellipsis-${isLast ? 'last' : 'first'}`,
-        },
-        [
-          h(
-            'span',
-            {class: ['page-link']},
-            normalizeSlot(SLOT_NAME_ELLIPSIS_TEXT, {}, this.$slots) || props.ellipsisText || '...'
-          ),
-        ]
-      )
-    }
-
-    const makePageButton = (page: PaginationPage, idx: number) => {
-      const active: boolean = isActivePage(page.number) && !noCurrentPage
-      const tabIndex = this.disabled ? null : active || (noCurrentPage && idx === 0) ? '0' : '-1'
-      const scope = {
-        active,
-        disabled: this.disabled,
-        page: page.number,
-        index: page.number - 1,
-        content: page.number,
-      }
-      const btnContent = normalizeSlot(SLOT_NAME_PAGE, scope, this.$slots) || page.number
-      const inner = h(
-        this.disabled ? 'span' : 'button',
-        {
-          'class': ['page-link', {'flex-grow-1': !this.disabled && fill}],
-          'aria-controls': props.ariaControls || null,
-          'aria-disabled': this.disabled ? 'true' : null,
-          'aria-label': props.labelPage ? `${props.labelPage} ${page.number}` : null,
-          'role': 'menuitemradio',
-          'type': this.disabled ? null : 'button',
-          'tabindex': tabIndex,
-          'onClick': (event: MouseEvent) => {
-            if (!this.disabled) {
-              this.pageClick(event, page.number)
-            }
+        return h(
+          'li',
+          {
+            class: [
+              'page-item',
+              {
+                'disabled': props.disabled,
+                active,
+                'flex-fill': fill,
+                'd-flex': fill && !props.disabled,
+              },
+              props.pageClass,
+            ],
+            role: 'presentation',
+            key: `page-${page.number}`,
           },
-        },
-        btnContent
-      )
+          inner
+        )
+      }
 
-      return h(
-        'li',
-        {
-          class: [
-            'page-item',
-            {
-              'disabled': this.disabled,
-              active,
-              'flex-fill': fill,
-              'd-flex': fill && !this.disabled,
-            },
-            props.pageClass,
-          ],
-          role: 'presentation',
-          key: `page-${page.number}`,
-        },
-        inner
-      )
-    }
+      // Goto first page button. Don't render button when `hideGotoEndButtons` or `firstNumber` is set
+      if (!props.hideGotoEndButtons && !props.firstNumber) {
+        const gotoFirstPageButton = makeEndBtn(
+          1,
+          props.labelFirstPage,
+          SLOT_NAME_FIRST_TEXT,
+          props.firstText,
+          props.firstClass,
+          1
+        )
+        buttons.push(gotoFirstPageButton)
+      }
 
-    // Goto first page button. Don't render button when `hideGotoEndButtons` or `firstNumber` is set
-    if (!props.hideGotoEndButtons && !props.firstNumber) {
-      const gotoFirstPageButton = makeEndBtn(
-        1,
+      //Previous Button
+      const previousButton = makeEndBtn(
+        props.modelValue - 1,
         props.labelFirstPage,
-        SLOT_NAME_FIRST_TEXT,
-        props.firstText,
-        props.firstClass,
+        SLOT_NAME_PREV_TEXT,
+        props.prevText,
+        props.prevClass,
         1
       )
-      buttons.push(gotoFirstPageButton)
-    }
+      buttons.push(previousButton)
 
-    //Previous Button
-    const previousButton = makeEndBtn(
-      props.modelValue - 1,
-      props.labelFirstPage,
-      SLOT_NAME_PREV_TEXT,
-      props.prevText,
-      props.prevClass,
-      1
-    )
-    buttons.push(previousButton)
+      // First Page Number Button
+      if (props.firstNumber && pageNumbers[0] !== 1) {
+        buttons.push(makePageButton({number: 1}, 0))
+      }
 
-    // First Page Number Button
-    if (this.firstNumber && pageNumbers[0] !== 1) {
-      buttons.push(makePageButton({number: 1}, 0))
-    }
+      // first Ellipsis
+      if (showFirstDots.value) {
+        buttons.push(makeEllipsis(false))
+      }
 
-    // first Ellipsis
-    if (this.showFirstDots) {
-      buttons.push(makeEllipsis(false))
-    }
+      pages.value.forEach((page, idx) => {
+        const offset = showFirstDots.value && props.firstNumber && pageNumbers[0] !== 1 ? 1 : 0
+        buttons.push(makePageButton(page, idx + offset))
+      })
 
-    this.pages.forEach((page, idx) => {
-      const offset = this.showFirstDots && this.firstNumber && pageNumbers[0] !== 1 ? 1 : 0
-      buttons.push(makePageButton(page, idx + offset))
-    })
+      // last Ellipsis
+      if (showLastDots.value) {
+        buttons.push(makeEllipsis(true))
+      }
 
-    // last Ellipsis
-    if (this.showLastDots) {
-      buttons.push(makeEllipsis(true))
-    }
+      if (props.lastNumber && pageNumbers[pageNumbers.length - 1] !== numberOfPages.value) {
+        buttons.push(makePageButton({number: numberOfPages.value}, -1))
+      }
 
-    if (this.lastNumber && pageNumbers[pageNumbers.length - 1] !== this.numberOfPages) {
-      buttons.push(makePageButton({number: this.numberOfPages}, -1))
-    }
-
-    //Next Button
-    const nextButton = makeEndBtn(
-      props.modelValue + 1,
-      props.labelNextPage,
-      SLOT_NAME_NEXT_TEXT,
-      props.nextText,
-      props.nextClass,
-      this.numberOfPages
-    )
-    buttons.push(nextButton)
-
-    // Goto last page button
-    if (!props.lastNumber && !props.hideGotoEndButtons) {
-      const gotoLastPageButton = makeEndBtn(
-        this.numberOfPages,
-        props.labelLastPage,
-        SLOT_NAME_LAST_TEXT,
-        props.lastText,
-        props.lastClass,
-        this.numberOfPages
+      //Next Button
+      const nextButton = makeEndBtn(
+        props.modelValue + 1,
+        props.labelNextPage,
+        SLOT_NAME_NEXT_TEXT,
+        props.nextText,
+        props.nextClass,
+        numberOfPages.value
       )
-      buttons.push(gotoLastPageButton)
-    }
+      buttons.push(nextButton)
 
-    const $pagination = h(
-      'ul',
-      {
-        'class': ['pagination', this.btnSize, this.alignment, this.styleClass],
-        'role': 'menubar',
-        'aria-disabled': this.disabled,
-        'aria-label': this.ariaLabel || null,
-      },
-      buttons
-    )
-    return $pagination
+      // Goto last page button
+      if (!props.lastNumber && !props.hideGotoEndButtons) {
+        const gotoLastPageButton = makeEndBtn(
+          numberOfPages.value,
+          props.labelLastPage,
+          SLOT_NAME_LAST_TEXT,
+          props.lastText,
+          props.lastClass,
+          numberOfPages.value
+        )
+        buttons.push(gotoLastPageButton)
+      }
+
+      const $pagination = h(
+        'ul',
+        {
+          'class': ['pagination', btnSize.value, alignment.value, styleClass.value],
+          'role': 'menubar',
+          'aria-disabled': props.disabled,
+          'aria-label': props.ariaLabel || null,
+        },
+        buttons
+      )
+      return $pagination
+    }
   },
 })
 </script>

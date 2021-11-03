@@ -46,7 +46,7 @@ export default defineComponent({
     zIndex: {type: [Number, String], default: 10},
   },
   emits: ['click', 'hidden', 'shown'],
-  setup(props) {
+  setup(props, {slots, emit}) {
     const computedRounded = computed(() =>
       props.rounded === true || props.rounded === ''
         ? 'rounded'
@@ -65,95 +65,86 @@ export default defineComponent({
       spinnerSmall: props.spinnerSmall,
     }))
 
-    return {
-      computedRounded,
-      computedVariant,
-      computedSlotScope,
-    }
-  },
-  render() {
-    const props = this.$props
-    const slots = this.$slots
-    const emit = this.$emit
+    return () => {
+      const defaultOverlayFn = (scope: ISlotScope) =>
+        h(resolveComponent('BSpinner'), {
+          type: scope.spinnerType,
+          variant: scope.spinnerVariant,
+          small: scope.spinnerSmall,
+        })
 
-    const defaultOverlayFn = (scope: ISlotScope) =>
-      h(resolveComponent('BSpinner'), {
-        type: scope.spinnerType,
-        variant: scope.spinnerVariant,
-        small: scope.spinnerSmall,
-      })
+      let $overlay: any = ''
 
-    let $overlay: any = ''
-
-    if (props.show) {
-      const $background = h('div', {
-        class: ['position-absolute', this.computedVariant, this.computedRounded],
-        style: {
-          ...POSITION_COVER,
-          opacity: props.opacity,
-          backgroundColor: props.bgColor || null,
-          backdropFilter: props.blur ? `blur(${props.blur})` : null,
-        },
-      })
-
-      const $content = h(
-        'div',
-        {
-          class: 'position-absolute',
-          style: props.noCenter
-            ? {...POSITION_COVER}
-            : {top: '50%', left: '50%', transform: 'translateX(-50%) translateY(-50%)'},
-        },
-        normalizeSlot(SLOT_NAME_OVERLAY, this.computedSlotScope, slots) ||
-          defaultOverlayFn(this.computedSlotScope) ||
-          ''
-      )
-
-      $overlay = h(
-        props.overlayTag,
-        {
-          class: [
-            'b-overlay',
-            {
-              'position-absolute': !props.noWrap || (props.noWrap && !props.fixed),
-              'position-fixed': props.noWrap && props.fixed,
-            },
-          ],
+      if (props.show) {
+        const $background = h('div', {
+          class: ['position-absolute', computedVariant.value, computedRounded.value],
           style: {
             ...POSITION_COVER,
-            zIndex: props.zIndex || 10,
+            opacity: props.opacity,
+            backgroundColor: props.bgColor || null,
+            backdropFilter: props.blur ? `blur(${props.blur})` : null,
           },
-          onClick: (event: MouseEvent) => emit('click', event),
-          key: 'overlay',
-        },
-        [$background, $content]
-      )
-    }
+        })
 
-    const getOverlayTransition = () =>
-      h(
-        BTransition,
+        const $content = h(
+          'div',
+          {
+            class: 'position-absolute',
+            style: props.noCenter
+              ? {...POSITION_COVER}
+              : {top: '50%', left: '50%', transform: 'translateX(-50%) translateY(-50%)'},
+          },
+          normalizeSlot(SLOT_NAME_OVERLAY, computedSlotScope.value, slots) ||
+            defaultOverlayFn(computedSlotScope.value) ||
+            ''
+        )
+
+        $overlay = h(
+          props.overlayTag,
+          {
+            class: [
+              'b-overlay',
+              {
+                'position-absolute': !props.noWrap || (props.noWrap && !props.fixed),
+                'position-fixed': props.noWrap && props.fixed,
+              },
+            ],
+            style: {
+              ...POSITION_COVER,
+              zIndex: props.zIndex || 10,
+            },
+            onClick: (event: MouseEvent) => emit('click', event),
+            key: 'overlay',
+          },
+          [$background, $content]
+        )
+      }
+
+      const getOverlayTransition = () =>
+        h(
+          BTransition,
+          {
+            noFade: props.noFade,
+            name: 'fade',
+            appear: true,
+            onAfterEnter: () => emit('shown'),
+            onAfterLeave: () => emit('hidden'),
+          },
+          {default: () => $overlay}
+        )
+
+      if (props.noWrap) return getOverlayTransition()
+
+      const wrapper = h(
+        props.wrapTag,
         {
-          noFade: props.noFade,
-          name: 'fade',
-          appear: true,
-          onAfterEnter: () => emit('shown'),
-          onAfterLeave: () => emit('hidden'),
+          'class': ['b-overlay-wrap position-relative'],
+          'aria-busy': props.show ? 'true' : null,
         },
-        {default: () => $overlay}
+        [h('span', normalizeSlot(SLOT_NAME_DEFAULT, {}, slots)), getOverlayTransition()]
       )
-
-    if (props.noWrap) return getOverlayTransition()
-
-    const wrapper = h(
-      props.wrapTag,
-      {
-        'class': ['b-overlay-wrap position-relative'],
-        'aria-busy': props.show ? 'true' : null,
-      },
-      [h('span', normalizeSlot(SLOT_NAME_DEFAULT, {}, slots)), getOverlayTransition()]
-    )
-    return wrapper
+      return wrapper
+    }
   },
 })
 </script>
