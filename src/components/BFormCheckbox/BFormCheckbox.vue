@@ -38,6 +38,7 @@ import useId from '../../composables/useId'
 
 export default defineComponent({
   name: 'BFormCheckbox',
+  inheritAttrs: false,
   props: {
     id: {type: String, default: undefined},
     ariaLabel: {type: String},
