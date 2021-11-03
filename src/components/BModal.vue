@@ -3,7 +3,7 @@
     <div :id="id" ref="element" class="modal" :class="classes" tabindex="-1" v-bind="$attrs">
       <div class="modal-dialog" :class="modalDialogClasses">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" :class="computedHeaderClasses">
             <h5 class="modal-title">
               <slot name="title">
                 {{ title }}
@@ -11,11 +11,11 @@
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
           </div>
-          <div class="modal-body">
+          <div class="modal-body" :class="computedBodyClasses">
             <slot />
           </div>
-          <div v-if="!hideFooter" class="modal-footer">
-            <slot name="footer">
+          <div v-if="!hideFooter" class="modal-footer" :class="computedFooterClasses">
+            <slot name="modal-footer">
               <button
                 type="button"
                 class="btn btn-secondary"
@@ -41,9 +41,10 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref, watch} from 'vue'
+import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
 import {Modal} from 'bootstrap'
 import useEventListener from '../composables/useEventListener'
+import ColorVariant from '../types/ColorVariant'
 
 export default defineComponent({
   name: 'BModal',
@@ -56,7 +57,18 @@ export default defineComponent({
     fade: {type: Boolean, default: false},
     fullscreen: {type: [Boolean, String], default: false},
     id: {type: String},
-    title: {type: String},
+    bodyClass: {type: String, required: false},
+    bodyBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    bodyTextVariant: {type: String as PropType<ColorVariant>, required: false},
+    footerClass: {type: String, required: false},
+    footerBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    footerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
+    footerTextVariant: {type: String as PropType<ColorVariant>, required: false},
+    headerClass: {type: String, required: false},
+    headerBgVariant: {type: String as PropType<ColorVariant>, required: false},
+    headerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
+    headerTextVariant: {type: String as PropType<ColorVariant>, required: false},
+    title: {type: String, required: false},
     scrollable: {type: Boolean, default: false},
     show: {type: Boolean, default: false},
     size: {type: String},
@@ -79,6 +91,32 @@ export default defineComponent({
       'modal-dialog-centered': props.centered,
       'modal-dialog-scrollable': props.scrollable,
     }))
+
+    const computedBodyClasses = computed(() => [
+      {
+        [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
+        [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
+      },
+      props.bodyClass,
+    ])
+
+    const computedHeaderClasses = computed(() => [
+      {
+        [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
+        [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
+        [`text-${props.headerTextVariant}`]: props.headerTextVariant,
+      },
+      props.headerClass,
+    ])
+
+    const computedFooterClasses = computed(() => [
+      {
+        [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
+        [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
+        [`text-${props.footerTextVariant}`]: props.footerTextVariant,
+      },
+      props.footerClass,
+    ])
 
     useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
     useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
@@ -125,6 +163,9 @@ export default defineComponent({
       element,
       classes,
       modalDialogClasses,
+      computedBodyClasses,
+      computedFooterClasses,
+      computedHeaderClasses,
     }
   },
 })
