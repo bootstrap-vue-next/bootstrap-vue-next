@@ -452,7 +452,6 @@ recommended unless the content of the button textually conveys its purpose.
 ### Keyboard navigation support
 
 To be done
-
 <ComponentReference></ComponentReference>
 
 <script lang='ts' setup>

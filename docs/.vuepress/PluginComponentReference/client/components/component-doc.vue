@@ -1,4 +1,22 @@
 <template>
+  <b-row row tag="header" align-v="center">
+    <b-col sm="9">
+      <anchored-heading level="3">
+        <code class="notranslate bigger" translate="no">{{ tag }}</code>
+      </anchored-heading>
+    </b-col>
+    <b-col sm="3">
+      <b-button
+        v-if="githubURL"
+        variant="outline-secondary"
+        size="sm"
+        :href="githubURL"
+        target="_blank"
+      >
+        View source
+      </b-button>
+    </b-col>
+  </b-row>
   <b-table
     :items="propsItems"
     :fields="propFields"
@@ -16,11 +34,15 @@
 </template>
 <script lang="ts">
 import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent} from 'vue'
-
+import AnchoredHeading from './anchored-heading'
+import {hyphenate} from '@vue/shared/'
 // type definitions
 const SORT_THRESHOLD: number = 10
 
 export default defineComponent({
+  components: {
+    AnchoredHeading,
+  },
   name: 'BVComponentdoc',
   props: {
     component: {type: String},
@@ -62,6 +84,26 @@ export default defineComponent({
         }
         return obj
       }, {})
+    })
+    const githubURL: ComputedRef<string> = computed(() => {
+      const name = component.name ?? ''
+      if (name.indexOf('{') !== -1) {
+        // Example component (most likely an auto generated component)
+        return ''
+      }
+      const base = 'https://github.com/cdmoro/bootstrap-vue-3/tree/main/src/components'
+      // const slug = this.$route.params.slug
+      // Always point to the `.js` file (which may import a `.vue` file)
+      return `${base}/${name}/${name}.vue`
+    })
+
+    // component name kebab
+
+    const componentName: ComputedRef<string> = computed(() => {
+      return hyphenate(component.name ?? '')
+    })
+    const tag: ComputedRef<string> = computed(() => {
+      return `<${componentName.value}>`
     })
 
     const propsItems: ComputedRef<any> = computed(() => {
@@ -134,6 +176,8 @@ export default defineComponent({
     return {
       propsItems,
       propFields,
+      githubURL,
+      tag,
     }
   },
 })
