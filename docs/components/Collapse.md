@@ -325,7 +325,7 @@ display or hide content within the toggle via custom CSS.
       <b-collapse id="my-collapse">
         <!-- Content here -->
         <div class="mt-2">
-            This is data thats being collapsed
+            This is data that's being collapsed
         </div>
       </b-collapse>
     </div>
@@ -340,7 +340,7 @@ display or hide content within the toggle via custom CSS.
     </b-button>
     <b-collapse id="my-collapse">
       <!-- Content here -->
-      <div class="mt-2">This is data thats being collapsed</div>
+      <div class="mt-2">This is data that's being collapsed</div>
     </b-collapse>
   </div>
 </b-card>
@@ -380,7 +380,7 @@ required to, on the toggle element, add the `aria-controls` and other appropriat
 classes yourself.
 
 While the `v-b-toggle` directive can be placed on almost any HTML element or Vue component, it is
-recommended to use a button or link (or similar component) to act as your toggler. Otherwise your
+recommended to use a button or link (or similar component) to act as your toggler; otherwise your
 trigger elements may be inaccessible to keyboard or screen reader users. If you do place them on
 something other than a button or link (or similar component), you should add the attributes
 `tabindex="0"` and `role="button"` to allow users of assistive technology to reach your trigger

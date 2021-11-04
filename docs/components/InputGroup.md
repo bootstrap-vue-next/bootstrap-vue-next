@@ -178,7 +178,7 @@ wrapped in these components for proper styling.
 
 Set the `is-text` prop on `<b-input-group-prepend>` or `<b-input-group-append>` if the content is
 textual in nature to apply proper styling. Alternatively, place the `<b-input-group-text>`
-subcomponent inside of the `<b-input-group-prepend>` or `<b-input-group-append>`. This also applies
+subcomponent inside the `<b-input-group-prepend>` or `<b-input-group-append>`. This also applies
 when you want to use on of [BootstrapVue's icons](/docs/icons).
 
 ## Supported form-controls
@@ -315,7 +315,7 @@ the addon:
 </div>
 ```
 
-In the above example, we have use the `.visually-hidden` class on a `<span>` to visually hide the custom
+In the above example, we have used the `.visually-hidden` class on a `<span>` to visually hide the custom
 control's label content (while making them still accessible to screen reader users), and used the
 utility class `.mr-n2` to add a negative right margin to compensate for the "gutter" space between
 the control and the hidden label.

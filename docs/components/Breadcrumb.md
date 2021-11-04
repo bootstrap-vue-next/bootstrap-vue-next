@@ -19,7 +19,7 @@
   import {BreadcrumbItem} from '../../src/types'
 
   const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
-    {text: 'Admin', href: 'http://google.com'},
+    {text: 'Admin', href: 'https://google.com'},
     {text: 'Manage', href: '#'},
     {text: 'Library'},
   ])
@@ -185,7 +185,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
   import {BreadcrumbItem} from '../../src/types';
 
   const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
-    { text: 'Admin', href:'http://google.com'},
+    { text: 'Admin', href:'https://google.com'},
     { text: 'Manage', href:'#'},
     { text: 'Library'},
   ]);

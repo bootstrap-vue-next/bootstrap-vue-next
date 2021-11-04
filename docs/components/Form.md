@@ -156,7 +156,7 @@ supported components, form layout, and more.
 
 Bootstrap 5 has dropped form-specific layout classes for the grid system. See [this](https://getbootstrap.com/docs/5.0/migration/#forms)
 
-To create horizontal forms with the grid by add the `.row` class to form groups and use the `.col-_-_` classes to specify the width of your labels and controls. Be sure to add `.col-form-label` to your `<label>`s as well so they’re vertically centered with their associated form controls.
+To create horizontal forms with the grid by add the `.row` class to form groups and use the `.col-_-_` classes to specify the width of your labels and controls. Be sure to add `.col-form-label` to your `<label>`s as well, so they’re vertically centered with their associated form controls.
 
 You may need to manually address the width and alignment of individual form controls with
 [spacing utilities](/docs/reference/spacing-classes) (as shown below). Lastly, be sure to always
@@ -445,7 +445,7 @@ Disable browser native HTML5 validation by setting the `novalidate` prop to true
 Set the `validated` prop, on `<b-form>`, to `true` to add the Bootstrap v5 `.was-validated` class to
 the form to trigger validation states
 
-All of the form controls support a `state` prop, which can be used to set the form control into one
+All form controls support a `state` prop, which can be used to set the form control into one
 of three contextual states:
 
 - `false` (denotes invalid state) is great for when there's a blocking or required field. A user

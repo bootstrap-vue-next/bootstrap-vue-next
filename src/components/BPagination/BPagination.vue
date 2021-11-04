@@ -81,7 +81,7 @@ export default defineComponent({
       if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
         lStartNumber = numberOfPages.value - numberOfLinks.value + 1
       } else {
-        // Middle and beginnig calculation.
+        // Middle and beginning calculation.
         lStartNumber = props.modelValue - Math.floor(numberOfLinks.value / 2)
       }
       // Negative due at times
@@ -269,7 +269,7 @@ export default defineComponent({
 
     return () => {
       const buttons = []
-      const pageNumbers = pages.value.map((p) => p.number) // array of numbers.. Used in first and last number comparisions
+      const pageNumbers = pages.value.map((p) => p.number) // array of numbers.. Used in first and last number comparisons
       const isActivePage = (pageNumber: number) => pageNumber === props.modelValue
       const noCurrentPage: boolean = props.modelValue < 1
       const fill = props.align === 'fill'

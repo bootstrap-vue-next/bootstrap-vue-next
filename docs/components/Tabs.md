@@ -67,7 +67,7 @@ component in order to properly decorate the card header and remove the extra pad
 
 When `<b-tabs>` is in `card` mode, each `<b-tab>` sub-component will automatically have the
 `card-body` class applied (this class provides the padding around the tab content). To disable the
-`card-body` class, set the `no-body` prop on the `<b-tab>` sub component.
+`card-body` class, set the `no-body` prop on the `<b-tab>` sub-component.
 
 <ClientOnly>
   <b-card no-body>
@@ -275,7 +275,7 @@ Visually move the tab controls to the bottom by setting the prop `end`.
 **Caveats:**
 
 - Bottom placement visually works best with the `pills` variant. When using the default `tabs`
-  variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
+  variant, you may want to provide your own custom styling classes, as Bootstrap v4 CSS assumes the
   tabs will always be placed on the top of the tabs content.
 - To provide a better user experience with bottom placed controls, ensure that the content of each
   tab pane is the same height and fits completely within the visible viewport, otherwise the user
@@ -283,7 +283,7 @@ Visually move the tab controls to the bottom by setting the prop `end`.
 
 ## Vertical tabs
 
-Have the tab controls placed on the lefthand side by setting the `vertical` prop to `true`. Vertical
+Have the tab controls placed on the left-hand side by setting the `vertical` prop to `true`. Vertical
 tabs work with or without `card` mode enabled.
 
 <ClientOnly>
@@ -360,7 +360,7 @@ column classes such as `col-2`, `col-3`, etc.
 ```
 
 Vertical placement visually works best with the `pills` variant. When using the default `tabs`
-variant, you may want to provided your own custom styling classes, as Bootstrap v4 CSS assumes the
+variant, you may want to provide your own custom styling classes, as Bootstrap v4 CSS assumes the
 tab controls will always be placed on the top of the tabs content.
 
 **Note:** _overflowing text may occur if your width is narrower than the tab title. You may need
@@ -401,7 +401,7 @@ To apply classes to the currently active control or tab use the `active-nav-item
 
 ## Fade animation
 
-Fade is enabled by default when changing tabs. It can disabled with `no-fade` property.
+Fade is enabled By default, when changing tabs. It can be disabled with the `no-fade` property.
 
 ## Add tabs without content
 
@@ -487,7 +487,7 @@ which does not support child interactive elements per the HTML5 spec.
 
 The tab selectors are based on Bootstrap v5's `nav` markup ( i.e.
 `ul.nav > li.nav-item > a.nav-link`). In some situations, you may want to add classes to the `<li>`
-(nav-item) and/or the `<a>` (nav-link) on a per tab basis. To do so, simply supply the classname to
+(nav-item) and/or the `<a>` (nav-link) on a per-tab basis. To do so, simply supply the classname to
 the `title-item-class` prop (for the `<li>` element) or `title-link-class` prop (for the `<a>`
 element). Value's can be passed as a string or array of strings.
 

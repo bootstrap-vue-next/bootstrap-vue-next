@@ -41,7 +41,7 @@
 ## Grouped radios
 
 The individual radio inputs in `<b-form-radio-group>` can be specified via the `options` prop, or
-via manual placement of the `<b-form-radio>` sub component. When using manually placed
+via manual placement of the `<b-form-radio>` sub-component. When using manually placed
 `<b-form-radio>` components within a `<b-form-radio-group>`, they will inherit most props and the
 v-model from the `<b-form-radio-group>`.
 
@@ -292,13 +292,13 @@ checked.
 
 The `v-model` of both `<b-form-radio>` and `<b-form-radio-group>` binds to the default `modelValue` prop. To
 pre-check a radio, you must set the `v-model` value to the one of the radio's value (i.e. must match
-the value of specified on one of the the radio's `value` prop). Each radio in a radio group _must_ have a unique value.
+the value of specified on one of the radio's `value` prop). Each radio in a radio group _must_ have a unique value.
 
 Radios support values of many types, such as a `string`, `boolean`, `number`, or a plain `object`.
 
 ## Inline or stacked radios
 
-By default `<b-form-radio-group>` generates inline radio inputs, while `<b-form-radio>` generates
+By default, `<b-form-radio-group>` generates inline radio inputs, while `<b-form-radio>` generates
 stacked radios. Set the prop `stacked` on `<b-form-radio-group>` to make the radios appear one over
 the other, or when using radios not in a group, set the `inline` prop on `b-form-radio` to true to
 render them inline.
@@ -665,7 +665,7 @@ Supported `aria-invalid` values are:
 | `aria-invalid`                                                                                               | `Boolean` or `String`   | `false`     | Sets the 'aria-invalid' attribute value on the wrapper element. When not provided, the 'state' prop will control the attribute                                            |
 | `autofocus`                                                                                                  | `Boolean`               | `false`     | When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control    |
 | `button-variant`                                                                                             | `String`                | `secondary` | Specifies the Bootstrap contextual color theme variant the apply to the button style radios' mode                                                                         |
-| `buttons`                                                                                                    | `Boolean`               | `false`     | When set, renderes the radios in this group with button styling                                                                                                           |
+| `buttons`                                                                                                    | `Boolean`               | `false`     | When set, renders the radios in this group with button styling                                                                                                            |
 | `disabled`                                                                                                   | `Boolean`               | `false`     | When set to `true`, disables the component's functionality and places it in a disabled state                                                                              |
 | `disabled-field`                                                                                             | `String`                | `disabled`  | Field name in the `options` array that should be used for the disabled state                                                                                              |
 | `form`                                                                                                       | `String`                |             | ID of the form that the form control belongs to. Sets the `form` attribute on the control                                                                                 |
