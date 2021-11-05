@@ -36,7 +36,7 @@ export default defineComponent({
 
       let baseClass = 'card-img'
 
-      if (top) {
+      if (props.top) {
         baseClass += '-top'
       } else if (props.right || props.end) {
         baseClass += '-right'
