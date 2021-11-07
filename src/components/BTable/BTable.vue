@@ -54,7 +54,7 @@ export default defineComponent({
               {
                 ...field.thAttr,
                 scope: 'col',
-                class: [field.class, field.thClass],
+                class: [field.class, field.thClass, field.variant ? `table-${field.variant}` : ''],
                 title: field.headerTitle,
                 abbr: field.headerAbbr,
                 style: field.thStyle,
@@ -88,7 +88,11 @@ export default defineComponent({
                   'td',
                   {
                     ...field.tdAttr,
-                    class: [field.class, field.tdClass],
+                    class: [
+                      field.class,
+                      field.tdClass,
+                      field.variant ? `table-${field.variant}` : '',
+                    ],
                   },
                   tdContent
                 )
@@ -120,7 +124,11 @@ export default defineComponent({
                 {
                   ...field.thAttr,
                   scope: 'col',
-                  class: [field.class, field.thClass],
+                  class: [
+                    field.class,
+                    field.thClass,
+                    field.variant ? `table-${field.variant}` : '',
+                  ],
                   title: field.headerTitle,
                   abbr: field.headerAbbr,
                   style: field.thStyle,
