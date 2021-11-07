@@ -52,10 +52,12 @@ export default defineComponent({
             h(
               'th',
               {
+                ...field.thAttr,
                 scope: 'col',
                 class: [field.class, field.thClass],
                 title: field.headerTitle,
                 abbr: field.headerAbbr,
+                style: field.thStyle,
               },
               field.label
             )
@@ -85,6 +87,7 @@ export default defineComponent({
                 return h(
                   'td',
                   {
+                    ...field.tdAttr,
                     class: [field.class, field.tdClass],
                   },
                   tdContent
@@ -115,10 +118,12 @@ export default defineComponent({
               h(
                 'th',
                 {
+                  ...field.thAttr,
                   scope: 'col',
                   class: [field.class, field.thClass],
                   title: field.headerTitle,
                   abbr: field.headerAbbr,
+                  style: field.thStyle,
                 },
                 field.label
               )
