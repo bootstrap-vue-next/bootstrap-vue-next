@@ -33,7 +33,7 @@ import useId from '../../composables/useId'
 export default defineComponent({
   name: 'BFormRadioGroup',
   props: {
-    modelValue: {type: [String, Boolean, Array, Object], default: ''},
+    modelValue: {type: [String, Boolean, Array, Object, Number], default: ''},
     ariaInvalid: {type: [Boolean, String], default: null},
     autofocus: {type: Boolean, default: false},
     buttonVariant: {type: String as PropType<ColorVariant>, default: 'secondary'},

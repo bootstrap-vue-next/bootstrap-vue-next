@@ -40,7 +40,7 @@ export default defineComponent({
     ariaLabel: {type: String},
     ariaLabelledBy: {type: String},
     autofocus: {type: Boolean, default: false},
-    modelValue: {type: [Boolean, String, Array, Object], default: null},
+    modelValue: {type: [Boolean, String, Array, Object, Number], default: null},
     plain: {type: Boolean, default: false},
     button: {type: Boolean, default: false},
     switch: {type: Boolean, default: false},
@@ -53,7 +53,7 @@ export default defineComponent({
     required: {type: Boolean, default: false},
     size: {type: String},
     state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
-    value: {type: [String, Boolean, Object], default: true},
+    value: {type: [String, Boolean, Object, Number], default: true},
   },
   emits: ['update:modelValue', 'change', 'input'],
   setup(props, {emit}) {
