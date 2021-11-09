@@ -16,7 +16,9 @@
               :class="computedCloseButtonClasses"
               data-bs-dismiss="modal"
               :aria-label="headerCloseLabel"
-            />
+            >
+              <slot name="header-close"></slot>
+            </button>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
             <slot />
@@ -111,7 +113,7 @@ export default defineComponent({
     titleTag: {type: String, default: 'h5'},
   },
   emits: ['update:modelValue', 'show', 'shown', 'hide', 'hidden', 'hide-prevented', 'ok', 'cancel'],
-  setup(props, {emit}) {
+  setup(props, {emit, slots}) {
     const element = ref<HTMLElement>()
     const instance = ref<Modal>()
     const modalClasses = computed(() => [
@@ -166,9 +168,16 @@ export default defineComponent({
       props.titleClass,
     ])
 
+    const hasHeaderCloseSlot = computed(() => {
+      console.log('Header close slot available', !!slots['header-close'])
+      console.log('slots', slots)
+      return !!slots['header-close']
+    })
     const computedCloseButtonClasses = computed(() => [
       {
-        [`btn-close-white`]: props.headerCloseWhite,
+        [`btn-close-content`]: hasHeaderCloseSlot.value,
+        [`d-flex`]: hasHeaderCloseSlot.value,
+        [`btn-close-white`]: !hasHeaderCloseSlot.value && props.headerCloseWhite,
       },
     ])
 
