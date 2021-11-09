@@ -88,13 +88,17 @@ const plugin: Plugin = {
   // TODO: use options in the future
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   install(app: App, options: BootstrapVueOptions = {}) {
-    Object.entries(Components).forEach(([name, component]) => {
-      app.component(name, component)
-    })
+    Object.entries(Components)
+      .filter(([name]) => !Array.isArray(options.remove) || !options.remove.includes(name))
+      .forEach(([name, component]) => {
+        app.component(name, component)
+      })
 
-    Object.entries(Directives).forEach(([name, component]) => {
-      app.directive(name, component)
-    })
+    Object.entries(Directives)
+      .filter(([name]) => !Array.isArray(options.remove) || !options.remove.includes(name))
+      .forEach(([name, component]) => {
+        app.directive(name, component)
+      })
 
     createBreadcrumb(app)
   },

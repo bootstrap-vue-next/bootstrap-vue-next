@@ -15,6 +15,7 @@ interface BootstrapVueOptions {
   BProgress?: Record<string, any>
   BSpinner?: Record<string, any>
   BTab?: Record<string, any>
+  remove?: string[]
 }
 
 export default BootstrapVueOptions
