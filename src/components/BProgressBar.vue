@@ -1,3 +1,7 @@
+<template>
+  <div></div>
+</template>
+
 <script lang="ts">
 import {ColorVariant} from '../types'
 import {computed, defineComponent, h, inject, PropType} from 'vue'

@@ -1314,6 +1314,25 @@
       </div>
     </div>
 
+    <!-- Progress -->
+    <div class="my-2">
+      <h2>Progress</h2>
+      <h5>No label</h5>
+      <b-progress :value="33.3333" :max="50"></b-progress>
+
+      <h5>Value label</h5>
+      <b-progress :value="33.3333" :max="50" show-value></b-progress>
+
+      <h5>Progress label</h5>
+      <b-progress :value="33.3333" :max="50" show-progress></b-progress>
+
+      <h5>Value label with precision</h5>
+      <b-progress :value="33.3333" :max="50" :precision="2" show-value></b-progress>
+
+      <h5>Progress label with precision</h5>
+      <b-progress :value="33.3333" :max="50" :precision="2" show-progress></b-progress>
+    </div>
+
     <!-- Icons -->
     <div class="my-2">
       <h2 class="my-3">Icons</h2>
