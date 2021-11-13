@@ -17,6 +17,17 @@
       </b-button>
     </b-col>
   </b-row>
+  <!-- Componet Ref Quick Links -->
+  <ul class="component-ref-mini-toc my-3">
+    <li v-if="propsItems && propsItems.length > 0">
+      <a :href="`#comp-ref-${componentName}-props`">
+        <code class="notranslate" translate="no">{{ tag }}</code> Properties
+      </a>
+    </li>
+  </ul>
+  <anchored-heading :id="`comp-ref-${componentName}-props`" level="4" class="mb-3">
+    Properties
+  </anchored-heading>
   <b-table
     :items="propsItems"
     :fields="propFields"
@@ -31,6 +42,30 @@
       <span v-html="value"></span>
     </template>
   </b-table>
+
+  <anchored-heading :id="`comp-ref-${componentName}-emits`" level="4" class="mb-3">
+    Emits
+  </anchored-heading>
+  <b-table
+    :items="emits"
+    :fields="emitsFields"
+    primary-key="emit"
+    table-class="bv-docs-table"
+    responsive="sm"
+    bordered
+    striped
+  >
+    <template #cell(args)="{value, item}">
+      <ol v-if="value && value.length > 0" class="list-unstyled mb-0">
+        <li v-for="(arg, idx) in value" :key="`emit-${item.emit}-${arg.arg || idx}`">
+          <template v-if="arg.arg">
+            <code class="notranslate" translate="no">{{ arg.arg }}</code> -
+          </template>
+          <span v-if="arg.description">{{ arg.description }}</span>
+        </li>
+      </ol>
+    </template>
+  </b-table>
 </template>
 <script lang="ts">
 import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent} from 'vue'
@@ -38,6 +73,10 @@ import AnchoredHeading from './anchored-heading'
 import {hyphenate} from '@vue/shared/'
 // type definitions
 const SORT_THRESHOLD: number = 10
+
+//Regex for matching v-model
+
+const VMODEL_REGEX: RegExp = /(\A\w+):update/
 
 export default defineComponent({
   components: {
@@ -55,7 +94,7 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-    events: {
+    emits: {
       type: Array,
       default: () => [],
     },
@@ -173,7 +212,21 @@ export default defineComponent({
       ]
     })
 
+    const emitsFields: ComputedRef<any> = computed(() => {
+      const sortable = component.emits.length >= SORT_THRESHOLD
+      return [
+        {key: 'emit', label: 'Emit', sortable},
+        {key: 'args', label: 'Arguments'},
+        {key: 'description', label: 'Description'},
+      ]
+    })
+
+    const emitsItems: ComputedRef<any> = computed(() => {
+      // let match = VMODEL_REGEX.exec(myString);
+    })
     return {
+      componentName,
+      emitsFields,
       propsItems,
       propFields,
       githubURL,
