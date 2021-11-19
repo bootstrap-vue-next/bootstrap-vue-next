@@ -1223,6 +1223,14 @@
         >
           Click to toggle popover
         </button>
+        <b-button ref="popoverRef">Click to toggle popover by ref</b-button>
+        <b-popover :target="popoverRef" placement="bottom">
+          <template #title> Popover <em>Title</em> - {{ popoverInput }} </template>
+          <b-button @click="consoleLog"> 456 </b-button>
+          I am popover <b>component</b> content!
+          <b-form-input v-model="popoverInput" type="text" />
+          Name: <strong>{{ popoverInput }}</strong>
+        </b-popover>
       </div>
     </div>
 
@@ -1387,7 +1395,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, reactive, ref} from 'vue'
+import {ComponentPublicInstance, defineComponent, onMounted, reactive, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
@@ -1424,6 +1432,7 @@ export default defineComponent({
 
     const name = ref('')
     const popoverInput = ref('foo')
+    const popoverRef = ref<ComponentPublicInstance<HTMLButtonElement>>()
 
     const consoleLog = () => console.log('button clicked!')
 
@@ -1576,6 +1585,7 @@ export default defineComponent({
       paginationPerPage,
       paginationRows,
       paginationDangerClasses,
+      popoverRef,
       setCheckedSelectedCars,
       radioDefault,
       radioButton,
