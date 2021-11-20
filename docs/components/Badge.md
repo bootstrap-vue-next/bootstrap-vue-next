@@ -156,16 +156,7 @@ Use the `pill` prop to make badges more rounded with a larger border-radius.
 <b-badge variant="dark" pill>Dark</b-badge>
 ```
 
-## Component reference
-
-### Properties
-
-| Property         | Type      | Default       | Description                                                        |
-| ---------------- | --------- | ------------- | ------------------------------------------------------------------ |
-| `dot-indicator`  | `Boolean` | `false`       |
-| `text-indicator` | `Boolean` | `false`       |
-| `pill`           | `Boolean` | `false`       | When set to 'true', renders the badge in pill style                |
-| `variant`        | `String`  | `'secondary'` | Applies one of the Bootstrap theme color variants to the component |
+<ComponentReference></ComponentReference>
 
 ### Slots
 

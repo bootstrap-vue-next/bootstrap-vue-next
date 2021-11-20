@@ -30,54 +30,57 @@
       </a>
     </li>
   </ul>
-  <anchored-heading :id="`comp-ref-${componentName}-props`" level="4" class="mb-3">
-    Properties
-  </anchored-heading>
-  <b-table
-    :items="propsItems"
-    :fields="propFields"
-    primary-key="prop"
-    table-class="bv-docs-table"
-    responsive="sm"
-    sort-icon-left
-    bordered
-    striped
-  >
-    <template #cell(prop)="{value}">
-      <code class="text-nowrap notranslate" translate="no">{{ value }}</code
-      ><br />
-    </template>
-    <template #cell(type)="{value}">
-      <span v-html="value"></span>
-    </template>
-    <template #cell(defaultValue)="{value}">
-      <code v-if="value" class="word-wrap-normal notranslate" translate="no">{{ value }}</code>
-    </template>
-  </b-table>
-
-  <anchored-heading :id="`comp-ref-${componentName}-emits`" level="4" class="mb-3">
-    Emits
-  </anchored-heading>
-  <b-table
-    :items="emits"
-    :fields="emitsFields"
-    primary-key="emit"
-    table-class="bv-docs-table"
-    responsive="sm"
-    bordered
-    striped
-  >
-    <template #cell(args)="{value, item}">
-      <ol v-if="value && value.length > 0" class="list-unstyled mb-0">
-        <li v-for="(arg, idx) in value" :key="`emit-${item.emit}-${arg.arg || idx}`">
-          <template v-if="arg.arg">
-            <code class="notranslate" translate="no">{{ arg.arg }}</code> -
-          </template>
-          <span v-if="arg.description">{{ arg.description }}</span>
-        </li>
-      </ol>
-    </template>
-  </b-table>
+  <div v-if="propsItems && propsItems.length > 0" class="bd-content">
+    <anchored-heading :id="`comp-ref-${componentName}-props`" level="4" class="mb-3">
+      Properties
+    </anchored-heading>
+    <b-table
+      :items="propsItems"
+      :fields="propFields"
+      primary-key="prop"
+      table-class="bv-docs-table"
+      responsive="sm"
+      sort-icon-left
+      bordered
+      striped
+    >
+      <template #cell(prop)="{value}">
+        <code class="text-nowrap notranslate" translate="no">{{ value }}</code
+        ><br />
+      </template>
+      <template #cell(type)="{value}">
+        <span v-html="value"></span>
+      </template>
+      <template #cell(defaultValue)="{value}">
+        <code v-if="value" class="word-wrap-normal notranslate" translate="no">{{ value }}</code>
+      </template>
+    </b-table>
+  </div>
+  <div v-if="emits && emits.length > 0" class="bd-content">
+    <anchored-heading :id="`comp-ref-${componentName}-emits`" level="4" class="mb-3">
+      Emits
+    </anchored-heading>
+    <b-table
+      :items="emits"
+      :fields="emitsFields"
+      primary-key="emit"
+      table-class="bv-docs-table"
+      responsive="sm"
+      bordered
+      striped
+    >
+      <template #cell(args)="{value, item}">
+        <ol v-if="value && value.length > 0" class="list-unstyled mb-0">
+          <li v-for="(arg, idx) in value" :key="`emit-${item.emit}-${arg.arg || idx}`">
+            <template v-if="arg.arg">
+              <code class="notranslate" translate="no">{{ arg.arg }}</code> -
+            </template>
+            <span v-if="arg.description">{{ arg.description }}</span>
+          </li>
+        </ol>
+      </template>
+    </b-table>
+  </div>
 </template>
 <script lang="ts">
 import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent} from 'vue'
@@ -225,7 +228,7 @@ export default defineComponent({
     })
 
     const emitsFields: ComputedRef<any> = computed(() => {
-      const sortable = component.emits.length >= SORT_THRESHOLD
+      const sortable = component.emits?.length >= SORT_THRESHOLD
       return [
         {key: 'emit', label: 'Emit', sortable},
         {key: 'args', label: 'Arguments'},
