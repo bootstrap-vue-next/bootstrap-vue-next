@@ -27,7 +27,6 @@ export const componentReference: Plugin<ComponentReferenceOptions> = ({
   extendsPageData(page, app: App) {
     const {filePath} = resolvePageComponentReferencePath(baseDir, page, app)
     let componentReference = null
-
     if (fs.existsSync(filePath)) {
       componentReference = require(filePath)
     }

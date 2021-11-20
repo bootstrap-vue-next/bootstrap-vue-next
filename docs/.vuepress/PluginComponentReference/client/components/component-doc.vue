@@ -24,6 +24,11 @@
         <code class="notranslate" translate="no">{{ tag }}</code> Properties
       </a>
     </li>
+    <li v-if="emits && emits.length > 0">
+      <a :href="`#comp-ref-${componentName}-emits`">
+        <code class="notranslate" translate="no">{{ tag }}</code> Emits
+      </a>
+    </li>
   </ul>
   <anchored-heading :id="`comp-ref-${componentName}-props`" level="4" class="mb-3">
     Properties
@@ -38,8 +43,15 @@
     bordered
     striped
   >
+    <template #cell(prop)="{value}">
+      <code class="text-nowrap notranslate" translate="no">{{ value }}</code
+      ><br />
+    </template>
     <template #cell(type)="{value}">
       <span v-html="value"></span>
+    </template>
+    <template #cell(defaultValue)="{value}">
+      <code v-if="value" class="word-wrap-normal notranslate" translate="no">{{ value }}</code>
     </template>
   </b-table>
 
@@ -181,7 +193,7 @@ export default defineComponent({
               : String(JSON.stringify(defaultValue, undefined, 1)).replace(/"/g, "'")
 
           return {
-            prop: prop, // KEBAB case this
+            prop: hyphenate(prop),
             type,
             defaultValue,
             required: p.required || false,
@@ -221,8 +233,15 @@ export default defineComponent({
       ]
     })
 
-    const emitsItems: ComputedRef<any> = computed(() => {
+    const vmodelItems: ComputedRef<any> = computed(() => {
+      //TODO loop through props and emits to determine v-model
       // let match = VMODEL_REGEX.exec(myString);
+      return []
+    })
+
+    const vmodelFields: ComputedRef<any> = computed(() => {
+      //TODO loop
+      return []
     })
     return {
       componentName,
