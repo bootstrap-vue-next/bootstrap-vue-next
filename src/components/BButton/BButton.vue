@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ButtonVariant, InputSize} from '../types'
-import {BLINK_PROPS} from './BLink/BLink.vue'
+import {ButtonVariant, InputSize} from '../../types'
+import {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
   name: 'BButton',

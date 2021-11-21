@@ -267,7 +267,7 @@ default), `'viewport'`, `'window'` or a reference to an HTML element. The bounda
 directly to Popper.js's `boundariesElement` configuration option.
 
 **Note:** When `boundary` is any value other than the default of `'scrollParent'`, the style
-`position: static` is applied to to the dropdown component's root element in order to allow the menu
+`position: static` is applied to the dropdown component's root element in order to allow the menu
 to "break-out" of its scroll container. In some situations this may affect your layout or
 positioning of the dropdown trigger button. In these cases you may need to wrap your dropdown inside
 another element.
@@ -357,13 +357,13 @@ with the BootstrapVue defaults.
 
 Head to the [Popper.js docs](https://popper.js.org/docs/v1/) to see all the configuration options.
 
-**Note**: The props `offset`, `boundary` and `no-flip` may loose their effect when you overwrite the
+**Note**: The props `offset`, `boundary` and `no-flip` may lose their effect when you overwrite the
 Popper.js configuration.
 
 ## Split button support
 
 Create a split dropdown button, where the left button provides standard `click` event and link
-support, while the right hand side is the dropdown menu toggle button.
+support, while the right-hand side is the dropdown menu toggle button.
 
 <ClientOnly>
   <b-card>
@@ -552,7 +552,7 @@ accepts either a string or array of strings.
 
 ### Split button color variant
 
-By default the left split button uses the same `variant` as the `toggle` button. You can give the
+By default, the left split button uses the same `variant` as the `toggle` button. You can give the
 split button its own variant via the `split-variant` prop.
 
 <ClientOnly>
@@ -621,7 +621,7 @@ You can render the dropdown menu in dark mode by setting the `dark` property.
 
 ### Block level dropdowns
 
-By default dropdowns act like buttons and are displayed inline. To create block level dropdowns
+By default, dropdowns act like buttons and are displayed inline. To create block level dropdowns
 (that span to the full width of a parent) set the `block` prop. Both, regular and split button
 dropdowns are supported.
 
@@ -741,7 +741,7 @@ to `true`. This is useful when the dropdown is to be displayed as an icon.
 
 ## Dropdown supported sub-components
 
-The following components can be placed inside of your dropdowns. Using any other component or markup
+The following components can be placed inside your dropdowns. Using any other component or markup
 may break layout and/or keyboard navigation.
 | Sub-component | Description |
 | ----------------- | ---------------------------- |
@@ -749,7 +749,7 @@ may break layout and/or keyboard navigation.
 | <span style="white-space:nowrap;">`<b-dropdown-item-button>`</span> | An alternative to `<b-dropdown-item>` that renders a menu item using a `<button>` element. |
 | `<b-dropdown-divider>` | A divider / spacer which can be used to separate dropdown items. |
 | `<b-dropdown-text>` | Free flowing text content in a menu. |
-| `<b-dropdown-group>` | For grouping dropdown sub components with an optional header. |
+| `<b-dropdown-group>` | For grouping dropdown sub-components with an optional header. |
 | `<b-dropdown-header>` | A header item, used to help identify a group of dropdown items. |
 
 **Note:** _Nested sub-menus are **not** supported._
@@ -814,7 +814,7 @@ Disabled the dropdown item button by setting the `disabled` prop.
 <div>
   <b-dropdown id="dropdown-buttons" text="Dropdown using buttons as menu items" class="m-2">
     <b-dropdown-item-button>I'm a button</b-dropdown-item-button>
-    <b-dropdown-item-button active>I'm a active button</b-dropdown-item-button>
+    <b-dropdown-item-button active>I'm an active button</b-dropdown-item-button>
     <b-dropdown-item-button disabled>I'm a button, but disabled!</b-dropdown-item-button>
     <b-dropdown-item-button>I don't look like a button, but I am!</b-dropdown-item-button>
   </b-dropdown>
@@ -852,7 +852,7 @@ Separate groups of related menu items with `<b-dropdown-divider>`.
 
 ### `<b-dropdown-text>`
 
-Place any freeform text within a dropdown menu using the `<b-dropdown-text>` sub component or use
+Place any freeform text within a dropdown menu using the `<b-dropdown-text>` sub-component or use
 text and use spacing utilities. Note that you'll likely need additional sizing styles to
 constrain/set the menu width.
 
@@ -885,16 +885,16 @@ constrain/set the menu width.
 ```
 
 `<b-dropdown-text>` has the BootstrapVue custom class `.b-dropdown-text` applied to it which sets
-some basic styles which are suitable in most situations. By default its width will be the same as
+some basic styles which are suitable in most situations. By default, its width will be the same as
 the widest `<b-dropdown-item>` content. You may need to place additional styles or helper classes on
 the component.
 
-~~By default `<b-dropdown-text>` renders using tag `<p>`. You can change the rendered tag by setting
+~~By default, `<b-dropdown-text>` renders using tag `<p>`. You can change the rendered tag by setting
 the `tag` prop to any valid HTML5 tag on the `<b-dropdown-text>` sub-component.~~
 
 ### `<b-dropdown-group>`
 
-Group a set of dropdown sub components with an optional associated header. Place a
+Group a set of dropdown sub-components with an optional associated header. Place a
 `<b-dropdown-divider>` between your `<b-dropdown-group>` and other groups or non-grouped dropdown
 contents
 

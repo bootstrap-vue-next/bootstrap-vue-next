@@ -28,29 +28,27 @@ export default /* #__PURE__ */ defineComponent({
   },
   setup(props) {
     const svgSprite = computed(() => BootstrapIcons)
-    return {
-      svgSprite,
-    }
-  },
-  render() {
-    const renderIcon = h(
-      'use',
-      {
-        'xlink:href': `${this.svgSprite}#${this.icon}`,
-      },
-      ''
-    )
 
-    return h(
-      BIconBase,
-      {
-        ...this.$props,
-        content: renderIcon,
-      },
-      {
-        default: () => '',
-      }
-    )
+    return () => {
+      const renderIcon = h(
+        'use',
+        {
+          'xlink:href': `${svgSprite.value}#${props.icon}`,
+        },
+        ''
+      )
+
+      return h(
+        BIconBase,
+        {
+          ...props,
+          content: renderIcon,
+        },
+        {
+          default: () => '',
+        }
+      )
+    }
   },
 })
 </script>

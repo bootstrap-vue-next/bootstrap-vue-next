@@ -82,7 +82,7 @@ auto-dismissing).
 
 ## Visible state
 
-Use the `show` prop to control the visibility state of the alert. By default alerts are **not**
+Use the `show` prop to control the visibility state of the alert. By default, alerts are **not**
 shown. Set the prop `show` to explicitly display them.
 
 The `show` prop accepts boolean `true` or `false` to show and hide the alert respectively.

@@ -6,7 +6,7 @@
 ## Customizing appearance
 
 `<b-pagination>` supports several props/slots that allow you to customize the appearance. All
-`*-text` props are text-only and strip out HTML but you can use their equally named slot
+`*-text` props are text-only and strip out HTML, but you can use their equally named slot
 counterparts for that.
 
 ### Limiting the number of displayed buttons
@@ -351,7 +351,7 @@ Easily switch to pill style buttons by setting the `pills` prop
 
 ### Alignment
 
-By default the pagination component is left aligned. Change the alignment to `center`, `end`
+By default, the pagination component is left aligned. Change the alignment to `center`, `end`
 or `fill` by setting the prop `align` to the appropriate value.
 
 <ClientOnly>

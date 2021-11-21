@@ -18,7 +18,7 @@
           },
           {
             "prop": "pill",
-            "description": "The ID to be injected to accordian items and used to in b-collaspe for state managment"
+            "description": "When set to 'true', renders the badge in pill style"
           },
           {
             "prop": "variant",

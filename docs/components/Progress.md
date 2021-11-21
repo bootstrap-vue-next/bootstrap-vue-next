@@ -24,7 +24,7 @@ Documentation and examples for using Bootstrap custom progress bars featuring su
 
 Set the maximum value with the `max` prop (default is `100`), and the current value via the `value` prop (default `0`).
 
-When creating multiple bars in a single process, place the value prop on the individual `<b-progress-bar>` sub components (see the Multiple Bars section below for more details)
+When creating multiple bars in a single process, place the value prop on the individual `<b-progress-bar>` sub-components (see the Multiple Bars section below for more details)
 
 ## Labels
 

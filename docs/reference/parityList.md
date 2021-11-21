@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# Comparision with BoostrapVue
+# Comparison with BoostrapVue
 
 In this section, you'll see a full list of BootstrapVue components (standard and non-standard) and the coverage status for `properties`, `slots`, `events`, etc. Also, we specify the new features of Bootstrap **v5** in each component that requires it.
 
@@ -131,22 +131,22 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | Property              | Status                                                                               | Observations |
 | --------------------- | ------------------------------------------------------------------------------------ | ------------ |
 | active                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| active-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| append                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| aria-current          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| active-class          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| append                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| aria-current          | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | disabled              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| exact                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| exact-active-class    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| exact                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| exact-active-class    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | href                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | html                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | no-prefetch           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | prefetch              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| rel                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| replace               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
-| router-component-name | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| rel                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| replace               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| router-component-name | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | target                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | text                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| to                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| to                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ### Slots
 
@@ -177,7 +177,7 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | no-prefetch           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
 | pill                  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
 | prefetch              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
-| pressed               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | vue3 no longers support sync. Use v-model:pressed  |
+| pressed               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | vue3 no longer support sync. Use v-model:pressed   |
 | rel                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
 | replace               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
 | router-component-name | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
@@ -523,7 +523,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `shown`  | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `toggle` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 
-### Sub components
+### sub-components
 
 #### DropDownItem
 
@@ -1203,7 +1203,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Jumbotron
 
-This components was suppresed in Boostrap `v5`.
+This component was removed in Boostrap `v5`.
 
 More information [here](https://getbootstrap.com/docs/5.0/migration/#jumbotron).
 
@@ -1263,7 +1263,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Media
 
-This components was suppresed in Boostrap `v5`.
+This component was removed in Boostrap `v5`.
 
 More information [here](https://getbootstrap.com/docs/5.0/utilities/flex/#media-object).
 

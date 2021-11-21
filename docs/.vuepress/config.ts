@@ -26,7 +26,7 @@ export default defineUserConfig<DefaultThemeOptions>({
         children: [
           {text: 'Components', link: '/components/'},
           {text: 'Types', link: '/reference/types.md'},
-          {text: 'Comparision with BootstrapVue', link: '/reference/parityList.md'},
+          {text: 'Comparison with BootstrapVue', link: '/reference/parityList.md'},
         ],
       },
     ],

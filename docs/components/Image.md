@@ -152,7 +152,7 @@ Align images with the boolean props `left` (floats left) `right`(floats right), 
 left+right margins). You can also center images by placing them in a container that has the class
 `text-center`.
 
-**Left an Right aligned (float):**
+**Left and right aligned (float):**
 
 <ClientOnly>
   <b-card>
@@ -241,7 +241,7 @@ The default `blank-color` is `transparent`.
 
 **Notes:**
 
-- In blank image mode, if only one of width or height is set, the image will be have both width and
+- In blank image mode, if only one of width or height is set, the image will have both width and
   height set to the same value.
 - In blank image mode, if width and height are not set, both width and height will internally be set
   to 1.
@@ -266,7 +266,7 @@ guide.
 
 - If the `blank` prop is set, then `srcset` and `sizes` props are ignored
 - IE 11 does not support `srcset` and `sizes`, so ensure you have a value for the `src` prop
-- Vue-loader does not support project relative URLs (asset URLs) on the `srcset` attribute. Instead
+- Vue-loader does not support project relative URLs (asset URLs) on the `srcset` attribute; instead
   use `require(...)` to resolve the individual URL paths. Be cautious of creating a string of data
   URI's longer than supported by the maximum attribute value length of the browser. If your webpack
   config has a limit for the `url-loader` and you want to prevent inline data-urls, you may have to

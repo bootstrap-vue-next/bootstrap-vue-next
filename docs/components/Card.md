@@ -63,7 +63,7 @@ following are examples of what's supported inside a `<b-card>`
 The building block of a `<b-card>` is the `<b-card-body>` section which provides a padded section
 within a card.
 
-By default the `<b-card>` content is automatically placed in a `<b-card-body>` section:
+By default, the `<b-card>` content is automatically placed in a `<b-card-body>` section:
 
 <ClientOnly>
   <b-card>

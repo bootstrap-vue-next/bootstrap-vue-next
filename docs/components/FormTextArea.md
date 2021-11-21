@@ -428,7 +428,7 @@ You can always access the native `input` and `change` events by using the `.nati
 ## Exposed input properties and methods
 
 `<b-form-textarea>` exposes several of the native input element's properties and methods on the
-component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...>`, caputre the ref in a variable and use
+component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...>`, capture the ref in a variable and use
 `input.propertyName` or `input.methodName(...)`).
 
 ### example

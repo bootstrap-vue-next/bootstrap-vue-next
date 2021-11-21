@@ -344,7 +344,7 @@ downwards. For `shift-h`, positive values will move the icon to the right, while
 will move it left. Both props accept values that are in units of 1/16em (relative to the icon's
 current _font size_).
 
-For clarity in the example, we’ve added a background color on the icon so you can see the effect.
+For clarity in the example, we’ve added a background color on the icon, so you can see the effect.
 
 <ClientOnly>
   <b-card>
@@ -1105,7 +1105,7 @@ SVGs are awesome to work with, but they do have some known quirks to work around
   `focusable="false"` to the `<svg>` element. You can override this by setting the attribute
   `focusable="false"` on the icon component.
 - **Browsers inconsistently announce SVGs as `<img>` tags with voice assistance.** Hence, we have
-  added added the attributes `role="img"` and `alt="icon"`. You can override these attributes if
+  added the attributes `role="img"` and `alt="icon"`. You can override these attributes if
   needed.
 - **Safari skips `aria-label` when used on non-focusable SVGs.** As such, use the attribute
   `aria-hidden="true"` when using the icon and use CSS to visually hide the equivalent label.
@@ -1136,7 +1136,7 @@ SVGs are awesome to work with, but they do have some known quirks to work around
 | `size`       | `String`             |         | Sets the icon size. Possible values : `sm`, `md`, `lg`, `2x`, `3x`, `4x`, `5x`                                                       |
 | `stacked`    | `Boolean`            | `false` | Set this prop to true when placing inside a BIconstack component                                                                     |
 | `title`      | `String`             |         | Text content to place in the title                                                                                                   |
-| `variant`    | `String`             |         | Contextual color variant. By default the icon inherits the current text color                                                        |
+| `variant`    | `String`             |         | Contextual color variant. By default, the icon inherits the current text color                                                       |
 
 ### `<b-iconstack>`
 
@@ -1154,4 +1154,4 @@ SVGs are awesome to work with, but they do have some known quirks to work around
 | `shift-v`    | `Number` or `String` | `0`     | Moves the icon vertically. Positive numbers will shift the icon up, negative down. Value is in 1/16em units                          |
 | `size`       | `String`             |         | Sets the icon size. Possible values : `sm`, `md`, `lg`, `2x`, `3x`, `4x`, `5x`                                                       |
 | `title`      | `String`             |         | Text content to place in the title                                                                                                   |
-| `variant`    | `String`             |         | Contextual color variant. By default the icon inherits the current text color                                                        |
+| `variant`    | `String`             |         | Contextual color variant. By default, the icon inherits the current text color                                                       |
