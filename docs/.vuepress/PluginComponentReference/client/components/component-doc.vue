@@ -42,7 +42,7 @@
       responsive="sm"
       sort-icon-left
       bordered
-      striped
+      table-striped
     >
       <template #cell(prop)="{value}">
         <code class="text-nowrap notranslate" translate="no">{{ value }}</code
@@ -67,7 +67,7 @@
       table-class="bv-docs-table"
       responsive="sm"
       bordered
-      striped
+      table-striped
     >
       <template #cell(args)="{value, item}">
         <ol v-if="value && value.length > 0" class="list-unstyled mb-0">

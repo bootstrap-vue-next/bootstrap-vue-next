@@ -1,5 +1,5 @@
 {
-  "name": "@bootstrap-vue-3/collapse",
+  "name": "@bootstrap-vue-3/Badge",
   "version": "Alpha",
   "meta": {
     "title": "Badge",
@@ -26,7 +26,7 @@
           },
           {
             "prop": "tag",
-            "description": "what the parent element be for the tag"
+            "description": "Specify the HTML tag to render instead of the default tag"
           }
         ],
         "emits": []
