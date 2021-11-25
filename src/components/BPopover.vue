@@ -45,7 +45,9 @@ export default defineComponent({
     noninteractive: {type: Boolean, default: false},
     placement: {type: String as PropType<Popover.Options['placement']>, default: 'right'},
     target: {
-      type: [String, Object] as PropType<string | ComponentPublicInstance<HTMLElement> | undefined>,
+      type: [String, Object] as PropType<
+        string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+      >,
       default: undefined,
     },
     title: {type: String},
@@ -72,7 +74,9 @@ export default defineComponent({
         if (typeof unrefTarget === 'string') {
           const element = document.getElementById(unrefTarget)
           target.value = element ? element : undefined
-        } else if (typeof unrefTarget !== 'undefined') target.value = unrefTarget.$el as HTMLElement
+        } else if (unrefTarget instanceof HTMLElement) target.value = unrefTarget
+        else if (typeof unrefTarget !== 'undefined')
+          target.value = (unrefTarget as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
         else target.value = undefined
 
         if (target.value)
