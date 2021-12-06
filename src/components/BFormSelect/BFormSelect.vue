@@ -84,7 +84,7 @@ export default defineComponent({
     },
     textField: {type: String, default: 'text'},
     valueField: {type: String, default: 'value'},
-    modelValue: {type: [String, Array, Object], default: ''},
+    modelValue: {type: [String, Array, Object, Number], default: ''},
   },
   emits: ['update:modelValue', 'change', 'input'],
   setup(props, {emit}) {

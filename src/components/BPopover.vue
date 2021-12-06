@@ -22,7 +22,17 @@
 
 <script lang="ts">
 import {Popover} from 'bootstrap'
-import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
+import {
+  ComponentPublicInstance,
+  computed,
+  defineComponent,
+  nextTick,
+  onMounted,
+  PropType,
+  ref,
+  unref,
+  watch,
+} from 'vue'
 import useEventListener from '../composables/useEventListener'
 import {ColorVariant} from '../types'
 
@@ -34,7 +44,12 @@ export default defineComponent({
     id: {type: String},
     noninteractive: {type: Boolean, default: false},
     placement: {type: String as PropType<Popover.Options['placement']>, default: 'right'},
-    target: {type: String, required: true},
+    target: {
+      type: [String, Object] as PropType<
+        string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+      >,
+      default: undefined,
+    },
     title: {type: String},
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: Boolean, default: false},
@@ -45,7 +60,7 @@ export default defineComponent({
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
   setup(props, {emit, slots}) {
     const element = ref<HTMLElement>()
-    const target = ref<HTMLElement>()
+    const target = ref<HTMLElement | undefined>()
     const instance = ref<Popover>()
     const titleRef = ref<HTMLElement>()
     const contentRef = ref<HTMLElement>()
@@ -54,24 +69,33 @@ export default defineComponent({
     }))
 
     onMounted(() => {
-      instance.value = new Popover(`#${props.target}`, {
-        container: props.container,
-        trigger: props.triggers,
-        placement: props.placement,
-        title: props.title || slots.title ? titleRef.value : '',
-        content: contentRef.value,
-        html: props.html,
-        sanitize: props.sanitize,
-      })
+      nextTick(() => {
+        const unrefTarget = unref(props.target)
+        if (typeof unrefTarget === 'string') {
+          const element = document.getElementById(unrefTarget)
+          target.value = element ? element : undefined
+        } else if (unrefTarget instanceof HTMLElement) target.value = unrefTarget
+        else if (typeof unrefTarget !== 'undefined')
+          target.value = (unrefTarget as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
+        else target.value = undefined
 
-      if (document.getElementById(props.target)) {
-        target.value = document.getElementById(props.target) as HTMLElement
-      }
+        if (target.value)
+          instance.value = new Popover(target.value, {
+            container: props.container,
+            trigger: props.triggers,
+            placement: props.placement,
+            title: props.title || slots.title ? titleRef.value : '',
+            content: contentRef.value,
+            html: props.html,
+            sanitize: props.sanitize,
+          })
+        else console.warn('[B-Popover] Target is a mandatory props.')
+      })
 
       element.value?.parentNode?.removeChild(element.value)
 
       if (props.show) {
-        instance.value.show()
+        instance.value?.show()
       }
     })
 
