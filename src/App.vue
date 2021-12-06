@@ -1199,7 +1199,7 @@
     <div class="my-2">
       <h2>Popover</h2>
       <div class="d-flex gap-2">
-        <b-button id="popover-target-1"> Hover Me </b-button>
+        <b-button id="popover-target-1">Hover Me</b-button>
         <b-popover target="popover-target-1" triggers="hover" placement="top">
           <template #title> Popover <em>Title</em> - {{ popoverInput }} </template>
           <b-button @click="consoleLog"> 456 </b-button>
@@ -1223,8 +1223,9 @@
         >
           Click to toggle popover
         </button>
-        <b-button ref="popoverRef">Click to toggle popover by ref</b-button>
-        <b-popover :target="popoverRef" placement="bottom">
+        <b-button ref="popoverRef">Click to toggle popover by ref with ref container</b-button>
+        <div ref="popoverContainerRef"></div>
+        <b-popover :container="popoverContainerRef" :target="popoverRef" placement="bottom">
           <template #title> Popover <em>Title</em> - {{ popoverInput }} </template>
           <b-button @click="consoleLog"> 456 </b-button>
           I am popover <b>component</b> content!
@@ -1433,6 +1434,7 @@ export default defineComponent({
     const name = ref('')
     const popoverInput = ref('foo')
     const popoverRef = ref<ComponentPublicInstance<HTMLButtonElement>>()
+    const popoverContainerRef = ref<HTMLButtonElement>()
 
     const consoleLog = () => console.log('button clicked!')
 
@@ -1586,6 +1588,7 @@ export default defineComponent({
       paginationRows,
       paginationDangerClasses,
       popoverRef,
+      popoverContainerRef,
       setCheckedSelectedCars,
       radioDefault,
       radioButton,
