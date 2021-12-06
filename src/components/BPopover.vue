@@ -30,7 +30,6 @@ import {
   onMounted,
   PropType,
   ref,
-  unref,
   watch,
 } from 'vue'
 import useEventListener from '../composables/useEventListener'
