@@ -10,7 +10,7 @@ export default defineComponent({
   props: {
     appendToast: {type: Boolean, default: false},
     autoHideDelay: {type: Number, default: 5000},
-    bodyClass: {type: String},
+    bodyClagitss: {type: String},
     headerClass: {type: String},
     headerTag: {type: String, default: 'header'},
     // Switches role to 'status' and aria-live to 'polite'
