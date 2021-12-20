@@ -1383,6 +1383,10 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
+
+    <b-toast title="wow" ref="toast"></b-toast>
+    <b-button class="mt-3" @click="toast.show()">Show Toast</b-button>
+    <b-button class="mt-3" @click="toast.hide()">Hide Toast</b-button>
   </b-container>
 </template>
 
@@ -1424,6 +1428,8 @@ export default defineComponent({
 
     const name = ref('')
     const popoverInput = ref('foo')
+
+    const toast = ref(null)
 
     const consoleLog = () => console.log('button clicked!')
 
@@ -1596,6 +1602,7 @@ export default defineComponent({
       handleVisible,
       handledVisible,
       buttonIsPressed,
+      toast,
     }
   },
 })

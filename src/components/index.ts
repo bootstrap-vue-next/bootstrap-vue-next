@@ -74,6 +74,7 @@ import BSpinner from './BSpinner.vue'
 import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
 import BTabs from './BTabs/BTabs.vue'
+import BToast from './BToast/BToast.vue'
 import BTransition from './BTransition/BTransition.vue'
 
 export default {
@@ -152,6 +153,7 @@ export default {
   BSpinner,
   BTab,
   BTable,
+  BToast,
   BTabs,
   BTransition,
 }

@@ -1,9 +1,17 @@
 <template>
-  <div></div>
+  <div ref="element" class="toast">
+    <div class="toast-header">
+      {{ title }}
+    </div>
+    <div class="toast-body"></div>
+  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from 'vue'
+import {computed, defineComponent, h, onMounted, PropType, reactive, ref, watch} from 'vue'
+import useEventListener from '../../composables/useEventListener'
+
+import {Toast} from 'bootstrap'
 
 export default defineComponent({
   name: 'BToast',
@@ -27,8 +35,36 @@ export default defineComponent({
     toaster: {type: String, default: 'b-toaster-top-right'},
     variant: {type: String},
   },
-  setup() {
-    return {}
+  setup(props, {emit}) {
+    const element = ref<HTMLElement>()
+    const instance = ref<Toast>()
+    const root = ref(null)
+
+    useEventListener(element, 'show.bs.toast', () => emit('show'))
+    useEventListener(element, 'shown.bs.toast', () => emit('shown'))
+    useEventListener(element, 'hide.bs.toast', () => emit('hide'))
+    useEventListener(element, 'hidden.bs.toast', () => emit('hidden'))
+
+    useEventListener(element, 'mouseover.bs.toast', () => emit('mouseover'))
+    useEventListener(element, 'mouseout.bs.toast', () => emit('mouseout'))
+    useEventListener(element, 'focusin.bs.toast', () => emit('focusin'))
+    useEventListener(element, 'focusout.bs.toast', () => emit('focusout'))
+
+    onMounted(() => {
+      instance.value = new Toast(element.value as HTMLElement)
+    })
+    const hide = () => {
+      instance.value?.hide()
+    }
+    const show = () => {
+      instance.value?.show()
+    }
+
+    return {
+      element,
+      hide,
+      show,
+    }
   },
 })
 </script>
