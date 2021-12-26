@@ -1,9 +1,11 @@
 <template>
-  <div ref="element" class="toast">
-    <div class="toast-header">
+  <div ref="element" class="toast" :class="classes">
+    <div v-if="title" class="toast-header">
       {{ title }}
     </div>
-    <div class="toast-body"></div>
+    <div v-if="body" class="toast-body">
+      {{ body }}
+    </div>
   </div>
 </template>
 
@@ -20,7 +22,7 @@ import {
   watch,
 } from 'vue'
 import useEventListener from '../../composables/useEventListener'
-
+import {ColorVariant} from '../../types'
 import {Toast} from 'bootstrap'
 
 export default defineComponent({
@@ -28,7 +30,7 @@ export default defineComponent({
   props: {
     appendToast: {type: Boolean, default: false},
     delay: {type: Number, default: 5000},
-    bodyClagitss: {type: String},
+    bodyClass: {type: String},
     headerClass: {type: String},
     headerTag: {type: String, default: 'header'},
     animation: {type: Boolean, default: true},
@@ -42,9 +44,11 @@ export default defineComponent({
     // Render the toast in place, rather than in a portal-target
     static: {type: Boolean, default: false},
     title: {type: String},
+    body: {type: String},
+    modelValue: {type: Boolean, default: true},
     toastClass: {type: Array as PropType<Array<string>>},
     toaster: {type: String, default: 'top-right'},
-    variant: {type: String},
+    variant: {type: String as PropType<ColorVariant>, default: 'info'},
   },
 
   setup(props, {emit}) {
@@ -52,27 +56,19 @@ export default defineComponent({
     const instance = ref<Toast>()
     const root = ref(null)
 
-    console.log(getCurrentInstance()?.appContext.app._container)
-
     useEventListener(element, 'show.bs.toast', () => emit('show'))
     useEventListener(element, 'shown.bs.toast', () => emit('shown'))
     useEventListener(element, 'hide.bs.toast', () => emit('hide'))
     useEventListener(element, 'hidden.bs.toast', () => emit('hidden'))
 
-    // useEventListener(element, 'mouseover.bs.toast', () => emit('mouseover'))
-    // useEventListener(element, 'mouseout.bs.toast', () => emit('mouseout'))
-    // useEventListener(element, 'focusin.bs.toast', () => emit('focusin'))
-    // useEventListener(element, 'focusout.bs.toast', () => emit('focusout'))
+    const classes = computed(() => ({
+      [`b-toast-${props.variant}`]: props.variant,
+      show: props.modelValue,
+    }))
+    // const toastClasses = computed(() => ({
+    //   'show': props.show,
+    // }))
 
-    // const ensureToaster = () =>{
-
-    // }
-    watch(
-      () => props.toaster,
-      (first, second) => {
-        // nextTick(ensureToaster)
-      }
-    )
     onMounted(() => {
       const config = {
         animation: props.animation,
@@ -91,6 +87,7 @@ export default defineComponent({
 
     return {
       element,
+      classes,
       hide,
       show,
     }

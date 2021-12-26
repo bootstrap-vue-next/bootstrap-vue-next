@@ -1,0 +1,34 @@
+$b-toast-background-opacity: alpha($toast-background-color) !default;
+
+// .b-toast-primary{
+//       color: red
+// }
+// rgba(204,229,255,.85)
+@mixin b-toast-variant($background, $border, $color) {
+  // Based on alert-variant mixin
+  background-color: rgba(lighten($background, 5%), $b-toast-background-opacity) !important;
+  border-color: rgba($border, $b-toast-background-opacity) !important;
+  color: $color;
+
+  .toast-header {
+    color: $color;
+    background-color: rgba($background, $b-toast-background-opacity);
+    border-bottom-color: rgba($border, $b-toast-background-opacity);
+  }
+
+  &.b-toast-solid {
+    .toast {
+      background-color: rgba(lighten($background, 5%), 1);
+    }
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .b-toast-#{$color} {
+    @include b-toast-variant(
+      shift-color($value, $alert-bg-scale),
+      shift-color($value, $alert-border-scale),
+      shift-color($value, $alert-color-scale)
+    );
+  }
+}
