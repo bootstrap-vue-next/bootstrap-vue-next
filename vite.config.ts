@@ -3,6 +3,7 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
+import visualizer from 'rollup-plugin-visualizer'
 
 const config = defineConfig({
   resolve: {
@@ -36,6 +37,7 @@ const config = defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
+    visualizer(), // generates admin/stats.html on npm run build
   ],
 
   server: {
