@@ -170,7 +170,6 @@ export default defineComponent({
 
     const hasHeaderCloseSlot = computed(() => {
       console.log('Header close slot available', !!slots['header-close'])
-      console.log('slots', slots)
       return !!slots['header-close']
     })
     const computedCloseButtonClasses = computed(() => [

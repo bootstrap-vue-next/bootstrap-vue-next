@@ -86,14 +86,11 @@ export {default as BTable} from './components/BTable/BTable.vue'
 export {default as BTabs} from './components/BTabs/BTabs.vue'
 export {default as BTransition} from './components/BTransition/BTransition.vue'
 export {default as BToast} from './components/BToast/BToast.vue'
+
 const plugin: Plugin = {
   // TODO: use options in the future
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   install(app: App, options: BootstrapVueOptions = {}) {
-    // Object.entries(Plugins).forEach(([name, plugin]) => {
-    //   app.use(plugin)
-    // })
-
     Object.entries(Components).forEach(([name, component]) => {
       app.component(name, component)
     })

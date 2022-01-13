@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
-  <b-container class="mt-4" fluid="sm">
+  <div></div>
+  <b-container ref="container" class="mt-4" fluid="sm" id="container" :toast="{root: true}">
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
@@ -1384,21 +1385,20 @@
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
 
-    <b-toast title="wow" ref="toast"></b-toast>
     <b-button class="mt-3" @click="toast.show()">Show Toast</b-button>
-    <b-button class="mt-3" @click="toast.hide()">Hide Toast</b-button>
+    <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
   </b-container>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, reactive, ref} from 'vue'
+import {defineComponent, onMounted, reactive, ref, inject, getCurrentInstance} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
 import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
 import {BvEvent} from './utils/bvEvent'
 import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
-
+import {useToast} from './plugins/BToast'
 export default defineComponent({
   name: 'App',
   components: {BDropdown, BFormCheckbox, BFormTextarea},
@@ -1414,6 +1414,9 @@ export default defineComponent({
     const breadcrumb = useBreadcrumb()
     const collapse = ref(false)
     const offcanvas = ref(false)
+    const container = ref(null)
+    const c = useToast()
+    console.log(c.show('hello', 'good'))
     const tableItems = [
       {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
       {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
@@ -1429,10 +1432,7 @@ export default defineComponent({
     const name = ref('')
     const popoverInput = ref('foo')
 
-    const toast = ref(null)
-
-    const consoleLog = () => console.log('button clicked!')
-
+    const consoleLog = () => console.log('Button Click!')
     const checkedDefault = ref(false)
     const checkedButton = ref(false)
     const checkedRequired = ref(false)
@@ -1526,7 +1526,6 @@ export default defineComponent({
 
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
-
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1554,6 +1553,7 @@ export default defineComponent({
       password,
       showPassword,
       description,
+      container,
       input,
       name,
       popoverInput,
@@ -1602,7 +1602,6 @@ export default defineComponent({
       handleVisible,
       handledVisible,
       buttonIsPressed,
-      toast,
     }
   },
 })

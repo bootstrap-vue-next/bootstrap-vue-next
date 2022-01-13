@@ -34,8 +34,10 @@ const router = createRouter({
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/styles.scss'
-
+import BToastPlugin from './plugins/BToast'
 const app = createApp(App)
 app.use(BootstrapVue)
+app.use(BToastPlugin)
 // app.use(router)
 app.mount('#app')
+console.log('after mount')

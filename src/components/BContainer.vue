@@ -1,28 +1,58 @@
-<template>
-  <div :class="classes">
-    <slot />
-  </div>
-</template>
-
 <script lang="ts">
 import {Breakpoint} from '../types'
-import {computed, defineComponent, PropType} from 'vue'
+import {
+  ComponentPublicInstance,
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  h,
+  onMounted,
+  PropType,
+  provide,
+  Ref,
+  ref,
+  VNode,
+} from 'vue'
+import {ToastInstance, useToast} from '../plugins/BToast'
+import BToastContainer from './BToast/BToastContainer.vue'
 
 export default defineComponent({
   name: 'BContainer',
   props: {
     fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
+    toast: {type: Object},
   },
-  setup(props) {
+  setup(props, {slots, expose}) {
+    const container = ref()
+    const subContainers: Array<VNode> = []
+    let toastInstance: ToastInstance | undefined
     const classes = computed(() => ({
       container: !props.fluid,
       [`container-fluid`]: typeof props.fluid === 'boolean' && props.fluid,
       [`container-${props.fluid}`]: typeof props.fluid === 'string',
     }))
 
-    return {
-      classes,
+    onMounted(() => {
+      if (props.toast) {
+        // toastInstance.setVmContainer(container)
+      }
+    })
+
+    // let this be the container for the toast
+    if (props.toast) {
+      toastInstance = useToast({container, root: props.toast.root})
+      for (const containerPosition in toastInstance.containerPositions.value) {
+        subContainers.push(h(BToastContainer, {}))
+      }
     }
+
+    expose({
+      ...toastInstance?.useMethods,
+    })
+
+    return () =>
+      h('div', {class: classes.value, ref: container}, [...subContainers, slots.default?.()])
   },
+  methods: {},
 })
 </script>

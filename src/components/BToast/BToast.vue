@@ -1,6 +1,6 @@
 <template>
   <div ref="element" class="toast" :class="classes">
-    <div v-if="title" class="toast-header">
+    <div :v-if="title" class="toast-header">
       {{ title }}
     </div>
     <div v-if="body" class="toast-body">
@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import {
+  Component,
   computed,
   defineComponent,
   getCurrentInstance,
@@ -21,6 +22,7 @@ import {
   ref,
   watch,
 } from 'vue'
+
 import useEventListener from '../../composables/useEventListener'
 import {ColorVariant} from '../../types'
 import {Toast} from 'bootstrap'
@@ -52,15 +54,8 @@ export default defineComponent({
   },
 
   setup(props, {emit}) {
-    const element = ref<HTMLElement>()
     const instance = ref<Toast>()
     const root = ref(null)
-
-    useEventListener(element, 'show.bs.toast', () => emit('show'))
-    useEventListener(element, 'shown.bs.toast', () => emit('shown'))
-    useEventListener(element, 'hide.bs.toast', () => emit('hide'))
-    useEventListener(element, 'hidden.bs.toast', () => emit('hidden'))
-
     const classes = computed(() => ({
       [`b-toast-${props.variant}`]: props.variant,
       show: props.modelValue,
@@ -68,28 +63,19 @@ export default defineComponent({
     // const toastClasses = computed(() => ({
     //   'show': props.show,
     // }))
-
     onMounted(() => {
-      const config = {
-        animation: props.animation,
-        delay: props.delay,
-        autohide: props.autoHide,
-      }
-      instance.value = new Toast(element.value as HTMLElement, config)
+      console.log('hello')
     })
 
-    const hide = () => {
-      instance.value?.hide()
-    }
-    const show = () => {
-      instance.value?.show()
-    }
+    //   const hide = () => {
+
+    //  }
+    //   const show = () => {
+
+    //   }
 
     return {
-      element,
       classes,
-      hide,
-      show,
     }
   },
 })
