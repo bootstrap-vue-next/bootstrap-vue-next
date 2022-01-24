@@ -1,5 +1,14 @@
 <template>
-  <div :class="[positionClass]" class="toast-container position-absolute"></div>
+  <div :class="[positionClass]" class="toast-container position-absolute p-3">
+    <b-toast
+      v-for="toast in vm.toasts"
+      :key="toast.options.id"
+      :title="toast.content.title"
+      :body="toast.content.body"
+      :component="toast.content.vnode"
+    >
+    </b-toast>
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,7 +27,7 @@ import {
   watch,
 } from 'vue'
 
-import {ToastOptions} from '../../plugins/BToast'
+import {Toast, ToastVM} from '../../plugins/BToast'
 import {ContainerPosition} from '../../types/container'
 
 const toastPositions = {
@@ -37,27 +46,12 @@ export default defineComponent({
   name: 'BToastContainer',
   props: {
     position: {type: String as PropType<ContainerPosition>, default: 'top-right'},
+    vm: {type: Object as PropType<ToastVM>},
   },
 
   setup(props, {emit}) {
-    const toasts: Ref<Array<ToastOptions>> = ref([])
-
-    function show(
-      toast: ToastOptions = {delay: 5000, value: true, pos: 'top-right'}
-    ): ToRefs<ToastOptions> {
-      if (toast.id === undefined) {
-        const t = reactive({...{id: Symbol('toast')}, ...toast})
-        toasts.value.push(t)
-        return toRefs<ToastOptions>(t)
-      }
-
-      return toRefs<ToastOptions>(toast)
-    }
+    const toasts: Ref<Array<Toast>> = ref([])
     const positionClass = computed(() => toastPositions[props.position])
-
-    // function hide(){
-
-    // }
 
     return {
       positionClass,

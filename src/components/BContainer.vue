@@ -15,6 +15,7 @@ import {
 } from 'vue'
 import {ToastInstance, useToast} from '../plugins/BToast'
 import BToastContainer from './BToast/BToastContainer.vue'
+import {ContainerPosition} from '../types/container'
 
 export default defineComponent({
   name: 'BContainer',
@@ -24,7 +25,6 @@ export default defineComponent({
   },
   setup(props, {slots, expose}) {
     const container = ref()
-    const subContainers: Array<VNode> = []
     let toastInstance: ToastInstance | undefined
     const classes = computed(() => ({
       container: !props.fluid,
@@ -41,17 +41,19 @@ export default defineComponent({
     // let this be the container for the toast
     if (props.toast) {
       toastInstance = useToast({container, root: props.toast.root})
-      for (const containerPosition in toastInstance.containerPositions.value) {
-        subContainers.push(h(BToastContainer, {}))
-      }
+      expose({
+        // ...toastInstance?.useMethods,
+      })
     }
 
-    expose({
-      ...toastInstance?.useMethods,
-    })
+    return () => {
+      const subContainers: Array<VNode> = []
 
-    return () =>
-      h('div', {class: classes.value, ref: container}, [...subContainers, slots.default?.()])
+      toastInstance?.containerPositions.value.forEach((position) => {
+        subContainers.push(h(BToastContainer, {vm: toastInstance?.vm, position}))
+      })
+      return h('div', {class: classes.value, ref: container}, [...subContainers, slots.default?.()])
+    }
   },
   methods: {},
 })

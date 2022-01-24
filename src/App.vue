@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <div></div>
-  <b-container ref="container" class="mt-4" fluid="sm" id="container" :toast="{root: true}">
+  <b-container id="container" ref="container" class="mt-4" fluid="sm" :toast="{root: true}">
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
@@ -1391,7 +1391,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, reactive, ref, inject, getCurrentInstance} from 'vue'
+import {defineComponent, getCurrentInstance, h, inject, onMounted, reactive, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
@@ -1415,8 +1415,7 @@ export default defineComponent({
     const collapse = ref(false)
     const offcanvas = ref(false)
     const container = ref(null)
-    const c = useToast()
-    console.log(c.show('hello', 'good'))
+
     const tableItems = [
       {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
       {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
@@ -1526,8 +1525,13 @@ export default defineComponent({
 
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
-    onMounted(() => {
-      breadcrumb.items.push({
+
+onMounted(() => {
+    const c = useToast()
+    
+    console.log(c?.show({title: "Hello", vnode: h("div", "life")}))
+
+    breadcrumb.items.push({
         text: 'Home',
         href: '/home',
       })

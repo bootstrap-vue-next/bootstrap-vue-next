@@ -13,6 +13,7 @@ import {
   watchEffect,
   ComponentPublicInstance,
   watch,
+  reactive,
 } from 'vue'
 import {
   ComponentPublicInstance,
@@ -20,12 +21,20 @@ import {
   shallowReactive,
   ComputedRef,
   computed,
+  isReactive,
   watchEffect,
+  VNode,
   ref,
 } from 'vue'
 
 import {BootstrapVueOptions} from '../types'
 import {ContainerPosition} from '../types/container'
+
+export interface ToastContent {
+  title?: String
+  body?: String
+  vnode?: VNode
+}
 
 export interface ToastOptions {
   id?: Symbol
@@ -34,94 +43,162 @@ export interface ToastOptions {
   pos?: ContainerPosition
 }
 
+export interface Toast {
+  options: ToastOptions
+  content: ToastContent
+}
+
 type VMContainer = Ref<ComponentPublicInstance | null>
 
-interface ToastVM {
+interface ToastContainers {
+  [key: symbol]: ToastVM
+}
+
+// Toast ViewModel, Each toast instance controls one view model
+export interface ToastVM {
   container: VMContainer | undefined
-  root?: Boolean
+  toasts: Array<Toast>
+  root: Boolean
+  id: symbol
 }
 
 export class ToastInstance {
-  vms: Array<VMContainer>
-  rootContainer?: VMContainer
-  toasts: Array<ToastOptions>
-  containerPositions: ComputedRef<Iterable<ContainerPosition>>
+  vm: ToastVM
+  containerPositions: ComputedRef<Set<ContainerPosition>>
 
-  constructor() {
-    this.vms = []
-    this.toasts = shallowReactive([])
+  constructor(vm: ToastVM) {
+    if (isReactive(vm)) {
+      this.vm = vm
+    } else {
+      this.vm = reactive(vm) as ToastVM
+    }
 
-    this.containerPositions = computed<Iterable<ContainerPosition>>(() => {
+    this.containerPositions = computed<Set<ContainerPosition>>(() => {
       let s = new Set<ContainerPosition>([])
-      console.log(this.toasts[0].pos)
-      this.toasts.map((toast) => {
-        if (toast.pos) {
-          s.add(toast.pos)
+      this.vm.toasts.map((toast) => {
+        if (toast.options.pos) {
+          s.add(toast.options.pos)
         }
       })
       return s
     })
   }
 
-  watchContainerMount = watchEffect(
-    () => {
-      // watch the component get mounted so we can show the toasts
-      // this.rootContainer?.value?.show()
-      // if(c){
-      //   watch(c, () => {
-      //   console.log("params were changed")
-      // })
-      // }
-    },
-    {
-      flush: 'post',
-    }
-  )
-
-  setVmContainer(vm: ToastVM): void {
-    if (vm.container === undefined) return
-
-    if (vm.root) {
-      this.rootContainer = vm.container
-      return
+  toasts(position?: ContainerPosition): ComputedRef<Array<Toast>> {
+    if (position) {
+      return computed<Array<Toast>>(() => {
+        return this.vm.toasts.filter((toast) => {
+          if (toast.options.pos == position) {
+            return toast
+          }
+        })
+      })
     }
 
-    this.vms.push(vm.container)
+    return computed(() => {
+      return this.vm.toasts
+    })
   }
 
-  toastexists(toast: ToastOptions): boolean {
-    return this.toasts.indexOf(toast) != -1
-  }
-
-  useMethods(): any {
-    return {show: this.show, hide: this.hide}
+  isRoot(): Boolean {
+    return this.vm.root ?? false
   }
 
   show(
-    title: String,
-    body: string,
-    toast: ToastOptions = {delay: 5000, value: true, pos: 'top-right'}
-  ): ToastOptions {
-    let newToast: ToastOptions = {id: Symbol('toast'), value: true}
-    this.toasts.push(toast)
+    content: ToastContent,
+    options: ToastOptions = {delay: 5000, value: true, pos: 'top-right'}
+  ): Toast {
+    let topts: ToastOptions = {id: Symbol('toast'), ...options}
+
+    let toast: Toast = {
+      options: {id: Symbol('toast'), ...options},
+      content: content,
+    }
+
+    this.vm.toasts.push(toast)
+
     return toast
-    // h(BToastComponent, )
   }
 
   hide(): void {}
 }
 
-let injectkey: Symbol = Symbol('toast')
+export class ToastController {
+  vms: ToastContainers
+  rootInstance?: symbol
 
-export const useToast = (vm: ToastVM = {container: undefined}, key = null) => {
-  let instance = inject(key !== null ? key : injectkey) as ToastInstance
-  instance.setVmContainer(vm)
-  return instance
+  constructor() {
+    this.vms = {}
+  }
+
+  getOrCreateViewModel(vm: ToastVM): ToastVM {
+    // if (vm.container === undefined) return
+
+    if (vm.root) {
+      this.rootInstance = vm.id
+    }
+    this.vms[vm.id] = vm
+    return vm
+  }
+
+  getVM(): ToastVM | undefined
+  getVM(id?: symbol): ToastVM | undefined {
+    if (!id && this.rootInstance) {
+      return this.vms[this.rootInstance]
+    } else if (id) {
+      return this.vms[id]
+    }
+
+    return undefined
+  }
+
+  //fetch a toast instance given a  a ToastVM
+  useMethods(container?: ToastVM): ToastInstance | undefined {
+    // if (container){
+    //   let instance = this.vms[container.id]
+    //   return new ToastInstance(instance)
+    // }
+    // if (this.rooInstance){
+    //   return new ToastInstance(this.vms[this.rooInstance])
+    // }
+    // return undefined
+  }
+}
+
+// default global inject key to fetch the controller
+let injectkey: symbol = Symbol('toast')
+
+let defaults = {
+  container: undefined,
+  toasts: [],
+  root: false,
+}
+export function useToast(): ToastInstance | undefined
+export function useToast(vm: {id: symbol}, key?: symbol): ToastInstance | undefined
+export function useToast(
+  vm: {container: Ref<ComponentPublicInstance>; root: Boolean},
+  key?: symbol
+): ToastInstance | undefined
+export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | undefined {
+  //lets get our controller to fetch the toast instance
+  let controller = inject(key !== null ? key : injectkey) as ToastController
+
+  // not paramters passed, use root if defined
+  if (!vm) {
+    let local_vm = controller.getVM()
+    return local_vm ? new ToastInstance(local_vm) : undefined
+  }
+
+  // use toast generically
+  let vm_id = {id: Symbol('toastInstance')}
+  let local_vm = {...defaults, ...vm_id, ...vm}
+  let vm_instance = controller.getOrCreateViewModel(local_vm)
+  return new ToastInstance(vm_instance)
 }
 
 const BToastPlugin: Plugin = {
   install: (app: App, options: BootstrapVueOptions = {}) => {
-    app.provide(options?.BToast?.injectkey ?? injectkey, new ToastInstance())
+    app.provide(options?.BToast?.injectkey ?? injectkey, new ToastController())
   },
 }
 
