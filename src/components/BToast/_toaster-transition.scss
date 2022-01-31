@@ -1,23 +1,9 @@
-.b-toaster {
-  .b-toast {
-    .b-toaster-enter-active,
-    .b-toaster-leave-active {
-      transition: opacity 4s linear !important;
-      background-color: red;
-    }
-
-    .b-toaster-enter-from,
-    .b-toaster-leave-to {
-      opacity: 0;
-      background-color: red;
-    }
-  }
-}
-
-// &.b-toaster-top-right,
-// &.b-toaster-top-left,
-// &.b-toaster-bottom-right,
-// &.b-toaster-bottom-left {
+// .b-toaster {
+//   .b-toast {
+// // &.b-toaster-top-right,
+// // &.b-toaster-top-left,
+// // &.b-toaster-bottom-right,
+// // &.b-toaster-bottom-left {
 //       .b-toast {
 //         &.b-toaster-enter-active,
 //         &.b-toaster-leave-active,
@@ -61,4 +47,5 @@
 //           opacity: 0;
 //         }
 //   }
+// }
 // }
