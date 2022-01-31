@@ -75,7 +75,7 @@ import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
 import BTabs from './BTabs/BTabs.vue'
 import BToast from './BToast/BToast.vue'
-import BToastContainer from './BToast/BToastContainer.vue'
+import BToastContainer from './BToast/BToaster.vue'
 import BTransition from './BTransition/BTransition.vue'
 
 export default {

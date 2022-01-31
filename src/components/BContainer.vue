@@ -14,18 +14,19 @@ import {
   VNode,
 } from 'vue'
 import {ToastInstance, useToast} from '../plugins/BToast'
-import BToastContainer from './BToast/BToastContainer.vue'
-import {ContainerPosition} from '../types/container'
-
+import BToaster from './BToast/BToaster.vue'
+import Position from '../types/position'
 export default defineComponent({
   name: 'BContainer',
   props: {
     fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
     toast: {type: Object},
+    position: {type: String as PropType<Position>, required: false},
   },
   setup(props, {slots, expose}) {
     const container = ref()
     let toastInstance: ToastInstance | undefined
+
     const classes = computed(() => ({
       container: !props.fluid,
       [`container-fluid`]: typeof props.fluid === 'boolean' && props.fluid,
@@ -50,9 +51,13 @@ export default defineComponent({
       const subContainers: Array<VNode> = []
 
       toastInstance?.containerPositions.value.forEach((position) => {
-        subContainers.push(h(BToastContainer, {vm: toastInstance?.vm, position}))
+        subContainers.push(h(BToaster, {vm: toastInstance?.vm, position}))
       })
-      return h('div', {class: classes.value, ref: container}, [...subContainers, slots.default?.()])
+
+      return h('div', {class: [classes.value, props.position], ref: container}, [
+        ...subContainers,
+        slots.default?.(),
+      ])
     }
   },
   methods: {},

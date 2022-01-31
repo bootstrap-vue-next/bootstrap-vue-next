@@ -23,6 +23,7 @@ import {
   computed,
   isReactive,
   watchEffect,
+  Reactive,
   VNode,
   ref,
 } from 'vue'
@@ -38,13 +39,13 @@ export interface ToastContent {
 
 export interface ToastOptions {
   id?: Symbol
-  value?: true // show or hide
+  value?: boolean // show or hide
   delay?: number
   pos?: ContainerPosition
 }
 
 export interface Toast {
-  options: ToastOptions
+  options: Reactive<ToastOptions>
   content: ToastContent
 }
 
@@ -111,7 +112,7 @@ export class ToastInstance {
     let topts: ToastOptions = {id: Symbol('toast'), ...options}
 
     let toast: Toast = {
-      options: {id: Symbol('toast'), ...options},
+      options: reactive({id: Symbol('toast'), ...options}),
       content: content,
     }
 

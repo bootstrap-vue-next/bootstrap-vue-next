@@ -4,19 +4,17 @@ import {isPlainObject} from '../../utils/inspect'
 import {defineComponent, h, PropType, ref, Transition} from 'vue'
 
 const NO_FADE_PROPS = {
-  name: '',
-  enterClass: '',
-  enterActiveClass: '',
-  enterToClass: 'show',
-  leaveClass: 'show',
-  leaveActiveClass: '',
-  leaveToClass: '',
+  // name: '',
+  // enterActiveClass: '',
+  // enterToClass: 'show',
+  // leaveActiveClass: '',
+  // leaveToClass: '',
 }
 
 const FADE_PROPS = {
   ...NO_FADE_PROPS,
-  enterActiveClass: 'fade',
-  leaveActiveClass: 'fade',
+  // enterActiveClass: 'fade',
+  // leaveActiveClass: 'fade',
 }
 
 export default defineComponent({
@@ -29,7 +27,7 @@ export default defineComponent({
   },
   setup(props, {slots}) {
     const transProperties = ref(props.transProps)
-    if (!isPlainObject(transProperties)) {
+    if (!isPlainObject(transProperties.value)) {
       transProperties.value = props.noFade ? NO_FADE_PROPS : FADE_PROPS
       if (props.appear) {
         // Default the appear classes to equal the enter classes
@@ -48,6 +46,7 @@ export default defineComponent({
       // We always need `css` true
       css: true,
     }
+
     return () =>
       h(
         Transition,

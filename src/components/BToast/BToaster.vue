@@ -1,13 +1,15 @@
 <template>
-  <div :class="[positionClass]" class="toast-container position-absolute p-3">
+  <div :class="[positionClass]" class="b-toaster position-absolute p-3">
     <b-toast
       v-for="toast in vm.toasts"
       :key="toast.options.id"
+      v-model="toast.options.value"
       :title="toast.content.title"
       :body="toast.content.body"
       :component="toast.content.vnode"
     >
     </b-toast>
+    <div></div>
   </div>
 </template>
 
@@ -43,7 +45,7 @@ const toastPositions = {
 }
 
 export default defineComponent({
-  name: 'BToastContainer',
+  name: 'BToaster',
   props: {
     position: {type: String as PropType<ContainerPosition>, default: 'top-right'},
     vm: {type: Object as PropType<ToastVM>},

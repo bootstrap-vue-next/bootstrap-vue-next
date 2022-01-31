@@ -1,7 +1,8 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
-  <div></div>
-  <b-container id="container" ref="container" class="mt-4" fluid="sm" :toast="{root: true}">
+  <b-container :toast="{root: true}" fluid="sm" position="position-fixed"></b-container>
+
+  <b-container id="container" ref="container" class="mt-4" fluid="sm">
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
@@ -1387,6 +1388,8 @@
 
     <b-button class="mt-3" @click="toast.show()">Show Toast</b-button>
     <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
+
+    <div id="demo"></div>
   </b-container>
 </template>
 
@@ -1526,12 +1529,12 @@ export default defineComponent({
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
 
-onMounted(() => {
-    const c = useToast()
-    
-    console.log(c?.show({title: "Hello", vnode: h("div", "life")}))
+    onMounted(() => {
+      const c = useToast()
 
-    breadcrumb.items.push({
+      console.log(c?.show({title: 'Hello', vnode: h('div', 'life')}))
+
+      breadcrumb.items.push({
         text: 'Home',
         href: '/home',
       })
