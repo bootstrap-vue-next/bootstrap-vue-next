@@ -1,3 +1,4 @@
+import {Toast} from 'bootstrap'
 import {
   App,
   Plugin,
@@ -49,18 +50,18 @@ export interface Toast {
   content: ToastContent
 }
 
-type VMContainer = Ref<ComponentPublicInstance | null>
-
-interface ToastContainers {
-  [key: symbol]: ToastVM
-}
-
 // Toast ViewModel, Each toast instance controls one view model
 export interface ToastVM {
   container: VMContainer | undefined
   toasts: Array<Toast>
   root: Boolean
   id: symbol
+}
+
+type VMContainer = Ref<ComponentPublicInstance | null>
+
+interface ToastContainers {
+  [key: symbol]: ToastVM
 }
 
 export class ToastInstance {
@@ -132,18 +133,36 @@ export class ToastController {
     this.vms = {}
   }
 
-  getOrCreateViewModel(vm: ToastVM): ToastVM {
-    // if (vm.container === undefined) return
-
-    if (vm.root) {
-      this.rootInstance = vm.id
+  // Assume Root Vm if no paramters are passed
+  public getOrCreateViewModel(): ToastVM
+  public getOrCreateViewModel(vm?: ToastVM): ToastVM
+  public getOrCreateViewModel(vm?: any): ToastVM {
+    if (!vm) {
+      if (this.rootInstance) {
+        return this.vms[this.rootInstance]
+      } else {
+        let vm: ToastVM = {root: true, toasts: [], container: undefined, id: Symbol('toast')}
+        this.rootInstance = vm.id
+        this.vms[vm.id] = vm
+        return vm
+      }
+    } else {
+      if (vm.root) {
+        // lets see if we have a root instance
+        if (this.rootInstance) {
+          return this.vms[this.rootInstance]
+        } else {
+        }
+        this.rootInstance = vm.id
+      }
+      this.vms[vm.id] = vm
+      return vm
     }
-    this.vms[vm.id] = vm
-    return vm
   }
 
-  getVM(): ToastVM | undefined
-  getVM(id?: symbol): ToastVM | undefined {
+  public getVM(): ToastVM | undefined
+  public getVM(id?: symbol): ToastVM | undefined
+  public getVM(id?: any): ToastVM | undefined {
     if (!id && this.rootInstance) {
       return this.vms[this.rootInstance]
     } else if (id) {
@@ -152,22 +171,11 @@ export class ToastController {
 
     return undefined
   }
-
-  //fetch a toast instance given a  a ToastVM
-  useMethods(container?: ToastVM): ToastInstance | undefined {
-    // if (container){
-    //   let instance = this.vms[container.id]
-    //   return new ToastInstance(instance)
-    // }
-    // if (this.rooInstance){
-    //   return new ToastInstance(this.vms[this.rooInstance])
-    // }
-    // return undefined
-  }
 }
 
 // default global inject key to fetch the controller
 let injectkey: symbol = Symbol('toast')
+let rootkey = 'root'
 
 let defaults = {
   container: undefined,
@@ -180,19 +188,20 @@ export function useToast(
   vm: {container: Ref<ComponentPublicInstance>; root: Boolean},
   key?: symbol
 ): ToastInstance | undefined
+
 export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | undefined {
   //lets get our controller to fetch the toast instance
   let controller = inject(key !== null ? key : injectkey) as ToastController
 
   // not paramters passed, use root if defined
   if (!vm) {
-    let local_vm = controller.getVM()
-    return local_vm ? new ToastInstance(local_vm) : undefined
+    let local_vm = new ToastInstance(controller.getOrCreateViewModel())
+    return local_vm
   }
 
   // use toast generically
   let vm_id = {id: Symbol('toastInstance')}
-  let local_vm = {...defaults, ...vm_id, ...vm}
+  let local_vm: ToastVM = {...defaults, ...vm_id, ...vm}
   let vm_instance = controller.getOrCreateViewModel(local_vm)
   return new ToastInstance(vm_instance)
 }

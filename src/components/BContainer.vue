@@ -42,6 +42,8 @@ export default defineComponent({
     // let this be the container for the toast
     if (props.toast) {
       toastInstance = useToast({container, root: props.toast.root})
+
+      console.log(toastInstance)
       expose({
         // ...toastInstance?.useMethods,
       })

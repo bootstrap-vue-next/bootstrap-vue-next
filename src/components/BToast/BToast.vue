@@ -11,7 +11,6 @@
         <component :is="component" v-if="component"></component>
       </div>
     </b-transition>
-    <div class="btn" @click="toggle()">toggle</div>
   </div>
 </template>
 
