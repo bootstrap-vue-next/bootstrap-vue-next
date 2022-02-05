@@ -21,8 +21,8 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "./scripts/deploy.sh",
-    "test": "yarn run test:lint && yarn run test:unit",
-    "test:lint": "yarn run lint",
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "npm run lint",
     "test:unit": "jest",
     "prepare": "husky install && vite build"
   },
