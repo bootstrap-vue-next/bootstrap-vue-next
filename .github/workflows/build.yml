@@ -17,33 +17,20 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [12, 14, 16]
+        node-version: [14.x, 16.x]
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
 
-      - name: Set Node.js version
-        uses: actions/setup-node@v2.1.5
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache node_modules
-        uses: actions/cache@v2.1.6
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ matrix.os }}-node-v${{ matrix.node }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-node-v${{ matrix.node }}-yarn-
-            ${{ matrix.os }}-node-v${{ matrix.node }}-
-            ${{ matrix.os }}-
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile --non-interactive
+        run: npm ci
 
       - name: Build
-        run: yarn run build
+        run: npm run build --if-present
