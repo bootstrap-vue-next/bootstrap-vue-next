@@ -1,4 +1,3 @@
-import {Toast} from 'bootstrap'
 import {
   App,
   Plugin,

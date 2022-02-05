@@ -1386,7 +1386,7 @@
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
 
-    <b-button class="mt-3" @click="toast.show()">Show Toast</b-button>
+    <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
     <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
 
     <div id="demo"></div>
@@ -1401,7 +1401,7 @@ import TableField from './types/TableField'
 import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
 import {BvEvent} from './utils/bvEvent'
 import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
-import {useToast} from './plugins/BToast'
+import {ToastInstance, useToast} from './plugins/BToast'
 export default defineComponent({
   name: 'App',
   components: {BDropdown, BFormCheckbox, BFormTextarea},
@@ -1528,11 +1528,10 @@ export default defineComponent({
 
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
-
+    
+    let c  : ToastInstance | undefined
+    c = useToast()
     onMounted(() => {
-      const c = useToast()
-
-      console.log(c?.show({title: 'Hello', vnode: h('div', 'life')}))
 
       breadcrumb.items.push({
         text: 'Home',
@@ -1546,17 +1545,20 @@ export default defineComponent({
     const handlePaginationPageClick = (event: BvEvent, page: number) => {
       if (page === 7) {
         event.preventDefault()
-        return
+        
       }
-
-      console.log('page click', page)
     }
 
     const handleVisible = () => {
       handledVisible.value = true
     }
 
+    const createToast = () =>{
+      c?.show({title: 'Hello', vnode: h('div', 'life')})
+    }
+
     return {
+      createToast,
       password,
       showPassword,
       description,
