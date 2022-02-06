@@ -44,7 +44,6 @@
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-rc.14",
     "babel-loader": "^8.2.2",
-    "bootstrap-icons": "^1.5.0",
     "esbuild-loader": "^2.13.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
