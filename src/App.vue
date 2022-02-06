@@ -1161,10 +1161,9 @@
       <h2>Modal</h2>
       <b-button @click="showModal = !showModal"> Toggle modal v-model </b-button>
       {{ showModal }}
-      <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
-      <b-modal id="exampleModal" v-model="showModal" size="xl" title="Modal title" fade>
-        ...
-      </b-modal>
+      <b-button v-b-modal="'exampleModal'">Launch demo modal (value)</b-button>
+      <b-button v-b-modal.exampleModal>Launch demo modal </b-button>
+      <b-modal id="exampleModal" size="xl" title="Modal title" fade> ... </b-modal>
     </div>
 
     <!-- <b-nav pills>
