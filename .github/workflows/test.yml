@@ -62,23 +62,23 @@ jobs:
   test-unit:
     runs-on: ${{ matrix.os }}
 
-  strategy:
-    matrix:
-      os: [ubuntu-latest]
-      node-version: [14.x, 16.x]
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [14.x, 16.x]
 
-  steps:
-    - name: Clone repository
-      uses: actions/checkout@v2
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Audit
-      run: npm run test:unit --coverage --maxWorkers=2
+      - name: Audit
+        run: npm run test:unit --coverage --maxWorkers=2
