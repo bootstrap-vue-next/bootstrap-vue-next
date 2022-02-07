@@ -48,19 +48,28 @@ export default defineComponent({
         'thead',
         h(
           'tr',
-          computedFields.value.map((field) =>
-            h(
-              'th',
-              {
-                ...field.thAttr,
-                scope: 'col',
-                class: [field.class, field.thClass, field.variant ? `table-${field.variant}` : ''],
-                title: field.headerTitle,
-                abbr: field.headerAbbr,
-                style: field.thStyle,
-              },
-              field.label
-            )
+          computedFields.value.map((field) => {
+              const slotName = `head(${field.key})`
+              let thContent = field.label
+
+              if (slots[slotName]) {
+                thContent = slots[slotName]?.({
+                  label: field.label,
+                })
+              }
+              return h(
+                'th',
+                {
+                  ...field.thAttr,
+                  scope: 'col',
+                  class: [field.class, field.thClass, field.variant ? `table-${field.variant}` : ''],
+                  title: field.headerTitle,
+                  abbr: field.headerAbbr,
+                  style: field.thStyle,
+                },
+                thContent
+              )
+            }
           )
         )
       )
