@@ -42,8 +42,6 @@ export default defineComponent({
     // let this be the container for the toast
     if (props.toast) {
       toastInstance = useToast({container, root: props.toast.root})
-
-      console.log(toastInstance)
       expose({
         // ...toastInstance?.useMethods,
       })
@@ -53,7 +51,7 @@ export default defineComponent({
       const subContainers: Array<VNode> = []
 
       toastInstance?.containerPositions.value.forEach((position) => {
-        subContainers.push(h(BToaster, {vm: toastInstance?.vm, position}))
+        subContainers.push(h(BToaster, {instance: toastInstance, position}))
       })
 
       return h('div', {class: [classes.value, props.position], ref: container}, [

@@ -30,6 +30,7 @@ import {
 
 import {BootstrapVueOptions} from '../types'
 import {ContainerPosition} from '../types/container'
+import getID from '../utils/getID'
 
 export interface ToastContent {
   title?: String
@@ -38,7 +39,7 @@ export interface ToastContent {
 }
 
 export interface ToastOptions {
-  id?: Symbol
+  id?: String
   value?: boolean // show or hide
   delay?: number
   pos?: ContainerPosition
@@ -101,6 +102,26 @@ export class ToastInstance {
     })
   }
 
+  displayedToasts(position?: ContainerPosition): ComputedRef<Array<Toast>> {
+    return computed<Array<Toast>>(() => {
+      return this.vm.toasts.filter((toast) => {
+        if (toast.options.pos == position && toast.options.value) {
+          return toast
+        } else if (toast.options.value) {
+          return toast
+        }
+      })
+    })
+  }
+
+  remove(...forDeletion: [String]): void {
+    this.vm.toasts = this.vm.toasts.filter((item) => {
+      if (!forDeletion.includes(item.options.id)) {
+        return item
+      }
+    })
+  }
+
   isRoot(): Boolean {
     return this.vm.root ?? false
   }
@@ -109,15 +130,13 @@ export class ToastInstance {
     content: ToastContent,
     options: ToastOptions = {delay: 5000, value: true, pos: 'top-right'}
   ): Toast {
-    let topts: ToastOptions = {id: Symbol('toast'), ...options}
+    let topts: ToastOptions = {id: getID(), ...options}
 
     let toast: Toast = {
-      options: reactive({id: Symbol('toast'), ...options}),
+      options: reactive(topts),
       content: content,
     }
-
     this.vm.toasts.push(toast)
-
     return toast
   }
 

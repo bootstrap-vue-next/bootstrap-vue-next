@@ -126,7 +126,6 @@ export default defineComponent({
           {
             noFade: props.noFade,
             name: 'fade',
-            appear: true,
             onAfterEnter: () => emit('shown'),
             onAfterLeave: () => emit('hidden'),
           },

@@ -1,12 +1,15 @@
 <template>
   <div :class="[positionClass]" class="b-toaster position-absolute p-3">
+    {{ instance.toasts().value }}
     <b-toast
-      v-for="toast in vm.toasts"
+      v-for="toast in instance.displayedToasts().value"
+      :id="toast.options.id"
       :key="toast.options.id"
       v-model="toast.options.value"
       :title="toast.content.title"
       :body="toast.content.body"
       :component="toast.content.vnode"
+      @destroyed="handleDestroy"
     >
     </b-toast>
     <div></div>
@@ -28,8 +31,7 @@ import {
   ToRefs,
   watch,
 } from 'vue'
-
-import {Toast, ToastVM} from '../../plugins/BToast'
+import {Toast, ToastInstance} from '../../plugins/BToast'
 import {ContainerPosition} from '../../types/container'
 
 const toastPositions = {
@@ -48,21 +50,22 @@ export default defineComponent({
   name: 'BToaster',
   props: {
     position: {type: String as PropType<ContainerPosition>, default: 'top-right'},
-    vm: {type: Object as PropType<ToastVM>},
+    instance: {type: Object as PropType<ToastInstance>},
+    // appendToast: {type: Boolean, default: false},
   },
 
   setup(props, {emit}) {
-    const toasts: Ref<Array<Toast>> = ref([])
     const positionClass = computed(() => toastPositions[props.position])
 
+    const handleDestroy = (id: string) => {
+      //we made want to disable reactivity for deletes. Future Note
+      props.instance?.remove(id)
+    }
     return {
       positionClass,
+      handleDestroy,
     }
   },
-  computed: {
-    // pos() {
-    // return toastPositions.topRight
-    // },
-  },
+  computed: {},
 })
 </script>

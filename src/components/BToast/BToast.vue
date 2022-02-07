@@ -1,5 +1,5 @@
 <template>
-  <div class="b-toast">
+  <div :id="id" class="b-toast">
     <b-transition :no-fade="noFade" name="b-toaster" v-bind="transitionHandlers">
       <div v-if="localShow" ref="element" class="toast" :class="classes">
         <div v-if="title" class="toast-header">
@@ -22,7 +22,9 @@ import {
   getCurrentInstance,
   h,
   nextTick,
+  onBeforeUnmount,
   onMounted,
+  onUnmounted,
   PropType,
   reactive,
   ref,
@@ -42,13 +44,14 @@ const MIN_DURATION = 1000
 
 export default defineComponent({
   name: 'BToast',
+  emits: ['destroyed', 'update:modelValue'],
   props: {
-    appendToast: {type: Boolean, default: false},
     delay: {type: Number, default: 5000},
     bodyClass: {type: String},
     headerClass: {type: String},
     headerTag: {type: String, default: 'header'},
     animation: {type: Boolean, default: true},
+    id: {type: String},
     // Switches role to 'status' and aria-live to 'polite'
     isStatus: {type: Boolean, default: false},
     autoHide: {type: Boolean, default: true},
@@ -93,7 +96,6 @@ export default defineComponent({
 
     const hide = () => {
       if (props.modelValue) {
-        emit('update:modelValue', false)
         dismissStarted = resumeDismiss = 0
         clearDismissTimer()
         isHiding.value = true
@@ -159,6 +161,7 @@ export default defineComponent({
     const onAfterLeave = () => {
       isTransitioning.value = false
       resumeDismiss = dismissStarted = 0
+      emit('update:modelValue', false)
     }
 
     const transitionHandlers = computed(() => ({
@@ -167,6 +170,10 @@ export default defineComponent({
       onBeforeLeave,
       onAfterLeave,
     }))
+
+    onUnmounted(() => {
+      emit('destroyed', props.id)
+    })
 
     onMounted(() => {
       nextTick(() => {
@@ -178,25 +185,6 @@ export default defineComponent({
       })
     })
 
-    //   const show = () => {
-
-    //   }
-
-    // return () =>{
-
-    //   let $overlay = h(
-    //       'transition',
-    //       {
-    //         noFade: props.noFade,
-    //         name: 'fade',
-    //         appear: true,
-    //         onAfterEnter: () => emit('shown'),
-    //         onAfterLeave: () => emit('hidden'),
-    //       },
-    //          h("div", "life")
-    //     )
-    //   return  $overlay
-    // }
     return {
       transitionHandlers,
       onBeforeEnter,
