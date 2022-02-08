@@ -26,11 +26,10 @@
       <!-- eslint-disable vue/no-v-html -->
       <b-form-select-option
         v-else
-        :key="`option_${index}`"
+        :key="`option2_${index}`"
         :value="option.value"
         :disabled="option.disabled"
-        v-text="option.text"
-        v-html="option.html"
+        v-html="option.html || option.text"
       />
       <!--eslint-enable-->
     </template>
@@ -84,7 +83,7 @@ export default defineComponent({
     },
     textField: {type: String, default: 'text'},
     valueField: {type: String, default: 'value'},
-    modelValue: {type: [String, Array, Object], default: ''},
+    modelValue: {type: [String, Array, Object, Number], default: ''},
   },
   emits: ['update:modelValue', 'change', 'input'],
   setup(props, {emit}) {

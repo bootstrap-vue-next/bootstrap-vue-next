@@ -123,6 +123,8 @@ distortion will occur. The image will be scaled up or down to fit within the ava
 
 ### Icon content
 
+TODO this should work with any icon font, eg icon="fa fa-cogs"
+
 Easily use one of [BootstrapVue's icons](/docs/icons) as the avatar content via the `icon` prop. The
 prop should be set to a valid icon name. Icons will scale respective to the [`size` prop](#sizing).
 
@@ -146,9 +148,6 @@ prop should be set to a valid icon name. Icons will scale respective to the [`si
 
 **Notes:**
 
-- When providing a BootstrapVue icon name, you _must_ ensure that you have registered the
-  corresponding icon component (either locally to your component/page, or globally), if not using
-  the full [`BootstrapVueIcons` plugin](/docs/icons).
 - The `icon` prop takes precedence over the `text` prop.
 - If the `text`, `src`, or `icon` props are not provided _and_ the [default slot](#custom-content)
   has no content, then the `person-fill` icon will be used.

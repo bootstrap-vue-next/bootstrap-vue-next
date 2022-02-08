@@ -42,6 +42,7 @@
 import * as Popper from '@popperjs/core'
 import {Dropdown} from 'bootstrap'
 import {ComponentPublicInstance, computed, defineComponent, onMounted, PropType, ref} from 'vue'
+import BButton from '../../components/BButton/BButton.vue'
 import {ButtonVariant, Size} from '../../types'
 import mergeDeep from '../../utils/mergeDeep'
 import useId from '../../composables/useId'
@@ -50,6 +51,7 @@ import {HTMLElement} from '../../types/safe-types'
 
 export default defineComponent({
   name: 'BDropdown',
+  components: {BButton},
   props: {
     autoClose: {type: [Boolean, String], default: true},
     block: {type: Boolean, default: false},
