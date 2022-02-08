@@ -24,7 +24,8 @@
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "npm run lint",
     "test:unit": "jest",
-    "prepare": "husky install && vite build"
+    "prepare": "husky install && vite build",
+    "publish": "npm publish --tag develop"
   },
   "types": "src/BootstrapVue.d.ts",
   "dependencies": {

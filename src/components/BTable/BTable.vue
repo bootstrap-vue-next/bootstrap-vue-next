@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, h, PropType} from 'vue'
+import {computed, defineComponent, h, PropType, VNode} from 'vue'
 import {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
 import useItemHelper from './itemHelper'
 
@@ -44,12 +44,38 @@ export default defineComponent({
     const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 
     return () => {
-      const tHead = h(
-        'thead',
+      let theadTop: VNode | null
+      theadTop = null
+      if (slots['thead-top']) {
+        theadTop = slots['thead-top']()
+      }
+
+      let theadSub: VNode | null
+      theadSub = null
+      if (slots['thead-sub']) {
+        theadSub = h(
+          'tr',
+
+          computedFields.value.map((field) =>
+            h('td', slots['thead-sub']({items: computedFields.value, ...field}))
+          )
+        )
+      }
+
+      const tHead = h('thead', [
+        theadTop,
         h(
           'tr',
-          computedFields.value.map((field) =>
-            h(
+          computedFields.value.map((field) => {
+            const slotName = `head(${field.key})`
+            let thContent = field.label
+
+            if (slots[slotName]) {
+              thContent = slots[slotName]?.({
+                label: field.label,
+              })
+            }
+            return h(
               'th',
               {
                 ...field.thAttr,
@@ -59,11 +85,12 @@ export default defineComponent({
                 abbr: field.headerAbbr,
                 style: field.thStyle,
               },
-              field.label
+              thContent
             )
-          )
-        )
-      )
+          })
+        ),
+        theadSub,
+      ])
 
       const tBody = [
         h(
