@@ -1450,15 +1450,11 @@
 <script lang="ts">
 import {ComponentPublicInstance, defineComponent, onMounted, reactive, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
-import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
-import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
 import {BvEvent} from './utils/bvEvent'
-import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {BFormSelect, BDropdown, BFormCheckbox, BFormTextarea},
   setup() {
     const password = ref('123')
     const showPassword = ref(false)
