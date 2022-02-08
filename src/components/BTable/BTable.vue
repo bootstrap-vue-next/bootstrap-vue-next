@@ -56,7 +56,14 @@ export default defineComponent({
         theadSub = h(
           'tr',
           computedFields.value.map((field) =>
-            h('td', slots['thead-sub']({items: computedFields.value, ...field}))
+            h(
+              'td',
+              {
+                scope: 'col',
+                class: [field.class, field.thClass, field.variant ? `table-${field.variant}` : ''],
+              },
+              slots['thead-sub']({items: computedFields.value, ...field})
+            )
           )
         )
       }
