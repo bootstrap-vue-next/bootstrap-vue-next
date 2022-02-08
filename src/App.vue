@@ -1450,6 +1450,7 @@
 <script lang="ts">
 import {ComponentPublicInstance, defineComponent, onMounted, reactive, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
+import BFormSelect from './components/BFormSelect/BFormSelect.vue'
 import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
 import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
