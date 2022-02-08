@@ -1506,15 +1506,10 @@
     "@typescript-eslint/types" "4.33.0"
     "eslint-visitor-keys" "^2.0.0"
 
-"@vitejs/plugin-vue@^2.1.0":
+"@vitejs/plugin-vue@^2.1.0", "@vitejs/plugin-vue@2.x.x":
   "integrity" "sha512-AZ78WxvFMYd8JmM/GBV6a6SGGTU0GgN/0/4T+FnMMsLzFEzTeAUwuraapy50ifHZsC+G5SvWs86bvaCPTneFlA=="
   "resolved" "https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-2.1.0.tgz"
   "version" "2.1.0"
-
-"@vitejs/plugin-vue@1.x.x":
-  "integrity" "sha512-/QJ0Z9qfhAFtKRY+r57ziY4BSbGUTGsPRMpB/Ron3QPwBZM4OZAZHdTa4a8PafCwU5DTatXG8TMDoP8z+oDqJw=="
-  "resolved" "https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-1.10.2.tgz"
-  "version" "1.10.2"
 
 "@vue/compiler-core@3.2.29":
   "integrity" "sha512-RePZ/J4Ub3sb7atQw6V6Rez+/5LCRHGFlSetT3N4VMrejqJnNPXKUt5AVm/9F5MJriy2w/VudEIvgscCfCWqxw=="
