@@ -1040,6 +1040,36 @@
           </template>
         </b-table>
       </div>
+      <div>
+        <h4 class="my-3">Table: Adding additional rows to the header</h4>
+
+        <b-table
+          responsive="xs"
+          caption="List of users"
+          :items="items"
+          :fields="objectTableDefinitions"
+          striped
+          hover
+          foot-clone
+        >
+          <template #thead-top>
+            <tr class="my">
+              <th colspan="2"><span class="sr-only">List of users</span></th>
+            </tr>
+          </template>
+          <template #thead-sub="{key, label}">
+            <tr class="my">
+              <th variant="danger" />
+              <th variant="danger">
+                <b-form-select :placeholder="label" :options="[label, key]" label-field="label" />
+              </th>
+            </tr>
+          </template>
+          <template #cell(first_name)="data">
+            <a href="#">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </div>
     </div>
 
     <!-- Accordion -->
@@ -1387,6 +1417,7 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, reactive, ref} from 'vue'
+import BFormSelect from './components/BFormSelect/BFormSelect.vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
@@ -1396,7 +1427,7 @@ import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {BDropdown, BFormCheckbox, BFormTextarea},
+  components: {BFormSelect, BDropdown, BFormCheckbox, BFormTextarea},
   setup() {
     const password = ref('123')
     const showPassword = ref(false)
