@@ -13,24 +13,10 @@
     <span v-else-if="src" class="b-avatar-img">
       <img :src="src" :alt="alt" @error="onImgError" />
     </span>
-    <b-icon
-      v-else-if="icon"
-      :icon="iconName"
-      aria-hidden="true"
-      :alt="alt"
-      :variant="computedIconVariant"
-      :size="size"
-    />
-    <span v-else-if="text" class="b-avatar-text" :class="textClasses" :style="fontStyle">{{
-      text
-    }}</span>
-    <b-icon
-      v-else
-      :icon="iconName"
-      :variant="computedIconVariant"
-      aria-hidden="true"
-      :alt="alt"
-    ></b-icon>
+    <span v-else-if="text" class="b-avatar-text" :class="textClasses" :style="fontStyle">
+      {{ text }}
+    </span>
+
     <span v-if="showBadge" class="b-avatar-badge" :class="badgeClasses" :style="badgeStyle">
       <slot v-if="hasBadgeSlot" name="badge"></slot>
       <span v-else :class="badgeTextClasses">{{ badgeText }}</span>
@@ -66,7 +52,6 @@ export default defineComponent({
     buttonType: {type: String, default: 'button'},
     disabled: {type: Boolean, default: false},
     icon: {type: String, required: false},
-    iconVariant: {type: String as PropType<ColorVariant>, default: null}, // not standard BootstrapVue props
     rounded: {type: [Boolean, String], default: 'circle'},
     size: {type: [String, Number] as PropType<InputSize | string | number>, required: false},
     square: {type: Boolean, default: false},
@@ -145,14 +130,11 @@ export default defineComponent({
     })
 
     const iconName = computed(() => {
+      // TODO this should work with any icon font, eg icon="fa fa-cogs"
       if (props.icon) return props.icon
       if (!props.text && !props.src) return 'person-fill'
       return undefined
     })
-
-    const computedIconVariant = computed(
-      () => props.iconVariant || computeContrastVariant(computedVariant.value)
-    )
 
     const badgeStyle = computed((): StyleValue => {
       const offset = props.badgeOffset || '0px'
@@ -205,7 +187,6 @@ export default defineComponent({
       badgeTextClasses,
       classes,
       clicked,
-      computedIconVariant,
       fontStyle,
       hasBadgeSlot,
       hasDefaultSlot,

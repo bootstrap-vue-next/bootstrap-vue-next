@@ -56,8 +56,6 @@ export {default as BFormSelectOptionGroup} from './components/BFormSelect/BFormS
 export {default as BFormText} from './components/BForm/BFormText.vue'
 export {default as BFormTextarea} from './components/BFormTextarea/BFormTextarea.vue'
 export {default as BFormValidFeedback} from './components/BForm/BFormValidFeedback.vue'
-export {default as BIcon} from './components/BIcon/BIcon.vue'
-export {default as BIconstack} from './components/BIcon/BIconstack.vue'
 export {default as BImg} from './components/BImg.vue'
 export {default as BInputGroup} from './components/BInputGroup/BInputGroup.vue'
 export {default as BInputGroupAddon} from './components/BInputGroup/BInputGroupAddon.vue'

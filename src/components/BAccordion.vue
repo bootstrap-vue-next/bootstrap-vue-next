@@ -24,7 +24,7 @@ export default defineComponent({
     }))
 
     if (!props.free) {
-      provide(injectionKey, `#${computedId.value}`)
+      provide(injectionKey, `${computedId.value}`)
     }
 
     return {
