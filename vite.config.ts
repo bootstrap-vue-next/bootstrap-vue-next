@@ -20,7 +20,7 @@ const config = defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['vue'],
+      external: ['bootstrap', 'vue'],
       output: {
         exports: 'named',
         assetFileNames: `bootstrap-vue-3.[ext]`, //without this, it generates build/styles.css
