@@ -44,10 +44,10 @@ As you may suppose, this library is heavily inspired by **BootstrapVue**, as wel
 
 ```console
 # NPM
-npm i --save bootstrap-vue-3
+npm i --save bootstrap bootstrap-vue-3
 
 # Yarn
-yarn add bootstrap-vue-3
+yarn add bootstrap bootstrap-vue-3
 ```
 
 # Contribute & support 🙌
