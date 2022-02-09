@@ -77,7 +77,7 @@ Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
 
 ```
 npm run release
-git push --follow-tags origin main
+git push --follow-tags
 ```
 
 then https://github.com/cdmoro/bootstrap-vue-3/releases/new
