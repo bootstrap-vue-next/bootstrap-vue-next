@@ -25,7 +25,8 @@
     "test:lint": "npm run lint",
     "test:unit": "jest",
     "prepare": "husky install && vite build",
-    "publish": "npm publish --tag develop"
+    "publish": "npm publish --tag develop",
+    "release": "standard-version"
   },
   "types": "src/BootstrapVue.d.ts",
   "dependencies": {
@@ -60,6 +61,7 @@
     "rollup-plugin-visualizer": "^5.5.2",
     "sass": "^1.34.1",
     "sass-loader": "12.x.x",
+    "standard-version": "^9.3.2",
     "style-loader": "^3.2.1",
     "ts-jest": "^27.0.4",
     "typescript": "~4.1.5",

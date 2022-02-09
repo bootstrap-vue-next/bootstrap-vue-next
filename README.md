@@ -72,3 +72,12 @@ Or if you prefer you can make a one-time donation through these channels:
 # License
 
 Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
+
+# Making a new release
+
+```
+npm run release
+git push --follow-tags origin main
+```
+
+then https://github.com/cdmoro/bootstrap-vue-3/releases/new
