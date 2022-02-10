@@ -55,6 +55,7 @@ export default defineComponent({
       if (slots['thead-sub']) {
         theadSub = h(
           'tr',
+
           computedFields.value.map((field) =>
             h(
               'td',
