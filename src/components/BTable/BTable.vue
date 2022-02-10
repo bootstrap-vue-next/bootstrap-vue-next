@@ -120,9 +120,7 @@ export default defineComponent({
                     items: props.items,
                   })
                 }
-                if (tr?._cellVariants && tr?._cellVariants[field.key]) {
-                  field.variant = tr?._cellVariants[field.key]
-                }
+
                 return h(
                   'td',
                   {
@@ -131,6 +129,9 @@ export default defineComponent({
                       field.class,
                       field.tdClass,
                       field.variant ? `table-${field.variant}` : '',
+                      tr?._cellVariants && tr?._cellVariants[field.key]
+                        ? `table-${tr?._cellVariants[field.key]}`
+                        : '',
                     ],
                   },
                   tdContent
