@@ -104,6 +104,9 @@ export default defineComponent({
           props.items.map((tr, index) =>
             h(
               'tr',
+              {
+                class: [tr._rowVariant ? `table-${tr._rowVariant}` : null],
+              },
               computedFields.value.map((field) => {
                 const slotName = `cell(${field.key})`
                 let tdContent = tr[field.key]
@@ -116,7 +119,9 @@ export default defineComponent({
                     items: props.items,
                   })
                 }
-
+                if (tr?._cellVariants && tr?._cellVariants[field.key]) {
+                  field.variant = tr?._cellVariants[field.key]
+                }
                 return h(
                   'td',
                   {
