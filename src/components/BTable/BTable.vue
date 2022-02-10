@@ -57,7 +57,14 @@ export default defineComponent({
           'tr',
 
           computedFields.value.map((field) =>
-            h('td', slots['thead-sub']({items: computedFields.value, ...field}))
+            h(
+              'td',
+              {
+                scope: 'col',
+                class: [field.class, field.thClass, field.variant ? `table-${field.variant}` : ''],
+              },
+              slots['thead-sub']({items: computedFields.value, ...field})
+            )
           )
         )
       }
@@ -98,6 +105,9 @@ export default defineComponent({
           props.items.map((tr, index) =>
             h(
               'tr',
+              {
+                class: [tr._rowVariant ? `table-${tr._rowVariant}` : null],
+              },
               computedFields.value.map((field) => {
                 const slotName = `cell(${field.key})`
                 let tdContent = tr[field.key]
@@ -119,6 +129,9 @@ export default defineComponent({
                       field.class,
                       field.tdClass,
                       field.variant ? `table-${field.variant}` : '',
+                      tr?._cellVariants && tr?._cellVariants[field.key]
+                        ? `table-${tr?._cellVariants[field.key]}`
+                        : '',
                     ],
                   },
                   tdContent
