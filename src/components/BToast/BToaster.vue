@@ -1,6 +1,5 @@
 <template>
   <div :class="[positionClass]" class="b-toaster position-absolute p-3">
-    {{ instance.toasts().value }}
     <b-toast
       v-for="toast in instance.displayedToasts().value"
       :id="toast.options.id"

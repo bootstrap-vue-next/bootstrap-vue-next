@@ -1,19 +1,3 @@
-<template>
-  <div :id="id" class="b-toast">
-    <b-transition :no-fade="noFade" name="b-toaster" v-bind="transitionHandlers">
-      <div v-if="localShow" ref="element" class="toast" :class="classes">
-        <div v-if="title" class="toast-header">
-          {{ title }}
-        </div>
-        <div v-if="body" class="toast-body">
-          {{ body }}
-        </div>
-        <component :is="component" v-if="component"></component>
-      </div>
-    </b-transition>
-  </div>
-</template>
-
 <script lang="ts">
 import {
   Component,
@@ -32,15 +16,18 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-
+import {normalizeSlot} from '../../utils/normalize-slot'
 import useEventListener from '../../composables/useEventListener'
 import {ColorVariant} from '../../types'
 import {Toast} from 'bootstrap'
 import {toInteger} from '../../utils/number'
 import BTransition from '../BTransition/BTransition.vue'
 import {requestAF} from '../../utils/dom'
+import BButtonClose from '../BButton/BCloseButton.vue'
 
-const MIN_DURATION = 1000
+export const SLOT_NAME_TOAST_TITLE = 'toast-title'
+
+const MIN_DURATION = 5000
 
 export default defineComponent({
   name: 'BToast',
@@ -49,7 +36,7 @@ export default defineComponent({
     delay: {type: Number, default: 5000},
     bodyClass: {type: String},
     headerClass: {type: String},
-    headerTag: {type: String, default: 'header'},
+    headerTag: {type: String, default: 'div'},
     animation: {type: Boolean, default: true},
     id: {type: String},
     // Switches role to 'status' and aria-live to 'polite'
@@ -69,7 +56,7 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>, default: 'info'},
   },
 
-  setup(props, {emit}) {
+  setup(props, {emit, slots}) {
     const instance = ref<Toast>()
     const root = ref(null)
     const isTransitioning = ref(false)
@@ -131,6 +118,7 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       (newValue) => {
+        console.log('cow')
         newValue ? show() : hide()
       }
     )
@@ -144,31 +132,31 @@ export default defineComponent({
       }
     }
 
-    const onBeforeEnter = () => {
+    const OnBeforeEnter = () => {
       isTransitioning.value = true
       emit('update:modelValue', true)
     }
 
-    const onAfterEnter = () => {
+    const OnAfterEnter = () => {
       isTransitioning.value = false
       startDismissTimer()
     }
 
-    const onBeforeLeave = () => {
+    const OnBeforeLeave = () => {
       isTransitioning.value = true
     }
 
-    const onAfterLeave = () => {
+    const OnAfterLeave = () => {
       isTransitioning.value = false
       resumeDismiss = dismissStarted = 0
       emit('update:modelValue', false)
     }
 
     const transitionHandlers = computed(() => ({
-      onBeforeEnter,
-      onAfterEnter,
-      onBeforeLeave,
-      onAfterLeave,
+      OnBeforeEnter,
+      OnAfterEnter,
+      OnBeforeLeave,
+      OnAfterLeave,
     }))
 
     onUnmounted(() => {
@@ -185,12 +173,79 @@ export default defineComponent({
       })
     })
 
-    return {
-      transitionHandlers,
-      onBeforeEnter,
-      classes,
-      toggle,
-      localShow,
+    return () => {
+      const makeToast = () => {
+        const $headerContent: Array<VNode> = []
+
+        const $title = normalizeSlot(SLOT_NAME_TOAST_TITLE, {hide}, slots)
+
+        if ($title) {
+          $headerContent.push(h($title))
+        } else if (props.title) {
+          $headerContent.push(h('strong', {staticClass: 'mr-2'}, props.title))
+        }
+
+        if (!props.noCloseButton) {
+          $headerContent.push(
+            h(BButtonClose, {
+              class: ['ml-auto mb-1'],
+              on: {
+                click: () => {
+                  hide()
+                },
+              },
+            })
+          )
+        }
+
+        const $header = []
+
+        if ($headerContent.length > 0) {
+          $header.push(
+            h(
+              props.headerTag,
+              {
+                class: 'mr-2',
+              },
+              {default: () => $headerContent}
+            )
+          )
+        }
+
+        return h(
+          'div',
+          {
+            class: ['toast', props.toastClass, classes.value],
+            // tabindex: '0'
+          },
+          [$header]
+        )
+      }
+      const $toast = h(
+        'div',
+        {
+          'class': ['b-toast'],
+          'id': props.id,
+          'role': isHiding.value ? null : props.isStatus ? 'status' : 'alert',
+          'aria-live': isHiding.value ? null : props.isStatus ? 'polite' : 'assertive',
+          'aria-atomic': isHiding.value ? null : 'true',
+        },
+        [
+          h(
+            BTransition,
+            {
+              noFade: props.noFade,
+              onAfterEnter: OnAfterEnter,
+              onBeforeEnter: OnBeforeEnter,
+              onAfterLeave: OnAfterLeave,
+              onBeforeLeave: OnBeforeLeave,
+            },
+            [localShow.value ? makeToast() : '']
+          ),
+        ]
+      )
+
+      return $toast
     }
   },
 })

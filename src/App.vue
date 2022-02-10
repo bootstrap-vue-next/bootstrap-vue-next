@@ -1528,11 +1528,10 @@ export default defineComponent({
 
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
-    
-    let c  : ToastInstance | undefined
+
+    let c: ToastInstance | undefined
     c = useToast()
     onMounted(() => {
-
       breadcrumb.items.push({
         text: 'Home',
         href: '/home',
@@ -1545,7 +1544,6 @@ export default defineComponent({
     const handlePaginationPageClick = (event: BvEvent, page: number) => {
       if (page === 7) {
         event.preventDefault()
-        
       }
     }
 
@@ -1553,8 +1551,8 @@ export default defineComponent({
       handledVisible.value = true
     }
 
-    const createToast = () =>{
-      c?.show({title: 'Hello', vnode: h('div', 'life')})
+    const createToast = () => {
+      c?.show({title: 'example title', vnode: h('div', 'life')})
     }
 
     return {
