@@ -255,7 +255,7 @@ export default defineComponent({
               onAfterLeave: OnAfterLeave,
               onBeforeLeave: OnBeforeLeave,
             },
-            [localShow.value ? makeToast() : '']
+            () => [localShow.value ? makeToast() : '']
           ),
         ]
       )
