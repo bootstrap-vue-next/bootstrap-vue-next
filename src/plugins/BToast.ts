@@ -34,8 +34,7 @@ import getID from '../utils/getID'
 
 export interface ToastContent {
   title?: String
-  body?: String
-  vnode?: VNode
+  body?: String | VNode
 }
 
 export interface ToastOptions {
