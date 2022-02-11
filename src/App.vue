@@ -1552,7 +1552,7 @@ export default defineComponent({
     }
 
     const createToast = () => {
-      c?.show({title: 'example title', vnode: h('div', 'life')})
+      c?.show({title: 'example title', body: h('div', 'cool Dynamic')})
     }
 
     return {

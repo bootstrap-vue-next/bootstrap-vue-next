@@ -17,22 +17,23 @@ import {
   watchEffect,
 } from 'vue'
 import {normalizeSlot} from '../../utils/normalize-slot'
-import useEventListener from '../../composables/useEventListener'
 import {ColorVariant} from '../../types'
 import {Toast} from 'bootstrap'
 import {toInteger} from '../../utils/number'
 import BTransition from '../BTransition/BTransition.vue'
 import {requestAF} from '../../utils/dom'
 import BButtonClose from '../BButton/BCloseButton.vue'
+import {isLink} from '../../utils/router'
+import {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export const SLOT_NAME_TOAST_TITLE = 'toast-title'
-
 const MIN_DURATION = 5000
 
 export default defineComponent({
   name: 'BToast',
   emits: ['destroyed', 'update:modelValue'],
   props: {
+    ...BLINK_PROPS,
     delay: {type: Number, default: 5000},
     bodyClass: {type: String},
     headerClass: {type: String},
@@ -118,7 +119,6 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       (newValue) => {
-        console.log('cow')
         newValue ? show() : hide()
       }
     )
@@ -173,6 +173,14 @@ export default defineComponent({
       })
     })
 
+    const onLinkClick = () => {
+      nextTick(() => {
+        requestAF(() => {
+          hide()
+        })
+      })
+    }
+
     return () => {
       const makeToast = () => {
         const $headerContent: Array<VNode> = []
@@ -182,43 +190,50 @@ export default defineComponent({
         if ($title) {
           $headerContent.push(h($title))
         } else if (props.title) {
-          $headerContent.push(h('strong', {staticClass: 'mr-2'}, props.title))
+          $headerContent.push(h('strong', {class: 'me-auto'}, props.title))
         }
 
         if (!props.noCloseButton) {
           $headerContent.push(
             h(BButtonClose, {
-              class: ['ml-auto mb-1'],
-              on: {
-                click: () => {
-                  hide()
-                },
+              class: ['btn-close'],
+              onClick: () => {
+                hide()
               },
             })
           )
         }
-
-        const $header = []
+        const $innertoast = []
 
         if ($headerContent.length > 0) {
-          $header.push(
+          $innertoast.push(
             h(
               props.headerTag,
               {
-                class: 'mr-2',
+                class: 'toast-header',
               },
               {default: () => $headerContent}
             )
           )
         }
-
+        if (normalizeSlot('default', {hide}, slots) || props.body) {
+          const $body = h(
+            isLink(props) ? 'b-link' : 'div',
+            {
+              class: ['toast-body', props.bodyClass],
+              onClick: isLink(props) ? {click: onLinkClick} : {},
+            },
+            normalizeSlot('default', {hide}, slots) || props.body
+          )
+          $innertoast.push($body)
+        }
         return h(
           'div',
           {
             class: ['toast', props.toastClass, classes.value],
-            // tabindex: '0'
+            tabindex: '0',
           },
-          [$header]
+          $innertoast
         )
       }
       const $toast = h(
