@@ -1,0 +1,36 @@
+{
+  "name": "@bootstrap-vue-3/Badge",
+  "version": "Alpha",
+  "meta": {
+    "title": "Badge",
+    "description": "Badges, for counting and labeling components",
+    "components": [
+      {
+        "component": "BBadge",
+        "props": [
+          {
+            "prop": "dotIndicator",
+            "description": "Indication position and dot styling applied"
+          },
+          {
+            "prop": "textIndicator",
+            "description": "Indication position applied"
+          },
+          {
+            "prop": "pill",
+            "description": "When set to 'true', renders the badge in pill style"
+          },
+          {
+            "prop": "variant",
+            "description": "Applies one of the Bootstrap theme color variants to the component"
+          },
+          {
+            "prop": "tag",
+            "description": "Specify the HTML tag to render instead of the default tag"
+          }
+        ],
+        "emits": []
+      }
+    ]
+  }
+}
