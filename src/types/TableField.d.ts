@@ -1,12 +1,13 @@
+import {StyleValue, TdHTMLAttributes, ThHTMLAttributes} from 'vue'
 import ColorVariant from './ColorVariant'
 
-export interface TableFieldObject {
+export interface TableFieldObject<T = Record<string, unknown>> {
   key: string
   label?: string
   headerTitle?: string
   headerAbbr?: string
   class?: string | string[]
-  formatter?: string | ((value: string, key?: string, item?: any[]) => string)
+  formatter?: string | ((value: string, key?: string, item?: T) => string)
   sortable?: boolean
   sortKey?: string
   sortDirection?: string
@@ -14,14 +15,14 @@ export interface TableFieldObject {
   filterByFormatted?: boolean
   tdClass?: string | string[]
   thClass?: string | string[]
-  thStyle?: Record<string, unknown>
+  thStyle?: StyleValue
   variant?: ColorVariant
-  tdAttr?: Record<string, unknown>
-  thAttr?: Record<string, unknown>
+  tdAttr?: TdHTMLAttributes
+  thAttr?: ThHTMLAttributes
   isRowHeader?: boolean
   stickyColumn?: boolean
 }
 
-type TableField = string | TableFieldObject
+type TableField<T = Record<string, unknown>> = string | TableFieldObject<T>
 
 export default TableField
