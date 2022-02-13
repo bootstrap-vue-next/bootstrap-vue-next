@@ -1,8 +1,9 @@
 import {StyleValue, TdHTMLAttributes, ThHTMLAttributes} from 'vue'
 import ColorVariant from './ColorVariant'
+import LiteralUnion from './LiteralUnion'
 
 export interface TableFieldObject<T = Record<string, unknown>> {
-  key: string
+  key: LiteralUnion<keyof T>
   label?: string
   headerTitle?: string
   headerAbbr?: string
