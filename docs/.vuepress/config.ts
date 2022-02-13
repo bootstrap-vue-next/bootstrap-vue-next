@@ -57,6 +57,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Pagination.md',
             '/components/Spinners.md',
             '/components/Tabs.md',
+            '/components/Toast.md',
           ],
         },
       ],
