@@ -31,7 +31,6 @@ export default defineComponent({
     const transProperties = ref(props.transProps)
     if (!isPlainObject(transProperties.value)) {
       transProperties.value = props.noFade ? NO_FADE_PROPS : FADE_PROPS
-      console.log(transProperties.value)
       if (props.appear) {
         // Default the appear classes to equal the enter classes
         transProperties.value = {

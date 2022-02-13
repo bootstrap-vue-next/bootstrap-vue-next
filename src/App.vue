@@ -1456,16 +1456,17 @@
 </template>
 
 <script lang="ts">
-import {h, ComponentPublicInstance, defineComponent, onMounted, reactive, ref} from 'vue'
+import {ComponentPublicInstance, defineComponent, h, inject, onMounted, reactive, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import TableField from './types/TableField'
 import {BvEvent} from './utils/bvEvent'
 import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
-import {ToastInstance, useToast} from './plugins/BToast'
+import {ToastInstance, useToast} from './components/BToast/plugin'
 
 export default defineComponent({
   name: 'App',
   setup() {
+    inject('toast')
     const password = ref('123')
     const showPassword = ref(false)
     const description = ref('This is a description')

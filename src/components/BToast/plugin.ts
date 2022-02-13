@@ -10,27 +10,23 @@ import {
   onUpdated,
   nextTick,
   inject,
-  watchEffect,
   ComponentPublicInstance,
   watch,
-  reactive,
-} from 'vue'
-import {
-  ComponentPublicInstance,
+  VNode,
   Ref,
   shallowReactive,
   ComputedRef,
   computed,
   isReactive,
   watchEffect,
-  Reactive,
-  VNode,
   ref,
+  Reactive,
+  reactive,
 } from 'vue'
 
-import {BootstrapVueOptions} from '../types'
-import {ContainerPosition} from '../types/container'
-import getID from '../utils/getID'
+import {BootstrapVueOptions} from '../../types'
+import {ContainerPosition} from '../../types/container'
+import getID from '../../utils/getID'
 
 export interface ToastContent {
   title?: String
@@ -48,6 +44,8 @@ export interface Toast {
   options: Reactive<ToastOptions>
   content: ToastContent
 }
+
+export type BodyProp = ToastContent['body']
 
 // Toast ViewModel, Each toast instance controls one view model
 export interface ToastVM {
@@ -188,10 +186,12 @@ export class ToastController {
 
     return undefined
   }
+
+  useToast = useToast
 }
 
 // default global inject key to fetch the controller
-let injectkey: symbol = Symbol('toast')
+let injectkey: string = 'toast'
 let rootkey = 'root'
 
 let defaults = {
@@ -200,13 +200,13 @@ let defaults = {
   root: false,
 }
 export function useToast(): ToastInstance | undefined
-export function useToast(vm: {id: symbol}, key?: symbol): ToastInstance | undefined
+export function useToast(vm: {id: symbol}, key?: string): ToastInstance | undefined
 export function useToast(
   vm: {container: Ref<ComponentPublicInstance>; root: Boolean},
-  key?: symbol
+  key?: string
 ): ToastInstance | undefined
 
-export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | undefined {
+export function useToast(vm?: any, key: string = injectkey): ToastInstance | undefined {
   //lets get our controller to fetch the toast instance
   let controller = inject(key !== null ? key : injectkey) as ToastController
 

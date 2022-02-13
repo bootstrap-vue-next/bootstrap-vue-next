@@ -3,18 +3,14 @@ import {
   Component,
   computed,
   defineComponent,
-  getCurrentInstance,
   h,
   nextTick,
-  onBeforeUnmount,
   onMounted,
   onUnmounted,
   PropType,
-  reactive,
   ref,
   VNode,
   watch,
-  watchEffect,
 } from 'vue'
 import {normalizeSlot} from '../../utils/normalize-slot'
 import {ColorVariant} from '../../types'
@@ -25,6 +21,7 @@ import {requestAF} from '../../utils/dom'
 import BButtonClose from '../BButton/BCloseButton.vue'
 import {isLink} from '../../utils/router'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
+import {BodyProp} from '../../plugins/BToast'
 
 export const SLOT_NAME_TOAST_TITLE = 'toast-title'
 const MIN_DURATION = 5000
@@ -36,6 +33,7 @@ export default defineComponent({
     ...BLINK_PROPS,
     delay: {type: Number, default: 5000},
     bodyClass: {type: String},
+    body: {type: Object as PropType<BodyProp>},
     headerClass: {type: String},
     headerTag: {type: String, default: 'div'},
     animation: {type: Boolean, default: true},
@@ -50,8 +48,6 @@ export default defineComponent({
     // Render the toast in place, rather than in a portal-target
     static: {type: Boolean, default: false},
     title: {type: String},
-    component: {type: Object as PropType<VNode>},
-    body: {type: String},
     modelValue: {type: Boolean, default: false},
     toastClass: {type: Array as PropType<Array<string>>},
     variant: {type: String as PropType<ColorVariant>, default: 'info'},

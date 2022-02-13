@@ -13,7 +13,7 @@ import {
   ref,
   VNode,
 } from 'vue'
-import {ToastInstance, useToast} from '../plugins/BToast'
+import {ToastInstance, useToast} from './BToast/plugin'
 import BToaster from './BToast/BToaster.vue'
 import Position from '../types/position'
 export default defineComponent({
