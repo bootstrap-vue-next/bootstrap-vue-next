@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
-  <b-container class="mt-4" fluid="sm">
+  <b-container :toast="{root: true}" fluid="sm" position="position-fixed"></b-container>
+
+  <b-container id="container" ref="container" class="mt-4" fluid="sm">
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
@@ -1445,18 +1447,26 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
+
+    <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
+    <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
+
+    <div id="demo"></div>
   </b-container>
 </template>
 
 <script lang="ts">
-import {ComponentPublicInstance, defineComponent, onMounted, reactive, ref} from 'vue'
+import {ComponentPublicInstance, defineComponent, h, inject, onMounted, reactive, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import TableField from './types/TableField'
 import {BvEvent} from './utils/bvEvent'
+import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
+import {ToastInstance, useToast} from './components/BToast/plugin'
 
 export default defineComponent({
   name: 'App',
   setup() {
+    inject('toast')
     const password = ref('123')
     const showPassword = ref(false)
     const description = ref('This is a description')
@@ -1468,6 +1478,8 @@ export default defineComponent({
     const breadcrumb = useBreadcrumb()
     const collapse = ref(false)
     const offcanvas = ref(false)
+    const container = ref(null)
+
     const tableItems = [
       {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
       {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
@@ -1492,8 +1504,7 @@ export default defineComponent({
     const popoverRef = ref<ComponentPublicInstance<HTMLButtonElement>>()
     const popoverContainerRef = ref<HTMLButtonElement>()
 
-    const consoleLog = () => console.log('button clicked!')
-
+    const consoleLog = () => console.log('Button Click!')
     const checkedDefault = ref(false)
     const checkedButton = ref(false)
     const checkedRequired = ref(false)
@@ -1588,6 +1599,8 @@ export default defineComponent({
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
 
+    let c: ToastInstance | undefined
+    c = useToast()
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1601,20 +1614,23 @@ export default defineComponent({
     const handlePaginationPageClick = (event: BvEvent, page: number) => {
       if (page === 7) {
         event.preventDefault()
-        return
       }
-
-      console.log('page click', page)
     }
 
     const handleVisible = () => {
       handledVisible.value = true
     }
 
+    const createToast = () => {
+      c?.show({title: 'example title', body: h('div', 'cool Dynamic')})
+    }
+
     return {
+      createToast,
       password,
       showPassword,
       description,
+      container,
       input,
       name,
       popoverInput,
