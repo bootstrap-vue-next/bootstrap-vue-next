@@ -138,6 +138,10 @@ export class ToastInstance {
     return toast
   }
 
+  info(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+    return this.show(content, {variant: 'info', ...options})
+  }
+
   danger(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
     return this.show(content, {variant: 'danger', ...options})
   }
