@@ -1,8 +1,6 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
-  <b-container :toast="{root: true}" fluid="sm" position="position-fixed"></b-container>
-
-  <b-container id="container" ref="container" class="mt-4" fluid="sm">
+<b-container  id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
@@ -1448,9 +1446,9 @@
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
 
+    <b-toast v-model="showToast"  title="Hello"  body="cow"></b-toast>
     <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
     <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
-
     <div id="demo"></div>
   </b-container>
 </template>
@@ -1479,7 +1477,7 @@ export default defineComponent({
     const collapse = ref(false)
     const offcanvas = ref(false)
     const container = ref(null)
-
+    const showToast = ref(true)
     const tableItems = [
       {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
       {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
@@ -1622,7 +1620,7 @@ export default defineComponent({
     }
 
     const createToast = () => {
-      c?.show({title: 'example title', body: h('div', 'cool Dynamic')})
+      c?.show({title: 'example title', body: h('div', 'cool Dynamic')}, {pos: 'bottom-right'})
     }
 
     return {
@@ -1662,6 +1660,7 @@ export default defineComponent({
       popoverRef,
       popoverContainerRef,
       setCheckedSelectedCars,
+      showToast,
       radioDefault,
       radioButton,
       radioRequired,

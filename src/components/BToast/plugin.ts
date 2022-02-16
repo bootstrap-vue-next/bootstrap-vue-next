@@ -24,6 +24,7 @@ import {
   reactive,
 } from 'vue'
 
+import {ColorVariant} from '../../types'
 import {BootstrapVueOptions} from '../../types'
 import {ContainerPosition} from '../../types/container'
 import getID from '../../utils/getID'
@@ -38,6 +39,7 @@ export interface ToastOptions {
   value?: boolean // show or hide
   delay?: number
   pos?: ContainerPosition
+  variant?: ColorVariant
 }
 
 export interface Toast {
@@ -60,6 +62,8 @@ type VMContainer = Ref<ComponentPublicInstance | null>
 interface ToastContainers {
   [key: symbol]: ToastVM
 }
+
+let defaultToastOptions: ToastOptions = {delay: 5000, value: true, pos: 'top-right'}
 
 export class ToastInstance {
   vm: ToastVM
@@ -123,11 +127,8 @@ export class ToastInstance {
     return this.vm.root ?? false
   }
 
-  show(
-    content: ToastContent,
-    options: ToastOptions = {delay: 5000, value: true, pos: 'top-right'}
-  ): Toast {
-    let topts: ToastOptions = {id: getID(), ...options}
+  show(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+    let topts: ToastOptions = {id: getID(), ...defaultToastOptions, ...options}
 
     let toast: Toast = {
       options: reactive(topts),
@@ -135,6 +136,18 @@ export class ToastInstance {
     }
     this.vm.toasts.push(toast)
     return toast
+  }
+
+  danger(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+    return this.show(content, {variant: 'danger', ...options})
+  }
+
+  warning(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+    return this.show(content, {variant: 'warning', ...options})
+  }
+
+  success(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+    return this.show(content, {variant: 'success', ...options})
   }
 
   hide(): void {}

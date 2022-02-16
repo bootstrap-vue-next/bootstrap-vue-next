@@ -1,5 +1,5 @@
 <template>
-  <div :class="[positionClass]" class="b-toaster position-absolute p-3">
+  <div :class="[positionClass]" class="b-toaster position-fixed p-3" style="z-index: 11">
     <b-toast
       v-for="toast in instance.displayedToasts().value"
       :id="toast.options.id"
@@ -8,6 +8,7 @@
       :title="toast.content.title"
       :body="toast.content.body"
       :component="toast.content.vnode"
+      :variant="toast.options.variant"
       @destroyed="handleDestroy"
     >
     </b-toast>

@@ -50,7 +50,7 @@ export default defineComponent({
     title: {type: String},
     modelValue: {type: Boolean, default: false},
     toastClass: {type: Array as PropType<Array<string>>},
-    variant: {type: String as PropType<ColorVariant>, default: 'info'},
+    variant: {type: String as PropType<ColorVariant>},
   },
 
   setup(props, {emit, slots}) {
