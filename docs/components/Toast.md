@@ -47,12 +47,14 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
 ></b-container>
 <b-button class="" @click="show1">Show Toast</b-button>
 <b-button class="ms-2" @click="show2">Show Toast with Body</b-button>
-<script>
+
+<script lang="ts" setup>
   import {useToast} from 'BootstrapVue/ToastPlugin'
   let toast = useToast()
   let show1 = () => {
     toast.show({title: 'example title'})
   }
+
   let show2 = () => {
     toast.show({title: 'example title', body: 'This is a toast'})
   }
@@ -66,7 +68,63 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
   <b-button class="ms-2" @click="show2">Show Toast with Body</b-button>
   </b-card>
 
+</ClientOnly>
+
+## Variants
+
+Toasts can be displayed as variants thru various helper methods or be set in `ToastOptions.varaint`
+
+```html
+<b-container
+  :toast="{root: true}"
+  fluid="sm"
+  position="position-fixed"
+  style="top:50px; left : -200px"
+></b-container>
+<b-card>
+  <b-button class="" variant="danger" @click="variantshow1">Show Danger</b-button>
+  <b-button class="ms-2" variant="Info" @click="variantshow2">Show Info</b-button>
+  <b-button class="ms-2" variant="warning" @click="variantshow3">Show Warning</b-button>
+  <b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
+</b-card>
+
+<script>
+  import {useToast} from 'BootstrapVue/ToastPlugin'
+  let toast = useToast()
+  let variantshow1 = () => {
+    toast.danger({title: 'Item Deleted'}, {pos: 'bottom-right'})
+  }
+  let variantshow2 = () => {
+    toast.info({title: 'New Message', body: 'This is a toast'}, {pos: 'bottom-right'})
+  }
+  let variantshow3 = () => {
+    toast.warning({title: 'Warning for Item', body: 'Please check list'}, {pos: 'bottom-right'})
+  }
+  let variantshow4 = () => {
+    toast.success({title: 'Event Created!', body: 'Bootstrap Event'}, {pos: 'bottom-right'})
+  }
+</script>
+```
+
+<ClientOnly>
+  <b-container :toast="{root: true}" fluid="sm" position="position-fixed" style="top:50px; left : 10px" ></b-container>
+  <b-card>
+  <b-button class=""  variant="danger" @click="variantshow1">Show Danger</b-button>
+  <b-button class="ms-2" variant="info" @click="variantshow2">Show Info</b-button>
+  <b-button class="ms-2" variant="warning" @click="variantshow3">Show Warning</b-button>
+  <b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
+  </b-card>
+
   <script lang="ts" setup>
+
+  </script>
+
+</ClientOnly>
+
+<ComponentReference></ComponentReference>
+
+<script lang='ts' setup>
+  import {ref, computed} from 'vue'
     import {inject} from 'vue'
     import {useToast} from ''
     
@@ -74,9 +132,10 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
     let toast = controller.useToast()
 
     let show1 = () => {toast.show({title: 'example title'})}
-    let show2 = () => {toast.show({title: 'example title', body: "This is a toast"})}
-  </script>
+    let show2 = () => {toast.info({title: 'example title', body: "This is a toast"})}
 
-</ClientOnly>
-
-<ComponentReference></ComponentReference>
+    let variantshow1 = () => {toast.danger({title: 'Item Deleted'}, {pos: 'bottom-right'})}
+    let variantshow2 = () => {toast.info({title: 'New Message', body: "This is a toast"}, {pos: 'bottom-right'})}
+    let variantshow3 = () => {toast.warning({title: 'Warning for Item', body: "Please check list"},{pos: 'bottom-right'})}
+    let variantshow4 = () => {toast.success({title: 'Event Created!', body: "Bootstrap Event"},{pos: 'bottom-right'})}
+</script>
