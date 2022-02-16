@@ -83,7 +83,7 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
 ></b-container>
 <b-card>
   <b-button class="" variant="danger" @click="variantshow1">Show Danger</b-button>
-  <b-button class="ms-2" variant="Info" @click="variantshow2">Show Info</b-button>
+  <b-button class="ms-2" variant="info" @click="variantshow2">Show Info</b-button>
   <b-button class="ms-2" variant="warning" @click="variantshow3">Show Warning</b-button>
   <b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
 </b-card>
