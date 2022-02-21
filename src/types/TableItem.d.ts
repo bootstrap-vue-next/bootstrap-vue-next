@@ -1,9 +1,9 @@
 import ColorVariant from './ColorVariant'
 
-interface TableItem {
-  [key: string]: any
+type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
-  _cellVariants?: Record<string, string>
+  _cellVariants?: Partial<Record<keyof T, ColorVariant>>
+  _showDetails?: boolean
 }
 
 export default TableItem
