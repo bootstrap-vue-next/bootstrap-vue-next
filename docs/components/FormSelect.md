@@ -557,9 +557,9 @@ When `state` is set to `false`, aria-invalid will also be set to true.
 
 #### v-model
 
-| Property           | Type                | Default | Description                                                                            |
-| ------------------ | ------------------- | ------- | -------------------------------------------------------------------------------------- |
-| default modelValue | `Array` or `Object` | `null`  | Current value of the select. Should be set to an array when the 'multiple' prop is set |
+| Property           | Type                                    | Default | Description                                                                            |
+| ------------------ | --------------------------------------- | ------- | -------------------------------------------------------------------------------------- |
+| default modelValue | `String`, `Number`, `Array` or `Object` | `null`  | Current value of the select. Should be set to an array when the 'multiple' prop is set |
 
 #### Slots
 

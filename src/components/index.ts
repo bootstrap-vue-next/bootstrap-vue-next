@@ -48,8 +48,6 @@ import BFormSelectOptionGroup from './BFormSelect/BFormSelectOptionGroup.vue'
 import BFormText from './BForm/BFormText.vue'
 import BFormTextarea from './BFormTextarea/BFormTextarea.vue'
 import BFormValidFeedback from './BForm/BFormValidFeedback.vue'
-import BIcon from './BIcon/BIcon.vue'
-import BIconstack from './BIcon/BIconstack.vue'
 import BImg from './BImg.vue'
 import BInputGroup from './BInputGroup/BInputGroup.vue'
 import BInputGroupAddon from './BInputGroup/BInputGroupAddon.vue'
@@ -74,6 +72,9 @@ import BSpinner from './BSpinner.vue'
 import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
 import BTabs from './BTabs/BTabs.vue'
+import {BToast, BToaster, ToastPlugin} from './BToast'
+
+import BToastContainer from './BToast/BToaster.vue'
 import BTransition from './BTransition/BTransition.vue'
 
 export default {
@@ -127,8 +128,6 @@ export default {
   BFormText,
   BFormTextarea,
   BFormValidFeedback,
-  BIcon,
-  BIconstack,
   BImg,
   BInputGroup,
   BInputGroupAddon,
@@ -152,6 +151,10 @@ export default {
   BSpinner,
   BTab,
   BTable,
+  BToast,
+  BToaster,
+  BToastContainer,
   BTabs,
   BTransition,
+  ToastPlugin,
 }

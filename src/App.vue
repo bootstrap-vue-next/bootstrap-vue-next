@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
-  <b-container class="mt-4" fluid="sm">
+<b-container  id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
@@ -10,7 +10,7 @@
           id="text-password"
           type="password"
           aria-describedby="password-help-block"
-          aria-invalid=""
+          aria-invalid
         />
         <b-form-text id="password-help-block">
           Your password must be 8-20 characters long, contain letters and numbers, and must not
@@ -114,11 +114,11 @@
             name="checkbox-1"
             value="accepted"
             unchecked-value="not_accepted"
+            >I accept the terms and use</b-form-checkbox
           >
-            I accept the terms and use
-          </b-form-checkbox>
           <div>
-            State: <strong>{{ checkboxes.status }}</strong>
+            State:
+            <strong>{{ checkboxes.status }}</strong>
           </div>
         </div>
         <h4 class="m-2">Individual</h4>
@@ -171,8 +171,12 @@
         </div>
         <h4>Checkbox bound to array</h4>
         <div class="row mx-4 my-1">
-          <div class="col-4"><strong>Select some cars</strong></div>
-          <div class="col-4"><strong>Selected cars</strong></div>
+          <div class="col-4">
+            <strong>Select some cars</strong>
+          </div>
+          <div class="col-4">
+            <strong>Selected cars</strong>
+          </div>
         </div>
         <div class="row mx-4 my-1">
           <div class="col-4">
@@ -181,9 +185,8 @@
               :key="index"
               v-model="checkedSelectedCars"
               :value="car"
+              >{{ car }}</b-form-checkbox
             >
-              {{ car }}
-            </b-form-checkbox>
           </div>
           <div class="col-8">
             <ul>
@@ -203,14 +206,18 @@
     <div class="my-2">
       <h2 class="m-2">Form Checkbox Group</h2>
       <div class="m-4">
-        <span><b>With options</b></span>
+        <span>
+          <b>With options</b>
+        </span>
         <b-form-checkbox-group
           id="checkbox-group-1"
           v-model="checkboxes.selected"
           :options="checkboxes.options"
         />
         <br />
-        <span><b>With slots</b></span>
+        <span>
+          <b>With slots</b>
+        </span>
         <b-form-checkbox-group id="checkbox-group-2" v-model="checkboxes.selected">
           <b-form-checkbox value="orange">Orange</b-form-checkbox>
           <b-form-checkbox value="apple">Apple</b-form-checkbox>
@@ -219,7 +226,8 @@
         </b-form-checkbox-group>
         <br />
         <div>
-          Selected: <strong>{{ checkboxes.selected }}</strong>
+          Selected:
+          <strong>{{ checkboxes.selected }}</strong>
         </div>
         <b-button class="me-2" @click="checkboxes.selected = ['orange']">Orange only</b-button>
         <b-button class="me-2" @click="checkboxes.selected = ['grape']">Grape only</b-button>
@@ -271,7 +279,8 @@
         <b-form-radio v-model="radioSelected" name="some-radios" value="B">Option B</b-form-radio>
       </div>
       <div class="mt-3 mx-4">
-        Selected: <strong>{{ radioSelected }}</strong>
+        Selected:
+        <strong>{{ radioSelected }}</strong>
       </div>
       <div class="mx-4 my-1">
         <button class="btn btn-primary mx-1" @click="radioSelected = 'A'">Set value A</button>
@@ -280,8 +289,12 @@
       <p />
       <h4>Radio bound to array</h4>
       <div class="row mx-4 my-1">
-        <div class="col-4"><strong>Select some cars</strong></div>
-        <div class="col-4"><strong>Selected cars</strong></div>
+        <div class="col-4">
+          <strong>Select some cars</strong>
+        </div>
+        <div class="col-4">
+          <strong>Selected cars</strong>
+        </div>
       </div>
       <div class="row mx-4">
         <div class="col-4">
@@ -290,9 +303,8 @@
             :key="index"
             v-model="radioSelectedCars"
             :value="car"
+            >{{ car }}</b-form-radio
           >
-            {{ car }}
-          </b-form-radio>
         </div>
         <div class="col-8">
           <ul>
@@ -321,7 +333,8 @@
         </b-form-radio-group>
 
         <div class="mt-3">
-          Selected: <strong>{{ radios.ex1.selected }}</strong>
+          Selected:
+          <strong>{{ radios.ex1.selected }}</strong>
         </div>
       </div>
       <h4 class="m-2">Changing the option field names</h4>
@@ -335,7 +348,8 @@
           disabled-field="notEnabled"
         ></b-form-radio-group>
         <div class="mt-3">
-          Selected: <strong>{{ radios.ex2.selected }}</strong>
+          Selected:
+          <strong>{{ radios.ex2.selected }}</strong>
         </div>
       </div>
       <h4 class="m-2">Button styles radios</h4>
@@ -376,7 +390,8 @@
       <h4 class="mt-2">plain</h4>
       <b-form-select v-model="formSelectSelected" :options="formSelectOptions" size="sm" plain />
       <div class="mt-2">
-        Selected: <strong>{{ formSelectSelected }}</strong>
+        Selected:
+        <strong>{{ formSelectSelected }}</strong>
       </div>
       <h4 class="mt-2">multiple</h4>
       <b-form-select
@@ -394,7 +409,8 @@
         <b-form-select-option value="D">Option D</b-form-select-option>
       </b-form-select>
       <div class="mt-2">
-        Selected: <strong>{{ formSelectMultipleSelected }}</strong>
+        Selected:
+        <strong>{{ formSelectMultipleSelected }}</strong>
       </div>
     </div>
 
@@ -467,14 +483,14 @@
             query: {param: 'someVal'},
             path: '/about' /* path is used when vue-router is not present */,
           }"
+          >About</b-link
         >
-          About
-        </b-link>
       </div>
       <p>NB: navigation behavior depends of the usage of "vue-router"</p>
       <!-- activate "vue-router" in "main.ts" to test the "router-view" component
       <router-view></router-view>
-    --></div>
+      -->
+    </div>
 
     <!-- Badge -->
     <div class="my-2">
@@ -482,11 +498,26 @@
       <div>
         <h4>Simple</h4>
         <div class="ms-4">
-          <h2>Example heading <b-badge>New</b-badge></h2>
-          <h3>Example heading <b-badge>New</b-badge></h3>
-          <h4>Example heading <b-badge>New</b-badge></h4>
-          <h5>Example heading <b-badge>New</b-badge></h5>
-          <h6>Example heading <b-badge>New</b-badge></h6>
+          <h2>
+            Example heading
+            <b-badge>New</b-badge>
+          </h2>
+          <h3>
+            Example heading
+            <b-badge>New</b-badge>
+          </h3>
+          <h4>
+            Example heading
+            <b-badge>New</b-badge>
+          </h4>
+          <h5>
+            Example heading
+            <b-badge>New</b-badge>
+          </h5>
+          <h6>
+            Example heading
+            <b-badge>New</b-badge>
+          </h6>
         </div>
       </div>
       <div class="mt-2">
@@ -742,12 +773,24 @@
       <h2 class="my-3">Tabs</h2>
       <div>
         <b-tabs v-model="tabIndex" small>
-          <b-tab title="First"><p>I'm the first tab</p></b-tab>
-          <b-tab title="Second"><p>I'm the second tab</p></b-tab>
-          <b-tab title="Third" disabled><p>I'm a disabled tab!</p></b-tab>
-          <b-tab title="Fourth" disabled><p>I'm a disabled tab!</p></b-tab>
-          <b-tab title="Fifth"><p>I'm the fifth tab</p></b-tab>
-          <b-tab title="Sixth" :disabled="true"><p>I'm a disabled tab!</p></b-tab>
+          <b-tab title="First">
+            <p>I'm the first tab</p>
+          </b-tab>
+          <b-tab title="Second">
+            <p>I'm the second tab</p>
+          </b-tab>
+          <b-tab title="Third" disabled>
+            <p>I'm a disabled tab!</p>
+          </b-tab>
+          <b-tab title="Fourth" disabled>
+            <p>I'm a disabled tab!</p>
+          </b-tab>
+          <b-tab title="Fifth">
+            <p>I'm the fifth tab</p>
+          </b-tab>
+          <b-tab title="Sixth" :disabled="true">
+            <p>I'm a disabled tab!</p>
+           </b-tab>
         </b-tabs>
 
         <div class="text-center">
@@ -764,17 +807,15 @@
         <b-tabs>
           <b-tab active>
             <template #title>
-              <b-spinner type="grow" small></b-spinner>
-              I'm <i>custom</i> <strong>title</strong>
+              <b-spinner type="grow" small></b-spinner>I'm
+              <i>custom</i>
+              <strong>title</strong>
             </template>
             <p class="p-3">Tab contents 1</p>
           </b-tab>
 
           <b-tab>
-            <template #title>
-              <b-spinner type="border" small></b-spinner>
-              Tab 2
-            </template>
+            <template #title> <b-spinner type="border" small></b-spinner>Tab 2 </template>
             <p class="p-3">Tab contents 2</p>
           </b-tab>
         </b-tabs>
@@ -788,13 +829,13 @@
         <h4 class="my-3">Basic layout</h4>
         <div class="bd-example-row">
           <b-row>
-            <b-col> 1 of 2 </b-col>
-            <b-col> 2 of 2 </b-col>
+            <b-col>1 of 2</b-col>
+            <b-col>2 of 2</b-col>
           </b-row>
           <b-row>
-            <b-col> 1 of 3 </b-col>
-            <b-col> 2 of 3 </b-col>
-            <b-col> 3 of 3 </b-col>
+            <b-col>1 of 3</b-col>
+            <b-col>2 of 3</b-col>
+            <b-col>3 of 3</b-col>
           </b-row>
         </div>
       </div>
@@ -802,10 +843,10 @@
         <h4 class="my-3">Row columns</h4>
         <div class="bd-example-row">
           <b-row cols="1" cols-sm="2" cols-md="4">
-            <b-col> Column </b-col>
-            <b-col> Column </b-col>
-            <b-col> Column </b-col>
-            <b-col> Column </b-col>
+            <b-col>Column</b-col>
+            <b-col>Column</b-col>
+            <b-col>Column</b-col>
+            <b-col>Column</b-col>
           </b-row>
         </div>
       </div>
@@ -813,14 +854,14 @@
         <h4 class="my-3">Variable width content</h4>
         <div class="bd-example-row">
           <b-row align-h="md-center">
-            <b-col lg="2"> 1 of 3 </b-col>
-            <b-col md="auto"> Variable width content </b-col>
-            <b-col lg="2"> 3 of 3 </b-col>
+            <b-col lg="2">1 of 3</b-col>
+            <b-col md="auto">Variable width content</b-col>
+            <b-col lg="2">3 of 3</b-col>
           </b-row>
           <b-row>
-            <b-col> 1 of 3 </b-col>
-            <b-col md="auto"> Variable width content </b-col>
-            <b-col lg="2"> 3 of 3 </b-col>
+            <b-col>1 of 3</b-col>
+            <b-col md="auto">Variable width content</b-col>
+            <b-col lg="2">3 of 3</b-col>
           </b-row>
         </div>
       </div>
@@ -843,15 +884,9 @@
         <b-avatar button class="me-1" text="BV" />
         <b-avatar button class="me-5" src="https://placekitten.com/300/300" />
 
-        <b-avatar class="me-2" icon="person-fill" size="sm" square icon-variant="dark" />
+        <b-avatar class="me-2" icon="person-fill" size="sm" square />
         <b-avatar class="me-2" icon="person-fill" variant="success" rounded />
-        <b-avatar
-          class="me-5"
-          icon="person-fill"
-          variant="warning"
-          icon-variant="danger"
-          size="lg"
-        />
+        <b-avatar class="me-5" icon="person-fill" variant="warning" size="lg" />
 
         <b-avatar class="me-2" text="ED" size="sm" square text-variant="dark" />
         <b-avatar class="me-2" text="ED" variant="success" rounded />
@@ -872,11 +907,17 @@
       <h2>Image</h2>
 
       <div>
-        <h4>Small image with <code>fluid</code>:</h4>
+        <h4>
+          Small image with
+          <code>fluid</code>:
+        </h4>
         <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image" />
       </div>
       <div>
-        <h4 class="my-3">Small image with <code>fluid-grow</code>:</h4>
+        <h4 class="my-3">
+          Small image with
+          <code>fluid-grow</code>:
+        </h4>
         <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image" />
       </div>
       <div>
@@ -1041,6 +1082,37 @@
           </template>
         </b-table>
       </div>
+      <div>
+        <h4 class="my-3">Table: Adding additional rows to the header</h4>
+
+        <b-table
+          responsive="xs"
+          caption="List of users"
+          :items="items"
+          :fields="objectTableDefinitions"
+          striped
+          hover
+          foot-clone
+          dark
+        >
+          <template #thead-top>
+            <tr class="my">
+              <th colspan="2"><span class="sr-only">List of users</span></th>
+            </tr>
+          </template>
+          <template #thead-sub="{key, label}">
+            <tr class="my">
+              <th variant="danger" />
+              <th variant="danger">
+                <b-form-select :placeholder="label" :options="[label, key]" label-field="label" />
+              </th>
+            </tr>
+          </template>
+          <template #cell(first_name)="data">
+            <a href="#">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </div>
     </div>
 
     <!-- Accordion -->
@@ -1160,12 +1232,12 @@
     <!-- Modal -->
     <div class="my-2">
       <h2>Modal</h2>
-      <b-button @click="showModal = !showModal"> Toggle modal v-model </b-button>
+      <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
       {{ showModal }}
       <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
-      <b-modal id="exampleModal" v-model="showModal" size="xl" title="Modal title" fade>
-        ...
-      </b-modal>
+      <b-modal id="exampleModal" v-model="showModal" size="xl" title="Modal title" fade
+        >...</b-modal
+      >
     </div>
 
     <!-- <b-nav pills>
@@ -1182,17 +1254,17 @@
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item>Three</b-dropdown-item>
     </b-nav-item-dropdown>
-  </b-nav> -->
+    </b-nav>-->
 
     <!-- Tooltip -->
     <div class="my-2">
       <h2>Tooltip</h2>
       <div class="d-flex gap-2">
-        <b-button v-b-tooltip.top :title="tooltip"> Tooltip on top </b-button>
-        <b-button @click="setTooltip"> Change tooltip </b-button>
-        <b-button v-b-tooltip.left title="Tooltip on left"> Tooltip on left </b-button>
-        <b-button v-b-tooltip.right.click title="Tooltip on right"> Tooltip on right </b-button>
-        <b-button v-b-tooltip.bottom title="Tooltip on bottom"> Tooltip on bottom </b-button>
+        <b-button v-b-tooltip.top :title="tooltip">Tooltip on top</b-button>
+        <b-button @click="setTooltip">Change tooltip</b-button>
+        <b-button v-b-tooltip.left title="Tooltip on left">Tooltip on left</b-button>
+        <b-button v-b-tooltip.right.click title="Tooltip on right">Tooltip on right</b-button>
+        <b-button v-b-tooltip.bottom title="Tooltip on bottom">Tooltip on bottom</b-button>
       </div>
     </div>
 
@@ -1200,13 +1272,16 @@
     <div class="my-2">
       <h2>Popover</h2>
       <div class="d-flex gap-2">
-        <b-button id="popover-target-1"> Hover Me </b-button>
+        <b-button id="popover-target-1">Hover Me</b-button>
         <b-popover target="popover-target-1" triggers="hover" placement="top">
-          <template #title> Popover <em>Title</em> - {{ popoverInput }} </template>
-          <b-button @click="consoleLog"> 456 </b-button>
-          I am popover <b>component</b> content!
-          <b-form-input v-model="popoverInput" type="text" />
-          Name: <strong>{{ popoverInput }}</strong>
+          <template #title>
+            Popover
+            <em>Title</em>
+            - {{ popoverInput }}
+          </template>
+          <b-button @click="consoleLog">456</b-button>I am popover <b>component</b> content!
+          <b-form-input v-model="popoverInput" type="text" />Name:
+          <strong>{{ popoverInput }}</strong>
         </b-popover>
         <button
           v-b-popover.top="'And here\'s some amazing content. It\'s very engaging. Right?'"
@@ -1224,13 +1299,17 @@
         >
           Click to toggle popover
         </button>
-        <b-button ref="popoverRef">Click to toggle popover by ref</b-button>
-        <b-popover :target="popoverRef" placement="bottom">
-          <template #title> Popover <em>Title</em> - {{ popoverInput }} </template>
-          <b-button @click="consoleLog"> 456 </b-button>
-          I am popover <b>component</b> content!
-          <b-form-input v-model="popoverInput" type="text" />
-          Name: <strong>{{ popoverInput }}</strong>
+        <b-button ref="popoverRef">Click to toggle popover by ref with ref container</b-button>
+        <div ref="popoverContainerRef"></div>
+        <b-popover :container="popoverContainerRef" :target="popoverRef" placement="bottom">
+          <template #title>
+            Popover
+            <em>Title</em>
+            - {{ popoverInput }}
+          </template>
+          <b-button @click="consoleLog">456</b-button>I am popover <b>component</b> content!
+          <b-form-input v-model="popoverInput" type="text" />Name:
+          <strong>{{ popoverInput }}</strong>
         </b-popover>
       </div>
     </div>
@@ -1247,8 +1326,7 @@
           first-number
           last-number
           @page-click="handlePaginationPageClick"
-        >
-        </b-pagination>
+        ></b-pagination>
         <span class="mx-3">Select page 7 is prevented</span>
       </div>
       <b-pagination
@@ -1256,8 +1334,7 @@
         :limit="paginationLimit"
         :total-rows="paginationRows"
         :per-page="paginationPerPage"
-      >
-      </b-pagination>
+      ></b-pagination>
       <b-pagination
         v-model="paginationPageNumber"
         :limit="paginationLimit"
@@ -1267,18 +1344,25 @@
         next-text="Next"
         first-text="First"
         last-text="Last"
-      >
-      </b-pagination>
+      ></b-pagination>
       <b-pagination
         v-model="paginationPageNumber"
         :total-rows="paginationRows"
         :per-page="paginationPerPage"
         class="mt-4"
       >
-        <template #first-text><span class="text-success">First</span></template>
-        <template #prev-text><span class="text-danger">Prev</span></template>
-        <template #next-text><span class="text-warning">Next</span></template>
-        <template #last-text><span class="text-info">Last</span></template>
+        <template #first-text>
+          <span class="text-success">First</span>
+        </template>
+        <template #prev-text>
+          <span class="text-danger">Prev</span>
+        </template>
+        <template #next-text>
+          <span class="text-warning">Next</span>
+        </template>
+        <template #last-text>
+          <span class="text-info">Last</span>
+        </template>
         <template #ellipsis-text>
           <b-spinner small type="grow"></b-spinner>
           <b-spinner small type="grow"></b-spinner>
@@ -1301,8 +1385,7 @@
         last-text="Last"
         last-class="border border-4 border-info"
         ellipsis-class="border border-3 border-success"
-      >
-      </b-pagination>
+      ></b-pagination>
       <div class="overflow-auto">
         <b-pagination
           v-model="paginationPageNumber"
@@ -1314,39 +1397,11 @@
           first-text="First"
           last-text="Last"
           align="end"
-        >
-        </b-pagination>
+        ></b-pagination>
       </div>
       Current page : {{ paginationPageNumber }}
       <div>
         <button class="btn btn-primary" @click="paginationPageNumber = 4">Set to page 4</button>
-      </div>
-    </div>
-
-    <!-- Icons -->
-    <div class="my-2">
-      <h2 class="my-3">Icons</h2>
-      <b-icon icon="exclamation-circle-fill" class="m-2"></b-icon>
-
-      <div>
-        <h4>Variants</h4>
-        <b-icon icon="exclamation-circle-fill" variant="success" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" variant="warning" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" variant="danger" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" variant="info" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" variant="primary" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" variant="secondary" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" variant="dark" class="m-2"></b-icon>
-      </div>
-      <div>
-        <h4>Sizes</h4>
-        <b-icon icon="exclamation-circle-fill" size="sm" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" size="md" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" size="lg" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" size="2x" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" size="3x" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" size="4x" class="m-2"></b-icon>
-        <b-icon icon="exclamation-circle-fill" size="5x" class="m-2"></b-icon>
       </div>
     </div>
 
@@ -1358,9 +1413,9 @@
           <b-card title="Card with overlay" :aria-hidden="showOverlay ? 'true' : null">
             <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
             <b-card-text>Click the button to toggle the overlay:</b-card-text>
-            <b-button :disabled="showOverlay" variant="primary" @click="showOverlay = true">
-              Show overlay
-            </b-button>
+            <b-button :disabled="showOverlay" variant="primary" @click="showOverlay = true"
+              >Show overlay</b-button
+            >
           </b-card>
         </b-overlay>
         <b-button class="mt-3" @click="showOverlay = !showOverlay">Toggle overlay</b-button>
@@ -1384,7 +1439,8 @@
     <p></p>
     <b-button v-model:pressed="buttonIsPressed" variant="primary" class="mt-3">Toggle Me</b-button>
     <p>
-      Pressed State: <strong>{{ buttonIsPressed }}</strong>
+      Pressed State:
+      <strong>{{ buttonIsPressed }}</strong>
     </p>
 
     <p />
@@ -1392,22 +1448,26 @@
       <div v-b-visible.once="handleVisible">Handle Visible Test</div>
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
+
+    <b-toast v-model="showToast"  title="Hello"  body="cow"></b-toast>
+    <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
+    <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
+    <div id="demo"></div>
   </b-container>
 </template>
 
 <script lang="ts">
-import {ComponentPublicInstance, defineComponent, onMounted, reactive, ref} from 'vue'
+import {ComponentPublicInstance, defineComponent, h, inject, onMounted, reactive, ref} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
-import BDropdown from './components/BDropdown/BDropdown.vue'
 import TableField from './types/TableField'
-import BFormCheckbox from './components/BFormCheckbox/BFormCheckbox.vue'
 import {BvEvent} from './utils/bvEvent'
 import BFormTextarea from './components/BFormTextarea/BFormTextarea.vue'
+import {ToastInstance, useToast} from './components/BToast/plugin'
 
 export default defineComponent({
   name: 'App',
-  components: {BDropdown, BFormCheckbox, BFormTextarea},
   setup() {
+    inject('toast')
     const password = ref('123')
     const showPassword = ref(false)
     const description = ref('This is a description')
@@ -1419,10 +1479,19 @@ export default defineComponent({
     const breadcrumb = useBreadcrumb()
     const collapse = ref(false)
     const offcanvas = ref(false)
+    const container = ref(null)
+    const showToast = ref(true)
     const tableItems = [
       {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
       {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
       {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
+      {
+        age: 89,
+        first_name: 'Michael',
+        last_name: 'Jordan',
+        _rowVariant: 'primary',
+        _cellVariants: {last_name: 'danger'},
+      },
       {age: 38, first_name: 'Jami', last_name: 'Carney'},
     ]
     const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
@@ -1434,9 +1503,9 @@ export default defineComponent({
     const name = ref('')
     const popoverInput = ref('foo')
     const popoverRef = ref<ComponentPublicInstance<HTMLButtonElement>>()
+    const popoverContainerRef = ref<HTMLButtonElement>()
 
-    const consoleLog = () => console.log('button clicked!')
-
+    const consoleLog = () => console.log('Button Click!')
     const checkedDefault = ref(false)
     const checkedButton = ref(false)
     const checkedRequired = ref(false)
@@ -1531,6 +1600,8 @@ export default defineComponent({
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
 
+    let c: ToastInstance | undefined
+    c = useToast()
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
@@ -1544,20 +1615,23 @@ export default defineComponent({
     const handlePaginationPageClick = (event: BvEvent, page: number) => {
       if (page === 7) {
         event.preventDefault()
-        return
       }
-
-      console.log('page click', page)
     }
 
     const handleVisible = () => {
       handledVisible.value = true
     }
 
+    const createToast = () => {
+      c?.show({title: 'example title', body: h('div', 'cool Dynamic')}, {pos: 'bottom-right'})
+    }
+
     return {
+      createToast,
       password,
       showPassword,
       description,
+      container,
       input,
       name,
       popoverInput,
@@ -1587,7 +1661,9 @@ export default defineComponent({
       paginationRows,
       paginationDangerClasses,
       popoverRef,
+      popoverContainerRef,
       setCheckedSelectedCars,
+      showToast,
       radioDefault,
       radioButton,
       radioRequired,

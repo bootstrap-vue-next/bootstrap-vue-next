@@ -8,8 +8,7 @@
       :value="option.value"
       :disabled="option.disabled"
       v-bind="$attrs"
-      v-text="option.text"
-      v-html="option.html"
+      v-html="option.html || option.text"
     />
     <!--eslint-enable-->
     <slot />

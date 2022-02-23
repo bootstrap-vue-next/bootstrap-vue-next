@@ -59,12 +59,14 @@
 <script lang="ts">
 import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
 import {Modal} from 'bootstrap'
+import BButton from '../components/BButton/BButton.vue'
 import useEventListener from '../composables/useEventListener'
 import ColorVariant from '../types/ColorVariant'
 import InputSize from '../types/InputSize'
 
 export default defineComponent({
   name: 'BModal',
+  components: {BButton},
   inheritAttrs: false,
   props: {
     bodyBgVariant: {type: String as PropType<ColorVariant>, required: false},
@@ -168,11 +170,7 @@ export default defineComponent({
       props.titleClass,
     ])
 
-    const hasHeaderCloseSlot = computed(() => {
-      console.log('Header close slot available', !!slots['header-close'])
-      console.log('slots', slots)
-      return !!slots['header-close']
-    })
+    const hasHeaderCloseSlot = computed(() => !!slots['header-close'])
     const computedCloseButtonClasses = computed(() => [
       {
         [`btn-close-content`]: hasHeaderCloseSlot.value,

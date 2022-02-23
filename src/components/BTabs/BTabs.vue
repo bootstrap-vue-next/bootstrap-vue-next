@@ -224,7 +224,6 @@ export default defineComponent({
         tabs.value[index]?.onClick &&
         isFunction(tabs.value[index].onClick)
       ) {
-        console.log('isfunction', isFunction(tabs.value[index].onClick))
         tabs.value[index].onClick(event)
       }
     }

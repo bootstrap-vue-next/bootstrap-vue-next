@@ -30,7 +30,6 @@ import {
   onMounted,
   PropType,
   ref,
-  unref,
   watch,
 } from 'vue'
 import useEventListener from '../composables/useEventListener'
@@ -39,7 +38,12 @@ import {ColorVariant} from '../types'
 export default defineComponent({
   name: 'BPopover',
   props: {
-    container: {type: String, default: 'body'},
+    container: {
+      type: [String, Object] as PropType<
+        string | ComponentPublicInstance<HTMLElement> | HTMLElement
+      >,
+      default: 'body',
+    },
     content: {type: String},
     id: {type: String},
     noninteractive: {type: Boolean, default: false},
@@ -68,20 +72,33 @@ export default defineComponent({
       [`b-popover-${props.variant}`]: props.variant,
     }))
 
+    const cleanElementProp = (
+      target: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+    ): HTMLElement | string | undefined => {
+      if (typeof target === 'string') {
+        return target
+      } else if (target instanceof HTMLElement) return target
+      else if (typeof target !== 'undefined')
+        return (target as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
+      return undefined
+    }
+
+    const getElement = (element: HTMLElement | string | undefined): HTMLElement | undefined => {
+      if (!element) return undefined
+      if (typeof element === 'string') {
+        const idElement = document.getElementById(element)
+        return idElement ? idElement : undefined
+      }
+      return element
+    }
+
     onMounted(() => {
       nextTick(() => {
-        const unrefTarget = unref(props.target)
-        if (typeof unrefTarget === 'string') {
-          const element = document.getElementById(unrefTarget)
-          target.value = element ? element : undefined
-        } else if (unrefTarget instanceof HTMLElement) target.value = unrefTarget
-        else if (typeof unrefTarget !== 'undefined')
-          target.value = (unrefTarget as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
-        else target.value = undefined
+        target.value = getElement(cleanElementProp(props.target))
 
         if (target.value)
           instance.value = new Popover(target.value, {
-            container: props.container,
+            container: cleanElementProp(props.container),
             trigger: props.triggers,
             placement: props.placement,
             title: props.title || slots.title ? titleRef.value : '',
