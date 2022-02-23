@@ -30,6 +30,7 @@
   },
   "types": "src/BootstrapVue.d.ts",
   "dependencies": {
+    "bootstrap": "^5.1.3",
     "core-js": "3.x.x"
   },
   "peerDependencies": {
@@ -47,6 +48,7 @@
     "@vue/compiler-sfc": "3.x.x",
     "@vue/eslint-config-typescript": "10.x.x",
     "@vue/test-utils": "^2.0.0-rc.14",
+    "@vuepress/bundler-webpack": "^2.0.0-beta.35",
     "babel-loader": "8.x.x",
     "esbuild-loader": "^2.13.1",
     "eslint": "8.x.x",

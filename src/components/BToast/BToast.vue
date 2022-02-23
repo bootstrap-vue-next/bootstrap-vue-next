@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-  Component,
   computed,
   defineComponent,
   h,
@@ -104,6 +103,27 @@ export default defineComponent({
       })
     }
 
+    const onPause = () => {
+      if (!props.autoHide || props.noHoverPause || !dismissTimer || resumeDismiss) {
+        return
+      }
+
+      const passed = Date.now() - dismissStarted
+
+      if (passed > 0) {
+        clearDismissTimer()
+        resumeDismiss = Math.max(computedDuration.value - passed, MIN_DURATION)
+      }
+    }
+
+    const onUnPause = () => {
+      if (!props.autoHide || props.noHoverPause || !resumeDismiss) {
+        resumeDismiss = dismissStarted = 0
+      }
+
+      startDismissTimer()
+    }
+
     const toggle = () => {
       if (props.modelValue) {
         hide()
@@ -156,6 +176,12 @@ export default defineComponent({
     }))
 
     onUnmounted(() => {
+      //if there is time left on autohide or no autohide then keep toast alive
+      clearDismissTimer()
+      if (!props.autoHide) {
+        return
+      }
+
       emit('destroyed', props.id)
     })
 
@@ -189,7 +215,7 @@ export default defineComponent({
           $headerContent.push(h('strong', {class: 'me-auto'}, props.title))
         }
 
-        if (!props.noCloseButton) {
+        if (!props.noCloseButton && $headerContent.length !== 0) {
           $headerContent.push(
             h(BButtonClose, {
               class: ['btn-close'],
@@ -240,6 +266,8 @@ export default defineComponent({
           'role': isHiding.value ? null : props.isStatus ? 'status' : 'alert',
           'aria-live': isHiding.value ? null : props.isStatus ? 'polite' : 'assertive',
           'aria-atomic': isHiding.value ? null : 'true',
+          'onmouseenter': onPause,
+          'onmouseleave': onUnPause,
         },
         [
           h(
