@@ -1,5 +1,5 @@
 import AnchoredHeading from './anchored-heading'
-import Compoenentdoc from './component-doc'
+import ComponentDoc from './component-doc.vue'
 import {computed, defineComponent, h, ref, toRefs, resolveComponent} from 'vue'
 import {usePageData} from '@vuepress/client'
 
@@ -16,7 +16,7 @@ export default defineComponent({
       h(AnchoredHeading, {id: 'component-reference'}, () => 'Component reference'),
       this.pagedata.componentReference.meta.components.map(
         ({component, emits, rootEventListeners, slots, aliases, props: propsMeta, version}) => {
-          return h(Compoenentdoc, {
+          return h(ComponentDoc, {
             component,
             emits,
             rootEventListeners,

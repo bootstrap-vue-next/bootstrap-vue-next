@@ -1,6 +1,8 @@
 import {App, Plugin} from 'vue'
 import Components from './components'
 import Directives from './directives'
+import Plugins from './Plugins'
+
 import {BootstrapVueOptions} from './types'
 import {createBreadcrumb} from './composables/useBreadcrumb'
 import './styles/styles.scss'
@@ -81,6 +83,9 @@ export {default as BTab} from './components/BTabs/BTab.vue'
 export {default as BTable} from './components/BTable/BTable.vue'
 export {default as BTabs} from './components/BTabs/BTabs.vue'
 export {default as BTransition} from './components/BTransition/BTransition.vue'
+export {default as BToast} from './components/BToast/BToast.vue'
+export {default as BToaster} from './components/BToast/BToaster.vue'
+export {ToastPlugin} from './components/BToast/'
 
 const plugin: Plugin = {
   // TODO: use options in the future

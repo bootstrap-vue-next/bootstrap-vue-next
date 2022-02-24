@@ -125,8 +125,8 @@ export default defineComponent({
           BTransition,
           {
             noFade: props.noFade,
+            transProps: {enterToClass: 'show'},
             name: 'fade',
-            appear: true,
             onAfterEnter: () => emit('shown'),
             onAfterLeave: () => emit('hidden'),
           },

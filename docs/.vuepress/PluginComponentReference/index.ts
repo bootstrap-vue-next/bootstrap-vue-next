@@ -24,13 +24,12 @@ export const componentReference: Plugin<ComponentReferenceOptions> = ({
 }) => ({
   name: 'plugin-object',
   clientAppEnhanceFiles: path.resolve(__dirname, './client/clientAppEnhance.ts'),
-  extendsPageData(page, app: App) {
+  extendsPage(page, app: App) {
     const {filePath} = resolvePageComponentReferencePath(baseDir, page, app)
     let componentReference = null
     if (fs.existsSync(filePath)) {
       componentReference = require(filePath)
     }
-
-    return {componentReference}
+    page.data.componentReference = componentReference
   },
 })

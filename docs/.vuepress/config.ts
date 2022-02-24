@@ -12,6 +12,7 @@ export default defineUserConfig<DefaultThemeOptions>({
   themeConfig: {
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
+    docsDir: 'docs',
     editLink: true,
     contributors: false,
     lastUpdated: true,
@@ -57,6 +58,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/Pagination.md',
             '/components/Spinners.md',
             '/components/Tabs.md',
+            '/components/Toast.md',
           ],
         },
       ],
