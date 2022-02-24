@@ -1,7 +1,6 @@
 import {App, Plugin} from 'vue'
 import Components from './components'
 import Directives from './directives'
-import Plugins from './Plugins'
 
 import {BootstrapVueOptions} from './types'
 import {createBreadcrumb} from './composables/useBreadcrumb'
