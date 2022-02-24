@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
-<b-container  id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+  <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
@@ -746,7 +746,7 @@
         </b-col>
         <b-col cols="6">
           <b-card no-body class="overflow-hidden" style="max-width: 540px">
-            <b-row no-gutters>
+            <b-row class="g-0">
               <b-col md="6">
                 <b-card-img
                   src="https://picsum.photos/400/400/?image=20"
@@ -1446,7 +1446,7 @@
       <div v-if="handledVisible">This should only show if handleVisible was triggered</div>
     </div>
 
-    <b-toast v-model="showToast"  title="Hello"  body="cow"></b-toast>
+    <b-toast v-model="showToast" title="Hello" body="cow"></b-toast>
     <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
     <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
     <div id="demo"></div>
