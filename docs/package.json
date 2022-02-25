@@ -1,0 +1,16 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vuepress dev",
+    "build": "vuepress build",
+    "deploy": "./scripts/deploy.sh"
+  },
+  "devDependencies": {
+    "@vuepress/bundler-webpack": "^2.0.0-beta.35",
+    "bootstrap-vue-3": "file:/..",
+    "vuepress": "^2.0.0-beta.35",
+    "vuepress-webpack": "^2.0.0-beta.35"
+  }
+}

@@ -808,6 +808,8 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 | `change` | `checked` - Value of checkbox(es). When bound to multiple checkboxes, value will be an array | Emitted when selected value(s) is changed due to user interaction |
 | `input`  | `checked` - Value of checkbox(es). When bound to multiple checkboxes, value will be an array | Emitted when selected value(s) is changed                         |
 
+<ClientOnly>
+
 <script lang='ts' setup>
   import {ref, computed} from 'vue'
 
@@ -854,3 +856,5 @@ The indeterminate state is **visual only**. The checkbox is still either checked
   const contextualState = computed(() => contextualSelected.value.length === 2);
 
 </script>
+
+</ClientOnly>

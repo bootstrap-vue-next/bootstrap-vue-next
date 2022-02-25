@@ -269,7 +269,9 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
 </script>
 ```
 
-<ComponentReference></ComponentReference>
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 #### v-model
 
@@ -283,6 +285,8 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
 | ------------- | ------------------------------ |
 | `default`     | Content to place in the alert  |
 | ~~`dismiss`~~ | Content for the dismiss button |
+
+<ClientOnly>
 
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
@@ -311,3 +315,5 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
   };
 
 </script>
+
+</ClientOnly>

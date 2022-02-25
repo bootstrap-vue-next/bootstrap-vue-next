@@ -244,6 +244,8 @@ The striped gradient can also be animated by setting the `animated` prop.
 | --------- | ----------------------------------------------------------------------------------------------------------------- |
 | `default` | Content to place in the progress bar. Overrides the `label`, `label-html`, `show-progress` and `show-value` props |
 
+<ClientOnly>
+
 <script>
 import { ref } from 'vue';
 
@@ -257,3 +259,5 @@ export default {
     },
 }
 </script>
+
+</ClientOnly>

@@ -1470,6 +1470,8 @@
 
     <b-toast v-model="showToast" title="Hello" body="cow"></b-toast>
     <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
+    <b-button class="mt-3" @click="createToast2()">Show Toast 2</b-button>
+
     <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
     <div id="demo"></div>
   </b-container>
@@ -1645,8 +1647,13 @@ export default defineComponent({
       c?.show({title: 'example title', body: h('div', 'cool Dynamic')}, {pos: 'bottom-right'})
     }
 
+    const createToast2 = () => {
+      c?.show({title: 'example title', body: h('div', 'cool Dynamic')})
+    }
+
     return {
       createToast,
+      createToast2,
       password,
       showPassword,
       description,

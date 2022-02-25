@@ -148,4 +148,6 @@ Add `free` property to make accordion items stay open when another item is opene
 </b-accordion>
 ```
 
-<ComponentReference></ComponentReference>
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>

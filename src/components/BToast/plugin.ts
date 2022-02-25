@@ -103,18 +103,6 @@ export class ToastInstance {
     })
   }
 
-  displayedToasts(position?: ContainerPosition): ComputedRef<Array<Toast>> {
-    return computed<Array<Toast>>(() => {
-      return this.vm.toasts.filter((toast) => {
-        if (toast.options.pos == position && toast.options.value) {
-          return toast
-        } else if (toast.options.value) {
-          return toast
-        }
-      })
-    })
-  }
-
   remove(...forDeletion: [String]): void {
     this.vm.toasts = this.vm.toasts.filter((item) => {
       if (!forDeletion.includes(item.options.id)) {
@@ -208,7 +196,7 @@ export class ToastController {
 }
 
 // default global inject key to fetch the controller
-let injectkey: string = 'toast'
+let injectkey: symbol = Symbol()
 let rootkey = 'root'
 
 let defaults = {
@@ -217,13 +205,13 @@ let defaults = {
   root: false,
 }
 export function useToast(): ToastInstance | undefined
-export function useToast(vm: {id: symbol}, key?: string): ToastInstance | undefined
+export function useToast(vm: {id: symbol}, key?: symbol): ToastInstance | undefined
 export function useToast(
   vm: {container: Ref<ComponentPublicInstance>; root: Boolean},
-  key?: string
+  key?: symbol
 ): ToastInstance | undefined
 
-export function useToast(vm?: any, key: string = injectkey): ToastInstance | undefined {
+export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | undefined {
   //lets get our controller to fetch the toast instance
   let controller = inject(key !== null ? key : injectkey) as ToastController
 
@@ -240,7 +228,7 @@ export function useToast(vm?: any, key: string = injectkey): ToastInstance | und
   return new ToastInstance(vm_instance)
 }
 
-const BToastPlugin: Plugin = {
+export const BToastPlugin: Plugin = {
   install: (app: App, options: BootstrapVueOptions = {}) => {
     app.provide(options?.BToast?.injectkey ?? injectkey, new ToastController())
   },
