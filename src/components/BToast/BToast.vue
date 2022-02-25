@@ -13,14 +13,13 @@ import {
 } from 'vue'
 import {normalizeSlot} from '../../utils/normalize-slot'
 import {ColorVariant} from '../../types'
-import {Toast} from 'bootstrap'
 import {toInteger} from '../../utils/number'
 import BTransition from '../BTransition/BTransition.vue'
 import {requestAF} from '../../utils/dom'
 import BButtonClose from '../BButton/BCloseButton.vue'
 import {isLink} from '../../utils/router'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
-import {BodyProp} from '../../plugins/BToast'
+import {BodyProp} from './plugin'
 
 export const SLOT_NAME_TOAST_TITLE = 'toast-title'
 const MIN_DURATION = 5000
@@ -32,7 +31,7 @@ export default defineComponent({
     ...BLINK_PROPS,
     delay: {type: Number, default: 5000},
     bodyClass: {type: String},
-    body: {type: Object as PropType<BodyProp>},
+    body: {type: [Object, String] as PropType<BodyProp>},
     headerClass: {type: String},
     headerTag: {type: String, default: 'div'},
     animation: {type: Boolean, default: true},
@@ -53,8 +52,6 @@ export default defineComponent({
   },
 
   setup(props, {emit, slots}) {
-    const instance = ref<Toast>()
-    const root = ref(null)
     const isTransitioning = ref(false)
     const isHiding = ref(false)
     const localShow = ref(false)

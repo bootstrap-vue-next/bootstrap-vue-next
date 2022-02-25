@@ -116,10 +116,6 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
   <b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
   </b-card>
 
-  <script lang="ts" setup>
-
-  </script>
-
 </ClientOnly>
 
 <ClientOnly>
@@ -130,9 +126,9 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
 
 <script lang='ts' setup>
   import {ref, computed} from 'vue'
-    import {useToast} from 'bootstrap-vue-3'
+  import {useToast} from 'bootstrap-vue-3'
 
-    let toast = useToast()
+  // let toast = useToast()
 
     let show1 = () => {toast.show({title: 'example title'})}
     let show2 = () => {toast.info({title: 'example title', body: "This is a toast"})}
