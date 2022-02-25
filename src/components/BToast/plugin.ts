@@ -103,18 +103,6 @@ export class ToastInstance {
     })
   }
 
-  displayedToasts(position?: ContainerPosition): ComputedRef<Array<Toast>> {
-    return computed<Array<Toast>>(() => {
-      return this.vm.toasts.filter((toast) => {
-        if (toast.options.pos == position && toast.options.value) {
-          return toast
-        } else if (toast.options.value) {
-          return toast
-        }
-      })
-    })
-  }
-
   remove(...forDeletion: [String]): void {
     this.vm.toasts = this.vm.toasts.filter((item) => {
       if (!forDeletion.includes(item.options.id)) {
