@@ -13,7 +13,7 @@ import {computed, defineComponent, PropType} from 'vue'
 import {ColorVariant} from '../../types'
 
 export default defineComponent({
-  name: 'BCardfooter',
+  name: 'BCardFooter',
   props: {
     footer: {type: String},
     footerBgVariant: {type: String as PropType<ColorVariant>, required: false},

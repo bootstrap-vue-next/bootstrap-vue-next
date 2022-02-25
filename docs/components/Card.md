@@ -427,7 +427,7 @@ card.
 Using a combination of grid components, utility classes and individual card sub-components, cards
 can be made horizontal in a mobile-friendly and responsive way.
 
-In the example below, we remove the row grid gutters with the `no-gutters` prop on `<b-row>` and use
+In the example below, we remove the row grid gutters with the `class="g-0"` prop on `<b-row>` and use
 `md` props on `<b-col>` to make the card horizontal at the `md` breakpoint. Class `rounded-0`
 removes the rounding of the `<b-card-img>` corners while class `overflow-hidden` on `<b-card>` will
 appropriately clip the image's corners based on the border-radius of the card. Further adjustments
@@ -436,7 +436,7 @@ may be needed depending on your card content.
 <ClientOnly>
   <b-card>
     <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-      <b-row no-gutters>
+      <b-row class="g-0">
         <b-col md="6">
           <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
         </b-col>
@@ -456,7 +456,7 @@ may be needed depending on your card content.
 ```html
 <b-card>
   <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-    <b-row no-gutters>
+    <b-row class="g-0">
       <b-col md="6">
         <b-card-img
           src="https://picsum.photos/400/400/?image=20"

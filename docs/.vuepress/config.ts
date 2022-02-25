@@ -13,6 +13,7 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
   themeConfig: {
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
+    docsDir: 'docs',
     editLink: true,
     contributors: false,
     lastUpdated: true,
