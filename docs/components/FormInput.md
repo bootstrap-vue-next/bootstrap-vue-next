@@ -681,7 +681,10 @@ these methods and properties. Support will vary based on input type.
 | `update:modelValue` | `modelValue` - Value of input, after any formatting. Not emitted if the value does not change | Emitted to update the v-model                                                                                                                      |
 
 <!-- --------------------------------------------------------------------------------------------- -->
-<!-- <script lang="ts" setup>
+
+<ClientOnly>
+
+<script lang="ts" setup>
   import {ref, computed} from 'vue'
 
   const selectedText = ref('')
@@ -712,4 +715,6 @@ these methods and properties. Support will vary based on input type.
   const sampleInputText = ref('sample text')
 
   const selectAllText = () => inputRef.value.input.select()
-</script> -->
+</script>
+
+</ClientOnly>

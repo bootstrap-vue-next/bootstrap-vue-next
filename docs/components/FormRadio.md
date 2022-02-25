@@ -749,7 +749,10 @@ Supported `aria-invalid` values are:
 | `change` | `checked` - Current selected Value of the radio | Emitted when selected value is changed due to user interaction |
 | `input`  | `checked` - Current selected Value of the radio | Emitted when selected value is changed                         |
 
+<ClientOnly>
+
 <script lang="ts" setup>
+  
   import {ref, computed} from 'vue'
 
   const individualSelected = ref()
@@ -800,3 +803,5 @@ Supported `aria-invalid` values are:
   ]
 
 </script>
+
+</ClientOnly>

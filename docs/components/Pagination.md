@@ -452,7 +452,9 @@ recommended unless the content of the button textually conveys its purpose.
 ### Keyboard navigation support
 
 To be done
+<ClientOnly>
 <ComponentReference></ComponentReference>
+</ClientOnly>
 
 #### v-model
 
@@ -478,6 +480,8 @@ To be done
 | `update:modelValue` | `current page` - Value of he current page                                                   |                                                    |
 | `page-click`        | `bvEvent ` - The `BvEvent` object. Call `bvEvent.preventDefault()` to cancel page selection | Emitted when a page button was clicked. Cancelable |
 
+<ClientOnly>
+
 <script lang='ts' setup>
   import {ref, computed} from 'vue'
 
@@ -498,3 +502,5 @@ To be done
   const ex5CurrentPage = ref(3);
   const ex5Rows = ref(100);
 </script>
+
+</ClientOnly>

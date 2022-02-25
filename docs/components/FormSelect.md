@@ -612,6 +612,8 @@ When `state` is set to `false`, aria-invalid will also be set to true.
 | `first`   | Slot to place options above options provided via the 'options' prop |
 
 <!-- ------------------------------------------------------------------ -->
+<ClientOnly>
+
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
 
@@ -668,3 +670,5 @@ When `state` is set to `false`, aria-invalid will also be set to true.
   ]
 
 </script>
+
+</ClientOnly>
