@@ -124,10 +124,10 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
 
 <ComponentReference></ComponentReference>
 
-<script lang='ts' setup>
+<!-- <script lang='ts' setup>
   import {ref, computed} from 'vue'
     import {useToast} from 'bootstrap-vue-3'
-   
+
     let toast = useToast()
 
     let show1 = () => {toast.show({title: 'example title'})}
@@ -137,4 +137,4 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
     let variantshow2 = () => {toast.info({title: 'New Message', body: "This is a toast"}, {pos: 'bottom-right'})}
     let variantshow3 = () => {toast.warning({title: 'Warning for Item', body: "Please check list"},{pos: 'bottom-right'})}
     let variantshow4 = () => {toast.success({title: 'Event Created!', body: "Bootstrap Event"},{pos: 'bottom-right'})}
-</script>
+</script> -->

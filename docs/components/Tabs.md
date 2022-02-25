@@ -810,7 +810,7 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 | `click` | `event` - Original event object | Emitted when a tab is clicked |
 
 <!-- ------------------------------------------------------------------ -->
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
   import {ref, computed} from 'vue'
 
   const tabIndex = ref(0)
@@ -837,4 +837,4 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 
   const newTab = () => tabs.value.push(tabCounter.value++)
 
-</script>
+</script> -->
