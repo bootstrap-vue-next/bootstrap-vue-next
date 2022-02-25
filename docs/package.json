@@ -7,9 +7,12 @@
     "build": "vuepress build",
     "deploy": "./scripts/deploy.sh"
   },
+  "peerDependencies": {
+    "bootstrap": "5.x.x"
+  },
   "devDependencies": {
     "@vuepress/bundler-webpack": "^2.0.0-beta.35",
-    "bootstrap-vue-3": "file:/..",
+    "bootstrap-vue-3": "file:../",
     "vuepress": "^2.0.0-beta.35",
     "vuepress-webpack": "^2.0.0-beta.35"
   }
