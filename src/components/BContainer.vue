@@ -19,6 +19,8 @@ import Position from '../types/position'
 export default defineComponent({
   name: 'BContainer',
   props: {
+    gutterX: {type: String, default: null},
+    gutterY: {type: String, default: null},
     fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
     toast: {type: Object},
     position: {type: String as PropType<Position>, required: false},
@@ -31,6 +33,8 @@ export default defineComponent({
       container: !props.fluid,
       [`container-fluid`]: typeof props.fluid === 'boolean' && props.fluid,
       [`container-${props.fluid}`]: typeof props.fluid === 'string',
+      [`gx-${props.gutterX}`]: props.gutterX !== null,
+      [`gy-${props.gutterY}`]: props.gutterY !== null,
     }))
 
     onMounted(() => {
