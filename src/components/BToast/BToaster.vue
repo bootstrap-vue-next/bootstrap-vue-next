@@ -1,7 +1,7 @@
 <template>
   <div :class="[positionClass]" class="b-toaster position-fixed p-3" style="z-index: 11">
     <b-toast
-      v-for="toast in instance.displayedToasts().value"
+      v-for="toast in instance.toasts(position).value"
       :id="toast.options.id"
       :key="toast.options.id"
       v-model="toast.options.value"
@@ -31,7 +31,7 @@ import {
   ToRefs,
   watch,
 } from 'vue'
-import {Toast, ToastInstance} from '../../plugins/BToast'
+import {ToastInstance} from './plugin'
 import {ContainerPosition} from '../../types/container'
 
 const toastPositions = {

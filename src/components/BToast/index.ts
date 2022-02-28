@@ -1,5 +1,4 @@
 import BToast from './BToast.vue'
 import BToaster from './BToaster.vue'
-import ToastPlugin from './plugin'
-
-export {ToastPlugin, BToast, BToaster}
+import {BToastPlugin, useToast} from './plugin'
+export {BToastPlugin, useToast, BToast, BToaster}

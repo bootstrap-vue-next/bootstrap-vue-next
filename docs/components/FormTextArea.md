@@ -552,6 +552,8 @@ these methods and properties. Support will vary based on input type.
 | `input`             | `modelValue` - Current value of input                                                         | Input event triggered by user interaction. Emitted after any formatting (not including 'trim' or 'number' props) and after the v-model is updated  |
 | `update:modelValue` | `modelValue` - Value of input, after any formatting. Not emitted if the value does not change | Emitted to update the v-model                                                                                                                      |
 
+<ClientOnly>
+
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
 
@@ -571,3 +573,5 @@ these methods and properties. Support will vary based on input type.
     textArea.value.input.select()
   }
 </script>
+
+</ClientOnly>

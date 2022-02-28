@@ -13,7 +13,7 @@ Toast Components can be used standalone or part of the toast plugin.
 To use the plugin make sure to to include it in your app. This will create a global wide handler to fetch your Toast VM instances.
 
 ```js
-import BToastPlugin from './plugins/BToast'
+import {BToastPlugin} from 'bootstrap-vue-3'
 app.use(BToastPlugin)
 ```
 
@@ -27,6 +27,7 @@ We then use the toast composable to grab our root vm to display toasts.
 
 ```js
 //setup function
+import {useToast} from 'bootstrap-vue-3'
 let toast = useToast()
 ```
 
@@ -89,7 +90,7 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
 </b-card>
 
 <script>
-  import {useToast} from 'BootstrapVue/ToastPlugin'
+  import {useToast} from 'bootstrap-vue-3'
   let toast = useToast()
   let variantshow1 = () => {
     toast.danger({title: 'Item Deleted'}, {pos: 'bottom-right'})
@@ -115,21 +116,19 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
   <b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
   </b-card>
 
-  <script lang="ts" setup>
-
-  </script>
-
 </ClientOnly>
 
-<ComponentReference></ComponentReference>
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
+
+<ClientOnly>
 
 <script lang='ts' setup>
   import {ref, computed} from 'vue'
-    import {inject} from 'vue'
-    import {useToast} from ''
-    
-    let controller = inject('toast')
-    let toast = controller.useToast()
+  import {useToast} from 'bootstrap-vue-3'
+
+  let toast = useToast()
 
     let show1 = () => {toast.show({title: 'example title'})}
     let show2 = () => {toast.info({title: 'example title', body: "This is a toast"})}
@@ -139,3 +138,5 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
     let variantshow3 = () => {toast.warning({title: 'Warning for Item', body: "Please check list"},{pos: 'bottom-right'})}
     let variantshow4 = () => {toast.success({title: 'Event Created!', body: "Bootstrap Event"},{pos: 'bottom-right'})}
 </script>
+
+</ClientOnly>

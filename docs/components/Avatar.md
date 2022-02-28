@@ -838,10 +838,10 @@ Avatars are based upon `<b-badge>` and `<b-button>` components, and as such, rel
 | --------- | ---------------------------------------------- |
 | `default` | Content (avatars) to place in the avatar group |
 
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
   import {ref, Ref} from 'vue';
 
   const alertEvent = (event: PointerEvent) => {
     alert(`Clicked`);
   }
-</script>
+</script> -->

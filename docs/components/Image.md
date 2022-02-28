@@ -303,6 +303,8 @@ guide.
 | `width`                                                | `Number` or `String`  |               | The value to set on the image's 'width' attribute                                                                                                               |
 
 <!-- ------------------------------------------------------------------ -->
+<ClientOnly>
+
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
 
@@ -310,3 +312,5 @@ guide.
   const propsTr = {blank: true, width: 75, height: 75, class: 'm1'}
   
 </script>
+
+</ClientOnly>

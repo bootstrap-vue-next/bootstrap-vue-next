@@ -1,7 +1,7 @@
 import {createApp, h} from 'vue'
 import App from './App.vue'
 import BootstrapVue from './BootstrapVue'
-import {ToastPlugin} from './BootstrapVue'
+import {BToastPlugin} from './BootstrapVue'
 /*
 import { createWebHistory, createRouter } from "vue-router";
 
@@ -37,6 +37,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/styles.scss'
 const app = createApp(App)
 app.use(BootstrapVue)
-app.use(ToastPlugin)
+app.use(BToastPlugin)
 // app.use(router)
 app.mount('#app')

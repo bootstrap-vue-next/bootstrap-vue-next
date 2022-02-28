@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-  Component,
   computed,
   defineComponent,
   h,
@@ -14,14 +13,13 @@ import {
 } from 'vue'
 import {normalizeSlot} from '../../utils/normalize-slot'
 import {ColorVariant} from '../../types'
-import {Toast} from 'bootstrap'
 import {toInteger} from '../../utils/number'
 import BTransition from '../BTransition/BTransition.vue'
 import {requestAF} from '../../utils/dom'
 import BButtonClose from '../BButton/BCloseButton.vue'
 import {isLink} from '../../utils/router'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
-import {BodyProp} from '../../plugins/BToast'
+import {BodyProp} from './plugin'
 
 export const SLOT_NAME_TOAST_TITLE = 'toast-title'
 const MIN_DURATION = 5000
@@ -33,7 +31,7 @@ export default defineComponent({
     ...BLINK_PROPS,
     delay: {type: Number, default: 5000},
     bodyClass: {type: String},
-    body: {type: Object as PropType<BodyProp>},
+    body: {type: [Object, String] as PropType<BodyProp>},
     headerClass: {type: String},
     headerTag: {type: String, default: 'div'},
     animation: {type: Boolean, default: true},
@@ -54,8 +52,6 @@ export default defineComponent({
   },
 
   setup(props, {emit, slots}) {
-    const instance = ref<Toast>()
-    const root = ref(null)
     const isTransitioning = ref(false)
     const isHiding = ref(false)
     const localShow = ref(false)
@@ -102,6 +98,27 @@ export default defineComponent({
           localShow.value = true
         })
       })
+    }
+
+    const onPause = () => {
+      if (!props.autoHide || props.noHoverPause || !dismissTimer || resumeDismiss) {
+        return
+      }
+
+      const passed = Date.now() - dismissStarted
+
+      if (passed > 0) {
+        clearDismissTimer()
+        resumeDismiss = Math.max(computedDuration.value - passed, MIN_DURATION)
+      }
+    }
+
+    const onUnPause = () => {
+      if (!props.autoHide || props.noHoverPause || !resumeDismiss) {
+        resumeDismiss = dismissStarted = 0
+      }
+
+      startDismissTimer()
     }
 
     const toggle = () => {
@@ -156,6 +173,12 @@ export default defineComponent({
     }))
 
     onUnmounted(() => {
+      //if there is time left on autohide or no autohide then keep toast alive
+      clearDismissTimer()
+      if (!props.autoHide) {
+        return
+      }
+
       emit('destroyed', props.id)
     })
 
@@ -189,7 +212,7 @@ export default defineComponent({
           $headerContent.push(h('strong', {class: 'me-auto'}, props.title))
         }
 
-        if (!props.noCloseButton) {
+        if (!props.noCloseButton && $headerContent.length !== 0) {
           $headerContent.push(
             h(BButtonClose, {
               class: ['btn-close'],
@@ -240,6 +263,8 @@ export default defineComponent({
           'role': isHiding.value ? null : props.isStatus ? 'status' : 'alert',
           'aria-live': isHiding.value ? null : props.isStatus ? 'polite' : 'assertive',
           'aria-atomic': isHiding.value ? null : 'true',
+          'onmouseenter': onPause,
+          'onmouseleave': onUnPause,
         },
         [
           h(

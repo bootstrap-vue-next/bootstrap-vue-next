@@ -184,7 +184,9 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
 <b-badge href="#" variant="dark">Dark</b-badge>
 ```
 
-<ComponentReference></ComponentReference>
+<ClientOnly>
+    <ComponentReference></ComponentReference>
+</ClientOnly>
 
 ### Slots
 

@@ -533,6 +533,8 @@ scoped `default` slot.
 | `descriptionId`   | `String` | The ID of the description element. Will be `null` when no description content given                                                       |
 | `labelId`         | `String` | The ID of the label element. Will be `null` when no description content given                                                             |
 
+<ClientOnly>
+
 <script lang="ts" setup>
   import {computed, ref} from 'vue'
 
@@ -549,3 +551,5 @@ scoped `default` slot.
   )
 
 </script>
+
+</ClientOnly>

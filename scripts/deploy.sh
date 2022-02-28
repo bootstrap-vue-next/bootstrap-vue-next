@@ -6,7 +6,10 @@ set -e
 # build library
 npm run build
 
-# build
+# docs
+cd docs
+npm install
+cd ..
 npm run docs:build
 
 # navigate into the build output directory
