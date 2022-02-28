@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, h, PropType, VNode} from 'vue'
+import {computed, defineComponent, h, PropType, Slot, VNode} from 'vue'
 import {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
 import useItemHelper from './itemHelper'
+import {VNodeArrayChildren} from '@vue/runtime-core'
 
 export default defineComponent({
   name: 'BTable',
@@ -24,9 +25,13 @@ export default defineComponent({
     responsive: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
     small: {type: Boolean, default: false},
     striped: {type: Boolean, default: false},
+    busy: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props, {slots}) {
+    type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() => any)
+    type RawSlots = {[name: string]: unknown; $stable?: boolean}
+
     const classes = computed(() => ({
       [`align-${props.align}`]: props.align,
       [`table-${props.variant}`]: props.variant,
@@ -44,13 +49,13 @@ export default defineComponent({
     const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 
     return () => {
-      let theadTop: VNode | null
+      let theadTop: RawChildren | RawSlots | null
       theadTop = null
       if (slots['thead-top']) {
         theadTop = slots['thead-top']()
       }
 
-      let theadSub: VNode | null
+      let theadSub: RawChildren | RawSlots | null
       theadSub = null
       if (slots['thead-sub']) {
         theadSub = h(
@@ -99,48 +104,55 @@ export default defineComponent({
         theadSub,
       ])
 
-      const tBody = [
-        h(
-          'tbody',
-          props.items.map((tr, index) =>
-            h(
-              'tr',
-              {
-                class: [tr._rowVariant ? `table-${tr._rowVariant}` : null],
-              },
-              computedFields.value.map((field) => {
-                const slotName = `cell(${field.key})`
-                let tdContent = tr[field.key]
+      let tBody: VNode[] | null
+      if (props.busy) {
+        if (slots['busy']) {
+          tBody = [h('tbody', {}, slots['busy']())]
+        }
+      } else {
+        tBody = [
+          h(
+            'tbody',
+            props.items.map((tr, index) =>
+              h(
+                'tr',
+                {
+                  class: [tr._rowVariant ? `table-${tr._rowVariant}` : null],
+                },
+                computedFields.value.map((field) => {
+                  const slotName = `cell(${field.key})`
+                  let tdContent = tr[field.key]
 
-                if (slots[slotName]) {
-                  tdContent = slots[slotName]?.({
-                    value: tr[field.key],
-                    index,
-                    item: tr,
-                    items: props.items,
-                  })
-                }
+                  if (slots[slotName]) {
+                    tdContent = slots[slotName]?.({
+                      value: tr[field.key],
+                      index,
+                      item: tr,
+                      items: props.items,
+                    })
+                  }
 
-                return h(
-                  'td',
-                  {
-                    ...field.tdAttr,
-                    class: [
-                      field.class,
-                      field.tdClass,
-                      field.variant ? `table-${field.variant}` : '',
-                      tr?._cellVariants && tr?._cellVariants[field.key]
-                        ? `table-${tr?._cellVariants[field.key]}`
-                        : '',
-                    ],
-                  },
-                  tdContent
-                )
-              })
+                  return h(
+                    'td',
+                    {
+                      ...field.tdAttr,
+                      class: [
+                        field.class,
+                        field.tdClass,
+                        field.variant ? `table-${field.variant}` : '',
+                        tr?._cellVariants && tr?._cellVariants[field.key]
+                          ? `table-${tr?._cellVariants[field.key]}`
+                          : '',
+                      ],
+                    },
+                    tdContent
+                  )
+                })
+              )
             )
-          )
-        ),
-      ]
+          ),
+        ]
+      }
 
       const tableContent = [tHead, tBody]
 
