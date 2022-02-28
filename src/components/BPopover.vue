@@ -55,7 +55,7 @@ export default defineComponent({
       default: undefined,
     },
     title: {type: String},
-    delay: {type: [Number, Object]},
+    delay: {type: [Number, Object], default: 400},
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
