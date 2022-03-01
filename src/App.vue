@@ -802,6 +802,9 @@
           <b-tab title="Fifth">
             <p>I'm the fifth tab</p>
           </b-tab>
+          <b-tab title="Sixth" :disabled="true">
+            <p>I'm a disabled tab!</p>
+           </b-tab>
         </b-tabs>
 
         <div class="text-center">
