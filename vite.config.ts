@@ -28,6 +28,7 @@ const config = defineConfig({
         // for externalized deps
         globals: {
           vue: 'Vue',
+          bootstrap: 'Bootstrap',
         },
       },
     },
