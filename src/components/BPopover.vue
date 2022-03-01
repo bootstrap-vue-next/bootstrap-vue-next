@@ -34,7 +34,10 @@ import {
 } from 'vue'
 import useEventListener from '../composables/useEventListener'
 import {ColorVariant} from '../types'
-
+interface DelayObject {
+  show: number
+  hide: number
+}
 export default defineComponent({
   name: 'BPopover',
   props: {
@@ -55,7 +58,7 @@ export default defineComponent({
       default: undefined,
     },
     title: {type: String},
-    delay: {type: [Number, Object]},
+    delay: {type: [Number, Object] as PropType<number | DelayObject>, default: 0},
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: Boolean, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},

@@ -1,7 +1,6 @@
-import {createApp, h} from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
-import BootstrapVue from './BootstrapVue'
-import {BToastPlugin} from './BootstrapVue'
+import BootstrapVue, {BToastPlugin} from './BootstrapVue'
 /*
 import { createWebHistory, createRouter } from "vue-router";
 

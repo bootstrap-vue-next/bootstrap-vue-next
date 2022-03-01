@@ -149,11 +149,11 @@ export default defineComponent({
             buttonId,
             contentId,
             active,
-            disabled: tab.props.disabled === '',
+            disabled: tab.props.disabled === '' || tab.props.disabled === true,
             navItemClasses: [
               {
                 active,
-                disabled: tab.props.disabled === '',
+                disabled: tab.props.disabled === '' || tab.props.disabled === true,
               },
               active && props.activeNavItemClass ? props.activeNavItemClass : null,
               tab.props['title-link-class'],
