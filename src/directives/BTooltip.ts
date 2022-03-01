@@ -48,7 +48,7 @@ function resolveDelay(values: DirectiveBinding['value']): Tooltip.Options['delay
     return values.delay
   }
 
-  return 50
+  return 0
 }
 
 const BTooltip: Directive<HTMLElement> = {

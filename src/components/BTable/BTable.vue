@@ -191,19 +191,20 @@ export default defineComponent({
       )
 
       if (props.responsive) {
-        return h(
-          'div',
-          {
-            class: {
-              'table-responsive': typeof props.responsive === 'boolean',
-              [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+        return () =>
+          h(
+            'div',
+            {
+              class: {
+                'table-responsive': typeof props.responsive === 'boolean',
+                [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+              },
             },
-          },
-          table
-        )
+            table
+          )
       }
 
-      return table
+      return () => table
     }
   },
 })

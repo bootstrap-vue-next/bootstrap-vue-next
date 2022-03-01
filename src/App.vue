@@ -1,6 +1,93 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+    <!-- Table simple -->
+    <b-table-simple hover small caption-top responsive>
+      <caption>
+        Items sold in August, grouped by Country and City:
+      </caption>
+      <colgroup>
+        <col />
+        <col />
+      </colgroup>
+      <colgroup>
+        <col />
+        <col />
+        <col />
+      </colgroup>
+      <colgroup>
+        <col />
+        <col />
+      </colgroup>
+      <b-thead head-variant="dark">
+        <b-tr>
+          <b-th colspan="2">Region</b-th>
+          <b-th colspan="3">Clothes</b-th>
+          <b-th colspan="2">Accessories</b-th>
+        </b-tr>
+        <b-tr>
+          <b-th>Country</b-th>
+          <b-th>City</b-th>
+          <b-th>Trousers</b-th>
+          <b-th>Skirts</b-th>
+          <b-th>Dresses</b-th>
+          <b-th>Bracelets</b-th>
+          <b-th>Rings</b-th>
+        </b-tr>
+      </b-thead>
+      <b-tbody>
+        <b-tr>
+          <b-th rowspan="3">Belgium</b-th>
+          <b-th class="text-right">Antwerp</b-th>
+          <b-td>56</b-td>
+          <b-td>22</b-td>
+          <b-td>43</b-td>
+          <b-td variant="success">72</b-td>
+          <b-td>23</b-td>
+        </b-tr>
+        <b-tr>
+          <b-th class="text-right">Gent</b-th>
+          <b-td>46</b-td>
+          <b-td variant="warning">18</b-td>
+          <b-td>50</b-td>
+          <b-td>61</b-td>
+          <b-td variant="danger">15</b-td>
+        </b-tr>
+        <b-tr>
+          <b-th class="text-right">Brussels</b-th>
+          <b-td>51</b-td>
+          <b-td>27</b-td>
+          <b-td>38</b-td>
+          <b-td>69</b-td>
+          <b-td>28</b-td>
+        </b-tr>
+        <b-tr>
+          <b-th rowspan="2">The Netherlands</b-th>
+          <b-th class="text-right">Amsterdam</b-th>
+          <b-td variant="success">89</b-td>
+          <b-td>34</b-td>
+          <b-td>69</b-td>
+          <b-td>85</b-td>
+          <b-td>38</b-td>
+        </b-tr>
+        <b-tr>
+          <b-th class="text-right">Utrecht</b-th>
+          <b-td>80</b-td>
+          <b-td variant="danger">12</b-td>
+          <b-td>43</b-td>
+          <b-td>36</b-td>
+          <b-td variant="warning">19</b-td>
+        </b-tr>
+      </b-tbody>
+      <b-tfoot>
+        <b-tr>
+          <b-td colspan="7" variant="secondary" class="text-end">
+            Total Rows:
+            <b>5</b>
+          </b-td>
+        </b-tr>
+      </b-tfoot>
+    </b-table-simple>
     <!-- Popover-->
     <div class="my-2">
       <h2>Popover</h2>
@@ -11,7 +98,7 @@
         triggers="hover"
         placement="right"
       >
-        <template #title> What? </template>
+        <template #title>What?</template>
         Hello Word
       </b-popover>
     </div>
@@ -128,8 +215,8 @@
             name="checkbox-1"
             value="accepted"
             unchecked-value="not_accepted"
-            >I accept the terms and use
-          </b-form-checkbox>
+            >I accept the terms and use</b-form-checkbox
+          >
           <div>
             State:
             <strong>{{ checkboxes.status }}</strong>
@@ -142,14 +229,14 @@
         </div>
         <div class="row mx-4 my-1">
           <b-form-checkbox v-model="checkedButton" button class="col-4"
-            >Button format
-          </b-form-checkbox>
+            >Button format</b-form-checkbox
+          >
           <div class="col-6">Checked: {{ checkedButton }}</div>
         </div>
         <div class="row mx-4 my-1">
           <b-form-checkbox v-model="checkedRequired" required class="col-4"
-            >Required
-          </b-form-checkbox>
+            >Required</b-form-checkbox
+          >
           <div class="col-6">Checked: {{ checkedRequired }}</div>
         </div>
         <div class="row mx-4 my-1">
@@ -157,8 +244,8 @@
         </div>
         <div class="row mx-4 my-1">
           <b-form-checkbox v-model="checkedIndeterminate" indeterminate class="col-4"
-            >Indeterminate
-          </b-form-checkbox>
+            >Indeterminate</b-form-checkbox
+          >
           <div class="col-6">Checked: {{ checkedIndeterminate }}</div>
         </div>
         <div class="row mx-4 my-1">
@@ -167,14 +254,14 @@
             value="correct"
             unchecked-value="incorrect"
             class="col-4"
-            >Bound to string
-          </b-form-checkbox>
+            >Bound to string</b-form-checkbox
+          >
           <div class="col-6">Value: {{ checkedString }}</div>
         </div>
         <div class="mx-4 my-1">
           <b-button class="mx-1" variant="primary" @click="checkedString = 'correct'"
-            >Set correct
-          </b-button>
+            >Set correct</b-button
+          >
           <button class="btn btn-primary mx-1" @click="checkedString = 'incorrect'">
             Set incorrect
           </button>
@@ -199,8 +286,8 @@
               :key="index"
               v-model="checkedSelectedCars"
               :value="car"
-              >{{ car }}
-            </b-form-checkbox>
+              >{{ car }}</b-form-checkbox
+            >
           </div>
           <div class="col-8">
             <ul>
@@ -269,8 +356,8 @@
       </div>
       <div class="row mx-4 my-1">
         <b-form-radio v-model="radioIndeterminate" indeterminate class="col-4"
-          >Indeterminate
-        </b-form-radio>
+          >Indeterminate</b-form-radio
+        >
         <div class="col-6">Checked: {{ radioIndeterminate }}</div>
       </div>
       <div class="row mx-4 my-1">
@@ -279,8 +366,8 @@
           value="correct"
           unchecked-value="incorrect"
           class="col-4"
-          >Bound to string
-        </b-form-radio>
+          >Bound to string</b-form-radio
+        >
         <div class="col-6">Value: {{ radioString }}</div>
       </div>
       <div class="row mx-4 my-1">
@@ -317,8 +404,8 @@
             :key="index"
             v-model="radioSelectedCars"
             :value="car"
-            >{{ car }}
-          </b-form-radio>
+            >{{ car }}</b-form-radio
+          >
         </div>
         <div class="col-8">
           <ul>
@@ -416,8 +503,8 @@
       >
         <template #first>
           <b-form-select-option :value="null" disabled
-            >-- Please select an option --
-          </b-form-select-option>
+            >-- Please select an option --</b-form-select-option
+          >
         </template>
         <b-form-select-option value="C">Option C</b-form-select-option>
         <b-form-select-option value="D">Option D</b-form-select-option>
@@ -487,8 +574,8 @@
       <h2 class="my-3">Navigation (Links)</h2>
       <div id="nav">
         <b-link :to="{name: 'Home', path: '/' /* path is used when vue-router is not present */}"
-          >Home
-        </b-link>
+          >Home</b-link
+        >
         <br />
         <b-link
           :to="{
@@ -497,8 +584,8 @@
             query: {param: 'someVal'},
             path: '/about' /* path is used when vue-router is not present */,
           }"
-          >About
-        </b-link>
+          >About</b-link
+        >
       </div>
       <p>NB: navigation behavior depends of the usage of "vue-router"</p>
       <!-- activate "vue-router" in "main.ts" to test the "router-view" component
@@ -818,8 +905,7 @@
         <b-tabs>
           <b-tab active>
             <template #title>
-              <b-spinner type="grow" small></b-spinner>
-              I'm
+              <b-spinner type="grow" small></b-spinner>I'm
               <i>custom</i>
               <strong>title</strong>
             </template>
@@ -827,10 +913,7 @@
           </b-tab>
 
           <b-tab>
-            <template #title>
-              <b-spinner type="border" small></b-spinner>
-              Tab 2
-            </template>
+            <template #title> <b-spinner type="border" small></b-spinner>Tab 2 </template>
             <p class="p-3">Tab contents 2</p>
           </b-tab>
         </b-tabs>
@@ -1112,7 +1195,9 @@
         >
           <template #thead-top>
             <tr class="my">
-              <th colspan="2"><span class="sr-only">List of users</span></th>
+              <th colspan="2">
+                <span class="sr-only">List of users</span>
+              </th>
             </tr>
           </template>
           <template #thead-sub="{key, label}">
@@ -1251,8 +1336,8 @@
       {{ showModal }}
       <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
       <b-modal id="exampleModal" v-model="showModal" size="xl" title="Modal title" fade
-        >...
-      </b-modal>
+        >...</b-modal
+      >
     </div>
 
     <!-- <b-nav pills>
@@ -1294,10 +1379,8 @@
             <em>Title</em>
             - {{ popoverInput }}
           </template>
-          <b-button @click="consoleLog">456</b-button>
-          I am popover <b>component</b> content!
-          <b-form-input v-model="popoverInput" type="text" />
-          Name:
+          <b-button @click="consoleLog">456</b-button>I am popover <b>component</b> content!
+          <b-form-input v-model="popoverInput" type="text" />Name:
           <strong>{{ popoverInput }}</strong>
         </b-popover>
         <button
@@ -1324,10 +1407,8 @@
             <em>Title</em>
             - {{ popoverInput }}
           </template>
-          <b-button @click="consoleLog">456</b-button>
-          I am popover <b>component</b> content!
-          <b-form-input v-model="popoverInput" type="text" />
-          Name:
+          <b-button @click="consoleLog">456</b-button>I am popover <b>component</b> content!
+          <b-form-input v-model="popoverInput" type="text" />Name:
           <strong>{{ popoverInput }}</strong>
         </b-popover>
       </div>
@@ -1433,8 +1514,8 @@
             <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
             <b-card-text>Click the button to toggle the overlay:</b-card-text>
             <b-button :disabled="showOverlay" variant="primary" @click="showOverlay = true"
-              >Show overlay
-            </b-button>
+              >Show overlay</b-button
+            >
           </b-card>
         </b-overlay>
         <b-button class="mt-3" @click="showOverlay = !showOverlay">Toggle overlay</b-button>
