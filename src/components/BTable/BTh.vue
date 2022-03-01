@@ -1,5 +1,12 @@
 <template>
-  <th role="columnheader" :scope="scope" :class="classes" :colspan="colspan" :rowspan="rowspan">
+  <th
+    role="columnheader"
+    :scope="scope"
+    :class="classes"
+    :colspan="colspan"
+    :rowspan="rowspan"
+    :data-label="stackedHeading"
+  >
     <slot />
   </th>
 </template>
@@ -10,6 +17,7 @@ import {computed} from 'vue'
 const props = defineProps({
   colspan: {type: String},
   rowspan: {type: String},
+  stackedHeading: {type: String},
   variant: {type: String},
 })
 
