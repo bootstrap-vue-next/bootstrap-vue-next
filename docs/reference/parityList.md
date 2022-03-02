@@ -1388,6 +1388,128 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Table
 
+### `<b-table-simple>`
+
+#### Properties
+
+| Property             | Status                                                                               | Observations |
+| -------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `bordered`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `borderless`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `caption-top`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `dark`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `fixed`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `hover`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `id`                 | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `no-border-collapse` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `outlined`           | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `responsive`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `small`              | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `stacked`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `sticky-header`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `striped`            | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `table-class`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `table-variant`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-tbody>`
+
+#### Properties
+
+| Property                    | Status                                                                             | Observations |
+| --------------------------- | ---------------------------------------------------------------------------------- | ------------ |
+| `tbody-transition-handlers` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+| `tbody-transition-props`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed |              |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-thead>`
+
+#### Properties
+
+| Property       | Status                                                                               | Observations |
+| -------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `head-variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+#### Slots
+
+| Name      | Description                                                                          |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-tfoot>`
+
+#### Properties
+
+| Property       | Status                                                                               | Observations |
+| -------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `foot-variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-tr>`
+
+#### Properties
+
+| Property  | Status                                                                               | Observations |
+| --------- | ------------------------------------------------------------------------------------ | ------------ |
+| `variant` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-td>`
+
+#### Properties
+
+| Property          | Status                                                                               | Observations |
+| ----------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `colspan`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `rowspan`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `stacked-heading` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `sticky-column`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `variant`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-th>`
+
+#### Properties
+
+| Property          | Status                                                                               | Observations |
+| ----------------- | ------------------------------------------------------------------------------------ | ------------ |
+| `colspan`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `rowspan`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `stacked-heading` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `sticky-column`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+| `variant`         | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
 ## Tab
 
 ### Properties
