@@ -68,6 +68,9 @@ import BPopover from './BPopover.vue'
 import BProgress from './BProgress.vue'
 import BProgressBar from './BProgressBar.vue'
 import BRow from './BRow.vue'
+import BSkeleton from './BSkeleton/BSkeleton.vue'
+import BSkeletonTable from './BSkeleton/BSkeletonTable.vue'
+import BSkeletonWrapper from './BSkeleton/BSkeletonWrapper.vue'
 import BSpinner from './BSpinner.vue'
 import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
@@ -147,6 +150,9 @@ export default {
   BProgress,
   BProgressBar,
   BRow,
+  BSkeleton,
+  BSkeletonTable,
+  BSkeletonWrapper,
   BSpinner,
   BTab,
   BTable,

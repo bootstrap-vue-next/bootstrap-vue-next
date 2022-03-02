@@ -5,6 +5,7 @@ module.exports = {
     'es6': true,
     'node': true,
     'jest/globals': true,
+    'vue/setup-compiler-macros': true,
   },
   extends: [
     'eslint:recommended',
