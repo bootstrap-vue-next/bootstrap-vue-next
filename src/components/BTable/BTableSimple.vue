@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, h, PropType, useSlots} from 'vue'
-import type {ColorVariant} from '../../types'
+import {computed, h, PropType, useSlots, VNode} from 'vue'
+import type {Breakpoint, ColorVariant} from '../../types'
 
 const props = defineProps({
   bordered: {type: Boolean, default: false},
@@ -13,8 +13,8 @@ const props = defineProps({
   captionTop: {type: Boolean, default: false},
   dark: {type: Boolean, default: false},
   hover: {type: Boolean, default: false},
-  responsive: {type: [Boolean, String], default: false},
-  stacked: {type: Boolean, default: false},
+  responsive: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
+  stacked: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
   striped: {type: Boolean, default: false},
   small: {type: Boolean, default: false},
   tableClass: {type: [Array, Object, String]},
@@ -31,7 +31,8 @@ const classes = computed(() => [
     'caption-top': props.captionTop,
     'table-dark': props.dark,
     'table-hover': props.hover,
-    'b-table-stacked': props.stacked,
+    'b-table-stacked': typeof props.stacked === 'boolean',
+    [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
     'table-striped': props.striped,
     'table-sm': props.small,
     [`table-${props.tableVariant}`]: props.tableVariant,
@@ -48,8 +49,7 @@ const table = h(
   slots.default?.()
 )
 
-// TODO: type correctly
-let Render: any = table
+let Render: VNode = table
 
 if (props.responsive) {
   Render = h(
