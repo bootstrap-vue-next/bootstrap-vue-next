@@ -50,3 +50,33 @@
   padding: 0 0 0 0.5rem;
   margin: 0;
 }
+
+.b-table-sticky-header > .table.b-table > tbody > tr > .b-table-sticky-column,
+.b-table-sticky-header > .table.b-table > tfoot > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tbody > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tfoot > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tbody > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tfoot > tr > .b-table-sticky-column {
+  z-index: 2;
+}
+
+.b-table-sticky-header > .table.b-table > tbody > tr > .b-table-sticky-column,
+.b-table-sticky-header > .table.b-table > tfoot > tr > .b-table-sticky-column,
+.b-table-sticky-header > .table.b-table > thead > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tbody > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tfoot > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > thead > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tbody > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tfoot > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > thead > tr > .b-table-sticky-column {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+}
+
+.table.b-table > tbody > tr > .table-b-table-default,
+.table.b-table > tfoot > tr > .table-b-table-default,
+.table.b-table > thead > tr > .table-b-table-default {
+  color: #212529;
+  background-color: #fff;
+}

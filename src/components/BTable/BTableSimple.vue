@@ -49,7 +49,7 @@ const table = h(
 )
 
 // TODO: type correctly
-let Render: any
+let Render: any = table
 
 if (props.responsive) {
   Render = h(
@@ -63,6 +63,4 @@ if (props.responsive) {
     table
   )
 }
-
-Render = table
 </script>

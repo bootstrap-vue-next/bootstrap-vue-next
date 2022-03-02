@@ -3,12 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, h, useSlots} from 'vue'
+import {computed, h, useSlots, VNode} from 'vue'
 
 const props = defineProps({
-  colspan: {type: String},
-  rowspan: {type: String},
+  colspan: {type: [String, Number]},
+  rowspan: {type: [String, Number]},
   stackedHeading: {type: String},
+  stickyColumn: {type: Boolean, default: false},
   variant: {type: String},
 })
 
@@ -16,12 +17,13 @@ const slots = useSlots()
 
 const classes = computed(() => ({
   [`table-${props.variant}`]: props.variant,
+  'b-table-sticky-column': props.stickyColumn,
+  'table-b-table-default': props.stickyColumn && !props.variant,
 }))
 
 const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 
-// TODO: type correctly
-let content: any = slots.default?.()
+let content: VNode[] | VNode | undefined = slots.default?.()
 
 if (props.stackedHeading) {
   content = h('div', content)

@@ -1,6 +1,43 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+    <b-table-simple responsive>
+      <b-thead>
+        <b-tr>
+          <b-th sticky-column>Sticky Column Header</b-th>
+          <b-th>Heading 1</b-th>
+          <b-th>Heading 2</b-th>
+          <b-th>Heading 3</b-th>
+          <b-th>Heading 4</b-th>
+        </b-tr>
+      </b-thead>
+      <b-tbody>
+        <b-tr>
+          <b-td sticky-column variant="primary">Sticky Column Row Header</b-td>
+          <b-td>Cell</b-td>
+          <b-td>Cell</b-td>
+          <b-td>Cell</b-td>
+          <b-td>Cell</b-td>
+        </b-tr>
+        <b-tr>
+          <b-th sticky-column>Sticky Column Row Header</b-th>
+          <b-td>Cell</b-td>
+          <b-td>Cell</b-td>
+          <b-td>Cell</b-td>
+          <b-td>Cell</b-td>
+        </b-tr>
+      </b-tbody>
+      <b-tfoot>
+        <b-tr>
+          <b-th sticky-column>Sticky Column Footer</b-th>
+          <b-th>Heading 1</b-th>
+          <b-th>Heading 2</b-th>
+          <b-th>Heading 3</b-th>
+          <b-th>Heading 4</b-th>
+        </b-tr>
+      </b-tfoot>
+    </b-table-simple>
+    <hr />
     <!-- Table simple -->
     <b-table-simple hover small caption-top responsive>
       <caption>
