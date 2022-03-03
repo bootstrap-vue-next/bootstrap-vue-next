@@ -31,7 +31,7 @@ const classes = computed(() => [
     'caption-top': props.captionTop,
     'table-dark': props.dark,
     'table-hover': props.hover,
-    'b-table-stacked': typeof props.stacked === 'boolean',
+    'b-table-stacked': typeof props.stacked === 'boolean' && props.stacked,
     [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
     'table-striped': props.striped,
     'table-sm': props.small,
@@ -56,7 +56,7 @@ if (props.responsive) {
     'div',
     {
       class: {
-        'table-responsive': typeof props.responsive === 'boolean',
+        'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
         [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
       },
     },

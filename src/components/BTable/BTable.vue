@@ -196,7 +196,7 @@ export default defineComponent({
             'div',
             {
               class: {
-                'table-responsive': typeof props.responsive === 'boolean',
+                'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
                 [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
               },
             },
