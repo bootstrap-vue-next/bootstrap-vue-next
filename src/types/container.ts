@@ -1,4 +1,4 @@
-import VerticalAlign from './VerticalAlign'
+import type VerticalAlign from './VerticalAlign'
 
 export type ContainerVerticalAlign = Exclude<VerticalAlign, 'baseline' | 'text-top' | 'text-bottom'>
 export type ContainerHorizontalAlign = 'left' | 'center' | 'right'
