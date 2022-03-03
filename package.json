@@ -43,6 +43,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-rc.14",
+    "@vuepress/plugin-search": "^2.0.0-beta.36",
     "babel-loader": "^8.2.2",
     "bootstrap-icons": "^1.5.0",
     "esbuild-loader": "^2.13.1",

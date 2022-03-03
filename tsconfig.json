@@ -11,7 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["webpack-env"],
+    "types": ["webpack-env", "@vuepress/client/types"],
     "paths": {},
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },

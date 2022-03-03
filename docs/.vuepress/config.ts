@@ -6,12 +6,25 @@ export default defineUserConfig<DefaultThemeOptions>({
   base: '/bootstrap-vue-3/',
   title: 'BootstrapVue 3',
   head: [['link', {rel: 'icon', href: '/bootstrap-vue-3/favicon.ico'}]],
+  plugins: [
+    [
+      '@vuepress/plugin-search',
+      {
+        locales: {
+          '/': {
+            placeholder: 'Search',
+          },
+        },
+      },
+    ],
+  ],
   themeConfig: {
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
     editLink: true,
     contributors: false,
     lastUpdated: true,
+    darkMode: false,
     themePlugins: {
       mediumZoom: false,
     },
