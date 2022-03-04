@@ -1384,6 +1384,47 @@ This component is implemented in Bootstrap v5 as [Offcanvas](https://getbootstra
 
 This is a <Badge type="warning" text="non-standard" /> component.
 
+### `<b-skeleton>`
+
+#### Properties
+
+| Property    | Status                                                                               |
+| ----------- | ------------------------------------------------------------------------------------ |
+| `animation` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `height`    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `size`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `type`      | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `variant`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `width`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-skeleton-wrapper>`
+
+#### Properties
+
+| Property  | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `loading` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `loading` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+### `<b-skeleton-table>`
+
+#### Properties
+
+| Property      | Status                                                                               |
+| ------------- | ------------------------------------------------------------------------------------ |
+| `animation`   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `columns`     | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `hide-header` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `rows`        | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `show-footer` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+| `table-props` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
 ## Spinner
 
 ## Table
