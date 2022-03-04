@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-bordered table-striped" v-bind="tableProps">
+  <b-table-simple v-bind="tableProps">
     <thead v-if="!hideHeader">
       <tr>
         <th v-for="(th, i) in columns" :key="i">
@@ -21,11 +21,11 @@
         </th>
       </tr>
     </tfoot>
-  </table>
+  </b-table-simple>
 </template>
 
 <script setup lang="ts">
-// import BTableSimple from '../BTable/BtableSimple.vue'
+import BTableSimple from '../BTable/BTableSimple.vue'
 import BSkeleton from './BSkeleton.vue'
 
 defineProps({

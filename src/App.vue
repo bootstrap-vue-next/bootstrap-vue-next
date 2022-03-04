@@ -2,7 +2,6 @@
 <template>
   <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
     <b-skeleton-table
-      show-footer
       :rows="4"
       :columns="3"
       :table-props="{bordered: true, striped: true}"
