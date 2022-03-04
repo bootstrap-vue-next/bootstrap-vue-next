@@ -19,6 +19,5 @@ export default (
         .toLowerCase()
     )
 
-    console.log(classPrefix, prop.replace(propPrefix, ''), props[prop])
     return arr
   }, [])
