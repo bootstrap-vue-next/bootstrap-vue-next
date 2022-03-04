@@ -14,9 +14,10 @@ export default (
 
     arr.push(
       [classPrefix, prop.replace(propPrefix, ''), props[prop]]
-        .filter((e) => e)
+        .filter((e) => e && typeof e !== 'boolean')
         .join('-')
         .toLowerCase()
     )
+
     return arr
   }, [])

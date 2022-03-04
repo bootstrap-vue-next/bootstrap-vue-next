@@ -54,6 +54,10 @@ table:not(.table) tr:nth-child(2n) {
   background-color: var(--c-bg-lighter);
 }
 
+.table {
+  display: table;
+}
+
 code {
   background: transparent;
   padding: 0;

@@ -59,6 +59,7 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
             '/components/Progress.md',
             '/components/Pagination.md',
             '/components/Spinners.md',
+            '/components/Table.md',
             '/components/Tabs.md',
             '/components/Toast.md',
           ],

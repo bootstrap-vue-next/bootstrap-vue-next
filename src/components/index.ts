@@ -74,6 +74,13 @@ import BSkeletonWrapper from './BSkeleton/BSkeletonWrapper.vue'
 import BSpinner from './BSpinner.vue'
 import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
+import BTableSimple from './BTable/BTableSimple.vue'
+import BTbody from './BTable/BTbody.vue'
+import BTd from './BTable/BTd.vue'
+import BTfoot from './BTable/BTfoot.vue'
+import BTh from './BTable/BTh.vue'
+import BThead from './BTable/BThead.vue'
+import BTr from './BTable/BTr.vue'
 import BTabs from './BTabs/BTabs.vue'
 import {BToast, BToaster, BToastPlugin} from './BToast'
 import BToastContainer from './BToast/BToaster.vue'
@@ -156,6 +163,13 @@ export default {
   BSpinner,
   BTab,
   BTable,
+  BTableSimple,
+  BTbody,
+  BTd,
+  BTfoot,
+  BTh,
+  BThead,
+  BTr,
   BToast,
   BToaster,
   BToastContainer,

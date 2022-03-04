@@ -1,0 +1,82 @@
+.table.b-table.b-table-stacked {
+  display: block;
+  width: 100%;
+}
+
+.table.b-table.b-table-stacked > tfoot,
+.table.b-table.b-table-stacked > tfoot > tr.b-table-bottom-row,
+.table.b-table.b-table-stacked > tfoot > tr.b-table-top-row,
+.table.b-table.b-table-stacked > thead,
+.table.b-table.b-table-stacked > thead > tr.b-table-bottom-row,
+.table.b-table.b-table-stacked > thead > tr.b-table-top-row {
+  display: none;
+}
+
+.table.b-table.b-table-stacked > caption,
+.table.b-table.b-table-stacked > tbody,
+.table.b-table.b-table-stacked > tbody > tr,
+.table.b-table.b-table-stacked > tbody > tr > td,
+.table.b-table.b-table-stacked > tbody > tr > th {
+  display: block;
+}
+
+.table.b-table.b-table-stacked > tbody > tr > :first-child,
+.table.b-table.b-table-stacked > tbody > tr > [rowspan] + td,
+.table.b-table.b-table-stacked > tbody > tr > [rowspan] + th {
+  border-top-width: 3px;
+}
+
+.table.b-table.b-table-stacked > tbody > tr > [data-label]::before {
+  content: attr(data-label);
+  width: 40%;
+  float: left;
+  text-align: right;
+  word-wrap: break-word;
+  font-weight: 700;
+  font-style: normal;
+  padding: 0 0.5rem 0 0;
+  margin: 0;
+}
+
+.table.b-table.b-table-stacked > tbody > tr > [data-label]::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.table.b-table.b-table-stacked > tbody > tr > [data-label] > div {
+  display: inline-block;
+  width: 60%;
+  padding: 0 0 0 0.5rem;
+  margin: 0;
+}
+
+.b-table-sticky-header > .table.b-table > tbody > tr > .b-table-sticky-column,
+.b-table-sticky-header > .table.b-table > tfoot > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tbody > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tfoot > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tbody > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tfoot > tr > .b-table-sticky-column {
+  z-index: 2;
+}
+
+.b-table-sticky-header > .table.b-table > tbody > tr > .b-table-sticky-column,
+.b-table-sticky-header > .table.b-table > tfoot > tr > .b-table-sticky-column,
+.b-table-sticky-header > .table.b-table > thead > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tbody > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > tfoot > tr > .b-table-sticky-column,
+.table-responsive > .table.b-table > thead > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tbody > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > tfoot > tr > .b-table-sticky-column,
+[class*="table-responsive-"] > .table.b-table > thead > tr > .b-table-sticky-column {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+}
+
+.table.b-table > tbody > tr > .table-b-table-default,
+.table.b-table > tfoot > tr > .table-b-table-default,
+.table.b-table > thead > tr > .table-b-table-default {
+  color: #212529;
+  background-color: #fff;
+}
