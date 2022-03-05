@@ -1,6 +1,105 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+    <b-skeleton-icon>
+      <svg
+        viewBox="0 0 16 16"
+        width="1em"
+        height="1em"
+        focusable="false"
+        role="img"
+        aria-label="person"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        class="bi-person b-skeleton-icon b-icon bi"
+        style="font-size: 200%"
+      >
+        <g>
+          <path
+            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
+          ></path>
+        </g>
+      </svg>
+    </b-skeleton-icon>
+    <b-skeleton-icon>
+      <svg
+        viewBox="0 0 16 16"
+        width="1em"
+        height="1em"
+        focusable="false"
+        role="img"
+        aria-label="person fill"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        class="bi-person-fill b-skeleton-icon b-icon bi"
+        style="font-size: 200%"
+      >
+        <g>
+          <path
+            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+          ></path>
+        </g>
+      </svg>
+    </b-skeleton-icon>
+    <b-skeleton-table
+      :rows="4"
+      :columns="3"
+      :table-props="{bordered: true, striped: true}"
+    ></b-skeleton-table>
+    <b-button @click="loading = !loading">Toggle loading</b-button>
+    <b-card>
+      <b-skeleton-wrapper :loading="loading">
+        <template #loading>
+          <b-skeleton width="85%"></b-skeleton>
+          <b-skeleton width="55%"></b-skeleton>
+          <b-skeleton width="70%"></b-skeleton>
+        </template>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra nunc sapien, non
+        rhoncus elit tincidunt vitae. Vestibulum maximus, ligula eu feugiat molestie, massa diam
+        imperdiet odio, vitae viverra ligula est id nisi. Aliquam ut molestie est. Pellentesque
+        habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus
+        at consequat dui. Aenean tristique sagittis quam, sit amet sollicitudin neque sodales in.
+      </b-skeleton-wrapper>
+    </b-card>
+    <h5>Text (default)</h5>
+    <b-skeleton></b-skeleton>
+
+    <h5 class="mt-3">Avatar</h5>
+    <b-skeleton type="avatar"></b-skeleton>
+
+    <h5 class="mt-3">Input</h5>
+    <b-skeleton type="input"></b-skeleton>
+
+    <h5 class="mt-3">Button</h5>
+    <b-skeleton type="button"></b-skeleton>
+
+    <h5>Wave (default)</h5>
+    <b-card>
+      <b-skeleton animation="wave" width="85%"></b-skeleton>
+      <b-skeleton animation="wave" width="55%"></b-skeleton>
+      <b-skeleton animation="wave" width="70%"></b-skeleton>
+    </b-card>
+
+    <h5 class="mt-3">Fade</h5>
+    <b-card>
+      <b-skeleton animation="fade" width="85%"></b-skeleton>
+      <b-skeleton animation="fade" width="55%"></b-skeleton>
+      <b-skeleton animation="fade" width="70%"></b-skeleton>
+    </b-card>
+
+    <h5 class="mt-3">Throb</h5>
+    <b-card>
+      <b-skeleton animation="throb" width="85%"></b-skeleton>
+      <b-skeleton animation="throb" width="55%"></b-skeleton>
+      <b-skeleton animation="throb" width="70%"></b-skeleton>
+    </b-card>
+
+    <h5 class="mt-3">None</h5>
+    <b-card>
+      <b-skeleton animation width="85%"></b-skeleton>
+      <b-skeleton animation width="55%"></b-skeleton>
+      <b-skeleton animation width="70%"></b-skeleton>
+    </b-card>
     <b-table-simple responsive>
       <b-thead>
         <b-tr>
@@ -1696,6 +1795,7 @@ export default defineComponent({
   name: 'App',
   setup() {
     inject('toast')
+    const loading = ref(false)
     const password = ref('123')
     const showPassword = ref(false)
     const description = ref('This is a description')
@@ -1858,6 +1958,7 @@ export default defineComponent({
     }
 
     return {
+      loading,
       createToast,
       createToast2,
       password,
