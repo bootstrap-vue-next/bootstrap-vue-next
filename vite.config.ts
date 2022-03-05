@@ -34,6 +34,8 @@ const config = defineConfig({
     },
   },
 
+  css: {preprocessorOptions: {scss: {charset: false}}},
+
   plugins: [
     vue({
       include: [/\.vue$/, /\.md$/],
