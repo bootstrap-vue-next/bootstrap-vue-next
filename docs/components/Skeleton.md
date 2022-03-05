@@ -227,6 +227,93 @@ Utilize `<b-skeleton>` helper components to quickly scaffold existing components
 ></b-skeleton-table>
 ```
 
+## Icons
+
+`<b-skeleton-icon>` can also be used as placeholder for icons. And, since we drop `bootstrap-icon` package, for any SVG image. Any custom properties has to be written inside the SVG element.
+
+<ClientOnly>
+  <b-skeleton-icon>
+    <svg
+      viewBox="0 0 16 16"
+      width="1em"
+      height="1em"
+      focusable="false"
+      role="img"
+      aria-label="person"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      style="font-size: 200%"
+    >
+      <g>
+        <path
+          d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
+        ></path>
+      </g>
+    </svg>
+  </b-skeleton-icon>
+  <b-skeleton-icon>
+    <svg
+      viewBox="0 0 16 16"
+      width="1em"
+      height="1em"
+      focusable="false"
+      role="img"
+      aria-label="person fill"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      class="text-primary"
+      style="font-size: 200%"
+    >
+      <g>
+        <path
+          d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+        ></path>
+      </g>
+    </svg>
+  </b-skeleton-icon>
+</ClientOnly>
+
+```html
+<b-skeleton-icon>
+  <svg
+    viewBox="0 0 16 16"
+    width="1em"
+    height="1em"
+    focusable="false"
+    role="img"
+    aria-label="person"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    class="bi-person b-skeleton-icon b-icon bi"
+    style="font-size: 200%"
+  >
+    <g>
+      <path
+        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
+      ></path>
+    </g>
+  </svg>
+</b-skeleton-icon>
+<b-skeleton-icon>
+  <svg
+    viewBox="0 0 16 16"
+    width="1em"
+    height="1em"
+    focusable="false"
+    role="img"
+    aria-label="person fill"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    class="bi-person-fill b-skeleton-icon b-icon bi"
+    style="font-size: 200%"
+  >
+    <g>
+      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+    </g>
+  </svg>
+</b-skeleton-icon>
+```
+
 ## Component reference
 
 ### `<b-skeleton>`
@@ -269,6 +356,20 @@ Utilize `<b-skeleton>` helper components to quickly scaffold existing components
 | `rows`        | `Number`  | `3`     | Amount of rows to display                                                                     |
 | `show-footer` | `Boolean` | `false` | Enables the footer of the table                                                               |
 | `table-props` | `Object`  | `{}`    | Supports the same props as `<b-table-simple>`                                                 |
+
+### `<b-skeleton-icon>`
+
+#### Properties
+
+| Property    | Type     | Default  | Description                                                                      |
+| ----------- | -------- | -------- | -------------------------------------------------------------------------------- |
+| `animation` | `String` | `'wave'` | Animation used for the component, leave empty or `null` to disable the animation |
+
+#### Slots
+
+| Name      | Description                     |
+| --------- | ------------------------------- |
+| `default` | Content to show the SVG element |
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'

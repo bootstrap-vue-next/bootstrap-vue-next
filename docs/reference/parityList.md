@@ -1425,6 +1425,26 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `show-footer` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `table-props` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 
+### `<b-skeleton-img>`
+
+Not implemented yet.
+
+### `<b-skeleton-icon>`
+
+Since we do not implement Bootstrap icons or any related icon package. This component is slighly different from the BootstrapVue component, it was refactoring as a SVG wrapper.
+
+#### Properties
+
+| Property    | Status                                                                               |
+| ----------- | ------------------------------------------------------------------------------------ |
+| `animation` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
+#### Slots
+
+| Name      | Status                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| `default` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
+
 ## Spinner
 
 ## Table

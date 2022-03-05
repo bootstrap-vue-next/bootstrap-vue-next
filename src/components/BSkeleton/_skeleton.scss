@@ -65,6 +65,10 @@
   animation: b-skeleton-animate-wave 1.75s linear infinite;
 }
 
+.b-skeleton-icon-wrapper svg {
+  color: rgba(0, 0, 0, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .b-skeleton-animate-wave:after {
     background: none;

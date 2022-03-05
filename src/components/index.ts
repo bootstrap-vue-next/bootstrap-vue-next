@@ -69,6 +69,7 @@ import BProgress from './BProgress.vue'
 import BProgressBar from './BProgressBar.vue'
 import BRow from './BRow.vue'
 import BSkeleton from './BSkeleton/BSkeleton.vue'
+import BSkeletonIcon from './BSkeleton/BSkeletonIcon.vue'
 import BSkeletonTable from './BSkeleton/BSkeletonTable.vue'
 import BSkeletonWrapper from './BSkeleton/BSkeletonWrapper.vue'
 import BSpinner from './BSpinner.vue'
@@ -158,6 +159,7 @@ export default {
   BProgressBar,
   BRow,
   BSkeleton,
+  BSkeletonIcon,
   BSkeletonTable,
   BSkeletonWrapper,
   BSpinner,
