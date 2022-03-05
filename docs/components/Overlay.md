@@ -976,6 +976,8 @@ also set the `rounded` prop on `<b-overlay>`.
 | `hidden` |                                     | Emitted when the overlay has been hidden |
 | `shown`  |                                     | Emitted when the overlay has been shown  |
 
+<ClientOnly>
+
 <script lang="ts" setup>
   import {ref, nextTick} from 'vue';
 
@@ -1098,3 +1100,5 @@ also set the `rounded` prop on `<b-overlay>`.
   }
 
 </script>
+
+</ClientOnly>

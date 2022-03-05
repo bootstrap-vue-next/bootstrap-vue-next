@@ -19,13 +19,13 @@
   <a href="https://v3.vuejs.org/">
     <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
   </a>
-  
+
   <a href="https://github.com/cdmoro/bootstrap-vue-3/actions?workflow=Tests">
     <img src="https://flat.badgen.net/github/status/cdmoro/bootstrap-vue-3" alt="Build status">
   </a>
-  
+
   <br>
-  
+
   <a href="https://www.npmjs.com/package/bootstrap-vue-3">
     <img src="https://flat.badgen.net/npm/dt/bootstrap-vue-3" alt="npm downloads">
   </a>
@@ -42,12 +42,12 @@ As you may suppose, this library is heavily inspired by **BootstrapVue**, as wel
 
 # Install
 
-``` console
+```console
+# NPM
+npm i --save bootstrap bootstrap-vue-3
+
 # Yarn
 yarn add bootstrap bootstrap-vue-3
-
-# NPM
-npm i bootstrap bootstrap-vue-3
 ```
 
 # Contribute & support 🙌
@@ -72,3 +72,12 @@ Or if you prefer you can make a one-time donation through these channels:
 # License
 
 Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
+
+# Making a new release
+
+```
+npm run release
+git push --follow-tags
+```
+
+then https://github.com/cdmoro/bootstrap-vue-3/releases/new

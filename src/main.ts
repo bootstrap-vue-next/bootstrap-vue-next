@@ -1,6 +1,6 @@
-import {createApp, h} from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
-import BootstrapVue from './BootstrapVue'
+import BootstrapVue, {BToastPlugin} from './BootstrapVue'
 /*
 import { createWebHistory, createRouter } from "vue-router";
 
@@ -34,8 +34,8 @@ const router = createRouter({
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/styles.scss'
-
 const app = createApp(App)
 app.use(BootstrapVue)
+app.use(BToastPlugin)
 // app.use(router)
 app.mount('#app')

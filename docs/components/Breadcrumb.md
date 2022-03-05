@@ -61,7 +61,6 @@ over the content of each item:
   <b-card>
     <b-breadcrumb>
       <b-breadcrumb-item href="#home">
-        <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
         Home
       </b-breadcrumb-item>
       <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
@@ -74,10 +73,7 @@ over the content of each item:
 
 ```html
 <b-breadcrumb>
-  <b-breadcrumb-item href="#home">
-    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
-    Home
-  </b-breadcrumb-item>
+  <b-breadcrumb-item href="#home"> Home </b-breadcrumb-item>
   <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
   <b-breadcrumb-item href="#bar" @click="alertEvent">Bar</b-breadcrumb-item>
   <b-breadcrumb-item active>Baz</b-breadcrumb-item>
@@ -103,7 +99,6 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
   <b-card>
     <b-breadcrumb>
       <b-breadcrumb-item href="#home">
-        <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
         Home
       </b-breadcrumb-item>
       <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
@@ -118,10 +113,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 
 ```html
 <b-breadcrumb>
-  <b-breadcrumb-item href="#home">
-    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
-    Home
-  </b-breadcrumb-item>
+  <b-breadcrumb-item href="#home"> Home </b-breadcrumb-item>
   <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
   <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>
   <b-breadcrumb-item active>Baz</b-breadcrumb-item>
@@ -180,7 +172,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 | ------- | ----------------------------------- | --------------------------------------- |
 | `click` | `event` - Native click event object | Content to place in the breadcrumb item |
 
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
   import {ref, Ref} from 'vue';
   import {BreadcrumbItem} from '../../src/types';
 
@@ -195,4 +187,4 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
   const alertEvent = (event: PointerEvent) => {
     alert(`Event ${event.target}`);
   }
-</script>
+</script> -->

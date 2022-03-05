@@ -1,10 +1,16 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
 @import "../components/BAvatar/avatar";
 @import "../components/BButton/button";
 @import "../components/BCard/card";
-@import "../components/BIcon/icon";
 @import "../components/BInputGroup/input-group";
 @import "../components/BPagination/pagination";
+@import "../components/BSkeleton/skeleton";
 @import "../components/BTransition/transition";
+@import "../components/BTable/table";
+@import "../components/BToast/index";
 
 .input-group
   > .form-floating:not(:first-child)

@@ -4,10 +4,13 @@
 set -e
 
 # build library
-yarn run build
+npm run build
 
-# build
-yarn run docs:build
+# docs
+cd docs
+npm install
+cd ..
+npm run docs:build
 
 # navigate into the build output directory
 cd docs/.vuepress/dist

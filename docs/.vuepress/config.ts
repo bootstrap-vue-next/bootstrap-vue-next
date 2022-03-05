@@ -1,7 +1,9 @@
 import {defineUserConfig} from 'vuepress'
+import {componentReference} from './PluginComponentReference'
 import type {DefaultThemeOptions} from 'vuepress'
+import type {WebpackBundlerOptions} from '@vuepress/bundler-webpack'
 
-export default defineUserConfig<DefaultThemeOptions>({
+export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
   lang: 'en-US',
   base: '/bootstrap-vue-3/',
   title: 'BootstrapVue 3',
@@ -17,14 +19,17 @@ export default defineUserConfig<DefaultThemeOptions>({
         },
       },
     ],
+    componentReference
   ],
   themeConfig: {
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
+    docsDir: 'docs',
     editLink: true,
     contributors: false,
     lastUpdated: true,
     darkMode: false,
+    bundler: '@vuepress/bundler-webpack',
     themePlugins: {
       mediumZoom: false,
     },
@@ -45,6 +50,7 @@ export default defineUserConfig<DefaultThemeOptions>({
         {
           text: 'Components',
           children: [
+            '/components/README.md',
             '/components/Accordion.md',
             '/components/Alert.md',
             '/components/Avatar.md',
@@ -54,24 +60,21 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/components/ButtonGroup.md',
             '/components/ButtonToolbar.md',
             '/components/Card.md',
-            '/components/Collapse.md',
             '/components/Dropdown.md',
             '/components/FormCheckbox.md',
-            '/components/Form.md',
-            '/components/FormGroup.md',
-            '/components/FormInput.md',
             '/components/FormRadio.md',
+            '/components/FormInput.md',
             '/components/FormSelect.md',
-            '/components/FormTextArea.md',
-            '/components/Icon.md',
             '/components/Image.md',
-            '/components/InputGroup.md',
             '/components/ListGroup.md',
             '/components/Overlay.md',
-            '/components/Pagination.md',
             '/components/Progress.md',
+            '/components/Pagination.md',
+            '/components/Skeleton.md',
             '/components/Spinners.md',
+            '/components/Table.md',
             '/components/Tabs.md',
+            '/components/Toast.md',
           ],
         },
       ],

@@ -429,6 +429,8 @@ apply those roles for you automatically, as it depends on your final document ma
 | `shown`             |                                                   | Emitted when collapse has finished opening |
 | `update:modelValue` | `visible` Will be true if the collapse is visible | Emitted when collapse has finished opening |
 
+<ClientOnly>
+
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
 
@@ -445,6 +447,8 @@ apply those roles for you automatically, as it depends on your final document ma
           synth nesciunt you probably haven't heard of them accusamus labore VHS.
         `
 </script>
+
+</ClientOnly>
 
 <style>
 .collapsed > .when-open {

@@ -1,4 +1,4 @@
-import {DOCUMENT} from '../types/safe-types'
+import {DOCUMENT, WINDOW} from '../types/safe-types'
 import {Comment, Slot, VNode} from 'vue'
 import {from as arrayFrom} from './array'
 import {toString} from './stringUtils'
@@ -103,3 +103,14 @@ export const removeAttr = (el: HTMLElement, attr: string): void => {
 
 export const isTag = (tag: any, name: any): boolean =>
   toString(tag).toLowerCase() === toString(name).toLowerCase()
+
+export const requestAF =
+  WINDOW.requestAnimationFrame ||
+  WINDOW.webkitRequestAnimationFrame ||
+  WINDOW.mozRequestAnimationFrame ||
+  WINDOW.msRequestAnimationFrame ||
+  WINDOW.oRequestAnimationFrame ||
+  // Fallback, but not a true polyfill
+  // Only needed for Opera Mini
+  /* istanbul ignore next */
+  ((cb) => setTimeout(cb, 16))

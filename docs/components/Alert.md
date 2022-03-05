@@ -269,19 +269,9 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
 </script>
 ```
 
-## Component reference
-
-### `<b-alert>`
-
-#### Properties
-
-| Property        | Type      | Default | Description                                                                |
-| --------------- | --------- | ------- | -------------------------------------------------------------------------- |
-| `dismiss-label` | `String`  | `Close` | Value for the 'aria-label' attribute on the dismiss button                 |
-| `dismissible`   | `Boolean` | `false` | When set, enables the dismiss close button                                 |
-| ~~`fade`~~      | `Boolean` | `false` | When set to `true`, enables the fade animation/transition on the component |
-| `show`          | `Boolean` | `false` | When set, shows the alert. Do not use together with v-model                |
-| `variant`       | `String`  | `info`  | Applies one of the Bootstrap theme color variants to the component         |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 #### v-model
 
@@ -296,13 +286,7 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
 | `default`     | Content to place in the alert  |
 | ~~`dismiss`~~ | Content for the dismiss button |
 
-#### Events
-
-| Event                | Arguments                                        | Description                                                                                   |
-| -------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| `dismiss-count-down` | `dismissCountDown` - Time remaining to dismissed | Content to place in the alert                                                                 |
-| `dismissed`          |                                                  | Alert dismissed either via the dismiss close button or when the dismiss countdown has expired |
-| `update:modelValue`  | modelValue                                       | Standard event to update the v-model                                                          |
+<ClientOnly>
 
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
@@ -331,3 +315,5 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
   };
 
 </script>
+
+</ClientOnly>

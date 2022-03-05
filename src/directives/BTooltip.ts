@@ -43,6 +43,14 @@ function resolvePlacement(modifiers: DirectiveBinding['modifiers']): Tooltip.Opt
   return 'top'
 }
 
+function resolveDelay(values: DirectiveBinding['value']): Tooltip.Options['delay'] {
+  if (values?.delay) {
+    return values.delay
+  }
+
+  return 0
+}
+
 const BTooltip: Directive<HTMLElement> = {
   beforeMount(el, binding) {
     el.setAttribute('data-bs-toogle', 'tooltip')
@@ -50,10 +58,12 @@ const BTooltip: Directive<HTMLElement> = {
     const isHtml = /<("[^"]*"|'[^']*'|[^'">])*>/.test(el.title)
     const trigger = resolveTrigger(binding.modifiers)
     const placement = resolvePlacement(binding.modifiers)
+    const delay = resolveDelay(binding.value)
 
     new Tooltip(el, {
       trigger,
       placement,
+      delay,
       html: isHtml,
     })
   },

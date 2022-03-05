@@ -48,8 +48,6 @@ import BFormSelectOptionGroup from './BFormSelect/BFormSelectOptionGroup.vue'
 import BFormText from './BForm/BFormText.vue'
 import BFormTextarea from './BFormTextarea/BFormTextarea.vue'
 import BFormValidFeedback from './BForm/BFormValidFeedback.vue'
-import BIcon from './BIcon/BIcon.vue'
-import BIconstack from './BIcon/BIconstack.vue'
 import BImg from './BImg.vue'
 import BInputGroup from './BInputGroup/BInputGroup.vue'
 import BInputGroupAddon from './BInputGroup/BInputGroupAddon.vue'
@@ -70,10 +68,23 @@ import BPopover from './BPopover.vue'
 import BProgress from './BProgress.vue'
 import BProgressBar from './BProgressBar.vue'
 import BRow from './BRow.vue'
+import BSkeleton from './BSkeleton/BSkeleton.vue'
+import BSkeletonIcon from './BSkeleton/BSkeletonIcon.vue'
+import BSkeletonTable from './BSkeleton/BSkeletonTable.vue'
+import BSkeletonWrapper from './BSkeleton/BSkeletonWrapper.vue'
 import BSpinner from './BSpinner.vue'
 import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
+import BTableSimple from './BTable/BTableSimple.vue'
+import BTbody from './BTable/BTbody.vue'
+import BTd from './BTable/BTd.vue'
+import BTfoot from './BTable/BTfoot.vue'
+import BTh from './BTable/BTh.vue'
+import BThead from './BTable/BThead.vue'
+import BTr from './BTable/BTr.vue'
 import BTabs from './BTabs/BTabs.vue'
+import {BToast, BToaster, BToastPlugin} from './BToast'
+import BToastContainer from './BToast/BToaster.vue'
 import BTransition from './BTransition/BTransition.vue'
 
 export default {
@@ -127,8 +138,6 @@ export default {
   BFormText,
   BFormTextarea,
   BFormValidFeedback,
-  BIcon,
-  BIconstack,
   BImg,
   BInputGroup,
   BInputGroupAddon,
@@ -149,9 +158,24 @@ export default {
   BProgress,
   BProgressBar,
   BRow,
+  BSkeleton,
+  BSkeletonIcon,
+  BSkeletonTable,
+  BSkeletonWrapper,
   BSpinner,
   BTab,
   BTable,
+  BTableSimple,
+  BTbody,
+  BTd,
+  BTfoot,
+  BTh,
+  BThead,
+  BTr,
+  BToast,
+  BToaster,
+  BToastContainer,
   BTabs,
   BTransition,
+  BToastPlugin,
 }

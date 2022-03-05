@@ -458,6 +458,8 @@ Refer to the
 [Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.0/forms/validation/)
 for details on the Bootstrap v5 validation states.
 
+<ClientOnly>
+
 <script lang='ts' setup>
   import {ref, computed, reactive, nextTick} from 'vue'
 
@@ -493,6 +495,8 @@ for details on the Bootstrap v5 validation states.
   const userId = ref('')
   const validation = computed(()=> userId.value.length > 4 && userId.value.length < 13)
 </script>
+
+</ClientOnly>
 
 ## Component reference
 

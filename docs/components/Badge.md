@@ -184,16 +184,9 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
 <b-badge href="#" variant="dark">Dark</b-badge>
 ```
 
-## Component reference
-
-### Properties
-
-| Property         | Type      | Default       | Description                                                        |
-| ---------------- | --------- | ------------- | ------------------------------------------------------------------ |
-| `dot-indicator`  | `Boolean` | `false`       |
-| `text-indicator` | `Boolean` | `false`       |
-| `pill`           | `Boolean` | `false`       | When set to 'true', renders the badge in pill style                |
-| `variant`        | `String`  | `'secondary'` | Applies one of the Bootstrap theme color variants to the component |
+<ClientOnly>
+    <ComponentReference></ComponentReference>
+</ClientOnly>
 
 ### Slots
 

@@ -1,0 +1,51 @@
+// .b-toaster {
+//   .b-toast {
+// // &.b-toaster-top-right,
+// // &.b-toaster-top-left,
+// // &.b-toaster-bottom-right,
+// // &.b-toaster-bottom-left {
+//       .b-toast {
+//         &.b-toaster-enter-active,
+//         &.b-toaster-leave-active,
+//         &.b-toaster-move {
+//           transition: transform 0.175s;
+//         }
+
+//         &.b-toaster-enter-from {
+//           opacity: 0;
+//         }
+
+//         &.b-toaster-enter-to,
+//         &.b-toaster-enter-active {
+//           display: block;
+//           .toast.fade {
+//             // Delay the appearance of the toast until
+//             // the move transition has completed
+//             transition-delay: 0.175s;
+//           }
+
+//           .toast {
+//             // Delay the appearance of the toast until
+//             // the move transition has completed
+//             transition: opacity 0.25s linear;
+// }
+//         }
+
+//         &.b-toaster-enter-to {
+//         }
+
+//         &.b-toaster-leave-active {
+//           position: absolute;
+//           transition-delay: 0.175s;
+
+//           .toast.fade {
+//             transition-delay: 0s;
+//           }
+//         }
+
+//         &.b-toaster-leave-to {
+//           opacity: 0;
+//         }
+//   }
+// }
+// }

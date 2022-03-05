@@ -3,6 +3,7 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
+import visualizer from 'rollup-plugin-visualizer'
 
 const config = defineConfig({
   resolve: {
@@ -19,7 +20,7 @@ const config = defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['vue'],
+      external: ['bootstrap', 'vue'],
       output: {
         exports: 'named',
         assetFileNames: `bootstrap-vue-3.[ext]`, //without this, it generates build/styles.css
@@ -27,15 +28,19 @@ const config = defineConfig({
         // for externalized deps
         globals: {
           vue: 'Vue',
+          bootstrap: 'Bootstrap',
         },
       },
     },
   },
 
+  css: {preprocessorOptions: {scss: {charset: false}}},
+
   plugins: [
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
+    visualizer(), // generates admin/stats.html on npm run build
   ],
 
   server: {

@@ -1,0 +1,69 @@
+$b-toast-background-opacity: alpha($toast-background-color) !default;
+
+.b-toast {
+  display: block;
+  position: relative;
+  max-width: $toast-max-width;
+  backface-visibility: hidden;
+  background-clip: padding-box;
+  z-index: 1;
+
+  @include border-radius($toast-border-radius);
+
+  .toast {
+    // Allow us to override Bootstrap's default toast opacity
+    // As they do not provide it as a variable
+    background-color: rgba($toast-background-color, $b-toast-background-opacity);
+  }
+
+  &:not(:last-child) {
+    margin-bottom: $toast-padding-x;
+  }
+
+  &.b-toast-solid {
+    .toast {
+      background-color: rgba($toast-background-color, 1);
+    }
+  }
+
+  .toast {
+    // Override default Bootstrap v4.x opacity of 0
+    // Needed for re-usable fade transition
+    .toast-body {
+      display: block; // Needed when we use a link as the body element
+    }
+  }
+}
+
+// .b-toast-primary{
+//       color: red
+// }
+// rgba(204,229,255,.85)
+@mixin b-toast-variant($background, $border, $color) {
+  // Based on alert-variant mixin
+  background-color: rgba(lighten($background, 5%), $b-toast-background-opacity) !important;
+  border-color: rgba($border, $b-toast-background-opacity) !important;
+  color: $color;
+
+  .toast-header {
+    color: $color;
+    background-color: rgba($background, $b-toast-background-opacity);
+    border-bottom-color: rgba($border, $b-toast-background-opacity);
+  }
+
+  &.b-toast-solid {
+    .toast {
+      background-color: rgba(lighten($background, 5%), 1);
+    }
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .b-toast-#{$color} {
+    @include b-toast-variant(
+      shift-color($value, $alert-bg-scale),
+      shift-color($value, $alert-border-scale),
+      shift-color($value, $alert-color-scale)
+    );
+  }
+}

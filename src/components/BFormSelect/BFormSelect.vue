@@ -26,11 +26,10 @@
       <!-- eslint-disable vue/no-v-html -->
       <b-form-select-option
         v-else
-        :key="`option_${index}`"
+        :key="`option2_${index}`"
         :value="option.value"
         :disabled="option.disabled"
-        v-text="option.text"
-        v-html="option.html"
+        v-html="option.html || option.text"
       />
       <!--eslint-enable-->
     </template>

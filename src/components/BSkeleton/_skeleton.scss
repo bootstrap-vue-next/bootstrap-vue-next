@@ -1,0 +1,170 @@
+.b-skeleton-wrapper {
+  cursor: wait;
+}
+
+.b-skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.12);
+  cursor: wait;
+  -webkit-mask-image: radial-gradient(#fff, #000);
+  mask-image: radial-gradient(#fff, #000);
+}
+
+.b-skeleton:before {
+  content: " ";
+}
+
+.b-skeleton-text {
+  height: 1rem;
+  margin-bottom: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.b-skeleton-button {
+  width: 75px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+}
+
+.b-skeleton-avatar {
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+}
+
+.b-skeleton-input {
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.b-skeleton-icon-wrapper svg {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+.b-skeleton-img {
+  height: 100%;
+  width: 100%;
+}
+
+.b-skeleton-animate-wave:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  background: linear-gradient(90deg, transparent, hsla(0, 0%, 100%, 0.4), transparent);
+  -webkit-animation: b-skeleton-animate-wave 1.75s linear infinite;
+  animation: b-skeleton-animate-wave 1.75s linear infinite;
+}
+
+.b-skeleton-icon-wrapper svg {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b-skeleton-animate-wave:after {
+    background: none;
+    -webkit-animation: none;
+    animation: none;
+  }
+}
+
+@-webkit-keyframes b-skeleton-animate-wave {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+
+  to {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+@keyframes b-skeleton-animate-wave {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+
+  to {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+.b-skeleton-animate-fade {
+  -webkit-animation: b-skeleton-animate-fade 0.875s ease-in-out infinite alternate;
+  animation: b-skeleton-animate-fade 0.875s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b-skeleton-animate-fade {
+    -webkit-animation: none;
+    animation: none;
+  }
+}
+
+@-webkit-keyframes b-skeleton-animate-fade {
+  0% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.4;
+  }
+}
+
+@keyframes b-skeleton-animate-fade {
+  0% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.4;
+  }
+}
+
+.b-skeleton-animate-throb {
+  -webkit-animation: b-skeleton-animate-throb 0.875s ease-in infinite alternate;
+  animation: b-skeleton-animate-throb 0.875s ease-in infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b-skeleton-animate-throb {
+    -webkit-animation: none;
+    animation: none;
+  }
+}
+
+@-webkit-keyframes b-skeleton-animate-throb {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  to {
+    -webkit-transform: scale(0.975);
+    transform: scale(0.975);
+  }
+}
+
+@keyframes b-skeleton-animate-throb {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  to {
+    -webkit-transform: scale(0.975);
+    transform: scale(0.975);
+  }
+}
