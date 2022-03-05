@@ -8,6 +8,9 @@ BootstrapVue 3 components
             <RouterLink to="./Accordion.html">Accordion</RouterLink> — Easily toggle content visibility on your pages. Includes support for making accordions.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Alert.html">Alert</RouterLink> — Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Avatar.html">Avatar</RouterLink> — Custom component typically used to display a user profile as a picture, an icon, or short text.
         </b-list-group-item>
         <b-list-group-item>
@@ -53,10 +56,7 @@ BootstrapVue 3 components
             <RouterLink to="./FormSelect.html">Form Select</RouterLink> — Bootstrap custom select using custom styles. 
         </b-list-group-item>
         <b-list-group-item>
-            <RouterLink to="./FormTextArea.html">Form Textarea</RouterLink> — Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states. 
-        </b-list-group-item>
-        <b-list-group-item>
-            <RouterLink to="./Icon.html">Icon</RouterLink> — Icons designed to work with Bootstrap components, from form controls to navigation. 
+            <RouterLink to="./FormTextarea.html">Form Textarea</RouterLink> — Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states. 
         </b-list-group-item>
         <b-list-group-item>
             <RouterLink to="./Image.html">Image</RouterLink> — Image component with responsive behavior. 
@@ -80,7 +80,16 @@ BootstrapVue 3 components
             <RouterLink to="./Spinners.html">Spinner</RouterLink> — The &lt;b-spinner&gt; component can be used to show the loading state in your projects. They're rendered only with basic HTML and CSS as a lightweight Vue functional component.
         </b-list-group-item>
         <b-list-group-item>
+            <RouterLink to="./Skeleton.html">Skeleton</RouterLink> — The &lt;b-skeleton&gt; component can be used to scaffold a loading state, while your data is loading.
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./Table.html">Table</RouterLink> — For displaying tabular data. &lt;b-table&gt; supports pagination, filtering, sorting, custom rendering, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVue also provides lightweight alternative components &lt;b-table-lite&gt; and &lt;b-table-simple&gt;.
+        </b-list-group-item>
+        <b-list-group-item>
             <RouterLink to="./Tabs.html">Tabs</RouterLink> — Create a widget of tabbable panes of local content.
+        </b-list-group-item>
+        <b-list-group-item>
+            <RouterLink to="./Toast.html">Toast</RouterLink> — Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
         </b-list-group-item>
     </b-list-group>
 </ClientOnly>
