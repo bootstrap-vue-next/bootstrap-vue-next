@@ -8,8 +8,19 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
   base: '/bootstrap-vue-3/',
   title: 'BootstrapVue 3',
   head: [['link', {rel: 'icon', href: '/bootstrap-vue-3/favicon.ico'}]],
-
-  plugins: [componentReference],
+  plugins: [
+    [
+      '@vuepress/plugin-search',
+      {
+        locales: {
+          '/': {
+            placeholder: 'Search',
+          },
+        },
+      },
+    ],
+    componentReference
+  ],
   themeConfig: {
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
@@ -17,6 +28,7 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
     editLink: true,
     contributors: false,
     lastUpdated: true,
+    darkMode: false,
     bundler: '@vuepress/bundler-webpack',
     themePlugins: {
       mediumZoom: false,
