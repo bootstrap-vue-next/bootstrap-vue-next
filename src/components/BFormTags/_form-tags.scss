@@ -6,6 +6,14 @@
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+.b-form-tags.disabled {
+  background-color: #e9ecef;
+}
+
+.b-form-tag.disabled {
+  opacity: 0.75;
+}
+
 .b-form-tags.focus.is-valid {
   border-color: #198754;
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
@@ -26,9 +34,9 @@
 }
 
 .b-form-tag {
-  font-size: 75%;
+  font-size: 75% !important;
   font-weight: 400 !important;
-  line-height: 1.5;
+  line-height: 1.5 !important;
   margin-right: 0.25rem;
 }
 

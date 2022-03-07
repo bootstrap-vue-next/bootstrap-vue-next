@@ -29,7 +29,7 @@
       >
         <span id="" class="b-form-tag-content flex-grow-1 text-truncate">{{ tag }}</span>
         <button
-          v-if="!noTagRemove"
+          v-if="!disabled && !noTagRemove"
           aria-keyshortcuts="Delete"
           type="button"
           :aria-label="tagRemoveLabel"
@@ -43,6 +43,7 @@
         <div role="group" class="d-flex">
           <input
             :id="inputId"
+            :disabled="disabled"
             :value="inputValue"
             :type="inputType"
             :placeholder="placeholder"
@@ -54,7 +55,7 @@
             @input="onInput"
             @keyup.enter.exact="onEnter"
             @keyup.delete.exact="onDelete"
-            @focus="focus = true"
+            @focus="onFocus"
             @blur="focus = false"
           />
           <button
@@ -69,7 +70,7 @@
               inputClass,
             ]"
             style="font-size: 90%"
-            :disabled="inputValue.length === 0"
+            :disabled="disabled || inputValue.length === 0"
             @click="addTag"
           >
             <slot name="add-button-text">{{ addButtonText }}</slot>
@@ -89,11 +90,12 @@
 
 <script setup lang="ts">
 import {computed, PropType, ref, watch} from 'vue'
-import type {InputType} from '../../types'
+import type {InputSize, InputType} from '../../types'
 
 const props = defineProps({
   addButtonText: {type: String, default: 'Add'},
   addButtonVariant: {type: String, default: 'outline-secondary'},
+  disabled: {type: Boolean, default: false},
   duplicateTagText: {type: String, default: 'Duplicate tag(s)'},
   inputAttrs: {type: Object},
   inputClass: {type: [Array, Object, String]},
@@ -107,6 +109,7 @@ const props = defineProps({
   removeOnDelete: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
   state: {type: Boolean, default: null},
+  size: {type: String as PropType<InputSize>},
   tagPills: {type: Boolean, default: false},
   tagRemoveLabel: {type: String, default: 'Remove tag'},
   tagRemovedLabel: {type: String, default: 'Tag removed'},
@@ -127,6 +130,8 @@ const inputValue = ref('')
 const focus = ref(false)
 
 const classes = computed(() => ({
+  [`form-control-${props.size}`]: props.size,
+  'disabled': props.disabled,
   'focus': focus.value,
   'is-invalid': props.state === false,
   'is-valid': props.state === true,
@@ -137,6 +142,7 @@ const tagClasses = computed(() => [
   {
     'text-dark': ['warning', 'info', 'light'].includes(props.tagVariant),
     'rounded-pill': props.tagPills,
+    'disabled': props.disabled,
   },
 ])
 
@@ -144,6 +150,14 @@ const duplicateTag = computed(() => value.value.includes(inputValue.value))
 const validTag = computed(() =>
   inputValue.value === '' ? true : props.tagValidator(inputValue.value)
 )
+
+function onFocus() {
+  if (props.disabled) {
+    return
+  }
+
+  focus.value = true
+}
 
 function onInput(e: Event) {
   const {value} = e.target as HTMLInputElement

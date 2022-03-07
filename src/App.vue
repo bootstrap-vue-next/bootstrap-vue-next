@@ -7,7 +7,7 @@
         v-model="value"
         input-id="tags-validation"
         tag-variant="primary"
-        tag-pills
+        disabled
         :input-attrs="{'aria-describedby': 'tags-validation-help'}"
       ></b-form-tags>
       <template #invalid-feedback> You must provide at least 3 tags and no more than 8 </template>
