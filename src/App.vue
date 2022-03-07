@@ -1,6 +1,26 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+    <b-form-group label="Tags validation example" label-for="tags-validation" :state="state">
+      <!-- <label for="tags-basic">Type a new tag and press enter</label> -->
+      <b-form-tags
+        v-model="value"
+        input-id="tags-validation"
+        tag-variant="primary"
+        tag-pills
+        :input-attrs="{'aria-describedby': 'tags-validation-help'}"
+      ></b-form-tags>
+      <template #invalid-feedback> You must provide at least 3 tags and no more than 8 </template>
+
+      <template #description>
+        <div id="tags-validation-help">
+          Tags must be 3 to 5 characters in length and all lower case. Enter tags separated by
+          spaces or press enter.
+        </div>
+      </template>
+    </b-form-group>
+    <p class="mt-2">Value: {{ value }}</p>
+
     <b-skeleton-icon>
       <svg
         viewBox="0 0 16 16"
@@ -1785,7 +1805,16 @@
 </template>
 
 <script lang="ts">
-import {ComponentPublicInstance, defineComponent, h, inject, onMounted, reactive, ref} from 'vue'
+import {
+  ComponentPublicInstance,
+  computed,
+  defineComponent,
+  h,
+  inject,
+  onMounted,
+  reactive,
+  ref,
+} from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
 import TableField from './types/TableField'
 import {BvEvent} from './utils/bvEvent'
@@ -1795,6 +1824,8 @@ export default defineComponent({
   name: 'App',
   setup() {
     inject('toast')
+    const value = ref(['apple', 'orange'])
+    const state = computed(() => value.value.length > 2 && value.value.length < 9)
     const loading = ref(false)
     const password = ref('123')
     const showPassword = ref(false)
@@ -1957,7 +1988,15 @@ export default defineComponent({
       c?.show({title: 'example title', body: h('div', 'cool Dynamic')})
     }
 
+    function tagValidator(tag: string) {
+      // Individual tag validator function
+      return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
+    }
+
     return {
+      tagValidator,
+      value,
+      state,
       loading,
       createToast,
       createToast2,
