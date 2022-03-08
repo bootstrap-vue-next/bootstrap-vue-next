@@ -5,8 +5,9 @@
       <!-- <label for="tags-basic">Type a new tag and press enter</label> -->
       <b-form-tags
         v-model="value"
-        input-id="tags-validation"
-        tag-variant="primary"
+        tag-variant="warning"
+        separator=" ,"
+        remove-on-delete
         disabled
         :input-attrs="{'aria-describedby': 'tags-validation-help'}"
       ></b-form-tags>

@@ -1,45 +1,69 @@
 <template>
-  <div class="b-form-tags form-control h-auto" :class="classes" role="group" tabindex="-1">
+  <div
+    :id="computedId"
+    class="b-form-tags form-control h-auto"
+    :class="classes"
+    role="group"
+    tabindex="-1"
+    @focusin="onFocusin"
+  >
     <output
+      :id="`${computedId}selected_tags__`"
       class="visually-hidden"
       role="status"
-      for=""
+      :for="inputId"
       :aria-live="focus ? 'polite' : 'off'"
       aria-atomic="true"
       aria-relevant="additions text"
-      >{{ value.join(', ') }}</output
+      >{{ tags.join(', ') }}</output
     >
     <div
+      :id="`${computedId}removed_tags__`"
       role="status"
       :aria-live="focus ? 'assertive' : 'off'"
       aria-atomic="true"
       class="visually-hidden"
     >
-      ({{ tagRemovedLabel }})
+      ({{ tagRemovedLabel }}) {{ lastRemovedTag }}
     </div>
-    <ul class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center">
+    <ul
+      :id="`${computedId}tag_list__`"
+      class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
+    >
       <li
-        v-for="(tag, i) in value"
-        id=""
+        v-for="(tag, i) in tags"
+        :id="tagsId.get(tag)"
         :key="tag"
         :title="tag"
-        class="badge b-form-tag d-inline-flex mw-100"
+        class="badge b-form-tag d-inline-flex align-items-center mw-100"
         :class="tagClasses"
         aria-labelledby=""
       >
-        <span id="" class="b-form-tag-content flex-grow-1 text-truncate">{{ tag }}</span>
+        <span
+          :id="`${tagsId.get(tag)}taglabel__`"
+          class="b-form-tag-content flex-grow-1 text-truncate"
+          >{{ tag }}</span
+        >
         <button
           v-if="!disabled && !noTagRemove"
           aria-keyshortcuts="Delete"
           type="button"
           :aria-label="tagRemoveLabel"
-          class="btn-close btn-close-white b-form-tag-remove"
-          aria-controls=""
-          aria-describedby=""
+          class="btn-close b-form-tag-remove"
+          :class="{
+            'btn-close-white': !['warning', 'info', 'light'].includes(tagVariant),
+          }"
+          :aria-controls="tagsId.get(tag)"
+          :aria-describedby="`${tagsId.get(tag)}taglabel__`"
           @click="removeTag(i)"
         ></button>
       </li>
-      <li role="none" aria-live="off" class="b-from-tags-field flex-grow-1" aria-controls="">
+      <li
+        role="none"
+        aria-live="off"
+        class="b-from-tags-field flex-grow-1"
+        :aria-controls="`${computedId}tag_list__`"
+      >
         <div role="group" class="d-flex">
           <input
             :id="inputId"
@@ -59,7 +83,7 @@
             @blur="focus = false"
           />
           <button
-            v-if="validTag"
+            v-if="validTag && !duplicateTag"
             type="button"
             class="btn b-form-tags-button py-0"
             :class="[
@@ -83,13 +107,14 @@
       <small v-if="duplicateTag" class="form-text text-muted"
         >{{ duplicateTagText }}: {{ inputValue }}</small
       >
-      <small v-if="value.length === limit" class="form-text text-muted">Tag limit reached</small>
+      <small v-if="tags.length === limit" class="form-text text-muted">Tag limit reached</small>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, PropType, ref, watch} from 'vue'
+import useId from '../../composables/useId'
+import {computed, onMounted, PropType, ref, watch} from 'vue'
 import type {InputSize, InputType} from '../../types'
 
 const props = defineProps({
@@ -108,6 +133,7 @@ const props = defineProps({
   noTagRemove: {type: Boolean, default: false},
   removeOnDelete: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
+  separator: {type: String},
   state: {type: Boolean, default: null},
   size: {type: String as PropType<InputSize>},
   tagPills: {type: Boolean, default: false},
@@ -118,16 +144,27 @@ const props = defineProps({
   placeholder: {type: String, default: 'Add tag...'},
 })
 
+const computedId = useId()
+const inputId = computed(() => props.inputId || `${computedId.value}input__`)
+
+onMounted(() => generateTagsId())
+
 watch(
   () => props.modelValue,
-  (newVal) => (value.value = newVal)
+  (newVal) => {
+    tags.value = newVal
+
+    generateTagsId()
+  }
 )
 
 const emit = defineEmits(['update:modelValue'])
 
-const value = ref(props.modelValue)
+const tags = ref(props.modelValue)
+const tagsId = ref(new Map())
 const inputValue = ref('')
 const focus = ref(false)
+const lastRemovedTag = ref('')
 
 const classes = computed(() => ({
   [`form-control-${props.size}`]: props.size,
@@ -146,10 +183,17 @@ const tagClasses = computed(() => [
   },
 ])
 
-const duplicateTag = computed(() => value.value.includes(inputValue.value))
+const duplicateTag = computed(() => tags.value.includes(inputValue.value))
 const validTag = computed(() =>
   inputValue.value === '' ? true : props.tagValidator(inputValue.value)
 )
+
+function onFocusin(e: FocusEvent) {
+  if (props.disabled) {
+    const target = e.target as HTMLDivElement
+    target.blur()
+  }
+}
 
 function onFocus() {
   if (props.disabled) {
@@ -161,6 +205,13 @@ function onFocus() {
 
 function onInput(e: Event) {
   const {value} = e.target as HTMLInputElement
+
+  if (props.separator?.includes(value.charAt(value.length - 1))) {
+    inputValue.value = value.slice(0, value.length - 1)
+    addTag()
+    return
+  }
+
   inputValue.value = value
 }
 
@@ -171,8 +222,8 @@ function onEnter() {
 }
 
 function onDelete() {
-  if (props.removeOnDelete && inputValue.value === '' && value.value.length > 0) {
-    removeTag(value.value.length - 1)
+  if (props.removeOnDelete && inputValue.value === '' && tags.value.length > 0) {
+    removeTag(tags.value.length - 1)
   }
 }
 
@@ -181,7 +232,7 @@ function addTag() {
     inputValue.value === '' ||
     duplicateTag.value ||
     !props.tagValidator(inputValue.value) ||
-    (props.limit && value.value.length === props.limit)
+    (props.limit && tags.value.length === props.limit)
   ) {
     return
   }
@@ -192,7 +243,16 @@ function addTag() {
 }
 
 function removeTag(i: number) {
-  value.value.splice(i, 1)
-  emit('update:modelValue', value.value)
+  lastRemovedTag.value = tags.value.splice(i, 1).toString()
+  generateTagsId()
+  emit('update:modelValue', tags.value)
+}
+
+function generateTagsId() {
+  const oldTagsId = new Map(tagsId.value)
+  tagsId.value.clear()
+  tags.value.forEach((tag) => {
+    tagsId.value.set(tag, oldTagsId.has(tag) ? oldTagsId.get(tag) : useId().value)
+  })
 }
 </script>
