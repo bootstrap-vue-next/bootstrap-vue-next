@@ -8,8 +8,10 @@
         tag-variant="warning"
         separator=" ,"
         remove-on-delete
-        disabled
+        name="tag-names"
         :input-attrs="{'aria-describedby': 'tags-validation-help'}"
+        :tag-validator="tagValidator"
+        @tag-state="onTagState"
       ></b-form-tags>
       <template #invalid-feedback> You must provide at least 3 tags and no more than 8 </template>
 
@@ -1994,7 +1996,16 @@ export default defineComponent({
       return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
     }
 
+    function onTagState(valid: string[], invalid: string[], duplicate: string[]) {
+      // console.log({
+      //   valid,
+      //   invalid,
+      //   duplicate,
+      // })
+    }
+
     return {
+      onTagState,
       tagValidator,
       value,
       state,

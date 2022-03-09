@@ -109,6 +109,9 @@
       >
       <small v-if="tags.length === limit" class="form-text text-muted">Tag limit reached</small>
     </div>
+    <template v-if="name">
+      <input v-for="tag in tags" :key="tag" type="hidden" :name="name" :value="tag" />
+    </template>
   </div>
 </template>
 
@@ -129,11 +132,12 @@ const props = defineProps({
   form: {type: String},
   limit: {type: Number},
   modelValue: {type: Array as PropType<string[]>, default: () => []},
+  name: {type: String},
   noAddOnEnter: {type: Boolean, default: false},
   noTagRemove: {type: Boolean, default: false},
   removeOnDelete: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  separator: {type: String},
+  separator: {type: [String, Array] as PropType<string | string[]>},
   state: {type: Boolean, default: null},
   size: {type: String as PropType<InputSize>},
   tagPills: {type: Boolean, default: false},
@@ -147,7 +151,13 @@ const props = defineProps({
 const computedId = useId()
 const inputId = computed(() => props.inputId || `${computedId.value}input__`)
 
-onMounted(() => generateTagsId())
+onMounted(() => {
+  generateTagsId()
+
+  if (props.modelValue.length > 0) {
+    shouldRemoveOnDelete.value = true
+  }
+})
 
 watch(
   () => props.modelValue,
@@ -158,11 +168,12 @@ watch(
   }
 )
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'tag-state'])
 
 const tags = ref(props.modelValue)
 const tagsId = ref(new Map())
 const inputValue = ref('')
+const shouldRemoveOnDelete = ref(false)
 const focus = ref(false)
 const lastRemovedTag = ref('')
 
@@ -205,6 +216,7 @@ function onFocus() {
 
 function onInput(e: Event) {
   const {value} = e.target as HTMLInputElement
+  shouldRemoveOnDelete.value = false
 
   if (props.separator?.includes(value.charAt(value.length - 1))) {
     inputValue.value = value.slice(0, value.length - 1)
@@ -213,6 +225,12 @@ function onInput(e: Event) {
   }
 
   inputValue.value = value
+
+  const _validTags = props.tagValidator(value) && !duplicateTag.value ? [value] : []
+  const _invalidTags = props.tagValidator(value) ? [] : [value]
+  const _duplicateTag = duplicateTag.value ? [value] : []
+
+  emit('tag-state', _validTags, _invalidTags, _duplicateTag)
 }
 
 function onEnter() {
@@ -222,8 +240,15 @@ function onEnter() {
 }
 
 function onDelete() {
-  if (props.removeOnDelete && inputValue.value === '' && tags.value.length > 0) {
+  if (
+    props.removeOnDelete &&
+    inputValue.value === '' &&
+    shouldRemoveOnDelete.value &&
+    tags.value.length > 0
+  ) {
     removeTag(tags.value.length - 1)
+  } else {
+    shouldRemoveOnDelete.value = true
   }
 }
 
@@ -239,6 +264,7 @@ function addTag() {
 
   const newValue = [...props.modelValue, inputValue.value]
   inputValue.value = ''
+  shouldRemoveOnDelete.value = true
   emit('update:modelValue', newValue)
 }
 
