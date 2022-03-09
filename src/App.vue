@@ -9,6 +9,7 @@
         separator=" ,"
         remove-on-delete
         name="tag-names"
+        no-outer-focus
         :input-attrs="{'aria-describedby': 'tags-validation-help'}"
         :tag-validator="tagValidator"
         @tag-state="onTagState"

@@ -134,6 +134,7 @@ const props = defineProps({
   modelValue: {type: Array as PropType<string[]>, default: () => []},
   name: {type: String},
   noAddOnEnter: {type: Boolean, default: false},
+  noOuterFocus: {type: Boolean, default: false},
   noTagRemove: {type: Boolean, default: false},
   removeOnDelete: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
@@ -207,7 +208,7 @@ function onFocusin(e: FocusEvent) {
 }
 
 function onFocus() {
-  if (props.disabled) {
+  if (props.disabled || props.noOuterFocus) {
     return
   }
 
