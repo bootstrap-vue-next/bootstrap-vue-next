@@ -10,6 +10,7 @@
         remove-on-delete
         name="tag-names"
         no-outer-focus
+        no-add-on-enter
         :input-attrs="{'aria-describedby': 'tags-validation-help'}"
         :tag-validator="tagValidator"
         @tag-state="onTagState"

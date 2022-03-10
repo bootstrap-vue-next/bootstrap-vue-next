@@ -11,107 +11,160 @@
       :id="`${computedId}selected_tags__`"
       class="visually-hidden"
       role="status"
-      :for="inputId"
+      :for="_inputId"
       :aria-live="focus ? 'polite' : 'off'"
       aria-atomic="true"
       aria-relevant="additions text"
       >{{ tags.join(', ') }}</output
     >
-    <div
-      :id="`${computedId}removed_tags__`"
-      role="status"
-      :aria-live="focus ? 'assertive' : 'off'"
-      aria-atomic="true"
-      class="visually-hidden"
+
+    <slot
+      v-bind="{
+        addButtonText,
+        addButtonVariant,
+        addTag,
+        disableAddButton,
+        disabled,
+        duplicateTagText,
+        duplicateTags,
+        form,
+        inputAttrs: {
+          ...inputAttrs,
+          disabled,
+          form,
+          id: _inputId,
+          value: inputValue,
+        },
+        inputHandlers: {
+          input: onInput,
+          keydown: onKeydown,
+          change: onChange,
+        },
+        inputId: _inputId,
+        inputType,
+        invalidTagText,
+        invalidTags,
+        isDuplicate,
+        isInvalid,
+        isLimitReached,
+        limitTagsText,
+        name,
+        noAddOnEnter,
+        noOuterFocus,
+        noTagRemove,
+        placeholder,
+        removeOnDelete,
+        required,
+        separator,
+        size,
+        state,
+        tagClass,
+        tagPills,
+        tagRemoveLabel,
+        tagRemovedLabel,
+        tagValidator,
+        tagVariant,
+        value: modelValue,
+      }"
     >
-      ({{ tagRemovedLabel }}) {{ lastRemovedTag }}
-    </div>
-    <ul
-      :id="`${computedId}tag_list__`"
-      class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
-    >
-      <li
-        v-for="(tag, i) in tags"
-        :id="tagsId.get(tag)"
-        :key="tag"
-        :title="tag"
-        class="badge b-form-tag d-inline-flex align-items-center mw-100"
-        :class="tagClasses"
-        aria-labelledby=""
+      <div
+        :id="`${computedId}removed_tags__`"
+        role="status"
+        :aria-live="focus ? 'assertive' : 'off'"
+        aria-atomic="true"
+        class="visually-hidden"
       >
-        <span
-          :id="`${tagsId.get(tag)}taglabel__`"
-          class="b-form-tag-content flex-grow-1 text-truncate"
-          >{{ tag }}</span
+        ({{ tagRemovedLabel }}) {{ lastRemovedTag }}
+      </div>
+      <ul
+        :id="`${computedId}tag_list__`"
+        class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
+      >
+        <li
+          v-for="(tag, i) in tags"
+          :id="tagsId.get(tag)"
+          :key="tag"
+          :title="tag"
+          class="badge b-form-tag d-inline-flex align-items-center mw-100"
+          :class="tagClass"
+          aria-labelledby=""
         >
-        <button
-          v-if="!disabled && !noTagRemove"
-          aria-keyshortcuts="Delete"
-          type="button"
-          :aria-label="tagRemoveLabel"
-          class="btn-close b-form-tag-remove"
-          :class="{
-            'btn-close-white': !['warning', 'info', 'light'].includes(tagVariant),
-          }"
-          :aria-controls="tagsId.get(tag)"
-          :aria-describedby="`${tagsId.get(tag)}taglabel__`"
-          @click="removeTag(i)"
-        ></button>
-      </li>
-      <li
-        role="none"
-        aria-live="off"
-        class="b-from-tags-field flex-grow-1"
-        :aria-controls="`${computedId}tag_list__`"
-      >
-        <div role="group" class="d-flex">
-          <input
-            :id="inputId"
-            :disabled="disabled"
-            :value="inputValue"
-            :type="inputType"
-            :placeholder="placeholder"
-            class="b-form-tags-input w-100 flex-grow-1 p-0 m-0 bg-transparent border-0"
-            style="outline: currentcolor none 0px; min-width: 5rem"
-            v-bind="inputAttrs"
-            :form="form"
-            :required="required"
-            @input="onInput"
-            @keyup.enter.exact="onEnter"
-            @keyup.delete.exact="onDelete"
-            @focus="onFocus"
-            @blur="focus = false"
-          />
-          <button
-            v-if="validTag && !duplicateTag"
-            type="button"
-            class="btn b-form-tags-button py-0"
-            :class="[
-              `btn-${addButtonVariant}`,
-              {
-                'disabled invisible': inputValue.length === 0,
-              },
-              inputClass,
-            ]"
-            style="font-size: 90%"
-            :disabled="disabled || inputValue.length === 0"
-            @click="addTag"
+          <span
+            :id="`${tagsId.get(tag)}taglabel__`"
+            class="b-form-tag-content flex-grow-1 text-truncate"
+            >{{ tag }}</span
           >
-            <slot name="add-button-text">{{ addButtonText }}</slot>
-          </button>
+          <button
+            v-if="!disabled && !noTagRemove"
+            aria-keyshortcuts="Delete"
+            type="button"
+            :aria-label="tagRemoveLabel"
+            class="btn-close b-form-tag-remove"
+            :class="{
+              'btn-close-white': !['warning', 'info', 'light'].includes(tagVariant),
+            }"
+            :aria-controls="tagsId.get(tag)"
+            :aria-describedby="`${tagsId.get(tag)}taglabel__`"
+            @click="removeTag(i)"
+          ></button>
+        </li>
+        <li
+          role="none"
+          aria-live="off"
+          class="b-from-tags-field flex-grow-1"
+          :aria-controls="`${computedId}tag_list__`"
+        >
+          <div role="group" class="d-flex">
+            <input
+              :id="_inputId"
+              :disabled="disabled"
+              :value="inputValue"
+              :type="inputType"
+              :placeholder="placeholder"
+              class="b-form-tags-input w-100 flex-grow-1 p-0 m-0 bg-transparent border-0"
+              style="outline: currentcolor none 0px; min-width: 5rem"
+              v-bind="inputAttrs"
+              :form="form"
+              :required="required"
+              @input="onInput"
+              @change="onChange"
+              @keydown="onKeydown"
+              @focus="onFocus"
+              @blur="focus = false"
+            />
+            <button
+              v-if="disableAddButton"
+              type="button"
+              class="btn b-form-tags-button py-0"
+              :class="[
+                `btn-${addButtonVariant}`,
+                {
+                  'disabled invisible': inputValue.length === 0,
+                },
+                inputClass,
+              ]"
+              style="font-size: 90%"
+              :disabled="disabled || inputValue.length === 0"
+              @click="addTag"
+            >
+              <slot name="add-button-text">{{ addButtonText }}</slot>
+            </button>
+          </div>
+        </li>
+      </ul>
+      <div aria-live="polite" aria-atomic="true">
+        <div v-if="isInvalid" class="d-block invalid-feedback">
+          {{ invalidTagText }}: {{ inputValue }}
         </div>
-      </li>
-    </ul>
-    <div aria-live="polite" aria-atomic="true">
-      <div v-if="!validTag" class="d-block invalid-feedback">Invalid tag(s): {{ inputValue }}</div>
-      <small v-if="duplicateTag" class="form-text text-muted"
-        >{{ duplicateTagText }}: {{ inputValue }}</small
-      >
-      <small v-if="tags.length === limit" class="form-text text-muted">Tag limit reached</small>
-    </div>
-    <template v-if="name">
-      <input v-for="tag in tags" :key="tag" type="hidden" :name="name" :value="tag" />
-    </template>
+        <small v-if="isDuplicate" class="form-text text-muted"
+          >{{ duplicateTagText }}: {{ inputValue }}</small
+        >
+        <small v-if="tags.length === limit" class="form-text text-muted">Tag limit reached</small>
+      </div>
+      <template v-if="name">
+        <input v-for="tag in tags" :key="tag" type="hidden" :name="name" :value="tag" />
+      </template>
+    </slot>
   </div>
 </template>
 
@@ -123,14 +176,17 @@ import type {InputSize, InputType} from '../../types'
 const props = defineProps({
   addButtonText: {type: String, default: 'Add'},
   addButtonVariant: {type: String, default: 'outline-secondary'},
+  addOnChange: {type: Boolean, default: false},
   disabled: {type: Boolean, default: false},
   duplicateTagText: {type: String, default: 'Duplicate tag(s)'},
   inputAttrs: {type: Object},
   inputClass: {type: [Array, Object, String]},
   inputId: {type: String},
   inputType: {type: String as PropType<InputType>, default: 'text'},
+  invalidTagText: {type: String, default: 'Invalid tag(s)'},
   form: {type: String},
   limit: {type: Number},
+  limitTagsText: {type: String, default: 'Tag limit reached'},
   modelValue: {type: Array as PropType<string[]>, default: () => []},
   name: {type: String},
   noAddOnEnter: {type: Boolean, default: false},
@@ -150,7 +206,7 @@ const props = defineProps({
 })
 
 const computedId = useId()
-const inputId = computed(() => props.inputId || `${computedId.value}input__`)
+const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
 
 onMounted(() => {
   generateTagsId()
@@ -178,6 +234,10 @@ const shouldRemoveOnDelete = ref(false)
 const focus = ref(false)
 const lastRemovedTag = ref('')
 
+const validTags = ref<string[]>([])
+const invalidTags = ref<string[]>([])
+const duplicateTags = ref<string[]>([])
+
 const classes = computed(() => ({
   [`form-control-${props.size}`]: props.size,
   'disabled': props.disabled,
@@ -186,7 +246,7 @@ const classes = computed(() => ({
   'is-valid': props.state === true,
 }))
 
-const tagClasses = computed(() => [
+const tagClass = computed(() => [
   `bg-${props.tagVariant}`,
   {
     'text-dark': ['warning', 'info', 'light'].includes(props.tagVariant),
@@ -195,10 +255,14 @@ const tagClasses = computed(() => [
   },
 ])
 
-const duplicateTag = computed(() => tags.value.includes(inputValue.value))
-const validTag = computed(() =>
-  inputValue.value === '' ? true : props.tagValidator(inputValue.value)
+const isDuplicate = computed(() => tags.value.includes(inputValue.value))
+
+const isInvalid = computed(() =>
+  inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
+const isLimitReached = computed(() => tags.value.length === props.limit)
+
+const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
 
 function onFocusin(e: FocusEvent) {
   if (props.disabled) {
@@ -219,6 +283,8 @@ function onInput(e: Event) {
   const {value} = e.target as HTMLInputElement
   shouldRemoveOnDelete.value = false
 
+  console.log('input', value)
+
   if (props.separator?.includes(value.charAt(value.length - 1))) {
     inputValue.value = value.slice(0, value.length - 1)
     addTag()
@@ -227,21 +293,31 @@ function onInput(e: Event) {
 
   inputValue.value = value
 
-  const _validTags = props.tagValidator(value) && !duplicateTag.value ? [value] : []
-  const _invalidTags = props.tagValidator(value) ? [] : [value]
-  const _duplicateTag = duplicateTag.value ? [value] : []
+  validTags.value = props.tagValidator(value) && !isDuplicate.value ? [value] : []
+  invalidTags.value = props.tagValidator(value) ? [] : [value]
+  duplicateTags.value = isDuplicate.value ? [value] : []
 
-  emit('tag-state', _validTags, _invalidTags, _duplicateTag)
+  emit('tag-state', validTags, invalidTags, duplicateTags)
 }
 
-function onEnter() {
-  if (!props.noAddOnEnter) {
-    addTag()
+function onChange(e: Event) {
+  if (props.addOnChange) {
+    onInput(e)
+
+    if (!isDuplicate.value) {
+      addTag()
+    }
   }
 }
 
-function onDelete() {
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Enter' && !props.noAddOnEnter) {
+    addTag()
+    return
+  }
+
   if (
+    (e.key === 'Backspace' || e.key === 'Delete') &&
     props.removeOnDelete &&
     inputValue.value === '' &&
     shouldRemoveOnDelete.value &&
@@ -256,9 +332,9 @@ function onDelete() {
 function addTag() {
   if (
     inputValue.value === '' ||
-    duplicateTag.value ||
+    isDuplicate.value ||
     !props.tagValidator(inputValue.value) ||
-    (props.limit && tags.value.length === props.limit)
+    (props.limit && isLimitReached.value)
   ) {
     return
   }
