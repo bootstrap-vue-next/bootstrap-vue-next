@@ -19,7 +19,7 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
         },
       },
     ],
-    componentReference
+    componentReference,
   ],
   themeConfig: {
     logo: '/logo.png',
@@ -66,6 +66,7 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
             '/components/FormRadio.md',
             '/components/FormInput.md',
             '/components/FormSelect.md',
+            '/components/FormTags.md',
             '/components/FormTextarea.md',
             '/components/Image.md',
             '/components/InputGroup.md',

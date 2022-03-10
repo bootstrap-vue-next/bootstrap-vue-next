@@ -33,6 +33,10 @@ header.hero a {
   position: fixed;
 }
 
+.theme-container > .navbar .toggle-sidebar-button span {
+  background-color: var(--c-bg);
+}
+
 .theme-container > .navbar a {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
@@ -110,4 +114,8 @@ h2.accordion-header {
 .nav-tabs .nav-link:hover,
 .nav-pills .nav-link:hover {
   text-decoration: none !important;
+}
+
+kbd {
+  border: none;
 }

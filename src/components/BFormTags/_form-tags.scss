@@ -40,6 +40,10 @@
   margin-right: 0.25rem;
 }
 
+.b-form-tags .b-form-tag + .b-form-tag {
+  margin-left: 0;
+}
+
 .b-form-tag > button.b-form-tag-remove {
   color: inherit;
   font-size: 75%;

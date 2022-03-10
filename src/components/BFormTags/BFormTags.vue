@@ -48,12 +48,10 @@
         isInvalid,
         isLimitReached,
         limitTagsText,
-        name,
-        noAddOnEnter,
-        noOuterFocus,
+        limit,
         noTagRemove,
         placeholder,
-        removeOnDelete,
+        removeTag,
         required,
         separator,
         size,
@@ -61,10 +59,8 @@
         tagClass,
         tagPills,
         tagRemoveLabel,
-        tagRemovedLabel,
-        tagValidator,
         tagVariant,
-        value: modelValue,
+        tags,
       }"
     >
       <div
@@ -81,7 +77,7 @@
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
         <li
-          v-for="(tag, i) in tags"
+          v-for="tag in tags"
           :id="tagsId.get(tag)"
           :key="tag"
           :title="tag"
@@ -105,7 +101,7 @@
             }"
             :aria-controls="tagsId.get(tag)"
             :aria-describedby="`${tagsId.get(tag)}taglabel__`"
-            @click="removeTag(i)"
+            @click="removeTag(tag)"
           ></button>
         </li>
         <li
@@ -145,7 +141,7 @@
                 inputClass,
               ]"
               style="font-size: 90%"
-              :disabled="disabled || inputValue.length === 0"
+              :disabled="disabled || inputValue.length === 0 || isLimitReached"
               @click="addTag"
             >
               <slot name="add-button-text">{{ addButtonText }}</slot>
@@ -162,10 +158,10 @@
         >
         <small v-if="tags.length === limit" class="form-text text-muted">Tag limit reached</small>
       </div>
-      <template v-if="name">
-        <input v-for="tag in tags" :key="tag" type="hidden" :name="name" :value="tag" />
-      </template>
     </slot>
+    <template v-if="name">
+      <input v-for="tag in tags" :key="tag" type="hidden" :name="name" :value="tag" />
+    </template>
   </div>
 </template>
 
@@ -296,8 +292,6 @@ function onInput(e: Event) {
   const {value} = e.target as HTMLInputElement
   shouldRemoveOnDelete.value = false
 
-  console.log('input', value)
-
   if (props.separator?.includes(value.charAt(value.length - 1))) {
     inputValue.value = value.slice(0, value.length - 1)
     addTag()
@@ -336,7 +330,7 @@ function onKeydown(e: KeyboardEvent) {
     shouldRemoveOnDelete.value &&
     tags.value.length > 0
   ) {
-    removeTag(tags.value.length - 1)
+    removeTag(tags.value[tags.value.length - 1])
   } else {
     shouldRemoveOnDelete.value = true
   }
@@ -358,8 +352,9 @@ function addTag() {
   emit('update:modelValue', newValue)
 }
 
-function removeTag(i: number) {
-  lastRemovedTag.value = tags.value.splice(i, 1).toString()
+function removeTag(tag: string) {
+  const tagIndex = tags.value.indexOf(tag)
+  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
   generateTagsId()
   emit('update:modelValue', tags.value)
 }
