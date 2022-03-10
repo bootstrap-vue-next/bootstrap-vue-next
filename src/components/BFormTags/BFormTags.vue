@@ -117,6 +117,7 @@
           <div role="group" class="d-flex">
             <input
               :id="_inputId"
+              ref="input"
               :disabled="disabled"
               :value="inputValue"
               :type="inputType"
@@ -170,13 +171,14 @@
 
 <script setup lang="ts">
 import useId from '../../composables/useId'
-import {computed, onMounted, PropType, ref, watch} from 'vue'
+import {computed, onActivated, onMounted, PropType, ref, watch} from 'vue'
 import type {InputSize, InputType} from '../../types'
 
 const props = defineProps({
   addButtonText: {type: String, default: 'Add'},
   addButtonVariant: {type: String, default: 'outline-secondary'},
   addOnChange: {type: Boolean, default: false},
+  autofocus: {type: Boolean, default: false},
   disabled: {type: Boolean, default: false},
   duplicateTagText: {type: String, default: 'Duplicate tag(s)'},
   inputAttrs: {type: Object},
@@ -205,16 +207,21 @@ const props = defineProps({
   placeholder: {type: String, default: 'Add tag...'},
 })
 
+const input = ref<HTMLInputElement | null>(null)
 const computedId = useId()
 const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
 
 onMounted(() => {
+  checkAutofocus()
+
   generateTagsId()
 
   if (props.modelValue.length > 0) {
     shouldRemoveOnDelete.value = true
   }
 })
+
+onActivated(() => checkAutofocus())
 
 watch(
   () => props.modelValue,
@@ -263,6 +270,12 @@ const isInvalid = computed(() =>
 const isLimitReached = computed(() => tags.value.length === props.limit)
 
 const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
+
+function checkAutofocus() {
+  if (props.autofocus) {
+    input.value?.focus()
+  }
+}
 
 function onFocusin(e: FocusEvent) {
   if (props.disabled) {

@@ -6,6 +6,7 @@
       <b-form-tags
         v-model="value"
         tag-variant="warning"
+        autofocus
         separator=" ,"
         remove-on-delete
         name="tag-names"
