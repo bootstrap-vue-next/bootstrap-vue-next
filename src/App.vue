@@ -1007,6 +1007,32 @@
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-dropdown>
       </div>
+      <div>
+        <h4 class="m-2">Navigation</h4>
+        <b-card>
+          <router-view />
+        </b-card>
+        <b-link to="/" active-class="link-success">Home</b-link> |
+        <b-link to="/about/foo" active-class="link-success">About</b-link> |
+        <b-link to="/test" active-class="link-success">Test</b-link>
+        <b-dropdown text="Router integration" class="m-2">
+          <b-dropdown-item to="/">Home</b-dropdown-item>
+          <b-dropdown-item
+            :to="{
+              name: 'About',
+              params: {id: '456'},
+              query: {param: 'someVal'},
+            }"
+          >
+            About
+          </b-dropdown-item>
+          <router-link v-slot="{href, navigate, isActive}" to="/test" custom>
+            <b-dropdown-item :active="isActive" :href="href" @click="navigate">
+              test slot
+            </b-dropdown-item>
+          </router-link>
+        </b-dropdown>
+      </div>
     </div>
 
     <!-- Cards -->
