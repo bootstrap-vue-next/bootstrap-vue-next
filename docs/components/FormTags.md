@@ -18,7 +18,7 @@ Tags are added by clicking the **Add** button, pressing the Enter key or optiona
   <p class="mt-2">Value: {{ value }}</p>
 </ClientOnly>
 
-```vue
+```html
 <template>
   <label for="tags-basic">Type a new tag and press enter</label>
   <b-form-tags input-id="tags-basic" v-model="value"></b-form-tags>
@@ -26,9 +26,9 @@ Tags are added by clicking the **Add** button, pressing the Enter key or optiona
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+  import {ref} from 'vue'
 
-const value = ref<string[]>(['apple', 'orange'])
+  const value = ref<string[]>(['apple', 'orange'])
 </script>
 ```
 
@@ -52,7 +52,7 @@ The following example will auto create a tag when <kbd>Space</kbd>, <kbd>,</kbd>
   <p class="mt-2">Value: {{ value2 }}</p>
 </ClientOnly>
 
-```vue
+```html
 <template>
   <label for="tags-separators">Enter tags separated by space, comma or semicolon</label>
   <b-form-tags
@@ -66,9 +66,9 @@ The following example will auto create a tag when <kbd>Space</kbd>, <kbd>,</kbd>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+  import {ref} from 'vue'
 
-const value = ref<string[]>(['one', 'two'])
+  const value = ref<string[]>(['one', 'two'])
 </script>
 ```
 
@@ -93,7 +93,7 @@ When the prop `remove-on-delete` is set, and the user presses <kbd>Backspace</kb
   <p>Value: {{ value3 }}</p>
 </ClientOnly>
 
-```vue
+```html
 <template>
   <label for="tags-remove-on-delete">Enter new tags separated by space</label>
   <b-form-tags
@@ -112,9 +112,9 @@ When the prop `remove-on-delete` is set, and the user presses <kbd>Backspace</kb
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+  import {ref} from 'vue'
 
-const value = ref<string[]>(['apple', 'orange', 'grape'])
+  const value = ref<string[]>(['apple', 'orange', 'grape'])
 </script>
 ```
 
@@ -174,7 +174,7 @@ case. Enter tags separated by spaces or press enter.
 </b-form-group>
 </ClientOnly>
 
-```vue
+```html
 <template>
   <b-form-group label="Tags validation example" label-for="tags-validation" :state="state">
     <b-form-tags
@@ -198,18 +198,20 @@ case. Enter tags separated by spaces or press enter.
 </template>
 
 <script setup lang="ts">
-import {ref, computed, watch} from 'vue'
+  import {ref, computed, watch} from 'vue'
 
-const tags = ref<string[]>([])
-const dirty = ref(false)
+  const tags = ref<string[]>([])
+  const dirty = ref(false)
 
-const state = computed(() => (dirty.value ? tags.value.length > 2 && tags.value.length < 9 : null))
+  const state = computed(() =>
+    dirty.value ? tags.value.length > 2 && tags.value.length < 9 : null
+  )
 
-watch(tags, () => (dirty.value = false))
+  watch(tags, () => (dirty.value = false))
 
-function tagValidator(tag) {
-  return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
-}
+  function tagValidator(tag) {
+    return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
+  }
 </script>
 ```
 
@@ -245,7 +247,7 @@ If you are providing your own feedback for duplicate and invalid tags (via the u
   </ul>
 </ClientOnly>
 
-```vue
+```html
 <template>
   <label for="tags-state-event">Enter tags</label>
   <b-form-tags
@@ -268,22 +270,22 @@ If you are providing your own feedback for duplicate and invalid tags (via the u
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+  import {ref} from 'vue'
 
-const tags = ref<string[]>([])
-const validTags = ref([])
-const invalidTags = ref([])
-const duplicateTags = ref([])
+  const tags = ref<string[]>([])
+  const validTags = ref([])
+  const invalidTags = ref([])
+  const duplicateTags = ref([])
 
-function onTagState(valid, invalid, duplicate) {
-  validTags.value = valid
-  invalidTags.value = invalid
-  duplicateTags.value = duplicate
-}
+  function onTagState(valid, invalid, duplicate) {
+    validTags.value = valid
+    invalidTags.value = invalid
+    duplicateTags.value = duplicate
+  }
 
-function validator(tag) {
-  return tag.length > 2 && tag.length < 6
-}
+  function validator(tag) {
+    return tag.length > 2 && tag.length < 6
+  }
 </script>
 ```
 
@@ -301,7 +303,7 @@ Removing tags is unaffected by the `limit` prop.
   <p class="mt-2">Value: {{ value6 }}</p>
 </ClientOnly>
 
-```vue
+```html
 <template>
   <label for="tags-limit">Enter tags</label>
   <b-form-tags input-id="tags-limit" v-model="value" :limit="limit" remove-on-delete></b-form-tags>
@@ -309,10 +311,10 @@ Removing tags is unaffected by the `limit` prop.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+  import {ref} from 'vue'
 
-const value = ref<string[]>([])
-const limit = ref(5)
+  const value = ref<string[]>([])
+  const limit = ref(5)
 </script>
 ```
 
@@ -393,7 +395,7 @@ The following example includes the suggested ARIA attributes and roles needed fo
 
 <ClientOnly>
   <b-form-tags v-model="value7" no-outer-focus class="mb-2">
-    <template v-slot="{ tags, inputAttrs, inputHandlers, addTag, removeTag }">
+    <template #default="{ tags, inputAttrs, inputHandlers, addTag, removeTag }">
       <b-input-group aria-controls="my-custom-tags-list">
         <input
           v-bind="inputAttrs"
@@ -432,10 +434,10 @@ The following example includes the suggested ARIA attributes and roles needed fo
   </b-form-tags>
 </ClientOnly>
 
-```vue
+```html
 <template>
   <b-form-tags v-model="value" no-outer-focus class="mb-2">
-    <template v-slot="{tags, inputAttrs, inputHandlers, addTag, removeTag}">
+    <template #default="{tags, inputAttrs, inputHandlers, addTag, removeTag}">
       <b-input-group aria-controls="my-custom-tags-list">
         <input
           v-bind="inputAttrs"
@@ -480,11 +482,252 @@ The following example includes the suggested ARIA attributes and roles needed fo
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+  import {ref} from 'vue'
 
-const value = ref<string[]>(['apple', 'orange', 'banana', 'pear', 'peach'])
+  const value = ref<string[]>(['apple', 'orange', 'banana', 'pear', 'peach'])
 </script>
 ```
+
+## Using custom form components
+
+The scope contains attributes and event handlers that can be directly bound to most custom inputs or select components (the event handlers accept either a string tag value or a native event object). Any component that emits `input` as characters are typed, and (optionally) emits `change` when the input value changes (i.e on blur or select), and uses the prop `value` as the v-model, should work without modification.
+
+In this example, we are using the [`<b-form-tag>` helper component](#b-form-tag-helper-component), but feel free to render tags using standard HTML or components.
+
+<ClientOnly>
+<b-form-tags v-model="value8" no-outer-focus class="mb-2">
+  <template #default="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+    <b-input-group class="mb-2">
+      <b-form-input
+        v-bind="inputAttrs"
+        v-on="inputHandlers"
+        placeholder="New tag - Press enter to add"
+        class="form-control"
+      ></b-form-input>
+      <b-input-group-append>
+        <b-button @click="addTag()" variant="primary">Add</b-button>
+      </b-input-group-append>
+    </b-input-group>
+    <div class="d-inline-block" style="font-size: 1.5rem;">
+      <b-form-tag
+        v-for="tag in tags"
+        @remove="removeTag(tag)"
+        :key="tag"
+        :title="tag"
+        :variant="tagVariant"
+        class="mr-1"
+      >{{ tag }}</b-form-tag>
+    </div>
+  </template>
+</b-form-tags>
+</ClientOnly>
+
+```html
+<template>
+  <b-form-tags v-model="value" no-outer-focus class="mb-2">
+    <template #default="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+      <b-input-group class="mb-2">
+        <b-form-input
+          v-bind="inputAttrs"
+          v-on="inputHandlers"
+          placeholder="New tag - Press enter to add"
+          class="form-control"
+        ></b-form-input>
+        <b-input-group-append>
+          <b-button @click="addTag()" variant="primary">Add</b-button>
+        </b-input-group-append>
+      </b-input-group>
+      <div class="d-inline-block" style="font-size: 1.5rem;">
+        <b-form-tag
+          v-for="tag in tags"
+          @remove="removeTag(tag)"
+          :key="tag"
+          :title="tag"
+          :variant="tagVariant"
+          class="mr-1"
+          >{{ tag }}</b-form-tag
+        >
+      </div>
+    </template>
+  </b-form-tags>
+</template>
+
+<script setup lang="ts">
+  import {ref} from 'vue'
+
+  const value = ref<string[]>(['apple', 'orange', 'banana'])
+</script>
+```
+
+The following is an example of using a custom select component for choosing from a pre-defined set of tags:
+
+<ClientOnly>
+<b-form-group label="Tagged input using select" label-for="tags-component-select">
+  <b-form-tags
+    id="tags-component-select"
+    v-model="value9"
+    size="lg"
+    class="mb-2"
+    add-on-change
+    no-outer-focus
+  >
+    <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+      <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+        <li v-for="tag in tags" :key="tag" class="list-inline-item">
+          <b-form-tag
+            @remove="removeTag(tag)"
+            :title="tag"
+            :disabled="disabled"
+            variant="info"
+          >{{ tag }}</b-form-tag>
+        </li>
+      </ul>
+      <b-form-select
+        v-bind="inputAttrs"
+        v-on="inputHandlers"
+        :disabled="disabled || availableOptions.length === 0"
+        :options="availableOptions"
+      >
+        <template #first>
+          <option disabled value="">Choose a tag...</option>
+        </template>
+      </b-form-select>
+    </template>
+  </b-form-tags>
+</b-form-group>
+</ClientOnly>
+
+```html
+<template>
+  <b-form-group label="Tagged input using select" label-for="tags-component-select">
+    <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
+    <b-form-tags
+      id="tags-component-select"
+      v-model="value"
+      size="lg"
+      class="mb-2"
+      add-on-change
+      no-outer-focus
+    >
+      <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+        <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+          <li v-for="tag in tags" :key="tag" class="list-inline-item">
+            <b-form-tag @remove="removeTag(tag)" :title="tag" :disabled="disabled" variant="info"
+              >{{ tag }}</b-form-tag
+            >
+          </li>
+        </ul>
+        <b-form-select
+          v-bind="inputAttrs"
+          v-on="inputHandlers"
+          :disabled="disabled || availableOptions.length === 0"
+          :options="availableOptions"
+        >
+          <template #first>
+            <!-- This is required to prevent bugs with Safari -->
+            <option disabled value="">Choose a tag...</option>
+          </template>
+        </b-form-select>
+      </template>
+    </b-form-tags>
+  </b-form-group>
+</template>
+
+<script setup lang="ts">
+  import {ref, computed} from 'vue'
+
+  const options = ref<string[]>([
+    'Apple',
+    'Orange',
+    'Banana',
+    'Lime',
+    'Peach',
+    'Chocolate',
+    'Strawberry',
+  ])
+  const value9 = ref<string[]>([])
+
+  const availableOptions = computed(() =>
+    this.options.filter((opt) => this.value.indexOf(opt) === -1)
+  )
+</script>
+```
+
+If the custom input is using custom event names that mimic `input` and `change`, and/or needs the `.native` modifier for keydown, you can do something similar to below to bind the event handlers:
+
+```html
+<template #default="{ inputAttrs, inputHandlers, removeTag, tags }">
+  <custom-input
+    :id="inputAttrs.id"
+    :vistom-value-prop="inputAttrs.value"
+    @custom-input-event="inputHandlers.input($event)"
+    @custom-change-event="inputHandlers.change($event)"
+    @keydown.native="inputHandlers.keydown($event)"
+  ></custom-input>
+  <template v-for="tag in tags">
+    <!-- Your custom tag list here -->
+  </template>
+</template>
+```
+
+The `inputHandlers.input` handler **must** be bound to an event that updates with each character entered by the user for the _as-you-type_ tag validation to work.
+
+## Advanced custom rendering usage
+
+In situations where the `inputHandlers` will not work with your custom input, or if you need greater control over tag creation, you can take advantage of the additional properties provided via the default slot's scope.
+
+<!-- Example 10 -->
+
+The following is an example of using the `<b-dropdown>` component for choosing or searching from a pre-defined set of tags:
+
+<!-- Example 11 -->
+
+## Creating wrapper components
+
+You can easily create a custom wrapper component with your preferred rendering style as follows:
+
+```html
+<template>
+  <b-form-tags :value="value" @input="$emit('input', $event)">
+    <template #default="{ tags, addTag, removeTag, inputAttrs, inputHandlers }">
+      <!-- Place your custom rendering here -->
+    </template>
+  </b-form-tags>
+</template>
+
+<script>
+  import {BFormTags} from 'bootstrap-vue-3'
+
+  export default {
+    name: 'MyCustomTags',
+    components: {BFormTags},
+    model: {
+      prop: 'value',
+      event: 'input',
+    },
+    props: {
+      value: {
+        type: Array,
+        default: () => [],
+      },
+    },
+  }
+</script>
+```
+
+## `<b-form-tag>` helper component
+
+BootstrapVue provides the helper component `<b-form-tag>`, for use with the default scoped slot of `<b-form-tags>`. The component is based upon [`<b-badge>`]() and [`<b-button-close>`]().
+
+`<b-form-tag>` supports the same variants as `<b-badge>` and also supports `pill` styling. Sizing is based on the containing element's font-size.
+
+The remove event is emitted when the `<b-form-tag>` remove button is clicked.
+
+Tags that are too wide for their parent container will automatically have their text content truncated with an ellipsis. For this reason, it is always good practice to supply a title via the title prop when using the default slot of `<b-form-tag>` for the tag content.
+
+Note `<b-form-tag>` requires BootstrapVue3's custom CSS/SCSS for proper styling.
+
+## Component reference
 
 <script setup lang="ts">
   import { ref, computed, watch } from 'vue'
@@ -532,4 +775,12 @@ const value = ref<string[]>(['apple', 'orange', 'banana', 'pear', 'peach'])
 
   // #7 example
   const value7 = ref(['apple', 'orange', 'banana', 'pear', 'peach'])
+
+  // #8 example
+  const value8 = ref(['apple', 'orange', 'banana'])
+
+  // #9 example
+  const options = ref(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
+  const value9 = ref([])
+  const availableOptions = computed(() => this.options.filter(opt => this.value.indexOf(opt) === -1));
   </script>

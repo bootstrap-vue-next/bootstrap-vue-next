@@ -17,6 +17,15 @@
       aria-relevant="additions text"
       >{{ tags.join(', ') }}</output
     >
+    <div
+      :id="`${computedId}removed_tags__`"
+      role="status"
+      :aria-live="focus ? 'assertive' : 'off'"
+      aria-atomic="true"
+      class="visually-hidden"
+    >
+      ({{ tagRemovedLabel }}) {{ lastRemovedTag }}
+    </div>
 
     <slot
       v-bind="{
@@ -63,15 +72,6 @@
         tags,
       }"
     >
-      <div
-        :id="`${computedId}removed_tags__`"
-        role="status"
-        :aria-live="focus ? 'assertive' : 'off'"
-        aria-atomic="true"
-        class="visually-hidden"
-      >
-        ({{ tagRemovedLabel }}) {{ lastRemovedTag }}
-      </div>
       <ul
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
@@ -81,37 +81,9 @@
           :id="tagsId.get(tag)"
           :key="tag"
           tag="li"
-          :title="tag"
           @remove="removeTag"
-        ></b-form-tag>
-        <!-- <li
-          v-for="tag in tags"
-          :id="tagsId.get(tag)"
-          :key="tag"
-          :title="tag"
-          class="badge b-form-tag d-inline-flex align-items-center mw-100"
-          :class="tagClass"
-          aria-labelledby=""
+          >{{ tag }}</b-form-tag
         >
-          <span
-            :id="`${tagsId.get(tag)}taglabel__`"
-            class="b-form-tag-content flex-grow-1 text-truncate"
-            >{{ tag }}</span
-          >
-          <button
-            v-if="!disabled && !noTagRemove"
-            aria-keyshortcuts="Delete"
-            type="button"
-            :aria-label="tagRemoveLabel"
-            class="btn-close b-form-tag-remove"
-            :class="{
-              'btn-close-white': !['warning', 'info', 'light'].includes(tagVariant),
-            }"
-            :aria-controls="tagsId.get(tag)"
-            :aria-describedby="`${tagsId.get(tag)}taglabel__`"
-            @click="removeTag(tag)"
-          ></button>
-        </li> -->
         <li
           role="none"
           aria-live="off"
@@ -150,7 +122,7 @@
               ]"
               style="font-size: 90%"
               :disabled="disabled || inputValue.length === 0 || isLimitReached"
-              @click="addTag"
+              @click="addTag(inputValue)"
             >
               <slot name="add-button-text">{{ addButtonText }}</slot>
             </button>
@@ -297,13 +269,14 @@ function onFocus() {
   focus.value = true
 }
 
-function onInput(e: Event) {
-  const {value} = e.target as HTMLInputElement
+function onInput(e: Event | string) {
+  const value = typeof e === 'string' ? e : (e.target as HTMLInputElement).value
+
   shouldRemoveOnDelete.value = false
 
   if (props.separator?.includes(value.charAt(value.length - 1))) {
     inputValue.value = value.slice(0, value.length - 1)
-    addTag()
+    addTag(inputValue.value)
     return
   }
 
@@ -321,14 +294,14 @@ function onChange(e: Event) {
     onInput(e)
 
     if (!isDuplicate.value) {
-      addTag()
+      addTag(inputValue.value)
     }
   }
 }
 
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' && !props.noAddOnEnter) {
-    addTag()
+    addTag(inputValue.value)
     return
   }
 
@@ -345,17 +318,17 @@ function onKeydown(e: KeyboardEvent) {
   }
 }
 
-function addTag() {
+function addTag(tag: string) {
   if (
-    inputValue.value === '' ||
+    tag === '' ||
     isDuplicate.value ||
-    !props.tagValidator(inputValue.value) ||
+    !props.tagValidator(tag) ||
     (props.limit && isLimitReached.value)
   ) {
     return
   }
 
-  const newValue = [...props.modelValue, inputValue.value]
+  const newValue = [...props.modelValue, tag]
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
   emit('update:modelValue', newValue)
@@ -369,10 +342,10 @@ function removeTag(tag: string) {
 }
 
 function generateTagsId() {
-  const oldTagsId = new Map(tagsId.value)
+  const oldTagsIdValue = new Map(tagsId.value)
   tagsId.value.clear()
   tags.value.forEach((tag) => {
-    tagsId.value.set(tag, oldTagsId.has(tag) ? oldTagsId.get(tag) : useId().value)
+    tagsId.value.set(tag, oldTagsIdValue.has(tag) ? oldTagsIdValue.get(tag) : useId().value)
   })
 }
 </script>
