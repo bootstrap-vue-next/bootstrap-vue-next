@@ -8,7 +8,7 @@
     aria-labelledby=""
   >
     <span :id="`${id}taglabel__`" class="b-form-tag-content flex-grow-1 text-truncate">
-      <slot />
+      <slot>{{ _title }}</slot>
     </span>
     <button
       v-if="!disabled && !noRemove"

@@ -76,9 +76,14 @@
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
-        <b-form-tag v-for="tag in tags" :id="tagsId.get(tag)" :key="tag" @remove="removeTag">{{
-          tag
-        }}</b-form-tag>
+        <b-form-tag
+          v-for="tag in tags"
+          :id="tagsId.get(tag)"
+          :key="tag"
+          tag="li"
+          :title="tag"
+          @remove="removeTag"
+        ></b-form-tag>
         <!-- <li
           v-for="tag in tags"
           :id="tagsId.get(tag)"
