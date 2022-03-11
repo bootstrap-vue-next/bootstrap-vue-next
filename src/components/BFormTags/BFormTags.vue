@@ -76,7 +76,10 @@
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
-        <li
+        <b-form-tag v-for="tag in tags" :id="tagsId.get(tag)" :key="tag" @remove="removeTag">{{
+          tag
+        }}</b-form-tag>
+        <!-- <li
           v-for="tag in tags"
           :id="tagsId.get(tag)"
           :key="tag"
@@ -103,7 +106,7 @@
             :aria-describedby="`${tagsId.get(tag)}taglabel__`"
             @click="removeTag(tag)"
           ></button>
-        </li>
+        </li> -->
         <li
           role="none"
           aria-live="off"
@@ -166,8 +169,9 @@
 </template>
 
 <script setup lang="ts">
-import useId from '../../composables/useId'
 import {computed, onActivated, onMounted, PropType, ref, watch} from 'vue'
+import BFormTag from './BFormTag.vue'
+import useId from '../../composables/useId'
 import type {InputSize, InputType} from '../../types'
 
 const props = defineProps({
