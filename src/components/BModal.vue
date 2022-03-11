@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
-import {Modal} from 'bootstrap'
+import Modal from 'bootstrap/js/dist/modal'
 import BButton from '../components/BButton/BButton.vue'
 import useEventListener from '../composables/useEventListener'
 import ColorVariant from '../types/ColorVariant'

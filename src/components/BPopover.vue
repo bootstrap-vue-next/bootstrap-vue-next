@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import {Popover} from 'bootstrap'
+import Popover from 'bootstrap/js/dist/popover'
 import {
   ComponentPublicInstance,
   computed,

@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, ref, watch} from 'vue'
-import {Offcanvas} from 'bootstrap'
+import Offcanvas from 'bootstrap/js/dist/offcanvas'
 import useEventListener from '../composables/useEventListener'
 
 export default defineComponent({

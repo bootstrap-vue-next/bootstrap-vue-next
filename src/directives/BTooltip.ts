@@ -1,5 +1,5 @@
 import {Directive, DirectiveBinding} from 'vue'
-import {Tooltip} from 'bootstrap'
+import Tooltip from 'bootstrap/js/dist/tooltip'
 
 function resolveTrigger(modifiers: DirectiveBinding['modifiers']): Tooltip.Options['trigger'] {
   if (modifiers.manual) {

@@ -1,5 +1,5 @@
 import {Directive} from 'vue'
-import {Popover} from 'bootstrap'
+import Popover from 'bootstrap/js/dist/popover'
 
 const BPopover: Directive<HTMLElement> = {
   mounted(el, binding) {

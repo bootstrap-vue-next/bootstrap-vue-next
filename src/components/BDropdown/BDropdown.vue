@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import * as Popper from '@popperjs/core'
-import {Dropdown} from 'bootstrap'
+import Dropdown from 'bootstrap/js/dist/dropdown'
 import {ComponentPublicInstance, computed, defineComponent, onMounted, PropType, ref} from 'vue'
 import BButton from '../../components/BButton/BButton.vue'
 import {ButtonVariant, Size} from '../../types'
