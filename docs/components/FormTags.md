@@ -645,10 +645,10 @@ The following is an example of using a custom select component for choosing from
     'Chocolate',
     'Strawberry',
   ])
-  const value9 = ref<string[]>([])
+  const value = ref<string[]>([])
 
   const availableOptions = computed(() =>
-    this.options.filter((opt) => this.value.indexOf(opt) === -1)
+    options.value.filter((opt) => value.value.indexOf(opt) === -1)
   )
 </script>
 ```
@@ -695,29 +695,18 @@ You can easily create a custom wrapper component with your preferred rendering s
   </b-form-tags>
 </template>
 
-<script>
+<script setup lang="ts">
   import {BFormTags} from 'bootstrap-vue-3'
 
-  export default {
-    name: 'MyCustomTags',
-    components: {BFormTags},
-    model: {
-      prop: 'value',
-      event: 'input',
-    },
-    props: {
-      value: {
-        type: Array,
-        default: () => [],
-      },
-    },
-  }
+  defineProps({
+    value: {type: Array, default: () => []},
+  })
 </script>
 ```
 
 ## `<b-form-tag>` helper component
 
-BootstrapVue provides the helper component `<b-form-tag>`, for use with the default scoped slot of `<b-form-tags>`. The component is based upon [`<b-badge>`]() and [`<b-button-close>`]().
+BootstrapVue provides the helper component `<b-form-tag>`, for use with the default scoped slot of `<b-form-tags>`. The component is based upon [`<b-badge>`](Badge.md) and [`<b-button-close>`]().
 
 `<b-form-tag>` supports the same variants as `<b-badge>` and also supports `pill` styling. Sizing is based on the containing element's font-size.
 
@@ -783,4 +772,8 @@ Note `<b-form-tag>` requires BootstrapVue3's custom CSS/SCSS for proper styling.
   const options = ref(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
   const value9 = ref([])
   const availableOptions = computed(() => this.options.filter(opt => this.value.indexOf(opt) === -1));
+
+  // #10 example
+
+  // #11 example
   </script>
