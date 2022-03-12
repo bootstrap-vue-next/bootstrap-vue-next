@@ -98,6 +98,9 @@ export default defineComponent({
     const classes = computed(() => ({
       'd-grid': props.block,
       'd-flex': props.block && props.split,
+      'dropend': props.dropright, 
+      'dropup': props.dropup,
+      'dropstart': props.dropleft,
     }))
 
     const buttonClasses = computed(() => ({
