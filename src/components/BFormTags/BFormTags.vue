@@ -146,7 +146,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onActivated, onMounted, PropType, ref, watch} from 'vue'
+import {computed, nextTick, onActivated, onMounted, PropType, ref, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import useId from '../../composables/useId'
 import type {InputSize, InputType} from '../../types'
@@ -274,9 +274,15 @@ function onInput(e: Event | string) {
 
   shouldRemoveOnDelete.value = false
 
+  if (props.separator?.includes(value.charAt(0)) && value.length > 0) {
+    if (input.value) {
+      input.value.value = ''
+    }
+    return
+  }
+
   if (props.separator?.includes(value.charAt(value.length - 1))) {
-    inputValue.value = value.slice(0, value.length - 1)
-    addTag(inputValue.value)
+    addTag(value.slice(0, value.length - 1))
     return
   }
 
@@ -319,6 +325,8 @@ function onKeydown(e: KeyboardEvent) {
 }
 
 function addTag(tag: string) {
+  tag = tag.trim()
+
   if (
     tag === '' ||
     isDuplicate.value ||
@@ -332,6 +340,7 @@ function addTag(tag: string) {
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
   emit('update:modelValue', newValue)
+  input.value?.focus()
 }
 
 function removeTag(tag: string) {

@@ -676,11 +676,269 @@ The `inputHandlers.input` handler **must** be bound to an event that updates wit
 
 In situations where the `inputHandlers` will not work with your custom input, or if you need greater control over tag creation, you can take advantage of the additional properties provided via the default slot's scope.
 
-<!-- Example 10 -->
+<ClientOnly>
+<b-form-checkbox switch size="lg" v-model="disabled">Disable</b-form-checkbox>
+<b-form-tags
+v-model="value10"
+@input="resetInputValue()"
+tag-variant="success"
+class="mb-2 mt-2"
+:disabled="disabled"
+no-outer-focus
+placeholder="Enter a new tag value and click Add"
+:state="state10">
+<template v-slot="{tags, inputId, placeholder, disabled, addTag, removeTag }">
+<b-input-group>
+<b-form-input
+      v-model="newTag"
+      :id="inputId"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :formatter="formatter"
+    ></b-form-input>
+<b-input-group-append>
+<b-button @click="addTag(newTag)" :disabled="disabled" variant="primary">Add</b-button>
+</b-input-group-append>
+</b-input-group>
+<b-form-invalid-feedback :state="state">
+Duplicate tag value cannot be added again!
+</b-form-invalid-feedback>
+
+  <ul v-if="tags.length > 0" class="mb-0">
+    <li v-for="tag in tags" :key="tag" :title="`Tag: ${tag}`" class="mt-2">
+      <span  class="d-flex align-items-center">
+        <span class="mr-2">{{ tag }}</span>
+        <b-button
+          :disabled="disabled"
+          size="sm"
+          variant="outline-danger"
+          @click="removeTag(tag)"
+        >
+          remove tag
+        </b-button>
+      </span>
+    </li>
+  </ul>
+  <b-form-text v-else>
+    There are no tags specified. Add a new tag above.
+  </b-form-text>
+</template>
+</b-form-tags>
+</ClientOnly>
+
+```html
+<template>
+  <b-form-checkbox switch size="lg" v-model="disabled">Disable</b-form-checkbox>
+  <b-form-tags
+    v-model="value"
+    @input="resetInputValue()"
+    tag-variant="success"
+    class="mb-2 mt-2"
+    :disabled="disabled"
+    no-outer-focus
+    placeholder="Enter a new tag value and click Add"
+    :state="state"
+  >
+    <template v-slot="{tags, inputId, placeholder, disabled, addTag, removeTag }">
+      <b-input-group>
+        <!-- Always bind the id to the input so that it can be focused when needed -->
+        <b-form-input
+          v-model="newTag"
+          :id="inputId"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :formatter="formatter"
+        ></b-form-input>
+        <b-input-group-append>
+          <b-button @click="addTag(newTag)" :disabled="disabled" variant="primary">Add</b-button>
+        </b-input-group-append>
+      </b-input-group>
+      <b-form-invalid-feedback :state="state">
+        Duplicate tag value cannot be added again!
+      </b-form-invalid-feedback>
+      <ul v-if="tags.length > 0" class="mb-0">
+        <li v-for="tag in tags" :key="tag" :title="`Tag: ${tag}`" class="mt-2">
+          <span class="d-flex align-items-center">
+            <span class="mr-2">{{ tag }}</span>
+            <b-button
+              :disabled="disabled"
+              size="sm"
+              variant="outline-danger"
+              @click="removeTag(tag)"
+            >
+              remove tag
+            </b-button>
+          </span>
+        </li>
+      </ul>
+      <b-form-text v-else> There are no tags specified. Add a new tag above. </b-form-text>
+    </template>
+  </b-form-tags>
+</template>
+
+<script setup lang="ts">
+  import {ref, computed} from 'vue'
+
+  const newTag = ref('')
+  const disabled = ref(false)
+  const value = ref<string[]>([])
+
+  const state = computed(() => (value.value.indexOf(newTag.value.trim()) > -1 ? false : null))
+
+  function resetInputValue() {
+    newTag.value = ''
+  }
+
+  function formatter(value) {
+    return value.value.toUpperCase()
+  }
+</script>
+```
 
 The following is an example of using the `<b-dropdown>` component for choosing or searching from a pre-defined set of tags:
 
-<!-- Example 11 -->
+<ClientOnly>
+  <b-form-group label="Tagged input using dropdown" label-for="tags-with-dropdown">
+  <b-form-tags id="tags-with-dropdown" v-model="value11" no-outer-focus class="mb-2">
+  <template v-slot="{ tags, disabled, addTag, removeTag }">
+    <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+      <li v-for="tag in tags" :key="tag" class="list-inline-item">
+        <b-form-tag
+          @remove="removeTag(tag)"
+          :title="tag"
+          :disabled="disabled"
+          variant="info"
+        >{{ tag }}</b-form-tag>
+      </li>
+    </ul>
+    <b-dropdown size="sm" variant="outline-secondary" block menu-class="w-100">
+      <template #button-content>
+        Choose tags
+      </template>
+      <b-dropdown-form @submit.stop.prevent="() => {}">
+        <b-form-group
+          label="Search tags"
+          label-for="tag-search-input"
+          label-cols-md="auto"
+          class="mb-0"
+          label-size="sm"
+          :description="searchDesc"
+          :disabled="disabled"
+        >
+          <b-form-input
+            v-model="search"
+            id="tag-search-input"
+            type="search"
+            size="sm"
+            autocomplete="off"
+            ></b-form-input>
+        </b-form-group>
+      </b-dropdown-form>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item-button
+        v-for="option in availableOptions11"
+        :key="option"
+        @click="onOptionClick({ option, addTag })"
+      >
+        {{ option }}
+      </b-dropdown-item-button>
+      <b-dropdown-text v-if="availableOptions11.length === 0">
+        There are no tags available to select
+      </b-dropdown-text>
+    </b-dropdown>
+  </template>
+  </b-form-tags>
+  </b-form-group>
+</ClientOnly>
+
+```html
+<template>
+  <b-form-group label="Tagged input using dropdown" label-for="tags-with-dropdown">
+    <b-form-tags id="tags-with-dropdown" v-model="value" no-outer-focus class="mb-2">
+      <template v-slot="{ tags, disabled, addTag, removeTag }">
+        <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+          <li v-for="tag in tags" :key="tag" class="list-inline-item">
+            <b-form-tag @remove="removeTag(tag)" :title="tag" :disabled="disabled" variant="info"
+              >{{ tag }}</b-form-tag
+            >
+          </li>
+        </ul>
+
+        <b-dropdown size="sm" variant="outline-secondary" block menu-class="w-100">
+          <template #button-content> Choose tags </template>
+          <b-dropdown-form @submit.stop.prevent="() => {}">
+            <b-form-group
+              label="Search tags"
+              label-for="tag-search-input"
+              label-cols-md="auto"
+              class="mb-0"
+              label-size="sm"
+              :description="searchDesc"
+              :disabled="disabled"
+            >
+              <b-form-input
+                v-model="search"
+                id="tag-search-input"
+                type="search"
+                size="sm"
+                autocomplete="off"
+              ></b-form-input>
+            </b-form-group>
+          </b-dropdown-form>
+          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item-button
+            v-for="option in availableOptions"
+            :key="option"
+            @click="onOptionClick({ option, addTag })"
+          >
+            {{ option }}
+          </b-dropdown-item-button>
+          <b-dropdown-text v-if="availableOptions.length === 0">
+            There are no tags available to select
+          </b-dropdown-text>
+        </b-dropdown>
+      </template>
+    </b-form-tags>
+  </b-form-group>
+</template>
+
+<script setup lang="ts">
+  import {ref, computed} from 'vue'
+
+  const options = ref(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
+  const search = ref('')
+  const value = ref([])
+
+  const criteria = computed(() => {
+    // Compute the search criteria
+    return search.value.trim().toLowerCase()
+  })
+  const availableOptions = computed(() => {
+    // Filter out already selected options
+    const options = options.value.filter((opt) => value.value.indexOf(opt) === -1)
+
+    if (criteria.value) {
+      // Show only options that match criteria
+      return options.filter((opt) => opt.toLowerCase().indexOf(criteria.value) > -1)
+    }
+    // Show all options available
+    return options
+  })
+
+  const searchDesc = computed(() => {
+    if (criteria.value && availableOptions.value.length === 0) {
+      return 'There are no tags matching your search criteria'
+    }
+
+    return ''
+  })
+
+  function onOptionClick({option, addTag}) {
+    addTag(option)
+    search.value = ''
+  }
+</script>
+```
 
 ## Creating wrapper components
 
@@ -706,7 +964,7 @@ You can easily create a custom wrapper component with your preferred rendering s
 
 ## `<b-form-tag>` helper component
 
-BootstrapVue provides the helper component `<b-form-tag>`, for use with the default scoped slot of `<b-form-tags>`. The component is based upon [`<b-badge>`](Badge.md) and [`<b-button-close>`]().
+BootstrapVue provides the helper component `<b-form-tag>`, for use with the default scoped slot of `<b-form-tags>`. The component is based upon [`<b-badge>`](Badge.md) and [`<b-button-close>`](ButtonClose.md).
 
 `<b-form-tag>` supports the same variants as `<b-badge>` and also supports `pill` styling. Sizing is based on the containing element's font-size.
 
@@ -771,9 +1029,49 @@ Note `<b-form-tag>` requires BootstrapVue3's custom CSS/SCSS for proper styling.
   // #9 example
   const options = ref(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
   const value9 = ref([])
-  const availableOptions = computed(() => this.options.filter(opt => this.value.indexOf(opt) === -1));
+  const availableOptions = computed(() => options.value.filter(opt => value.value.indexOf(opt) === -1));
 
   // #10 example
+  const newTag = ref('')
+  const disabled = ref(false)
+  const value10 = ref([])
+
+  const state10 = computed(() => value.value.indexOf(newTag.value.trim()) > -1 ? false : null)
+
+  function resetInputValue() {
+    newTag.value = ''
+  }
+
+  function formatter(value) {
+    return value.value.toUpperCase()
+  }
 
   // #11 example
+  const options11 = ref(['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'])
+  const search = ref('')
+  const value11 = ref([])
+
+  const criteria = computed(() => {
+    return search.value.trim().toLowerCase()
+  })
+  const availableOptions11 = computed(() => {
+    const _options = options.value.filter(opt => value.value.indexOf(opt) === -1)
+    
+    if (criteria.value) {
+      return _options.filter(opt => opt.toLowerCase().indexOf(criteria.value) > -1);
+    }
+    
+    return _options
+  })
+  const searchDesc = computed(() => {
+    if (criteria.value && availableOptions11.value.length === 0) {
+      return 'There are no tags matching your search criteria'
+    }
+    return ''
+  })
+
+  function onOptionClick({ option, addTag }) {
+    addTag(option)
+    search.value = ''
+  }
   </script>
