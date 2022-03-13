@@ -1945,7 +1945,8 @@ export default defineComponent({
     const formInputRangeValue = ref(3)
 
     const formSelectSelected = ref()
-    const formSelectMultipleSelected = ref([])
+    let formSelectMultipleSelected = ref([])
+    formSelectMultipleSelected = ['first', 'second']
     const formSelectOptions = [
       {value: null, text: 'Please select an option'},
       {text: 'Item 1', value: 'first'},

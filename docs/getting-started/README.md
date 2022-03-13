@@ -35,8 +35,8 @@ Or if you prefer you can make a one-time donation through these channels:
 
 In order to use this library you have to install these packages:
 
-- [Vue.js](https://v3.vuejs.org/) `^3.0.x`
-- [Bootstrap](https://getbootstrap.com/docs/5.1/getting-started/introduction/) `^5.0.x`
+- [Bootstrap](https://getbootstrap.com/docs/5.1/getting-started/introduction/) `5.x.x`
+- [Vue.js](https://v3.vuejs.org/) `3.x.x`
 
 ## Install
 

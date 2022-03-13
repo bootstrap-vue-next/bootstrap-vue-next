@@ -63,6 +63,7 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
             '/components/Dropdown.md',
             '/components/Form.md',
             '/components/FormCheckbox.md',
+            '/components/FormGroup.md',
             '/components/FormRadio.md',
             '/components/FormInput.md',
             '/components/FormSelect.md',
