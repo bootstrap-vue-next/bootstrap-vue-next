@@ -4,7 +4,7 @@
       :is="tag"
       class="dropdown-item"
       :class="[classes, linkClass]"
-      v-bind="attrs"
+      v-bind="componentAttrs"
       @click="$emit('click', $event)"
     >
       <slot />
@@ -29,27 +29,28 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>, default: null},
   },
   emits: ['click'],
-  setup(props) {
+  setup(props, {attrs}) {
     const classes = computed(() => ({
       active: props.active,
       disabled: props.disabled,
       [`text-${props.variant}`]: props.variant,
     }))
 
-    const tag = computed(() => (props.href ? 'a' : 'button'))
+    const tag = computed(() => (props.href ? 'a' : attrs.to ? 'b-link' : 'button'))
 
-    const attrs = computed(() => ({
+    const componentAttrs = computed(() => ({
       'aria-current': props.active ? 'true' : null,
       'href': tag.value === 'a' ? props.href : null,
       'rel': props.rel,
       'type': tag.value === 'button' ? 'button' : null,
       'target': props.target,
+      ...(attrs.to ? {activeClass: 'active', ...attrs} : {}),
     }))
 
     return {
       classes,
       tag,
-      attrs,
+      componentAttrs,
     }
   },
 })
