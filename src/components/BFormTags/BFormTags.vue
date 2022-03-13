@@ -76,14 +76,9 @@
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
-        <b-form-tag
-          v-for="tag in tags"
-          :id="tagsId.get(tag)"
-          :key="tag"
-          tag="li"
-          @remove="removeTag"
-          >{{ tag }}</b-form-tag
-        >
+        <b-form-tag v-for="tag in tags" :key="tag" tag="li" @remove="removeTag">{{
+          tag
+        }}</b-form-tag>
         <li
           role="none"
           aria-live="off"
@@ -146,7 +141,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onActivated, onMounted, PropType, ref, watch} from 'vue'
+import {computed, onActivated, onMounted, PropType, ref, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import useId from '../../composables/useId'
 import type {InputSize, InputType} from '../../types'
@@ -191,8 +186,6 @@ const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
 onMounted(() => {
   checkAutofocus()
 
-  generateTagsId()
-
   if (props.modelValue.length > 0) {
     shouldRemoveOnDelete.value = true
   }
@@ -204,15 +197,12 @@ watch(
   () => props.modelValue,
   (newVal) => {
     tags.value = newVal
-
-    generateTagsId()
   }
 )
 
 const emit = defineEmits(['update:modelValue', 'tag-state'])
 
 const tags = ref(props.modelValue)
-const tagsId = ref(new Map())
 const inputValue = ref('')
 const shouldRemoveOnDelete = ref(false)
 const focus = ref(false)
@@ -346,15 +336,10 @@ function addTag(tag: string) {
 function removeTag(tag: string) {
   const tagIndex = tags.value.indexOf(tag)
   lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
-  generateTagsId()
-  emit('update:modelValue', tags.value)
-}
 
-function generateTagsId() {
-  const oldTagsIdValue = new Map(tagsId.value)
-  tagsId.value.clear()
-  tags.value.forEach((tag) => {
-    tagsId.value.set(tag, oldTagsIdValue.has(tag) ? oldTagsIdValue.get(tag) : useId().value)
-  })
+  if (input.value) {
+    input.value.value = ''
+  }
+  emit('update:modelValue', tags.value)
 }
 </script>
