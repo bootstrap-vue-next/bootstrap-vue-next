@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, onBeforeUnmount, PropType, ref, watch} from 'vue'
-import {Alert} from 'bootstrap'
+import Alert from 'bootstrap/js/dist/alert'
 import {ColorVariant} from '../types'
 import {toInteger} from '../utils/number'
 

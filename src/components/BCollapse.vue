@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, ref, watch} from 'vue'
-import {Collapse} from 'bootstrap'
+import Collapse from 'bootstrap/js/dist/collapse'
 import useEventListener from '../composables/useEventListener'
 import getID from '../utils/getID'
 

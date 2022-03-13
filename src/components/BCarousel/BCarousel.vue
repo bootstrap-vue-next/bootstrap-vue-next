@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import {defineComponent, InjectionKey, onMounted, provide, ref, VNode} from 'vue'
-import {Carousel} from 'bootstrap'
+import Carousel from 'bootstrap/js/dist/carousel'
 import useEventListener from '../../composables/useEventListener'
 import useId from '../../composables/useId'
 
