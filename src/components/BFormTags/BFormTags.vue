@@ -271,12 +271,12 @@ function onInput(e: Event | string) {
     return
   }
 
+  inputValue.value = value
+
   if (props.separator?.includes(value.charAt(value.length - 1))) {
     addTag(value.slice(0, value.length - 1))
     return
   }
-
-  inputValue.value = value
 
   validTags.value = props.tagValidator(value) && !isDuplicate.value ? [value] : []
   invalidTags.value = props.tagValidator(value) ? [] : [value]
@@ -337,9 +337,6 @@ function removeTag(tag: string) {
   const tagIndex = tags.value.indexOf(tag)
   lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
 
-  if (input.value) {
-    input.value.value = ''
-  }
   emit('update:modelValue', tags.value)
 }
 </script>
