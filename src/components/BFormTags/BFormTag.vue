@@ -35,7 +35,7 @@ const props = defineProps({
   id: {type: String},
   noRemove: {type: Boolean, default: false},
   pill: {type: Boolean, default: false},
-  removeLabel: {type: String, default: 'span'},
+  removeLabel: {type: String, default: 'Remove tag'},
   tag: {type: String, default: 'span'},
   title: {type: String},
   variant: {type: String, default: 'secondary'},

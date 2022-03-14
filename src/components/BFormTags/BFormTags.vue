@@ -6,6 +6,7 @@
     role="group"
     tabindex="-1"
     @focusin="onFocusin"
+    @focusout="$emit('focusout', $event)"
   >
     <output
       :id="`${computedId}selected_tags__`"
@@ -76,9 +77,16 @@
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
-        <b-form-tag v-for="tag in tags" :key="tag" tag="li" @remove="removeTag">{{
-          tag
-        }}</b-form-tag>
+        <b-form-tag
+          v-for="tag in tags"
+          :key="tag"
+          :class="tagClass"
+          tag="li"
+          :variant="tagVariant"
+          :pill="tagPills"
+          @remove="removeTag"
+          >{{ tag }}</b-form-tag
+        >
         <li
           role="none"
           aria-live="off"
@@ -102,7 +110,7 @@
               @change="onChange"
               @keydown="onKeydown"
               @focus="onFocus"
-              @blur="focus = false"
+              @blur="onBlur"
             />
             <button
               v-if="disableAddButton"
@@ -166,17 +174,18 @@ const props = defineProps({
   noAddOnEnter: {type: Boolean, default: false},
   noOuterFocus: {type: Boolean, default: false},
   noTagRemove: {type: Boolean, default: false},
+  placeholder: {type: String, default: 'Add tag...'},
   removeOnDelete: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
   separator: {type: [String, Array] as PropType<string | string[]>},
   state: {type: Boolean, default: null},
   size: {type: String as PropType<InputSize>},
+  tagClass: {type: [String, Array, Object]},
   tagPills: {type: Boolean, default: false},
-  tagRemoveLabel: {type: String, default: 'Remove tag'},
+  tagRemoveLabel: {type: String},
   tagRemovedLabel: {type: String, default: 'Tag removed'},
   tagValidator: {type: Function, default: () => true},
   tagVariant: {type: String, default: 'secondary'},
-  placeholder: {type: String, default: 'Add tag...'},
 })
 
 const input = ref<HTMLInputElement | null>(null)
@@ -200,7 +209,15 @@ watch(
   }
 )
 
-const emit = defineEmits(['update:modelValue', 'tag-state'])
+const emit = defineEmits([
+  'update:modelValue',
+  'input',
+  'tag-state',
+  'focus',
+  'focusin',
+  'focusout',
+  'blur',
+])
 
 const tags = ref(props.modelValue)
 const inputValue = ref('')
@@ -219,15 +236,6 @@ const classes = computed(() => ({
   'is-invalid': props.state === false,
   'is-valid': props.state === true,
 }))
-
-const tagClass = computed(() => [
-  `bg-${props.tagVariant}`,
-  {
-    'text-dark': ['warning', 'info', 'light'].includes(props.tagVariant),
-    'rounded-pill': props.tagPills,
-    'disabled': props.disabled,
-  },
-])
 
 const isDuplicate = computed(() => tags.value.includes(inputValue.value))
 
@@ -248,15 +256,24 @@ function onFocusin(e: FocusEvent) {
   if (props.disabled) {
     const target = e.target as HTMLDivElement
     target.blur()
+    return
   }
+
+  emit('focusin', e)
 }
 
-function onFocus() {
+function onFocus(e: FocusEvent) {
   if (props.disabled || props.noOuterFocus) {
     return
   }
 
   focus.value = true
+  emit('focus', e)
+}
+
+function onBlur(e: FocusEvent) {
+  focus.value = false
+  emit('blur', e)
 }
 
 function onInput(e: Event | string) {
@@ -314,8 +331,8 @@ function onKeydown(e: KeyboardEvent) {
   }
 }
 
-function addTag(tag: string) {
-  tag = tag.trim()
+function addTag(tag?: string) {
+  tag = (tag || inputValue.value).trim()
 
   if (
     tag === '' ||
@@ -330,6 +347,7 @@ function addTag(tag: string) {
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
   emit('update:modelValue', newValue)
+  emit('input', newValue)
   input.value?.focus()
 }
 
