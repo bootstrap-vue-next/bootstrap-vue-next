@@ -45,6 +45,8 @@ import BFormRow from './BForm/BFormRow.vue'
 import BFormSelect from './BFormSelect/BFormSelect.vue'
 import BFormSelectOption from './BFormSelect/BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelect/BFormSelectOptionGroup.vue'
+import BFormTag from './BFormTags/BFormTag.vue'
+import BFormTags from './BFormTags/BFormTags.vue'
 import BFormText from './BForm/BFormText.vue'
 import BFormTextarea from './BFormTextarea/BFormTextarea.vue'
 import BFormValidFeedback from './BForm/BFormValidFeedback.vue'
@@ -137,6 +139,8 @@ export default {
   BFormSelectOptionGroup,
   BFormText,
   BFormTextarea,
+  BFormTag,
+  BFormTags,
   BFormValidFeedback,
   BImg,
   BInputGroup,
