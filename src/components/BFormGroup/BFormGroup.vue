@@ -263,6 +263,7 @@ export default defineComponent({
           for: props.labelFor || null,
           tabIndex: isFieldset ? '-1' : null,
           class: [
+            this.isHorizontal ? 'col-form-label' : 'form-label',
             {
               'bv-no-focus-ring': isFieldset,
               'col-form-label': this.isHorizontal || isFieldset,
