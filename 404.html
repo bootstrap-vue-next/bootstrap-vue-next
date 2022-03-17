@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/bootstrap-vue-3/favicon.ico"><title>BootstrapVue 3</title><meta name="description" content="">
+    <link rel="modulepreload" href="/bootstrap-vue-3/assets/app.aeb2ae30.js"><link rel="modulepreload" href="/bootstrap-vue-3/assets/404.html.66a43409.js"><link rel="modulepreload" href="/bootstrap-vue-3/assets/404.html.b4feb918.js">
+    <link rel="stylesheet" href="/bootstrap-vue-3/assets/style.fbb5f64a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="theme-container"><div class="theme-default-content"><h1>404</h1><blockquote>How did we get here?</blockquote><a href="/bootstrap-vue-3/" class="">Take me home</a></div></div><!----><!--]--></div>
+    <script type="module" src="/bootstrap-vue-3/assets/app.aeb2ae30.js" defer></script>
+  </body>
+</html>
