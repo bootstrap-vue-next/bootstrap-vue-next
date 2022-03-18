@@ -41,7 +41,6 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
   - `pos`: 'top-left', 'top-center', 'top-right', 'middle-left', 'middle-center', 'middle-right', 'bottom-left', 'bottom-center', 'bottom-right'
   - `delay`: number
   - `variant` : string ColorVariant
-    :
 
 ```html
 <b-container
