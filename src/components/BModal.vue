@@ -5,9 +5,7 @@
         <div class="modal-content" :class="contentClass">
           <div v-if="!hideHeader" class="modal-header" :class="computedHeaderClasses">
             <component :is="titleTag" class="modal-title" :class="computedTitleClasses">
-              <slot name="title">
-                {{ title }}
-              </slot>
+              <slot name="title">{{ title }}</slot>
             </component>
             <button
               v-if="!hideHeaderClose"
@@ -34,9 +32,8 @@
                 :size="buttonSize"
                 :variant="cancelVariant"
                 @click="$emit('cancel')"
+                >{{ cancelTitle }}</b-button
               >
-                {{ cancelTitle }}
-              </b-button>
               <b-button
                 type="button"
                 class="btn btn-primary"
@@ -45,9 +42,8 @@
                 :size="buttonSize"
                 :variant="okVariant"
                 @click="$emit('ok')"
+                >{{ okTitle }}</b-button
               >
-                {{ okTitle }}
-              </b-button>
             </slot>
           </div>
         </div>
@@ -63,6 +59,7 @@ import BButton from '../components/BButton/BButton.vue'
 import useEventListener from '../composables/useEventListener'
 import ColorVariant from '../types/ColorVariant'
 import InputSize from '../types/InputSize'
+import BVModal from '../globalProperties/bvModal'
 
 export default defineComponent({
   name: 'BModal',
@@ -198,6 +195,14 @@ export default defineComponent({
       if (!e.defaultPrevented) {
         emit('update:modelValue', false)
       }
+    })
+
+    BVModal.emitter.on('BVMODAL-SHOW', (id) => {
+      if (props.id === id) instance.value?.show()
+    })
+
+    BVModal.emitter.on('BVMODAL-HIDE', (id) => {
+      if (props.id === id) instance.value?.hide()
     })
 
     onMounted(() => {
