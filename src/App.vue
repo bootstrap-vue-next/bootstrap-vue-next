@@ -2019,7 +2019,12 @@ export default defineComponent({
     }
 
     const createToast2 = () => {
-      c?.show({title: 'example title', body: h('div', 'cool Dynamic')})
+      c?.show(
+        {
+          body: 'This is a long content toast. Very looooooooooooong content toast. Should be centered.',
+        },
+        {pos: 'bottom-center'}
+      )
     }
 
     function tagValidator(tag: string) {
