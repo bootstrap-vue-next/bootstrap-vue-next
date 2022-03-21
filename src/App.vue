@@ -1611,12 +1611,16 @@
     <!-- Modal -->
     <div class="my-2">
       <h2>Modal</h2>
-      <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
-      {{ showModal }}
+      <div class="d-flex align-items-center gap-2">
+        <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
+        <b-button @click="$bvModal.show('exampleModal')">Show modal using $bvModal.show</b-button>
+        {{ showModal }}
+      </div>
       <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
-      <b-modal id="exampleModal" v-model="showModal" size="xl" title="Modal title" fade
-        >...</b-modal
-      >
+      <b-modal id="exampleModal" v-model="showModal" size="xl" title="Modal title" fade>
+        ...
+        <b-button @click="$bvModal.hide('exampleModal')">Hide modal usig $bvModal.hide</b-button>
+      </b-modal>
     </div>
 
     <!-- <b-nav pills>
