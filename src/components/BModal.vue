@@ -63,6 +63,7 @@ import BButton from '../components/BButton/BButton.vue'
 import useEventListener from '../composables/useEventListener'
 import ColorVariant from '../types/ColorVariant'
 import InputSize from '../types/InputSize'
+import BVModal from '../globalProperties/bvModal'
 
 export default defineComponent({
   name: 'BModal',
@@ -198,6 +199,14 @@ export default defineComponent({
       if (!e.defaultPrevented) {
         emit('update:modelValue', false)
       }
+    })
+
+    BVModal.emitter.on('BVMODAL-SHOW', (id) => {
+      if (props.id === id) instance.value?.show()
+    })
+
+    BVModal.emitter.on('BVMODAL-HIDE', (id) => {
+      if (props.id === id) instance.value?.hide()
     })
 
     onMounted(() => {
