@@ -17,24 +17,23 @@
           class="nav-item"
           :class="tab.props['title-item-class']"
         >
-          <a
+          <button
             :id="buttonId"
             class="nav-link"
             :class="navItemClasses"
             data-bs-toggle="tab"
             :data-bs-target="target"
-            href="#"
             role="tab"
             :aria-controls="contentId"
             :aria-selected="active"
             v-bind="tab.props['title-link-attributes']"
-            @click.stop="(e) => handleClick(e, idx)"
+            @click.stop.prevent="(e) => handleClick(e, idx)"
           >
             <component :is="tab.children.title" v-if="tab.children && tab.children.title" />
             <template v-else>
               {{ tab.props.title }}
             </template>
-          </a>
+          </button>
         </li>
         <slot name="tabs-end" />
       </ul>
