@@ -201,11 +201,12 @@ export default defineComponent({
       }
     })
 
-    BVModal.bus.on((event) => {
-      if (event.id === props.id) {
-        if (event.type === 'BVMODAL-SHOW') instance.value?.show()
-        if (event.type === 'BVMODAL-HIDE') instance.value?.hide()
-      }
+    BVModal.emitter.on('BVMODAL-SHOW', (id) => {
+      if (props.id === id) instance.value?.show()
+    })
+
+    BVModal.emitter.on('BVMODAL-HIDE', (id) => {
+      if (props.id === id) instance.value?.hide()
     })
 
     onMounted(() => {

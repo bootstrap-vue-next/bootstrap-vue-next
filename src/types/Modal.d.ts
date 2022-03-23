@@ -1,1 +1,1 @@
-export type ModalEvent = {type: 'BVMODAL-SHOW' | 'BVMODAL-HIDE'; id: string}
+export type ModalEvent = 'BVMODAL-SHOW' | 'BVMODAL-HIDE'

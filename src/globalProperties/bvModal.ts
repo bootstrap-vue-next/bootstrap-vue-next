@@ -1,14 +1,12 @@
-import {EventBusKey, useEventBus, UseEventBusReturn} from '@vueuse/core'
+import mitt, {Emitter} from 'mitt'
 import {ModalEvent} from 'src/types/Modal'
-
-const ModalEventKey: EventBusKey<ModalEvent> = Symbol('MODAL-EVENT-KEY')
 
 export default class BVModal {
   private static _instance: BVModal
-  private _bus: UseEventBusReturn<ModalEvent, any>
+  private _emitter: Emitter<Record<ModalEvent, string>>
 
   constructor() {
-    this._bus = useEventBus(ModalEventKey)
+    this._emitter = mitt<Record<ModalEvent, string>>()
   }
 
   private static get instance(): BVModal {
@@ -17,15 +15,15 @@ export default class BVModal {
     return this._instance
   }
 
-  public static get bus(): UseEventBusReturn<ModalEvent, any> {
-    return this.instance._bus
+  public static get emitter(): Emitter<Record<ModalEvent, string>> {
+    return this.instance._emitter
   }
 
   public static show(id: string) {
-    this.bus.emit({type: 'BVMODAL-SHOW', id})
+    this.instance._emitter.emit('BVMODAL-SHOW', id)
   }
 
   public static hide(id: string) {
-    this.bus.emit({type: 'BVMODAL-HIDE', id})
+    this.instance._emitter.emit('BVMODAL-HIDE', id)
   }
 }
