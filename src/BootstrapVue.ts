@@ -1,7 +1,6 @@
 import {App, Plugin} from 'vue'
 import Components from './components'
 import Directives from './directives'
-import GlobalProperties from './globalProperties'
 
 import {BootstrapVueOptions} from './types'
 import {createBreadcrumb} from './composables/useBreadcrumb'
@@ -104,10 +103,6 @@ const plugin: Plugin = {
 
     Object.entries(Directives).forEach(([name, component]) => {
       app.directive(name, component)
-    })
-
-    Object.entries(GlobalProperties).forEach(([name, property]) => {
-      app.config.globalProperties[name] = property
     })
 
     createBreadcrumb(app)
