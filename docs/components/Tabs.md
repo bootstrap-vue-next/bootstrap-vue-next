@@ -679,7 +679,7 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
   </b-card>
 </ClientOnly>
 
-````html
+```html
 <template>
   <div>
     <b-card no-body>
@@ -709,7 +709,7 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
   </div>
 </template>
 
-<!-- <script lang="ts" setup>
+<script lang="ts" setup>
   import {ref, computed} from 'vue'
 
   const tabs = ref([])
@@ -725,74 +725,92 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 
   const newTab = () => tabs.value.push(tabCounter.value++)
 </script>
-``` -->
+```
 
-## Component reference ### `<b-tabs
-  >` #### Properties | Property | Type | Default | Description | | ----------------------- |
-  ------------------------------- | ------- |
-  --------------------------------------------------------------------------------------------------------------------------------------
-  | | `active-nav-item-class` | `Array` or `Object` or `String` | | CSS class (or classes) to apply
-  to the active nav item tab control | | `active-tab-class` | `Array` or `Object` or `String` | |
-  CSS class (or classes) to apply to the active nav item tab control | | `align` | `String` | |
-  Align the nav items in the nav: 'start', 'center', 'end' | | `card` | `Boolean` | `false` | When
-  set to true, renders the tabs the the appropriate styles to be placed into a 'b-card' | |
-  `content-class` | `Array` or `Object` or `String` | | CSS class (or classes) to apply to the
-  tab-content wrapper | | `end` | `Boolean` | `false` | Place the tab controls at the bottom
-  (horizontal tabs), or right (vertical tabs) | | `fill` | `Boolean` | `false` | Proportionately
-  fills all horizontal space with nav items. All horizontal space is occupied, but not every nav
-  item has the same width | | `id` | `String` | | Used to set the `id` attribute on the rendered
-  content, and used as the base to generate any additional element IDs as needed | | `justified` |
-  `Boolean` | `false` | Fills all horizontal space with nav items, but unlike 'fill', every nav item
-  will be the same width | | `lazy` | `Boolean` | `false` | Lazily render the b-tab contents when
-  shown | | `lazy` | `Boolean` | `false` | Lazily render the b-tab contents when shown | |
-  `nav-class` | `Array` or `Object` or `String` | | CSS class (or classes) to apply to the tablist
-  (nav) wrapper | | `nav-wrapper-class` | `Array` or `Object` or `String` | | CSS class (or classes)
-  to apply to the tablist (nav) wrapper | | `no-fade` | `Boolean` | `false` | When set to `true`,
-  disables the fade animation/transition on the component | | ~~`no-key-nav`~~ | `Boolean` | `false`
-  | Disable keyboard navigation of the tab controls | | `no-nav-style` | `Boolean` | `false` |
-  Disable keyboard navigation of the tab controls | | `pills` | `Boolean` | `false` | Renders the
-  nav items with the appearance of pill buttons | | `small` | `Boolean` | `false` | Makes the nav
-  smaller | | `tag` | `String` | `div` | Specify the HTML tag to render instead of the default tag |
-  | `vertical` | `Boolean` | `false` | Renders the tab controls vertically | #### v-model | Property
-  | Type | Default | Description | | ------------------ | -------- | ------- |
-  ---------------------------------------- | | default modelValue | `Number` | | Currently visible
-  tab index (zero-based) | #### Slots | Name | Description | | ------------ |
-  ---------------------------------------------------------------------------- | | `default` |
-  Content (tabs) to place in the tabs element | | `empty` | Renders this slot if no tabs are present
-  | | `tabs-end` | Additional tab buttons without tab content placed after content tab buttons | |
-  `tabs-start` | Additional tab buttons without tab content placed before content tab buttons | ####
-  Events | Name | Argument | Description | | ------------------- |
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  | -------------------------------------------------------- | | `activate-tab` | `newTabIndex` -
-  Tab being activated (0-based index)<br />`prevTabIndex` - Tab that is currently active (0-based
-  index). Will be -1 if no current active tab<br />`bvEvent` - BvEvent object. Call
-  bvEvent.preventDefault() to cancel | Emitted just before a tab is shown/activated. Cancelable | |
-  `update:modelValue` | `tabIndex` - Current active tab index (0-based index) | Emitted when the
-  modelValue value is changed | ### `<b-tab
-    >` #### Properties | Property | Type | Default | Description | | ----------------------- |
-    ------------------------------- | ------- |
-    -----------------------------------------------------------------------------------------------------------------------------
-    | | `active` | `Boolean` | `false` | When set to `true`, places the component in the active
-    state with active styling | | `button-id` | `String` | | Use a specific ID for this tab's tab
-    control button. If not provided, one will automatically be generated | | `disabled` | `Boolean`
-    | `false` | When set to `true`, disables the component's functionality and places it in a
-    disabled state | | `id` | `String` | | Used to set the `id` attribute on the rendered content,
-    and used as the base to generate any additional element IDs as needed | | `lazy` | `Boolean` |
-    `false` | Lazily render this tab's content when shown | | `no-body` | `Boolean` | `false` | When
-    the parent b-tabs has the 'card' prop set, do not render a card-body wrapper | | `tag` |
-    `String` | `div` | Specify the HTML tag to render instead of the default tag | | `title` |
-    `String` | | Text content to place in the title | | `title-item-class` | `Array` or `Object` or
-    `String` | | CSS class (or classes) to apply to the tab's control button 'li' element | |
-    `title-link-attributes` | `Object` | | Attributes to apply to the tab's control button inner
-    link element | | `title-link-class` | `Array` or `Object` or `String` | | CSS class (or classes)
-    to apply to the tab's control button inner link element | #### Slots | Name | Description | |
-    --------- | ----------------------------------- | | `default` | Content to place in the tab
-    element | | `title` | Slot for custom tab title | #### Events | Name | Argument | Description |
-    | ------- | ------------------------------- | ----------------------------- | | `click` |
-    `event` - Original event object | Emitted when a tab is clicked |
+## Component reference
 
-    <!-- ------------------------------------------------------------------ -->
-    <!-- <script lang="ts" setup>
+### `<b-tabs>`
+
+#### Properties
+
+| Property                | Type                            | Default | Description                                                                                                                            |
+| ----------------------- | ------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `active-nav-item-class` | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the active nav item tab control                                                                     |
+| `active-tab-class`      | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the active nav item tab control                                                                     |
+| `align`                 | `String`                        |         | Align the nav items in the nav: 'start', 'center', 'end'                                                                               |
+| `card`                  | `Boolean`                       | `false` | When set to true, renders the tabs the the appropriate styles to be placed into a 'b-card'                                             |
+| `content-class`         | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the tab-content wrapper                                                                             |
+| `end`                   | `Boolean`                       | `false` | Place the tab controls at the bottom (horizontal tabs), or right (vertical tabs)                                                       |
+| `fill`                  | `Boolean`                       | `false` | Proportionately fills all horizontal space with nav items. All horizontal space is occupied, but not every nav item has the same width |
+| `id`                    | `String`                        |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed          |
+| `justified`             | `Boolean`                       | `false` | Fills all horizontal space with nav items, but unlike 'fill', every nav item will be the same width                                    |
+| `lazy`                  | `Boolean`                       | `false` | Lazily render the b-tab contents when shown                                                                                            |
+| `lazy`                  | `Boolean`                       | `false` | Lazily render the b-tab contents when shown                                                                                            |
+| `nav-class`             | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the tablist (nav) wrapper                                                                           |
+| `nav-wrapper-class`     | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the tablist (nav) wrapper                                                                           |
+| `no-fade`               | `Boolean`                       | `false` | When set to `true`, disables the fade animation/transition on the component                                                            |
+| ~~`no-key-nav`~~        | `Boolean`                       | `false` | Disable keyboard navigation of the tab controls                                                                                        |
+| `no-nav-style`          | `Boolean`                       | `false` | Disable keyboard navigation of the tab controls                                                                                        |
+| `pills`                 | `Boolean`                       | `false` | Renders the nav items with the appearance of pill buttons                                                                              |
+| `small`                 | `Boolean`                       | `false` | Makes the nav smaller                                                                                                                  |
+| `tag`                   | `String`                        | `div`   | Specify the HTML tag to render instead of the default tag                                                                              |
+| `vertical`              | `Boolean`                       | `false` | Renders the tab controls vertically                                                                                                    |
+
+#### v-model
+
+| Property           | Type     | Default | Description                              |
+| ------------------ | -------- | ------- | ---------------------------------------- |
+| default modelValue | `Number` |         | Currently visible tab index (zero-based) |
+
+#### Slots
+
+| Name         | Description                                                                  |
+| ------------ | ---------------------------------------------------------------------------- |
+| `default`    | Content (tabs) to place in the tabs element                                  |
+| `empty`      | Renders this slot if no tabs are present                                     |
+| `tabs-end`   | Additional tab buttons without tab content placed after content tab buttons  |
+| `tabs-start` | Additional tab buttons without tab content placed before content tab buttons |
+
+#### Events
+
+| Name                | Argument                                                                                                                                                                                                                           | Description                                              |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `activate-tab`      | `newTabIndex` - Tab being activated (0-based index)<br/>`prevTabIndex` - Tab that is currently active (0-based index). Will be -1 if no current active tab<br/>`bvEvent` - BvEvent object. Call bvEvent.preventDefault() to cancel | Emitted just before a tab is shown/activated. Cancelable |
+| `update:modelValue` | `tabIndex` - Current active tab index (0-based index)                                                                                                                                                                              | Emitted when the modelValue value is changed             |
+
+### `<b-tab>`
+
+#### Properties
+
+| Property                | Type                            | Default | Description                                                                                                                   |
+| ----------------------- | ------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `active`                | `Boolean`                       | `false` | When set to `true`, places the component in the active state with active styling                                              |
+| `button-id`             | `String`                        |         | Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated                     |
+| `disabled`              | `Boolean`                       | `false` | When set to `true`, disables the component's functionality and places it in a disabled state                                  |
+| `id`                    | `String`                        |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `lazy`                  | `Boolean`                       | `false` | Lazily render this tab's content when shown                                                                                   |
+| `no-body`               | `Boolean`                       | `false` | When the parent b-tabs has the 'card' prop set, do not render a card-body wrapper                                             |
+| `tag`                   | `String`                        | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
+| `title`                 | `String`                        |         | Text content to place in the title                                                                                            |
+| `title-item-class`      | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the tab's control button 'li' element                                                      |
+| `title-link-attributes` | `Object`                        |         | Attributes to apply to the tab's control button inner link element                                                            |
+| `title-link-class`      | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the tab's control button inner link element                                                |
+
+#### Slots
+
+| Name      | Description                         |
+| --------- | ----------------------------------- |
+| `default` | Content to place in the tab element |
+| `title`   | Slot for custom tab title           |
+
+#### Events
+
+| Name    | Argument                        | Description                   |
+| ------- | ------------------------------- | ----------------------------- |
+| `click` | `event` - Original event object | Emitted when a tab is clicked |
+
+<!-- ------------------------------------------------------------------ -->
+<!-- <script lang="ts" setup>
   import {ref, computed} from 'vue'
 
   const tabIndex = ref(0)
@@ -819,7 +837,4 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 
   const newTab = () => tabs.value.push(tabCounter.value++)
 
-</script> --></b-tab
-  ></b-tabs
->
-````
+</script> -->
