@@ -1,4 +1,6 @@
-import {DOCUMENT, WINDOW} from '../types/safe-types'
+import {DOCUMENT, AnimationFrame} from '../types/safe-types'
+import {HAS_WINDOW_SUPPORT} from '../utils/env'
+
 import {Comment, Slot, VNode} from 'vue'
 import {from as arrayFrom} from './array'
 import {toString} from './stringUtils'
@@ -79,10 +81,10 @@ export const offset = (el: HTMLElement) => {
 }
 
 // Select a single element, returns `null` if not found
-export const select = (selector, root) =>
+export const select = (selector: any, root: any) =>
   (isElement(root) ? root : DOCUMENT).querySelector(selector) || null
 
-export const selectAll = (selector, root) =>
+export const selectAll = (selector: any, root: any) =>
   arrayFrom((isElement(root) ? root : DOCUMENT).querySelectorAll(selector))
 
 export const getAttr = (el: HTMLElement, attr: string): string | null =>
@@ -104,12 +106,12 @@ export const removeAttr = (el: HTMLElement, attr: string): void => {
 export const isTag = (tag: any, name: any): boolean =>
   toString(tag).toLowerCase() === toString(name).toLowerCase()
 
-export const requestAF =
-  WINDOW.requestAnimationFrame ||
-  WINDOW.webkitRequestAnimationFrame ||
-  WINDOW.mozRequestAnimationFrame ||
-  WINDOW.msRequestAnimationFrame ||
-  WINDOW.oRequestAnimationFrame ||
+export const requestAF: AnimationFrame =
+  window.requestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  window.msRequestAnimationFrame ||
+  window.oRequestAnimationFrame ||
   // Fallback, but not a true polyfill
   // Only needed for Opera Mini
   /* istanbul ignore next */

@@ -91,7 +91,7 @@ export class ToastInstance {
     if (position) {
       return computed<Array<Toast>>(() => {
         return this.vm.toasts.filter((toast) => {
-          if (toast.options.pos == position) {
+          if (toast.options.pos == position && toast.options.value) {
             return toast
           }
         })
