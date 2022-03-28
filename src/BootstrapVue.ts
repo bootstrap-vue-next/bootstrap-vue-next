@@ -6,7 +6,7 @@ import {BootstrapVueOptions} from './types'
 import {createBreadcrumb} from './composables/useBreadcrumb'
 import './styles/styles.scss'
 
-// import available components
+// export available components
 export {default as BAccordion} from './components/BAccordion.vue'
 export {default as BAccordionItem} from './components/BAccordionItem.vue'
 export {default as BAlert} from './components/BAlert.vue'
@@ -92,6 +92,12 @@ export {default as BTransition} from './components/BTransition/BTransition.vue'
 export {default as BToast} from './components/BToast/BToast.vue'
 export {default as BToaster} from './components/BToast/BToaster.vue'
 export {BToastPlugin, useToast} from './components/BToast/'
+
+// export available directives
+export {default as VBPopover} from './directives/BPopover'
+export {default as VBToggle} from './directives/BToggle'
+export {default as VBTooltip} from './directives/BTooltip'
+export {default as VBVisible} from './directives/BVisible'
 
 const plugin: Plugin = {
   // TODO: use options in the future
