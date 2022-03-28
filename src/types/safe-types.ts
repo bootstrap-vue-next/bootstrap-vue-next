@@ -7,14 +7,26 @@ import {HAS_DOCUMENT_SUPPORT, HAS_WINDOW_SUPPORT} from '../utils/env'
 export const WINDOW = HAS_WINDOW_SUPPORT ? window : {}
 export const DOCUMENT = HAS_DOCUMENT_SUPPORT ? document : {}
 
-export const Element = HAS_WINDOW_SUPPORT ? WINDOW.Element : class Element extends Object {}
+export type AnimationFrame = typeof requestAnimationFrame
+
+declare global {
+  interface Window {
+    requestAnimationFrame: AnimationFrame
+    webkitRequestAnimationFrame: AnimationFrame
+    mozRequestAnimationFrame: AnimationFrame
+    msRequestAnimationFrame: AnimationFrame
+    oRequestAnimationFrame: AnimationFrame
+  }
+}
+
+export const Element = HAS_WINDOW_SUPPORT ? window.Element : class Element extends Object {}
 
 export const HTMLElement = HAS_WINDOW_SUPPORT
-  ? WINDOW.HTMLElement
+  ? window.HTMLElement
   : class HTMLElement extends Element {}
 
 export const SVGElement = HAS_WINDOW_SUPPORT
-  ? WINDOW.SVGElement
+  ? window.SVGElement
   : class SVGElement extends Element {}
 
-export const File = HAS_WINDOW_SUPPORT ? WINDOW.File : class File extends Object {}
+export const File = HAS_WINDOW_SUPPORT ? window.File : class File extends Object {}

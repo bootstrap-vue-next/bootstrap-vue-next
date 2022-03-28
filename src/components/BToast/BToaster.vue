@@ -12,7 +12,6 @@
       @destroyed="handleDestroy"
     >
     </b-toast>
-    <div></div>
   </div>
 </template>
 
@@ -36,13 +35,13 @@ import {ContainerPosition} from '../../types/container'
 
 const toastPositions = {
   'top-left': 'top-0 start-0',
-  'top-center': 'top-0 start-50',
+  'top-center': 'top-0 start-50 translate-middle-x',
   'top-right': 'top-0 end-0',
   'middle-left': 'top-50 start-0 translate-middle-y',
   'middle-center': 'top-50 start-50 translate-middle',
   'middle-right': 'top-50 end-0 translate-middle-y',
   'bottom-left': 'bottom-0 start-0',
-  'bottom-center': 'bottom-0 start-50',
+  'bottom-center': 'bottom-0 start-50 translate-middle-x',
   'bottom-right': 'bottom-0 end-0',
 }
 
