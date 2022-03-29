@@ -1,6 +1,17 @@
 <!-- eslint-disable vue/max-attributes-per-line vue/singleline-html-element-content-newline -->
 <template>
   <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+    <b-table-simple>
+      <b-tbody>
+        <b-tr>
+          <b-td>{{ count }}</b-td>
+          <b-td stacked-heading="sm">{{ count }}</b-td>
+          <b-td><button @click="count++">Increment</button></b-td>
+        </b-tr>
+      </b-tbody>
+    </b-table-simple>
+    <button @click="count++">Increment</button>
+    {{ count }}
     <b-form-group label="Tags validation example" label-for="tags-validation" :state="state">
       <!-- <label for="tags-basic">Type a new tag and press enter</label> -->
       <b-form-tags
@@ -1856,6 +1867,7 @@ import {ToastInstance, useToast} from './components/BToast/plugin'
 export default defineComponent({
   name: 'App',
   setup() {
+    const count = ref(0)
     inject('toast')
     const value = ref(['apple', 'orange'])
     const state = computed(() => value.value.length > 2 && value.value.length < 9)
@@ -1972,8 +1984,8 @@ export default defineComponent({
     const formInputRangeValue = ref(3)
 
     const formSelectSelected = ref()
-    let formSelectMultipleSelected = ref([])
-    formSelectMultipleSelected = ['first', 'second']
+    const formSelectMultipleSelected = ref<string[]>([])
+    formSelectMultipleSelected.value = ['first', 'second']
     const formSelectOptions = [
       {value: null, text: 'Please select an option'},
       {text: 'Item 1', value: 'first'},
@@ -2041,6 +2053,7 @@ export default defineComponent({
     }
 
     return {
+      count,
       onTagState,
       tagValidator,
       value,
