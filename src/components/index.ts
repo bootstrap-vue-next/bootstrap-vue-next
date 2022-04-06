@@ -62,7 +62,7 @@ import BListGroupItem from './BListGroup/BListGroupItem.vue'
 import BModal from './BModal.vue'
 import BNav from './BNav.vue'
 import BNavItem from './BNavItem.vue'
-// import BNavItemDropdown from './BNavItemDropdown.vue'
+import BNavItemDropdown from './BNavItemDropdown.vue'
 import BOffcanvas from './BOffcanvas.vue'
 import BOverlay from './BOverlay/BOverlay.vue'
 import BPagination from './BPagination/BPagination.vue'
@@ -154,7 +154,7 @@ export default {
   BModal,
   BNav,
   BNavItem,
-  // BNavItemDropdown,
+  BNavItemDropdown,
   BOffcanvas,
   BOverlay,
   BPagination,
