@@ -9,7 +9,7 @@
 <script lang="ts">
 import {ButtonVariant, Size} from '../types'
 import {defineComponent, PropType} from 'vue'
-import BDropdown from './BDropdown.vue'
+import BDropdown from './BDropdown/BDropdown.vue'
 
 export default defineComponent({
   name: 'BNavItemDropdown',
