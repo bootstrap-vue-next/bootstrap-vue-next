@@ -4,6 +4,7 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import visualizer from 'rollup-plugin-visualizer'
+import dts from 'vite-plugin-dts'
 
 const config = defineConfig({
   resolve: {
@@ -60,6 +61,7 @@ const config = defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     visualizer(), // generates admin/stats.html on npm run build
+    dts(),
   ],
 
   server: {
