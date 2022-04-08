@@ -4,12 +4,20 @@
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
   "version": "0.1.10",
   "license": "MIT",
-  "main": "dist/bootstrap-vue-3.umd.js",
+  "main": "./dist/bootstrap-vue-3.umd.js",
   "module": "./dist/bootstrap-vue-3.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/bootstrap-vue-3.es.js",
+      "require": "./dist/bootstrap-vue-3.umd.js"
+    },
+    "./dist/bootstrap-vue-3.css": "./dist/bootstrap-vue-3.css"
+  },
   "files": [
     "dist",
     "src"
   ],
+  "types": "./dist/BootstrapVue.d.ts",
   "workspaces": [
     "docs/"
   ],
@@ -31,7 +39,6 @@
     "publish": "npm publish --tag develop",
     "release": "standard-version"
   },
-  "types": "src/BootstrapVue.d.ts",
   "dependencies": {
     "core-js": "3.x.x"
   },
