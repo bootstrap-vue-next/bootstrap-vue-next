@@ -106,13 +106,14 @@ export const removeAttr = (el: HTMLElement, attr: string): void => {
 export const isTag = (tag: any, name: any): boolean =>
   toString(tag).toLowerCase() === toString(name).toLowerCase()
 
-export const requestAF: AnimationFrame =
-  window.requestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.mozRequestAnimationFrame ||
-  window.msRequestAnimationFrame ||
-  window.oRequestAnimationFrame ||
-  // Fallback, but not a true polyfill
-  // Only needed for Opera Mini
-  /* istanbul ignore next */
-  ((cb) => setTimeout(cb, 16))
+export const requestAF: AnimationFrame = HAS_WINDOW_SUPPORT
+  ? window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    // Fallback, but not a true polyfill
+    // Only needed for Opera Mini
+    /* istanbul ignore next */
+    ((cb) => setTimeout(cb, 16))
+  : (cb) => setTimeout(cb, 0)
