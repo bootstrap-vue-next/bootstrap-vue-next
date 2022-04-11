@@ -96,16 +96,25 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
   import {useToast} from 'bootstrap-vue-3'
   let toast = useToast()
   let variantshow1 = () => {
-    toast.danger({title: 'Item Deleted'}, {pos: 'bottom-center'})
+    toast.show({title: 'Item Deleted'}, {pos: 'bottom-center', variant: 'danger'})
   }
   let variantshow2 = () => {
-    toast.info({title: 'New Message', body: 'This is a toast'}, {pos: 'bottom-right'})
+    toast.show(
+      {title: 'New Message', body: 'This is a toast'},
+      {pos: 'bottom-right', variant: 'info'}
+    )
   }
   let variantshow3 = () => {
-    toast.warning({title: 'Warning for Item', body: 'Please check list'}, {pos: 'bottom-right'})
+    toast.show(
+      {title: 'Warning for Item', body: 'Please check list'},
+      {pos: 'bottom-right', variant: 'warning'}
+    )
   }
   let variantshow4 = () => {
-    toast.success({title: 'Event Created!', body: 'Bootstrap Event'}, {pos: 'bottom-right'})
+    toast.show(
+      {title: 'Event Created!', body: 'Bootstrap Event'},
+      {pos: 'bottom-right', variant: 'success'}
+    )
   }
 </script>
 ```
