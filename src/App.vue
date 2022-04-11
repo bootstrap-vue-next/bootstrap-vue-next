@@ -1842,7 +1842,7 @@
     <b-toast v-model="showToast" title="Hello" body="cow"></b-toast>
     <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
     <b-button class="mt-3" @click="createToast2()">Show Toast 2</b-button>
-
+    <b-button class="mt-3" @click="createToastError()">Show a danger Toast</b-button>
     <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
     <div id="demo"></div>
   </b-container>
@@ -2039,6 +2039,15 @@ export default defineComponent({
       )
     }
 
+    const createToastError = () => {
+      c?.show(
+        {
+          body: 'This is a danger toast!!',
+        },
+        {variant: 'danger'}
+      )
+    }
+
     function tagValidator(tag: string) {
       // Individual tag validator function
       return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
@@ -2061,6 +2070,7 @@ export default defineComponent({
       loading,
       createToast,
       createToast2,
+      createToastError,
       password,
       showPassword,
       description,
