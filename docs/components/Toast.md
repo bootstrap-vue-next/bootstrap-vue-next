@@ -76,7 +76,7 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
 
 ## Variants
 
-Toasts can be displayed as variants thru various helper methods or be set in `ToastOptions.varaint`
+Toasts can be displayed as variants thru various helper methods or be set in `ToastOptions.variant`
 
 ```html
 <b-container
