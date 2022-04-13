@@ -12,7 +12,7 @@
     :aria-required="required ? 'true' : null"
     :aria-invalid="computedAriaInvalid"
     v-bind="$attrs"
-    :value="modelValue"
+    :value="JSON.stringify(modelValue)"
     @change="onChange($event)"
   >
     <slot name="first" />
@@ -27,7 +27,7 @@
       <b-form-select-option
         v-else
         :key="`option2_${index}`"
-        :value="option.value"
+        :value="JSON.stringify(option.value)"
         :disabled="option.disabled"
         v-html="option.html || option.text"
       />
@@ -135,8 +135,8 @@ export default defineComponent({
         .filter((o: any) => o.selected)
         .map((o: any) => ('_value' in o ? o._value : o.value))
       nextTick(() => {
-        emit('change', target.multiple ? selectedVal : selectedVal[0])
-        emit('update:modelValue', target.multiple ? selectedVal : selectedVal[0])
+        emit('change', JSON.parse(target.multiple ? selectedVal : selectedVal[0]))
+        emit('update:modelValue', JSON.parse(target.multiple ? selectedVal : selectedVal[0]))
       })
     }
 
