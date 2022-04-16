@@ -43,7 +43,7 @@ export default defineComponent({
       const subContainers: Array<VNode> = []
 
       toastInstance?.containerPositions.value.forEach((position) => {
-        subContainers.push(h(BToaster, {instance: toastInstance, position}))
+        subContainers.push(h(BToaster, {key: position, instance: toastInstance, position}))
       })
 
       return h('div', {class: [classes.value, props.position], ref: container}, [
