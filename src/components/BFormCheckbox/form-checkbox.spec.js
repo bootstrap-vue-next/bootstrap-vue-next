@@ -947,9 +947,11 @@ describe('form-checkbox', () => {
   it('stand-alone button has label class active when clicked (checked)', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        'button': true,
-        'modelValue': false,
-        'value': 'a',
+        button: true,
+        modelValue: false,
+        value: 'a',
+      },
+      attrs: {
         'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       slots: {
@@ -968,7 +970,7 @@ describe('form-checkbox', () => {
     expect($label.classes()).toContain('btn')
     expect($label.classes()).toContain('btn-secondary')
 
-    await $input.trigger('click')
+    await $input.setValue(true)
     expect($label.classes().length).toEqual(3)
     expect($label.classes()).toContain('active')
     expect($label.classes()).toContain('btn')
@@ -1120,7 +1122,7 @@ describe('form-checkbox', () => {
 
   // --- Functionality testing ---
 
-  it('default has internal localChecked=false when prop modelValue=false', async () => {
+  it('default has internal modelValue=false when prop modelValue=false', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         modelValue: false,
@@ -1131,8 +1133,8 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toEqual(false)
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toEqual(false)
 
     const $input = wrapper.find('input')
     expect($input).toBeDefined()
@@ -1141,7 +1143,7 @@ describe('form-checkbox', () => {
     wrapper.unmount()
   })
 
-  it('default has internal localChecked=true when prop modelValue=true', async () => {
+  it('default has internal modelValue=true when prop modelValue=true', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         modelValue: true,
@@ -1152,8 +1154,8 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toEqual(true)
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toEqual(true)
 
     const $input = wrapper.find('input')
     expect($input).toBeDefined()
@@ -1162,7 +1164,7 @@ describe('form-checkbox', () => {
     wrapper.unmount()
   })
 
-  it('default has internal localChecked null', async () => {
+  it('default has internal modelValue null', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         uncheckedValue: 'foo',
@@ -1174,13 +1176,13 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toBe(null)
 
     wrapper.unmount()
   })
 
-  it('default has internal localChecked set to checked prop', async () => {
+  it('default has internal modelValue set to checked prop', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         uncheckedValue: 'foo',
@@ -1193,13 +1195,13 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toEqual('foo')
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toEqual('foo')
 
     wrapper.unmount()
   })
 
-  it('default has internal localChecked set to value when checked=value', async () => {
+  it('default has internal modelValue set to value when checked=value', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
         uncheckedValue: 'foo',
@@ -1212,34 +1214,8 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toEqual('bar')
-
-    wrapper.unmount()
-  })
-
-  it('default has internal localChecked set to value when checked changed to value', async () => {
-    const wrapper = mount(BFormCheckbox, {
-      props: {
-        uncheckedValue: 'foo',
-        value: 'bar',
-      },
-      slots: {
-        default: 'foobar',
-      },
-    })
-
-    expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toBe(null)
-
-    await wrapper.setProps({modelValue: 'bar'})
-    expect(wrapper.vm.localChecked).toEqual('bar')
-    expect(wrapper.emitted('input')).toBeDefined()
-
-    const $last = wrapper.emitted('input').length - 1
-    expect(wrapper.emitted('input')[$last]).toBeDefined()
-    expect(wrapper.emitted('input')[$last][0]).toEqual('bar')
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toEqual('bar')
 
     wrapper.unmount()
   })
@@ -1251,25 +1227,28 @@ describe('form-checkbox', () => {
         uncheckedValue: 'foo',
         value: 'bar',
       },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
+      },
       slots: {
         default: 'foobar',
       },
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toBe(null)
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $input = wrapper.find('input')
     expect($input).toBeDefined()
 
-    await $input.trigger('click')
+    await $input.setValue(true)
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
     expect(wrapper.emitted('change')[0][0]).toEqual('bar')
 
-    await $input.trigger('click')
+    await $input.setValue(false)
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
     expect(wrapper.emitted('change')[1][0]).toEqual('foo')
@@ -1284,14 +1263,17 @@ describe('form-checkbox', () => {
         uncheckedValue: 'foo',
         value: 'bar',
       },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
+      },
       slots: {
         default: 'foobar',
       },
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toBe(null)
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $label = wrapper.find('label')
@@ -1318,14 +1300,17 @@ describe('form-checkbox', () => {
         value: 'bar',
         disabled: true,
       },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
+      },
       slots: {
         default: 'foobar',
       },
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toBe(null)
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $input = wrapper.find('input')
@@ -1345,14 +1330,17 @@ describe('form-checkbox', () => {
         value: 'bar',
         disabled: true,
       },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
+      },
       slots: {
         default: 'foobar',
       },
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(wrapper.vm.localChecked).toBe(null)
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(wrapper.vm.modelValue).toBe(null)
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $label = wrapper.find('label')
@@ -1371,26 +1359,29 @@ describe('form-checkbox', () => {
         value: 'bar',
         modelValue: ['foo'],
       },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
+      },
       slots: {
         default: 'foobar',
       },
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(1)
+    expect(wrapper.vm.modelValue[0]).toEqual('foo')
 
     const $input = wrapper.find('input')
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(false)
 
     await $input.trigger('click')
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(2)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
-    expect(wrapper.vm.localChecked[1]).toEqual('bar')
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(2)
+    expect(wrapper.vm.modelValue[0]).toEqual('foo')
+    expect(wrapper.vm.modelValue[1]).toEqual('bar')
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
     expect(wrapper.emitted('change')[0][0]).toEqual(['foo', 'bar'])
@@ -1399,9 +1390,9 @@ describe('form-checkbox', () => {
     expect($input.element.checked).toBe(true)
 
     await $input.trigger('click')
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(1)
+    expect(wrapper.vm.modelValue[0]).toEqual('foo')
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
     expect(wrapper.emitted('change')[1][0]).toEqual(['foo'])
@@ -1410,8 +1401,8 @@ describe('form-checkbox', () => {
     expect($input.element.checked).toBe(false)
 
     await wrapper.setProps({modelValue: []})
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(0)
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(0)
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
 
@@ -1419,9 +1410,9 @@ describe('form-checkbox', () => {
     expect($input.element.checked).toBe(false)
 
     await $input.trigger('click')
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('bar')
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(1)
+    expect(wrapper.vm.modelValue[0]).toEqual('bar')
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(3)
     expect(wrapper.emitted('change')[2][0]).toEqual(['bar'])
@@ -1430,8 +1421,8 @@ describe('form-checkbox', () => {
     expect($input.element.checked).toBe(true)
 
     await $input.trigger('click')
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(0)
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(0)
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(4)
     expect(wrapper.emitted('change')[3][0]).toEqual([])
@@ -1455,10 +1446,10 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(1)
+    expect(wrapper.vm.modelValue[0]).toEqual('foo')
 
     const $input = wrapper.find('input')
     expect($input).toBeDefined()
@@ -1469,11 +1460,11 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(true)
 
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(2)
-    expect(wrapper.vm.localChecked[0]).toEqual('bar')
-    expect(wrapper.vm.localChecked[1]).toEqual('foo')
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(2)
+    expect(wrapper.vm.modelValue[0]).toEqual('bar')
+    expect(wrapper.vm.modelValue[1]).toEqual('foo')
 
     wrapper.unmount()
   })
@@ -1485,39 +1476,8 @@ describe('form-checkbox', () => {
         value: {bar: 1, baz: 2},
         modelValue: ['foo'],
       },
-      slots: {
-        default: 'foobar',
-      },
-    })
-
-    expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.localChecked).toBeDefined()
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
-
-    const $input = wrapper.find('input')
-    expect($input).toBeDefined()
-
-    await $input.trigger('click')
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(2)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
-    expect(wrapper.vm.localChecked[1]).toEqual({bar: 1, baz: 2})
-
-    await $input.trigger('click')
-    expect(Array.isArray(wrapper.vm.localChecked)).toBe(true)
-    expect(wrapper.vm.localChecked.length).toBe(1)
-    expect(wrapper.vm.localChecked[0]).toEqual('foo')
-
-    wrapper.unmount()
-  })
-
-  it('focus() and blur() methods work', async () => {
-    const wrapper = mount(BFormCheckbox, {
-      attachTo: createContainer(),
-      props: {
-        modelValue: false,
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       slots: {
         default: 'foobar',
@@ -1525,28 +1485,27 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
+    expect(wrapper.vm.modelValue).toBeDefined()
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(1)
+    expect(wrapper.vm.modelValue[0]).toEqual('foo')
 
     const $input = wrapper.find('input')
     expect($input).toBeDefined()
-    expect(document).toBeDefined()
 
-    expect(wrapper.vm.focus).toBeDefined()
-    expect(typeof wrapper.vm.focus).toBe('function')
-    expect(wrapper.vm.blur).toBeDefined()
-    expect(typeof wrapper.vm.blur).toBe('function')
-    expect($input.element).not.toBe(document.activeElement)
+    await $input.trigger('click')
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(2)
+    expect(wrapper.vm.modelValue[0]).toEqual('foo')
+    expect(wrapper.vm.modelValue[1]).toEqual({bar: 1, baz: 2})
 
-    wrapper.vm.focus()
-    await waitNT(wrapper.vm)
-    expect($input.element).toBe(document.activeElement)
-
-    wrapper.vm.blur()
-    await waitNT(wrapper.vm)
-    expect($input.element).not.toBe(document.activeElement)
+    await $input.trigger('click')
+    expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
+    expect(wrapper.vm.modelValue.length).toBe(1)
+    expect(wrapper.vm.modelValue[0]).toEqual('foo')
 
     wrapper.unmount()
   })
-
   // These tests are wrapped in a new describe to limit the scope
   // of the `getBoundingClientRect()` mock
   describe('prop `autofocus`', () => {

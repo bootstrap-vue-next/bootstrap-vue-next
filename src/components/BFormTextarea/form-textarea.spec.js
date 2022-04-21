@@ -344,11 +344,13 @@ describe('form-textarea', () => {
   it('does not apply formatter on textarea when lazy', async () => {
     const wrapper = mount(BFormTextarea, {
       props: {
-        'formatter'(value) {
+        formatter(value) {
           return value.toLowerCase()
         },
-        'lazyFormatter': true,
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+        lazyFormatter: true,
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       attachTo: createContainer(),
     })
@@ -372,12 +374,14 @@ describe('form-textarea', () => {
   it('applies formatter on blur when lazy', async () => {
     const wrapper = mount(BFormTextarea, {
       props: {
-        'modelValue': '',
-        'formatter'(value) {
+        modelValue: '',
+        formatter(value) {
           return value.toLowerCase()
         },
-        'lazyFormatter': true,
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+        lazyFormatter: true,
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       attachTo: createContainer(),
     })
@@ -477,11 +481,13 @@ describe('form-textarea', () => {
   it('does not update value when non-lazy formatter returns false', async () => {
     const wrapper = mount(BFormTextarea, {
       props: {
-        'modelValue': 'abc',
-        'formatter'() {
+        modelValue: 'abc',
+        formatter() {
           return false
         },
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       attachTo: createContainer(),
     })
@@ -606,9 +612,11 @@ describe('form-textarea', () => {
   it('"lazy" modifier prop works', async () => {
     const wrapper = mount(BFormTextarea, {
       props: {
-        'type': 'text',
-        'lazy': true,
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+        type: 'text',
+        lazy: true,
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
     })
 
