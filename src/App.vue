@@ -692,6 +692,7 @@
           <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
           <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
           <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
+          <b-form-radio :value="{fifth: 5}">This is the 5th radio</b-form-radio>
         </b-form-radio-group>
 
         <div class="mt-3">
@@ -715,6 +716,10 @@
         </div>
       </div>
       <h4 class="m-2">Button styles radios</h4>
+      <div class="mt-3">
+        Selected:
+        <strong>{{ radios.ex3.selected }}</strong>
+      </div>
       <div class="m-4">
         <b-form-radio-group
           id="btn-radios-1"
@@ -1955,21 +1960,24 @@ export default defineComponent({
         ],
       },
       ex2: {
-        selected: {d: 1},
+        selected: {e: 1},
         options: [
           {item: 'A', name: 'Option A'},
           {item: 'B', name: 'Option B'},
           {item: 'D', name: 'Option C', notEnabled: true},
           {item: {d: 1}, name: 'Option D'},
+          {item: {e: 1}, name: 'Option E'},
         ],
       },
       ex3: {
-        selected: 'radio1',
+        selected: {e: 1},
         options: [
           {text: 'Radio 1', value: 'radio1'},
           {text: 'Radio 3', value: 'radio2'},
           {text: 'Radio 3 (disabled)', value: 'radio3', disabled: true},
           {text: 'Radio 4', value: 'radio4'},
+          {value: {d: 1}, text: 'Option D'},
+          {value: {e: 1}, text: 'Option E'},
         ],
       },
     })
