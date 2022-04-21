@@ -99,16 +99,6 @@ export default defineComponent({
       return toFallback
     })
 
-    const focus = () => {
-      if (!props.disabled) link.value.focus()
-    }
-
-    const blur = () => {
-      if (!props.disabled) {
-        link.value.blur()
-      }
-    }
-
     const clicked = function (e: PointerEvent) {
       if (props.disabled) {
         e.preventDefault()

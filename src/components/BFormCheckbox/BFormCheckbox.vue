@@ -16,6 +16,8 @@
       :aria-required="name && required ? 'true' : null"
       :value="value"
       :indeterminate="indeterminate"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
     />
     <label
       v-if="$slots.default || !plain"

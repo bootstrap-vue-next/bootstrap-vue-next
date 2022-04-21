@@ -15,6 +15,8 @@
       :aria-labelledby="ariaLabelledBy"
       :value="value"
       :aria-required="name && required ? 'true' : null"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
     />
     <label
       v-if="$slots.default || !plain"
@@ -28,7 +30,7 @@
 
 <script lang="ts">
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
-import {computed, defineComponent, onMounted, PropType, Ref, ref, watch} from 'vue'
+import {computed, defineComponent, onMounted, PropType, Ref, ref} from 'vue'
 import useId from '../../composables/useId'
 
 export default defineComponent({
@@ -59,11 +61,12 @@ export default defineComponent({
     const isFocused = ref(false)
 
     const localValue: any = computed({
-      get: () => props.modelValue,
+      get: () => (Array.isArray(props.modelValue) ? props.modelValue[0] : props.modelValue),
       set: (newValue: any) => {
-        emit('input', newValue)
-        emit('change', newValue)
-        emit('update:modelValue', newValue)
+        const emitValue = Array.isArray(props.modelValue) ? [newValue] : newValue
+        emit('input', emitValue)
+        emit('change', emitValue)
+        emit('update:modelValue', emitValue)
       },
     })
 

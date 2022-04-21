@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, watch} from 'vue'
+import {computed, defineComponent, PropType} from 'vue'
 import {ColorVariant, Size} from '../../types'
 import useId from '../../composables/useId'
 import {
