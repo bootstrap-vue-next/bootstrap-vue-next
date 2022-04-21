@@ -63,7 +63,8 @@ export default defineComponent({
     const localValue: any = computed({
       get: () => (Array.isArray(props.modelValue) ? props.modelValue[0] : props.modelValue),
       set: (newValue: any) => {
-        const emitValue = Array.isArray(props.modelValue) ? [newValue] : newValue
+        const value = newValue ? props.value : false
+        const emitValue = Array.isArray(props.modelValue) ? [value] : value
         emit('input', emitValue)
         emit('change', emitValue)
         emit('update:modelValue', emitValue)

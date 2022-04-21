@@ -125,8 +125,6 @@ export default defineComponent({
       tag,
       routerAttr,
       link,
-      focus,
-      blur,
       clicked,
     }
   },

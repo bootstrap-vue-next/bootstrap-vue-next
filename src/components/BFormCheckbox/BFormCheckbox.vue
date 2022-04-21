@@ -69,7 +69,7 @@ export default defineComponent({
       get: () => {
         if (props.uncheckedValue) {
           if (!Array.isArray(props.modelValue)) {
-            return props.modelValue ? props.value : props.uncheckedValue
+            return props.modelValue === props.value
           }
           return props.modelValue.indexOf(props.value) > -1
         }
@@ -77,13 +77,11 @@ export default defineComponent({
       },
       set: (newValue: any) => {
         let emitValue = newValue
-        console.log(newValue)
-        if (props.uncheckedValue) {
-          if (!Array.isArray(props.modelValue)) {
-            emitValue = newValue ? props.value : props.uncheckedValue
-          } else {
+        if (!Array.isArray(props.modelValue)) {
+          emitValue = newValue ? props.value : props.uncheckedValue
+        } else {
+          if (props.uncheckedValue) {
             emitValue = props.modelValue
-            console.log('array', emitValue, newValue)
             if (newValue) {
               if (emitValue.indexOf(props.uncheckedValue) > -1)
                 emitValue.splice(emitValue.indexOf(props.uncheckedValue), 1)
@@ -95,7 +93,6 @@ export default defineComponent({
             }
           }
         }
-        console.log(emitValue)
         emit('input', emitValue)
         emit('update:modelValue', emitValue)
         emit('change', emitValue)

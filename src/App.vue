@@ -485,17 +485,17 @@
         <h4 class="m-2">array with uncheckedValue</h4>
         <div class="m-4">
           <b-form-checkbox
-            id="checkbox-1"
+            id="checkbox-2"
             v-model="checkboxes.statusArray"
-            name="checkbox-1"
+            name="checkbox-2"
             value="accepted"
             unchecked-value="not_accepted"
             >I accept the terms and use</b-form-checkbox
           >
           <b-form-checkbox
-            id="checkbox-2"
+            id="checkbox-3"
             v-model="checkboxes.statusArray"
-            name="checkbox-2"
+            name="checkbox-3"
             value="accepted2"
             unchecked-value="not_accepted2"
             >I accept the terms and use</b-form-checkbox
