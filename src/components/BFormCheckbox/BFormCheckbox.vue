@@ -64,11 +64,39 @@ export default defineComponent({
     const isFocused = ref(false)
 
     const localValue = computed({
-      get: () => props.modelValue,
+      get: () => {
+        if (props.uncheckedValue) {
+          if (!Array.isArray(props.modelValue)) {
+            return props.modelValue ? props.value : props.uncheckedValue
+          }
+          return props.modelValue.indexOf(props.value) > -1
+        }
+        return props.modelValue
+      },
       set: (newValue: any) => {
-        emit('input', newValue)
-        emit('update:modelValue', newValue)
-        emit('change', newValue)
+        let emitValue = newValue
+        console.log(newValue)
+        if (props.uncheckedValue) {
+          if (!Array.isArray(props.modelValue)) {
+            emitValue = newValue ? props.value : props.uncheckedValue
+          } else {
+            emitValue = props.modelValue
+            console.log('array', emitValue, newValue)
+            if (newValue) {
+              if (emitValue.indexOf(props.uncheckedValue) > -1)
+                emitValue.splice(emitValue.indexOf(props.uncheckedValue), 1)
+              emitValue.push(props.value)
+            } else {
+              if (emitValue.indexOf(props.value) > -1)
+                emitValue.splice(emitValue.indexOf(props.value), 1)
+              emitValue.push(props.uncheckedValue)
+            }
+          }
+        }
+        console.log(emitValue)
+        emit('input', emitValue)
+        emit('update:modelValue', emitValue)
+        emit('change', emitValue)
       },
     })
 

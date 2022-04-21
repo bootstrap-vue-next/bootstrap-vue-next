@@ -482,6 +482,29 @@
             <strong>{{ checkboxes.status }}</strong>
           </div>
         </div>
+        <h4 class="m-2">array with uncheckedValue</h4>
+        <div class="m-4">
+          <b-form-checkbox
+            id="checkbox-1"
+            v-model="checkboxes.statusArray"
+            name="checkbox-1"
+            value="accepted"
+            unchecked-value="not_accepted"
+            >I accept the terms and use</b-form-checkbox
+          >
+          <b-form-checkbox
+            id="checkbox-2"
+            v-model="checkboxes.statusArray"
+            name="checkbox-2"
+            value="accepted2"
+            unchecked-value="not_accepted2"
+            >I accept the terms and use</b-form-checkbox
+          >
+          <div>
+            State:
+            <strong>{{ checkboxes.statusArray }}</strong>
+          </div>
+        </div>
         <h4 class="m-2">Individual</h4>
         <div class="row mx-4">
           <b-form-checkbox v-model="checkedDefault" class="col-4">Default</b-form-checkbox>
@@ -1929,6 +1952,7 @@ export default defineComponent({
     }
     const checkboxes = reactive({
       status: 'accepted',
+      statusArray: ['accepted'],
       selected: ['pineapple', {foo: 1}],
       options: [
         {text: 'Orange', value: 'orange'},
