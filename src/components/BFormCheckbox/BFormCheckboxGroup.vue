@@ -8,11 +8,7 @@
     tabindex="-1"
   >
     <template v-for="(item, key) in checkboxList" :key="key">
-      <b-form-checkbox
-        v-model="item.model"
-        v-bind="item.props"
-        @change="childUpdated($event, item.props?.value)"
-      >
+      <b-form-checkbox v-model="localValue" v-bind="item.props">
         <!-- eslint-disable vue/no-v-html -->
         <span v-if="item.html" v-html="item.html" />
         <!--eslint-enable-->
@@ -65,7 +61,7 @@ export default defineComponent({
     const computedId = useId(props.id, 'checkbox')
     const computedName = useId(props.name, 'checkbox')
 
-    const localChecked = computed({
+    const localValue = computed({
       get: () => props.modelValue,
       set: (newValue: any) => {
         if (JSON.stringify(newValue) === JSON.stringify(props.modelValue)) return
@@ -82,7 +78,6 @@ export default defineComponent({
         .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
         .map((e) => ({
           ...e,
-          model: props.modelValue.find((mv) => e.props?.value === mv) ? e.props?.value : false,
           props: {
             switch: props.switches,
             ...e.props,
@@ -90,24 +85,8 @@ export default defineComponent({
         }))
     )
 
-    const childUpdated = (newValue: any, checkedValue: any) => {
-      const resp = props.modelValue.filter(
-        (e) => JSON.stringify(e) !== JSON.stringify(checkedValue)
-      )
-      if (JSON.stringify(newValue) === JSON.stringify(checkedValue)) resp.push(newValue)
-      emit('update:modelValue', resp)
-      emit('change', resp)
-    }
-
     const attrs = getGroupAttr(props)
     const classes = getGroupClasses(props)
-
-    watch(
-      () => props.modelValue,
-      (newValue) => {
-        emit('input', newValue)
-      }
-    )
 
     // TODO: make jest tests compatible with the v-focus directive
 
@@ -115,9 +94,8 @@ export default defineComponent({
       attrs,
       classes,
       checkboxList,
-      childUpdated,
       computedId,
-      localChecked,
+      localValue,
     }
   },
 })

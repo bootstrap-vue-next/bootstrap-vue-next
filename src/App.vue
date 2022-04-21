@@ -583,7 +583,8 @@
           <b-form-checkbox value="orange">Orange</b-form-checkbox>
           <b-form-checkbox value="apple">Apple</b-form-checkbox>
           <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
-          <b-form-checkbox value="grape">Grape</b-form-checkbox>
+          <b-form-checkbox :value="{foo: 1}">Object</b-form-checkbox>
+          <b-form-checkbox value="grape">Grapess</b-form-checkbox>
         </b-form-checkbox-group>
         <br />
         <div>
@@ -1923,11 +1924,12 @@ export default defineComponent({
     }
     const checkboxes = reactive({
       status: 'accepted',
-      selected: ['pineapple'],
+      selected: ['pineapple', {foo: 1}],
       options: [
         {text: 'Orange', value: 'orange'},
         {text: 'Apple', value: 'apple'},
         {text: 'Pineapple', value: 'pineapple'},
+        {text: 'Object', value: {foo: 1}},
         {html: '<b>Grape</b> (html content)', value: 'grape'},
       ],
     })
@@ -1943,16 +1945,17 @@ export default defineComponent({
     const radioSelected = ref()
     const radios = reactive({
       ex1: {
-        selected: 'first',
+        selected: {fifth: 5},
         options: [
           {text: 'Toggle this custom radio', value: 'first'},
           {text: 'Or toggle this other custom radio', value: 'second'},
           {text: 'This one is Disabled', value: 'third', disabled: true},
           {text: 'This is the 4th radio', value: {fourth: 4}},
+          {text: 'This is the 5th radio', value: {fifth: 5}},
         ],
       },
       ex2: {
-        selected: 'A',
+        selected: {d: 1},
         options: [
           {item: 'A', name: 'Option A'},
           {item: 'B', name: 'Option B'},
@@ -1983,7 +1986,7 @@ export default defineComponent({
 
     const formInputRangeValue = ref(3)
 
-    const formSelectSelected = ref()
+    const formSelectSelected = ref({foo: 'item 6', baz: false})
     const formSelectMultipleSelected = ref<string[]>([])
     formSelectMultipleSelected.value = ['first', 'second']
     const formSelectOptions = [
@@ -1992,7 +1995,8 @@ export default defineComponent({
       {text: 'Item 2', value: 'second'},
       {html: '<b>Item</b> 3', value: 'third', disabled: true},
       {text: 'Item 4'},
-      {text: 'Item 5', value: {foo: 'bar', baz: true}},
+      {text: 'Item 5', value: {foo: 'item 5', baz: true}},
+      {text: 'Item 6', value: {foo: 'item 6', baz: false}},
       {
         label: 'Grouped options',
         options: [
