@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.10...v0.1.11) (2022-04-26)
+
+### Features
+
+- generate dist/BootstrapVue.d.ts and update package.json ([6a5075c](https://github.com/cdmoro/bootstrap-vue-3/commit/6a5075c392169c9efc7e24393fa4753092627813))
+- generates \*.d.ts files from .ts or .vue source ([c3751c0](https://github.com/cdmoro/bootstrap-vue-3/commit/c3751c09e50cc3e48bca7b1d6bf05cf6333ab94e))
+
 ### [0.1.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.9...v0.1.10) (2022-04-07)
 
 ### Bug Fixes
