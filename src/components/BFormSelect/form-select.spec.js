@@ -303,26 +303,6 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('focus() and blur() methods work', async () => {
-    const wrapper = mount(BFormSelect, {
-      attachTo: createContainer(),
-    })
-
-    expect(document.activeElement).not.toBe(wrapper.element)
-
-    wrapper.vm.focus()
-    await waitNT(wrapper.vm)
-
-    expect(document.activeElement).toBe(wrapper.element)
-
-    wrapper.vm.blur()
-    await waitNT(wrapper.vm)
-
-    expect(document.activeElement).not.toBe(wrapper.element)
-
-    wrapper.unmount()
-  })
-
   it('has option elements from simple options array', async () => {
     const wrapper = mount(BFormSelect, {
       props: {

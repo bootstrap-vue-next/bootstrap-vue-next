@@ -482,6 +482,29 @@
             <strong>{{ checkboxes.status }}</strong>
           </div>
         </div>
+        <h4 class="m-2">array with uncheckedValue</h4>
+        <div class="m-4">
+          <b-form-checkbox
+            id="checkbox-2"
+            v-model="checkboxes.statusArray"
+            name="checkbox-2"
+            value="accepted"
+            unchecked-value="not_accepted"
+            >I accept the terms and use</b-form-checkbox
+          >
+          <b-form-checkbox
+            id="checkbox-3"
+            v-model="checkboxes.statusArray"
+            name="checkbox-3"
+            value="accepted2"
+            unchecked-value="not_accepted2"
+            >I accept the terms and use</b-form-checkbox
+          >
+          <div>
+            State:
+            <strong>{{ checkboxes.statusArray }}</strong>
+          </div>
+        </div>
         <h4 class="m-2">Individual</h4>
         <div class="row mx-4">
           <b-form-checkbox v-model="checkedDefault" class="col-4">Default</b-form-checkbox>
@@ -583,7 +606,8 @@
           <b-form-checkbox value="orange">Orange</b-form-checkbox>
           <b-form-checkbox value="apple">Apple</b-form-checkbox>
           <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
-          <b-form-checkbox value="grape">Grape</b-form-checkbox>
+          <b-form-checkbox :value="{foo: 1}">Object</b-form-checkbox>
+          <b-form-checkbox value="grape">Grapess</b-form-checkbox>
         </b-form-checkbox-group>
         <br />
         <div>
@@ -691,6 +715,7 @@
           <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
           <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
           <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
+          <b-form-radio :value="{fifth: 5}">This is the 5th radio</b-form-radio>
         </b-form-radio-group>
 
         <div class="mt-3">
@@ -714,6 +739,10 @@
         </div>
       </div>
       <h4 class="m-2">Button styles radios</h4>
+      <div class="mt-3">
+        Selected:
+        <strong>{{ radios.ex3.selected }}</strong>
+      </div>
       <div class="m-4">
         <b-form-radio-group
           id="btn-radios-1"
@@ -1923,11 +1952,13 @@ export default defineComponent({
     }
     const checkboxes = reactive({
       status: 'accepted',
-      selected: ['pineapple'],
+      statusArray: ['accepted'],
+      selected: ['pineapple', {foo: 1}],
       options: [
         {text: 'Orange', value: 'orange'},
         {text: 'Apple', value: 'apple'},
         {text: 'Pineapple', value: 'pineapple'},
+        {text: 'Object', value: {foo: 1}},
         {html: '<b>Grape</b> (html content)', value: 'grape'},
       ],
     })
@@ -1943,30 +1974,34 @@ export default defineComponent({
     const radioSelected = ref()
     const radios = reactive({
       ex1: {
-        selected: 'first',
+        selected: {fifth: 5},
         options: [
           {text: 'Toggle this custom radio', value: 'first'},
           {text: 'Or toggle this other custom radio', value: 'second'},
           {text: 'This one is Disabled', value: 'third', disabled: true},
           {text: 'This is the 4th radio', value: {fourth: 4}},
+          {text: 'This is the 5th radio', value: {fifth: 5}},
         ],
       },
       ex2: {
-        selected: 'A',
+        selected: {e: 1},
         options: [
           {item: 'A', name: 'Option A'},
           {item: 'B', name: 'Option B'},
           {item: 'D', name: 'Option C', notEnabled: true},
           {item: {d: 1}, name: 'Option D'},
+          {item: {e: 1}, name: 'Option E'},
         ],
       },
       ex3: {
-        selected: 'radio1',
+        selected: {e: 1},
         options: [
           {text: 'Radio 1', value: 'radio1'},
           {text: 'Radio 3', value: 'radio2'},
           {text: 'Radio 3 (disabled)', value: 'radio3', disabled: true},
           {text: 'Radio 4', value: 'radio4'},
+          {value: {d: 1}, text: 'Option D'},
+          {value: {e: 1}, text: 'Option E'},
         ],
       },
     })
@@ -1983,7 +2018,7 @@ export default defineComponent({
 
     const formInputRangeValue = ref(3)
 
-    const formSelectSelected = ref()
+    const formSelectSelected = ref({foo: 'item 6', baz: false})
     const formSelectMultipleSelected = ref<string[]>([])
     formSelectMultipleSelected.value = ['first', 'second']
     const formSelectOptions = [
@@ -1992,7 +2027,8 @@ export default defineComponent({
       {text: 'Item 2', value: 'second'},
       {html: '<b>Item</b> 3', value: 'third', disabled: true},
       {text: 'Item 4'},
-      {text: 'Item 5', value: {foo: 'bar', baz: true}},
+      {text: 'Item 5', value: {foo: 'item 5', baz: true}},
+      {text: 'Item 6', value: {foo: 'item 6', baz: false}},
       {
         label: 'Grouped options',
         options: [

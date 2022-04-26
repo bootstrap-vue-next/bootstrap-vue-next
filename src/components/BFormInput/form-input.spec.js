@@ -456,11 +456,13 @@ describe('form-input', () => {
   it('does not apply formatter on input when lazy', async () => {
     const wrapper = mount(BFormInput, {
       props: {
-        'formatter'(value) {
+        formatter(value) {
           return value.toLowerCase()
         },
-        'lazyFormatter': true,
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+        lazyFormatter: true,
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       attachTo: createContainer(),
     })
@@ -484,12 +486,14 @@ describe('form-input', () => {
   it('applies formatter on blur when lazy', async () => {
     const wrapper = mount(BFormInput, {
       props: {
-        'modelValue': '',
-        'formatter'(value) {
+        modelValue: '',
+        formatter(value) {
           return value.toLowerCase()
         },
-        'lazyFormatter': true,
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+        lazyFormatter: true,
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       attachTo: createContainer(),
     })
@@ -589,11 +593,13 @@ describe('form-input', () => {
   it('does not update value when non-lazy formatter returns false', async () => {
     const wrapper = mount(BFormInput, {
       props: {
-        'modelValue': 'abc',
-        'formatter'() {
+        modelValue: 'abc',
+        formatter() {
           return false
         },
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
       attachTo: createContainer(),
     })
@@ -718,9 +724,11 @@ describe('form-input', () => {
   it('"number" modifier prop works', async () => {
     const wrapper = mount(BFormInput, {
       props: {
-        'type': 'text',
-        'number': true,
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+        type: 'text',
+        number: true,
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
     })
 
@@ -762,9 +770,11 @@ describe('form-input', () => {
   it('"lazy" modifier prop works', async () => {
     const wrapper = mount(BFormInput, {
       props: {
-        'type': 'text',
-        'lazy': true,
-        'onUpdate:modelValue': async (modelValue) => wrapper.setProps({modelValue}),
+        type: 'text',
+        lazy: true,
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
       },
     })
 
@@ -912,25 +922,6 @@ describe('form-input', () => {
     wrapper.unmount()
   })
   */
-
-  it('focus() and blur() methods work', async () => {
-    const wrapper = mount(BFormInput, {
-      attachTo: createContainer(),
-    })
-
-    const $input = wrapper.find('input')
-
-    expect(typeof wrapper.vm.focus).toBe('function')
-    expect(typeof wrapper.vm.blur).toBe('function')
-
-    expect(document.activeElement).not.toBe($input.element)
-    wrapper.vm.focus()
-    expect(document.activeElement).toBe($input.element)
-    wrapper.vm.blur()
-    expect(document.activeElement).not.toBe($input.element)
-
-    wrapper.unmount()
-  })
 
   // These tests are wrapped in a new describe to limit the scope of the getBCR Mock
   describe('prop `autofocus`', () => {

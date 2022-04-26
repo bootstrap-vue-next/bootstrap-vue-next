@@ -2,6 +2,8 @@
   <select
     :id="computedId"
     ref="input"
+    v-bind="$attrs"
+    v-model="localValue"
     :class="classes"
     :name="name"
     :form="form || null"
@@ -11,9 +13,6 @@
     :required="required"
     :aria-required="required ? 'true' : null"
     :aria-invalid="computedAriaInvalid"
-    v-bind="$attrs"
-    :value="modelValue"
-    @change="onChange($event)"
   >
     <slot name="first" />
     <template v-for="(option, index) in formOptions">
@@ -38,16 +37,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  nextTick,
-  onActivated,
-  onMounted,
-  PropType,
-  ref,
-  watch,
-} from 'vue'
+import {computed, defineComponent, nextTick, onActivated, onMounted, PropType, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import useId from '../../composables/useId'
@@ -125,20 +115,20 @@ export default defineComponent({
     })
 
     const formOptions = computed(() => normalizeOptions(props.options, 'BFormSelect', props))
+    const localValue = computed({
+      get() {
+        return props.modelValue
+      },
+      set(newValue: any) {
+        emit('change', newValue)
+        emit('update:modelValue', newValue)
+        emit('input', newValue)
+      },
+    })
+
     // /computed
 
     // methods
-
-    const onChange = (evt: any) => {
-      const {target} = evt
-      const selectedVal = Array.from(target.options)
-        .filter((o: any) => o.selected)
-        .map((o: any) => ('_value' in o ? o._value : o.value))
-      nextTick(() => {
-        emit('change', target.multiple ? selectedVal : selectedVal[0])
-        emit('update:modelValue', target.multiple ? selectedVal : selectedVal[0])
-      })
-    }
 
     const focus = () => {
       if (!props.disabled) input.value?.focus()
@@ -151,13 +141,6 @@ export default defineComponent({
     }
     // /methods
 
-    watch(
-      () => props.modelValue,
-      (newValue) => {
-        emit('input', newValue)
-      }
-    )
-
     return {
       input,
       computedId,
@@ -165,7 +148,7 @@ export default defineComponent({
       computedAriaInvalid,
       classes,
       formOptions,
-      onChange,
+      localValue,
       focus,
       blur,
     }

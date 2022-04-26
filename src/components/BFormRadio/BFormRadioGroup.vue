@@ -8,7 +8,7 @@
     tabindex="-1"
   >
     <template v-for="(item, key) in checkboxList" :key="key">
-      <b-form-radio v-model="item.model" v-bind="item.props" @change="childUpdated">
+      <b-form-radio v-model="localValue" v-bind="item.props">
         <!-- eslint-disable vue/no-v-html -->
         <span v-if="item.html" v-html="item.html" />
         <!--eslint-enable-->
@@ -60,7 +60,7 @@ export default defineComponent({
     const computedId = useId(props.id, 'radio')
     const computedName = useId(props.name, 'checkbox')
 
-    const localChecked = computed({
+    const localValue = computed({
       get: () => props.modelValue,
       set: (newValue: any) => {
         emit('input', newValue)
@@ -76,17 +76,8 @@ export default defineComponent({
         .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
         .map((e) => ({
           ...e,
-          model:
-            JSON.stringify(props.modelValue) === JSON.stringify(e.props?.value)
-              ? e.props?.value
-              : null,
         }))
     )
-
-    const childUpdated = (newValue: any) => {
-      emit('change', newValue)
-      emit('update:modelValue', newValue)
-    }
 
     const attrs = getGroupAttr(props)
     const classes = getGroupClasses(props)
@@ -97,9 +88,8 @@ export default defineComponent({
       attrs,
       classes,
       checkboxList,
-      childUpdated,
       computedId,
-      localChecked,
+      localValue,
     }
   },
 })

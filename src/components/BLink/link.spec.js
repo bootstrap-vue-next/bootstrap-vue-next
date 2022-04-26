@@ -181,26 +181,6 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('focus and blur methods work', async () => {
-    const wrapper = mount(BLink, {
-      attachTo: createContainer(),
-      props: {
-        href: '#foobar',
-      },
-    })
-
-    expect(wrapper.element.tagName).toBe('A')
-    expect(document.activeElement).not.toBe(wrapper.element)
-
-    wrapper.vm.focus()
-    expect(document.activeElement).toBe(wrapper.element)
-
-    wrapper.vm.blur()
-    expect(document.activeElement).not.toBe(wrapper.element)
-
-    wrapper.unmount()
-  })
-
   describe('click handling', () => {
     it('should invoke click handler bound by Vue when clicked on', async () => {
       let called = 0
