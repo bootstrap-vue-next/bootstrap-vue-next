@@ -11,11 +11,13 @@
       "import": "./dist/bootstrap-vue-3.es.js",
       "require": "./dist/bootstrap-vue-3.umd.js"
     },
-    "./dist/bootstrap-vue-3.css": "./dist/bootstrap-vue-3.css"
+    "./dist/bootstrap-vue-3.css": "./dist/bootstrap-vue-3.css",
+    "./nuxt": "./nuxt.js"
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "nuxt.js"
   ],
   "types": "./dist/BootstrapVue.d.ts",
   "workspaces": [
