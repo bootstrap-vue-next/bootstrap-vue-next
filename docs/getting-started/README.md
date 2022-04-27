@@ -40,7 +40,7 @@ In order to use this library you have to install these packages:
 
 ## Install
 
-### Bundlers
+### Installation - Vue.js
 
 To install this library you can use Yarn or NPM:
 
@@ -78,6 +78,51 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 const app = createApp(App)
 app.use(BootstrapVue3)
 app.mount('#app')
+```
+
+### Installation - Nuxt.js 3
+
+As with the Vue.js installation.
+
+In your Nuxt3 application, install `bootstrap-vue-3`
+
+<CodeGroup>
+  <CodeGroupItem title="YARN" active>
+
+```bash
+yarn add bootstrap bootstrap-vue-3
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="NPM">
+
+```bash
+npm install bootstrap bootstrap-vue-3
+```
+
+  </CodeGroupItem>
+</CodeGroup>
+
+Open your `nuxt.config.ts` or `nuxt.config.js` file and configure your application to use `bootstrap-vue-3`. The components will be imported automatically as needed.
+
+```javascript
+import {defineNuxtConfig} from 'nuxt3'
+
+export default defineNuxtConfig({
+  modules: ['bootstrap-vue-3/nuxt'],
+  css: ['bootstrap/dist/css/bootstrap.css'],
+})
+```
+
+Enjoy it in your app without import.
+
+```vue
+<template>
+  <div>
+    <BButton variant="primary">Test</BButton>
+  </div>
+</template>
 ```
 
 ## Comparison with BoostrapVue
