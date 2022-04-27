@@ -1,7 +1,9 @@
 <template>
   <li class="nav-item dropdown">
     <b-dropdown v-bind="$props">
-      <slot />
+      <template v-for="(_, slot) in $slots" #[slot]="scope">
+        <slot :name="slot" v-bind="scope || {}" />
+      </template>
     </b-dropdown>
   </li>
 </template>
