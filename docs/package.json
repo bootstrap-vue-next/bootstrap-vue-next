@@ -11,9 +11,8 @@
     "bootstrap": "5.x.x"
   },
   "devDependencies": {
-    "@vuepress/bundler-webpack": "^2.0.0-beta.35",
+    "@vuepress/plugin-search": "^2.0.0-beta.41",
     "bootstrap-vue-3": "file:../",
-    "vuepress": "^2.0.0-beta.35",
-    "vuepress-webpack": "^2.0.0-beta.35"
+    "vuepress": "^2.0.0-beta.41"
   }
 }
