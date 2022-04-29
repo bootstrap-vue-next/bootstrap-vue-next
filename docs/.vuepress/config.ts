@@ -1,27 +1,26 @@
-import {defineUserConfig} from 'vuepress'
+import {defineUserConfig, viteBundler} from 'vuepress'
 import {componentReference} from './PluginComponentReference'
+import {defaultTheme} from '@vuepress/theme-default'
 import type {DefaultThemeOptions} from 'vuepress'
-import type {WebpackBundlerOptions} from '@vuepress/bundler-webpack'
+const {searchPlugin} = require('@vuepress/plugin-search')
 
-export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
+export default defineUserConfig<DefaultThemeOptions>({
   lang: 'en-US',
   base: '/bootstrap-vue-3/',
   title: 'BootstrapVue 3',
   head: [['link', {rel: 'icon', href: '/bootstrap-vue-3/favicon.ico'}]],
   plugins: [
-    [
-      '@vuepress/plugin-search',
-      {
-        locales: {
-          '/': {
-            placeholder: 'Search',
-          },
+    searchPlugin({
+      locales: {
+        '/': {
+          placeholder: 'Search',
         },
       },
-    ],
+    }),
     componentReference,
   ],
-  themeConfig: {
+  bundler: viteBundler(),
+  theme: defaultTheme({
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
     docsDir: 'docs',
@@ -85,5 +84,5 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
         },
       ],
     },
-  },
+  }),
 })

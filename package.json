@@ -59,7 +59,6 @@
     "@vue/compiler-sfc": "3.x.x",
     "@vue/eslint-config-typescript": "10.x.x",
     "@vue/test-utils": "^2.0.0-rc.14",
-    "@vuepress/plugin-search": "^2.0.0-beta.36",
     "eslint": "8.x.x",
     "eslint-config-prettier": "8.x.x",
     "eslint-plugin-jest": "26.x.x",
