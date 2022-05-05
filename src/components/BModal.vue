@@ -28,7 +28,7 @@
               <b-button
                 v-if="!okOnly"
                 type="button"
-                class="btn btn-secondary"
+                class="btn"
                 data-bs-dismiss="modal"
                 :disabled="disableCancel"
                 :size="buttonSize"
@@ -39,7 +39,7 @@
               </b-button>
               <b-button
                 type="button"
-                class="btn btn-primary"
+                class="btn"
                 data-bs-dismiss="modal"
                 :disabled="disableOk"
                 :size="buttonSize"
