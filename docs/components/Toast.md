@@ -134,20 +134,17 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
   <ComponentReference></ComponentReference>
 </ClientOnly>
 
-<ClientOnly>
-
 <script lang='ts' setup>
   import {ref, computed} from 'vue';
   import {useToast} from 'bootstrap-vue-3';
 
+  // let toast = useToast()
 
-    let show1 = () => {toast.show({title: 'example title'})};
-    let show2 = () => {toast.show({title: 'example title', body: "This is a toast"}, {variant: 'info'})};
+  let show1 = () => {toast.show({title: 'example title'})};
+  let show2 = () => {toast.show({title: 'example title', body: "This is a toast"}, {variant: 'info'})};
 
-    let variantshow1 = () => {toast.show({title: 'Item Deleted'}, {pos: 'bottom-center', variant: 'danger'})};
-    let variantshow2 = () => {toast.show({title: 'New Message', body: "This is a toast"}, {pos: 'bottom-right', variant: 'info'})};
-    let variantshow3 = () => {toast.show({title: 'Warning for Item', body: "Please check list"},{pos: 'bottom-right', variant: 'warning'})};
-    let variantshow4 = () => {toast.show({title: 'Event Created!', body: "Bootstrap Event"},{pos: 'bottom-right', variant: 'success'})};
+  let variantshow1 = () => {toast.show({title: 'Item Deleted'}, {pos: 'bottom-center', variant: 'danger'})};
+  let variantshow2 = () => {toast.show({title: 'New Message', body: "This is a toast"}, {pos: 'bottom-right', variant: 'info'})};
+  let variantshow3 = () => {toast.show({title: 'Warning for Item', body: "Please check list"},{pos: 'bottom-right', variant: 'warning'})};
+  let variantshow4 = () => {toast.show({title: 'Event Created!', body: "Bootstrap Event"},{pos: 'bottom-right', variant: 'success'})};
 </script>
-
-</ClientOnly>

@@ -741,7 +741,7 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 <p class="alert alert-warning">
   <strong>Caution:</strong> Props that support HTML strings (<code>*-html</code>) can be vulnerable to
   <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
-  <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>when passed raw user supplied values. You must properly 
+  <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>when passed raw user supplied values. You must properly
   <a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the user input first!
 </p>
 
@@ -808,8 +808,6 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 | `change` | `checked` - Value of checkbox(es). When bound to multiple checkboxes, value will be an array | Emitted when selected value(s) is changed due to user interaction |
 | `input`  | `checked` - Value of checkbox(es). When bound to multiple checkboxes, value will be an array | Emitted when selected value(s) is changed                         |
 
-<ClientOnly>
-
 <script lang='ts' setup>
   import {ref, computed} from 'vue'
 
@@ -820,7 +818,7 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 
   const availableCars = ['BMW', 'Mercedes', 'Toyota'];
   const selectedCars = ref([]);
- 
+
   const concatSelectedCars = computed(() => { return selectedCars.value.join(', ');});
 
   const checkEx2Selected = ref(['A']);
@@ -856,5 +854,3 @@ The indeterminate state is **visual only**. The checkbox is still either checked
   const contextualState = computed(() => contextualSelected.value.length === 2);
 
 </script>
-
-</ClientOnly>

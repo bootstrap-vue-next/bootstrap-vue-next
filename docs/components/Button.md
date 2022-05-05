@@ -409,8 +409,6 @@ added, nor will the keyboard event listeners be enabled.
 | ------- | ------------------------- | ---------------------------------------- |
 | `click` | Native click event object | Emitted when non-disabled button clicked |
 
-<ClientOnly>
-
 <script lang='ts' setup>
   import {ref, computed} from 'vue'
 
@@ -424,5 +422,3 @@ added, nor will the keyboard event listeners be enabled.
 
   const btnStates = computed(() => buttons.value.map(b => b.state))
 </script>
-
-</ClientOnly>
