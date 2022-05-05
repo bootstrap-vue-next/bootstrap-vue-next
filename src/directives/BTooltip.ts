@@ -72,9 +72,10 @@ const BTooltip: Directive<HTMLElement> = {
 
     if (title !== '') {
       const instance = Tooltip.getInstance(el)
-      instance?.hide()
+      instance?.toggle()
       el.setAttribute('data-bs-original-title', title || '')
       el.setAttribute('title', '')
+      instance?.toggle()
     }
   },
   unmounted(el) {
