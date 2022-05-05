@@ -44,10 +44,8 @@ export default defineComponent({
   setup(props) {
     const computedSize = computed(() => computeSize(props.size))
 
-    const computeOverlap = (value: any): number => {
-      const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value || 0
-      return calcValue
-    }
+    const computeOverlap = (value: any): number =>
+      isString(value) && isNumeric(value) ? toFloat(value, 0) : value || 0
     const overlapScale = computed(() => mathMin(mathMax(computeOverlap(props.overlap), 0), 1) / 2)
 
     const paddingStyle = computed((): StyleValue => {
