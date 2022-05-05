@@ -1,6 +1,8 @@
 import {mount} from '@vue/test-utils'
+import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
+
 import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
-import BFormInput from './BFormInput'
+import BFormInput from './BFormInput.vue'
 
 describe('form-input', () => {
   it('has class form-control', async () => {
@@ -220,7 +222,7 @@ describe('form-input', () => {
   })
 
   it('renders text input when type not supported', async () => {
-    const warnHandler = jest.fn()
+    const warnHandler = vitest.fn()
 
     const wrapper = mount(BFormInput, {
       global: {
@@ -394,7 +396,7 @@ describe('form-input', () => {
   })
 
   it('emits a native focus event', async () => {
-    const spy = jest.fn()
+    const spy = vitest.fn()
     const wrapper = mount(BFormInput, {
       attrs: {
         onFocus: spy,
@@ -622,7 +624,7 @@ describe('form-input', () => {
 
   /* TODO: implement noWheel
   it('focused number input with no-wheel set to true works', async () => {
-    const spy = jest.fn()
+    const spy = vitest.fn()
     const wrapper = mount(BFormInput, {
       attachTo: createContainer(),
       props: {
@@ -650,7 +652,7 @@ describe('form-input', () => {
 
 
   it('focused number input with no-wheel set to false works', async () => {
-    const spy = jest.fn(() => {})
+    const spy = vitest.fn(() => {})
     const wrapper = mount(BFormInput, {
       attachTo: createContainer(),
       props: {
@@ -680,7 +682,7 @@ describe('form-input', () => {
 
 
   it('changing no-wheel after mount works', async () => {
-    const spy = jest.fn(() => {})
+    const spy = vitest.fn(() => {})
     const wrapper = mount(BFormInput, {
       attachTo: createContainer(),
       props: {
@@ -823,7 +825,7 @@ describe('form-input', () => {
 
   /* TODO: implement debounce
   it('"debounce" prop works', async () => {
-    jest.useFakeTimers()
+    vitest.useFakeTimers()
     const wrapper = mount(BFormInput, {
       props: {
         type: 'text',
@@ -853,7 +855,7 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')[1][0]).toBe('ab')
 
     // Advance timer
-    jest.runOnlyPendingTimers()
+    vitest.runOnlyPendingTimers()
     // Should update the v-model
     expect($input.element.value).toBe('ab')
     // `v-model` update event should have emitted
@@ -911,7 +913,7 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')[5][0]).toBe('abcd')
 
     // Advance timer
-    jest.runOnlyPendingTimers()
+    vitest.runOnlyPendingTimers()
     // Should update the v-model
     expect($input.element.value).toBe('abcd')
     // `v-model` update event should not have emitted new event
@@ -929,7 +931,7 @@ describe('form-input', () => {
 
     beforeEach(() => {
       // Mock `getBoundingClientRect()` so that the `isVisible(el)` test returns `true`
-      Element.prototype.getBoundingClientRect = jest.fn(() => ({
+      Element.prototype.getBoundingClientRect = vitest.fn(() => ({
         width: 24,
         height: 24,
         top: 0,

@@ -1,6 +1,7 @@
 import {mount} from '@vue/test-utils'
-import BListGroup from './BListGroup'
-import BListGroupItem from './BListGroupItem'
+import BListGroup from './BListGroup.vue'
+import BListGroupItem from './BListGroupItem.vue'
+import {describe, expect, it, vitest} from 'vitest'
 
 describe('list-group > list-group-item', () => {
   it('default should have tag div', async () => {

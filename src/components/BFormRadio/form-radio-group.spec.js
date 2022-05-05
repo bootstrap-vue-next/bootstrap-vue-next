@@ -1,7 +1,8 @@
+import {describe, expect, it} from 'vitest'
 import {mount} from '@vue/test-utils'
 import {createContainer, waitNT} from '../../../tests/utils'
-import BFormRadioGroup from './BFormRadioGroup'
-import BFormRadio from './BFormRadio'
+import BFormRadioGroup from './BFormRadioGroup.vue'
+import BFormRadio from './BFormRadio.vue'
 
 const global = {components: {BFormRadio}}
 

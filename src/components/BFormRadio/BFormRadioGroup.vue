@@ -82,7 +82,7 @@ export default defineComponent({
     const attrs = getGroupAttr(props)
     const classes = getGroupClasses(props)
 
-    // TODO: make jest tests compatible with the v-focus directive
+    // TODO: make tests compatible with the v-focus directive
 
     return {
       attrs,

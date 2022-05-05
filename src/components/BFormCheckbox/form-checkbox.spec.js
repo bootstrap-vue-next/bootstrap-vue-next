@@ -1,6 +1,8 @@
 import {mount} from '@vue/test-utils'
+import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
+
 import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
-import BFormCheckbox from './BFormCheckbox'
+import BFormCheckbox from './BFormCheckbox.vue'
 
 describe('form-checkbox', () => {
   // --- Custom checkbox structure, class and attributes tests ---
@@ -1514,7 +1516,7 @@ describe('form-checkbox', () => {
     beforeEach(() => {
       // Mock `getBoundingClientRect()` so that the `isVisible(el)` test returns `true`
       // In our test below, all pagination buttons would normally be visible
-      Element.prototype.getBoundingClientRect = jest.fn(() => ({
+      Element.prototype.getBoundingClientRect = vitest.fn(() => ({
         width: 24,
         height: 24,
         top: 0,

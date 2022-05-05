@@ -1,6 +1,7 @@
 import {mount} from '@vue/test-utils'
+import {afterAll, describe, expect, it, vitest} from 'vitest'
 import {h} from 'vue'
-import BFormSelectOptionGroup from './BFormSelectOptionGroup'
+import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 
 describe('form-select-option-group', () => {
   afterAll(() => {
@@ -75,7 +76,7 @@ describe('form-select-option-group', () => {
   })
 
   it('has option elements from options legacy object format', async () => {
-    const spyWarn = jest.spyOn(console, 'warn').mockImplementationOnce((fn) => fn)
+    const spyWarn = vitest.spyOn(console, 'warn').mockImplementationOnce((fn) => fn)
     const wrapper = mount(BFormSelectOptionGroup, {
       props: {
         label: 'foo',
