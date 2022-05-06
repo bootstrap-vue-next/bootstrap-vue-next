@@ -82,7 +82,7 @@ export default defineComponent({
     const inputClasses = getInputClasses(props)
     const labelClasses = getLabelClasses(props)
 
-    // TODO: make jest tests compatible with the v-focus directive
+    // TODO: make tests compatible with the v-focus directive
     if (props.autofocus) {
       onMounted(() => {
         input.value.focus()

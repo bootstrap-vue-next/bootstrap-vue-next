@@ -1,7 +1,8 @@
 import {mount} from '@vue/test-utils'
 import {waitNT, waitRAF} from '../../../tests/utils'
+import {describe, expect, it, vitest} from 'vitest'
 
-import BToast from './BToast'
+import BToast from './BToast.vue'
 
 describe('b-Toast', () => {
   it('has expected structure', async () => {

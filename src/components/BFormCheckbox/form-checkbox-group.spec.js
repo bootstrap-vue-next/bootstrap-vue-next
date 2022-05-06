@@ -1,7 +1,8 @@
+import {describe, expect, it} from 'vitest'
 import {mount} from '@vue/test-utils'
 import {createContainer, waitNT} from '../../../tests/utils'
-import BFormCheckboxGroup from './BFormCheckboxGroup'
-import BFormCheckbox from './BFormCheckbox'
+import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
+import BFormCheckbox from './BFormCheckbox.vue'
 
 const global = {components: {BFormCheckbox}}
 

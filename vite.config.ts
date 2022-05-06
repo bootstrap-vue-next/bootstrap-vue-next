@@ -1,4 +1,4 @@
-//import builtins from 'rollup-plugin-node-builtins'
+/// <reference types="vitest" />
 
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -67,6 +67,11 @@ const config = defineConfig({
   server: {
     host: 'localhost', //this is the default
     port: 8080, //this is the default
+  },
+
+  test: {
+    // globals: true,
+    environment: 'jsdom',
   },
 })
 

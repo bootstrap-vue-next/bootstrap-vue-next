@@ -1,7 +1,8 @@
 /* eslint-disable no-return-await */
 import {mount} from '@vue/test-utils'
+import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
-import BFormRadio from './BFormRadio'
+import BFormRadio from './BFormRadio.vue'
 
 describe('form-radio', () => {
   /* Custom radio structure, class and attributes tests */
@@ -1141,7 +1142,7 @@ describe('form-radio', () => {
     beforeEach(() => {
       // Mock `getBoundingClientRect()` so that the `isVisible(el)` test returns `true`
       // In our test below, all pagination buttons would normally be visible
-      Element.prototype.getBoundingClientRect = jest.fn(() => ({
+      Element.prototype.getBoundingClientRect = vitest.fn(() => ({
         width: 24,
         height: 24,
         top: 0,
