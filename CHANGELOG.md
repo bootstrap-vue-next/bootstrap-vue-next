@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.11...v0.1.12) (2022-05-06)
+
+### Features
+
+- **BNavItemDropdown:** pass slots to the child BDropdown ([c8a9af9](https://github.com/cdmoro/bootstrap-vue-3/commit/c8a9af9831008bfbaf392bca8aeb54f7373ae131))
+- **github-action:** deploy docs to github-pages ([f515fba](https://github.com/cdmoro/bootstrap-vue-3/commit/f515fba3947931743c16831d622715b48bea53d6))
+- support for library authors for nuxt3 ([10388dd](https://github.com/cdmoro/bootstrap-vue-3/commit/10388dddc0a484ec6e8b90676dbb3cc3a095406b))
+
+### Bug Fixes
+
+- retain tooltip visibility on title update ([d4c4e41](https://github.com/cdmoro/bootstrap-vue-3/commit/d4c4e4110017b4186e29e49300b2e574141f9ae2))
+
 ### [0.1.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.10...v0.1.11) (2022-04-26)
 
 ### Features
