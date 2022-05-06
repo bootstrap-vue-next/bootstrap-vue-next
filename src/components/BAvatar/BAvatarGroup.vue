@@ -32,7 +32,7 @@ export interface ParentData {
 export const injectionKey: InjectionKey<ParentData> = Symbol()
 
 export default defineComponent({
-  name: 'BAvatar',
+  name: 'BAvatarGroup',
   props: {
     overlap: {type: [Number, String], default: 0.3},
     rounded: {type: [Boolean, String], default: false},
