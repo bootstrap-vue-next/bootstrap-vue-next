@@ -458,46 +458,6 @@ Refer to the
 [Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.0/forms/validation/)
 for details on the Bootstrap v5 validation states.
 
-<ClientOnly>
-
-<script lang='ts' setup>
-  import {ref, computed, reactive, nextTick} from 'vue'
-
-  const form = reactive({
-    email: '',
-    name: '',
-    food: null,
-    checked: []
-  })
-
-  const foods = [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
-  const show = ref(true)
-
-  const onSubmit = (event) => {
-    event.preventDefault()
-    alert(JSON.stringify(form))
-  }
-
-  const onReset = (event) => {
-    event.preventDefault()
-    // Reset our form values
-    form.email = ''
-    form.name = ''
-    form.food = null
-    form.checked = []
-    // Trick to reset/clear native browser form validation state
-    show.value = false
-    nextTick(() => {
-      show.value = true
-    })
-  }
-
-  const userId = ref('')
-  const validation = computed(()=> userId.value.length > 4 && userId.value.length < 13)
-</script>
-
-</ClientOnly>
-
 ## Component reference
 
 ### `<b-form>`
@@ -584,3 +544,39 @@ for details on the Bootstrap v5 validation states.
 | Property  | Description                                         |
 | --------- | --------------------------------------------------- |
 | `default` | Content to place in the form valid feedback element |
+
+<script lang='ts' setup>
+  import {ref, computed, reactive, nextTick} from 'vue'
+
+  const form = reactive({
+    email: '',
+    name: '',
+    food: null,
+    checked: []
+  })
+
+  const foods = [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
+  const show = ref(true)
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    alert(JSON.stringify(form))
+  }
+
+  const onReset = (event) => {
+    event.preventDefault()
+    // Reset our form values
+    form.email = ''
+    form.name = ''
+    form.food = null
+    form.checked = []
+    // Trick to reset/clear native browser form validation state
+    show.value = false
+    nextTick(() => {
+      show.value = true
+    })
+  }
+
+  const userId = ref('')
+  const validation = computed(()=> userId.value.length > 4 && userId.value.length < 13)
+</script>

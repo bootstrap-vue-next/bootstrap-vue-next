@@ -172,7 +172,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 | ------- | ----------------------------------- | --------------------------------------- |
 | `click` | `event` - Native click event object | Content to place in the breadcrumb item |
 
-<!-- <script lang="ts" setup>
+<script lang="ts" setup>
   import {ref, Ref} from 'vue';
   import {BreadcrumbItem} from '../../src/types';
 
@@ -187,4 +187,4 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
   const alertEvent = (event: PointerEvent) => {
     alert(`Event ${event.target}`);
   }
-</script> -->
+</script>
