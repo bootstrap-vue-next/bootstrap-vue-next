@@ -53,7 +53,7 @@ function resolveDelay(values: DirectiveBinding['value']): Tooltip.Options['delay
 
 const BTooltip: Directive<HTMLElement> = {
   beforeMount(el, binding) {
-    el.setAttribute('data-bs-toogle', 'tooltip')
+    el.setAttribute('data-bs-toggle', 'tooltip')
 
     const isHtml = /<("[^"]*"|'[^']*'|[^'">])*>/.test(el.title)
     const trigger = resolveTrigger(binding.modifiers)
