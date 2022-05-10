@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.12...v0.1.13) (2022-05-10)
+
+### Bug Fixes
+
+- typo ([768bacc](https://github.com/cdmoro/bootstrap-vue-3/commit/768bacc546c8588e09b65ca1c600f3bf7af28fce))
+
 ### [0.1.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.11...v0.1.12) (2022-05-06)
 
 ### Features
