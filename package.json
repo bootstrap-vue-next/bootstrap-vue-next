@@ -12,7 +12,8 @@
       "require": "./dist/bootstrap-vue-3.umd.js"
     },
     "./dist/bootstrap-vue-3.css": "./dist/bootstrap-vue-3.css",
-    "./nuxt": "./nuxt.js"
+    "./nuxt": "./nuxt.js",
+    "./src/styles/styles.scss": "./src/styles/styles.scss"
   },
   "files": [
     "dist",
