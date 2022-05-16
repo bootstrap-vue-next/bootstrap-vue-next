@@ -13,10 +13,13 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
+import BCardTitle from './BCardTitle.vue'
+import BCardSubTitle from './BCardSubTitle.vue'
 import {ColorVariant} from '../../types'
 
 export default defineComponent({
   name: 'BCardBody',
+  components: {BCardTitle, BCardSubTitle},
   props: {
     bodyBgVariant: {type: String as PropType<ColorVariant>, required: false},
     bodyClass: {type: [Array, Object, String], required: false},
