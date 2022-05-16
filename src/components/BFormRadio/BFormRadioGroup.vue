@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
+import BFormRadio from './BFormRadio.vue'
 import {ColorVariant, Size} from '../../types'
 import {
   bindGroupProps,
@@ -32,6 +33,7 @@ import useId from '../../composables/useId'
 
 export default defineComponent({
   name: 'BFormRadioGroup',
+  components: {BFormRadio},
   props: {
     modelValue: {type: [String, Boolean, Array, Object, Number], default: ''},
     ariaInvalid: {type: [Boolean, String], default: null},

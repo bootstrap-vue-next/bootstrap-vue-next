@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
+import BFormCheckbox from './BFormCheckbox.vue'
 import {ColorVariant, Size} from '../../types'
 import useId from '../../composables/useId'
 import {
@@ -32,6 +33,7 @@ import {
 
 export default defineComponent({
   name: 'BFormCheckboxGroup',
+  components: {BFormCheckbox},
   props: {
     modelValue: {type: Array, default: () => []},
     ariaInvalid: {type: [Boolean, String], default: null},
