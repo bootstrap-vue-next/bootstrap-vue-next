@@ -20,7 +20,6 @@ import {
   isReactive,
   watchEffect,
   ref,
-  Reactive,
   reactive,
 } from 'vue'
 
@@ -43,7 +42,7 @@ export interface ToastOptions {
 }
 
 export interface Toast {
-  options: Reactive<ToastOptions>
+  options: ToastOptions
   content: ToastContent
 }
 
