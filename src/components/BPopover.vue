@@ -64,6 +64,7 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>, default: undefined},
     html: {type: Boolean, default: true},
     sanitize: {type: Boolean, default: false},
+    offset: {type: String as PropType<Popover.Options['offset']>, default: '0px'},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
   setup(props, {emit, slots}) {
@@ -110,6 +111,7 @@ export default defineComponent({
             html: props.html,
             delay: props.delay,
             sanitize: props.sanitize,
+            offset: props.offset,
           })
         else console.warn('[B-Popover] Target is a mandatory props.')
       })
