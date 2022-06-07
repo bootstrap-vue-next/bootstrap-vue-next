@@ -11,10 +11,13 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["vitest/globals", "@vuepress/client/types"],
+    "types": ["vitest/globals", "@vuepress/client/types", "vite/client"],
     "paths": {},
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "vueCompilerOptions": {
+    "experimentalSuppressInvalidJsxElementTypeErrors": true
+  }
 }

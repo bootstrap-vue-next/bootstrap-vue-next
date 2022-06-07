@@ -28,7 +28,7 @@
   "scripts": {
     "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "docs:dev": "npm exec --workspace=docs vuepress dev docs",
     "docs:build": "npm exec --workspace=docs vuepress build .",
@@ -38,7 +38,6 @@
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "npm run lint",
     "test:unit": "vitest",
-    "prepare": "husky install && vite build",
     "publish": "npm publish --tag develop",
     "release": "standard-version"
   },
@@ -61,6 +60,7 @@
     "@vue/test-utils": "^2.0.0-rc.14",
     "eslint": "8.x.x",
     "eslint-config-prettier": "8.x.x",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "8.x.x",
     "husky": "^7.0.2",
     "improved-yarn-audit": "3.x.x",
@@ -75,7 +75,8 @@
     "vite-plugin-dts": "1.x.x",
     "vitest": "^0.10.4",
     "vue": "3.x.x",
-    "vue-router": "4.x.x"
+    "vue-router": "4.x.x",
+    "vue-tsc": "^0.37.2"
   },
   "repository": {
     "type": "git",
