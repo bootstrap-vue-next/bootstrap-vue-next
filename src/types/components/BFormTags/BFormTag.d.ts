@@ -1,3 +1,4 @@
+import type {RawSlots, VNodeArrayChildren} from 'vue'
 // Props
 export interface Props {
   id: string

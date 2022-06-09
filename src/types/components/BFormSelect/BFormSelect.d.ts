@@ -1,3 +1,4 @@
+import type {Size} from 'src/types'
 // Props
 export interface Props {
   ariaInvalid?: boolean | 'false' | 'true' | 'grammar' | 'spelling'

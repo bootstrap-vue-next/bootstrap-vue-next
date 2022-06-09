@@ -1,3 +1,4 @@
+import type {ButtonVariant, Size} from 'src/types'
 // Props
 export interface Props {
   id: string

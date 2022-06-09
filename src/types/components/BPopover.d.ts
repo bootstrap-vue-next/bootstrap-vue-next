@@ -1,3 +1,6 @@
+import type {ColorVariant} from 'src/types'
+import type Popover from 'bootstrap/js/dist/popover'
+import type {ComponentPublicInstance} from 'vue'
 // Props
 export interface Props {
   id: string
@@ -24,3 +27,7 @@ export interface Emits {
   (e: 'inserted'): void
 }
 // Other
+interface DelayObject {
+  show: number
+  hide: number
+}

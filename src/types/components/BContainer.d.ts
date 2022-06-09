@@ -1,3 +1,4 @@
+import type {Breakpoint, Position} from 'src/types'
 // Props
 export interface Props {
   gutterX?: string

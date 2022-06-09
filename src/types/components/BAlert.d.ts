@@ -1,3 +1,4 @@
+import type {ColorVariant} from 'src/types'
 // Props
 export interface Props {
   dismissLabel?: string

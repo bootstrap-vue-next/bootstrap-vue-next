@@ -1,3 +1,5 @@
+import type {RouteLocationRaw} from 'vue-router'
+import type {LinkTarget} from 'src/types'
 // Props
 export interface Props {
   active?: boolean
@@ -8,15 +10,15 @@ export interface Props {
   exact?: boolean
   exactActiveClass?: string
   href: string
-  // noPrefetch?: Boolean
-  // prefetch?: Boolean
+  // noPrefetch?: boolean
+  // prefetch?: boolean
   rel?: string
   replace?: boolean
   routerComponentName?: string
   routerTag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-}
+} // TODO look at this
 // Emits
 export interface Emits {
   (e: 'click', value: PointerEvent): void

@@ -1,3 +1,5 @@
+import type {ColorVariant, LinkTarget} from 'src/types'
+
 // Props
 export interface Props {
   action?: boolean
@@ -8,14 +10,14 @@ export interface Props {
   disabled?: boolean
   // exact?: boolean
   // exactActiveClass: string
-  href: {type: string}
+  href: string
   // noPrefetch?: Boolean
   // prefetch?: Boolean
   // rel?: String
   // replace?: Boolean
   // routerComponentName?: String
   tag?: string
-  target?: string
+  target?: LinkTarget
   //to: string | Record<string, unknown>
   variant: ColorVariant
 }

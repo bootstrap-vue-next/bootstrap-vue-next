@@ -1,5 +1,4 @@
-import ColorVariant from 'src/types/ColorVariant'
-
+import type {ColorVariant} from 'src/types'
 // Props
 export interface Props {
   id: string

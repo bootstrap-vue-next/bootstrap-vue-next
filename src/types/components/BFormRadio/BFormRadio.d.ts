@@ -15,13 +15,13 @@ export interface Props {
   buttonVariant?: string
   inline?: boolean
   required?: boolean
-  state?: boolean | null | undefined
+  state?: boolean | null
   value?: string | boolean | Record<string, unknown> | number
 }
 // Emits
 export interface Emits {
-  (e: 'input', value: string | number | boolean | Record<string, any>): void
-  (e: 'change', value: string | number | boolean | Record<string, any>): void
-  (e: 'update:modelValue', value: string | number | boolean | Record<string, any>): void
+  (e: 'input', value: string | number | boolean | Record<string, unknown>): void
+  (e: 'change', value: string | number | boolean | Record<string, unknown>): void
+  (e: 'update:modelValue', value: string | number | boolean | Record<string, unknown>): void
 }
 // Other

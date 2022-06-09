@@ -1,4 +1,5 @@
-import * as Popper from '@popperjs/core'
+import type * as Popper from '@popperjs/core'
+import type {ButtonType, ButtonVariant, Size} from 'src/types'
 // Props
 export interface Props {
   id: string
@@ -22,7 +23,7 @@ export interface Props {
   right?: boolean
   role?: string
   split?: boolean
-  splitButtonType?: 'button' | 'submit' | 'reset'
+  splitButtonType?: ButtonType
   splitHref?: string
   noCaret?: boolean
   toggleText?: string

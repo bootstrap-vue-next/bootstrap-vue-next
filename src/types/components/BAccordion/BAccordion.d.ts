@@ -2,7 +2,7 @@
 export interface Props {
   flush?: boolean
   free?: boolean
-  id: string | undefined
+  id?: string
 }
 // Emits
 

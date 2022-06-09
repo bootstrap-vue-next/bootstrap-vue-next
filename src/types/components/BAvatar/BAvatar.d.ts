@@ -1,4 +1,4 @@
-import ColorVariant from 'src/types/ColorVariant'
+import type {ColorVariant, InputSize} from 'src/types'
 
 // Props
 export interface Props {

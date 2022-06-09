@@ -1,3 +1,4 @@
+import type {InputSize} from 'src/types'
 // Props
 export interface Props {
   append?: string
