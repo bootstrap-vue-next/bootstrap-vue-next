@@ -1,5 +1,5 @@
 <script lang="ts">
-import ColorVariant from '../../types/ColorVariant'
+import type {ColorVariant} from '../../types'
 import {toFloat} from '../../utils/number'
 import {computed, defineComponent, h, PropType, resolveComponent} from 'vue'
 import {normalizeSlot} from '../../utils/normalize-slot'

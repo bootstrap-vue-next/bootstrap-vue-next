@@ -1,4 +1,4 @@
-import {DOCUMENT, AnimationFrame} from '../types/safe-types'
+import {AnimationFrame, DOCUMENT} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from '../utils/env'
 
 import {Comment, Slot, VNode} from 'vue'

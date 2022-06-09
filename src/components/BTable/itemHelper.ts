@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {TableField, TableItem} from '../../types'
-import {TableFieldObject} from '../../types/TableField'
+import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, isString} from '../../utils/inspect'
 import {startCase} from '../../utils/stringUtils'
 

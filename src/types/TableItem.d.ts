@@ -1,4 +1,4 @@
-import ColorVariant from './ColorVariant'
+import type {ColorVariant} from 'src/types'
 
 type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
