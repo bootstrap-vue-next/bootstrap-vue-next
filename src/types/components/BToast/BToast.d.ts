@@ -1,7 +1,32 @@
+import {BodyProp} from 'src/components/BToast/plugin'
+import {ColorVariant} from 'src/types'
+import type {BLinkProps} from '..'
 // Props
-export interface Props {
-  
+export interface Props extends BLinkProps {
+  title: string
+  bodyClass: string
+  headerClass: string
+  id: string
+  delay?: number
+  body?: BodyProp
+  headerTag?: string
+  animation?: boolean
+  // Switches role to 'status' and aria-live to 'polite'
+  isStatus?: boolean
+  autoHide?: boolean
+  noCloseButton?: boolean
+  noFade?: boolean
+  noHoverPause?: boolean
+  solid?: boolean
+  // Render the toast in place, rather than in a portal-target
+  static?: boolean
+  modelValue?: boolean
+  toastClass?: Array<string>
+  variant?: ColorVariant
 }
 // Emits
-
+export interface Emits {
+  (e: 'destroyed', value: Props['id']): void
+  (e: 'update:modelValue', value: Props['modelValue']): void // TODO replace all self referencing syntax to this style
+}
 // Other
