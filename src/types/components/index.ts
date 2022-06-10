@@ -122,8 +122,7 @@ export type {Props as BTransitionProps} from './BTransition/BTransition'
 export type {Props as BAlertProps} from './BAlert'
 export type {Emits as BAlertEmits} from './BAlert'
 
-// export type {Props as BColProps} from './BCol'
-// TODO BCol
+export type {Props as BColProps} from './BCol'
 
 export type {Props as BCollapseProps} from './BCollapse'
 export type {Emits as BCollapseEmits} from './BCollapse'
@@ -152,7 +151,5 @@ export type {Props as BProgressProps} from './BProgress'
 export type {Props as BProgressBarProps} from './BProgressBar'
 
 export type {Props as BRowProps} from './BRow'
-
-// TODO BRow
 
 export type {Props as BSpinnerProps} from './BSpinner'

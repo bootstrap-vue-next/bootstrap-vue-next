@@ -1,4 +1,4 @@
-import {Size} from '..'
+import type {Size} from 'src/types'
 
 interface FormCommonInputProps {
   ariaInvalid?: boolean | 'false' | 'true' | 'grammar' | 'spelling'
