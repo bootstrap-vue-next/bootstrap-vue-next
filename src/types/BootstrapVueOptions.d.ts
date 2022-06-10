@@ -1,7 +1,7 @@
 // TODO: Create the options for every component
 
 interface BToastPluginOptions {
-  injectkey: Symbol
+  injectkey: symbol
 }
 
 interface BootstrapVueOptions {

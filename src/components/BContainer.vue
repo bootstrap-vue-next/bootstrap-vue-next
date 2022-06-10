@@ -1,9 +1,8 @@
 <script lang="ts">
-import {Breakpoint} from '../types'
+import type {Breakpoint, Position} from '../types'
 import {computed, defineComponent, h, onMounted, PropType, ref, VNode} from 'vue'
 import {ToastInstance, useToast} from './BToast/plugin'
 import BToaster from './BToast/BToaster.vue'
-import Position from '../types/position'
 export default defineComponent({
   name: 'BContainer',
   props: {

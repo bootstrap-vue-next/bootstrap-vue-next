@@ -31,7 +31,7 @@ import {
   watch,
 } from 'vue'
 import {ToastInstance} from './plugin'
-import {ContainerPosition} from '../../types/container'
+import type {ContainerPosition} from '../../types'
 
 const toastPositions = {
   'top-left': 'top-0 start-0',

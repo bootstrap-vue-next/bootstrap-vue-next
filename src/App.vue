@@ -1907,7 +1907,7 @@ import {
   ref,
 } from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
-import TableField from './types/TableField'
+import type {TableField} from './types'
 import {BvEvent} from './utils/bvEvent'
 import {ToastInstance, useToast} from './components/BToast/plugin'
 

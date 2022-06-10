@@ -47,7 +47,7 @@ import {ButtonVariant, Size} from '../../types'
 import mergeDeep from '../../utils/mergeDeep'
 import useId from '../../composables/useId'
 import useEventListener from '../../composables/useEventListener'
-import {HTMLElement} from '../../types/safe-types'
+import {HTMLElement} from '../../types/safeTypes'
 
 export default defineComponent({
   name: 'BDropdown',
