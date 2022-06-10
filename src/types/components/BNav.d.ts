@@ -1,6 +1,6 @@
 // Props
 export interface Props {
-  align: {type: string}
+  align: string
   fill?: boolean
   justified?: boolean
   pills?: boolean

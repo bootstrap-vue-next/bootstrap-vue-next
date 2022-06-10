@@ -1,3 +1,4 @@
+import type {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from 'src/types'
 // Props
 export interface Props {
   caption: string

@@ -61,7 +61,7 @@ import {
   watch,
 } from 'vue'
 import getID from '../../utils/getID'
-import Alignment from '../../types/Alignment'
+import type {Alignment} from '../../types'
 import {BvEvent} from '../../utils/bvEvent'
 import {mathMax} from '../../utils/math'
 import {isFunction} from '../../utils/inspect'

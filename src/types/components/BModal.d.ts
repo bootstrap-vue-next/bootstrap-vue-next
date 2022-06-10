@@ -1,3 +1,4 @@
+import type {ColorVariant, InputSize} from 'src/types'
 // Props
 export interface Props {
   bodyBgVariant?: ColorVariant

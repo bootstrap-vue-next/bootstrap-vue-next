@@ -1,3 +1,4 @@
+import type {ColorVariant, SpinnerType} from 'src/types'
 // Props
 export interface Props {
   label: string

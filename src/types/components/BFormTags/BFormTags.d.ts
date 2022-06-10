@@ -1,3 +1,4 @@
+import type {InputSize, InputType} from 'src/types'
 // Props
 export interface Props {
   addButtonText?: string
@@ -15,7 +16,7 @@ export interface Props {
   limit: number
   limitTagsText?: string
   modelValue?: Array<string>
-  name: {type: string}
+  name: string
   noAddOnEnter?: boolean
   noOuterFocus?: boolean
   noTagRemove?: boolean

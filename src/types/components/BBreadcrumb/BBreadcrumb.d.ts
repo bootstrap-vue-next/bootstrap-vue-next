@@ -1,6 +1,6 @@
 // Props
-interface Props {
-  items: Array<BreadcrumbItem>
+export interface Props {
+  items: Array<BreadcrumbItem> // TODO whatever this is
 }
 // Emits
 

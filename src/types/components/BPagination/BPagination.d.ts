@@ -1,3 +1,4 @@
+import type {Alignment, InputSize} from 'src/types'
 // Props
 export interface Props {
   align?: Alignment

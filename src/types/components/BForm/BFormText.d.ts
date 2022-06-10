@@ -1,4 +1,4 @@
-import TextColorVariant from 'src/types/TextColorVariant'
+import type {TextColorVariant} from 'src/types'
 
 // Props
 export interface Props {

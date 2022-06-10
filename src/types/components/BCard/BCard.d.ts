@@ -1,3 +1,4 @@
+import type {Alignment, ColorVariant} from 'src/types'
 // Props
 export interface Props {
   align?: Alignment

@@ -1,4 +1,4 @@
-import {ColorVariant, Size} from 'src/types'
+import type {ColorVariant, Size} from 'src/types'
 
 // Props
 export interface Props {

@@ -46,8 +46,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import Alignment from '../../types/Alignment'
-import {ColorVariant} from '../../types'
+import type {Alignment, ColorVariant} from '../../types'
 
 export default defineComponent({
   name: 'BCard',
