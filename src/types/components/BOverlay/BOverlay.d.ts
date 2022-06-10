@@ -35,7 +35,7 @@ export interface Emits {
   (e: 'shown'): void
 }
 // Other
-export interface ISlotScope {
+export interface SlotScope {
   spinnerType: string | null
   spinnerVariant: string | null
   spinnerSmall: boolean

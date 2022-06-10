@@ -1,6 +1,13 @@
+import type Alignment from 'src/types/Alignment'
+import type {RowColsBreakpointProps} from 'src/types'
 // Props
-export interface Props {
-  
+export interface Props extends RowColsBreakpointProps {
+  tag?: string
+  gutterX?: string
+  gutterY?: string
+  alignV?: Alignment.Vertical
+  alignH?: Alignment.Horizontal
+  alignContent?: Alignment.Content
 }
 // Emits
 
