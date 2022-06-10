@@ -8,7 +8,7 @@
 import {computed, defineComponent, PropType} from 'vue'
 import getBreakpointProps from '../utils/getBreakpointProps'
 import getClasses from '../utils/getClasses'
-import Alignment from '../types/Alignment'
+import type {Alignment} from '../types'
 
 const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], default: null})
 

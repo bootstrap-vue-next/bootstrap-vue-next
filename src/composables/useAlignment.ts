@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {computed, ComputedRef} from 'vue'
 
-import Alignment from '../types/Alignment'
+import type {Alignment} from '../types'
 
 function alignment(props: any): ComputedRef<string> {
   return computed(() => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-import TransitionMode from '../../types/TransitionMode'
+import {TransitionMode} from '../../types'
 import {isPlainObject} from '../../utils/inspect'
 import {defineComponent, h, PropType, ref, Transition} from 'vue'
 

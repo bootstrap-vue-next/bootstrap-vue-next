@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import Alignment from '../types/Alignment'
+import type {Alignment} from '../types'
 import getBreakpointProps from '../utils/getBreakpointProps'
 import getClasses from '../utils/getClasses'
 
