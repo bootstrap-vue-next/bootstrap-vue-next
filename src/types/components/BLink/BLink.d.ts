@@ -18,7 +18,7 @@ export interface Props {
   routerTag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-}
+} // TODO look at this
 // Emits
 export interface Emits {
   (e: 'click', value: PointerEvent): void

@@ -153,3 +153,4 @@ export type {Props as BProgressBarProps} from './BProgressBar'
 export type {Props as BRowProps} from './BRow'
 
 export type {Props as BSpinnerProps} from './BSpinner'
+
