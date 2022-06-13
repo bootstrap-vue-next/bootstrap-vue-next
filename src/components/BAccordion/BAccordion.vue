@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+// https://vuejs.org/guide/typescript/composition-api.html#syntax-limitations , may be possible in a future release
 // import type {BAccordionProps} from '@/types/components'
 import {computed, InjectionKey, provide} from 'vue'
 import useId from '@/composables/useId'
