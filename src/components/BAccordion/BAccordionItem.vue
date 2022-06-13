@@ -28,34 +28,22 @@
   </div>
 </template>
 
-<script lang="ts">
-import {defineComponent, inject} from 'vue'
+<script setup lang="ts">
+import {inject} from 'vue'
+import BCollapse from '../BCollapse.vue'
+import vBToggle from '@/directives/BToggle'
+import useId from '@/composables/useId'
 import {injectionKey} from './BAccordion.vue'
-import BCollapse from './BCollapse.vue'
-import BToggle from '../directives/BToggle'
-import useId from '../composables/useId'
+// import type {BAccordionItemProps} from '@/types/components'
 
-export default defineComponent({
-  name: 'BAccordionItem',
-  components: {
-    BCollapse,
-  },
-  directives: {
-    BToggle,
-  },
-  props: {
-    title: {type: String},
-    id: {type: String},
-    visible: {type: Boolean, default: false},
-  },
-  setup(props) {
-    const computedId = useId(props.id, 'accordion_item')
-    const parent = inject(injectionKey, '')
+interface BAccordionItemProps {
+  id: string
+  title: string
+  visible?: boolean
+}
 
-    return {
-      parent,
-      computedId,
-    }
-  },
-})
+const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
+
+const computedId = useId(props.id, 'accordion_item')
+const parent = inject(injectionKey, '')
 </script>

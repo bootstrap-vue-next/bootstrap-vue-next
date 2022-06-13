@@ -7,8 +7,8 @@ import {createBreadcrumb} from './composables/useBreadcrumb'
 import './styles/styles.scss'
 
 // export available components
-export {default as BAccordion} from './components/BAccordion.vue'
-export {default as BAccordionItem} from './components/BAccordionItem.vue'
+export {default as BAccordion} from './components/BAccordion/BAccordion.vue'
+export {default as BAccordionItem} from './components/BAccordion/BAccordionItem.vue'
 export {default as BAlert} from './components/BAlert.vue'
 export {default as BAvatar} from './components/BAvatar/BAvatar.vue'
 export {default as BAvatarGroup} from './components/BAvatar/BAvatarGroup.vue'
