@@ -1,5 +1,5 @@
-import BAccordion from './BAccordion.vue'
-import BAccordionItem from './BAccordionItem.vue'
+import BAccordion from './BAccordion/BAccordion.vue'
+import BAccordionItem from './BAccordion/BAccordionItem.vue'
 import BAlert from './BAlert.vue'
 import BAvatar from './BAvatar/BAvatar.vue'
 import BAvatarGroup from './BAvatar/BAvatarGroup.vue'
