@@ -7,5 +7,7 @@ export interface Props extends Omit<BLinkProps, 'event' | 'routerTag'> {
   text?: string
 }
 // Emits
-
+export interface Emits {
+  (e: 'click', value: MouseEvent): void
+}
 // Other
