@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import {omit} from '../../utils/object'
+import {omit} from '@/utils/object'
 import {computed, defineComponent} from 'vue'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
@@ -30,11 +30,14 @@ export default defineComponent({
     const liClasses = computed(() => ({
       active: props.active,
     }))
-    const computedTag = computed(() => (props.active ? 'span' : 'b-link'))
+
+    const computedTag = computed<'span' | 'b-link'>(() => (props.active ? 'span' : 'b-link'))
+
     const computedAriaCurrent = computed(() => ({
       'aria-current': props.active ? props.ariaCurrent : undefined,
     }))
-    const clicked = function (e: MouseEvent) {
+
+    const clicked = (e: MouseEvent): void => {
       if (props.disabled || props.active) {
         e.preventDefault()
         e.stopImmediatePropagation()
@@ -42,6 +45,7 @@ export default defineComponent({
       }
       if (!props.disabled) emit('click', e)
     }
+
     return {
       liClasses,
       computedTag,

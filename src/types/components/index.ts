@@ -10,7 +10,8 @@ export type {ParentData as BAvatarGroupParentData} from './BAvatar/BAvatarGroup'
 export type {Props as BBadgeProps} from './BBadge/BBadge'
 // BBreadcrumb
 export type {Props as BBreadcrumbProps} from './BBreadcrumb/BBreadcrumb'
-export type {Props as BBreadcrumbItem} from './BBreadcrumb/BBreadcrumbItem'
+export type {Props as BBreadcrumbItemProps} from './BBreadcrumb/BBreadcrumbItem'
+export type {Emits as BBreadcrumbItemEmits} from './BBreadcrumb/BBreadcrumbItem'
 // BButton
 export type {Props as BButtonProps} from './BButton/BButton'
 export type {Emits as BButtonEmits} from './BButton/BButton'

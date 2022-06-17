@@ -1,4 +1,4 @@
-interface BreadcrumbItemObject {
+export interface BreadcrumbItemObject {
   active?: boolean
   disabled?: boolean
   href?: string

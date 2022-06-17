@@ -21,6 +21,6 @@ export interface Props {
 }
 // Emits
 export interface Emits {
-  (e: 'click', value: PointerEvent): void
+  (e: 'click', value: MouseEvent): void
 }
 // Other

@@ -31,9 +31,9 @@
 </template>
 
 <script lang="ts">
-import type {LinkTarget} from '../../types'
-import {computed, defineComponent, getCurrentInstance, PropType, Ref, ref} from 'vue'
-import {RouteLocation, RouteLocationRaw} from 'vue-router'
+import type {LinkTarget} from '@/types'
+import {computed, defineComponent, getCurrentInstance, PropType, ref} from 'vue'
+import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {
   active: {type: Boolean, default: false},
@@ -60,9 +60,9 @@ export default defineComponent({
   emits: ['click'],
   setup(props, {emit, attrs}) {
     const instance = getCurrentInstance()
-    const link: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
+    const link = ref<HTMLElement>(null as unknown as HTMLElement)
 
-    const tag = computed(() => {
+    const tag = computed<string>(() => {
       const routerName = props.routerComponentName
         .split('-')
         .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
@@ -74,7 +74,7 @@ export default defineComponent({
       return props.routerComponentName
     })
 
-    const computedHref = computed(() => {
+    const computedHref = computed<string>(() => {
       const toFallback = '#'
       if (props.href) return props.href
 
@@ -99,15 +99,6 @@ export default defineComponent({
       return toFallback
     })
 
-    const clicked = function (e: PointerEvent) {
-      if (props.disabled) {
-        e.preventDefault()
-        e.stopImmediatePropagation()
-        return
-      }
-      emit('click', e)
-    }
-
     const routerAttr = computed(() => ({
       'to': props.to,
       'href': computedHref.value,
@@ -120,6 +111,15 @@ export default defineComponent({
         : attrs.tabindex,
       'aria-disabled': props.disabled ? 'true' : null,
     }))
+
+    const clicked = (e: MouseEvent): void => {
+      if (props.disabled) {
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        return
+      }
+      emit('click', e)
+    }
 
     return {
       tag,
