@@ -1,4 +1,4 @@
-import type {BreadcrumbItem} from 'src/types'
+import type {BreadcrumbItem} from '@/types'
 // Props
 export interface Props {
   items: Array<BreadcrumbItem>

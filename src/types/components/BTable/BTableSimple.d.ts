@@ -1,4 +1,4 @@
-import type {Breakpoint, ColorVariant} from 'src/types'
+import type {Breakpoint, ColorVariant} from '@/types'
 // Props
 export interface Props {
   borderVariant: ColorVariant

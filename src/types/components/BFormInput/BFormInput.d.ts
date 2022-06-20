@@ -1,4 +1,4 @@
-import type {InputType} from 'src/types'
+import type {InputType} from '@/types'
 import type {FormCommonInputProps} from 'src/types/composables'
 
 // Props

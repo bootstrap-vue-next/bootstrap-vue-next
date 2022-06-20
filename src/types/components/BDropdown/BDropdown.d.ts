@@ -1,5 +1,5 @@
 import type Popper from '@popperjs/core'
-import type {ButtonType, ButtonVariant, Size} from 'src/types'
+import type {ButtonType, ButtonVariant, Size} from '@/types'
 // Props
 export interface Props {
   id: string

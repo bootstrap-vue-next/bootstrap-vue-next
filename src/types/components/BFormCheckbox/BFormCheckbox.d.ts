@@ -1,4 +1,4 @@
-import type {InputSize} from 'src/types'
+import type {InputSize} from '@/types'
 
 // Props
 export interface Props {

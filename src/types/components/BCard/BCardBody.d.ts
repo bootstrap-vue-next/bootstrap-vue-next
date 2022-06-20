@@ -1,4 +1,4 @@
-import type {ColorVariant, TextColorVariant} from 'src/types'
+import type {ColorVariant, TextColorVariant} from '@/types'
 // Props
 export interface Props {
   bodyBgVariant?: ColorVariant
