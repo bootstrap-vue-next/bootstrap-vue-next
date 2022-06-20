@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import {ButtonVariant, InputSize} from '../../types'
+import type {ButtonVariant, InputSize, LinkTarget} from '@/types'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
     size: {type: String as PropType<InputSize>},
     squared: {type: Boolean, default: false},
     tag: {type: String, default: 'button'},
-    target: {type: String, default: '_self'},
+    target: {type: String as PropType<LinkTarget>, default: '_self'},
     type: {type: String, default: 'button'},
     variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
   },
@@ -64,7 +64,12 @@ export default defineComponent({
       'routerTag': isBLink ? props.routerTag : null,
     }))
 
-    const clicked = function (e: PointerEvent) {
+    const computedTag = computed<string>(() => {
+      if (isBLink) return 'b-link'
+      return props.href ? 'a' : props.tag
+    })
+
+    const clicked = (e: MouseEvent): void => {
       if (props.disabled) {
         e.preventDefault()
         e.stopPropagation()
@@ -75,11 +80,6 @@ export default defineComponent({
         emit('update:pressed', !props.pressed)
       }
     }
-
-    const computedTag = computed(() => {
-      if (isBLink) return 'b-link'
-      return props.href ? 'a' : props.tag
-    })
 
     return {
       classes,

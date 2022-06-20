@@ -8,23 +8,21 @@
   />
 </template>
 
-<script lang="ts">
-import {computed, defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BCloseButtonProps} from '@/types/components'
+import {computed} from 'vue'
 
-export default defineComponent({
-  name: 'BCloseButton',
-  props: {
-    disabled: {type: Boolean, default: false},
-    white: {type: Boolean, default: false},
-  },
-  setup(props) {
-    const classes = computed(() => ({
-      'btn-close-white': props.white,
-    }))
+interface BCloseButtonProps {
+  disabled?: boolean
+  white?: boolean
+}
 
-    return {
-      classes,
-    }
-  },
+const props = withDefaults(defineProps<BCloseButtonProps>(), {
+  disabled: false,
+  white: false,
 })
+
+const classes = computed(() => ({
+  'btn-close-white': props.white,
+}))
 </script>
