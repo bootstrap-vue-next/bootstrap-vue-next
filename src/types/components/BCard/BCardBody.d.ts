@@ -1,14 +1,14 @@
-import type {ColorVariant} from 'src/types'
+import type {ColorVariant, TextColorVariant} from 'src/types'
 // Props
 export interface Props {
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array | Record<string, unknown> | string
+  bodyClass?: Array<string> | Record<string, unknown> | string
   bodyTag?: string
-  bodyTextVariant?: ColorVariant
+  bodyTextVariant?: TextColorVariant
   overlay?: boolean
   subTitle?: string
   subTitleTag?: string
-  subTitleTextVariant?: ColorVariant
+  subTitleTextVariant?: TextColorVariant
   title?: string
   titleTag?: string
 }

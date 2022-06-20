@@ -1,8 +1,9 @@
+import type {TextColorVariant} from '@/types'
 // Props
 export interface Props {
   subTitle: string
   subTitleTag?: string
-  subTitleTextVariant?: string
+  subTitleTextVariant?: TextColorVariant
 }
 // Emits
 
