@@ -34,7 +34,7 @@ import {isNumber, isNumeric, isString} from '@/utils/inspect'
 import {toFloat} from '@/utils/number'
 import {injectionKey} from './BAvatarGroup.vue'
 
-interface Props {
+interface BAvatarProps {
   alt: string
   ariaLabel: string
   badge?: boolean | string
@@ -55,7 +55,7 @@ interface Props {
   variant?: ColorVariant
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BAvatarProps>(), {
   alt: 'avatar',
   badge: false,
   badgeLeft: false,
@@ -70,12 +70,12 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'secondary',
 })
 
-interface Emits {
+interface BAvatarEmits {
   (e: 'click', value: MouseEvent): void
   (e: 'img-error', value: Event): void
 }
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<BAvatarEmits>()
 
 const slots = useSlots()
 

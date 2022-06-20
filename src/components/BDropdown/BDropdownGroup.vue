@@ -23,35 +23,41 @@
   </li>
 </template>
 
+<script setup lang="ts">
+// import type {BDropdownGroupProps} from '@/types/components'
+import type {ColorVariant} from '@/types'
+import {computed, defineComponent} from 'vue'
+
+interface BDropdownGroupProps {
+  id: string
+  ariaDescribedby: string
+  header: string
+  headerClasses?: string | Array<string> | Record<string, unknown>
+  headerTag?: string
+  headerVariant?: ColorVariant
+}
+
+const props = withDefaults(defineProps<BDropdownGroupProps>(), {
+  headerClasses: undefined,
+  headerTag: 'header',
+  headerVariant: undefined,
+})
+
+const headerId = computed<string | undefined>(() =>
+  props.id ? [props.id, 'group_dd_header'].join('_') : undefined
+)
+
+const headerRole = computed<'heading' | undefined>(() =>
+  props.headerTag === 'header' ? undefined : 'heading'
+)
+
+const classes = computed(() => ({
+  [`text-${props.headerVariant}`]: props.headerVariant,
+}))
+</script>
+
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../../types'
-
 export default defineComponent({
-  name: 'BDropdownGroup',
   inheritAttrs: false,
-  props: {
-    ariaDescribedby: {type: String},
-    header: {type: String},
-    headerClasses: {type: [String, Array, Object], default: null},
-    headerTag: {type: String, default: 'header'},
-    headerVariant: {type: String as PropType<ColorVariant>, default: null},
-    id: {type: String},
-  },
-  setup(props) {
-    const headerId = computed(() => (props.id ? [props.id, 'group_dd_header'].join('_') : null))
-
-    const headerRole = computed(() => (props.headerTag === 'header' ? null : 'heading'))
-
-    const classes = computed(() => ({
-      [`text-${props.headerVariant}`]: props.headerVariant,
-    }))
-
-    return {
-      classes,
-      headerId,
-      headerRole,
-    }
-  },
 })
 </script>
