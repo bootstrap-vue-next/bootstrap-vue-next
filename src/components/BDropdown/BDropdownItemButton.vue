@@ -44,9 +44,7 @@ const attrs = computed(() => ({
   disabled: props.disabled,
 }))
 
-const clicked = (e: MouseEvent): void => {
-  emit('click', e)
-}
+const clicked = (e: MouseEvent): void => emit('click', e)
 </script>
 
 <script lang="ts">
