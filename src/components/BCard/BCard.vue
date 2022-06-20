@@ -44,117 +44,124 @@
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
-import type {Alignment, ColorVariant} from '../../types'
+<script setup lang="ts">
+// import type {BCardProps} from '@/types/components'
+import type {Alignment, ColorVariant, TextColorVariant} from '@/types'
+import {computed} from 'vue'
 
-export default defineComponent({
-  name: 'BCard',
-  props: {
-    align: {type: String as PropType<Alignment>, required: false},
-    bgVariant: {type: String as PropType<ColorVariant>, required: false},
-    bodyBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    bodyClass: {type: [Array, Object, String], required: false},
-    bodyTag: {type: String, default: 'div'},
-    bodyTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    borderVariant: {type: String as PropType<ColorVariant>, required: false},
-    footer: {type: String, required: false},
-    footerBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    footerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
-    footerClass: {type: [Array, Object, String], required: false},
-    footerHtml: {type: String, default: ''},
-    footerTag: {type: String, default: 'div'},
-    footerTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    header: {type: String, required: false},
-    headerBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    headerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
-    headerClass: {type: [Array, Object, String], required: false},
-    headerHtml: {type: String, default: ''},
-    headerTag: {type: String, default: 'div'},
-    headerTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    imgAlt: {type: String, required: false},
-    imgBottom: {type: Boolean, default: false},
-    imgEnd: {type: Boolean, default: false},
-    imgHeight: {type: [String, Number], required: false},
-    imgLeft: {type: Boolean, default: false},
-    imgRight: {type: Boolean, default: false},
-    imgSrc: {type: String, required: false},
-    imgStart: {type: Boolean, default: false},
-    imgTop: {type: Boolean, default: false},
-    imgWidth: {type: [String, Number], required: false},
-    noBody: {type: Boolean, default: false},
-    overlay: {type: Boolean, default: false},
-    subTitle: {type: String, required: false},
-    subTitleTag: {type: String, default: 'h6'},
-    subTitleTextVariant: {type: String as PropType<ColorVariant>, default: 'muted'},
-    tag: {type: String, default: 'div'},
-    textVariant: {type: String as PropType<ColorVariant>, required: false},
-    title: {type: String, required: false},
-    titleTag: {type: String, default: 'h4'},
-  },
-  setup(props) {
-    const classes = computed(() => ({
-      [`text-${props.align}`]: props.align,
-      [`text-${props.textVariant}`]: props.textVariant,
-      [`bg-${props.bgVariant}`]: props.bgVariant,
-      [`border-${props.borderVariant}`]: props.borderVariant,
-      'flex-row': props.imgLeft || props.imgStart,
-      'flex-row-reverse': props.imgEnd || props.imgRight,
-    }))
+interface BCardProps {
+  align?: Alignment
+  bgVariant?: ColorVariant
+  bodyBgVariant?: ColorVariant
+  bodyClass?: Array<string> | Record<string, unknown> | string // TODO record<string, unknown> can be replaced as a known object
+  bodyTag?: string // Above todo, also Array can be explicit
+  bodyTextVariant?: ColorVariant
+  borderVariant?: ColorVariant
+  footer?: string
+  footerBgVariant?: ColorVariant
+  footerBorderVariant?: ColorVariant
+  footerClass?: Array<string> | Record<string, unknown> | string
+  footerHtml?: string
+  footerTag?: string
+  footerTextVariant?: ColorVariant
+  header?: string
+  headerBgVariant?: ColorVariant
+  headerBorderVariant?: ColorVariant
+  headerClass?: Array<string> | Record<string, unknown> | string
+  headerHtml?: string
+  headerTag?: string
+  headerTextVariant?: ColorVariant
+  imgAlt?: string
+  imgBottom?: boolean
+  imgEnd?: boolean
+  imgHeight?: string | number
+  imgLeft?: boolean
+  imgRight?: boolean
+  imgSrc?: string
+  imgStart?: boolean
+  imgTop?: boolean
+  imgWidth?: string | number
+  noBody?: boolean
+  overlay?: boolean
+  subTitle?: string
+  subTitleTag?: string
+  subTitleTextVariant?: TextColorVariant
+  tag?: string
+  textVariant?: TextColorVariant
+  title?: string
+  titleTag?: string
+}
 
-    const bodyClasses = computed(() => ({
-      'card-body': !props.noBody,
-      'card-img-overlay': props.overlay,
-      [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
-      [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
-    }))
-
-    const footerClasses = computed(() => ({
-      [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
-      [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
-      [`text-${props.footerTextVariant}`]: props.footerTextVariant,
-    }))
-
-    const headerClasses = computed(() => ({
-      [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
-      [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
-      [`text-${props.headerTextVariant}`]: props.headerTextVariant,
-    }))
-
-    const imgClasses = computed(() => ({
-      'card-img':
-        !props.imgEnd &&
-        !props.imgRight &&
-        !props.imgStart &&
-        !props.imgLeft &&
-        !props.imgTop &&
-        !props.imgTop,
-      'card-img-right': props.imgEnd || props.imgRight,
-      'card-img-left': props.imgStart || props.imgLeft,
-      'card-img-top': props.imgTop,
-      'card-img-bottom': props.imgBottom,
-    }))
-
-    const imgAttr = computed(() => ({
-      src: props.imgSrc,
-      alt: props.imgAlt,
-      height: props.imgHeight,
-      width: props.imgWidth,
-    }))
-
-    const subTitleClasses = computed(() => ({
-      [`text-${props.subTitleTextVariant}`]: props.subTitleTextVariant,
-    }))
-
-    return {
-      classes,
-      bodyClasses,
-      footerClasses,
-      headerClasses,
-      imgClasses,
-      imgAttr,
-      subTitleClasses,
-    }
-  },
+const props = withDefaults(defineProps<BCardProps>(), {
+  bodyTag: 'div',
+  footerHtml: '',
+  footerTag: 'div',
+  headerHtml: '',
+  headerTag: 'div',
+  imgBottom: false,
+  imgEnd: false,
+  imgLeft: false,
+  imgRight: false,
+  imgStart: false,
+  imgTop: false,
+  noBody: false,
+  overlay: false,
+  subTitleTag: 'h6',
+  subTitleTextVariant: 'muted',
+  tag: 'div',
+  titleTag: 'h4',
 })
+
+const classes = computed(() => ({
+  [`text-${props.align}`]: props.align,
+  [`text-${props.textVariant}`]: props.textVariant,
+  [`bg-${props.bgVariant}`]: props.bgVariant,
+  [`border-${props.borderVariant}`]: props.borderVariant,
+  'flex-row': props.imgLeft || props.imgStart,
+  'flex-row-reverse': props.imgEnd || props.imgRight,
+}))
+
+const bodyClasses = computed(() => ({
+  'card-body': !props.noBody,
+  'card-img-overlay': props.overlay,
+  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
+  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
+}))
+
+const footerClasses = computed(() => ({
+  [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
+  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
+  [`text-${props.footerTextVariant}`]: props.footerTextVariant,
+}))
+
+const headerClasses = computed(() => ({
+  [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
+  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
+  [`text-${props.headerTextVariant}`]: props.headerTextVariant,
+}))
+
+const imgClasses = computed(() => ({
+  'card-img':
+    !props.imgEnd &&
+    !props.imgRight &&
+    !props.imgStart &&
+    !props.imgLeft &&
+    !props.imgTop &&
+    !props.imgTop,
+  'card-img-right': props.imgEnd || props.imgRight,
+  'card-img-left': props.imgStart || props.imgLeft,
+  'card-img-top': props.imgTop,
+  'card-img-bottom': props.imgBottom,
+}))
+
+const imgAttr = computed(() => ({
+  src: props.imgSrc,
+  alt: props.imgAlt,
+  height: props.imgHeight,
+  width: props.imgWidth,
+}))
+
+const subTitleClasses = computed(() => ({
+  [`text-${props.subTitleTextVariant}`]: props.subTitleTextVariant,
+}))
 </script>

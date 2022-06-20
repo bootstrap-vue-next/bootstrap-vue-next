@@ -1,48 +1,54 @@
 <template>
   <li role="presentation">
-    <button
-      class="dropdown-item"
-      :class="[classes, buttonClass]"
-      v-bind="attrs"
-      @click="$emit('click', $event)"
-    >
+    <button class="dropdown-item" :class="[classes, buttonClass]" v-bind="attrs" @click="clicked">
       <slot />
     </button>
   </li>
 </template>
 
+<script setup lang="ts">
+// import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '@/types/components'
+import type {ButtonType, ColorVariant} from '@/types'
+import {computed, defineComponent} from 'vue'
+
+interface BDropdownItemButtonProps {
+  buttonClass: string | Array<string> | Record<string, unknown>
+  active?: boolean
+  activeClass?: string
+  disabled?: boolean
+  variant?: ColorVariant
+}
+
+const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
+  active: false,
+  activeClass: 'active',
+  disabled: false,
+  variant: undefined,
+})
+
+interface BDropdownItemButtonEmits {
+  (e: 'click', value: MouseEvent): void
+}
+
+const emit = defineEmits<BDropdownItemButtonEmits>()
+
+const classes = computed(() => ({
+  [props.activeClass]: props.active,
+  disabled: props.disabled,
+  [`text-${props.variant}`]: props.variant,
+}))
+
+const attrs = computed(() => ({
+  role: 'menuitem',
+  type: 'button' as ButtonType,
+  disabled: props.disabled,
+}))
+
+const clicked = (e: MouseEvent): void => emit('click', e)
+</script>
+
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../../types'
-
 export default defineComponent({
-  name: 'BDropdownItemButton',
   inheritAttrs: false,
-  props: {
-    active: {type: Boolean, default: false},
-    activeClass: {type: String, default: 'active'},
-    buttonClass: {type: [String, Array, Object]},
-    disabled: {type: Boolean, default: false},
-    variant: {type: String as PropType<ColorVariant>, default: null},
-  },
-  emits: ['click'],
-  setup(props) {
-    const classes = computed(() => ({
-      [props.activeClass]: props.active,
-      disabled: props.disabled,
-      [`text-${props.variant}`]: props.variant,
-    }))
-
-    const attrs = computed(() => ({
-      role: 'menuitem',
-      type: 'button',
-      disabled: props.disabled,
-    }))
-
-    return {
-      classes,
-      attrs,
-    }
-  },
 })
 </script>

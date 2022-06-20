@@ -1,5 +1,5 @@
 import type Popper from '@popperjs/core'
-import type {ButtonType, ButtonVariant, Size} from 'src/types'
+import type {ButtonType, ButtonVariant, Size} from '@/types'
 // Props
 export interface Props {
   id: string
@@ -9,7 +9,7 @@ export interface Props {
   splitVariant: ButtonVariant
   text: string
   toggleClass: Array | Record<string, unknown> | string
-  autoClose?: boolean | string
+  autoClose?: boolean | 'inside' | 'outside'
   block?: boolean
   boundary?: Popper.Boundary
   dark?: boolean

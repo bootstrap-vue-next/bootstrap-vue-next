@@ -4,39 +4,39 @@
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BFormValidFeedbackProps} from '@/types/components'
+import {computed} from 'vue'
 
-export default defineComponent({
-  name: 'BFormValidFeedback',
-  props: {
-    ariaLive: {type: String, required: false},
-    forceShow: {type: Boolean, default: false},
-    id: {type: String, required: false},
-    role: {type: String, required: false},
-    state: {type: Boolean, default: undefined},
-    tag: {type: String, default: 'div'},
-    tooltip: {type: Boolean, default: false},
-  },
-  setup(props) {
-    const computedShow = computed(() => props.forceShow === true || props.state === true)
-    const classes = computed(() => ({
-      'd-block': computedShow.value,
-      'valid-feedback': !props.tooltip,
-      'valid-tooltip': props.tooltip,
-    }))
-    const attrs = computed(() => ({
-      'id': props.id || null,
-      'role': props.role || null,
-      'aria-live': props.ariaLive || null,
-      'aria-atomic': props.ariaLive ? 'true' : null,
-    }))
+interface BFormValidFeedbackProps {
+  ariaLive?: string
+  forceShow?: boolean
+  id?: string
+  role?: string
+  state?: boolean
+  tag?: string
+  tooltip?: boolean
+}
 
-    return {
-      attrs,
-      classes,
-      computedShow,
-    }
-  },
+const props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
+  forceShow: false,
+  state: undefined,
+  tag: 'div',
+  tooltip: false,
 })
+
+const computedShow = computed<boolean>(() => props.forceShow === true || props.state === true)
+
+const classes = computed(() => ({
+  'd-block': computedShow.value,
+  'valid-feedback': !props.tooltip,
+  'valid-tooltip': props.tooltip,
+}))
+
+const attrs = computed(() => ({
+  'id': props.id || null,
+  'role': props.role || null,
+  'aria-live': props.ariaLive || null,
+  'aria-atomic': props.ariaLive ? 'true' : null,
+}))
 </script>

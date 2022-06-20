@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     :id="computedId"
@@ -11,8 +12,8 @@
         class="d-block w-100"
         :alt="imgAlt"
         :src="imgSrc"
-        :width="imgWidth || width"
-        :height="imgHeight || height"
+        :width="imgWidth || parentWidth"
+        :height="imgHeight || parentHeight"
         :blank="imgBlank"
         :blank-color="imgBlankColor"
       />
@@ -36,65 +37,62 @@
   </div>
 </template>
 
-<script lang="ts">
-import useId from '../../composables/useId'
-import {computed, defineComponent, inject} from 'vue'
-import {injectionKey, ParentData} from './BCarousel.vue'
+<script setup lang="ts">
+// import type {BCarouselSlideProps} from '@/types/components'
+import useId from '@/composables/useId'
+import {computed, inject} from 'vue'
+import type {BCarouselParentData} from '@/types/components'
+import {injectionKey} from './BCarousel.vue'
 
-export default defineComponent({
-  name: 'BCarouselSlide',
-  props: {
-    active: {type: Boolean, default: false},
-    background: {type: String, required: false},
-    caption: {type: String, required: false},
-    captionHtml: {type: String, required: false},
-    captionTag: {type: String, default: 'h3'},
-    contentTag: {type: String, default: 'div'},
-    contentVisibleUp: {type: String, required: false},
-    id: {type: String, required: false},
-    imgAlt: {type: String, required: false},
-    imgBlank: {type: Boolean, default: false},
-    imgBlankColor: {type: String, default: 'transparent'},
-    imgHeight: {type: String},
-    imgSrc: {type: String},
-    imgWidth: {type: String},
-    interval: {type: [String, Number]},
-    text: {type: String, required: false},
-    textHtml: {type: String, required: false},
-    textTag: {type: String, default: 'p'},
-  },
-  setup(props) {
-    const parentData = inject<ParentData>(injectionKey, {})
-    const computedId = useId(props.id, 'accordion')
-    const img = computed(() => (props.imgBlank ? props.imgBlank : props.imgSrc))
+interface BCarouselSlideProps {
+  imgSrc: string
+  imgHeight: string
+  imgWidth: string
+  interval: string | number
+  active?: boolean
+  background?: string
+  caption?: string
+  captionHtml?: string
+  captionTag?: string
+  contentTag?: string
+  contentVisibleUp?: string
+  id?: string
+  imgAlt?: string
+  imgBlank?: boolean
+  imgBlankColor?: string
+  text?: string
+  textHtml?: string
+  textTag?: string
+}
 
-    const computedAttr = computed(() => ({
-      background: `${
-        props.background || parentData.background || 'rgb(171, 171, 171)'
-      } none repeat scroll 0% 0%`,
-    }))
-
-    const computedContentClasses = computed(() => ({
-      'd-none': props.contentVisibleUp,
-      [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp,
-    }))
-    const showText = computed(() => props.text && !props.textHtml)
-    const showTextAsHtml = computed(() => props.textHtml)
-    const showCaption = computed(() => props.caption && !props.captionHtml)
-    const showCaptionAsHtml = computed(() => props.captionHtml)
-
-    return {
-      computedAttr,
-      computedContentClasses,
-      computedId,
-      height: parentData.height,
-      img,
-      showCaption,
-      showCaptionAsHtml,
-      showText,
-      showTextAsHtml,
-      width: parentData.width,
-    }
-  },
+const props = withDefaults(defineProps<BCarouselSlideProps>(), {
+  active: false,
+  captionTag: 'h3',
+  contentTag: 'div',
+  imgBlank: false,
+  imgBlankColor: 'transparent',
+  textTag: 'p',
 })
+
+const parentData = inject<BCarouselParentData>(injectionKey, {})
+const computedId = useId(props.id, 'accordion')
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const img = computed<string | true>(() => (props.imgBlank ? props.imgBlank : props.imgSrc))
+
+const computedAttr = computed(() => ({
+  background: `${
+    props.background || parentData.background || 'rgb(171, 171, 171)'
+  } none repeat scroll 0% 0%`,
+}))
+
+const computedContentClasses = computed(() => ({
+  'd-none': props.contentVisibleUp,
+  [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp,
+}))
+const showText = computed<boolean | '' | undefined>(() => props.text && !props.textHtml)
+const showTextAsHtml = computed<string | undefined>(() => props.textHtml)
+const showCaption = computed<boolean | '' | undefined>(() => props.caption && !props.captionHtml)
+const showCaptionAsHtml = computed<string | undefined>(() => props.captionHtml)
+const parentWidth = computed<string | undefined>(() => parentData.width)
+const parentHeight = computed<string | undefined>(() => parentData.height)
 </script>

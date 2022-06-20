@@ -6,14 +6,15 @@
   </component>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BCardTitleProps} from '@/types/components'
 
-export default defineComponent({
-  name: 'BCardTitle',
-  props: {
-    title: {type: String},
-    titleTag: {type: String, default: 'h4'},
-  },
+interface BCardTitleProps {
+  title: string
+  titleTag?: string
+}
+
+withDefaults(defineProps<BCardTitleProps>(), {
+  titleTag: 'h4',
 })
 </script>

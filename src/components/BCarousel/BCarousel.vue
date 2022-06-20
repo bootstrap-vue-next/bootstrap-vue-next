@@ -40,67 +40,72 @@
   </div>
 </template>
 
-<script lang="ts">
-import {defineComponent, InjectionKey, onMounted, provide, ref, VNode} from 'vue'
+<script setup lang="ts">
+// import type {BCarouselProps, BCarouselEmits} from '@/types/components'
+import type {BCarouselParentData} from '@/types/components'
+import {InjectionKey, onMounted, provide, ref, useSlots, VNode} from 'vue'
 import Carousel from 'bootstrap/js/dist/carousel'
 import useEventListener from '../../composables/useEventListener'
 import useId from '../../composables/useId'
 
-export interface ParentData {
+interface BCarouselProps {
+  id: string
+  imgHeight: string
+  imgWidth: string
   background?: string
-  width?: string
-  height?: string
+  modelValue?: number
+  controls?: boolean
+  indicators?: boolean
+  interval?: number
+  noTouch?: boolean
+  noWrap?: boolean
 }
 
-export const injectionKey: InjectionKey<ParentData> = Symbol()
-
-export default defineComponent({
-  name: 'BCarousel',
-  props: {
-    background: {type: String, required: false},
-    modelValue: {type: Number, default: 0},
-    controls: {type: Boolean, default: false},
-    id: {type: String},
-    imgHeight: {type: String},
-    imgWidth: {type: String},
-    indicators: {type: Boolean, default: false},
-    interval: {type: Number, default: 5000},
-    noTouch: {type: Boolean, default: false},
-    noWrap: {type: Boolean, default: false},
-  },
-  emits: ['sliding-start', 'sliding-end'],
-  setup(props, {slots, emit}) {
-    const element = ref<HTMLElement>()
-    const instance = ref<Carousel>()
-    const computedId = useId(props.id, 'accordion')
-    const slides = ref<VNode[]>([])
-
-    useEventListener(element, 'slide.bs.carousel', (payload) => emit('sliding-start', payload))
-    useEventListener(element, 'slid.bs.carousel', (payload) => emit('sliding-end', payload))
-
-    onMounted(() => {
-      instance.value = new Carousel(element.value as HTMLElement, {
-        wrap: !props.noTouch,
-        interval: props.interval,
-        touch: !props.noTouch,
-      })
-
-      if (slots.default) {
-        slides.value = slots.default().filter((child: any) => child.type?.name === 'BCarouselSlide')
-      }
-    })
-
-    provide(injectionKey, {
-      background: props.background,
-      width: props.imgWidth,
-      height: props.imgHeight,
-    })
-
-    return {
-      element,
-      computedId,
-      slides,
-    }
-  },
+const props = withDefaults(defineProps<BCarouselProps>(), {
+  modelValue: 0,
+  controls: false,
+  indicators: false,
+  interval: 5000,
+  noTouch: false,
+  noWrap: false,
 })
+
+interface BCarouselEmits {
+  (e: 'sliding-start', value: Event): void
+  (e: 'sliding-end', value: Event): void
+}
+
+const emit = defineEmits<BCarouselEmits>()
+
+const slots = useSlots()
+
+const element = ref<HTMLElement>()
+const instance = ref<Carousel>()
+const computedId = useId(props.id, 'accordion')
+const slides = ref<VNode[]>([])
+
+useEventListener(element, 'slide.bs.carousel', (payload) => emit('sliding-start', payload))
+useEventListener(element, 'slid.bs.carousel', (payload) => emit('sliding-end', payload))
+
+onMounted(() => {
+  instance.value = new Carousel(element.value as HTMLElement, {
+    wrap: !props.noTouch,
+    interval: props.interval,
+    touch: !props.noTouch,
+  })
+
+  if (slots.default) {
+    slides.value = slots.default().filter((child: any) => child.type?.name === 'BCarouselSlide')
+  }
+})
+
+provide(injectionKey, {
+  background: props.background,
+  width: props.imgWidth,
+  height: props.imgHeight,
+})
+</script>
+
+<script lang="ts">
+export const injectionKey: InjectionKey<BCarouselParentData> = Symbol()
 </script>

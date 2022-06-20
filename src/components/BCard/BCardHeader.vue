@@ -8,31 +8,28 @@
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../../types'
+<script setup lang="ts">
+// import type {BCardHeaderProps} from '@/types/components'
+import {computed} from 'vue'
+import type {ColorVariant} from '@/types'
 
-export default defineComponent({
-  name: 'BCardHeader',
-  props: {
-    header: {type: String, required: false},
-    headerBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    headerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
-    headerClass: {type: [Array, Object, String], required: false},
-    headerHtml: {type: String, required: false},
-    headerTag: {type: String, default: 'div'},
-    headerTextVariant: {type: String as PropType<ColorVariant>, required: false},
-  },
-  setup(props) {
-    const classes = computed(() => ({
-      [`text-${props.headerTextVariant}`]: props.headerTextVariant,
-      [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
-      [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
-    }))
+interface BCardHeaderProps {
+  header?: string
+  headerBgVariant?: ColorVariant
+  headerBorderVariant?: ColorVariant
+  headerClass?: Array<string> | Record<string, unknown> | string
+  headerHtml?: string
+  headerTag?: string
+  headerTextVariant?: ColorVariant
+}
 
-    return {
-      classes,
-    }
-  },
+const props = withDefaults(defineProps<BCardHeaderProps>(), {
+  headerTag: 'div',
 })
+
+const classes = computed(() => ({
+  [`text-${props.headerTextVariant}`]: props.headerTextVariant,
+  [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
+  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
+}))
 </script>

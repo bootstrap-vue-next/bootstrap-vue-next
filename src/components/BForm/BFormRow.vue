@@ -4,13 +4,14 @@
   </component>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BFormRowProps} from '@/types/components'
 
-export default defineComponent({
-  name: 'BFormRow',
-  props: {
-    tag: {type: String, default: 'div'},
-  },
+interface BFormRowProps {
+  tag?: string
+}
+
+withDefaults(defineProps<BFormRowProps>(), {
+  tag: 'div',
 })
 </script>

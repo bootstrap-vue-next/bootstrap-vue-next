@@ -8,31 +8,28 @@
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant} from '../../types'
+<script setup lang="ts">
+// import type {BCardFooterProps} from '@/types/components'
+import type {ColorVariant, TextColorVariant} from '@/types'
+import {computed} from 'vue'
 
-export default defineComponent({
-  name: 'BCardFooter',
-  props: {
-    footer: {type: String},
-    footerBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    footerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
-    footerClass: {type: [Array, Object, String], required: false},
-    footerHtml: {type: String, required: false},
-    footerTag: {type: String, default: 'div'},
-    footerTextVariant: {type: String as PropType<ColorVariant>, required: false},
-  },
-  setup(props) {
-    const classes = computed(() => ({
-      [`text-${props.footerTextVariant}`]: props.footerTextVariant,
-      [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
-      [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
-    }))
+interface BCardFooterProps {
+  footer: string
+  footerBgVariant?: ColorVariant
+  footerBorderVariant?: ColorVariant
+  footerClass?: Array<string> | Record<string, unknown> | string
+  footerHtml?: string
+  footerTag?: string
+  footerTextVariant?: TextColorVariant
+}
 
-    return {
-      classes,
-    }
-  },
+const props = withDefaults(defineProps<BCardFooterProps>(), {
+  footerTag: 'div',
 })
+
+const classes = computed(() => ({
+  [`text-${props.footerTextVariant}`]: props.footerTextVariant,
+  [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
+  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
+}))
 </script>

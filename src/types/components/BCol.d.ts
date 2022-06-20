@@ -1,5 +1,5 @@
 import type Alignment from 'src/types/Alignment'
-import type {ColBreakpointProps, OffsetBreakpointProps, OrderBreakpointProps} from 'src/types'
+import type {ColBreakpointProps, OffsetBreakpointProps, OrderBreakpointProps} from '@/types'
 
 // Props
 export interface Props extends ColBreakpointProps, OffsetBreakpointProps, OrderBreakpointProps {

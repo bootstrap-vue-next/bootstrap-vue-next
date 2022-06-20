@@ -3,24 +3,24 @@
     <slot />
   </component>
 </template>
-<script lang="ts">
-import {computed, defineComponent} from 'vue'
 
-export default defineComponent({
-  name: 'BCardGroup',
-  props: {
-    columns: {type: Boolean, default: false},
-    deck: {type: Boolean, default: false},
-    tag: {type: String, default: 'div'},
-  },
-  setup(props) {
-    const classes = computed(() =>
-      props.deck ? 'card-deck' : props.columns ? 'card-columns' : 'card-group'
-    )
+<script setup lang="ts">
+// import type {BCardGroupProps} from '@/types/components'
+import {computed} from 'vue'
 
-    return {
-      classes,
-    }
-  },
+interface BCardGroupProps {
+  columns?: boolean
+  deck?: boolean
+  tag?: string
+}
+
+const props = withDefaults(defineProps<BCardGroupProps>(), {
+  columns: false,
+  deck: false,
+  tag: 'div',
 })
+
+const classes = computed(() =>
+  props.deck ? 'card-deck' : props.columns ? 'card-columns' : 'card-group'
+)
 </script>

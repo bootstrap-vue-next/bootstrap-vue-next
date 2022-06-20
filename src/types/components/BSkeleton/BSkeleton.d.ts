@@ -1,4 +1,4 @@
-import type {ColorVariant, SkeletonAnimation, SkeletonType} from 'src/types'
+import type {ColorVariant, SkeletonAnimation, SkeletonType} from '@/types'
 // Props
 export interface Props {
   height: string

@@ -1,35 +1,36 @@
 <template>
-  <form
-    :id="id"
-    :novalidate="novalidate"
-    :class="classes"
-    @submit.prevent="$emit('submit', $event)"
-  >
+  <form :id="id" :novalidate="novalidate" :class="classes" @submit.prevent="submitted">
     <slot />
   </form>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BFormEmits, BFormProps} from '@/types/components'
+import {computed} from 'vue'
 
-export default defineComponent({
-  name: 'BForm',
-  props: {
-    id: {type: String, required: false},
-    floating: {type: Boolean, default: false},
-    novalidate: {type: Boolean, default: false},
-    validated: {type: Boolean, default: false},
-  },
-  emits: ['submit'],
-  setup(props) {
-    const classes = computed(() => ({
-      'form-floating': props.floating,
-      'was-validated': props.validated,
-    }))
+interface BFormProps {
+  id?: string
+  floating?: boolean
+  novalidate?: boolean
+  validated?: boolean
+}
 
-    return {
-      classes,
-    }
-  },
+const props = withDefaults(defineProps<BFormProps>(), {
+  floating: false,
+  novalidate: false,
+  validated: false,
 })
+
+interface BFormEmits {
+  (e: 'submit', value: Event): void
+}
+
+const emit = defineEmits<BFormEmits>()
+
+const classes = computed(() => ({
+  'form-floating': props.floating,
+  'was-validated': props.validated,
+}))
+
+const submitted = (e: Event): void => emit('submit', e)
 </script>

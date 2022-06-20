@@ -11,36 +11,35 @@
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
+<script setup lang="ts">
+// import type {BCardBodyProps} from '@/types/components'
+import {computed} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import BCardSubTitle from './BCardSubTitle.vue'
-import {ColorVariant} from '../../types'
+import type {ColorVariant, TextColorVariant} from '@/types'
 
-export default defineComponent({
-  name: 'BCardBody',
-  components: {BCardTitle, BCardSubTitle},
-  props: {
-    bodyBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    bodyClass: {type: [Array, Object, String], required: false},
-    bodyTag: {type: String, default: 'div'},
-    bodyTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    overlay: {type: Boolean, default: false},
-    subTitle: {type: String, required: false},
-    subTitleTag: {type: String, default: 'h4'},
-    subTitleTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    title: {type: String, required: false},
-    titleTag: {type: String, default: 'h4'},
-  },
-  setup(props) {
-    const classes = computed(() => ({
-      [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
-      [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
-    }))
+interface BCardBodyProps {
+  bodyBgVariant?: ColorVariant
+  bodyClass?: Array<string> | Record<string, unknown> | string
+  bodyTag?: string
+  bodyTextVariant?: TextColorVariant
+  overlay?: boolean
+  subTitle?: string
+  subTitleTag?: string
+  subTitleTextVariant?: TextColorVariant
+  title?: string
+  titleTag?: string
+}
 
-    return {
-      classes,
-    }
-  },
+const props = withDefaults(defineProps<BCardBodyProps>(), {
+  bodyTag: 'div',
+  overlay: false,
+  subTitle: 'h4',
+  titleTag: 'h4',
 })
+
+const classes = computed(() => ({
+  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
+  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
+}))
 </script>

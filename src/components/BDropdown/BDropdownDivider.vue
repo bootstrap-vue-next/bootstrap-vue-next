@@ -4,13 +4,14 @@
   </li>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BDropdownDividerProps} from '@/types/components'
 
-export default defineComponent({
-  name: 'BDropdownDivider',
-  props: {
-    tag: {type: String, default: 'hr'},
-  },
+interface BDropdownDividerProps {
+  tag?: string
+}
+
+withDefaults(defineProps<BDropdownDividerProps>(), {
+  tag: 'hr',
 })
 </script>

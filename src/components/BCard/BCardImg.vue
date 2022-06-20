@@ -2,60 +2,62 @@
   <img :class="classes" v-bind="attrs" />
 </template>
 
-<script lang="ts">
-import {computed, defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BCardImgProps} from '@/types/components'
+import {computed} from 'vue'
 
-export default defineComponent({
-  name: 'BCardImage',
-  props: {
-    alt: {type: String, default: null},
-    bottom: {type: Boolean, default: false},
-    end: {type: Boolean, default: false},
-    height: {type: [Number, String], required: false},
-    left: {type: Boolean, default: false},
-    right: {type: Boolean, default: false},
-    src: {type: String, required: false},
-    start: {type: Boolean, default: false},
-    top: {type: Boolean, default: false},
-    width: {type: [Number, String], required: false},
-  },
-  setup(props) {
-    const attrs = computed(() => ({
-      src: props.src,
-      alt: props.alt,
-      width:
-        (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
-        undefined,
-      height:
-        (typeof props.height === 'number' ? props.height : parseInt(props.height as string, 10)) ||
-        undefined,
-    }))
+interface BCardImgProps {
+  alt?: string
+  bottom?: boolean
+  end?: boolean
+  height?: number | string
+  left?: boolean
+  right?: boolean
+  src?: string
+  start?: boolean
+  top?: boolean
+  width?: number | string
+}
 
-    const classes = computed(() => {
-      const align = props.left ? 'float-left' : props.right ? 'float-right' : ''
+const props = withDefaults(defineProps<BCardImgProps>(), {
+  alt: undefined,
+  bottom: false,
+  end: false,
+  left: false,
+  right: false,
+  start: false,
+  top: false,
+})
 
-      let baseClass = 'card-img'
+const attrs = computed(() => ({
+  src: props.src,
+  alt: props.alt,
+  width:
+    (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
+    undefined,
+  height:
+    (typeof props.height === 'number' ? props.height : parseInt(props.height as string, 10)) ||
+    undefined,
+}))
 
-      if (props.top) {
-        baseClass += '-top'
-      } else if (props.right || props.end) {
-        baseClass += '-right'
-      } else if (props.bottom) {
-        baseClass += '-bottom'
-      } else if (props.left || props.start) {
-        baseClass += '-left'
-      }
+const classes = computed(() => {
+  const align = props.left ? 'float-left' : props.right ? 'float-right' : ''
 
-      return {
-        [align]: !!align,
-        [baseClass]: true,
-      }
-    })
+  let baseClass = 'card-img'
 
-    return {
-      attrs,
-      classes,
-    }
-  },
+  if (props.top) {
+    baseClass += '-top'
+  } else if (props.right || props.end) {
+    baseClass += '-right'
+  } else if (props.bottom) {
+    baseClass += '-bottom'
+  } else if (props.left || props.start) {
+    baseClass += '-left'
+  }
+
+  return {
+    [align]: !!align,
+    [baseClass]: true,
+  }
 })
 </script>

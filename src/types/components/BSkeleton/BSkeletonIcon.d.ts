@@ -1,4 +1,4 @@
-import type {SkeletonAnimation} from 'src/types'
+import type {SkeletonAnimation} from '@/types'
 // Props
 export interface Props {
   animation?: SkeletonAnimation
