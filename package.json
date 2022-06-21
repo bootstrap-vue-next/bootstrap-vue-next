@@ -57,7 +57,7 @@
     "@vitejs/plugin-vue": "2.x.x",
     "@vue/compiler-sfc": "3.x.x",
     "@vue/eslint-config-typescript": "10.x.x",
-    "@vue/test-utils": "^2.0.0-rc.14",
+    "@vue/test-utils": "^2.0.0-rc.18",
     "eslint": "8.x.x",
     "eslint-config-prettier": "8.x.x",
     "eslint-plugin-prettier": "^4.0.0",
