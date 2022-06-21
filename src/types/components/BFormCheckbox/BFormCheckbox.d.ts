@@ -1,5 +1,4 @@
-import type {InputSize} from '@/types'
-
+import type {ButtonVariant, InputSize} from '@/types'
 // Props
 export interface Props {
   ariaLabel: string
@@ -13,7 +12,7 @@ export interface Props {
   button?: boolean
   switch?: boolean
   disabled?: boolean
-  buttonVariant?: string
+  buttonVariant?: ButtonVariant
   inline?: boolean
   required?: boolean
   size?: InputSize
