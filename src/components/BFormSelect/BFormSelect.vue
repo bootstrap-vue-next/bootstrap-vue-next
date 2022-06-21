@@ -63,9 +63,9 @@ interface BFormSelectProps {
   selectSize?: number
   size?: Size
   state?: boolean | null
-  textField: string
-  valueField: 'value'
-  modelValue: string | Array<string> | Record<string, unknown> | number
+  textField?: string
+  valueField?: 'value'
+  modelValue?: string | Array<string> | Record<string, unknown> | number
 }
 
 const props = withDefaults(defineProps<BFormSelectProps>(), {

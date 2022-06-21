@@ -18,9 +18,9 @@ export interface Props {
   selectSize?: number
   size?: Size
   state?: boolean
-  textField: string
-  valueField: 'value'
-  modelValue: string | Array<string> | Record<string, unknown> | number
+  textField?: string
+  valueField?: 'value'
+  modelValue?: string | Array<string> | Record<string, unknown> | number
 }
 // Emits
 export interface Emits {
