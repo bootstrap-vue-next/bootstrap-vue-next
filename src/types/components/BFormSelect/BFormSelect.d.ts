@@ -1,7 +1,7 @@
 import type {Size} from '@/types'
 // Props
 export interface Props {
-  ariaInvalid?: boolean | 'false' | 'true' | 'grammar' | 'spelling'
+  ariaInvalid?: 'grammar' | 'spelling' | boolean | undefined
   autofocus?: boolean
   disabled?: boolean
   disabledField?: string
@@ -17,7 +17,10 @@ export interface Props {
   required?: boolean
   selectSize?: number
   size?: Size
-  state?: boolean | null
+  state?: boolean
+  textField: string
+  valueField: 'value'
+  modelValue: string | Array<string> | Record<string, unknown> | number
 }
 // Emits
 export interface Emits {
