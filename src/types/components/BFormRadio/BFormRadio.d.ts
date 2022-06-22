@@ -1,3 +1,4 @@
+import type {ButtonVariant} from '@/types'
 // Props
 export interface Props {
   ariaLabel: string
@@ -12,7 +13,7 @@ export interface Props {
   button?: boolean
   switch?: boolean
   disabled?: boolean
-  buttonVariant?: string
+  buttonVariant?: ButtonVariant
   inline?: boolean
   required?: boolean
   state?: boolean | null

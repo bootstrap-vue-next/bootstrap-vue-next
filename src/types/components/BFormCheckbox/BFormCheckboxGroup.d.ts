@@ -1,5 +1,4 @@
-import type {ColorVariant, Size} from '@/types'
-
+import type {ButtonVariant, Size} from '@/types'
 // Props
 export interface Props {
   id?: string
@@ -7,7 +6,7 @@ export interface Props {
   modelValue?: Array
   ariaInvalid?: boolean | string
   autofocus?: boolean
-  buttonVariant?: ColorVariant
+  buttonVariant?: ButtonVariant
   buttons?: boolean
   disabled?: boolean
   disabledField?: string

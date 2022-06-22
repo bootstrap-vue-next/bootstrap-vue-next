@@ -1,4 +1,5 @@
-import type {RawSlots, VNodeArrayChildren} from 'vue'
+import type {VNodeNormalizedChildren} from 'vue'
+import type {ColorVariant} from '@/types'
 // Props
 export interface Props {
   id: string
@@ -8,10 +9,10 @@ export interface Props {
   pill?: boolean
   removeLabel?: string
   tag?: string
-  variant?: string
+  variant?: ColorVariant
 }
 // Emits
 export interface Emits {
-  (e: 'remove', value?: string | VNodeArrayChildren | RawSlots): void
+  (e: 'remove', value?: VNodeNormalizedChildren): void
 }
 // Other
