@@ -53,12 +53,12 @@ import useEventListener from '@/composables/useEventListener'
 // So some of them could be converted to their pure types similar to Popper.Boundary
 interface BDropdownProps {
   id: string
-  menuClass: Array<string> | Record<string, unknown> | string
+  menuClass: Array<unknown> | Record<string, unknown> | string
   size: Size
-  splitClass: Array<string> | Record<string, unknown> | string
+  splitClass: Array<unknown> | Record<string, unknown> | string
   splitVariant: ButtonVariant
   text: string
-  toggleClass: Array<string> | Record<string, unknown> | string
+  toggleClass: Array<unknown> | Record<string, unknown> | string
   autoClose?: boolean | 'inside' | 'outside'
   block?: boolean
   boundary?: Popper.Boundary

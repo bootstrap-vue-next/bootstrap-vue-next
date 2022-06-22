@@ -12,7 +12,7 @@ import type {ButtonType, ColorVariant} from '@/types'
 import {computed, defineComponent} from 'vue'
 
 interface BDropdownItemButtonProps {
-  buttonClass: string | Array<string> | Record<string, unknown>
+  buttonClass: string | Array<unknown> | Record<string, unknown>
   active?: boolean
   activeClass?: string
   disabled?: boolean

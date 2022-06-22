@@ -19,7 +19,7 @@ import {computed, defineComponent, useAttrs} from 'vue'
 
 interface BDropdownItemProps {
   href: string
-  linkClass: Array<string> | Record<string, unknown> | string
+  linkClass: Array<unknown> | Record<string, unknown> | string
   active?: boolean
   disabled?: boolean
   rel?: string

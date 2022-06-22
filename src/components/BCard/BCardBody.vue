@@ -20,7 +20,7 @@ import type {ColorVariant, TextColorVariant} from '@/types'
 
 interface BCardBodyProps {
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<string> | Record<string, unknown> | string
+  bodyClass?: Array<unknown> | Record<string, unknown> | string
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   overlay?: boolean

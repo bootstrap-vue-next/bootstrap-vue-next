@@ -15,7 +15,7 @@ export interface Props {
   form: string
   limit: number
   limitTagsText?: string
-  modelValue?: Array<string>
+  modelValue?: Array<unknown>
   name: string
   noAddOnEnter?: boolean
   noOuterFocus?: boolean
@@ -23,7 +23,7 @@ export interface Props {
   placeholder?: string
   removeOnDelete?: boolean
   required?: boolean
-  separator: string | Array<string>
+  separator: string | Array<unknown>
   state?: boolean
   size: InputSize
   tagClass: string | Array | Record<string, unknown>
@@ -35,8 +35,8 @@ export interface Props {
 }
 // Emits
 export interface Emits {
-  (e: 'update:modelValue', value: Array<string>): void
-  (e: 'input', value: Array<string>): void
+  (e: 'update:modelValue', value: Array<unknown>): void
+  (e: 'input', value: Array<unknown>): void
   (e: 'tag-state', ...args: Array<unknown>): void
   (e: 'focus', value: FocusEvent): void
   (e: 'focusin', value: FocusEvent): void

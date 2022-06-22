@@ -2,7 +2,7 @@ import type {ColorVariant, TextColorVariant} from '@/types'
 // Props
 export interface Props {
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<string> | Record<string, unknown> | string
+  bodyClass?: Array<unknown> | Record<string, unknown> | string
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   overlay?: boolean

@@ -32,7 +32,7 @@ interface BDropdownGroupProps {
   id: string
   ariaDescribedby: string
   header: string
-  headerClasses?: string | Array<string> | Record<string, unknown>
+  headerClasses?: string | Array<unknown> | Record<string, unknown>
   headerTag?: string
   headerVariant?: ColorVariant
 }
