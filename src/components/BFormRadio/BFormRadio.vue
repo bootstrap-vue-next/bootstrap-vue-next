@@ -8,13 +8,13 @@
       :class="inputClasses"
       type="radio"
       :disabled="disabled"
-      :required="name && required"
+      :required="!!name && !!required"
       :name="name"
       :form="form"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
       :value="value"
-      :aria-required="name && required ? 'true' : null"
+      :aria-required="name && required ? true : undefined"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
@@ -28,77 +28,88 @@
   </div>
 </template>
 
-<script lang="ts">
-import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
-import {computed, defineComponent, onMounted, PropType, Ref, ref} from 'vue'
-import useId from '../../composables/useId'
+<script setup lang="ts">
+// import type {BFormRadioEmits, BFormRadioProps} from '@/types/components'
+import type {ButtonVariant} from '@/types'
+import {getClasses, getInputClasses, getLabelClasses} from '@/composables/useFormCheck'
+import {computed, onMounted, ref} from 'vue'
+import useId from '@/composables/useId'
 
-export default defineComponent({
-  name: 'BFormRadio',
-  props: {
-    ariaLabel: {type: String},
-    ariaLabelledBy: {type: String},
-    autofocus: {type: Boolean, default: false},
-    modelValue: {type: [Boolean, String, Array, Object, Number], default: null},
-    plain: {type: Boolean, default: false},
-    button: {type: Boolean, default: false},
-    switch: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false},
-    buttonVariant: {type: String, default: 'secondary'},
-    form: {type: String},
-    id: {type: String},
-    inline: {type: Boolean, default: false},
-    name: {type: String},
-    required: {type: Boolean, default: false},
-    size: {type: String},
-    state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
-    value: {type: [String, Boolean, Object, Number], default: true},
+interface BFormRadioProps {
+  ariaLabel?: string
+  ariaLabelledBy?: string
+  form?: string
+  id?: string
+  name?: string
+  size?: string
+  autofocus?: boolean
+  modelValue?: boolean | string | Array<unknown> | Record<string, unknown> | number
+  plain?: boolean
+  button?: boolean
+  switch?: boolean
+  disabled?: boolean
+  buttonVariant?: ButtonVariant
+  inline?: boolean
+  required?: boolean
+  state?: boolean | null
+  value?: string | boolean | Record<string, unknown> | number
+}
+
+const props = withDefaults(defineProps<BFormRadioProps>(), {
+  autofocus: false,
+  modelValue: undefined,
+  plain: false,
+  button: false,
+  switch: false,
+  disabled: false,
+  buttonVariant: 'secondary',
+  inline: false,
+  required: false,
+  state: undefined,
+  value: true,
+})
+
+interface BFormRadioEmits {
+  (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
+  (e: 'change', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
+  (
+    e: 'update:modelValue',
+    value: boolean | string | Array<unknown> | Record<string, unknown> | number
+  ): void
+}
+
+const emit = defineEmits<BFormRadioEmits>()
+
+const computedId = useId(props.id, 'form-check')
+const input = ref<HTMLElement>(null as unknown as HTMLElement)
+const isFocused = ref<boolean>(false)
+
+const localValue = computed<unknown>({
+  get: () => (Array.isArray(props.modelValue) ? props.modelValue[0] : props.modelValue),
+  set: (newValue: any) => {
+    const value = newValue ? props.value : false
+    const emitValue = Array.isArray(props.modelValue) ? [value] : value
+    emit('input', emitValue)
+    emit('change', emitValue)
+    emit('update:modelValue', emitValue)
   },
-  emits: ['update:modelValue', 'change', 'input'],
-  setup(props, {emit}) {
-    const computedId = useId(props.id, 'form-check')
-    const input: Ref<HTMLElement> = ref(null as unknown as HTMLElement)
-    const isFocused = ref(false)
+})
 
-    const localValue: any = computed({
-      get: () => (Array.isArray(props.modelValue) ? props.modelValue[0] : props.modelValue),
-      set: (newValue: any) => {
-        const value = newValue ? props.value : false
-        const emitValue = Array.isArray(props.modelValue) ? [value] : value
-        emit('input', emitValue)
-        emit('change', emitValue)
-        emit('update:modelValue', emitValue)
-      },
-    })
+const isChecked = computed<unknown>(() => {
+  if (Array.isArray(props.modelValue)) {
+    return (props.modelValue || []).find((e) => e === props.value)
+  }
+  return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
+})
 
-    const isChecked = computed(() => {
-      if (Array.isArray(props.modelValue)) {
-        return (props.modelValue || []).find((e) => e === props.value)
-      }
-      return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
-    })
+const classes = getClasses(props)
+const inputClasses = getInputClasses(props)
+const labelClasses = getLabelClasses(props)
 
-    const classes = getClasses(props)
-    const inputClasses = getInputClasses(props)
-    const labelClasses = getLabelClasses(props)
-
-    // TODO: make tests compatible with the v-focus directive
-    if (props.autofocus) {
-      onMounted(() => {
-        input.value.focus()
-      })
-    }
-
-    return {
-      localValue,
-      computedId,
-      classes,
-      inputClasses,
-      labelClasses,
-      isChecked,
-      isFocused,
-      input,
-    }
-  },
+// TODO: make tests compatible with the v-focus directive
+onMounted(() => {
+  if (props.autofocus) {
+    input.value.focus()
+  }
 })
 </script>
