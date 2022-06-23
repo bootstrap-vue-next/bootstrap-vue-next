@@ -88,6 +88,7 @@ export type {Props as BLinkProps} from './BLink/BLink'
 export type {Emits as BLinkEmits} from './BLink/BLink'
 // BListGroup
 export type {Props as BListGroupProps} from './BListGroup/BListGroup'
+export type {ParentData as BListGroupParentData} from './BListGroup/BListGroup'
 export type {Props as BListGroupItemProps} from './BListGroup/BListGroupItem'
 // BOverlay
 export type {Props as BOverlayProps} from './BOverlay/BOverlay'
