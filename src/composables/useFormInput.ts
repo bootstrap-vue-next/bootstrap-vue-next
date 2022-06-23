@@ -13,7 +13,7 @@ import useId from './useId'
 
 export const COMMON_INPUT_PROPS = {
   ariaInvalid: {
-    type: [Boolean, String] as PropType<boolean | 'false' | 'true' | 'grammar' | 'spelling'>,
+    type: [Boolean, String] as PropType<'grammar' | 'spelling' | boolean | undefined>,
     default: false,
   },
   autocomplete: {type: String, required: false},
@@ -93,12 +93,6 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
         return undefined
       }
       return props.ariaInvalid
-    }
-    if (props.ariaInvalid === 'true') {
-      return true
-    }
-    if (props.ariaInvalid === 'false') {
-      return undefined
     }
     return props.ariaInvalid
   })
