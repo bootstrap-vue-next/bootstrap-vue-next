@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue'
-import useFormInput, {COMMON_INPUT_PROPS} from '../../composables/useFormInput'
+import {computed, defineComponent, StyleValue} from 'vue'
+import useFormInput, {COMMON_INPUT_PROPS} from '@/composables/useFormInput'
 
 export default defineComponent({
   name: 'BFormTextarea',
@@ -44,7 +44,9 @@ export default defineComponent({
       'is-invalid': props.state === false,
     }))
 
-    const computedStyles = computed(() => (props.noResize ? {resize: 'none'} : undefined))
+    const computedStyles = computed<StyleValue | undefined>(() =>
+      props.noResize ? {resize: 'none'} : undefined
+    )
 
     const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
       useFormInput(props, emit)
