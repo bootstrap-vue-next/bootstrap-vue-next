@@ -26,7 +26,6 @@ const MIN_DURATION = 5000
 
 export default defineComponent({
   name: 'BToast',
-  emits: ['destroyed', 'update:modelValue'],
   props: {
     ...BLINK_PROPS,
     delay: {type: Number, default: 5000},
@@ -50,7 +49,7 @@ export default defineComponent({
     toastClass: {type: Array as PropType<Array<string>>},
     variant: {type: String as PropType<ColorVariant>},
   },
-
+  emits: ['destroyed', 'update:modelValue'],
   setup(props, {emit, slots}) {
     const isTransitioning = ref(false)
     const isHiding = ref(false)
