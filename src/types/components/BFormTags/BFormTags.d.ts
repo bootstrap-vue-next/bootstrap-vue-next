@@ -1,14 +1,14 @@
-import type {InputSize, InputType} from '@/types'
+import type {ButtonVariant, ColorVariant, InputSize, InputType} from '@/types'
 // Props
 export interface Props {
   addButtonText?: string
-  addButtonVariant?: string
+  addButtonVariant?: ButtonVariant
   addOnChange?: boolean
   autofocus?: boolean
   disabled?: boolean
   duplicateTagText?: string
   inputAttrs: Record<string, unknown>
-  inputClass: Array | Record<string, unknown> | string
+  inputClass: Array<unknown> | Record<string, unknown> | string
   inputId: string
   inputType?: InputType
   invalidTagText?: string
@@ -26,12 +26,12 @@ export interface Props {
   separator: string | Array<unknown>
   state?: boolean
   size: InputSize
-  tagClass: string | Array | Record<string, unknown>
+  tagClass: string | Array<unknown> | Record<string, unknown>
   tagPills?: boolean
   tagRemoveLabel: string
   tagRemovedLabel?: string
   tagValidator?: () => boolean
-  tagVariant?: string
+  tagVariant?: ColorVariant
 }
 // Emits
 export interface Emits {
