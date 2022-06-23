@@ -81,11 +81,26 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
 
   onActivated(handleAutofocus)
 
-  const computedAriaInvalid = computed(() => {
-    if (props.ariaInvalid) {
-      return props.ariaInvalid.toString()
+  const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
+    if (props.state === false) {
+      return true
     }
-    return props.state === false ? 'true' : undefined
+    if (props.state === true) {
+      return undefined
+    }
+    if (typeof props.ariaInvalid === 'boolean') {
+      if (props.ariaInvalid === false) {
+        return undefined
+      }
+      return props.ariaInvalid
+    }
+    if (props.ariaInvalid === 'true') {
+      return true
+    }
+    if (props.ariaInvalid === 'false') {
+      return undefined
+    }
+    return props.ariaInvalid
   })
 
   const onInput = (evt: Event) => {
