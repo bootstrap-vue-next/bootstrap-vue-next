@@ -5,11 +5,14 @@
 </template>
 
 <script setup lang="ts">
+// import type {BTrProps} from '@/types/components'
 import {computed} from 'vue'
 
-const props = defineProps({
-  variant: {type: String},
-})
+interface BTrProps {
+  variant: string
+}
+
+const props = defineProps<BTrProps>()
 
 const classes = computed(() => ({
   [`table-${props.variant}`]: props.variant,

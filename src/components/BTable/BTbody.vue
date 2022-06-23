@@ -5,10 +5,15 @@
 </template>
 
 <script setup lang="ts">
+// import type {BTBodyProps} from '@/types/components'
 import {computed} from 'vue'
 
-const props = defineProps({
-  headVariant: {type: Boolean, default: false},
+interface BTBodyProps {
+  headVariant?: boolean
+}
+
+const props = withDefaults(defineProps<BTBodyProps>(), {
+  headVariant: false,
 })
 
 const classes = computed(() => ({
