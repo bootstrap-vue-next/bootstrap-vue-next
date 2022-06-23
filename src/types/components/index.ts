@@ -114,6 +114,8 @@ export type {Props as BTrProps} from './BTable/BTr'
 // BTabs
 export type {Props as BTabProps} from './BTabs/BTab'
 export type {Props as BTabsProps} from './BTabs/BTabs'
+export type {Emits as BTabsEmits} from './BTabs/BTabs'
+export type {ParentData as BTabsParentData} from './BTabs/BTabs'
 // BToast
 export type {Props as BToastProps} from './BToast/BToast'
 export type {Emits as BToastEmits} from './BToast/BToast'
