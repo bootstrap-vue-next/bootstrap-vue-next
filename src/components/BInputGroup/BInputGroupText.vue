@@ -4,13 +4,14 @@
   </component>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BInputGroupTextProps} from '@/types/components'
 
-export default defineComponent({
-  name: 'BInputGroupText',
-  props: {
-    tag: {type: String, default: 'div'},
-  },
+interface BInputGroupTextProps {
+  tag?: string
+}
+
+withDefaults(defineProps<BInputGroupTextProps>(), {
+  tag: 'div',
 })
 </script>
