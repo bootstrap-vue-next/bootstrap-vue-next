@@ -9,3 +9,6 @@ export interface Props {
 // Emits
 
 // Other
+export interface ParentData {
+  numbered: boolean
+}

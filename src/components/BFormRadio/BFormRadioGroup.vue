@@ -18,81 +18,97 @@
   </div>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
+<script setup lang="ts">
+// import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '@/types/components'
+import type {ButtonVariant, Size} from '@/types'
+import {computed, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
-import {ColorVariant, Size} from '../../types'
 import {
   bindGroupProps,
   getGroupAttr,
   getGroupClasses,
   optionToElement,
   slotsToElements,
-} from '../../composables/useFormCheck'
-import useId from '../../composables/useId'
+} from '@/composables/useFormCheck'
+import useId from '@/composables/useId'
 
-export default defineComponent({
-  name: 'BFormRadioGroup',
-  components: {BFormRadio},
-  props: {
-    modelValue: {type: [String, Boolean, Array, Object, Number], default: ''},
-    ariaInvalid: {type: [Boolean, String], default: null},
-    autofocus: {type: Boolean, default: false},
-    buttonVariant: {type: String as PropType<ColorVariant>, default: 'secondary'},
-    buttons: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false},
-    disabledField: {type: String, default: 'disabled'},
-    form: {type: String},
-    htmlField: {type: String, default: 'html'},
-    id: {type: String},
-    name: {type: String},
-    options: {type: Array, default: () => []}, // Objects are not supported yet
-    plain: {type: Boolean, default: false},
-    required: {type: Boolean, default: false},
-    size: {type: String as PropType<Size>},
-    stacked: {type: Boolean, default: false},
-    state: {type: Boolean, default: null},
-    textField: {type: String, default: 'text'},
-    validated: {type: Boolean, default: false},
-    valueField: {type: String, default: 'value'},
-  },
-  emits: ['update:modelValue', 'input', 'change'],
-  setup(props, {emit, slots}) {
-    const slotsName = 'BFormRadio'
-    const computedId = useId(props.id, 'radio')
-    const computedName = useId(props.name, 'checkbox')
+interface BFormRadioGroupProps {
+  size?: Size
+  form?: string
+  id?: string
+  name?: string
+  modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
+  ariaInvalid?: boolean | string
+  autofocus?: boolean
+  buttonVariant?: ButtonVariant
+  buttons?: boolean
+  disabled?: boolean
+  disabledField?: string
+  htmlField?: string
+  options?: Array<unknown> // Objects are not supported yet
+  plain?: boolean
+  required?: boolean
+  stacked?: boolean
+  state?: boolean
+  textField?: string
+  validated?: boolean
+  valueField?: string
+}
 
-    const localValue = computed({
-      get: () => props.modelValue,
-      set: (newValue: any) => {
-        emit('input', newValue)
-        emit('update:modelValue', newValue)
-        emit('change', newValue)
-      },
-    })
+const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
+  modelValue: '',
+  ariaInvalid: undefined,
+  autofocus: false,
+  buttonVariant: 'secondary',
+  buttons: false,
+  disabled: false,
+  disabledField: 'disabled',
+  htmlField: 'html',
+  options: () => [],
+  plain: false,
+  required: false,
+  stacked: false,
+  state: undefined,
+  textField: 'text',
+  validated: false,
+  valueField: 'value',
+})
 
-    const checkboxList = computed(() =>
-      (slots.first ? slotsToElements(slots.first(), slotsName, props.disabled) : [])
-        .concat(props.options.map((e) => optionToElement(e, props)))
-        .concat(slots.default ? slotsToElements(slots.default(), slotsName, props.disabled) : [])
-        .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
-        .map((e) => ({
-          ...e,
-        }))
-    )
+interface BFormRadioGroupEmits {
+  (e: 'input', value: unknown): void
+  (e: 'update:modelValue', value: unknown): void
+  (e: 'change', value: unknown): void
+}
 
-    const attrs = getGroupAttr(props)
-    const classes = getGroupClasses(props)
+const emit = defineEmits<BFormRadioGroupEmits>()
 
-    // TODO: make tests compatible with the v-focus directive
+const slots = useSlots()
 
-    return {
-      attrs,
-      classes,
-      checkboxList,
-      computedId,
-      localValue,
-    }
+const slotsName = 'BFormRadio'
+const computedId = useId(props.id, 'radio')
+const computedName = useId(props.name, 'checkbox')
+
+const localValue = computed<string | boolean | Array<unknown> | Record<string, unknown> | number>({
+  get: () => props.modelValue,
+  set: (newValue: any) => {
+    emit('input', newValue)
+    emit('update:modelValue', newValue)
+    emit('change', newValue)
   },
 })
+
+const checkboxList = computed<Array<any>>(() =>
+  (slots.first ? slotsToElements(slots.first(), slotsName, props.disabled) : [])
+    .concat(props.options.map((e) => optionToElement(e, props)))
+    .concat(slots.default ? slotsToElements(slots.default(), slotsName, props.disabled) : [])
+    .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
+    .map((e) => ({
+      ...e,
+    }))
+)
+
+const attrs = getGroupAttr(props)
+const classes = getGroupClasses(props)
+
+// TODO: make tests compatible with the v-focus directive
 </script>

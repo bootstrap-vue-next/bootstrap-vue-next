@@ -23,5 +23,13 @@ export interface Props {
   modelValue?: number
 }
 // Emits
-
+export interface Emits {
+  (e: 'update:modelValue', value: number): void
+  (e: 'activate-tab'): void
+  (e: 'click'): void
+}
 // Other
+export interface ParentData {
+  lazy: boolean
+  card: boolean
+}

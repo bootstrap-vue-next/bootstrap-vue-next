@@ -21,33 +21,50 @@
       }"
       :aria-controls="id"
       :aria-describedby="taglabelId"
-      @click="$emit('remove', tagText)"
+      @click="emit('remove', tagText)"
     ></button>
   </component>
 </template>
 
 <script setup lang="ts">
-import {computed, useSlots} from 'vue'
-import useId from '../../composables/useId'
+// import type {BFormTagEmits, BFormTagProps} from '@/types/components'
+import {computed, useSlots, VNodeNormalizedChildren} from 'vue'
+import useId from '@/composables/useId'
+import type {ColorVariant} from '@/types'
 
-const props = defineProps({
-  disabled: {type: Boolean, default: false},
-  id: {type: String},
-  noRemove: {type: Boolean, default: false},
-  pill: {type: Boolean, default: false},
-  removeLabel: {type: String, default: 'Remove tag'},
-  tag: {type: String, default: 'span'},
-  title: {type: String},
-  variant: {type: String, default: 'secondary'},
+interface BFormTagProps {
+  id?: string
+  title?: string
+  disabled?: boolean
+  noRemove?: boolean
+  pill?: boolean
+  removeLabel?: string
+  tag?: string
+  variant?: ColorVariant
+}
+
+const props = withDefaults(defineProps<BFormTagProps>(), {
+  disabled: false,
+  noRemove: false,
+  pill: false,
+  removeLabel: 'Remove tag',
+  tag: 'span',
+  variant: 'secondary',
 })
 
-defineEmits(['remove'])
+interface BFormTagEmits {
+  (e: 'remove', value?: VNodeNormalizedChildren): void
+}
+
+const emit = defineEmits<BFormTagEmits>()
 
 const slots = useSlots()
 
-const tagText = computed(() => slots.default?.()[0].children || props.title)
+const tagText = computed<string>(
+  () => (slots.default?.()[0].children?.toString() || props.title) ?? ''
+)
 const computedId = useId(props.id)
-const taglabelId = computed(() => `${computedId.value}taglabel__`)
+const taglabelId = computed<string>(() => `${computedId.value}taglabel__`)
 
 const classes = computed(() => [
   `bg-${props.variant}`,

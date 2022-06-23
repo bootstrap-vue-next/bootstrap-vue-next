@@ -7,87 +7,91 @@
     :aria-disabled="disabled ? true : null"
     :target="link ? target : null"
     :href="!button ? href : null"
-    v-bind="attrs"
+    v-bind="computedAttrs"
   >
     <slot />
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, inject, PropType} from 'vue'
-import {ColorVariant} from '../../types'
+<script setup lang="ts">
+// import type {BListGroupItemProps} from '@/types/components'
+import {computed, inject, useAttrs} from 'vue'
+import type {ColorVariant, LinkTarget} from '@/types'
 import {injectionKey} from './BListGroup.vue'
 
-const ACTION_TAGS = ['a', 'router-link', 'button', 'b-link']
+interface BListGroupItemProps {
+  action?: boolean
+  active?: boolean
+  // activeClass: string
+  // append?: boolean
+  button?: boolean
+  disabled?: boolean
+  // exact?: boolean
+  // exactActiveClass: string
+  href?: string
+  // noPrefetch?: Boolean
+  // prefetch?: Boolean
+  // rel?: String
+  // replace?: Boolean
+  // routerComponentName?: String
+  tag?: string
+  target?: LinkTarget
+  //to: string | Record<string, unknown>
+  variant?: ColorVariant
+}
 
-export default defineComponent({
-  name: 'BListGroupItem',
-  props: {
-    action: {type: Boolean, default: false},
-    active: {type: Boolean, default: false},
-    // activeClass: {type: String},
-    // append: {type: Boolean, default: false},
-    button: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false},
-    // exact: {type: Boolean, default: false},
-    // exactActiveClass: {type: String},
-    href: {type: String},
-    // noPrefetch: {type: Boolean, default: false},
-    // prefetch: {type: Boolean, default: null},
-    // rel: {type: String, default: null},
-    // replace: {type: Boolean, default: false},
-    // routerComponentName: {type: String, default: null},
-    tag: {type: String, default: 'div'},
-    target: {type: String, default: '_self'},
-    //to: {type: [String, Object]},
-    variant: {type: String as PropType<ColorVariant>},
-  },
-  setup(props, context) {
-    const parentData = inject(injectionKey, null)
+const props = withDefaults(defineProps<BListGroupItemProps>(), {
+  action: false,
+  active: false,
+  button: false,
+  disabled: false,
+  tag: 'div',
+  target: '_self',
+})
 
-    const link = computed(() => !props.button && props.href)
-    const tagComputed = computed(
-      () =>
-        parentData?.numbered
-          ? 'li'
-          : props.button
-          ? 'button'
-          : !link.value
-          ? props.tag
-          : 'a' /* BLink */
-    )
+const attrs = useAttrs()
 
-    const classes = computed(() => {
-      const action = props.action || link.value || props.button || ACTION_TAGS.includes(props.tag)
-      return {
-        [`list-group-item-${props.variant}`]: props.variant,
-        'list-group-item-action': action,
-        'active': props.active,
-        'disabled': props.disabled,
-      }
-    })
+const parentData = inject(injectionKey, null)
 
-    const attrs = computed(() => {
-      const attrs = {} as {type?: string; disabled?: boolean}
-      if (props.button) {
-        if (!context.attrs || !context.attrs.type) {
-          // Add a type for button is one not provided in passed attributes
-          attrs.type = 'button'
-        }
-        if (props.disabled) {
-          // Set disabled attribute if button and disabled
-          attrs.disabled = true
-        }
-      }
-      return attrs
-    })
+const link = computed<boolean>(() => !props.button && !!props.href)
 
-    return {
-      tagComputed,
-      classes,
-      attrs,
-      link,
+const tagComputed = computed<string>(
+  () =>
+    parentData?.numbered
+      ? 'li'
+      : props.button
+      ? 'button'
+      : !link.value
+      ? props.tag
+      : 'a' /* BLink */
+)
+
+const classes = computed(() => {
+  const action =
+    props.action ||
+    link.value ||
+    props.button ||
+    ['a', 'router-link', 'button', 'b-link'].includes(props.tag)
+  return {
+    [`list-group-item-${props.variant}`]: props.variant,
+    'list-group-item-action': action,
+    'active': props.active,
+    'disabled': props.disabled,
+  }
+})
+
+const computedAttrs = computed(() => {
+  const localAttrs = {} as {type?: string; disabled?: boolean}
+  if (props.button) {
+    if (!attrs || !attrs.type) {
+      // Add a type for button is one not provided in passed attributes
+      localAttrs.type = 'button'
     }
-  },
+    if (props.disabled) {
+      // Set disabled attribute if button and disabled
+      localAttrs.disabled = true
+    }
+  }
+  return localAttrs
 })
 </script>

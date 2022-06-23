@@ -15,30 +15,30 @@
   </optgroup>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BFormSelectOptionGroupProps} from '@/types/components'
+import {computed} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
-import {normalizeOptions} from '../../composables/useFormSelect'
+import {normalizeOptions} from '@/composables/useFormSelect'
 
-export default defineComponent({
-  name: 'BFormSelectOptionGroup',
-  components: {BFormSelectOption},
-  props: {
-    label: {type: String, required: true},
-    disabledField: {type: String, default: 'disabled'},
-    htmlField: {type: String, default: 'html'},
-    options: {type: [Array, Object], default: () => []},
-    textField: {type: String, default: 'text'},
-    valueField: {type: String, default: 'value'},
-  },
-  setup(props) {
-    const formOptions = computed(() =>
-      normalizeOptions(props.options as any, 'BFormSelectOptionGroup', props)
-    )
+interface BFormSelectOptionGroupProps {
+  label?: string
+  disabledField?: string
+  htmlField?: string
+  options?: Array<unknown> | Record<string, unknown>
+  textField?: string
+  valueField?: string
+}
 
-    return {
-      formOptions,
-    }
-  },
+const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
+  disabledField: 'disabled',
+  htmlField: 'html',
+  options: () => [],
+  textField: 'text',
+  valueField: 'value',
 })
+
+const formOptions = computed(() =>
+  normalizeOptions(props.options as Array<any>, 'BFormSelectOptionGroup', props)
+)
 </script>

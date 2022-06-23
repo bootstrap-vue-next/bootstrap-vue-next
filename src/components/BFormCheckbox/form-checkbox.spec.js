@@ -1178,8 +1178,7 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.modelValue).toBeDefined()
-    expect(wrapper.vm.modelValue).toBe(null)
+    expect(wrapper.vm.modelValue).toBeUndefined()
 
     wrapper.unmount()
   })
@@ -1238,8 +1237,7 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.modelValue).toBeDefined()
-    expect(wrapper.vm.modelValue).toBe(null)
+    expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $input = wrapper.find('input')
@@ -1274,8 +1272,7 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.modelValue).toBeDefined()
-    expect(wrapper.vm.modelValue).toBe(null)
+    expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $label = wrapper.find('label')
@@ -1311,8 +1308,7 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.modelValue).toBeDefined()
-    expect(wrapper.vm.modelValue).toBe(null)
+    expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $input = wrapper.find('input')
@@ -1341,8 +1337,7 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.vm).toBeDefined()
-    expect(wrapper.vm.modelValue).toBeDefined()
-    expect(wrapper.vm.modelValue).toBe(null)
+    expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
     const $label = wrapper.find('label')

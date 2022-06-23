@@ -8,11 +8,16 @@
 </template>
 
 <script setup lang="ts">
-import {computed, PropType} from 'vue'
-import type {SkeletonAnimation} from '../../types'
+// import type {BSkeletonIconProps} from '@/types/components'
+import {computed} from 'vue'
+import type {SkeletonAnimation} from '@/types'
 
-const props = defineProps({
-  animation: {type: String as PropType<SkeletonAnimation>, default: 'wave'},
+interface BSkeletonIconProps {
+  animation?: SkeletonAnimation
+}
+
+const props = withDefaults(defineProps<BSkeletonIconProps>(), {
+  animation: 'wave',
 })
 
 const classes = computed(() => [`b-skeleton-animate-${props.animation}`])

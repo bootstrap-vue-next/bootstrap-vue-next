@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts">
-import {InputType} from '../../types'
+import type {InputType} from '@/types'
 import {computed, defineComponent, PropType} from 'vue'
-import useFormInput, {COMMON_INPUT_PROPS} from '../../composables/useFormInput'
+import useFormInput, {COMMON_INPUT_PROPS} from '@/composables/useFormInput'
 
 const allowedTypes = [
   'text',
@@ -74,7 +74,9 @@ export default defineComponent({
       }
     })
 
-    const localType = computed(() => (allowedTypes.includes(props.type) ? props.type : 'text'))
+    const localType = computed<InputType>(() =>
+      allowedTypes.includes(props.type) ? props.type : 'text'
+    )
 
     const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
       useFormInput(props, emit)

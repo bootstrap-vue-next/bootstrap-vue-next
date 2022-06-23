@@ -4,15 +4,15 @@
   </option>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BFormSelectOptionProps} from '@/types/components'
 
-export default defineComponent({
-  name: 'BFormSelectOption',
-  props: {
-    // eslint-disable-next-line vue/require-prop-types
-    value: {required: true},
-    disabled: {type: Boolean, default: false},
-  },
+interface BFormSelectOptionProps {
+  value: unknown
+  disabled?: boolean
+}
+
+withDefaults(defineProps<BFormSelectOptionProps>(), {
+  disabled: false,
 })
 </script>

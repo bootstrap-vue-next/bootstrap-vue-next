@@ -1,4 +1,4 @@
-/* eslint-disable vue/no-v-html */
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <component :is="tag" :id="id" class="input-group" :class="classes" role="group">
     <slot name="prepend">
@@ -19,38 +19,31 @@
   </component>
 </template>
 
-<script lang="ts">
-import {InputSize} from '../../types'
-import {computed, defineComponent, PropType} from 'vue'
+<script setup lang="ts">
+import type {InputSize} from '@/types'
+import {computed} from 'vue'
 
-export default defineComponent({
-  name: 'BInputGroup',
-  props: {
-    append: {type: String, required: false},
-    appendHtml: {type: String, required: false},
-    id: {type: String, required: false},
-    prepend: {type: String, required: false},
-    prependHtml: {type: String, required: false},
-    size: {type: String as PropType<InputSize>, required: false},
-    tag: {type: String, default: 'div'},
-  },
-  setup(props) {
-    const classes = computed(() => ({
-      'input-group-sm': props.size === 'sm',
-      'input-group-lg': props.size === 'lg',
-    }))
+interface BInputGroupProps {
+  append?: string
+  appendHtml?: string
+  id?: string
+  prepend?: string
+  prependHtml?: string
+  size?: InputSize
+  tag?: string
+}
 
-    const hasAppend = computed(() => props.append || props.appendHtml)
-    const hasPrepend = computed(() => props.prepend || props.prependHtml)
-    const showAppendHtml = computed(() => !!props.appendHtml)
-    const showPrependHtml = computed(() => !!props.prependHtml)
-    return {
-      classes,
-      hasAppend,
-      hasPrepend,
-      showAppendHtml,
-      showPrependHtml,
-    }
-  },
+const props = withDefaults(defineProps<BInputGroupProps>(), {
+  tag: 'div',
 })
+
+const classes = computed(() => ({
+  'input-group-sm': props.size === 'sm',
+  'input-group-lg': props.size === 'lg',
+}))
+
+const hasAppend = computed<boolean>(() => !!props.append || !!props.appendHtml)
+const hasPrepend = computed<boolean>(() => !!props.prepend || !!props.prependHtml)
+const showAppendHtml = computed<boolean>(() => !!props.appendHtml)
+const showPrependHtml = computed<boolean>(() => !!props.prependHtml)
 </script>

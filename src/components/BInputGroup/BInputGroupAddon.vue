@@ -7,28 +7,25 @@
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BInputGroupAddonProps} from '@/types/components'
+import {computed} from 'vue'
 import BInputGroupText from './BInputGroupText.vue'
 
-export default defineComponent({
-  name: 'BInputGroupAddon',
-  components: {BInputGroupText},
-  props: {
-    append: {type: Boolean, default: false},
-    id: {type: String, required: false},
-    isText: {type: Boolean, default: false},
-    tag: {type: String, default: 'div'},
-  },
-  setup(props) {
-    const computedClasses = computed(() => ({
-      'input-group-append': props.append,
-      'input-group-prepend': !props.append,
-    }))
+interface BInputGroupAddonProps {
+  append?: boolean
+  id?: string
+  isText?: boolean
+  tag?: string
+}
 
-    return {
-      computedClasses,
-    }
-  },
+const props = withDefaults(defineProps<BInputGroupAddonProps>(), {
+  append: false,
+  tag: 'div',
 })
+
+const computedClasses = computed(() => ({
+  'input-group-append': props.append,
+  'input-group-prepend': !props.append,
+}))
 </script>

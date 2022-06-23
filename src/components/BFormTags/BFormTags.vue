@@ -28,51 +28,7 @@
       ({{ tagRemovedLabel }}) {{ lastRemovedTag }}
     </div>
 
-    <slot
-      v-bind="{
-        addButtonText,
-        addButtonVariant,
-        addTag,
-        disableAddButton,
-        disabled,
-        duplicateTagText,
-        duplicateTags,
-        form,
-        inputAttrs: {
-          ...inputAttrs,
-          disabled,
-          form,
-          id: _inputId,
-          value: inputValue,
-        },
-        inputHandlers: {
-          input: onInput,
-          keydown: onKeydown,
-          change: onChange,
-        },
-        inputId: _inputId,
-        inputType,
-        invalidTagText,
-        invalidTags,
-        isDuplicate,
-        isInvalid,
-        isLimitReached,
-        limitTagsText,
-        limit,
-        noTagRemove,
-        placeholder,
-        removeTag,
-        required,
-        separator,
-        size,
-        state,
-        tagClass,
-        tagPills,
-        tagRemoveLabel,
-        tagVariant,
-        tags,
-      }"
-    >
+    <slot v-bind="slotAttrs">
       <ul
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
@@ -149,48 +105,85 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onActivated, onMounted, PropType, ref, watch} from 'vue'
+// import type {BFormTagsEmits, BFormTagsProps} from '@/types/components'
+import {computed, onActivated, onMounted, ref, VNodeNormalizedChildren, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
-import useId from '../../composables/useId'
-import type {InputSize, InputType} from '../../types'
+import useId from '@/composables/useId'
+import type {ButtonVariant, ColorVariant, InputSize, InputType} from '@/types'
 
-const props = defineProps({
-  addButtonText: {type: String, default: 'Add'},
-  addButtonVariant: {type: String, default: 'outline-secondary'},
-  addOnChange: {type: Boolean, default: false},
-  autofocus: {type: Boolean, default: false},
-  disabled: {type: Boolean, default: false},
-  duplicateTagText: {type: String, default: 'Duplicate tag(s)'},
-  inputAttrs: {type: Object},
-  inputClass: {type: [Array, Object, String]},
-  inputId: {type: String},
-  inputType: {type: String as PropType<InputType>, default: 'text'},
-  invalidTagText: {type: String, default: 'Invalid tag(s)'},
-  form: {type: String},
-  limit: {type: Number},
-  limitTagsText: {type: String, default: 'Tag limit reached'},
-  modelValue: {type: Array as PropType<string[]>, default: () => []},
-  name: {type: String},
-  noAddOnEnter: {type: Boolean, default: false},
-  noOuterFocus: {type: Boolean, default: false},
-  noTagRemove: {type: Boolean, default: false},
-  placeholder: {type: String, default: 'Add tag...'},
-  removeOnDelete: {type: Boolean, default: false},
-  required: {type: Boolean, default: false},
-  separator: {type: [String, Array] as PropType<string | string[]>},
-  state: {type: Boolean, default: null},
-  size: {type: String as PropType<InputSize>},
-  tagClass: {type: [String, Array, Object]},
-  tagPills: {type: Boolean, default: false},
-  tagRemoveLabel: {type: String},
-  tagRemovedLabel: {type: String, default: 'Tag removed'},
-  tagValidator: {type: Function, default: () => true},
-  tagVariant: {type: String, default: 'secondary'},
+interface BFormTagsProps {
+  addButtonText?: string
+  addButtonVariant?: ButtonVariant
+  addOnChange?: boolean
+  autofocus?: boolean
+  disabled?: boolean
+  duplicateTagText?: string
+  inputAttrs: Record<string, unknown>
+  inputClass: Array<unknown> | Record<string, unknown> | string
+  inputId: string
+  inputType?: InputType
+  invalidTagText?: string
+  form: string
+  limit: number
+  limitTagsText?: string
+  modelValue?: Array<string>
+  name: string
+  noAddOnEnter?: boolean
+  noOuterFocus?: boolean
+  noTagRemove?: boolean
+  placeholder?: string
+  removeOnDelete?: boolean
+  required?: boolean
+  separator: string | Array<unknown>
+  state?: boolean
+  size: InputSize
+  tagClass: string | Array<unknown> | Record<string, unknown>
+  tagPills?: boolean
+  tagRemoveLabel: string
+  tagRemovedLabel?: string
+  tagValidator?: (s: string) => boolean
+  tagVariant?: ColorVariant
+}
+
+const props = withDefaults(defineProps<BFormTagsProps>(), {
+  addButtonText: 'Add',
+  addButtonVariant: 'outline-secondary',
+  addOnChange: false,
+  autofocus: false,
+  disabled: false,
+  duplicateTagText: 'Duplicate tag(s)',
+  inputType: 'text',
+  invalidTagText: 'Invalid tag(s)',
+  limitTagsText: 'Tag limit reached',
+  modelValue: () => [],
+  noAddOnEnter: false,
+  noOuterFocus: false,
+  noTagRemove: false,
+  placeholder: 'Add tag...',
+  removeOnDelete: false,
+  required: false,
+  state: undefined,
+  tagPills: false,
+  tagRemovedLabel: 'Tag removed',
+  tagValidator: () => true,
+  tagVariant: 'secondary',
 })
+
+interface BFormTagsEmits {
+  (e: 'update:modelValue', value: Array<unknown>): void
+  (e: 'input', value: Array<unknown>): void
+  (e: 'tag-state', ...args: Array<unknown>): void
+  (e: 'focus', value: FocusEvent): void
+  (e: 'focusin', value: FocusEvent): void
+  (e: 'focusout', value: FocusEvent): void
+  (e: 'blur', value: FocusEvent): void
+}
+
+const emit = defineEmits<BFormTagsEmits>()
 
 const input = ref<HTMLInputElement | null>(null)
 const computedId = useId()
-const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
+const _inputId = computed<string>(() => props.inputId || `${computedId.value}input__`)
 
 onMounted(() => {
   checkAutofocus()
@@ -209,25 +202,15 @@ watch(
   }
 )
 
-const emit = defineEmits([
-  'update:modelValue',
-  'input',
-  'tag-state',
-  'focus',
-  'focusin',
-  'focusout',
-  'blur',
-])
+const tags = ref<Array<string>>(props.modelValue)
+const inputValue = ref<string>('')
+const shouldRemoveOnDelete = ref<boolean>(false)
+const focus = ref<boolean>(false)
+const lastRemovedTag = ref<string>('')
 
-const tags = ref(props.modelValue)
-const inputValue = ref('')
-const shouldRemoveOnDelete = ref(false)
-const focus = ref(false)
-const lastRemovedTag = ref('')
-
-const validTags = ref<string[]>([])
-const invalidTags = ref<string[]>([])
-const duplicateTags = ref<string[]>([])
+const validTags = ref<Array<string>>([])
+const invalidTags = ref<Array<string>>([])
+const duplicateTags = ref<Array<string>>([])
 
 const classes = computed(() => ({
   [`form-control-${props.size}`]: props.size,
@@ -237,22 +220,22 @@ const classes = computed(() => ({
   'is-valid': props.state === true,
 }))
 
-const isDuplicate = computed(() => tags.value.includes(inputValue.value))
+const isDuplicate = computed<boolean>(() => tags.value.includes(inputValue.value))
 
-const isInvalid = computed(() =>
+const isInvalid = computed<boolean>(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = computed(() => tags.value.length === props.limit)
+const isLimitReached = computed<boolean>(() => tags.value.length === props.limit)
 
-const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
+const disableAddButton = computed<boolean>(() => !isInvalid.value && !isDuplicate.value)
 
-function checkAutofocus() {
+const checkAutofocus = () => {
   if (props.autofocus) {
     input.value?.focus()
   }
 }
 
-function onFocusin(e: FocusEvent) {
+const onFocusin = (e: FocusEvent): void => {
   if (props.disabled) {
     const target = e.target as HTMLDivElement
     target.blur()
@@ -262,7 +245,7 @@ function onFocusin(e: FocusEvent) {
   emit('focusin', e)
 }
 
-function onFocus(e: FocusEvent) {
+const onFocus = (e: FocusEvent): void => {
   if (props.disabled || props.noOuterFocus) {
     return
   }
@@ -271,12 +254,12 @@ function onFocus(e: FocusEvent) {
   emit('focus', e)
 }
 
-function onBlur(e: FocusEvent) {
+const onBlur = (e: FocusEvent): void => {
   focus.value = false
   emit('blur', e)
 }
 
-function onInput(e: Event | string) {
+const onInput = (e: Event | string): void => {
   const value = typeof e === 'string' ? e : (e.target as HTMLInputElement).value
 
   shouldRemoveOnDelete.value = false
@@ -302,7 +285,7 @@ function onInput(e: Event | string) {
   emit('tag-state', validTags, invalidTags, duplicateTags)
 }
 
-function onChange(e: Event) {
+const onChange = (e: Event): void => {
   if (props.addOnChange) {
     onInput(e)
 
@@ -312,7 +295,7 @@ function onChange(e: Event) {
   }
 }
 
-function onKeydown(e: KeyboardEvent) {
+const onKeydown = (e: KeyboardEvent): void => {
   if (e.key === 'Enter' && !props.noAddOnEnter) {
     addTag(inputValue.value)
     return
@@ -331,7 +314,7 @@ function onKeydown(e: KeyboardEvent) {
   }
 }
 
-function addTag(tag?: string) {
+const addTag = (tag?: string): void => {
   tag = (tag || inputValue.value).trim()
 
   if (
@@ -351,10 +334,78 @@ function addTag(tag?: string) {
   input.value?.focus()
 }
 
-function removeTag(tag: string) {
-  const tagIndex = tags.value.indexOf(tag)
+const removeTag = (tag?: VNodeNormalizedChildren): void => {
+  const tagIndex = tags.value.indexOf(tag?.toString() ?? '')
   lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
 
   emit('update:modelValue', tags.value)
 }
+
+const slotAttrs = computed(() => {
+  const {
+    addButtonText,
+    addButtonVariant,
+    disabled,
+    duplicateTagText,
+    inputAttrs,
+    form,
+    inputType,
+    invalidTagText,
+    limitTagsText,
+    limit,
+    noTagRemove,
+    placeholder,
+    required,
+    separator,
+    size,
+    state,
+    tagClass,
+    tagPills,
+    tagRemoveLabel,
+    tagVariant,
+  } = props
+  return {
+    addButtonText,
+    addButtonVariant,
+    addTag,
+    disableAddButton,
+    disabled,
+    duplicateTagText,
+    duplicateTags,
+    form,
+    inputAttrs: {
+      ...inputAttrs,
+      disabled,
+      form,
+      id: _inputId,
+      value: inputValue,
+    },
+    inputHandlers: {
+      input: onInput,
+      keydown: onKeydown,
+      change: onChange,
+    },
+    inputId: _inputId,
+    inputType,
+    invalidTagText,
+    invalidTags,
+    isDuplicate,
+    isInvalid,
+    isLimitReached,
+    limitTagsText,
+    limit,
+    noTagRemove,
+    placeholder,
+    removeTag,
+    required,
+    separator,
+    size,
+    state,
+    tagClass,
+    tagPills,
+    tagRemoveLabel,
+    tagVariant,
+    tags,
+  }
+})
 </script>

@@ -4,7 +4,13 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  loading: {type: Boolean, default: false},
+// import type {BSkeletonWrapperProps} from '@/types/components'
+
+interface BSkeletonWrapperProps {
+  loading?: boolean
+}
+
+withDefaults(defineProps<BSkeletonWrapperProps>(), {
+  loading: false,
 })
 </script>

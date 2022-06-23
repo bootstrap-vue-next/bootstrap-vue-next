@@ -6,12 +6,12 @@
     v-model="localValue"
     :class="classes"
     :name="name"
-    :form="form || null"
-    :multiple="multiple || null"
+    :form="form || undefined"
+    :multiple="multiple || undefined"
     :size="computedSelectSize"
     :disabled="disabled"
     :required="required"
-    :aria-required="required ? 'true' : null"
+    :aria-required="required ? true : undefined"
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
@@ -36,122 +36,137 @@
   </select>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, nextTick, onActivated, onMounted, PropType, ref} from 'vue'
+<script setup lang="ts">
+// import type {BFormSelectEmits, BFormSelectProps} from '@/types/components'
+import type {Size} from '@/types'
+import {computed, nextTick, onActivated, onMounted, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import useId from '../../composables/useId'
-import {Size} from '../../types'
-import {normalizeOptions} from '../../composables/useFormSelect'
+import useId from '@/composables/useId'
+import {normalizeOptions} from '@/composables/useFormSelect'
 
-export default defineComponent({
-  name: 'BFormSelect',
-  components: {BFormSelectOption, BFormSelectOptionGroup},
-  props: {
-    ariaInvalid: {
-      type: [Boolean, String] as PropType<boolean | 'false' | 'true' | 'grammar' | 'spelling'>,
-      default: false,
-    },
-    autofocus: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false},
-    disabledField: {type: String, default: 'disabled'},
-    form: {type: String, required: false},
-    htmlField: {type: String, default: 'html'},
-    id: {type: String, required: false},
-    labelField: {type: String, default: 'label'},
-    multiple: {type: Boolean, default: false},
-    name: {type: String, required: false},
-    options: {type: [Array, Object], default: () => []},
-    optionsField: {type: String, default: 'options'},
-    plain: {type: Boolean, default: false},
-    required: {type: Boolean, default: false},
-    selectSize: {type: Number, default: 0},
-    size: {type: String as PropType<Size>, required: false},
-    state: {
-      type: Boolean as PropType<boolean | null | undefined>,
-      default: null,
-    },
-    textField: {type: String, default: 'text'},
-    valueField: {type: String, default: 'value'},
-    modelValue: {type: [String, Array, Object, Number], default: ''},
+interface BFormSelectProps {
+  ariaInvalid?: boolean | 'grammar' | 'spelling'
+  autofocus?: boolean
+  disabled?: boolean
+  disabledField?: string
+  form?: string
+  htmlField?: string
+  id?: string
+  labelField?: string
+  multiple?: boolean
+  name?: string
+  options?: Array<unknown> | Record<string, unknown>
+  optionsField?: string
+  plain?: boolean
+  required?: boolean
+  selectSize?: number
+  size?: Size
+  state?: boolean
+  textField?: string
+  valueField?: string
+  modelValue?: string | Array<unknown> | Record<string, unknown> | number
+}
+
+const props = withDefaults(defineProps<BFormSelectProps>(), {
+  ariaInvalid: false,
+  autofocus: false,
+  disabled: false,
+  disabledField: 'disabled',
+  htmlField: 'html',
+  labelField: 'label',
+  multiple: false,
+  options: () => [],
+  optionsField: 'options',
+  plain: false,
+  required: false,
+  selectSize: 0,
+  state: undefined,
+  textField: 'text',
+  valueField: 'value',
+  modelValue: '',
+})
+
+interface BFormSelectEmits {
+  (e: 'input', value: unknown): void
+  (e: 'update:modelValue', value: unknown): void
+  (e: 'change', value: unknown): void
+}
+
+const emit = defineEmits<BFormSelectEmits>()
+
+const input = ref<HTMLElement>()
+const computedId = useId(props.id, 'input')
+
+// lifecycle events
+const handleAutofocus = () => {
+  nextTick(() => {
+    if (props.autofocus) input.value?.focus()
+  })
+}
+onMounted(handleAutofocus)
+onActivated(handleAutofocus)
+// /lifecycle events
+
+// computed
+const classes = computed(() => ({
+  'form-control': props.plain,
+  [`form-control-${props.size}`]: props.size && props.plain,
+  'form-select': !props.plain,
+  [`form-select-${props.size}`]: props.size && !props.plain,
+  'is-valid': props.state === true,
+  'is-invalid': props.state === false,
+}))
+
+const computedSelectSize = computed<number | undefined>(() => {
+  if (props.selectSize || props.plain) {
+    return props.selectSize
+  }
+  return undefined
+})
+
+const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
+  if (props.state === false) {
+    return true
+  }
+  if (props.state === true) {
+    return undefined
+  }
+  if (typeof props.ariaInvalid === 'boolean') {
+    if (props.ariaInvalid === false) {
+      return undefined
+    }
+    return props.ariaInvalid
+  }
+  return props.ariaInvalid
+})
+
+const formOptions = computed(() =>
+  normalizeOptions(props.options as Array<any>, 'BFormSelect', props)
+)
+const localValue = computed({
+  get() {
+    return props.modelValue
   },
-  emits: ['update:modelValue', 'change', 'input'],
-  setup(props, {emit}) {
-    const input = ref<HTMLElement>()
-    const computedId = useId(props.id, 'input')
-
-    // lifecycle events
-    const handleAutofocus = () => {
-      nextTick(() => {
-        if (props.autofocus) input.value?.focus()
-      })
-    }
-    onMounted(handleAutofocus)
-    onActivated(handleAutofocus)
-    // /lifecycle events
-
-    // computed
-    const classes = computed(() => ({
-      'form-control': props.plain,
-      [`form-control-${props.size}`]: props.size && props.plain,
-      'form-select': !props.plain,
-      [`form-select-${props.size}`]: props.size && !props.plain,
-      'is-valid': props.state === true,
-      'is-invalid': props.state === false,
-    }))
-
-    const computedSelectSize = computed(() => {
-      if (props.selectSize || props.plain) {
-        return props.selectSize
-      }
-      return null
-    })
-
-    const computedAriaInvalid = computed(() => {
-      if (props.ariaInvalid) {
-        return props.ariaInvalid.toString()
-      }
-      return props.state === false ? 'true' : null
-    })
-
-    const formOptions = computed(() => normalizeOptions(props.options, 'BFormSelect', props))
-    const localValue = computed({
-      get() {
-        return props.modelValue
-      },
-      set(newValue: any) {
-        emit('change', newValue)
-        emit('update:modelValue', newValue)
-        emit('input', newValue)
-      },
-    })
-
-    // /computed
-
-    // methods
-
-    const focus = () => {
-      if (!props.disabled) input.value?.focus()
-    }
-
-    const blur = () => {
-      if (!props.disabled) {
-        input.value?.blur()
-      }
-    }
-    // /methods
-
-    return {
-      input,
-      computedId,
-      computedSelectSize,
-      computedAriaInvalid,
-      classes,
-      formOptions,
-      localValue,
-      focus,
-      blur,
-    }
+  set(newValue: any) {
+    emit('change', newValue)
+    emit('update:modelValue', newValue)
+    emit('input', newValue)
   },
 })
+
+// /computed
+
+// methods
+
+const focus = () => {
+  if (!props.disabled) input.value?.focus()
+}
+
+const blur = () => {
+  if (!props.disabled) {
+    input.value?.blur()
+  }
+}
+// /methods
 </script>

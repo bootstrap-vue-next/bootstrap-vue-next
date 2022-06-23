@@ -1,6 +1,7 @@
+import type {SkeletonAnimation} from '@/types'
 // Props
 export interface Props {
-  animation?: string
+  animation?: SkeletonAnimation
   columns?: number
   hideHeader?: boolean
   rows?: number

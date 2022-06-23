@@ -13,7 +13,7 @@ import useId from './useId'
 
 export const COMMON_INPUT_PROPS = {
   ariaInvalid: {
-    type: [Boolean, String] as PropType<boolean | 'false' | 'true' | 'grammar' | 'spelling'>,
+    type: [Boolean, String] as PropType<'grammar' | 'spelling' | boolean | undefined>,
     default: false,
   },
   autocomplete: {type: String, required: false},
@@ -81,11 +81,20 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
 
   onActivated(handleAutofocus)
 
-  const computedAriaInvalid = computed(() => {
-    if (props.ariaInvalid) {
-      return props.ariaInvalid.toString()
+  const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
+    if (props.state === false) {
+      return true
     }
-    return props.state === false ? 'true' : undefined
+    if (props.state === true) {
+      return undefined
+    }
+    if (typeof props.ariaInvalid === 'boolean') {
+      if (props.ariaInvalid === false) {
+        return undefined
+      }
+      return props.ariaInvalid
+    }
+    return props.ariaInvalid
   })
 
   const onInput = (evt: Event) => {

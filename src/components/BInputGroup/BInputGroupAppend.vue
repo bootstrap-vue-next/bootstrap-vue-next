@@ -4,17 +4,17 @@
   </b-input-group-addon>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+// import type {BInputGroupAppendProps} from '@/types/components'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 
-export default defineComponent({
-  name: 'BInputGroupAppend',
-  components: {BInputGroupAddon},
-  props: {
-    id: {type: String, required: false},
-    isText: {type: Boolean, default: false},
-    tag: {type: String, default: 'div'},
-  },
+interface BInputGroupAppendProps {
+  id?: string
+  isText?: boolean
+  tag?: string
+}
+
+withDefaults(defineProps<BInputGroupAppendProps>(), {
+  tag: 'div',
 })
 </script>

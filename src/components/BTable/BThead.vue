@@ -5,11 +5,14 @@
 </template>
 
 <script setup lang="ts">
+// import type {BTheadProps} from '@/types/components'
 import {computed} from 'vue'
 
-const props = defineProps({
-  headVariant: {type: String},
-})
+interface BTheadProps {
+  headVariant: string
+}
+
+const props = defineProps<BTheadProps>()
 
 const classes = computed(() => ({
   [`table-${props.headVariant}`]: props.headVariant,
