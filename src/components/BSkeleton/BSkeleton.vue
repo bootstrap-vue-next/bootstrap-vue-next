@@ -3,16 +3,22 @@
 </template>
 
 <script setup lang="ts">
-import {computed, PropType, StyleValue} from 'vue'
-import type {ColorVariant, SkeletonAnimation, SkeletonType} from '../../types'
+// import type {BSkeletonProps} from '@/types/components'
+import {computed, StyleValue} from 'vue'
+import type {ColorVariant, SkeletonAnimation, SkeletonType} from '@/types'
 
-const props = defineProps({
-  animation: {type: String as PropType<SkeletonAnimation>, default: 'wave'},
-  height: {type: String},
-  size: {type: String},
-  type: {type: String as PropType<SkeletonType>, default: 'text'},
-  variant: {type: String as PropType<ColorVariant>},
-  width: {type: String},
+interface BSkeletonProps {
+  height?: string
+  width?: string
+  size?: string
+  animation?: SkeletonAnimation
+  type?: SkeletonType
+  variant?: ColorVariant
+}
+
+const props = withDefaults(defineProps<BSkeletonProps>(), {
+  animation: 'wave',
+  type: 'text',
 })
 
 const classes = computed(() => [

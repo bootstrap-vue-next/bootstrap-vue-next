@@ -25,15 +25,25 @@
 </template>
 
 <script setup lang="ts">
+// import type {BSkeletonTableProps} from '@/types/components'
+import type {SkeletonAnimation} from '@/types'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BSkeleton from './BSkeleton.vue'
 
-defineProps({
-  animation: {type: String, default: 'wave'},
-  columns: {type: Number, default: 5},
-  hideHeader: {type: Boolean, default: false},
-  rows: {type: Number, default: 3},
-  showFooter: {type: Boolean, default: false},
-  tableProps: {type: Object},
+interface BSkeletonTableProps {
+  animation?: SkeletonAnimation
+  columns?: number
+  hideHeader?: boolean
+  rows?: number
+  showFooter?: boolean
+  tableProps: Record<string, unknown>
+}
+
+withDefaults(defineProps<BSkeletonTableProps>(), {
+  animation: 'wave',
+  columns: 5,
+  hideHeader: false,
+  rows: 3,
+  showFooter: false,
 })
 </script>
