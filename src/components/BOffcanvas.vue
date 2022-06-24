@@ -74,7 +74,7 @@ useEventListener(element, 'hide.bs.offcanvas', () => {
   emit('update:modelValue', false)
 })
 
-onMounted(() => {
+onMounted((): void => {
   instance.value = new Offcanvas(element.value as HTMLElement)
 
   if (props.modelValue) {
