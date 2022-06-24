@@ -152,6 +152,7 @@ export type {Emits as BPopoverEmits} from './BPopover'
 export type {DelayObject as BPopoverDelayObject} from './BPopover'
 
 export type {Props as BProgressProps} from './BProgress'
+export type {ParentData as BProgressParentData} from './BProgress'
 
 export type {Props as BProgressBarProps} from './BProgressBar'
 

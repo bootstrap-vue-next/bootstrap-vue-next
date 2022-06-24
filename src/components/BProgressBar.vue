@@ -1,7 +1,8 @@
 <script lang="ts">
-import {ColorVariant} from '../types'
+import type {ColorVariant} from '@/types'
+import type {BProgressParentData} from '@/types/components'
 import {computed, defineComponent, h, inject, PropType} from 'vue'
-import {injectionKey, ParentData} from './BProgress.vue'
+import {injectionKey} from './BProgress.vue'
 
 export default defineComponent({
   name: 'BProgressBar',
@@ -18,7 +19,7 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props, {slots}) {
-    const parent = inject<ParentData>(injectionKey)
+    const parent = inject<BProgressParentData>(injectionKey)
 
     const classes = computed(() => ({
       'progress-bar-animated': props.animated || parent?.animated,
@@ -27,7 +28,7 @@ export default defineComponent({
       [`bg-${props.variant}`]: props.variant,
     }))
 
-    const computedLabel = computed(() => {
+    const computedLabel = computed<string>(() => {
       if (props.showValue || parent?.showValue) {
         return parseFloat(props.value as string).toFixed(props.precision as number)
       }
@@ -43,7 +44,7 @@ export default defineComponent({
       return props.label || ''
     })
 
-    const width = computed(() => {
+    const width = computed<string>(() => {
       if (props.max || parent?.max) {
         return `${
           ((props.value as number) * 100) / parseInt((props.max || parent?.max) as string)

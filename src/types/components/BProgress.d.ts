@@ -14,3 +14,10 @@ export interface Props {
 // Emits
 
 // Other
+export interface ParentData {
+  animated: boolean
+  max: number | string
+  showProgress: boolean
+  showValue: boolean
+  striped: boolean
+}
