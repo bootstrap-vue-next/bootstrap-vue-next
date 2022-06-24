@@ -56,188 +56,215 @@
   </teleport>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, onMounted, PropType, ref, watch} from 'vue'
+<script setup lang="ts">
+// import type {BModalEmits, BModalProps} from '@/types/components'
 import Modal from 'bootstrap/js/dist/modal'
-import BButton from '../components/BButton/BButton.vue'
-import useEventListener from '../composables/useEventListener'
-import type {ColorVariant, InputSize} from '../types'
+import BButton from '@/components/BButton/BButton.vue'
+import useEventListener from '@/composables/useEventListener'
+import type {ColorVariant, InputSize} from '@/types'
 
-export default defineComponent({
-  name: 'BModal',
-  components: {BButton},
-  inheritAttrs: false,
-  props: {
-    bodyBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    bodyClass: {type: String, required: false},
-    bodyTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    busy: {type: Boolean, default: false},
-    buttonSize: {type: String as PropType<InputSize>, default: 'md'},
-    cancelDisabled: {type: Boolean, default: false},
-    cancelTitle: {type: String, default: 'Cancel'},
-    cancelVariant: {type: String as PropType<ColorVariant>, default: 'secondary'},
-    centered: {type: Boolean, default: false},
-    contentClass: {type: String, required: false},
-    dialogClass: {type: String, required: false},
-    footerBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    footerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
-    footerClass: {type: String, required: false},
-    footerTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    fullscreen: {type: [Boolean, String], default: false},
-    headerBgVariant: {type: String as PropType<ColorVariant>, required: false},
-    headerBorderVariant: {type: String as PropType<ColorVariant>, required: false},
-    headerClass: {type: String, required: false},
-    headerCloseLabel: {type: String, default: 'Close'},
-    headerCloseWhite: {type: Boolean, default: false},
-    headerTextVariant: {type: String as PropType<ColorVariant>, required: false},
-    hideBackdrop: {type: Boolean, default: false},
-    hideFooter: {type: Boolean, default: false},
-    hideHeader: {type: Boolean, default: false},
-    hideHeaderClose: {type: Boolean, default: false},
-    id: {type: String, required: false},
-    modalClass: {type: String, required: false},
-    modelValue: {type: Boolean, default: false},
-    noCloseOnBackdrop: {type: Boolean, default: false},
-    noCloseOnEsc: {type: Boolean, default: false},
-    noFade: {type: Boolean, default: false},
-    noFocus: {type: Boolean, default: false},
-    okDisabled: {type: Boolean, default: false},
-    okOnly: {type: Boolean, default: false},
-    okTitle: {type: String, default: 'Ok'},
-    okVariant: {type: String as PropType<ColorVariant>, default: 'primary'},
-    scrollable: {type: Boolean, default: false},
-    show: {type: Boolean, default: false},
-    size: {type: String, required: false},
-    title: {type: String, required: false},
-    titleClass: {type: String, required: false},
-    titleSrOnly: {type: Boolean, default: false},
-    titleTag: {type: String, default: 'h5'},
+interface BModalProps {
+  bodyBgVariant?: ColorVariant
+  bodyClass?: string
+  bodyTextVariant?: ColorVariant
+  busy?: boolean
+  buttonSize?: InputSize
+  cancelDisabled?: boolean
+  cancelTitle?: string
+  cancelVariant?: ColorVariant
+  centered?: boolean
+  contentClass?: string
+  dialogClass?: string
+  footerBgVariant?: ColorVariant
+  footerBorderVariant?: ColorVariant
+  footerClass?: string
+  footerTextVariant?: ColorVariant
+  fullscreen?: boolean | string
+  headerBgVariant?: ColorVariant
+  headerBorderVariant?: ColorVariant
+  headerClass?: string
+  headerCloseLabel?: string
+  headerCloseWhite?: boolean
+  headerTextVariant?: ColorVariant
+  hideBackdrop?: boolean
+  hideFooter?: boolean
+  hideHeader?: boolean
+  hideHeaderClose?: boolean
+  id?: string
+  modalClass?: string
+  modelValue?: boolean
+  noCloseOnBackdrop?: boolean
+  noCloseOnEsc?: boolean
+  noFade?: boolean
+  noFocus?: boolean
+  okDisabled?: boolean
+  okOnly?: boolean
+  okTitle?: string
+  okVariant?: ColorVariant
+  scrollable?: boolean
+  show?: boolean
+  size?: string
+  title?: string
+  titleClass?: string
+  titleSrOnly?: boolean
+  titleTag?: string
+}
+
+const props = withDefaults(defineProps<BModalProps>(), {
+  busy: false,
+  buttonSize: 'md',
+  cancelDisabled: false,
+  cancelTitle: 'Cancel',
+  cancelVariant: 'secondary',
+  centered: false,
+  fullscreen: false,
+  headerCloseLabel: 'Close',
+  headerCloseWhite: false,
+  hideBackdrop: false,
+  hideFooter: false,
+  hideHeader: false,
+  hideHeaderClose: false,
+  modelValue: false,
+  noCloseOnBackdrop: false,
+  noCloseOnEsc: false,
+  noFade: false,
+  noFocus: false,
+  okDisabled: false,
+  okOnly: false,
+  okTitle: 'Ok',
+  okVariant: 'primary',
+  scrollable: false,
+  show: false,
+  titleSrOnly: false,
+  titleTag: 'h5',
+})
+
+interface BModalEmits {
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'show', value: Event): void
+  (e: 'shown', value: Event): void
+  (e: 'hide', value: Event): void
+  (e: 'hidden', value: Event): void
+  (e: 'hide-prevented', value: Event): void
+  (e: 'ok'): void
+  (e: 'cancel'): void
+}
+
+const emit = defineEmits<BModalEmits>()
+
+const slots = useSlots()
+
+const element = ref<HTMLElement>()
+const instance = ref<Modal>()
+const modalClasses = computed(() => [
+  {
+    fade: !props.noFade,
+    show: props.show,
   },
-  emits: ['update:modelValue', 'show', 'shown', 'hide', 'hidden', 'hide-prevented', 'ok', 'cancel'],
-  setup(props, {emit, slots}) {
-    const element = ref<HTMLElement>()
-    const instance = ref<Modal>()
-    const modalClasses = computed(() => [
-      {
-        fade: !props.noFade,
-        show: props.show,
-      },
-      props.modalClass,
-    ])
-    const modalDialogClasses = computed(() => [
-      {
-        'modal-fullscreen': typeof props.fullscreen === 'boolean' ? props.fullscreen : false,
-        [`modal-fullscreen-${props.fullscreen}-down`]:
-          typeof props.fullscreen === 'string' ? props.fullscreen : false,
-        [`modal-${props.size}`]: props.size,
-        'modal-dialog-centered': props.centered,
-        'modal-dialog-scrollable': props.scrollable,
-      },
-      props.dialogClass,
-    ])
+  props.modalClass,
+])
+const modalDialogClasses = computed(() => [
+  {
+    'modal-fullscreen': typeof props.fullscreen === 'boolean' ? props.fullscreen : false,
+    [`modal-fullscreen-${props.fullscreen}-down`]:
+      typeof props.fullscreen === 'string' ? props.fullscreen : false,
+    [`modal-${props.size}`]: props.size,
+    'modal-dialog-centered': props.centered,
+    'modal-dialog-scrollable': props.scrollable,
+  },
+  props.dialogClass,
+])
 
-    const computedBodyClasses = computed(() => [
-      {
-        [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
-        [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
-      },
-      props.bodyClass,
-    ])
+const computedBodyClasses = computed(() => [
+  {
+    [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
+    [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
+  },
+  props.bodyClass,
+])
 
-    const computedHeaderClasses = computed(() => [
-      {
-        [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
-        [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
-        [`text-${props.headerTextVariant}`]: props.headerTextVariant,
-      },
-      props.headerClass,
-    ])
+const computedHeaderClasses = computed(() => [
+  {
+    [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
+    [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
+    [`text-${props.headerTextVariant}`]: props.headerTextVariant,
+  },
+  props.headerClass,
+])
 
-    const computedFooterClasses = computed(() => [
-      {
-        [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
-        [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
-        [`text-${props.footerTextVariant}`]: props.footerTextVariant,
-      },
-      props.footerClass,
-    ])
+const computedFooterClasses = computed(() => [
+  {
+    [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
+    [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
+    [`text-${props.footerTextVariant}`]: props.footerTextVariant,
+  },
+  props.footerClass,
+])
 
-    const computedTitleClasses = computed(() => [
-      {
-        ['visually-hidden']: props.titleSrOnly,
-      },
-      props.titleClass,
-    ])
+const computedTitleClasses = computed(() => [
+  {
+    ['visually-hidden']: props.titleSrOnly,
+  },
+  props.titleClass,
+])
 
-    const hasHeaderCloseSlot = computed(() => !!slots['header-close'])
-    const computedCloseButtonClasses = computed(() => [
-      {
-        [`btn-close-content`]: hasHeaderCloseSlot.value,
-        [`d-flex`]: hasHeaderCloseSlot.value,
-        [`btn-close-white`]: !hasHeaderCloseSlot.value && props.headerCloseWhite,
-      },
-    ])
+const hasHeaderCloseSlot = computed<boolean>(() => !!slots['header-close'])
+const computedCloseButtonClasses = computed(() => [
+  {
+    [`btn-close-content`]: hasHeaderCloseSlot.value,
+    [`d-flex`]: hasHeaderCloseSlot.value,
+    [`btn-close-white`]: !hasHeaderCloseSlot.value && props.headerCloseWhite,
+  },
+])
 
-    const disableCancel = computed(() => props.cancelDisabled || props.busy)
-    const disableOk = computed(() => props.okDisabled || props.busy)
+const disableCancel = computed<boolean>(() => props.cancelDisabled || props.busy)
+const disableOk = computed<boolean>(() => props.okDisabled || props.busy)
 
-    useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
-    useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
-    useEventListener(element, 'hidePrevented.bs.modal', (e) => emit('hide-prevented', e))
+useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
+useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
+useEventListener(element, 'hidePrevented.bs.modal', (e) => emit('hide-prevented', e))
 
-    useEventListener(element, 'show.bs.modal', (e) => {
-      emit('show', e)
-      if (!e.defaultPrevented) {
-        emit('update:modelValue', true)
-      }
-    })
+useEventListener(element, 'show.bs.modal', (e) => {
+  emit('show', e)
+  if (!e.defaultPrevented) {
+    emit('update:modelValue', true)
+  }
+})
 
-    useEventListener(element, 'hide.bs.modal', (e) => {
-      emit('hide', e)
-      if (!e.defaultPrevented) {
-        emit('update:modelValue', false)
-      }
-    })
+useEventListener(element, 'hide.bs.modal', (e) => {
+  emit('hide', e)
+  if (!e.defaultPrevented) {
+    emit('update:modelValue', false)
+  }
+})
 
-    onMounted(() => {
-      instance.value = new Modal(element.value as HTMLElement, {
-        backdrop: props.hideBackdrop
-          ? false
-          : props.noCloseOnBackdrop
-          ? 'static'
-          : !props.hideBackdrop,
-        keyboard: !props.noCloseOnEsc,
-        focus: !props.noFocus,
-      })
+onMounted(() => {
+  instance.value = new Modal(element.value as HTMLElement, {
+    backdrop: props.hideBackdrop ? false : props.noCloseOnBackdrop ? 'static' : !props.hideBackdrop,
+    keyboard: !props.noCloseOnEsc,
+    focus: !props.noFocus,
+  })
 
-      if (props.modelValue) {
-        instance.value?.show()
-      }
-    })
+  if (props.modelValue) {
+    instance.value?.show()
+  }
+})
 
-    watch(
-      () => props.modelValue,
-      (value) => {
-        if (value) {
-          instance.value?.show()
-        } else {
-          instance.value?.hide()
-        }
-      }
-    )
-
-    return {
-      element,
-      disableCancel,
-      disableOk,
-      modalClasses,
-      modalDialogClasses,
-      computedBodyClasses,
-      computedFooterClasses,
-      computedHeaderClasses,
-      computedTitleClasses,
-      computedCloseButtonClasses,
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (value) {
+      instance.value?.show()
+    } else {
+      instance.value?.hide()
     }
-  },
+  }
+)
+</script>
+
+<script lang="ts">
+import {computed, defineComponent, onMounted, ref, useSlots, watch} from 'vue'
+export default defineComponent({
+  inheritAttrs: false,
 })
 </script>
