@@ -27,65 +27,73 @@
   </div>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, onMounted, ref, watch} from 'vue'
+<script setup lang="ts">
+// import type {BOffcanvasEmits, BOffcanvasProps} from '@/types/components'
+import {computed, onMounted, ref, watch} from 'vue'
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
-import useEventListener from '../composables/useEventListener'
+import useEventListener from '@/composables/useEventListener'
 
-export default defineComponent({
-  name: 'BOffcanvas',
-  props: {
-    modelValue: {type: Boolean, default: false},
-    bodyScrolling: {type: Boolean, default: false},
-    backdrop: {type: Boolean, default: true},
-    placement: {type: String, default: 'start'},
-    title: {type: String, required: true},
-  },
-  emits: ['update:modelValue', 'show', 'shown', 'hide', 'hidden'],
-  setup(props, {emit}) {
-    const element = ref<HTMLElement>()
-    const instance = ref<Offcanvas>()
+interface BOffcanvasProps {
+  modelValue?: boolean
+  bodyScrolling?: boolean
+  backdrop?: boolean
+  placement?: string
+  title?: string
+}
 
-    useEventListener(element, 'shown.bs.offcanvas', () => emit('shown'))
-    useEventListener(element, 'hidden.bs.offcanvas', () => emit('hidden'))
-
-    useEventListener(element, 'show.bs.offcanvas', () => {
-      emit('show')
-      emit('update:modelValue', true)
-    })
-
-    useEventListener(element, 'hide.bs.offcanvas', () => {
-      emit('hide')
-      emit('update:modelValue', false)
-    })
-
-    onMounted(() => {
-      instance.value = new Offcanvas(element.value as HTMLElement)
-
-      if (props.modelValue) {
-        instance.value?.show(element.value as HTMLElement)
-      }
-    })
-
-    const classes = computed(() => ({
-      [`offcanvas-${props.placement}`]: props.placement,
-    }))
-
-    watch(
-      () => props.modelValue,
-      (value) => {
-        if (value) {
-          instance.value?.show(element.value as HTMLElement)
-        } else {
-          instance.value?.hide()
-        }
-      }
-    )
-
-    return {
-      element,
-      classes,
-    }
-  },
+const props = withDefaults(defineProps<BOffcanvasProps>(), {
+  modelValue: false,
+  bodyScrolling: false,
+  backdrop: true,
+  placement: 'start',
 })
+
+interface BOffcanvasEmits {
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'show'): void
+  (e: 'shown'): void
+  (e: 'hide'): void
+  (e: 'hidden'): void
+}
+
+const emit = defineEmits<BOffcanvasEmits>()
+
+const element = ref<HTMLElement>()
+const instance = ref<Offcanvas>()
+
+useEventListener(element, 'shown.bs.offcanvas', () => emit('shown'))
+useEventListener(element, 'hidden.bs.offcanvas', () => emit('hidden'))
+
+useEventListener(element, 'show.bs.offcanvas', () => {
+  emit('show')
+  emit('update:modelValue', true)
+})
+
+useEventListener(element, 'hide.bs.offcanvas', () => {
+  emit('hide')
+  emit('update:modelValue', false)
+})
+
+onMounted((): void => {
+  instance.value = new Offcanvas(element.value as HTMLElement)
+
+  if (props.modelValue) {
+    instance.value?.show(element.value as HTMLElement)
+  }
+})
+
+const classes = computed(() => ({
+  [`offcanvas-${props.placement}`]: props.placement,
+}))
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (value) {
+      instance.value?.show(element.value as HTMLElement)
+    } else {
+      instance.value?.hide()
+    }
+  }
+)
 </script>

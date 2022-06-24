@@ -6,7 +6,7 @@ export interface Props {
   id: string
   title: string
   content: string
-  container?: PropType<string | ComponentPublicInstance<HTMLElement> | HTMLElement>
+  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement
   noninteractive?: boolean
   placement: Popover.Options['placement']
   target?: string | ComponentPublicInstance<HTMLElement> | HTMLElement
@@ -27,7 +27,7 @@ export interface Emits {
   (e: 'inserted'): void
 }
 // Other
-interface DelayObject {
+export interface DelayObject {
   show: number
   hide: number
 }

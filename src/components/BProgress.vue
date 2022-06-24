@@ -17,41 +17,42 @@
   </div>
 </template>
 
-<script lang="ts">
-import {ColorVariant} from '../types'
-import {defineComponent, InjectionKey, PropType, provide} from 'vue'
+<script setup lang="ts">
+// import type {BProgressProps} from '@/types/components'
+import type {ColorVariant} from '@/types'
+import {InjectionKey, provide} from 'vue'
 
-export interface ParentData {
-  animated: boolean
+interface BProgressProps {
+  variant: ColorVariant
   max: number | string
-  showProgress: boolean
-  showValue: boolean
-  striped: boolean
+  height: string
+  animated?: boolean
+  precision?: number | string
+  showProgress?: boolean
+  showValue?: boolean
+  striped?: boolean
+  value?: number | string
 }
 
-export const injectionKey: InjectionKey<ParentData> = Symbol()
-
-export default defineComponent({
-  name: 'BProgress',
-  props: {
-    animated: {type: Boolean, default: false},
-    max: {type: [Number, String]},
-    height: {type: String},
-    precision: {type: [Number, String], default: 0},
-    showProgress: {type: Boolean, default: false},
-    showValue: {type: Boolean, default: false},
-    striped: {type: Boolean, default: false},
-    value: {type: [Number, String], default: 0},
-    variant: {type: String as PropType<ColorVariant>},
-  },
-  setup(props) {
-    provide(injectionKey, {
-      animated: props.animated,
-      max: props.max,
-      showProgress: props.showProgress,
-      showValue: props.showValue,
-      striped: props.striped,
-    })
-  },
+const props = withDefaults(defineProps<BProgressProps>(), {
+  animated: false,
+  precision: 0,
+  showProgress: false,
+  showValue: false,
+  striped: false,
+  value: 0,
 })
+
+provide(injectionKey, {
+  animated: props.animated,
+  max: props.max,
+  showProgress: props.showProgress,
+  showValue: props.showValue,
+  striped: props.striped,
+})
+</script>
+
+<script lang="ts">
+import type {BProgressParentData} from '@/types/components'
+export const injectionKey: InjectionKey<BProgressParentData> = Symbol()
 </script>

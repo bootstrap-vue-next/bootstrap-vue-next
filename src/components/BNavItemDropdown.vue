@@ -8,37 +8,39 @@
   </li>
 </template>
 
-<script lang="ts">
-import {ButtonVariant, Size} from '../types'
-import {defineComponent, PropType} from 'vue'
+<script setup lang="ts">
+// import type {BNavItemDropdownProps} from '@/types/components'
+import type {ButtonVariant, Size} from '@/types'
 import BDropdown from './BDropdown/BDropdown.vue'
 
-export default defineComponent({
-  name: 'BNavItemDropdown',
-  components: {
-    BDropdown,
-  },
-  props: {
-    autoClose: {type: String, default: 'true'},
-    id: {type: String},
-    dark: {type: Boolean, default: false},
-    dropleft: {type: Boolean, default: false},
-    dropright: {type: Boolean, default: false},
-    dropup: {type: Boolean, default: false},
-    right: {type: [Boolean, String], default: false},
-    left: {type: [Boolean, String], default: false},
-    text: {type: String},
-    offset: {type: String},
-    offsetParent: {type: Boolean, default: false},
-    split: {type: Boolean, default: false},
-    splitVariant: {type: String as PropType<ButtonVariant>},
-    size: {type: String as PropType<Size>},
-    variant: {type: String as PropType<ButtonVariant>, default: 'link'},
-  },
-  setup(props) {
-    return {
-      props,
-    }
-  },
+interface BNavItemDropdownProps {
+  id: string
+  text: string
+  size: Size
+  offset: string
+  autoClose?: string
+  dark?: boolean
+  dropleft?: boolean
+  dropright?: boolean
+  dropup?: boolean
+  right?: boolean | string
+  left?: boolean | string
+  offsetParent?: boolean
+  split?: boolean
+  splitVariant: ButtonVariant
+  variant?: ButtonVariant
+}
+
+withDefaults(defineProps<BNavItemDropdownProps>(), {
+  autoClose: 'true',
+  dark: false,
+  dropleft: false,
+  dropright: false,
+  dropup: false,
+  right: false,
+  left: false,
+  offsetParent: false,
+  split: false,
+  variant: 'link',
 })
 </script>

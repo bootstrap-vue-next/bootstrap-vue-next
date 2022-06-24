@@ -11,32 +11,32 @@
   </component>
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
-import {ColorVariant, SpinnerType} from '../types'
+<script setup lang="ts">
+// import type {BSpinnerProps} from '@/types/components'
+import {computed} from 'vue'
+import type {ColorVariant, SpinnerType} from '@/types'
 
-export default defineComponent({
-  name: 'BSpinner',
-  props: {
-    label: {type: String},
-    role: {type: String, default: 'status'},
-    small: {type: Boolean, default: false},
-    tag: {type: String, default: 'span'},
-    type: {type: String as PropType<SpinnerType>, default: 'border'},
-    variant: {type: String as PropType<ColorVariant>},
-  },
-  setup(props) {
-    const classes = computed(() => ({
-      'spinner-border': props.type === 'border',
-      'spinner-border-sm': props.type === 'border' && props.small,
-      'spinner-grow': props.type === 'grow',
-      'spinner-grow-sm': props.type === 'grow' && props.small,
-      [`text-${props.variant}`]: !!props.variant,
-    }))
+interface BSpinnerProps {
+  label: string
+  role?: string
+  small?: boolean
+  tag?: string
+  type?: SpinnerType
+  variant?: ColorVariant
+}
 
-    return {
-      classes,
-    }
-  },
+const props = withDefaults(defineProps<BSpinnerProps>(), {
+  role: 'status',
+  small: false,
+  tag: 'span',
+  type: 'border',
 })
+
+const classes = computed(() => ({
+  'spinner-border': props.type === 'border',
+  'spinner-border-sm': props.type === 'border' && props.small,
+  'spinner-grow': props.type === 'grow',
+  'spinner-grow-sm': props.type === 'grow' && props.small,
+  [`text-${props.variant}`]: !!props.variant,
+}))
 </script>

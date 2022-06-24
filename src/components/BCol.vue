@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import type {Alignment} from '../types'
-import getBreakpointProps from '../utils/getBreakpointProps'
-import getClasses from '../utils/getClasses'
+import type {Alignment} from '@/types'
+import getBreakpointProps from '@/utils/getBreakpointProps'
+import getClasses from '@/utils/getClasses'
 
 const breakpointCol = getBreakpointProps('', [], {type: [Boolean, String, Number], default: false})
 const breakpointOffset = getBreakpointProps('offset', [''], {type: [String, Number], default: null})
@@ -28,19 +28,15 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
   },
   setup(props) {
-    let classList: string[] = []
-
     const properties = [
       {content: breakpointCol, propPrefix: 'cols', classPrefix: 'col'},
       {content: breakpointOffset, propPrefix: 'offset'},
       {content: breakpointOrder, propPrefix: 'order'},
     ]
 
-    properties.forEach((property) => {
-      classList = classList.concat(
-        getClasses(props, property.content, property.propPrefix, property.classPrefix)
-      )
-    })
+    const classList: Array<string> = properties.flatMap((el) =>
+      getClasses(props, el.content, el.propPrefix, el.classPrefix)
+    )
 
     const classes = computed(() => ({
       col: props.col || !classList.some((e) => /^col-/.test(e) && !props.cols),
