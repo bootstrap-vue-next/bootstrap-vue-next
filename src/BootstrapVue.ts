@@ -44,7 +44,7 @@ export {default as BDropdownText} from './components/BDropdown/BDropdownText.vue
 export {default as BForm} from './components/BForm/BForm.vue'
 export {default as BFormCheckbox} from './components/BFormCheckbox/BFormCheckbox.vue'
 export {default as BFormCheckboxGroup} from './components/BFormCheckbox/BFormCheckboxGroup.vue'
-export {default as BFormFloatingLabel} from './components/BFormFloatingLabel.vue'
+export {default as BFormFloatingLabel} from './components/BForm/BFormFloatingLabel.vue'
 export {default as BFormGroup} from './components/BFormGroup/BFormGroup.vue'
 export {default as BFormInput} from './components/BFormInput/BFormInput.vue'
 export {default as BFormInvalidFeedback} from './components/BForm/BFormInvalidFeedback.vue'
