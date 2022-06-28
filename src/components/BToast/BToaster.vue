@@ -1,7 +1,7 @@
 <template>
   <div :class="[positionClass]" class="b-toaster position-fixed p-3" style="z-index: 11">
     <b-toast
-      v-for="toast in instance.toasts(position).value"
+      v-for="toast in instance?.toasts(position).value"
       :id="toast.options.id"
       :key="toast.options.id"
       v-model="toast.options.value"
@@ -23,7 +23,7 @@ import type {ToastInstance} from '@/components/BToast/plugin'
 
 interface BToasterProps {
   position?: ContainerPosition
-  instance: ToastInstance
+  instance?: ToastInstance
   // appendToast?: boolean
 }
 
