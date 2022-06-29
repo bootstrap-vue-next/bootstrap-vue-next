@@ -77,7 +77,9 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
 const parentData = inject<BCarouselParentData>(injectionKey, {})
 const computedId = useId(props.id, 'accordion')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const img = computed(() => (props.imgBlank ? props.imgBlank : props.imgSrc))
+const img = computed<string | true | undefined>(() =>
+  props.imgBlank ? props.imgBlank : props.imgSrc
+)
 
 const computedAttr = computed(() => ({
   background: `${
