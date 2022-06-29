@@ -32,7 +32,7 @@ const routes = [
       name: 'About',
       props: {id: [Number, String]},
       render() {
-        return h('h1', {}, `About page ${this.id}`)
+        return h('h1', {}, `About page ${this.props.id}`)
       },
     },
     props: true,
