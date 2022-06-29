@@ -14,7 +14,7 @@ import type {ColorVariant, TextColorVariant} from '@/types'
 import {computed} from 'vue'
 
 interface BCardFooterProps {
-  footer: string
+  footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
   footerClass?: Array<unknown> | Record<string, unknown> | string

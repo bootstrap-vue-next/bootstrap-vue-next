@@ -1,9 +1,9 @@
 import type {Breakpoint, ColorVariant} from '@/types'
 // Props
 export interface Props {
-  borderVariant: ColorVariant
-  tableClass: Array | Record<string, unknown> | string
-  tableVariant: string
+  borderVariant?: ColorVariant
+  tableClass?: Array<unknown> | Record<string, unknown> | string
+  tableVariant?: string
   bordered?: boolean
   borderless?: boolean
   captionTop?: boolean

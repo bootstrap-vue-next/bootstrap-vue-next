@@ -2,13 +2,13 @@ import type Popper from '@popperjs/core'
 import type {ButtonType, ButtonVariant, Size} from '@/types'
 // Props
 export interface Props {
-  id: string
-  menuClass: Array | Record<string, unknown> | string
-  size: Size
-  splitClass: Array | Record<string, unknown> | string
-  splitVariant: ButtonVariant
-  text: string
-  toggleClass: Array | Record<string, unknown> | string
+  id?: string
+  menuClass?: Array<unknown> | Record<string, unknown> | string
+  size?: Size
+  splitClass?: Array<unknown> | Record<string, unknown> | string
+  splitVariant?: ButtonVariant
+  text?: string
+  toggleClass?: Array<unknown> | Record<string, unknown> | string
   autoClose?: boolean | 'inside' | 'outside'
   block?: boolean
   boundary?: Popper.Boundary

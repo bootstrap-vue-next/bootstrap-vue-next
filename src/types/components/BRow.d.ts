@@ -1,4 +1,4 @@
-import type Alignment from 'src/types/Alignment'
+import type Alignment from '@/types/Alignment'
 import type {RowColsBreakpointProps} from '@/types'
 // Props
 export interface Props extends RowColsBreakpointProps {

@@ -3,12 +3,12 @@ import type Popover from 'bootstrap/js/dist/popover'
 import type {ComponentPublicInstance} from 'vue'
 // Props
 export interface Props {
-  id: string
-  title: string
-  content: string
+  id?: string
+  title?: string
+  content?: string
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement
   noninteractive?: boolean
-  placement: Popover.Options['placement']
+  placement?: Popover.Options['placement']
   target?: string | ComponentPublicInstance<HTMLElement> | HTMLElement
   delay?: number | DelayObject
   triggers?: Popover.Options['trigger']

@@ -1,9 +1,9 @@
 import type {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '@/types'
 // Props
 export interface Props {
-  caption: string
-  align: VerticalAlign
-  borderVariant: ColorVariant
+  caption?: string
+  align?: VerticalAlign
+  borderVariant?: ColorVariant
   captionTop?: boolean
   borderless?: boolean
   bordered?: boolean
@@ -15,7 +15,7 @@ export interface Props {
   responsive?: boolean | Breakpoint
   small?: boolean
   striped?: boolean
-  variant: ColorVariant
+  variant?: ColorVariant
 }
 // Emits
 

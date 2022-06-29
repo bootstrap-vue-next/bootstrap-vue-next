@@ -1,12 +1,12 @@
-import type {BodyProp} from 'src/components/BToast/plugin'
+import type {BodyProp} from '@/components/BToast/plugin'
 import type {ColorVariant} from '@/types'
-import type {BLinkProps} from 'src/types/components'
+import type {BLinkProps} from '@/types/components'
 // Props
 export interface Props extends BLinkProps {
-  title: string
-  bodyClass: string
-  headerClass: string
-  id: string
+  title?: string
+  bodyClass?: string
+  headerClass?: string
+  id?: string
   delay?: number
   body?: BodyProp
   headerTag?: string

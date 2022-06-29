@@ -16,7 +16,7 @@ export interface Props {
   labelAlignMd?: boolean | string | number
   labelAlignSm?: boolean | string | number
   labelAlignXl?: boolean | string | number
-  labelClass?: Array | Record<string, unknown> | string
+  labelClass?: Array<unknown> | Record<string, unknown> | string
   labelCols?: boolean | string | number
   labelColsLg?: boolean | string | number
   labelColsMd?: boolean | string | number

@@ -45,10 +45,10 @@ import type {BCarouselParentData} from '@/types/components'
 import {injectionKey} from './BCarousel.vue'
 
 interface BCarouselSlideProps {
-  imgSrc: string
-  imgHeight: string
-  imgWidth: string
-  interval: string | number
+  imgSrc?: string
+  imgHeight?: string
+  imgWidth?: string
+  interval?: string | number
   active?: boolean
   background?: string
   caption?: string
@@ -77,7 +77,7 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
 const parentData = inject<BCarouselParentData>(injectionKey, {})
 const computedId = useId(props.id, 'accordion')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const img = computed<string | true>(() => (props.imgBlank ? props.imgBlank : props.imgSrc))
+const img = computed(() => (props.imgBlank ? props.imgBlank : props.imgSrc))
 
 const computedAttr = computed(() => ({
   background: `${

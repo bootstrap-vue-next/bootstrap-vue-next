@@ -23,8 +23,8 @@ import {
   watchEffect,
 } from 'vue'
 
-import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '../../types'
-import getID from '../../utils/getID'
+import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '@/types'
+import getID from '@/utils/getID'
 
 export interface ToastContent {
   title?: string

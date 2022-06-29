@@ -1,6 +1,6 @@
 // Props
 export interface Props {
-  title: string
+  title?: string
   titleTag?: string
 }
 // Emits

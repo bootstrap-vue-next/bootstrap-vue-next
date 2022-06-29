@@ -19,7 +19,7 @@ import BBreadcrumbItem from './BBreadcrumbItem.vue'
 // import type {BBreadcrumbProps} from '@/types/components'
 
 interface BBreadcrumbProps {
-  items: Array<BreadcrumbItem>
+  items?: Array<BreadcrumbItem>
 }
 
 const props = defineProps<BBreadcrumbProps>()

@@ -17,7 +17,7 @@ import {computed} from 'vue'
 import type {ColorVariant, SpinnerType} from '@/types'
 
 interface BSpinnerProps {
-  label: string
+  label?: string
   role?: string
   small?: boolean
   tag?: string

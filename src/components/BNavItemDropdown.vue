@@ -14,10 +14,10 @@ import type {ButtonVariant, Size} from '@/types'
 import BDropdown from './BDropdown/BDropdown.vue'
 
 interface BNavItemDropdownProps {
-  id: string
-  text: string
-  size: Size
-  offset: string
+  id?: string
+  text?: string
+  size?: Size
+  offset?: string
   autoClose?: string
   dark?: boolean
   dropleft?: boolean
@@ -27,7 +27,7 @@ interface BNavItemDropdownProps {
   left?: boolean | string
   offsetParent?: boolean
   split?: boolean
-  splitVariant: ButtonVariant
+  splitVariant?: ButtonVariant
   variant?: ButtonVariant
 }
 

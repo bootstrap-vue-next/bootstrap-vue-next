@@ -1,5 +1,5 @@
 import type {ColorVariant} from '@/types'
-import type {BLinkProps} from 'src/types/components'
+import type {BLinkProps} from '@/types/components'
 // Props
 export interface Props extends Omit<BLinkProps, 'event' | 'routerTag'> {
   pill?: boolean

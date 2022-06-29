@@ -1,6 +1,6 @@
 // Props
 export interface Props {
-  footVariant: string
+  footVariant?: string
 }
 // Emits
 

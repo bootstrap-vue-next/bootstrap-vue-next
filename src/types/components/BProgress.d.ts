@@ -1,9 +1,9 @@
 import type {ColorVariant} from '@/types'
 // Props
 export interface Props {
-  variant: ColorVariant
-  max: number | string
-  height: string
+  variant?: ColorVariant
+  max?: number | string
+  height?: string
   animated?: boolean
   precision?: number | string
   showProgress?: boolean

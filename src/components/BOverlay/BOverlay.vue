@@ -1,8 +1,8 @@
 <script lang="ts">
-import type {ColorVariant} from '../../types'
-import {toFloat} from '../../utils/number'
+import type {ColorVariant} from '@/types'
+import {toFloat} from '@/utils/number'
 import {computed, defineComponent, h, PropType, resolveComponent} from 'vue'
-import {normalizeSlot} from '../../utils/normalize-slot'
+import {normalizeSlot} from '@/utils/normalize-slot'
 import BTransition from '../BTransition/BTransition.vue'
 
 const POSITION_COVER = {top: 0, left: 0, bottom: 0, right: 0}

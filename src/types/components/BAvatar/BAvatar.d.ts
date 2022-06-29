@@ -2,8 +2,8 @@ import type {ColorVariant, InputSize} from '@/types'
 
 // Props
 export interface Props {
-  alt: string
-  ariaLabel: string
+  alt?: string
+  ariaLabel?: string
   badge?: boolean | string
   badgeLeft?: boolean
   badgeOffset?: string

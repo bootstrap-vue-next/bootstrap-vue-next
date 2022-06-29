@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import {computed, h, PropType, useSlots, VNode} from 'vue'
-import type {Breakpoint, ColorVariant} from '../../types'
+import type {Breakpoint, ColorVariant} from '@/types'
 
 const props = defineProps({
   bordered: {type: Boolean, default: false},

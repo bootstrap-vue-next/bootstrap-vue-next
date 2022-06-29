@@ -10,7 +10,7 @@
 // import type {BCardTitleProps} from '@/types/components'
 
 interface BCardTitleProps {
-  title: string
+  title?: string
   titleTag?: string
 }
 

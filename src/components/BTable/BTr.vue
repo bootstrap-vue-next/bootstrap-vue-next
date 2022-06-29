@@ -9,7 +9,7 @@
 import {computed} from 'vue'
 
 interface BTrProps {
-  variant: string
+  variant?: string
 }
 
 const props = defineProps<BTrProps>()

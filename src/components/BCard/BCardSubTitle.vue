@@ -12,7 +12,7 @@ import type {TextColorVariant} from '@/types'
 import {computed} from 'vue'
 
 interface BCardSubtitleProps {
-  subTitle: string
+  subTitle?: string
   subTitleTag?: string
   subTitleTextVariant?: TextColorVariant
 }

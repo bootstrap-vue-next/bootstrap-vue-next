@@ -17,8 +17,8 @@
 import type {ColorVariant, LinkTarget} from '@/types'
 
 interface BDropdownItemProps {
-  href: string
-  linkClass: Array<unknown> | Record<string, unknown> | string
+  href?: string
+  linkClass?: Array<unknown> | Record<string, unknown> | string
   active?: boolean
   disabled?: boolean
   rel?: string

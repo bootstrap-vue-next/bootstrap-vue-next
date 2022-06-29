@@ -37,8 +37,8 @@ import {injectionKey} from './BAccordion.vue'
 // import type {BAccordionItemProps} from '@/types/components'
 
 interface BAccordionItemProps {
-  id: string
-  title: string
+  id?: string
+  title?: string
   visible?: boolean
 }
 

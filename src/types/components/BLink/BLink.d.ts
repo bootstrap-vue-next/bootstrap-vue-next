@@ -6,10 +6,10 @@ export interface Props {
   activeClass?: string
   append?: boolean
   disabled?: boolean
-  event?: string | Array
+  event?: string | Array<unknown>
   exact?: boolean
   exactActiveClass?: string
-  href: string
+  href?: string
   // noPrefetch?: boolean
   // prefetch?: boolean
   rel?: string

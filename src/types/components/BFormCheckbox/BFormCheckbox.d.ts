@@ -1,11 +1,11 @@
 import type {ButtonVariant, InputSize} from '@/types'
 // Props
 export interface Props {
-  ariaLabel: string
-  ariaLabelledBy: string
-  form: string
-  indeterminate: boolean
-  name: string
+  ariaLabel?: string
+  ariaLabelledBy?: string
+  form?: string
+  indeterminate?: boolean
+  name?: string
   id?: string
   autofocus?: boolean
   plain?: boolean
@@ -17,9 +17,9 @@ export interface Props {
   required?: boolean
   size?: InputSize
   state?: boolean
-  uncheckedValue?: boolean | string | Array | Record<string, unknown> | number
-  value?: boolean | string | Array | Record<string, unknown> | number
-  modelValue?: boolean | string | Array | Record<string, unknown> | number
+  uncheckedValue?: Array<unknown> | Set<unknown> | boolean
+  value?: Array<unknown> | Set<unknown> | boolean
+  modelValue?: Array<unknown> | Set<unknown> | boolean
 }
 // Emits
 export interface Emits {

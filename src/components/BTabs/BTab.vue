@@ -17,8 +17,8 @@ import {computed, inject} from 'vue'
 import {injectionKey} from './BTabs.vue'
 
 interface BTabProps {
-  id: string
-  title: string
+  id?: string
+  title?: string
   active?: boolean
   buttonId?: string
   disabled?: boolean
