@@ -22,12 +22,12 @@ import {injectionKey} from './BListGroup.vue'
 interface BListGroupItemProps {
   action?: boolean
   active?: boolean
-  // activeClass: string
+  // activeClass?: string
   // append?: boolean
   button?: boolean
   disabled?: boolean
   // exact?: boolean
-  // exactActiveClass: string
+  // exactActiveClass?: string
   href?: string
   // noPrefetch?: Boolean
   // prefetch?: Boolean
@@ -36,7 +36,7 @@ interface BListGroupItemProps {
   // routerComponentName?: String
   tag?: string
   target?: LinkTarget
-  //to: string | Record<string, unknown>
+  //to?: string | Record<string, unknown>
   variant?: ColorVariant
 }
 

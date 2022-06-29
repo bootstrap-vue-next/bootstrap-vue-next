@@ -1,5 +1,5 @@
 import type {ButtonVariant, InputSize, LinkTarget} from '@/types'
-import type {BLinkProps} from 'src/types/components'
+import type {BLinkProps} from '@/types/components'
 // Props
 export interface Props extends BLinkProps {
   active?: boolean
@@ -17,7 +17,7 @@ export interface Props extends BLinkProps {
 }
 // Emits
 export interface Emits {
-  (e: 'clicked', value: PointerEvent): void
+  (e: 'clicked', value: MouseEvent): void
   (e: 'update:pressed', value: boolean): void
 }
 // Other

@@ -8,7 +8,7 @@
 // import type {BFormSelectOptionProps} from '@/types/components'
 
 interface BFormSelectOptionProps {
-  value: unknown
+  value?: unknown
   disabled?: boolean
 }
 

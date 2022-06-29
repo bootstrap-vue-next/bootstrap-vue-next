@@ -35,8 +35,8 @@ import {toFloat} from '@/utils/number'
 import {injectionKey} from './BAvatarGroup.vue'
 
 interface BAvatarProps {
-  alt: string
-  ariaLabel: string
+  alt?: string
+  ariaLabel?: string
   badge?: boolean | string
   badgeLeft?: boolean
   badgeOffset?: string

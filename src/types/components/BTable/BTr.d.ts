@@ -1,6 +1,6 @@
 // Props
 export interface Props {
-  variant: string
+  variant?: string
 }
 // Emits
 

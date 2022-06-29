@@ -1,4 +1,4 @@
-import type Alignment from 'src/types/Alignment'
+import type Alignment from '@/types/Alignment'
 import type {ColBreakpointProps, OffsetBreakpointProps, OrderBreakpointProps} from '@/types'
 
 // Props

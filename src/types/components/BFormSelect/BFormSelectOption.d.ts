@@ -1,6 +1,6 @@
 // Props
 export interface Props {
-  value: unknown
+  value?: unknown
   disabled?: boolean
 }
 // Emits

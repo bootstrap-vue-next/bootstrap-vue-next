@@ -9,7 +9,7 @@
 import {computed} from 'vue'
 
 interface BTheadProps {
-  headVariant: string
+  headVariant?: string
 }
 
 const props = defineProps<BTheadProps>()

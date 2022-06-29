@@ -2,8 +2,8 @@ import type {ColorVariant, LinkTarget} from '@/types'
 
 // Props
 export interface Props {
-  href: string
-  linkClass: Array | Record<string, unknown> | string
+  href?: string
+  linkClass?: Array<unknown> | Record<string, unknown> | string
   active?: boolean
   disabled?: boolean
   rel?: string

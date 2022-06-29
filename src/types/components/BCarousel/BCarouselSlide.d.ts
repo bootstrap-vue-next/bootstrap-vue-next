@@ -1,9 +1,9 @@
 // Props
 export interface Props {
-  imgSrc: string
-  imgHeight: string
-  imgWidth: string
-  interval: string | number
+  imgSrc?: string
+  imgHeight?: string
+  imgWidth?: string
+  interval?: string | number
   active?: boolean
   background?: string
   caption?: string

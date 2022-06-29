@@ -2,8 +2,8 @@ import type {VNodeNormalizedChildren} from 'vue'
 import type {ColorVariant} from '@/types'
 // Props
 export interface Props {
-  id: string
-  title: string
+  id?: string
+  title?: string
   disabled?: boolean
   noRemove?: boolean
   pill?: boolean

@@ -1,7 +1,7 @@
 import type {ColorVariant, TextColorVariant} from '@/types'
 // Props
 export interface Props {
-  footer: string
+  footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
   footerClass?: Array<unknown> | Record<string, unknown> | string

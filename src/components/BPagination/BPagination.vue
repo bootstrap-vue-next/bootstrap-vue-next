@@ -1,11 +1,11 @@
 <script lang="ts">
-import {normalizeSlot} from '../../utils/normalize-slot'
+import {normalizeSlot} from '@/utils/normalize-slot'
 import {computed, defineComponent, h, PropType, reactive, watch} from 'vue'
-import {Alignment, InputSize, Pagination, PaginationPage} from '../../types'
-import {isUndefinedOrNull} from '../../utils/inspect'
-import {toInteger} from '../../utils/number'
-import useAlignment from '../../composables/useAlignment'
-import {BvEvent} from '../../utils/bvEvent'
+import {Alignment, InputSize, Pagination, PaginationPage} from '@/types'
+import {isUndefinedOrNull} from '@/utils/inspect'
+import {toInteger} from '@/utils/number'
+import useAlignment from '@/composables/useAlignment'
+import {BvEvent} from '@/utils/bvEvent'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5
 

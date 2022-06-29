@@ -1,10 +1,10 @@
 import type {ButtonVariant, Size} from '@/types'
 // Props
 export interface Props {
-  id: string
-  text: string
-  size: Size
-  offset: string
+  id?: string
+  text?: string
+  size?: Size
+  offset?: string
   autoClose?: string
   dark?: boolean
   dropleft?: boolean
@@ -14,7 +14,7 @@ export interface Props {
   left?: boolean | string
   offsetParent?: boolean
   split?: boolean
-  splitVariant: ButtonVariant
+  splitVariant?: ButtonVariant
   variant?: ButtonVariant
 }
 // Emits

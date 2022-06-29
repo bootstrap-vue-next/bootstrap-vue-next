@@ -1,6 +1,6 @@
 // Props
 export interface Props {
-  headVariant: string
+  headVariant?: string
 }
 // Emits
 

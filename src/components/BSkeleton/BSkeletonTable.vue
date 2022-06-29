@@ -36,7 +36,7 @@ interface BSkeletonTableProps {
   hideHeader?: boolean
   rows?: number
   showFooter?: boolean
-  tableProps: Record<string, unknown>
+  tableProps?: Record<string, unknown>
 }
 
 withDefaults(defineProps<BSkeletonTableProps>(), {

@@ -9,7 +9,7 @@
 import {computed} from 'vue'
 
 interface BTfootProps {
-  footVariant: string
+  footVariant?: string
 }
 
 const props = defineProps<BTfootProps>()

@@ -1,18 +1,18 @@
 import type {Alignment} from '@/types'
 // Props
 export interface Props {
-  activeNavItemClass?: Array | Record<string, unknown> | string
-  activeTabClass?: Array | Record<string, unknown> | string
+  activeNavItemClass?: Array<unknown> | Record<string, unknown> | string
+  activeTabClass?: Array<unknown> | Record<string, unknown> | string
   align?: Alignment
   card?: boolean
-  contentClass?: Array | Record<string, unknown> | string
+  contentClass?: Array<unknown> | Record<string, unknown> | string
   end?: boolean
   fill?: boolean
   id?: string
   justified?: boolean
   lazy?: boolean
-  navClass?: Array | Record<string, unknown> | string
-  navWrapperClass?: Array | Record<string, unknown> | string
+  navClass?: Array<unknown> | Record<string, unknown> | string
+  navWrapperClass?: Array<unknown> | Record<string, unknown> | string
   noFade?: boolean
   // noKeyNav?: boolean
   noNavStyle?: boolean

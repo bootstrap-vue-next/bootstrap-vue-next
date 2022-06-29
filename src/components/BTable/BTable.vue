@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, h, PropType, VNode} from 'vue'
-import {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
+import {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '@/types'
 import useItemHelper from './itemHelper'
 
 export default defineComponent({

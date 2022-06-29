@@ -2,8 +2,8 @@ import type {ButtonVariant, Size} from '@/types'
 // Props
 export interface Props {
   id?: string
-  form: string
-  modelValue?: Array
+  form?: string
+  modelValue?: Array<unknown>
   ariaInvalid?: boolean | string
   autofocus?: boolean
   buttonVariant?: ButtonVariant
@@ -11,11 +11,11 @@ export interface Props {
   disabled?: boolean
   disabledField?: string
   htmlField?: string
-  name: string
-  options?: Array // Objects are not supported yet
+  name?: string
+  options?: Array<unknown> // Objects are not supported yet
   plain?: boolean
   required?: boolean
-  size: Size
+  size?: Size
   stacked?: boolean
   state?: boolean
   switches?: boolean

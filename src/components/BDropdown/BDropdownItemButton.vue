@@ -11,7 +11,7 @@
 import type {ButtonType, ColorVariant} from '@/types'
 
 interface BDropdownItemButtonProps {
-  buttonClass: string | Array<unknown> | Record<string, unknown>
+  buttonClass?: string | Array<unknown> | Record<string, unknown>
   active?: boolean
   activeClass?: string
   disabled?: boolean

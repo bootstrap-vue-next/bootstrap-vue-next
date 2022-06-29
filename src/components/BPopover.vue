@@ -29,12 +29,12 @@ import useEventListener from '@/composables/useEventListener'
 import type {ColorVariant} from '@/types'
 
 interface BPopoverProps {
-  id: string
-  title: string
-  content: string
+  id?: string
+  title?: string
+  content?: string
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement
   noninteractive?: boolean
-  placement: Popover.Options['placement']
+  placement?: Popover.Options['placement']
   target?: string | ComponentPublicInstance<HTMLElement> | HTMLElement
   delay?: number | BPopoverDelayObject
   triggers?: Popover.Options['trigger']

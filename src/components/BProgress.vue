@@ -19,13 +19,14 @@
 
 <script setup lang="ts">
 // import type {BProgressProps} from '@/types/components'
+import BProgressBar from './BProgressBar.vue'
 import type {ColorVariant} from '@/types'
 import {InjectionKey, provide} from 'vue'
 
 interface BProgressProps {
-  variant: ColorVariant
-  max: number | string
-  height: string
+  variant?: ColorVariant
+  max?: number | string
+  height?: string
   animated?: boolean
   precision?: number | string
   showProgress?: boolean

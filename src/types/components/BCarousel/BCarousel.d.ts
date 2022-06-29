@@ -1,8 +1,8 @@
 // Props
 export interface Props {
-  id: string
-  imgHeight: string
-  imgWidth: string
+  id?: string
+  imgHeight?: string
+  imgWidth?: string
   background?: string
   modelValue?: number
   controls?: boolean

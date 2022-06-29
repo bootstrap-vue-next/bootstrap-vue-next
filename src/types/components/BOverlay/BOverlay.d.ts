@@ -10,7 +10,7 @@ export interface Props {
   // and switches to absolute positioning
   noWrap?: boolean
   // TODO validators not exactly supported
-  // opacity: {
+  // opacity?: {
   //   type: [Number, String],
   //   default: 0.85,
   //   validator: (value: number | string) => {
