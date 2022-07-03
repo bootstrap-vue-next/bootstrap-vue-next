@@ -557,7 +557,7 @@ input groups. However, the inputs inside the input group do support contextual s
 | --------- | ------ | ------------------------------------------- |
 | `default` | No     | Content to place in the input group prepend |
 
-### `<b-input-group-Apppend>`
+### `<b-input-group-append>`
 
 **Note** Bootstrap 5 dropped `.input-group-append`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-append>` is added for compatibility reasons.
 
