@@ -8,6 +8,7 @@
       :disabled="disabled"
       :type="splitButtonType"
       v-bind="buttonAttr"
+      @click="onSplitClick"
     >
       {{ text }}
       <slot name="button-content" />
@@ -22,6 +23,7 @@
       class="dropdown-toggle-split dropdown-toggle"
       data-bs-toggle="dropdown"
       aria-expanded="false"
+      @click="emit('toggle')"
     >
       <span class="visually-hidden">
         {{ toggleText }}
@@ -107,6 +109,8 @@ interface BDropdownEmits {
   (e: 'shown'): void
   (e: 'hide'): void
   (e: 'hidden'): void
+  (e: 'click', event: Event): void
+  (e: 'toggle'): void
 }
 
 const emit = defineEmits<BDropdownEmits>()
@@ -120,6 +124,12 @@ useEventListener(parent, 'show.bs.dropdown', () => emit('show'))
 useEventListener(parent, 'shown.bs.dropdown', () => emit('shown'))
 useEventListener(parent, 'hide.bs.dropdown', () => emit('hide'))
 useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'))
+
+const onSplitClick = (event: Event) => {
+  if (props.split) {
+    emit('click', event)
+  }
+}
 
 const classes = computed(() => ({
   'd-grid': props.block,

@@ -966,6 +966,8 @@
             class="m-2"
             variant="outline-primary"
             split-variant="primary"
+            @click="(event: Event) => consoleLog('main split button clicked', event)"
+            @toggle="consoleLog('toggle button clicked')"
           >
             <b-dropdown-item href="#">Action</b-dropdown-item>
           </b-dropdown>
@@ -1716,8 +1718,8 @@
             <em>Title</em>
             - {{ popoverInput }}
           </template>
-          <b-button @click="consoleLog">456</b-button>I am popover <b>component</b> content!
-          <b-form-input v-model="popoverInput" type="text" />Name:
+          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
+          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
           <strong>{{ popoverInput }}</strong>
         </b-popover>
         <button
@@ -1744,8 +1746,8 @@
             <em>Title</em>
             - {{ popoverInput }}
           </template>
-          <b-button @click="consoleLog">456</b-button>I am popover <b>component</b> content!
-          <b-form-input v-model="popoverInput" type="text" />Name:
+          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
+          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
           <strong>{{ popoverInput }}</strong>
         </b-popover>
       </div>
@@ -1890,7 +1892,7 @@
     <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
     <b-button class="mt-3" @click="createToast2()">Show Toast 2</b-button>
     <b-button class="mt-3" @click="createToastError()">Show a danger Toast</b-button>
-    <b-button class="mt-3" @click="consoleLog">Hide Toast</b-button>
+    <b-button class="mt-3" @click="consoleLog('Button Click!')">Hide Toast</b-button>
     <div id="demo"></div>
   </b-container>
 </template>
@@ -1956,7 +1958,7 @@ export default defineComponent({
     const popoverRef = ref<ComponentPublicInstance<HTMLButtonElement>>()
     const popoverContainerRef = ref<HTMLButtonElement>()
 
-    const consoleLog = () => console.log('Button Click!')
+    const consoleLog = (...args: unknown[]) => console.log(...args)
     const checkedDefault = ref(false)
     const checkedButton = ref(false)
     const checkedRequired = ref(false)
