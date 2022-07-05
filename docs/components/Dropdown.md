@@ -1099,12 +1099,14 @@ the dropdown menu, ensure they are wrapped with a plain `<li>`.
 
 #### Events
 
-| Name     | Argument | Description                                        |
-| -------- | -------- | -------------------------------------------------- |
-| `hidden` |          | Emitted when dropdown is hidden                    |
-| `hide`   |          | Emitted just before dropdown is hidden. Cancelable |
-| `show`   |          | Emitted just before dropdown is shown. Cancelable  |
-| `shown`  |          | Emitted when dropdown is shown                     |
+| Name     | Argument                          | Description                                        |
+| -------- | --------------------------------- | -------------------------------------------------- |
+| `hidden` |                                   | Emitted when dropdown is hidden                    |
+| `hide`   |                                   | Emitted just before dropdown is hidden. Cancelable |
+| `show`   |                                   | Emitted just before dropdown is shown. Cancelable  |
+| `shown`  |                                   | Emitted when dropdown is shown                     |
+| `click`  | event - Native click event object | Emitted when split button is clicked in split mode |
+| `toggle` |                                   | Emitted when toggle button is clicked              |
 
 ### `<b-dropdown-item>`
 
