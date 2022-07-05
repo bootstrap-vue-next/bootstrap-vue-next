@@ -966,7 +966,7 @@
             class="m-2"
             variant="outline-primary"
             split-variant="primary"
-            @click="(event) => consoleLog('main split button clicked', event)"
+            @click="(event: Event) => consoleLog('main split button clicked', event)"
             @toggle="consoleLog('toggle button clicked')"
           >
             <b-dropdown-item href="#">Action</b-dropdown-item>
