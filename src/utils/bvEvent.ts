@@ -22,7 +22,10 @@ export class BvEvent {
     }
 
     // Merge defaults first, the eventInit, and the type last
-    // so it can't be overwritten
+    // so, it can't be overwritten
+    // TODO: Find a better way to avoid the original error...
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     assign(this, BvEvent.Defaults, this.constructor.Defaults, eventInit, {eventType})
 
     // Freeze some props as readonly, but leave them enumerable

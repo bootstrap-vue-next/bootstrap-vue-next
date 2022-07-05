@@ -44,15 +44,15 @@ export default defineComponent({
     const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 
     return () => {
-      let theadTop: VNode | null
-      theadTop = null
+      let theadTop: VNode | null = null
       if (slots['thead-top']) {
-        theadTop = slots['thead-top']()
+        theadTop = slots['thead-top']() as unknown as VNode
       }
 
       let theadSub: VNode | null
       theadSub = null
       if (slots['thead-sub']) {
+        const slotReference = slots['thead-sub'] as unknown as (arg: object) => VNode
         theadSub = h(
           'tr',
 
@@ -63,7 +63,7 @@ export default defineComponent({
                 scope: 'col',
                 class: [field.class, field.thClass, field.variant ? `table-${field.variant}` : ''],
               },
-              slots['thead-sub']({items: computedFields.value, ...field})
+              slotReference({items: computedFields.value, ...field}) as unknown as VNode
             )
           )
         )
@@ -75,7 +75,7 @@ export default defineComponent({
           'tr',
           computedFields.value.map((field) => {
             const slotName = `head(${field.key})`
-            let thContent = field.label
+            let thContent: any = field.label
 
             if (slots[slotName]) {
               thContent = slots[slotName]?.({
@@ -110,7 +110,7 @@ export default defineComponent({
               },
               computedFields.value.map((field) => {
                 const slotName = `cell(${field.key})`
-                let tdContent = tr[field.key]
+                let tdContent = tr[field.key] as unknown as VNode
 
                 if (slots[slotName]) {
                   tdContent = slots[slotName]?.({
@@ -118,7 +118,7 @@ export default defineComponent({
                     index,
                     item: tr,
                     items: props.items,
-                  })
+                  }) as unknown as VNode
                 }
 
                 return h(

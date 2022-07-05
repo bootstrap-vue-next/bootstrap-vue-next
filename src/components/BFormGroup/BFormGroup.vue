@@ -1,21 +1,21 @@
 <script lang="ts">
+import useId from '@/composables/useId'
 import {RX_SPACE_SPLIT} from '@/constants/regex'
 import {arrayIncludes} from '@/utils/array'
 import {cssEscape} from '@/utils/css-escape'
 import {attemptFocus, getAttr, isVisible, removeAttr, select, selectAll, setAttr} from '@/utils/dom'
 import {IS_BROWSER} from '@/utils/env'
+import getID from '@/utils/getID'
 import {isBoolean} from '@/utils/inspect'
+import {normalizeSlot} from '@/utils/normalize-slot'
 import {stringToInteger} from '@/utils/number'
 import {suffixPropName} from '@/utils/props'
 import {computed, defineComponent, h, nextTick, onMounted, ref, watch} from 'vue'
-import useId from '@/composables/useId'
-import {normalizeSlot} from '@/utils/normalize-slot'
-import getID from '@/utils/getID'
 import BCol from '../BCol.vue'
-import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
 import BFormText from '../BForm/BFormText.vue'
+import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
 
 const INPUTS = ['input', 'select', 'textarea']
 // Selector for finding first input in the form group
@@ -69,8 +69,8 @@ export default defineComponent({
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
-    const getAlignClasses = (props: any, prefix: string) => {
-      const alignClasses = breakPoints.reduce((result: string[], breakpoint) => {
+    const getAlignClasses = (props: any, prefix: string) =>
+      breakPoints.reduce((result: string[], breakpoint) => {
         const propValue: string = props[suffixPropName(breakpoint, `${prefix}Align`)] || null
         if (propValue) {
           result.push(['text', breakpoint, propValue].filter((p) => p).join('-'))
@@ -78,11 +78,9 @@ export default defineComponent({
 
         return result
       }, [])
-      return alignClasses
-    }
 
-    const getColProps = (props: any, prefix: string) => {
-      const colProps: any = breakPoints.reduce((result: any, breakpoint: string) => {
+    const getColProps = (props: any, prefix: string) =>
+      breakPoints.reduce((result: any, breakpoint: string) => {
         let propValue = props[suffixPropName(breakpoint, `${prefix}Cols`)]
         // Handle case where the prop's value is an empty string,
         // which represents `true`
@@ -103,8 +101,6 @@ export default defineComponent({
         }
         return result
       }, {})
-      return colProps
-    }
 
     const content = ref()
 
@@ -277,7 +273,7 @@ export default defineComponent({
     let $invalidFeedback = null
     const invalidFeedbackContent =
       normalizeSlot(SLOT_NAME_INVALID_FEEDBACK, {}, slots) || this.invalidFeedback
-    const invalidFeedbackId = invalidFeedbackContent ? getID('_BV_feedback_invalid_') : null
+    const invalidFeedbackId = invalidFeedbackContent ? getID('_BV_feedback_invalid_') : undefined
 
     if (invalidFeedbackContent) {
       $invalidFeedback = h(
@@ -287,7 +283,6 @@ export default defineComponent({
           id: invalidFeedbackId,
           state: props.state,
           tooltip: props.tooltip,
-          tabindex: invalidFeedbackContent ? '-1' : null,
         },
         {default: () => invalidFeedbackContent}
       )
@@ -296,7 +291,7 @@ export default defineComponent({
     let $validFeedback = null
     const validFeedbackContent =
       normalizeSlot(SLOT_NAME_VALID_FEEDBACK, {}, slots) || this.validFeedback
-    const validFeedbackId = validFeedbackContent ? getID('_BV_feedback_valid_') : null
+    const validFeedbackId = validFeedbackContent ? getID('_BV_feedback_valid_') : undefined
 
     if (validFeedbackContent) {
       $validFeedback = h(
@@ -306,7 +301,6 @@ export default defineComponent({
           id: validFeedbackId,
           state: props.state,
           tooltip: props.tooltip,
-          tabindex: validFeedbackContent ? '-1' : null,
         },
         {default: () => validFeedbackContent}
         // validFeedbackContent
@@ -315,13 +309,12 @@ export default defineComponent({
 
     let $description = null
     const descriptionContent = normalizeSlot(SLOT_NAME_DESCRIPTION, {}, slots) || this.description
-    const descriptionId = descriptionContent ? getID('_BV_description_') : null
+    const descriptionId = descriptionContent ? getID('_BV_description_') : undefined
     if (descriptionContent) {
       $description = h(
         BFormText,
         {
           id: descriptionId,
-          tabindex: '-1',
         },
         {default: () => descriptionContent}
       )
