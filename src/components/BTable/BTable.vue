@@ -44,15 +44,11 @@ export default defineComponent({
     const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 
     return () => {
-      let theadTop: VNode | null = null
-      if (slots['thead-top']) {
-        theadTop = slots['thead-top']() as unknown as VNode
-      }
+      const theadTop = slots['thead-top']?.()
 
-      let theadSub: VNode | null
-      theadSub = null
-      if (slots['thead-sub']) {
-        const slotReference = slots['thead-sub'] as unknown as (arg: object) => VNode
+      let theadSub: VNode | undefined
+      const slotReference = slots['thead-sub']
+      if (slotReference) {
         theadSub = h(
           'tr',
 
@@ -63,7 +59,7 @@ export default defineComponent({
                 scope: 'col',
                 class: [field.class, field.thClass, field.variant ? `table-${field.variant}` : ''],
               },
-              slotReference({items: computedFields.value, ...field}) as unknown as VNode
+              slotReference({items: computedFields.value, ...field})
             )
           )
         )
