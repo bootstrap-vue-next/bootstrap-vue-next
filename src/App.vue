@@ -133,9 +133,9 @@
 
     <h5 class="mt-3">None</h5>
     <b-card>
-      <b-skeleton width="85%"></b-skeleton>
-      <b-skeleton width="55%"></b-skeleton>
-      <b-skeleton width="70%"></b-skeleton>
+      <b-skeleton animation width="85%"></b-skeleton>
+      <b-skeleton animation width="55%"></b-skeleton>
+      <b-skeleton animation width="70%"></b-skeleton>
     </b-card>
     <b-table-simple responsive>
       <b-thead>
