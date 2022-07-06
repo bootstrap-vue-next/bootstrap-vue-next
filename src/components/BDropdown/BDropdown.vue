@@ -144,6 +144,7 @@ const buttonClasses = computed(() => ({
 
 const dropdownMenuClasses = computed(() => ({
   'dropdown-menu-dark': props.dark,
+  'dropdown-menu-right': props.right,
 }))
 
 const buttonAttr = computed(() => ({
