@@ -28,6 +28,7 @@ interface BNavItemDropdownProps {
   offsetParent?: boolean
   split?: boolean
   splitVariant?: ButtonVariant
+  noCaret?: boolean
   variant?: ButtonVariant
 }
 
@@ -41,6 +42,7 @@ withDefaults(defineProps<BNavItemDropdownProps>(), {
   left: false,
   offsetParent: false,
   split: false,
+  noCaret: false,
   variant: 'link',
 })
 </script>
