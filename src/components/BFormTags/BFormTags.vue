@@ -141,7 +141,7 @@ interface BFormTagsProps {
   tagPills?: boolean
   tagRemoveLabel?: string
   tagRemovedLabel?: string
-  tagValidator?: (t: unknown) => boolean
+  tagValidator?: (t?: string) => boolean
   tagVariant?: ColorVariant
 }
 
@@ -170,9 +170,9 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
 })
 
 interface BFormTagsEmits {
-  (e: 'update:modelValue', value: Array<unknown>): void
-  (e: 'input', value: Array<unknown>): void
-  (e: 'tag-state', ...args: Array<unknown>): void
+  (e: 'update:modelValue', value: Array<string>): void
+  (e: 'input', value: Array<string>): void
+  (e: 'tag-state', ...args: Array<Array<string>>): void
   (e: 'focus', value: FocusEvent): void
   (e: 'focusin', value: FocusEvent): void
   (e: 'focusout', value: FocusEvent): void
@@ -282,7 +282,7 @@ const onInput = (e: Event | string): void => {
   invalidTags.value = props.tagValidator(value) ? [] : [value]
   duplicateTags.value = isDuplicate.value ? [value] : []
 
-  emit('tag-state', validTags, invalidTags, duplicateTags)
+  emit('tag-state', validTags.value, invalidTags.value, duplicateTags.value)
 }
 
 const onChange = (e: Event): void => {
