@@ -1,9 +1,21 @@
 <template>
-  <Render />
+  <th
+    role="columnheader"
+    :scope="scope"
+    :class="classes"
+    :colspan="colspan"
+    :rowspan="rowspan"
+    :data-label="stackedHeading"
+  >
+    <div v-if="stackedHeading">
+      <slot />
+    </div>
+    <slot v-else />
+  </th>
 </template>
 
 <script setup lang="ts">
-import {computed, h, useSlots, VNode} from 'vue'
+import {computed} from 'vue'
 
 const props = defineProps({
   colspan: {type: [String, Number]},
@@ -13,8 +25,6 @@ const props = defineProps({
   variant: {type: String},
 })
 
-const slots = useSlots()
-
 const classes = computed(() => ({
   [`table-${props.variant}`]: props.variant,
   'b-table-sticky-column': props.stickyColumn,
@@ -22,23 +32,4 @@ const classes = computed(() => ({
 }))
 
 const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
-
-let content: VNode[] | VNode | undefined = slots.default?.()
-
-if (props.stackedHeading) {
-  content = h('div', content)
-}
-
-const Render = h(
-  'th',
-  {
-    'role': 'columnheader',
-    'scope': scope.value,
-    'class': classes.value,
-    'colspan': props.colspan,
-    'rowspan': props.rowspan,
-    'data-label': props.stackedHeading,
-  },
-  content
-)
 </script>
