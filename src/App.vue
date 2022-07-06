@@ -133,9 +133,9 @@
 
     <h5 class="mt-3">None</h5>
     <b-card>
-      <b-skeleton animation width="85%"></b-skeleton>
-      <b-skeleton animation width="55%"></b-skeleton>
-      <b-skeleton animation width="70%"></b-skeleton>
+      <b-skeleton width="85%"></b-skeleton>
+      <b-skeleton width="55%"></b-skeleton>
+      <b-skeleton width="70%"></b-skeleton>
     </b-card>
     <b-table-simple responsive>
       <b-thead>
@@ -530,24 +530,6 @@
             >Indeterminate</b-form-checkbox
           >
           <div class="col-6">Checked: {{ checkedIndeterminate }}</div>
-        </div>
-        <div class="row mx-4 my-1">
-          <b-form-checkbox
-            v-model="checkedString"
-            value="correct"
-            unchecked-value="incorrect"
-            class="col-4"
-            >Bound to string</b-form-checkbox
-          >
-          <div class="col-6">Value: {{ checkedString }}</div>
-        </div>
-        <div class="mx-4 my-1">
-          <b-button class="mx-1" variant="primary" @click="checkedString = 'correct'"
-            >Set correct</b-button
-          >
-          <button class="btn btn-primary mx-1" @click="checkedString = 'incorrect'">
-            Set incorrect
-          </button>
         </div>
         <div class="row mx-4 my-1">
           <b-form-checkbox v-model="checkedPlain" class="col-4" plain>Plain</b-form-checkbox>
@@ -1272,7 +1254,7 @@
       <div>
         <h4 class="my-3">Variable width content</h4>
         <div class="bd-example-row">
-          <b-row align-h="md-center">
+          <b-row align-h="center">
             <b-col lg="2">1 of 3</b-col>
             <b-col md="auto">Variable width content</b-col>
             <b-col lg="2">3 of 3</b-col>
@@ -1462,7 +1444,7 @@
       <h2>Table</h2>
       <div>
         <h4 class="my-3">Table without field definitions</h4>
-        <b-table responsive="xs" caption="List of users" :items="items" striped hover foot-clone>
+        <b-table responsive caption="List of users" :items="items" striped hover foot-clone>
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
@@ -1471,7 +1453,7 @@
       <div>
         <h4 class="my-3">Table with string field definitions</h4>
         <b-table
-          responsive="xs"
+          responsive
           caption="List of users"
           :items="items"
           :fields="stringTableDefinitions"
@@ -1488,7 +1470,7 @@
         <h4 class="my-3">Table with object field definitions</h4>
 
         <b-table
-          responsive="xs"
+          responsive
           caption="List of users"
           :items="items"
           :fields="objectTableDefinitions"
@@ -1505,7 +1487,7 @@
         <h4 class="my-3">Table: Adding additional rows to the header</h4>
 
         <b-table
-          responsive="xs"
+          responsive
           caption="List of users"
           :items="items"
           :fields="objectTableDefinitions"
@@ -1906,10 +1888,11 @@ import {
   inject,
   onMounted,
   reactive,
+  Ref,
   ref,
 } from 'vue'
 import {useBreadcrumb} from './composables/useBreadcrumb'
-import type {TableField} from './types'
+import type {TableField, TableItem} from './types'
 import {BvEvent} from './utils/bvEvent'
 import {ToastInstance, useToast} from './components/BToast/plugin'
 
@@ -1934,7 +1917,7 @@ export default defineComponent({
     const offcanvas = ref(false)
     const container = ref(null)
     const showToast = ref(true)
-    const tableItems = [
+    const tableItems: Array<TableItem> = [
       {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
       {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
       {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
@@ -1948,7 +1931,7 @@ export default defineComponent({
       {age: 38, first_name: 'Jami', last_name: 'Carney'},
     ]
     const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
-    const objectTableDefinitions = ref<TableField[]>([
+    const objectTableDefinitions: Ref<Array<TableField>> = ref([
       {key: 'last_name', label: 'Family name'},
       {key: 'first_name', label: 'Given name'},
     ])
@@ -1971,7 +1954,7 @@ export default defineComponent({
       checkedSelectedCars.value = ['Mercedes', 'Toyota']
     }
     const checkboxes = reactive({
-      status: 'accepted',
+      status: true,
       statusArray: ['accepted'],
       selected: ['pineapple', {foo: 1}],
       options: [
@@ -2104,10 +2087,8 @@ export default defineComponent({
       )
     }
 
-    function tagValidator(tag: string) {
-      // Individual tag validator function
-      return tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
-    }
+    const tagValidator = (tag: string | undefined) =>
+      !!tag && tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
 
     function onTagState(valid: string[], invalid: string[], duplicate: string[]) {
       // console.log({
