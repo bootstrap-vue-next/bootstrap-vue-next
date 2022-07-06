@@ -1,8 +1,8 @@
+import {VNode} from '@vue/runtime-core'
 import {Slots} from 'vue'
 import {isFunction} from './inspect'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const normalizeSlot = (name: string, scope = {}, $slots: Slots = {}) => {
+export const normalizeSlot = (name: string, scope = {}, $slots: Slots = {}): VNode => {
   // Ensure names is an array
   const names = [name]
   let slot
@@ -11,5 +11,5 @@ export const normalizeSlot = (name: string, scope = {}, $slots: Slots = {}) => {
     slot = $slots[name]
   }
   // Note: in Vue 3.x, slots have been unified. No more scoped slots and all slots are exposed as functions
-  return slot && isFunction(slot) ? slot(scope) : slot
+  return (slot && isFunction(slot) ? slot(scope) : slot) as unknown as VNode
 }

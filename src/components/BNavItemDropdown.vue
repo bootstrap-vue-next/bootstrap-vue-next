@@ -18,12 +18,12 @@ interface BNavItemDropdownProps {
   text?: string
   size?: Size
   offset?: string
-  autoClose?: string
+  autoClose?: boolean | 'inside' | 'outside'
   dark?: boolean
   dropleft?: boolean
   dropright?: boolean
   dropup?: boolean
-  right?: boolean | string
+  right?: boolean
   left?: boolean | string
   offsetParent?: boolean
   split?: boolean
@@ -32,7 +32,7 @@ interface BNavItemDropdownProps {
 }
 
 withDefaults(defineProps<BNavItemDropdownProps>(), {
-  autoClose: 'true',
+  autoClose: true,
   dark: false,
   dropleft: false,
   dropright: false,

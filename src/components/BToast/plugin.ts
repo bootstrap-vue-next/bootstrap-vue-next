@@ -1,30 +1,17 @@
+import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '@/types'
+import getID from '@/utils/getID'
 import {
   App,
   ComponentPublicInstance,
   computed,
   ComputedRef,
-  getCurrentInstance,
-  h,
   inject,
   isReactive,
-  nextTick,
-  onMounted,
-  onUpdated,
   Plugin,
-  provide,
   reactive,
-  ref,
   Ref,
-  render,
-  resolveComponent,
-  shallowReactive,
   VNode,
-  watch,
-  watchEffect,
 } from 'vue'
-
-import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '@/types'
-import getID from '@/utils/getID'
 
 export interface ToastContent {
   title?: string
@@ -88,7 +75,7 @@ export class ToastInstance {
     if (position) {
       return computed<Array<Toast>>(() =>
         this.vm.toasts.filter((toast) => {
-          if (toast.options.pos == position && toast.options.value) {
+          if (toast.options.pos === position && toast.options.value) {
             return toast
           }
         })
@@ -100,7 +87,7 @@ export class ToastInstance {
 
   remove(...forDeletion: [string]): void {
     this.vm.toasts = this.vm.toasts.filter((item) => {
-      if (!forDeletion.includes(item.options.id)) {
+      if (item.options.id && !forDeletion.includes(item.options.id)) {
         return item
       }
     })
@@ -137,7 +124,9 @@ export class ToastInstance {
     return this.show(content, {variant: 'success', ...options})
   }
 
-  hide(): void {}
+  hide(): void {
+    //empty...
+  }
 }
 
 export class ToastController {
@@ -148,7 +137,7 @@ export class ToastController {
     this.vms = {}
   }
 
-  // Assume Root Vm if no paramters are passed
+  // Assume Root Vm if no parameters are passed
   public getOrCreateViewModel(): ToastVM
   public getOrCreateViewModel(vm?: ToastVM): ToastVM
   public getOrCreateViewModel(vm?: any): ToastVM {
@@ -190,7 +179,7 @@ export class ToastController {
 
 // default global inject key to fetch the controller
 const injectkey = Symbol()
-const rootkey = 'root'
+const rootkey = 'root' // TODO: I guess this variable is not used in any place...
 
 const defaults = {
   container: undefined,
@@ -205,13 +194,12 @@ export function useToast(
 ): ToastInstance | undefined
 
 export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | undefined {
-  //lets get our controller to fetch the toast instance
+  //let's get our controller to fetch the toast instance
   const controller = inject(key !== null ? key : injectkey) as ToastController
 
-  // not paramters passed, use root if defined
+  // not parameters passed, use root if defined
   if (!vm) {
-    const local_vm = new ToastInstance(controller.getOrCreateViewModel())
-    return local_vm
+    return new ToastInstance(controller.getOrCreateViewModel())
   }
 
   // use toast generically
