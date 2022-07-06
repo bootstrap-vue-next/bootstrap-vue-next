@@ -2087,8 +2087,8 @@ export default defineComponent({
       )
     }
 
-    const tagValidator = (tag: string | undefined) =>
-      !!tag && tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
+    const tagValidator = (tag: string) =>
+      tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
 
     function onTagState(valid: string[], invalid: string[], duplicate: string[]) {
       // console.log({
