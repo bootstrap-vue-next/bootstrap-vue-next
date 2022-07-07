@@ -75,9 +75,8 @@ Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
 
 # Making a new release
 
-```
-npm run release
-git push --follow-tags
-```
+1. increase version in `package.json`, commit
+2. https://github.com/cdmoro/bootstrap-vue-3/releases/new (create new tag)
 
-then https://github.com/cdmoro/bootstrap-vue-3/releases/new
+`bootstrap-vue-3/.github/workflows/npm-publish.yml` will auto-publish at https://www.npmjs.com/package/bootstrap-vue-3
+TODO: publish runs 2 times
