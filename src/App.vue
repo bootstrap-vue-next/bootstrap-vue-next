@@ -133,9 +133,9 @@
 
     <h5 class="mt-3">None</h5>
     <b-card>
-      <b-skeleton width="85%"></b-skeleton>
-      <b-skeleton width="55%"></b-skeleton>
-      <b-skeleton width="70%"></b-skeleton>
+      <b-skeleton animation width="85%"></b-skeleton>
+      <b-skeleton animation width="55%"></b-skeleton>
+      <b-skeleton animation width="70%"></b-skeleton>
     </b-card>
     <b-table-simple responsive>
       <b-thead>
@@ -2087,8 +2087,8 @@ export default defineComponent({
       )
     }
 
-    const tagValidator = (tag: string | undefined) =>
-      !!tag && tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
+    const tagValidator = (tag: string) =>
+      tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
 
     function onTagState(valid: string[], invalid: string[], duplicate: string[]) {
       // console.log({

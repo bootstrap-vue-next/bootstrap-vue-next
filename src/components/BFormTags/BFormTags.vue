@@ -141,7 +141,7 @@ interface BFormTagsProps {
   tagPills?: boolean
   tagRemoveLabel?: string
   tagRemovedLabel?: string
-  tagValidator?: (t?: string) => boolean
+  tagValidator?: (t: string) => boolean
   tagVariant?: ColorVariant
 }
 
