@@ -238,7 +238,7 @@ const getTabs = (slots: any): any[] => {
       }
       return arr
     }, [])
-    .filter((child: any) => child.type?.name === 'BTab')
+    .filter((child: any) => child.type?.__name === 'BTab')
 }
 
 activateTab(_tabIndex.value)
