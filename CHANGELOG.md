@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.14](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.13...v0.1.14) (2022-07-07)
+
+
+### Bug Fixes
+
+* Allow to change the target for the current popover. ([a9491b4](https://github.com/cdmoro/bootstrap-vue-3/commit/a9491b4290936ec3998b23228d5368a521cf1394))
+* **BToast:** vue has no exported member named 'Reactive' ([844035b](https://github.com/cdmoro/bootstrap-vue-3/commit/844035ba055a4bcad03e195825155e122ba7880a))
+* missing import components BFormCheckbox, BFormGroup, ... ([77761f2](https://github.com/cdmoro/bootstrap-vue-3/commit/77761f2a25d375d9c6b84031f7f171950d5db750))
+
 ### [0.1.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.12...v0.1.13) (2022-05-10)
 
 ### Bug Fixes
