@@ -24,7 +24,16 @@
 // import type {BPopoverEmits, BPopoverProps} from '@/types/components'
 import type {BPopoverDelayObject} from '@/types/components'
 import Popover from 'bootstrap/js/dist/popover'
-import {ComponentPublicInstance, computed, nextTick, onMounted, ref, useSlots, watch} from 'vue'
+import {
+  ComponentPublicInstance,
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  useSlots,
+  watch,
+} from 'vue'
 import useEventListener from '@/composables/useEventListener'
 import type {ColorVariant} from '@/types'
 
@@ -100,23 +109,29 @@ const getElement = (element: HTMLElement | string | undefined): HTMLElement | un
   return element
 }
 
+const generatePopoverInstance = (
+  targetValue: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+) => {
+  target.value = getElement(cleanElementProp(targetValue))
+
+  if (!target.value) return
+
+  instance.value = new Popover(target.value, {
+    container: cleanElementProp(props.container),
+    trigger: props.triggers,
+    placement: props.placement,
+    title: props.title || slots.title ? titleRef.value : '',
+    content: contentRef.value,
+    html: props.html,
+    delay: props.delay,
+    sanitize: props.sanitize,
+    offset: props.offset,
+  })
+}
+
 onMounted(() => {
   nextTick(() => {
-    target.value = getElement(cleanElementProp(props.target))
-
-    if (target.value)
-      instance.value = new Popover(target.value, {
-        container: cleanElementProp(props.container),
-        trigger: props.triggers,
-        placement: props.placement,
-        title: props.title || slots.title ? titleRef.value : '',
-        content: contentRef.value,
-        html: props.html,
-        delay: props.delay,
-        sanitize: props.sanitize,
-        offset: props.offset,
-      })
-    else console.warn('[B-Popover] Target is a mandatory props.')
+    generatePopoverInstance(props.target)
   })
 
   element.value?.parentNode?.removeChild(element.value)
@@ -125,6 +140,18 @@ onMounted(() => {
     instance.value?.show()
   }
 })
+
+onBeforeUnmount(() => {
+  instance.value?.dispose()
+})
+
+watch(
+  () => props.target,
+  (newValue) => {
+    instance.value?.dispose()
+    generatePopoverInstance(newValue)
+  }
+)
 
 watch(
   () => props.show,
