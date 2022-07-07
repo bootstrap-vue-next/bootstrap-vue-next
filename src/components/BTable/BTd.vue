@@ -1,43 +1,35 @@
-<script lang="ts">
-import {computed, defineComponent, h, useSlots} from 'vue'
+<template>
+  <td
+    role="cell"
+    :scope="scope"
+    :class="classes"
+    :colspan="colspan"
+    :rowspan="rowspan"
+    :data-label="stackedHeading"
+  >
+    <div v-if="stackedHeading">
+      <slot />
+    </div>
+    <slot v-else />
+  </td>
+</template>
 
-export default defineComponent({
-  props: {
-    colspan: {type: [String, Number]},
-    rowspan: {type: [String, Number]},
-    stackedHeading: {type: String},
-    stickyColumn: {type: Boolean, default: false},
-    variant: {type: String},
-  },
+<script setup lang="ts">
+import {computed} from 'vue'
 
-  setup(props) {
-    const slots = useSlots()
-
-    const classes = computed(() => ({
-      [`table-${props.variant}`]: props.variant,
-      'b-table-sticky-column': props.stickyColumn,
-      'table-b-table-default': props.stickyColumn && !props.variant,
-    }))
-
-    const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
-
-    const children = computed(() =>
-      props.stackedHeading ? h('div', slots.default?.()) : slots.default?.()
-    )
-
-    return () =>
-      h(
-        'td',
-        {
-          'role': 'cell',
-          'scope': scope.value,
-          'class': classes.value,
-          'colspan': props.colspan,
-          'rowspan': props.rowspan,
-          'data-label': props.stackedHeading,
-        },
-        children.value
-      )
-  },
+const props = defineProps({
+  colspan: {type: [String, Number]},
+  rowspan: {type: [String, Number]},
+  stackedHeading: {type: String},
+  stickyColumn: {type: Boolean, default: false},
+  variant: {type: String},
 })
+
+const classes = computed(() => ({
+  [`table-${props.variant}`]: props.variant,
+  'b-table-sticky-column': props.stickyColumn,
+  'table-b-table-default': props.stickyColumn && !props.variant,
+}))
+
+const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 </script>
