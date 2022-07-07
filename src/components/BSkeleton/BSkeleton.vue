@@ -23,8 +23,9 @@ const props = withDefaults(defineProps<BSkeletonProps>(), {
 
 const classes = computed(() => [
   `b-skeleton-${props.type}`,
-  `b-skeleton-animate-${props.animation}`,
   {
+    [`b-skeleton-animate-${props.animation}`]:
+      typeof props.animation === 'boolean' ? undefined : props.animation,
     [`bg-${props.variant}`]: props.variant,
   },
 ])

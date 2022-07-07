@@ -1,9 +1,16 @@
 <template>
-  <Render />
+  <div v-if="responsive" :class="responsiveClasses">
+    <table role="table" :class="classes">
+      <slot />
+    </table>
+  </div>
+  <table v-else role="table" :class="classes">
+    <slot />
+  </table>
 </template>
 
 <script setup lang="ts">
-import {computed, h, PropType, useSlots, VNode} from 'vue'
+import {computed, PropType} from 'vue'
 import type {Breakpoint, ColorVariant} from '@/types'
 
 const props = defineProps({
@@ -21,9 +28,9 @@ const props = defineProps({
   tableVariant: {type: String},
 })
 
-const slots = useSlots()
-
 const classes = computed(() => [
+  'table',
+  'b-table',
   {
     'table-bordered': props.bordered,
     'table-borderless': props.borderless,
@@ -40,27 +47,10 @@ const classes = computed(() => [
   props.tableClass,
 ])
 
-const table = h(
-  'table',
+const responsiveClasses = computed(() => [
   {
-    class: ['table b-table', classes.value],
-    role: 'table',
+    'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
+    [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
   },
-  slots.default?.()
-)
-
-let Render: VNode = table
-
-if (props.responsive) {
-  Render = h(
-    'div',
-    {
-      class: {
-        'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
-        [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
-      },
-    },
-    table
-  )
-}
+])
 </script>
