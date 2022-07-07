@@ -30,7 +30,7 @@ export interface Props {
   tagPills?: boolean
   tagRemoveLabel?: string
   tagRemovedLabel?: string
-  tagValidator?: (t: unknown) => boolean
+  tagValidator?: (t: string) => boolean
   tagVariant?: ColorVariant
 }
 // Emits

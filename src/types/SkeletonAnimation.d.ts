@@ -1,3 +1,3 @@
-type SkeletonAnimation = 'wave' | 'fade' | 'throb'
+type SkeletonAnimation = boolean | 'wave' | 'fade' | 'throb'
 
 export default SkeletonAnimation
