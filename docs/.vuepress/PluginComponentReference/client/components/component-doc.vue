@@ -140,7 +140,7 @@ export default defineComponent({
       }, {})
     })
     const githubURL: ComputedRef<string> = computed(() => {
-      const name = component.name ?? ''
+      const name = component.name ?? component.__name ?? ''
       if (name.indexOf('{') !== -1) {
         // Example component (most likely an auto generated component)
         return ''
@@ -154,7 +154,7 @@ export default defineComponent({
     // component name kebab
 
     const componentName: ComputedRef<string> = computed(() => {
-      return hyphenate(component.name ?? '')
+      return hyphenate(component.name ?? component.__name ?? '')
     })
     const tag: ComputedRef<string> = computed(() => {
       return `<${componentName.value}>`

@@ -1,10 +1,10 @@
-import {defineUserConfig, viteBundler} from 'vuepress'
-import {componentReference} from './PluginComponentReference'
+import {viteBundler} from '@vuepress/bundler-vite'
+import {defineUserConfig} from '@vuepress/cli'
 import {defaultTheme} from '@vuepress/theme-default'
-import type {DefaultThemeOptions} from 'vuepress'
-const {searchPlugin} = require('@vuepress/plugin-search')
+import {searchPlugin} from '@vuepress/plugin-search'
+import {componentReference} from './PluginComponentReference'
 
-export default defineUserConfig<DefaultThemeOptions>({
+export default defineUserConfig({
   lang: 'en-US',
   base: '/bootstrap-vue-3/',
   title: 'BootstrapVue 3',
@@ -27,8 +27,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     editLink: true,
     contributors: false,
     lastUpdated: true,
-    darkMode: false,
-    bundler: '@vuepress/bundler-webpack',
+    colorMode: 'light',
     themePlugins: {
       mediumZoom: false,
     },
