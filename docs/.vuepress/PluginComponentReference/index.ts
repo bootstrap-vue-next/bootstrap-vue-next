@@ -23,7 +23,7 @@ export const componentReference: Plugin<ComponentReferenceOptions> = ({
   baseDir = 'component-references',
 }) => ({
   name: 'plugin-object',
-  clientAppEnhanceFiles: path.resolve(__dirname, './client/clientAppEnhance.ts'),
+  clientConfigFile: path.resolve(__dirname, './client.ts'),
   extendsPage(page, app: App) {
     const {filePath} = resolvePageComponentReferencePath(baseDir, page, app)
     let componentReference = null
