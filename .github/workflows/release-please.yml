@@ -10,4 +10,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
-          package-name: release-please-action
+          package-name: package.json
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
