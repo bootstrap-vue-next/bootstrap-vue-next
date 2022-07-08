@@ -75,6 +75,12 @@ Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
 
 # Making a new release
 
+`.github/workflows/release-please.yml` will auto generate releases. Googleapi states `creates a release pull request after it notices the default branch contains "releasable units"` -- one who's commit follows conventional commits guidelines. You may have noticed that https://github.com/cdmoro/bootstrap-vue-3/pull/443 did not come with a bot release, but https://github.com/cdmoro/bootstrap-vue-3/pull/445 did (in terms of this https://github.com/cdmoro/bootstrap-vue-3/pull/444 , it was the bot activating from 443 and seeing a previous 'releasable unit' in May, not creating a PR _for_ rather _because of_). I also think the bot would rebase and merge two of it's own release PR requests keeping it's own prs clean.
+
+One could however, remove the bot automation and use https://github.com/googleapis/release-please/blob/main/docs/cli.md#creatingupdating-release-prs for manually (but auto generating) creating a release PR. If you feel manually releasing is preferable, simply remove the workflow. You would need to manually configure a few things to get the release-please cli to work, but once figured out it should be fairly easy to create new releases.
+
+Another way to manual release:
+
 1. increase version in `package.json`, commit
 2. https://github.com/cdmoro/bootstrap-vue-3/releases/new (create new tag)
 
