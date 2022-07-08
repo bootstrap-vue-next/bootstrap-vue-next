@@ -2,7 +2,6 @@ import {defineClientConfig} from '@vuepress/client'
 import 'bootstrap/scss/bootstrap.scss'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 import DocReference from './components/DocReference.vue'
-import ReferenceSection from './PluginComponentReference/client/components/reference-section'
 import {h} from 'vue'
 
 export default defineClientConfig({
@@ -12,7 +11,6 @@ export default defineClientConfig({
       app.use(BootstrapVue3)
       app.use(BToastPlugin)
       app.component('doc-reference', DocReference)
-      app.component('ComponentReference', (props) => h(ReferenceSection, {}))
     }
   },
   setup() {},
