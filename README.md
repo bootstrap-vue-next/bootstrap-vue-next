@@ -75,17 +75,12 @@ Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
 
 # Making a new release
 
-`.github/workflows/release-please.yml` will auto generate releases. Googleapi states `creates a release pull request after it notices the default branch contains "releasable units"` -- one who's commit follows conventional commits guidelines. You may have noticed that https://github.com/cdmoro/bootstrap-vue-3/pull/443 did not come with a bot release, but https://github.com/cdmoro/bootstrap-vue-3/pull/445 did. I also think the bot would rebase and merge two of it's own release PR requests keeping it's own prs clean.
+Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yml` workflow will auto generate releases when using [conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
 
-`.github/workflows/npm-publish.yml` run when a release is created and will auto-publish at https://www.npmjs.com/package/bootstrap-vue-3
+The workflow `.github/workflows/npm-publish.yml` will then auto-publish at <https://www.npmjs.com/package/bootstrap-vue-3>
 
 ## Manual releases
 
-One could however, remove the bot automation and use https://github.com/googleapis/release-please/blob/main/docs/cli.md#creatingupdating-release-prs for manually (but auto generating) creating a release PR. If you feel manually releasing is preferable, simply remove the workflow. You would need to manually configure a few things to get the release-please cli to work, but once figured out it should be fairly easy to create new releases.
+One could also manually create a release PR using the cli, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto generate a PR containing the new release notes
 
-Another way to manual release:
-
-1. increase version in `package.json`, commit
-2. https://github.com/cdmoro/bootstrap-vue-3/releases/new (create new tag)
-
-TODO: publish runs 2 times
+It will then auto-publish as stated before
