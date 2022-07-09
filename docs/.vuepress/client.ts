@@ -9,7 +9,7 @@ export default defineClientConfig({
     if (!__VUEPRESS_SSR__) {
       const {BootstrapVue3, BToastPlugin} = await import('../../dist/bootstrap-vue-3.es')
       app.use(BootstrapVue3)
-      app.use(BToastPlugin)
+      app.use(BToastPlugin, {BToast: {injectkey: 'toast'}})
       app.component('doc-reference', DocReference)
     }
   },
