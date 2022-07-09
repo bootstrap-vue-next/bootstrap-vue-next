@@ -10,6 +10,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
-          package-name: package.json
+          package-name: bootstrap-vue-3
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
