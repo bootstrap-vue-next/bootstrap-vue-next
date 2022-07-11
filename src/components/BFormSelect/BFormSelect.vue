@@ -37,13 +37,13 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormSelectEmits, BFormSelectProps} from '@/types/components'
-import type {Size} from '@/types'
+// import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
+import type {Size} from '../../types'
 import {computed, nextTick, onActivated, onMounted, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import useId from '@/composables/useId'
-import {normalizeOptions} from '@/composables/useFormSelect'
+import useId from '../../composables/useId'
+import {normalizeOptions} from '../../composables/useFormSelect'
 
 interface BFormSelectProps {
   ariaInvalid?: boolean | 'grammar' | 'spelling'

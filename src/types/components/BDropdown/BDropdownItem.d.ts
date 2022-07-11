@@ -1,4 +1,4 @@
-import type {ColorVariant, LinkTarget} from '@/types'
+import type {ColorVariant, LinkTarget} from '../..'
 
 // Props
 export interface Props {

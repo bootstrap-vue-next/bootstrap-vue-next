@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormCheckboxEmits, BFormCheckboxProps} from '@/types/components'
-import {getClasses, getInputClasses, getLabelClasses} from '@/composables/useFormCheck'
-import type {ButtonVariant, InputSize} from '@/types'
-import useId from '@/composables/useId'
+// import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
+import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
+import type {ButtonVariant, InputSize} from '../../types'
+import useId from '../../composables/useId'
 
 interface BFormCheckboxProps {
   ariaLabel?: string

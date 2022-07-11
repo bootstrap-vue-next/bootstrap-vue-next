@@ -1,4 +1,4 @@
-import type {BLinkProps} from '@/types/components'
+import type {BLinkProps} from '..'
 // Props
 export interface Props extends Omit<BLinkProps, 'event' | 'routerTag'> {
   active?: boolean

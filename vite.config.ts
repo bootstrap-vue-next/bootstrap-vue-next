@@ -5,15 +5,8 @@ import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import visualizer from 'rollup-plugin-visualizer'
 import dts from 'vite-plugin-dts'
-import {fileURLToPath, URL} from 'url'
 
 const config = defineConfig({
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
-  },
-
   build: {
     minify: true,
     lib: {

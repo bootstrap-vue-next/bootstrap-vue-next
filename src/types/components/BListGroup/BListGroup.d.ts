@@ -1,4 +1,4 @@
-import type {Breakpoint} from '@/types'
+import type {Breakpoint} from '../..'
 // Props
 export interface Props {
   flush?: boolean

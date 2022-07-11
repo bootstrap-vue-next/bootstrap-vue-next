@@ -1,5 +1,5 @@
-import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '@/types'
-import getID from '@/utils/getID'
+import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '../../types'
+import getID from '../../utils/getID'
 import {
   App,
   ComponentPublicInstance,

@@ -27,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormTagEmits, BFormTagProps} from '@/types/components'
+// import type {BFormTagEmits, BFormTagProps} from '../../types/components'
 import {computed, useSlots, VNodeNormalizedChildren} from 'vue'
-import useId from '@/composables/useId'
-import type {ColorVariant} from '@/types'
+import useId from '../../composables/useId'
+import type {ColorVariant} from '../../types'
 
 interface BFormTagProps {
   id?: string

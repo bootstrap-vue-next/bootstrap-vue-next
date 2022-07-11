@@ -1,6 +1,6 @@
 <script lang="ts">
-import type {ColorVariant} from '@/types'
-import type {BProgressParentData} from '@/types/components'
+import type {ColorVariant} from '../types'
+import type {BProgressParentData} from '../types/components'
 import {computed, defineComponent, h, inject, PropType} from 'vue'
 import {injectionKey} from './BProgress.vue'
 

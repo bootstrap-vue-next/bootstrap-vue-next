@@ -7,14 +7,14 @@
 </template>
 
 <script setup lang="ts">
-// import type { BAvatarGroupParentData, BAvatarGroupProps } from '@/types/components'
-import type {BAvatarGroupParentData} from '@/types/components'
+// import type { BAvatarGroupParentData, BAvatarGroupProps } from '../types/components'
+import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, InjectionKey, provide, StyleValue} from 'vue'
-import type {ColorVariant, InputSize} from '@/types'
-import {mathMax, mathMin} from '@/utils/math'
-import {toFloat} from '@/utils/number'
+import type {ColorVariant, InputSize} from '../../types'
+import {mathMax, mathMin} from '../../utils/math'
+import {toFloat} from '../../utils/number'
 import {computeSize} from './BAvatar.vue'
-import {isNumeric, isString} from '@/utils/inspect'
+import {isNumeric, isString} from '../../utils/inspect'
 
 interface BAvatarGroupProps {
   overlap?: number | string

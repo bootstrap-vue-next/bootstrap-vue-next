@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormValidFeedbackProps} from '@/types/components'
+// import type {BFormValidFeedbackProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BFormValidFeedbackProps {

@@ -1,5 +1,5 @@
 import type {RouteLocationRaw} from 'vue-router'
-import type {LinkTarget} from '@/types'
+import type {LinkTarget} from '../..'
 // Props
 export interface Props {
   active?: boolean

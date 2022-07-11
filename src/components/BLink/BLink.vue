@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import type {LinkTarget} from '@/types'
+import type {LinkTarget} from '../../types'
 import {computed, defineComponent, getCurrentInstance, PropType, ref} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 

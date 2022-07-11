@@ -1,4 +1,4 @@
-import type {ColorVariant} from '@/types'
+import type {ColorVariant} from '../..'
 // Props
 export interface Props {
   header?: string

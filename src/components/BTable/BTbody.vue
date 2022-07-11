@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTBodyProps} from '@/types/components'
+// import type {BTBodyProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BTBodyProps {

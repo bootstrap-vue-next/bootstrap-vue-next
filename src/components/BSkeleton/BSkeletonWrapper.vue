@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BSkeletonWrapperProps} from '@/types/components'
+// import type {BSkeletonWrapperProps} from '../../types/components'
 
 interface BSkeletonWrapperProps {
   loading?: boolean

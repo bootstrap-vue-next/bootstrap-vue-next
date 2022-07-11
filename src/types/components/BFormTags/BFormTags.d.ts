@@ -1,4 +1,4 @@
-import type {ButtonVariant, ColorVariant, InputSize, InputType} from '@/types'
+import type {ButtonVariant, ColorVariant, InputSize, InputType} from '../..'
 // Props
 export interface Props {
   addButtonText?: string

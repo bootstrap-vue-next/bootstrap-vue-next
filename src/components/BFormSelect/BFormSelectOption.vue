@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormSelectOptionProps} from '@/types/components'
+// import type {BFormSelectOptionProps} from '../../types/components'
 
 interface BFormSelectOptionProps {
   value?: unknown

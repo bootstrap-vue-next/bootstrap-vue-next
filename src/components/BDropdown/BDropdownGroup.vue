@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownGroupProps} from '@/types/components'
-import type {ColorVariant} from '@/types'
+// import type {BDropdownGroupProps} from '../../types/components'
+import type {ColorVariant} from '../../types'
 
 interface BDropdownGroupProps {
   id?: string

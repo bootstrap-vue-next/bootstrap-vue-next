@@ -41,12 +41,12 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCarouselProps, BCarouselEmits} from '@/types/components'
-import type {BCarouselParentData} from '@/types/components'
+// import type {BCarouselProps, BCarouselEmits} from '../types/components'
+import type {BCarouselParentData} from '../../types/components'
 import {InjectionKey, onMounted, provide, ref, useSlots, VNode} from 'vue'
 import Carousel from 'bootstrap/js/dist/carousel'
-import useEventListener from '@/composables/useEventListener'
-import useId from '@/composables/useId'
+import useEventListener from '../../composables/useEventListener'
+import useId from '../../composables/useId'
 
 interface BCarouselProps {
   id?: string

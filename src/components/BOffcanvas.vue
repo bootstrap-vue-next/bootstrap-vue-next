@@ -28,10 +28,10 @@
 </template>
 
 <script setup lang="ts">
-// import type {BOffcanvasEmits, BOffcanvasProps} from '@/types/components'
+// import type {BOffcanvasEmits, BOffcanvasProps} from '../types/components'
 import {computed, onMounted, ref, watch} from 'vue'
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
-import useEventListener from '@/composables/useEventListener'
+import useEventListener from '../composables/useEventListener'
 
 interface BOffcanvasProps {
   modelValue?: boolean

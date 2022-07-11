@@ -1,4 +1,4 @@
-import type {Alignment, InputSize} from '@/types'
+import type {Alignment, InputSize} from '../..'
 // Props
 export interface Props {
   align?: Alignment

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BImgProps} from '@/types/components'
+// import type {BImgProps} from '../types/components'
 import {computed} from 'vue'
 
 interface BImgProps {

@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BPopoverEmits, BPopoverProps} from '@/types/components'
-import type {BPopoverDelayObject} from '@/types/components'
+// import type {BPopoverEmits, BPopoverProps} from '../types/components'
+import type {BPopoverDelayObject} from '../types/components'
 import Popover from 'bootstrap/js/dist/popover'
 import {
   ComponentPublicInstance,
@@ -34,8 +34,8 @@ import {
   useSlots,
   watch,
 } from 'vue'
-import useEventListener from '@/composables/useEventListener'
-import type {ColorVariant} from '@/types'
+import useEventListener from '../composables/useEventListener'
+import type {ColorVariant} from '../types'
 
 interface BPopoverProps {
   id?: string

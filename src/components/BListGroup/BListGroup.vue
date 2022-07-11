@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BListGroupProps} from '@/types/components'
+// import type {BListGroupProps} from '../../types/components'
 import {computed, InjectionKey, provide} from 'vue'
-import type {Breakpoint} from '@/types'
+import type {Breakpoint} from '../../types'
 
 interface BListGroupProps {
   flush?: boolean
@@ -41,6 +41,6 @@ provide(injectionKey, {
 </script>
 
 <script lang="ts">
-import type {BListGroupParentData} from '@/types/components'
+import type {BListGroupParentData} from '../../types/components'
 export const injectionKey: InjectionKey<BListGroupParentData> = Symbol()
 </script>

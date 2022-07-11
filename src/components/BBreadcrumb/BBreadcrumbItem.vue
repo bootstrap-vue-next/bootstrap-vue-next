@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import {omit} from '@/utils/object'
+import {omit} from '../../utils/object'
 import {computed, defineComponent} from 'vue'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 

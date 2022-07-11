@@ -50,13 +50,13 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTabsProps, BTabsEmits} from '@/types/components'
+// import type {BTabsProps, BTabsEmits} from '../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, useSlots, watch} from 'vue'
-import getID from '@/utils/getID'
-import type {Alignment} from '@/types'
-import {BvEvent} from '@/utils/bvEvent'
-import {mathMax} from '@/utils/math'
-import {isFunction} from '@/utils/inspect'
+import getID from '../../utils/getID'
+import type {Alignment} from '../../types'
+import {BvEvent} from '../../utils/bvEvent'
+import {mathMax} from '../../utils/math'
+import {isFunction} from '../../utils/inspect'
 
 interface BTabsProps {
   activeNavItemClass?: Array<unknown> | Record<string, unknown> | string
@@ -315,6 +315,6 @@ provide(injectionKey, {
 </script>
 
 <script lang="ts">
-import {BTabsParentData} from '@/types/components'
+import {BTabsParentData} from '../../types/components'
 export const injectionKey: InjectionKey<BTabsParentData> = Symbol()
 </script>

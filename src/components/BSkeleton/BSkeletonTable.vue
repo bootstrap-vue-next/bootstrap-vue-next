@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BSkeletonTableProps} from '@/types/components'
-import type {SkeletonAnimation} from '@/types'
+// import type {BSkeletonTableProps} from '../../types/components'
+import type {SkeletonAnimation} from '../../types'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BSkeleton from './BSkeleton.vue'
 

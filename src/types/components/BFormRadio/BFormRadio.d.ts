@@ -1,4 +1,4 @@
-import type {ButtonVariant} from '@/types'
+import type {ButtonVariant} from '../..'
 // Props
 export interface Props {
   ariaLabel?: string

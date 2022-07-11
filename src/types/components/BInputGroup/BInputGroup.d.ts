@@ -1,4 +1,4 @@
-import type {InputSize} from '@/types'
+import type {InputSize} from '../..'
 // Props
 export interface Props {
   append?: string

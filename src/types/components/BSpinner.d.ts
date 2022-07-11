@@ -1,4 +1,4 @@
-import type {ColorVariant, SpinnerType} from '@/types'
+import type {ColorVariant, SpinnerType} from '..'
 // Props
 export interface Props {
   label?: string

@@ -45,8 +45,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardProps} from '@/types/components'
-import type {Alignment, ColorVariant, TextColorVariant} from '@/types'
+// import type {BCardProps} from '../../types/components'
+import type {Alignment, ColorVariant, TextColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BCardProps {

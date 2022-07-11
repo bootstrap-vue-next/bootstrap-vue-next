@@ -1,4 +1,4 @@
-import type {TransitionMode} from '@/types'
+import type {TransitionMode} from '../..'
 
 // Props
 export interface Props {

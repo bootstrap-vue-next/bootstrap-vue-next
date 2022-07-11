@@ -1,4 +1,4 @@
-import type {Alignment} from '@/types'
+import type {Alignment} from '../..'
 // Props
 export interface Props {
   activeNavItemClass?: Array<unknown> | Record<string, unknown> | string

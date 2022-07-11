@@ -1,4 +1,4 @@
-import type {ButtonVariant, Size} from '@/types'
+import type {ButtonVariant, Size} from '../..'
 // Props
 export interface Props {
   size?: Size

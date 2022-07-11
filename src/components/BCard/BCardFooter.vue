@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardFooterProps} from '@/types/components'
-import type {ColorVariant, TextColorVariant} from '@/types'
+// import type {BCardFooterProps} from '../../types/components'
+import type {ColorVariant, TextColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BCardFooterProps {

@@ -25,13 +25,13 @@
 </template>
 
 <script setup lang="ts">
-// import type { BAvatarProps, BAvatarEmits } from '@/types/components'
-import {isEmptySlot} from '@/utils/dom'
-import type {BAvatarGroupParentData} from '@/types/components'
+// import type { BAvatarProps, BAvatarEmits } from '../types/components'
+import {isEmptySlot} from '../../utils/dom'
+import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, useSlots} from 'vue'
-import type {ColorVariant, InputSize} from '@/types'
-import {isNumber, isNumeric, isString} from '@/utils/inspect'
-import {toFloat} from '@/utils/number'
+import type {ColorVariant, InputSize} from '../../types'
+import {isNumber, isNumeric, isString} from '../../utils/inspect'
+import {toFloat} from '../../utils/number'
 import {injectionKey} from './BAvatarGroup.vue'
 
 interface BAvatarProps {
