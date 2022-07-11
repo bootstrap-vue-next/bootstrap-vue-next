@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BButtonToolbarProps} from '@/types/components'
+// import type {BButtonToolbarProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BButtonToolbarProps {

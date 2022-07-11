@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardGroupProps} from '@/types/components'
+// import type {BCardGroupProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BCardGroupProps {

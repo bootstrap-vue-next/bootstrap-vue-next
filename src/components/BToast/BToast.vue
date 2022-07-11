@@ -11,13 +11,13 @@ import {
   VNode,
   watch,
 } from 'vue'
-import {normalizeSlot} from '@/utils/normalize-slot'
-import {ColorVariant} from '@/types'
-import {toInteger} from '@/utils/number'
+import {normalizeSlot} from '../../utils/normalize-slot'
+import {ColorVariant} from '../../types'
+import {toInteger} from '../../utils/number'
 import BTransition from '../BTransition/BTransition.vue'
-import {requestAF} from '@/utils/dom'
+import {requestAF} from '../../utils/dom'
 import BButtonClose from '../BButton/BCloseButton.vue'
-import {isLink} from '@/utils/router'
+import {isLink} from '../../utils/router'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 import {BodyProp} from './plugin'
 

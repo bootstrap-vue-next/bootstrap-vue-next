@@ -1,15 +1,23 @@
 <script lang="ts">
-import useId from '@/composables/useId'
-import {RX_SPACE_SPLIT} from '@/constants/regex'
-import {arrayIncludes} from '@/utils/array'
-import {cssEscape} from '@/utils/css-escape'
-import {attemptFocus, getAttr, isVisible, removeAttr, select, selectAll, setAttr} from '@/utils/dom'
-import {IS_BROWSER} from '@/utils/env'
-import getID from '@/utils/getID'
-import {isBoolean} from '@/utils/inspect'
-import {normalizeSlot} from '@/utils/normalize-slot'
-import {stringToInteger} from '@/utils/number'
-import {suffixPropName} from '@/utils/props'
+import useId from '../../composables/useId'
+import {RX_SPACE_SPLIT} from '../../constants/regex'
+import {arrayIncludes} from '../../utils/array'
+import {cssEscape} from '../../utils/css-escape'
+import {
+  attemptFocus,
+  getAttr,
+  isVisible,
+  removeAttr,
+  select,
+  selectAll,
+  setAttr,
+} from '../../utils/dom'
+import {IS_BROWSER} from '../../utils/env'
+import getID from '../../utils/getID'
+import {isBoolean} from '../../utils/inspect'
+import {normalizeSlot} from '../../utils/normalize-slot'
+import {stringToInteger} from '../../utils/number'
+import {suffixPropName} from '../../utils/props'
 import {computed, defineComponent, h, nextTick, onMounted, ref, watch} from 'vue'
 import BCol from '../BCol.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'

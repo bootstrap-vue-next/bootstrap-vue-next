@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardImgProps} from '@/types/components'
+// import type {BCardImgProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BCardImgProps {

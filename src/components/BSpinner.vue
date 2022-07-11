@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BSpinnerProps} from '@/types/components'
+// import type {BSpinnerProps} from '../types/components'
 import {computed} from 'vue'
-import type {ColorVariant, SpinnerType} from '@/types'
+import type {ColorVariant, SpinnerType} from '../types'
 
 interface BSpinnerProps {
   label?: string

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormEmits, BFormProps} from '@/types/components'
+// import type {BFormEmits, BFormProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BFormProps {

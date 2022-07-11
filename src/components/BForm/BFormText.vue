@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormTextProps} from '@/types/components'
+// import type {BFormTextProps} from '../../types/components'
 import {computed} from 'vue'
-import type {TextColorVariant} from '@/types'
+import type {TextColorVariant} from '../../types'
 
 interface BFormTextProps {
   id?: string

@@ -18,9 +18,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BProgressProps} from '@/types/components'
+// import type {BProgressProps} from '../types/components'
 import BProgressBar from './BProgressBar.vue'
-import type {ColorVariant} from '@/types'
+import type {ColorVariant} from '../types'
 import {InjectionKey, provide} from 'vue'
 
 interface BProgressProps {
@@ -54,6 +54,6 @@ provide(injectionKey, {
 </script>
 
 <script lang="ts">
-import type {BProgressParentData} from '@/types/components'
+import type {BProgressParentData} from '../types/components'
 export const injectionKey: InjectionKey<BProgressParentData> = Symbol()
 </script>

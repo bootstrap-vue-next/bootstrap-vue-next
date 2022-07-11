@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCloseButtonProps} from '@/types/components'
+// import type {BCloseButtonProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BCloseButtonProps {

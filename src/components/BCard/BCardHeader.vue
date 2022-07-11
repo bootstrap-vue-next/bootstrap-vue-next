@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardHeaderProps} from '@/types/components'
+// import type {BCardHeaderProps} from '../../types/components'
 import {computed} from 'vue'
-import type {ColorVariant} from '@/types'
+import type {ColorVariant} from '../../types'
 
 interface BCardHeaderProps {
   header?: string

@@ -1,4 +1,4 @@
-import type {Breakpoint, Position} from '@/types'
+import type {Breakpoint, Position} from '..'
 // Props
 export interface Props {
   gutterX?: string

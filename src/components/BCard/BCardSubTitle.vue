@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardSubtitleProps} from '@/types/components'
-import type {TextColorVariant} from '@/types'
+// import type {BCardSubtitleProps} from '../../types/components'
+import type {TextColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BCardSubtitleProps {

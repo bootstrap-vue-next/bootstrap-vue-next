@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type {InputSize} from '@/types'
+import type {InputSize} from '../../types'
 import {computed} from 'vue'
 
 interface BInputGroupProps {

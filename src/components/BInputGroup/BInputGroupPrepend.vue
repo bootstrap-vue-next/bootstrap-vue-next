@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BInputGroupPrependProps} from '@/types/components'
+// import type {BInputGroupPrependProps} from '../../types/components'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 
 interface BInputGroupPrependProps {

@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownItemButtonEmits, BDropdownItemProps} from '@/types/components'
-import type {ColorVariant, LinkTarget} from '@/types'
+// import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
+import type {ColorVariant, LinkTarget} from '../../types'
 
 interface BDropdownItemProps {
   href?: string

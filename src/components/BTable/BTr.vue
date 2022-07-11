@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTrProps} from '@/types/components'
+// import type {BTrProps} from '../../types/components'
 import {computed} from 'vue'
 
 interface BTrProps {

@@ -12,11 +12,11 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardBodyProps} from '@/types/components'
+// import type {BCardBodyProps} from '../../types/components'
 import {computed} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import BCardSubTitle from './BCardSubTitle.vue'
-import type {ColorVariant, TextColorVariant} from '@/types'
+import type {ColorVariant, TextColorVariant} from '../../types'
 
 interface BCardBodyProps {
   bodyBgVariant?: ColorVariant

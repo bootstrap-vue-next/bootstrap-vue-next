@@ -8,9 +8,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BSkeletonIconProps} from '@/types/components'
+// import type {BSkeletonIconProps} from '../../types/components'
 import {computed} from 'vue'
-import type {SkeletonAnimation} from '@/types'
+import type {SkeletonAnimation} from '../../types'
 
 interface BSkeletonIconProps {
   animation?: SkeletonAnimation

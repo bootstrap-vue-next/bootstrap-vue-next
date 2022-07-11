@@ -1,5 +1,5 @@
-import type {ContainerPosition} from '@/types'
-import type {ToastInstance} from '@/components/BToast/plugin'
+import type {ContainerPosition} from '../..'
+import type {ToastInstance} from '../../../components/BToast/plugin'
 // Props
 export interface Props {
   position?: ContainerPosition

@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BInputGroupAddonProps} from '@/types/components'
+// import type {BInputGroupAddonProps} from '../../types/components'
 import {computed} from 'vue'
 import BInputGroupText from './BInputGroupText.vue'
 

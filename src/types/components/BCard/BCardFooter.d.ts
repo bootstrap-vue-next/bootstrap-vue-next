@@ -1,4 +1,4 @@
-import type {ColorVariant, TextColorVariant} from '@/types'
+import type {ColorVariant, TextColorVariant} from '../..'
 // Props
 export interface Props {
   footer?: string

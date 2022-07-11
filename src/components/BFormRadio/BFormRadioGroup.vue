@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '@/types/components'
-import type {ButtonVariant, Size} from '@/types'
+// import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
+import type {ButtonVariant, Size} from '../../types'
 import {computed, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import {
@@ -29,8 +29,8 @@ import {
   getGroupClasses,
   optionToElement,
   slotsToElements,
-} from '@/composables/useFormCheck'
-import useId from '@/composables/useId'
+} from '../../composables/useFormCheck'
+import useId from '../../composables/useId'
 
 interface BFormRadioGroupProps {
   size?: Size

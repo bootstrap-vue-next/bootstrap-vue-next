@@ -1,5 +1,5 @@
 <script lang="ts">
-import type {Breakpoint, Position} from '@/types'
+import type {Breakpoint, Position} from '../types'
 import {computed, defineComponent, h, onMounted, PropType, ref, VNode} from 'vue'
 import {ToastInstance, useToast} from './BToast/plugin'
 import BToaster from './BToast/BToaster.vue'

@@ -13,11 +13,11 @@
 </template>
 
 <script setup lang="ts">
-// import type {BAlertEmits, BAlertProps} from '@/types/components'
-import type {ColorVariant} from '@/types'
+// import type {BAlertEmits, BAlertProps} from '../types/components'
+import type {ColorVariant} from '../types'
 import {computed, onBeforeUnmount, ref, watch} from 'vue'
 import Alert from 'bootstrap/js/dist/alert'
-import {toInteger} from '@/utils/number'
+import {toInteger} from '../utils/number'
 
 interface BAlertProps {
   dismissLabel?: string

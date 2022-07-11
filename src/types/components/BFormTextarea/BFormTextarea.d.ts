@@ -1,4 +1,4 @@
-import type {FormCommonInputProps} from '@/types/composables'
+import type {FormCommonInputProps} from '../../composables'
 
 // Props
 export interface Props extends FormCommonInputProps {

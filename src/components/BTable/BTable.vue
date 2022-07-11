@@ -189,7 +189,7 @@
 
 <script setup lang="ts">
 import {computed, PropType} from 'vue'
-import {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '@/types'
+import {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
 import useItemHelper from './itemHelper'
 
 const props = defineProps({

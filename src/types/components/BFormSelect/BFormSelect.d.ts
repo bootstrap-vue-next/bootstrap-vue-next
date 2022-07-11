@@ -1,4 +1,4 @@
-import type {Size} from '@/types'
+import type {Size} from '../..'
 // Props
 export interface Props {
   ariaInvalid?: boolean | 'grammar' | 'spelling'

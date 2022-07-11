@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '@/types/components'
-import type {ButtonType, ColorVariant} from '@/types'
+// import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '../../types/components'
+import type {ButtonType, ColorVariant} from '../../types'
 
 interface BDropdownItemButtonProps {
   buttonClass?: string | Array<unknown> | Record<string, unknown>

@@ -31,10 +31,10 @@
 <script setup lang="ts">
 import {inject} from 'vue'
 import BCollapse from '../BCollapse.vue'
-import vBToggle from '@/directives/BToggle'
-import useId from '@/composables/useId'
+import vBToggle from '../../directives/BToggle'
+import useId from '../../composables/useId'
 import {injectionKey} from './BAccordion.vue'
-// import type {BAccordionItemProps} from '@/types/components'
+// import type {BAccordionItemProps} from '../types/components'
 
 interface BAccordionItemProps {
   id?: string

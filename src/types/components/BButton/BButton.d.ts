@@ -1,5 +1,5 @@
-import type {ButtonVariant, InputSize, LinkTarget} from '@/types'
-import type {BLinkProps} from '@/types/components'
+import type {ButtonVariant, InputSize, LinkTarget} from '../..'
+import type {BLinkProps} from '..'
 // Props
 export interface Props extends BLinkProps {
   active?: boolean

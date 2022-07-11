@@ -13,10 +13,10 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {useBreadcrumb} from '@/composables/useBreadcrumb'
-import type {BreadcrumbItem, BreadcrumbItemObject} from '@/types'
+import {useBreadcrumb} from '../../composables/useBreadcrumb'
+import type {BreadcrumbItem, BreadcrumbItemObject} from '../../types'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
-// import type {BBreadcrumbProps} from '@/types/components'
+// import type {BBreadcrumbProps} from '../types/components'
 
 interface BBreadcrumbProps {
   items?: Array<BreadcrumbItem>

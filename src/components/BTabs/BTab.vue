@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTabProps} from '@/types/components'
+// import type {BTabProps} from '../../types/components'
 import {computed, inject} from 'vue'
 import {injectionKey} from './BTabs.vue'
 

@@ -57,11 +57,11 @@
 </template>
 
 <script setup lang="ts">
-// import type {BModalEmits, BModalProps} from '@/types/components'
+// import type {BModalEmits, BModalProps} from '../types/components'
 import Modal from 'bootstrap/js/dist/modal'
-import BButton from '@/components/BButton/BButton.vue'
-import useEventListener from '@/composables/useEventListener'
-import type {ColorVariant, InputSize} from '@/types'
+import BButton from './BButton/BButton.vue'
+import useEventListener from '../composables/useEventListener'
+import type {ColorVariant, InputSize} from '../types'
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant

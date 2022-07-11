@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BListGroupItemProps} from '@/types/components'
+// import type {BListGroupItemProps} from '../../types/components'
 import {computed, inject, useAttrs} from 'vue'
-import type {ColorVariant, LinkTarget} from '@/types'
+import type {ColorVariant, LinkTarget} from '../../types'
 import {injectionKey} from './BListGroup.vue'
 
 interface BListGroupItemProps {

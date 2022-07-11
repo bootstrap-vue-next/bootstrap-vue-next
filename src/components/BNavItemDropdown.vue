@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BNavItemDropdownProps} from '@/types/components'
-import type {ButtonVariant, Size} from '@/types'
+// import type {BNavItemDropdownProps} from '../types/components'
+import type {ButtonVariant, Size} from '../types'
 import BDropdown from './BDropdown/BDropdown.vue'
 
 interface BNavItemDropdownProps {

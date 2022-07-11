@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BNavItemProps} from '@/types/components'
+// import type {BNavItemProps} from '../types/components'
 import {computed} from 'vue'
 
 interface BNavItemProps {

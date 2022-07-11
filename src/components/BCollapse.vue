@@ -12,11 +12,11 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCollapseEmits, BCollapseProps} from '@/types/components'
+// import type {BCollapseEmits, BCollapseProps} from '../types/components'
 import {computed, onMounted, ref, watch} from 'vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-import useEventListener from '@/composables/useEventListener'
-import getID from '@/utils/getID'
+import useEventListener from '../composables/useEventListener'
+import getID from '../utils/getID'
 
 interface BCollapseProps {
   accordion?: string

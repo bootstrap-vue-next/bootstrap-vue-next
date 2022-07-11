@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-// import type {BSkeletonProps} from '@/types/components'
+// import type {BSkeletonProps} from '../../types/components'
 import {computed, StyleValue} from 'vue'
-import type {ColorVariant, SkeletonAnimation, SkeletonType} from '@/types'
+import type {ColorVariant, SkeletonAnimation, SkeletonType} from '../../types'
 
 interface BSkeletonProps {
   height?: string

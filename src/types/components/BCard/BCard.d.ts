@@ -1,4 +1,4 @@
-import type {Alignment, ColorVariant, TextColorVariant} from '@/types'
+import type {Alignment, ColorVariant, TextColorVariant} from '../..'
 // Props
 export interface Props {
   align?: Alignment

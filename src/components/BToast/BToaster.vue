@@ -16,10 +16,10 @@
 </template>
 
 <script setup lang="ts">
-// import type {BToasterProps} from '@/types/components'
+// import type {BToasterProps} from '../../types/components'
 import {computed} from 'vue'
-import type {ContainerPosition} from '@/types'
-import type {ToastInstance} from '@/components/BToast/plugin'
+import type {ContainerPosition} from '../../types'
+import type {ToastInstance} from '../BToast/plugin'
 
 interface BToasterProps {
   position?: ContainerPosition

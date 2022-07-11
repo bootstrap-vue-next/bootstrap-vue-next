@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
-import type {ButtonVariant, InputSize, LinkTarget} from '@/types'
+import type {ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({

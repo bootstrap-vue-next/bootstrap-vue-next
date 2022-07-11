@@ -1,6 +1,5 @@
-import type {InputType} from '@/types'
-import type {FormCommonInputProps} from '@/types/composables'
-
+import type {InputType} from '../..'
+import type {FormCommonInputProps} from '../../composables'
 // Props
 export interface Props extends FormCommonInputProps {
   // debounce?: string | number

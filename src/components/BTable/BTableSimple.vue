@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import {computed, PropType} from 'vue'
-import type {Breakpoint, ColorVariant} from '@/types'
+import type {Breakpoint, ColorVariant} from '../../types'
 
 const props = defineProps({
   bordered: {type: Boolean, default: false},

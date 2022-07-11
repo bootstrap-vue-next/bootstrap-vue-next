@@ -1,5 +1,5 @@
 import type {ComputedRef} from 'vue'
-import type {ColorVariant, InputSize} from '@/types'
+import type {ColorVariant, InputSize} from '../..'
 // Props
 export interface Props {
   overlap?: number | string
