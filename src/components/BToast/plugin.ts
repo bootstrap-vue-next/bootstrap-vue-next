@@ -179,6 +179,8 @@ export class ToastController {
 
 // default global inject key to fetch the controller
 const injectkey = Symbol()
+const fetchKey = Symbol()
+
 const rootkey = 'root' // TODO: I guess this variable is not used in any place...
 
 const defaults = {
@@ -186,6 +188,11 @@ const defaults = {
   toasts: [],
   root: false,
 }
+
+export function getKey(): any {
+  return inject(fetchKey)
+}
+
 export function useToast(): ToastInstance | undefined
 export function useToast(vm: {id: symbol}, key?: symbol): ToastInstance | undefined
 export function useToast(
@@ -195,7 +202,7 @@ export function useToast(
 
 export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | undefined {
   //let's get our controller to fetch the toast instance
-  const controller = inject(key !== null ? key : injectkey) as ToastController
+  const controller = inject(getKey()) as ToastController
 
   // not parameters passed, use root if defined
   if (!vm) {
@@ -211,6 +218,7 @@ export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | und
 
 export const BToastPlugin: Plugin = {
   install: (app: App, options: BootstrapVueOptions = {}) => {
+    app.provide(fetchKey, options?.BToast?.injectkey ?? injectkey)
     app.provide(options?.BToast?.injectkey ?? injectkey, new ToastController())
   },
 }

@@ -84,3 +84,8 @@ The workflow `.github/workflows/npm-publish.yml` will then auto-publish at <http
 One could also manually create a release PR using the cli, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto generate a PR containing the new release notes
 
 It will then auto-publish as stated before
+
+Collaborators can also manually release by:
+
+increase version in package.json, commit
+https://github.com/cdmoro/bootstrap-vue-3/releases/new (create new tag)
