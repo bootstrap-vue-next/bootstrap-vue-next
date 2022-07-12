@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.18](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.17...v0.1.18) (2022-07-12)
+
+
+### Bug Fixes
+
+* **BCardBody:** subTitleTag typo fix ([ac4e86a](https://github.com/cdmoro/bootstrap-vue-3/commit/ac4e86ab6f7f4dc1277498d943615d73a51fd5cc))
+
 ## [0.1.17](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.16...v0.1.17) (2022-07-12)
 
 
