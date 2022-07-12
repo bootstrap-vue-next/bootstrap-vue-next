@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["vitest/globals", "@vuepress/client/types", "vite/client"],
+    "types": ["vitest/globals", "vite/client"],
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
