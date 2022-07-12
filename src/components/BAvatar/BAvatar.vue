@@ -200,7 +200,6 @@ const onImgError = (e: Event): void => emit('img-error', e)
 </script>
 
 <script lang="ts">
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const computeSize = (value: any): string | null => {
   const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value
   return isNumber(calcValue) ? `${calcValue}px` : calcValue || null

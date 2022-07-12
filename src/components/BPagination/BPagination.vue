@@ -75,7 +75,7 @@ export default defineComponent({
     )
 
     const startNumber = computed(() => {
-      let lStartNumber = 1
+      let lStartNumber: number
       const pagesLeft: number = numberOfPages.value - props.modelValue
 
       if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
@@ -153,21 +153,6 @@ export default defineComponent({
         }
       }
 
-      return n
-    })
-
-    const pageNumberfinal = computed(() => {
-      let n: number = numberOfLinks.value
-
-      if (showFirstDots.value && props.firstNumber && startNumber.value < 4) {
-        n = n + 2
-      }
-      const lastPageNumber = startNumber.value + n - 1
-
-      if (showLastDots.value && props.lastNumber && lastPageNumber > numberOfPages.value - 3) {
-        n = n + (lastPageNumber === numberOfPages.value - 2 ? 2 : 3)
-      }
-      n = Math.min(n, numberOfPages.value - startNumber.value + 1)
       return n
     })
 
@@ -474,7 +459,8 @@ export default defineComponent({
         buttons.push(gotoLastPageButton)
       }
 
-      const $pagination = h(
+      //pagination
+      return h(
         'ul',
         {
           'class': ['pagination', btnSize.value, alignment.value, styleClass.value],
@@ -484,7 +470,6 @@ export default defineComponent({
         },
         buttons
       )
-      return $pagination
     }
   },
 })

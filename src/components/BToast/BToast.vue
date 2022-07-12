@@ -64,7 +64,7 @@ export default defineComponent({
     let resumeDismiss: number
 
     const clearDismissTimer = () => {
-      if (dismissTimer === undefined) return
+      if (typeof dismissTimer === 'undefined') return
       clearTimeout(dismissTimer)
       dismissTimer = undefined
     }
@@ -121,14 +121,6 @@ export default defineComponent({
       startDismissTimer()
     }
 
-    const toggle = () => {
-      if (props.modelValue) {
-        hide()
-      } else {
-        show()
-      }
-    }
-
     watch(
       () => props.modelValue,
       (newValue) => {
@@ -165,15 +157,8 @@ export default defineComponent({
       emit('update:modelValue', false)
     }
 
-    const transitionHandlers = computed(() => ({
-      OnBeforeEnter,
-      OnAfterEnter,
-      OnBeforeLeave,
-      OnAfterLeave,
-    }))
-
     onUnmounted(() => {
-      //if there is time left on autohide or no autohide then keep toast alive
+      //if there is time left on autoHide or no autoHide then keep toast alive
       clearDismissTimer()
       if (!props.autoHide) {
         return
@@ -255,7 +240,8 @@ export default defineComponent({
           $innertoast
         )
       }
-      const $toast = h(
+      //toast
+      return h(
         'div',
         {
           'class': ['b-toast'],
@@ -280,8 +266,6 @@ export default defineComponent({
           ),
         ]
       )
-
-      return $toast
     }
   },
 })

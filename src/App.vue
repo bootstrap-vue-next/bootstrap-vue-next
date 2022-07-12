@@ -2091,11 +2091,11 @@ export default defineComponent({
       tag === tag.toLowerCase() && tag.length > 2 && tag.length < 6
 
     function onTagState(valid: string[], invalid: string[], duplicate: string[]) {
-      // console.log({
-      //   valid,
-      //   invalid,
-      //   duplicate,
-      // })
+      console.log({
+        valid,
+        invalid,
+        duplicate,
+      })
     }
 
     return {
