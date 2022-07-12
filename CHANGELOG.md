@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.17](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.16...v0.1.17) (2022-07-12)
+
+
+### Bug Fixes
+
+* subtitle should be undefined by default ([1424108](https://github.com/cdmoro/bootstrap-vue-3/commit/1424108bf8ea6e38efd46bdb549cc26937504b17))
+
 ## [0.1.16](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.15...v0.1.16) (2022-07-11)
 
 
