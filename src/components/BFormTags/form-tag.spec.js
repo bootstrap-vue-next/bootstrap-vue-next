@@ -1,6 +1,6 @@
 import {mount} from '@vue/test-utils'
 import BFormTag from './BFormTag.vue'
-import {describe, expect, it, vitest} from 'vitest'
+import {describe, expect, it} from 'vitest'
 
 describe('form-tag', () => {
   it('has expected structure', async () => {

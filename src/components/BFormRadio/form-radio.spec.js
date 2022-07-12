@@ -795,7 +795,7 @@ describe('form-radio', () => {
     expect(label.classes()).toContain('btn-secondary')
     await input.setValue(true)
     //await input.trigger('click')
-    console.log(label.classes(), wrapper.vm.modelValue)
+    //console.log(label.classes(), wrapper.vm.modelValue)
     expect(label.classes().length).toEqual(3)
     expect(label.classes()).toContain('active')
     expect(label.classes()).toContain('btn')
