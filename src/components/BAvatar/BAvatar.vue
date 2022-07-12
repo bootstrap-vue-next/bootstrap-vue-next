@@ -148,13 +148,6 @@ const textClasses = computed<string>(() => {
   return `text-${textVariant}`
 })
 
-const iconName = computed<string | undefined>(() => {
-  // TODO this should work with any icon font, eg icon="fa fa-cogs"
-  if (props.icon) return props.icon
-  if (!props.text && !props.src) return 'person-fill'
-  return undefined
-})
-
 const badgeStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset || '0px'
   const fontSize =
