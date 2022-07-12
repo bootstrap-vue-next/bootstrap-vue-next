@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   bodyTag: 'div',
   overlay: false,
   titleTag: 'h4',
+  subTitleTag: 'h4',
 })
 
 const classes = computed(() => ({
