@@ -1,6 +1,6 @@
 import {mount} from '@vue/test-utils'
 import {waitNT, waitRAF} from '../../../tests/utils'
-import {describe, expect, it, vitest} from 'vitest'
+import {describe, expect, it} from 'vitest'
 
 import BToast from './BToast.vue'
 

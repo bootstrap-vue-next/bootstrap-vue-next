@@ -109,6 +109,7 @@ onActivated(handleAutofocus)
 // /lifecycle events
 
 // computed
+// noinspection PointlessBooleanExpressionJS
 const classes = computed(() => ({
   'form-control': props.plain,
   [`form-control-${props.size}`]: props.size && props.plain,
@@ -126,14 +127,15 @@ const computedSelectSize = computed<number | undefined>(() => {
 })
 
 const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
-  if (props.state === false) {
-    return true
-  }
-  if (props.state === true) {
+  // noinspection SuspiciousTypeOfGuard
+  if (typeof props.state === 'boolean') {
+    if (!props.state) {
+      return true
+    }
     return undefined
   }
   if (typeof props.ariaInvalid === 'boolean') {
-    if (props.ariaInvalid === false) {
+    if (!props.ariaInvalid) {
       return undefined
     }
     return props.ariaInvalid
@@ -169,4 +171,9 @@ const blur = () => {
   }
 }
 // /methods
+
+defineExpose({
+  blur,
+  focus,
+})
 </script>

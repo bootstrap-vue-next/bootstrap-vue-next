@@ -1,6 +1,6 @@
 import {mount} from '@vue/test-utils'
 import BFormSelectOption from './BFormSelectOption.vue'
-import {describe, expect, it, vitest} from 'vitest'
+import {describe, expect, it} from 'vitest'
 
 describe('form-select-option', () => {
   it('has expected default structure', async () => {
