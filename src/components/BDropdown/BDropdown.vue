@@ -196,4 +196,8 @@ onMounted((): void => {
     },
   })
 })
+
+defineExpose({
+  hide,
+})
 </script>

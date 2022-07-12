@@ -169,4 +169,9 @@ const blur = () => {
   }
 }
 // /methods
+
+defineExpose({
+  blur,
+  focus,
+})
 </script>
