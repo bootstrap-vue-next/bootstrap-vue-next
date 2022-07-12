@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "types": ["vitest/globals", "@vuepress/client/types", "vite/client"]
+  },
+  "include": ["./**/*.ts", "./**/*.vue", ".vuepress/**/*.ts", ".vuepress/**/*.vue"]
+}
