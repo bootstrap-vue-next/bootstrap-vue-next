@@ -1,5 +1,4 @@
 {
-  "name": "bootstrap-vue-3-workspace-test",
   "private": true,
   "workspaces": [
     "packages/*"
