@@ -15,6 +15,7 @@
   "devDependencies": {
     "husky": "^7.0.2",
     "improved-yarn-audit": "3.x.x",
+    "lint-staged": "12.x.x",
     "release-please": "^13.18.7",
     "turbo": "latest"
   },
