@@ -88,4 +88,4 @@ It will then auto-publish as stated before
 Collaborators can also manually release by:
 
 increase version in package.json, commit
-https://github.com/cdmoro/bootstrap-vue-3/releases/new (create new tag)
+<https://github.com/cdmoro/bootstrap-vue-3/releases/new> (create new tag)
