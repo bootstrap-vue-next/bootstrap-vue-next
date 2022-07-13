@@ -82,7 +82,7 @@ actionable items. see below).
 ## Actionable list group items
 
 Turn a `<b-list-group-item>` into an actionable _link_ (`<a href="...">`) by specifying either an
-`href` prop or ~~[router-link](/docs/reference/router-links) `to`~~ prop.
+`href` prop or ~~[router-link](/docs/reference/router-links)~~ `to` prop.
 
 <ClientOnly>
   <b-card class="bd-example">
@@ -130,7 +130,7 @@ Or if you prefer `<button>` elements over links, set the `button` prop to `true`
 
 - When the prop `button` is `true`, all [link related props](/docs/components/link) (other than
   `active`) and the `tag` prop will have no effect.
-- When `href` or ~~`to`~~ are set, the `tag` prop has no effect.
+- When `href` or `to` are set, the `tag` prop has no effect.
 
 ~~Refer to the [Router support](/docs/reference/router-links) reference page for router-link specific
 props.~~
@@ -571,16 +571,17 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
 
 #### Properties
 
-| Property   | Type      | Default   | Description                                                                                                         |
-| ---------- | --------- | --------- | ------------------------------------------------------------------------------------------------------------------- |
-| `action`   | `Boolean` | `false`   | When set, give the item the appearance of having an action. Not needed when props 'to', 'href' or 'button' are used |
-| `active`   | `Boolean` | `false`   | When set to `true`, places the component in the active state with active styling                                    |
-| `button`   | `Boolean` | `false`   | When true renders the list-group-item as a button element                                                           |
-| `disabled` | `Boolean` | `false`   | When set to `true`, disables the component's functionality and places it in a disabled state                        |
-| `href`     | `String`  |           | Denotes the target URL of the link for standard a links                                                             |
-| `tag`      | `String`  | `'div'`   | Specify the HTML tag to render instead of the default tag                                                           |
-| `target`   | `String`  | `'_self'` | Sets the `target` attribute on the rendered link                                                                    |
-| `variant`  | `String`  |           | Applies one of the Bootstrap theme color variants to the component                                                  |
+| Property   | Type                 | Default   | Description                                                                                                                                                                                                          |
+| ---------- | -------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `action`   | `Boolean`            | `false`   | When set, give the item the appearance of having an action. Not needed when props 'to', 'href' or 'button' are used                                                                                                  |
+| `active`   | `Boolean`            | `false`   | When set to `true`, places the component in the active state with active styling                                                                                                                                     |
+| `button`   | `Boolean`            | `false`   | When true renders the list-group-item as a button element                                                                                                                                                            |
+| `disabled` | `Boolean`            | `false`   | When set to `true`, disables the component's functionality and places it in a disabled state                                                                                                                         |
+| `href`     | `String`             |           | Denotes the target URL of the link for standard a links                                                                                                                                                              |
+| `tag`      | `String`             | `'div'`   | Specify the HTML tag to render instead of the default tag                                                                                                                                                            |
+| `target`   | `String`             | `'_self'` | Sets the `target` attribute on the rendered link                                                                                                                                                                     |
+| `to`       | `Object` or `String` | `_self`   | `<router-link>` prop: Denotes the target route of the link. When clicked, the value of the to prop will be passed to `router.push()` internally, so the value can be either a string or a Location descriptor object |
+| `variant`  | `String`             |           | Applies one of the Bootstrap theme color variants to the component                                                                                                                                                   |
 
 #### Slots
 
