@@ -1,5 +1,4 @@
-import {VNode} from '@vue/runtime-core'
-import {Slots} from 'vue'
+import {Slots, VNode} from 'vue'
 import {isFunction} from './inspect'
 
 export const normalizeSlot = (name: string, scope = {}, $slots: Slots = {}): VNode => {

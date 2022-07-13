@@ -1,0 +1,95 @@
+{
+  "name": "bootstrap-vue-3",
+  "displayName": "BootstrapVue3",
+  "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
+  "version": "0.1.18",
+  "license": "MIT",
+  "main": "./dist/bootstrap-vue-3.umd.js",
+  "module": "./dist/bootstrap-vue-3.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/bootstrap-vue-3.es.js",
+      "require": "./dist/bootstrap-vue-3.umd.js"
+    },
+    "./dist/bootstrap-vue-3.css": "./dist/bootstrap-vue-3.css",
+    "./nuxt": "./nuxt.js",
+    "./src/styles/styles.scss": "./src/styles/styles.scss"
+  },
+  "files": [
+    "dist",
+    "src",
+    "nuxt.js"
+  ],
+  "types": "./dist/BootstrapVue.d.ts",
+  "workspaces": [
+    "docs/"
+  ],
+  "private": false,
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "docs:dev": "pnpm exec --workspace=docs vuepress dev docs",
+    "docs:build": "pnpm exec --workspace=docs vuepress build .",
+    "lint": "eslint --ext .js,.vue --ignore-path ../../.gitignore --fix src",
+    "format": "prettier . --write",
+    "docs:deploy": "./scripts/deploy.sh",
+    "test": "pnpm run test:lint && pnpm run test:unit",
+    "test:lint": "pnpm run lint",
+    "test:unit": "vitest",
+    "publish": "pnpm publish --tag develop"
+  },
+  "peerDependencies": {
+    "bootstrap": "5.x.x"
+  },
+  "dependencies": {
+    "vue": "3.x.x"
+  },
+  "devDependencies": {
+    "bootstrap": "5.x.x",
+    "tsconfig": "workspace:*",
+    "@types/bootstrap": "5.x.x",
+    "@typescript-eslint/eslint-plugin": "5.x.x",
+    "@typescript-eslint/parser": "5.x.x",
+    "@vitejs/plugin-vue": "2.x.x",
+    "@vue/eslint-config-typescript": "10.x.x",
+    "@vue/test-utils": "^2.0.0-rc.18",
+    "eslint": "8.x.x",
+    "eslint-config-prettier": "8.x.x",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "8.x.x",
+    "jsdom": "^19.0.0",
+    "lint-staged": "12.x.x",
+    "prettier": "^2.3.2",
+    "rollup": "^2.76.0",
+    "rollup-plugin-visualizer": "5.x.x",
+    "sass": "1.x.x",
+    "typescript": "4.x.x",
+    "vite": "2.x.x",
+    "vite-plugin-dts": "1.x.x",
+    "vitest": "^0.10.4",
+    "vue-router": "4.x.x",
+    "vue-tsc": "^0.37.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cdmoro/bootstrap-vue-3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdmoro/bootstrap-vue-3/issues"
+  },
+  "homepage": "https://github.com/cdmoro/bootstrap-vue-3",
+  "keywords": [
+    "bootstrap",
+    "components",
+    "typescript",
+    "vue",
+    "component-library",
+    "bootstrapvue",
+    "vue3"
+  ],
+  "lint-staged": {
+    "*.{js,vue}": "eslint --cache --fix",
+    "*": "prettier --write --ignore-unknown"
+  }
+}

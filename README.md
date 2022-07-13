@@ -1,91 +1,77 @@
-<p align="center">
-  <a href="https://cdmoro.github.io/bootstrap-vue-3/">
-    <img src="https://raw.githubusercontent.com/cdmoro/bootstrap-vue-3/main/static/logo.png" width="300">
-  </a>
-</p>
+# Turborepo starter with pnpm
 
-<h1 align="center">BootstrapVue 3</h1>
-<p align="center">Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript</p>
+This is an official starter turborepo.
 
-<br>
+## What's inside?
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
-    <img src="https://flat.badgen.net/npm/v/bootstrap-vue-3" alt="Current version">
-  </a>
-  <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">
-    <img src="https://flat.badgen.net/badge/bootstrap/5.0.x/563d7c" alt="Bootstrap version">
-  </a>
-  <a href="https://v3.vuejs.org/">
-    <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
-  </a>
+This turborepo uses [pnpm](https://pnpm.io) as a packages manager. It includes the following packages/apps:
 
-  <a href="https://github.com/cdmoro/bootstrap-vue-3/actions?workflow=Tests">
-    <img src="https://flat.badgen.net/github/status/cdmoro/bootstrap-vue-3" alt="Build status">
-  </a>
+### Apps and Packages
 
-  <br>
+- `docs`: a [Next.js](https://nextjs.org) app
+- `web`: another [Next.js](https://nextjs.org) app
+- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
-  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
-    <img src="https://flat.badgen.net/npm/dt/bootstrap-vue-3" alt="npm downloads">
-  </a>
-  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
-    <img src="https://flat.badgen.net/npm/dw/bootstrap-vue-3" alt="npm weekly downloads">
-  </a>
-</p>
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-# Why BootstrapVue3?
+### Utilities
 
-BootstrapVue3 is an attempt to have [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
+This turborepo has some additional tools already setup for you:
 
-As you may suppose, this library is heavily inspired by **BootstrapVue**, as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with **BootstrapVue**, so it will be easy to switch between libraries.
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
 
-# Install
+## Setup
 
-```console
-# NPM
-npm i --save bootstrap bootstrap-vue-3
+This repository is used in the `npx create-turbo@latest` command, and selected when choosing which package manager you wish to use with your monorepo (pnpm).
 
-# Yarn
-yarn add bootstrap bootstrap-vue-3
+### Build
+
+To build all apps and packages, run the following command:
+
+```
+cd my-turborepo
+pnpm run build
 ```
 
-# Contribute & support 🙌
+### Develop
 
-This project is still in **alpha version** so there is a lot of work to do. If you want to contribute you can:
+To develop all apps and packages, run the following command:
 
-- submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues/new)
-- or better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls)
-- or even better, visit [my patreon page](https://patreon.com/cdmoro) and support me 😄
+```
+cd my-turborepo
+pnpm run dev
+```
 
-## One-time donations
+### Remote Caching
 
-Or if you prefer you can make a one-time donation through these channels:
+Turborepo can use a technique known as [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/cdmoro)
-[![Invitame un café en cafecito.app](https://cdn.cafecito.app/imgs/buttons/button_2.svg)](https://cafecito.app/cdmoro)
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
 
-# Links
+```
+cd my-turborepo
+pnpx turbo login
+```
 
-- :blue_book: [Documentation](https://cdmoro.github.io/bootstrap-vue-3/)
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
 
-# License
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
 
-Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
+```
+pnpx turbo link
+```
 
-# Making a new release
+## Useful Links
 
-Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yml` workflow will auto generate releases when using [conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
+Learn more about the power of Turborepo:
 
-The workflow `.github/workflows/npm-publish.yml` will then auto-publish at <https://www.npmjs.com/package/bootstrap-vue-3>
-
-## Manual releases
-
-One could also manually create a release PR using the cli, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto generate a PR containing the new release notes
-
-It will then auto-publish as stated before
-
-Collaborators can also manually release by:
-
-increase version in package.json, commit
-https://github.com/cdmoro/bootstrap-vue-3/releases/new (create new tag)
+- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
+- [Caching](https://turborepo.org/docs/core-concepts/caching)
+- [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching)
+- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
+- [Configuration Options](https://turborepo.org/docs/reference/configuration)
+- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)

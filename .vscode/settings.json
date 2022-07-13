@@ -1,4 +1,4 @@
 {
-  "editor.tabSize": 2,
-  "html.format.wrapAttributes": "force-expand-multiline"
-}
+    "editor.tabSize": 2,
+    "html.format.wrapAttributes": "force-expand-multiline"
+  }
