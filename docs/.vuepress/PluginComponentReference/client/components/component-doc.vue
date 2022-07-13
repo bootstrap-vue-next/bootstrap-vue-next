@@ -85,7 +85,7 @@
 <script lang="ts">
 import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent} from 'vue'
 import AnchoredHeading from './anchored-heading'
-import {hyphenate} from '@vue/shared/'
+import {hyphenate} from '../../../util'
 // type definitions
 const SORT_THRESHOLD: number = 10
 
