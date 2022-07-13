@@ -1258,7 +1258,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `router-component-name` | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
 | `tag`                   | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `target`                | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| `to`                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |              |
+| `to`                    | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `variant`               | ![](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 ### Slots
