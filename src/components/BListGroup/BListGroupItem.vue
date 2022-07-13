@@ -7,6 +7,7 @@
     :aria-disabled="disabled ? true : null"
     :target="link ? target : null"
     :href="!button ? href : null"
+    :to="!button ? to : null"
     v-bind="computedAttrs"
   >
     <slot />
@@ -16,7 +17,9 @@
 <script setup lang="ts">
 // import type {BListGroupItemProps} from '../../types/components'
 import {computed, inject, useAttrs} from 'vue'
+import type {RouteLocationRaw} from 'vue-router'
 import type {ColorVariant, LinkTarget} from '../../types'
+import BLink from '../BLink/BLink.vue'
 import {injectionKey} from './BListGroup.vue'
 
 interface BListGroupItemProps {
@@ -36,7 +39,7 @@ interface BListGroupItemProps {
   // routerComponentName?: String
   tag?: string
   target?: LinkTarget
-  //to?: string | Record<string, unknown>
+  to?: RouteLocationRaw
   variant?: ColorVariant
 }
 
@@ -53,17 +56,10 @@ const attrs = useAttrs()
 
 const parentData = inject(injectionKey, null)
 
-const link = computed<boolean>(() => !props.button && !!props.href)
+const link = computed<boolean>(() => !props.button && (!!props.href || !!props.to))
 
-const tagComputed = computed<string>(
-  () =>
-    parentData?.numbered
-      ? 'li'
-      : props.button
-      ? 'button'
-      : !link.value
-      ? props.tag
-      : 'a' /* BLink */
+const tagComputed = computed<string | typeof BLink>(() =>
+  parentData?.numbered ? 'li' : props.button ? 'button' : !link.value ? props.tag : BLink
 )
 
 const classes = computed(() => {
