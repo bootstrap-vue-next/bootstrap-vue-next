@@ -1,19 +1,21 @@
 {
+    "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
-        "target": "es2019",
-        "module": "esnext",
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
         "strict": true,
         "jsx": "preserve",
-        "importHelpers": true,
-        "moduleResolution": "node",
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
         "sourceMap": true,
-        "baseUrl": ".",
-        "types": ["vitest/globals", "vite/client"],
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+        "skipLibCheck": true,
+        "importHelpers": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true
     },
     "exclude": ["node_modules"],
     "vueCompilerOptions": {
