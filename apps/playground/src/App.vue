@@ -1891,13 +1891,11 @@ import {
   Ref,
   ref,
 } from 'vue'
-import {useBreadcrumb} from '../../../packages/bootstrap-vue-3/src/composables/useBreadcrumb'
-import type {TableField, TableItem} from '../../../packages/bootstrap-vue-3/src/types'
-import {BvEvent} from '../../../packages/bootstrap-vue-3/src/utils/bvEvent'
-import {
-  ToastInstance,
-  useToast,
-} from '../../../packages/bootstrap-vue-3/src/components/BToast/plugin'
+import {useToast} from 'bootstrap-vue-3'
+import {ToastInstance} from 'bootstrap-vue-3/dist/components/BToast/plugin'
+import {BvEvent} from 'bootstrap-vue-3/dist/utils/bvEvent'
+import {TableField, TableItem} from 'bootstrap-vue-3/dist/types'
+import {useBreadcrumb} from 'bootstrap-vue-3/src/composables/useBreadcrumb'
 
 export default defineComponent({
   name: 'App',

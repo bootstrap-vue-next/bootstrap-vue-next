@@ -21,9 +21,6 @@
     "nuxt.js"
   ],
   "types": "./dist/BootstrapVue.d.ts",
-  "workspaces": [
-    "docs/"
-  ],
   "private": false,
   "scripts": {
     "dev": "vite",
