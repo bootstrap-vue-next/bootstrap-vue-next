@@ -57,7 +57,7 @@ const config = defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     visualizer(), // generates admin/stats.html on npm run build
-    dts(),
+    dts({skipDiagnostics: false, logDiagnostics: true}),
   ],
 
   server: {

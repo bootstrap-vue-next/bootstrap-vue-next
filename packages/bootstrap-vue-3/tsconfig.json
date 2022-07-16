@@ -1,8 +1,15 @@
 {
   "extends": "tsconfig/base.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "vite/client"]
+    "types": ["vitest/globals", "vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "vue-router": ["node_modules/vue-router"],
+      ".pnpm/@vue+shared*": ["../../node_modules/.pnpm/@vue+shared*"],
+      "@vue+runtime-core*": ["../../node_modules/.pnpm/@vue+shared*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
   "references": [{"path": "./tsconfig.node.json"}]
 }
+// https://github.com/qmhc/vite-plugin-dts#take-errors-that-unable-to-infer-types-from-packages-which-under-node_modules
