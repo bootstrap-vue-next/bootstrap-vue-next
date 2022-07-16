@@ -1892,7 +1892,6 @@ import {
   ref,
 } from 'vue'
 import {useToast} from 'bootstrap-vue-3'
-import {ToastInstance} from 'bootstrap-vue-3/dist/components/BToast/plugin'
 import {BvEvent} from 'bootstrap-vue-3/dist/utils/bvEvent'
 import {TableField, TableItem} from 'bootstrap-vue-3/dist/types'
 import {useBreadcrumb} from 'bootstrap-vue-3/src/composables/useBreadcrumb'
@@ -2045,7 +2044,7 @@ export default defineComponent({
     const handledVisible = ref(false)
     const buttonIsPressed = ref(false)
 
-    const c: ToastInstance | undefined = useToast()
+    const c = useToast()
     onMounted(() => {
       breadcrumb.items.push({
         text: 'Home',
