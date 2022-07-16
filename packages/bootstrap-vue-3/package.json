@@ -38,11 +38,13 @@
     "vue": "3.x.x"
   },
   "devDependencies": {
+    "@popperjs/core": "^2.x.x",
     "@types/bootstrap": "5.x.x",
     "@vitejs/plugin-vue": "2.x.x",
+    "@vue/runtime-core": "^3.2.37",
+    "@vue/shared": "^3.2.37",
     "@vue/test-utils": "^2.0.0-rc.18",
     "bootstrap": "5.x.x",
-    "@popperjs/core": "^2.x.x",
     "jsdom": "^19.0.0",
     "rollup": "^2.76.0",
     "rollup-plugin-visualizer": "5.x.x",

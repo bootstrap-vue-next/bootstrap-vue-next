@@ -76,6 +76,8 @@ importers:
       '@popperjs/core': ^2.x.x
       '@types/bootstrap': 5.x.x
       '@vitejs/plugin-vue': 2.x.x
+      '@vue/runtime-core': ^3.2.37
+      '@vue/shared': ^3.2.37
       '@vue/test-utils': ^2.0.0-rc.18
       bootstrap: 5.x.x
       jsdom: ^19.0.0
@@ -94,6 +96,8 @@ importers:
       '@popperjs/core': 2.11.5
       '@types/bootstrap': 5.1.12
       '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vue/runtime-core': 3.2.37
+      '@vue/shared': 3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       bootstrap: 5.1.3_@popperjs+core@2.11.5
       jsdom: 19.0.0

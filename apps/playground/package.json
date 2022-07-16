@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap-vue-3": "workspace:*",
     "bootstrap": "5.x.x",
+    "bootstrap-vue-3": "workspace:*",
     "vue": "^3.2.37",
     "vue-router": "4.x.x"
   },
