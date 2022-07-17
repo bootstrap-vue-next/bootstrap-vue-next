@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, StyleValue} from 'vue'
-import useFormInput, {COMMON_INPUT_PROPS} from '../../composables/useFormInput'
+import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
 
 export default defineComponent({
   name: 'BFormTextarea',

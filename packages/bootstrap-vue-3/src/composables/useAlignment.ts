@@ -3,8 +3,8 @@ import {computed, ComputedRef} from 'vue'
 
 import type {Alignment} from '../types'
 
-function alignment(props: any): ComputedRef<string> {
-  return computed(() => {
+export default (props: {align: Alignment}): ComputedRef<string> =>
+  computed(() => {
     if (props.align === 'center') {
       return 'justify-content-center'
     } else if (props.align === 'end') {
@@ -14,6 +14,3 @@ function alignment(props: any): ComputedRef<string> {
     }
     return 'justify-content-start'
   })
-}
-
-export default alignment

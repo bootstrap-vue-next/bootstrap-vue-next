@@ -1,5 +1,5 @@
 <script lang="ts">
-import useId from '../../composables/useId'
+import {useId} from '../../composables'
 import {RX_SPACE_SPLIT} from '../../constants/regex'
 import {arrayIncludes} from '../../utils/array'
 import {cssEscape} from '../../utils/css-escape'

@@ -44,7 +44,7 @@ type InputEmitType = (
 ) => void
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
+export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   const input = ref<HTMLInputElement>()
   let inputValue: string | null = null
   let neverFormatted = true
@@ -176,5 +176,3 @@ function useFormInput(props: Readonly<InputProps>, emit: InputEmitType) {
     blur,
   }
 }
-
-export default useFormInput

@@ -15,11 +15,11 @@ const BREADCRUMB_OBJECT: UseBreadcrumbI = {
   },
 }
 
-export function createBreadcrumb(app: App): void {
+export const createBreadcrumb = (app: App): void => {
   app.provide(BREADCRUMB_SYMBOL, BREADCRUMB_OBJECT)
 }
 
-export function useBreadcrumb(): UseBreadcrumbI {
+export const useBreadcrumb = (): UseBreadcrumbI => {
   const context = inject(BREADCRUMB_SYMBOL)
 
   if (!context) {

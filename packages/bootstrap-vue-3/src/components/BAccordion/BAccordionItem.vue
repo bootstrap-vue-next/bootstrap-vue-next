@@ -32,7 +32,7 @@
 import {inject} from 'vue'
 import BCollapse from '../BCollapse.vue'
 import vBToggle from '../../directives/BToggle'
-import useId from '../../composables/useId'
+import {useId} from '../../composables'
 import {injectionKey} from './BAccordion.vue'
 // import type {BAccordionItemProps} from '../types/components'
 

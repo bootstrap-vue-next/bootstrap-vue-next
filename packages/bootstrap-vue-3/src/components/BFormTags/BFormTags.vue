@@ -108,7 +108,7 @@
 // import type {BFormTagsEmits, BFormTagsProps} from '../types/components'
 import {computed, onActivated, onMounted, ref, VNodeNormalizedChildren, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
-import useId from '../../composables/useId'
+import {useId} from '../../composables'
 import type {ButtonVariant, ColorVariant, InputSize, InputType} from '../../types'
 
 interface BFormTagsProps {

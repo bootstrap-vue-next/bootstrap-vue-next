@@ -4,7 +4,7 @@ import {computed, defineComponent, h, PropType, reactive, watch} from 'vue'
 import {Alignment, InputSize, Pagination, PaginationPage} from '../../types'
 import {isUndefinedOrNull} from '../../utils/inspect'
 import {toInteger} from '../../utils/number'
-import useAlignment from '../../composables/useAlignment'
+import {useAlignment} from '../../composables'
 import {BvEvent} from '../../utils/bvEvent'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5

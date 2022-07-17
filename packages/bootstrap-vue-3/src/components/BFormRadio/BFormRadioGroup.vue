@@ -29,8 +29,8 @@ import {
   getGroupClasses,
   optionToElement,
   slotsToElements,
-} from '../../composables/useFormCheck'
-import useId from '../../composables/useId'
+  useId,
+} from '../../composables'
 
 interface BFormRadioGroupProps {
   size?: Size

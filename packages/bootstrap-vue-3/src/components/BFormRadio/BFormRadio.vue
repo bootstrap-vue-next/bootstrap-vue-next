@@ -31,9 +31,8 @@
 <script setup lang="ts">
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
 import type {ButtonVariant} from '../../types'
-import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
+import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
 import {computed, onMounted, ref} from 'vue'
-import useId from '../../composables/useId'
 
 interface BFormRadioProps {
   ariaLabel?: string

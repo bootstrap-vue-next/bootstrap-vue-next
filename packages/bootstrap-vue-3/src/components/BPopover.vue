@@ -34,7 +34,7 @@ import {
   useSlots,
   watch,
 } from 'vue'
-import useEventListener from '../composables/useEventListener'
+import {useEventListener} from '../composables'
 import type {ColorVariant} from '../types'
 
 interface BPopoverProps {

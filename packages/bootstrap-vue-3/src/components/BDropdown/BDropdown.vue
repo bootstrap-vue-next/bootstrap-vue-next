@@ -48,8 +48,7 @@ import {ComponentPublicInstance, computed, onMounted, ref} from 'vue'
 import BButton from '../BButton/BButton.vue'
 import type {ButtonType, ButtonVariant, Size} from '../../types'
 import mergeDeep from '../../utils/mergeDeep'
-import useId from '../../composables/useId'
-import useEventListener from '../../composables/useEventListener'
+import {useEventListener, useId} from '../../composables'
 
 // TODO it seems that some of these props are actually just Popper options
 // So some of them could be converted to their pure types similar to Popper.Boundary

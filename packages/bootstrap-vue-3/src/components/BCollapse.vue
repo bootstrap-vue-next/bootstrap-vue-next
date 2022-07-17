@@ -15,7 +15,7 @@
 // import type {BCollapseEmits, BCollapseProps} from '../types/components'
 import {computed, onMounted, ref, watch} from 'vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-import useEventListener from '../composables/useEventListener'
+import {useEventListener} from '../composables'
 import getID from '../utils/getID'
 
 interface BCollapseProps {

@@ -42,8 +42,7 @@ import type {Size} from '../../types'
 import {computed, nextTick, onActivated, onMounted, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import useId from '../../composables/useId'
-import {normalizeOptions} from '../../composables/useFormSelect'
+import {normalizeOptions, useId} from '../../composables'
 
 interface BFormSelectProps {
   ariaInvalid?: boolean | 'grammar' | 'spelling'

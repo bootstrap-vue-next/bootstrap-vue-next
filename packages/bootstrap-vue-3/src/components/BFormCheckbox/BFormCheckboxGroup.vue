@@ -23,14 +23,14 @@
 import {computed, useSlots} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {ButtonVariant, Size} from '../../types'
-import useId from '../../composables/useId'
 import {
   bindGroupProps,
   getGroupAttr,
   getGroupClasses,
   optionToElement,
   slotsToElements,
-} from '../../composables/useFormCheck'
+  useId,
+} from '../../composables'
 
 interface BFormCheckboxGroupProps {
   id?: string

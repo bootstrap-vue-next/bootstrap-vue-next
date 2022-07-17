@@ -3,7 +3,7 @@ import Components from './components'
 import Directives from './directives'
 
 import {BootstrapVueOptions} from './types'
-import {createBreadcrumb} from './composables/useBreadcrumb'
+import {createBreadcrumb} from './composables'
 import './styles/styles.scss'
 
 // All available components

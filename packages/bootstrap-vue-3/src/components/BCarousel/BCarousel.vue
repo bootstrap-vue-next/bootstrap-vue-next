@@ -45,8 +45,7 @@
 import type {BCarouselParentData} from '../../types/components'
 import {InjectionKey, onMounted, provide, ref, useSlots, VNode} from 'vue'
 import Carousel from 'bootstrap/js/dist/carousel'
-import useEventListener from '../../composables/useEventListener'
-import useId from '../../composables/useId'
+import {useEventListener, useId} from '../../composables'
 
 interface BCarouselProps {
   id?: string

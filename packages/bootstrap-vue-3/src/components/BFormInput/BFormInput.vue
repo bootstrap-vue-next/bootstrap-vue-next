@@ -27,7 +27,7 @@
 <script lang="ts">
 import type {InputType} from '../../types'
 import {computed, defineComponent, PropType} from 'vue'
-import useFormInput, {COMMON_INPUT_PROPS} from '../../composables/useFormInput'
+import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
 
 const allowedTypes = [
   'text',
