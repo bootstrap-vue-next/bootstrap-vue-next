@@ -1,35 +1,46 @@
-name: Build and Deploy Docs to GitHub Pages
+# This workflow builds and deploys the docs to GitHub Pages
+
+name: docs-github-pages-deploy
+
 on:
   push:
     paths:
-      - 'docs/**'
+      - 'apps/docs/**'
       - '.github/workflows/docs-github-pages-deploy.yml'
     branches:
       - main
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
-    runs-on: ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
+
     steps:
-      - name: Checkout 🛎️
+      - name: Clone repository
         uses: actions/checkout@v3
 
-      - name: Install and build library 🔧
-        run: |
-          npm install
-          npm run build
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
 
-      - name: Install documentation 🔧
-        working-directory: ./docs
-        run: |
-          npm install
+      - name: Set node version to 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
 
-      - name: Build documentation 🔧
-        run: |
-          npm run docs:build
+      - name: Install dependencies
+        run: pnpm install
 
-      - name: Deploy 🚀
+      - name: Build library
+        run: pnpm run build
+
+      - name: Deploy Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: ./docs/.vuepress/dist # The folder the action should deploy.
+          folder: ./apps/docs/.vuepress/dist # The folder the action should deploy.
