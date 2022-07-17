@@ -2,7 +2,7 @@
 
 ## Setting up your workspace
 
-Setting up your workspace is simple and follows other open-source rules, if you are new and unfamiliar with the flow: Fork the repository, then git clone your own repository. You can make any changes you want to in this repository of yours. You can commit and push changes without any changes to the main package. After you have pushed changes up to GitHub in your own repository, visit your GitHub's repository, there should be a notification at the top saying changes have been made, you can click that prompt, or the "Contribute" button and open a pull request to the main package. **Please use [conventional commit](https://www.conventionalcommits.org/) messages**
+Setting up your workspace is simple and follows other open-source rules, if you are new and unfamiliar with the flow: Fork the repository, then git clone your own repository. You can make any changes you want to in this repository of yours. You can commit and push changes without any changes to the main package. After you have pushed changes up to GitHub in your own repository, visit your GitHub's repository, there should be a notification at the top saying changes have been made, you can click that prompt, or the "Contribute" button and open a pull request to the main package. This pull request, if merged, will affect the main package at this point. **Please use [conventional commit](https://www.conventionalcommits.org/) messages**
 
 ## Registering new components
 
