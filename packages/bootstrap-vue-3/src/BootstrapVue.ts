@@ -6,118 +6,8 @@ import {BootstrapVueOptions} from './types'
 import {createBreadcrumb} from './composables/useBreadcrumb'
 import './styles/styles.scss'
 
-// export available components
-export {default as BAccordion} from './components/BAccordion/BAccordion.vue'
-export {default as BAccordionItem} from './components/BAccordion/BAccordionItem.vue'
-export {default as BAlert} from './components/BAlert.vue'
-export {default as BAvatar} from './components/BAvatar/BAvatar.vue'
-export {default as BAvatarGroup} from './components/BAvatar/BAvatarGroup.vue'
-export {default as BBadge} from './components/BBadge/BBadge.vue'
-export {default as BBreadcrumb} from './components/BBreadcrumb/BBreadcrumb.vue'
-export {default as BBreadcrumbItem} from './components/BBreadcrumb/BBreadcrumbItem.vue'
-export {default as BButton} from './components/BButton/BButton.vue'
-export {default as BButtonGroup} from './components/BButton/BButtonGroup.vue'
-export {default as BButtonToolbar} from './components/BButton/BButtonToolbar.vue'
-export {default as BCard} from './components/BCard/BCard.vue'
-export {default as BCardBody} from './components/BCard/BCardBody.vue'
-export {default as BCardFooter} from './components/BCard/BCardFooter.vue'
-export {default as BCardGroup} from './components/BCard/BCardGroup.vue'
-export {default as BCardHeader} from './components/BCard/BCardHeader.vue'
-export {default as BCardImg} from './components/BCard/BCardImg.vue'
-export {default as BCardSubTitle} from './components/BCard/BCardSubTitle.vue'
-export {default as BCardText} from './components/BCard/BCardText.vue'
-export {default as BCardTitle} from './components/BCard/BCardTitle.vue'
-export {default as BCarousel} from './components/BCarousel/BCarousel.vue'
-export {default as BCarouselSlide} from './components/BCarousel/BCarouselSlide.vue'
-export {default as BCloseButton} from './components/BButton/BCloseButton.vue'
-export {default as BCol} from './components/BCol.vue'
-export {default as BCollapse} from './components/BCollapse.vue'
-export {default as BContainer} from './components/BContainer.vue'
-export {default as BDropdown} from './components/BDropdown/BDropdown.vue'
-export {default as BDropdownDivider} from './components/BDropdown/BDropdownDivider.vue'
-export {default as BDropdownForm} from './components/BDropdown/BDropdownForm.vue'
-export {default as BDropdownGroup} from './components/BDropdown/BDropdownGroup.vue'
-export {default as BDropdownHeader} from './components/BDropdown/BDropdownHeader.vue'
-export {default as BDropdownItem} from './components/BDropdown/BDropdownItem.vue'
-export {default as BDropdownItemButton} from './components/BDropdown/BDropdownItemButton.vue'
-export {default as BDropdownText} from './components/BDropdown/BDropdownText.vue'
-export {default as BForm} from './components/BForm/BForm.vue'
-export {default as BFormCheckbox} from './components/BFormCheckbox/BFormCheckbox.vue'
-export {default as BFormCheckboxGroup} from './components/BFormCheckbox/BFormCheckboxGroup.vue'
-export {default as BFormFloatingLabel} from './components/BForm/BFormFloatingLabel.vue'
-export {default as BFormGroup} from './components/BFormGroup/BFormGroup.vue'
-export {default as BFormInput} from './components/BFormInput/BFormInput.vue'
-export {default as BFormInvalidFeedback} from './components/BForm/BFormInvalidFeedback.vue'
-export {default as BFormRadio} from './components/BFormRadio/BFormRadio.vue'
-export {default as BFormRadioGroup} from './components/BFormRadio/BFormRadioGroup.vue'
-export {default as BFormRow} from './components/BForm/BFormRow.vue'
-export {default as BFormSelect} from './components/BFormSelect/BFormSelect.vue'
-export {default as BFormSelectOption} from './components/BFormSelect/BFormSelectOption.vue'
-export {default as BFormSelectOptionGroup} from './components/BFormSelect/BFormSelectOptionGroup.vue'
-export {default as BFormText} from './components/BForm/BFormText.vue'
-export {default as BFormTextarea} from './components/BFormTextarea/BFormTextarea.vue'
-export {default as BFormValidFeedback} from './components/BForm/BFormValidFeedback.vue'
-export {default as BImg} from './components/BImg.vue'
-export {default as BInputGroup} from './components/BInputGroup/BInputGroup.vue'
-export {default as BInputGroupAddon} from './components/BInputGroup/BInputGroupAddon.vue'
-export {default as BInputGroupAppend} from './components/BInputGroup/BInputGroupAppend.vue'
-export {default as BInputGroupPrepend} from './components/BInputGroup/BInputGroupPrepend.vue'
-export {default as BInputGroupText} from './components/BInputGroup/BInputGroupText.vue'
-export {default as BLink} from './components/BLink/BLink.vue'
-export {default as BListGroup} from './components/BListGroup/BListGroup.vue'
-export {default as BListGroupItem} from './components/BListGroup/BListGroupItem.vue'
-export {default as BModal} from './components/BModal.vue'
-export {default as BNav} from './components/BNav.vue'
-export {default as BNavItem} from './components/BNavItem.vue'
-// // export {default as BNavItemDropdown} from './components/BNavItemDropdown.vue'
-export {default as BOffcanvas} from './components/BOffcanvas.vue'
-export {default as BOverlay} from './components/BOverlay/BOverlay.vue'
-export {default as BPagination} from './components/BPagination/BPagination.vue'
-export {default as BPopover} from './components/BPopover.vue'
-export {default as BProgress} from './components/BProgress.vue'
-export {default as BProgressBar} from './components/BProgressBar.vue'
-export {default as BRow} from './components/BRow.vue'
-export {default as BSpinner} from './components/BSpinner.vue'
-export {default as BTab} from './components/BTabs/BTab.vue'
-export {default as BTable} from './components/BTable/BTable.vue'
-export {default as BTableSimple} from './components/BTable/BTableSimple.vue'
-export {default as BTbody} from './components/BTable/BTbody.vue'
-export {default as BTd} from './components/BTable/BTd.vue'
-export {default as BTfoot} from './components/BTable/BTfoot.vue'
-export {default as BTh} from './components/BTable/BTh.vue'
-export {default as BThead} from './components/BTable/BThead.vue'
-export {default as BTr} from './components/BTable/BTr.vue'
-export {default as BTabs} from './components/BTabs/BTabs.vue'
-export {default as BTransition} from './components/BTransition/BTransition.vue'
-export {default as BToast} from './components/BToast/BToast.vue'
-export {default as BToaster} from './components/BToast/BToaster.vue'
-export {BToastPlugin, useToast} from './components/BToast/'
-
-// export available directives
-export {default as VBPopover} from './directives/BPopover'
-export {default as VBToggle} from './directives/BToggle'
-export {default as VBTooltip} from './directives/BTooltip'
-export {default as VBVisible} from './directives/BVisible'
-
-const plugin: Plugin = {
-  // TODO: use options in the future
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  install(app: App, options: BootstrapVueOptions = {}) {
-    Object.entries(Components).forEach(([name, component]) => {
-      app.component(name, component)
-    })
-
-    Object.entries(Directives).forEach(([name, component]) => {
-      app.directive(name, component)
-    })
-
-    createBreadcrumb(app)
-  },
-}
-
-export {plugin as BootstrapVue3}
-export default plugin
-
+// All available components
+// Keep this list in sync with /components/index.ts please
 import BAccordion from './components/BAccordion/BAccordion.vue'
 import BAccordionItem from './components/BAccordion/BAccordionItem.vue'
 import BAlert from './components/BAlert.vue'
@@ -205,10 +95,45 @@ import BTh from './components/BTable/BTh.vue'
 import BThead from './components/BTable/BThead.vue'
 import BTr from './components/BTable/BTr.vue'
 import BTabs from './components/BTabs/BTabs.vue'
-import {BToast, BToaster, BToastPlugin} from './components/BToast'
+import {BToast, BToaster, BToastPlugin, useToast} from './components/BToast/'
 import BToastContainer from './components/BToast/BToaster.vue'
 import BTransition from './components/BTransition/BTransition.vue'
 
+// Export available composables
+export {useToast}
+
+// Export available directives
+export {default as VBPopover} from './directives/BPopover'
+export {default as VBToggle} from './directives/BToggle'
+export {default as VBTooltip} from './directives/BTooltip'
+export {default as VBVisible} from './directives/BVisible'
+
+// Main app plugin
+const plugin: Plugin = {
+  // TODO: use options in the future
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  install(app: App, options: BootstrapVueOptions = {}) {
+    Object.entries(Components).forEach(([name, component]) => {
+      app.component(name, component)
+    })
+
+    Object.entries(Directives).forEach(([name, component]) => {
+      app.directive(name, component)
+    })
+
+    createBreadcrumb(app)
+  },
+}
+
+export {plugin as BootstrapVue3}
+export default plugin
+
+// Export available plugins
+// Not to be confused with the above main app plugin
+export {BToastPlugin}
+
+// Inject all components into the global @vue/runtime-core
+// This allows intellisense in templates w/out direct importing
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BAccordion: typeof BAccordion
@@ -304,4 +229,99 @@ declare module '@vue/runtime-core' {
     BTransition: typeof BTransition
     BToastPlugin: typeof BToastPlugin
   }
+}
+
+// Finally export components
+export {
+  BAccordion,
+  BAccordionItem,
+  BAlert,
+  BAvatar,
+  BAvatarGroup,
+  BBadge,
+  BBreadcrumb,
+  BBreadcrumbItem,
+  BButton,
+  BButtonGroup,
+  BButtonToolbar,
+  BCard,
+  BCardBody,
+  BCardFooter,
+  BCardGroup,
+  BCardHeader,
+  BCardImg,
+  BCardSubTitle,
+  BCardText,
+  BCardTitle,
+  BCarousel,
+  BCarouselSlide,
+  BCloseButton,
+  BCol,
+  BCollapse,
+  BContainer,
+  BDropdown,
+  BDropdownDivider,
+  BDropdownForm,
+  BDropdownGroup,
+  BDropdownHeader,
+  BDropdownItem,
+  BDropdownItemButton,
+  BDropdownText,
+  BForm,
+  BFormFloatingLabel,
+  BFormInvalidFeedback,
+  BFormRow,
+  BFormText,
+  BFormValidFeedback,
+  BFormCheckbox,
+  BFormCheckboxGroup,
+  BFormGroup,
+  BFormInput,
+  BFormRadio,
+  BFormRadioGroup,
+  BFormSelect,
+  BFormSelectOption,
+  BFormSelectOptionGroup,
+  BFormTag,
+  BFormTags,
+  BFormTextarea,
+  BImg,
+  BInputGroup,
+  BInputGroupAddon,
+  BInputGroupAppend,
+  BInputGroupPrepend,
+  BInputGroupText,
+  BLink,
+  BListGroup,
+  BListGroupItem,
+  BModal,
+  BNav,
+  BNavItem,
+  BNavItemDropdown,
+  BOffcanvas,
+  BOverlay,
+  BPagination,
+  BPopover,
+  BProgress,
+  BProgressBar,
+  BRow,
+  BSkeleton,
+  BSkeletonIcon,
+  BSkeletonTable,
+  BSkeletonWrapper,
+  BSpinner,
+  BTab,
+  BTable,
+  BTableSimple,
+  BTbody,
+  BTd,
+  BTfoot,
+  BTh,
+  BThead,
+  BTr,
+  BTabs,
+  BToast,
+  BToaster,
+  BToastContainer,
+  BTransition,
 }
