@@ -8,7 +8,7 @@ on:
     types: [created]
 
 jobs:
-  build:
+  publish-npm:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -37,12 +37,7 @@ jobs:
 
       - name: Test library
       - run: npm test
-  publish-npm:
-    needs: build
 
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Publish
         run: pnpm publish
         env:
