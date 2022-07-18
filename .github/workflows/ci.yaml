@@ -38,8 +38,6 @@ jobs:
       - name: Build library
         run: pnpm run build
   test-lint:
-    needs: build
-
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -66,7 +64,6 @@ jobs:
       - name: Test lint
         run: pnpm run test:lint
   # test-audit:
-  #   needs: build
   #   runs-on: ${{ matrix.os }}
 
   #   strategy:
@@ -93,8 +90,6 @@ jobs:
   #     - name: Test audit
   #       run: pnpm audit
   test-unit:
-    needs: build
-
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -117,6 +112,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --ignore-scripts
-        
+
       - name: Test unit
         run: npm run test:unit --coverage --maxWorkers=2
