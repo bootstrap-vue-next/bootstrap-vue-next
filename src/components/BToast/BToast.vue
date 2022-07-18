@@ -22,7 +22,7 @@ import {BLINK_PROPS} from '../BLink/BLink.vue'
 import {BodyProp} from './plugin'
 
 export const SLOT_NAME_TOAST_TITLE = 'toast-title'
-const MIN_DURATION = 5000
+const MIN_DURATION = 1000
 
 export default defineComponent({
   name: 'BToast',
