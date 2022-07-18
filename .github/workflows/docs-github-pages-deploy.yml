@@ -36,7 +36,7 @@ jobs:
 
       - name: Build library
         run: pnpm run build
-  build-and-deploy:
+  deploy:
     needs: build
 
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
