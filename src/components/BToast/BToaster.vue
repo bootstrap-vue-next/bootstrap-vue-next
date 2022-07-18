@@ -5,6 +5,7 @@
       :id="toast.options.id"
       :key="toast.options.id"
       v-model="toast.options.value"
+      :delay="toast.options.delay"
       :title="toast.content.title"
       :body="toast.content.body"
       :component="toast.content.body"
