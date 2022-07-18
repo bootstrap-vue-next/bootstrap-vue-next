@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 // import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
+import {computed, useAttrs} from 'vue'
 import type {ColorVariant, LinkTarget} from '../../types'
 
 interface BDropdownItemProps {
@@ -65,8 +66,7 @@ const clicked = (e: MouseEvent): void => emit('click', e)
 </script>
 
 <script lang="ts">
-import {computed, defineComponent, useAttrs} from 'vue'
-export default defineComponent({
+export default {
   inheritAttrs: false,
-})
+}
 </script>

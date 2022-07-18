@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
+import {computed, onMounted, ref} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
 import type {ButtonVariant, InputSize} from '../../types'
 
@@ -145,8 +146,7 @@ onMounted((): void => {
 </script>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref} from 'vue'
-export default defineComponent({
+export default {
   inheritAttrs: false,
-})
+}
 </script>

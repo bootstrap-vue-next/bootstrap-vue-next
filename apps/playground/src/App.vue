@@ -365,7 +365,11 @@
     <!-- Form -->
     <div class="my-2">
       <h2>Form</h2>
-      <b-form @submit.stop.prevent>
+      <!-- TODO doing @submit.stop.prevent alone is not allowed -->
+      <!-- This is an issue for people that want to stop propogation -->
+      <!-- A workaround is to do () => {} -->
+      <!-- But that's not a great solution -->
+      <b-form @submit.stop.prevent="() => {}">
         <label for="text-password">Password</label>
         <b-form-input
           id="text-password"

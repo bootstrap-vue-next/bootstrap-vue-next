@@ -61,6 +61,7 @@
 import Modal from 'bootstrap/js/dist/modal'
 import BButton from './BButton/BButton.vue'
 import {useEventListener} from '../composables'
+import {computed, onMounted, ref, useSlots, watch} from 'vue'
 import type {ColorVariant, InputSize} from '../types'
 
 interface BModalProps {
@@ -263,8 +264,7 @@ watch(
 </script>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref, useSlots, watch} from 'vue'
-export default defineComponent({
+export default {
   inheritAttrs: false,
-})
+}
 </script>

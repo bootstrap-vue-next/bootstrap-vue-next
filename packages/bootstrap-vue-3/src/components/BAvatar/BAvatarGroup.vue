@@ -7,10 +7,10 @@
 </template>
 
 <script setup lang="ts">
-// import type { BAvatarGroupParentData, BAvatarGroupProps } from '../types/components'
+// import type { BAvatarGroupParentData, BAvatarGroupProps, InputSize } from '../types/components'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, InjectionKey, provide, StyleValue} from 'vue'
-import type {ColorVariant, InputSize} from '../../types'
+import type {ColorVariant} from '../../types'
 import {mathMax, mathMin} from '../../utils/math'
 import {toFloat} from '../../utils/number'
 import {computeSize} from './BAvatar.vue'
@@ -19,7 +19,8 @@ import {isNumeric, isString} from '../../utils/inspect'
 interface BAvatarGroupProps {
   overlap?: number | string
   rounded?: boolean | string
-  size?: InputSize | string
+  size?: 'sm' | 'md' | 'lg' | string
+  // size?: InputSize | string
   square?: boolean
   tag?: string
   variant?: ColorVariant

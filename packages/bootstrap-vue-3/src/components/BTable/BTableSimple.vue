@@ -10,22 +10,35 @@
 </template>
 
 <script setup lang="ts">
-import {computed, PropType} from 'vue'
-import type {Breakpoint, ColorVariant} from '../../types'
+// import type {Breakpoint} from '../../types'
+import {computed} from 'vue'
+import type {ColorVariant} from '../../types'
 
-const props = defineProps({
-  bordered: {type: Boolean, default: false},
-  borderless: {type: Boolean, default: false},
-  borderVariant: {type: String as PropType<ColorVariant>},
-  captionTop: {type: Boolean, default: false},
-  dark: {type: Boolean, default: false},
-  hover: {type: Boolean, default: false},
-  responsive: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
-  stacked: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
-  striped: {type: Boolean, default: false},
-  small: {type: Boolean, default: false},
-  tableClass: {type: [Array, Object, String]},
-  tableVariant: {type: String},
+interface BTableSimpleProps {
+  bordered?: boolean
+  borderless?: boolean
+  borderVariant?: ColorVariant
+  captionTop?: boolean
+  dark?: boolean
+  hover?: boolean
+  responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+  stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+  striped?: boolean
+  small?: boolean
+  tableClass?: Array<unknown> | Record<string, unknown> | string
+  tableVariant?: string
+}
+
+const props = withDefaults(defineProps<BTableSimpleProps>(), {
+  bordered: false,
+  borderless: false,
+  captionTop: false,
+  dark: false,
+  hover: false,
+  responsive: false,
+  stacked: false,
+  striped: false,
+  small: false,
 })
 
 const classes = computed(() => [

@@ -17,12 +17,16 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 
-const props = defineProps({
-  colspan: {type: [String, Number]},
-  rowspan: {type: [String, Number]},
-  stackedHeading: {type: String},
-  stickyColumn: {type: Boolean, default: false},
-  variant: {type: String},
+interface BThProps {
+  colspan?: string | number
+  rowspan?: string | number
+  stackedHeading?: string
+  stickyColumn?: boolean
+  variant?: string
+}
+
+const props = withDefaults(defineProps<BThProps>(), {
+  stickyColumn: false,
 })
 
 const classes = computed(() => ({

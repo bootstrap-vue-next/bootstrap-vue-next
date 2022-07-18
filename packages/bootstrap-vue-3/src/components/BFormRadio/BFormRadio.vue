@@ -50,7 +50,7 @@ interface BFormRadioProps {
   buttonVariant?: ButtonVariant
   inline?: boolean
   required?: boolean
-  state?: boolean | null
+  state?: boolean
   value?: string | boolean | Record<string, unknown> | number
 }
 

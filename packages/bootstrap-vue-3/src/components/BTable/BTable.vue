@@ -188,27 +188,43 @@
 </template>
 
 <script setup lang="ts">
-import {computed, PropType} from 'vue'
-import {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
+// import type {Breakpoint} from '../../types'
+import {computed} from 'vue'
+import type {ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
 import useItemHelper from './itemHelper'
 
-const props = defineProps({
-  align: {type: String as PropType<VerticalAlign>},
-  caption: {type: String},
-  captionTop: {type: Boolean, default: false},
-  borderless: {type: Boolean, default: false},
-  bordered: {type: Boolean, default: false},
-  borderVariant: {type: String as PropType<ColorVariant>},
-  dark: {type: Boolean, default: false},
-  fields: {type: Array as PropType<TableField[]>, default: () => []},
-  footClone: {type: Boolean, default: false},
-  hover: {type: Boolean, default: false},
-  items: {type: Array as PropType<TableItem[]>, default: () => []},
-  responsive: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
-  small: {type: Boolean, default: false},
-  striped: {type: Boolean, default: false},
-  variant: {type: String as PropType<ColorVariant>},
+interface BTableProps {
+  align?: VerticalAlign
+  caption?: string
+  captionTop?: boolean
+  borderless?: boolean
+  bordered?: boolean
+  borderVariant?: ColorVariant
+  dark?: boolean
+  fields?: Array<TableField>
+  footClone?: boolean
+  hover?: boolean
+  items?: Array<TableItem>
+  responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+  small?: boolean
+  striped?: boolean
+  variant?: ColorVariant
+}
+
+const props = withDefaults(defineProps<BTableProps>(), {
+  captionTop: false,
+  borderless: false,
+  bordered: false,
+  dark: false,
+  fields: () => [],
+  footClone: false,
+  hover: false,
+  items: () => [],
+  responsive: false,
+  small: false,
+  striped: false,
 })
+
 const classes = computed(() => [
   'table',
   {

@@ -26,6 +26,7 @@
 <script setup lang="ts">
 // import type {BDropdownGroupProps} from '../../types/components'
 import type {ColorVariant} from '../../types'
+import {computed} from 'vue'
 
 interface BDropdownGroupProps {
   id?: string
@@ -56,8 +57,7 @@ const classes = computed(() => ({
 </script>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue'
-export default defineComponent({
+export default {
   inheritAttrs: false,
-})
+}
 </script>

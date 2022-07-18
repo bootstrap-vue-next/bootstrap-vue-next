@@ -7,11 +7,11 @@
 <script setup lang="ts">
 // import type {BListGroupProps} from '../../types/components'
 import {computed, InjectionKey, provide} from 'vue'
-import type {Breakpoint} from '../../types'
+// import type {Breakpoint} from '../../types'
 
 interface BListGroupProps {
   flush?: boolean
-  horizontal?: boolean | Breakpoint
+  horizontal?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   numbered?: boolean
   tag?: string
 }

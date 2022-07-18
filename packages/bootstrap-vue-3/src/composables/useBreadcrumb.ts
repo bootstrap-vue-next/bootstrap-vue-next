@@ -1,7 +1,7 @@
 import {App, inject, InjectionKey, reactive} from 'vue'
 import type {BreadcrumbItem} from '../types'
 
-interface UseBreadcrumbI {
+export interface UseBreadcrumbI {
   items: BreadcrumbItem[]
   readonly reset: () => void
 }
