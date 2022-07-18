@@ -10,9 +10,7 @@ on:
     branches:
       - main
 jobs:
-  build-and-deploy:
-    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
-
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -38,7 +36,19 @@ jobs:
 
       - name: Build library
         run: pnpm run build
+  build-and-deploy:
+    needs: build
 
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
+
+    steps:
       - name: Deploy Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:

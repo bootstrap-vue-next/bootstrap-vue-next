@@ -1,6 +1,4 @@
-# This workflow checks to see if the library's tests pass
-
-name: test
+name: ci
 
 on:
   push:
@@ -13,7 +11,7 @@ on:
       - main
 
 jobs:
-  test-lint:
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -37,10 +35,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build library
+        run: pnpm run build
+  test-lint:
+    needs: build
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
+
+    steps:
       - name: Test lint
         run: pnpm run test:lint
-
   # test-audit:
+  #   needs: build
   #   runs-on: ${{ matrix.os }}
 
   #   strategy:
@@ -49,25 +60,11 @@ jobs:
   #       node-version: [16.x]
 
   #   steps:
-  #     - name: Clone repository
-  #       uses: actions/checkout@v3
-
-  #     - name: Install pnpm
-  #       uses: pnpm/action-setup@v2.2.2
-
-  #     - name: Set node version to 16
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 16
-  #         cache: 'pnpm'
-
-  #     - name: Install dependencies
-  #       run: pnpm install
-
   #     - name: Test audit
   #       run: pnpm audit
-
   test-unit:
+    needs: build
+
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -76,20 +73,5 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v3
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.2
-
-      - name: Set node version to 16
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
       - name: Test unit
         run: npm run test:unit --coverage --maxWorkers=2
