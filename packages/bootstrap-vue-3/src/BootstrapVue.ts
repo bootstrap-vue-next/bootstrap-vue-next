@@ -102,6 +102,9 @@ import BTransition from './components/BTransition/BTransition.vue'
 // Export available composables
 export {useToast}
 
+// Export utils
+export {BvEvent} from './utils/bvEvent'
+
 // Export available directives
 export {default as VBPopover} from './directives/BPopover'
 export {default as VBToggle} from './directives/BToggle'
@@ -127,6 +130,26 @@ const plugin: Plugin = {
 
 export {plugin as BootstrapVue3}
 export default plugin
+
+// Export composables
+export {
+  useId,
+  normalizeOptions,
+  useFormInput,
+  COMMON_INPUT_PROPS,
+  useAlignment,
+  createBreadcrumb,
+  useBreadcrumb,
+  useEventListener,
+  getClasses,
+  getInputClasses,
+  getLabelClasses,
+  getGroupAttr,
+  getGroupClasses,
+  slotsToElements,
+  optionToElement,
+  bindGroupProps,
+} from './composables'
 
 // Export available plugins
 // Not to be confused with the above main app plugin
@@ -230,6 +253,45 @@ declare module '@vue/runtime-core' {
     BToastPlugin: typeof BToastPlugin
   }
 }
+
+// Export types
+export type {
+  Alignment,
+  Animation,
+  BootstrapVueOptions,
+  BreadcrumbItem,
+  BreadcrumbItemObject,
+  Breakpoint,
+  ColBreakpointProps,
+  RowColsBreakpointProps,
+  OffsetBreakpointProps,
+  OrderBreakpointProps,
+  ButtonType,
+  ButtonVariant,
+  ColorVariant,
+  ContainerVerticalAlign,
+  ContainerHorizontalAlign,
+  ContainerPosition,
+  InputSize,
+  InputType,
+  LinkTarget,
+  LiteralUnion,
+  Pagination,
+  PaginationPage,
+  Position,
+  RadioOption,
+  SelectOption,
+  Size,
+  SkeletonAnimation,
+  SkeletonType,
+  SpinnerType,
+  TableFieldObject,
+  TableField,
+  TableItem,
+  TextColorVariant,
+  TransitionMode,
+  VerticalAlign,
+} from './types'
 
 // Finally export components
 export {
