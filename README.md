@@ -80,7 +80,7 @@ Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
 
 # Making a new release
 
-Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yml` workflow will auto generate releases when using [conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
+Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yml` workflow will auto generate releases when using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
 
 The workflow `.github/workflows/npm-publish.yml` will then auto-publish at <https://www.npmjs.com/package/bootstrap-vue-3>
 
