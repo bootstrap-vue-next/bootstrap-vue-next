@@ -7,6 +7,7 @@
     "build": "vuepress build"
   },
   "devDependencies": {
+    "@popperjs/core": "^2.x.x",
     "@vuepress/client": "2.0.0-beta.45",
     "@vuepress/plugin-register-components": "2.0.0-beta.49",
     "@vuepress/plugin-search": "2.0.0-beta.49",

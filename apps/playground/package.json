@@ -15,6 +15,7 @@
     "vue-router": "4.x.x"
   },
   "devDependencies": {
+    "@popperjs/core": "^2.x.x",
     "@vitejs/plugin-vue": "^3.0.0",
     "tsconfig": "workspace:*",
     "typescript": "^4.6.4",

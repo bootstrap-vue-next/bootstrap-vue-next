@@ -16,18 +16,11 @@
     "prepare": "husky install && turbo run build"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.x.x",
-    "@typescript-eslint/parser": "5.x.x",
-    "@vue/eslint-config-typescript": "10.x.x",
-    "eslint": "8.x.x",
-    "eslint-config-prettier": "8.x.x",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "8.x.x",
-    "prettier": "^2.3.2",
+    "eslint-config-custom": "workspace:*",
     "husky": "^7.0.2",
     "improved-yarn-audit": "3.x.x",
     "lint-staged": "12.x.x",
-    "release-please": "^13.18.7",
+    "release-please": "^13.19.3",
     "turbo": "latest"
   },
   "engines": {
