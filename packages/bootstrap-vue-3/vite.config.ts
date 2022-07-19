@@ -56,7 +56,7 @@ const config = defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
-    visualizer(), // generates admin/stats.html on npm run build
+    visualizer(), // generates admin/stats.html on pnpm run build
     dts({skipDiagnostics: false, logDiagnostics: true}),
   ],
 

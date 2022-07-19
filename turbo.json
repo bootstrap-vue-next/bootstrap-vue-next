@@ -4,13 +4,28 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "test:lint": {
+      "outputs": []
+    },
+    "test:unit": {
+      "outputs": [],
+      "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
     },
     "lint": {
       "outputs": []
     },
     "dev": {
       "cache": false
+    },
+    "deploy": {
+      "dependsOn": ["build", "test", "lint"],
+      "outputs": []
     }
   }
 }

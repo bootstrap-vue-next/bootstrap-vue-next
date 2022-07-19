@@ -82,6 +82,7 @@
     </b-table>
   </div>
 </template>
+
 <script lang="ts">
 import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent} from 'vue'
 import AnchoredHeading from './anchored-heading'

@@ -48,6 +48,9 @@ npm i --save bootstrap bootstrap-vue-3
 
 # Yarn
 yarn add bootstrap bootstrap-vue-3
+
+# PNPM
+pnpm add bootstrap bootstrap-vue-3
 ```
 
 # Contribute & support 🙌

@@ -8,6 +8,9 @@
     "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "test:lint": "turbo run test:lint",
+    "test:unit": "turbo run test:unit",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install && turbo run build"
