@@ -61,7 +61,7 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 - or better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls)
 - or even better, visit [my patreon page](https://patreon.com/cdmoro) and support me 😄
 
-Read <https://github.com/cdmoro/bootstrap-vue-3/tree/main/docs/reference/contribution.md> on how to start helping
+Read [Contribution Guide](./CONTRIBUTION.md) on how to start helping
 
 ## One-time donations
 
