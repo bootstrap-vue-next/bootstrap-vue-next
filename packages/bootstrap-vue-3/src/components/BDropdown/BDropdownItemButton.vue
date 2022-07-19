@@ -49,6 +49,7 @@ const clicked = (e: MouseEvent): void => emit('click', e)
 
 <script lang="ts">
 export default {
+  name: 'BDropdownItemButton',
   inheritAttrs: false,
 }
 </script>

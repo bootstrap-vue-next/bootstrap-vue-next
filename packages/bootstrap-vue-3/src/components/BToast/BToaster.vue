@@ -50,3 +50,9 @@ const handleDestroy = (id: string) => {
   props.instance?.remove(id)
 }
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BToaster',
+}
+</script>

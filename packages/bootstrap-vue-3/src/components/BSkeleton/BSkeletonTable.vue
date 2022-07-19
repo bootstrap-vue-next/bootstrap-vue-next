@@ -47,3 +47,9 @@ withDefaults(defineProps<BSkeletonTableProps>(), {
   showFooter: false,
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BSkeletonTable',
+}
+</script>

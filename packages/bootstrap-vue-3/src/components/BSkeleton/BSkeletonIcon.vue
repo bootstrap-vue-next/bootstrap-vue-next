@@ -22,3 +22,9 @@ const props = withDefaults(defineProps<BSkeletonIconProps>(), {
 
 const classes = computed(() => [`b-skeleton-animate-${props.animation}`])
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BSkeletonIcon',
+}
+</script>

@@ -119,3 +119,9 @@ const classes = getGroupClasses(props)
 
 // TODO: make tests compatible with the v-focus directive
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BFormCheckboxGroup',
+}
+</script>

@@ -97,3 +97,9 @@ watch(
   }
 )
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BOffcanvas',
+}
+</script>

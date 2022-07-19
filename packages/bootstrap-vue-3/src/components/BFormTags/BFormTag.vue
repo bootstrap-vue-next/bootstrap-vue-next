@@ -75,3 +75,9 @@ const classes = computed(() => [
   },
 ])
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BFormTag',
+}
+</script>

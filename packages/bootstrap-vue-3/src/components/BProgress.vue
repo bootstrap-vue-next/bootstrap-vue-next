@@ -56,4 +56,8 @@ provide(injectionKey, {
 <script lang="ts">
 import type {BProgressParentData} from '../types/components'
 export const injectionKey: InjectionKey<BProgressParentData> = Symbol()
+
+export default {
+  name: 'BProgress',
+}
 </script>

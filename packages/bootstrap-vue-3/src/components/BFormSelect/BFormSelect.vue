@@ -176,3 +176,9 @@ defineExpose({
   focus,
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BFormSelect',
+}
+</script>

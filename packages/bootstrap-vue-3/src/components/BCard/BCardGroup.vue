@@ -24,3 +24,9 @@ const classes = computed(() =>
   props.deck ? 'card-deck' : props.columns ? 'card-columns' : 'card-group'
 )
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BCardGroup',
+}
+</script>

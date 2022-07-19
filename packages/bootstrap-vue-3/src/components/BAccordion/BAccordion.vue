@@ -35,4 +35,7 @@ if (!props.free) {
 
 <script lang="ts">
 export const injectionKey: InjectionKey<string> = Symbol()
+export default {
+  name: 'BAccordion',
+}
 </script>

@@ -14,3 +14,9 @@ withDefaults(defineProps<BSkeletonWrapperProps>(), {
   loading: false,
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BSkeletonWrapper',
+}
+</script>

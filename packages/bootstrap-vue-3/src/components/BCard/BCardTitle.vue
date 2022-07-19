@@ -18,3 +18,9 @@ withDefaults(defineProps<BCardTitleProps>(), {
   titleTag: 'h4',
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BCardTitle',
+}
+</script>

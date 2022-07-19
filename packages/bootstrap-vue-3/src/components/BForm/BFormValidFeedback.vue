@@ -40,3 +40,9 @@ const attrs = computed(() => ({
   'aria-atomic': props.ariaLive ? 'true' : null,
 }))
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BFormValidFeedback',
+}
+</script>

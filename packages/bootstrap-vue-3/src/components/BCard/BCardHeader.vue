@@ -33,3 +33,9 @@ const classes = computed(() => ({
   [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
 }))
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BCardHeader',
+}
+</script>

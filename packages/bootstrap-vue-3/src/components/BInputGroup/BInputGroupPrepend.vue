@@ -18,3 +18,9 @@ withDefaults(defineProps<BInputGroupPrependProps>(), {
   tag: 'div',
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BInputGroupPrepend',
+}
+</script>

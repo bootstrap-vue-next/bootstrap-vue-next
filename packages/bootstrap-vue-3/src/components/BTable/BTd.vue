@@ -37,3 +37,9 @@ const classes = computed(() => ({
 
 const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BTd',
+}
+</script>

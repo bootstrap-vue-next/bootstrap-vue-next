@@ -20,3 +20,9 @@ const classes = computed(() => ({
   [`thead-${props.headVariant}`]: props.headVariant,
 }))
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BTbody',
+}
+</script>

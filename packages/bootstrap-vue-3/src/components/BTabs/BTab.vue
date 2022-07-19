@@ -53,3 +53,9 @@ const classes = computed(() => ({
   'card-body': parentData?.card && props.noBody === false,
 }))
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BTab',
+}
+</script>

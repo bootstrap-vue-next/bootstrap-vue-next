@@ -98,3 +98,9 @@ const showCaptionAsHtml = computed<string | undefined>(() => props.captionHtml)
 const parentWidth = computed<string | undefined>(() => parentData.width)
 const parentHeight = computed<string | undefined>(() => parentData.height)
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BCarouselSlide',
+}
+</script>

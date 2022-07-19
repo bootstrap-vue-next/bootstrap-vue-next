@@ -15,3 +15,9 @@ interface BFormFloatingLabelProps {
 
 defineProps<BFormFloatingLabelProps>()
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BFormFloatingLabel',
+}
+</script>

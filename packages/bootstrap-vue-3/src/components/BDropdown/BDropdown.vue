@@ -200,3 +200,9 @@ defineExpose({
   hide,
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BDropdown',
+}
+</script>

@@ -26,3 +26,9 @@ const classes = computed(() => ({
   [`text-${props.subTitleTextVariant}`]: props.subTitleTextVariant,
 }))
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BCardSubTitle',
+}
+</script>

@@ -112,3 +112,9 @@ onMounted(() => {
   }
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BFormRadio',
+}
+</script>

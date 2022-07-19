@@ -15,3 +15,9 @@ withDefaults(defineProps<BDropdownDividerProps>(), {
   tag: 'hr',
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BDropdownDivider',
+}
+</script>

@@ -18,3 +18,9 @@ const classes = computed(() => ({
   [`table-${props.footVariant}`]: props.footVariant,
 }))
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BTfoot',
+}
+</script>

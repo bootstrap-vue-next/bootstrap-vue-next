@@ -58,6 +58,7 @@ const classes = computed(() => ({
 
 <script lang="ts">
 export default {
+  name: 'BDropdownGroup',
   inheritAttrs: false,
 }
 </script>

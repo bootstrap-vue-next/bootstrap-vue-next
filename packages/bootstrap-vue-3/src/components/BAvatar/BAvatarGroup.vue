@@ -59,4 +59,8 @@ provide<BAvatarGroupParentData>(injectionKey, {
 
 <script lang="ts">
 export const injectionKey: InjectionKey<BAvatarGroupParentData> = Symbol()
+
+export default {
+  name: 'BAvatarGroup',
+}
 </script>

@@ -67,3 +67,9 @@ const responsiveClasses = computed(() => [
   },
 ])
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BTableSimple',
+}
+</script>

@@ -34,3 +34,9 @@ const classes = computed(() => ({
 
 const submitted = (e: Event): void => emit('submit', e)
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BForm',
+}
+</script>

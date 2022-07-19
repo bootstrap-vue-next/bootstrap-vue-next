@@ -409,3 +409,9 @@ const slotAttrs = computed(() => {
   }
 })
 </script>
+
+<script lang="ts">
+export default {
+  name: 'BFormTags',
+}
+</script>
