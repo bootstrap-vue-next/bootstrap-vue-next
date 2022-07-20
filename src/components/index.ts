@@ -88,6 +88,7 @@ import BTabs from './BTabs/BTabs.vue'
 import {BToast, BToaster, BToastPlugin} from './BToast'
 import BToastContainer from './BToast/BToaster.vue'
 import BTransition from './BTransition/BTransition.vue'
+import BD from './BD.vue'
 
 export default {
   BAccordion,
@@ -182,4 +183,5 @@ export default {
   BTabs,
   BTransition,
   BToastPlugin,
+  BD,
 }
