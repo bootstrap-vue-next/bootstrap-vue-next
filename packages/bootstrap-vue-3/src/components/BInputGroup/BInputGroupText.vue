@@ -15,9 +15,3 @@ withDefaults(defineProps<BInputGroupTextProps>(), {
   tag: 'div',
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BInputGroupText',
-}
-</script>

@@ -125,9 +125,3 @@ watch(countDown, (newValue) => {
   }
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BAlert',
-}
-</script>

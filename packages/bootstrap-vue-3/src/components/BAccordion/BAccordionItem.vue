@@ -47,9 +47,3 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
 const computedId = useId(props.id, 'accordion_item')
 const parent = inject(injectionKey, '')
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BAccordionItem',
-}
-</script>

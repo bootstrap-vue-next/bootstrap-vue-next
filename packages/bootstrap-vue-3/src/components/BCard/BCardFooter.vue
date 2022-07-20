@@ -33,9 +33,3 @@ const classes = computed(() => ({
   [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BCardFooter',
-}
-</script>

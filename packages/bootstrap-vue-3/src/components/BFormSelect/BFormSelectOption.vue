@@ -16,9 +16,3 @@ withDefaults(defineProps<BFormSelectOptionProps>(), {
   disabled: false,
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BFormSelectOption',
-}
-</script>

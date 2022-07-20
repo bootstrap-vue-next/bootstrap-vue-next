@@ -61,9 +61,3 @@ const classes = computed(() => {
   }
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BCardImg',
-}
-</script>

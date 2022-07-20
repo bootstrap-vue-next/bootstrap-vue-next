@@ -38,7 +38,6 @@ import type {BPopoverDelayObject} from '../types/components'
 import type {ColorVariant} from '../types'
 
 export default defineComponent({
-  name: 'BPopover',
   props: {
     container: {
       type: [String, Object] as PropType<

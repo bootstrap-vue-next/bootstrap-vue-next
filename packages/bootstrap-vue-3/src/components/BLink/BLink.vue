@@ -55,7 +55,6 @@ export const BLINK_PROPS = {
 }
 
 export default defineComponent({
-  name: 'BLink',
   props: BLINK_PROPS,
   emits: ['click'],
   setup(props, {emit, attrs}) {

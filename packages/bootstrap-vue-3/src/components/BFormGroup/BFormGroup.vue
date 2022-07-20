@@ -39,7 +39,6 @@ export const SLOT_NAME_DESCRIPTION = 'description'
 export const SLOT_NAME_DEFAULT = 'default'
 
 export default defineComponent({
-  name: 'BFormGroup',
   components: {BCol, BFormInvalidFeedback, BFormRow, BFormText, BFormValidFeedback},
   props: {
     contentCols: {type: [Boolean, String, Number], required: false},

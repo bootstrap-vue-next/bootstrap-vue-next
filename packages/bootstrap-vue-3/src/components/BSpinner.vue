@@ -40,9 +40,3 @@ const classes = computed(() => ({
   [`text-${props.variant}`]: !!props.variant,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BSpinner',
-}
-</script>

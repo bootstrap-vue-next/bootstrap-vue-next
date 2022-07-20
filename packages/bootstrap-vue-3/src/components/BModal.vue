@@ -262,10 +262,3 @@ watch(
   }
 )
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BModal',
-  inheritAttrs: false,
-}
-</script>

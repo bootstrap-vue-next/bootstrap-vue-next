@@ -18,9 +18,3 @@ const classes = computed(() => ({
   [`table-${props.variant}`]: props.variant,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BTr',
-}
-</script>

@@ -15,7 +15,6 @@ import {pluckProps} from '../../utils/props'
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
 
 export default defineComponent({
-  name: 'BBadge',
   props: {
     pill: {type: Boolean, default: false},
     tag: {type: String, default: 'span'},

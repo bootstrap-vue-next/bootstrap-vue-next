@@ -43,9 +43,3 @@ const classes = computed(() => ({
   [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BCardBody',
-}
-</script>

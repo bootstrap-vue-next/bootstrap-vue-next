@@ -47,9 +47,3 @@ const hasPrepend = computed<boolean>(() => !!props.prepend || !!props.prependHtm
 const showAppendHtml = computed<boolean>(() => !!props.appendHtml)
 const showPrependHtml = computed<boolean>(() => !!props.prependHtml)
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BInputGroup',
-}
-</script>

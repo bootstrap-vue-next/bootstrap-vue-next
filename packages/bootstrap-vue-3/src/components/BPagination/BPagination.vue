@@ -32,7 +32,6 @@ const sanitizeCurrentPage = (value: number, numberOfPages: number) => {
 }
 
 export default defineComponent({
-  name: 'BPagination',
   props: {
     align: {type: String as PropType<Alignment>, default: 'start'},
     ariaControls: {type: String, required: false},

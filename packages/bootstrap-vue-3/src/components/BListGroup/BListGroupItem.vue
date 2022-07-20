@@ -91,9 +91,3 @@ const computedAttrs = computed(() => {
   return localAttrs
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BListGroupItem',
-}
-</script>

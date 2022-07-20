@@ -317,8 +317,4 @@ provide(injectionKey, {
 <script lang="ts">
 import {BTabsParentData} from '../../types/components'
 export const injectionKey: InjectionKey<BTabsParentData> = Symbol()
-
-export default {
-  name: 'BTabs',
-}
 </script>

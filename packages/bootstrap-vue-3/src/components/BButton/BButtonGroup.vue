@@ -27,9 +27,3 @@ const classes = computed(() => ({
   [`btn-group-${props.size}`]: props.size,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BButtonGroup',
-}
-</script>

@@ -147,7 +147,6 @@ onMounted((): void => {
 
 <script lang="ts">
 export default {
-  name: 'BFormCheckbox',
   inheritAttrs: false,
 }
 </script>

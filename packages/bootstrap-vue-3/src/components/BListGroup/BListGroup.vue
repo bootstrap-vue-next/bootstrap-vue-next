@@ -43,8 +43,4 @@ provide(injectionKey, {
 <script lang="ts">
 import type {BListGroupParentData} from '../../types/components'
 export const injectionKey: InjectionKey<BListGroupParentData> = Symbol()
-
-export default {
-  name: 'BListGroup',
-}
 </script>

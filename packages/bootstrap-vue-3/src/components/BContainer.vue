@@ -4,7 +4,6 @@ import {computed, defineComponent, h, onMounted, PropType, ref, VNode} from 'vue
 import {ToastInstance, useToast} from './BToast/plugin'
 import BToaster from './BToast/BToaster.vue'
 export default defineComponent({
-  name: 'BContainer',
   props: {
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},

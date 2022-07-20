@@ -29,9 +29,3 @@ const computedClasses = computed(() => ({
   'input-group-prepend': !props.append,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BInputGroupAddon',
-}
-</script>

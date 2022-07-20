@@ -10,7 +10,6 @@ import type {ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
-  name: 'BButton',
   props: {
     ...BLINK_PROPS,
     active: {type: Boolean, default: false},

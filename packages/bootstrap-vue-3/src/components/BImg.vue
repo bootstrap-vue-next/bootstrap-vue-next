@@ -128,9 +128,3 @@ const classes = computed(() => {
   }
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BImg',
-}
-</script>

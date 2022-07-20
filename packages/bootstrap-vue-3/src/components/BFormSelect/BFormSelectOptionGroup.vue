@@ -42,9 +42,3 @@ const formOptions = computed(() =>
   normalizeOptions(props.options as Array<any>, 'BFormSelectOptionGroup', props)
 )
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BFormSelectOptionGroup',
-}
-</script>

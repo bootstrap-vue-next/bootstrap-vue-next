@@ -31,9 +31,3 @@ const attrs = computed(() => ({
   id: props.id || null,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BFormText',
-}
-</script>

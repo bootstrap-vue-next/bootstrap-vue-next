@@ -17,7 +17,6 @@ import {computed, defineComponent} from 'vue'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
-  name: 'BBreadcrumbItem',
   props: {
     ...omit(BLINK_PROPS, ['event', 'routerTag']),
     active: {type: Boolean, default: false},

@@ -20,7 +20,6 @@ const FADE_PROPS = {
 }
 
 export default defineComponent({
-  name: 'BTransition',
   props: {
     appear: {type: Boolean, default: false},
     mode: {type: String as PropType<TransitionMode>, required: false},

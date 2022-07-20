@@ -27,7 +27,6 @@ import {computed, defineComponent, StyleValue} from 'vue'
 import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
 
 export default defineComponent({
-  name: 'BFormTextarea',
   props: {
     ...COMMON_INPUT_PROPS,
     noResize: {type: Boolean, default: false},

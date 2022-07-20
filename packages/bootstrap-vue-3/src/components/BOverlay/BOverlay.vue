@@ -16,7 +16,6 @@ interface ISlotScope {
 }
 
 export default defineComponent({
-  name: 'BOverlay',
   components: {BTransition},
   props: {
     bgColor: {type: String, required: false},

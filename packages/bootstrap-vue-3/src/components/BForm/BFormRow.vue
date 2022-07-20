@@ -15,9 +15,3 @@ withDefaults(defineProps<BFormRowProps>(), {
   tag: 'div',
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BFormRow',
-}
-</script>

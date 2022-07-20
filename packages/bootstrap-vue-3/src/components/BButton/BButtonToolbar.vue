@@ -23,9 +23,3 @@ const classes = computed(() => ({
   'justify-content-between': props.justify,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BButtonToolbar',
-}
-</script>

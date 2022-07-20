@@ -15,7 +15,6 @@ const breakpointOffset = getBreakpointProps('offset', [''], {type: [String, Numb
 const breakpointOrder = getBreakpointProps('order', [''], {type: [String, Number], default: null})
 
 export default defineComponent({
-  name: 'BCol',
   props: {
     col: {type: Boolean, default: false}, // Generic flexbox .col (xs)
     cols: {type: [String, Number], default: null}, // .col-[1-12]|auto (xs)

@@ -44,7 +44,6 @@ const allowedTypes = [
 ]
 
 export default defineComponent({
-  name: 'BFormInput',
   props: {
     ...COMMON_INPUT_PROPS,
     // debounce: {type: [String, Number], default: 0}, TODO: not implemented yet

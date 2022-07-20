@@ -26,9 +26,3 @@ const classes = computed(() => ({
   'btn-close-white': props.white,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BCloseButton',
-}
-</script>

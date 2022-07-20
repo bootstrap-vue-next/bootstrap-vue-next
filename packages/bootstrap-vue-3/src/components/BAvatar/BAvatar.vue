@@ -198,7 +198,4 @@ export const computeSize = (value: any): string | null => {
   const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value
   return isNumber(calcValue) ? `${calcValue}px` : calcValue || null
 }
-export default {
-  name: 'BAvatar',
-}
 </script>

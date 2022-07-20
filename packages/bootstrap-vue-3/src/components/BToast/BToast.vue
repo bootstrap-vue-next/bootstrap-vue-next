@@ -25,7 +25,6 @@ export const SLOT_NAME_TOAST_TITLE = 'toast-title'
 const MIN_DURATION = 5000
 
 export default defineComponent({
-  name: 'BToast',
   props: {
     ...BLINK_PROPS,
     delay: {type: Number, default: 5000},

@@ -18,9 +18,3 @@ const classes = computed(() => ({
   [`table-${props.headVariant}`]: props.headVariant,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BThead',
-}
-</script>

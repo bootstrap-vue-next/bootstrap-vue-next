@@ -13,7 +13,6 @@ import type {Alignment} from '../types'
 const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], default: null})
 
 export default defineComponent({
-  name: 'BRow',
   props: {
     tag: {type: String, default: 'div'},
     gutterX: {type: String, default: null},

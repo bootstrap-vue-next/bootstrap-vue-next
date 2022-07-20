@@ -45,9 +45,3 @@ const breadcrumbItemObjects = computed<Array<BreadcrumbItemObject>>(() => {
   return items
 })
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BBreadcrumb',
-}
-</script>

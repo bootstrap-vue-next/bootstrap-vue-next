@@ -34,9 +34,3 @@ const classes = computed(() => ({
   'nav-justified': props.justified,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BNav',
-}
-</script>

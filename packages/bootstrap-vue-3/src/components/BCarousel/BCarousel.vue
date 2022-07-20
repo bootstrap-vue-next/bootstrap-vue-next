@@ -107,8 +107,4 @@ provide(injectionKey, {
 
 <script lang="ts">
 export const injectionKey: InjectionKey<BCarouselParentData> = Symbol()
-
-export default {
-  name: 'BCarousel',
-}
 </script>

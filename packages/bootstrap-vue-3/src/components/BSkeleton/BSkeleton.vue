@@ -35,9 +35,3 @@ const style = computed<StyleValue>(() => ({
   height: props.size || props.height,
 }))
 </script>
-
-<script lang="ts">
-export default {
-  name: 'BSkeleton',
-}
-</script>
