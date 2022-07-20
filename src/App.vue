@@ -83,7 +83,8 @@
       :columns="3"
       :table-props="{bordered: true, striped: true}"
     ></b-skeleton-table>
-    <b-button @click="loading = !loading">Toggle loading</b-button>
+
+    <b-button block @click="loading = !loading">Toggle loading1</b-button>
     <b-card>
       <b-skeleton-wrapper :loading="loading">
         <template #loading>
@@ -98,6 +99,7 @@
         at consequat dui. Aenean tristique sagittis quam, sit amet sollicitudin neque sodales in.
       </b-skeleton-wrapper>
     </b-card>
+
     <h5>Text (default)</h5>
     <b-skeleton></b-skeleton>
 
@@ -109,6 +111,12 @@
 
     <h5 class="mt-3">Button</h5>
     <b-skeleton type="button"></b-skeleton>
+
+    <h5>Block level buttons</h5>
+    <b-d gap="1">
+      <b-button block variant="primary">Block Level Button</b-button>
+      <b-button block variant="primary">Block Level Button</b-button>
+    </b-d>
 
     <h5>Wave (default)</h5>
     <b-card>

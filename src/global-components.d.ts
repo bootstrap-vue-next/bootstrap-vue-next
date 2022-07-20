@@ -88,6 +88,7 @@ import BTabs from './components/BTabs/BTabs.vue'
 import {BToast, BToaster, BToastPlugin} from './components/BToast'
 import BToastContainer from './components/BToast/BToaster.vue'
 import BTransition from './components/BTransition/BTransition.vue'
+import BD from './components/BD.vue'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -183,5 +184,6 @@ declare module '@vue/runtime-core' {
     BTabs: typeof BTabs
     BTransition: typeof BTransition
     BToastPlugin: typeof BToastPlugin
+    BD: typeof BD
   }
 }

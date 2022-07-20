@@ -92,6 +92,7 @@ export {default as BTransition} from './components/BTransition/BTransition.vue'
 export {default as BToast} from './components/BToast/BToast.vue'
 export {default as BToaster} from './components/BToast/BToaster.vue'
 export {BToastPlugin, useToast} from './components/BToast/'
+export {default as BD} from './components/BD.vue'
 
 // export available directives
 export {default as VBPopover} from './directives/BPopover'
