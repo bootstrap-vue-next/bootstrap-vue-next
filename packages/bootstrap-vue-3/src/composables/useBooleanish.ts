@@ -1,4 +1,4 @@
-import {resolveBooleanish} from 'src/utils'
+import {resolveBooleanish} from '../utils'
 import {computed, ComputedRef} from 'vue'
 import {Booleanish} from '../types'
 

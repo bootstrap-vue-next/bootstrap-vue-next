@@ -1,4 +1,4 @@
-interface ComponentProps {
+export interface ComponentProps {
   [key: string]: {type: any[]; default: any}
 }
 

@@ -3,7 +3,7 @@ type PropDefinition = {
   default: any
 }
 
-interface ComponentProps {
+export interface ComponentProps {
   [key: string]: PropDefinition
 }
 
