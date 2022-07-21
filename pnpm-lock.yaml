@@ -795,7 +795,7 @@ packages:
       vite: ^2.5.10
       vue: ^3.2.25
     dependencies:
-      vite: 2.9.14_sass@1.53.0
+      vite: 2.9.14
       vue: 3.2.37
     dev: true
 
