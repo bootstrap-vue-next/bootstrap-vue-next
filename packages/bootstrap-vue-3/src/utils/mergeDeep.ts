@@ -1,9 +1,6 @@
-function _isObject(item: any) {
-  return item && typeof item === 'object' && item.constructor === Object
-}
+const _isObject = (item: any) => item && typeof item === 'object' && item.constructor === Object
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function mergeDeep(target: any, source: any, extendArray = true) {
+const mergeDeep = (target: any, source: any, extendArray = true) => {
   const output =
     target instanceof Date && typeof target.getMonth === 'function'
       ? new Date(target)

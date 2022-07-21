@@ -2,7 +2,6 @@ interface ComponentProps {
   [key: string]: {type: any[]; default: any}
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default (
   props: any,
   els: ComponentProps,

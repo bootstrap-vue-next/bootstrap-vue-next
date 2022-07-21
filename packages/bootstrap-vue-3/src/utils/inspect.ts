@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 // Quick object check
 // This is primarily used to tell Objects from primitive values
 // when we know the value is a JSON-compliant type

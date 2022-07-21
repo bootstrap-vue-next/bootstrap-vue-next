@@ -1,5 +1,5 @@
 import {AnimationFrame, DOCUMENT} from '../types/safeTypes'
-import {HAS_WINDOW_SUPPORT} from '../utils/env'
+import {HAS_WINDOW_SUPPORT} from '../utils'
 
 import {Comment, Slot, VNode} from 'vue'
 import {from as arrayFrom} from './array'
@@ -61,11 +61,9 @@ export const isVisible = (el: HTMLElement): boolean => {
   return !!(bcr && bcr.height > 0 && bcr.width > 0)
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const isEmptySlot = (slot: Slot | undefined, data?: any) =>
   !slot || slot(data).filter((vnode: VNode) => vnode.type !== Comment).length < 1
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const offset = (el: HTMLElement) => {
   const _offset = {top: 0, left: 0}
   if (!isElement(el) || el.getClientRects().length === 0) {

@@ -1,13 +1,13 @@
 import {toString} from './stringUtils'
 
-const escapeChar = (value: string) => '\\' + value
+const escapeChar = (value: string) => `\\${value}`
 
 // The `cssEscape()` util is based on this `CSS.escape()` polyfill:
 // https://github.com/mathiasbynens/CSS.escape
-export const cssEscape = (value: any): string => {
+export default (value: any): string => {
   value = toString(value)
 
-  const length = value.length
+  const {length} = value
   const firstCharCode = value.charCodeAt(0)
 
   return value.split('').reduce((result: string, char: string, index: number) => {
@@ -15,7 +15,7 @@ export const cssEscape = (value: any): string => {
 
     // If the character is NULL (U+0000), use (U+FFFD) as replacement
     if (charCode === 0x0000) {
-      return result + '\uFFFD'
+      return `${result}\uFFFD`
     }
 
     // If the character ...

@@ -26,16 +26,14 @@
 
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
-import {isEmptySlot} from '../../utils/dom'
+import {isEmptySlot, isNumber, isNumeric, isString, toFloat} from '../../utils'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, useSlots} from 'vue'
 import type {ColorVariant} from '../../types'
-import {isNumber, isNumeric, isString} from '../../utils/inspect'
-import {toFloat} from '../../utils/number'
 import {injectionKey} from './BAvatarGroup.vue'
 
 interface BAvatarProps {
-  alt?: string
+  alt?: string // TODO each complex variant should contain a note about it's type
   ariaLabel?: string
   badge?: boolean | string
   badgeLeft?: boolean

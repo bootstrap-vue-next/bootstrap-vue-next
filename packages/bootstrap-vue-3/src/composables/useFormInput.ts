@@ -43,7 +43,6 @@ type InputEmitType = (
   ...args: any[]
 ) => void
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   const input = ref<HTMLInputElement>()
   let inputValue: string | null = null

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {isObject} from './inspect'
+// import {isObject} from './inspect'
 
 export const assign = (target: any, ...args: any[]) => Object.assign(target, ...args)
 export const defineProperties = (obj: any, props: PropertyDescriptorMap & ThisType<any>) =>

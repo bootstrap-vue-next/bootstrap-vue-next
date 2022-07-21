@@ -1,7 +1,7 @@
 import {Slots, VNode} from 'vue'
 import {isFunction} from './inspect'
 
-export const normalizeSlot = (name: string, scope = {}, $slots: Slots = {}): VNode => {
+export default (name: string, scope = {}, $slots: Slots = {}): VNode => {
   // Ensure names is an array
   const names = [name]
   let slot

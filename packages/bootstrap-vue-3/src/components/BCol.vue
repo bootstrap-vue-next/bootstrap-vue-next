@@ -7,8 +7,7 @@
 <script lang="ts">
 import {computed, defineComponent, PropType} from 'vue'
 import type {Alignment} from '../types'
-import getBreakpointProps from '../utils/getBreakpointProps'
-import getClasses from '../utils/getClasses'
+import {getBreakpointProps, getClasses} from '../utils'
 
 const breakpointCol = getBreakpointProps('', [], {type: [Boolean, String, Number], default: false})
 const breakpointOffset = getBreakpointProps('offset', [''], {type: [String, Number], default: null})

@@ -103,7 +103,7 @@ import BTransition from './components/BTransition/BTransition.vue'
 export {useToast}
 
 // Export utils
-export {BvEvent} from './utils/bvEvent'
+export {BvEvent} from './utils'
 
 // Export available directives
 export {default as VBPopover} from './directives/BPopover'

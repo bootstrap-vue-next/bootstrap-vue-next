@@ -1,7 +1,5 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
-import {concat} from '../utils/array'
-import {getAttr, isTag} from '../utils/dom'
-import {isString} from '../utils/inspect'
+import {concat, getAttr, isString, isTag} from '../utils'
 import {Directive, DirectiveBinding} from 'vue'
 
 function resolveToggleType(el: HTMLElement): string {

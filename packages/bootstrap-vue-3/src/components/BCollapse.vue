@@ -16,7 +16,7 @@
 import {computed, onMounted, ref, watch} from 'vue'
 import Collapse from 'bootstrap/js/dist/collapse'
 import {useEventListener} from '../composables'
-import getID from '../utils/getID'
+import {getID} from '../utils'
 
 interface BCollapseProps {
   accordion?: string

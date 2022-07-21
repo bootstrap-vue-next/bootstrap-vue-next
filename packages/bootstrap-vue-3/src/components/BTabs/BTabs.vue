@@ -52,11 +52,8 @@
 <script setup lang="ts">
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, useSlots, watch} from 'vue'
-import getID from '../../utils/getID'
+import {BvEvent, getID, isFunction, mathMax} from '../../utils'
 import type {Alignment} from '../../types'
-import {BvEvent} from '../../utils/bvEvent'
-import {mathMax} from '../../utils/math'
-import {isFunction} from '../../utils/inspect'
 
 interface BTabsProps {
   activeNavItemClass?: Array<unknown> | Record<string, unknown> | string

@@ -48,7 +48,6 @@ const getGroupClasses = (props: any): ComputedRef =>
     [`btn-group-${props.size}`]: props.size,
   }))
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean) =>
   slots
     .filter((e: any) => e.type.name === nodeType)

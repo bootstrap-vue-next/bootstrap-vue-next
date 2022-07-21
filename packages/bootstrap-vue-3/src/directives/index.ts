@@ -5,6 +5,8 @@ import BTooltip from './BTooltip'
 import BVisible from './BVisible'
 import focus from './focus'
 
+export {BModal, BPopover, BToggle, BTooltip, BVisible, focus}
+
 export default {
   BModal,
   BPopover,

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {Component} from 'vue'
 import {assign, defineProperties, defineProperty, readonlyDescriptor} from './object'
-export class BvEvent {
+export default class BvEvent {
   cancelable = true
   componentId: string | null = null
   defaultPrevented = false

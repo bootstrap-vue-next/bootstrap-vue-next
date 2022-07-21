@@ -1,9 +1,8 @@
 // Number utilities
 
 //Validates a number is an integer. If not return NaN
-export const toInteger = (value: number, defaultValue = NaN): number => {
-  return Number.isInteger(value) ? value : defaultValue
-}
+export const toInteger = (value: number, defaultValue = NaN): number =>
+  Number.isInteger(value) ? value : defaultValue
 
 export const stringToInteger = (value: string, defaultValue = NaN): number => {
   const integer = parseInt(value, 10)

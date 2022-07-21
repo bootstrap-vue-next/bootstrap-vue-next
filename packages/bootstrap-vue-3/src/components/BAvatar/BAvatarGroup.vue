@@ -11,10 +11,8 @@
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, InjectionKey, provide, StyleValue} from 'vue'
 import type {ColorVariant} from '../../types'
-import {mathMax, mathMin} from '../../utils/math'
-import {toFloat} from '../../utils/number'
+import {isNumeric, isString, mathMax, mathMin, toFloat} from '../../utils'
 import {computeSize} from './BAvatar.vue'
-import {isNumeric, isString} from '../../utils/inspect'
 
 interface BAvatarGroupProps {
   overlap?: number | string

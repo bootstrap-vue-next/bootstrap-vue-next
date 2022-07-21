@@ -17,7 +17,7 @@
 import type {ColorVariant} from '../types'
 import {computed, onBeforeUnmount, ref, watch} from 'vue'
 import Alert from 'bootstrap/js/dist/alert'
-import {toInteger} from '../utils/number'
+import {toInteger} from '../utils'
 
 interface BAlertProps {
   dismissLabel?: string

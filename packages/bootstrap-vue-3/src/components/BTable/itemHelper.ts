@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import type {TableField, TableFieldObject, TableItem} from '../../types'
-import {isObject, isString} from '../../utils/inspect'
-import {startCase} from '../../utils/stringUtils'
+import {isObject, isString, startCase} from '../../utils'
 
 const useItemHelper = () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {

@@ -2,7 +2,7 @@
  * SSR safe types
  */
 
-import {HAS_DOCUMENT_SUPPORT, HAS_WINDOW_SUPPORT} from '../utils/env'
+import {HAS_DOCUMENT_SUPPORT, HAS_WINDOW_SUPPORT} from '../utils'
 
 export const WINDOW = HAS_WINDOW_SUPPORT ? window : {}
 export const DOCUMENT = HAS_DOCUMENT_SUPPORT ? document : {}
