@@ -2,7 +2,7 @@ import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
 import {concat, getAttr, isString, isTag} from '../utils'
 import {Directive, DirectiveBinding} from 'vue'
 
-function resolveToggleType(el: HTMLElement): string {
+const resolveToggleType = (el: HTMLElement): string => {
   if (el.classList.contains('offcanvas')) {
     return 'offcanvas'
   }
