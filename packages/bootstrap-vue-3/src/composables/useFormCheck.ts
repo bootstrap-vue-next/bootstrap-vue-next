@@ -1,5 +1,9 @@
 import {computed, ComputedRef} from 'vue'
 
+/**
+ * @param props
+ * @returns
+ */
 const _getComputedAriaInvalid = (props: any): ComputedRef =>
   computed(() => {
     if (props.ariaInvalid === true || props.ariaInvalid === 'true' || props.ariaInvalid === '') {
@@ -10,6 +14,10 @@ const _getComputedAriaInvalid = (props: any): ComputedRef =>
     return computedState === false ? 'true' : props.ariaInvalid
   })
 
+/**
+ * @param props
+ * @returns
+ */
 const getClasses = (props: any): ComputedRef =>
   computed(() => ({
     'form-check': !props.plain && !props.button,
@@ -18,6 +26,10 @@ const getClasses = (props: any): ComputedRef =>
     [`form-control-${props.size}`]: props.size && props.size !== 'md',
   }))
 
+/**
+ * @param props
+ * @returns
+ */
 const getInputClasses = (props: any): ComputedRef =>
   computed(() => ({
     'form-check-input': !props.plain && !props.button,
@@ -26,6 +38,10 @@ const getInputClasses = (props: any): ComputedRef =>
     'btn-check': props.button,
   }))
 
+/**
+ * @param props
+ * @returns
+ */
 const getLabelClasses = (props: any): ComputedRef =>
   computed(() => ({
     'form-check-label': !props.plain && !props.button,
@@ -34,12 +50,20 @@ const getLabelClasses = (props: any): ComputedRef =>
     [`btn-${props.size}`]: props.button && props.size && props.size !== 'md',
   }))
 
+/**
+ * @param props
+ * @returns
+ */
 const getGroupAttr = (props: any): ComputedRef =>
   computed(() => ({
     'aria-invalid': _getComputedAriaInvalid(props).value,
     'aria-required': props.required.toString() === 'true' ? 'true' : null,
   }))
 
+/**
+ * @param props
+ * @returns
+ */
 const getGroupClasses = (props: any): ComputedRef =>
   computed(() => ({
     'was-validated': props.validated,
@@ -48,6 +72,12 @@ const getGroupClasses = (props: any): ComputedRef =>
     [`btn-group-${props.size}`]: props.size,
   }))
 
+/**
+ * @param slots
+ * @param nodeType
+ * @param disabled
+ * @returns
+ */
 const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean) =>
   slots
     .filter((e: any) => e.type.name === nodeType)
@@ -65,6 +95,11 @@ const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean)
       }
     })
 
+/**
+ * @param option
+ * @param props
+ * @returns
+ */
 const optionToElement = (option: any, props: any): any => {
   if (typeof option === 'string') {
     return {
@@ -87,6 +122,14 @@ const optionToElement = (option: any, props: any): any => {
   }
 }
 
+/**
+ * @param el
+ * @param idx
+ * @param props
+ * @param computedName
+ * @param computedId
+ * @returns
+ */
 const bindGroupProps = (
   el: any,
   idx: number,

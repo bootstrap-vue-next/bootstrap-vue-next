@@ -2,8 +2,11 @@ import {toString} from './stringUtils'
 
 const escapeChar = (value: string) => `\\${value}`
 
-// The `cssEscape()` util is based on this `CSS.escape()` polyfill:
-// https://github.com/mathiasbynens/CSS.escape
+/**
+ * The `cssEscape()` util is based on this `CSS.escape()` polyfill: https://github.com/mathiasbynens/CSS.escape
+ *
+ * @param {any} value
+ */
 export default (value: any): string => {
   value = toString(value)
 

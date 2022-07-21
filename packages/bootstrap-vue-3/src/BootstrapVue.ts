@@ -4,6 +4,7 @@ import Directives from './directives'
 import {BootstrapVueOptions} from './types'
 import {createBreadcrumb, useBreadcrumb} from './composables'
 import './styles/styles.scss'
+
 // All available components
 // Keep this list in sync with /components/index.ts please
 import BAccordion from './components/BAccordion/BAccordion.vue'
@@ -98,14 +99,7 @@ import BToastContainer from './components/BToast/BToaster.vue'
 import BTransition from './components/BTransition/BTransition.vue'
 
 // Export available composables
-export {useToast}
-
-// Export available plugins
-// Not to be confused with the above main app plugin
-export {BToastPlugin}
-
-// Export available composables
-export {useBreadcrumb}
+export {useToast, useBreadcrumb}
 
 // Export available directives
 export {
@@ -114,6 +108,10 @@ export {
   BTooltip as VBTooltip,
   BVisible as VBVisible,
 } from './directives'
+
+// Export available plugins
+// Not to be confused with the main app plugin
+export {BToastPlugin}
 
 // Export available utils
 export {BvEvent} from './utils'

@@ -1,3 +1,6 @@
+/**
+ * @external
+ */
 declare type Alignment = 'start' | 'end' | 'center' | 'fill'
 
 declare namespace Alignment {

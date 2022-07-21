@@ -2,6 +2,13 @@ export interface ComponentProps {
   [key: string]: {type: any[]; default: any}
 }
 
+/**
+ * @param props
+ * @param els
+ * @param propPrefix
+ * @param classPrefix
+ * @returns
+ */
 export default (
   props: any,
   els: ComponentProps,

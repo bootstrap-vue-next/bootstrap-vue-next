@@ -7,6 +7,12 @@ export interface ComponentProps {
   [key: string]: PropDefinition
 }
 
+/**
+ * @param prefix
+ * @param breakpoints
+ * @param definition
+ * @returns
+ */
 export default (
   prefix: string,
   breakpoints: string[],

@@ -43,6 +43,11 @@ type InputEmitType = (
   ...args: any[]
 ) => void
 
+/**
+ * @param props
+ * @param emit
+ * @returns
+ */
 export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   const input = ref<HTMLInputElement>()
   let inputValue: string | null = null

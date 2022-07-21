@@ -15,10 +15,18 @@ const BREADCRUMB_OBJECT: UseBreadcrumbI = {
   },
 }
 
+/**
+ * @param app
+ */
 export const createBreadcrumb = (app: App): void => {
   app.provide(BREADCRUMB_SYMBOL, BREADCRUMB_OBJECT)
 }
 
+/**
+ * @external
+ *
+ * @returns
+ */
 export const useBreadcrumb = (): UseBreadcrumbI => {
   const context = inject(BREADCRUMB_SYMBOL)
 

@@ -1,3 +1,6 @@
+/**
+ * @external
+ */
 type ColorVariant =
   | 'primary'
   | 'secondary'

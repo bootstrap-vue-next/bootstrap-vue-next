@@ -1,5 +1,10 @@
 import {onBeforeUnmount, onMounted, Ref} from 'vue'
 
+/**
+ * @param element
+ * @param event
+ * @param callback
+ */
 export default (
   element: Ref<HTMLElement | undefined>,
   event: string,

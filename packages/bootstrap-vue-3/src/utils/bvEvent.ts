@@ -1,5 +1,9 @@
 import {Component} from 'vue'
 import {assign, defineProperties, defineProperty, readonlyDescriptor} from './object'
+
+/**
+ * @external
+ */
 export default class BvEvent {
   cancelable = true
   componentId: string | null = null

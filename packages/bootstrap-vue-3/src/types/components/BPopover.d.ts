@@ -27,6 +27,9 @@ export interface Emits {
   (e: 'inserted'): void
 }
 // Other
+/**
+ * @external
+ */
 export interface DelayObject {
   show: number
   hide: number

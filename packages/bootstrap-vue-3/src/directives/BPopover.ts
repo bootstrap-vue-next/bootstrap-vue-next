@@ -1,6 +1,9 @@
 import {Directive} from 'vue'
 import Popover from 'bootstrap/js/dist/popover'
 
+/**
+ * @external
+ */
 const BPopover: Directive<HTMLElement> = {
   mounted(el, binding) {
     let placement: Popover.Options['placement'] = 'right'

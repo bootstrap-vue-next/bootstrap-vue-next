@@ -2,6 +2,11 @@ import {computed, ComputedRef} from 'vue'
 
 import type {Alignment} from '../types'
 
+/**
+ *
+ * @param props
+ * @returns
+ */
 export default (props: {align: Alignment}): ComputedRef<string> =>
   computed(() => {
     if (props.align === 'center') {

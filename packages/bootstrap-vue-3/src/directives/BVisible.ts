@@ -2,7 +2,11 @@ import {Directive, DirectiveBinding} from 'vue'
 
 const observerInstances = new Map()
 
-function destroy(el: HTMLElement) {
+/**
+ *
+ * @param el
+ */
+const destroy = (el: HTMLElement) => {
   if (observerInstances.has(el)) {
     const observer = observerInstances.get(el)
     if (observer && observer.stop) {
@@ -12,7 +16,12 @@ function destroy(el: HTMLElement) {
   }
 }
 
-function bind(el: HTMLElement, binding: DirectiveBinding) {
+/**
+ *
+ * @param el
+ * @param binding
+ */
+const bind = (el: HTMLElement, binding: DirectiveBinding) => {
   const options = {
     margin: '0px',
     once: false,
@@ -39,6 +48,9 @@ function bind(el: HTMLElement, binding: DirectiveBinding) {
   observerInstances.set(el, observer)
 }
 
+/**
+ * @external
+ */
 const BVisible: Directive<HTMLElement> = {
   beforeMount(el, binding) {
     bind(el, binding)

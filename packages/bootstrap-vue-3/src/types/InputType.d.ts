@@ -1,3 +1,6 @@
+/**
+ * @external
+ */
 type InputType =
   | 'text'
   | 'number'

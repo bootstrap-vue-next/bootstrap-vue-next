@@ -41,6 +41,12 @@ const _normalizeOption = (
   }
 }
 
+/**
+ * @param options
+ * @param componentName
+ * @param props
+ * @returns
+ */
 const normalizeOptions = (options: any[], componentName: string, props: any): any => {
   if (Array.isArray(options)) {
     return options.map((option) => _normalizeOption(option, null, componentName, props))

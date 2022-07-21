@@ -1,5 +1,8 @@
 import type {ColorVariant} from '.'
 
+/**
+ * @external
+ */
 type ButtonVariant =
   | ColorVariant
   | 'link'

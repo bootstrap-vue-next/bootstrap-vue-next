@@ -1,3 +1,6 @@
+/**
+ * @external
+ */
 type Position =
   | 'position-static'
   | 'position-relative'

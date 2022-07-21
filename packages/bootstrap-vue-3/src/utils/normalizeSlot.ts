@@ -1,6 +1,12 @@
-import {Slots, VNode} from 'vue'
+import type {Slots, VNode} from 'vue'
 import {isFunction} from './inspect'
 
+/**
+ * @param name
+ * @param scope
+ * @param $slots
+ * @returns
+ */
 export default (name: string, scope = {}, $slots: Slots = {}): VNode => {
   // Ensure names is an array
   const names = [name]

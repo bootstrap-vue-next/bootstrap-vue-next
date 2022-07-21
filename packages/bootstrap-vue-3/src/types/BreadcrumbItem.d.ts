@@ -6,6 +6,9 @@ export interface BreadcrumbItemObject {
   to?: string | Record<string, any>
 }
 
+/**
+ * @external
+ */
 type BreadcrumbItem = BreadcrumbItemObject | string
 
 export default BreadcrumbItem

@@ -1,7 +1,7 @@
 import {Directive, DirectiveBinding} from 'vue'
 import Tooltip from 'bootstrap/js/dist/tooltip'
 
-function resolveTrigger(modifiers: DirectiveBinding['modifiers']): Tooltip.Options['trigger'] {
+const resolveTrigger = (modifiers: DirectiveBinding['modifiers']): Tooltip.Options['trigger'] => {
   if (modifiers.manual) {
     return 'manual'
   }
@@ -27,7 +27,9 @@ function resolveTrigger(modifiers: DirectiveBinding['modifiers']): Tooltip.Optio
   return 'hover focus'
 }
 
-function resolvePlacement(modifiers: DirectiveBinding['modifiers']): Tooltip.Options['placement'] {
+const resolvePlacement = (
+  modifiers: DirectiveBinding['modifiers']
+): Tooltip.Options['placement'] => {
   if (modifiers.left) {
     return 'left'
   }
@@ -43,7 +45,7 @@ function resolvePlacement(modifiers: DirectiveBinding['modifiers']): Tooltip.Opt
   return 'top'
 }
 
-function resolveDelay(values: DirectiveBinding['value']): Tooltip.Options['delay'] {
+const resolveDelay = (values: DirectiveBinding['value']): Tooltip.Options['delay'] => {
   if (values?.delay) {
     return values.delay
   }
@@ -51,6 +53,9 @@ function resolveDelay(values: DirectiveBinding['value']): Tooltip.Options['delay
   return 0
 }
 
+/**
+ * @external
+ */
 const BTooltip: Directive<HTMLElement> = {
   beforeMount(el, binding) {
     el.setAttribute('data-bs-toggle', 'tooltip')

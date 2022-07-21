@@ -1,14 +1,25 @@
 import {AnimationFrame, DOCUMENT} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from '../utils'
-
 import {Comment, Slot, VNode} from 'vue'
 import {from as arrayFrom} from './array'
 import {toString} from './stringUtils'
 
+/**
+ * @param el
+ * @returns
+ */
 export const isElement = (el: HTMLElement): boolean => !!(el && el.nodeType === Node.ELEMENT_NODE)
 
+/**
+ * @param el
+ * @returns
+ */
 export const getBCR = (el: HTMLElement) => (isElement(el) ? el.getBoundingClientRect() : null)
 
+/**
+ * @param excludes
+ * @returns
+ */
 export const getActiveElement = (excludes = []): Element | null => {
   const {activeElement} = document
   return activeElement && !excludes.some((el: HTMLElement) => el === activeElement)
@@ -16,9 +27,18 @@ export const getActiveElement = (excludes = []): Element | null => {
     : null
 }
 
+/**
+ * @param el
+ * @returns
+ */
 export const isActiveElement = (el: HTMLElement): boolean =>
   isElement(el) && el === getActiveElement()
 
+/**
+ * @param el
+ * @param options
+ * @returns
+ */
 export const attemptFocus = (el: HTMLElement, options = {}): boolean => {
   try {
     el.focus(options)
@@ -28,7 +48,12 @@ export const attemptFocus = (el: HTMLElement, options = {}): boolean => {
   return isActiveElement(el)
 }
 
-// Attempt to blur an element, and return `true` if successful
+/**
+ * Attempt to blur an element, and return `true` if successful
+ *
+ * @param el
+ * @returns
+ */
 export const attemptBlur = (el: HTMLElement): boolean => {
   try {
     el.blur()
@@ -38,11 +63,25 @@ export const attemptBlur = (el: HTMLElement): boolean => {
   return !isActiveElement(el)
 }
 
+/**
+ * @param el
+ * @param prop
+ * @returns
+ */
 export const getStyle = (el: HTMLElement, prop: string) =>
   prop && isElement(el) ? el.getAttribute(prop) || null : null
 
+/**
+ * @param parent
+ * @param child
+ * @returns
+ */
 export const contains = (parent: Node, child: Node): boolean => parent.contains(child)
 
+/**
+ * @param el
+ * @returns
+ */
 export const isVisible = (el: HTMLElement): boolean => {
   //if (!isElement(el) || !el.parentNode || !contains(DOCUMENT.body, el)) {
   // Note this can fail for shadow dom elements since they
@@ -61,9 +100,18 @@ export const isVisible = (el: HTMLElement): boolean => {
   return !!(bcr && bcr.height > 0 && bcr.width > 0)
 }
 
+/**
+ * @param slot
+ * @param data
+ * @returns
+ */
 export const isEmptySlot = (slot: Slot | undefined, data?: any) =>
   !slot || slot(data).filter((vnode: VNode) => vnode.type !== Comment).length < 1
 
+/**
+ * @param el
+ * @returns
+ */
 export const offset = (el: HTMLElement) => {
   const _offset = {top: 0, left: 0}
   if (!isElement(el) || el.getClientRects().length === 0) {
@@ -78,29 +126,60 @@ export const offset = (el: HTMLElement) => {
   return _offset
 }
 
-// Select a single element, returns `null` if not found
+/**
+ * Select a single element, returns `null` if not found
+ *
+ * @param selector
+ * @param root
+ * @returns
+ */
 export const select = (selector: any, root: any) =>
   (isElement(root) ? root : DOCUMENT).querySelector(selector) || null
 
+/**
+ * @param selector
+ * @param root
+ * @returns
+ */
 export const selectAll = (selector: any, root: any) =>
   arrayFrom((isElement(root) ? root : DOCUMENT).querySelectorAll(selector))
 
+/**
+ * @param el
+ * @param attr
+ * @returns
+ */
 export const getAttr = (el: HTMLElement, attr: string): string | null =>
   attr && isElement(el) ? el.getAttribute(attr) : null
 
+/**
+ * @param el
+ * @param attr
+ * @param value
+ */
 export const setAttr = (el: HTMLElement, attr: string, value: string): void => {
   if (attr && isElement(el)) {
     el.setAttribute(attr, value)
   }
 }
 
-// Remove an attribute from an element
+/**
+ * Remove an attribute from an element
+ *
+ * @param el
+ * @param attr
+ */
 export const removeAttr = (el: HTMLElement, attr: string): void => {
   if (attr && isElement(el)) {
     el.removeAttribute(attr)
   }
 }
 
+/**
+ * @param tag
+ * @param name
+ * @returns
+ */
 export const isTag = (tag: any, name: any): boolean =>
   toString(tag).toLowerCase() === toString(name).toLowerCase()
 
@@ -112,6 +191,5 @@ export const requestAF: AnimationFrame = HAS_WINDOW_SUPPORT
     window.oRequestAnimationFrame ||
     // Fallback, but not a true polyfill
     // Only needed for Opera Mini
-    /* istanbul ignore next */
     ((cb) => setTimeout(cb, 16))
   : (cb) => setTimeout(cb, 0)

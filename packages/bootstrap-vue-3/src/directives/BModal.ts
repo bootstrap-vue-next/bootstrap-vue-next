@@ -1,5 +1,8 @@
 import {DirectiveBinding} from 'vue'
 
+/**
+ * This is not marked as external, but in the future I think it may be
+ */
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding): void {
     let target: string = binding.value

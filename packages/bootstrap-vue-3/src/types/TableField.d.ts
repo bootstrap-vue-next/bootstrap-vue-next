@@ -23,6 +23,9 @@ export interface TableFieldObject<T = Record<string, unknown>> {
   stickyColumn?: boolean
 }
 
+/**
+ * @external
+ */
 type TableField<T = Record<string, unknown>> = string | TableFieldObject<T>
 
 export default TableField
