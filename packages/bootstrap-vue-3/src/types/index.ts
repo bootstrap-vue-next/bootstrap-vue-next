@@ -1,6 +1,5 @@
 export type {default as Alignment} from './Alignment'
 export type {default as Animation} from './Animation'
-export type {default as Booleanish} from './Booleanish'
 export type {default as BootstrapVueOptions} from './BootstrapVueOptions'
 export type {default as BreadcrumbItem} from './BreadcrumbItem'
 export type {BreadcrumbItemObject} from './BreadcrumbItem'

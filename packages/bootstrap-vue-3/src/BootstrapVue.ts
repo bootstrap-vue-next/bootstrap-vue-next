@@ -217,7 +217,6 @@ export {
 export type {
   InputSize,
   ColorVariant,
-  Booleanish,
   BreadcrumbItem,
   LinkTarget,
   ButtonVariant,

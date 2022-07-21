@@ -45,7 +45,6 @@ import normalizeSlot from './normalizeSlot'
 import {stringToInteger, toFloat, toInteger, toPercison} from './number'
 import {assign, defineProperties, defineProperty, omit, readonlyDescriptor} from './object'
 import {pluckProps, suffixPropName} from './props'
-import resolveBooleanish from './resolveBooleanish'
 import {isLink} from './router'
 import {startCase, toString, upperFirst} from './stringUtils'
 
@@ -59,7 +58,6 @@ export {
   startCase,
   toString,
   upperFirst,
-  resolveBooleanish,
   attemptFocus,
   contains,
   stringToInteger,
@@ -134,7 +132,6 @@ export default {
   suffixPropName,
   toPercison,
   assign,
-  resolveBooleanish,
   defineProperties,
   defineProperty,
   omit,
