@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {Directive, DirectiveBinding} from 'vue'
 import Tooltip from 'bootstrap/js/dist/tooltip'
 
@@ -75,15 +74,12 @@ const BTooltip: Directive<HTMLElement> = {
   },
   updated(el) {
     const title = el.getAttribute('title')
-    const originalTitle = el.getAttribute('data-bs-original-title')
-    const instance = Tooltip.getInstance(el)
 
-    el.removeAttribute('title')
-
-    if (title && title !== originalTitle) {
-      // @ts-ignore
+    if (title) {
+      const instance = Tooltip.getInstance(el)
       instance?.setContent({'.tooltip-inner': title})
       el.setAttribute('data-bs-original-title', title)
+      el.removeAttribute('title')
     }
   },
   unmounted(el) {
