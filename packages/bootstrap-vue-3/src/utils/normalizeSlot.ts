@@ -1,5 +1,5 @@
 import type {Slots, VNode} from 'vue'
-import {isFunction} from './inspect'
+import {isFunction} from '.'
 
 /**
  * @param name

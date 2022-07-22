@@ -1,5 +1,5 @@
 import {RX_FIRST_START_SPACE_WORD, RX_LOWER_UPPER, RX_UNDERSCORE} from '../constants/regex'
-import {isArray, isPlainObject, isString, isUndefinedOrNull} from './inspect'
+import {isArray, isPlainObject, isString, isUndefinedOrNull} from '.'
 
 /**
  * Convert a value to a string that can be rendered `undefined`/`null` will be converted to `''` Plain objects and arrays will be JSON stringified

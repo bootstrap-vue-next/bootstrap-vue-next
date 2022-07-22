@@ -1,6 +1,11 @@
 import {arrayIncludes, concat, from} from './array'
 import BvEvent from './bvEvent'
 import cssEscape from './cssEscape'
+import {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROWSER} from './env'
+// For some reason the order of this matters
+// Moving ./env lower than ./dom, causes it to have cannot use before init errors
+// I couldn't manage to recreate it for a bug report to Vite/vue-tsc/"Someone"... It may be an issue with our config
+// Perhaps someone in the future could solve the issue better, than my temporary solution of just moving the import up
 import {
   attemptBlur,
   attemptFocus,
@@ -21,7 +26,6 @@ import {
   selectAll,
   setAttr,
 } from './dom'
-import {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROWSER} from './env'
 import getBreakpointProps from './getBreakpointProps'
 import getClasses from './getClasses'
 import getID from './getID'

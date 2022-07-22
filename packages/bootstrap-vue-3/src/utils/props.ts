@@ -1,8 +1,7 @@
 // Suffix can be a falsey value so nothing is appended to string
 // (helps when looping over props & some shouldn't change)
 
-import {isArray} from './inspect'
-import {upperFirst} from './stringUtils'
+import {isArray, upperFirst} from '.'
 
 /**
  * Use data last parameters to allow for currying

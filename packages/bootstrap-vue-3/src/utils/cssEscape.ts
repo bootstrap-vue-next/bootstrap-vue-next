@@ -1,4 +1,4 @@
-import {toString} from './stringUtils'
+import {toString} from '.'
 
 const escapeChar = (value: string) => `\\${value}`
 

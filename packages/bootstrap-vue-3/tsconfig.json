@@ -2,21 +2,7 @@
   "extends": "tsconfig/base.json",
   "compilerOptions": {
     "types": ["vitest/globals", "vite/client"],
-    "baseUrl": ".",
-    "paths": {
-      "vue-router": ["node_modules/vue-router"]
-      // "@vue/shared": ["../../node_modules/.pnpm/@vue+shared@3.2.37/node_modules/@vue/shared/dist/shared"],
-      // "@vue/runtime-core": ["../../node_modules/.pnpm/@vue+runtime-core@3.2.37/node_modules/@vue/runtime-core/dist/runtime-core"]
-      // I got it to remove the issues with @vue/shared by importing @vue/shared in the file...
-      // However, that's not the best way to do that since @vue/shared isn't in this's package.json (should it be?)
-      // Resolving paths here isn't seeming to do anything
-      // It is not able to resolve @vue/runtime-core for the downstream packages if it does not exist in package.json
-      // Perhaps it needs to exist in this package.json, but also be resolved as a path to ensure that the softlink works correctly.
-      // Lastly, when all these are correct and @vue/runtime-core works in here, downstream, it is able to fetch the global components
-      // If the bootstrapVue.d.ts dist file contains the @vue/runtime-core code
-      // Perhaps, global-components.d.ts could be imported at some point, but since there
-      // Is not an actual ts/js file, it will not be imported.
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
   "references": [{"path": "./tsconfig.node.json"}]

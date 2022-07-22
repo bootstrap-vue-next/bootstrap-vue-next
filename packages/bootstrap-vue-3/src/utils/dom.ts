@@ -1,8 +1,6 @@
 import {AnimationFrame, DOCUMENT} from '../types/safeTypes'
-import {HAS_WINDOW_SUPPORT} from '../utils'
+import {from as arrayFrom, HAS_WINDOW_SUPPORT, toString} from '.'
 import {Comment, Slot, VNode} from 'vue'
-import {from as arrayFrom} from './array'
-import {toString} from './stringUtils'
 
 /**
  * @param el

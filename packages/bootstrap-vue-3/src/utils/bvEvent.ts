@@ -1,5 +1,5 @@
 import {Component} from 'vue'
-import {assign, defineProperties, defineProperty, readonlyDescriptor} from './object'
+import {assign, defineProperties, defineProperty, readonlyDescriptor} from '.'
 
 /**
  * @external

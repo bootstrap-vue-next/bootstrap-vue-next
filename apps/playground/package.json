@@ -9,15 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap": "5.x.x",
+    "@popperjs/core": "^2.11.5",
+    "bootstrap": "^5.2.0",
     "bootstrap-vue-3": "workspace:*",
     "vue": "^3.2.37",
-    "vue-router": "4.x.x"
+    "vue-router": "4"
   },
   "devDependencies": {
-    "@popperjs/core": "^2.x.x",
-    "@vitejs/plugin-vue": "^3.0.0",
     "tsconfig": "workspace:*",
+    "@vitejs/plugin-vue": "^3.0.0",
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
     "vue-tsc": "^0.38.4"
