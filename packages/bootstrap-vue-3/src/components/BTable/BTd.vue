@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BTdProps {
@@ -22,7 +23,7 @@ interface BTdProps {
   rowspan?: string | number
   stackedHeading?: string
   stickyColumn?: boolean
-  variant?: string
+  variant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<BTdProps>(), {
