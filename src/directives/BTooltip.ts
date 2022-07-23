@@ -74,13 +74,14 @@ const BTooltip: Directive<HTMLElement> = {
   },
   updated(el) {
     const title = el.getAttribute('title')
+    const originalTitle = el.getAttribute('data-bs-original-title')
 
-    if (title) {
+    if (title && title !== originalTitle) {
       const instance = Tooltip.getInstance(el)
       instance?.setContent({'.tooltip-inner': title})
       el.setAttribute('data-bs-original-title', title)
-      el.removeAttribute('title')
     }
+    el.removeAttribute('title')
   },
   unmounted(el) {
     const instance = Tooltip.getInstance(el)
