@@ -38,7 +38,6 @@
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "npm run lint",
     "test:unit": "vitest",
-    "publish": "npm publish --tag develop",
     "prepare": "husky install && npm run build"
   },
   "dependencies": {
