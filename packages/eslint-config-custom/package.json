@@ -1,5 +1,6 @@
 {
   "name": "eslint-config-custom",
+  "version": "1.0.0",
   "private": true,
   "main": "index.cjs",
   "dependencies": {
