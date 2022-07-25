@@ -130,7 +130,7 @@
       <h4 class="m-2">Custom Button Icon</h4>
       <b-dropdown text="Custom Button Icon" no-caret class="m-2" variant="link">
         <template #button-content>
-          <img src="./assets/logo.png" style="height: 1em" />
+          <img src="../../assets/logo.png" style="height: 1em" />
         </template>
         <b-dropdown-item href="#">Action</b-dropdown-item>
       </b-dropdown>

@@ -6,7 +6,7 @@ on:
   push:
     paths:
       - 'apps/docs/**'
-      - '.github/workflows/docs-github-pages-deploy.yml'
+      - '.github/workflows/docs-github-pages-deploy.yaml'
     branches:
       - main
 jobs:

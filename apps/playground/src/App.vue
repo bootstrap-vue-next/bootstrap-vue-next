@@ -1,5 +1,6 @@
 <template>
   <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+    <router-view />
   </b-container>
 </template>
 

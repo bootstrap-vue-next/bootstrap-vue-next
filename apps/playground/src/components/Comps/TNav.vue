@@ -26,7 +26,7 @@
         <b-nav-item>Link</b-nav-item>
         <b-nav-item-dropdown text="Custom Button Icon" no-caret variant="link">
           <template #button-content>
-            <img src="./assets/logo.png" style="height: 1em" />
+            <img src="../../assets/logo.png" style="height: 1em" />
           </template>
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-nav-item-dropdown>
