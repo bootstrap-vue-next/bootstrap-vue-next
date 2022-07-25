@@ -1,25 +1,11 @@
 import {h} from 'vue'
 import {createRouter, createWebHistory} from 'vue-router'
-import Component from '../components/component.vue'
+import HomePage from '../Views/HomePage.vue'
 
-const router = createRouter({
+export default createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: {
-        name: 'Home',
-        render() {
-          return h('h1', {}, 'Home page')
-        },
-      },
-    },
-    {
-      path: '/component/:name',
-      name: 'Component',
-      component: Component,
-    },
+    {path: '/', name: 'Home', component: HomePage},
     {
       path: '/about',
       name: 'About',
@@ -32,5 +18,3 @@ const router = createRouter({
     },
   ],
 })
-
-export default router
