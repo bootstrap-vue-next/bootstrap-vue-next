@@ -26,7 +26,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - run: npm install
         if: ${{ steps.release.outputs.release_created }}
-      - run: npm publish
+      - run: npm publish --tag develop
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.release_created }}
