@@ -1,5 +1,6 @@
 import {h} from 'vue'
 import {createRouter, createWebHistory} from 'vue-router'
+import Component from '../components/component.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,6 +14,11 @@ const router = createRouter({
           return h('h1', {}, 'Home page')
         },
       },
+    },
+    {
+      path: '/component/:name',
+      name: 'Component',
+      component: Component,
     },
     {
       path: '/about',
