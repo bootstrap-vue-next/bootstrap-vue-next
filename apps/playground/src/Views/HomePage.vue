@@ -153,8 +153,8 @@ const switchActive = (name: string): void => {
   const comp = comps.find((el) => el.name === name)
   if (comp === undefined || comp.disabled === true) return
   const value = comp.name
-  const ind = active.value.findIndex((el) => el === value)
-  ind !== -1 ? active.value.splice(ind, 1) : active.value.push(value)
+  const index = active.value.findIndex((el) => el === value)
+  index !== -1 ? active.value.splice(index, 1) : active.value.push(value)
   if (active.value.length === 0) {
     localStorage.removeItem('bv3-playground-dev-active-list')
     return

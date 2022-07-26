@@ -1,6 +1,5 @@
 <template>
-  <div class="my-2">
-    <h2 class="my-3">Cards</h2>
+  <b-container fluid>
     <b-row>
       <b-col>
         <b-card
@@ -79,5 +78,5 @@
         </b-card>
       </b-col>
     </b-row>
-  </div>
+  </b-container>
 </template>

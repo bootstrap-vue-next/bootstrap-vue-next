@@ -1,80 +1,103 @@
 <template>
-  <div class="my-2">
-    <h4 class="m-2">Grouped (with options or slots)</h4>
-    <div class="m-4">
-      <b-form-radio-group
-        id="radio-group-1"
-        v-model="radios.ex1.selected"
-        :options="radios.ex1.options"
-        name="radio-options"
-      ></b-form-radio-group>
+  <b-container fluid>
+    <b-row>
+      <b-col>
+        <h4 class="m-2">Grouped (with options or slots)</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-radio-group
+          id="radio-group-1"
+          v-model="radios.ex1.selected"
+          :options="radios.ex1.options"
+          name="radio-options"
+        />
 
-      <b-form-radio-group
-        id="radio-group-2"
-        v-model="radios.ex1.selected"
-        name="radio-sub-component"
-      >
-        <b-form-radio value="first">Toggle this custom radio</b-form-radio>
-        <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
-        <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
-        <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
-        <b-form-radio :value="{fifth: 5}">This is the 5th radio</b-form-radio>
-      </b-form-radio-group>
-
-      <div class="mt-3">
+        <b-form-radio-group
+          id="radio-group-2"
+          v-model="radios.ex1.selected"
+          name="radio-sub-component"
+        >
+          <b-form-radio value="first">Toggle this custom radio</b-form-radio>
+          <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
+          <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
+          <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
+          <b-form-radio :value="{fifth: 5}">This is the 5th radio</b-form-radio>
+        </b-form-radio-group>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         Selected:
         <strong>{{ radios.ex1.selected }}</strong>
-      </div>
-    </div>
-    <h4 class="m-2">Changing the option field names</h4>
-    <div class="m-4">
-      <b-form-radio-group
-        v-model="radios.ex2.selected"
-        :options="radios.ex2.options"
-        class="mb-3"
-        value-field="item"
-        text-field="name"
-        disabled-field="notEnabled"
-      ></b-form-radio-group>
-      <div class="mt-3">
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h4 class="m-2">Changing the option field names</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-radio-group
+          v-model="radios.ex2.selected"
+          :options="radios.ex2.options"
+          class="mb-3"
+          value-field="item"
+          text-field="name"
+          disabled-field="notEnabled"
+        />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         Selected:
         <strong>{{ radios.ex2.selected }}</strong>
-      </div>
-    </div>
-    <h4 class="m-2">Button styles radios</h4>
-    <div class="mt-3">
-      Selected:
-      <strong>{{ radios.ex3.selected }}</strong>
-    </div>
-    <div class="m-4">
-      <b-form-radio-group
-        id="btn-radios-1"
-        v-model="radios.ex3.selected"
-        :options="radios.ex3.options"
-        name="radios-btn-default"
-        buttons
-      ></b-form-radio-group>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h4 class="m-2">Button styles radios</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        Selected:
+        <strong>{{ radios.ex3.selected }}</strong>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-radio-group
+          id="btn-radios-1"
+          v-model="radios.ex3.selected"
+          :options="radios.ex3.options"
+          name="radios-btn-default"
+          buttons
+        />
 
-      <b-form-radio-group
-        id="btn-radios-2"
-        v-model="radios.ex3.selected"
-        :options="radios.ex3.options"
-        button-variant="outline-primary"
-        size="lg"
-        name="radio-btn-outline"
-        buttons
-      ></b-form-radio-group>
+        <b-form-radio-group
+          id="btn-radios-2"
+          v-model="radios.ex3.selected"
+          :options="radios.ex3.options"
+          button-variant="outline-primary"
+          size="lg"
+          name="radio-btn-outline"
+          buttons
+        />
 
-      <b-form-radio-group
-        id="btn-radios-3"
-        v-model="radios.ex3.selected"
-        :options="radios.ex3.options"
-        name="radio-btn-stacked"
-        buttons
-        stacked
-      ></b-form-radio-group>
-    </div>
-  </div>
+        <b-form-radio-group
+          id="btn-radios-3"
+          v-model="radios.ex3.selected"
+          :options="radios.ex3.options"
+          name="radio-btn-stacked"
+          buttons
+          stacked
+        />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script setup lang="ts">

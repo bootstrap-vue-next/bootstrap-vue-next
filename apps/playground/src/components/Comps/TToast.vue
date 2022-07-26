@@ -1,9 +1,15 @@
 <template>
-  <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
-  <b-button class="mt-3" @click="createToast2()">Show Toast 2</b-button>
-  <b-button class="mt-3" @click="createToastError()">Show a danger Toast</b-button>
-  <b-button class="mt-3" @click="consoleLog('Button Click!')">Hide Toast</b-button>
-  <b-toast v-model="showToast" title="Hello" body="cow"></b-toast>
+  <b-container fluid>
+    <b-row>
+      <b-col>
+        <b-button class="mt-3" @click="createToast()">Show Toast</b-button>
+        <b-button class="mt-3" @click="createToast2()">Show Toast 2</b-button>
+        <b-button class="mt-3" @click="createToastError()">Show a danger Toast</b-button>
+        <b-button class="mt-3" @click="consoleLog('Button Click!')">Hide Toast</b-button>
+        <b-toast v-model="showToast" title="Hello" body="cow" />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script setup lang="ts">

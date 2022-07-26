@@ -1,33 +1,56 @@
 <template>
-  <div class="my-2">
-    <h2>Form Select</h2>
-    <b-form-select v-model="formSelectSelected" :options="formSelectOptions" />
-    <h4 class="mt-2">plain</h4>
-    <b-form-select v-model="formSelectSelected" :options="formSelectOptions" size="sm" plain />
-    <div class="mt-2">
-      Selected:
-      <strong>{{ formSelectSelected }}</strong>
-    </div>
-    <h4 class="mt-2">multiple</h4>
-    <b-form-select
-      v-model="formSelectMultipleSelected"
-      :options="formSelectOptions"
-      class="mb-3"
-      multiple
-    >
-      <template #first>
-        <b-form-select-option :value="null" disabled
-          >-- Please select an option --</b-form-select-option
+  <b-container fluid>
+    <b-row>
+      <b-col>
+        <b-form-select v-model="formSelectSelected" :options="formSelectOptions" />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h4 class="mt-2">plain</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-select v-model="formSelectSelected" :options="formSelectOptions" size="sm" plain />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        Selected:
+        <strong>{{ formSelectSelected }}</strong>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h4 class="mt-2">multiple</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-select
+          v-model="formSelectMultipleSelected"
+          :options="formSelectOptions"
+          class="mb-3"
+          multiple
         >
-      </template>
-      <b-form-select-option value="C">Option C</b-form-select-option>
-      <b-form-select-option value="D">Option D</b-form-select-option>
-    </b-form-select>
-    <div class="mt-2">
-      Selected:
-      <strong>{{ formSelectMultipleSelected }}</strong>
-    </div>
-  </div>
+          <template #first>
+            <b-form-select-option :value="null" disabled
+              >-- Please select an option --</b-form-select-option
+            >
+          </template>
+          <b-form-select-option value="C">Option C</b-form-select-option>
+          <b-form-select-option value="D">Option D</b-form-select-option>
+        </b-form-select>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        Selected:
+        <strong>{{ formSelectMultipleSelected }}</strong>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script setup lang="ts">

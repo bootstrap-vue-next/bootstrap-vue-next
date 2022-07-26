@@ -1,8 +1,11 @@
 <template>
-  <div class="my-2">
-    <h2>Form Textarea</h2>
-    <b-form-textarea v-model="description" class="my-3" />
-  </div>
+  <b-container fluid>
+    <b-row>
+      <b-col>
+        <b-form-textarea v-model="description" class="my-3" />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script setup lang="ts">
