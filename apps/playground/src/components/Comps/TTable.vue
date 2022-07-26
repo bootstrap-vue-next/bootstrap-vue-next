@@ -1,81 +1,103 @@
 <template>
-  <div class="my-2">
-    <h2>Table</h2>
-    <div>
-      <h4 class="my-3">Table without field definitions</h4>
-      <b-table responsive caption="List of users" :items="items" striped hover foot-clone>
-        <template #cell(first_name)="data">
-          <a href="#">{{ data.value }}</a>
-        </template>
-      </b-table>
-    </div>
-    <div>
-      <h4 class="my-3">Table with string field definitions</h4>
-      <b-table
-        responsive
-        caption="List of users"
-        :items="items"
-        :fields="stringTableDefinitions"
-        striped
-        hover
-        foot-clone
-      >
-        <template #cell(first_name)="data">
-          <a href="#">{{ data.value }}</a>
-        </template>
-      </b-table>
-    </div>
-    <div>
-      <h4 class="my-3">Table with object field definitions</h4>
+  <b-container fluid>
+    <b-row>
+      <b-col>
+        <h4 class="my-3">Table without field definitions</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-table responsive caption="List of users" :items="items" striped hover foot-clone>
+          <template #cell(first_name)="data">
+            <a href="#">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h4 class="my-3">Table with string field definitions</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-table
+          responsive
+          caption="List of users"
+          :items="items"
+          :fields="stringTableDefinitions"
+          striped
+          hover
+          foot-clone
+        >
+          <template #cell(first_name)="data">
+            <a href="#">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </b-col>
+    </b-row>
 
-      <b-table
-        responsive
-        caption="List of users"
-        :items="items"
-        :fields="objectTableDefinitions"
-        striped
-        hover
-        foot-clone
-      >
-        <template #cell(first_name)="data">
-          <a href="#">{{ data.value }}</a>
-        </template>
-      </b-table>
-    </div>
-    <div>
-      <h4 class="my-3">Table: Adding additional rows to the header</h4>
-
-      <b-table
-        responsive
-        caption="List of users"
-        :items="items"
-        :fields="objectTableDefinitions"
-        striped
-        hover
-        foot-clone
-        dark
-      >
-        <template #thead-top>
-          <tr class="my">
-            <th colspan="2">
-              <span class="sr-only">List of users</span>
-            </th>
-          </tr>
-        </template>
-        <template #thead-sub="{key, label}">
-          <tr class="my">
-            <th variant="danger" />
-            <th variant="danger">
-              <b-form-select :placeholder="label" :options="[label, key]" label-field="label" />
-            </th>
-          </tr>
-        </template>
-        <template #cell(first_name)="data">
-          <a href="#">{{ data.value }}</a>
-        </template>
-      </b-table>
-    </div>
-  </div>
+    <b-row>
+      <b-col>
+        <h4 class="my-3">Table with object field definitions</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-table
+          responsive
+          caption="List of users"
+          :items="items"
+          :fields="objectTableDefinitions"
+          striped
+          hover
+          foot-clone
+        >
+          <template #cell(first_name)="data">
+            <a href="#">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h4 class="my-3">Table: Adding additional rows to the header</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-table
+          responsive
+          caption="List of users"
+          :items="items"
+          :fields="objectTableDefinitions"
+          striped
+          hover
+          foot-clone
+          dark
+        >
+          <template #thead-top>
+            <tr class="my">
+              <th colspan="2">
+                <span class="sr-only">List of users</span>
+              </th>
+            </tr>
+          </template>
+          <template #thead-sub="{key, label}">
+            <tr class="my">
+              <th variant="danger" />
+              <th variant="danger">
+                <b-form-select :placeholder="label" :options="[label, key]" label-field="label" />
+              </th>
+            </tr>
+          </template>
+          <template #cell(first_name)="data">
+            <a href="#">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script setup lang="ts">
