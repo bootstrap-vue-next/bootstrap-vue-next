@@ -1,0 +1,14 @@
+{
+  "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["vite/client"],
+    // "paths": { 
+    //   // This seems to be removable if packages/bootstrap-vue-3 
+    //   // Has @vue/runtime-core
+    //   "@vue/runtime-core": ["node_modules/.pnpm/@vue+runtime-core@3.2.37/node_modules/@vue/runtime-core/dist/runtime-core"]
+    // },
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

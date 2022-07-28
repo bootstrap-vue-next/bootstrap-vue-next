@@ -1,11 +1,19 @@
-.DS_Store
-node_modules
-/dist
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+dist
 .eslintcache
 
-# local env files
-.env.local
-.env.*.local
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# misc
+.DS_Store
+*.pem
 
 # Log files
 npm-debug.log*
@@ -14,6 +22,18 @@ yarn-error.log*
 pnpm-debug.log*
 stats.html
 
+# local env files
+.env.local
+.env.*.local
+
+# turbo
+.turbo
+
+# Vuepress files
+.temp
+.cache
+/coverage/
+
 # Editor directories and files
 .idea
 *.suo
@@ -21,9 +41,3 @@ stats.html
 *.njsproj
 *.sln
 *.sw?
-
-# Vuepress files
-.temp
-.cache
-docs/.vuepress/dist
-/coverage/
