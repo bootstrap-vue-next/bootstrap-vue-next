@@ -51,6 +51,7 @@
 
 <script setup lang="ts">
 // import type {BTabsProps, BTabsEmits} from '../types/components'
+import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, useSlots, watch} from 'vue'
 import {BvEvent, getID, isFunction, mathMax} from '../../utils'
 import type {Alignment} from '../../types'
@@ -312,6 +313,5 @@ provide(injectionKey, {
 </script>
 
 <script lang="ts">
-import {BTabsParentData} from '../../types/components'
 export const injectionKey: InjectionKey<BTabsParentData> = Symbol()
 </script>
