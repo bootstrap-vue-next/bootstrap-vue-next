@@ -77,20 +77,3 @@ Or if you prefer you can make a one-time donation through these channels:
 # License
 
 Released under the MIT [Licence](./LICENSE). Copyright (c) BootstrapVue3.
-
-# Making a new release
-
-Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yaml` workflow will auto generate releases when using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
-
-The workflow `.github/workflows/npm-publish.yaml` will then auto-publish at <https://www.npmjs.com/package/bootstrap-vue-3>
-
-## Manual releases
-
-One could also manually create a release PR using the cli, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto generate a PR containing the new release notes
-
-It will then auto-publish as stated before
-
-Collaborators can also manually release by:
-
-increase version in package.json, commit
-<https://github.com/cdmoro/bootstrap-vue-3/releases/new> (create new tag)
