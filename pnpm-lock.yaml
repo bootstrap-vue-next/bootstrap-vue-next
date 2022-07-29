@@ -27,7 +27,6 @@ importers:
       '@vuepress/utils': 2.0.0-beta.49
       bootstrap: ^5.2.0
       bootstrap-vue-3: workspace:*
-      eslint-config-custom: workspace:*
       tsconfig: workspace:*
       vue: ^3.2.37
       vuepress: 2.0.0-beta.49
@@ -39,7 +38,6 @@ importers:
       '@vuepress/utils': 2.0.0-beta.49
       bootstrap: 5.2.0_@popperjs+core@2.11.5
       bootstrap-vue-3: link:../../packages/bootstrap-vue-3
-      eslint-config-custom: link:../../packages/eslint-config-custom
       tsconfig: link:../../packages/tsconfig
       vue: 3.2.37
       vuepress: 2.0.0-beta.49_ky4o5iv42nfwog2gkj2rnr6kla
