@@ -1,0 +1,19 @@
+{
+  "name": "eslint-config-custom",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.cjs",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "5.x.x",
+    "@typescript-eslint/parser": "5.x.x",
+    "@vue/eslint-config-typescript": "10.x.x",
+    "eslint": "8.x.x",
+    "eslint-config-prettier": "8.x.x",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "8.x.x",
+    "prettier": "^2.3.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}

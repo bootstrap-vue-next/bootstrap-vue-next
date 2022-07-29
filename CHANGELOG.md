@@ -2,13 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.1.21](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.20...v0.1.21) (2022-07-23)
-
-
-### Bug Fixes
-
-* allow workflow bot to use peerDep ([7b64e26](https://github.com/cdmoro/bootstrap-vue-3/commit/7b64e26e21640208e21faae66e1277f1eef0c230))
-
 ## [0.1.20](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.19...v0.1.20) (2022-07-21)
 
 
