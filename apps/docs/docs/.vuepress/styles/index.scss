@@ -1,0 +1,121 @@
+:root {
+  --c-brand: #563d7c;
+  --c-brand-light: #61428f;
+  --content-width: 1200px;
+}
+
+body {
+  font-family: var(--font-family) !important;
+  background-color: var(--c-bg) !important;
+  color: var(--c-text) !important;
+  font-size: 16px !important;
+}
+
+a:not(.action-button) {
+  color: var(--c-text-accent);
+}
+
+.nav-link:not(.sidebar-item):not(.action-button) {
+  padding: 0 !important;
+}
+
+.badge {
+  height: auto;
+}
+
+header.hero a {
+  text-decoration: none;
+}
+
+.theme-container > .navbar {
+  background: #563d7c;
+  color: #ffffff;
+  position: fixed;
+}
+
+.theme-container > .navbar .toggle-sidebar-button span {
+  background-color: var(--c-bg);
+}
+
+.theme-container > .navbar a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.theme-container .site-name {
+  color: #ffffff;
+}
+
+.theme-container > .navbar a.router-link-active {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.theme-container .navbar-dropdown-title {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.theme-container .navbar-dropdown a {
+  color: #563d7c;
+}
+
+.theme-container .navbar-dropdown a.router-link-active {
+  font-weight: bold;
+}
+
+.theme-container > aside a {
+  text-decoration: none;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  font-size: 0.85em !important;
+  font-family: var(--font-family-code) !important;
+  line-height: 1.58 !important;
+}
+
+p:not(.hero .description) {
+  margin: 1rem 0 !important;
+}
+
+table:not(.table) {
+  font-size: 0.85em;
+}
+
+table:not(.table) td,
+table:not(.table) th {
+  border: 1px solid var(--c-border);
+  padding: 6px 13px;
+}
+
+table:not(.table) tr:nth-child(2n) {
+  background-color: var(--c-bg-lighter);
+}
+
+.table {
+  display: table;
+}
+
+code {
+  background: transparent;
+  padding: 0;
+}
+
+h2.accordion-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.nav-tabs .nav-link:not(.sidebar-item):not(.action-button),
+.nav-pills .nav-link:not(.sidebar-item):not(.action-button) {
+  padding: 0.5rem 1rem !important;
+}
+
+.nav-tabs .nav-link:hover,
+.nav-pills .nav-link:hover {
+  text-decoration: none !important;
+}
+
+kbd {
+  border: none;
+}
