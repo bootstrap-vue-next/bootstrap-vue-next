@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://cdmoro.github.io/bootstrap-vue-3/">
-    <img src="https://raw.githubusercontent.com/cdmoro/bootstrap-vue-3/main/static/logo.png" width="300">
+    <img src="https://raw.githubusercontent.com/cdmoro/bootstrap-vue-3/main/apps/docs/docs/.vuepress/public/logo.png" width="300">
   </a>
 </p>
 
