@@ -6,6 +6,7 @@
     class="collapse"
     :class="classes"
     :data-bs-parent="accordion || null"
+    :is-nav="isNav"
   >
     <slot :visible="modelValue" :close="close" />
   </component>
@@ -27,6 +28,7 @@ interface BCollapseProps {
   tag?: string
   toggle?: boolean
   visible?: boolean
+  isNav?: boolean
 }
 
 const props = withDefaults(defineProps<BCollapseProps>(), {
@@ -35,6 +37,7 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
   tag: 'div',
   toggle: false,
   visible: false,
+  isNav: false,
 })
 
 interface BCollapseEmits {
@@ -51,6 +54,7 @@ const element = ref<HTMLElement>()
 const instance = ref<Collapse>()
 const classes = computed(() => ({
   show: props.modelValue,
+  'navbar-collapse': props.isNav,
 }))
 
 const close = () => emit('update:modelValue', false)
