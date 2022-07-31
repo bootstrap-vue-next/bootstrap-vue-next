@@ -15,9 +15,9 @@
 
 <script setup lang="ts">
 // import type {BNavItemProps} from '../types/components'
-import {computed} from 'vue'
-import {RouteLocationRaw} from 'vue-router'
 import BLink from '../BLink/BLink.vue'
+import {computed} from 'vue'
+import type {RouteLocationRaw} from 'vue-router'
 
 interface BNavItemProps {
   active?: boolean

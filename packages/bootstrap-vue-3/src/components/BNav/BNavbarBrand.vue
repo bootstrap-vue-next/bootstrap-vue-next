@@ -1,21 +1,27 @@
 <template>
-  <BLink v-if="href || to" :href="href" :to="to">
-    <slot></slot>
-  </BLink>
-  <div v-else>
-    <slot></slot>
-  </div>
+  <component :is="computedTag" v-bind="attrs">
+    <slot />
+  </component>
 </template>
 
 <script setup lang="ts">
-import BLink from '../BLink/BLink.vue'
-import {RouteLocationRaw} from 'vue-router'
+import {computed} from 'vue'
+import type {RouteLocationRaw} from 'vue-router'
 
 interface Props {
-  tag?: 'div'
+  tag?: string
   href?: string
   to?: RouteLocationRaw
 }
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  tag: 'div',
+})
+
+const computedTag = computed<string>(() => (props.to ? 'b-link' : props.href ? 'a' : props.tag))
+
+const attrs = computed(() => ({
+  href: props.href,
+  to: props.to,
+}))
 </script>

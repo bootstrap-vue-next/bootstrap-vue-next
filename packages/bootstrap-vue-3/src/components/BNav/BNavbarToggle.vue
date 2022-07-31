@@ -8,10 +8,19 @@
 import {ref} from 'vue'
 
 interface Props {
-  target: string
+  target?: string
+  disabled?: boolean // TODO ensure that if the button is disabled that it doesn't collapse
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+})
+
+interface Emits {
+  (e: 'click'): void
+}
+
+const emit = defineEmits<Emits>()
 
 const classes = ref({
   'navbar-toggler': true,
@@ -19,9 +28,11 @@ const classes = ref({
 })
 
 const onButtonClicked = () => {
+  emit('click')
+
   classes.value.collapsed = !classes.value.collapsed
 
-  const el = document.getElementById(props.target)
+  const el = document.getElementById(props.target) // Handle this
   el?.classList.toggle('show')
 }
 </script>

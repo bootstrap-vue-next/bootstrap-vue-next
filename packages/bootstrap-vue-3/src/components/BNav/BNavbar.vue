@@ -1,39 +1,34 @@
 <template>
-  <nav :class="classes">
-    <div class="container-fluid">
-      <slot></slot>
-    </div>
-  </nav>
+  <component :is="tag" class="navbar" :class="classes" :role="computedRole">
+    <slot />
+  </component>
 </template>
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {ColorVariant, NavbarBreakpoint} from '../../types/index'
+import type {ColorVariant, NavbarBreakpoint} from '../../types'
 
 interface Props {
   variant?: ColorVariant
   toggleable?: NavbarBreakpoint
+  tag?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'light',
   toggleable: false, // navbar never collapses
+  tag: 'nav',
 })
 
-const classes = computed(() => {
-  const result: {[key: string]: boolean} = {
-    'navbar': true,
-    'navbar-light': props.variant === 'light',
-    'navbar-dark': props.variant !== 'light',
-    'navbar-expand': props.toggleable === false, // for navbars that never collapse
-  }
+const computedRole = computed<null | 'navigation'>(() =>
+  props.tag === 'nav' ? null : 'navigation'
+)
 
-  if (typeof props.toggleable === 'string') {
-    result[`navbar-expand-${props.toggleable}`] = true
-  }
-
-  result[`bg-${props.variant}`] = true
-
-  return result
-})
+const classes = computed(() => ({
+  'navbar-light': props.variant === 'light',
+  'navbar-dark': props.variant !== 'light',
+  'navbar-expand': props.toggleable === false, // for navbars that never collapse
+  [`bg-${props.variant}`]: props.variant,
+  [`navbar-expand-${props.toggleable}`]: typeof props.toggleable === 'string',
+}))
 </script>
