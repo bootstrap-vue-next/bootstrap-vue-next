@@ -48,6 +48,7 @@
     "rollup": "^2.76.0",
     "rollup-plugin-visualizer": "5.x.x",
     "sass": "1.x.x",
+    "tsconfig": "workspace:*",
     "typescript": "4.x.x",
     "vite": "2.x.x",
     "vite-plugin-dts": "1.x.x",
