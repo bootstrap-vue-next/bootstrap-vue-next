@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://cdmoro.github.io/bootstrap-vue-3/">
-    <img src="https://raw.githubusercontent.com/cdmoro/bootstrap-vue-3/main/static/logo.png" width="300">
+    <img src="https://raw.githubusercontent.com/cdmoro/bootstrap-vue-3/main/apps/docs/docs/.vuepress/public/logo.png" width="300">
   </a>
 </p>
 
@@ -61,7 +61,7 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 - or better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls)
 - or even better, visit [my patreon page](https://patreon.com/cdmoro) and support me 😄
 
-Read [Contribution Guide](./CONTRIBUTION.md) on how to start helping
+Read our [Contribution Guide](https://github.com/cdmoro/bootstrap-vue-3/blob/main/CONTRIBUTING.md) on how to start helping
 
 ## One-time donations
 
