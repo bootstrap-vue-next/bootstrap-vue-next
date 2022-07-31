@@ -53,7 +53,7 @@ const emit = defineEmits<BCollapseEmits>()
 const element = ref<HTMLElement>()
 const instance = ref<Collapse>()
 const classes = computed(() => ({
-  show: props.modelValue,
+  'show': props.modelValue,
   'navbar-collapse': props.isNav,
 }))
 

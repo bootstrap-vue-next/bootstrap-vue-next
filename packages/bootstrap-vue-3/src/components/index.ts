@@ -60,9 +60,13 @@ import BLink from './BLink/BLink.vue'
 import BListGroup from './BListGroup/BListGroup.vue'
 import BListGroupItem from './BListGroup/BListGroupItem.vue'
 import BModal from './BModal.vue'
-import BNav from './BNav.vue'
-import BNavItem from './BNavItem.vue'
-import BNavItemDropdown from './BNavItemDropdown.vue'
+import BNav from './BNav/BNav.vue'
+import BNavbar from './BNav/BNavbar.vue'
+import BNavbarBrand from './BNav/BNavbarBrand.vue'
+import BNavbarNav from './BNav/BNavbarNav.vue'
+import BNavbarToggle from './BNav/BNavbarToggle.vue'
+import BNavItem from './BNav/BNavItem.vue'
+import BNavItemDropdown from './BNav/BNavItemDropdown.vue'
 import BOffcanvas from './BOffcanvas.vue'
 import BOverlay from './BOverlay/BOverlay.vue'
 import BPagination from './BPagination/BPagination.vue'
@@ -153,6 +157,10 @@ export default {
   BListGroupItem,
   BModal,
   BNav,
+  BNavbar,
+  BNavbarBrand,
+  BNavbarNav,
+  BNavbarToggle,
   BNavItem,
   BNavItemDropdown,
   BOffcanvas,

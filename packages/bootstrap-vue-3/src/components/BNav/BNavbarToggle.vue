@@ -18,12 +18,10 @@ const classes = ref({
   'collapsed': true,
 })
 
-function onButtonClicked() {
+const onButtonClicked = () => {
   classes.value.collapsed = !classes.value.collapsed
 
   const el = document.getElementById(props.target)
   el?.classList.toggle('show')
 }
 </script>
-
-<style scoped></style>
