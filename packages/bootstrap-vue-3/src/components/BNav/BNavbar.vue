@@ -20,8 +20,8 @@ const props = withDefaults(defineProps<Props>(), {
   tag: 'nav',
 })
 
-const computedRole = computed<null | 'navigation'>(() =>
-  props.tag === 'nav' ? null : 'navigation'
+const computedRole = computed<undefined | 'navigation'>(() =>
+  props.tag === 'nav' ? undefined : 'navigation'
 )
 
 const classes = computed(() => ({
