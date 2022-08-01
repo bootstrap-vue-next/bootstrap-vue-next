@@ -61,8 +61,7 @@ const config = defineConfig({
   ],
 
   server: {
-    host: 'localhost', //this is the default
-    port: 8080, //this is the default
+    host: true,
   },
 
   test: {

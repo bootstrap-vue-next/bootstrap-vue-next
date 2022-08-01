@@ -23,7 +23,7 @@
   "types": "./dist/BootstrapVue.d.ts",
   "private": false,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 5174",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path ../../.gitignore --fix src",
