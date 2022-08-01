@@ -60,6 +60,14 @@ npm install bootstrap bootstrap-vue-3
 ```
 
   </CodeGroupItem>
+
+  <CodeGroupItem title="PNPM">
+
+```bash
+pnpm add bootstrap bootstrap-vue-3
+```
+
+  </CodeGroupItem>
 </CodeGroup>
 
 And in your `main.js/ts`:
@@ -99,6 +107,14 @@ yarn add bootstrap bootstrap-vue-3
 
 ```bash
 npm install bootstrap bootstrap-vue-3
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="PNPM">
+
+```bash
+pnpm add bootstrap bootstrap-vue-3
 ```
 
   </CodeGroupItem>

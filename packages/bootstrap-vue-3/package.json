@@ -2,7 +2,7 @@
   "name": "bootstrap-vue-3",
   "displayName": "BootstrapVue3",
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
-  "version": "0.1.18",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-3.umd.js",
   "module": "./dist/bootstrap-vue-3.es.js",
@@ -23,7 +23,7 @@
   "types": "./dist/BootstrapVue.d.ts",
   "private": false,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 5174",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path ../../.gitignore --fix src",
