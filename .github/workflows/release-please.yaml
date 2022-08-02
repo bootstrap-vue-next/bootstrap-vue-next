@@ -27,6 +27,7 @@ jobs:
         id: release
         with:
           release-type: node
+          path: packages/bootstrap-vue-3
           package-name: bootstrap-vue-3
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
