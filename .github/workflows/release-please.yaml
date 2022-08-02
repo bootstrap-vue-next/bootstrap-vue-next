@@ -50,7 +50,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Install dependencies
-        run: pnpm install --ignore-scripts
+        run: pnpm install
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Publish 
