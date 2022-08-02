@@ -22,18 +22,13 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v3
-        # these if statements ensure that a publication only occurs when
-        # a new release is created:
-
       - name: Use release please
         uses: google-github-actions/release-please-action@v3
         id: release
         with:
           release-type: node
           path: packages/bootstrap-vue-3
-          package-name: bootstrap-vue-3
+          package-name: bootstrap-vue-4
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
 
@@ -42,7 +37,11 @@ jobs:
           
       # The logic below handles the npm publication:
 
-      
+      - name: Clone repository
+        uses: actions/checkout@v3
+        # these if statements ensure that a publication only occurs when
+        # a new release is created:
+        if: ${{ steps.release.outputs.release_created }}
         
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.2
