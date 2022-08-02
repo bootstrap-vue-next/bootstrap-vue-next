@@ -1,24 +1,29 @@
 <template>
   <li class="nav-item" :class="classes">
-    <a
+    <b-link
       :href="href"
+      :to="to"
       class="nav-link"
+      :class="classes"
       :tabindex="disabled ? -1 : undefined"
       :aria-disabled="disabled ? true : undefined"
     >
       <slot />
-    </a>
+    </b-link>
   </li>
 </template>
 
 <script setup lang="ts">
 // import type {BNavItemProps} from '../types/components'
+import BLink from '../BLink/BLink.vue'
 import {computed} from 'vue'
+import type {RouteLocationRaw} from 'vue-router'
 
 interface BNavItemProps {
   active?: boolean
   disabled?: boolean
   href?: string
+  to?: RouteLocationRaw
 }
 
 const props = withDefaults(defineProps<BNavItemProps>(), {
