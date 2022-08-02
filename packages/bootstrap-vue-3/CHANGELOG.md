@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/VividLemon/bootstrap-vue-3/compare/v0.2.3...v0.2.4) (2022-08-02)
+
+
+### Bug Fixes
+
+* test commit force workflows ([b9ccf0b](https://github.com/VividLemon/bootstrap-vue-3/commit/b9ccf0b5de486303c008dfefc524760ec49681f5))
+
 ## [0.2.3](https://github.com/VividLemon/bootstrap-vue-3/compare/v0.2.2...v0.2.3) (2022-08-02)
 
 
