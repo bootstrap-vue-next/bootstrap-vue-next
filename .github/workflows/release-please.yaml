@@ -59,6 +59,14 @@ jobs:
         run: pnpm install --ignore-scripts
         if: ${{ steps.release.outputs.release_created }}
 
+      - name: Build library
+        run: pnpm run build
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Test library
+        run: pnpm test
+        if: ${{ steps.release.outputs.release_created }}
+
       - name: Publish 
         run: pnpm publish --tag develop --filter .\packages\bootstrap-vue-3\
         env:
