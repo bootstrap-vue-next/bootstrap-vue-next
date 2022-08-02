@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.0...v0.2.1) (2022-08-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* vue considered peerDependency
+
+### Miscellaneous Chores
+
+* vue considered peerDependency ([197ae39](https://github.com/cdmoro/bootstrap-vue-3/commit/197ae390767d4db867d1a39abe29ad475d36c34f))
+
 ## [0.2.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.1.21...v0.2.0) (2022-08-01)
 
 
