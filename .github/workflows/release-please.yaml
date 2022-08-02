@@ -33,7 +33,7 @@ jobs:
           bump-patch-for-minor-pre-major: true
 
       - name: echo
-        run: echo release_created ${{ steps.release.outputs.release_created }} upload_url ${{ steps.release.outputs.upload_url }} html_url ${{ steps.release.outputs.html_url }} tag_name ${{ steps.release.outputs.tag_name }} major ${{ steps.release.outputs.major }} minor ${{ steps.release.outputs.minor }} patch ${{ steps.release.outputs.patch }} sha ${{ steps.release.outputs.sha }} pr ${{ steps.release.outputs.pr }} prs ${{ steps.release.outputs.prs }}
+        run: echo ${{ steps.release.outputs }}
           
       # The logic below handles the npm publication:
 
