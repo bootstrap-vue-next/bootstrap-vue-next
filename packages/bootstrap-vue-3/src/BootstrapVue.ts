@@ -73,7 +73,7 @@ import BNav from './components/BNav/BNav.vue'
 import BNavbar from './components/BNav/BNavbar.vue'
 import BNavbarBrand from './components/BNav/BNavbarBrand.vue'
 import BNavbarNav from './components/BNav/BNavbarNav.vue'
-import BNavbarToggle from './components/BNav/BNavbarToggle.vue'
+// import BNavbarToggle from './components/BNav/BNavbarToggle.vue'
 import BNavItem from './components/BNav/BNavItem.vue'
 import BNavItemDropdown from './components/BNav/BNavItemDropdown.vue'
 import BOffcanvas from './components/BOffcanvas.vue'
@@ -188,7 +188,7 @@ export {
   BNavbar,
   BNavbarBrand,
   BNavbarNav,
-  BNavbarToggle,
+  // BNavbarToggle,
   BNavItem,
   BNavItemDropdown,
   BOffcanvas,
@@ -315,7 +315,7 @@ declare module '@vue/runtime-core' {
     BNavbar: typeof BNavbar
     BNavbarBrand: typeof BNavbarBrand
     BNavbarNav: typeof BNavbarNav
-    BNavbarToggle: typeof BNavbarToggle
+    // BNavbarToggle: typeof BNavbarToggle
     BNavItem: typeof BNavItem
     BNavItemDropdown: typeof BNavItemDropdown
     BOffcanvas: typeof BOffcanvas

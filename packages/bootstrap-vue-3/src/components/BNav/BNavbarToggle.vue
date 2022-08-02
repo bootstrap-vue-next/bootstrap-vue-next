@@ -1,18 +1,29 @@
 <template>
-  <button :class="classes" type="button" @click="onButtonClicked">
-    <span class="navbar-toggler-icon"></span>
+  <button
+    v-b-toggle=""
+    class="navbar-toggler"
+    :class="classes"
+    type=""
+    v-bind="attrs"
+    @click="onClick"
+  >
+    <span class="navbar-toggler-icon" />
   </button>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {BToggle as vBToggle} from '../../directives/index'
+import {computed} from 'vue'
+import {ButtonType} from '../../types'
 
 interface Props {
-  target?: string
   disabled?: boolean // TODO ensure that if the button is disabled that it doesn't collapse
+  label?: string
+  target?: string // TODO target should be required, ignoring the other rules about possibly undefined? It is in B-V
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  label: 'Toggle navigation',
   disabled: false,
 })
 
@@ -22,17 +33,26 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const classes = ref({
+const attrs = computed(() => ({
+  'type': 'button' as ButtonType,
+  'disabled': props.disabled,
+  'aria-label': props.label,
+}))
+
+const classes = computed(() => ({
   'navbar-toggler': true,
   'collapsed': true,
-})
+}))
 
-const onButtonClicked = () => {
-  emit('click')
+const onClick = (): void => {
+  if (!props.disabled) {
+    emit('click')
 
-  classes.value.collapsed = !classes.value.collapsed
-
-  const el = document.getElementById(props.target) // Handle this
-  el?.classList.toggle('show')
+    classes.value.collapsed = !classes.value.collapsed
+    if (props.target !== undefined) {
+      const el = document.getElementById(props.target)
+      el?.classList.toggle('show')
+    }
+  }
 }
 </script>

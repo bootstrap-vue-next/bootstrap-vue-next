@@ -6,29 +6,45 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {ColorVariant, NavbarBreakpoint} from '../../types'
+import type {ColorVariant} from '../../types'
 
 interface Props {
-  variant?: ColorVariant
-  toggleable?: NavbarBreakpoint
+  fixed?: string
+  print?: boolean
+  sticky?: boolean
   tag?: string
+  toggleable?: false | 'sm' | 'md' | 'lg' | 'xl' // Type Omit<Breakpoint, 'xxl'>
+  type?: string
+  variant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'light',
-  toggleable: false, // navbar never collapses
+  print: false,
+  sticky: false,
   tag: 'nav',
+  toggleable: false, // navbar never collapses
+  type: 'light',
 })
 
 const computedRole = computed<undefined | 'navigation'>(() =>
   props.tag === 'nav' ? undefined : 'navigation'
 )
 
+const computedNavbarExpand = computed<undefined | string>(() =>
+  props.toggleable && typeof props.toggleable === 'string'
+    ? `navbar-expand-${props.toggleable}`
+    : props.toggleable === false
+    ? 'navbar-expand'
+    : undefined
+)
+
 const classes = computed(() => ({
-  'navbar-light': props.variant === 'light',
-  'navbar-dark': props.variant !== 'light',
-  'navbar-expand': props.toggleable === false, // for navbars that never collapse
+  'd-print': props.print,
+  'sticky-top': props.sticky,
+  [`navbar-${props.type}`]: props.type,
   [`bg-${props.variant}`]: props.variant,
-  [`navbar-expand-${props.toggleable}`]: typeof props.toggleable === 'string',
+  [`fixed-${props.fixed}`]: props.fixed,
+  'navbar-expand': props.toggleable === false, // for navbars that never collapse
+  [computedNavbarExpand.value as string]: computedNavbarExpand.value !== undefined,
 }))
 </script>
