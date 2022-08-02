@@ -16,7 +16,6 @@ jobs:
   release-please:
     env: 
       path: packages/bootstrap-vue-3
-      postfix: --release_created
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -34,9 +33,6 @@ jobs:
           package-name: bootstrap-vue-3
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
-
-      - name: echo
-        run: echo ${{ steps.release.outputs }}
           
       # The logic below handles the npm publication:
 
