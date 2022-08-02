@@ -9,7 +9,7 @@
 import type {LinkTarget} from '../../types'
 import {computed} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
-
+// TODO this components is not done
 interface Props {
   active?: boolean
   activeClass?: string
@@ -44,8 +44,5 @@ const props = withDefaults(defineProps<Props>(), {
 
 const computedTag = computed<string>(() => (props.to ? 'b-link' : props.href ? 'a' : props.tag))
 
-const attrs = computed(() => ({
-  href: props.href,
-  to: props.to,
-}))
+const attrs = computed(() => ({target: props.target, href: props.href, to: props.to}))
 </script>

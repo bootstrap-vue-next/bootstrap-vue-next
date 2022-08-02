@@ -21,7 +21,7 @@ describe('navbar-brand', () => {
     history: createWebHistory(),
     routes,
   })
-  it("generates a router-link tag when the 'to' prop is passed", async () => {
+  it('contains target prop of _self by default', async () => {
     const wrapper = mount(BNavbarBrand, {
       slots: {
         default: 'test link',
@@ -33,7 +33,7 @@ describe('navbar-brand', () => {
         plugins: [router],
       },
     })
-
-    expect(wrapper.html()).toContain('href="/test-route"')
+    console.log(wrapper.html())
+    expect(wrapper.html()).toContain('target="_self"')
   }, 5000)
 })
