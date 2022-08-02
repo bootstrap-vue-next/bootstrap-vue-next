@@ -6,9 +6,6 @@ name: release-please
 
 on:
   push:
-    paths:
-      - 'packages/bootstrap-vue-3/**'
-      - '.github/workflows/release-please.yaml'
     branches:
       - main
 
