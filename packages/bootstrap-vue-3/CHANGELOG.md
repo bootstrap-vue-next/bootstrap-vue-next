@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.2](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.1...v0.2.2) (2022-08-02)
+
+
+### Features
+
+* bnav components ([17baaf2](https://github.com/cdmoro/bootstrap-vue-3/commit/17baaf2adb0d8dd10a79c5a8a2611437acdf34ef))
+
+
+### Bug Fixes
+
+* breaking test suite ([9e1a1d8](https://github.com/cdmoro/bootstrap-vue-3/commit/9e1a1d84014d5b4ca7954e344c02f1fd39ba637d))
+
 ## [0.2.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.0...v0.2.1) (2022-08-02)
 
 
