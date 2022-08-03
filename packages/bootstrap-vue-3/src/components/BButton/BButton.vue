@@ -5,21 +5,22 @@
 </template>
 
 <script lang="ts">
+import {resolveBooleanish} from '../../utils'
 import {computed, defineComponent, PropType} from 'vue'
-import type {ButtonVariant, InputSize, LinkTarget} from '../../types'
+import type {Booleanish, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
   props: {
     ...BLINK_PROPS,
-    active: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false},
+    active: {type: Boolean as PropType<Booleanish>, default: false},
+    disabled: {type: Boolean as PropType<Booleanish>, default: false},
     href: {type: String, required: false},
-    pill: {type: Boolean, default: false},
-    pressed: {type: Boolean, default: null},
+    pill: {type: Boolean as PropType<Booleanish>, default: false},
+    pressed: {type: Boolean as PropType<Booleanish>, default: null},
     rel: {type: String, default: null},
     size: {type: String as PropType<InputSize>},
-    squared: {type: Boolean, default: false},
+    squared: {type: Boolean as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'button'},
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     type: {type: String, default: 'button'},
@@ -27,8 +28,14 @@ export default defineComponent({
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
+    const activeBoolean = computed(() => resolveBooleanish(props.active))
+    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+    const pillBoolean = computed(() => resolveBooleanish(props.pill))
+    const pressedBoolean = computed(() => resolveBooleanish(props.pressed))
+    const squaredBoolean = computed(() => resolveBooleanish(props.squared))
+
     // TODO none of these are computed values. Meaning they will not react if any of these are changed?
-    const isToggle = props.pressed !== null
+    const isToggle = pressedBoolean.value !== null
     const isButton = props.tag === 'button' && !props.href && !props.to
     const isLink = !!(props.href || props.to)
     const isBLink = !!props.to
@@ -37,17 +44,17 @@ export default defineComponent({
     const classes = computed(() => ({
       [`btn-${props.variant}`]: props.variant,
       [`btn-${props.size}`]: props.size,
-      'active': props.active || props.pressed,
-      'rounded-pill': props.pill,
-      'rounded-0': props.squared,
-      'disabled': props.disabled,
+      'active': activeBoolean.value || pressedBoolean.value,
+      'rounded-pill': pillBoolean.value,
+      'rounded-0': squaredBoolean.value,
+      'disabled': disabledBoolean.value,
     }))
 
     const attrs = computed(() => ({
-      'aria-disabled': nonStandardTag ? String(props.disabled) : null,
-      'aria-pressed': isToggle ? String(props.pressed) : null,
+      'aria-disabled': nonStandardTag ? String(disabledBoolean.value) : null,
+      'aria-pressed': isToggle ? String(pressedBoolean.value) : null,
       'autocomplete': isToggle ? 'off' : null,
-      'disabled': isButton ? props.disabled : null,
+      'disabled': isButton ? disabledBoolean.value : null,
       'href': props.href,
       'rel': isLink ? props.rel : null,
       'role': nonStandardTag || isLink ? 'button' : null,
@@ -70,14 +77,14 @@ export default defineComponent({
     })
 
     const clicked = (e: MouseEvent): void => {
-      if (props.disabled) {
+      if (disabledBoolean.value) {
         e.preventDefault()
         e.stopPropagation()
         return
       }
       emit('click', e)
       if (isToggle) {
-        emit('update:pressed', !props.pressed)
+        emit('update:pressed', !pressedBoolean.value)
       }
     }
 
