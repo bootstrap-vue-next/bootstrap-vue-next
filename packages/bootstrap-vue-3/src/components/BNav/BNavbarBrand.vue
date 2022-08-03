@@ -1,48 +1,29 @@
 <template>
-  <component :is="computedTag" v-bind="attrs">
+  <component :is="computedTag" class="navbar-brand" v-bind="props">
     <slot />
   </component>
 </template>
 
-<script setup lang="ts">
-// TODO refactor this to use old setup containing BLINKPROPS and pluckprops utility
-import type {LinkTarget} from '../../types'
-import {computed} from 'vue'
-import type {RouteLocationRaw} from 'vue-router'
-// TODO this components is not done
-interface Props {
-  active?: boolean
-  activeClass?: string
-  append?: boolean
-  disabled?: boolean
-  exact?: boolean
-  exactActiveClass?: string
-  exactPath?: boolean
-  exactPathActiveClass?: string
-  href?: string
-  noPrefetch?: boolean
-  prefetch?: boolean
-  rel?: string
-  replace?: boolean
-  routerComponentName?: string
-  tag?: string
-  target?: LinkTarget
-  to?: RouteLocationRaw
-}
+<script lang="ts">
+import {isLink, omit, pluckProps} from '../../utils'
+import {computed, defineComponent} from 'vue'
+import {BLINK_PROPS} from '../BLink/BLink.vue'
 
-const props = withDefaults(defineProps<Props>(), {
-  active: false,
-  append: false,
-  disabled: false,
-  exact: false,
-  exactPath: false,
-  noPrefetch: false,
-  replace: false,
-  target: '_self',
-  tag: 'div',
+const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
+
+export default defineComponent({
+  props: {
+    tag: {type: String, default: 'div'},
+    ...linkProps,
+  },
+  setup(props) {
+    const link = computed<boolean>(() => isLink(props))
+    const computedTag = computed<string>(() => (link.value ? 'b-link' : props.tag))
+
+    return {
+      props: link.value ? pluckProps(linkProps, props) : {},
+      computedTag,
+    }
+  },
 })
-
-const computedTag = computed<string>(() => (props.to ? 'b-link' : props.href ? 'a' : props.tag))
-
-const attrs = computed(() => ({target: props.target, href: props.href, to: props.to}))
 </script>
