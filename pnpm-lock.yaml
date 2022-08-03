@@ -76,7 +76,7 @@ importers:
       '@vue/shared': ^3.2.37
       '@vue/test-utils': ^2.0.0-rc.18
       bootstrap: 5.x.x
-      jsdom: ^19.0.0
+      jsdom: ^20.0.0
       rollup: ^2.76.0
       rollup-plugin-visualizer: 5.x.x
       sass: 1.x.x
@@ -84,7 +84,7 @@ importers:
       typescript: 4.x.x
       vite: 2.x.x
       vite-plugin-dts: 1.x.x
-      vitest: ^0.10.4
+      vitest: ^0.20.3
       vue: 3.x.x
       vue-router: 4.x.x
       vue-tsc: ^0.37.2
@@ -96,7 +96,7 @@ importers:
       '@vue/shared': 3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       bootstrap: 5.2.0_@popperjs+core@2.11.5
-      jsdom: 19.0.0
+      jsdom: 20.0.0
       rollup: 2.77.2
       rollup-plugin-visualizer: 5.7.1_rollup@2.77.2
       sass: 1.54.1
@@ -104,7 +104,7 @@ importers:
       typescript: 4.7.4
       vite: 2.9.14_sass@1.54.1
       vite-plugin-dts: 1.4.1_vite@2.9.14
-      vitest: 0.10.5_jsdom@19.0.0+sass@1.54.1
+      vitest: 0.20.3_jsdom@20.0.0+sass@1.54.1
       vue: 3.2.37
       vue-router: 4.1.3_vue@3.2.37
       vue-tsc: 0.37.9_typescript@4.7.4
@@ -2064,6 +2064,11 @@ packages:
     engines: {node: '>=0.12'}
     dev: true
 
+  /entities/4.3.1:
+    resolution: {integrity: sha512-o4q/dYJlmyjP2zfnaWDUC6A3BQFmVTX+tZPezK7k0GLSU9QYCauscf5Y+qcEPzKL+EixVouYDgLQK5H9GrLpkg==}
+    engines: {node: '>=0.12'}
+    dev: true
+
   /envinfo/7.8.1:
     resolution: {integrity: sha512-/o+BXHmB7ocbHEAs6F2EnG0ogybVVUdkRunTT2glZU9XAaGmhqskrvKwqXuDfNjEO0LZKWdejEEpnq8aM0tOaw==}
     engines: {node: '>=4'}
@@ -3022,9 +3027,9 @@ packages:
     dependencies:
       argparse: 2.0.1
 
-  /jsdom/19.0.0:
-    resolution: {integrity: sha512-RYAyjCbxy/vri/CfnjUWJQQtZ3LKlLnDqj+9XLNnJPgEGeirZs3hllKR20re8LUZ6o1b1X4Jat+Qd26zmP41+A==}
-    engines: {node: '>=12'}
+  /jsdom/20.0.0:
+    resolution: {integrity: sha512-x4a6CKCgx00uCmP+QakBDFXwjAJ69IkkIWHmtmjd3wvXPcdOS44hfX2vqkOQrVrq8l9DhNNADZRXaCEWvgXtVA==}
+    engines: {node: '>=14'}
     peerDependencies:
       canvas: ^2.5.0
     peerDependenciesMeta:
@@ -3046,8 +3051,8 @@ packages:
       https-proxy-agent: 5.0.1
       is-potential-custom-element-name: 1.0.1
       nwsapi: 2.2.1
-      parse5: 6.0.1
-      saxes: 5.0.1
+      parse5: 7.0.0
+      saxes: 6.0.0
       symbol-tree: 3.2.4
       tough-cookie: 4.0.0
       w3c-hr-time: 1.0.2
@@ -3055,7 +3060,7 @@ packages:
       webidl-conversions: 7.0.0
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
-      whatwg-url: 10.0.0
+      whatwg-url: 11.0.0
       ws: 8.8.1
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
@@ -3668,8 +3673,10 @@ packages:
       lines-and-columns: 1.2.4
     dev: true
 
-  /parse5/6.0.1:
-    resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
+  /parse5/7.0.0:
+    resolution: {integrity: sha512-y/t8IXSPWTuRZqXc0ajH/UwDj4mnqLEbSttNbThcFhGrZuOyoyvNBO85PBp2jQa55wY9d07PBNjsK8ZP3K5U6g==}
+    dependencies:
+      entities: 4.3.1
     dev: true
 
   /path-browserify/1.0.1:
@@ -4006,9 +4013,9 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /saxes/5.0.1:
-    resolution: {integrity: sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==}
-    engines: {node: '>=10'}
+  /saxes/6.0.0:
+    resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
+    engines: {node: '>=v12.22.7'}
     dependencies:
       xmlchars: 2.2.0
     dev: true
@@ -4292,13 +4299,13 @@ packages:
     resolution: {integrity: sha512-qsdtZH+vMoCARQtyod4imc2nIJwg9Cc7lPRrw9CzF8ZKR0khdr8+2nX80PBhET3tcyTtJDxAffGh2rXH4tyU8A==}
     dev: true
 
-  /tinypool/0.1.3:
-    resolution: {integrity: sha512-2IfcQh7CP46XGWGGbdyO4pjcKqsmVqFAPcXfPxcPXmOWt9cYkTP9HcDmGgsfijYoAEc4z9qcpM/BaBz46Y9/CQ==}
+  /tinypool/0.2.4:
+    resolution: {integrity: sha512-Vs3rhkUH6Qq1t5bqtb816oT+HeJTXfwt2cbPH17sWHIYKTotQIFPk3tf2fgqRrVyMDVOc1EnPgzIxfIulXVzwQ==}
     engines: {node: '>=14.0.0'}
     dev: true
 
-  /tinyspy/0.3.3:
-    resolution: {integrity: sha512-gRiUR8fuhUf0W9lzojPf1N1euJYA30ISebSfgca8z76FOvXtVXqd5ojEIaKLWbDQhAaC3ibxZIjqbyi4ybjcTw==}
+  /tinyspy/1.0.0:
+    resolution: {integrity: sha512-FI5B2QdODQYDRjfuLF+OrJ8bjWRMCXokQPcwKm0W3IzcbUmBNv536cQc7eXGoAuXphZwgx1DFbqImwzz08Fnhw==}
     engines: {node: '>=14.0.0'}
     dev: true
 
@@ -4753,16 +4760,50 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.10.5_jsdom@19.0.0+sass@1.54.1:
-    resolution: {integrity: sha512-4qXdNbHwAd9YcsztJoVMWUQGcMATVlY9Xd95I3KQ2JJwDLTL97f/jgfGRotqptvNxdlmme5TBY0Gv+l6+JSYvA==}
+  /vite/3.0.4_sass@1.54.1:
+    resolution: {integrity: sha512-NU304nqnBeOx2MkQnskBQxVsa0pRAH5FphokTGmyy8M3oxbvw7qAXts2GORxs+h/2vKsD+osMhZ7An6yK6F1dA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.14.53
+      postcss: 8.4.14
+      resolve: 1.22.1
+      rollup: 2.77.2
+      sass: 1.54.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vitest/0.20.3_jsdom@20.0.0+sass@1.54.1:
+    resolution: {integrity: sha512-cXMjTbZxBBUUuIF3PUzEGPLJWtIMeURBDXVxckSHpk7xss4JxkiiWh5cnIlfGyfJne2Ii3QpbiRuFL5dMJtljw==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
+      '@edge-runtime/vm': '*'
+      '@vitest/browser': '*'
       '@vitest/ui': '*'
       c8: '*'
       happy-dom: '*'
       jsdom: '*'
     peerDependenciesMeta:
+      '@edge-runtime/vm':
+        optional: true
+      '@vitest/browser':
+        optional: true
       '@vitest/ui':
         optional: true
       c8:
@@ -4774,16 +4815,20 @@ packages:
     dependencies:
       '@types/chai': 4.3.1
       '@types/chai-subset': 1.3.3
+      '@types/node': 18.6.3
       chai: 4.3.6
-      jsdom: 19.0.0
+      debug: 4.3.4
+      jsdom: 20.0.0
       local-pkg: 0.4.2
-      tinypool: 0.1.3
-      tinyspy: 0.3.3
-      vite: 2.9.14_sass@1.54.1
+      tinypool: 0.2.4
+      tinyspy: 1.0.0
+      vite: 3.0.4_sass@1.54.1
     transitivePeerDependencies:
       - less
       - sass
       - stylus
+      - supports-color
+      - terser
     dev: true
 
   /vue-demi/0.13.6_vue@3.2.37:
@@ -4932,14 +4977,6 @@ packages:
   /whatwg-mimetype/3.0.0:
     resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
     engines: {node: '>=12'}
-    dev: true
-
-  /whatwg-url/10.0.0:
-    resolution: {integrity: sha512-CLxxCmdUby142H5FZzn4D8ikO1cmypvXVQktsgosNy4a4BHrDHeciBBGZhb0bNoR5/MltoCatso+vFjjGx8t0w==}
-    engines: {node: '>=12'}
-    dependencies:
-      tr46: 3.0.0
-      webidl-conversions: 7.0.0
     dev: true
 
   /whatwg-url/11.0.0:
