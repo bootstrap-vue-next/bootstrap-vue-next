@@ -6,43 +6,47 @@
       v-bind="$props"
       @click="clicked"
     >
-      <slot></slot>
+      <slot />
     </component>
   </li>
 </template>
 
 <script lang="ts">
-import {omit} from '../../utils'
-import {computed, defineComponent} from 'vue'
+import {omit, resolveBooleanish} from '../../utils'
+import {computed, defineComponent, PropType} from 'vue'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
+import type {Booleanish} from '../../types'
 
 export default defineComponent({
   props: {
     ...omit(BLINK_PROPS, ['event', 'routerTag']),
-    active: {type: Boolean, default: false},
+    active: {type: Boolean as PropType<Booleanish>, default: false},
     ariaCurrent: {type: String, default: 'location'},
-    disabled: {type: Boolean, default: false},
+    disabled: {type: Boolean as PropType<Booleanish>, default: false},
     text: {type: String, required: false},
   },
   emits: ['click'],
   setup(props, {emit}) {
+    const activeBoolean = computed(() => resolveBooleanish(props.active))
+    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+
     const liClasses = computed(() => ({
       active: props.active,
     }))
 
-    const computedTag = computed<'span' | 'b-link'>(() => (props.active ? 'span' : 'b-link'))
+    const computedTag = computed<'span' | 'b-link'>(() => (activeBoolean.value ? 'span' : 'b-link'))
 
     const computedAriaCurrent = computed(() => ({
-      'aria-current': props.active ? props.ariaCurrent : undefined,
+      'aria-current': activeBoolean.value ? props.ariaCurrent : undefined,
     }))
 
     const clicked = (e: MouseEvent): void => {
-      if (props.disabled || props.active) {
+      if (disabledBoolean.value || activeBoolean.value) {
         e.preventDefault()
         e.stopImmediatePropagation()
         return
       }
-      if (!props.disabled) emit('click', e)
+      if (!disabledBoolean.value) emit('click', e)
     }
 
     return {

@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   tag: 'div',
 })
 
-const booleanSquare = computed(() => resolveBooleanish(props.square))
+const squareBoolean = computed(() => resolveBooleanish(props.square))
 
 const computedSize = computed<string | null>(() => computeSize(props.size))
 
@@ -51,7 +51,7 @@ const paddingStyle = computed<StyleValue>(() => {
 provide<BAvatarGroupParentData>(injectionKey, {
   overlapScale,
   size: props.size,
-  square: booleanSquare.value,
+  square: squareBoolean.value,
   rounded: props.rounded,
   variant: props.variant,
 })

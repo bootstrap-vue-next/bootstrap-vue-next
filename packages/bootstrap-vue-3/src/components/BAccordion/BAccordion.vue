@@ -25,14 +25,15 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
 })
 
 const computedId = useId(props.id, 'accordion')
-const booleanFlush = computed(() => resolveBooleanish(props.flush))
-const booleanFree = computed(() => resolveBooleanish(props.free))
+
+const flushBoolean = computed(() => resolveBooleanish(props.flush))
+const freeBoolean = computed(() => resolveBooleanish(props.free))
 
 const classes = computed(() => ({
-  'accordion-flush': booleanFlush.value,
+  'accordion-flush': flushBoolean.value,
 }))
 
-if (!booleanFree.value) {
+if (!freeBoolean.value) {
   provide(injectionKey, computedId.value.toString())
 }
 </script>
