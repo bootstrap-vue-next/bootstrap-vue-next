@@ -26,8 +26,8 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
 
 const computedId = useId(props.id, 'accordion')
 
-const flushBoolean = computed(() => resolveBooleanish(props.flush))
-const freeBoolean = computed(() => resolveBooleanish(props.free))
+const flushBoolean = computed<boolean>(() => resolveBooleanish(props.flush))
+const freeBoolean = computed<boolean>(() => resolveBooleanish(props.free))
 
 const classes = computed(() => ({
   'accordion-flush': flushBoolean.value,

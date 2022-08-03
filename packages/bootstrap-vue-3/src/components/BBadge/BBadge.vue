@@ -25,9 +25,9 @@ export default defineComponent({
     const link = computed<boolean>(() => isLink(props))
     const computedTag = computed<string>(() => (link.value ? 'b-link' : props.tag))
 
-    const pillBoolean = computed(() => resolveBooleanish(props.pill))
-    const textIndicatorBoolean = computed(() => resolveBooleanish(props.textIndicator))
-    const dotIndicatorBoolean = computed(() => resolveBooleanish(props.dotIndicator))
+    const pillBoolean = computed<boolean>(() => resolveBooleanish(props.pill))
+    const textIndicatorBoolean = computed<boolean>(() => resolveBooleanish(props.textIndicator))
+    const dotIndicatorBoolean = computed<boolean>(() => resolveBooleanish(props.dotIndicator))
 
     const classes = computed(() => ({
       [`bg-${props.variant}`]: props.variant,

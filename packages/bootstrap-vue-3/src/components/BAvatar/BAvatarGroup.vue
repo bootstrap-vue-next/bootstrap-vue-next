@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   tag: 'div',
 })
 
-const squareBoolean = computed(() => resolveBooleanish(props.square))
+const squareBoolean = computed<boolean>(() => resolveBooleanish(props.square))
 
 const computedSize = computed<string | null>(() => computeSize(props.size))
 

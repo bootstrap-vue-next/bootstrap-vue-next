@@ -46,7 +46,7 @@ interface BAccordionItemProps {
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
 
-const visibleBoolean = computed(() => resolveBooleanish(props.visible))
+const visibleBoolean = computed<boolean>(() => resolveBooleanish(props.visible))
 
 const computedId = useId(props.id, 'accordion_item')
 const parent = inject(injectionKey, '')

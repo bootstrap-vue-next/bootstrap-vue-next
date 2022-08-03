@@ -69,11 +69,11 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   variant: 'secondary',
 })
 
-const badgeLeftBoolean = computed(() => resolveBooleanish(props.badgeLeft))
-const badgeTopBoolean = computed(() => resolveBooleanish(props.badgeTop))
-const buttonBoolean = computed(() => resolveBooleanish(props.button))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-const squareBoolean = computed(() => resolveBooleanish(props.square))
+const badgeLeftBoolean = computed<boolean>(() => resolveBooleanish(props.badgeLeft))
+const badgeTopBoolean = computed<boolean>(() => resolveBooleanish(props.badgeTop))
+const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const squareBoolean = computed<boolean>(() => resolveBooleanish(props.square))
 
 interface BAvatarEmits {
   (e: 'click', value: MouseEvent): void

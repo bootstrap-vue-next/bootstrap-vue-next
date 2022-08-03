@@ -28,11 +28,11 @@ export default defineComponent({
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
-    const activeBoolean = computed(() => resolveBooleanish(props.active))
-    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-    const pillBoolean = computed(() => resolveBooleanish(props.pill))
-    const pressedBoolean = computed(() => resolveBooleanish(props.pressed))
-    const squaredBoolean = computed(() => resolveBooleanish(props.squared))
+    const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+    const pillBoolean = computed<boolean>(() => resolveBooleanish(props.pill))
+    const pressedBoolean = computed<boolean>(() => resolveBooleanish(props.pressed))
+    const squaredBoolean = computed<boolean>(() => resolveBooleanish(props.squared))
 
     // TODO none of these are computed values. Meaning they will not react if any of these are changed?
     const isToggle = pressedBoolean.value !== null

@@ -27,8 +27,8 @@ export default defineComponent({
   },
   emits: ['click'],
   setup(props, {emit}) {
-    const activeBoolean = computed(() => resolveBooleanish(props.active))
-    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+    const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 
     const liClasses = computed(() => ({
       active: props.active,
