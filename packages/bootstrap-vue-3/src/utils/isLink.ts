@@ -1,7 +1,7 @@
 import type {RouteLocationRaw} from 'vue-router'
 
 /**
- * @param props
+ * @param {{href?: string; to?: RouteLocationRaw}} props
  * @returns
  */
 export default (props: {href?: string; to?: RouteLocationRaw}): boolean =>
