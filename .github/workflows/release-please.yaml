@@ -67,7 +67,7 @@ jobs:
         if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
 
       - name: Publish 
-        run: pnpm publish --tag develop --filter .\packages\bootstrap-vue-3\
+        run: pnpm publish --tag develop --filter bootstrap-vue-3
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
