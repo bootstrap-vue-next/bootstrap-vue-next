@@ -1,6 +1,6 @@
 <template>
   <ul class="navbar-nav" :class="classes">
-    <slot></slot>
+    <slot />
   </ul>
 </template>
 
