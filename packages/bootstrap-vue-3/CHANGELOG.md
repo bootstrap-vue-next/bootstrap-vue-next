@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.3...v0.2.4) (2022-08-03)
+
+
+### Bug Fixes
+
+* **BNavbarBrand:** component fixed and finished ([626cb2c](https://github.com/cdmoro/bootstrap-vue-3/commit/626cb2cfb6d41c85c18a5c707ffdd3998f92dba1))
+
 ## [0.2.3](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.2...v0.2.3) (2022-08-03)
 
 
