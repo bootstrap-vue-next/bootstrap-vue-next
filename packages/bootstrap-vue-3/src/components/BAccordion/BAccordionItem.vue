@@ -17,7 +17,7 @@
     <b-collapse
       :id="computedId"
       class="accordion-collapse"
-      :visible="visible"
+      :visible="booleanVisible"
       :accordion="parent"
       :aria-labelledby="`heading${computedId}`"
     >
@@ -29,20 +29,24 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from 'vue'
+import {computed, inject} from 'vue'
 import BCollapse from '../BCollapse.vue'
 import vBToggle from '../../directives/BToggle'
 import {useId} from '../../composables'
 import {injectionKey} from './BAccordion.vue'
+import {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 // import type {BAccordionItemProps} from '../types/components'
 
 interface BAccordionItemProps {
   id?: string
   title?: string
-  visible?: boolean
+  visible?: Booleanish
 }
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
+
+const booleanVisible = computed(() => resolveBooleanish(props.visible))
 
 const computedId = useId(props.id, 'accordion_item')
 const parent = inject(injectionKey, '')

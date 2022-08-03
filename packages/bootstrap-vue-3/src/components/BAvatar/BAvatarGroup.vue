@@ -10,8 +10,8 @@
 // import type { BAvatarGroupParentData, BAvatarGroupProps, InputSize } from '../types/components'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, InjectionKey, provide, StyleValue} from 'vue'
-import type {ColorVariant} from '../../types'
-import {isNumeric, isString, mathMax, mathMin, toFloat} from '../../utils'
+import type {Booleanish, ColorVariant} from '../../types'
+import {isNumeric, isString, mathMax, mathMin, resolveBooleanish, toFloat} from '../../utils'
 import {computeSize} from './BAvatar.vue'
 
 interface BAvatarGroupProps {
@@ -19,7 +19,7 @@ interface BAvatarGroupProps {
   rounded?: boolean | string
   size?: 'sm' | 'md' | 'lg' | string
   // size?: InputSize | string
-  square?: boolean
+  square?: Booleanish
   tag?: string
   variant?: ColorVariant
 }
@@ -30,6 +30,8 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   square: false,
   tag: 'div',
 })
+
+const booleanSquare = computed(() => resolveBooleanish(props.square))
 
 const computedSize = computed<string | null>(() => computeSize(props.size))
 
@@ -49,7 +51,7 @@ const paddingStyle = computed<StyleValue>(() => {
 provide<BAvatarGroupParentData>(injectionKey, {
   overlapScale,
   size: props.size,
-  square: props.square,
+  square: booleanSquare.value,
   rounded: props.rounded,
   variant: props.variant,
 })

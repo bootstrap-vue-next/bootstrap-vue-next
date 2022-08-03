@@ -27,6 +27,7 @@ export default defineComponent({
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
+    // TODO none of these are computed values. Meaning they will not react if any of these are changed?
     const isToggle = props.pressed !== null
     const isButton = props.tag === 'button' && !props.href && !props.to
     const isLink = !!(props.href || props.to)
