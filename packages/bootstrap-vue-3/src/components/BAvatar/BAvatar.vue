@@ -26,28 +26,28 @@
 
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
-import {isEmptySlot, isNumber, isNumeric, isString, toFloat} from '../../utils'
+import {isEmptySlot, isNumber, isNumeric, isString, resolveBooleanish, toFloat} from '../../utils'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, useSlots} from 'vue'
-import type {ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
 
 interface BAvatarProps {
   alt?: string // TODO each complex variant should contain a note about it's type
   ariaLabel?: string
   badge?: boolean | string
-  badgeLeft?: boolean
+  badgeLeft?: Booleanish
   badgeOffset?: string
-  badgeTop?: boolean
+  badgeTop?: Booleanish
   badgeVariant?: ColorVariant
-  button?: boolean
+  button?: Booleanish
   buttonType?: string
-  disabled?: boolean
+  disabled?: Booleanish
   icon?: string
   rounded?: boolean | string
   size?: 'sm' | 'md' | 'lg' | string
   // size?: InputSize | string
-  square?: boolean
+  square?: Booleanish
   src?: string
   text?: string
   textVariant?: ColorVariant // not standard BootstrapVue props
@@ -68,6 +68,12 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   textVariant: undefined,
   variant: 'secondary',
 })
+
+const booleanBadgeLeft = computed(() => resolveBooleanish(props.badgeLeft))
+const booleanBadgeTop = computed(() => resolveBooleanish(props.badgeTop))
+const booleanButton = computed(() => resolveBooleanish(props.button))
+const booleanDisabled = computed(() => resolveBooleanish(props.disabled))
+const booleanSquare = computed(() => resolveBooleanish(props.square))
 
 interface BAvatarEmits {
   (e: 'click', value: MouseEvent): void
@@ -112,7 +118,7 @@ const computedRounded = computed<string | boolean>(() =>
 
 const attrs = computed(() => ({
   'aria-label': props.ariaLabel || null,
-  'disabled': props.disabled || null,
+  'disabled': booleanDisabled.value || null,
 }))
 
 const badgeClasses = computed(() => ({
@@ -128,18 +134,18 @@ const badgeTextClasses = computed<string>(() => {
 const classes = computed(() => ({
   [`b-avatar-${props.size}`]: props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
   [`bg-${computedVariant.value}`]: computedVariant.value,
-  [`badge`]: !props.button && computedVariant.value && hasDefaultSlot.value,
+  [`badge`]: !booleanButton.value && computedVariant.value && hasDefaultSlot.value,
   rounded: computedRounded.value === '' || computedRounded.value === true,
-  [`rounded-circle`]: !props.square && computedRounded.value === 'circle',
-  [`rounded-0`]: props.square || computedRounded.value === '0',
-  [`rounded-1`]: !props.square && computedRounded.value === 'sm',
-  [`rounded-3`]: !props.square && computedRounded.value === 'lg',
-  [`rounded-top`]: !props.square && computedRounded.value === 'top',
-  [`rounded-bottom`]: !props.square && computedRounded.value === 'bottom',
-  [`rounded-start`]: !props.square && computedRounded.value === 'left',
-  [`rounded-end`]: !props.square && computedRounded.value === 'right',
-  btn: props.button,
-  [`btn-${computedVariant.value}`]: props.button ? computedVariant.value : null,
+  [`rounded-circle`]: !booleanSquare.value && computedRounded.value === 'circle',
+  [`rounded-0`]: booleanSquare.value || computedRounded.value === '0',
+  [`rounded-1`]: !booleanSquare.value && computedRounded.value === 'sm',
+  [`rounded-3`]: !booleanSquare.value && computedRounded.value === 'lg',
+  [`rounded-top`]: !booleanSquare.value && computedRounded.value === 'top',
+  [`rounded-bottom`]: !booleanSquare.value && computedRounded.value === 'bottom',
+  [`rounded-start`]: !booleanSquare.value && computedRounded.value === 'left',
+  [`rounded-end`]: !booleanSquare.value && computedRounded.value === 'right',
+  btn: booleanButton.value,
+  [`btn-${computedVariant.value}`]: booleanButton.value ? computedVariant.value : null,
 }))
 
 const textClasses = computed<string>(() => {
@@ -155,10 +161,10 @@ const badgeStyle = computed<StyleValue>(() => {
       : ''
   return {
     fontSize: fontSize || '',
-    top: props.badgeTop ? offset : '',
-    bottom: props.badgeTop ? '' : offset,
-    left: props.badgeLeft ? offset : '',
-    right: props.badgeLeft ? '' : offset,
+    top: booleanBadgeTop.value ? offset : '',
+    bottom: booleanBadgeTop.value ? '' : offset,
+    left: booleanBadgeLeft.value ? offset : '',
+    right: booleanBadgeLeft.value ? '' : offset,
   }
 })
 
@@ -178,7 +184,7 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const tag = computed<string>(() => (props.button ? props.buttonType : 'span'))
+const tag = computed<string>(() => (booleanButton.value ? props.buttonType : 'span'))
 const tagStyle = computed(() => ({
   ...marginStyle.value,
   width: computedSize.value,
@@ -186,7 +192,7 @@ const tagStyle = computed(() => ({
 }))
 
 const clicked = (e: MouseEvent): void => {
-  if (!props.disabled && props.button) emit('click', e)
+  if (!booleanDisabled.value && booleanButton.value) emit('click', e)
 }
 const onImgError = (e: Event): void => emit('img-error', e)
 </script>

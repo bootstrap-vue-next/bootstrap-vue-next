@@ -33,7 +33,7 @@ describe('navbar-brand', () => {
         plugins: [router],
       },
     })
-    console.log(wrapper.html())
+
     expect(wrapper.html()).toContain('target="_self"')
   }, 5000)
 })
