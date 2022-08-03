@@ -34,6 +34,7 @@
   },
   "peerDependencies": {
     "bootstrap": "5.x.x",
+    "@popperjs/core": "^2.x.x",
     "vue": "3.x.x"
   },
   "devDependencies": {

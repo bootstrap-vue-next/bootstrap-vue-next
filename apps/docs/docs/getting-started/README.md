@@ -48,7 +48,7 @@ To install this library you can use Yarn or NPM:
   <CodeGroupItem title="YARN" active>
 
 ```bash
-yarn add bootstrap bootstrap-vue-3
+yarn add bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -56,7 +56,7 @@ yarn add bootstrap bootstrap-vue-3
   <CodeGroupItem title="NPM">
 
 ```bash
-npm install bootstrap bootstrap-vue-3
+npm install bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -64,7 +64,7 @@ npm install bootstrap bootstrap-vue-3
   <CodeGroupItem title="PNPM">
 
 ```bash
-pnpm add bootstrap bootstrap-vue-3
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -98,7 +98,7 @@ In your Nuxt3 application, install `bootstrap-vue-3`
   <CodeGroupItem title="YARN" active>
 
 ```bash
-yarn add bootstrap bootstrap-vue-3
+yarn add bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -106,7 +106,7 @@ yarn add bootstrap bootstrap-vue-3
   <CodeGroupItem title="NPM">
 
 ```bash
-npm install bootstrap bootstrap-vue-3
+npm install bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -114,7 +114,7 @@ npm install bootstrap bootstrap-vue-3
   <CodeGroupItem title="PNPM">
 
 ```bash
-pnpm add bootstrap bootstrap-vue-3
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>

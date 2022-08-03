@@ -39,6 +39,6 @@ jobs:
         run: pnpm test
 
       - name: Publish
-        run: pnpm publish --tag develop --filter bootstrap-vue-3
+        run: pnpm publish --filter bootstrap-vue-3
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
