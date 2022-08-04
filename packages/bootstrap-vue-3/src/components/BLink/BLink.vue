@@ -22,7 +22,7 @@
     :is="tag"
     v-else
     ref="link"
-    :class="{active, disabled}"
+    :class="{active: activeBoolean, disabled: disabledBoolean}"
     v-bind="routerAttr"
     @click="clicked"
   >
@@ -31,23 +31,24 @@
 </template>
 
 <script lang="ts">
-import type {LinkTarget} from '../../types'
+import type {Booleanish, LinkTarget} from '../../types'
+import {resolveBooleanish} from '../../utils'
 import {computed, defineComponent, getCurrentInstance, PropType, ref} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {
-  active: {type: Boolean, default: false},
+  active: {type: Boolean as PropType<Booleanish>, default: false},
   activeClass: {type: String, default: 'router-link-active'},
-  append: {type: Boolean, default: false},
-  disabled: {type: Boolean, default: false},
+  append: {type: Boolean as PropType<Booleanish>, default: false},
+  disabled: {type: Boolean as PropType<Booleanish>, default: false},
   event: {type: [String, Array], default: 'click'},
-  exact: {type: Boolean, default: false},
+  exact: {type: Boolean as PropType<Booleanish>, default: false},
   exactActiveClass: {type: String, default: 'router-link-exact-active'},
   href: {type: String},
-  // noPrefetch: {type: Boolean, default: false},
-  // prefetch: {type: Boolean, default: null},
+  // noPrefetch: {type: Boolean as PropType<Booleanish>, default: false},
+  // prefetch: {type: Boolean as PropType<Booleanish>, default: null},
   rel: {type: String, default: null},
-  replace: {type: Boolean, default: false},
+  replace: {type: Boolean as PropType<Booleanish>, default: false},
   routerComponentName: {type: String, default: 'router-link'},
   routerTag: {type: String, default: 'a'},
   target: {type: String as PropType<LinkTarget>, default: '_self'},
@@ -58,6 +59,15 @@ export default defineComponent({
   props: BLINK_PROPS,
   emits: ['click'],
   setup(props, {emit, attrs}) {
+    const activeBoolean = computed(() => resolveBooleanish(props.active))
+    // TODO append is never used
+    const appendBoolean = computed(() => resolveBooleanish(props.append))
+    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+    // TODO exact is never used
+    const exactBoolean = computed(() => resolveBooleanish(props.exact))
+    // TODO replace is never used
+    const replaceBoolean = computed(() => resolveBooleanish(props.replace))
+
     const instance = getCurrentInstance()
     const link = ref<HTMLElement>(null as unknown as HTMLElement)
 
@@ -67,7 +77,7 @@ export default defineComponent({
         .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
         .join('')
       const hasRouter = instance?.appContext.app.component(routerName) !== undefined
-      if (!hasRouter || props.disabled || !props.to) {
+      if (!hasRouter || disabledBoolean.value || !props.to) {
         return 'a'
       }
       return props.routerComponentName
@@ -103,16 +113,16 @@ export default defineComponent({
       'href': computedHref.value,
       'target': props.target,
       'rel': props.target === '_blank' && props.rel === null ? 'noopener' : props.rel || null,
-      'tabindex': props.disabled
+      'tabindex': disabledBoolean.value
         ? '-1'
         : typeof attrs.tabindex === 'undefined'
         ? null
         : attrs.tabindex,
-      'aria-disabled': props.disabled ? 'true' : null,
+      'aria-disabled': disabledBoolean.value ? 'true' : null,
     }))
 
     const clicked = (e: MouseEvent): void => {
-      if (props.disabled) {
+      if (disabledBoolean.value) {
         e.preventDefault()
         e.stopImmediatePropagation()
         return
@@ -125,6 +135,11 @@ export default defineComponent({
       routerAttr,
       link,
       clicked,
+      activeBoolean,
+      appendBoolean,
+      disabledBoolean,
+      replaceBoolean,
+      exactBoolean,
     }
   },
 })
