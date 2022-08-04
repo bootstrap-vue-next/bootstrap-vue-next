@@ -12,18 +12,20 @@ import {
   isVisible,
   normalizeSlot,
   removeAttr,
+  resolveBooleanish,
   select,
   selectAll,
   setAttr,
   stringToInteger,
   suffixPropName,
 } from '../../utils'
-import {computed, defineComponent, h, nextTick, onMounted, ref, watch} from 'vue'
+import {computed, defineComponent, h, nextTick, onMounted, PropType, ref, watch} from 'vue'
 import BCol from '../BCol.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
 import BFormText from '../BForm/BFormText.vue'
 import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
+import type {Booleanish} from '../../types'
 
 const INPUTS = ['input', 'select', 'textarea']
 // Selector for finding first input in the form group
@@ -47,7 +49,7 @@ export default defineComponent({
     contentColsSm: {type: [Boolean, String, Number], required: false},
     contentColsXl: {type: [Boolean, String, Number], required: false},
     description: {type: [String], required: false},
-    disabled: {type: Boolean, default: false},
+    disabled: {type: Boolean as PropType<Booleanish>, default: false},
     feedbackAriaLive: {type: String, default: 'assertive'},
     id: {type: String, required: false},
     invalidFeedback: {type: String, required: false},
@@ -65,14 +67,20 @@ export default defineComponent({
     labelColsXl: {type: [Boolean, String, Number], required: false},
     labelFor: {type: String, required: false},
     labelSize: {type: String, required: false},
-    labelSrOnly: {type: Boolean, default: false},
-    state: {type: Boolean, default: null},
-    tooltip: {type: Boolean, default: false},
+    labelSrOnly: {type: Boolean as PropType<Booleanish>, default: false},
+    state: {type: Boolean as PropType<Booleanish>, default: null},
+    tooltip: {type: Boolean as PropType<Booleanish>, default: false},
     validFeedback: {type: String, required: false},
-    validated: {type: Boolean, default: false},
+    validated: {type: Boolean as PropType<Booleanish>, default: false},
     floating: {type: Boolean, default: false},
   },
   setup(props, {attrs}) {
+    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+    const labelSrOnlyBoolean = computed(() => resolveBooleanish(props.labelSrOnly))
+    const stateBoolean = computed(() => resolveBooleanish(props.state))
+    const tooltipBoolean = computed(() => resolveBooleanish(props.tooltip))
+    const validatedBoolean = computed(() => resolveBooleanish(props.validated))
+
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
@@ -154,7 +162,7 @@ export default defineComponent({
     )
     const computedState = computed(() =>
       // If not a boolean, ensure that value is null
-      isBoolean(props.state) ? props.state : null
+      isBoolean(stateBoolean.value) ? stateBoolean.value : null
     )
     const stateClass = computed(() => {
       const state = computedState.value
@@ -208,6 +216,11 @@ export default defineComponent({
     }
 
     return {
+      disabledBoolean,
+      labelSrOnlyBoolean,
+      stateBoolean,
+      tooltipBoolean,
+      validatedBoolean,
       ariaDescribedby,
       computedAriaInvalid,
       contentColProps,
@@ -231,7 +244,7 @@ export default defineComponent({
 
     if (labelContent || this.isHorizontal) {
       const labelTag: string = isFieldset ? 'legend' : 'label'
-      if (props.labelSrOnly) {
+      if (this.labelSrOnlyBoolean) {
         if (labelContent) {
           $label = h(
             labelTag,
@@ -288,8 +301,8 @@ export default defineComponent({
         {
           ariaLive: props.feedbackAriaLive,
           id: invalidFeedbackId,
-          state: props.state,
-          tooltip: props.tooltip,
+          state: this.stateBoolean,
+          tooltip: this.tooltipBoolean,
         },
         {default: () => invalidFeedbackContent}
       )
@@ -306,8 +319,8 @@ export default defineComponent({
         {
           ariaLive: props.feedbackAriaLive,
           id: validFeedbackId,
-          state: props.state,
-          tooltip: props.tooltip,
+          state: this.stateBoolean,
+          tooltip: this.tooltipBoolean,
         },
         {default: () => validFeedbackContent}
         // validFeedbackContent
@@ -334,8 +347,8 @@ export default defineComponent({
     const ariaDescribedby = (this.ariaDescribedby =
       [
         descriptionId,
-        props.state === false ? invalidFeedbackId : null,
-        props.state === true ? validFeedbackId : null,
+        this.stateBoolean === false ? invalidFeedbackId : null,
+        this.stateBoolean === true ? validFeedbackId : null,
       ]
         .filter((x) => x)
         .join(' ') || null)
@@ -373,11 +386,11 @@ export default defineComponent({
         'mb-3',
         this.stateClass,
         {
-          'was-validated': props.validated,
+          'was-validated': this.validatedBoolean,
         },
       ],
       'id': useId(props.id).value,
-      'disabled': isFieldset ? props.disabled : null,
+      'disabled': isFieldset ? this.disabledBoolean : null,
       'role': isFieldset ? null : 'group',
       'aria-invalid': this.computedAriaInvalid,
       // Only apply `aria-labelledby` if we are a horizontal fieldset
