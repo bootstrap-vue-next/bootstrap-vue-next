@@ -40,6 +40,7 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
 })
 
 // TODO overlay is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const overlayBoolean = computed<boolean>(() => resolveBooleanish(props.overlay))
 
 const classes = computed(() => ({
