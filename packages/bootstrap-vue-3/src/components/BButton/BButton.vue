@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {resolveBooleanish} from '../../utils'
+import {isLink, resolveBooleanish} from '../../utils'
 import {computed, defineComponent, PropType} from 'vue'
 import type {Booleanish, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
@@ -34,12 +34,11 @@ export default defineComponent({
     const pressedBoolean = computed<boolean>(() => resolveBooleanish(props.pressed))
     const squaredBoolean = computed<boolean>(() => resolveBooleanish(props.squared))
 
-    // TODO none of these are computed values. Meaning they will not react if any of these are changed?
-    const isToggle = pressedBoolean.value !== null
-    const isButton = props.tag === 'button' && !props.href && !props.to
-    const isLink = !!(props.href || props.to)
-    const isBLink = !!props.to
-    const nonStandardTag = props.href ? false : !isButton
+    const isToggle = computed(() => pressedBoolean.value !== null)
+    const isButton = computed(() => props.tag === 'button' && !props.href && !props.to)
+    const link = computed(() => isLink(props))
+    const isBLink = computed(() => !!props.to)
+    const nonStandardTag = computed(() => (props.href ? false : !isButton.value))
 
     const classes = computed(() => ({
       [`btn-${props.variant}`]: props.variant,
@@ -51,28 +50,28 @@ export default defineComponent({
     }))
 
     const attrs = computed(() => ({
-      'aria-disabled': nonStandardTag ? String(disabledBoolean.value) : null,
-      'aria-pressed': isToggle ? String(pressedBoolean.value) : null,
-      'autocomplete': isToggle ? 'off' : null,
-      'disabled': isButton ? disabledBoolean.value : null,
+      'aria-disabled': nonStandardTag.value ? String(disabledBoolean.value) : null,
+      'aria-pressed': isToggle.value ? String(pressedBoolean.value) : null,
+      'autocomplete': isToggle.value ? 'off' : null,
+      'disabled': isButton.value ? disabledBoolean.value : null,
       'href': props.href,
-      'rel': isLink ? props.rel : null,
-      'role': nonStandardTag || isLink ? 'button' : null,
-      'target': isLink ? props.target : null,
-      'type': isButton ? props.type : null,
-      'to': !isButton ? props.to : null,
-      'append': isLink ? props.append : null,
-      'activeClass': isBLink ? props.activeClass : null,
-      'event': isBLink ? props.event : null,
-      'exact': isBLink ? props.exact : null,
-      'exactActiveClass': isBLink ? props.exactActiveClass : null,
-      'replace': isBLink ? props.replace : null,
-      'routerComponentName': isBLink ? props.routerComponentName : null,
-      'routerTag': isBLink ? props.routerTag : null,
+      'rel': link.value ? props.rel : null,
+      'role': nonStandardTag.value || link.value ? 'button' : null,
+      'target': link.value ? props.target : null,
+      'type': isButton.value ? props.type : null,
+      'to': !isButton.value ? props.to : null,
+      'append': link.value ? props.append : null,
+      'activeClass': isBLink.value ? props.activeClass : null,
+      'event': isBLink.value ? props.event : null,
+      'exact': isBLink.value ? props.exact : null,
+      'exactActiveClass': isBLink.value ? props.exactActiveClass : null,
+      'replace': isBLink.value ? props.replace : null,
+      'routerComponentName': isBLink.value ? props.routerComponentName : null,
+      'routerTag': isBLink.value ? props.routerTag : null,
     }))
 
     const computedTag = computed<string>(() => {
-      if (isBLink) return 'b-link'
+      if (isBLink.value) return 'b-link'
       return props.href ? 'a' : props.tag
     })
 
@@ -83,7 +82,7 @@ export default defineComponent({
         return
       }
       emit('click', e)
-      if (isToggle) {
+      if (isToggle.value) {
         emit('update:pressed', !pressedBoolean.value)
       }
     }
