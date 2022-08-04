@@ -41,3 +41,6 @@ stats.html
 *.njsproj
 *.sln
 *.sw?
+
+# Tarballs
+*.tgz
