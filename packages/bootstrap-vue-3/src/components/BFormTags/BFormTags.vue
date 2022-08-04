@@ -39,7 +39,7 @@
           :class="tagClass"
           tag="li"
           :variant="tagVariant"
-          :pill="tagPills"
+          :pill="tagPillsBoolean"
           @remove="removeTag"
           >{{ tag }}</b-form-tag
         >
@@ -53,7 +53,7 @@
             <input
               :id="_inputId"
               ref="input"
-              :disabled="disabled"
+              :disabled="disabledBoolean"
               :value="inputValue"
               :type="inputType"
               :placeholder="placeholder"
@@ -61,7 +61,7 @@
               style="outline: currentcolor none 0px; min-width: 5rem"
               v-bind="inputAttrs"
               :form="form"
-              :required="required"
+              :required="requiredBoolean"
               @input="onInput"
               @change="onChange"
               @keydown="onKeydown"
@@ -80,7 +80,7 @@
                 inputClass,
               ]"
               style="font-size: 90%"
-              :disabled="disabled || inputValue.length === 0 || isLimitReached"
+              :disabled="disabledBoolean || inputValue.length === 0 || isLimitReached"
               @click="addTag(inputValue)"
             >
               <slot name="add-button-text">{{ addButtonText }}</slot>
@@ -109,14 +109,15 @@
 import {computed, onActivated, onMounted, ref, VNodeNormalizedChildren, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useId} from '../../composables'
-import type {ButtonVariant, ColorVariant, InputSize, InputType} from '../../types'
+import type {Booleanish, ButtonVariant, ColorVariant, InputSize, InputType} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormTagsProps {
   addButtonText?: string
   addButtonVariant?: ButtonVariant
-  addOnChange?: boolean
-  autofocus?: boolean
-  disabled?: boolean
+  addOnChange?: Booleanish
+  autofocus?: Booleanish
+  disabled?: Booleanish
   duplicateTagText?: string
   inputAttrs?: Record<string, unknown>
   inputClass?: Array<unknown> | Record<string, unknown> | string
@@ -128,17 +129,17 @@ interface BFormTagsProps {
   limitTagsText?: string
   modelValue?: Array<string>
   name?: string
-  noAddOnEnter?: boolean
-  noOuterFocus?: boolean
-  noTagRemove?: boolean
+  noAddOnEnter?: Booleanish
+  noOuterFocus?: Booleanish
+  noTagRemove?: Booleanish
   placeholder?: string
-  removeOnDelete?: boolean
-  required?: boolean
+  removeOnDelete?: Booleanish
+  required?: Booleanish
   separator?: string | Array<unknown>
-  state?: boolean
+  state?: Booleanish
   size?: InputSize
   tagClass?: string | Array<unknown> | Record<string, unknown>
-  tagPills?: boolean
+  tagPills?: Booleanish
   tagRemoveLabel?: string
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
@@ -168,6 +169,17 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   tagValidator: () => true,
   tagVariant: 'secondary',
 })
+
+const addOnChangeBoolean = computed(() => resolveBooleanish(props.addOnChange))
+const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
+const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const noAddOnEnterBoolean = computed(() => resolveBooleanish(props.noAddOnEnter))
+const noOuterFocusBoolean = computed(() => resolveBooleanish(props.noOuterFocus))
+const noTagRemoveBoolean = computed(() => resolveBooleanish(props.noTagRemove))
+const removeOnDeleteBoolean = computed(() => resolveBooleanish(props.removeOnDelete))
+const requiredBoolean = computed(() => resolveBooleanish(props.required))
+const stateBoolean = computed(() => resolveBooleanish(props.state))
+const tagPillsBoolean = computed(() => resolveBooleanish(props.tagPills))
 
 interface BFormTagsEmits {
   (e: 'update:modelValue', value: Array<string>): void
@@ -214,10 +226,10 @@ const duplicateTags = ref<Array<string>>([])
 
 const classes = computed(() => ({
   [`form-control-${props.size}`]: props.size,
-  'disabled': props.disabled,
+  'disabled': disabledBoolean.value,
   'focus': focus.value,
-  'is-invalid': props.state === false,
-  'is-valid': props.state === true,
+  'is-invalid': stateBoolean.value === false,
+  'is-valid': stateBoolean.value === true,
 }))
 
 const isDuplicate = computed<boolean>(() => tags.value.includes(inputValue.value))
@@ -230,13 +242,13 @@ const isLimitReached = computed<boolean>(() => tags.value.length === props.limit
 const disableAddButton = computed<boolean>(() => !isInvalid.value && !isDuplicate.value)
 
 const checkAutofocus = () => {
-  if (props.autofocus) {
+  if (autofocusBoolean.value) {
     input.value?.focus()
   }
 }
 
 const onFocusin = (e: FocusEvent): void => {
-  if (props.disabled) {
+  if (disabledBoolean.value) {
     const target = e.target as HTMLDivElement
     target.blur()
     return
@@ -246,7 +258,7 @@ const onFocusin = (e: FocusEvent): void => {
 }
 
 const onFocus = (e: FocusEvent): void => {
-  if (props.disabled || props.noOuterFocus) {
+  if (disabledBoolean.value || noOuterFocusBoolean.value) {
     return
   }
 
@@ -286,7 +298,7 @@ const onInput = (e: Event | string): void => {
 }
 
 const onChange = (e: Event): void => {
-  if (props.addOnChange) {
+  if (addOnChangeBoolean.value) {
     onInput(e)
 
     if (!isDuplicate.value) {
@@ -296,14 +308,14 @@ const onChange = (e: Event): void => {
 }
 
 const onKeydown = (e: KeyboardEvent): void => {
-  if (e.key === 'Enter' && !props.noAddOnEnter) {
+  if (e.key === 'Enter' && !noAddOnEnterBoolean.value) {
     addTag(inputValue.value)
     return
   }
 
   if (
     (e.key === 'Backspace' || e.key === 'Delete') &&
-    props.removeOnDelete &&
+    removeOnDeleteBoolean.value &&
     inputValue.value === '' &&
     shouldRemoveOnDelete.value &&
     tags.value.length > 0
@@ -345,7 +357,6 @@ const slotAttrs = computed(() => {
   const {
     addButtonText,
     addButtonVariant,
-    disabled,
     duplicateTagText,
     inputAttrs,
     form,
@@ -353,14 +364,10 @@ const slotAttrs = computed(() => {
     invalidTagText,
     limitTagsText,
     limit,
-    noTagRemove,
     placeholder,
-    required,
     separator,
     size,
-    state,
     tagClass,
-    tagPills,
     tagRemoveLabel,
     tagVariant,
   } = props
@@ -369,13 +376,13 @@ const slotAttrs = computed(() => {
     addButtonVariant,
     addTag,
     disableAddButton,
-    disabled,
+    disabled: disabledBoolean.value,
     duplicateTagText,
     duplicateTags,
     form,
     inputAttrs: {
       ...inputAttrs,
-      disabled,
+      disabled: disabledBoolean.value,
       form,
       id: _inputId,
       value: inputValue,
@@ -394,15 +401,15 @@ const slotAttrs = computed(() => {
     isLimitReached,
     limitTagsText,
     limit,
-    noTagRemove,
+    noTagRemove: noTagRemoveBoolean.value,
     placeholder,
     removeTag,
-    required,
+    required: requiredBoolean.value,
     separator,
     size,
-    state,
+    state: stateBoolean.value,
     tagClass,
-    tagPills,
+    tagPills: tagPillsBoolean.value,
     tagRemoveLabel,
     tagVariant,
     tags,
