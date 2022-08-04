@@ -23,18 +23,22 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, StyleValue} from 'vue'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
+import {computed, defineComponent, PropType, StyleValue} from 'vue'
 import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
 
 export default defineComponent({
   props: {
     ...COMMON_INPUT_PROPS,
-    noResize: {type: Boolean, default: false},
+    noResize: {type: Boolean as PropType<Booleanish>, default: false},
     rows: {type: [String, Number], required: false, default: 2},
     wrap: {type: String, default: 'soft'},
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
+    const noResizeBoolean = computed(() => resolveBooleanish(props.noResize))
+
     const classes = computed(() => ({
       'form-control': !props.plaintext,
       'form-control-plaintext': props.plaintext,
@@ -44,7 +48,7 @@ export default defineComponent({
     }))
 
     const computedStyles = computed<StyleValue | undefined>(() =>
-      props.noResize ? {resize: 'none'} : undefined
+      noResizeBoolean.value ? {resize: 'none'} : undefined
     )
 
     const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
