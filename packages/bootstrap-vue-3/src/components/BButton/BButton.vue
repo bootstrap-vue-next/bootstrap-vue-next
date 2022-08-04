@@ -34,11 +34,11 @@ export default defineComponent({
     const pressedBoolean = computed<boolean>(() => resolveBooleanish(props.pressed))
     const squaredBoolean = computed<boolean>(() => resolveBooleanish(props.squared))
 
-    const isToggle = computed(() => pressedBoolean.value !== null)
-    const isButton = computed(() => props.tag === 'button' && !props.href && !props.to)
-    const link = computed(() => isLink(props))
-    const isBLink = computed(() => !!props.to)
-    const nonStandardTag = computed(() => (props.href ? false : !isButton.value))
+    const isToggle = computed<boolean>(() => pressedBoolean.value !== null)
+    const isButton = computed<boolean>(() => props.tag === 'button' && !props.href && !props.to)
+    const link = computed<boolean>(() => isLink(props))
+    const isBLink = computed<boolean>(() => !!props.to)
+    const nonStandardTag = computed<boolean>(() => (props.href ? false : !isButton.value))
 
     const classes = computed(() => ({
       [`btn-${props.variant}`]: props.variant,
