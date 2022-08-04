@@ -57,7 +57,6 @@ interface BFormRadioProps {
 
 const props = withDefaults(defineProps<BFormRadioProps>(), {
   autofocus: false,
-  modelValue: undefined,
   plain: false,
   button: false,
   switch: false,
@@ -65,7 +64,6 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   buttonVariant: 'secondary',
   inline: false,
   required: false,
-  state: undefined,
   value: true,
 })
 
@@ -84,7 +82,9 @@ const inlineBoolean = computed(() => resolveBooleanish(props.inline))
 const requiredBoolean = computed(() => resolveBooleanish(props.required))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed(() => resolveBooleanish(props.state))
+const stateBoolean = computed(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 
 interface BFormRadioEmits {
   (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void

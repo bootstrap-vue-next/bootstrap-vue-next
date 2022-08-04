@@ -58,7 +58,6 @@ interface BFormRadioGroupProps {
 
 const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   modelValue: '',
-  ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
   buttons: false,
@@ -69,7 +68,6 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   plain: false,
   required: false,
   stacked: false,
-  state: undefined,
   textField: 'text',
   validated: false,
   valueField: 'value',
@@ -93,7 +91,9 @@ const requiredBoolean = computed(() => resolveBooleanish(props.required))
 const stackedBoolean = computed(() => resolveBooleanish(props.stacked))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed(() => resolveBooleanish(props.state))
+const stateBoolean = computed(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 // TODO validated is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const validatedBoolean = computed(() => resolveBooleanish(props.validated))

@@ -65,7 +65,6 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   disabled: false,
   rounded: 'circle',
   square: false,
-  textVariant: undefined,
   variant: 'secondary',
 })
 

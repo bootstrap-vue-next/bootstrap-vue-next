@@ -22,7 +22,6 @@ interface BCardImgProps {
 }
 
 const props = withDefaults(defineProps<BCardImgProps>(), {
-  alt: undefined,
   bottom: false,
   end: false,
   left: false,

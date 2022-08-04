@@ -31,9 +31,7 @@ interface BDropdownItemProps {
 const props = withDefaults(defineProps<BDropdownItemProps>(), {
   active: false,
   disabled: false,
-  rel: undefined,
   target: '_self',
-  variant: undefined,
 })
 
 const activeBoolean = computed(() => resolveBooleanish(props.active))

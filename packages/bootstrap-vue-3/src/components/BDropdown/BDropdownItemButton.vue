@@ -24,7 +24,6 @@ const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
   disabled: false,
-  variant: undefined,
 })
 
 const activeBoolean = computed(() => resolveBooleanish(props.active))

@@ -59,7 +59,6 @@ interface BFormCheckboxGroupProps {
 
 const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   modelValue: () => [],
-  ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
   buttons: false,
@@ -70,7 +69,6 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   plain: false,
   required: false,
   stacked: false,
-  state: undefined,
   switches: false,
   textField: 'text',
   validated: false,
@@ -95,7 +93,9 @@ const requiredBoolean = computed(() => resolveBooleanish(props.required))
 const stackedBoolean = computed(() => resolveBooleanish(props.stacked))
 // TODO state is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed(() => resolveBooleanish(props.state))
+const stateBoolean = computed(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 const switchesBoolean = computed(() => resolveBooleanish(props.switches))
 // TODO validated is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

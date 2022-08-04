@@ -65,7 +65,6 @@ interface BFormCheckboxProps {
 }
 
 const props = withDefaults(defineProps<BFormCheckboxProps>(), {
-  id: undefined,
   autofocus: false,
   plain: false,
   button: false,
@@ -73,12 +72,9 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   disabled: false,
   buttonVariant: 'secondary',
   inline: false,
-  required: undefined,
   size: 'md',
-  state: undefined,
   uncheckedValue: false,
   value: true,
-  modelValue: undefined,
 })
 
 const indeterminateBoolean = computed<boolean | undefined>(() =>
@@ -96,10 +92,14 @@ const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
 // TODO inline is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inlineBoolean = computed(() => resolveBooleanish(props.inline))
-const requiredBoolean = computed(() => resolveBooleanish(props.required))
+const requiredBoolean = computed(() =>
+  props.required !== undefined ? resolveBooleanish(props.required) : undefined
+)
 // TODO state is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed(() => resolveBooleanish(props.state))
+const stateBoolean = computed(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 
 interface BFormCheckboxEmits {
   (e: 'update:modelValue', value: unknown): void

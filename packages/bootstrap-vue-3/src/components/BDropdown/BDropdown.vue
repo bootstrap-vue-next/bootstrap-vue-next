@@ -97,7 +97,6 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   role: 'menu',
   split: false,
   splitButtonType: 'button',
-  splitHref: undefined,
   noCaret: false,
   toggleText: 'Toggle dropdown',
   variant: 'secondary',
