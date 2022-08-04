@@ -1,8 +1,8 @@
 # This workflow is for the release please action. It automates releases when using conventional commit messages
-# It also auto publishes releases to npm 
+# It also auto publishes releases to npm under the @latest tag
 # For more information see: https://github.com/google-github-actions/release-please-action
 
-name: release-please
+name: release-main
 
 on:
   push:
@@ -28,6 +28,7 @@ jobs:
           package-name: bootstrap-vue-3
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
+          default-branch: main
           
       # The logic below handles the npm publication:
 
@@ -62,7 +63,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
-        run: pnpm publish --filter bootstrap-vue-3
+        run: pnpm publish --tag latest --filter bootstrap-vue-3
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created }}
