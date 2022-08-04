@@ -5,8 +5,8 @@
       :to="to"
       class="nav-link"
       :class="classes"
-      :tabindex="disabled ? -1 : undefined"
-      :aria-disabled="disabled ? true : undefined"
+      :tabindex="disabledBoolean ? -1 : undefined"
+      :aria-disabled="disabledBoolean ? true : undefined"
     >
       <slot />
     </b-link>
@@ -18,10 +18,12 @@
 import BLink from '../BLink/BLink.vue'
 import {computed} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BNavItemProps {
-  active?: boolean
-  disabled?: boolean
+  active?: Booleanish
+  disabled?: Booleanish
   href?: string
   to?: RouteLocationRaw
 }
@@ -31,8 +33,11 @@ const props = withDefaults(defineProps<BNavItemProps>(), {
   disabled: false,
 })
 
+const activeBoolean = computed(() => resolveBooleanish(props.active))
+const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+
 const classes = computed(() => ({
-  active: props.active,
-  disabled: props.disabled,
+  active: activeBoolean.value,
+  disabled: disabledBoolean.value,
 }))
 </script>
