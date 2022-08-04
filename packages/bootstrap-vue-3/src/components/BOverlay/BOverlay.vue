@@ -1,6 +1,6 @@
 <script lang="ts">
-import type {ColorVariant} from '../../types'
-import {normalizeSlot, toFloat} from '../../utils'
+import type {Booleanish, ColorVariant} from '../../types'
+import {normalizeSlot, resolveBooleanish, toFloat} from '../../utils'
 import {computed, defineComponent, h, PropType, resolveComponent} from 'vue'
 import BTransition from '../BTransition/BTransition.vue'
 
@@ -19,12 +19,12 @@ export default defineComponent({
   props: {
     bgColor: {type: String, required: false},
     blur: {type: String, default: '2px'},
-    fixed: {type: Boolean, default: false},
-    noCenter: {type: Boolean, default: false},
-    noFade: {type: Boolean, default: false},
+    fixed: {type: Boolean as PropType<Booleanish>, default: false},
+    noCenter: {type: Boolean as PropType<Booleanish>, default: false},
+    noFade: {type: Boolean as PropType<Booleanish>, default: false},
     // If `true, does not render the default slot
     // and switches to absolute positioning
-    noWrap: {type: Boolean, default: false},
+    noWrap: {type: Boolean as PropType<Booleanish>, default: false},
     opacity: {
       type: [Number, String],
       default: 0.85,
@@ -35,8 +35,8 @@ export default defineComponent({
     },
     overlayTag: {type: String, default: 'div'},
     rounded: {type: [Boolean, String], default: false},
-    show: {type: Boolean, default: false},
-    spinnerSmall: {type: Boolean, default: false},
+    show: {type: Boolean as PropType<Booleanish>, default: false},
+    spinnerSmall: {type: Boolean as PropType<Booleanish>, default: false},
     spinnerType: {type: String, default: 'border'},
     spinnerVariant: {type: String, required: false},
     variant: {type: String as PropType<ColorVariant>, default: 'light'},
@@ -45,6 +45,13 @@ export default defineComponent({
   },
   emits: ['click', 'hidden', 'shown'],
   setup(props, {slots, emit}) {
+    const fixedBoolean = computed(() => resolveBooleanish(props.fixed))
+    const noCenterBoolean = computed(() => resolveBooleanish(props.noCenter))
+    const noFadeBoolean = computed(() => resolveBooleanish(props.noFade))
+    const noWrapBoolean = computed(() => resolveBooleanish(props.noWrap))
+    const showBoolean = computed(() => resolveBooleanish(props.show))
+    const spinnerSmallBoolean = computed(() => resolveBooleanish(props.spinnerSmall))
+
     const computedRounded = computed(() =>
       props.rounded === true || props.rounded === ''
         ? 'rounded'
@@ -60,7 +67,7 @@ export default defineComponent({
     const computedSlotScope = computed(() => ({
       spinnerType: props.spinnerType || null,
       spinnerVariant: props.spinnerVariant || null,
-      spinnerSmall: props.spinnerSmall,
+      spinnerSmall: spinnerSmallBoolean.value,
     }))
 
     return () => {
@@ -68,12 +75,12 @@ export default defineComponent({
         h(resolveComponent('BSpinner'), {
           type: scope.spinnerType,
           variant: scope.spinnerVariant,
-          small: scope.spinnerSmall,
+          small: spinnerSmallBoolean.value,
         })
 
       let $overlay: any = ''
 
-      if (props.show) {
+      if (showBoolean.value) {
         const $background = h('div', {
           class: ['position-absolute', computedVariant.value, computedRounded.value],
           style: {
@@ -88,7 +95,7 @@ export default defineComponent({
           'div',
           {
             class: 'position-absolute',
-            style: props.noCenter
+            style: noCenterBoolean.value
               ? {...POSITION_COVER}
               : {top: '50%', left: '50%', transform: 'translateX(-50%) translateY(-50%)'},
           },
@@ -103,8 +110,9 @@ export default defineComponent({
             class: [
               'b-overlay',
               {
-                'position-absolute': !props.noWrap || (props.noWrap && !props.fixed),
-                'position-fixed': props.noWrap && props.fixed,
+                'position-absolute':
+                  !noWrapBoolean.value || (noWrapBoolean.value && !fixedBoolean.value),
+                'position-fixed': noWrapBoolean.value && fixedBoolean.value,
               },
             ],
             style: {
@@ -122,7 +130,7 @@ export default defineComponent({
         h(
           BTransition,
           {
-            noFade: props.noFade,
+            noFade: noFadeBoolean.value,
             transProps: {enterToClass: 'show'},
             name: 'fade',
             onAfterEnter: () => emit('shown'),
@@ -131,13 +139,13 @@ export default defineComponent({
           {default: () => $overlay}
         )
 
-      if (props.noWrap) return getOverlayTransition()
+      if (noWrapBoolean.value) return getOverlayTransition()
 
       const wrapper = h(
         props.wrapTag,
         {
           'class': ['b-overlay-wrap position-relative'],
-          'aria-busy': props.show ? 'true' : null,
+          'aria-busy': showBoolean.value ? 'true' : null,
         },
         [h('span', normalizeSlot(SLOT_NAME_DEFAULT, {}, slots)), getOverlayTransition()]
       )
