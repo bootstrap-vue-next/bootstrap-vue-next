@@ -1,18 +1,23 @@
 <template>
-  <option :value="value ?? ''" :disabled="disabled">
+  <option :value="value ?? ''" :disabled="disabledBoolean">
     <slot />
   </option>
 </template>
 
 <script setup lang="ts">
 // import type {BFormSelectOptionProps} from '../../types/components'
+import {computed} from 'vue'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormSelectOptionProps {
   value?: unknown
-  disabled?: boolean
+  disabled?: Booleanish
 }
 
-withDefaults(defineProps<BFormSelectOptionProps>(), {
+const props = withDefaults(defineProps<BFormSelectOptionProps>(), {
   disabled: false,
 })
+
+const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
 </script>

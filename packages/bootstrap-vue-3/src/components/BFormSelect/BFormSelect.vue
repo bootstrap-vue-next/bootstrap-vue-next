@@ -7,11 +7,11 @@
     :class="classes"
     :name="name"
     :form="form || undefined"
-    :multiple="multiple || undefined"
+    :multiple="multipleBoolean || undefined"
     :size="computedSelectSize"
-    :disabled="disabled"
-    :required="required"
-    :aria-required="required ? true : undefined"
+    :disabled="disabledBoolean"
+    :required="requiredBoolean"
+    :aria-required="requiredBoolean ? true : undefined"
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
@@ -38,7 +38,8 @@
 
 <script setup lang="ts">
 // import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
-import type {Size} from '../../types'
+import type {Booleanish, Size} from '../../types'
+import {resolveBooleanish} from '../../utils'
 import {computed, nextTick, onActivated, onMounted, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
@@ -46,22 +47,22 @@ import {normalizeOptions, useId} from '../../composables'
 
 interface BFormSelectProps {
   ariaInvalid?: boolean | 'grammar' | 'spelling'
-  autofocus?: boolean
-  disabled?: boolean
+  autofocus?: Booleanish
+  disabled?: Booleanish
   disabledField?: string
   form?: string
   htmlField?: string
   id?: string
   labelField?: string
-  multiple?: boolean
+  multiple?: Booleanish
   name?: string
   options?: Array<unknown> | Record<string, unknown>
   optionsField?: string
-  plain?: boolean
-  required?: boolean
+  plain?: Booleanish
+  required?: Booleanish
   selectSize?: number
   size?: Size
-  state?: boolean
+  state?: Booleanish
   textField?: string
   valueField?: string
   modelValue?: string | Array<unknown> | Record<string, unknown> | number
@@ -80,11 +81,19 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   plain: false,
   required: false,
   selectSize: 0,
-  state: undefined,
   textField: 'text',
   valueField: 'value',
   modelValue: '',
 })
+
+const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
+const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const multipleBoolean = computed(() => resolveBooleanish(props.multiple))
+const plainBoolean = computed(() => resolveBooleanish(props.plain))
+const requiredBoolean = computed(() => resolveBooleanish(props.required))
+const stateBoolean = computed(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 
 interface BFormSelectEmits {
   (e: 'input', value: unknown): void
@@ -100,7 +109,7 @@ const computedId = useId(props.id, 'input')
 // lifecycle events
 const handleAutofocus = () => {
   nextTick(() => {
-    if (props.autofocus) input.value?.focus()
+    if (autofocusBoolean.value) input.value?.focus()
   })
 }
 onMounted(handleAutofocus)
@@ -110,16 +119,16 @@ onActivated(handleAutofocus)
 // computed
 // noinspection PointlessBooleanExpressionJS
 const classes = computed(() => ({
-  'form-control': props.plain,
-  [`form-control-${props.size}`]: props.size && props.plain,
-  'form-select': !props.plain,
-  [`form-select-${props.size}`]: props.size && !props.plain,
-  'is-valid': props.state === true,
-  'is-invalid': props.state === false,
+  'form-control': plainBoolean.value,
+  [`form-control-${props.size}`]: props.size && plainBoolean.value,
+  'form-select': !plainBoolean.value,
+  [`form-select-${props.size}`]: props.size && !plainBoolean.value,
+  'is-valid': stateBoolean.value === true,
+  'is-invalid': stateBoolean.value === false,
 }))
 
 const computedSelectSize = computed<number | undefined>(() => {
-  if (props.selectSize || props.plain) {
+  if (props.selectSize || plainBoolean.value) {
     return props.selectSize
   }
   return undefined
@@ -127,8 +136,8 @@ const computedSelectSize = computed<number | undefined>(() => {
 
 const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
   // noinspection SuspiciousTypeOfGuard
-  if (typeof props.state === 'boolean') {
-    if (!props.state) {
+  if (typeof stateBoolean.value === 'boolean') {
+    if (!stateBoolean.value) {
       return true
     }
     return undefined
@@ -161,11 +170,11 @@ const localValue = computed({
 // methods
 
 const focus = () => {
-  if (!props.disabled) input.value?.focus()
+  if (!disabledBoolean.value) input.value?.focus()
 }
 
 const blur = () => {
-  if (!props.disabled) {
+  if (!disabledBoolean.value) {
     input.value?.blur()
   }
 }
