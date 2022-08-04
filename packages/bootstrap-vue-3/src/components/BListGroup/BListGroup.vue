@@ -7,12 +7,14 @@
 <script setup lang="ts">
 // import type {BListGroupProps} from '../../types/components'
 import {computed, InjectionKey, provide} from 'vue'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 // import type {Breakpoint} from '../../types'
 
 interface BListGroupProps {
-  flush?: boolean
+  flush?: Booleanish
   horizontal?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-  numbered?: boolean
+  numbered?: Booleanish
   tag?: string
 }
 
@@ -23,20 +25,23 @@ const props = withDefaults(defineProps<BListGroupProps>(), {
   tag: 'div',
 })
 
+const flushBoolean = computed(() => resolveBooleanish(props.flush))
+const numberedBoolean = computed(() => resolveBooleanish(props.numbered))
+
 const classes = computed(() => {
-  const horizontal = props.flush ? false : props.horizontal
+  const horizontal = flushBoolean.value ? false : props.horizontal
   return {
-    'list-group-flush': props.flush,
+    'list-group-flush': flushBoolean.value,
     'list-group-horizontal': horizontal === true,
     [`list-group-horizontal-${horizontal}`]: typeof horizontal === 'string',
-    'list-group-numbered': props.numbered,
+    'list-group-numbered': numberedBoolean.value,
   }
 })
 
-const computedTag = computed<string>(() => (props.numbered === true ? 'ol' : props.tag))
+const computedTag = computed<string>(() => (numberedBoolean.value === true ? 'ol' : props.tag))
 
 provide(injectionKey, {
-  numbered: props.numbered,
+  numbered: numberedBoolean.value,
 })
 </script>
 
