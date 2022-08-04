@@ -2,7 +2,7 @@
 # It also auto publishes releases to npm 
 # For more information see: https://github.com/google-github-actions/release-please-action
 
-name: release-please-main
+name: release-please
 
 on:
   push:
@@ -62,7 +62,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
-        run: pnpm publish --tag latest --filter bootstrap-vue-3
+        run: pnpm publish --filter bootstrap-vue-3
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created }}
