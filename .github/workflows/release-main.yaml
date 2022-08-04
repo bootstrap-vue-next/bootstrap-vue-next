@@ -1,21 +1,16 @@
 # This workflow is for the release please action. It automates releases when using conventional commit messages
-# It also auto publishes releases to npm 
+# It also auto publishes releases to npm under the @latest tag
 # For more information see: https://github.com/google-github-actions/release-please-action
 
-name: release-please
+name: release-main
 
 on:
   push:
-    paths:
-      - 'packages/bootstrap-vue-3/**'
-      - '.github/workflows/release-please.yaml'
     branches:
       - main
 
 jobs:
   release-please:
-    env: 
-      path: packages/bootstrap-vue-3
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -29,10 +24,11 @@ jobs:
         id: release
         with:
           release-type: node
-          path: ${{ env.path }}
+          path: packages/bootstrap-vue-3
           package-name: bootstrap-vue-3
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
+          default-branch: main
           
       # The logic below handles the npm publication:
 
@@ -40,11 +36,11 @@ jobs:
         uses: actions/checkout@v3
         # these if statements ensure that a publication only occurs when
         # a new release is created:
-        if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
+        if: ${{ steps.release.outputs.releases_created }}
         
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.2
-        if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
+        if: ${{ steps.release.outputs.releases_created }}
         
       - name: Set node version to 16
         uses: actions/setup-node@v2
@@ -52,22 +48,22 @@ jobs:
           node-version: 16
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
-        if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
+        if: ${{ steps.release.outputs.releases_created }}
 
       - name: Install dependencies
         run: pnpm install --ignore-scripts
-        if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
+        if: ${{ steps.release.outputs.releases_created }}
 
       - name: Build library
         run: pnpm run build
-        if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
+        if: ${{ steps.release.outputs.releases_created }}
 
       - name: Test library
         run: pnpm test
-        if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
+        if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
-        run: pnpm publish --tag develop --filter bootstrap-vue-3
+        run: pnpm publish --tag latest --filter bootstrap-vue-3
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ contains(steps.release.outputs.paths_released, env.path) }}
+        if: ${{ steps.release.outputs.releases_created }}

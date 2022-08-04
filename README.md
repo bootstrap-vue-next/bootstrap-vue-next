@@ -44,13 +44,13 @@ As you may suppose, this library is heavily inspired by **BootstrapVue**, as wel
 
 ```console
 # NPM
-npm i --save bootstrap bootstrap-vue-3
+npm i --save bootstrap bootstrap-vue-3 @popperjs/core
 
 # Yarn
-yarn add bootstrap bootstrap-vue-3
+yarn add bootstrap bootstrap-vue-3 @popperjs/core
 
 # PNPM
-pnpm add bootstrap bootstrap-vue-3
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
 # Contribute & support 🙌

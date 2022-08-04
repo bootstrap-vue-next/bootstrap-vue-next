@@ -4,9 +4,9 @@
       <button
         v-b-toggle:[computedId]
         class="accordion-button"
-        :class="{collapsed: !visible}"
+        :class="{collapsed: !visibleBoolean}"
         type="button"
-        :aria-expanded="visible ? 'true' : 'false'"
+        :aria-expanded="visibleBoolean ? 'true' : 'false'"
         :aria-controls="computedId"
       >
         <slot name="title">
@@ -17,7 +17,7 @@
     <b-collapse
       :id="computedId"
       class="accordion-collapse"
-      :visible="booleanVisible"
+      :visible="visibleBoolean"
       :accordion="parent"
       :aria-labelledby="`heading${computedId}`"
     >
@@ -46,7 +46,7 @@ interface BAccordionItemProps {
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
 
-const booleanVisible = computed(() => resolveBooleanish(props.visible))
+const visibleBoolean = computed<boolean>(() => resolveBooleanish(props.visible))
 
 const computedId = useId(props.id, 'accordion_item')
 const parent = inject(injectionKey, '')

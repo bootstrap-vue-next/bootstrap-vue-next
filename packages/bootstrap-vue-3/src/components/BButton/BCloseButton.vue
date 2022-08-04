@@ -2,7 +2,7 @@
   <button
     type="button"
     class="btn-close"
-    :disabled="disabled"
+    :disabled="disabledBoolean"
     :class="classes"
     aria-label="Close"
   />
@@ -11,10 +11,12 @@
 <script setup lang="ts">
 // import type {BCloseButtonProps} from '../../types/components'
 import {computed} from 'vue'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BCloseButtonProps {
-  disabled?: boolean
-  white?: boolean
+  disabled?: Booleanish
+  white?: Booleanish
 }
 
 const props = withDefaults(defineProps<BCloseButtonProps>(), {
@@ -22,7 +24,10 @@ const props = withDefaults(defineProps<BCloseButtonProps>(), {
   white: false,
 })
 
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const whiteBoolean = computed<boolean>(() => resolveBooleanish(props.white))
+
 const classes = computed(() => ({
-  'btn-close-white': props.white,
+  'btn-close-white': whiteBoolean.value,
 }))
 </script>

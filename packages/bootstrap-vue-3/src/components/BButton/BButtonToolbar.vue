@@ -6,11 +6,13 @@
 
 <script setup lang="ts">
 // import type {BButtonToolbarProps} from '../../types/components'
+import type {Booleanish} from '../../types'
 import {computed} from 'vue'
+import {resolveBooleanish} from '../../utils'
 
 interface BButtonToolbarProps {
   ariaRole?: string
-  justify?: boolean
+  justify?: Booleanish
   // keyNav?: boolean
 }
 
@@ -19,7 +21,9 @@ const props = withDefaults(defineProps<BButtonToolbarProps>(), {
   justify: false,
 })
 
+const justifyBoolean = computed<boolean>(() => resolveBooleanish(props.justify))
+
 const classes = computed(() => ({
-  'justify-content-between': props.justify,
+  'justify-content-between': justifyBoolean.value,
 }))
 </script>

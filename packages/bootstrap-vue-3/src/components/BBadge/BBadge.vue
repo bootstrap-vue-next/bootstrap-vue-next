@@ -25,19 +25,19 @@ export default defineComponent({
     const link = computed<boolean>(() => isLink(props))
     const computedTag = computed<string>(() => (link.value ? 'b-link' : props.tag))
 
-    const booleanPill = computed(() => resolveBooleanish(props.pill))
-    const booleanTextIndicator = computed(() => resolveBooleanish(props.textIndicator))
-    const booleanDotIndicator = computed(() => resolveBooleanish(props.dotIndicator))
+    const pillBoolean = computed<boolean>(() => resolveBooleanish(props.pill))
+    const textIndicatorBoolean = computed<boolean>(() => resolveBooleanish(props.textIndicator))
+    const dotIndicatorBoolean = computed<boolean>(() => resolveBooleanish(props.dotIndicator))
 
     const classes = computed(() => ({
       [`bg-${props.variant}`]: props.variant,
       'active': props.active,
       'disabled': props.disabled,
       'text-dark': ['warning', 'info', 'light'].includes(props.variant),
-      'rounded-pill': booleanPill.value,
+      'rounded-pill': pillBoolean.value,
       'position-absolute top-0 start-100 translate-middle':
-        booleanTextIndicator.value || booleanDotIndicator.value,
-      'p-2 border border-light rounded-circle': booleanDotIndicator.value,
+        textIndicatorBoolean.value || dotIndicatorBoolean.value,
+      'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
       'text-decoration-none': link.value,
     }))
 
