@@ -1,0 +1,68 @@
+# This workflow is for the release please action. It automates releases when using conventional commit messages
+# It also auto publishes releases to npm 
+# For more information see: https://github.com/google-github-actions/release-please-action
+
+name: release-please-dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  release-please:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
+
+    steps:
+      - name: Use release please
+        uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          path: packages/bootstrap-vue-3
+          package-name: bootstrap-vue-3
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
+          
+      # The logic below handles the npm publication:
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+        # these if statements ensure that a publication only occurs when
+        # a new release is created:
+        if: ${{ steps.release.outputs.releases_created }}
+        
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        if: ${{ steps.release.outputs.releases_created }}
+        
+      - name: Set node version to 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+        if: ${{ steps.release.outputs.releases_created }}
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+        if: ${{ steps.release.outputs.releases_created }}
+
+      - name: Build library
+        run: pnpm run build
+        if: ${{ steps.release.outputs.releases_created }}
+
+      - name: Test library
+        run: pnpm test
+        if: ${{ steps.release.outputs.releases_created }}
+
+      - name: Publish 
+        run: pnpm publish --tag develop --filter bootstrap-vue-3
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.release.outputs.releases_created }}
