@@ -22,7 +22,7 @@
 // import type {BFormCheckboxGroupEmits, BFormCheckboxGroupProps} from '../../types/components'
 import {computed, useSlots} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
-import type {ButtonVariant, Size} from '../../types'
+import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {
   bindGroupProps,
   getGroupAttr,
@@ -31,28 +31,29 @@ import {
   slotsToElements,
   useId,
 } from '../../composables'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormCheckboxGroupProps {
   id?: string
   form?: string
   modelValue?: Array<unknown>
   ariaInvalid?: boolean | string
-  autofocus?: boolean
+  autofocus?: Booleanish
   buttonVariant?: ButtonVariant
-  buttons?: boolean
-  disabled?: boolean
+  buttons?: Booleanish
+  disabled?: Booleanish
   disabledField?: string
   htmlField?: string
   name?: string
   options?: Array<unknown> // Objects are not supported yet
-  plain?: boolean
-  required?: boolean
+  plain?: Booleanish
+  required?: Booleanish
   size?: Size
-  stacked?: boolean
-  state?: boolean
-  switches?: boolean
+  stacked?: Booleanish
+  state?: Booleanish
+  switches?: Booleanish
   textField?: string
-  validated?: boolean
+  validated?: Booleanish
   valueField?: string
 }
 
@@ -75,6 +76,30 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   validated: false,
   valueField: 'value',
 })
+
+// TODO autofocus is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
+// TODO buttons is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const buttonsBoolean = computed(() => resolveBooleanish(props.buttons))
+const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+// TODO plain is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const plainBoolean = computed(() => resolveBooleanish(props.plain))
+// TODO required is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const requiredBoolean = computed(() => resolveBooleanish(props.required))
+// TODO stacked is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const stackedBoolean = computed(() => resolveBooleanish(props.stacked))
+// TODO state is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const stateBoolean = computed(() => resolveBooleanish(props.state))
+const switchesBoolean = computed(() => resolveBooleanish(props.switches))
+// TODO validated is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const validatedBoolean = computed(() => resolveBooleanish(props.validated))
 
 interface BFormCheckboxGroupEmits {
   (e: 'input', value: unknown): void
@@ -101,14 +126,14 @@ const localValue = computed({
 })
 
 const checkboxList = computed(() =>
-  (slots.first ? slotsToElements(slots.first(), slotsName, props.disabled) : [])
+  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : [])
     .concat(props.options.map((e) => optionToElement(e, props)))
-    .concat(slots.default ? slotsToElements(slots.default(), slotsName, props.disabled) : [])
+    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : [])
     .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
     .map((e) => ({
       ...e,
       props: {
-        switch: props.switches,
+        switch: switchesBoolean.value,
         ...e.props,
       },
     }))
