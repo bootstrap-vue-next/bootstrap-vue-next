@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.5](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.4...v0.2.5) (2022-08-04)
+
+
+### Features
+
+* add booleanish to bbuttongroup ([e9256c1](https://github.com/cdmoro/bootstrap-vue-3/commit/e9256c145adca1f653fc49f5da6895e236e2c30e))
+* add booleanish to more bbutton* ([a4a72ea](https://github.com/cdmoro/bootstrap-vue-3/commit/a4a72ea12db6d14e2df18d266baf34838e2902a9))
+* bbutton booleanish added ([83785cc](https://github.com/cdmoro/bootstrap-vue-3/commit/83785cc458ea7c574e9bd83054e5d7a0119bda43))
+
+
+### Bug Fixes
+
+* add @popperjs/core to peerDependencies ([821b3a8](https://github.com/cdmoro/bootstrap-vue-3/commit/821b3a8853279ff3391e4c87adb305414bf52ac4))
+* **BButton:** BButton link props non-reactive ([99d271f](https://github.com/cdmoro/bootstrap-vue-3/commit/99d271ff09c6f5ae5ffcd04ff7275adf70ab17a8))
+
 ## [0.2.4](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.3...v0.2.4) (2022-08-03)
 
 
