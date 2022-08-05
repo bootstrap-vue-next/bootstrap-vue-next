@@ -1,16 +1,21 @@
 <template>
-  <slot v-if="loading" name="loading" />
+  <slot v-if="loadingBoolean" name="loading" />
   <slot v-else />
 </template>
 
 <script setup lang="ts">
 // import type {BSkeletonWrapperProps} from '../../types/components'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
+import {computed} from 'vue'
 
 interface BSkeletonWrapperProps {
-  loading?: boolean
+  loading?: Booleanish
 }
 
-withDefaults(defineProps<BSkeletonWrapperProps>(), {
+const props = withDefaults(defineProps<BSkeletonWrapperProps>(), {
   loading: false,
 })
+
+const loadingBoolean = computed(() => resolveBooleanish(props.loading))
 </script>
