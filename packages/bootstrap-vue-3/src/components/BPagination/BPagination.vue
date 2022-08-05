@@ -1,7 +1,7 @@
 <script lang="ts">
-import {BvEvent, isUndefinedOrNull, normalizeSlot, toInteger} from '../../utils'
+import {BvEvent, isUndefinedOrNull, normalizeSlot, resolveBooleanish, toInteger} from '../../utils'
 import {computed, defineComponent, h, PropType, reactive, watch} from 'vue'
-import {Alignment, InputSize, Pagination, PaginationPage} from '../../types'
+import {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
 import {useAlignment} from '../../composables'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5
@@ -33,21 +33,21 @@ export default defineComponent({
     align: {type: String as PropType<Alignment>, default: 'start'},
     ariaControls: {type: String, required: false},
     ariaLabel: {type: String, default: 'Pagination'},
-    disabled: {type: Boolean, default: false},
+    disabled: {type: Boolean as PropType<Booleanish>, default: false},
     ellipsisClass: {type: [Array, String], default: () => []},
     ellipsisText: {type: String, default: '\u2026'},
     firstClass: {type: [Array, String], default: () => []},
-    firstNumber: {type: Boolean, default: false},
+    firstNumber: {type: Boolean as PropType<Booleanish>, default: false},
     firstText: {type: String, default: '\u00AB'},
-    hideEllipsis: {type: Boolean, default: false},
-    hideGotoEndButtons: {type: Boolean, default: false},
+    hideEllipsis: {type: Boolean as PropType<Booleanish>, default: false},
+    hideGotoEndButtons: {type: Boolean as PropType<Booleanish>, default: false},
     labelFirstPage: {type: String, default: 'Go to first page'},
     labelLastPage: {type: String, default: 'Go to last page'},
     labelNextPage: {type: String, default: 'Go to next page'},
     labelPage: {type: String, default: 'Go to page'},
     labelPrevPage: {type: String, default: 'Go to previous page'},
     lastClass: {type: [Array, String], default: () => []},
-    lastNumber: {type: Boolean, default: false},
+    lastNumber: {type: Boolean as PropType<Booleanish>, default: false},
     lastText: {type: String, default: '\u00BB'},
     limit: {type: Number, default: DEFAULT_LIMIT},
     modelValue: {type: Number, default: 1}, // V-model prop
@@ -55,7 +55,7 @@ export default defineComponent({
     nextText: {type: String, default: '\u203A'},
     pageClass: {type: [Array, String], default: () => []},
     perPage: {type: Number, default: DEFAULT_PER_PAGE},
-    pills: {type: Boolean, default: false},
+    pills: {type: Boolean as PropType<Booleanish>, default: false},
     prevClass: {type: [Array, String], default: () => []},
     prevText: {type: String, default: '\u2039'},
     size: {type: String as PropType<InputSize>, required: false},
@@ -63,6 +63,13 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'page-click'],
   setup(props, {emit, slots}) {
+    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+    const firstNumberBoolean = computed(() => resolveBooleanish(props.firstNumber))
+    const hideEllipsisBoolean = computed(() => resolveBooleanish(props.hideEllipsis))
+    const hideGotoEndButtonsBoolean = computed(() => resolveBooleanish(props.hideGotoEndButtons))
+    const lastNumberBoolean = computed(() => resolveBooleanish(props.lastNumber))
+    const pillsBoolean = computed(() => resolveBooleanish(props.pills))
+
     const alignment = useAlignment(props)
 
     // Use Active to on page-item to denote active tab
@@ -93,7 +100,10 @@ export default defineComponent({
 
       // Special handling for lower limits (where ellipsis are never shown)
       if (props.limit <= ELLIPSIS_THRESHOLD) {
-        if (props.lastNumber && numberOfPages.value === lStartNumber + numberOfLinks.value - 1) {
+        if (
+          lastNumberBoolean.value &&
+          numberOfPages.value === lStartNumber + numberOfLinks.value - 1
+        ) {
           lStartNumber = Math.max(lStartNumber - 1, 1)
         }
       }
@@ -110,14 +120,14 @@ export default defineComponent({
         }
       } else {
         if (props.limit > ELLIPSIS_THRESHOLD) {
-          rShowDots = !!(!props.hideEllipsis || props.firstNumber)
+          rShowDots = !!(!hideEllipsisBoolean.value || firstNumberBoolean.value)
         }
       }
       if (startNumber.value <= 1) {
         rShowDots = false
       }
 
-      if (rShowDots && props.firstNumber && startNumber.value < 4) {
+      if (rShowDots && firstNumberBoolean.value && startNumber.value < 4) {
         rShowDots = false
       }
 
@@ -131,21 +141,21 @@ export default defineComponent({
       if (numberOfPages.value <= props.limit) {
         n = numberOfPages.value
       } else if (props.modelValue < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
-        if (!props.hideEllipsis || props.lastNumber) {
-          n = props.limit - (props.firstNumber ? 0 : 1)
+        if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
+          n = props.limit - (firstNumberBoolean.value ? 0 : 1)
         }
         n = Math.min(n, props.limit)
       } else if (
         numberOfPages.value - props.modelValue + 2 < props.limit &&
         props.limit > ELLIPSIS_THRESHOLD
       ) {
-        if (!props.hideEllipsis || props.firstNumber) {
-          n = props.limit - (props.lastNumber ? 0 : 1)
+        if (!hideEllipsisBoolean.value || firstNumberBoolean.value) {
+          n = props.limit - (lastNumberBoolean.value ? 0 : 1)
         }
       } else {
         // We consider ellipsis tabs as their own page links
         if (props.limit > ELLIPSIS_THRESHOLD) {
-          n = props.limit - (props.hideEllipsis ? 0 : 2)
+          n = props.limit - (hideEllipsisBoolean.value ? 0 : 2)
         }
       }
 
@@ -158,12 +168,12 @@ export default defineComponent({
       let rShowDots = false
 
       if (props.modelValue < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
-        if (!props.hideEllipsis || props.lastNumber) {
+        if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
           rShowDots = true
         }
       } else {
         if (props.limit > ELLIPSIS_THRESHOLD) {
-          rShowDots = !!(!props.hideEllipsis || props.lastNumber)
+          rShowDots = !!(!hideEllipsisBoolean.value || lastNumberBoolean.value)
         }
       }
       if (startNumber.value > paginationWindowEnd) {
@@ -171,7 +181,7 @@ export default defineComponent({
       }
       const lastPageNumber = startNumber.value + numberOfLinks.value - 1
 
-      if (rShowDots && props.lastNumber && lastPageNumber > numberOfPages.value - 3) {
+      if (rShowDots && lastNumberBoolean.value && lastPageNumber > numberOfPages.value - 3) {
         rShowDots = false
       }
 
@@ -213,7 +223,7 @@ export default defineComponent({
     }
 
     const btnSize = computed(() => (props.size ? `pagination-${props.size}` : ''))
-    const styleClass = computed(() => (props.pills ? 'b-pagination-pills' : ''))
+    const styleClass = computed(() => (pillsBoolean.value ? 'b-pagination-pills' : ''))
 
     watch(
       () => props.modelValue,
@@ -264,7 +274,7 @@ export default defineComponent({
         pageTest: number
       ) => {
         const isDisabled: boolean =
-          props.disabled ||
+          disabledBoolean.value ||
           isActivePage(pageTest) ||
           noCurrentPage ||
           linkTo < 1 ||
@@ -335,27 +345,31 @@ export default defineComponent({
 
       const makePageButton = (page: PaginationPage, idx: number) => {
         const active: boolean = isActivePage(page.number) && !noCurrentPage
-        const tabIndex = props.disabled ? null : active || (noCurrentPage && idx === 0) ? '0' : '-1'
+        const tabIndex = disabledBoolean.value
+          ? null
+          : active || (noCurrentPage && idx === 0)
+          ? '0'
+          : '-1'
         const scope = {
           active,
-          disabled: props.disabled,
+          disabled: disabledBoolean.value,
           page: page.number,
           index: page.number - 1,
           content: page.number,
         }
         const btnContent = normalizeSlot(SLOT_NAME_PAGE, scope, slots) || page.number
         const inner = h(
-          props.disabled ? 'span' : 'button',
+          disabledBoolean.value ? 'span' : 'button',
           {
-            'class': ['page-link', {'flex-grow-1': !props.disabled && fill}],
+            'class': ['page-link', {'flex-grow-1': !disabledBoolean.value && fill}],
             'aria-controls': props.ariaControls || null,
-            'aria-disabled': props.disabled ? 'true' : null,
+            'aria-disabled': disabledBoolean.value ? 'true' : null,
             'aria-label': props.labelPage ? `${props.labelPage} ${page.number}` : null,
             'role': 'menuitemradio',
-            'type': props.disabled ? null : 'button',
+            'type': disabledBoolean.value ? null : 'button',
             'tabindex': tabIndex,
             'onClick': (event: MouseEvent) => {
-              if (!props.disabled) {
+              if (!disabledBoolean.value) {
                 pageClick(event, page.number)
               }
             },
@@ -369,10 +383,10 @@ export default defineComponent({
             class: [
               'page-item',
               {
-                'disabled': props.disabled,
+                'disabled': disabledBoolean.value,
                 active,
                 'flex-fill': fill,
-                'd-flex': fill && !props.disabled,
+                'd-flex': fill && !disabledBoolean.value,
               },
               props.pageClass,
             ],
@@ -384,7 +398,7 @@ export default defineComponent({
       }
 
       // Goto first page button. Don't render button when `hideGotoEndButtons` or `firstNumber` is set
-      if (!props.hideGotoEndButtons && !props.firstNumber) {
+      if (!hideGotoEndButtonsBoolean.value && !firstNumberBoolean.value) {
         const gotoFirstPageButton = makeEndBtn(
           1,
           props.labelFirstPage,
@@ -408,7 +422,7 @@ export default defineComponent({
       buttons.push(previousButton)
 
       // First Page Number Button
-      if (props.firstNumber && pageNumbers[0] !== 1) {
+      if (firstNumberBoolean.value && pageNumbers[0] !== 1) {
         buttons.push(makePageButton({number: 1}, 0))
       }
 
@@ -418,7 +432,8 @@ export default defineComponent({
       }
 
       pages.value.forEach((page, idx) => {
-        const offset = showFirstDots.value && props.firstNumber && pageNumbers[0] !== 1 ? 1 : 0
+        const offset =
+          showFirstDots.value && firstNumberBoolean.value && pageNumbers[0] !== 1 ? 1 : 0
         buttons.push(makePageButton(page, idx + offset))
       })
 
@@ -427,7 +442,7 @@ export default defineComponent({
         buttons.push(makeEllipsis(true))
       }
 
-      if (props.lastNumber && pageNumbers[pageNumbers.length - 1] !== numberOfPages.value) {
+      if (lastNumberBoolean.value && pageNumbers[pageNumbers.length - 1] !== numberOfPages.value) {
         buttons.push(makePageButton({number: numberOfPages.value}, -1))
       }
 
@@ -443,7 +458,7 @@ export default defineComponent({
       buttons.push(nextButton)
 
       // Goto last page button
-      if (!props.lastNumber && !props.hideGotoEndButtons) {
+      if (!lastNumberBoolean.value && !hideGotoEndButtonsBoolean.value) {
         const gotoLastPageButton = makeEndBtn(
           numberOfPages.value,
           props.labelLastPage,
@@ -461,7 +476,7 @@ export default defineComponent({
         {
           'class': ['pagination', btnSize.value, alignment.value, styleClass.value],
           'role': 'menubar',
-          'aria-disabled': props.disabled,
+          'aria-disabled': disabledBoolean.value,
           'aria-label': props.ariaLabel || null,
         },
         buttons
