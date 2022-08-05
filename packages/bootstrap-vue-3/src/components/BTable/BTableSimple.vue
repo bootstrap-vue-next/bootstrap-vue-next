@@ -12,19 +12,20 @@
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
 import {computed} from 'vue'
-import type {ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BTableSimpleProps {
-  bordered?: boolean
-  borderless?: boolean
+  bordered?: Booleanish
+  borderless?: Booleanish
   borderVariant?: ColorVariant
-  captionTop?: boolean
-  dark?: boolean
-  hover?: boolean
+  captionTop?: Booleanish
+  dark?: Booleanish
+  hover?: Booleanish
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-  striped?: boolean
-  small?: boolean
+  striped?: Booleanish
+  small?: Booleanish
   tableClass?: Array<unknown> | Record<string, unknown> | string
   tableVariant?: string
 }
@@ -41,20 +42,28 @@ const props = withDefaults(defineProps<BTableSimpleProps>(), {
   small: false,
 })
 
+const captionTopBoolean = computed(() => resolveBooleanish(props.captionTop))
+const borderlessBoolean = computed(() => resolveBooleanish(props.borderless))
+const borderedBoolean = computed(() => resolveBooleanish(props.bordered))
+const darkBoolean = computed(() => resolveBooleanish(props.dark))
+const hoverBoolean = computed(() => resolveBooleanish(props.hover))
+const smallBoolean = computed(() => resolveBooleanish(props.small))
+const stripedBoolean = computed(() => resolveBooleanish(props.striped))
+
 const classes = computed(() => [
   'table',
   'b-table',
   {
-    'table-bordered': props.bordered,
-    'table-borderless': props.borderless,
+    'table-bordered': borderedBoolean.value,
+    'table-borderless': borderlessBoolean.value,
     [`border-${props.borderVariant}`]: props.borderVariant,
-    'caption-top': props.captionTop,
-    'table-dark': props.dark,
-    'table-hover': props.hover,
+    'caption-top': captionTopBoolean.value,
+    'table-dark': darkBoolean.value,
+    'table-hover': hoverBoolean.value,
     'b-table-stacked': typeof props.stacked === 'boolean' && props.stacked,
     [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
-    'table-striped': props.striped,
-    'table-sm': props.small,
+    'table-striped': stripedBoolean.value,
+    'table-sm': smallBoolean.value,
     [`table-${props.tableVariant}`]: props.tableVariant,
   },
   props.tableClass,
