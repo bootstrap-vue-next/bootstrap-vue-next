@@ -23,11 +23,12 @@ interface BFormInvalidFeedbackProps {
 const props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
   forceShow: false,
   tag: 'div',
+  state: undefined,
   tooltip: false,
 })
 
 const forceShowBoolean = computed<boolean>(() => resolveBooleanish(props.forceShow))
-const stateBoolean = computed(() =>
+const stateBoolean = computed<boolean | undefined>(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )
 const tooltipBoolean = computed<boolean>(() => resolveBooleanish(props.tooltip))

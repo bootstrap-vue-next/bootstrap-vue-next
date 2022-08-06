@@ -17,7 +17,7 @@ interface BTfootProps {
 
 const props = defineProps<BTfootProps>()
 
-const footVariantBoolean = computed(() =>
+const footVariantBoolean = computed<boolean | undefined>(() =>
   props.footVariant !== undefined ? resolveBooleanish(props.footVariant) : undefined
 )
 

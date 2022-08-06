@@ -178,7 +178,9 @@ const noOuterFocusBoolean = computed<boolean>(() => resolveBooleanish(props.noOu
 const noTagRemoveBoolean = computed<boolean>(() => resolveBooleanish(props.noTagRemove))
 const removeOnDeleteBoolean = computed<boolean>(() => resolveBooleanish(props.removeOnDelete))
 const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
-const stateBoolean = computed<boolean>(() => resolveBooleanish(props.state))
+const stateBoolean = computed<boolean | undefined>(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 const tagPillsBoolean = computed<boolean>(() => resolveBooleanish(props.tagPills))
 
 interface BFormTagsEmits {

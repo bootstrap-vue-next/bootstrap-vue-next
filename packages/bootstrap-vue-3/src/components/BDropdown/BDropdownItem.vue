@@ -31,6 +31,8 @@ interface BDropdownItemProps {
 const props = withDefaults(defineProps<BDropdownItemProps>(), {
   active: false,
   disabled: false,
+  rel: undefined,
+  variant: undefined,
   target: '_self',
 })
 

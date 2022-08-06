@@ -24,10 +24,11 @@ const props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
   forceShow: false,
   tag: 'div',
   tooltip: false,
+  state: undefined,
 })
 
 const forceShowBoolean = computed<boolean>(() => resolveBooleanish(props.forceShow))
-const stateBoolean = computed(() =>
+const stateBoolean = computed<boolean | undefined>(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )
 const tooltipBoolean = computed<boolean>(() => resolveBooleanish(props.tooltip))

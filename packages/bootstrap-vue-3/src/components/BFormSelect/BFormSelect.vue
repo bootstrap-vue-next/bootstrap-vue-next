@@ -74,6 +74,7 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   disabled: false,
   disabledField: 'disabled',
   htmlField: 'html',
+  state: undefined,
   labelField: 'label',
   multiple: false,
   options: () => [],
@@ -91,7 +92,7 @@ const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled
 const multipleBoolean = computed<boolean>(() => resolveBooleanish(props.multiple))
 const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
 const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
-const stateBoolean = computed(() =>
+const stateBoolean = computed<boolean | undefined>(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )
 

@@ -61,6 +61,8 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   button: false,
   switch: false,
   disabled: false,
+  modelValue: undefined,
+  state: undefined,
   buttonVariant: 'secondary',
   inline: false,
   required: false,
@@ -82,7 +84,7 @@ const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
 const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed(() =>
+const stateBoolean = computed<boolean | undefined>(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )
 

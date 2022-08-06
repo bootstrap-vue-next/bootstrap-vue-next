@@ -62,6 +62,8 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   autofocus: false,
   buttonVariant: 'secondary',
   buttons: false,
+  ariaInvalid: undefined,
+  state: undefined,
   disabled: false,
   disabledField: 'disabled',
   htmlField: 'html',
@@ -93,7 +95,7 @@ const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required
 const stackedBoolean = computed<boolean>(() => resolveBooleanish(props.stacked))
 // TODO state is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed(() =>
+const stateBoolean = computed<boolean | undefined>(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )
 const switchesBoolean = computed<boolean>(() => resolveBooleanish(props.switches))

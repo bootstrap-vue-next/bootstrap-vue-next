@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<BCardImgProps>(), {
   end: false,
   left: false,
   right: false,
+  alt: undefined,
   start: false,
   top: false,
 })

@@ -23,6 +23,7 @@ interface BDropdownItemButtonProps {
 const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
+  variant: undefined,
   disabled: false,
 })
 

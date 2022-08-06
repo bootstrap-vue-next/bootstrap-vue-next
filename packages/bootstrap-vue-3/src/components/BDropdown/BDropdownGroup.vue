@@ -39,6 +39,8 @@ interface BDropdownGroupProps {
 
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   headerTag: 'header',
+  headerClasses: undefined,
+  headerVariant: undefined,
 })
 
 const headerId = computed<string | undefined>(() =>

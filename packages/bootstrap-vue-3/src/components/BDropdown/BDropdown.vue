@@ -91,6 +91,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   dropRight: false,
   dropLeft: false,
   noFlip: false,
+  splitHref: undefined,
   offset: 0,
   popperOpts: () => ({}),
   right: false,

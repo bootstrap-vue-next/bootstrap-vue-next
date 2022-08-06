@@ -68,6 +68,10 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   autofocus: false,
   plain: false,
   button: false,
+  id: undefined,
+  required: undefined,
+  state: undefined,
+  modelValue: undefined,
   switch: false,
   disabled: false,
   buttonVariant: 'secondary',
@@ -92,12 +96,12 @@ const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled
 // TODO inline is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
-const requiredBoolean = computed(() =>
+const requiredBoolean = computed<boolean | undefined>(() =>
   props.required !== undefined ? resolveBooleanish(props.required) : undefined
 )
 // TODO state is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed(() =>
+const stateBoolean = computed<boolean | undefined>(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )
 
