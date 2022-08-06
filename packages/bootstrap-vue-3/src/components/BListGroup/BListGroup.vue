@@ -25,8 +25,8 @@ const props = withDefaults(defineProps<BListGroupProps>(), {
   tag: 'div',
 })
 
-const flushBoolean = computed(() => resolveBooleanish(props.flush))
-const numberedBoolean = computed(() => resolveBooleanish(props.numbered))
+const flushBoolean = computed<boolean>(() => resolveBooleanish(props.flush))
+const numberedBoolean = computed<boolean>(() => resolveBooleanish(props.numbered))
 
 const classes = computed(() => {
   const horizontal = flushBoolean.value ? false : props.horizontal

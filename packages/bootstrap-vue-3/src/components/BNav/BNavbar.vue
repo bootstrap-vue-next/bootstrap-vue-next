@@ -27,8 +27,8 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'light',
 })
 
-const printBoolean = computed(() => resolveBooleanish(props.print))
-const stickyBoolean = computed(() => resolveBooleanish(props.sticky))
+const printBoolean = computed<boolean>(() => resolveBooleanish(props.print))
+const stickyBoolean = computed<boolean>(() => resolveBooleanish(props.sticky))
 
 const computedRole = computed<undefined | 'navigation'>(() =>
   props.tag === 'nav' ? undefined : 'navigation'

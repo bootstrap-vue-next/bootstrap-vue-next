@@ -44,9 +44,9 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkClass: undefined,
 })
 
-const activeBoolean = computed(() => resolveBooleanish(props.active))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-const lazyBoolean = computed(() => resolveBooleanish(props.lazy))
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const lazyBoolean = computed<boolean>(() => resolveBooleanish(props.lazy))
 
 const parentData = inject(injectionKey, null)
 

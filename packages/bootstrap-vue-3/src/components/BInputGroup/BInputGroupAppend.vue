@@ -22,5 +22,5 @@ const props = withDefaults(defineProps<BInputGroupAppendProps>(), {
   isText: false,
 })
 
-const isTextBoolean = computed(() => resolveBooleanish(props.isText))
+const isTextBoolean = computed<boolean>(() => resolveBooleanish(props.isText))
 </script>

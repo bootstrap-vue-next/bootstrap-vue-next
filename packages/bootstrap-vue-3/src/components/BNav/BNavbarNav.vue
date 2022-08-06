@@ -24,9 +24,9 @@ const props = withDefaults(defineProps<Props>(), {
   tag: 'ul',
 })
 
-const fillBoolean = computed(() => resolveBooleanish(props.fill))
-const justifiedBoolean = computed(() => resolveBooleanish(props.justified))
-const smallBoolean = computed(() => resolveBooleanish(props.small))
+const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
+const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
 
 const comptuedJustifyContent = computed(() => {
   const value = props.align === 'left' ? 'start' : props.align === 'right' ? 'end' : props.align

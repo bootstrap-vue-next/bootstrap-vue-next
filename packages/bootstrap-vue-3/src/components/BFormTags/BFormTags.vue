@@ -170,16 +170,16 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   tagVariant: 'secondary',
 })
 
-const addOnChangeBoolean = computed(() => resolveBooleanish(props.addOnChange))
-const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-const noAddOnEnterBoolean = computed(() => resolveBooleanish(props.noAddOnEnter))
-const noOuterFocusBoolean = computed(() => resolveBooleanish(props.noOuterFocus))
-const noTagRemoveBoolean = computed(() => resolveBooleanish(props.noTagRemove))
-const removeOnDeleteBoolean = computed(() => resolveBooleanish(props.removeOnDelete))
-const requiredBoolean = computed(() => resolveBooleanish(props.required))
-const stateBoolean = computed(() => resolveBooleanish(props.state))
-const tagPillsBoolean = computed(() => resolveBooleanish(props.tagPills))
+const addOnChangeBoolean = computed<boolean>(() => resolveBooleanish(props.addOnChange))
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const noAddOnEnterBoolean = computed<boolean>(() => resolveBooleanish(props.noAddOnEnter))
+const noOuterFocusBoolean = computed<boolean>(() => resolveBooleanish(props.noOuterFocus))
+const noTagRemoveBoolean = computed<boolean>(() => resolveBooleanish(props.noTagRemove))
+const removeOnDeleteBoolean = computed<boolean>(() => resolveBooleanish(props.removeOnDelete))
+const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
+const stateBoolean = computed<boolean>(() => resolveBooleanish(props.state))
+const tagPillsBoolean = computed<boolean>(() => resolveBooleanish(props.tagPills))
 
 interface BFormTagsEmits {
   (e: 'update:modelValue', value: Array<string>): void

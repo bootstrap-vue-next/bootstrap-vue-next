@@ -76,8 +76,8 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
   textTag: 'p',
 })
 
-const activeBoolean = computed(() => resolveBooleanish(props.active))
-const imgBlankBoolean = computed(() => resolveBooleanish(props.imgBlank))
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const imgBlankBoolean = computed<boolean>(() => resolveBooleanish(props.imgBlank))
 
 const parentData = inject<BCarouselParentData>(injectionKey, {})
 const computedId = useId(props.id, 'accordion')

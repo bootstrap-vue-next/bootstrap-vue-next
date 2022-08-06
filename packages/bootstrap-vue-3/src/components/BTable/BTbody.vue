@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<BTBodyProps>(), {
   headVariant: false,
 })
 
-const headVariantBoolean = computed(() => resolveBooleanish(props.headVariant))
+const headVariantBoolean = computed<boolean>(() => resolveBooleanish(props.headVariant))
 
 const classes = computed(() => ({
   // TODO this doesn't look right thead-false?

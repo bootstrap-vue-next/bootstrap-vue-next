@@ -33,8 +33,8 @@ const props = withDefaults(defineProps<BNavItemProps>(), {
   disabled: false,
 })
 
-const activeBoolean = computed(() => resolveBooleanish(props.active))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 
 const classes = computed(() => ({
   active: activeBoolean.value,

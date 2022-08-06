@@ -59,14 +59,14 @@ export default defineComponent({
   props: BLINK_PROPS,
   emits: ['click'],
   setup(props, {emit, attrs}) {
-    const activeBoolean = computed(() => resolveBooleanish(props.active))
+    const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
     // TODO append is never used
-    const appendBoolean = computed(() => resolveBooleanish(props.append))
-    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+    const appendBoolean = computed<boolean>(() => resolveBooleanish(props.append))
+    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
     // TODO exact is never used
-    const exactBoolean = computed(() => resolveBooleanish(props.exact))
+    const exactBoolean = computed<boolean>(() => resolveBooleanish(props.exact))
     // TODO replace is never used
-    const replaceBoolean = computed(() => resolveBooleanish(props.replace))
+    const replaceBoolean = computed<boolean>(() => resolveBooleanish(props.replace))
 
     const instance = getCurrentInstance()
     const link = ref<HTMLElement>(null as unknown as HTMLElement)

@@ -63,12 +63,14 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'page-click'],
   setup(props, {emit, slots}) {
-    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-    const firstNumberBoolean = computed(() => resolveBooleanish(props.firstNumber))
-    const hideEllipsisBoolean = computed(() => resolveBooleanish(props.hideEllipsis))
-    const hideGotoEndButtonsBoolean = computed(() => resolveBooleanish(props.hideGotoEndButtons))
-    const lastNumberBoolean = computed(() => resolveBooleanish(props.lastNumber))
-    const pillsBoolean = computed(() => resolveBooleanish(props.pills))
+    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+    const firstNumberBoolean = computed<boolean>(() => resolveBooleanish(props.firstNumber))
+    const hideEllipsisBoolean = computed<boolean>(() => resolveBooleanish(props.hideEllipsis))
+    const hideGotoEndButtonsBoolean = computed<boolean>(() =>
+      resolveBooleanish(props.hideGotoEndButtons)
+    )
+    const lastNumberBoolean = computed<boolean>(() => resolveBooleanish(props.lastNumber))
+    const pillsBoolean = computed<boolean>(() => resolveBooleanish(props.pills))
 
     const alignment = useAlignment(props)
 

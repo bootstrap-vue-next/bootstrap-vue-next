@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<BTdProps>(), {
   stickyColumn: false,
 })
 
-const stickyColumnBoolean = computed(() => resolveBooleanish(props.stickyColumn))
+const stickyColumnBoolean = computed<boolean>(() => resolveBooleanish(props.stickyColumn))
 
 const classes = computed(() => ({
   [`table-${props.variant}`]: props.variant,

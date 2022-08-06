@@ -75,20 +75,20 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
 
 // TODO autofocus is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
 // TODO buttons is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const buttonsBoolean = computed(() => resolveBooleanish(props.buttons))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const buttonsBoolean = computed<boolean>(() => resolveBooleanish(props.buttons))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 // TODO plain is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const plainBoolean = computed(() => resolveBooleanish(props.plain))
+const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
 // TODO required is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const requiredBoolean = computed(() => resolveBooleanish(props.required))
+const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
 // TODO stacked is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stackedBoolean = computed(() => resolveBooleanish(props.stacked))
+const stackedBoolean = computed<boolean>(() => resolveBooleanish(props.stacked))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateBoolean = computed(() =>
@@ -96,7 +96,7 @@ const stateBoolean = computed(() =>
 )
 // TODO validated is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const validatedBoolean = computed(() => resolveBooleanish(props.validated))
+const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
 
 interface BFormRadioGroupEmits {
   (e: 'input', value: unknown): void

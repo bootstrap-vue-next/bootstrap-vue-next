@@ -13,6 +13,7 @@
 import type {ButtonVariant, Size} from '../../types'
 import BDropdown from '../BDropdown/BDropdown.vue'
 
+// Unsure of how to include booleanish here
 interface BNavItemDropdownProps {
   id?: string
   text?: string

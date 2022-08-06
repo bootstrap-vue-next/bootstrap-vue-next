@@ -27,8 +27,8 @@ const props = withDefaults(defineProps<BInputGroupAddonProps>(), {
   isText: false,
 })
 
-const appendBoolean = computed(() => resolveBooleanish(props.append))
-const isTextBoolean = computed(() => resolveBooleanish(props.isText))
+const appendBoolean = computed<boolean>(() => resolveBooleanish(props.append))
+const isTextBoolean = computed<boolean>(() => resolveBooleanish(props.isText))
 
 const computedClasses = computed(() => ({
   'input-group-append': appendBoolean.value,

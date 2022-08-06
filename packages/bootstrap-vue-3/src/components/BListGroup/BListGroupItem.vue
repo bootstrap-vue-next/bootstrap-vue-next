@@ -53,10 +53,10 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
   target: '_self',
 })
 
-const actionBoolean = computed(() => resolveBooleanish(props.action))
-const activeBoolean = computed(() => resolveBooleanish(props.active))
-const buttonBoolean = computed(() => resolveBooleanish(props.button))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const actionBoolean = computed<boolean>(() => resolveBooleanish(props.action))
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 
 const attrs = useAttrs()
 

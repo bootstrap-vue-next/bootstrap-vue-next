@@ -49,6 +49,6 @@ const props = withDefaults(defineProps<BSkeletonTableProps>(), {
   showFooter: false,
 })
 
-const hideHeaderBoolean = computed(() => resolveBooleanish(props.hideHeader))
-const showFooterBoolean = computed(() => resolveBooleanish(props.showFooter))
+const hideHeaderBoolean = computed<boolean>(() => resolveBooleanish(props.hideHeader))
+const showFooterBoolean = computed<boolean>(() => resolveBooleanish(props.showFooter))
 </script>

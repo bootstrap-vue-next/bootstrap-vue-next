@@ -86,11 +86,11 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   modelValue: '',
 })
 
-const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-const multipleBoolean = computed(() => resolveBooleanish(props.multiple))
-const plainBoolean = computed(() => resolveBooleanish(props.plain))
-const requiredBoolean = computed(() => resolveBooleanish(props.required))
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const multipleBoolean = computed<boolean>(() => resolveBooleanish(props.multiple))
+const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
 const stateBoolean = computed(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )

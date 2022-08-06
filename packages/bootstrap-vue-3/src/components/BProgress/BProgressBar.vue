@@ -19,10 +19,10 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props, {slots}) {
-    const animatedBoolean = computed(() => resolveBooleanish(props.animated))
-    const showProgressBoolean = computed(() => resolveBooleanish(props.showProgress))
-    const showValueBoolean = computed(() => resolveBooleanish(props.showValue))
-    const stripedBoolean = computed(() => resolveBooleanish(props.striped))
+    const animatedBoolean = computed<boolean>(() => resolveBooleanish(props.animated))
+    const showProgressBoolean = computed<boolean>(() => resolveBooleanish(props.showProgress))
+    const showValueBoolean = computed<boolean>(() => resolveBooleanish(props.showValue))
+    const stripedBoolean = computed<boolean>(() => resolveBooleanish(props.striped))
 
     const parent = inject<BProgressParentData>(injectionKey)
 

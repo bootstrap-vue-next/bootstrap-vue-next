@@ -226,14 +226,14 @@ const props = withDefaults(defineProps<BTableProps>(), {
   striped: false,
 })
 
-const captionTopBoolean = computed(() => resolveBooleanish(props.captionTop))
-const borderlessBoolean = computed(() => resolveBooleanish(props.borderless))
-const borderedBoolean = computed(() => resolveBooleanish(props.bordered))
-const darkBoolean = computed(() => resolveBooleanish(props.dark))
-const footCloneBoolean = computed(() => resolveBooleanish(props.footClone))
-const hoverBoolean = computed(() => resolveBooleanish(props.hover))
-const smallBoolean = computed(() => resolveBooleanish(props.small))
-const stripedBoolean = computed(() => resolveBooleanish(props.striped))
+const captionTopBoolean = computed<boolean>(() => resolveBooleanish(props.captionTop))
+const borderlessBoolean = computed<boolean>(() => resolveBooleanish(props.borderless))
+const borderedBoolean = computed<boolean>(() => resolveBooleanish(props.bordered))
+const darkBoolean = computed<boolean>(() => resolveBooleanish(props.dark))
+const footCloneBoolean = computed<boolean>(() => resolveBooleanish(props.footClone))
+const hoverBoolean = computed<boolean>(() => resolveBooleanish(props.hover))
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+const stripedBoolean = computed<boolean>(() => resolveBooleanish(props.striped))
 
 const classes = computed(() => [
   'table',

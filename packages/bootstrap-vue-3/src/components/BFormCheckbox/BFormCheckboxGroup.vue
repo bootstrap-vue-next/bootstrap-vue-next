@@ -77,29 +77,29 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
 
 // TODO autofocus is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
 // TODO buttons is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const buttonsBoolean = computed(() => resolveBooleanish(props.buttons))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const buttonsBoolean = computed<boolean>(() => resolveBooleanish(props.buttons))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 // TODO plain is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const plainBoolean = computed(() => resolveBooleanish(props.plain))
+const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
 // TODO required is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const requiredBoolean = computed(() => resolveBooleanish(props.required))
+const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
 // TODO stacked is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stackedBoolean = computed(() => resolveBooleanish(props.stacked))
+const stackedBoolean = computed<boolean>(() => resolveBooleanish(props.stacked))
 // TODO state is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateBoolean = computed(() =>
   props.state !== undefined ? resolveBooleanish(props.state) : undefined
 )
-const switchesBoolean = computed(() => resolveBooleanish(props.switches))
+const switchesBoolean = computed<boolean>(() => resolveBooleanish(props.switches))
 // TODO validated is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const validatedBoolean = computed(() => resolveBooleanish(props.validated))
+const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
 
 interface BFormCheckboxGroupEmits {
   (e: 'input', value: unknown): void

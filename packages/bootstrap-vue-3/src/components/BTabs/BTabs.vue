@@ -113,16 +113,16 @@ const props = withDefaults(defineProps<BTabsProps>(), {
   modelValue: -1,
 })
 
-const cardBoolean = computed(() => resolveBooleanish(props.card))
-const endBoolean = computed(() => resolveBooleanish(props.end))
-const fillBoolean = computed(() => resolveBooleanish(props.fill))
-const justifiedBoolean = computed(() => resolveBooleanish(props.justified))
-const lazyBoolean = computed(() => resolveBooleanish(props.lazy))
-const noFadeBoolean = computed(() => resolveBooleanish(props.noFade))
-const noNavStyleBoolean = computed(() => resolveBooleanish(props.noNavStyle))
-const pillsBoolean = computed(() => resolveBooleanish(props.pills))
-const smallBoolean = computed(() => resolveBooleanish(props.small))
-const verticalBoolean = computed(() => resolveBooleanish(props.vertical))
+const cardBoolean = computed<boolean>(() => resolveBooleanish(props.card))
+const endBoolean = computed<boolean>(() => resolveBooleanish(props.end))
+const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
+const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
+const lazyBoolean = computed<boolean>(() => resolveBooleanish(props.lazy))
+const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
+const noNavStyleBoolean = computed<boolean>(() => resolveBooleanish(props.noNavStyle))
+const pillsBoolean = computed<boolean>(() => resolveBooleanish(props.pills))
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+const verticalBoolean = computed<boolean>(() => resolveBooleanish(props.vertical))
 
 interface BTabsEmits {
   (e: 'update:modelValue', value: number): void

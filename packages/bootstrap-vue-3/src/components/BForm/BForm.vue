@@ -23,9 +23,9 @@ const props = withDefaults(defineProps<BFormProps>(), {
   validated: false,
 })
 
-const floatingBoolean = computed(() => resolveBooleanish(props.floating))
-const novalidateBoolean = computed(() => resolveBooleanish(props.novalidate))
-const validatedBoolean = computed(() => resolveBooleanish(props.validated))
+const floatingBoolean = computed<boolean>(() => resolveBooleanish(props.floating))
+const novalidateBoolean = computed<boolean>(() => resolveBooleanish(props.novalidate))
+const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
 
 interface BFormEmits {
   (e: 'submit', value: Event): void

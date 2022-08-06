@@ -72,14 +72,15 @@ export default defineComponent({
     tooltip: {type: Boolean as PropType<Booleanish>, default: false},
     validFeedback: {type: String, required: false},
     validated: {type: Boolean as PropType<Booleanish>, default: false},
-    floating: {type: Boolean, default: false},
+    floating: {type: Boolean as PropType<Booleanish>, default: false},
   },
   setup(props, {attrs}) {
-    const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-    const labelSrOnlyBoolean = computed(() => resolveBooleanish(props.labelSrOnly))
-    const stateBoolean = computed(() => resolveBooleanish(props.state))
-    const tooltipBoolean = computed(() => resolveBooleanish(props.tooltip))
-    const validatedBoolean = computed(() => resolveBooleanish(props.validated))
+    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+    const labelSrOnlyBoolean = computed<boolean>(() => resolveBooleanish(props.labelSrOnly))
+    const stateBoolean = computed<boolean>(() => resolveBooleanish(props.state))
+    const tooltipBoolean = computed<boolean>(() => resolveBooleanish(props.tooltip))
+    const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
+    const floatingBoolean = computed<boolean>(() => resolveBooleanish(props.floating))
 
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
@@ -221,6 +222,7 @@ export default defineComponent({
       stateBoolean,
       tooltipBoolean,
       validatedBoolean,
+      floatingBoolean,
       ariaDescribedby,
       computedAriaInvalid,
       contentColProps,
@@ -359,7 +361,7 @@ export default defineComponent({
       $validFeedback,
       $description,
     ]
-    if (!this.isHorizontal && props.floating) contentBlocks.push($label)
+    if (!this.isHorizontal && this.floatingBoolean) contentBlocks.push($label)
 
     let $content = h(
       'div',
@@ -367,7 +369,7 @@ export default defineComponent({
         ref: 'content',
         class: [
           {
-            'form-floating': !this.isHorizontal && props.floating,
+            'form-floating': !this.isHorizontal && this.floatingBoolean,
           },
         ],
       },
@@ -407,7 +409,7 @@ export default defineComponent({
       rowProps,
       this.isHorizontal && isFieldset
         ? [h(BFormRow, {}, {default: () => [$label, $content]})]
-        : this.isHorizontal || !props.floating
+        : this.isHorizontal || !this.floatingBoolean
         ? [$label, $content]
         : [$content]
     )

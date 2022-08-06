@@ -33,13 +33,13 @@ const props = withDefaults(defineProps<BNavProps>(), {
   vertical: false,
 })
 
-const cardHeaderBoolean = computed(() => resolveBooleanish(props.cardHeader))
-const fillBoolean = computed(() => resolveBooleanish(props.fill))
-const justifiedBoolean = computed(() => resolveBooleanish(props.justified))
-const pillsBoolean = computed(() => resolveBooleanish(props.pills))
-const smallBoolean = computed(() => resolveBooleanish(props.small))
-const tabsBoolean = computed(() => resolveBooleanish(props.tabs))
-const verticalBoolean = computed(() => resolveBooleanish(props.vertical))
+const cardHeaderBoolean = computed<boolean>(() => resolveBooleanish(props.cardHeader))
+const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
+const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
+const pillsBoolean = computed<boolean>(() => resolveBooleanish(props.pills))
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+const tabsBoolean = computed<boolean>(() => resolveBooleanish(props.tabs))
+const verticalBoolean = computed<boolean>(() => resolveBooleanish(props.vertical))
 
 const classes = computed(() => ({
   'nav-tabs': tabsBoolean.value,

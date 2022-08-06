@@ -80,18 +80,18 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
 const indeterminateBoolean = computed<boolean | undefined>(() =>
   props.indeterminate ? resolveBooleanish(props.indeterminate) : undefined
 )
-const autofocusBoolean = computed(() => resolveBooleanish(props.autofocus))
-const plainBoolean = computed(() => resolveBooleanish(props.plain))
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
+const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
 // TODO button is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const buttonBoolean = computed(() => resolveBooleanish(props.button))
+const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
 // TODO switch is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const switchBoolean = computed(() => resolveBooleanish(props.switch))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const switchBoolean = computed<boolean>(() => resolveBooleanish(props.switch))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 // TODO inline is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const inlineBoolean = computed(() => resolveBooleanish(props.inline))
+const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
 const requiredBoolean = computed(() =>
   props.required !== undefined ? resolveBooleanish(props.required) : undefined
 )

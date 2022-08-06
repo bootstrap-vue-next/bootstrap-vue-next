@@ -37,7 +37,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
-    const noResizeBoolean = computed(() => resolveBooleanish(props.noResize))
+    const noResizeBoolean = computed<boolean>(() => resolveBooleanish(props.noResize))
 
     const classes = computed(() => ({
       'form-control': !props.plaintext,

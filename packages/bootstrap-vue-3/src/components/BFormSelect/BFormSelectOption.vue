@@ -19,5 +19,5 @@ const props = withDefaults(defineProps<BFormSelectOptionProps>(), {
   disabled: false,
 })
 
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 </script>

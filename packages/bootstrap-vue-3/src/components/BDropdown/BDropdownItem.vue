@@ -34,8 +34,8 @@ const props = withDefaults(defineProps<BDropdownItemProps>(), {
   target: '_self',
 })
 
-const activeBoolean = computed(() => resolveBooleanish(props.active))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 
 interface BDropdownItemEmits {
   (e: 'click', value: MouseEvent): void

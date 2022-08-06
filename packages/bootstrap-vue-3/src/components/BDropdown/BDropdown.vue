@@ -102,15 +102,15 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   variant: 'secondary',
 })
 
-const blockBoolean = computed(() => resolveBooleanish(props.block))
-const darkBoolean = computed(() => resolveBooleanish(props.dark))
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-const dropUpBoolean = computed(() => resolveBooleanish(props.dropUp))
-const dropRightBoolean = computed(() => resolveBooleanish(props.dropRight))
-const dropLeftBoolean = computed(() => resolveBooleanish(props.dropLeft))
-const rightBoolean = computed(() => resolveBooleanish(props.right))
-const splitBoolean = computed(() => resolveBooleanish(props.split))
-const noCaretBoolean = computed(() => resolveBooleanish(props.noCaret))
+const blockBoolean = computed<boolean>(() => resolveBooleanish(props.block))
+const darkBoolean = computed<boolean>(() => resolveBooleanish(props.dark))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const dropUpBoolean = computed<boolean>(() => resolveBooleanish(props.dropUp))
+const dropRightBoolean = computed<boolean>(() => resolveBooleanish(props.dropRight))
+const dropLeftBoolean = computed<boolean>(() => resolveBooleanish(props.dropLeft))
+const rightBoolean = computed<boolean>(() => resolveBooleanish(props.right))
+const splitBoolean = computed<boolean>(() => resolveBooleanish(props.split))
+const noCaretBoolean = computed<boolean>(() => resolveBooleanish(props.noCaret))
 
 interface BDropdownEmits {
   (e: 'show'): void

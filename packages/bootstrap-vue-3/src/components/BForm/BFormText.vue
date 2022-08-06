@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<BFormTextProps>(), {
   textVariant: 'muted',
 })
 
-const inlineBoolean = computed(() => resolveBooleanish(props.inline))
+const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
 
 const classes = computed(() => ({
   'form-text': !inlineBoolean.value,

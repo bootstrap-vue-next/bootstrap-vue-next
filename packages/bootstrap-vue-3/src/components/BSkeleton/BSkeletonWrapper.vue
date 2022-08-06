@@ -17,5 +17,5 @@ const props = withDefaults(defineProps<BSkeletonWrapperProps>(), {
   loading: false,
 })
 
-const loadingBoolean = computed(() => resolveBooleanish(props.loading))
+const loadingBoolean = computed<boolean>(() => resolveBooleanish(props.loading))
 </script>

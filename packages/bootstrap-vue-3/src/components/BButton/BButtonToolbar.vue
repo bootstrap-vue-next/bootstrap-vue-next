@@ -13,7 +13,7 @@ import {resolveBooleanish} from '../../utils'
 interface BButtonToolbarProps {
   ariaRole?: string
   justify?: Booleanish
-  // keyNav?: boolean
+  // keyNav?: Booleanish
 }
 
 const props = withDefaults(defineProps<BButtonToolbarProps>(), {

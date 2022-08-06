@@ -45,12 +45,12 @@ export default defineComponent({
   },
   emits: ['click', 'hidden', 'shown'],
   setup(props, {slots, emit}) {
-    const fixedBoolean = computed(() => resolveBooleanish(props.fixed))
-    const noCenterBoolean = computed(() => resolveBooleanish(props.noCenter))
-    const noFadeBoolean = computed(() => resolveBooleanish(props.noFade))
-    const noWrapBoolean = computed(() => resolveBooleanish(props.noWrap))
-    const showBoolean = computed(() => resolveBooleanish(props.show))
-    const spinnerSmallBoolean = computed(() => resolveBooleanish(props.spinnerSmall))
+    const fixedBoolean = computed<boolean>(() => resolveBooleanish(props.fixed))
+    const noCenterBoolean = computed<boolean>(() => resolveBooleanish(props.noCenter))
+    const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
+    const noWrapBoolean = computed<boolean>(() => resolveBooleanish(props.noWrap))
+    const showBoolean = computed<boolean>(() => resolveBooleanish(props.show))
+    const spinnerSmallBoolean = computed<boolean>(() => resolveBooleanish(props.spinnerSmall))
 
     const computedRounded = computed(() =>
       props.rounded === true || props.rounded === ''

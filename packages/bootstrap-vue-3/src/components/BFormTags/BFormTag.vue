@@ -53,8 +53,8 @@ const props = withDefaults(defineProps<BFormTagProps>(), {
   variant: 'secondary',
 })
 
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
-const noRemoveBoolean = computed(() => resolveBooleanish(props.noRemove))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const noRemoveBoolean = computed<boolean>(() => resolveBooleanish(props.noRemove))
 
 interface BFormTagEmits {
   (e: 'remove', value?: VNodeNormalizedChildren): void

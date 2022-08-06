@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
 })
 
-const disabledBoolean = computed(() => resolveBooleanish(props.disabled))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 
 interface Emits {
   (e: 'click'): void

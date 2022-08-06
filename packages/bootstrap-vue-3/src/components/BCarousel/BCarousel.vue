@@ -71,12 +71,12 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   noWrap: false,
 })
 
-const controlsBoolean = computed(() => resolveBooleanish(props.controls))
-const indicatorsBoolean = computed(() => resolveBooleanish(props.indicators))
-const noTouchBoolean = computed(() => resolveBooleanish(props.noTouch))
+const controlsBoolean = computed<boolean>(() => resolveBooleanish(props.controls))
+const indicatorsBoolean = computed<boolean>(() => resolveBooleanish(props.indicators))
+const noTouchBoolean = computed<boolean>(() => resolveBooleanish(props.noTouch))
 // TODO no wrap is never used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const noWrapBoolean = computed(() => resolveBooleanish(props.noWrap))
+const noWrapBoolean = computed<boolean>(() => resolveBooleanish(props.noWrap))
 
 interface BCarouselEmits {
   (e: 'sliding-start', value: Event): void
