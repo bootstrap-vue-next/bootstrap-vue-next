@@ -7,7 +7,7 @@ import type {Booleanish} from '../types'
  * @returns inputisBooleanish
  */
 export const isBooleanish = (input: unknown): input is Booleanish =>
-  typeof input === 'boolean' || input === 'true' || input === 'false'
+  typeof input === 'boolean' || input === '' || input === 'true' || input === 'false'
 
 /**
  * Converts a Booleanish type to boolean
@@ -15,5 +15,5 @@ export const isBooleanish = (input: unknown): input is Booleanish =>
  * @param {Booleanish} input
  * @returns
  */
-export const resolveBooleanish = (input: Booleanish | ''): boolean =>
+export const resolveBooleanish = (input: Booleanish): boolean =>
   typeof input === 'boolean' ? input : input === '' ? true : input === 'true' ? true : false
