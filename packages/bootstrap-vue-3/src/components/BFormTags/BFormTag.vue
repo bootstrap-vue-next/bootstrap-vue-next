@@ -11,7 +11,7 @@
       <slot>{{ tagText }}</slot>
     </span>
     <button
-      v-if="!disabled && !noRemove"
+      v-if="!disabledBoolean && !noRemoveBoolean"
       aria-keyshortcuts="Delete"
       type="button"
       :aria-label="removeLabel"
@@ -30,14 +30,15 @@
 // import type {BFormTagEmits, BFormTagProps} from '../../types/components'
 import {computed, useSlots, VNodeNormalizedChildren} from 'vue'
 import {useId} from '../../composables'
-import type {ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormTagProps {
   id?: string
   title?: string
-  disabled?: boolean
-  noRemove?: boolean
-  pill?: boolean
+  disabled?: Booleanish
+  noRemove?: Booleanish
+  pill?: Booleanish
   removeLabel?: string
   tag?: string
   variant?: ColorVariant
@@ -51,6 +52,9 @@ const props = withDefaults(defineProps<BFormTagProps>(), {
   tag: 'span',
   variant: 'secondary',
 })
+
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const noRemoveBoolean = computed<boolean>(() => resolveBooleanish(props.noRemove))
 
 interface BFormTagEmits {
   (e: 'remove', value?: VNodeNormalizedChildren): void
@@ -71,7 +75,7 @@ const classes = computed(() => [
   {
     'text-dark': ['warning', 'info', 'light'].includes(props.variant),
     'rounded-pill': props.pill,
-    'disabled': props.disabled,
+    'disabled': disabledBoolean.value,
   },
 ])
 </script>

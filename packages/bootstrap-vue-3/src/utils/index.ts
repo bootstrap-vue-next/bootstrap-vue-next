@@ -49,7 +49,7 @@ import normalizeSlot from './normalizeSlot'
 import {stringToInteger, toFloat, toInteger, toPercison} from './number'
 import {assign, defineProperties, defineProperty, omit, readonlyDescriptor} from './object'
 import {pluckProps, suffixPropName} from './props'
-import resolveBooleanish from './resolveBooleanish'
+import {isBooleanish, resolveBooleanish} from './booleanish'
 import isLink from './isLink'
 import {startCase, toString, upperFirst} from './stringUtils'
 
@@ -58,6 +58,7 @@ export {
   concat,
   from,
   BvEvent,
+  isBooleanish,
   cssEscape,
   attemptBlur,
   startCase,
@@ -146,6 +147,7 @@ export default {
   mergeDeep,
   normalizeSlot,
   getActiveElement,
+  isBooleanish,
   getAttr,
   getBCR,
   getStyle,

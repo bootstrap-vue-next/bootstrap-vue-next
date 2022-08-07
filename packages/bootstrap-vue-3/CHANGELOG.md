@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.2.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.5...v0.2.6) (2022-08-07)
+
+
+### Features
+
+* add a booleanish type predicate func ([89d9399](https://github.com/cdmoro/bootstrap-vue-3/commit/89d93990fee92feb6256de7b31a8be6023087ef0))
+* add bformselectoption booleanish props optio ([90f211d](https://github.com/cdmoro/bootstrap-vue-3/commit/90f211d8da61c4ceb68b3f37ee454cb26b366fdb))
+* add blistgroup/ booleanish prop options ([c8d266c](https://github.com/cdmoro/bootstrap-vue-3/commit/c8d266c80ba380f267f5e7209de26f8afd7c338e))
+* add booleanish option to bcarousel/ ([fc52ea2](https://github.com/cdmoro/bootstrap-vue-3/commit/fc52ea2e4199c4a24e374556fdeefb5c9bbb54f1))
+* add booleanish prop option to bkskeleton/ ([b22b2b7](https://github.com/cdmoro/bootstrap-vue-3/commit/b22b2b7c0074eb31edc82289c32eec89b2f86f31))
+* add booleanish prop options to all remaining ([4fba7e2](https://github.com/cdmoro/bootstrap-vue-3/commit/4fba7e241f43860ade68d190200cecfa6972e8c7))
+* add booleanish to BCard/ ([a37b92b](https://github.com/cdmoro/bootstrap-vue-3/commit/a37b92b306052df7f1c2d422daff0e4534ea250b))
+* add booleanish to bpagination ([16c3c02](https://github.com/cdmoro/bootstrap-vue-3/commit/16c3c029cae7ebadeadb167aa1a41ced2150bf17))
+* bdropdown/ add booleanish props ([c713ca3](https://github.com/cdmoro/bootstrap-vue-3/commit/c713ca34fa3dbb6f7c9a46599dcb1b381d584e1c))
+* bform/ add booleanish props option ([f46c010](https://github.com/cdmoro/bootstrap-vue-3/commit/f46c010a19229c393fd78912c18298b10e87d78d))
+* bformcheckbox add booleanish props option ([c29ed46](https://github.com/cdmoro/bootstrap-vue-3/commit/c29ed461a707e2ca3066d1e59dae20c253fb73ed))
+* bformgroup add booleanish prop options ([267b310](https://github.com/cdmoro/bootstrap-vue-3/commit/267b310bd97b4119cc7dfa7c399bd9319aa79764))
+* bformradio add booleanish prop options ([c16c741](https://github.com/cdmoro/bootstrap-vue-3/commit/c16c7411f429571a1c97d8e14d87bbe236554f80))
+* bformtag/ booleanish prop options ([6859d43](https://github.com/cdmoro/bootstrap-vue-3/commit/6859d43df60c5af110dbcb49de23f230b2c3c8f3))
+* bformtextarea/ booleanish prop options ([8a758f8](https://github.com/cdmoro/bootstrap-vue-3/commit/8a758f80172e8a126b38647e716da757c5590b1f))
+* binputgroup/ booleanish prop options ([793fffa](https://github.com/cdmoro/bootstrap-vue-3/commit/793fffa437d7e98969d9dfd2de2c9e3239e1fbb8))
+* blink uses booleanish prop options ([8094cc9](https://github.com/cdmoro/bootstrap-vue-3/commit/8094cc93eb18b72c3851a73f503f51272798c5d3))
+* bnav/ add booleanish prop options ([c3a1060](https://github.com/cdmoro/bootstrap-vue-3/commit/c3a106035a4863dbe8060a1db9b5128683cfe2fc))
+* boverlay add booleanish prop option ([3f62a20](https://github.com/cdmoro/bootstrap-vue-3/commit/3f62a2074d47428ca7216a7e0642fe46c8318ec0))
+* BProgress/ add booleanish prop option ([88cffc7](https://github.com/cdmoro/bootstrap-vue-3/commit/88cffc7fa7f8cdda90ab8fc966185b1403e03a97))
+* btab/ booleanish prop options ([497b85c](https://github.com/cdmoro/bootstrap-vue-3/commit/497b85cfadaf656188f7ba58fc6a769123bc2d9a))
+* btable/ add booleanish prop options ([decf141](https://github.com/cdmoro/bootstrap-vue-3/commit/decf1419de7fb273d388294a27bf1c03963097b3))
+
+
+### Bug Fixes
+
+* binputgroup/ isText false by default ([793fffa](https://github.com/cdmoro/bootstrap-vue-3/commit/793fffa437d7e98969d9dfd2de2c9e3239e1fbb8))
+* explicit set to undefined causes type loss ([c12de9d](https://github.com/cdmoro/bootstrap-vue-3/commit/c12de9dc1b0d6e7ab9d3c136d325ffeace87aff3))
+* one more missing explicit undefined ([ef7cf42](https://github.com/cdmoro/bootstrap-vue-3/commit/ef7cf4201fb1d84d13c73968b059933f61a2eef3))
+
+
+### Reverts
+
+* **3f62a20:** fix undefined boolean behavior ([d03c097](https://github.com/cdmoro/bootstrap-vue-3/commit/d03c0971b5e645b5c0b5071f6f935046fd7345c4))
+
 ## [0.2.5](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.4...v0.2.5) (2022-08-04)
 
 

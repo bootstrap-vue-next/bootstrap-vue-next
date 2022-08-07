@@ -1,6 +1,6 @@
 <template>
   <b-table-simple v-bind="tableProps">
-    <thead v-if="!hideHeader">
+    <thead v-if="!hideHeaderBoolean">
       <tr>
         <th v-for="(th, i) in columns" :key="i">
           <b-skeleton />
@@ -14,7 +14,7 @@
         </td>
       </tr>
     </tbody>
-    <tfoot v-if="showFooter">
+    <tfoot v-if="showFooterBoolean">
       <tr>
         <th v-for="(th, l) in columns" :key="l">
           <b-skeleton />
@@ -26,24 +26,29 @@
 
 <script setup lang="ts">
 // import type {BSkeletonTableProps} from '../../types/components'
-import type {SkeletonAnimation} from '../../types'
+import {computed} from 'vue'
+import type {Booleanish, SkeletonAnimation} from '../../types'
+import {resolveBooleanish} from '../../utils'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BSkeleton from './BSkeleton.vue'
 
 interface BSkeletonTableProps {
   animation?: SkeletonAnimation
   columns?: number
-  hideHeader?: boolean
+  hideHeader?: Booleanish
   rows?: number
-  showFooter?: boolean
+  showFooter?: Booleanish
   tableProps?: Record<string, unknown>
 }
 
-withDefaults(defineProps<BSkeletonTableProps>(), {
+const props = withDefaults(defineProps<BSkeletonTableProps>(), {
   animation: 'wave',
   columns: 5,
   hideHeader: false,
   rows: 3,
   showFooter: false,
 })
+
+const hideHeaderBoolean = computed<boolean>(() => resolveBooleanish(props.hideHeader))
+const showFooterBoolean = computed<boolean>(() => resolveBooleanish(props.showFooter))
 </script>

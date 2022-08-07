@@ -7,19 +7,19 @@
       v-model="localValue"
       :class="inputClasses"
       type="radio"
-      :disabled="disabled"
-      :required="!!name && !!required"
+      :disabled="disabledBoolean"
+      :required="!!name && !!requiredBoolean"
       :name="name"
       :form="form"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
       :value="value"
-      :aria-required="name && required ? true : undefined"
+      :aria-required="name && requiredBoolean ? true : undefined"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
     <label
-      v-if="$slots.default || !plain"
+      v-if="$slots.default || !plainBoolean"
       :for="computedId"
       :class="[labelClasses, {active: isChecked, focus: isFocused}]"
     >
@@ -30,9 +30,10 @@
 
 <script setup lang="ts">
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
-import type {ButtonVariant} from '../../types'
+import type {Booleanish, ButtonVariant} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
 import {computed, onMounted, ref} from 'vue'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -41,32 +42,51 @@ interface BFormRadioProps {
   id?: string
   name?: string
   size?: string
-  autofocus?: boolean
+  autofocus?: Booleanish
   modelValue?: boolean | string | Array<unknown> | Record<string, unknown> | number
-  plain?: boolean
-  button?: boolean
-  switch?: boolean
-  disabled?: boolean
+  plain?: Booleanish
+  button?: Booleanish
+  switch?: Booleanish
+  disabled?: Booleanish
   buttonVariant?: ButtonVariant
-  inline?: boolean
-  required?: boolean
-  state?: boolean
+  inline?: Booleanish
+  required?: Booleanish
+  state?: Booleanish
   value?: string | boolean | Record<string, unknown> | number
 }
 
 const props = withDefaults(defineProps<BFormRadioProps>(), {
   autofocus: false,
-  modelValue: undefined,
   plain: false,
   button: false,
   switch: false,
   disabled: false,
+  modelValue: undefined,
+  state: undefined,
   buttonVariant: 'secondary',
   inline: false,
   required: false,
-  state: undefined,
   value: true,
 })
+
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
+const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+// TODO button is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
+// TODO switch is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const switchBoolean = computed<boolean>(() => resolveBooleanish(props.switch))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+// TODO inline is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
+const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
+// TODO state is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const stateBoolean = computed<boolean | undefined>(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 
 interface BFormRadioEmits {
   (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
@@ -107,7 +127,7 @@ const labelClasses = getLabelClasses(props)
 
 // TODO: make tests compatible with the v-focus directive
 onMounted(() => {
-  if (props.autofocus) {
+  if (autofocusBoolean.value) {
     input.value.focus()
   }
 })

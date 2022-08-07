@@ -62,10 +62,10 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   badgeVariant: 'primary',
   button: false,
   buttonType: 'button',
+  textVariant: undefined,
   disabled: false,
   rounded: 'circle',
   square: false,
-  textVariant: undefined,
   variant: 'secondary',
 })
 

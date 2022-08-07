@@ -1,6 +1,6 @@
 <template>
   <div :id="computedId" ref="element" class="carousel slide" data-bs-ride="carousel">
-    <div v-if="indicators" class="carousel-indicators">
+    <div v-if="indicatorsBoolean" class="carousel-indicators">
       <button
         v-for="(slide, i) of slides"
         :key="i"
@@ -17,7 +17,7 @@
       <slot />
     </div>
 
-    <template v-if="controls">
+    <template v-if="controlsBoolean">
       <button
         class="carousel-control-prev"
         type="button"
@@ -43,9 +43,11 @@
 <script setup lang="ts">
 // import type {BCarouselProps, BCarouselEmits} from '../types/components'
 import type {BCarouselParentData} from '../../types/components'
-import {InjectionKey, onMounted, provide, ref, useSlots, VNode} from 'vue'
+import {computed, InjectionKey, onMounted, provide, ref, useSlots, VNode} from 'vue'
 import Carousel from 'bootstrap/js/dist/carousel'
 import {useEventListener, useId} from '../../composables'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BCarouselProps {
   id?: string
@@ -53,11 +55,11 @@ interface BCarouselProps {
   imgWidth?: string
   background?: string
   modelValue?: number
-  controls?: boolean
-  indicators?: boolean
+  controls?: Booleanish
+  indicators?: Booleanish
   interval?: number
-  noTouch?: boolean
-  noWrap?: boolean
+  noTouch?: Booleanish
+  noWrap?: Booleanish
 }
 
 const props = withDefaults(defineProps<BCarouselProps>(), {
@@ -68,6 +70,13 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   noTouch: false,
   noWrap: false,
 })
+
+const controlsBoolean = computed<boolean>(() => resolveBooleanish(props.controls))
+const indicatorsBoolean = computed<boolean>(() => resolveBooleanish(props.indicators))
+const noTouchBoolean = computed<boolean>(() => resolveBooleanish(props.noTouch))
+// TODO no wrap is never used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const noWrapBoolean = computed<boolean>(() => resolveBooleanish(props.noWrap))
 
 interface BCarouselEmits {
   (e: 'sliding-start', value: Event): void
@@ -88,9 +97,9 @@ useEventListener(element, 'slid.bs.carousel', (payload) => emit('sliding-end', p
 
 onMounted(() => {
   instance.value = new Carousel(element.value as HTMLElement, {
-    wrap: !props.noTouch,
+    wrap: !noTouchBoolean.value,
     interval: props.interval,
-    touch: !props.noTouch,
+    touch: !noTouchBoolean.value,
   })
 
   if (slots.default) {

@@ -14,12 +14,13 @@
 <script setup lang="ts">
 // import type {BSpinnerProps} from '../types/components'
 import {computed} from 'vue'
-import type {ColorVariant, SpinnerType} from '../types'
+import type {Booleanish, ColorVariant, SpinnerType} from '../types'
+import {resolveBooleanish} from '../utils'
 
 interface BSpinnerProps {
   label?: string
   role?: string
-  small?: boolean
+  small?: Booleanish
   tag?: string
   type?: SpinnerType
   variant?: ColorVariant
@@ -32,11 +33,13 @@ const props = withDefaults(defineProps<BSpinnerProps>(), {
   type: 'border',
 })
 
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+
 const classes = computed(() => ({
   'spinner-border': props.type === 'border',
-  'spinner-border-sm': props.type === 'border' && props.small,
+  'spinner-border-sm': props.type === 'border' && smallBoolean.value,
   'spinner-grow': props.type === 'grow',
-  'spinner-grow-sm': props.type === 'grow' && props.small,
+  'spinner-grow-sm': props.type === 'grow' && smallBoolean.value,
   [`text-${props.variant}`]: !!props.variant,
 }))
 </script>

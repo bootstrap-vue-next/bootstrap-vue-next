@@ -5,13 +5,15 @@
 </template>
 
 <script setup lang="ts">
+import type {Booleanish} from '../../types'
 import {computed} from 'vue'
+import {resolveBooleanish} from '../../utils'
 
 interface Props {
   align?: string
-  fill?: boolean
-  justified?: boolean
-  small?: boolean
+  fill?: Booleanish
+  justified?: Booleanish
+  small?: Booleanish
   tag?: string
 }
 
@@ -22,15 +24,19 @@ const props = withDefaults(defineProps<Props>(), {
   tag: 'ul',
 })
 
+const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
+const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+
 const comptuedJustifyContent = computed(() => {
   const value = props.align === 'left' ? 'start' : props.align === 'right' ? 'end' : props.align
   return `justify-content-${value}`
 })
 
 const classes = computed(() => ({
-  'nav-fill': props.fill,
-  'nav-justified': props.justified,
+  'nav-fill': fillBoolean.value,
+  'nav-justified': justifiedBoolean.value,
   [comptuedJustifyContent.value]: props.align !== undefined,
-  'small': props.small,
+  'small': smallBoolean.value,
 }))
 </script>

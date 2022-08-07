@@ -13,16 +13,18 @@
 
 <script setup lang="ts">
 // import type {BTabProps} from '../../types/components'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 import {computed, inject} from 'vue'
 import {injectionKey} from './BTabs.vue'
 
 interface BTabProps {
   id?: string
   title?: string
-  active?: boolean
+  active?: Booleanish
   buttonId?: string
-  disabled?: boolean
-  lazy?: boolean
+  disabled?: Booleanish
+  lazy?: Booleanish
   noBody?: boolean | string
   tag?: string
   titleItemClass?: Array<unknown> | Record<string, unknown> | string
@@ -42,14 +44,18 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkClass: undefined,
 })
 
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const lazyBoolean = computed<boolean>(() => resolveBooleanish(props.lazy))
+
 const parentData = inject(injectionKey, null)
 
-const computedLazy = computed<boolean>(() => parentData?.lazy || props.lazy)
-const computedActive = computed<boolean>(() => props.active && !props.disabled)
+const computedLazy = computed<boolean>(() => parentData?.lazy || lazyBoolean.value)
+const computedActive = computed<boolean>(() => activeBoolean.value && !disabledBoolean.value)
 const showSlot = computed<boolean>(() => computedActive.value || !computedLazy.value)
 const classes = computed(() => ({
-  'active': props.active,
-  'show': props.active,
+  'active': activeBoolean.value,
+  'show': activeBoolean.value,
   'card-body': parentData?.card && props.noBody === false,
 }))
 </script>

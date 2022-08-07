@@ -25,7 +25,7 @@ import type {ToastInstance} from '../BToast/plugin'
 interface BToasterProps {
   position?: ContainerPosition
   instance?: ToastInstance
-  // appendToast?: boolean
+  // appendToast?: Booleanish
 }
 
 const props = withDefaults(defineProps<BToasterProps>(), {

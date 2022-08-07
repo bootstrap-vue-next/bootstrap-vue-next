@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <component :is="tag" class="card" :class="classes">
-    <img v-if="imgSrc && !imgBottom" v-bind="imgAttr" :class="imgClasses" />
+    <img v-if="imgSrc && !imgBottomBoolean" v-bind="imgAttr" :class="imgClasses" />
     <component
       :is="headerTag"
       v-if="header || $slots.header || headerHtml"
@@ -14,13 +14,13 @@
       </slot>
     </component>
 
-    <component :is="bodyTag" v-if="!noBody" :class="[bodyClass, bodyClasses]">
-      <component :is="titleTag" v-if="title && !noBody" class="card-title">
+    <component :is="bodyTag" v-if="!noBodyBoolean" :class="[bodyClass, bodyClasses]">
+      <component :is="titleTag" v-if="title && !noBodyBoolean" class="card-title">
         {{ title }}
       </component>
       <component
         :is="subTitleTag"
-        v-if="subTitle && !noBody"
+        v-if="subTitle && !noBodyBoolean"
         class="card-subtitle mb-2"
         :class="subTitleClasses"
       >
@@ -28,7 +28,7 @@
       </component>
       <slot />
     </component>
-    <slot v-if="noBody" />
+    <slot v-if="noBodyBoolean" />
     <component
       :is="footerTag"
       v-if="footer || $slots.footer || footerHtml"
@@ -40,14 +40,15 @@
         {{ footer }}
       </slot>
     </component>
-    <img v-if="imgSrc && imgBottom" v-bind="imgAttr" :class="imgClasses" />
+    <img v-if="imgSrc && imgBottomBoolean" v-bind="imgAttr" :class="imgClasses" />
   </component>
 </template>
 
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
-import type {Alignment, ColorVariant, TextColorVariant} from '../../types'
+import type {Alignment, Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {computed} from 'vue'
+import {resolveBooleanish} from '../../utils'
 
 interface BCardProps {
   align?: Alignment
@@ -72,17 +73,17 @@ interface BCardProps {
   headerTag?: string
   headerTextVariant?: ColorVariant
   imgAlt?: string
-  imgBottom?: boolean
-  imgEnd?: boolean
+  imgBottom?: Booleanish
+  imgEnd?: Booleanish
   imgHeight?: string | number
-  imgLeft?: boolean
-  imgRight?: boolean
+  imgLeft?: Booleanish
+  imgRight?: Booleanish
   imgSrc?: string
-  imgStart?: boolean
-  imgTop?: boolean
+  imgStart?: Booleanish
+  imgTop?: Booleanish
   imgWidth?: string | number
-  noBody?: boolean
-  overlay?: boolean
+  noBody?: Booleanish
+  overlay?: Booleanish
   subTitle?: string
   subTitleTag?: string
   subTitleTextVariant?: TextColorVariant
@@ -112,18 +113,27 @@ const props = withDefaults(defineProps<BCardProps>(), {
   titleTag: 'h4',
 })
 
+const imgBottomBoolean = computed<boolean>(() => resolveBooleanish(props.imgBottom))
+const imgEndBoolean = computed<boolean>(() => resolveBooleanish(props.imgEnd))
+const imgLeftBoolean = computed<boolean>(() => resolveBooleanish(props.imgLeft))
+const imgRightBoolean = computed<boolean>(() => resolveBooleanish(props.imgRight))
+const imgStartBoolean = computed<boolean>(() => resolveBooleanish(props.imgStart))
+const imgTopBoolean = computed<boolean>(() => resolveBooleanish(props.imgTop))
+const noBodyBoolean = computed<boolean>(() => resolveBooleanish(props.noBody))
+const overlayBoolean = computed<boolean>(() => resolveBooleanish(props.overlay))
+
 const classes = computed(() => ({
   [`text-${props.align}`]: props.align,
   [`text-${props.textVariant}`]: props.textVariant,
   [`bg-${props.bgVariant}`]: props.bgVariant,
   [`border-${props.borderVariant}`]: props.borderVariant,
-  'flex-row': props.imgLeft || props.imgStart,
-  'flex-row-reverse': props.imgEnd || props.imgRight,
+  'flex-row': imgLeftBoolean.value || imgStartBoolean.value,
+  'flex-row-reverse': imgEndBoolean.value || imgRightBoolean.value,
 }))
 
 const bodyClasses = computed(() => ({
-  'card-body': !props.noBody,
-  'card-img-overlay': props.overlay,
+  'card-body': !noBodyBoolean.value,
+  'card-img-overlay': overlayBoolean.value,
   [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
   [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
 }))
@@ -142,16 +152,16 @@ const headerClasses = computed(() => ({
 
 const imgClasses = computed(() => ({
   'card-img':
-    !props.imgEnd &&
-    !props.imgRight &&
-    !props.imgStart &&
-    !props.imgLeft &&
-    !props.imgTop &&
-    !props.imgTop,
-  'card-img-right': props.imgEnd || props.imgRight,
-  'card-img-left': props.imgStart || props.imgLeft,
-  'card-img-top': props.imgTop,
-  'card-img-bottom': props.imgBottom,
+    !imgEndBoolean.value &&
+    !imgRightBoolean.value &&
+    !imgStartBoolean.value &&
+    !imgLeftBoolean.value &&
+    !imgTopBoolean.value &&
+    !imgTopBoolean.value,
+  'card-img-right': imgEndBoolean.value || imgRightBoolean.value,
+  'card-img-left': imgStartBoolean.value || imgLeftBoolean.value,
+  'card-img-top': imgTopBoolean.value,
+  'card-img-bottom': imgBottomBoolean.value,
 }))
 
 const imgAttr = computed(() => ({

@@ -67,7 +67,7 @@
           </td>
         </tr>
       </tbody>
-      <tfoot v-if="footClone">
+      <tfoot v-if="footCloneBoolean">
         <tr>
           <th
             v-for="field in computedFields"
@@ -160,7 +160,7 @@
         </td>
       </tr>
     </tbody>
-    <tfoot v-if="footClone">
+    <tfoot v-if="footCloneBoolean">
       <tr>
         <th
           v-for="field in computedFields"
@@ -190,24 +190,25 @@
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
 import {computed} from 'vue'
-import type {ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
+import type {Booleanish, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
+import {resolveBooleanish} from '../../utils'
 import useItemHelper from './itemHelper'
 
 interface BTableProps {
   align?: VerticalAlign
   caption?: string
-  captionTop?: boolean
-  borderless?: boolean
-  bordered?: boolean
+  captionTop?: Booleanish
+  borderless?: Booleanish
+  bordered?: Booleanish
   borderVariant?: ColorVariant
-  dark?: boolean
+  dark?: Booleanish
   fields?: Array<TableField>
-  footClone?: boolean
-  hover?: boolean
+  footClone?: Booleanish
+  hover?: Booleanish
   items?: Array<TableItem>
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-  small?: boolean
-  striped?: boolean
+  small?: Booleanish
+  striped?: Booleanish
   variant?: ColorVariant
 }
 
@@ -225,19 +226,28 @@ const props = withDefaults(defineProps<BTableProps>(), {
   striped: false,
 })
 
+const captionTopBoolean = computed<boolean>(() => resolveBooleanish(props.captionTop))
+const borderlessBoolean = computed<boolean>(() => resolveBooleanish(props.borderless))
+const borderedBoolean = computed<boolean>(() => resolveBooleanish(props.bordered))
+const darkBoolean = computed<boolean>(() => resolveBooleanish(props.dark))
+const footCloneBoolean = computed<boolean>(() => resolveBooleanish(props.footClone))
+const hoverBoolean = computed<boolean>(() => resolveBooleanish(props.hover))
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+const stripedBoolean = computed<boolean>(() => resolveBooleanish(props.striped))
+
 const classes = computed(() => [
   'table',
   {
     [`align-${props.align}`]: props.align,
     [`table-${props.variant}`]: props.variant,
-    'table-striped': props.striped,
-    'table-hover': props.hover,
-    'table-dark': props.dark,
-    'table-bordered': props.bordered,
+    'table-striped': stripedBoolean.value,
+    'table-hover': hoverBoolean.value,
+    'table-dark': darkBoolean.value,
+    'table-bordered': borderedBoolean.value,
     [`border-${props.borderVariant}`]: props.borderVariant,
-    'table-borderless': props.borderless,
-    'table-sm': props.small,
-    'caption-top': props.captionTop,
+    'table-borderless': borderlessBoolean.value,
+    'table-sm': smallBoolean.value,
+    'caption-top': captionTopBoolean.value,
   },
 ])
 

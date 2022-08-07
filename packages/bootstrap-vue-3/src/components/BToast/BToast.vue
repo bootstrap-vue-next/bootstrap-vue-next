@@ -11,8 +11,8 @@ import {
   VNode,
   watch,
 } from 'vue'
-import {isLink, normalizeSlot, requestAF, toInteger} from '../../utils'
-import {ColorVariant} from '../../types'
+import {isLink, normalizeSlot, requestAF, resolveBooleanish, toInteger} from '../../utils'
+import {Booleanish, ColorVariant} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BButtonClose from '../BButton/BCloseButton.vue'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
@@ -29,24 +29,40 @@ export default defineComponent({
     body: {type: [Object, String] as PropType<BodyProp>},
     headerClass: {type: String},
     headerTag: {type: String, default: 'div'},
-    animation: {type: Boolean, default: true},
+    animation: {type: Boolean as PropType<Booleanish>, default: true},
     id: {type: String},
     // Switches role to 'status' and aria-live to 'polite'
-    isStatus: {type: Boolean, default: false},
-    autoHide: {type: Boolean, default: true},
-    noCloseButton: {type: Boolean, default: false},
-    noFade: {type: Boolean, default: false},
-    noHoverPause: {type: Boolean, default: false},
-    solid: {type: Boolean, default: false},
+    isStatus: {type: Boolean as PropType<Booleanish>, default: false},
+    autoHide: {type: Boolean as PropType<Booleanish>, default: true},
+    noCloseButton: {type: Boolean as PropType<Booleanish>, default: false},
+    noFade: {type: Boolean as PropType<Booleanish>, default: false},
+    noHoverPause: {type: Boolean as PropType<Booleanish>, default: false},
+    solid: {type: Boolean as PropType<Booleanish>, default: false},
     // Render the toast in place, rather than in a portal-target
-    static: {type: Boolean, default: false},
+    static: {type: Boolean as PropType<Booleanish>, default: false},
     title: {type: String},
-    modelValue: {type: Boolean, default: false},
+    modelValue: {type: Boolean as PropType<Booleanish>, default: false},
     toastClass: {type: Array as PropType<Array<string>>},
     variant: {type: String as PropType<ColorVariant>},
   },
   emits: ['destroyed', 'update:modelValue'],
   setup(props, {emit, slots}) {
+    // TODO animation is never used
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const animationBoolean = computed<boolean>(() => resolveBooleanish(props.animation))
+    const isStatusBoolean = computed<boolean>(() => resolveBooleanish(props.isStatus))
+    const autoHideBoolean = computed<boolean>(() => resolveBooleanish(props.autoHide))
+    const noCloseButtonBoolean = computed<boolean>(() => resolveBooleanish(props.noCloseButton))
+    const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
+    const noHoverPauseBoolean = computed<boolean>(() => resolveBooleanish(props.noHoverPause))
+    // TODO solid is never used
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const solidBoolean = computed<boolean>(() => resolveBooleanish(props.solid))
+    // TODO static is never used
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const staticBoolean = computed<boolean>(() => resolveBooleanish(props.static))
+    const modelValueBoolean = computed<boolean>(() => resolveBooleanish(props.modelValue))
+
     const isTransitioning = ref(false)
     const isHiding = ref(false)
     const localShow = ref(false)
@@ -71,7 +87,7 @@ export default defineComponent({
     )
 
     const hide = () => {
-      if (props.modelValue) {
+      if (modelValueBoolean.value) {
         dismissStarted = resumeDismiss = 0
         clearDismissTimer()
         isHiding.value = true
@@ -97,7 +113,7 @@ export default defineComponent({
     }
 
     const onPause = () => {
-      if (!props.autoHide || props.noHoverPause || !dismissTimer || resumeDismiss) {
+      if (!autoHideBoolean.value || noHoverPauseBoolean.value || !dismissTimer || resumeDismiss) {
         return
       }
 
@@ -110,7 +126,7 @@ export default defineComponent({
     }
 
     const onUnPause = () => {
-      if (!props.autoHide || props.noHoverPause || !resumeDismiss) {
+      if (!autoHideBoolean.value || noHoverPauseBoolean.value || !resumeDismiss) {
         resumeDismiss = dismissStarted = 0
       }
 
@@ -118,7 +134,7 @@ export default defineComponent({
     }
 
     watch(
-      () => props.modelValue,
+      () => modelValueBoolean.value,
       (newValue) => {
         newValue ? show() : hide()
       }
@@ -126,7 +142,7 @@ export default defineComponent({
 
     const startDismissTimer = () => {
       clearDismissTimer()
-      if (props.autoHide) {
+      if (autoHideBoolean.value) {
         dismissTimer = setTimeout(hide, resumeDismiss || computedDuration.value)
         dismissStarted = Date.now()
         resumeDismiss = 0
@@ -156,7 +172,7 @@ export default defineComponent({
     onUnmounted(() => {
       //if there is time left on autoHide or no autoHide then keep toast alive
       clearDismissTimer()
-      if (!props.autoHide) {
+      if (!autoHideBoolean.value) {
         return
       }
 
@@ -165,7 +181,7 @@ export default defineComponent({
 
     onMounted(() => {
       nextTick(() => {
-        if (props.modelValue) {
+        if (modelValueBoolean.value) {
           requestAF(() => {
             show()
           })
@@ -193,7 +209,7 @@ export default defineComponent({
           $headerContent.push(h('strong', {class: 'me-auto'}, props.title))
         }
 
-        if (!props.noCloseButton && $headerContent.length !== 0) {
+        if (!noCloseButtonBoolean.value && $headerContent.length !== 0) {
           $headerContent.push(
             h(BButtonClose, {
               class: ['btn-close'],
@@ -242,8 +258,8 @@ export default defineComponent({
         {
           'class': ['b-toast'],
           'id': props.id,
-          'role': isHiding.value ? null : props.isStatus ? 'status' : 'alert',
-          'aria-live': isHiding.value ? null : props.isStatus ? 'polite' : 'assertive',
+          'role': isHiding.value ? null : isStatusBoolean.value ? 'status' : 'alert',
+          'aria-live': isHiding.value ? null : isStatusBoolean.value ? 'polite' : 'assertive',
           'aria-atomic': isHiding.value ? null : 'true',
           'onmouseenter': onPause,
           'onmouseleave': onUnPause,
@@ -252,7 +268,7 @@ export default defineComponent({
           h(
             BTransition,
             {
-              noFade: props.noFade,
+              noFade: noFadeBoolean.value,
               onAfterEnter: OnAfterEnter,
               onBeforeEnter: OnBeforeEnter,
               onAfterLeave: OnAfterLeave,

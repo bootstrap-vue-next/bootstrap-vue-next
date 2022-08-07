@@ -1,7 +1,7 @@
 <script lang="ts">
-import {TransitionMode} from '../../types'
-import {isPlainObject} from '../../utils'
-import {defineComponent, h, PropType, ref, Transition} from 'vue'
+import {Booleanish, TransitionMode} from '../../types'
+import {isPlainObject, resolveBooleanish} from '../../utils'
+import {computed, defineComponent, h, PropType, ref, Transition} from 'vue'
 
 const NO_FADE_PROPS = {
   name: '',
@@ -21,16 +21,19 @@ const FADE_PROPS = {
 
 export default defineComponent({
   props: {
-    appear: {type: Boolean, default: false},
+    appear: {type: Boolean as PropType<Booleanish>, default: false},
     mode: {type: String as PropType<TransitionMode>, required: false},
-    noFade: {type: Boolean, default: false},
+    noFade: {type: Boolean as PropType<Booleanish>, default: false},
     transProps: {type: Object, required: false},
   },
   setup(props, {slots}) {
+    const appearBoolean = computed<boolean>(() => resolveBooleanish(props.appear))
+    const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
+
     const transProperties = ref(props.transProps)
     if (!isPlainObject(transProperties.value)) {
-      transProperties.value = props.noFade ? NO_FADE_PROPS : FADE_PROPS
-      if (props.appear) {
+      transProperties.value = noFadeBoolean.value ? NO_FADE_PROPS : FADE_PROPS
+      if (appearBoolean.value) {
         // Default the appear classes to equal the enter classes
         transProperties.value = {
           ...transProperties.value,
