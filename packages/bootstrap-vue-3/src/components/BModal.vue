@@ -276,6 +276,24 @@ onMounted(() => {
 })
 
 watch(
+  () => props.noCloseOnBackdrop,
+  (newValue) => {
+    ;(instance.value as unknown as {_config: Modal.Options})._config.backdrop = props.hideBackdrop
+      ? false
+      : newValue
+      ? 'static'
+      : !props.hideBackdrop
+  }
+)
+
+watch(
+  () => props.noCloseOnEsc,
+  (newValue) => {
+    ;(instance.value as unknown as {_config: Modal.Options})._config.keyboard = !newValue
+  }
+)
+
+watch(
   () => modelValueBoolean.value,
   (value) => {
     if (value) {
