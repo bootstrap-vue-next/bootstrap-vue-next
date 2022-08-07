@@ -42,7 +42,7 @@ In order to use this library you have to install these packages:
 
 ### Installation - Vue.js
 
-To install this library you can use Yarn or NPM:
+To install this library you can use Yarn, NPM, or PNPM:
 
 <CodeGroup>
   <CodeGroupItem title="YARN" active>
@@ -92,7 +92,7 @@ app.mount('#app')
 
 As with the Vue.js installation.
 
-In your Nuxt3 application, install `bootstrap-vue-3`
+In your Nuxt3 application, install the necessary packages for `bootstrap-vue-3`
 
 <CodeGroup>
   <CodeGroupItem title="YARN" active>
