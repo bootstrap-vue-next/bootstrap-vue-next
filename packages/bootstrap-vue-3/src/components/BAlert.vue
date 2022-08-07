@@ -2,7 +2,7 @@
   <div v-if="isAlertVisible" ref="element" class="alert" role="alert" :class="classes">
     <slot />
     <button
-      v-if="dismissible"
+      v-if="dismissibleBoolean"
       type="button"
       class="btn-close"
       data-bs-dismiss="alert"
@@ -14,17 +14,17 @@
 
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
-import type {ColorVariant} from '../types'
+import type {Booleanish, ColorVariant} from '../types'
 import {computed, onBeforeUnmount, ref, watch} from 'vue'
 import Alert from 'bootstrap/js/dist/alert'
-import {toInteger} from '../utils'
+import {resolveBooleanish, toInteger} from '../utils'
 
 interface BAlertProps {
   dismissLabel?: string
-  dismissible?: boolean
-  fade?: boolean
+  dismissible?: Booleanish
+  fade?: Booleanish
   modelValue?: boolean | number
-  show?: boolean
+  show?: Booleanish
   variant?: ColorVariant
 }
 
@@ -36,6 +36,12 @@ const props = withDefaults(defineProps<BAlertProps>(), {
   show: false,
   variant: 'info',
 })
+
+const dismissibleBoolean = computed<boolean>(() => resolveBooleanish(props.dismissible))
+// TODO fade is never used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const fadeBoolean = computed<boolean>(() => resolveBooleanish(props.fade))
+const showBoolean = computed<boolean>(() => resolveBooleanish(props.show))
 
 interface BAlertEmits {
   (e: 'dismissed'): void
@@ -50,7 +56,8 @@ const instance = ref<Alert>()
 const classes = computed(() => ({
   [`alert-${props.variant}`]: props.variant,
   'show': props.modelValue,
-  'alert-dismissible': props.dismissible,
+  'alert-dismissible': dismissibleBoolean.value,
+  // TODO it seems like fade is probably used here
   'fade': props.modelValue,
 }))
 
@@ -72,7 +79,7 @@ const clearCountDownInterval = (): void => {
 }
 
 const countDown = ref<number>(parseCountDown(props.modelValue))
-const isAlertVisible = computed<boolean>(() => !!props.modelValue || props.show)
+const isAlertVisible = computed<boolean>(() => !!props.modelValue || showBoolean.value)
 
 onBeforeUnmount((): void => {
   clearCountDownInterval()
@@ -95,7 +102,7 @@ const parsedModelValue = computed<boolean>(() => {
 
 const handleShowAndModelChanged = (): void => {
   countDown.value = parseCountDown(props.modelValue)
-  if ((parsedModelValue.value || props.show) && !instance.value)
+  if ((parsedModelValue.value || showBoolean.value) && !instance.value)
     instance.value = new Alert(element.value as HTMLElement)
 }
 
@@ -109,7 +116,7 @@ const dismissClicked = (): void => {
 }
 
 watch(() => props.modelValue, handleShowAndModelChanged)
-watch(() => props.show, handleShowAndModelChanged)
+watch(() => showBoolean.value, handleShowAndModelChanged)
 
 watch(countDown, (newValue) => {
   clearCountDownInterval()

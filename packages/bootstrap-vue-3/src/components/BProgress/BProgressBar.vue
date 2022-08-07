@@ -1,38 +1,44 @@
 <script lang="ts">
-import type {ColorVariant} from '../types'
-import type {BProgressParentData} from '../types/components'
+import type {Booleanish, ColorVariant} from '../../types'
+import type {BProgressParentData} from '../../types/components'
+import {resolveBooleanish} from '../../utils'
 import {computed, defineComponent, h, inject, PropType} from 'vue'
 import {injectionKey} from './BProgress.vue'
 
 export default defineComponent({
   props: {
-    animated: {type: Boolean, default: false},
+    animated: {type: Boolean as PropType<Booleanish>, default: false},
     label: {type: String},
     labelHtml: {type: String},
     max: {type: [Number, String]},
     precision: {type: [Number, String], default: 0},
-    showProgress: {type: Boolean, default: false},
-    showValue: {type: Boolean, default: false},
-    striped: {type: Boolean, default: false},
+    showProgress: {type: Boolean as PropType<Booleanish>, default: false},
+    showValue: {type: Boolean as PropType<Booleanish>, default: false},
+    striped: {type: Boolean as PropType<Booleanish>, default: false},
     value: {type: [Number, String], default: 0},
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props, {slots}) {
+    const animatedBoolean = computed<boolean>(() => resolveBooleanish(props.animated))
+    const showProgressBoolean = computed<boolean>(() => resolveBooleanish(props.showProgress))
+    const showValueBoolean = computed<boolean>(() => resolveBooleanish(props.showValue))
+    const stripedBoolean = computed<boolean>(() => resolveBooleanish(props.striped))
+
     const parent = inject<BProgressParentData>(injectionKey)
 
     const classes = computed(() => ({
-      'progress-bar-animated': props.animated || parent?.animated,
+      'progress-bar-animated': animatedBoolean.value || parent?.animated,
       'progress-bar-striped':
-        props.striped || parent?.striped || props.animated || parent?.animated,
+        stripedBoolean.value || parent?.striped || animatedBoolean.value || parent?.animated,
       [`bg-${props.variant}`]: props.variant,
     }))
 
     const computedLabel = computed<string>(() => {
-      if (props.showValue || parent?.showValue) {
+      if (showValueBoolean.value || parent?.showValue) {
         return parseFloat(props.value as string).toFixed(props.precision as number)
       }
 
-      if (props.showProgress || parent?.showProgress) {
+      if (showProgressBoolean.value || parent?.showProgress) {
         const progress = (
           ((props.value as number) * 100) /
           parseInt((props.max || 100) as string)

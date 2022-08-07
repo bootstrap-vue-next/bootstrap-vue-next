@@ -3,7 +3,7 @@
   <div
     :id="computedId"
     class="carousel-item"
-    :class="{active}"
+    :class="{active: activeBoolean}"
     :data-bs-interval="interval"
     :style="computedAttr"
   >
@@ -14,7 +14,7 @@
         :src="imgSrc"
         :width="imgWidth || parentWidth"
         :height="imgHeight || parentHeight"
-        :blank="imgBlank"
+        :blank="imgBlankBoolean"
         :blank-color="imgBlankColor"
       />
     </slot>
@@ -41,6 +41,8 @@
 // import type {BCarouselSlideProps} from '../../types/components'
 import {useId} from '../../composables'
 import {computed, inject} from 'vue'
+import {resolveBooleanish} from '../../utils'
+import type {Booleanish} from '../../types'
 import type {BCarouselParentData} from '../../types/components'
 import {injectionKey} from './BCarousel.vue'
 
@@ -49,7 +51,7 @@ interface BCarouselSlideProps {
   imgHeight?: string
   imgWidth?: string
   interval?: string | number
-  active?: boolean
+  active?: Booleanish
   background?: string
   caption?: string
   captionHtml?: string
@@ -58,7 +60,7 @@ interface BCarouselSlideProps {
   contentVisibleUp?: string
   id?: string
   imgAlt?: string
-  imgBlank?: boolean
+  imgBlank?: Booleanish
   imgBlankColor?: string
   text?: string
   textHtml?: string
@@ -74,11 +76,14 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
   textTag: 'p',
 })
 
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const imgBlankBoolean = computed<boolean>(() => resolveBooleanish(props.imgBlank))
+
 const parentData = inject<BCarouselParentData>(injectionKey, {})
 const computedId = useId(props.id, 'accordion')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const img = computed<string | true | undefined>(() =>
-  props.imgBlank ? props.imgBlank : props.imgSrc
+  imgBlankBoolean.value ? imgBlankBoolean.value : props.imgSrc
 )
 
 const computedAttr = computed(() => ({

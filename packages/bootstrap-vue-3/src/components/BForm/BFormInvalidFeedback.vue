@@ -7,30 +7,40 @@
 <script setup lang="ts">
 // import type {BFormInvalidFeedbackProps} from '../../types/components'
 import {computed} from 'vue'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormInvalidFeedbackProps {
   ariaLive?: string
-  forceShow?: boolean
+  forceShow?: Booleanish
   id?: string
   role?: string
-  state?: boolean
+  state?: Booleanish
   tag?: string
-  tooltip?: boolean
+  tooltip?: Booleanish
 }
 
 const props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
   forceShow: false,
-  state: undefined,
   tag: 'div',
+  state: undefined,
   tooltip: false,
 })
 
-const computedShow = computed<boolean>(() => props.forceShow === true || props.state === false)
+const forceShowBoolean = computed<boolean>(() => resolveBooleanish(props.forceShow))
+const stateBoolean = computed<boolean | undefined>(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
+const tooltipBoolean = computed<boolean>(() => resolveBooleanish(props.tooltip))
+
+const computedShow = computed<boolean>(
+  () => forceShowBoolean.value === true || stateBoolean.value === false
+)
 
 const classes = computed(() => ({
   'd-block': computedShow.value,
-  'invalid-feedback': !props.tooltip,
-  'invalid-tooltip': props.tooltip,
+  'invalid-feedback': !tooltipBoolean.value,
+  'invalid-tooltip': tooltipBoolean.value,
 }))
 
 const attrs = computed(() => ({

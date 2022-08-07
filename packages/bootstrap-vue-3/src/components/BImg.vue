@@ -4,24 +4,26 @@
 
 <script setup lang="ts">
 // import type {BImgProps} from '../types/components'
+import type {Booleanish} from '../types'
+import {resolveBooleanish} from '../utils'
 import {computed} from 'vue'
 
 interface BImgProps {
   alt?: string
-  blank?: boolean
+  blank?: Booleanish
   blankColor?: string
-  block?: boolean
-  center?: boolean
-  fluid?: boolean
-  fluidGrow?: boolean
+  block?: Booleanish
+  center?: Booleanish
+  fluid?: Booleanish
+  fluidGrow?: Booleanish
   height?: number | string
-  left?: boolean
-  right?: boolean
+  left?: Booleanish
+  right?: Booleanish
   rounded?: boolean | string
   sizes?: string | Array<string>
   src?: string
   srcset?: string | Array<string>
-  thumbnail?: boolean
+  thumbnail?: Booleanish
   width?: number | string
 }
 
@@ -38,6 +40,15 @@ const props = withDefaults(defineProps<BImgProps>(), {
   rounded: false,
   thumbnail: false,
 })
+
+const blankBoolean = computed<boolean>(() => resolveBooleanish(props.blank))
+const blockBoolean = computed<boolean>(() => resolveBooleanish(props.block))
+const centerBoolean = computed<boolean>(() => resolveBooleanish(props.center))
+const fluidBoolean = computed<boolean>(() => resolveBooleanish(props.fluid))
+const fluidGrowBoolean = computed<boolean>(() => resolveBooleanish(props.fluidGrow))
+const leftBoolean = computed<boolean>(() => resolveBooleanish(props.left))
+const rightBoolean = computed<boolean>(() => resolveBooleanish(props.right))
+const thumbnailBoolean = computed<boolean>(() => resolveBooleanish(props.thumbnail))
 
 const BLANK_TEMPLATE =
   '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +
@@ -79,7 +90,7 @@ const attrs = computed(() => {
       .join(',')
   else if (Array.isArray(props.sizes)) sizes = props.sizes.filter((x) => x).join(',')
 
-  if (props.blank) {
+  if (blankBoolean.value) {
     if (!height && width) {
       height = width
     } else if (!width && height) {
@@ -107,20 +118,19 @@ const attrs = computed(() => {
 
 const classes = computed(() => {
   let align = ''
-  // eslint-disable-next-line prefer-destructuring
-  let block = props.block
-  if (props.left) {
+  let block = blockBoolean.value
+  if (leftBoolean.value) {
     align = 'float-start'
-  } else if (props.right) {
+  } else if (rightBoolean.value) {
     align = 'float-end'
-  } else if (props.center) {
+  } else if (centerBoolean.value) {
     align = 'mx-auto'
     block = true
   }
   return {
-    'img-thumbnail': props.thumbnail,
-    'img-fluid': props.fluid || props.fluidGrow,
-    'w-100': props.fluidGrow,
+    'img-thumbnail': thumbnailBoolean.value,
+    'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
+    'w-100': fluidGrowBoolean.value,
     'rounded': props.rounded === '' || props.rounded === true,
     [`rounded-${props.rounded}`]: typeof props.rounded === 'string' && props.rounded !== '',
     [align]: !!align,

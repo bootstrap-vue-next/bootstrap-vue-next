@@ -7,20 +7,20 @@
       v-model="localValue"
       :class="inputClasses"
       type="checkbox"
-      :disabled="disabled"
-      :required="!!name && !!required"
+      :disabled="disabledBoolean"
+      :required="!!name && !!requiredBoolean"
       :name="name"
       :form="form"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
-      :aria-required="name && required ? 'true' : undefined"
+      :aria-required="name && requiredBoolean ? 'true' : undefined"
       :value="value"
-      :indeterminate="indeterminate"
+      :indeterminate="indeterminateBoolean"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
     <label
-      v-if="$slots.default || !plain"
+      v-if="$slots.default || !plainBoolean"
       :for="computedId"
       :class="[labelClasses, {active: isChecked, focus: isFocused}]"
     >
@@ -33,25 +33,26 @@
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
 import {computed, onMounted, ref} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
-import type {ButtonVariant, InputSize} from '../../types'
+import type {Booleanish, ButtonVariant, InputSize} from '../../types'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormCheckboxProps {
   ariaLabel?: string
   ariaLabelledBy?: string
   form?: string
-  indeterminate?: boolean
+  indeterminate?: Booleanish
   name?: string
   id?: string
-  autofocus?: boolean
-  plain?: boolean
-  button?: boolean
-  switch?: boolean
-  disabled?: boolean
+  autofocus?: Booleanish
+  plain?: Booleanish
+  button?: Booleanish
+  switch?: Booleanish
+  disabled?: Booleanish
   buttonVariant?: ButtonVariant
-  inline?: boolean
-  required?: boolean
+  inline?: Booleanish
+  required?: Booleanish
   size?: InputSize
-  state?: boolean
+  state?: Booleanish
   uncheckedValue?:
     | Array<unknown>
     | Set<unknown>
@@ -64,21 +65,45 @@ interface BFormCheckboxProps {
 }
 
 const props = withDefaults(defineProps<BFormCheckboxProps>(), {
-  id: undefined,
   autofocus: false,
   plain: false,
   button: false,
+  id: undefined,
+  required: undefined,
+  state: undefined,
+  modelValue: undefined,
   switch: false,
   disabled: false,
   buttonVariant: 'secondary',
   inline: false,
-  required: undefined,
   size: 'md',
-  state: undefined,
   uncheckedValue: false,
   value: true,
-  modelValue: undefined,
 })
+
+const indeterminateBoolean = computed<boolean | undefined>(() =>
+  props.indeterminate ? resolveBooleanish(props.indeterminate) : undefined
+)
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
+const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+// TODO button is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
+// TODO switch is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const switchBoolean = computed<boolean>(() => resolveBooleanish(props.switch))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+// TODO inline is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
+const requiredBoolean = computed<boolean | undefined>(() =>
+  props.required !== undefined ? resolveBooleanish(props.required) : undefined
+)
+// TODO state is not used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const stateBoolean = computed<boolean | undefined>(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
 
 interface BFormCheckboxEmits {
   (e: 'update:modelValue', value: unknown): void
@@ -139,7 +164,7 @@ const labelClasses = getLabelClasses(props)
 
 // TODO: make tests compatible with the v-focus directive
 onMounted((): void => {
-  if (props.autofocus) {
+  if (autofocusBoolean.value) {
     input.value.focus()
   }
 })

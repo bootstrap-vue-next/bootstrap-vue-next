@@ -1,18 +1,20 @@
 <template>
-  <form :id="id" :novalidate="novalidate" :class="classes" @submit.prevent="submitted">
+  <form :id="id" :novalidate="novalidateBoolean" :class="classes" @submit.prevent="submitted">
     <slot />
   </form>
 </template>
 
 <script setup lang="ts">
 // import type {BFormEmits, BFormProps} from '../../types/components'
+import type {Booleanish} from '../../types'
+import {resolveBooleanish} from '../../utils'
 import {computed} from 'vue'
 
 interface BFormProps {
   id?: string
-  floating?: boolean
-  novalidate?: boolean
-  validated?: boolean
+  floating?: Booleanish
+  novalidate?: Booleanish
+  validated?: Booleanish
 }
 
 const props = withDefaults(defineProps<BFormProps>(), {
@@ -21,6 +23,10 @@ const props = withDefaults(defineProps<BFormProps>(), {
   validated: false,
 })
 
+const floatingBoolean = computed<boolean>(() => resolveBooleanish(props.floating))
+const novalidateBoolean = computed<boolean>(() => resolveBooleanish(props.novalidate))
+const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
+
 interface BFormEmits {
   (e: 'submit', value: Event): void
 }
@@ -28,8 +34,8 @@ interface BFormEmits {
 const emit = defineEmits<BFormEmits>()
 
 const classes = computed(() => ({
-  'form-floating': props.floating,
-  'was-validated': props.validated,
+  'form-floating': floatingBoolean.value,
+  'was-validated': validatedBoolean.value,
 }))
 
 const submitted = (e: Event): void => emit('submit', e)

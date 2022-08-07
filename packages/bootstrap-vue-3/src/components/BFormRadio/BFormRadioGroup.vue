@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 // import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
-import type {ButtonVariant, Size} from '../../types'
+import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {computed, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import {
@@ -31,6 +31,7 @@ import {
   slotsToElements,
   useId,
 } from '../../composables'
+import {resolveBooleanish} from '../../utils'
 
 interface BFormRadioGroupProps {
   size?: Size
@@ -39,28 +40,29 @@ interface BFormRadioGroupProps {
   name?: string
   modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
   ariaInvalid?: boolean | string
-  autofocus?: boolean
+  autofocus?: Booleanish
   buttonVariant?: ButtonVariant
-  buttons?: boolean
-  disabled?: boolean
+  buttons?: Booleanish
+  disabled?: Booleanish
   disabledField?: string
   htmlField?: string
   options?: Array<unknown> // Objects are not supported yet
-  plain?: boolean
-  required?: boolean
-  stacked?: boolean
-  state?: boolean
+  plain?: Booleanish
+  required?: Booleanish
+  stacked?: Booleanish
+  state?: Booleanish
   textField?: string
-  validated?: boolean
+  validated?: Booleanish
   valueField?: string
 }
 
 const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   modelValue: '',
-  ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
   buttons: false,
+  ariaInvalid: undefined,
+  state: undefined,
   disabled: false,
   disabledField: 'disabled',
   htmlField: 'html',
@@ -68,11 +70,35 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   plain: false,
   required: false,
   stacked: false,
-  state: undefined,
   textField: 'text',
   validated: false,
   valueField: 'value',
 })
+
+// TODO autofocus is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
+// TODO buttons is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const buttonsBoolean = computed<boolean>(() => resolveBooleanish(props.buttons))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+// TODO plain is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+// TODO required is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
+// TODO stacked is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const stackedBoolean = computed<boolean>(() => resolveBooleanish(props.stacked))
+// TODO state is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const stateBoolean = computed<boolean | undefined>(() =>
+  props.state !== undefined ? resolveBooleanish(props.state) : undefined
+)
+// TODO validated is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
 
 interface BFormRadioGroupEmits {
   (e: 'input', value: unknown): void
@@ -98,9 +124,9 @@ const localValue = computed<string | boolean | Array<unknown> | Record<string, u
 })
 
 const checkboxList = computed<Array<any>>(() =>
-  (slots.first ? slotsToElements(slots.first(), slotsName, props.disabled) : [])
+  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : [])
     .concat(props.options.map((e) => optionToElement(e, props)))
-    .concat(slots.default ? slotsToElements(slots.default(), slotsName, props.disabled) : [])
+    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : [])
     .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
     .map((e) => ({
       ...e,

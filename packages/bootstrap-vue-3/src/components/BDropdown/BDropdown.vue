@@ -4,8 +4,8 @@
       :id="computedId"
       :variant="splitVariant || variant"
       :size="size"
-      :class="[buttonClasses, split ? splitClass : toggleClass]"
-      :disabled="disabled"
+      :class="[buttonClasses, splitBoolean ? splitClass : toggleClass]"
+      :disabled="disabledBoolean"
       :type="splitButtonType"
       v-bind="buttonAttr"
       @click="onSplitClick"
@@ -14,10 +14,10 @@
       <slot name="button-content" />
     </b-button>
     <b-button
-      v-if="split"
+      v-if="splitBoolean"
       :variant="variant"
       :size="size"
-      :disabled="disabled"
+      :disabled="disabledBoolean"
       v-bind="splitAttr"
       :class="toggleClass"
       class="dropdown-toggle-split dropdown-toggle"
@@ -46,8 +46,8 @@ import type Popper from '@popperjs/core'
 import Dropdown from 'bootstrap/js/dist/dropdown'
 import {ComponentPublicInstance, computed, onMounted, ref} from 'vue'
 import BButton from '../BButton/BButton.vue'
-import type {ButtonType, ButtonVariant, Size} from '../../types'
-import {mergeDeep} from '../../utils'
+import type {Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
+import {mergeDeep, resolveBooleanish} from '../../utils'
 import {useEventListener, useId} from '../../composables'
 
 // TODO it seems that some of these props are actually just Popper options
@@ -61,22 +61,22 @@ interface BDropdownProps {
   text?: string
   toggleClass?: Array<unknown> | Record<string, unknown> | string
   autoClose?: boolean | 'inside' | 'outside'
-  block?: boolean
+  block?: Booleanish
   boundary?: Popper.Boundary
-  dark?: boolean
-  disabled?: boolean
-  dropup?: boolean
-  dropright?: boolean
-  dropleft?: boolean
-  noFlip?: boolean
+  dark?: Booleanish
+  disabled?: Booleanish
+  dropUp?: Booleanish
+  dropRight?: Booleanish
+  dropLeft?: Booleanish
+  noFlip?: Booleanish
   offset?: number | string
   popperOpts?: Record<string, unknown>
-  right?: boolean
+  right?: Booleanish
   role?: string
-  split?: boolean
+  split?: Booleanish
   splitButtonType?: ButtonType
   splitHref?: string
-  noCaret?: boolean
+  noCaret?: Booleanish
   toggleText?: string
   variant?: ButtonVariant
 }
@@ -87,21 +87,31 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   boundary: 'clippingParents',
   dark: false,
   disabled: false,
-  dropup: false,
-  dropright: false,
-  dropleft: false,
+  dropUp: false,
+  dropRight: false,
+  dropLeft: false,
   noFlip: false,
+  splitHref: undefined,
   offset: 0,
   popperOpts: () => ({}),
   right: false,
   role: 'menu',
   split: false,
   splitButtonType: 'button',
-  splitHref: undefined,
   noCaret: false,
   toggleText: 'Toggle dropdown',
   variant: 'secondary',
 })
+
+const blockBoolean = computed<boolean>(() => resolveBooleanish(props.block))
+const darkBoolean = computed<boolean>(() => resolveBooleanish(props.dark))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const dropUpBoolean = computed<boolean>(() => resolveBooleanish(props.dropUp))
+const dropRightBoolean = computed<boolean>(() => resolveBooleanish(props.dropRight))
+const dropLeftBoolean = computed<boolean>(() => resolveBooleanish(props.dropLeft))
+const rightBoolean = computed<boolean>(() => resolveBooleanish(props.right))
+const splitBoolean = computed<boolean>(() => resolveBooleanish(props.split))
+const noCaretBoolean = computed<boolean>(() => resolveBooleanish(props.noCaret))
 
 interface BDropdownEmits {
   (e: 'show'): void
@@ -125,36 +135,36 @@ useEventListener(parent, 'hide.bs.dropdown', () => emit('hide'))
 useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'))
 
 const onSplitClick = (event: Event) => {
-  if (props.split) {
+  if (splitBoolean.value) {
     emit('click', event)
   }
 }
 
 const classes = computed(() => ({
-  'd-grid': props.block,
-  'd-flex': props.block && props.split,
+  'd-grid': blockBoolean.value,
+  'd-flex': blockBoolean.value && splitBoolean.value,
 }))
 
 const buttonClasses = computed(() => ({
-  'dropdown-toggle': !props.split,
-  'dropdown-toggle-no-caret': props.noCaret && !props.split,
-  'w-100': props.split && props.block,
+  'dropdown-toggle': !splitBoolean.value,
+  'dropdown-toggle-no-caret': noCaretBoolean.value && !splitBoolean.value,
+  'w-100': splitBoolean.value && blockBoolean.value,
 }))
 
 const dropdownMenuClasses = computed(() => ({
-  'dropdown-menu-dark': props.dark,
-  'dropdown-menu-right': props.right,
+  'dropdown-menu-dark': darkBoolean.value,
+  'dropdown-menu-right': rightBoolean.value,
 }))
 
 const buttonAttr = computed(() => ({
-  'data-bs-toggle': props.split ? undefined : 'dropdown',
-  'aria-expanded': props.split ? undefined : false,
-  'ref': props.split ? undefined : dropdown,
-  'href': props.split ? props.splitHref : undefined,
+  'data-bs-toggle': splitBoolean.value ? undefined : 'dropdown',
+  'aria-expanded': splitBoolean.value ? undefined : false,
+  'ref': splitBoolean.value ? undefined : dropdown,
+  'href': splitBoolean.value ? props.splitHref : undefined,
 }))
 
 const splitAttr = computed(() => ({
-  ref: props.split ? dropdown : undefined,
+  ref: splitBoolean.value ? dropdown : undefined,
 }))
 
 const hide = (): void => {
@@ -166,7 +176,7 @@ onMounted((): void => {
     autoClose: props.autoClose,
     boundary: props.boundary,
     offset: props.offset ? props.offset.toString() : '',
-    reference: props.offset || props.split ? 'parent' : 'toggle',
+    reference: props.offset || splitBoolean.value ? 'parent' : 'toggle',
     popperConfig: (defaultConfig?: Partial<Popper.Options>) => {
       const dropDownConfig = {
         placement: 'bottom-start',
@@ -182,13 +192,13 @@ onMounted((): void => {
             ],
       }
 
-      if (props.dropup) {
-        dropDownConfig.placement = props.right ? 'top-end' : 'top-start'
-      } else if (props.dropright) {
+      if (dropUpBoolean.value) {
+        dropDownConfig.placement = rightBoolean.value ? 'top-end' : 'top-start'
+      } else if (dropRightBoolean.value) {
         dropDownConfig.placement = 'right-start'
-      } else if (props.dropleft) {
+      } else if (dropLeftBoolean.value) {
         dropDownConfig.placement = 'left-start'
-      } else if (props.right) {
+      } else if (rightBoolean.value) {
         dropDownConfig.placement = 'bottom-end'
       }
       return mergeDeep(defaultConfig, mergeDeep(dropDownConfig, props.popperOpts))

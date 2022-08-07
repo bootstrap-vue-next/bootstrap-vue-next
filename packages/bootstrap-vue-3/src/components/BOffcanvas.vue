@@ -5,8 +5,8 @@
     :class="classes"
     tabindex="-1"
     aria-labelledby="offcanvasLabel"
-    :data-bs-backdrop="backdrop"
-    :data-bs-scroll="bodyScrolling"
+    :data-bs-backdrop="backdropBoolean"
+    :data-bs-scroll="bodyScrollingBoolean"
   >
     <div class="offcanvas-header">
       <h5 id="offcanvasLabel" class="offcanvas-title">
@@ -32,11 +32,13 @@
 import {computed, onMounted, ref, watch} from 'vue'
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
 import {useEventListener} from '../composables'
+import {Booleanish} from '../types'
+import {resolveBooleanish} from '../utils'
 
 interface BOffcanvasProps {
-  modelValue?: boolean
-  bodyScrolling?: boolean
-  backdrop?: boolean
+  modelValue?: Booleanish
+  bodyScrolling?: Booleanish
+  backdrop?: Booleanish
   placement?: string
   title?: string
 }
@@ -47,6 +49,10 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   backdrop: true,
   placement: 'start',
 })
+
+const modelValueBoolean = computed<boolean>(() => resolveBooleanish(props.modelValue))
+const bodyScrollingBoolean = computed<boolean>(() => resolveBooleanish(props.bodyScrolling))
+const backdropBoolean = computed<boolean>(() => resolveBooleanish(props.backdrop))
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void
@@ -77,7 +83,7 @@ useEventListener(element, 'hide.bs.offcanvas', () => {
 onMounted((): void => {
   instance.value = new Offcanvas(element.value as HTMLElement)
 
-  if (props.modelValue) {
+  if (modelValueBoolean.value) {
     instance.value?.show(element.value as HTMLElement)
   }
 })
@@ -87,7 +93,7 @@ const classes = computed(() => ({
 }))
 
 watch(
-  () => props.modelValue,
+  () => modelValueBoolean.value,
   (value) => {
     if (value) {
       instance.value?.show(element.value as HTMLElement)

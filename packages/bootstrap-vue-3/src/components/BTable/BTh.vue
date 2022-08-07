@@ -15,24 +15,28 @@
 </template>
 
 <script setup lang="ts">
+import type {Booleanish, ColorVariant} from '../../types'
+import {resolveBooleanish} from '../../utils'
 import {computed} from 'vue'
 
 interface BThProps {
   colspan?: string | number
   rowspan?: string | number
   stackedHeading?: string
-  stickyColumn?: boolean
-  variant?: string
+  stickyColumn?: Booleanish
+  variant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<BThProps>(), {
   stickyColumn: false,
 })
 
+const stickyColumnBoolean = computed<boolean>(() => resolveBooleanish(props.stickyColumn))
+
 const classes = computed(() => ({
   [`table-${props.variant}`]: props.variant,
-  'b-table-sticky-column': props.stickyColumn,
-  'table-b-table-default': props.stickyColumn && !props.variant,
+  'b-table-sticky-column': stickyColumnBoolean.value,
+  'table-b-table-default': stickyColumnBoolean.value && !props.variant,
 }))
 
 const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))

@@ -8,23 +8,27 @@
 
 <script setup lang="ts">
 // import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '../../types/components'
-import type {ButtonType, ColorVariant} from '../../types'
+import type {Booleanish, ButtonType, ColorVariant} from '../../types'
 import {computed} from 'vue'
+import {resolveBooleanish} from '../../utils'
 
 interface BDropdownItemButtonProps {
   buttonClass?: string | Array<unknown> | Record<string, unknown>
-  active?: boolean
+  active?: Booleanish
   activeClass?: string
-  disabled?: boolean
+  disabled?: Booleanish
   variant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
-  disabled: false,
   variant: undefined,
+  disabled: false,
 })
+
+const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
 
 interface BDropdownItemButtonEmits {
   (e: 'click', value: MouseEvent): void
@@ -33,15 +37,15 @@ interface BDropdownItemButtonEmits {
 const emit = defineEmits<BDropdownItemButtonEmits>()
 
 const classes = computed(() => ({
-  [props.activeClass]: props.active,
-  disabled: props.disabled,
+  [props.activeClass]: activeBoolean.value,
+  disabled: disabledBoolean.value,
   [`text-${props.variant}`]: props.variant,
 }))
 
 const attrs = computed(() => ({
   role: 'menuitem',
   type: 'button' as ButtonType,
-  disabled: props.disabled,
+  disabled: disabledBoolean.value,
 }))
 
 const clicked = (e: MouseEvent): void => emit('click', e)

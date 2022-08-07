@@ -3,14 +3,14 @@
     <div :id="id" ref="element" class="modal" :class="modalClasses" tabindex="-1" v-bind="$attrs">
       <div class="modal-dialog" :class="modalDialogClasses">
         <div class="modal-content" :class="contentClass">
-          <div v-if="!hideHeader" class="modal-header" :class="computedHeaderClasses">
+          <div v-if="!hideHeaderBoolean" class="modal-header" :class="computedHeaderClasses">
             <component :is="titleTag" class="modal-title" :class="computedTitleClasses">
               <slot name="title">
                 {{ title }}
               </slot>
             </component>
             <button
-              v-if="!hideHeaderClose"
+              v-if="!hideHeaderCloseBoolean"
               type="button"
               class="btn-close"
               :class="computedCloseButtonClasses"
@@ -23,10 +23,10 @@
           <div class="modal-body" :class="computedBodyClasses">
             <slot />
           </div>
-          <div v-if="!hideFooter" class="modal-footer" :class="computedFooterClasses">
+          <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">
             <slot name="footer">
               <b-button
-                v-if="!okOnly"
+                v-if="!okOnlyBoolean"
                 type="button"
                 class="btn"
                 data-bs-dismiss="modal"
@@ -60,20 +60,21 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import Modal from 'bootstrap/js/dist/modal'
 import BButton from './BButton/BButton.vue'
+import {resolveBooleanish} from '../utils'
 import {useEventListener} from '../composables'
 import {computed, onMounted, ref, useSlots, watch} from 'vue'
-import type {ColorVariant, InputSize} from '../types'
+import type {Booleanish, ColorVariant, InputSize} from '../types'
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
   bodyClass?: string
   bodyTextVariant?: ColorVariant
-  busy?: boolean
+  busy?: Booleanish
   buttonSize?: InputSize
-  cancelDisabled?: boolean
+  cancelDisabled?: Booleanish
   cancelTitle?: string
   cancelVariant?: ColorVariant
-  centered?: boolean
+  centered?: Booleanish
   contentClass?: string
   dialogClass?: string
   footerBgVariant?: ColorVariant
@@ -85,29 +86,29 @@ interface BModalProps {
   headerBorderVariant?: ColorVariant
   headerClass?: string
   headerCloseLabel?: string
-  headerCloseWhite?: boolean
+  headerCloseWhite?: Booleanish
   headerTextVariant?: ColorVariant
-  hideBackdrop?: boolean
-  hideFooter?: boolean
-  hideHeader?: boolean
-  hideHeaderClose?: boolean
+  hideBackdrop?: Booleanish
+  hideFooter?: Booleanish
+  hideHeader?: Booleanish
+  hideHeaderClose?: Booleanish
   id?: string
   modalClass?: string
-  modelValue?: boolean
-  noCloseOnBackdrop?: boolean
-  noCloseOnEsc?: boolean
-  noFade?: boolean
-  noFocus?: boolean
-  okDisabled?: boolean
-  okOnly?: boolean
+  modelValue?: Booleanish
+  noCloseOnBackdrop?: Booleanish
+  noCloseOnEsc?: Booleanish
+  noFade?: Booleanish
+  noFocus?: Booleanish
+  okDisabled?: Booleanish
+  okOnly?: Booleanish
   okTitle?: string
   okVariant?: ColorVariant
-  scrollable?: boolean
-  show?: boolean
+  scrollable?: Booleanish
+  show?: Booleanish
   size?: string
   title?: string
   titleClass?: string
-  titleSrOnly?: boolean
+  titleSrOnly?: Booleanish
   titleTag?: string
 }
 
@@ -140,6 +141,25 @@ const props = withDefaults(defineProps<BModalProps>(), {
   titleTag: 'h5',
 })
 
+const busyBoolean = computed<boolean>(() => resolveBooleanish(props.busy))
+const cancelDisabledBoolean = computed<boolean>(() => resolveBooleanish(props.cancelDisabled))
+const centeredBoolean = computed<boolean>(() => resolveBooleanish(props.centered))
+const headerCloseWhiteBoolean = computed<boolean>(() => resolveBooleanish(props.headerCloseWhite))
+const hideBackdropBoolean = computed<boolean>(() => resolveBooleanish(props.hideBackdrop))
+const hideFooterBoolean = computed<boolean>(() => resolveBooleanish(props.hideFooter))
+const hideHeaderBoolean = computed<boolean>(() => resolveBooleanish(props.hideHeader))
+const hideHeaderCloseBoolean = computed<boolean>(() => resolveBooleanish(props.hideHeaderClose))
+const modelValueBoolean = computed<boolean>(() => resolveBooleanish(props.modelValue))
+const noCloseOnBackdropBoolean = computed<boolean>(() => resolveBooleanish(props.noCloseOnBackdrop))
+const noCloseOnEscBoolean = computed<boolean>(() => resolveBooleanish(props.noCloseOnEsc))
+const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
+const noFocusBoolean = computed<boolean>(() => resolveBooleanish(props.noFocus))
+const okDisabledBoolean = computed<boolean>(() => resolveBooleanish(props.okDisabled))
+const okOnlyBoolean = computed<boolean>(() => resolveBooleanish(props.okOnly))
+const scrollableBoolean = computed<boolean>(() => resolveBooleanish(props.scrollable))
+const showBoolean = computed<boolean>(() => resolveBooleanish(props.show))
+const titleSrOnlyBoolean = computed<boolean>(() => resolveBooleanish(props.titleSrOnly))
+
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
   (e: 'show', value: Event): void
@@ -159,8 +179,8 @@ const element = ref<HTMLElement>()
 const instance = ref<Modal>()
 const modalClasses = computed(() => [
   {
-    fade: !props.noFade,
-    show: props.show,
+    fade: !noFadeBoolean.value,
+    show: showBoolean.value,
   },
   props.modalClass,
 ])
@@ -170,8 +190,8 @@ const modalDialogClasses = computed(() => [
     [`modal-fullscreen-${props.fullscreen}-down`]:
       typeof props.fullscreen === 'string' ? props.fullscreen : false,
     [`modal-${props.size}`]: props.size,
-    'modal-dialog-centered': props.centered,
-    'modal-dialog-scrollable': props.scrollable,
+    'modal-dialog-centered': centeredBoolean.value,
+    'modal-dialog-scrollable': scrollableBoolean.value,
   },
   props.dialogClass,
 ])
@@ -204,7 +224,7 @@ const computedFooterClasses = computed(() => [
 
 const computedTitleClasses = computed(() => [
   {
-    ['visually-hidden']: props.titleSrOnly,
+    ['visually-hidden']: titleSrOnlyBoolean.value,
   },
   props.titleClass,
 ])
@@ -214,12 +234,12 @@ const computedCloseButtonClasses = computed(() => [
   {
     [`btn-close-content`]: hasHeaderCloseSlot.value,
     [`d-flex`]: hasHeaderCloseSlot.value,
-    [`btn-close-white`]: !hasHeaderCloseSlot.value && props.headerCloseWhite,
+    [`btn-close-white`]: !hasHeaderCloseSlot.value && headerCloseWhiteBoolean.value,
   },
 ])
 
-const disableCancel = computed<boolean>(() => props.cancelDisabled || props.busy)
-const disableOk = computed<boolean>(() => props.okDisabled || props.busy)
+const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
+const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
 
 useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
 useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
@@ -241,18 +261,22 @@ useEventListener(element, 'hide.bs.modal', (e) => {
 
 onMounted(() => {
   instance.value = new Modal(element.value as HTMLElement, {
-    backdrop: props.hideBackdrop ? false : props.noCloseOnBackdrop ? 'static' : !props.hideBackdrop,
-    keyboard: !props.noCloseOnEsc,
-    focus: !props.noFocus,
+    backdrop: hideBackdropBoolean.value
+      ? false
+      : noCloseOnBackdropBoolean.value
+      ? 'static'
+      : !hideBackdropBoolean.value,
+    keyboard: !noCloseOnEscBoolean.value,
+    focus: !noFocusBoolean.value,
   })
 
-  if (props.modelValue) {
+  if (modelValueBoolean.value) {
     instance.value?.show()
   }
 })
 
 watch(
-  () => props.modelValue,
+  () => modelValueBoolean.value,
   (value) => {
     if (value) {
       instance.value?.show()

@@ -1,14 +1,21 @@
 <template>
   <component :is="tag" :id="id" class="tabs" :class="classes">
-    <div v-if="end" class="tab-content" :class="contentClass">
+    <div v-if="endBoolean" class="tab-content" :class="contentClass">
       <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
         <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
       </template>
-      <div v-if="showEmpty" key="bv-empty-tab" class="tab-pane active" :class="{'card-body': card}">
+      <div
+        v-if="showEmpty"
+        key="bv-empty-tab"
+        class="tab-pane active"
+        :class="{'card-body': cardBoolean}"
+      >
         <slot name="empty" />
       </div>
     </div>
-    <div :class="[navWrapperClass, {'card-header': card, 'ms-auto': vertical && end}]">
+    <div
+      :class="[navWrapperClass, {'card-header': cardBoolean, 'ms-auto': vertical && endBoolean}]"
+    >
       <ul class="nav" :class="[navTabsClasses, navClass]" role="tablist">
         <slot name="tabs-start" />
         <li
@@ -38,11 +45,16 @@
         <slot name="tabs-end" />
       </ul>
     </div>
-    <div v-if="!end" class="tab-content" :class="contentClass">
+    <div v-if="!endBoolean" class="tab-content" :class="contentClass">
       <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
         <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
       </template>
-      <div v-if="showEmpty" key="bv-empty-tab" class="tab-pane active" :class="{'card-body': card}">
+      <div
+        v-if="showEmpty"
+        key="bv-empty-tab"
+        class="tab-pane active"
+        :class="{'card-body': cardBoolean}"
+      >
         <slot name="empty" />
       </div>
     </div>
@@ -53,29 +65,29 @@
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, useSlots, watch} from 'vue'
-import {BvEvent, getID, isFunction, mathMax} from '../../utils'
-import type {Alignment} from '../../types'
+import {BvEvent, getID, isFunction, mathMax, resolveBooleanish} from '../../utils'
+import type {Alignment, Booleanish} from '../../types'
 
 interface BTabsProps {
   activeNavItemClass?: Array<unknown> | Record<string, unknown> | string
   activeTabClass?: Array<unknown> | Record<string, unknown> | string
   align?: Alignment
-  card?: boolean
+  card?: Booleanish
   contentClass?: Array<unknown> | Record<string, unknown> | string
-  end?: boolean
-  fill?: boolean
+  end?: Booleanish
+  fill?: Booleanish
   id?: string
-  justified?: boolean
-  lazy?: boolean
+  justified?: Booleanish
+  lazy?: Booleanish
   navClass?: Array<unknown> | Record<string, unknown> | string
   navWrapperClass?: Array<unknown> | Record<string, unknown> | string
-  noFade?: boolean
-  // noKeyNav?: boolean
-  noNavStyle?: boolean
-  pills?: boolean
-  small?: boolean
+  noFade?: Booleanish
+  // noKeyNav?: Booleanish
+  noNavStyle?: Booleanish
+  pills?: Booleanish
+  small?: Booleanish
   tag?: string
-  vertical?: boolean
+  vertical?: Booleanish
   modelValue?: number
 }
 
@@ -100,6 +112,17 @@ const props = withDefaults(defineProps<BTabsProps>(), {
   vertical: false,
   modelValue: -1,
 })
+
+const cardBoolean = computed<boolean>(() => resolveBooleanish(props.card))
+const endBoolean = computed<boolean>(() => resolveBooleanish(props.end))
+const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
+const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
+const lazyBoolean = computed<boolean>(() => resolveBooleanish(props.lazy))
+const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
+const noNavStyleBoolean = computed<boolean>(() => resolveBooleanish(props.noNavStyle))
+const pillsBoolean = computed<boolean>(() => resolveBooleanish(props.pills))
+const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+const verticalBoolean = computed<boolean>(() => resolveBooleanish(props.vertical))
 
 interface BTabsEmits {
   (e: 'update:modelValue', value: number): void
@@ -155,7 +178,7 @@ const tabs = computed(() => {
         ],
         tabClasses: [
           {
-            fade: !props.noFade,
+            fade: !noFadeBoolean.value,
           },
           active && props.activeTabClass ? props.activeTabClass : null,
         ],
@@ -174,18 +197,18 @@ const tabs = computed(() => {
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
 const classes = computed(() => ({
-  'd-flex align-items-start': props.vertical,
+  'd-flex align-items-start': verticalBoolean.value,
 }))
 
 const navTabsClasses = computed(() => ({
-  'nav-pills': props.pills,
-  'flex-column me-3': props.vertical,
+  'nav-pills': pillsBoolean.value,
+  'flex-column me-3': verticalBoolean.value,
   [`justify-content-${props.align}`]: !!props.align,
-  'nav-fill': props.fill,
-  'card-header-tabs': props.card,
-  'nav-justified': props.justified,
-  'nav-tabs': !props.noNavStyle && !props.pills,
-  'small': props.small,
+  'nav-fill': fillBoolean.value,
+  'card-header-tabs': cardBoolean.value,
+  'nav-justified': justifiedBoolean.value,
+  'nav-tabs': !noNavStyleBoolean.value && !pillsBoolean.value,
+  'small': smallBoolean.value,
 }))
 
 const activateTab = (index: number): boolean => {
@@ -307,8 +330,8 @@ onMounted(() => {
 })
 
 provide(injectionKey, {
-  lazy: props.lazy,
-  card: props.card,
+  lazy: lazyBoolean.value,
+  card: cardBoolean.value,
 })
 </script>
 
