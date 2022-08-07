@@ -220,29 +220,30 @@ export {
 }
 
 // Export types
+export type {BodyProp} from './components/BToast/plugin'
 export type {
-  InputSize,
-  ColorVariant,
-  BreadcrumbItem,
-  LinkTarget,
-  ButtonVariant,
   Alignment,
-  TextColorVariant,
-  Size,
-  ButtonType,
-  InputType,
+  Booleanish,
+  BreadcrumbItem,
   Breakpoint,
+  ButtonType,
+  ButtonVariant,
+  ColorVariant,
+  ContainerPosition,
+  InputSize,
+  InputType,
+  LinkTarget,
+  Position,
+  Size,
   SkeletonAnimation,
   SkeletonType,
-  VerticalAlign,
+  SpinnerType,
   TableField,
   TableItem,
-  ContainerPosition,
+  TextColorVariant,
   TransitionMode,
-  Position,
-  SpinnerType,
+  VerticalAlign,
 } from './types'
-export type {BodyProp} from './components/BToast/plugin'
 export type {BPopoverDelayObject} from './types/components'
 
 // Inject all components into the global @vue/runtime-core
