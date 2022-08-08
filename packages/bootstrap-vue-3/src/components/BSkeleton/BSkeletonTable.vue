@@ -26,9 +26,9 @@
 
 <script setup lang="ts">
 // import type {BSkeletonTableProps} from '../../types/components'
-import {computed} from 'vue'
+import {toRef} from 'vue'
 import type {Booleanish, SkeletonAnimation} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BSkeleton from './BSkeleton.vue'
 
@@ -49,6 +49,6 @@ const props = withDefaults(defineProps<BSkeletonTableProps>(), {
   showFooter: false,
 })
 
-const hideHeaderBoolean = computed<boolean>(() => resolveBooleanish(props.hideHeader))
-const showFooterBoolean = computed<boolean>(() => resolveBooleanish(props.showFooter))
+const hideHeaderBoolean = useBooleanish(toRef(props, 'hideHeader'))
+const showFooterBoolean = useBooleanish(toRef(props, 'showFooter'))
 </script>

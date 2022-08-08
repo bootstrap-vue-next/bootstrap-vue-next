@@ -43,11 +43,10 @@
 <script setup lang="ts">
 // import type {BCarouselProps, BCarouselEmits} from '../types/components'
 import type {BCarouselParentData} from '../../types/components'
-import {computed, InjectionKey, onMounted, provide, ref, useSlots, VNode} from 'vue'
+import {InjectionKey, onMounted, provide, ref, toRef, useSlots, VNode} from 'vue'
 import Carousel from 'bootstrap/js/dist/carousel'
-import {useEventListener, useId} from '../../composables'
+import {useBooleanish, useEventListener, useId} from '../../composables'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
 
 interface BCarouselProps {
   id?: string
@@ -71,12 +70,12 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   noWrap: false,
 })
 
-const controlsBoolean = computed<boolean>(() => resolveBooleanish(props.controls))
-const indicatorsBoolean = computed<boolean>(() => resolveBooleanish(props.indicators))
-const noTouchBoolean = computed<boolean>(() => resolveBooleanish(props.noTouch))
+const controlsBoolean = useBooleanish(toRef(props, 'controls'))
+const indicatorsBoolean = useBooleanish(toRef(props, 'indicators'))
+const noTouchBoolean = useBooleanish(toRef(props, 'noTouch'))
 // TODO no wrap is never used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const noWrapBoolean = computed<boolean>(() => resolveBooleanish(props.noWrap))
+const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
 
 interface BCarouselEmits {
   (e: 'sliding-start', value: Event): void

@@ -31,8 +31,8 @@
 <script setup lang="ts">
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
 import type {Booleanish, ButtonVariant} from '../../types'
-import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
-import {computed, onMounted, ref} from 'vue'
+import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
+import {computed, onMounted, ref, toRef} from 'vue'
 import {resolveBooleanish} from '../../utils'
 
 interface BFormRadioProps {
@@ -69,19 +69,19 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   value: true,
 })
 
-const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
-const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
+const plainBoolean = useBooleanish(toRef(props, 'plain'))
 // TODO button is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
+const buttonBoolean = useBooleanish(toRef(props, 'button'))
 // TODO switch is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const switchBoolean = computed<boolean>(() => resolveBooleanish(props.switch))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const switchBoolean = useBooleanish(toRef(props, 'switch'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 // TODO inline is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
-const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
+const inlineBoolean = useBooleanish(toRef(props, 'inline'))
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateBoolean = computed<boolean | undefined>(() =>

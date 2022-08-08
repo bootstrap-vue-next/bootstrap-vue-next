@@ -1,7 +1,8 @@
 <script lang="ts">
 import {Booleanish, TransitionMode} from '../../types'
-import {isPlainObject, resolveBooleanish} from '../../utils'
-import {computed, defineComponent, h, PropType, ref, Transition} from 'vue'
+import {isPlainObject} from '../../utils'
+import {defineComponent, h, PropType, ref, toRef, Transition} from 'vue'
+import {useBooleanish} from '../../composables'
 
 const NO_FADE_PROPS = {
   name: '',
@@ -27,8 +28,8 @@ export default defineComponent({
     transProps: {type: Object, required: false},
   },
   setup(props, {slots}) {
-    const appearBoolean = computed<boolean>(() => resolveBooleanish(props.appear))
-    const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
+    const appearBoolean = useBooleanish(toRef(props, 'appear'))
+    const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
 
     const transProperties = ref(props.transProps)
     if (!isPlainObject(transProperties.value)) {

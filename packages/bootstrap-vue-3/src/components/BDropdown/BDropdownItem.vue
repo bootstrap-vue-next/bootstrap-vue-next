@@ -14,9 +14,9 @@
 
 <script setup lang="ts">
 // import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
-import {computed, useAttrs} from 'vue'
+import {computed, toRef, useAttrs} from 'vue'
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 
 interface BDropdownItemProps {
   href?: string
@@ -36,8 +36,8 @@ const props = withDefaults(defineProps<BDropdownItemProps>(), {
   target: '_self',
 })
 
-const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const activeBoolean = useBooleanish(toRef(props, 'active'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
 interface BDropdownItemEmits {
   (e: 'click', value: MouseEvent): void

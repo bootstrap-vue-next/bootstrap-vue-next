@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
-import {computed} from 'vue'
-import {resolveBooleanish} from '../../utils'
+import {computed, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 
 interface Props {
   align?: string
@@ -24,9 +24,9 @@ const props = withDefaults(defineProps<Props>(), {
   tag: 'ul',
 })
 
-const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
-const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
-const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+const fillBoolean = useBooleanish(toRef(props, 'fill'))
+const justifiedBoolean = useBooleanish(toRef(props, 'justified'))
+const smallBoolean = useBooleanish(toRef(props, 'small'))
 
 const comptuedJustifyContent = computed(() => {
   const value = props.align === 'left' ? 'start' : props.align === 'right' ? 'end' : props.align

@@ -29,13 +29,12 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject} from 'vue'
+import {inject, toRef} from 'vue'
 import BCollapse from '../BCollapse.vue'
 import vBToggle from '../../directives/BToggle'
-import {useId} from '../../composables'
+import {useBooleanish, useId} from '../../composables'
 import {injectionKey} from './BAccordion.vue'
 import {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
 // import type {BAccordionItemProps} from '../types/components'
 
 interface BAccordionItemProps {
@@ -46,7 +45,7 @@ interface BAccordionItemProps {
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
 
-const visibleBoolean = computed<boolean>(() => resolveBooleanish(props.visible))
+const visibleBoolean = useBooleanish(toRef(props, 'visible'))
 
 const computedId = useId(props.id, 'accordion_item')
 const parent = inject(injectionKey, '')

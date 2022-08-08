@@ -7,8 +7,8 @@
 <script setup lang="ts">
 // import type {BButtonGroupProps} from '../../types/components'
 import type {Booleanish} from '../../types'
-import {computed} from 'vue'
-import {resolveBooleanish} from '../../utils'
+import {computed, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 
 interface BButtonGroupProps {
   ariaRole?: string
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<BButtonGroupProps>(), {
   vertical: false,
 })
 
-const verticalBoolean = computed<boolean>(() => resolveBooleanish(props.vertical))
+const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
 const classes = computed(() => ({
   'btn-group': !verticalBoolean.value,

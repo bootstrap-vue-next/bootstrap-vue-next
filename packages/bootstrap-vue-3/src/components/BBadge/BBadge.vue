@@ -5,8 +5,9 @@
 </template>
 
 <script lang="ts">
-import {isLink, omit, pluckProps, resolveBooleanish} from '../../utils'
-import {computed, defineComponent, PropType} from 'vue'
+import {isLink, omit, pluckProps} from '../../utils'
+import {useBooleanish} from '../../composables'
+import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
@@ -25,9 +26,9 @@ export default defineComponent({
     const link = computed<boolean>(() => isLink(props))
     const computedTag = computed<string>(() => (link.value ? 'b-link' : props.tag))
 
-    const pillBoolean = computed<boolean>(() => resolveBooleanish(props.pill))
-    const textIndicatorBoolean = computed<boolean>(() => resolveBooleanish(props.textIndicator))
-    const dotIndicatorBoolean = computed<boolean>(() => resolveBooleanish(props.dotIndicator))
+    const pillBoolean = useBooleanish(toRef(props, 'pill'))
+    const textIndicatorBoolean = useBooleanish(toRef(props, 'textIndicator'))
+    const dotIndicatorBoolean = useBooleanish(toRef(props, 'dotIndicator'))
 
     const classes = computed(() => ({
       [`bg-${props.variant}`]: props.variant,

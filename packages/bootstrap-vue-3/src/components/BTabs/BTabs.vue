@@ -64,8 +64,9 @@
 <script setup lang="ts">
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import type {BTabsParentData} from '../../types/components'
-import {computed, InjectionKey, onMounted, provide, ref, useSlots, watch} from 'vue'
-import {BvEvent, getID, isFunction, mathMax, resolveBooleanish} from '../../utils'
+import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
+import {BvEvent, getID, isFunction, mathMax} from '../../utils'
+import {useBooleanish} from '../../composables'
 import type {Alignment, Booleanish} from '../../types'
 
 interface BTabsProps {
@@ -113,16 +114,16 @@ const props = withDefaults(defineProps<BTabsProps>(), {
   modelValue: -1,
 })
 
-const cardBoolean = computed<boolean>(() => resolveBooleanish(props.card))
-const endBoolean = computed<boolean>(() => resolveBooleanish(props.end))
-const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
-const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
-const lazyBoolean = computed<boolean>(() => resolveBooleanish(props.lazy))
-const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
-const noNavStyleBoolean = computed<boolean>(() => resolveBooleanish(props.noNavStyle))
-const pillsBoolean = computed<boolean>(() => resolveBooleanish(props.pills))
-const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
-const verticalBoolean = computed<boolean>(() => resolveBooleanish(props.vertical))
+const cardBoolean = useBooleanish(toRef(props, 'card'))
+const endBoolean = useBooleanish(toRef(props, 'end'))
+const fillBoolean = useBooleanish(toRef(props, 'fill'))
+const justifiedBoolean = useBooleanish(toRef(props, 'justified'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
+const noNavStyleBoolean = useBooleanish(toRef(props, 'noNavStyle'))
+const pillsBoolean = useBooleanish(toRef(props, 'pills'))
+const smallBoolean = useBooleanish(toRef(props, 'small'))
+const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
 interface BTabsEmits {
   (e: 'update:modelValue', value: number): void

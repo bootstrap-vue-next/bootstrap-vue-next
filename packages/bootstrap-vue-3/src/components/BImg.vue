@@ -5,8 +5,8 @@
 <script setup lang="ts">
 // import type {BImgProps} from '../types/components'
 import type {Booleanish} from '../types'
-import {resolveBooleanish} from '../utils'
-import {computed} from 'vue'
+import {useBooleanish} from '../composables'
+import {computed, toRef} from 'vue'
 
 interface BImgProps {
   alt?: string
@@ -41,14 +41,14 @@ const props = withDefaults(defineProps<BImgProps>(), {
   thumbnail: false,
 })
 
-const blankBoolean = computed<boolean>(() => resolveBooleanish(props.blank))
-const blockBoolean = computed<boolean>(() => resolveBooleanish(props.block))
-const centerBoolean = computed<boolean>(() => resolveBooleanish(props.center))
-const fluidBoolean = computed<boolean>(() => resolveBooleanish(props.fluid))
-const fluidGrowBoolean = computed<boolean>(() => resolveBooleanish(props.fluidGrow))
-const leftBoolean = computed<boolean>(() => resolveBooleanish(props.left))
-const rightBoolean = computed<boolean>(() => resolveBooleanish(props.right))
-const thumbnailBoolean = computed<boolean>(() => resolveBooleanish(props.thumbnail))
+const blankBoolean = useBooleanish(toRef(props, 'blank'))
+const blockBoolean = useBooleanish(toRef(props, 'block'))
+const centerBoolean = useBooleanish(toRef(props, 'center'))
+const fluidBoolean = useBooleanish(toRef(props, 'fluid'))
+const fluidGrowBoolean = useBooleanish(toRef(props, 'fluidGrow'))
+const leftBoolean = useBooleanish(toRef(props, 'left'))
+const rightBoolean = useBooleanish(toRef(props, 'right'))
+const thumbnailBoolean = useBooleanish(toRef(props, 'thumbnail'))
 
 const BLANK_TEMPLATE =
   '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +

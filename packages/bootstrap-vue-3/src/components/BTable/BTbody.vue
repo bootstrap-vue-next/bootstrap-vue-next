@@ -7,8 +7,8 @@
 <script setup lang="ts">
 // import type {BTBodyProps} from '../../types/components'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, toRef} from 'vue'
 
 interface BTBodyProps {
   headVariant?: Booleanish
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<BTBodyProps>(), {
   headVariant: false,
 })
 
-const headVariantBoolean = computed<boolean>(() => resolveBooleanish(props.headVariant))
+const headVariantBoolean = useBooleanish(toRef(props, 'headVariant'))
 
 const classes = computed(() => ({
   // TODO this doesn't look right thead-false?

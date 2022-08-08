@@ -31,8 +31,8 @@
 
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
-import {computed, onMounted, ref} from 'vue'
-import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
+import {computed, onMounted, ref, toRef} from 'vue'
+import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {resolveBooleanish} from '../../utils'
 
@@ -84,18 +84,18 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
 const indeterminateBoolean = computed<boolean | undefined>(() =>
   props.indeterminate ? resolveBooleanish(props.indeterminate) : undefined
 )
-const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
-const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
+const plainBoolean = useBooleanish(toRef(props, 'plain'))
 // TODO button is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
+const buttonBoolean = useBooleanish(toRef(props, 'button'))
 // TODO switch is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const switchBoolean = computed<boolean>(() => resolveBooleanish(props.switch))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const switchBoolean = useBooleanish(toRef(props, 'switch'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 // TODO inline is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
+const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = computed<boolean | undefined>(() =>
   props.required !== undefined ? resolveBooleanish(props.required) : undefined
 )

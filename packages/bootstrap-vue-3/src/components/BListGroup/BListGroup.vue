@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 // import type {BListGroupProps} from '../../types/components'
-import {computed, InjectionKey, provide} from 'vue'
+import {computed, InjectionKey, provide, toRef} from 'vue'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 // import type {Breakpoint} from '../../types'
 
 interface BListGroupProps {
@@ -25,8 +25,8 @@ const props = withDefaults(defineProps<BListGroupProps>(), {
   tag: 'div',
 })
 
-const flushBoolean = computed<boolean>(() => resolveBooleanish(props.flush))
-const numberedBoolean = computed<boolean>(() => resolveBooleanish(props.numbered))
+const flushBoolean = useBooleanish(toRef(props, 'flush'))
+const numberedBoolean = useBooleanish(toRef(props, 'numbered'))
 
 const classes = computed(() => {
   const horizontal = flushBoolean.value ? false : props.horizontal

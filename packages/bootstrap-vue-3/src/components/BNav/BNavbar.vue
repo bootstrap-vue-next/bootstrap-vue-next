@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 
 interface Props {
   fixed?: string
@@ -27,8 +27,8 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'light',
 })
 
-const printBoolean = computed<boolean>(() => resolveBooleanish(props.print))
-const stickyBoolean = computed<boolean>(() => resolveBooleanish(props.sticky))
+const printBoolean = useBooleanish(toRef(props, 'print'))
+const stickyBoolean = useBooleanish(toRef(props, 'sticky'))
 
 const computedRole = computed<undefined | 'navigation'>(() =>
   props.tag === 'nav' ? undefined : 'navigation'

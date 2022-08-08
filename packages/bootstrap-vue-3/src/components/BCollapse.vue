@@ -14,10 +14,10 @@
 
 <script setup lang="ts">
 // import type {BCollapseEmits, BCollapseProps} from '../types/components'
-import {computed, onMounted, ref, watch} from 'vue'
+import {computed, onMounted, ref, toRef, watch} from 'vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-import {useEventListener} from '../composables'
-import {getID, resolveBooleanish} from '../utils'
+import {useBooleanish, useEventListener} from '../composables'
+import {getID} from '../utils'
 import type {Booleanish} from '../types'
 
 interface BCollapseProps {
@@ -40,10 +40,10 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
   isNav: false,
 })
 
-const modelValueBoolean = computed<boolean>(() => resolveBooleanish(props.modelValue))
-const toggleBoolean = computed<boolean>(() => resolveBooleanish(props.toggle))
-const visibleBoolean = computed<boolean>(() => resolveBooleanish(props.visible))
-const isNavBoolean = computed<boolean>(() => resolveBooleanish(props.isNav))
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const toggleBoolean = useBooleanish(toRef(props, 'toggle'))
+const visibleBoolean = useBooleanish(toRef(props, 'visible'))
+const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
 
 interface BCollapseEmits {
   (e: 'update:modelValue', value: boolean): void

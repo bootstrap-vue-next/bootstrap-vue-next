@@ -7,9 +7,9 @@
 <script setup lang="ts">
 // import type {BInputGroupPrependProps} from '../../types/components'
 import BInputGroupAddon from './BInputGroupAddon.vue'
-import {computed} from 'vue'
+import {toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
 
 interface BInputGroupPrependProps {
   id?: string
@@ -22,5 +22,5 @@ const props = withDefaults(defineProps<BInputGroupPrependProps>(), {
   isText: false,
 })
 
-const isTextBoolean = computed<boolean>(() => resolveBooleanish(props.isText))
+const isTextBoolean = useBooleanish(toRef(props, 'isText'))
 </script>

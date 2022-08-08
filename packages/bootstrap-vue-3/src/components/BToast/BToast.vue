@@ -8,10 +8,12 @@ import {
   onUnmounted,
   PropType,
   ref,
+  toRef,
   VNode,
   watch,
 } from 'vue'
-import {isLink, normalizeSlot, requestAF, resolveBooleanish, toInteger} from '../../utils'
+import {isLink, normalizeSlot, requestAF, toInteger} from '../../utils'
+import {useBooleanish} from '../../composables'
 import {Booleanish, ColorVariant} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BButtonClose from '../BButton/BCloseButton.vue'
@@ -49,19 +51,19 @@ export default defineComponent({
   setup(props, {emit, slots}) {
     // TODO animation is never used
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const animationBoolean = computed<boolean>(() => resolveBooleanish(props.animation))
-    const isStatusBoolean = computed<boolean>(() => resolveBooleanish(props.isStatus))
-    const autoHideBoolean = computed<boolean>(() => resolveBooleanish(props.autoHide))
-    const noCloseButtonBoolean = computed<boolean>(() => resolveBooleanish(props.noCloseButton))
-    const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
-    const noHoverPauseBoolean = computed<boolean>(() => resolveBooleanish(props.noHoverPause))
+    const animationBoolean = useBooleanish(toRef(props, 'animation'))
+    const isStatusBoolean = useBooleanish(toRef(props, 'isStatus'))
+    const autoHideBoolean = useBooleanish(toRef(props, 'autoHide'))
+    const noCloseButtonBoolean = useBooleanish(toRef(props, 'noCloseButton'))
+    const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
+    const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
     // TODO solid is never used
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const solidBoolean = computed<boolean>(() => resolveBooleanish(props.solid))
+    const solidBoolean = useBooleanish(toRef(props, 'solid'))
     // TODO static is never used
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const staticBoolean = computed<boolean>(() => resolveBooleanish(props.static))
-    const modelValueBoolean = computed<boolean>(() => resolveBooleanish(props.modelValue))
+    const staticBoolean = useBooleanish(toRef(props, 'static'))
+    const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 
     const isTransitioning = ref(false)
     const isHiding = ref(false)

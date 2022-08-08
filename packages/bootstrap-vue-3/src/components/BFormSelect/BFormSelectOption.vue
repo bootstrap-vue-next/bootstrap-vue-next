@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 // import type {BFormSelectOptionProps} from '../../types/components'
-import {computed} from 'vue'
+import {toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormSelectOptionProps {
   value?: unknown
@@ -19,5 +19,5 @@ const props = withDefaults(defineProps<BFormSelectOptionProps>(), {
   disabled: false,
 })
 
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 </script>

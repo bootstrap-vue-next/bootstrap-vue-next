@@ -8,9 +8,8 @@
 // https://vuejs.org/guide/typescript/composition-api.html#syntax-limitations , may be possible in a future release
 // import type {BAccordionProps} from '../types/components'
 import {Booleanish} from '../../types'
-import {computed, InjectionKey, provide} from 'vue'
-import {useId} from '../../composables'
-import {resolveBooleanish} from '../../utils'
+import {computed, InjectionKey, provide, toRef} from 'vue'
+import {useBooleanish, useId} from '../../composables'
 
 interface BAccordionProps {
   flush?: Booleanish
@@ -26,8 +25,8 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
 
 const computedId = useId(props.id, 'accordion')
 
-const flushBoolean = computed<boolean>(() => resolveBooleanish(props.flush))
-const freeBoolean = computed<boolean>(() => resolveBooleanish(props.free))
+const flushBoolean = useBooleanish(toRef(props, 'flush'))
+const freeBoolean = useBooleanish(toRef(props, 'free'))
 
 const classes = computed(() => ({
   'accordion-flush': flushBoolean.value,

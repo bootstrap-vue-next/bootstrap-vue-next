@@ -12,8 +12,9 @@
 </template>
 
 <script lang="ts">
-import {omit, resolveBooleanish} from '../../utils'
-import {computed, defineComponent, PropType} from 'vue'
+import {omit} from '../../utils'
+import {useBooleanish} from '../../composables'
+import {computed, defineComponent, PropType, toRef} from 'vue'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 import type {Booleanish} from '../../types'
 
@@ -27,8 +28,8 @@ export default defineComponent({
   },
   emits: ['click'],
   setup(props, {emit}) {
-    const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
-    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+    const activeBoolean = useBooleanish(toRef(props, 'active'))
+    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
     const liClasses = computed(() => ({
       active: props.active,

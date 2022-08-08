@@ -5,8 +5,9 @@
 </template>
 
 <script lang="ts">
-import {isLink, resolveBooleanish} from '../../utils'
-import {computed, defineComponent, PropType} from 'vue'
+import {isLink} from '../../utils'
+import {useBooleanish} from '../../composables'
+import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {BLINK_PROPS} from '../BLink/BLink.vue'
 
@@ -28,11 +29,11 @@ export default defineComponent({
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
-    const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
-    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-    const pillBoolean = computed<boolean>(() => resolveBooleanish(props.pill))
-    const pressedBoolean = computed<boolean>(() => resolveBooleanish(props.pressed))
-    const squaredBoolean = computed<boolean>(() => resolveBooleanish(props.squared))
+    const activeBoolean = useBooleanish(toRef(props, 'active'))
+    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+    const pillBoolean = useBooleanish(toRef(props, 'pill'))
+    const pressedBoolean = useBooleanish(toRef(props, 'pressed'))
+    const squaredBoolean = useBooleanish(toRef(props, 'squared'))
 
     const isToggle = computed<boolean>(() => pressedBoolean.value !== null)
     const isButton = computed<boolean>(() => props.tag === 'button' && !props.href && !props.to)

@@ -28,10 +28,9 @@
 
 <script setup lang="ts">
 // import type {BFormTagEmits, BFormTagProps} from '../../types/components'
-import {computed, useSlots, VNodeNormalizedChildren} from 'vue'
-import {useId} from '../../composables'
+import {computed, toRef, useSlots, VNodeNormalizedChildren} from 'vue'
+import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormTagProps {
   id?: string
@@ -53,8 +52,8 @@ const props = withDefaults(defineProps<BFormTagProps>(), {
   variant: 'secondary',
 })
 
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-const noRemoveBoolean = computed<boolean>(() => resolveBooleanish(props.noRemove))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const noRemoveBoolean = useBooleanish(toRef(props, 'noRemove'))
 
 interface BFormTagEmits {
   (e: 'remove', value?: VNodeNormalizedChildren): void

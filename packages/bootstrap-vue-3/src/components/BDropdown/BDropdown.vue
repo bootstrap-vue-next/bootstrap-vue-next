@@ -44,11 +44,11 @@
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import type Popper from '@popperjs/core'
 import Dropdown from 'bootstrap/js/dist/dropdown'
-import {ComponentPublicInstance, computed, onMounted, ref} from 'vue'
+import {ComponentPublicInstance, computed, onMounted, ref, toRef} from 'vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
-import {mergeDeep, resolveBooleanish} from '../../utils'
-import {useEventListener, useId} from '../../composables'
+import {mergeDeep} from '../../utils'
+import {useBooleanish, useEventListener, useId} from '../../composables'
 
 // TODO it seems that some of these props are actually just Popper options
 // So some of them could be converted to their pure types similar to Popper.Boundary
@@ -103,15 +103,15 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   variant: 'secondary',
 })
 
-const blockBoolean = computed<boolean>(() => resolveBooleanish(props.block))
-const darkBoolean = computed<boolean>(() => resolveBooleanish(props.dark))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-const dropUpBoolean = computed<boolean>(() => resolveBooleanish(props.dropUp))
-const dropRightBoolean = computed<boolean>(() => resolveBooleanish(props.dropRight))
-const dropLeftBoolean = computed<boolean>(() => resolveBooleanish(props.dropLeft))
-const rightBoolean = computed<boolean>(() => resolveBooleanish(props.right))
-const splitBoolean = computed<boolean>(() => resolveBooleanish(props.split))
-const noCaretBoolean = computed<boolean>(() => resolveBooleanish(props.noCaret))
+const blockBoolean = useBooleanish(toRef(props, 'block'))
+const darkBoolean = useBooleanish(toRef(props, 'dark'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const dropUpBoolean = useBooleanish(toRef(props, 'dropUp'))
+const dropRightBoolean = useBooleanish(toRef(props, 'dropRight'))
+const dropLeftBoolean = useBooleanish(toRef(props, 'dropLeft'))
+const rightBoolean = useBooleanish(toRef(props, 'right'))
+const splitBoolean = useBooleanish(toRef(props, 'split'))
+const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
 
 interface BDropdownEmits {
   (e: 'show'): void

@@ -1,8 +1,8 @@
 <script lang="ts">
 import {BvEvent, isUndefinedOrNull, normalizeSlot, resolveBooleanish, toInteger} from '../../utils'
-import {computed, defineComponent, h, PropType, reactive, watch} from 'vue'
+import {computed, defineComponent, h, PropType, reactive, toRef, watch} from 'vue'
 import {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
-import {useAlignment} from '../../composables'
+import {useAlignment, useBooleanish} from '../../composables'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5
 
@@ -63,14 +63,14 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'page-click'],
   setup(props, {emit, slots}) {
-    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-    const firstNumberBoolean = computed<boolean>(() => resolveBooleanish(props.firstNumber))
-    const hideEllipsisBoolean = computed<boolean>(() => resolveBooleanish(props.hideEllipsis))
+    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+    const firstNumberBoolean = useBooleanish(toRef(props, 'firstNumber'))
+    const hideEllipsisBoolean = useBooleanish(toRef(props, 'hideEllipsis'))
     const hideGotoEndButtonsBoolean = computed<boolean>(() =>
       resolveBooleanish(props.hideGotoEndButtons)
     )
-    const lastNumberBoolean = computed<boolean>(() => resolveBooleanish(props.lastNumber))
-    const pillsBoolean = computed<boolean>(() => resolveBooleanish(props.pills))
+    const lastNumberBoolean = useBooleanish(toRef(props, 'lastNumber'))
+    const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 
     const alignment = useAlignment(props)
 
