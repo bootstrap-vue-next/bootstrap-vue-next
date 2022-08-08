@@ -1,3 +1,3 @@
-type Booleanish = 'true' | 'false' | boolean
+type Booleanish = 'true' | 'false' | '' | boolean
 
 export default Booleanish
