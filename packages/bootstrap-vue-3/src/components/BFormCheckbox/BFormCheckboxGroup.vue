@@ -32,7 +32,6 @@ import {
   useBooleanish,
   useId,
 } from '../../composables'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormCheckboxGroupProps {
   id?: string
@@ -96,9 +95,8 @@ const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 // TODO state is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 const switchesBoolean = useBooleanish(toRef(props, 'switches'))
 // TODO validated is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

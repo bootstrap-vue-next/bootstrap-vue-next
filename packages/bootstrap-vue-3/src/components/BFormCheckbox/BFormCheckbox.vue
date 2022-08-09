@@ -31,10 +31,9 @@
 
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
-import {computed, onMounted, ref, toRef} from 'vue'
+import {computed, onMounted, Ref, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormCheckboxProps {
   ariaLabel?: string
@@ -81,9 +80,10 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   value: true,
 })
 
-const indeterminateBoolean = computed<boolean | undefined>(() =>
-  props.indeterminate ? resolveBooleanish(props.indeterminate) : undefined
-)
+const indeterminateBoolean =
+  props.indeterminate !== undefined
+    ? useBooleanish(toRef(props, 'indeterminate') as Ref<Booleanish>)
+    : computed(() => undefined)
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 // TODO button is not used
@@ -96,14 +96,12 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 // TODO inline is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
-const requiredBoolean = computed<boolean | undefined>(() =>
-  props.required !== undefined ? resolveBooleanish(props.required) : undefined
-)
+const requiredBoolean =
+  props.required !== undefined ? useBooleanish(toRef(props, 'required')) : computed(() => undefined)
 // TODO state is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 
 interface BFormCheckboxEmits {
   (e: 'update:modelValue', value: unknown): void

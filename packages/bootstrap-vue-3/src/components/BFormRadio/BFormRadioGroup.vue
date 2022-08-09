@@ -32,7 +32,6 @@ import {
   useBooleanish,
   useId,
 } from '../../composables'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormRadioGroupProps {
   size?: Size
@@ -94,9 +93,8 @@ const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 // TODO validated is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))

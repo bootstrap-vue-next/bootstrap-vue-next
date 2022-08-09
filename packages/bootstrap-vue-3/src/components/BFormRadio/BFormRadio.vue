@@ -33,7 +33,6 @@
 import type {Booleanish, ButtonVariant} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import {computed, onMounted, ref, toRef} from 'vue'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -84,9 +83,8 @@ const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 
 interface BFormRadioEmits {
   (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void

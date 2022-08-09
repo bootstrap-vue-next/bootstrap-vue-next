@@ -1,5 +1,5 @@
 <script lang="ts">
-import {BvEvent, isUndefinedOrNull, normalizeSlot, resolveBooleanish, toInteger} from '../../utils'
+import {BvEvent, isUndefinedOrNull, normalizeSlot, toInteger} from '../../utils'
 import {computed, defineComponent, h, PropType, reactive, toRef, watch} from 'vue'
 import {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
@@ -66,9 +66,7 @@ export default defineComponent({
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     const firstNumberBoolean = useBooleanish(toRef(props, 'firstNumber'))
     const hideEllipsisBoolean = useBooleanish(toRef(props, 'hideEllipsis'))
-    const hideGotoEndButtonsBoolean = computed<boolean>(() =>
-      resolveBooleanish(props.hideGotoEndButtons)
-    )
+    const hideGotoEndButtonsBoolean = useBooleanish(toRef(props, 'hideGotoEndButtons'))
     const lastNumberBoolean = useBooleanish(toRef(props, 'lastNumber'))
     const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 

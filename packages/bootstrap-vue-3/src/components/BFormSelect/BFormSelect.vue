@@ -39,7 +39,6 @@
 <script setup lang="ts">
 // import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
 import type {Booleanish, Size} from '../../types'
-import {resolveBooleanish} from '../../utils'
 import {computed, nextTick, onActivated, onMounted, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
@@ -92,9 +91,8 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const multipleBoolean = useBooleanish(toRef(props, 'multiple'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 
 interface BFormSelectEmits {
   (e: 'input', value: unknown): void

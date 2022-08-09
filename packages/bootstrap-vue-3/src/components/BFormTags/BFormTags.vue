@@ -110,7 +110,6 @@ import {computed, onActivated, onMounted, ref, toRef, VNodeNormalizedChildren, w
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, ColorVariant, InputSize, InputType} from '../../types'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormTagsProps {
   addButtonText?: string
@@ -178,9 +177,8 @@ const noOuterFocusBoolean = useBooleanish(toRef(props, 'noOuterFocus'))
 const noTagRemoveBoolean = useBooleanish(toRef(props, 'noTagRemove'))
 const removeOnDeleteBoolean = useBooleanish(toRef(props, 'removeOnDelete'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
 
 interface BFormTagsEmits {
