@@ -35,6 +35,7 @@ export default defineComponent({
       {content: breakpointOrder, propPrefix: 'order'},
     ]
 
+    // TODO is this supposed to be computed
     const classList: Array<string> = properties.flatMap((el) =>
       getClasses(props, el.content, el.propPrefix, el.classPrefix)
     )
