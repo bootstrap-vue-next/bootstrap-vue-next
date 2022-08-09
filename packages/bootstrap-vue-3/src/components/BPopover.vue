@@ -48,6 +48,7 @@ export default defineComponent({
     },
     content: {type: String},
     id: {type: String},
+    customClass: {type: String, default: ''},
     noninteractive: {type: Boolean as PropType<Booleanish>, default: false},
     placement: {type: String as PropType<Popover.Options['placement']>, default: 'right'},
     target: {
@@ -111,6 +112,7 @@ export default defineComponent({
       if (!target.value) return
 
       instance.value = new Popover(target.value, {
+        customClass: props.customClass,
         container: cleanElementProp(props.container),
         trigger: props.triggers,
         placement: props.placement,
