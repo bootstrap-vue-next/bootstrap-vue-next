@@ -135,6 +135,8 @@ const computedSelectSize = computed<number | undefined>(() => {
 
 const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
   // noinspection SuspiciousTypeOfGuard
+  // TODO review https://github.com/cdmoro/bootstrap-vue-3/issues/547#issuecomment-1209906982
+  // If the consensus is to make this resolveAriaInvalid, this will need to be changed along with the test
   if (typeof stateBoolean.value === 'boolean') {
     if (!stateBoolean.value) {
       return true
@@ -146,6 +148,15 @@ const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefine
       return undefined
     }
     return props.ariaInvalid
+  }
+  if (props.ariaInvalid === '') {
+    return undefined
+  }
+  if (props.ariaInvalid === 'true') {
+    return true
+  }
+  if (props.ariaInvalid === 'false') {
+    return false
   }
   return props.ariaInvalid
 })

@@ -30,9 +30,9 @@
 
 <script setup lang="ts">
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
-import type {Booleanish, ButtonVariant} from '../../types'
+import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import {computed, onMounted, ref, toRef} from 'vue'
+import {computed, onMounted, reactive, ref, toRef} from 'vue'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -40,7 +40,7 @@ interface BFormRadioProps {
   form?: string
   id?: string
   name?: string
-  size?: string
+  size?: InputSize
   autofocus?: Booleanish
   modelValue?: boolean | string | Array<unknown> | Record<string, unknown> | number
   plain?: Booleanish
@@ -119,9 +119,18 @@ const isChecked = computed<unknown>(() => {
   return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
 })
 
-const classes = getClasses(props)
-const inputClasses = getInputClasses(props)
-const labelClasses = getLabelClasses(props)
+const classesObject = reactive({
+  plain: toRef(plainBoolean, 'value'),
+  button: toRef(buttonBoolean, 'value'),
+  inline: toRef(inlineBoolean, 'value'),
+  switch: toRef(switchBoolean, 'value'),
+  size: toRef(props, 'size'),
+  state: toRef(stateBoolean, 'value'),
+  buttonVariant: toRef(props, 'buttonVariant'),
+})
+const classes = getClasses(classesObject)
+const inputClasses = getInputClasses(classesObject)
+const labelClasses = getLabelClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 onMounted(() => {

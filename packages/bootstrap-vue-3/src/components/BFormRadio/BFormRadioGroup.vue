@@ -21,7 +21,7 @@
 <script setup lang="ts">
 // import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, toRef, useSlots} from 'vue'
+import {computed, reactive, toRef, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import {
   bindGroupProps,
@@ -132,8 +132,17 @@ const checkboxList = computed<Array<any>>(() =>
     }))
 )
 
-const attrs = getGroupAttr(props)
-const classes = getGroupClasses(props)
+const classesObject = reactive({
+  required: toRef(requiredBoolean, 'value'),
+  ariaInvalid: toRef(props, 'ariaInvalid'),
+  state: toRef(stateBoolean, 'value'),
+  validated: toRef(validatedBoolean, 'value'),
+  buttons: toRef(buttonsBoolean, 'value'),
+  stacked: toRef(stackedBoolean, 'value'),
+  size: toRef(props, 'size'),
+})
+const attrs = getGroupAttr(classesObject)
+const classes = getGroupClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 </script>
