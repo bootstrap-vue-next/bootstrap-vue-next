@@ -43,7 +43,6 @@ import {
   isUndefinedOrNull,
   toType,
 } from './inspect'
-import {mathMax, mathMin} from './math'
 import mergeDeep from './mergeDeep'
 import normalizeSlot from './normalizeSlot'
 import {stringToInteger, toFloat, toInteger, toPercison} from './number'
@@ -115,8 +114,6 @@ export {
   isUndefined,
   isUndefinedOrNull,
   toType,
-  mathMax,
-  mathMin,
 }
 
 export default {
@@ -181,6 +178,4 @@ export default {
   isUndefined,
   isUndefinedOrNull,
   toType,
-  mathMax,
-  mathMin,
 }

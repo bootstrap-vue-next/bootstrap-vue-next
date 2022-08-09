@@ -11,7 +11,7 @@
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, InjectionKey, provide, StyleValue, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {isNumeric, isString, mathMax, mathMin, toFloat} from '../../utils'
+import {isNumeric, isString, toFloat} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
 
@@ -40,7 +40,7 @@ const computeOverlap = (value: any): number =>
   isString(value) && isNumeric(value) ? toFloat(value, 0) : value || 0
 
 const overlapScale = computed<number>(
-  () => mathMin(mathMax(computeOverlap(props.overlap), 0), 1) / 2
+  () => Math.min(Math.max(computeOverlap(props.overlap), 0), 1) / 2
 )
 
 const paddingStyle = computed<StyleValue>(() => {

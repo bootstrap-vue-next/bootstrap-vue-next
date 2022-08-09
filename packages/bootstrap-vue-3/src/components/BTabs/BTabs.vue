@@ -65,7 +65,7 @@
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
-import {BvEvent, getID, isFunction, mathMax} from '../../utils'
+import {BvEvent, getID, isFunction} from '../../utils'
 import {useBooleanish} from '../../composables'
 import type {Alignment, Booleanish} from '../../types'
 
@@ -269,8 +269,8 @@ watch(
   () => props.modelValue,
   (newValue, oldValue) => {
     if (newValue === oldValue) return
-    newValue = mathMax(newValue, -1)
-    oldValue = mathMax(oldValue, -1)
+    newValue = Math.max(newValue, -1)
+    oldValue = Math.max(oldValue, -1)
 
     if (tabs.value.length <= 0) {
       tabIndex.value = -1
