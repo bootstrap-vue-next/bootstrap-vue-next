@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 // import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
-import type {Booleanish, ButtonVariant, Size} from '../../types'
+import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
 import {computed, toRef, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import {
@@ -39,7 +39,7 @@ interface BFormRadioGroupProps {
   id?: string
   name?: string
   modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
-  ariaInvalid?: boolean | string
+  ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
   buttons?: Booleanish

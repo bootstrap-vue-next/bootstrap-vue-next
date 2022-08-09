@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
-import {computed, onMounted, Ref, ref, toRef} from 'vue'
+import {computed, onMounted, reactive, Ref, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 
@@ -86,20 +86,12 @@ const indeterminateBoolean =
     : computed(() => undefined)
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
-// TODO button is not used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
-// TODO switch is not used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const switchBoolean = useBooleanish(toRef(props, 'switch'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-// TODO inline is not used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean =
   props.required !== undefined ? useBooleanish(toRef(props, 'required')) : computed(() => undefined)
-// TODO state is not used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateBoolean =
   props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 
@@ -156,9 +148,18 @@ const isChecked = computed<boolean>(() => {
   return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
 })
 
-const classes = getClasses(props)
-const inputClasses = getInputClasses(props)
-const labelClasses = getLabelClasses(props)
+const classesObject = reactive({
+  plain: toRef(plainBoolean, 'value'),
+  button: toRef(buttonBoolean, 'value'),
+  inline: toRef(inlineBoolean, 'value'),
+  switch: toRef(switchBoolean, 'value'),
+  size: toRef(props, 'size'),
+  state: toRef(stateBoolean, 'value'),
+  buttonVariant: toRef(props, 'buttonVariant'),
+})
+const classes = getClasses(classesObject)
+const inputClasses = getInputClasses(classesObject)
+const labelClasses = getLabelClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 onMounted((): void => {

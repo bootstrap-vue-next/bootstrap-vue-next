@@ -38,14 +38,14 @@
 
 <script setup lang="ts">
 // import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
-import type {Booleanish, Size} from '../../types'
+import type {AriaInvalid, Booleanish, Size} from '../../types'
 import {computed, nextTick, onActivated, onMounted, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId} from '../../composables'
 
 interface BFormSelectProps {
-  ariaInvalid?: boolean | 'grammar' | 'spelling'
+  ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   disabled?: Booleanish
   disabledField?: string
