@@ -29,6 +29,7 @@ import {
 import getBreakpointProps from './getBreakpointProps'
 import getClasses from './getClasses'
 import getID from './getID'
+import resolveAriaInvalid from './resolveAriaInvalid'
 import {
   isArray,
   isBoolean,
@@ -64,6 +65,7 @@ export {
   toString,
   upperFirst,
   attemptFocus,
+  resolveAriaInvalid,
   contains,
   stringToInteger,
   toFloat,
@@ -145,6 +147,7 @@ export default {
   normalizeSlot,
   getActiveElement,
   isBooleanish,
+  resolveAriaInvalid,
   getAttr,
   getBCR,
   getStyle,

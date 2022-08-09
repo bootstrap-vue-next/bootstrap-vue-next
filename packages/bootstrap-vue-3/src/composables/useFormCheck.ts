@@ -1,5 +1,6 @@
 import {AriaInvalid, ButtonVariant, InputSize} from '../types'
 import {computed, ComputedRef} from 'vue'
+import {resolveAriaInvalid} from '../utils'
 
 /**
  * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
@@ -8,18 +9,7 @@ import {computed, ComputedRef} from 'vue'
 const _getComputedAriaInvalid = (items: {
   ariaInvalid?: AriaInvalid
   state?: boolean
-}): ComputedRef =>
-  computed(() => {
-    if (items.ariaInvalid === true || items.ariaInvalid === 'true' || items.ariaInvalid === '') {
-      return 'true'
-    }
-    if (items.ariaInvalid === 'grammar' || items.ariaInvalid === 'spelling') {
-      return items.ariaInvalid
-    }
-
-    const computedState = typeof items.state === 'boolean' ? items.state : null
-    return computedState === false ? 'true' : items.ariaInvalid
-  })
+}): ComputedRef => computed(() => resolveAriaInvalid(items.ariaInvalid, items.state))
 
 /**
  * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
