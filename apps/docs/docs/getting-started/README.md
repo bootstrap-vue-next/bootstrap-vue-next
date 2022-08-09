@@ -42,7 +42,7 @@ In order to use this library you have to install these packages:
 
 ### Installation - Vue.js
 
-To install this library you can use Yarn or NPM:
+To install this library you can use Yarn, NPM, or PNPM:
 
 <CodeGroup>
   <CodeGroupItem title="YARN" active>
@@ -92,7 +92,7 @@ app.mount('#app')
 
 As with the Vue.js installation.
 
-In your Nuxt3 application, install `bootstrap-vue-3`
+In your Nuxt3 application, install the necessary packages for `bootstrap-vue-3`
 
 <CodeGroup>
   <CodeGroupItem title="YARN" active>
@@ -148,21 +148,3 @@ As we said, we based this project in [BootstrapVue](https://bootstrap-vue.org/).
 <!-- To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet. -->
 
 You can view the full list in the following [section](../reference/parityList.md).
-
-## Types
-
-`BootstrapVue3` born with Typescript in mind. This is a list of types we use in this library and that you can use too:
-
-- Alignment
-- BreadcrumbItem
-- Breakpoint
-- ButtonVariant
-- ColorVariant
-- InputSize
-- InputType
-- LinkTarget
-- Size
-- SpinnerType
-- TableField
-- TableItem
-- VerticalAlign
