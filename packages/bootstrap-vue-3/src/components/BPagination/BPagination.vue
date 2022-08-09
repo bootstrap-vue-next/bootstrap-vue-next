@@ -70,7 +70,7 @@ export default defineComponent({
     const lastNumberBoolean = useBooleanish(toRef(props, 'lastNumber'))
     const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 
-    const alignment = useAlignment(props)
+    const alignment = useAlignment(toRef(props, 'align'))
 
     // Use Active to on page-item to denote active tab
     const numberOfPages = computed(() =>
