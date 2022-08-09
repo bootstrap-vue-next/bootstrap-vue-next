@@ -127,7 +127,7 @@ const emit = defineEmits<BDropdownEmits>()
 const parent = ref<HTMLElement>()
 const dropdown = ref<ComponentPublicInstance<HTMLElement>>()
 const instance = ref<Dropdown>()
-const computedId = useId(props.id, 'dropdown')
+const computedId = useId(toRef(props, 'id'), 'dropdown')
 
 useEventListener(parent, 'show.bs.dropdown', () => emit('show'))
 useEventListener(parent, 'shown.bs.dropdown', () => emit('shown'))

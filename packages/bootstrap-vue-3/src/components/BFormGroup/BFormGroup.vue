@@ -390,7 +390,7 @@ export default defineComponent({
           'was-validated': this.validatedBoolean,
         },
       ],
-      'id': useId(props.id).value,
+      'id': useId(toRef(props, 'id')).value,
       'disabled': isFieldset ? this.disabledBoolean : null,
       'role': isFieldset ? null : 'group',
       'aria-invalid': this.computedAriaInvalid,

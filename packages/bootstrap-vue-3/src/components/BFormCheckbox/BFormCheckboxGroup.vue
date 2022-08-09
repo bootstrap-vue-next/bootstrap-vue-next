@@ -113,8 +113,8 @@ const emit = defineEmits<BFormCheckboxGroupEmits>()
 const slots = useSlots()
 
 const slotsName = 'BFormCheckbox'
-const computedId = useId(props.id, 'checkbox')
-const computedName = useId(props.name, 'checkbox')
+const computedId = useId(toRef(props, 'id'), 'checkbox')
+const computedName = useId(toRef(props, 'name'), 'checkbox')
 
 const localValue = computed({
   get: () => props.modelValue,

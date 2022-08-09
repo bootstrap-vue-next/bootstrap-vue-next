@@ -66,7 +66,7 @@ const slots = useSlots()
 const tagText = computed<string>(
   () => (slots.default?.()[0].children?.toString() || props.title) ?? ''
 )
-const computedId = useId(props.id)
+const computedId = useId(toRef(props, 'id'))
 const taglabelId = computed<string>(() => `${computedId.value}taglabel__`)
 
 const classes = computed(() => [

@@ -79,7 +79,7 @@ const activeBoolean = useBooleanish(toRef(props, 'active'))
 const imgBlankBoolean = useBooleanish(toRef(props, 'imgBlank'))
 
 const parentData = inject<BCarouselParentData>(injectionKey, {})
-const computedId = useId(props.id, 'accordion')
+const computedId = useId(toRef(props, 'id'), 'accordion')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const img = computed<string | true | undefined>(() =>
   imgBlankBoolean.value ? imgBlankBoolean.value : props.imgSrc

@@ -111,7 +111,7 @@ interface BFormCheckboxEmits {
 
 const emit = defineEmits<BFormCheckboxEmits>()
 
-const computedId = useId(props.id, 'form-check')
+const computedId = useId(toRef(props, 'id'), 'form-check')
 const input = ref<HTMLElement>(null as unknown as HTMLElement)
 const isFocused = ref<boolean>(false)
 

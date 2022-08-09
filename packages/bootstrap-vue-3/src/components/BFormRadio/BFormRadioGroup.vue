@@ -110,8 +110,8 @@ const emit = defineEmits<BFormRadioGroupEmits>()
 const slots = useSlots()
 
 const slotsName = 'BFormRadio'
-const computedId = useId(props.id, 'radio')
-const computedName = useId(props.name, 'checkbox')
+const computedId = useId(toRef(props, 'id'), 'radio')
+const computedName = useId(toRef(props, 'name'), 'checkbox')
 
 const localValue = computed<string | boolean | Array<unknown> | Record<string, unknown> | number>({
   get: () => props.modelValue,

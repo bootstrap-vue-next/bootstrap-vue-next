@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
   id: undefined,
 })
 
-const computedId = useId(props.id, 'accordion')
+const computedId = useId(toRef(props, 'id'), 'accordion')
 
 const flushBoolean = useBooleanish(toRef(props, 'flush'))
 const freeBoolean = useBooleanish(toRef(props, 'free'))

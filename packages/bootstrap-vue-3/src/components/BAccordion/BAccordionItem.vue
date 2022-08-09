@@ -47,6 +47,6 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
 
 const visibleBoolean = useBooleanish(toRef(props, 'visible'))
 
-const computedId = useId(props.id, 'accordion_item')
+const computedId = useId(toRef(props, 'id'), 'accordion_item')
 const parent = inject(injectionKey, '')
 </script>

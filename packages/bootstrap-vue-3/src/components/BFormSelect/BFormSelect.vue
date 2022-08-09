@@ -103,7 +103,7 @@ interface BFormSelectEmits {
 const emit = defineEmits<BFormSelectEmits>()
 
 const input = ref<HTMLElement>()
-const computedId = useId(props.id, 'input')
+const computedId = useId(toRef(props, 'id'), 'input')
 
 // lifecycle events
 const handleAutofocus = () => {

@@ -88,7 +88,7 @@ const slots = useSlots()
 
 const element = ref<HTMLElement>()
 const instance = ref<Carousel>()
-const computedId = useId(props.id, 'accordion')
+const computedId = useId(toRef(props, 'id'), 'accordion')
 const slides = ref<VNode[]>([])
 
 useEventListener(element, 'slide.bs.carousel', (payload) => emit('sliding-start', payload))
