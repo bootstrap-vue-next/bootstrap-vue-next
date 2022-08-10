@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.7...v0.2.8) (2022-08-10)
+
+
+### Bug Fixes
+
+* [#550](https://github.com/cdmoro/bootstrap-vue-3/issues/550) remove debugging leftovers ([2325396](https://github.com/cdmoro/bootstrap-vue-3/commit/2325396be41b8400d5e4f70af04b50a3628e9143))
+
 ## [0.2.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.6...v0.2.7) (2022-08-10)
 
 
