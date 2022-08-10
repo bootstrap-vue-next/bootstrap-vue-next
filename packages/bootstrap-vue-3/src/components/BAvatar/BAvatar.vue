@@ -1,6 +1,4 @@
 <template>
-  {{ badgeLeft }}
-  {{ badgeLeftBoolean }}
   <component
     :is="tag"
     class="b-avatar"
