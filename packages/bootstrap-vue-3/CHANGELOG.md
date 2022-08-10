@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.6...v0.2.7) (2022-08-10)
+
+
+### Bug Fixes
+
+* [#540](https://github.com/cdmoro/bootstrap-vue-3/issues/540) prop w/ no value empty string is true ([203b42b](https://github.com/cdmoro/bootstrap-vue-3/commit/203b42b09b7b815c53c52ac506488396149c7149))
+* [#547](https://github.com/cdmoro/bootstrap-vue-3/issues/547) use reactive items for composables ([8a002ee](https://github.com/cdmoro/bootstrap-vue-3/commit/8a002ee6c59011757f2184d2ef5771b146836b58))
+* getClasses and related composables ([3e2d617](https://github.com/cdmoro/bootstrap-vue-3/commit/3e2d6177726f5105ea9b50bc5bd9a4ce1aed01a4))
+* useId not reactive if id is dynamic ([7ed7c52](https://github.com/cdmoro/bootstrap-vue-3/commit/7ed7c524a06755b69169176bdd22d5bced487bce))
+
 ## [0.2.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.5...v0.2.6) (2022-08-07)
 
 
