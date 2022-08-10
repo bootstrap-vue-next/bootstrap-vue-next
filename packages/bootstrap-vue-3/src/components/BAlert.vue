@@ -15,9 +15,10 @@
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
 import type {Booleanish, ColorVariant} from '../types'
-import {computed, onBeforeUnmount, ref, watch} from 'vue'
+import {computed, onBeforeUnmount, ref, toRef, watch} from 'vue'
 import Alert from 'bootstrap/js/dist/alert'
-import {resolveBooleanish, toInteger} from '../utils'
+import {toInteger} from '../utils'
+import {useBooleanish} from '../composables'
 
 interface BAlertProps {
   dismissLabel?: string
@@ -37,11 +38,11 @@ const props = withDefaults(defineProps<BAlertProps>(), {
   variant: 'info',
 })
 
-const dismissibleBoolean = computed<boolean>(() => resolveBooleanish(props.dismissible))
+const dismissibleBoolean = useBooleanish(toRef(props, 'dismissible'))
 // TODO fade is never used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const fadeBoolean = computed<boolean>(() => resolveBooleanish(props.fade))
-const showBoolean = computed<boolean>(() => resolveBooleanish(props.show))
+const fadeBoolean = useBooleanish(toRef(props, 'fade'))
+const showBoolean = useBooleanish(toRef(props, 'show'))
 
 interface BAlertEmits {
   (e: 'dismissed'): void

@@ -1,8 +1,8 @@
 <script lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
 import type {BProgressParentData} from '../../types/components'
-import {resolveBooleanish} from '../../utils'
-import {computed, defineComponent, h, inject, PropType} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, defineComponent, h, inject, PropType, toRef} from 'vue'
 import {injectionKey} from './BProgress.vue'
 
 export default defineComponent({
@@ -19,10 +19,10 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant>},
   },
   setup(props, {slots}) {
-    const animatedBoolean = computed<boolean>(() => resolveBooleanish(props.animated))
-    const showProgressBoolean = computed<boolean>(() => resolveBooleanish(props.showProgress))
-    const showValueBoolean = computed<boolean>(() => resolveBooleanish(props.showValue))
-    const stripedBoolean = computed<boolean>(() => resolveBooleanish(props.striped))
+    const animatedBoolean = useBooleanish(toRef(props, 'animated'))
+    const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
+    const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
+    const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
     const parent = inject<BProgressParentData>(injectionKey)
 

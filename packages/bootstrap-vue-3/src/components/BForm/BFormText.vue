@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 // import type {BFormTextProps} from '../../types/components'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish, TextColorVariant} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 
 interface BFormTextProps {
   id?: string
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<BFormTextProps>(), {
   textVariant: 'muted',
 })
 
-const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
+const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 
 const classes = computed(() => ({
   'form-text': !inlineBoolean.value,

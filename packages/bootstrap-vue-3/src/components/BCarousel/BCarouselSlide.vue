@@ -39,9 +39,8 @@
 
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
-import {useId} from '../../composables'
-import {computed, inject} from 'vue'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish, useId} from '../../composables'
+import {computed, inject, toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import type {BCarouselParentData} from '../../types/components'
 import {injectionKey} from './BCarousel.vue'
@@ -76,11 +75,11 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
   textTag: 'p',
 })
 
-const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
-const imgBlankBoolean = computed<boolean>(() => resolveBooleanish(props.imgBlank))
+const activeBoolean = useBooleanish(toRef(props, 'active'))
+const imgBlankBoolean = useBooleanish(toRef(props, 'imgBlank'))
 
 const parentData = inject<BCarouselParentData>(injectionKey, {})
-const computedId = useId(props.id, 'accordion')
+const computedId = useId(toRef(props, 'id'), 'accordion')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const img = computed<string | true | undefined>(() =>
   imgBlankBoolean.value ? imgBlankBoolean.value : props.imgSrc

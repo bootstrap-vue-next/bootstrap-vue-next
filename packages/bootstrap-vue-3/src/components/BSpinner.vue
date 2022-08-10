@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 // import type {BSpinnerProps} from '../types/components'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../types'
-import {resolveBooleanish} from '../utils'
+import {useBooleanish} from '../composables'
 
 interface BSpinnerProps {
   label?: string
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<BSpinnerProps>(), {
   type: 'border',
 })
 
-const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
+const smallBoolean = useBooleanish(toRef(props, 'small'))
 
 const classes = computed(() => ({
   'spinner-border': props.type === 'border',

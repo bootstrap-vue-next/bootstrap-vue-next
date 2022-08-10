@@ -134,12 +134,12 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have attribute aria-invalid when state=null', async () => {
+  it('default does not have attribute aria-invalid when state=undefined', async () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
       props: {
-        state: null,
+        state: undefined,
       },
     })
 

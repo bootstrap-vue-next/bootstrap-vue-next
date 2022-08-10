@@ -47,7 +47,11 @@ const _normalizeOption = (
  * @param props
  * @returns
  */
-const normalizeOptions = (options: any[], componentName: string, props: any): any => {
+const normalizeOptions = (
+  options: any[],
+  componentName: string,
+  props: Record<string, unknown>
+): any => {
   if (Array.isArray(options)) {
     return options.map((option) => _normalizeOption(option, null, componentName, props))
   } else if (Object.prototype.toString.call(options) === '[object Object]') {

@@ -16,10 +16,10 @@
 
 <script setup lang="ts">
 // import type {BListGroupItemProps} from '../../types/components'
-import {computed, inject, useAttrs} from 'vue'
+import {computed, inject, toRef, useAttrs} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 import {injectionKey} from './BListGroup.vue'
 
@@ -53,10 +53,10 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
   target: '_self',
 })
 
-const actionBoolean = computed<boolean>(() => resolveBooleanish(props.action))
-const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
-const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const actionBoolean = useBooleanish(toRef(props, 'action'))
+const activeBoolean = useBooleanish(toRef(props, 'active'))
+const buttonBoolean = useBooleanish(toRef(props, 'button'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
 const attrs = useAttrs()
 

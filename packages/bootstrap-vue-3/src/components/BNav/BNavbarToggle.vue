@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import {BToggle as vBToggle} from '../../directives'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish, ButtonType} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 
 interface Props {
   disabled?: Booleanish // TODO ensure that if the button is disabled that it doesn't collapse
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
 })
 
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
 interface Emits {
   (e: 'click'): void

@@ -1,7 +1,8 @@
 <script lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
-import {normalizeSlot, resolveBooleanish, toFloat} from '../../utils'
-import {computed, defineComponent, h, PropType, resolveComponent} from 'vue'
+import {normalizeSlot, toFloat} from '../../utils'
+import {useBooleanish} from '../../composables'
+import {computed, defineComponent, h, PropType, resolveComponent, toRef} from 'vue'
 import BTransition from '../BTransition/BTransition.vue'
 
 const POSITION_COVER = {top: 0, left: 0, bottom: 0, right: 0}
@@ -45,12 +46,12 @@ export default defineComponent({
   },
   emits: ['click', 'hidden', 'shown'],
   setup(props, {slots, emit}) {
-    const fixedBoolean = computed<boolean>(() => resolveBooleanish(props.fixed))
-    const noCenterBoolean = computed<boolean>(() => resolveBooleanish(props.noCenter))
-    const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
-    const noWrapBoolean = computed<boolean>(() => resolveBooleanish(props.noWrap))
-    const showBoolean = computed<boolean>(() => resolveBooleanish(props.show))
-    const spinnerSmallBoolean = computed<boolean>(() => resolveBooleanish(props.spinnerSmall))
+    const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
+    const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
+    const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
+    const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
+    const showBoolean = useBooleanish(toRef(props, 'show'))
+    const spinnerSmallBoolean = useBooleanish(toRef(props, 'spinnerSmall'))
 
     const computedRounded = computed(() =>
       props.rounded === true || props.rounded === ''

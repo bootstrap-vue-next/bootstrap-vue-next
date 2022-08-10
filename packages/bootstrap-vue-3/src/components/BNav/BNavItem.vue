@@ -16,10 +16,10 @@
 <script setup lang="ts">
 // import type {BNavItemProps} from '../types/components'
 import BLink from '../BLink/BLink.vue'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 
 interface BNavItemProps {
   active?: Booleanish
@@ -33,8 +33,8 @@ const props = withDefaults(defineProps<BNavItemProps>(), {
   disabled: false,
 })
 
-const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const activeBoolean = useBooleanish(toRef(props, 'active'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
 const classes = computed(() => ({
   active: activeBoolean.value,

@@ -189,9 +189,9 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 import useItemHelper from './itemHelper'
 
 interface BTableProps {
@@ -226,14 +226,14 @@ const props = withDefaults(defineProps<BTableProps>(), {
   striped: false,
 })
 
-const captionTopBoolean = computed<boolean>(() => resolveBooleanish(props.captionTop))
-const borderlessBoolean = computed<boolean>(() => resolveBooleanish(props.borderless))
-const borderedBoolean = computed<boolean>(() => resolveBooleanish(props.bordered))
-const darkBoolean = computed<boolean>(() => resolveBooleanish(props.dark))
-const footCloneBoolean = computed<boolean>(() => resolveBooleanish(props.footClone))
-const hoverBoolean = computed<boolean>(() => resolveBooleanish(props.hover))
-const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
-const stripedBoolean = computed<boolean>(() => resolveBooleanish(props.striped))
+const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
+const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
+const borderedBoolean = useBooleanish(toRef(props, 'bordered'))
+const darkBoolean = useBooleanish(toRef(props, 'dark'))
+const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
+const hoverBoolean = useBooleanish(toRef(props, 'hover'))
+const smallBoolean = useBooleanish(toRef(props, 'small'))
+const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
 const classes = computed(() => [
   'table',

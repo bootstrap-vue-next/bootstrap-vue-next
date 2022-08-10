@@ -29,6 +29,7 @@ import {
 import getBreakpointProps from './getBreakpointProps'
 import getClasses from './getClasses'
 import getID from './getID'
+import resolveAriaInvalid from './resolveAriaInvalid'
 import {
   isArray,
   isBoolean,
@@ -43,7 +44,6 @@ import {
   isUndefinedOrNull,
   toType,
 } from './inspect'
-import {mathMax, mathMin} from './math'
 import mergeDeep from './mergeDeep'
 import normalizeSlot from './normalizeSlot'
 import {stringToInteger, toFloat, toInteger, toPercison} from './number'
@@ -65,6 +65,7 @@ export {
   toString,
   upperFirst,
   attemptFocus,
+  resolveAriaInvalid,
   contains,
   stringToInteger,
   toFloat,
@@ -115,8 +116,6 @@ export {
   isUndefined,
   isUndefinedOrNull,
   toType,
-  mathMax,
-  mathMin,
 }
 
 export default {
@@ -148,6 +147,7 @@ export default {
   normalizeSlot,
   getActiveElement,
   isBooleanish,
+  resolveAriaInvalid,
   getAttr,
   getBCR,
   getStyle,
@@ -181,6 +181,4 @@ export default {
   isUndefined,
   isUndefinedOrNull,
   toType,
-  mathMax,
-  mathMin,
 }

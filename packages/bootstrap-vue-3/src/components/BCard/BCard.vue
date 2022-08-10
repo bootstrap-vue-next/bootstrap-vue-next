@@ -47,8 +47,8 @@
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
 import type {Alignment, Booleanish, ColorVariant, TextColorVariant} from '../../types'
-import {computed} from 'vue'
-import {resolveBooleanish} from '../../utils'
+import {computed, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 
 interface BCardProps {
   align?: Alignment
@@ -113,14 +113,14 @@ const props = withDefaults(defineProps<BCardProps>(), {
   titleTag: 'h4',
 })
 
-const imgBottomBoolean = computed<boolean>(() => resolveBooleanish(props.imgBottom))
-const imgEndBoolean = computed<boolean>(() => resolveBooleanish(props.imgEnd))
-const imgLeftBoolean = computed<boolean>(() => resolveBooleanish(props.imgLeft))
-const imgRightBoolean = computed<boolean>(() => resolveBooleanish(props.imgRight))
-const imgStartBoolean = computed<boolean>(() => resolveBooleanish(props.imgStart))
-const imgTopBoolean = computed<boolean>(() => resolveBooleanish(props.imgTop))
-const noBodyBoolean = computed<boolean>(() => resolveBooleanish(props.noBody))
-const overlayBoolean = computed<boolean>(() => resolveBooleanish(props.overlay))
+const imgBottomBoolean = useBooleanish(toRef(props, 'imgBottom'))
+const imgEndBoolean = useBooleanish(toRef(props, 'imgEnd'))
+const imgLeftBoolean = useBooleanish(toRef(props, 'imgLeft'))
+const imgRightBoolean = useBooleanish(toRef(props, 'imgRight'))
+const imgStartBoolean = useBooleanish(toRef(props, 'imgStart'))
+const imgTopBoolean = useBooleanish(toRef(props, 'imgTop'))
+const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
+const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
 const classes = computed(() => ({
   [`text-${props.align}`]: props.align,

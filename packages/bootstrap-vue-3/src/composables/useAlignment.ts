@@ -1,4 +1,4 @@
-import {computed, ComputedRef} from 'vue'
+import {computed, ComputedRef, Ref} from 'vue'
 
 import type {Alignment} from '../types'
 
@@ -7,13 +7,13 @@ import type {Alignment} from '../types'
  * @param props
  * @returns
  */
-export default (props: {align: Alignment}): ComputedRef<string> =>
+export default (align: Ref<Alignment>): ComputedRef<string> =>
   computed(() => {
-    if (props.align === 'center') {
+    if (align.value === 'center') {
       return 'justify-content-center'
-    } else if (props.align === 'end') {
+    } else if (align.value === 'end') {
       return 'justify-content-end'
-    } else if (props.align === 'start') {
+    } else if (align.value === 'start') {
       return 'justify-content-start'
     }
     return 'justify-content-start'

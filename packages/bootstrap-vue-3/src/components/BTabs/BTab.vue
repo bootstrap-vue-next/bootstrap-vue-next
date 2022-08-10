@@ -14,8 +14,8 @@
 <script setup lang="ts">
 // import type {BTabProps} from '../../types/components'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed, inject} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, inject, toRef} from 'vue'
 import {injectionKey} from './BTabs.vue'
 
 interface BTabProps {
@@ -44,9 +44,9 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkClass: undefined,
 })
 
-const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-const lazyBoolean = computed<boolean>(() => resolveBooleanish(props.lazy))
+const activeBoolean = useBooleanish(toRef(props, 'active'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 
 const parentData = inject(injectionKey, null)
 

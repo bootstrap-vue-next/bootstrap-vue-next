@@ -362,10 +362,10 @@ describe('form-checkbox', () => {
     wrapper.unmount()
   })
 
-  it('default has no input validation classes when state=null', async () => {
+  it('default has no input validation classes when state=undefined', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        state: null,
+        state: undefined,
         modelValue: false,
       },
       slots: {
@@ -697,10 +697,10 @@ describe('form-checkbox', () => {
     wrapper.unmount()
   })
 
-  it('plain has no input validation classes when state=null', async () => {
+  it('plain has no input validation classes when state=undefined', async () => {
     const wrapper = mount(BFormCheckbox, {
       props: {
-        state: null,
+        state: undefined,
         plain: true,
         modelValue: false,
       },

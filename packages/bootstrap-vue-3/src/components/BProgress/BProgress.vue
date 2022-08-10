@@ -21,8 +21,8 @@
 // import type {BProgressProps} from '../types/components'
 import BProgressBar from './BProgressBar.vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed, InjectionKey, provide} from 'vue'
+import {useBooleanish} from '../../composables'
+import {InjectionKey, provide, toRef} from 'vue'
 
 interface BProgressProps {
   variant?: ColorVariant
@@ -45,11 +45,13 @@ const props = withDefaults(defineProps<BProgressProps>(), {
   value: 0,
 })
 
-const animatedBoolean = computed<boolean>(() => resolveBooleanish(props.animated))
-const showProgressBoolean = computed<boolean>(() => resolveBooleanish(props.showProgress))
-const showValueBoolean = computed<boolean>(() => resolveBooleanish(props.showValue))
-const stripedBoolean = computed<boolean>(() => resolveBooleanish(props.striped))
+const animatedBoolean = useBooleanish(toRef(props, 'animated'))
+const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
+const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
+const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
+// TODO check and see if doing animatedBoolean.value is reactive for provide
+// It may be possible that a toRef() is required for these types of systems.
 provide(injectionKey, {
   animated: animatedBoolean.value,
   max: props.max,

@@ -5,9 +5,10 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
+import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Alignment, Booleanish} from '../types'
-import {getBreakpointProps, getClasses, resolveBooleanish} from '../utils'
+import {getBreakpointProps, getClasses} from '../utils'
+import {useBooleanish} from '../composables'
 
 const breakpointCol = getBreakpointProps('', [], {type: [Boolean, String, Number], default: false})
 const breakpointOffset = getBreakpointProps('offset', [''], {type: [String, Number], default: null})
@@ -26,7 +27,7 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
   },
   setup(props) {
-    const colBoolean = computed<boolean>(() => resolveBooleanish(props.col))
+    const colBoolean = useBooleanish(toRef(props, 'col'))
 
     const properties = [
       {content: breakpointCol, propPrefix: 'cols', classPrefix: 'col'},
@@ -34,6 +35,7 @@ export default defineComponent({
       {content: breakpointOrder, propPrefix: 'order'},
     ]
 
+    // TODO is this supposed to be computed
     const classList: Array<string> = properties.flatMap((el) =>
       getClasses(props, el.content, el.propPrefix, el.classPrefix)
     )

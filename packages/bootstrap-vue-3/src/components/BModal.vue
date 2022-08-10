@@ -60,9 +60,8 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import Modal from 'bootstrap/js/dist/modal'
 import BButton from './BButton/BButton.vue'
-import {resolveBooleanish} from '../utils'
-import {useEventListener} from '../composables'
-import {computed, onMounted, ref, useSlots, watch} from 'vue'
+import {useBooleanish, useEventListener} from '../composables'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
 
 interface BModalProps {
@@ -141,24 +140,24 @@ const props = withDefaults(defineProps<BModalProps>(), {
   titleTag: 'h5',
 })
 
-const busyBoolean = computed<boolean>(() => resolveBooleanish(props.busy))
-const cancelDisabledBoolean = computed<boolean>(() => resolveBooleanish(props.cancelDisabled))
-const centeredBoolean = computed<boolean>(() => resolveBooleanish(props.centered))
-const headerCloseWhiteBoolean = computed<boolean>(() => resolveBooleanish(props.headerCloseWhite))
-const hideBackdropBoolean = computed<boolean>(() => resolveBooleanish(props.hideBackdrop))
-const hideFooterBoolean = computed<boolean>(() => resolveBooleanish(props.hideFooter))
-const hideHeaderBoolean = computed<boolean>(() => resolveBooleanish(props.hideHeader))
-const hideHeaderCloseBoolean = computed<boolean>(() => resolveBooleanish(props.hideHeaderClose))
-const modelValueBoolean = computed<boolean>(() => resolveBooleanish(props.modelValue))
-const noCloseOnBackdropBoolean = computed<boolean>(() => resolveBooleanish(props.noCloseOnBackdrop))
-const noCloseOnEscBoolean = computed<boolean>(() => resolveBooleanish(props.noCloseOnEsc))
-const noFadeBoolean = computed<boolean>(() => resolveBooleanish(props.noFade))
-const noFocusBoolean = computed<boolean>(() => resolveBooleanish(props.noFocus))
-const okDisabledBoolean = computed<boolean>(() => resolveBooleanish(props.okDisabled))
-const okOnlyBoolean = computed<boolean>(() => resolveBooleanish(props.okOnly))
-const scrollableBoolean = computed<boolean>(() => resolveBooleanish(props.scrollable))
-const showBoolean = computed<boolean>(() => resolveBooleanish(props.show))
-const titleSrOnlyBoolean = computed<boolean>(() => resolveBooleanish(props.titleSrOnly))
+const busyBoolean = useBooleanish(toRef(props, 'busy'))
+const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
+const centeredBoolean = useBooleanish(toRef(props, 'centered'))
+const headerCloseWhiteBoolean = useBooleanish(toRef(props, 'headerCloseWhite'))
+const hideBackdropBoolean = useBooleanish(toRef(props, 'hideBackdrop'))
+const hideFooterBoolean = useBooleanish(toRef(props, 'hideFooter'))
+const hideHeaderBoolean = useBooleanish(toRef(props, 'hideHeader'))
+const hideHeaderCloseBoolean = useBooleanish(toRef(props, 'hideHeaderClose'))
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
+const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
+const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
+const noFocusBoolean = useBooleanish(toRef(props, 'noFocus'))
+const okDisabledBoolean = useBooleanish(toRef(props, 'okDisabled'))
+const okOnlyBoolean = useBooleanish(toRef(props, 'okOnly'))
+const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
+const showBoolean = useBooleanish(toRef(props, 'show'))
+const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void

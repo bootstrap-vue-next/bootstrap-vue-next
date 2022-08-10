@@ -38,15 +38,14 @@
 
 <script setup lang="ts">
 // import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
-import type {Booleanish, Size} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed, nextTick, onActivated, onMounted, ref} from 'vue'
+import type {AriaInvalid, Booleanish, Size} from '../../types'
+import {computed, nextTick, onActivated, onMounted, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {normalizeOptions, useId} from '../../composables'
+import {normalizeOptions, useBooleanish, useId} from '../../composables'
 
 interface BFormSelectProps {
-  ariaInvalid?: boolean | 'grammar' | 'spelling'
+  ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   disabled?: Booleanish
   disabledField?: string
@@ -87,14 +86,13 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   modelValue: '',
 })
 
-const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-const multipleBoolean = computed<boolean>(() => resolveBooleanish(props.multiple))
-const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
-const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const multipleBoolean = useBooleanish(toRef(props, 'multiple'))
+const plainBoolean = useBooleanish(toRef(props, 'plain'))
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 
 interface BFormSelectEmits {
   (e: 'input', value: unknown): void
@@ -105,7 +103,7 @@ interface BFormSelectEmits {
 const emit = defineEmits<BFormSelectEmits>()
 
 const input = ref<HTMLElement>()
-const computedId = useId(props.id, 'input')
+const computedId = useId(toRef(props, 'id'), 'input')
 
 // lifecycle events
 const handleAutofocus = () => {
@@ -137,6 +135,8 @@ const computedSelectSize = computed<number | undefined>(() => {
 
 const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
   // noinspection SuspiciousTypeOfGuard
+  // TODO review https://github.com/cdmoro/bootstrap-vue-3/issues/547#issuecomment-1209906982
+  // If the consensus is to make this resolveAriaInvalid, this will need to be changed along with the test
   if (typeof stateBoolean.value === 'boolean') {
     if (!stateBoolean.value) {
       return true
@@ -148,6 +148,15 @@ const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefine
       return undefined
     }
     return props.ariaInvalid
+  }
+  if (props.ariaInvalid === '') {
+    return undefined
+  }
+  if (props.ariaInvalid === 'true') {
+    return true
+  }
+  if (props.ariaInvalid === 'false') {
+    return false
   }
   return props.ariaInvalid
 })

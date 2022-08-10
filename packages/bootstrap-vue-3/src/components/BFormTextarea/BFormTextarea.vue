@@ -24,9 +24,8 @@
 
 <script lang="ts">
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed, defineComponent, PropType, StyleValue} from 'vue'
-import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
+import {computed, defineComponent, PropType, StyleValue, toRef} from 'vue'
+import {COMMON_INPUT_PROPS, useBooleanish, useFormInput} from '../../composables'
 
 export default defineComponent({
   props: {
@@ -37,7 +36,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
-    const noResizeBoolean = computed<boolean>(() => resolveBooleanish(props.noResize))
+    const noResizeBoolean = useBooleanish(toRef(props, 'noResize'))
 
     const classes = computed(() => ({
       'form-control': !props.plaintext,

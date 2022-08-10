@@ -29,11 +29,10 @@
 
 <script setup lang="ts">
 // import type {BOffcanvasEmits, BOffcanvasProps} from '../types/components'
-import {computed, onMounted, ref, watch} from 'vue'
+import {computed, onMounted, ref, toRef, watch} from 'vue'
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
-import {useEventListener} from '../composables'
+import {useBooleanish, useEventListener} from '../composables'
 import {Booleanish} from '../types'
-import {resolveBooleanish} from '../utils'
 
 interface BOffcanvasProps {
   modelValue?: Booleanish
@@ -50,9 +49,9 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   placement: 'start',
 })
 
-const modelValueBoolean = computed<boolean>(() => resolveBooleanish(props.modelValue))
-const bodyScrollingBoolean = computed<boolean>(() => resolveBooleanish(props.bodyScrolling))
-const backdropBoolean = computed<boolean>(() => resolveBooleanish(props.backdrop))
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
+const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void

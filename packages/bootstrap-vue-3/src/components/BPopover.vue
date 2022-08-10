@@ -30,11 +30,11 @@ import {
   onMounted,
   PropType,
   ref,
+  toRef,
   watch,
 } from 'vue'
-import {resolveBooleanish} from '../utils'
 import Popover from 'bootstrap/js/dist/popover'
-import {useEventListener} from '../composables'
+import {useBooleanish, useEventListener} from '../composables'
 import type {BPopoverDelayObject} from '../types/components'
 import {Booleanish, ColorVariant} from '../types'
 
@@ -48,6 +48,7 @@ export default defineComponent({
     },
     content: {type: String},
     id: {type: String},
+    customClass: {type: String, default: ''},
     noninteractive: {type: Boolean as PropType<Booleanish>, default: false},
     placement: {type: String as PropType<Popover.Options['placement']>, default: 'right'},
     target: {
@@ -69,10 +70,10 @@ export default defineComponent({
   setup(props, {emit, slots}) {
     // TODO noninteractive is never used
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const noninteractiveBoolean = computed<boolean>(() => resolveBooleanish(props.noninteractive))
-    const showBoolean = computed<boolean>(() => resolveBooleanish(props.show))
-    const htmlBoolean = computed<boolean>(() => resolveBooleanish(props.html))
-    const sanitizeBoolean = computed<boolean>(() => resolveBooleanish(props.sanitize))
+    const noninteractiveBoolean = useBooleanish(toRef(props, 'noninteractive'))
+    const showBoolean = useBooleanish(toRef(props, 'show'))
+    const htmlBoolean = useBooleanish(toRef(props, 'html'))
+    const sanitizeBoolean = useBooleanish(toRef(props, 'sanitize'))
 
     const element = ref<HTMLElement>()
     const target = ref<HTMLElement | undefined>()
@@ -111,6 +112,7 @@ export default defineComponent({
       if (!target.value) return
 
       instance.value = new Popover(target.value, {
+        customClass: props.customClass,
         container: cleanElementProp(props.container),
         trigger: props.triggers,
         placement: props.placement,

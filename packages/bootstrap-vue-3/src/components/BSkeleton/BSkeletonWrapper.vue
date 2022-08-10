@@ -6,8 +6,8 @@
 <script setup lang="ts">
 // import type {BSkeletonWrapperProps} from '../../types/components'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
+import {toRef} from 'vue'
 
 interface BSkeletonWrapperProps {
   loading?: Booleanish
@@ -17,5 +17,5 @@ const props = withDefaults(defineProps<BSkeletonWrapperProps>(), {
   loading: false,
 })
 
-const loadingBoolean = computed<boolean>(() => resolveBooleanish(props.loading))
+const loadingBoolean = useBooleanish(toRef(props, 'loading'))
 </script>

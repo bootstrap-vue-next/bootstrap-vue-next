@@ -7,6 +7,7 @@ import {
   onMounted,
   PropType,
   ref,
+  toRef,
   watch,
 } from 'vue'
 import useId from './useId'
@@ -52,7 +53,7 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   const input = ref<HTMLInputElement>()
   let inputValue: string | null = null
   let neverFormatted = true
-  const computedId = useId(props.id, 'input')
+  const computedId = useId(toRef(props, 'id'), 'input')
 
   const _formatValue = (value: unknown, evt: any, force = false) => {
     value = String(value)

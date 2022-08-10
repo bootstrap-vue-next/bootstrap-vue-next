@@ -32,8 +32,8 @@
 
 <script lang="ts">
 import type {Booleanish, LinkTarget} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed, defineComponent, getCurrentInstance, PropType, ref} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, defineComponent, getCurrentInstance, PropType, ref, toRef} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {
@@ -59,14 +59,14 @@ export default defineComponent({
   props: BLINK_PROPS,
   emits: ['click'],
   setup(props, {emit, attrs}) {
-    const activeBoolean = computed<boolean>(() => resolveBooleanish(props.active))
+    const activeBoolean = useBooleanish(toRef(props, 'active'))
     // TODO append is never used
-    const appendBoolean = computed<boolean>(() => resolveBooleanish(props.append))
-    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+    const appendBoolean = useBooleanish(toRef(props, 'append'))
+    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     // TODO exact is never used
-    const exactBoolean = computed<boolean>(() => resolveBooleanish(props.exact))
+    const exactBoolean = useBooleanish(toRef(props, 'exact'))
     // TODO replace is never used
-    const replaceBoolean = computed<boolean>(() => resolveBooleanish(props.replace))
+    const replaceBoolean = useBooleanish(toRef(props, 'replace'))
 
     const instance = getCurrentInstance()
     const link = ref<HTMLElement>(null as unknown as HTMLElement)

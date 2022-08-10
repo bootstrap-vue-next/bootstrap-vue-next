@@ -314,10 +314,10 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has no input validation classes when state=null', async () => {
+  it('default has no input validation classes when state=undefined', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        state: null,
+        state: undefined,
         modelValue: '',
         value: 'a',
       },
@@ -600,10 +600,10 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has no input validation classes when state=null', async () => {
+  it('plain has no input validation classes when state=undefined', async () => {
     const wrapper = mount(BFormRadio, {
       props: {
-        state: null,
+        state: undefined,
         plain: true,
         modelValue: '',
         value: 'a',

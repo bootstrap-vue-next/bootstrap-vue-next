@@ -30,10 +30,9 @@
 
 <script setup lang="ts">
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
-import type {Booleanish, ButtonVariant} from '../../types'
-import {getClasses, getInputClasses, getLabelClasses, useId} from '../../composables'
-import {computed, onMounted, ref} from 'vue'
-import {resolveBooleanish} from '../../utils'
+import type {Booleanish, ButtonVariant, InputSize} from '../../types'
+import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
+import {computed, onMounted, reactive, ref, toRef} from 'vue'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -41,7 +40,7 @@ interface BFormRadioProps {
   form?: string
   id?: string
   name?: string
-  size?: string
+  size?: InputSize
   autofocus?: Booleanish
   modelValue?: boolean | string | Array<unknown> | Record<string, unknown> | number
   plain?: Booleanish
@@ -69,24 +68,23 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   value: true,
 })
 
-const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
-const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
+const plainBoolean = useBooleanish(toRef(props, 'plain'))
 // TODO button is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
+const buttonBoolean = useBooleanish(toRef(props, 'button'))
 // TODO switch is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const switchBoolean = computed<boolean>(() => resolveBooleanish(props.switch))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const switchBoolean = useBooleanish(toRef(props, 'switch'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 // TODO inline is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const inlineBoolean = computed<boolean>(() => resolveBooleanish(props.inline))
-const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
+const inlineBoolean = useBooleanish(toRef(props, 'inline'))
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 
 interface BFormRadioEmits {
   (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
@@ -99,7 +97,7 @@ interface BFormRadioEmits {
 
 const emit = defineEmits<BFormRadioEmits>()
 
-const computedId = useId(props.id, 'form-check')
+const computedId = useId(toRef(props, 'id'), 'form-check')
 const input = ref<HTMLElement>(null as unknown as HTMLElement)
 const isFocused = ref<boolean>(false)
 
@@ -121,9 +119,18 @@ const isChecked = computed<unknown>(() => {
   return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
 })
 
-const classes = getClasses(props)
-const inputClasses = getInputClasses(props)
-const labelClasses = getLabelClasses(props)
+const classesObject = reactive({
+  plain: toRef(plainBoolean, 'value'),
+  button: toRef(buttonBoolean, 'value'),
+  inline: toRef(inlineBoolean, 'value'),
+  switch: toRef(switchBoolean, 'value'),
+  size: toRef(props, 'size'),
+  state: toRef(stateBoolean, 'value'),
+  buttonVariant: toRef(props, 'buttonVariant'),
+})
+const classes = getClasses(classesObject)
+const inputClasses = getInputClasses(classesObject)
+const labelClasses = getLabelClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 onMounted(() => {

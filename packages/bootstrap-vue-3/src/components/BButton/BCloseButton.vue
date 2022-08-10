@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 // import type {BCloseButtonProps} from '../../types/components'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 
 interface BCloseButtonProps {
   disabled?: Booleanish
@@ -24,8 +24,8 @@ const props = withDefaults(defineProps<BCloseButtonProps>(), {
   white: false,
 })
 
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-const whiteBoolean = computed<boolean>(() => resolveBooleanish(props.white))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const whiteBoolean = useBooleanish(toRef(props, 'white'))
 
 const classes = computed(() => ({
   'btn-close-white': whiteBoolean.value,

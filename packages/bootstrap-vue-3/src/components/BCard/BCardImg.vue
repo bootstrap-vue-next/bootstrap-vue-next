@@ -5,8 +5,8 @@
 <script setup lang="ts">
 // import type {BCardImgProps} from '../../types/components'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, toRef} from 'vue'
 
 interface BCardImgProps {
   alt?: string
@@ -31,12 +31,12 @@ const props = withDefaults(defineProps<BCardImgProps>(), {
   top: false,
 })
 
-const bottomBoolean = computed<boolean>(() => resolveBooleanish(props.bottom))
-const endBoolean = computed<boolean>(() => resolveBooleanish(props.end))
-const leftBoolean = computed<boolean>(() => resolveBooleanish(props.left))
-const rightBoolean = computed<boolean>(() => resolveBooleanish(props.right))
-const startBoolean = computed<boolean>(() => resolveBooleanish(props.start))
-const topBoolean = computed<boolean>(() => resolveBooleanish(props.top))
+const bottomBoolean = useBooleanish(toRef(props, 'bottom'))
+const endBoolean = useBooleanish(toRef(props, 'end'))
+const leftBoolean = useBooleanish(toRef(props, 'left'))
+const rightBoolean = useBooleanish(toRef(props, 'right'))
+const startBoolean = useBooleanish(toRef(props, 'start'))
+const topBoolean = useBooleanish(toRef(props, 'top'))
 
 const attrs = computed(() => ({
   src: props.src,

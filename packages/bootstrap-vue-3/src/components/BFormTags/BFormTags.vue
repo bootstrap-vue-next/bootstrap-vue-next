@@ -106,11 +106,10 @@
 
 <script setup lang="ts">
 // import type {BFormTagsEmits, BFormTagsProps} from '../types/components'
-import {computed, onActivated, onMounted, ref, VNodeNormalizedChildren, watch} from 'vue'
+import {computed, onActivated, onMounted, ref, toRef, VNodeNormalizedChildren, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
-import {useId} from '../../composables'
+import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, ColorVariant, InputSize, InputType} from '../../types'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormTagsProps {
   addButtonText?: string
@@ -170,18 +169,17 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   tagVariant: 'secondary',
 })
 
-const addOnChangeBoolean = computed<boolean>(() => resolveBooleanish(props.addOnChange))
-const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-const noAddOnEnterBoolean = computed<boolean>(() => resolveBooleanish(props.noAddOnEnter))
-const noOuterFocusBoolean = computed<boolean>(() => resolveBooleanish(props.noOuterFocus))
-const noTagRemoveBoolean = computed<boolean>(() => resolveBooleanish(props.noTagRemove))
-const removeOnDeleteBoolean = computed<boolean>(() => resolveBooleanish(props.removeOnDelete))
-const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
-const tagPillsBoolean = computed<boolean>(() => resolveBooleanish(props.tagPills))
+const addOnChangeBoolean = useBooleanish(toRef(props, 'addOnChange'))
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const noAddOnEnterBoolean = useBooleanish(toRef(props, 'noAddOnEnter'))
+const noOuterFocusBoolean = useBooleanish(toRef(props, 'noOuterFocus'))
+const noTagRemoveBoolean = useBooleanish(toRef(props, 'noTagRemove'))
+const removeOnDeleteBoolean = useBooleanish(toRef(props, 'removeOnDelete'))
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
+const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
 
 interface BFormTagsEmits {
   (e: 'update:modelValue', value: Array<string>): void

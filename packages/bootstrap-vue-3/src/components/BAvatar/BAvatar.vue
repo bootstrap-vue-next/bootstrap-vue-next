@@ -1,4 +1,6 @@
 <template>
+  {{ badgeLeft }}
+  {{ badgeLeftBoolean }}
   <component
     :is="tag"
     class="b-avatar"
@@ -26,11 +28,12 @@
 
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
-import {isEmptySlot, isNumber, isNumeric, isString, resolveBooleanish, toFloat} from '../../utils'
+import {isEmptySlot, isNumber, isNumeric, isString, toFloat} from '../../utils'
 import type {BAvatarGroupParentData} from '../../types/components'
-import {computed, inject, StyleValue, useSlots} from 'vue'
+import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
+import {useBooleanish} from '../../composables'
 
 interface BAvatarProps {
   alt?: string // TODO each complex variant should contain a note about it's type
@@ -69,11 +72,11 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   variant: 'secondary',
 })
 
-const badgeLeftBoolean = computed<boolean>(() => resolveBooleanish(props.badgeLeft))
-const badgeTopBoolean = computed<boolean>(() => resolveBooleanish(props.badgeTop))
-const buttonBoolean = computed<boolean>(() => resolveBooleanish(props.button))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-const squareBoolean = computed<boolean>(() => resolveBooleanish(props.square))
+const badgeLeftBoolean = useBooleanish(toRef(props, 'badgeLeft'))
+const badgeTopBoolean = useBooleanish(toRef(props, 'badgeTop'))
+const buttonBoolean = useBooleanish(toRef(props, 'button'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const squareBoolean = useBooleanish(toRef(props, 'square'))
 
 interface BAvatarEmits {
   (e: 'click', value: MouseEvent): void

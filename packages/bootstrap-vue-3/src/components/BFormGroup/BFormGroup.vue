@@ -1,5 +1,5 @@
 <script lang="ts">
-import {useId} from '../../composables'
+import {useBooleanish, useId} from '../../composables'
 import {RX_SPACE_SPLIT} from '../../constants/regex'
 import {
   arrayIncludes,
@@ -12,14 +12,13 @@ import {
   isVisible,
   normalizeSlot,
   removeAttr,
-  resolveBooleanish,
   select,
   selectAll,
   setAttr,
   stringToInteger,
   suffixPropName,
 } from '../../utils'
-import {computed, defineComponent, h, nextTick, onMounted, PropType, ref, watch} from 'vue'
+import {computed, defineComponent, h, nextTick, onMounted, PropType, ref, toRef, watch} from 'vue'
 import BCol from '../BCol.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
@@ -75,12 +74,12 @@ export default defineComponent({
     floating: {type: Boolean as PropType<Booleanish>, default: false},
   },
   setup(props, {attrs}) {
-    const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
-    const labelSrOnlyBoolean = computed<boolean>(() => resolveBooleanish(props.labelSrOnly))
-    const stateBoolean = computed<boolean>(() => resolveBooleanish(props.state))
-    const tooltipBoolean = computed<boolean>(() => resolveBooleanish(props.tooltip))
-    const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
-    const floatingBoolean = computed<boolean>(() => resolveBooleanish(props.floating))
+    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+    const labelSrOnlyBoolean = useBooleanish(toRef(props, 'labelSrOnly'))
+    const stateBoolean = useBooleanish(toRef(props, 'state'))
+    const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
+    const validatedBoolean = useBooleanish(toRef(props, 'validated'))
+    const floatingBoolean = useBooleanish(toRef(props, 'floating'))
 
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
@@ -391,7 +390,7 @@ export default defineComponent({
           'was-validated': this.validatedBoolean,
         },
       ],
-      'id': useId(props.id).value,
+      'id': useId(toRef(props, 'id')).value,
       'disabled': isFieldset ? this.disabledBoolean : null,
       'role': isFieldset ? null : 'group',
       'aria-invalid': this.computedAriaInvalid,

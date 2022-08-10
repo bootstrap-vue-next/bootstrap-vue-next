@@ -20,8 +20,8 @@
 
 <script setup lang="ts">
 // import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
-import type {Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, useSlots} from 'vue'
+import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
+import {computed, reactive, toRef, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import {
   bindGroupProps,
@@ -29,9 +29,9 @@ import {
   getGroupClasses,
   optionToElement,
   slotsToElements,
+  useBooleanish,
   useId,
 } from '../../composables'
-import {resolveBooleanish} from '../../utils'
 
 interface BFormRadioGroupProps {
   size?: Size
@@ -39,7 +39,7 @@ interface BFormRadioGroupProps {
   id?: string
   name?: string
   modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
-  ariaInvalid?: boolean | string
+  ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
   buttons?: Booleanish
@@ -77,28 +77,27 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
 
 // TODO autofocus is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const autofocusBoolean = computed<boolean>(() => resolveBooleanish(props.autofocus))
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 // TODO buttons is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const buttonsBoolean = computed<boolean>(() => resolveBooleanish(props.buttons))
-const disabledBoolean = computed<boolean>(() => resolveBooleanish(props.disabled))
+const buttonsBoolean = useBooleanish(toRef(props, 'buttons'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 // TODO plain is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const plainBoolean = computed<boolean>(() => resolveBooleanish(props.plain))
+const plainBoolean = useBooleanish(toRef(props, 'plain'))
 // TODO required is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const requiredBoolean = computed<boolean>(() => resolveBooleanish(props.required))
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
 // TODO stacked is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stackedBoolean = computed<boolean>(() => resolveBooleanish(props.stacked))
+const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = computed<boolean | undefined>(() =>
-  props.state !== undefined ? resolveBooleanish(props.state) : undefined
-)
+const stateBoolean =
+  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
 // TODO validated is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
+const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
 interface BFormRadioGroupEmits {
   (e: 'input', value: unknown): void
@@ -111,8 +110,8 @@ const emit = defineEmits<BFormRadioGroupEmits>()
 const slots = useSlots()
 
 const slotsName = 'BFormRadio'
-const computedId = useId(props.id, 'radio')
-const computedName = useId(props.name, 'checkbox')
+const computedId = useId(toRef(props, 'id'), 'radio')
+const computedName = useId(toRef(props, 'name'), 'checkbox')
 
 const localValue = computed<string | boolean | Array<unknown> | Record<string, unknown> | number>({
   get: () => props.modelValue,
@@ -133,8 +132,17 @@ const checkboxList = computed<Array<any>>(() =>
     }))
 )
 
-const attrs = getGroupAttr(props)
-const classes = getGroupClasses(props)
+const classesObject = reactive({
+  required: toRef(requiredBoolean, 'value'),
+  ariaInvalid: toRef(props, 'ariaInvalid'),
+  state: toRef(stateBoolean, 'value'),
+  validated: toRef(validatedBoolean, 'value'),
+  buttons: toRef(buttonsBoolean, 'value'),
+  stacked: toRef(stackedBoolean, 'value'),
+  size: toRef(props, 'size'),
+})
+const attrs = getGroupAttr(classesObject)
+const classes = getGroupClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 </script>

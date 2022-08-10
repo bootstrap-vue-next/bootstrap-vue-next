@@ -13,11 +13,11 @@
 
 <script setup lang="ts">
 // import type {BCardBodyProps} from '../../types/components'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import BCardSubTitle from './BCardSubTitle.vue'
 import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
-import {resolveBooleanish} from '../../utils'
+import {useBooleanish} from '../../composables'
 
 interface BCardBodyProps {
   bodyBgVariant?: ColorVariant
@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
 
 // TODO overlay is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const overlayBoolean = computed<boolean>(() => resolveBooleanish(props.overlay))
+const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
 const classes = computed(() => ({
   [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,

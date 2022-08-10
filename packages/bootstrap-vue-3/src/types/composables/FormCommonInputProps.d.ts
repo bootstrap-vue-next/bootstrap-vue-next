@@ -1,7 +1,7 @@
 import type {Size} from '..'
 
 interface FormCommonInputProps {
-  ariaInvalid?: boolean | 'false' | 'true' | 'grammar' | 'spelling'
+  ariaInvalid?: AriaInvalid
   autocomplete?: string
   autofocus?: boolean
   disabled?: boolean

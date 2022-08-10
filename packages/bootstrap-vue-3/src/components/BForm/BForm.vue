@@ -7,8 +7,8 @@
 <script setup lang="ts">
 // import type {BFormEmits, BFormProps} from '../../types/components'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, toRef} from 'vue'
 
 interface BFormProps {
   id?: string
@@ -23,9 +23,9 @@ const props = withDefaults(defineProps<BFormProps>(), {
   validated: false,
 })
 
-const floatingBoolean = computed<boolean>(() => resolveBooleanish(props.floating))
-const novalidateBoolean = computed<boolean>(() => resolveBooleanish(props.novalidate))
-const validatedBoolean = computed<boolean>(() => resolveBooleanish(props.validated))
+const floatingBoolean = useBooleanish(toRef(props, 'floating'))
+const novalidateBoolean = useBooleanish(toRef(props, 'novalidate'))
+const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
 interface BFormEmits {
   (e: 'submit', value: Event): void

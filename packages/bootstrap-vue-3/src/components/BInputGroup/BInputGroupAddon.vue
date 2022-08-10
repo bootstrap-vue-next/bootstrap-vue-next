@@ -10,8 +10,8 @@
 <script setup lang="ts">
 // import type {BInputGroupAddonProps} from '../../types/components'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, toRef} from 'vue'
 import BInputGroupText from './BInputGroupText.vue'
 
 interface BInputGroupAddonProps {
@@ -27,8 +27,8 @@ const props = withDefaults(defineProps<BInputGroupAddonProps>(), {
   isText: false,
 })
 
-const appendBoolean = computed<boolean>(() => resolveBooleanish(props.append))
-const isTextBoolean = computed<boolean>(() => resolveBooleanish(props.isText))
+const appendBoolean = useBooleanish(toRef(props, 'append'))
+const isTextBoolean = useBooleanish(toRef(props, 'isText'))
 
 const computedClasses = computed(() => ({
   'input-group-append': appendBoolean.value,

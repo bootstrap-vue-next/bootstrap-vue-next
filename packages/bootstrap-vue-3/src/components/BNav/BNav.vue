@@ -7,8 +7,8 @@
 <script setup lang="ts">
 // import type {BNavProps} from '../types/components'
 import type {Booleanish} from '../../types'
-import {resolveBooleanish} from '../../utils'
-import {computed} from 'vue'
+import {useBooleanish} from '../../composables'
+import {computed, toRef} from 'vue'
 
 interface BNavProps {
   align?: string
@@ -33,13 +33,13 @@ const props = withDefaults(defineProps<BNavProps>(), {
   vertical: false,
 })
 
-const cardHeaderBoolean = computed<boolean>(() => resolveBooleanish(props.cardHeader))
-const fillBoolean = computed<boolean>(() => resolveBooleanish(props.fill))
-const justifiedBoolean = computed<boolean>(() => resolveBooleanish(props.justified))
-const pillsBoolean = computed<boolean>(() => resolveBooleanish(props.pills))
-const smallBoolean = computed<boolean>(() => resolveBooleanish(props.small))
-const tabsBoolean = computed<boolean>(() => resolveBooleanish(props.tabs))
-const verticalBoolean = computed<boolean>(() => resolveBooleanish(props.vertical))
+const cardHeaderBoolean = useBooleanish(toRef(props, 'cardHeader'))
+const fillBoolean = useBooleanish(toRef(props, 'fill'))
+const justifiedBoolean = useBooleanish(toRef(props, 'justified'))
+const pillsBoolean = useBooleanish(toRef(props, 'pills'))
+const smallBoolean = useBooleanish(toRef(props, 'small'))
+const tabsBoolean = useBooleanish(toRef(props, 'tabs'))
+const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
 const classes = computed(() => ({
   'nav-tabs': tabsBoolean.value,
