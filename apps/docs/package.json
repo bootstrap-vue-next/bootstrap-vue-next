@@ -6,13 +6,9 @@
     "dev": "vuepress dev docs",
     "build": "vuepress build docs"
   },
-  "peerDependencies": {
-    "@vuepress/client": "2.0.0-beta.45",
-    "vue": "^3.2.37"
-  },
   "devDependencies": {
     "@popperjs/core": "^2.11.5",
-    "@vuepress/client": "2.0.0-beta.45",
+    "@vuepress/client": "2.0.0-beta.49",
     "@vuepress/plugin-register-components": "2.0.0-beta.49",
     "@vuepress/plugin-search": "2.0.0-beta.49",
     "@vuepress/utils": "2.0.0-beta.49",
