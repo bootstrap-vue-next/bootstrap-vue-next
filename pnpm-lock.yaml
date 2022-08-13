@@ -21,7 +21,7 @@ importers:
   apps/docs:
     specifiers:
       '@popperjs/core': ^2.11.5
-      '@vuepress/client': 2.0.0-beta.45
+      '@vuepress/client': 2.0.0-beta.49
       '@vuepress/plugin-register-components': 2.0.0-beta.49
       '@vuepress/plugin-search': 2.0.0-beta.49
       '@vuepress/utils': 2.0.0-beta.49
