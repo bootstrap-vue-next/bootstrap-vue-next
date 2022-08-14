@@ -2,6 +2,7 @@
 Bootstrap Vue offers several utility components to assist in building your grid layout.
 Using `<b-container>` and a combination of `<b-row>` and `<b-col>`, a responsive layout can be built with ease.
 For more detailed documentation and understanding, please visit Bootstrap's official Grid System.
+<ClientOnly>
 
 <b-card class="bd-example">
 <b-container>
@@ -18,6 +19,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-row>
 </b-container>
 </b-card>
+</ClientOnly>
 
 ```html
 <b-container>
@@ -37,6 +39,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
 
 ## Variable width content
 
+<ClientOnly>
 <b-card class="bd-example">
 <b-container>
   <b-row class="bd-example-row">
@@ -58,6 +61,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-row>
 </b-container>
 </b-card>
+</ClientOnly>
 
 ```html
 <b-container>
@@ -80,6 +84,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
 ```
 
 ## Ordering 
+<ClientOnly>
 <b-card class="bd-example">
 <b-container>
   <b-row class="bd-example-row">
@@ -95,6 +100,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-row>
 </b-container>
 </b-card>
+</ClientOnly>
 
 ```html
 <b-container>
@@ -113,6 +119,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
 ```
 ## Alignment
 
+<ClientOnly>
 <b-card class="bd-example">
 <b-container>
   <b-row class="bd-example-row" style="min-height: 10rem">
@@ -128,6 +135,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-row>
 </b-container>
 </b-card>
+</ClientOnly>
 
 ```html
 <b-container>
