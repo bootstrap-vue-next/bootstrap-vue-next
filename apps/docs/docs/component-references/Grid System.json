@@ -1,0 +1,35 @@
+{
+  "name": "@bootstrap-vue-3/Grid System",
+  "version": "1.0.0",
+  "meta": {
+    "components": [
+      {
+        "component": "BContainer",
+        "props": [
+        ],
+        "emits": [
+        ],
+        "slots": [
+        ]
+      },
+      {
+        "component": "BRow",
+        "props": [
+        ],
+        "emits": [
+        ],
+        "slots": [
+        ]
+      },
+      {
+        "component": "BCol",
+        "props": [
+        ],
+        "emits": [
+        ],
+        "slots": [
+        ]
+      }
+    ]
+  }
+}

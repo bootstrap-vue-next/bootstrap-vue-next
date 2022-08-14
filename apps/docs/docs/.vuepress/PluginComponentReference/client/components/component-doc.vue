@@ -131,6 +131,7 @@ export default defineComponent({
       props.component as string
     ) as ConcreteComponent
 
+  console.log(component.name)
     const componentPropsMetaObj: ComputedRef<any> = computed(() => {
       return props.propsMeta.reduce((obj, propMeta) => {
         if (propMeta.prop) {

@@ -68,6 +68,7 @@ export default defineUserConfig({
             '/components/FormSelect.md',
             '/components/FormTags.md',
             '/components/FormTextarea.md',
+            '/components/Grid System.md',
             '/components/Image.md',
             '/components/InputGroup.md',
             '/components/ListGroup.md',
