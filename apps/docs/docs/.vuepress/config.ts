@@ -23,7 +23,7 @@ export default defineUserConfig({
   theme: defaultTheme({
     logo: '/logo.png',
     repo: 'https://github.com/cdmoro/bootstrap-vue-3',
-    docsDir: 'docs',
+    docsDir: 'apps/docs/docs',
     editLink: true,
     contributors: false,
     lastUpdated: true,
