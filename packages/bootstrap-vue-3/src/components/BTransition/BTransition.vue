@@ -1,5 +1,5 @@
 <script lang="ts">
-import {Booleanish, TransitionMode} from '../../types'
+import type {Booleanish, TransitionMode} from '../../types'
 import {isPlainObject} from '../../utils'
 import {defineComponent, h, PropType, ref, toRef, Transition} from 'vue'
 import {useBooleanish} from '../../composables'

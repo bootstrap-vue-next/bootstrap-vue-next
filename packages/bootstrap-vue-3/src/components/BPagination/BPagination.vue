@@ -1,7 +1,7 @@
 <script lang="ts">
 import {BvEvent, isUndefinedOrNull, normalizeSlot, toInteger} from '../../utils'
 import {computed, defineComponent, h, PropType, reactive, toRef, watch} from 'vue'
-import {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
+import type {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5

@@ -7,7 +7,7 @@
 <script setup lang="ts">
 // https://vuejs.org/guide/typescript/composition-api.html#syntax-limitations , may be possible in a future release
 // import type {BAccordionProps} from '../types/components'
-import {Booleanish} from '../../types'
+import type {Booleanish} from '../../types'
 import {computed, InjectionKey, provide, toRef} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 

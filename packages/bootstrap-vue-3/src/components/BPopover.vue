@@ -36,7 +36,7 @@ import {
 import Popover from 'bootstrap/js/dist/popover'
 import {useBooleanish, useEventListener} from '../composables'
 import type {BPopoverDelayObject} from '../types/components'
-import {Booleanish, ColorVariant} from '../types'
+import type {Booleanish, ColorVariant} from '../types'
 
 export default defineComponent({
   props: {

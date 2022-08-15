@@ -1,4 +1,4 @@
-import {Size} from '../types'
+import type {AriaInvalid, Size} from '../types'
 import {
   computed,
   ExtractPropTypes,
@@ -11,11 +11,12 @@ import {
   watch,
 } from 'vue'
 import useId from './useId'
+import {resolveAriaInvalid} from '../utils'
 
 export const COMMON_INPUT_PROPS = {
   ariaInvalid: {
-    type: [Boolean, String] as PropType<'grammar' | 'spelling' | boolean | undefined>,
-    default: false,
+    type: Boolean as PropType<AriaInvalid>,
+    default: undefined,
   },
   autocomplete: {type: String, required: false},
   autofocus: {type: Boolean, default: false},
@@ -86,21 +87,9 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
 
   onActivated(handleAutofocus)
 
-  const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
-    if (props.state === false) {
-      return true
-    }
-    if (props.state === true) {
-      return undefined
-    }
-    if (typeof props.ariaInvalid === 'boolean') {
-      if (props.ariaInvalid === false) {
-        return undefined
-      }
-      return props.ariaInvalid
-    }
-    return props.ariaInvalid
-  })
+  const computedAriaInvalid = computed(() =>
+    resolveAriaInvalid(props.ariaInvalid, props.state ?? undefined)
+  )
 
   const onInput = (evt: Event) => {
     const {value} = evt.target as HTMLInputElement

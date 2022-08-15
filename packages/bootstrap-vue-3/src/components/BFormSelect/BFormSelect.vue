@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 // import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
+import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
 import {computed, nextTick, onActivated, onMounted, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
@@ -68,7 +69,7 @@ interface BFormSelectProps {
 }
 
 const props = withDefaults(defineProps<BFormSelectProps>(), {
-  ariaInvalid: false,
+  ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
   disabledField: 'disabled',
@@ -133,33 +134,9 @@ const computedSelectSize = computed<number | undefined>(() => {
   return undefined
 })
 
-const computedAriaInvalid = computed<'grammar' | 'spelling' | boolean | undefined>(() => {
-  // noinspection SuspiciousTypeOfGuard
-  // TODO review https://github.com/cdmoro/bootstrap-vue-3/issues/547#issuecomment-1209906982
-  // If the consensus is to make this resolveAriaInvalid, this will need to be changed along with the test
-  if (typeof stateBoolean.value === 'boolean') {
-    if (!stateBoolean.value) {
-      return true
-    }
-    return undefined
-  }
-  if (typeof props.ariaInvalid === 'boolean') {
-    if (!props.ariaInvalid) {
-      return undefined
-    }
-    return props.ariaInvalid
-  }
-  if (props.ariaInvalid === '') {
-    return undefined
-  }
-  if (props.ariaInvalid === 'true') {
-    return true
-  }
-  if (props.ariaInvalid === 'false') {
-    return false
-  }
-  return props.ariaInvalid
-})
+const computedAriaInvalid = computed(() =>
+  resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
+)
 
 const formOptions = computed(() =>
   normalizeOptions(props.options as Array<any>, 'BFormSelect', props)
