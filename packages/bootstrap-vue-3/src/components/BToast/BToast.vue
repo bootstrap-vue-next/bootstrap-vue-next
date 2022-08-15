@@ -14,7 +14,7 @@ import {
 } from 'vue'
 import {isLink, normalizeSlot, requestAF, toInteger} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BButtonClose from '../BButton/BCloseButton.vue'
 import {BLINK_PROPS} from '../BLink/BLink.vue'

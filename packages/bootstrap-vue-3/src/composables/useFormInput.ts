@@ -1,4 +1,4 @@
-import {AriaInvalid, Size} from '../types'
+import type {AriaInvalid, Size} from '../types'
 import {
   computed,
   ExtractPropTypes,

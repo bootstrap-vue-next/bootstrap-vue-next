@@ -1,4 +1,4 @@
-import {AriaInvalid, ButtonVariant, InputSize} from '../types'
+import type {AriaInvalid, ButtonVariant, InputSize} from '../types'
 import {computed, ComputedRef} from 'vue'
 import {resolveAriaInvalid} from '../utils'
 

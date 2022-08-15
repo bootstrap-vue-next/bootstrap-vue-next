@@ -1,5 +1,4 @@
 import {computed, ComputedRef, Ref} from 'vue'
-
 import type {Alignment} from '../types'
 
 /**
