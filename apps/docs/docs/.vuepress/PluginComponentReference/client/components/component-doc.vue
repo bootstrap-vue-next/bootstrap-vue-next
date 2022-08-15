@@ -145,7 +145,7 @@ export default defineComponent({
         // Example component (most likely an auto generated component)
         return ''
       }
-      const base = 'https://github.com/cdmoro/bootstrap-vue-3/tree/main/src/components'
+      const base = 'https://github.com/cdmoro/bootstrap-vue-3/tree/main/packages/bootstrap-vue-3/src/components'
       // const slug = this.$route.params.slug
       // Always point to the `.js` file (which may import a `.vue` file)
       return `${base}/${name}/${name}.vue`
