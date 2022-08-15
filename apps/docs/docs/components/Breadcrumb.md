@@ -16,7 +16,7 @@
 
 <script lang="ts" setup>
   import {ref, Ref} from 'vue'
-  import {BreadcrumbItem} from '../../src/types'
+  import type {BreadcrumbItem} from 'bootstrap-vue-3'
 
   const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
     {text: 'Admin', href: 'https://google.com'},
