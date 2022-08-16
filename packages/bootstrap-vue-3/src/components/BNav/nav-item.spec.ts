@@ -8,18 +8,21 @@ describe('nav-item', () => {
     const wrapper = mount(BNavItem)
     const $li = wrapper.find('li')
     expect($li.classes()).toContain('nav-item')
+    wrapper.unmount()
   })
 
   it('contains blink', () => {
     const wrapper = mount(BNavItem)
-    const $blink = wrapper.findComponent(BLink)
+    const $blink = wrapper.getComponent(BLink)
     expect($blink).toBeDefined()
+    wrapper.unmount()
   })
 
   it('blink has nav-link class', () => {
     const wrapper = mount(BNavItem)
     const $blink = wrapper.findComponent(BLink)
     expect($blink.classes()).toContain('nav-link')
+    wrapper.unmount()
   })
 
   it('blink has tabindex -1 when prop disabled', () => {
@@ -30,6 +33,7 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('tabindex')).toBe('-1')
+    wrapper.unmount()
   })
 
   it('blink has tabindex undefined when prop disabled is false', () => {
@@ -40,6 +44,7 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('tabindex')).toBeUndefined()
+    wrapper.unmount()
   })
 
   it('blink has aria disabled true when prop disabled', () => {
@@ -50,6 +55,7 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('aria-disabled')).toBe('true')
+    wrapper.unmount()
   })
 
   it('blink has aria disabled true when prop disabled', () => {
@@ -60,5 +66,6 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('aria-disabled')).toBeUndefined()
+    wrapper.unmount()
   })
 })

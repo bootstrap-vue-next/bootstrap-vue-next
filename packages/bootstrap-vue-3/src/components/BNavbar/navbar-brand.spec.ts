@@ -11,7 +11,7 @@ describe('navbar-brand', () => {
       },
     })
     const $blink = wrapper.getComponent(BLink)
-    console.log($blink)
     expect($blink).toBeDefined()
+    wrapper.unmount()
   })
 })
