@@ -1,10 +1,9 @@
 <template>
-  <li class="nav-item" :class="classes">
+  <li class="nav-item">
     <b-link
-      :href="href"
-      :to="to"
       class="nav-link"
       :class="classes"
+      v-bind="props"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
     >
@@ -13,31 +12,22 @@
   </li>
 </template>
 
-<script setup lang="ts">
-// import type {BNavItemProps} from '../types/components'
-import BLink from '../BLink/BLink.vue'
-import {computed, toRef} from 'vue'
-import type {RouteLocationRaw} from 'vue-router'
-import type {Booleanish} from '../../types'
+<script lang="ts">
+import {BLINK_PROPS} from '../BLink/BLink.vue'
+import {omit} from '../../utils'
 import {useBooleanish} from '../../composables'
+import {defineComponent, toRef} from 'vue'
 
-interface BNavItemProps {
-  active?: Booleanish
-  disabled?: Booleanish
-  href?: string
-  to?: RouteLocationRaw
-}
+const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
 
-const props = withDefaults(defineProps<BNavItemProps>(), {
-  active: false,
-  disabled: false,
+export default defineComponent({
+  props: {
+    ...linkProps,
+  },
+  setup(props) {
+    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+
+    return {disabledBoolean}
+  },
 })
-
-const activeBoolean = useBooleanish(toRef(props, 'active'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-
-const classes = computed(() => ({
-  active: activeBoolean.value,
-  disabled: disabledBoolean.value,
-}))
 </script>
