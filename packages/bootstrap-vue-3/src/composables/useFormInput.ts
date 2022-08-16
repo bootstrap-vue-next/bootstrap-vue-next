@@ -15,7 +15,7 @@ import {resolveAriaInvalid} from '../utils'
 
 export const COMMON_INPUT_PROPS = {
   ariaInvalid: {
-    type: Boolean as PropType<AriaInvalid>,
+    type: [Boolean, String] as PropType<AriaInvalid>,
     default: undefined,
   },
   autocomplete: {type: String, required: false},
