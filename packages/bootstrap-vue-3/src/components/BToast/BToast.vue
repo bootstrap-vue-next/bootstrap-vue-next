@@ -17,13 +17,14 @@ import {useBooleanish} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BButtonClose from '../BButton/BCloseButton.vue'
-import {BLINK_PROPS} from '../BLink/BLink.vue'
+import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import {BodyProp} from './plugin'
 
 export const SLOT_NAME_TOAST_TITLE = 'toast-title'
 const MIN_DURATION = 1000
 
 export default defineComponent({
+  components: {BLink},
   props: {
     ...BLINK_PROPS,
     delay: {type: Number, default: 5000},

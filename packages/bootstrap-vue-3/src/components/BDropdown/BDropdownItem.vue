@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 // import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
+import BLink from '../BLink/BLink.vue'
 import {computed, toRef, useAttrs} from 'vue'
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -53,8 +54,8 @@ const classes = computed(() => ({
   [`text-${props.variant}`]: props.variant,
 }))
 
-const tag = computed<'button' | 'a' | 'b-link'>(() =>
-  props.href ? 'a' : attrs.to ? 'b-link' : 'button'
+const tag = computed<'button' | 'a' | typeof BLink>(() =>
+  props.href ? 'a' : attrs.to ? BLink : 'button'
 )
 
 const componentAttrs = computed(() => ({

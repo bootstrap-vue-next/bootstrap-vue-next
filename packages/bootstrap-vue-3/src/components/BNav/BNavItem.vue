@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import {BLINK_PROPS} from '../BLink/BLink.vue'
+import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import {omit} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {defineComponent, toRef} from 'vue'
@@ -20,6 +20,7 @@ import {defineComponent, toRef} from 'vue'
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
 
 export default defineComponent({
+  components: {BLink},
   props: {
     ...linkProps,
   },

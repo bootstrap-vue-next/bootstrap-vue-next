@@ -15,10 +15,11 @@
 import {omit} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
-import {BLINK_PROPS} from '../BLink/BLink.vue'
+import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import type {Booleanish} from '../../types'
 
 export default defineComponent({
+  components: {BLink},
   props: {
     ...omit(BLINK_PROPS, ['event', 'routerTag']),
     active: {type: Boolean as PropType<Booleanish>, default: false},
@@ -35,7 +36,9 @@ export default defineComponent({
       active: props.active,
     }))
 
-    const computedTag = computed<'span' | 'b-link'>(() => (activeBoolean.value ? 'span' : 'b-link'))
+    const computedTag = computed<'span' | typeof BLink>(() =>
+      activeBoolean.value ? 'span' : BLink
+    )
 
     const computedAriaCurrent = computed(() => ({
       'aria-current': activeBoolean.value ? props.ariaCurrent : undefined,
