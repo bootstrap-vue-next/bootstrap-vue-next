@@ -27,7 +27,7 @@ export default defineComponent({
   setup(props) {
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
-    return {disabledBoolean}
+    return {disabledBoolean, props}
   },
 })
 </script>
