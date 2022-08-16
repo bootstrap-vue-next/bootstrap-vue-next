@@ -9,6 +9,7 @@ import BBreadcrumbItem from './BBreadcrumb/BBreadcrumbItem.vue'
 import BButton from './BButton/BButton.vue'
 import BButtonGroup from './BButton/BButtonGroup.vue'
 import BButtonToolbar from './BButton/BButtonToolbar.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
 import BCard from './BCard/BCard.vue'
 import BCardBody from './BCard/BCardBody.vue'
 import BCardFooter from './BCard/BCardFooter.vue'
@@ -20,7 +21,6 @@ import BCardText from './BCard/BCardText.vue'
 import BCardTitle from './BCard/BCardTitle.vue'
 import BCarousel from './BCarousel/BCarousel.vue'
 import BCarouselSlide from './BCarousel/BCarouselSlide.vue'
-import BCloseButton from './BButton/BCloseButton.vue'
 import BCol from './BCol.vue'
 import BCollapse from './BCollapse.vue'
 import BContainer from './BContainer.vue'
@@ -61,8 +61,10 @@ import BListGroup from './BListGroup/BListGroup.vue'
 import BListGroupItem from './BListGroup/BListGroupItem.vue'
 import BModal from './BModal.vue'
 import BNav from './BNav/BNav.vue'
+import BNavForm from './BNav/BNavForm.vue'
 import BNavItem from './BNav/BNavItem.vue'
 import BNavItemDropdown from './BNav/BNavItemDropdown.vue'
+import BNavText from './BNav/BNavText.vue'
 import BNavbar from './BNavbar/BNavbar.vue'
 import BNavbarBrand from './BNavbar/BNavbarBrand.vue'
 import BNavbarNav from './BNavbar/BNavbarNav.vue'
@@ -79,7 +81,6 @@ import BSkeletonIcon from './BSkeleton/BSkeletonIcon.vue'
 import BSkeletonTable from './BSkeleton/BSkeletonTable.vue'
 import BSkeletonWrapper from './BSkeleton/BSkeletonWrapper.vue'
 import BSpinner from './BSpinner.vue'
-import BTab from './BTabs/BTab.vue'
 import BTable from './BTable/BTable.vue'
 import BTableSimple from './BTable/BTableSimple.vue'
 import BTbody from './BTable/BTbody.vue'
@@ -88,6 +89,7 @@ import BTfoot from './BTable/BTfoot.vue'
 import BTh from './BTable/BTh.vue'
 import BThead from './BTable/BThead.vue'
 import BTr from './BTable/BTr.vue'
+import BTab from './BTabs/BTab.vue'
 import BTabs from './BTabs/BTabs.vue'
 import {BToast, BToaster, BToastPlugin} from './BToast'
 import BToastContainer from './BToast/BToaster.vue'
@@ -96,9 +98,11 @@ import BTransition from './BTransition/BTransition.vue'
 export default {
   BAccordion,
   BAccordionItem,
+  BNavText,
   BAlert,
   BAvatar,
   BAvatarGroup,
+  BNavForm,
   BBadge,
   BBreadcrumb,
   BBreadcrumbItem,

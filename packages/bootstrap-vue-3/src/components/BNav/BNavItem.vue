@@ -2,7 +2,6 @@
   <li class="nav-item">
     <b-link
       class="nav-link"
-      :class="classes"
       v-bind="props"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
