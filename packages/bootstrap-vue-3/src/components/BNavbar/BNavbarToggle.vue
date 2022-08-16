@@ -48,7 +48,7 @@ const classes = computed(() => ({
 }))
 
 const onClick = (): void => {
-  if (!disabledBoolean.value && props.target !== undefined) {
+  if (!disabledBoolean.value) {
     emit('click')
   }
 }
