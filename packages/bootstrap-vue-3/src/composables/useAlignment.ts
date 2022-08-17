@@ -7,13 +7,10 @@ import type {Alignment} from '../types'
  * @returns
  */
 export default (align: Ref<Alignment>): ComputedRef<string> =>
-  computed(() => {
-    if (align.value === 'center') {
-      return 'justify-content-center'
-    } else if (align.value === 'end') {
-      return 'justify-content-end'
-    } else if (align.value === 'start') {
-      return 'justify-content-start'
-    }
-    return 'justify-content-start'
-  })
+  computed(() =>
+    align.value === 'center'
+      ? 'justify-content-center'
+      : align.value === 'end'
+      ? 'justify-content-end'
+      : 'justify-content-start'
+  )

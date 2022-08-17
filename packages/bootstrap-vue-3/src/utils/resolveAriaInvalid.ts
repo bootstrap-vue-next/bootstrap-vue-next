@@ -14,4 +14,6 @@ export default (ariaInvalid?: AriaInvalid, state?: boolean): Exclude<AriaInvalid
     ? ariaInvalid
     : state === false
     ? 'true'
+    : ariaInvalid === false || ariaInvalid === 'false'
+    ? 'false'
     : ariaInvalid
