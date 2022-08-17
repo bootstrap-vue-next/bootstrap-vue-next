@@ -1,17 +1,11 @@
 <template>
-  <BForm
-    :id="id"
-    class="d-flex"
-    :role="role"
-    :floating="floating"
-    :novalidate="novalidate"
-    :validated="validated"
-  >
+  <BForm v-bind="attrs" class="d-flex">
     <slot />
   </BForm>
 </template>
 
 <script setup lang="ts">
+import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 
 interface Props {
@@ -22,9 +16,17 @@ interface Props {
   validated?: Booleanish
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   floating: false,
   novalidate: false,
   validated: false,
 })
+
+const attrs = computed(() => ({
+  floating: props.floating,
+  role: props.role,
+  id: props.id,
+  novalidate: props.novalidate,
+  validated: props.validated,
+}))
 </script>
