@@ -1,26 +1,28 @@
 <template>
   <button
-    v-b-toggle=""
+    v-b-toggle="!disabledBoolean ? target : undefined"
     class="navbar-toggler"
+    type="button"
     :class="classes"
-    type=""
     v-bind="attrs"
     @click="onClick"
   >
-    <span class="navbar-toggler-icon" />
+    <slot>
+      <span class="navbar-toggler-icon" />
+    </slot>
   </button>
 </template>
 
 <script setup lang="ts">
 import {BToggle as vBToggle} from '../../directives'
 import {computed, toRef} from 'vue'
-import type {Booleanish, ButtonType} from '../../types'
+import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface Props {
-  disabled?: Booleanish // TODO ensure that if the button is disabled that it doesn't collapse
+  disabled?: Booleanish
   label?: string
-  target?: string // TODO target should be required, ignoring the other rules about possibly undefined? It is in B-V
+  target?: string | Array<string>
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -37,25 +39,17 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const attrs = computed(() => ({
-  'type': 'button' as ButtonType,
   'disabled': disabledBoolean.value,
   'aria-label': props.label,
 }))
 
 const classes = computed(() => ({
-  'navbar-toggler': true,
-  'collapsed': true,
+  disabled: disabledBoolean.value,
 }))
 
 const onClick = (): void => {
   if (!disabledBoolean.value) {
     emit('click')
-
-    classes.value.collapsed = !classes.value.collapsed
-    if (props.target !== undefined) {
-      const el = document.getElementById(props.target)
-      el?.classList.toggle('show')
-    }
   }
 }
 </script>

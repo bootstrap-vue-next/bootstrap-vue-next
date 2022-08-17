@@ -10,32 +10,31 @@ import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface Props {
-  fixed?: string
+  fixed?: 'top' | 'bottom'
   print?: Booleanish
-  sticky?: Booleanish
+  sticky?: 'top' | 'bottom'
   tag?: string
   toggleable?: false | 'sm' | 'md' | 'lg' | 'xl' // Type Omit<Breakpoint, 'xxl'>
-  type?: string
+  dark?: Booleanish
   variant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<Props>(), {
   print: false,
-  sticky: false,
   tag: 'nav',
+  dark: false,
   toggleable: false, // navbar never collapses
-  type: 'light',
 })
 
 const printBoolean = useBooleanish(toRef(props, 'print'))
-const stickyBoolean = useBooleanish(toRef(props, 'sticky'))
+const darkBoolean = useBooleanish(toRef(props, 'dark'))
 
 const computedRole = computed<undefined | 'navigation'>(() =>
   props.tag === 'nav' ? undefined : 'navigation'
 )
 
 const computedNavbarExpand = computed<undefined | string>(() =>
-  props.toggleable && typeof props.toggleable === 'string'
+  typeof props.toggleable === 'string'
     ? `navbar-expand-${props.toggleable}`
     : props.toggleable === false
     ? 'navbar-expand'
@@ -44,11 +43,10 @@ const computedNavbarExpand = computed<undefined | string>(() =>
 
 const classes = computed(() => ({
   'd-print': printBoolean.value,
-  'sticky-top': stickyBoolean.value,
-  [`navbar-${props.type}`]: props.type,
-  [`bg-${props.variant}`]: props.variant,
-  [`fixed-${props.fixed}`]: props.fixed,
-  'navbar-expand': props.toggleable === false, // for navbars that never collapse
-  [computedNavbarExpand.value as string]: computedNavbarExpand.value !== undefined,
+  [`sticky-${props.sticky}`]: props.sticky !== undefined,
+  'navbar-dark': darkBoolean.value,
+  [`bg-${props.variant}`]: props.variant !== undefined,
+  [`fixed-${props.fixed}`]: props.fixed !== undefined,
+  [`${computedNavbarExpand.value}`]: computedNavbarExpand.value !== undefined,
 }))
 </script>

@@ -6,12 +6,12 @@
 
 <script setup lang="ts">
 // import type {BNavProps} from '../types/components'
-import type {Booleanish} from '../../types'
+import type {Alignment, Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
 
 interface BNavProps {
-  align?: string
+  align?: Alignment
   cardHeader?: Booleanish
   fill?: Booleanish
   justified?: Booleanish
@@ -45,11 +45,12 @@ const classes = computed(() => ({
   'nav-tabs': tabsBoolean.value,
   'nav-pills': pillsBoolean.value && !tabsBoolean.value,
   'card-header-tabs': !verticalBoolean.value && cardHeaderBoolean.value && tabsBoolean.value,
-  'card-header-pills': !verticalBoolean.value && cardHeaderBoolean.value && !tabsBoolean.value,
+  'card-header-pills':
+    !verticalBoolean.value && cardHeaderBoolean.value && pillsBoolean.value && !tabsBoolean.value,
   'flex-column': verticalBoolean.value,
-  'nav-fill': fillBoolean.value,
-  'nav-justified': justifiedBoolean.value,
-  [`justify-content-${props.align}`]: props.align,
+  'nav-fill': !verticalBoolean.value && fillBoolean.value,
+  'nav-justified': !verticalBoolean.value && justifiedBoolean.value,
+  [`justify-content-${props.align}`]: !verticalBoolean.value && props.align !== undefined,
   'small': smallBoolean.value,
 }))
 </script>
