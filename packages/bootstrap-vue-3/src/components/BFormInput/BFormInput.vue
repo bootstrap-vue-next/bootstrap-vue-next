@@ -49,7 +49,7 @@ export default defineComponent({
     // debounce: {type: [String, Number], default: 0}, TODO: not implemented yet
     max: {type: [String, Number], required: false},
     min: {type: [String, Number], required: false},
-    // noWheel: {type: Boolean as PropType<Booleanish>, default: false}, TODO: not implemented yet
+    // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
     step: {type: [String, Number], required: false},
     type: {
       type: String as PropType<InputType>,

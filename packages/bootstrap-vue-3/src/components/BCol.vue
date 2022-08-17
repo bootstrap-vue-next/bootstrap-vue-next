@@ -16,7 +16,7 @@ const breakpointOrder = getBreakpointProps('order', [''], {type: [String, Number
 
 export default defineComponent({
   props: {
-    col: {type: Boolean as PropType<Booleanish>, default: false}, // Generic flexbox .col (xs)
+    col: {type: [Boolean, String] as PropType<Booleanish>, default: false}, // Generic flexbox .col (xs)
     cols: {type: [String, Number], default: null}, // .col-[1-12]|auto (xs)
     ...breakpointCol,
     offset: {type: [String, Number], default: null},

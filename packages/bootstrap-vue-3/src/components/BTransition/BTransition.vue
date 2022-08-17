@@ -22,9 +22,9 @@ const FADE_PROPS = {
 
 export default defineComponent({
   props: {
-    appear: {type: Boolean as PropType<Booleanish>, default: false},
+    appear: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     mode: {type: String as PropType<TransitionMode>, required: false},
-    noFade: {type: Boolean as PropType<Booleanish>, default: false},
+    noFade: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     transProps: {type: Object, required: false},
   },
   setup(props, {slots}) {

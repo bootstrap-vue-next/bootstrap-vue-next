@@ -49,7 +49,7 @@ export default defineComponent({
     content: {type: String},
     id: {type: String},
     customClass: {type: String, default: ''},
-    noninteractive: {type: Boolean as PropType<Booleanish>, default: false},
+    noninteractive: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     placement: {type: String as PropType<Popover.Options['placement']>, default: 'right'},
     target: {
       type: [String, Object] as PropType<
@@ -60,10 +60,10 @@ export default defineComponent({
     title: {type: String},
     delay: {type: [Number, Object] as PropType<number | BPopoverDelayObject>, default: 0},
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
-    show: {type: Boolean as PropType<Booleanish>, default: false},
+    show: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     variant: {type: String as PropType<ColorVariant>, default: undefined},
-    html: {type: Boolean as PropType<Booleanish>, default: true},
-    sanitize: {type: Boolean as PropType<Booleanish>, default: false},
+    html: {type: [Boolean, String] as PropType<Booleanish>, default: true},
+    sanitize: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     offset: {type: String as PropType<Popover.Options['offset']>, default: '0'},
   },
   emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
