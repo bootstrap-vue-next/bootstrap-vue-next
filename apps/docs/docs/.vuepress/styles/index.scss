@@ -15,6 +15,11 @@ a:not(.action-button) {
   color: var(--c-text-accent);
 }
 
+
+html.dark .table{ 
+  color : var(--c-text)
+}
+
 .nav-link:not(.sidebar-item):not(.action-button) {
   padding: 0 !important;
 }
