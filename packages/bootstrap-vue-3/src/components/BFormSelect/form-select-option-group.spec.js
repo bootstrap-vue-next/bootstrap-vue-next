@@ -8,7 +8,7 @@ describe('form-select-option-group', () => {
     console.warn.mockClear()
   })
 
-  it('has expected default structure', async () => {
+  it('has expected default structure', () => {
     const wrapper = mount(BFormSelectOptionGroup, {
       props: {
         label: 'foo',
@@ -22,7 +22,7 @@ describe('form-select-option-group', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from simple options array', async () => {
+  it('has option elements from simple options array', () => {
     const wrapper = mount(BFormSelectOptionGroup, {
       props: {
         label: 'foo',
@@ -45,7 +45,7 @@ describe('form-select-option-group', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from options array of objects', async () => {
+  it('has option elements from options array of objects', () => {
     const wrapper = mount(BFormSelectOptionGroup, {
       props: {
         label: 'foo',
@@ -75,7 +75,7 @@ describe('form-select-option-group', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from options legacy object format', async () => {
+  it('has option elements from options legacy object format', () => {
     const spyWarn = vitest.spyOn(console, 'warn').mockImplementationOnce((fn) => fn)
     const wrapper = mount(BFormSelectOptionGroup, {
       props: {
@@ -100,7 +100,7 @@ describe('form-select-option-group', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from default slot', async () => {
+  it('has option elements from default slot', () => {
     const wrapper = mount(BFormSelectOptionGroup, {
       props: {
         label: 'foo',

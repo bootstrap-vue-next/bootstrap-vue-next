@@ -3,7 +3,7 @@ import BFormSelectOption from './BFormSelectOption.vue'
 import {describe, expect, it} from 'vitest'
 
 describe('form-select-option', () => {
-  it('has expected default structure', async () => {
+  it('has expected default structure', () => {
     const wrapper = mount(BFormSelectOption, {
       props: {
         value: 'foo',
@@ -17,7 +17,7 @@ describe('form-select-option', () => {
     wrapper.unmount()
   })
 
-  it('renders default slot content', async () => {
+  it('renders default slot content', () => {
     const wrapper = mount(BFormSelectOption, {
       props: {
         value: 'foo',
@@ -34,7 +34,7 @@ describe('form-select-option', () => {
     wrapper.unmount()
   })
 
-  it('renders HTML as default slot content', async () => {
+  it('renders HTML as default slot content', () => {
     const wrapper = mount(BFormSelectOption, {
       props: {
         value: 'foo',
@@ -53,7 +53,7 @@ describe('form-select-option', () => {
     wrapper.unmount()
   })
 
-  it('has disabled attribute applied when disabled=true', async () => {
+  it('has disabled attribute applied when disabled=true', () => {
     const wrapper = mount(BFormSelectOption, {
       props: {
         value: 'foo',

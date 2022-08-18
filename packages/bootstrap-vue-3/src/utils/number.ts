@@ -20,10 +20,6 @@ export const stringToInteger = (value: string, defaultValue = NaN): number => {
   return isNaN(integer) ? defaultValue : integer
 }
 
-// export const toFloat = (value: number, defaultValue = NaN): number => {
-//   return !Number.isInteger(value) ? value : defaultValue
-// }
-
 /**
  * Validates a number is a float. If not return NaN
  *

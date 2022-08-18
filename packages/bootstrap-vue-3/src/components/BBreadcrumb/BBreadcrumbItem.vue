@@ -22,9 +22,9 @@ export default defineComponent({
   components: {BLink},
   props: {
     ...omit(BLINK_PROPS, ['event', 'routerTag']),
-    active: {type: Boolean as PropType<Booleanish>, default: false},
+    active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     ariaCurrent: {type: String, default: 'location'},
-    disabled: {type: Boolean as PropType<Booleanish>, default: false},
+    disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     text: {type: String, required: false},
   },
   emits: ['click'],

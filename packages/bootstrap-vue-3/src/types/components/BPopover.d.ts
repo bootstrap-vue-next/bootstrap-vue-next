@@ -1,5 +1,5 @@
 import type {ColorVariant} from '..'
-import type Popover from 'bootstrap/js/dist/popover'
+import type {Popover} from 'bootstrap'
 import type {ComponentPublicInstance} from 'vue'
 // Props
 export interface Props {

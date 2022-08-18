@@ -1,5 +1,5 @@
 import {Directive} from 'vue'
-import Popover from 'bootstrap/js/dist/popover'
+import {Popover} from 'bootstrap'
 
 /**
  * @external

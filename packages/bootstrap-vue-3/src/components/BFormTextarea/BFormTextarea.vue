@@ -30,7 +30,7 @@ import {COMMON_INPUT_PROPS, useBooleanish, useFormInput} from '../../composables
 export default defineComponent({
   props: {
     ...COMMON_INPUT_PROPS,
-    noResize: {type: Boolean as PropType<Booleanish>, default: false},
+    noResize: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     rows: {type: [String, Number], required: false, default: 2},
     wrap: {type: String, default: 'soft'},
   },

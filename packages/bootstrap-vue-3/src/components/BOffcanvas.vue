@@ -30,7 +30,7 @@
 <script setup lang="ts">
 // import type {BOffcanvasEmits, BOffcanvasProps} from '../types/components'
 import {computed, onMounted, ref, toRef, watch} from 'vue'
-import Offcanvas from 'bootstrap/js/dist/offcanvas'
+import {Offcanvas} from 'bootstrap'
 import {useBooleanish, useEventListener} from '../composables'
 import type {Booleanish} from '../types'
 

@@ -4,7 +4,7 @@ import BFormTextarea from './BFormTextarea.vue'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 
 describe('form-textarea', () => {
-  it('has class form-control', async () => {
+  it('has class form-control', () => {
     const wrapper = mount(BFormTextarea)
 
     const $textarea = wrapper.find('textarea')
@@ -13,7 +13,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-lg when size=lg and plane=false', async () => {
+  it('has class form-control-lg when size=lg and plane=false', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         size: 'lg',
@@ -26,7 +26,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-sm when size=lg and plain=false', async () => {
+  it('has class form-control-sm when size=lg and plain=false', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         size: 'sm',
@@ -39,7 +39,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('does not have class form-control-plaintext when plaintext not set', async () => {
+  it('does not have class form-control-plaintext when plaintext not set', () => {
     const wrapper = mount(BFormTextarea)
 
     const $textarea = wrapper.find('textarea')
@@ -49,7 +49,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-plaintext when plaintext=true', async () => {
+  it('has class form-control-plaintext when plaintext=true', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         plaintext: true,
@@ -62,7 +62,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has attribute read-only when plaintext=true', async () => {
+  it('has attribute read-only when plaintext=true', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         plaintext: true,
@@ -76,7 +76,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has user supplied id', async () => {
+  it('has user supplied id', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         id: 'foobar',
@@ -103,7 +103,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has form attribute when form prop set', async () => {
+  it('has form attribute when form prop set', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         form: 'foobar',
@@ -116,7 +116,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('does not have is-valid or is-invalid classes when state is default', async () => {
+  it('does not have is-valid or is-invalid classes when state is default', () => {
     const wrapper = mount(BFormTextarea)
 
     const $textarea = wrapper.find('textarea')
@@ -126,7 +126,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has class is-valid when state=true', async () => {
+  it('has class is-valid when state=true', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         state: true,
@@ -140,7 +140,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has class is-invalid when state=false', async () => {
+  it('has class is-invalid when state=false', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         state: false,
@@ -154,7 +154,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('does not have aria-invalid attribute by default', async () => {
+  it('does not have aria-invalid attribute by default', () => {
     const wrapper = mount(BFormTextarea)
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
@@ -162,7 +162,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('does not have aria-invalid attribute when state is true', async () => {
+  it('does not have aria-invalid attribute when state is true', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         state: true,
@@ -174,7 +174,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when state=false', async () => {
+  it('has aria-invalid attribute when state=false', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         state: false,
@@ -187,7 +187,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when aria-invalid="true"', async () => {
+  it('has aria-invalid attribute when aria-invalid="true"', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         ariaInvalid: 'true',
@@ -200,7 +200,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when aria-invalid=true', async () => {
+  it('has aria-invalid attribute when aria-invalid=true', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         ariaInvalid: true,
@@ -213,7 +213,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when aria-invalid="spelling"', async () => {
+  it('has aria-invalid attribute when aria-invalid="spelling"', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         ariaInvalid: 'spelling',
@@ -226,7 +226,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('has user supplied rows', async () => {
+  it('has user supplied rows', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         rows: 8,
@@ -240,7 +240,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('is disabled when disabled=true', async () => {
+  it('is disabled when disabled=true', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         disabled: true,
@@ -254,7 +254,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('is not disabled when disabled=false', async () => {
+  it('is not disabled when disabled=false', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         disabled: false,
@@ -412,7 +412,7 @@ describe('form-textarea', () => {
     wrapper.unmount()
   })
 
-  it('does not apply formatter when value supplied on mount and not lazy', async () => {
+  it('does not apply formatter when value supplied on mount and not lazy', () => {
     const wrapper = mount(BFormTextarea, {
       props: {
         modelValue: 'TEST',
@@ -510,7 +510,7 @@ describe('form-textarea', () => {
   })
 
   /* TODO: implement noWheel
-  it('focused number input with no-wheel set to true works', async () => {
+  it('focused number input with no-wheel set to true works', () => {
     const spy = vitest.fn()
     const wrapper = mount(BFormTextarea, {
       attachTo: createContainer(),
@@ -538,7 +538,7 @@ describe('form-textarea', () => {
   })
 
 
-  it('focused number input with no-wheel set to false works', async () => {
+  it('focused number input with no-wheel set to false works', () => {
     const spy = vitest.fn(() => {})
     const wrapper = mount(BFormTextarea, {
       attachTo: createContainer(),
@@ -568,7 +568,7 @@ describe('form-textarea', () => {
   })
 
 
-  it('changing no-wheel after mount works', async () => {
+  it('changing no-wheel after mount works', () => {
     const spy = vitest.fn(() => {})
     const wrapper = mount(BFormTextarea, {
       attachTo: createContainer(),
@@ -665,7 +665,7 @@ describe('form-textarea', () => {
   })
 
   /* TODO: implement debounce
-  it('"debounce" prop works', async () => {
+  it('"debounce" prop works', () => {
     vitest.useFakeTimers()
     const wrapper = mount(BFormTextarea, {
       props: {
@@ -766,7 +766,7 @@ describe('form-textarea', () => {
   })
   */
 
-  it('focus() and blur() methods work', async () => {
+  it('focus() and blur() methods work', () => {
     const wrapper = mount(BFormTextarea, {
       attachTo: createContainer(),
     })

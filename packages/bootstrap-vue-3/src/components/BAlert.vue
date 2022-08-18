@@ -16,7 +16,7 @@
 // import type {BAlertEmits, BAlertProps} from '../types/components'
 import type {Booleanish, ColorVariant} from '../types'
 import {computed, onBeforeUnmount, ref, toRef, watch} from 'vue'
-import Alert from 'bootstrap/js/dist/alert'
+import {Alert} from 'bootstrap'
 import {toInteger} from '../utils'
 import {useBooleanish} from '../composables'
 

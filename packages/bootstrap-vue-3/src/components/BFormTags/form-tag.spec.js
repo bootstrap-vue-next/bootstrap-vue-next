@@ -3,7 +3,7 @@ import BFormTag from './BFormTag.vue'
 import {describe, expect, it} from 'vitest'
 
 describe('form-tag', () => {
-  it('has expected structure', async () => {
+  it('has expected structure', () => {
     const wrapper = mount(BFormTag, {
       propsData: {
         title: 'foobar',
@@ -24,7 +24,7 @@ describe('form-tag', () => {
     wrapper.unmount()
   })
 
-  it('renders custom root element', async () => {
+  it('renders custom root element', () => {
     const wrapper = mount(BFormTag, {
       propsData: {
         tag: 'li',
@@ -43,7 +43,7 @@ describe('form-tag', () => {
     wrapper.unmount()
   })
 
-  it('renders default slot', async () => {
+  it('renders default slot', () => {
     const wrapper = mount(BFormTag, {
       propsData: {
         title: 'foo',
@@ -63,7 +63,7 @@ describe('form-tag', () => {
     wrapper.unmount()
   })
 
-  it('has pill styles when `pill` prop set', async () => {
+  it('has pill styles when `pill` prop set', () => {
     const wrapper = mount(BFormTag, {
       propsData: {
         pill: true,
@@ -83,7 +83,7 @@ describe('form-tag', () => {
     wrapper.unmount()
   })
 
-  it('has custom variant when `variant` prop set', async () => {
+  it('has custom variant when `variant` prop set', () => {
     const wrapper = mount(BFormTag, {
       propsData: {
         title: 'foo',
@@ -126,7 +126,7 @@ describe('form-tag', () => {
     wrapper.unmount()
   })
 
-  it('does not have remove button when `disabled` prop is set', async () => {
+  it('does not have remove button when `disabled` prop is set', () => {
     const wrapper = mount(BFormTag, {
       propsData: {
         disabled: true,
@@ -144,7 +144,7 @@ describe('form-tag', () => {
     wrapper.unmount()
   })
 
-  it('does not have remove button when `no-remove` prop is set', async () => {
+  it('does not have remove button when `no-remove` prop is set', () => {
     const wrapper = mount(BFormTag, {
       propsData: {
         noRemove: true,
