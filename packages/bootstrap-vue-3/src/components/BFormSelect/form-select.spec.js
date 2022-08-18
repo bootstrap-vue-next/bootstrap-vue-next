@@ -9,7 +9,7 @@ describe('form-select', () => {
     console.warn.mockClear()
   })
 
-  it('has select as root element', async () => {
+  it('has select as root element', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.element.tagName).toBe('SELECT')
@@ -17,7 +17,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-select', async () => {
+  it('has class form-select', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.classes()).toContain('form-select')
@@ -26,7 +26,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('does not have attr multiple by default', async () => {
+  it('does not have attr multiple by default', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.attributes('multiple')).toBeUndefined()
@@ -34,14 +34,14 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('does not have attr required by default', async () => {
+  it('does not have attr required by default', () => {
     const wrapper = mount(BFormSelect)
     expect(wrapper.attributes('required')).toBeUndefined()
 
     wrapper.unmount()
   })
 
-  it('has attr required when required=true', async () => {
+  it('has attr required when required=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         required: true,
@@ -53,7 +53,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('does not have attr form by default', async () => {
+  it('does not have attr form by default', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.attributes('form')).toBeUndefined()
@@ -61,7 +61,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has attr form when form is set', async () => {
+  it('has attr form when form is set', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         form: 'foobar',
@@ -74,7 +74,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has attr multiple when multiple=true', async () => {
+  it('has attr multiple when multiple=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         multiple: true,
@@ -87,7 +87,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has attr size when select-size is set', async () => {
+  it('has attr size when select-size is set', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         selectSize: 4,
@@ -111,7 +111,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has user supplied ID attr when id is set', async () => {
+  it('has user supplied ID attr when id is set', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         id: 'foobar',
@@ -124,7 +124,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('does not have attr size by default', async () => {
+  it('does not have attr size by default', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.attributes('size')).toBeUndefined()
@@ -132,7 +132,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('does have attr size when plain=true', async () => {
+  it('does have attr size when plain=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         plain: true,
@@ -145,7 +145,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-select-sm when size=sm and plain=false', async () => {
+  it('has class form-select-sm when size=sm and plain=false', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         size: 'sm',
@@ -159,7 +159,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-select-lg when size=lg and plain=false', async () => {
+  it('has class form-select-lg when size=lg and plain=false', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         size: 'lg',
@@ -173,7 +173,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-select-foo when size=foo and plain=false', async () => {
+  it('has class form-select-foo when size=foo and plain=false', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         size: 'foo',
@@ -187,7 +187,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class is-invalid and attr aria-invalid="true" when state=false', async () => {
+  it('has class is-invalid and attr aria-invalid="true" when state=false', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         state: false,
@@ -202,7 +202,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class is-valid when state=true', async () => {
+  it('has class is-valid when state=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         state: true,
@@ -217,7 +217,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has attr aria-invalid="true" when aria-invalid="true"', async () => {
+  it('has attr aria-invalid="true" when aria-invalid="true"', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         ariaInvalid: 'true',
@@ -231,7 +231,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has attr aria-invalid="true" when aria-invalid=true', async () => {
+  it('has attr aria-invalid="true" when aria-invalid=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         ariaInvalid: true,
@@ -245,7 +245,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control when plain=true', async () => {
+  it('has class form-control when plain=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         plain: true,
@@ -259,7 +259,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-lg when size=lg and plain=true', async () => {
+  it('has class form-control-lg when size=lg and plain=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         size: 'lg',
@@ -274,7 +274,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-sm when size=sm and plain=true', async () => {
+  it('has class form-control-sm when size=sm and plain=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         size: 'sm',
@@ -289,7 +289,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-foo when size=foo and plain=true', async () => {
+  it('has class form-control-foo when size=foo and plain=true', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         size: 'foo',
@@ -304,7 +304,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from simple options array', async () => {
+  it('has option elements from simple options array', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         options: ['one', 'two', 'three'],
@@ -323,7 +323,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from options array of objects', async () => {
+  it('has option elements from options array of objects', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         options: [
@@ -349,7 +349,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from options array of objects with custom field names', async () => {
+  it('has option elements from options array of objects with custom field names', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         options: [
@@ -385,7 +385,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has option group elements with options from options array of objects', async () => {
+  it('has option group elements with options from options array of objects', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         options: [
@@ -432,7 +432,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has option group and option elements from options array of objects', async () => {
+  it('has option group and option elements from options array of objects', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         options: [
@@ -472,7 +472,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from options legacy object format', async () => {
+  it('has option elements from options legacy object format', () => {
     const spyWarn = vitest.spyOn(console, 'warn').mockImplementationOnce((fn) => fn)
     const wrapper = mount(BFormSelect, {
       props: {
@@ -496,7 +496,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('has option elements from default slot', async () => {
+  it('has option elements from default slot', () => {
     const wrapper = mount(BFormSelect, {
       slots: {
         default: [
@@ -519,7 +519,7 @@ describe('form-select', () => {
     wrapper.unmount()
   })
 
-  it('displays option text when value not set', async () => {
+  it('displays option text when value not set', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         options: [{text: 'one'}],

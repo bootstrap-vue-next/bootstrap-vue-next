@@ -4,7 +4,7 @@ import BLink from './BLink.vue'
 import {describe, expect, it, vitest} from 'vitest'
 
 describe('b-link', () => {
-  it('has expected default structure', async () => {
+  it('has expected default structure', () => {
     const wrapper = mount(BLink)
 
     expect(wrapper.element.tagName).toBe('A')
@@ -18,7 +18,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('renders content from default slot', async () => {
+  it('renders content from default slot', () => {
     const wrapper = mount(BLink, {
       slots: {
         default: 'foobar',
@@ -36,7 +36,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('sets attribute href to user supplied value', async () => {
+  it('sets attribute href to user supplied value', () => {
     const wrapper = mount(BLink, {
       props: {
         href: '/foobar',
@@ -54,7 +54,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('sets attribute href when user supplied href is hash target', async () => {
+  it('sets attribute href when user supplied href is hash target', () => {
     const wrapper = mount(BLink, {
       props: {
         href: '#foobar',
@@ -72,7 +72,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('should set href to string `to` prop', async () => {
+  it('should set href to string `to` prop', () => {
     const wrapper = mount(BLink, {
       props: {
         to: '/foobar',
@@ -90,7 +90,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('should set href to path from `to` prop', async () => {
+  it('should set href to path from `to` prop', () => {
     const wrapper = mount(BLink, {
       props: {
         to: {path: '/foobar'},
@@ -108,7 +108,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('should default rel to `noopener` when target==="_blank"', async () => {
+  it('should default rel to `noopener` when target==="_blank"', () => {
     const wrapper = mount(BLink, {
       props: {
         href: '/foobar',
@@ -125,7 +125,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('should render the given rel to when target==="_blank"', async () => {
+  it('should render the given rel to when target==="_blank"', () => {
     const wrapper = mount(BLink, {
       props: {
         href: '/foobar',
@@ -143,7 +143,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('should add "active" class when prop active=true', async () => {
+  it('should add "active" class when prop active=true', () => {
     const wrapper = mount(BLink, {
       props: {
         active: true,
@@ -157,7 +157,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it('should add aria-disabled="true" when disabled', async () => {
+  it('should add aria-disabled="true" when disabled', () => {
     const wrapper = mount(BLink, {
       props: {
         disabled: true,
@@ -170,7 +170,7 @@ describe('b-link', () => {
     wrapper.unmount()
   })
 
-  it("should add '.disabled' class when prop disabled=true", async () => {
+  it("should add '.disabled' class when prop disabled=true", () => {
     const wrapper = mount(BLink, {
       props: {
         disabled: true,
@@ -272,7 +272,7 @@ describe('b-link', () => {
 
   /*
   describe('router-link support', () => {
-    it('works', async () => {
+    it('works', () => {
       // Fake Gridsome `<g-link>` component
       const GLink = {
         name: 'GLink',

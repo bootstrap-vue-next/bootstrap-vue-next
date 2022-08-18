@@ -9,7 +9,7 @@ const global = {components: {BFormRadio}}
 describe('form-radio-group', () => {
   // --- Structure, class and attributes tests ---
 
-  it('default has structure <div></div>', async () => {
+  it('default has structure <div></div>', () => {
     const wrapper = mount(BFormRadioGroup, {global})
 
     expect(wrapper).toBeDefined()
@@ -19,7 +19,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has no classes on wrapper other than focus ring', async () => {
+  it('default has no classes on wrapper other than focus ring', () => {
     const wrapper = mount(BFormRadioGroup, {global})
 
     expect(wrapper.classes().length).toEqual(1)
@@ -41,7 +41,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has tabindex set to -1', async () => {
+  it('default has tabindex set to -1', () => {
     const wrapper = mount(BFormRadioGroup, {global})
 
     expect(wrapper.attributes('tabindex')).toBeDefined()
@@ -50,7 +50,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have aria-required set', async () => {
+  it('default does not have aria-required set', () => {
     const wrapper = mount(BFormRadioGroup, {global})
 
     expect(wrapper.attributes('aria-required')).toBeUndefined()
@@ -58,7 +58,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have aria-invalid set', async () => {
+  it('default does not have aria-invalid set', () => {
     const wrapper = mount(BFormRadioGroup, {global})
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
@@ -66,7 +66,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute role=radiogroup', async () => {
+  it('default has attribute role=radiogroup', () => {
     const wrapper = mount(BFormRadioGroup, {global})
 
     expect(wrapper.attributes('role')).toBeDefined()
@@ -75,7 +75,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has user provided ID', async () => {
+  it('default has user provided ID', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -90,7 +90,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has class was-validated when validated=true', async () => {
+  it('default has class was-validated when validated=true', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -105,7 +105,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when state=false', async () => {
+  it('default has attribute aria-invalid=true when state=false', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -120,7 +120,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have attribute aria-invalid when state=true', async () => {
+  it('default does not have attribute aria-invalid when state=true', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -134,7 +134,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have attribute aria-invalid when state=undefined', async () => {
+  it('default does not have attribute aria-invalid when state=undefined', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -148,7 +148,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when aria-invalid=true', async () => {
+  it('default has attribute aria-invalid=true when aria-invalid=true', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -163,7 +163,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when aria-invalid="true"', async () => {
+  it('default has attribute aria-invalid=true when aria-invalid="true"', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -178,7 +178,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when aria-invalid=""', async () => {
+  it('default has attribute aria-invalid=true when aria-invalid=""', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -195,7 +195,7 @@ describe('form-radio-group', () => {
 
   // --- Button mode structure ---
 
-  it('button mode has classes button-group and button-group-toggle', async () => {
+  it('button mode has classes button-group and button-group-toggle', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -212,7 +212,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('button mode has classes button-group-vertical and button-group-toggle when stacked=true', async () => {
+  it('button mode has classes button-group-vertical and button-group-toggle when stacked=true', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -230,7 +230,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('button mode has size class when size prop set', async () => {
+  it('button mode has size class when size prop set', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -249,7 +249,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('button mode has size class when size prop set and stacked', async () => {
+  it('button mode has size class when size prop set and stacked', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -302,7 +302,7 @@ describe('form-radio-group', () => {
 
   // --- Functionality testing ---
 
-  it('has radios via options array', async () => {
+  it('has radios via options array', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -318,7 +318,7 @@ describe('form-radio-group', () => {
     wrapper.unmount()
   })
 
-  it('has radios via options array which respect disabled', async () => {
+  it('has radios via options array which respect disabled', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
