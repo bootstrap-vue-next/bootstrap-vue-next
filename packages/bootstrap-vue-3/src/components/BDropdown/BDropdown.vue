@@ -43,7 +43,7 @@
 <script setup lang="ts">
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import type Popper from '@popperjs/core'
-import Dropdown from 'bootstrap/js/dist/dropdown'
+import {Dropdown} from 'bootstrap'
 import {ComponentPublicInstance, computed, onMounted, ref, toRef} from 'vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonType, ButtonVariant, Size} from '../../types'

@@ -15,7 +15,7 @@
 <script setup lang="ts">
 // import type {BCollapseEmits, BCollapseProps} from '../types/components'
 import {computed, onMounted, ref, toRef, watch} from 'vue'
-import Collapse from 'bootstrap/js/dist/collapse'
+import {Collapse} from 'bootstrap'
 import {useBooleanish, useEventListener} from '../composables'
 import {getID} from '../utils'
 import type {Booleanish} from '../types'

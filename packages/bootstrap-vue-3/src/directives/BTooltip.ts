@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {Directive, DirectiveBinding} from 'vue'
-import Tooltip from 'bootstrap/js/dist/tooltip'
+import {Tooltip} from 'bootstrap'
 
 const resolveTrigger = (modifiers: DirectiveBinding['modifiers']): Tooltip.Options['trigger'] => {
   if (modifiers.manual) {

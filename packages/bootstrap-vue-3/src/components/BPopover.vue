@@ -33,7 +33,7 @@ import {
   toRef,
   watch,
 } from 'vue'
-import Popover from 'bootstrap/js/dist/popover'
+import {Popover} from 'bootstrap'
 import {useBooleanish, useEventListener} from '../composables'
 import type {BPopoverDelayObject} from '../types/components'
 import type {Booleanish, ColorVariant} from '../types'

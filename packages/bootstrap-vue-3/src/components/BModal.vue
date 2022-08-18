@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import Modal from 'bootstrap/js/dist/modal'
+import {Modal} from 'bootstrap'
 import BButton from './BButton/BButton.vue'
 import {useBooleanish, useEventListener} from '../composables'
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
