@@ -6,15 +6,16 @@ import BLink from '../BLink/BLink.vue'
 describe('nav-item', () => {
   it('has class nav item', () => {
     const wrapper = mount(BNavItem)
-    const $li = wrapper.find('li')
-    expect($li.classes()).toContain('nav-item')
+    expect(wrapper.classes()).toContain('nav-item')
+
     wrapper.unmount()
   })
 
   it('contains blink', () => {
     const wrapper = mount(BNavItem)
-    const $blink = wrapper.getComponent(BLink)
-    expect($blink).toBeDefined()
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.exists()).toBe(true)
+
     wrapper.unmount()
   })
 
@@ -22,6 +23,7 @@ describe('nav-item', () => {
     const wrapper = mount(BNavItem)
     const $blink = wrapper.findComponent(BLink)
     expect($blink.classes()).toContain('nav-link')
+
     wrapper.unmount()
   })
 
@@ -33,6 +35,7 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('tabindex')).toBe('-1')
+
     wrapper.unmount()
   })
 
@@ -44,6 +47,7 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('tabindex')).toBeUndefined()
+
     wrapper.unmount()
   })
 
@@ -55,10 +59,11 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('aria-disabled')).toBe('true')
+
     wrapper.unmount()
   })
 
-  it('blink has aria disabled true when prop disabled', () => {
+  it('blink has aria disabled undefined when prop disabled', () => {
     const wrapper = mount(BNavItem, {
       props: {
         disabled: false,
@@ -66,6 +71,18 @@ describe('nav-item', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.attributes('aria-disabled')).toBeUndefined()
+
+    wrapper.unmount()
+  })
+
+  it('renders content from default slot', () => {
+    const wrapper = mount(BNavItem, {
+      slots: {
+        default: 'foobar',
+      },
+    })
+    expect(wrapper.text()).toBe('foobar')
+
     wrapper.unmount()
   })
 })

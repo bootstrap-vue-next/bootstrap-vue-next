@@ -1,6 +1,9 @@
 <template>
   <component :is="tag" class="navbar" :class="classes" :role="computedRole">
-    <slot />
+    <div v-if="container !== false" :class="containerClass">
+      <slot />
+    </div>
+    <slot v-else />
   </component>
 </template>
 
@@ -14,16 +17,18 @@ interface Props {
   print?: Booleanish
   sticky?: 'top' | 'bottom'
   tag?: string
-  toggleable?: false | 'sm' | 'md' | 'lg' | 'xl' // Type Omit<Breakpoint, 'xxl'>
+  toggleable?: boolean | 'sm' | 'md' | 'lg' | 'xl' // Type Omit<Breakpoint, 'xxl'>
   dark?: Booleanish
   variant?: ColorVariant
+  container?: 'fluid' | boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   print: false,
   tag: 'nav',
   dark: false,
-  toggleable: false, // navbar never collapses
+  toggleable: false,
+  container: 'fluid',
 })
 
 const printBoolean = useBooleanish(toRef(props, 'print'))
@@ -39,6 +44,14 @@ const computedNavbarExpand = computed<undefined | string>(() =>
     : props.toggleable === false
     ? 'navbar-expand'
     : undefined
+)
+
+const containerClass = computed<'container' | 'container-fluid' | undefined>(() =>
+  props.container === false
+    ? undefined
+    : props.container === true
+    ? 'container'
+    : `container-${props.container}`
 )
 
 const classes = computed(() => ({
