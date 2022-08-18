@@ -174,22 +174,22 @@ describe('nav', () => {
 
   it('has class justify-content-{type} when prop align is set', async () => {
     const wrapper = mount(BNav, {
-      props: {align: 'a'},
+      props: {align: 'start'},
     })
-    expect(wrapper.classes()).toContain('justify-content-a')
+    expect(wrapper.classes()).toContain('justify-content-start')
     await wrapper.setProps({align: undefined})
-    expect(wrapper.classes()).not.toContain('justify-content-a')
+    expect(wrapper.classes()).not.toContain('justify-content-start')
 
     wrapper.unmount()
   })
 
   it('does not have justify-content-{type} when prop align is set, but prop vertical is also set', async () => {
     const wrapper = mount(BNav, {
-      props: {align: 'a', vertical: false},
+      props: {align: 'start', vertical: false},
     })
-    expect(wrapper.classes()).toContain('justify-content-a')
+    expect(wrapper.classes()).toContain('justify-content-start')
     await wrapper.setProps({vertical: true})
-    expect(wrapper.classes()).not.toContain('justify-content-a')
+    expect(wrapper.classes()).not.toContain('justify-content-start')
 
     wrapper.unmount()
   })

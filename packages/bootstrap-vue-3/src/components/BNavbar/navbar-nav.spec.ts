@@ -61,11 +61,11 @@ describe('navbar-nav', () => {
 
   it('contains class justify-content-{type} when prop align set', async () => {
     const wrapper = mount(BNavbarNav, {
-      props: {align: 'a'},
+      props: {align: 'start'},
     })
-    expect(wrapper.classes()).toContain('justify-content-a')
+    expect(wrapper.classes()).toContain('justify-content-start')
     await wrapper.setProps({align: undefined})
-    expect(wrapper.classes()).not.toContain('justify-content-a')
+    expect(wrapper.classes()).not.toContain('justify-content-start')
 
     wrapper.unmount()
   })

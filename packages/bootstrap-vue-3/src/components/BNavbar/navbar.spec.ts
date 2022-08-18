@@ -34,10 +34,10 @@ describe('navbar', () => {
   it('has class navbar-expand on prop toggleable changes', async () => {
     const wrapper = mount(BNavbar, {
       props: {
-        toggleable: 'a',
+        toggleable: 'sm',
       },
     })
-    expect(wrapper.classes()).toContain('navbar-expand-a')
+    expect(wrapper.classes()).toContain('navbar-expand-sm')
     await wrapper.setProps({toggleable: false})
     expect(wrapper.classes()).toContain('navbar-expand')
     await wrapper.setProps({toggleable: undefined})
@@ -83,33 +83,33 @@ describe('navbar', () => {
 
   it('contains class sticky when prop sticky is set', async () => {
     const wrapper = mount(BNavbar, {
-      props: {sticky: 'a'},
+      props: {sticky: 'top'},
     })
-    expect(wrapper.classes()).toContain('sticky-a')
+    expect(wrapper.classes()).toContain('sticky-top')
     await wrapper.setProps({sticky: undefined})
-    expect(wrapper.classes()).not.toContain('sticky-a')
+    expect(wrapper.classes()).not.toContain('sticky-top')
 
     wrapper.unmount()
   })
 
   it('contains class bg when prop variant is set', async () => {
     const wrapper = mount(BNavbar, {
-      props: {variant: 'a'},
+      props: {variant: 'primary'},
     })
-    expect(wrapper.classes()).toContain('bg-a')
+    expect(wrapper.classes()).toContain('bg-primary')
     await wrapper.setProps({variant: undefined})
-    expect(wrapper.classes()).not.toContain('bg-a')
+    expect(wrapper.classes()).not.toContain('bg-primary')
 
     wrapper.unmount()
   })
 
   it('contains class fixed when prop fixed is set', async () => {
     const wrapper = mount(BNavbar, {
-      props: {fixed: 'a'},
+      props: {fixed: 'top'},
     })
-    expect(wrapper.classes()).toContain('fixed-a')
+    expect(wrapper.classes()).toContain('fixed-top')
     await wrapper.setProps({fixed: undefined})
-    expect(wrapper.classes()).not.toContain('fixed-a')
+    expect(wrapper.classes()).not.toContain('fixed-top')
 
     wrapper.unmount()
   })
