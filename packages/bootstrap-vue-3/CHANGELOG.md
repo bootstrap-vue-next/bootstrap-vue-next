@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.2.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.8...v0.2.9) (2022-08-18)
+
+
+### Features
+
+* add bnavitem/form/text ([70a300c](https://github.com/cdmoro/bootstrap-vue-3/commit/70a300c912ebc512771bfad122740cd59e2324c3))
+* bnavbartoggle can use array of ids ([3a92aff](https://github.com/cdmoro/bootstrap-vue-3/commit/3a92aff7390c4e37b1fa4ca1a6525041d3c48b48))
+* create courtesy container prop ([4a03357](https://github.com/cdmoro/bootstrap-vue-3/commit/4a03357e2fdb5d835f8d10df3974c474d83f30e1))
+* finish bnavbartoggle and navitem ([b8ebc29](https://github.com/cdmoro/bootstrap-vue-3/commit/b8ebc2923dac2d02b255d0ef61970e8988adb7e6))
+* finish up more nav components ([a75b388](https://github.com/cdmoro/bootstrap-vue-3/commit/a75b388ffb9b37af61efffdeae438372ba5e697b))
+
+
+### Bug Fixes
+
+* bnavitem dts build error ([17302db](https://github.com/cdmoro/bootstrap-vue-3/commit/17302db22b41e091e440a241da222e8c3bc57a71))
+* emits click when target is undefined ([7191128](https://github.com/cdmoro/bootstrap-vue-3/commit/71911283c0e90c099b16e635c65b9e90bc27bf63))
+* explicit import to BForm ([2a054be](https://github.com/cdmoro/bootstrap-vue-3/commit/2a054bea638cfa2ccb9de291782c2218174d7006))
+* further fix 289c168 to extend to Booleanish ([1ee080a](https://github.com/cdmoro/bootstrap-vue-3/commit/1ee080aec0f853d69b546ec478515fd6ce836b62))
+* include explicit imports of components ([f4767ec](https://github.com/cdmoro/bootstrap-vue-3/commit/f4767ecf1e49e5bd82e03b1912381c3b019bf19f))
+* no possible way to not have navbar-expand ([4a03357](https://github.com/cdmoro/bootstrap-vue-3/commit/4a03357e2fdb5d835f8d10df3974c474d83f30e1))
+* prop type replaced with prop dark Booleanish ([329cc3b](https://github.com/cdmoro/bootstrap-vue-3/commit/329cc3bab4eb4331c73a8125a1f11d69cfc92911))
+* props not available to template ([7a97401](https://github.com/cdmoro/bootstrap-vue-3/commit/7a974019f4f86cf565760d20e673e0a9bf3b3faa))
+* remove offsetParent prop ([3c4ac6a](https://github.com/cdmoro/bootstrap-vue-3/commit/3c4ac6abccc660d6221dcfdbd655dc1aa1099a2f))
+* tests causing breaking build ([17302db](https://github.com/cdmoro/bootstrap-vue-3/commit/17302db22b41e091e440a241da222e8c3bc57a71))
+* unify aria-invalid behavior ([de65efe](https://github.com/cdmoro/bootstrap-vue-3/commit/de65efefc554b02d3c63faf6a34d16e0784c2b4f))
+* warn proclaiming string not allowed in some ([289c168](https://github.com/cdmoro/bootstrap-vue-3/commit/289c16877f15fb2608c79947fd23257c3d6bc16a))
+
 ## [0.2.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.7...v0.2.8) (2022-08-10)
 
 
