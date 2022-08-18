@@ -9,11 +9,12 @@ import {isLink, omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {BLINK_PROPS} from '../BLink/BLink.vue'
+import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
 
 export default defineComponent({
+  components: {BLink},
   props: {
     pill: {type: Boolean as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'span'},
@@ -24,7 +25,7 @@ export default defineComponent({
   },
   setup(props) {
     const link = computed<boolean>(() => isLink(props))
-    const computedTag = computed<string>(() => (link.value ? 'b-link' : props.tag))
+    const computedTag = computed<string | typeof BLink>(() => (link.value ? BLink : props.tag))
 
     const pillBoolean = useBooleanish(toRef(props, 'pill'))
     const textIndicatorBoolean = useBooleanish(toRef(props, 'textIndicator'))

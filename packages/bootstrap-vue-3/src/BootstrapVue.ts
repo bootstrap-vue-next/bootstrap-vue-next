@@ -70,12 +70,14 @@ import BListGroup from './components/BListGroup/BListGroup.vue'
 import BListGroupItem from './components/BListGroup/BListGroupItem.vue'
 import BModal from './components/BModal.vue'
 import BNav from './components/BNav/BNav.vue'
-import BNavbar from './components/BNav/BNavbar.vue'
-import BNavbarBrand from './components/BNav/BNavbarBrand.vue'
-import BNavbarNav from './components/BNav/BNavbarNav.vue'
-// import BNavbarToggle from './components/BNav/BNavbarToggle.vue'
+import BNavForm from './components/BNav/BNavForm.vue'
+import BNavText from './components/BNav/BNavText.vue'
 import BNavItem from './components/BNav/BNavItem.vue'
 import BNavItemDropdown from './components/BNav/BNavItemDropdown.vue'
+import BNavbar from './components/BNavbar/BNavbar.vue'
+import BNavbarBrand from './components/BNavbar/BNavbarBrand.vue'
+import BNavbarNav from './components/BNavbar/BNavbarNav.vue'
+import BNavbarToggle from './components/BNavbar/BNavbarToggle.vue'
 import BOffcanvas from './components/BOffcanvas.vue'
 import BOverlay from './components/BOverlay/BOverlay.vue'
 import BPagination from './components/BPagination/BPagination.vue'
@@ -142,6 +144,8 @@ export {
   BCardSubTitle,
   BCardText,
   BCardTitle,
+  BNavForm,
+  BNavText,
   BCarousel,
   BCarouselSlide,
   BCloseButton,
@@ -188,7 +192,7 @@ export {
   BNavbar,
   BNavbarBrand,
   BNavbarNav,
-  // BNavbarToggle,
+  BNavbarToggle,
   BNavItem,
   BNavItemDropdown,
   BOffcanvas,
@@ -312,10 +316,12 @@ declare module '@vue/runtime-core' {
     BListGroupItem: typeof BListGroupItem
     BModal: typeof BModal
     BNav: typeof BNav
+    BNavForm: typeof BNavForm
+    BNavText: typeof BNavText
     BNavbar: typeof BNavbar
     BNavbarBrand: typeof BNavbarBrand
     BNavbarNav: typeof BNavbarNav
-    // BNavbarToggle: typeof BNavbarToggle
+    BNavbarToggle: typeof BNavbarToggle
     BNavItem: typeof BNavItem
     BNavItemDropdown: typeof BNavItemDropdown
     BOffcanvas: typeof BOffcanvas

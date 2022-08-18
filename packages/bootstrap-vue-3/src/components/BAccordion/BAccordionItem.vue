@@ -34,7 +34,7 @@ import BCollapse from '../BCollapse.vue'
 import vBToggle from '../../directives/BToggle'
 import {useBooleanish, useId} from '../../composables'
 import {injectionKey} from './BAccordion.vue'
-import {Booleanish} from '../../types'
+import type {Booleanish} from '../../types'
 // import type {BAccordionItemProps} from '../types/components'
 
 interface BAccordionItemProps {

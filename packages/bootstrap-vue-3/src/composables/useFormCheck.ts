@@ -1,15 +1,6 @@
-import {AriaInvalid, ButtonVariant, InputSize} from '../types'
+import type {AriaInvalid, ButtonVariant, InputSize} from '../types'
 import {computed, ComputedRef} from 'vue'
 import {resolveAriaInvalid} from '../utils'
-
-/**
- * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
- * @returns
- */
-const _getComputedAriaInvalid = (items: {
-  ariaInvalid?: AriaInvalid
-  state?: boolean
-}): ComputedRef => computed(() => resolveAriaInvalid(items.ariaInvalid, items.state))
 
 /**
  * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
@@ -72,7 +63,7 @@ const getGroupAttr = (items: {
   state?: boolean
 }): ComputedRef =>
   computed(() => ({
-    'aria-invalid': _getComputedAriaInvalid(items).value,
+    'aria-invalid': resolveAriaInvalid(items.ariaInvalid, items.state),
     'aria-required': items.required?.toString() === 'true' ? 'true' : null,
   }))
 

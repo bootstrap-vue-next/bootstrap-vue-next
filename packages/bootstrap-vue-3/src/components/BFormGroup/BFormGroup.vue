@@ -12,6 +12,7 @@ import {
   isVisible,
   normalizeSlot,
   removeAttr,
+  resolveAriaInvalid,
   select,
   selectAll,
   setAttr,
@@ -24,7 +25,7 @@ import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
 import BFormText from '../BForm/BFormText.vue'
 import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
-import type {Booleanish} from '../../types'
+import type {AriaInvalid, Booleanish} from '../../types'
 
 const INPUTS = ['input', 'select', 'textarea']
 // Selector for finding first input in the form group
@@ -168,12 +169,9 @@ export default defineComponent({
       const state = computedState.value
       return state === true ? 'is-valid' : state === false ? 'is-invalid' : null
     })
-    const computedAriaInvalid = computed(() => {
-      if (attrs.ariaInvalid === true || attrs.ariaInvalid === 'true' || attrs.ariaInvalid === '') {
-        return 'true'
-      }
-      return computedState.value === false ? 'true' : attrs.ariaInvalid
-    })
+    const computedAriaInvalid = computed(() =>
+      resolveAriaInvalid(attrs.ariaInvalid as unknown as AriaInvalid, stateBoolean.value)
+    )
 
     watch(
       () => ariaDescribedby,

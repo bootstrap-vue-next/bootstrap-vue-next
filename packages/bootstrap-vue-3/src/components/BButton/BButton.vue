@@ -9,9 +9,10 @@ import {isLink} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ButtonVariant, InputSize, LinkTarget} from '../../types'
-import {BLINK_PROPS} from '../BLink/BLink.vue'
+import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
+  components: {BLink},
   props: {
     ...BLINK_PROPS,
     active: {type: Boolean as PropType<Booleanish>, default: false},
@@ -71,10 +72,9 @@ export default defineComponent({
       'routerTag': isBLink.value ? props.routerTag : null,
     }))
 
-    const computedTag = computed<string>(() => {
-      if (isBLink.value) return 'b-link'
-      return props.href ? 'a' : props.tag
-    })
+    const computedTag = computed<string | typeof BLink>(() =>
+      isBLink.value ? BLink : props.href ? 'a' : props.tag
+    )
 
     const clicked = (e: MouseEvent): void => {
       if (disabledBoolean.value) {

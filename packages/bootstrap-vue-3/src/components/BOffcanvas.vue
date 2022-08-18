@@ -32,7 +32,7 @@
 import {computed, onMounted, ref, toRef, watch} from 'vue'
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
 import {useBooleanish, useEventListener} from '../composables'
-import {Booleanish} from '../types'
+import type {Booleanish} from '../types'
 
 interface BOffcanvasProps {
   modelValue?: Booleanish
