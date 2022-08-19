@@ -65,7 +65,7 @@ describe('navbar-toggle', () => {
     wrapper.unmount()
   })
 
-  it('disabled attribute is undefined by default', () => {
+  it('disabled attribute is empty string when true', () => {
     const wrapper = mount(BNavbarToggle, {
       props: {disabled: true},
     })
