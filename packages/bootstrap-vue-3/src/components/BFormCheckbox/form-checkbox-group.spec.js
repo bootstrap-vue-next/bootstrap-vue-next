@@ -9,7 +9,7 @@ const global = {components: {BFormCheckbox}}
 describe('form-checkbox-group', () => {
   // --- Structure, class and attributes tests ---
 
-  it('default has structure <div></div>', async () => {
+  it('default has structure <div></div>', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper).toBeDefined()
@@ -21,7 +21,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has no classes on wrapper other than focus ring', async () => {
+  it('default has no classes on wrapper other than focus ring', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
@@ -44,7 +44,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has tabindex set to -1', async () => {
+  it('default has tabindex set to -1', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper.attributes('tabindex')).toBeDefined()
@@ -53,7 +53,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have aria-required set', async () => {
+  it('default does not have aria-required set', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper.attributes('aria-required')).toBeUndefined()
@@ -61,7 +61,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have aria-invalid set', async () => {
+  it('default does not have aria-invalid set', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
@@ -69,7 +69,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute role=group', async () => {
+  it('default has attribute role=group', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper.attributes('role')).toBeDefined()
@@ -78,7 +78,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has user provided ID', async () => {
+  it('default has user provided ID', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -93,7 +93,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has class was-validated when validated=true', async () => {
+  it('default has class was-validated when validated=true', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -108,7 +108,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when state=false', async () => {
+  it('default has attribute aria-invalid=true when state=false', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -123,7 +123,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have attribute aria-invalid when state=true', async () => {
+  it('default does not have attribute aria-invalid when state=true', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -137,7 +137,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default does not have attribute aria-invalid when state=undefined', async () => {
+  it('default does not have attribute aria-invalid when state=undefined', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -151,7 +151,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when aria-invalid=true', async () => {
+  it('default has attribute aria-invalid=true when aria-invalid=true', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -166,7 +166,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when aria-invalid="true"', async () => {
+  it('default has attribute aria-invalid=true when aria-invalid="true"', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -181,7 +181,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('default has attribute aria-invalid=true when aria-invalid=""', async () => {
+  it('default has attribute aria-invalid=true when aria-invalid=""', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -198,7 +198,7 @@ describe('form-checkbox-group', () => {
 
   // --- Button mode structure ---
 
-  it('button mode has classes button-group and button-group-toggle', async () => {
+  it('button mode has classes button-group and button-group-toggle', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -215,7 +215,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('button mode has classes button-group-vertical and button-group-toggle when stacked=true', async () => {
+  it('button mode has classes button-group-vertical and button-group-toggle when stacked=true', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -233,7 +233,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('button mode has size class when size prop set', async () => {
+  it('button mode has size class when size prop set', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -252,7 +252,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('button mode has size class when size prop set and stacked', async () => {
+  it('button mode has size class when size prop set and stacked', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -304,7 +304,7 @@ describe('form-checkbox-group', () => {
 
   // --- Functionality testing ---
 
-  it('has checkboxes via options array', async () => {
+  it('has checkboxes via options array', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -321,7 +321,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('has checkboxes via options array which respect disabled', async () => {
+  it('has checkboxes via options array which respect disabled', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -423,7 +423,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('child checkboxes have is-valid classes when group state set to valid', async () => {
+  it('child checkboxes have is-valid classes when group state set to valid', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -446,7 +446,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('child checkboxes have is-invalid classes when group state set to invalid', async () => {
+  it('child checkboxes have is-invalid classes when group state set to invalid', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -468,7 +468,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('child checkboxes have disabled attribute when group disabled', async () => {
+  it('child checkboxes have disabled attribute when group disabled', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -490,7 +490,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('child checkboxes have required attribute when group required', async () => {
+  it('child checkboxes have required attribute when group required', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -514,7 +514,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('child checkboxes have class form-check-inline when stacked=false', async () => {
+  it('child checkboxes have class form-check-inline when stacked=false', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -535,7 +535,7 @@ describe('form-checkbox-group', () => {
     wrapper.unmount()
   })
 
-  it('child checkboxes do not have class custom-control-inline when stacked=true', async () => {
+  it('child checkboxes do not have class custom-control-inline when stacked=true', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,

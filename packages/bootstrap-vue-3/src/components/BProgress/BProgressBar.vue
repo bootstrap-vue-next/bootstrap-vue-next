@@ -7,14 +7,14 @@ import {injectionKey} from './BProgress.vue'
 
 export default defineComponent({
   props: {
-    animated: {type: Boolean as PropType<Booleanish>, default: false},
+    animated: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     label: {type: String},
     labelHtml: {type: String},
     max: {type: [Number, String]},
     precision: {type: [Number, String], default: 0},
-    showProgress: {type: Boolean as PropType<Booleanish>, default: false},
-    showValue: {type: Boolean as PropType<Booleanish>, default: false},
-    striped: {type: Boolean as PropType<Booleanish>, default: false},
+    showProgress: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    showValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    striped: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     value: {type: [Number, String], default: 0},
     variant: {type: String as PropType<ColorVariant>},
   },

@@ -3,7 +3,7 @@ import BListGroup from './BListGroup.vue'
 import {describe, expect, it} from 'vitest'
 
 describe('list-group', () => {
-  it('default should have tag div', async () => {
+  it('default should have tag div', () => {
     const wrapper = mount(BListGroup)
 
     expect(wrapper.element.tagName).toBe('DIV')
@@ -11,7 +11,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('default should contain only single class of list-group', async () => {
+  it('default should contain only single class of list-group', () => {
     const wrapper = mount(BListGroup)
 
     expect(wrapper.classes().length).toBe(1)
@@ -22,7 +22,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should have tag ul then prop tag=ul', async () => {
+  it('should have tag ul then prop tag=ul', () => {
     const wrapper = mount(BListGroup, {
       props: {tag: 'ul'},
     })
@@ -32,7 +32,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should have tag ol then prop numbered=true', async () => {
+  it('should have tag ol then prop numbered=true', () => {
     const wrapper = mount(BListGroup, {
       props: {tag: 'div', numbered: true},
     })
@@ -42,7 +42,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should have class list-group-flush when prop flush=true', async () => {
+  it('should have class list-group-flush when prop flush=true', () => {
     const wrapper = mount(BListGroup, {
       props: {flush: true},
     })
@@ -55,7 +55,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should have class list-group-horizontal when prop horizontal=true', async () => {
+  it('should have class list-group-horizontal when prop horizontal=true', () => {
     const wrapper = mount(BListGroup, {
       props: {horizontal: true},
     })
@@ -68,7 +68,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should have class list-group-horizontal-md when prop horizontal=md', async () => {
+  it('should have class list-group-horizontal-md when prop horizontal=md', () => {
     const wrapper = mount(BListGroup, {
       props: {horizontal: 'md'},
     })
@@ -82,7 +82,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should not have class list-group-horizontal when prop horizontal=true and flush=true', async () => {
+  it('should not have class list-group-horizontal when prop horizontal=true and flush=true', () => {
     const wrapper = mount(BListGroup, {
       props: {
         horizontal: true,
@@ -98,7 +98,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should not have class list-group-horizontal-lg when prop horizontal=lg and flush=true', async () => {
+  it('should not have class list-group-horizontal-lg when prop horizontal=lg and flush=true', () => {
     const wrapper = mount(BListGroup, {
       props: {
         horizontal: 'lg',
@@ -115,7 +115,7 @@ describe('list-group', () => {
     wrapper.unmount()
   })
 
-  it('should accept custom classes', async () => {
+  it('should accept custom classes', () => {
     const wrapper = mount(BListGroup, {
       attrs: {
         class: 'foobar',

@@ -7,7 +7,7 @@ import BFormRadio from './BFormRadio.vue'
 describe('form-radio', () => {
   /* Custom radio structure, class and attributes tests */
 
-  it('default has structure <div><input><label></label></div>', async () => {
+  it('default has structure <div><input><label></label></div>', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -27,7 +27,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has wrapper class form-check', async () => {
+  it('default has wrapper class form-check', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -43,7 +43,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has input type radio', async () => {
+  it('default has input type radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -60,7 +60,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has input class form-check-input', async () => {
+  it('default has input class form-check-input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -77,7 +77,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has label class form-check-label', async () => {
+  it('default has label class form-check-label', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: false,
@@ -94,7 +94,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has default slot content in label', async () => {
+  it('has default slot content in label', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -110,7 +110,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has no disabled attribute on input', async () => {
+  it('default has no disabled attribute on input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -126,7 +126,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has disabled attribute on input when prop disabled set', async () => {
+  it('has disabled attribute on input when prop disabled set', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -143,7 +143,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has no required attribute on input', async () => {
+  it('default has no required attribute on input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -159,7 +159,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('does not have required attribute on input when prop required set and name prop not provided', async () => {
+  it('does not have required attribute on input when prop required set and name prop not provided', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -177,7 +177,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has required attribute on input when prop required and name set', async () => {
+  it('has required attribute on input when prop required and name set', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -196,7 +196,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has no name attribute on input', async () => {
+  it('default has no name attribute on input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -212,7 +212,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has name attribute on input when name prop set', async () => {
+  it('has name attribute on input when name prop set', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -230,7 +230,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has no form attribute on input', async () => {
+  it('default has no form attribute on input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -246,7 +246,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has form attribute on input when form prop set', async () => {
+  it('has form attribute on input when form prop set', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -264,7 +264,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has custom attributes transferred to input element', async () => {
+  it('has custom attributes transferred to input element', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         id: 'foo',
@@ -278,7 +278,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has class form-check-inline when prop inline=true', async () => {
+  it('default has class form-check-inline when prop inline=true', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -296,7 +296,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has no input validation classes by default', async () => {
+  it('default has no input validation classes by default', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -314,7 +314,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has no input validation classes when state=undefined', async () => {
+  it('default has no input validation classes when state=undefined', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: undefined,
@@ -333,7 +333,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has input validation class is-valid when state=true', async () => {
+  it('default has input validation class is-valid when state=true', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: true,
@@ -352,7 +352,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has input validation class is-invalid when state=false', async () => {
+  it('default has input validation class is-invalid when state=false', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: false,
@@ -371,7 +371,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has id attribute on input when id prop set', async () => {
+  it('has id attribute on input when id prop set', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: false,
@@ -389,7 +389,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has id attribute on input', async () => {
+  it('default has id attribute on input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: false,
@@ -405,7 +405,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('has for attribute on label when id prop set', async () => {
+  it('has for attribute on label when id prop set', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: false,
@@ -423,7 +423,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has for attribute on label equal to id property of input', async () => {
+  it('default has for attribute on label equal to id property of input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: false,
@@ -443,7 +443,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has unique id attribute on input', async () => {
+  it('default has unique id attribute on input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: false,
@@ -472,7 +472,7 @@ describe('form-radio', () => {
   })
   // --- Plain styling ---
 
-  it('plain has structure <div><input><label></label></div>', async () => {
+  it('plain has structure <div><input><label></label></div>', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
@@ -493,7 +493,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has no wrapper class form-check', async () => {
+  it('plain has no wrapper class form-check', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
@@ -510,7 +510,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has input type radio', async () => {
+  it('plain has input type radio', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
@@ -528,7 +528,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has no input class form-check-input', async () => {
+  it('plain has no input class form-check-input', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
@@ -546,7 +546,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has no label class form-check-label', async () => {
+  it('plain has no label class form-check-label', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
@@ -564,7 +564,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has default slot content in label', async () => {
+  it('plain has default slot content in label', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
@@ -581,7 +581,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has no input validation classes by default', async () => {
+  it('plain has no input validation classes by default', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         plain: true,
@@ -600,7 +600,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has no input validation classes when state=undefined', async () => {
+  it('plain has no input validation classes when state=undefined', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: undefined,
@@ -620,7 +620,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has input validation class is-valid when state=true', async () => {
+  it('plain has input validation class is-valid when state=true', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: true,
@@ -640,7 +640,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('plain has input validation class is-invalid when state=false', async () => {
+  it('plain has input validation class is-invalid when state=false', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         state: false,
@@ -662,7 +662,7 @@ describe('form-radio', () => {
 
   // --- Button styling - stand-alone mode ---
 
-  it('stand-alone button has structure <div><input><label></label></div>', async () => {
+  it('stand-alone button has structure <div><input><label></label></div>', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
@@ -684,7 +684,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('stand-alone button has wrapper classes btn-check', async () => {
+  it('stand-alone button has wrapper classes btn-check', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
@@ -702,7 +702,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('stand-alone button has label classes btn and btn-secondary when unchecked', async () => {
+  it('stand-alone button has label classes btn and btn-secondary when unchecked', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
@@ -724,7 +724,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('stand-alone button has label classes btn and btn-size when size property set', async () => {
+  it('stand-alone button has label classes btn and btn-size when size property set', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
@@ -748,7 +748,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('stand-alone button has label classes btn, btn-secondary and active when checked by default', async () => {
+  it('stand-alone button has label classes btn, btn-secondary and active when checked by default', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
@@ -839,7 +839,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('stand-alone button has label btn-primary when prop btn-variant set to primary', async () => {
+  it('stand-alone button has label btn-primary when prop btn-variant set to primary', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         button: true,
@@ -865,7 +865,7 @@ describe('form-radio', () => {
 
   // --- Functionality testing ---
 
-  it.skip('default has internal modelValue="" when prop checked=""', async () => {
+  it.skip('default has internal modelValue="" when prop checked=""', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         modelValue: '',
@@ -882,7 +882,7 @@ describe('form-radio', () => {
     wrapper.unmount()
   })
 
-  it('default has internal modelValue set to value when checked=value', async () => {
+  it('default has internal modelValue set to value when checked=value', () => {
     const wrapper = mount(BFormRadio, {
       props: {
         value: 'bar',

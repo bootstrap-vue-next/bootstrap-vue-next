@@ -5,7 +5,7 @@ import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
 import BFormInput from './BFormInput.vue'
 
 describe('form-input', () => {
-  it('has class form-control', async () => {
+  it('has class form-control', () => {
     const wrapper = mount(BFormInput)
 
     const $input = wrapper.find('input')
@@ -14,7 +14,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-lg when size=lg and plane=false', async () => {
+  it('has class form-control-lg when size=lg and plane=false', () => {
     const wrapper = mount(BFormInput, {
       props: {
         size: 'lg',
@@ -27,7 +27,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-sm when size=lg and plain=false', async () => {
+  it('has class form-control-sm when size=lg and plain=false', () => {
     const wrapper = mount(BFormInput, {
       props: {
         size: 'sm',
@@ -40,7 +40,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have class form-control-plaintext when plaintext not set', async () => {
+  it('does not have class form-control-plaintext when plaintext not set', () => {
     const wrapper = mount(BFormInput)
 
     const $input = wrapper.find('input')
@@ -50,7 +50,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has class form-control-plaintext when plaintext=true', async () => {
+  it('has class form-control-plaintext when plaintext=true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         plaintext: true,
@@ -63,7 +63,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has attribute read-only when plaintext=true', async () => {
+  it('has attribute read-only when plaintext=true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         plaintext: true,
@@ -77,7 +77,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has class custom-range instead of form-control when type=range', async () => {
+  it('has class custom-range instead of form-control when type=range', () => {
     const wrapper = mount(BFormInput, {
       props: {
         type: 'range',
@@ -91,7 +91,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have class form-control-plaintext when type=range and plaintext=true', async () => {
+  it('does not have class form-control-plaintext when type=range and plaintext=true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         type: 'range',
@@ -107,7 +107,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have class form-control-plaintext when type=color and plaintext=true', async () => {
+  it('does not have class form-control-plaintext when type=color and plaintext=true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         type: 'color',
@@ -123,7 +123,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has user supplied id', async () => {
+  it('has user supplied id', () => {
     const wrapper = mount(BFormInput, {
       props: {
         id: 'foobar',
@@ -150,7 +150,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has form attribute when form prop set', async () => {
+  it('has form attribute when form prop set', () => {
     const wrapper = mount(BFormInput, {
       props: {
         form: 'foobar',
@@ -163,7 +163,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have list attribute when list prop not set', async () => {
+  it('does not have list attribute when list prop not set', () => {
     const wrapper = mount(BFormInput)
 
     const $input = wrapper.find('input')
@@ -172,7 +172,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has list attribute when list prop set', async () => {
+  it('has list attribute when list prop set', () => {
     const wrapper = mount(BFormInput, {
       props: {
         list: 'foobar',
@@ -185,7 +185,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have list attribute when list prop set and type=password', async () => {
+  it('does not have list attribute when list prop set and type=password', () => {
     const wrapper = mount(BFormInput, {
       props: {
         list: 'foobar',
@@ -199,7 +199,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('renders text input by default', async () => {
+  it('renders text input by default', () => {
     const wrapper = mount(BFormInput)
 
     const $input = wrapper.find('input')
@@ -208,7 +208,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('renders number input when type set to number', async () => {
+  it('renders number input when type set to number', () => {
     const wrapper = mount(BFormInput, {
       props: {
         type: 'number',
@@ -221,7 +221,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('renders text input when type not supported', async () => {
+  it('renders text input when type not supported', () => {
     const warnHandler = vitest.fn()
 
     const wrapper = mount(BFormInput, {
@@ -243,7 +243,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have is-valid or is-invalid classes when state is default', async () => {
+  it('does not have is-valid or is-invalid classes when state is default', () => {
     const wrapper = mount(BFormInput)
 
     const $input = wrapper.find('input')
@@ -253,7 +253,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has class is-valid when state=true', async () => {
+  it('has class is-valid when state=true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         state: true,
@@ -267,7 +267,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has class is-invalid when state=false', async () => {
+  it('has class is-invalid when state=false', () => {
     const wrapper = mount(BFormInput, {
       props: {
         state: false,
@@ -281,7 +281,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have aria-invalid attribute by default', async () => {
+  it('does not have aria-invalid attribute by default', () => {
     const wrapper = mount(BFormInput)
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
@@ -289,7 +289,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not have aria-invalid attribute when state is true', async () => {
+  it('does not have aria-invalid attribute when state is true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         state: true,
@@ -301,7 +301,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when state=false', async () => {
+  it('has aria-invalid attribute when state=false', () => {
     const wrapper = mount(BFormInput, {
       props: {
         state: false,
@@ -314,7 +314,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when aria-invalid="true"', async () => {
+  it('has aria-invalid attribute when aria-invalid="true"', () => {
     const wrapper = mount(BFormInput, {
       props: {
         ariaInvalid: 'true',
@@ -327,7 +327,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when aria-invalid=true', async () => {
+  it('has aria-invalid attribute when aria-invalid=true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         ariaInvalid: true,
@@ -340,7 +340,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('has aria-invalid attribute when aria-invalid="spelling"', async () => {
+  it('has aria-invalid attribute when aria-invalid="spelling"', () => {
     const wrapper = mount(BFormInput, {
       props: {
         ariaInvalid: 'spelling',
@@ -353,7 +353,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('is disabled when disabled=true', async () => {
+  it('is disabled when disabled=true', () => {
     const wrapper = mount(BFormInput, {
       props: {
         disabled: true,
@@ -367,7 +367,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('is not disabled when disabled=false', async () => {
+  it('is not disabled when disabled=false', () => {
     const wrapper = mount(BFormInput, {
       props: {
         disabled: false,
@@ -525,7 +525,7 @@ describe('form-input', () => {
     wrapper.unmount()
   })
 
-  it('does not apply formatter when value supplied on mount and not lazy', async () => {
+  it('does not apply formatter when value supplied on mount and not lazy', () => {
     const wrapper = mount(BFormInput, {
       props: {
         modelValue: 'TEST',
@@ -623,7 +623,7 @@ describe('form-input', () => {
   })
 
   /* TODO: implement noWheel
-  it('focused number input with no-wheel set to true works', async () => {
+  it('focused number input with no-wheel set to true works', () => {
     const spy = vitest.fn()
     const wrapper = mount(BFormInput, {
       attachTo: createContainer(),
@@ -651,7 +651,7 @@ describe('form-input', () => {
   })
 
 
-  it('focused number input with no-wheel set to false works', async () => {
+  it('focused number input with no-wheel set to false works', () => {
     const spy = vitest.fn(() => {})
     const wrapper = mount(BFormInput, {
       attachTo: createContainer(),
@@ -681,7 +681,7 @@ describe('form-input', () => {
   })
 
 
-  it('changing no-wheel after mount works', async () => {
+  it('changing no-wheel after mount works', () => {
     const spy = vitest.fn(() => {})
     const wrapper = mount(BFormInput, {
       attachTo: createContainer(),
@@ -824,7 +824,7 @@ describe('form-input', () => {
   })
 
   /* TODO: implement debounce
-  it('"debounce" prop works', async () => {
+  it('"debounce" prop works', () => {
     vitest.useFakeTimers()
     const wrapper = mount(BFormInput, {
       props: {

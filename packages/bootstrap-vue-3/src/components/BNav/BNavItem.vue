@@ -2,7 +2,7 @@
   <li class="nav-item">
     <b-link
       class="nav-link"
-      v-bind="props"
+      v-bind="$props"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
     >
@@ -27,7 +27,7 @@ export default defineComponent({
   setup(props) {
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
-    return {disabledBoolean, props}
+    return {disabledBoolean}
   },
 })
 </script>

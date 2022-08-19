@@ -20,12 +20,12 @@ export default defineComponent({
   props: {
     bgColor: {type: String, required: false},
     blur: {type: String, default: '2px'},
-    fixed: {type: Boolean as PropType<Booleanish>, default: false},
-    noCenter: {type: Boolean as PropType<Booleanish>, default: false},
-    noFade: {type: Boolean as PropType<Booleanish>, default: false},
+    fixed: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    noCenter: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    noFade: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     // If `true, does not render the default slot
     // and switches to absolute positioning
-    noWrap: {type: Boolean as PropType<Booleanish>, default: false},
+    noWrap: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     opacity: {
       type: [Number, String],
       default: 0.85,
@@ -36,8 +36,8 @@ export default defineComponent({
     },
     overlayTag: {type: String, default: 'div'},
     rounded: {type: [Boolean, String], default: false},
-    show: {type: Boolean as PropType<Booleanish>, default: false},
-    spinnerSmall: {type: Boolean as PropType<Booleanish>, default: false},
+    show: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    spinnerSmall: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     spinnerType: {type: String, default: 'border'},
     spinnerVariant: {type: String, required: false},
     variant: {type: String as PropType<ColorVariant>, default: 'light'},
