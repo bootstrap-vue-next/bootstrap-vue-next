@@ -1,9 +1,9 @@
 /// <reference types="vitest" />
 
-import {defineConfig} from 'vite'
+import {defineConfig, PluginOption} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
-import visualizer from 'rollup-plugin-visualizer'
+import {visualizer} from 'rollup-plugin-visualizer'
 import dts from 'vite-plugin-dts'
 
 const config = defineConfig({
@@ -56,7 +56,7 @@ const config = defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
-    visualizer(), // generates admin/stats.html on pnpm run build
+    visualizer() as PluginOption, // generates admin/stats.html on pnpm run build
     dts({skipDiagnostics: false, logDiagnostics: true}),
   ],
 
