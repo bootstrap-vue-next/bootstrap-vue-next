@@ -5,7 +5,6 @@
     "apps/*"
   ],
   "scripts": {
-    "audit": "improved-yarn-audit --ignore-dev-deps --min-severity moderate",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "test": "turbo run test",
@@ -17,10 +16,9 @@
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
-    "husky": "^7.0.2",
-    "improved-yarn-audit": "3.x.x",
-    "lint-staged": "12.x.x",
-    "release-please": "^13.19.3",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "release-please": "^14.1.0",
     "turbo": "latest"
   },
   "engines": {
