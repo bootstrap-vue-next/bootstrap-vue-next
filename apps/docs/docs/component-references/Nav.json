@@ -1,0 +1,22 @@
+{
+  "name": "@bootstrap-vue-3/NavBar",
+  "version": "1.0.0",
+  "meta": {
+    "components": [
+      {
+        "component": "BNav",
+        "props": [
+          {
+            "prop" : "align",
+            "description" : "Alignment of NavBar",
+            "type" : "String"
+        }
+        ],
+        "emits": [
+        ],
+        "slots": [
+        ]
+      }
+    ]
+  }
+}

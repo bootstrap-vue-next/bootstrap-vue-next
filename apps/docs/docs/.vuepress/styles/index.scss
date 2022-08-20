@@ -20,9 +20,6 @@ html.dark .table{
   color : var(--c-text)
 }
 
-.nav-link:not(.sidebar-item):not(.action-button) {
-  padding: 0 !important;
-}
 
 .badge {
   height: auto;
@@ -119,6 +116,10 @@ h2.accordion-header {
 .nav-tabs .nav-link:hover,
 .nav-pills .nav-link:hover {
   text-decoration: none !important;
+}
+
+.container .nav-link {
+  padding: .5rem;
 }
 
 kbd {
