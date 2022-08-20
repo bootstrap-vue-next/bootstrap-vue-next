@@ -22,6 +22,7 @@
         :label="option.label"
         :options="option.options"
       />
+      <!-- eslint-disable vue/no-v-text-v-html-on-component -->
       <!-- eslint-disable vue/no-v-html -->
       <b-form-select-option
         v-else
