@@ -40,6 +40,6 @@ const classes = computed(() => ({
   'spinner-border-sm': props.type === 'border' && smallBoolean.value,
   'spinner-grow': props.type === 'grow',
   'spinner-grow-sm': props.type === 'grow' && smallBoolean.value,
-  [`text-${props.variant}`]: !!props.variant,
+  [`text-${props.variant}`]: props.variant !== undefined,
 }))
 </script>
