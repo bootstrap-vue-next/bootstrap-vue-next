@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.9...v0.2.10) (2022-08-22)
+
+
+### Bug Fixes
+
+* BCol classes persisting after prop change ([b8ed3db](https://github.com/cdmoro/bootstrap-vue-3/commit/b8ed3dbb0840a10ba80f731a3aa53973f78a815e))
+* BOffcanvas dynamic aria-label on child button ([9b5e0fc](https://github.com/cdmoro/bootstrap-vue-3/commit/9b5e0fc7950c26963098a9885b48f3865fe040da))
+* drop{type} props are camelCase ([a0bf0ac](https://github.com/cdmoro/bootstrap-vue-3/commit/a0bf0ac9e6cb9fa74987a4da3137919b932fe552))
+
+
+### Reverts
+
+* **a0bf0ac:** dropup, etc is valid bootstrap ([b542d99](https://github.com/cdmoro/bootstrap-vue-3/commit/b542d9939b2d6eeb4afc7a9b1421bd12d81e0f9f))
+
 ## [0.2.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.8...v0.2.9) (2022-08-18)
 
 
