@@ -21,9 +21,9 @@ interface BNavItemDropdownProps {
   offset?: string
   autoClose?: boolean | 'inside' | 'outside'
   dark?: boolean
-  dropLeft?: boolean
-  dropRight?: boolean
-  dropUp?: boolean
+  dropleft?: boolean
+  dropright?: boolean
+  dropup?: boolean
   right?: boolean
   left?: boolean | string
   // offsetParent?: boolean // Breaks tests, does not exist on BDropdown
@@ -36,9 +36,9 @@ interface BNavItemDropdownProps {
 withDefaults(defineProps<BNavItemDropdownProps>(), {
   autoClose: true,
   dark: false,
-  dropLeft: false,
-  dropRight: false,
-  dropUp: false,
+  dropleft: false,
+  dropright: false,
+  dropup: false,
   right: false,
   left: false,
   // offsetParent: false,
