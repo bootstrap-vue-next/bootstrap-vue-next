@@ -47,7 +47,7 @@ describe('form-select-option', () => {
     expect(wrapper.element.tagName).toBe('OPTION')
     expect(wrapper.attributes('value')).toEqual('foo')
 
-    const $bold = wrapper.find('b')
+    const $bold = wrapper.get('b')
     expect($bold.text()).toEqual('Bold')
 
     wrapper.unmount()

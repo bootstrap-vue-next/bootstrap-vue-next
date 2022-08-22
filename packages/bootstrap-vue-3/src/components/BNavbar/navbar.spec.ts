@@ -157,7 +157,7 @@ describe('navbar', () => {
       props: {container: true},
       slots: {default: 'foobar'},
     })
-    const $div = wrapper.find('div')
+    const $div = wrapper.get('div')
     expect($div.text()).toBe('foobar')
 
     wrapper.unmount()
@@ -167,7 +167,7 @@ describe('navbar', () => {
     const wrapper = mount(BNavbar, {
       slots: {default: 'foobar'},
     })
-    const $div = wrapper.find('div')
+    const $div = wrapper.get('div')
     expect($div.text()).toBe('foobar')
 
     wrapper.unmount()

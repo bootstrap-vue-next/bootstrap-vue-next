@@ -185,7 +185,7 @@ describe('spinner', () => {
       props: {tag: 'div'},
       slots: {label: 'foobar'},
     })
-    const $span = wrapper.find('span')
+    const $span = wrapper.get('span')
     expect($span.text()).toBe('foobar')
 
     wrapper.unmount()
@@ -195,7 +195,7 @@ describe('spinner', () => {
     const wrapper = mount(BSpinner, {
       props: {tag: 'div', label: 'foobar'},
     })
-    const $span = wrapper.find('span')
+    const $span = wrapper.get('span')
     expect($span.text()).toBe('foobar')
 
     wrapper.unmount()
@@ -206,7 +206,7 @@ describe('spinner', () => {
       props: {tag: 'div', label: 'propbar'},
       slots: {label: 'labelbar'},
     })
-    const $span = wrapper.find('span')
+    const $span = wrapper.get('span')
     expect($span.text()).toBe('labelbar')
 
     wrapper.unmount()
@@ -216,7 +216,7 @@ describe('spinner', () => {
     const wrapper = mount(BSpinner, {
       props: {label: 'foobar', tag: 'div'},
     })
-    const $span = wrapper.find('span')
+    const $span = wrapper.get('span')
     expect($span.classes()).toContain('visually-hidden')
 
     wrapper.unmount()

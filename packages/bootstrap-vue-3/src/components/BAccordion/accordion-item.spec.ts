@@ -89,7 +89,7 @@ describe('accordion-item', () => {
 
   it('h2 child has static class accordion-header', () => {
     const wrapper = mount(BAccordionItem)
-    const $h2 = wrapper.find('h2')
+    const $h2 = wrapper.get('h2')
     expect($h2.classes()).toContain('accordion-header')
 
     wrapper.unmount()
@@ -97,7 +97,7 @@ describe('accordion-item', () => {
 
   it('h2 child has id attr has default id', () => {
     const wrapper = mount(BAccordionItem)
-    const $h2 = wrapper.find('h2')
+    const $h2 = wrapper.get('h2')
     expect($h2.attributes('id')).toBeDefined()
 
     wrapper.unmount()
@@ -107,7 +107,7 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'foobar'},
     })
-    const $h2 = wrapper.find('h2')
+    const $h2 = wrapper.get('h2')
     expect($h2.attributes('id')).toBe('foobarheading')
 
     wrapper.unmount()
@@ -115,7 +115,7 @@ describe('accordion-item', () => {
 
   it('h2 child has button child', () => {
     const wrapper = mount(BAccordionItem)
-    const $h2 = wrapper.find('h2')
+    const $h2 = wrapper.get('h2')
     const $button = $h2.find('button')
     expect($button.exists()).toBe(true)
 
@@ -124,8 +124,8 @@ describe('accordion-item', () => {
 
   it('h2 child button child has static class accordion-button', () => {
     const wrapper = mount(BAccordionItem)
-    const $h2 = wrapper.find('h2')
-    const $button = $h2.find('button')
+    const $h2 = wrapper.get('h2')
+    const $button = $h2.get('button')
     expect($button.classes()).toContain('accordion-button')
 
     wrapper.unmount()
@@ -133,8 +133,8 @@ describe('accordion-item', () => {
 
   it('h2 child button child has type attribute button', () => {
     const wrapper = mount(BAccordionItem)
-    const $h2 = wrapper.find('h2')
-    const $button = $h2.find('button')
+    const $h2 = wrapper.get('h2')
+    const $button = $h2.get('button')
     expect($button.attributes('type')).toBe('button')
 
     wrapper.unmount()
@@ -142,8 +142,8 @@ describe('accordion-item', () => {
 
   it('h2 child button child has aria-expanded false by default', () => {
     const wrapper = mount(BAccordionItem)
-    const $h2 = wrapper.find('h2')
-    const $button = $h2.find('button')
+    const $h2 = wrapper.get('h2')
+    const $button = $h2.get('button')
     expect($button.attributes('aria-expanded')).toBe('false')
 
     wrapper.unmount()
@@ -153,8 +153,8 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {visible: true},
     })
-    const $h2 = wrapper.find('h2')
-    const $button = $h2.find('button')
+    const $h2 = wrapper.get('h2')
+    const $button = $h2.get('button')
     expect($button.attributes('aria-expanded')).toBe('true')
 
     wrapper.unmount()
@@ -164,8 +164,8 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'foobar'},
     })
-    const $h2 = wrapper.find('h2')
-    const $button = $h2.find('button')
+    const $h2 = wrapper.get('h2')
+    const $button = $h2.get('button')
     expect($button.attributes('aria-controls')).toBe('foobar')
 
     wrapper.unmount()
@@ -175,8 +175,8 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {visible: false},
     })
-    const $h2 = wrapper.find('h2')
-    const $button = $h2.find('button')
+    const $h2 = wrapper.get('h2')
+    const $button = $h2.get('button')
     expect($button.classes()).toContain('collapsed')
     await wrapper.setProps({visible: true})
     expect($button.classes()).not.toContain('collapsed')

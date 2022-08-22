@@ -69,7 +69,7 @@ describe('offcanvas', () => {
   it('first child div has child h5 with static class offcanvas-title', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.find('h5')
+    const $h5 = $div.get('h5')
     expect($h5.classes()).toContain('offcanvas-title')
 
     wrapper.unmount()
@@ -78,7 +78,7 @@ describe('offcanvas', () => {
   it('first child div has child h5 has id offcanvasLabel', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.find('h5')
+    const $h5 = $div.get('h5')
     expect($h5.attributes('id')).toContain('offcanvasLabel')
 
     wrapper.unmount()
@@ -89,7 +89,7 @@ describe('offcanvas', () => {
       slots: {title: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.find('h5')
+    const $h5 = $div.get('h5')
     expect($h5.text()).toBe('foobar')
 
     wrapper.unmount()
@@ -100,7 +100,7 @@ describe('offcanvas', () => {
       props: {title: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $h5 = $div.find('h5')
+    const $h5 = $div.get('h5')
     expect($h5.text()).toBe('foobar')
 
     wrapper.unmount()
@@ -109,7 +109,7 @@ describe('offcanvas', () => {
   it('first child div has child button has static type button', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.find('button')
+    const $button = $div.get('button')
     expect($button.attributes('type')).toBe('button')
 
     wrapper.unmount()
@@ -118,7 +118,7 @@ describe('offcanvas', () => {
   it('first child div has child button has static class btn-close', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.find('button')
+    const $button = $div.get('button')
     expect($button.classes()).toContain('btn-close')
 
     wrapper.unmount()
@@ -127,7 +127,7 @@ describe('offcanvas', () => {
   it('first child div has child button has aria-label close', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.find('button')
+    const $button = $div.get('button')
     expect($button.attributes('aria-label')).toBe('Close')
 
     wrapper.unmount()
@@ -136,7 +136,7 @@ describe('offcanvas', () => {
   it('first child div has child button has static class text-reset', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.find('button')
+    const $button = $div.get('button')
     expect($button.classes()).toContain('text-reset')
 
     wrapper.unmount()

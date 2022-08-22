@@ -35,13 +35,12 @@ export default defineComponent({
       {content: breakpointOrder, propPrefix: 'order'},
     ]
 
-    // TODO is this supposed to be computed
-    const classList: Array<string> = properties.flatMap((el) =>
-      getClasses(props, el.content, el.propPrefix, el.classPrefix)
+    const classList = computed(() =>
+      properties.flatMap((el) => getClasses(props, el.content, el.propPrefix, el.classPrefix))
     )
 
     const classes = computed(() => ({
-      col: colBoolean.value || !classList.some((e) => /^col-/.test(e) && !props.cols),
+      col: colBoolean.value || !classList.value.some((e) => /^col-/.test(e) && !props.cols),
       [`col-${props.cols}`]: !!props.cols,
       [`offset-${props.offset}`]: !!props.offset,
       [`order-${props.order}`]: !!props.order,

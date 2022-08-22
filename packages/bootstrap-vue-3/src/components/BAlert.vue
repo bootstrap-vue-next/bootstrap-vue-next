@@ -55,11 +55,11 @@ const emit = defineEmits<BAlertEmits>()
 const element = ref<HTMLElement>()
 const instance = ref<Alert>()
 const classes = computed(() => ({
-  [`alert-${props.variant}`]: props.variant,
-  'show': props.modelValue,
+  [`alert-${props.variant}`]: !!props.variant,
+  'show': !!props.modelValue,
   'alert-dismissible': dismissibleBoolean.value,
   // TODO it seems like fade is probably used here
-  'fade': props.modelValue,
+  'fade': !!props.modelValue,
 }))
 
 let _countDownTimeout: undefined | ReturnType<typeof setTimeout>

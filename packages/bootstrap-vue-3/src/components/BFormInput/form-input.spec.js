@@ -8,7 +8,7 @@ describe('form-input', () => {
   it('has class form-control', () => {
     const wrapper = mount(BFormInput)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control')
 
     wrapper.unmount()
@@ -21,7 +21,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-lg')
 
     wrapper.unmount()
@@ -34,7 +34,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-sm')
 
     wrapper.unmount()
@@ -43,7 +43,7 @@ describe('form-input', () => {
   it('does not have class form-control-plaintext when plaintext not set', () => {
     const wrapper = mount(BFormInput)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).not.toContain('form-control-plaintext')
     expect($input.attributes('readonly')).toBeUndefined()
 
@@ -57,7 +57,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-plaintext')
 
     wrapper.unmount()
@@ -70,7 +70,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-plaintext')
     expect($input.attributes('readonly')).toBeDefined()
 
@@ -84,7 +84,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-range')
     expect($input.classes()).not.toContain('form-control')
 
@@ -99,7 +99,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-range')
     expect($input.classes()).not.toContain('form-control')
     expect($input.classes()).not.toContain('form-control-plaintext')
@@ -115,7 +115,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).not.toContain('custom-range')
     expect($input.classes()).not.toContain('form-control-plaintext')
     expect($input.classes()).toContain('form-control')
@@ -130,7 +130,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('id')).toBe('foobar')
 
     wrapper.unmount()
@@ -144,7 +144,7 @@ describe('form-input', () => {
     // We need to wait a tick for `safeId` to be generated
     await waitNT(wrapper.vm)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
 
     wrapper.unmount()
@@ -157,7 +157,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('form')).toBe('foobar')
 
     wrapper.unmount()
@@ -166,7 +166,7 @@ describe('form-input', () => {
   it('does not have list attribute when list prop not set', () => {
     const wrapper = mount(BFormInput)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('list')).toBeUndefined()
 
     wrapper.unmount()
@@ -179,7 +179,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('list')).toBe('foobar')
 
     wrapper.unmount()
@@ -193,7 +193,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('list')).toBeUndefined()
 
     wrapper.unmount()
@@ -202,7 +202,7 @@ describe('form-input', () => {
   it('renders text input by default', () => {
     const wrapper = mount(BFormInput)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('type')).toBe('text')
 
     wrapper.unmount()
@@ -215,7 +215,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('type')).toBe('number')
 
     wrapper.unmount()
@@ -235,7 +235,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('type')).toBe('text')
 
     expect(warnHandler).toHaveBeenCalled()
@@ -246,7 +246,7 @@ describe('form-input', () => {
   it('does not have is-valid or is-invalid classes when state is default', () => {
     const wrapper = mount(BFormInput)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).not.toContain('is-valid')
     expect($input.classes()).not.toContain('is-invalid')
 
@@ -260,7 +260,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('is-valid')
     expect($input.classes()).not.toContain('is-invalid')
 
@@ -274,7 +274,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes()).toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
 
@@ -308,7 +308,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('true')
 
     wrapper.unmount()
@@ -321,7 +321,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('true')
 
     wrapper.unmount()
@@ -334,7 +334,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('true')
 
     wrapper.unmount()
@@ -347,7 +347,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('spelling')
 
     wrapper.unmount()
@@ -360,7 +360,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeDefined()
     expect($input.element.disabled).toBe(true)
 
@@ -374,7 +374,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeUndefined()
     expect($input.element.disabled).toBe(false)
 
@@ -384,7 +384,7 @@ describe('form-input', () => {
   it('emits an input event', async () => {
     const wrapper = mount(BFormInput)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     $input.element.value = 'test'
     await $input.trigger('input')
 
@@ -403,7 +403,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     await $input.trigger('focus')
 
     expect(wrapper.emitted()).toMatchObject({})
@@ -419,7 +419,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     await $input.trigger('blur')
 
     expect(wrapper.emitted('blur')).toBeDefined()
@@ -440,7 +440,7 @@ describe('form-input', () => {
       attachTo: createContainer(),
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     $input.element.value = 'TEST'
     await $input.trigger('input')
 
@@ -469,7 +469,7 @@ describe('form-input', () => {
       attachTo: createContainer(),
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     $input.element.value = 'TEST'
     await $input.trigger('input')
 
@@ -500,7 +500,7 @@ describe('form-input', () => {
       attachTo: createContainer(),
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
 
     // Input event needed to set initial value
     $input.element.value = 'TEST'
@@ -556,7 +556,7 @@ describe('form-input', () => {
       attachTo: createContainer(),
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     await wrapper.setProps({modelValue: 'TEST'})
 
     expect($input.element.value).toEqual('TEST')
@@ -580,7 +580,7 @@ describe('form-input', () => {
       attachTo: createContainer(),
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     await wrapper.setProps({modelValue: 'TEST'})
 
     expect($input.element.value).toEqual('TEST')
@@ -734,7 +734,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     $input.element.value = '123.450'
     await $input.trigger('input')
 
@@ -780,7 +780,7 @@ describe('form-input', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     $input.element.value = 'a'
     await $input.trigger('input')
     expect($input.element.value).toBe('a')
@@ -834,7 +834,7 @@ describe('form-input', () => {
       }
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     $input.element.value = 'a'
     await $input.trigger('input')
     expect($input.element.value).toBe('a')

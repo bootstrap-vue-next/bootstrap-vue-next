@@ -24,20 +24,20 @@ describe('b-Toast', () => {
     await waitRAF()
 
     expect(wrapper.find('.toast').exists()).toBe(true)
-    const $toast = wrapper.find('.toast')
+    const $toast = wrapper.get('.toast')
     expect($toast.element.tagName).toBe('DIV')
     expect($toast.classes()).toContain('toast')
 
     expect($toast.find('.toast-header').exists()).toBe(true)
 
-    const $header = $toast.find('.toast-header')
-    expect($header.find('strong').text()).toEqual('Test')
-    expect($header.find('strong').classes()).toContain('me-auto')
+    const $header = $toast.get('.toast-header')
+    expect($header.get('strong').text()).toEqual('Test')
+    expect($header.get('strong').classes()).toContain('me-auto')
     expect($header.find('button').exists()).toBe(true)
-    expect($header.find('button').classes()).toContain('btn-close')
+    expect($header.get('button').classes()).toContain('btn-close')
 
     expect($toast.find('.toast-body').exists()).toBe(true)
-    const $body = $toast.find('.toast-body')
+    const $body = $toast.get('.toast-body')
     expect($body.element.tagName).toBe('DIV')
     expect($body.classes().length).toBe(1)
     expect($body.text()).toEqual('Test Body')
