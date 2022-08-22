@@ -18,13 +18,13 @@
         type="button"
         class="btn-close text-reset"
         data-bs-dismiss="offcanvas"
-        aria-label="Close"
+        :aria-label="dismissLabel"
       />
-      <!-- TODO this aria-label is static -->
-      <!-- This presents a problem for i18n applications -->
-      <!-- Perhaps we should refactor to be a bit more i18n friendly? -->
-      <!-- Proposal, either follow Vuetify in implementing multilanguage native support -->
-      <!-- OR, the simpler route, and to make the property a dynamic prop. Or both -->
+      <!-- TODO in v0.2.10 this was fixed to include a dynamic aria-label -->
+      <!-- My note still persists, that perhaps we should include native multilanguage support similar to Vuetify -->
+      <!-- Regardless, if native multilanguage support is included or not, -->
+      <!-- It will need to be reviewed through and ensure that any aria-{type} can be modified by a user -->
+      <!-- of course, ignoring true static aria tags like the above aria-labelledby -->
     </div>
     <div class="offcanvas-body">
       <slot />
@@ -40,6 +40,7 @@ import {useBooleanish, useEventListener} from '../composables'
 import type {Booleanish} from '../types'
 
 interface BOffcanvasProps {
+  dismissLabel?: string
   modelValue?: Booleanish
   bodyScrolling?: Booleanish
   backdrop?: Booleanish
@@ -48,6 +49,7 @@ interface BOffcanvasProps {
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
+  dismissLabel: 'Close',
   modelValue: false,
   bodyScrolling: false,
   backdrop: true,
