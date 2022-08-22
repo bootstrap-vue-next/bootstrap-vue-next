@@ -65,6 +65,7 @@ interface BDropdownProps {
   boundary?: Popper.Boundary
   dark?: Booleanish
   disabled?: Booleanish
+  isNav?: Booleanish
   dropup?: Booleanish
   dropright?: Booleanish
   dropleft?: Booleanish
@@ -88,6 +89,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   dark: false,
   disabled: false,
   dropup: false,
+  isNav: false,
   dropright: false,
   dropleft: false,
   noFlip: false,
@@ -108,6 +110,7 @@ const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
 const droprightBoolean = useBooleanish(toRef(props, 'dropright'))
+const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
 const dropleftBoolean = useBooleanish(toRef(props, 'dropleft'))
 const rightBoolean = useBooleanish(toRef(props, 'right'))
 const splitBoolean = useBooleanish(toRef(props, 'split'))
@@ -146,6 +149,7 @@ const classes = computed(() => ({
 }))
 
 const buttonClasses = computed(() => ({
+  'nav-link': isNavBoolean.value,
   'dropdown-toggle': !splitBoolean.value,
   'dropdown-toggle-no-caret': noCaretBoolean.value && !splitBoolean.value,
   'w-100': splitBoolean.value && blockBoolean.value,
