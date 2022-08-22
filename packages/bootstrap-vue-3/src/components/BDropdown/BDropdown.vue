@@ -65,9 +65,9 @@ interface BDropdownProps {
   boundary?: Popper.Boundary
   dark?: Booleanish
   disabled?: Booleanish
-  dropUp?: Booleanish
-  dropRight?: Booleanish
-  dropLeft?: Booleanish
+  dropup?: Booleanish
+  dropright?: Booleanish
+  dropleft?: Booleanish
   noFlip?: Booleanish
   offset?: number | string
   popperOpts?: Record<string, unknown>
@@ -87,9 +87,9 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   boundary: 'clippingParents',
   dark: false,
   disabled: false,
-  dropUp: false,
-  dropRight: false,
-  dropLeft: false,
+  dropup: false,
+  dropright: false,
+  dropleft: false,
   noFlip: false,
   splitHref: undefined,
   offset: 0,
@@ -106,9 +106,9 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
 const blockBoolean = useBooleanish(toRef(props, 'block'))
 const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const dropUpBoolean = useBooleanish(toRef(props, 'dropUp'))
-const dropRightBoolean = useBooleanish(toRef(props, 'dropRight'))
-const dropLeftBoolean = useBooleanish(toRef(props, 'dropLeft'))
+const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
+const droprightBoolean = useBooleanish(toRef(props, 'dropright'))
+const dropleftBoolean = useBooleanish(toRef(props, 'dropleft'))
 const rightBoolean = useBooleanish(toRef(props, 'right'))
 const splitBoolean = useBooleanish(toRef(props, 'split'))
 const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
@@ -192,11 +192,11 @@ onMounted((): void => {
             ],
       }
 
-      if (dropUpBoolean.value) {
+      if (dropupBoolean.value) {
         dropDownConfig.placement = rightBoolean.value ? 'top-end' : 'top-start'
-      } else if (dropRightBoolean.value) {
+      } else if (droprightBoolean.value) {
         dropDownConfig.placement = 'right-start'
-      } else if (dropLeftBoolean.value) {
+      } else if (dropleftBoolean.value) {
         dropDownConfig.placement = 'left-start'
       } else if (rightBoolean.value) {
         dropDownConfig.placement = 'bottom-end'
