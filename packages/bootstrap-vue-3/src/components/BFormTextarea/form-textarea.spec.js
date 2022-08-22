@@ -7,7 +7,7 @@ describe('form-textarea', () => {
   it('has class form-control', () => {
     const wrapper = mount(BFormTextarea)
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).toContain('form-control')
 
     wrapper.unmount()
@@ -20,7 +20,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).toContain('form-control-lg')
 
     wrapper.unmount()
@@ -33,7 +33,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).toContain('form-control-sm')
 
     wrapper.unmount()
@@ -42,7 +42,7 @@ describe('form-textarea', () => {
   it('does not have class form-control-plaintext when plaintext not set', () => {
     const wrapper = mount(BFormTextarea)
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).not.toContain('form-control-plaintext')
     expect($textarea.attributes('readonly')).toBeUndefined()
 
@@ -56,7 +56,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).toContain('form-control-plaintext')
 
     wrapper.unmount()
@@ -69,7 +69,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).toContain('form-control-plaintext')
     expect($textarea.attributes('readonly')).toBeDefined()
 
@@ -83,7 +83,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('id')).toBe('foobar')
 
     wrapper.unmount()
@@ -97,7 +97,7 @@ describe('form-textarea', () => {
     // We need to wait a tick for `safeId` to be generated
     await waitNT(wrapper.vm)
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('id')).toBeDefined()
 
     wrapper.unmount()
@@ -110,7 +110,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('form')).toBe('foobar')
 
     wrapper.unmount()
@@ -119,7 +119,7 @@ describe('form-textarea', () => {
   it('does not have is-valid or is-invalid classes when state is default', () => {
     const wrapper = mount(BFormTextarea)
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).not.toContain('is-valid')
     expect($textarea.classes()).not.toContain('is-invalid')
 
@@ -133,7 +133,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).toContain('is-valid')
     expect($textarea.classes()).not.toContain('is-invalid')
 
@@ -147,7 +147,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.classes()).toContain('is-invalid')
     expect($textarea.classes()).not.toContain('is-valid')
 
@@ -181,7 +181,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('aria-invalid')).toBe('true')
 
     wrapper.unmount()
@@ -194,7 +194,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('aria-invalid')).toBe('true')
 
     wrapper.unmount()
@@ -207,7 +207,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('aria-invalid')).toBe('true')
 
     wrapper.unmount()
@@ -220,7 +220,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('aria-invalid')).toBe('spelling')
 
     wrapper.unmount()
@@ -233,7 +233,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('rows')).toBeDefined()
     expect($textarea.element.rows).toBe(8)
 
@@ -247,7 +247,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('disabled')).toBeDefined()
     expect($textarea.element.disabled).toBe(true)
 
@@ -261,7 +261,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('disabled')).toBeUndefined()
     expect($textarea.element.disabled).toBe(false)
 
@@ -271,7 +271,7 @@ describe('form-textarea', () => {
   it('emits an input event', async () => {
     const wrapper = mount(BFormTextarea)
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     $textarea.element.value = 'test'
     await $textarea.trigger('input')
 
@@ -290,7 +290,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     await $textarea.trigger('focus')
 
     expect(wrapper.emitted()).toMatchObject({})
@@ -306,7 +306,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     await $textarea.trigger('blur')
 
     expect(wrapper.emitted('blur')).toBeDefined()
@@ -327,7 +327,7 @@ describe('form-textarea', () => {
       attachTo: createContainer(),
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     $textarea.element.value = 'TEST'
     await $textarea.trigger('input')
 
@@ -356,7 +356,7 @@ describe('form-textarea', () => {
       attachTo: createContainer(),
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     $textarea.element.value = 'TEST'
     await $textarea.trigger('input')
 
@@ -387,7 +387,7 @@ describe('form-textarea', () => {
       attachTo: createContainer(),
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
 
     // Input event needed to set initial value
     $textarea.element.value = 'TEST'
@@ -443,7 +443,7 @@ describe('form-textarea', () => {
       attachTo: createContainer(),
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     await wrapper.setProps({modelValue: 'TEST'})
 
     expect($textarea.element.value).toEqual('TEST')
@@ -467,7 +467,7 @@ describe('form-textarea', () => {
       attachTo: createContainer(),
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     await wrapper.setProps({modelValue: 'TEST'})
 
     expect($textarea.element.value).toEqual('TEST')
@@ -621,7 +621,7 @@ describe('form-textarea', () => {
       },
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     $textarea.element.value = 'a'
     await $textarea.trigger('input')
     expect($textarea.element.value).toBe('a')
@@ -675,7 +675,7 @@ describe('form-textarea', () => {
       }
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
     $textarea.element.value = 'a'
     await $textarea.trigger('input')
     expect($textarea.element.value).toBe('a')
@@ -771,7 +771,7 @@ describe('form-textarea', () => {
       attachTo: createContainer(),
     })
 
-    const $textarea = wrapper.find('textarea')
+    const $textarea = wrapper.get('textarea')
 
     expect(typeof wrapper.vm.focus).toBe('function')
     expect(typeof wrapper.vm.blur).toBe('function')

@@ -27,9 +27,9 @@ export default defineComponent({
     const classes = computed(() => ({
       [`gx-${props.gutterX}`]: props.gutterX !== null,
       [`gy-${props.gutterY}`]: props.gutterY !== null,
-      [`align-items-${props.alignV}`]: props.alignV,
-      [`justify-content-${props.alignH}`]: props.alignH,
-      [`align-content-${props.alignContent}`]: props.alignContent,
+      [`align-items-${props.alignV}`]: props.alignV !== null,
+      [`justify-content-${props.alignH}`]: props.alignH !== null,
+      [`align-content-${props.alignContent}`]: props.alignContent !== null,
     }))
 
     return {

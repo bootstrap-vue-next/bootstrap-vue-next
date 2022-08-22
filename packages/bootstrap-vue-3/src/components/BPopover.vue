@@ -81,7 +81,7 @@ export default defineComponent({
     const titleRef = ref<HTMLElement>()
     const contentRef = ref<HTMLElement>()
     const classes = computed(() => ({
-      [`b-popover-${props.variant}`]: props.variant,
+      [`b-popover-${props.variant}`]: props.variant !== undefined,
     }))
 
     const cleanElementProp = (

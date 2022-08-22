@@ -199,7 +199,7 @@ describe('b-link', () => {
       expect(called).toBe(0)
       expect(evt).toEqual(null)
 
-      await wrapper.find('a').trigger('click')
+      await wrapper.get('a').trigger('click')
       expect(called).toBe(1)
       expect(evt).toBeInstanceOf(MouseEvent)
 
@@ -219,7 +219,7 @@ describe('b-link', () => {
       expect(spy1).not.toHaveBeenCalled()
       expect(spy2).not.toHaveBeenCalled()
 
-      await wrapper.find('a').trigger('click')
+      await wrapper.get('a').trigger('click')
       expect(spy1).toHaveBeenCalled()
       expect(spy2).toHaveBeenCalled()
 
@@ -245,7 +245,7 @@ describe('b-link', () => {
       expect(called).toBe(0)
       expect(evt).toEqual(null)
 
-      await wrapper.find('a').trigger('click')
+      await wrapper.get('a').trigger('click')
       expect(called).toBe(0)
       expect(evt).toEqual(null)
 
@@ -261,9 +261,9 @@ describe('b-link', () => {
       })
 
       expect(wrapper.element.tagName).toBe('A')
-      wrapper.find('a').element.addEventListener('click', spy)
+      wrapper.get('a').element.addEventListener('click', spy)
 
-      await wrapper.find('a').trigger('click')
+      await wrapper.get('a').trigger('click')
       expect(spy).not.toHaveBeenCalled()
 
       wrapper.unmount()

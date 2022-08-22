@@ -57,7 +57,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('type')).toBeDefined()
     expect($input.attributes('type')).toEqual('checkbox')
 
@@ -74,7 +74,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    expect(wrapper.find('input').attributes('aria-label')).toBeUndefined()
+    expect(wrapper.get('input').attributes('aria-label')).toBeUndefined()
 
     wrapper.unmount()
   })
@@ -90,7 +90,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    expect(wrapper.find('input').attributes('aria-label')).toBe('bar')
+    expect(wrapper.get('input').attributes('aria-label')).toBe('bar')
 
     wrapper.unmount()
   })
@@ -105,7 +105,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('form-check-input')
     expect($input.classes()).not.toContain('position-static')
@@ -123,7 +123,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.classes().length).toEqual(1)
     expect($label.classes()).toContain('form-check-label')
 
@@ -140,7 +140,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.text()).toEqual('foobar')
 
     wrapper.unmount()
@@ -153,7 +153,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.text()).toEqual('')
 
     wrapper.unmount()
@@ -169,7 +169,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeUndefined()
 
     wrapper.unmount()
@@ -186,7 +186,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeDefined()
 
     wrapper.unmount()
@@ -202,7 +202,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('required')).toBeUndefined()
 
     wrapper.unmount()
@@ -219,7 +219,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('required')).toBeUndefined()
 
     wrapper.unmount()
@@ -237,7 +237,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('required')).toBeDefined()
 
     wrapper.unmount()
@@ -253,7 +253,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('name')).toBeUndefined()
 
     wrapper.unmount()
@@ -270,7 +270,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('name')).toBeDefined()
     expect($input.attributes('name')).toEqual('test')
 
@@ -287,7 +287,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('form')).toBeUndefined()
 
     wrapper.unmount()
@@ -304,7 +304,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('form')).toBeDefined()
     expect($input.attributes('form')).toEqual('test')
 
@@ -319,7 +319,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('foo')).toBeDefined()
     expect($input.attributes('foo')).toEqual('bar')
 
@@ -354,7 +354,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
@@ -373,7 +373,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
@@ -392,7 +392,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).toContain('is-valid')
@@ -411,7 +411,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
@@ -430,7 +430,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
     expect($input.attributes('id')).toEqual('test')
 
@@ -447,7 +447,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
 
     wrapper.unmount()
@@ -464,7 +464,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.attributes('for')).toBeDefined()
     expect($label.attributes('for')).toEqual('test')
 
@@ -481,10 +481,10 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.attributes('for')).toBeDefined()
     expect($input.attributes('id')).toEqual($label.attributes('for'))
 
@@ -510,8 +510,8 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
-    const $input2 = wrapper2.find('input')
+    const $input = wrapper.get('input')
+    const $input2 = wrapper2.get('input')
     expect($input.attributes('id')).toBeDefined()
     expect($input2.attributes('id')).toBeDefined()
     expect($input.attributes('id')).not.toEqual($input2.attributes('id'))
@@ -573,7 +573,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('type')).toBeDefined()
     expect($input.attributes('type')).toEqual('checkbox')
 
@@ -591,7 +591,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(0)
     expect($input.classes()).not.toContain('form-check-input')
 
@@ -609,7 +609,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.classes()).not.toContain('form-check-label')
     expect($label.classes().length).toEqual(0)
 
@@ -627,7 +627,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.text()).toEqual('foobar')
 
     wrapper.unmount()
@@ -644,7 +644,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    expect(wrapper.find('input').classes()).not.toContain('position-static')
+    expect(wrapper.get('input').classes()).not.toContain('position-static')
 
     wrapper.unmount()
   })
@@ -689,7 +689,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
@@ -709,7 +709,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
@@ -729,7 +729,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).toContain('is-valid')
@@ -749,7 +749,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.classes()).toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
@@ -813,7 +813,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.attributes('type')).toBeDefined()
     expect($input.attributes('type')).toEqual('checkbox')
 
@@ -831,7 +831,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('form-check-input')
 
@@ -849,7 +849,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label.classes().length).toEqual(1)
     expect($label.classes()).toContain('form-check-label')
 
@@ -893,7 +893,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('btn-check')
 
@@ -912,7 +912,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label).toBeDefined()
     expect($label.classes().length).toEqual(2)
     expect($label.classes()).not.toContain('active')
@@ -935,7 +935,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label).toBeDefined()
     expect($label.classes().length).toEqual(3)
     expect($label.classes()).not.toContain('focus')
@@ -961,10 +961,10 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label).toBeDefined()
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($label.classes().length).toEqual(2)
     expect($label.classes()).not.toContain('focus')
@@ -994,10 +994,10 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label).toBeDefined()
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($label.classes().length).toEqual(2)
     expect($label.classes()).not.toContain('focus')
     expect($label.classes()).not.toContain('active')
@@ -1029,7 +1029,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label).toBeDefined()
     expect($label.classes().length).toEqual(2)
     expect($label.classes()).not.toContain('focus')
@@ -1054,7 +1054,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('btn-check')
 
@@ -1073,7 +1073,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.indeterminate).toBe(false)
 
@@ -1091,7 +1091,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.indeterminate).toBe(true)
 
@@ -1109,7 +1109,7 @@ describe('form-checkbox', () => {
       },
     })
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.indeterminate).toBe(false)
 
@@ -1138,7 +1138,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue).toBeDefined()
     expect(wrapper.vm.modelValue).toEqual(false)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(false)
 
@@ -1159,7 +1159,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue).toBeDefined()
     expect(wrapper.vm.modelValue).toEqual(true)
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(true)
 
@@ -1240,7 +1240,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
 
     await $input.setValue(true)
@@ -1275,7 +1275,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label).toBeDefined()
 
     await $label.trigger('click')
@@ -1311,7 +1311,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
 
     await $input.trigger('click')
@@ -1340,7 +1340,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
 
-    const $label = wrapper.find('label')
+    const $label = wrapper.get('label')
     expect($label).toBeDefined()
 
     await $label.trigger('click')
@@ -1370,7 +1370,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue.length).toBe(1)
     expect(wrapper.vm.modelValue[0]).toEqual('foo')
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(false)
 
@@ -1448,7 +1448,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue.length).toBe(1)
     expect(wrapper.vm.modelValue[0]).toEqual('foo')
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(false)
 
@@ -1487,7 +1487,7 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue.length).toBe(1)
     expect(wrapper.vm.modelValue[0]).toEqual('foo')
 
-    const $input = wrapper.find('input')
+    const $input = wrapper.get('input')
     expect($input).toBeDefined()
 
     await $input.trigger('click')

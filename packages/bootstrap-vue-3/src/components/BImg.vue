@@ -116,25 +116,23 @@ const attrs = computed(() => {
   }
 })
 
-const classes = computed(() => {
-  let align = ''
-  let block = blockBoolean.value
-  if (leftBoolean.value) {
-    align = 'float-start'
-  } else if (rightBoolean.value) {
-    align = 'float-end'
-  } else if (centerBoolean.value) {
-    align = 'mx-auto'
-    block = true
-  }
-  return {
-    'img-thumbnail': thumbnailBoolean.value,
-    'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
-    'w-100': fluidGrowBoolean.value,
-    'rounded': props.rounded === '' || props.rounded === true,
-    [`rounded-${props.rounded}`]: typeof props.rounded === 'string' && props.rounded !== '',
-    [align]: !!align,
-    'd-block': block,
-  }
-})
+const alignment = computed(() =>
+  leftBoolean.value
+    ? 'float-start'
+    : rightBoolean.value
+    ? 'float-end'
+    : centerBoolean.value
+    ? 'mx-auto'
+    : undefined
+)
+
+const classes = computed(() => ({
+  'img-thumbnail': thumbnailBoolean.value,
+  'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
+  'w-100': fluidGrowBoolean.value,
+  'rounded': props.rounded === '' || props.rounded === true,
+  [`rounded-${props.rounded}`]: typeof props.rounded === 'string' && props.rounded !== '',
+  [`${alignment.value}`]: alignment.value !== undefined,
+  'd-block': blockBoolean.value || centerBoolean.value,
+}))
 </script>
