@@ -133,6 +133,17 @@ describe('offcanvas', () => {
     wrapper.unmount()
   })
 
+  it('first child div has child button has aria-label prop dismissLabel', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {dismissLabel: 'foobar'},
+    })
+    const [, $div] = wrapper.findAll('div')
+    const $button = $div.get('button')
+    expect($button.attributes('aria-label')).toBe('foobar')
+
+    wrapper.unmount()
+  })
+
   it('first child div has child button has static class text-reset', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
