@@ -20,6 +20,11 @@
         data-bs-dismiss="offcanvas"
         aria-label="Close"
       />
+      <!-- TODO this aria-label is static -->
+      <!-- This presents a problem for i18n applications -->
+      <!-- Perhaps we should refactor to be a bit more i18n friendly? -->
+      <!-- Proposal, either follow Vuetify in implementing multilanguage native support -->
+      <!-- OR, the simpler route, and to make the property a dynamic prop. Or both -->
     </div>
     <div class="offcanvas-body">
       <slot />

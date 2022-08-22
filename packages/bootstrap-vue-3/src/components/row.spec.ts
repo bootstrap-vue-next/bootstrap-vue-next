@@ -6,11 +6,15 @@ describe('row', () => {
   it('has static class row', () => {
     const wrapper = mount(BRow)
     expect(wrapper.classes()).toContain('row')
+
+    wrapper.unmount()
   })
 
   it('tag is div by default', () => {
     const wrapper = mount(BRow)
     expect(wrapper.element.tagName).toBe('DIV')
+
+    wrapper.unmount()
   })
 
   it('tag is prop tag', () => {
@@ -18,6 +22,8 @@ describe('row', () => {
       props: {tag: 'span'},
     })
     expect(wrapper.element.tagName).toBe('SPAN')
+
+    wrapper.unmount()
   })
 
   it('has class gx-{type} when prop gutterX', () => {
@@ -25,6 +31,8 @@ describe('row', () => {
       props: {gutterX: '120'},
     })
     expect(wrapper.classes()).toContain('gx-120')
+
+    wrapper.unmount()
   })
 
   it('has class gx-{type} when prop gutterY', () => {
@@ -32,6 +40,8 @@ describe('row', () => {
       props: {gutterY: '120'},
     })
     expect(wrapper.classes()).toContain('gy-120')
+
+    wrapper.unmount()
   })
 
   it('has class align-items-{type} when prop alignV', async () => {
@@ -41,6 +51,8 @@ describe('row', () => {
     expect(wrapper.classes()).toContain('align-items-baseline')
     await wrapper.setProps({alignV: undefined})
     expect(wrapper.classes()).not.toContain('align-items-baseline')
+
+    wrapper.unmount()
   })
 
   it('has class justify-content-{type} when prop alignH', async () => {
@@ -50,6 +62,8 @@ describe('row', () => {
     expect(wrapper.classes()).toContain('justify-content-between')
     await wrapper.setProps({alignH: undefined})
     expect(wrapper.classes()).not.toContain('justify-content-between')
+
+    wrapper.unmount()
   })
 
   it('has class align-content-{type} when prop alignContent', async () => {
@@ -59,6 +73,8 @@ describe('row', () => {
     expect(wrapper.classes()).toContain('align-content-between')
     await wrapper.setProps({alignContent: undefined})
     expect(wrapper.classes()).not.toContain('align-content-between')
+
+    wrapper.unmount()
   })
 
   // Did not test has rowColClasses existing or getClasses existing

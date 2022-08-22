@@ -6,32 +6,44 @@ describe('popover', () => {
   it('has static class popover', () => {
     const wrapper = mount(BPopover)
     expect(wrapper.classes()).toContain('popover')
+
+    wrapper.unmount()
   })
 
   it('has static class b-popover', () => {
     const wrapper = mount(BPopover)
     expect(wrapper.classes()).toContain('b-popover')
+
+    wrapper.unmount()
   })
 
   // There doesn't seem to be any way to get ref? It is not an attribute nor prop...
   it.skip('has attribute ref element', () => {
     const wrapper = mount(BPopover)
     expect(wrapper.attributes('ref')).toBe('element')
+
+    wrapper.unmount()
   })
 
   it('has role tooltip', () => {
     const wrapper = mount(BPopover)
     expect(wrapper.attributes('role')).toBe('tooltip')
+
+    wrapper.unmount()
   })
 
   it('has tabindex -1', () => {
     const wrapper = mount(BPopover)
     expect(wrapper.attributes('tabindex')).toBe('-1')
+
+    wrapper.unmount()
   })
 
   it('is tag div', () => {
     const wrapper = mount(BPopover)
     expect(wrapper.element.tagName).toBe('DIV')
+
+    wrapper.unmount()
   })
 
   it('has prop id', async () => {
@@ -41,6 +53,8 @@ describe('popover', () => {
     expect(wrapper.attributes('id')).toBe('abc')
     await wrapper.setProps({id: undefined})
     expect(wrapper.attributes('id')).toBeUndefined()
+
+    wrapper.unmount()
   })
 
   it('first child contains slot title', () => {
@@ -49,6 +63,8 @@ describe('popover', () => {
     })
     const [, $div] = wrapper.findAll('div')
     expect($div.text()).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('first child contains prop title', () => {
@@ -57,6 +73,8 @@ describe('popover', () => {
     })
     const [, $div] = wrapper.findAll('div')
     expect($div.text()).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('first child contains slot title if both slot and prop exists', () => {
@@ -66,6 +84,8 @@ describe('popover', () => {
     })
     const [, $div] = wrapper.findAll('div')
     expect($div.text()).toBe('slotbar')
+
+    wrapper.unmount()
   })
 
   it('second child contains slot default', () => {
@@ -74,6 +94,8 @@ describe('popover', () => {
     })
     const [, , $div] = wrapper.findAll('div')
     expect($div.text()).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('second child contains prop content', () => {
@@ -82,6 +104,8 @@ describe('popover', () => {
     })
     const [, , $div] = wrapper.findAll('div')
     expect($div.text()).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('second child contains slot default if both slot and prop exists', () => {
@@ -91,6 +115,8 @@ describe('popover', () => {
     })
     const [, , $div] = wrapper.findAll('div')
     expect($div.text()).toBe('slotbar')
+
+    wrapper.unmount()
   })
 
   it('contains b-popover-{type} if prop variant', async () => {
@@ -100,6 +126,8 @@ describe('popover', () => {
     expect(wrapper.classes()).toContain('b-popover-primary')
     await wrapper.setProps({variant: undefined})
     expect(wrapper.classes()).not.toContain('b-popover-primary')
+
+    wrapper.unmount()
   })
 
   // Functionally, this component does more, but this only tests the component

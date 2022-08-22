@@ -8,7 +8,7 @@
     :data-bs-parent="accordion || null"
     :is-nav="isNavBoolean"
   >
-    <slot :visible="modelValue" :close="close" />
+    <slot :visible="modelValueBoolean" :close="close" />
   </component>
 </template>
 

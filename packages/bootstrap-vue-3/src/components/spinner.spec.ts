@@ -6,6 +6,8 @@ describe('spinner', () => {
   it('tag is span by default', () => {
     const wrapper = mount(BSpinner)
     expect(wrapper.element.tagName).toBe('SPAN')
+
+    wrapper.unmount()
   })
 
   it('tag is tag prop', () => {
@@ -13,6 +15,8 @@ describe('spinner', () => {
       props: {tag: 'div'},
     })
     expect(wrapper.element.tagName).toBe('DIV')
+
+    wrapper.unmount()
   })
 
   it('has class spinner-border when prop type is border', async () => {
@@ -22,6 +26,8 @@ describe('spinner', () => {
     expect(wrapper.classes()).toContain('spinner-border')
     await wrapper.setProps({type: 'grow'})
     expect(wrapper.classes()).not.toContain('spinner-border')
+
+    wrapper.unmount()
   })
 
   it('has class spinner-border-sm when both prop type border and prop small', async () => {
@@ -31,6 +37,8 @@ describe('spinner', () => {
     expect(wrapper.classes()).toContain('spinner-border-sm')
     await wrapper.setProps({type: 'grow'})
     expect(wrapper.classes()).not.toContain('spinner-border-sm')
+
+    wrapper.unmount()
     // TODO bspinner has both spinner-border and spinner-border-sm , is this intentional?
   })
 
@@ -41,6 +49,8 @@ describe('spinner', () => {
     expect(wrapper.classes()).toContain('spinner-grow')
     await wrapper.setProps({type: 'border'})
     expect(wrapper.classes()).not.toContain('spinner-grow')
+
+    wrapper.unmount()
   })
 
   it('has class spinner-grow-sm when prop type is grow and prop small', async () => {
@@ -50,6 +60,8 @@ describe('spinner', () => {
     expect(wrapper.classes()).toContain('spinner-grow-sm')
     await wrapper.setProps({type: 'border'})
     expect(wrapper.classes()).not.toContain('spinner-grow-sm')
+
+    wrapper.unmount()
   })
 
   it('has class spinner-grow when prop type is grow', async () => {
@@ -59,6 +71,8 @@ describe('spinner', () => {
     expect(wrapper.classes()).toContain('spinner-grow')
     await wrapper.setProps({type: 'border'})
     expect(wrapper.classes()).not.toContain('spinner-grow')
+
+    wrapper.unmount()
   })
 
   it('has class text-{type} when prop variant', async () => {
@@ -69,6 +83,8 @@ describe('spinner', () => {
     await wrapper.setProps({variant: 'secondary'})
     expect(wrapper.classes()).toContain('text-secondary')
     expect(wrapper.classes()).not.toContain('text-primary')
+
+    wrapper.unmount()
   })
 
   it('does not have role when prop role, but has no label', () => {
@@ -76,6 +92,8 @@ describe('spinner', () => {
       props: {role: 'foobar'},
     })
     expect(wrapper.attributes('role')).toBeUndefined()
+
+    wrapper.unmount()
   })
 
   it('has role when prop role but also has prop label', () => {
@@ -83,6 +101,8 @@ describe('spinner', () => {
       props: {role: 'foobar', label: 'someLabel'},
     })
     expect(wrapper.attributes('role')).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('has role when prop role but also has slot label', () => {
@@ -91,6 +111,8 @@ describe('spinner', () => {
       slots: {label: 'someLabel'},
     })
     expect(wrapper.attributes('role')).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('has role status by default when label exists', () => {
@@ -98,6 +120,8 @@ describe('spinner', () => {
       slots: {label: 'foobar'},
     })
     expect(wrapper.attributes('role')).toBe('status')
+
+    wrapper.unmount()
   })
 
   it('has aria-hidden undefined when prop label', () => {
@@ -105,6 +129,8 @@ describe('spinner', () => {
       props: {label: 'foobar'},
     })
     expect(wrapper.attributes('aria-hidden')).toBeUndefined()
+
+    wrapper.unmount()
   })
 
   it('has aria-hidden undefined when slot label', () => {
@@ -112,11 +138,15 @@ describe('spinner', () => {
       slots: {label: 'foobar'},
     })
     expect(wrapper.attributes('aria-hidden')).toBeUndefined()
+
+    wrapper.unmount()
   })
 
   it('has aria-hidden true when no label', () => {
     const wrapper = mount(BSpinner)
     expect(wrapper.attributes('aria-hidden')).toBe('true')
+
+    wrapper.unmount()
   })
 
   it('does not have span child if no label', () => {
@@ -125,6 +155,8 @@ describe('spinner', () => {
     })
     const $span = wrapper.find('span')
     expect($span.exists()).toBe(false)
+
+    wrapper.unmount()
   })
 
   it('has span child if prop label', () => {
@@ -133,6 +165,8 @@ describe('spinner', () => {
     })
     const $span = wrapper.find('span')
     expect($span.exists()).toBe(true)
+
+    wrapper.unmount()
   })
 
   it('has span child if prop label', () => {
@@ -142,6 +176,8 @@ describe('spinner', () => {
     })
     const $span = wrapper.find('span')
     expect($span.exists()).toBe(true)
+
+    wrapper.unmount()
   })
 
   it('span child has text for slot label', () => {
@@ -151,6 +187,8 @@ describe('spinner', () => {
     })
     const $span = wrapper.find('span')
     expect($span.text()).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('span child has text for prop label', () => {
@@ -159,6 +197,8 @@ describe('spinner', () => {
     })
     const $span = wrapper.find('span')
     expect($span.text()).toBe('foobar')
+
+    wrapper.unmount()
   })
 
   it('prioritizes slot label over prop label if both exist', () => {
@@ -168,6 +208,8 @@ describe('spinner', () => {
     })
     const $span = wrapper.find('span')
     expect($span.text()).toBe('labelbar')
+
+    wrapper.unmount()
   })
 
   it('span child when has label has static class visually-hidden', () => {
@@ -176,5 +218,7 @@ describe('spinner', () => {
     })
     const $span = wrapper.find('span')
     expect($span.classes()).toContain('visually-hidden')
+
+    wrapper.unmount()
   })
 })
