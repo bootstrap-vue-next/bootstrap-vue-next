@@ -171,11 +171,20 @@ export default defineComponent({
             // ...(commonProps[prop] || {}),
             ...(propsMetaObj.value[prop] || {}),
           }
-
           // Describe type
-          let type = p.type
+          //For Setup Script Syntax prop types are not defined. 
+          let type = p?.type 
           let types = []
-          if (Array.isArray(type)) {
+          
+          // Priortize type if defined in Reference 
+          if ( meta?.type){
+            if (Array.isArray(meta?.type)) {
+             types = meta?.type.map((type) => type.name)
+          } else {
+            types = [meta?.type]
+          }
+          }
+          else if (Array.isArray(type)) {
             types = type.map((type) => type.name)
           } else {
             types = type && type.name ? [type.name] : ['Any']
@@ -186,7 +195,7 @@ export default defineComponent({
             .join(' or ')
 
           //default Value
-          let defaultValue = p.default
+          let defaultValue = p?.default || null
           if (defaultValue instanceof Function && !Array.isArray(defaultValue)) {
             defaultValue = defaultValue()
           }
@@ -199,14 +208,14 @@ export default defineComponent({
             prop: hyphenate(prop),
             type,
             defaultValue,
-            required: p.required || false,
+            required: p?.required || false,
             description: meta.description || '',
             version: meta.version || '',
             xss: meta.xss || false,
             // isVModel: this.componentVModel && this.componentVModel.prop === prop,
-            deprecated: p.deprecated || false,
-            deprecation: p.deprecation || false,
-            _showDetails: typeof p.deprecated === 'string' || typeof p.deprecation === 'string',
+            deprecated: p?.deprecated || false,
+            deprecation: p?.deprecation || false,
+            _showDetails: typeof p?.deprecated === 'string' || typeof p?.deprecation === 'string',
           }
         })
     })

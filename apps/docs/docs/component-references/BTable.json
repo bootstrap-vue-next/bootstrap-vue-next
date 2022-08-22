@@ -1,0 +1,17 @@
+{
+  "name": "@bootstrap-vue-3/BTable",
+  "version": "1.0.0",
+  "meta": {
+    "components": [
+      {
+        "component": "BTable",
+        "props": [
+        ],
+        "emits": [
+        ],
+        "slots": [
+        ]
+      }
+    ]
+  }
+}

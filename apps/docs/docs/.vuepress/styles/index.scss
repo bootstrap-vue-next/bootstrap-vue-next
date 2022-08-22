@@ -15,9 +15,11 @@ a:not(.action-button) {
   color: var(--c-text-accent);
 }
 
-.nav-link:not(.sidebar-item):not(.action-button) {
-  padding: 0 !important;
+
+html.dark .table{ 
+  color : var(--c-text)
 }
+
 
 .badge {
   height: auto;
@@ -116,6 +118,20 @@ h2.accordion-header {
   text-decoration: none !important;
 }
 
+.container .nav-link {
+  padding: .5rem;
+}
+
 kbd {
   border: none;
+}
+
+.bd-example{
+  .bd-example-row{
+    & > [class^="col-"], .col , [class^="offset-"] {
+      background-color: rgba(39,41,43,0.03);
+      padding-top: .75rem;
+      padding-bottom: .75rem;
+    }
+  }
 }
