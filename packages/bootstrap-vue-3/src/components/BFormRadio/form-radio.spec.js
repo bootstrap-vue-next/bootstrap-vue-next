@@ -1,7 +1,7 @@
-/* eslint-disable no-return-await */
 import {mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
-import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
+import {createContainer, waitRAF} from '../../../tests/utils'
+import {nextTick} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 
 describe('form-radio', () => {
@@ -1168,7 +1168,7 @@ describe('form-radio', () => {
         },
       })
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const input = wrapper.find('input')
@@ -1190,7 +1190,7 @@ describe('form-radio', () => {
         },
       })
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const input = wrapper.find('input')

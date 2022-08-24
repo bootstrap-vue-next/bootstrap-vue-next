@@ -1,5 +1,6 @@
 import {mount} from '@vue/test-utils'
-import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
+import {createContainer, waitRAF} from '../../../tests/utils'
+import {nextTick} from 'vue'
 import BFormTextarea from './BFormTextarea.vue'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 
@@ -95,7 +96,7 @@ describe('form-textarea', () => {
     })
 
     // We need to wait a tick for `safeId` to be generated
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     const $textarea = wrapper.get('textarea')
     expect($textarea.attributes('id')).toBeDefined()
@@ -815,7 +816,7 @@ describe('form-textarea', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const $textarea = wrapper.find('textarea')
@@ -835,7 +836,7 @@ describe('form-textarea', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const $textarea = wrapper.find('textarea')

@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest'
+import {nextTick} from 'vue'
 import {mount} from '@vue/test-utils'
-import {createContainer, waitNT} from '../../../tests/utils'
+import {createContainer} from '../../../tests/utils'
 import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 
@@ -36,7 +37,7 @@ describe('form-checkbox-group', () => {
       global,
     })
 
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     // Auto ID not generated until after mount
     expect(wrapper.attributes('id')).toBeDefined()
@@ -289,7 +290,7 @@ describe('form-checkbox-group', () => {
     })
 
     expect(wrapper).toBeDefined()
-    await waitNT(wrapper.vm)
+    await nextTick()
     // Find all the labels with `.btn` class
     const $btns = wrapper.findAll('label.btn')
     expect($btns).toBeDefined()

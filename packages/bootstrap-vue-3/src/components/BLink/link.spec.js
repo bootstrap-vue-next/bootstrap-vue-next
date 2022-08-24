@@ -3,7 +3,7 @@ import {mount} from '@vue/test-utils'
 import BLink from './BLink.vue'
 import {describe, expect, it, vitest} from 'vitest'
 
-describe('b-link', () => {
+describe('link', () => {
   it('has expected default structure', () => {
     const wrapper = mount(BLink)
 

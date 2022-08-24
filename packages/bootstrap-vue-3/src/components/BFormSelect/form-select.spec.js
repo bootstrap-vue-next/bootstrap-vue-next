@@ -1,6 +1,6 @@
 import {mount} from '@vue/test-utils'
-import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
-import {h} from 'vue'
+import {createContainer, waitRAF} from '../../../tests/utils'
+import {h, nextTick} from 'vue'
 import BFormSelect from './BFormSelect.vue'
 import {afterAll, afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 
@@ -104,7 +104,7 @@ describe('form-select', () => {
   it('has auto ID attr by default', async () => {
     const wrapper = mount(BFormSelect)
 
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     expect(wrapper.attributes('id')).toBeDefined()
 
@@ -548,7 +548,7 @@ describe('form-select', () => {
 
     // select 3rd option
     $options[2].setSelected()
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     expect(wrapper.emitted('update:modelValue')).toBeDefined()
     expect(wrapper.emitted('change')).toBeDefined()
@@ -600,7 +600,7 @@ describe('form-select', () => {
 
     // Select 3rd option
     $options[2].setSelected()
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     expect(wrapper.emitted('update:modelValue')).toBeDefined()
     expect(wrapper.emitted('change')).toBeDefined()
@@ -702,7 +702,7 @@ describe('form-select', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const input = wrapper.find('select')
@@ -723,7 +723,7 @@ describe('form-select', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const input = wrapper.find('select')

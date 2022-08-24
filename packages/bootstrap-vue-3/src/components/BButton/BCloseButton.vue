@@ -4,7 +4,7 @@
     class="btn-close"
     :disabled="disabledBoolean"
     :class="classes"
-    aria-label="Close"
+    :aria-label="ariaLabel"
   />
 </template>
 
@@ -17,9 +17,11 @@ import {useBooleanish} from '../../composables'
 interface BCloseButtonProps {
   disabled?: Booleanish
   white?: Booleanish
+  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<BCloseButtonProps>(), {
+  ariaLabel: 'Close',
   disabled: false,
   white: false,
 })
