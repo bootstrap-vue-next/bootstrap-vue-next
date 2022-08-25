@@ -353,7 +353,7 @@ describe('form-checkbox-group', () => {
         modelValue: [],
       },
       attrs: {
-        'onUpdate:modelValue': (modelValue) => wrapper.setProps({modelValue}),
+        'onUpdate:modelValue': (modelValue: Array<unknown>) => wrapper.setProps({modelValue}),
       },
     })
 
@@ -366,32 +366,34 @@ describe('form-checkbox-group', () => {
     await $inputs[0].trigger('click')
     expect(wrapper.vm.modelValue).toEqual(['one'])
     expect(wrapper.emitted('change')).toBeDefined()
-    expect(wrapper.emitted('change').length).toBe(1)
-    expect(wrapper.emitted('change')[0][0]).toEqual(['one'])
+    const $changed = wrapper.emitted('change') as unknown[][]
+    expect($changed.length).toBe(1)
+    expect($changed[0][0]).toEqual(['one'])
     expect(wrapper.emitted('update:modelValue')).toBeDefined()
-    expect(wrapper.emitted('update:modelValue').length).toBe(1)
-    expect(wrapper.emitted('update:modelValue')[0][0]).toEqual(['one'])
+    const $emitted = wrapper.emitted('update:modelValue') as unknown[][]
+    expect($emitted.length).toBe(1)
+    expect($emitted[0][0]).toEqual(['one'])
 
     await $inputs[2].trigger('click')
     expect(wrapper.vm.modelValue).toEqual(['one', 'three'])
-    expect(wrapper.emitted('change').length).toBe(2)
-    expect(wrapper.emitted('change')[1][0]).toEqual(['one', 'three'])
-    expect(wrapper.emitted('update:modelValue').length).toBe(2)
-    expect(wrapper.emitted('update:modelValue')[1][0]).toEqual(['one', 'three'])
+    expect($changed.length).toBe(2)
+    expect($changed[1][0]).toEqual(['one', 'three'])
+    expect($emitted.length).toBe(2)
+    expect($emitted[1][0]).toEqual(['one', 'three'])
 
     await $inputs[0].trigger('click')
     expect(wrapper.vm.modelValue).toEqual(['three'])
-    expect(wrapper.emitted('change').length).toBe(3)
-    expect(wrapper.emitted('change')[2][0]).toEqual(['three'])
-    expect(wrapper.emitted('update:modelValue').length).toBe(3)
-    expect(wrapper.emitted('update:modelValue')[2][0]).toEqual(['three'])
+    expect($changed.length).toBe(3)
+    expect($changed[2][0]).toEqual(['three'])
+    expect($emitted.length).toBe(3)
+    expect($emitted[2][0]).toEqual(['three'])
 
     await $inputs[1].trigger('click')
     expect(wrapper.vm.modelValue).toEqual(['three', 'two'])
-    expect(wrapper.emitted('change').length).toBe(4)
-    expect(wrapper.emitted('change')[3][0]).toEqual(['three', 'two'])
-    expect(wrapper.emitted('update:modelValue').length).toBe(4)
-    expect(wrapper.emitted('update:modelValue')[3][0]).toEqual(['three', 'two'])
+    expect($changed.length).toBe(4)
+    expect($changed[3][0]).toEqual(['three', 'two'])
+    expect($emitted.length).toBe(4)
+    expect($emitted[3][0]).toEqual(['three', 'two'])
 
     wrapper.unmount()
   })
@@ -411,15 +413,15 @@ describe('form-checkbox-group', () => {
     const $inputs = wrapper.findAll('input[type=checkbox]')
     expect($inputs.length).toBe(3)
     expect(wrapper.vm.modelValue).toEqual(['two'])
-    expect($inputs[0].element.checked).toBe(false)
-    expect($inputs[1].element.checked).toBe(true)
-    expect($inputs[2].element.checked).toBe(false)
+    expect(($inputs[0].element as HTMLInputElement).checked).toBe(false)
+    expect(($inputs[1].element as HTMLInputElement).checked).toBe(true)
+    expect(($inputs[2].element as HTMLInputElement).checked).toBe(false)
 
     await wrapper.setProps({modelValue: ['three', 'one']})
     expect(wrapper.vm.modelValue).toEqual(['three', 'one'])
-    expect($inputs[0].element.checked).toBe(true)
-    expect($inputs[1].element.checked).toBe(false)
-    expect($inputs[2].element.checked).toBe(true)
+    expect(($inputs[0].element as HTMLInputElement).checked).toBe(true)
+    expect(($inputs[1].element as HTMLInputElement).checked).toBe(false)
+    expect(($inputs[2].element as HTMLInputElement).checked).toBe(true)
 
     wrapper.unmount()
   })
