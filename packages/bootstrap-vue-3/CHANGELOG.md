@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.2.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.10...v0.2.11) (2022-08-25)
+
+
+### Features
+
+* **#585:** add noGutter prop to BRow ([66425bd](https://github.com/cdmoro/bootstrap-vue-3/commit/66425bda520096cda5d3f61488df74b737c712bb))
+* BCloseButton dynamic ariaLabel prop ([3891fb5](https://github.com/cdmoro/bootstrap-vue-3/commit/3891fb526a5a5d6bbf4a65aee665635f01f74127))
+
+
+### Bug Fixes
+
+* BToaster direct import of BToast ([3891fb5](https://github.com/cdmoro/bootstrap-vue-3/commit/3891fb526a5a5d6bbf4a65aee665635f01f74127))
+* ensure all components import their children ([3d7d1e7](https://github.com/cdmoro/bootstrap-vue-3/commit/3d7d1e7e3caa7e6fb0d163bd6352d7f9b0be9a35))
+* navitemdropdown has nav classes ([4547f17](https://github.com/cdmoro/bootstrap-vue-3/commit/4547f1718c545625335622794c34106f621ce064))
+* specific gx/y classes can coexist with noGutt ([3c00885](https://github.com/cdmoro/bootstrap-vue-3/commit/3c00885b9245bcc78942fc29fc0e5977e10cdc80))
+* table comps with incorrect variant prop ([e27eca4](https://github.com/cdmoro/bootstrap-vue-3/commit/e27eca447f5abee929c64129c81abfbdbaac1026))
+
 ## [0.2.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.9...v0.2.10) (2022-08-22)
 
 
