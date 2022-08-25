@@ -1,0 +1,40 @@
+# This workflow is responsible for auto marking issues and PRs as stale
+# It will mark issues as stale after 30 days, and close them 14 days after that
+# It will mark PRs as stale after 45 days, and will never close them
+# It will never mark an issue or PR that has a milestone or has an assignee
+# Exempt labels that will never be checked include: stale-exempt,future addition,enhancement,autorelease: tagged,autorelease: pending
+# It will only check issues or PRs made after 2022-06-01T00:00:00
+
+name: stale-issues
+
+on:
+  schedule:
+    - cron: '30 1 * * *'
+
+jobs:
+  stale:
+    runs-on: ${{ matrix.os }} 
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
+
+    steps:
+      - name: Use stale
+        uses: actions/stale@v5
+        with:
+          stale-issue-message: 'This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 14 days'
+          stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. It will not be auto-closed'
+          close-issue-message: 'This issue was closed because it has been stalled for 14 days with no activity'
+          days-before-issue-stale: 30
+          days-before-pr-stale: 45
+          days-before-issue-close: 14
+          days-before-pr-close: -1
+          stale-issue-label: stale
+          stale-pr-label: stale
+          exempt-issue-labels: 'stale-exempt,future addition,enhancement,autorelease: tagged,autorelease: pending'
+          exempt-pr-labels: 'stale-exempt,future addition,enhancement,autorelease: tagged,autorelease: pending'
+          start-date: '2022-06-01T00:00:00'
+          exempt-all-milestones: true
+          exempt-assignees: true
