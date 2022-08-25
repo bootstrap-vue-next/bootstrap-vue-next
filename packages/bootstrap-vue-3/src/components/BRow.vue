@@ -29,8 +29,8 @@ export default defineComponent({
     const rowColsClasses = getClasses(props, rowColsProps, 'cols', 'row-cols')
 
     const classes = computed(() => ({
-      [`gx-${props.gutterX}`]: props.gutterX !== null && !noGuttersBoolean.value,
-      [`gy-${props.gutterY}`]: props.gutterY !== null && !noGuttersBoolean.value,
+      [`gx-${props.gutterX}`]: props.gutterX !== null,
+      [`gy-${props.gutterY}`]: props.gutterY !== null,
       'g-0': noGuttersBoolean.value,
       [`align-items-${props.alignV}`]: props.alignV !== null,
       [`justify-content-${props.alignH}`]: props.alignH !== null,
