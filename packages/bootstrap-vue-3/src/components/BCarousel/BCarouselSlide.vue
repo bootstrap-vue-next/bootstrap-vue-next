@@ -44,6 +44,7 @@ import {computed, inject, toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import type {BCarouselParentData} from '../../types/components'
 import {injectionKey} from './BCarousel.vue'
+import BImg from '../BImg.vue'
 
 interface BCarouselSlideProps {
   imgSrc?: string

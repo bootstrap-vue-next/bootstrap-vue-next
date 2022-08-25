@@ -11,8 +11,7 @@
       :component="toast.content.body"
       :variant="toast.options.variant"
       @destroyed="handleDestroy"
-    >
-    </b-toast>
+    />
   </div>
 </template>
 
@@ -21,6 +20,7 @@
 import {computed} from 'vue'
 import type {ContainerPosition} from '../../types'
 import type {ToastInstance} from '../BToast/plugin'
+import BToast from './BToast.vue'
 
 interface BToasterProps {
   position?: ContainerPosition

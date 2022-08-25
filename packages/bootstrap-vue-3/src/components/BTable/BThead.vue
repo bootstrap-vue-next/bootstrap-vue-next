@@ -6,15 +6,16 @@
 
 <script setup lang="ts">
 // import type {BTheadProps} from '../../types/components'
+import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BTheadProps {
-  headVariant?: string
+  variant?: ColorVariant
 }
 
 const props = defineProps<BTheadProps>()
 
 const classes = computed(() => ({
-  [`table-${props.headVariant}`]: props.headVariant,
+  [`table-${props.variant}`]: props.variant !== undefined,
 }))
 </script>

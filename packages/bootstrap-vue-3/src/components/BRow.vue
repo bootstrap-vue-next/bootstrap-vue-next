@@ -5,9 +5,10 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from 'vue'
+import {computed, defineComponent, PropType, toRef} from 'vue'
 import {getBreakpointProps, getClasses} from '../utils'
-import type {Alignment} from '../types'
+import type {Alignment, Booleanish} from '../types'
+import {useBooleanish} from '../composables'
 
 const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], default: null})
 
@@ -17,17 +18,20 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},
+    noGutters: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     alignV: {type: String as PropType<Alignment.Vertical>, default: null},
     alignH: {type: String as PropType<Alignment.Horizontal>, default: null},
     alignContent: {type: String as PropType<Alignment.Content>, default: null},
     ...rowColsProps,
   },
   setup(props) {
+    const noGuttersBoolean = useBooleanish(toRef(props, 'noGutters'))
     const rowColsClasses = getClasses(props, rowColsProps, 'cols', 'row-cols')
 
     const classes = computed(() => ({
       [`gx-${props.gutterX}`]: props.gutterX !== null,
       [`gy-${props.gutterY}`]: props.gutterY !== null,
+      'g-0': noGuttersBoolean.value,
       [`align-items-${props.alignV}`]: props.alignV !== null,
       [`justify-content-${props.alignH}`]: props.alignH !== null,
       [`align-content-${props.alignContent}`]: props.alignContent !== null,

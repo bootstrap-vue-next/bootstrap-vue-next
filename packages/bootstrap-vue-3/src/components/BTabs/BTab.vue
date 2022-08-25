@@ -53,6 +53,7 @@ const parentData = inject(injectionKey, null)
 const computedLazy = computed<boolean>(() => parentData?.lazy || lazyBoolean.value)
 const computedActive = computed<boolean>(() => activeBoolean.value && !disabledBoolean.value)
 const showSlot = computed<boolean>(() => computedActive.value || !computedLazy.value)
+
 const classes = computed(() => ({
   'active': activeBoolean.value,
   'show': activeBoolean.value,

@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest'
 import {mount} from '@vue/test-utils'
-import {createContainer, waitNT} from '../../../tests/utils'
+import {createContainer} from '../../../tests/utils'
+import {nextTick} from 'vue'
 import BFormRadioGroup from './BFormRadioGroup.vue'
 import BFormRadio from './BFormRadio.vue'
 
@@ -34,7 +35,7 @@ describe('form-radio-group', () => {
       global,
     })
 
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     expect(wrapper.attributes('id')).toBeDefined()
 
@@ -286,7 +287,7 @@ describe('form-radio-group', () => {
     })
 
     expect(wrapper).toBeDefined()
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     // Find all the labels with .btn class
     const $buttons = wrapper.findAll('label.btn')
@@ -353,7 +354,7 @@ describe('form-radio-group', () => {
 
     // We need `$nextTick()` here since auto generated name is
     // computed in a `$nextTick()` on mount
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     expect(wrapper.vm.modelValue).toEqual('')
     expect(wrapper.classes()).toBeDefined()
@@ -437,8 +438,8 @@ describe('form-radio-group', () => {
     expect($radios[2].element.checked).toBe(false)
 
     await wrapper.setProps({modelValue: 'three'})
-    await waitNT(wrapper.vm)
-    await waitNT(wrapper.vm)
+    await nextTick()
+    await nextTick()
 
     expect(wrapper.vm.modelValue).toEqual('three')
     expect($radios[0].element.checked).toBe(false)

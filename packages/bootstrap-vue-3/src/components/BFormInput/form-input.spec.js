@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
-
-import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
+import {nextTick} from 'vue'
+import {createContainer, waitRAF} from '../../../tests/utils'
 import BFormInput from './BFormInput.vue'
 
 describe('form-input', () => {
@@ -142,7 +142,7 @@ describe('form-input', () => {
     })
 
     // We need to wait a tick for `safeId` to be generated
-    await waitNT(wrapper.vm)
+    await nextTick()
 
     const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
@@ -955,7 +955,7 @@ describe('form-input', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const $input = wrapper.find('input')
@@ -975,7 +975,7 @@ describe('form-input', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const $input = wrapper.find('input')

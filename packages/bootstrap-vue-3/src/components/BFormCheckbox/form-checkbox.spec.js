@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
-
-import {createContainer, waitNT, waitRAF} from '../../../tests/utils'
+import {nextTick} from 'vue'
+import {createContainer, waitRAF} from '../../../tests/utils'
 import BFormCheckbox from './BFormCheckbox.vue'
 
 describe('form-checkbox', () => {
@@ -1539,7 +1539,7 @@ describe('form-checkbox', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const $input = wrapper.find('input')
@@ -1563,7 +1563,7 @@ describe('form-checkbox', () => {
       })
 
       expect(wrapper.vm).toBeDefined()
-      await waitNT(wrapper.vm)
+      await nextTick()
       await waitRAF()
 
       const $input = wrapper.find('input')

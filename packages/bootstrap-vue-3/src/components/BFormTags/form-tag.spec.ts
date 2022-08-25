@@ -5,7 +5,7 @@ import {describe, expect, it} from 'vitest'
 describe('form-tag', () => {
   it('has expected structure', () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         title: 'foobar',
       },
     })
@@ -26,7 +26,7 @@ describe('form-tag', () => {
 
   it('renders custom root element', () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         tag: 'li',
         title: 'foobar',
       },
@@ -45,7 +45,7 @@ describe('form-tag', () => {
 
   it('renders default slot', () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         title: 'foo',
       },
       slots: {
@@ -65,7 +65,7 @@ describe('form-tag', () => {
 
   it('has pill styles when `pill` prop set', () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         pill: true,
         title: 'foo',
       },
@@ -85,7 +85,7 @@ describe('form-tag', () => {
 
   it('has custom variant when `variant` prop set', () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         title: 'foo',
         variant: 'danger',
       },
@@ -105,7 +105,7 @@ describe('form-tag', () => {
 
   it('emits "remove" event when button clicked', async () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         title: 'foobar',
       },
     })
@@ -121,14 +121,14 @@ describe('form-tag', () => {
 
     await $button.trigger('click')
     expect(wrapper.emitted('remove')).toBeDefined()
-    expect(wrapper.emitted('remove').length).toBe(1)
+    expect(wrapper.emitted('remove')?.length).toBe(1)
 
     wrapper.unmount()
   })
 
   it('does not have remove button when `disabled` prop is set', () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         disabled: true,
         title: 'foobar',
       },
@@ -146,7 +146,7 @@ describe('form-tag', () => {
 
   it('does not have remove button when `no-remove` prop is set', () => {
     const wrapper = mount(BFormTag, {
-      propsData: {
+      props: {
         noRemove: true,
         title: 'foobar',
       },

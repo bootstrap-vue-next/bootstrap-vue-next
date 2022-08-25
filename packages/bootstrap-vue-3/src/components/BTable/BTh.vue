@@ -7,7 +7,7 @@
     :rowspan="rowspan"
     :data-label="stackedHeading"
   >
-    <div v-if="stackedHeading">
+    <div v-if="stackedHeading !== undefined">
       <slot />
     </div>
     <slot v-else />
@@ -36,7 +36,7 @@ const stickyColumnBoolean = useBooleanish(toRef(props, 'stickyColumn'))
 const classes = computed(() => ({
   [`table-${props.variant}`]: props.variant,
   'b-table-sticky-column': stickyColumnBoolean.value,
-  'table-b-table-default': stickyColumnBoolean.value && !props.variant,
+  'table-b-table-default': stickyColumnBoolean.value && props.variant === undefined,
 }))
 
 const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))

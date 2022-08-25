@@ -1,12 +1,12 @@
 <template>
-  <div v-if="responsive" :class="responsiveClasses">
+  <table v-if="!responsive" role="table" :class="classes">
+    <slot />
+  </table>
+  <div v-else :class="responsiveClasses">
     <table role="table" :class="classes">
       <slot />
     </table>
   </div>
-  <table v-else role="table" :class="classes">
-    <slot />
-  </table>
 </template>
 
 <script setup lang="ts">
@@ -22,8 +22,8 @@ interface BTableSimpleProps {
   captionTop?: Booleanish
   dark?: Booleanish
   hover?: Booleanish
-  responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-  stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+  responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
+  stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
   striped?: Booleanish
   small?: Booleanish
   tableClass?: Array<unknown> | Record<string, unknown> | string
