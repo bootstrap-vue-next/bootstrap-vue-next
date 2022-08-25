@@ -77,6 +77,33 @@ describe('row', () => {
     wrapper.unmount()
   })
 
+  it('has class g-0 when prop noGutters', async () => {
+    const wrapper = mount(BRow, {
+      props: {noGutters: true},
+    })
+    expect(wrapper.classes()).toContain('g-0')
+    await wrapper.setProps({noGutters: false})
+    expect(wrapper.classes()).not.toContain('g-0')
+  })
+
+  it('does not have gx-{type} class when prop noGutters & prop gutterX', async () => {
+    const wrapper = mount(BRow, {
+      props: {noGutters: true, gutterX: '6'},
+    })
+    expect(wrapper.classes()).not.toContain('gx-6')
+    await wrapper.setProps({noGutters: false})
+    expect(wrapper.classes()).toContain('gx-6')
+  })
+
+  it('does not have gx-{type} class when prop noGutters & prop gutterY', async () => {
+    const wrapper = mount(BRow, {
+      props: {noGutters: true, gutterY: '6'},
+    })
+    expect(wrapper.classes()).not.toContain('gy-6')
+    await wrapper.setProps({noGutters: false})
+    expect(wrapper.classes()).toContain('gy-6')
+  })
+
   // Did not test has rowColClasses existing or getClasses existing
   // Is that up to a unit test? Or a component test? Or Both?
 })
