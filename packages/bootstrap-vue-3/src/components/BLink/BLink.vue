@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-template-shadow -->
 <template>
   <component
     :is="tag"

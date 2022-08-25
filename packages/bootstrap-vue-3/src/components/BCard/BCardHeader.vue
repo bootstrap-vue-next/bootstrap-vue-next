@@ -1,6 +1,6 @@
 <template>
   <component :is="headerTag" class="card-header" :class="[headerClass, classes]">
-    <!-- eslint-disable vue/no-v-html -->
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="!!headerHtml" v-html="headerHtml" />
     <slot v-else>
       {{ header }}

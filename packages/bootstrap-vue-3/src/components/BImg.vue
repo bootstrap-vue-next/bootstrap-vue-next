@@ -65,8 +65,7 @@ const makeBlankImgSrc = (width: any, height: any, color: string): string => {
 }
 
 const attrs = computed(() => {
-  // eslint-disable-next-line prefer-destructuring
-  let src = props.src
+  let {src} = props
   let width =
     (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
     undefined
