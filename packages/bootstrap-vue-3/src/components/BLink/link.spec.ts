@@ -1,5 +1,4 @@
 import {mount} from '@vue/test-utils'
-//import {createContainer} from '../../../tests/utils'
 import BLink from './BLink.vue'
 import {describe, expect, it, vitest} from 'vitest'
 
@@ -188,7 +187,7 @@ describe('link', () => {
       let evt = null
       const wrapper = mount(BLink, {
         attrs: {
-          onClick: (e) => {
+          onClick: (e: Event) => {
             evt = e
             called++
           },
@@ -234,7 +233,7 @@ describe('link', () => {
           disabled: true,
         },
         attrs: {
-          onClick: (e) => {
+          onClick: (e: Event) => {
             evt = e
             called++
           },
