@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" class="btn-toolbar" role="toolbar" :aria-label="ariaRole">
+  <div :class="classes" class="btn-toolbar" role="toolbar" :aria-label="ariaLabel">
     <slot />
   </div>
 </template>
@@ -11,13 +11,13 @@ import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BButtonToolbarProps {
-  ariaRole?: string
+  ariaLabel?: string
   justify?: Booleanish
   // keyNav?: Booleanish
 }
 
 const props = withDefaults(defineProps<BButtonToolbarProps>(), {
-  ariaRole: 'group',
+  ariaLabel: 'Group',
   justify: false,
 })
 

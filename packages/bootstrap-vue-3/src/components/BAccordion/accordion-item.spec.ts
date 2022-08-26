@@ -11,6 +11,13 @@ describe('accordion-item', () => {
     wrapper.unmount()
   })
 
+  it('root is div', () => {
+    const wrapper = mount(BAccordionItem)
+    expect(wrapper.element.tagName).toBe('DIV')
+
+    wrapper.unmount()
+  })
+
   it('contains b-collapse', () => {
     const wrapper = mount(BAccordionItem)
     const $bcollapse = wrapper.findComponent(BCollapse)
@@ -23,6 +30,15 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem)
     const $bcollapse = wrapper.findComponent(BCollapse)
     expect($bcollapse.classes()).toContain('accordion-collapse')
+
+    wrapper.unmount()
+  })
+
+  it('b-collapse has child div', () => {
+    const wrapper = mount(BAccordionItem)
+    const $bcollapse = wrapper.findComponent(BCollapse)
+    const [, $div] = $bcollapse.findAll('div')
+    expect($div.exists()).toBe(true)
 
     wrapper.unmount()
   })

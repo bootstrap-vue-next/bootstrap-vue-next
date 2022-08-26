@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="classes" role="group" :aria-role="ariaRole">
+  <component :is="tag" :class="classes" role="group" :aria-label="ariaLabel">
     <slot />
   </component>
 </template>
@@ -11,14 +11,14 @@ import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BButtonGroupProps {
-  ariaRole?: string
+  ariaLabel?: string
   size?: string
   tag?: string
   vertical?: Booleanish
 }
 
 const props = withDefaults(defineProps<BButtonGroupProps>(), {
-  ariaRole: 'group',
+  ariaLabel: 'Group',
   tag: 'div',
   vertical: false,
 })
