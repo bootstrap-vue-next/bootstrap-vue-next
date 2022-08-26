@@ -1,5 +1,5 @@
 <template>
-  <img :class="classes" v-bind="attrs" />
+  <img :class="classes" v-bind="attrs" @load="emit('load', $event)" />
 </template>
 
 <script setup lang="ts">
@@ -15,6 +15,7 @@ interface BImgProps {
   block?: Booleanish
   center?: Booleanish
   fluid?: Booleanish
+  lazy?: Booleanish
   fluidGrow?: Booleanish
   height?: number | string
   left?: Booleanish
@@ -30,6 +31,7 @@ interface BImgProps {
 const props = withDefaults(defineProps<BImgProps>(), {
   alt: undefined,
   blank: false,
+  lazy: false,
   blankColor: 'transparent',
   block: false,
   center: false,
@@ -41,6 +43,13 @@ const props = withDefaults(defineProps<BImgProps>(), {
   thumbnail: false,
 })
 
+interface Emits {
+  (e: 'load', value: Event): void
+}
+
+const emit = defineEmits<Emits>()
+
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const blankBoolean = useBooleanish(toRef(props, 'blank'))
 const blockBoolean = useBooleanish(toRef(props, 'block'))
 const centerBoolean = useBooleanish(toRef(props, 'center'))
@@ -65,8 +74,7 @@ const makeBlankImgSrc = (width: any, height: any, color: string): string => {
 }
 
 const attrs = computed(() => {
-  // eslint-disable-next-line prefer-destructuring
-  let src = props.src
+  let {src} = props
   let width =
     (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
     undefined
@@ -113,6 +121,7 @@ const attrs = computed(() => {
     height: height || undefined,
     srcset: srcset || undefined,
     sizes: sizes || undefined,
+    loading: lazyBoolean.value ? 'lazy' : 'eager',
   }
 })
 

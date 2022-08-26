@@ -1,9 +1,9 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <component :is="tag" :id="id" class="input-group" :class="classes" role="group">
     <slot name="prepend">
       <span v-if="hasPrepend" class="input-group-text">
         <span v-if="!showPrependHtml">{{ prepend }}</span>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-if="showPrependHtml" v-html="prependHtml"></span>
       </span>
     </slot>
@@ -13,6 +13,7 @@
     <slot name="append">
       <span v-if="hasAppend" class="input-group-text">
         <span v-if="!showAppendHtml">{{ append }}</span>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-if="showAppendHtml" v-html="appendHtml"></span>
       </span>
     </slot>

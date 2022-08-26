@@ -9,9 +9,8 @@
   >
     <template v-for="(item, key) in checkboxList" :key="key">
       <b-form-radio v-model="localValue" v-bind="item.props">
-        <!-- eslint-disable vue/no-v-html -->
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-if="item.html" v-html="item.html" />
-        <!--eslint-enable-->
         <span v-else v-text="item.text" />
       </b-form-radio>
     </template>

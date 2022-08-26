@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     :id="computedId"
@@ -26,10 +25,12 @@
     >
       <component :is="captionTag" v-if="caption || captionHtml">
         <span v-if="showCaption">{{ caption }}</span>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-if="showCaptionAsHtml" v-html="captionHtml"></span>
       </component>
       <component :is="textTag" v-if="text || textHtml">
         <span v-if="showText">{{ text }}</span>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-if="showTextAsHtml" v-html="textHtml"></span>
       </component>
       <slot> </slot>

@@ -1,6 +1,6 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <component :is="footerTag" class="card-footer" :class="[footerClass, classes]">
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="!!footerHtml" v-html="footerHtml" />
     <slot v-else>
       {{ footer }}
