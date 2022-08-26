@@ -7,13 +7,16 @@
     class="bv-no-focus-ring"
     tabindex="-1"
   >
-    <template v-for="(item, key) in checkboxList" :key="key">
-      <b-form-checkbox v-model="localValue" v-bind="item.props">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="item.html" v-html="item.html" />
-        <span v-else v-text="item.text" />
-      </b-form-checkbox>
-    </template>
+    <b-form-checkbox
+      v-for="(item, key) in checkboxList"
+      :key="key"
+      v-model="localValue"
+      v-bind="item.props"
+    >
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <span v-if="item.html" v-html="item.html" />
+      <span v-else v-text="item.text" />
+    </b-form-checkbox>
   </div>
 </template>
 
