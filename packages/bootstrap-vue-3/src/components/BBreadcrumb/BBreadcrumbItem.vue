@@ -40,9 +40,9 @@ export default defineComponent({
       activeBoolean.value ? 'span' : BLink
     )
 
-    const computedAriaCurrent = computed(() => ({
-      'aria-current': activeBoolean.value ? props.ariaCurrent : undefined,
-    }))
+    const computedAriaCurrent = computed(() =>
+      activeBoolean.value ? props.ariaCurrent : undefined
+    )
 
     const clicked = (e: MouseEvent): void => {
       if (disabledBoolean.value || activeBoolean.value) {

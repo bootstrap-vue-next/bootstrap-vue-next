@@ -6,7 +6,7 @@ export interface UseBreadcrumbI {
   readonly reset: () => void
 }
 
-const BREADCRUMB_SYMBOL: InjectionKey<UseBreadcrumbI> = Symbol()
+export const BREADCRUMB_SYMBOL: InjectionKey<UseBreadcrumbI> = Symbol()
 
 const BREADCRUMB_OBJECT: UseBreadcrumbI = {
   items: reactive<BreadcrumbItem[]>([]),

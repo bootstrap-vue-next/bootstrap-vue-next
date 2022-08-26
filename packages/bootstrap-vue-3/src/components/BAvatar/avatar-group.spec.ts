@@ -33,6 +33,12 @@ describe('avatar-group', () => {
     wrapper.unmount()
   })
 
+  it('has second child div', () => {
+    const wrapper = mount(BAvatarGroup)
+    const [, $div] = wrapper.findAll('div')
+    expect($div.exists()).toBe(true)
+  })
+
   it('div child has static class b-avatar-group-inner', () => {
     const wrapper = mount(BAvatarGroup)
     const [, $div] = wrapper.findAll('div')

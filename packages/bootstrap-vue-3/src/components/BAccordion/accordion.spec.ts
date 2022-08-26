@@ -36,4 +36,13 @@ describe('accordion', () => {
 
     wrapper.unmount()
   })
+
+  it('renders default slot', () => {
+    const wrapper = mount(BAccordion, {
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+
+    wrapper.unmount()
+  })
 })
