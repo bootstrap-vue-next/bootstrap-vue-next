@@ -389,13 +389,47 @@ describe('form-checkbox-group', () => {
     expect($emitted[2][0]).toEqual(['three'])
 
     await $inputs[1].trigger('click')
-    expect(wrapper.vm.modelValue).toEqual(['three', 'two'])
+    expect(wrapper.vm.modelValue).toEqual(['two', 'three'])
     expect($changed.length).toBe(4)
-    expect($changed[3][0]).toEqual(['three', 'two'])
+    expect($changed[3][0]).toEqual(['two', 'three'])
     expect($emitted.length).toBe(4)
-    expect($emitted[3][0]).toEqual(['three', 'two'])
+    expect($emitted[3][0]).toEqual(['two', 'three'])
 
     wrapper.unmount()
+  })
+
+  it('modelValue organizes based on options', async () => {
+    const wrapper = mount(BFormCheckboxGroup, {
+      attachTo: createContainer(),
+      global,
+      props: {
+        options: ['one', 'two', {value: {d: 1}, text: 'abc'}, 'three'],
+        modelValue: [],
+      },
+      attrs: {
+        'onUpdate:modelValue': (modelValue: Array<unknown>) => wrapper.setProps({modelValue}),
+      },
+    })
+
+    const $inputs = wrapper.findAll('input')
+    await $inputs[3].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual(['three'])
+    await $inputs[2].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual([{d: 1}, 'three'])
+    await $inputs[1].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual(['two', {d: 1}, 'three'])
+    await $inputs[0].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual(['one', 'two', {d: 1}, 'three'])
+    await $inputs[2].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual(['one', 'two', 'three'])
+    await $inputs[2].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual(['one', 'two', {d: 1}, 'three'])
+    await $inputs[1].trigger('click')
+    await $inputs[2].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual(['one', 'three'])
+    await $inputs[1].trigger('click')
+    await $inputs[2].trigger('click')
+    expect(wrapper.vm.modelValue).toEqual(['one', 'two', {d: 1}, 'three'])
   })
 
   it('checkboxes reflect group checked v-model', async () => {
