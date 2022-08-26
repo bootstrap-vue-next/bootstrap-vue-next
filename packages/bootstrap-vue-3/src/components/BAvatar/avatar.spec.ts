@@ -2,7 +2,7 @@ import {mount} from '@vue/test-utils'
 import {describe, expect, it} from 'vitest'
 import BAvatar from './BAvatar.vue'
 
-describe('accordion', () => {
+describe('avatar', () => {
   it('has static b-avatar class', () => {
     const wrapper = mount(BAvatar)
     expect(wrapper.classes()).toContain('b-avatar')

@@ -1,0 +1,45 @@
+import {mount} from '@vue/test-utils'
+import {describe, expect, it} from 'vitest'
+import BCloseButton from './BCloseButton.vue'
+
+describe('close-button', () => {
+  it('has static class btn-close', () => {
+    const wrapper = mount(BCloseButton)
+    expect(wrapper.classes()).toContain('btn-close')
+  })
+
+  it('has static attr type as button', () => {
+    const wrapper = mount(BCloseButton)
+    expect(wrapper.attributes('type')).toBe('button')
+  })
+
+  it('has attr aria-label when prop ariaLabel', async () => {
+    const wrapper = mount(BCloseButton, {
+      props: {ariaLabel: 'foobar'},
+    })
+    expect(wrapper.attributes('aria-label')).toBe('foobar')
+    await wrapper.setProps({ariaLabel: undefined})
+    expect(wrapper.attributes('aria-label')).toBe('Close')
+  })
+
+  it('has class btn-close-white when prop white', () => {
+    const wrapper = mount(BCloseButton, {
+      props: {white: true},
+    })
+    expect(wrapper.classes()).toContain('btn-close-white')
+  })
+
+  it('has attr disabled when prop disabled', async () => {
+    const wrapper = mount(BCloseButton, {
+      props: {disabled: true},
+    })
+    expect(wrapper.attributes('disabled')).toBe('')
+    await wrapper.setProps({disabled: false})
+    expect(wrapper.attributes('disabled')).toBeUndefined()
+  })
+
+  it('is tag button', () => {
+    const wrapper = mount(BCloseButton)
+    expect(wrapper.element.tagName).toBe('BUTTON')
+  })
+})
