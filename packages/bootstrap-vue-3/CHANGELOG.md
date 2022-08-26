@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.11...v0.2.12) (2022-08-26)
+
+
+### Features
+
+* BImg add lazy prop ([6d2b03e](https://github.com/cdmoro/bootstrap-vue-3/commit/6d2b03e376737a192e014b75223688f4c8dd4063))
+* formcheckboxgroup modelvalue sorts by option ([c9b4b75](https://github.com/cdmoro/bootstrap-vue-3/commit/c9b4b756c969b93747081213fd1675e5aec6342b))
+
+
+### Bug Fixes
+
+* ariaRole replaced with ariaLabel on Groups ([4d0c242](https://github.com/cdmoro/bootstrap-vue-3/commit/4d0c242d01bb97dca95cacaaff8dcce01786df2d))
+* bbreadcrumbitem aria-current prop was object ([68a1494](https://github.com/cdmoro/bootstrap-vue-3/commit/68a149460d90cee73f5f5c74bbc3fc6ad727f228))
+* export BREADCRUMB_SYMBOL for tests to use ([68a1494](https://github.com/cdmoro/bootstrap-vue-3/commit/68a149460d90cee73f5f5c74bbc3fc6ad727f228))
+
 ## [0.2.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.10...v0.2.11) (2022-08-25)
 
 
