@@ -3,6 +3,11 @@ import {describe, expect, it} from 'vitest'
 import BImg from './BImg.vue'
 
 describe('img', () => {
+  it('tag is img', () => {
+    const wrapper = mount(BImg)
+    expect(wrapper.element.tagName).toBe('IMG')
+  })
+
   it('has class img-thumbnail if prop thumbnail', async () => {
     const wrapper = mount(BImg, {
       props: {thumbnail: true},
@@ -168,5 +173,143 @@ describe('img', () => {
     wrapper.unmount()
   })
 
-  // TODO requires testing of attributes existing on img
+  it('has attr loading to be lazy when prop lazy', () => {
+    const wrapper = mount(BImg, {
+      props: {lazy: true},
+    })
+    expect(wrapper.attributes('loading')).toBe('lazy')
+  })
+
+  it('has attr loading to be eager when prop lazy false', () => {
+    const wrapper = mount(BImg, {
+      props: {lazy: false},
+    })
+    expect(wrapper.attributes('loading')).toBe('eager')
+  })
+
+  it('has attr loading to be eager by default', () => {
+    const wrapper = mount(BImg)
+    expect(wrapper.attributes('loading')).toBe('eager')
+  })
+
+  it('has attr src when prop src', () => {
+    const wrapper = mount(BImg, {
+      props: {src: '/abc'},
+    })
+    expect(wrapper.attributes('src')).toBe('/abc')
+  })
+
+  it('has attr alt when prop alt', () => {
+    const wrapper = mount(BImg, {
+      props: {alt: 'foobar'},
+    })
+    expect(wrapper.attributes('alt')).toBe('foobar')
+  })
+
+  it('has attr width when prop width is string', () => {
+    const wrapper = mount(BImg, {
+      props: {width: '100'},
+    })
+    expect(wrapper.attributes('width')).toBe('100')
+  })
+
+  it('has attr width when prop width is number', () => {
+    const wrapper = mount(BImg, {
+      props: {width: 100},
+    })
+    expect(wrapper.attributes('width')).toBe('100')
+  })
+
+  it('has attr height when prop height is string', () => {
+    const wrapper = mount(BImg, {
+      props: {height: '100'},
+    })
+    expect(wrapper.attributes('height')).toBe('100')
+  })
+
+  it('has attr height when prop height is number', () => {
+    const wrapper = mount(BImg, {
+      props: {height: 100},
+    })
+    expect(wrapper.attributes('height')).toBe('100')
+  })
+
+  it('has attr srcset when prop srcset is string', () => {
+    const wrapper = mount(BImg, {
+      props: {srcset: 'abc,def'},
+    })
+    expect(wrapper.attributes('srcset')).toBe('abc,def')
+  })
+
+  it('has attr srcset when prop srcset is array', () => {
+    const wrapper = mount(BImg, {
+      props: {srcset: ['abc', 'def']},
+    })
+    expect(wrapper.attributes('srcset')).toBe('abc,def')
+  })
+
+  it('has attr sizes when prop sizes is string', () => {
+    const wrapper = mount(BImg, {
+      props: {sizes: 'abc,def'},
+    })
+    expect(wrapper.attributes('sizes')).toBe('abc,def')
+  })
+
+  it('has attr sizes when prop sizes is array', () => {
+    const wrapper = mount(BImg, {
+      props: {sizes: ['abc', 'def']},
+    })
+    expect(wrapper.attributes('sizes')).toBe('abc,def')
+  })
+
+  it('has height when prop width and prop blank', () => {
+    const wrapper = mount(BImg, {
+      props: {width: 100, blank: true},
+    })
+    expect(wrapper.attributes('height')).toBe('100')
+  })
+
+  it('has width when prop height and prop blank', () => {
+    const wrapper = mount(BImg, {
+      props: {height: 100, blank: true},
+    })
+    expect(wrapper.attributes('width')).toBe('100')
+  })
+
+  it('has width and height 1 when prop blank', () => {
+    const wrapper = mount(BImg, {
+      props: {blank: true},
+    })
+    expect(wrapper.attributes('width')).toBe('1')
+    expect(wrapper.attributes('height')).toBe('1')
+  })
+
+  it('srcset is undefined when prop blank', () => {
+    const wrapper = mount(BImg, {
+      props: {blank: true, srcset: 'abc'},
+    })
+    expect(wrapper.attributes('srcset')).toBeUndefined()
+  })
+
+  it('sizes is undefined when prop blank', () => {
+    const wrapper = mount(BImg, {
+      props: {blank: true, sizes: 'abc'},
+    })
+    expect(wrapper.attributes('sizes')).toBeUndefined()
+  })
+
+  it('src is defined and no prop src when prop blank', () => {
+    const wrapper = mount(BImg, {
+      props: {blank: true},
+    })
+    expect(wrapper.attributes('src')).toBeDefined()
+  })
+
+  it('src is defined but not set prop when prop blank', () => {
+    const wrapper = mount(BImg, {
+      props: {blank: true, src: 'abc'},
+    })
+    expect(wrapper.attributes('src')).toBeDefined()
+    expect(wrapper.attributes('src')).not.toBe('abc')
+  })
 })
