@@ -24,8 +24,30 @@ const useItemHelper = () => {
     return fields
   }
 
+  const sortItems = (
+    fields: TableField[],
+    items: TableItem<Record<string, any>>[],
+    sort?: {key?: string; desc?: boolean}
+  ) => {
+    console.log(7777777)
+    if (!sort || !sort.key) return items
+    const sortKey = sort.key
+    return items.sort((a, b) =>
+      a[sortKey] > b[sortKey]
+        ? sort.desc
+          ? -1
+          : 1
+        : b[sortKey] > a[sortKey]
+        ? sort.desc
+          ? 1
+          : -1
+        : 0
+    )
+  }
+
   return {
     normaliseFields,
+    sortItems,
   }
 }
 
