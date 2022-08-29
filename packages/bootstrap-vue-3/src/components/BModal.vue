@@ -21,7 +21,7 @@
             </button>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
-            <Suspense v-if="!lazyBoolean || (lazyBoolean && modelValueBoolean == true)">
+            <Suspense v-if="!lazyBoolean || (lazyBoolean && modelValueBoolean === true)">
               <!-- <slot /> -->
               <ModalContentComponent></ModalContentComponent>
             </Suspense>
@@ -258,13 +258,11 @@ useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
 useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
 
 const show = () => {
-  // if (modelValueBoolean.value == true) return;
   emit('update:modelValue', true)
   getInstance().show()
 }
 
 const hide = () => {
-  // if (modelValueBoolean.value == false) return;
   emit('update:modelValue', false)
   getInstance().hide()
 }
