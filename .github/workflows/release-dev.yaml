@@ -29,6 +29,7 @@ jobs:
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
           default-branch: dev
+          release-labels: 'autorelease: published'
           
       # The logic below handles the npm publication:
 
