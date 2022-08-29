@@ -8,12 +8,7 @@
             v-for="field in computedFields"
             :key="field.key"
             scope="col"
-            :class="[
-              field.class,
-              field.thClass,
-              field.variant ? `table-${field.variant}` : '',
-              {'b-table-sortable-column': isSortable && field.sortable},
-            ]"
+            :class="getFieldColumnClasses(field)"
             :title="field.headerTitle"
             :abbr="field.headerAbbr"
             :style="field.thStyle"
@@ -22,11 +17,11 @@
           >
             <div class="d-flex flex-nowrap align-items-center gap-1">
               <span
-                v-if="isSortable && field.sortable && field.key == sortBy"
+                v-if="isSortable && field.sortable && field.key === sortBy"
                 class="text-muted small"
               >
-                <span v-show="sortDesc == true">▼</span>
-                <span v-show="sortDesc == false">▲</span>
+                <span v-show="sortDesc === true">▼</span>
+                <span v-show="sortDesc === false">▲</span>
               </span>
               <div>
                 <slot
@@ -58,10 +53,7 @@
       </thead>
       <tbody>
         <!-- eslint-disable-next-line vue/require-v-for-key -->
-        <tr
-          v-for="tr in computedItems"
-          :class="[tr._rowVariant ? `table-${tr._rowVariant}` : null]"
-        >
+        <tr v-for="tr in computedItems" :class="tr._rowVariant ? `table-${tr._rowVariant}` : null">
           <td
             v-for="(field, index) in computedFields"
             :key="field.key"
@@ -119,7 +111,14 @@
 // import type {Breakpoint} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
-import type {Booleanish, ColorVariant, TableField, TableItem, VerticalAlign} from '../../types'
+import type {
+  Booleanish,
+  ColorVariant,
+  TableField,
+  TableFieldObject,
+  TableItem,
+  VerticalAlign,
+} from '../../types'
 import BTableContainer from './BTableContainer.vue'
 import useItemHelper from './itemHelper'
 
@@ -221,4 +220,11 @@ const columnClicked = (field: TableField<Record<string, unknown>>) => {
     emits('sorted', props.sortBy, props.sortDesc)
   }
 }
+
+const getFieldColumnClasses = (field: TableFieldObject) => [
+  field.class,
+  field.thClass,
+  field.variant ? `table-${field.variant}` : '',
+  {'b-table-sortable-column': isSortable.value && field.sortable},
+]
 </script>
