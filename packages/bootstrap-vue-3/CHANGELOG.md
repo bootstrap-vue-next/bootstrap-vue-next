@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.2.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.12...v0.2.13) (2022-08-29)
+
+
+### Bug Fixes
+
+* **_table.scss:** duplicate rules ([9235143](https://github.com/cdmoro/bootstrap-vue-3/commit/92351435c82f8d1df17bee758704485e96057a62))
+* **#592:** update modelValue before emit input ([84fe96d](https://github.com/cdmoro/bootstrap-vue-3/commit/84fe96da73211bcf22795512e17033a3b2a242fb))
+* **BButton:** prop pressed is default false was null ([71cbd15](https://github.com/cdmoro/bootstrap-vue-3/commit/71cbd15947b511041716cb64140d9315cb996753))
+* **BButton:** prop rel is default undefined was null ([71cbd15](https://github.com/cdmoro/bootstrap-vue-3/commit/71cbd15947b511041716cb64140d9315cb996753))
+* **BButton:** prop type is strongly typed ButtonType ([71cbd15](https://github.com/cdmoro/bootstrap-vue-3/commit/71cbd15947b511041716cb64140d9315cb996753))
+* **BModal:** emit shown always emits value Event ([07fba08](https://github.com/cdmoro/bootstrap-vue-3/commit/07fba08a931d1da34be915b06524f684d65a287b))
+* **BModal:** use slot ([9235143](https://github.com/cdmoro/bootstrap-vue-3/commit/92351435c82f8d1df17bee758704485e96057a62))
+* **BTable:** classes is not array of object ([9235143](https://github.com/cdmoro/bootstrap-vue-3/commit/92351435c82f8d1df17bee758704485e96057a62))
+* **BTableContainer:** unnecessary assignment ([9235143](https://github.com/cdmoro/bootstrap-vue-3/commit/92351435c82f8d1df17bee758704485e96057a62))
+* **BTable:** v-for missing :key ([07fba08](https://github.com/cdmoro/bootstrap-vue-3/commit/07fba08a931d1da34be915b06524f684d65a287b))
+* field variant undefined rather than empty str ([07fba08](https://github.com/cdmoro/bootstrap-vue-3/commit/07fba08a931d1da34be915b06524f684d65a287b))
+* **ignore:** test commit please ignore ([ef8b9e4](https://github.com/cdmoro/bootstrap-vue-3/commit/ef8b9e4b5529cfe014f821a6742f0d71930163e2))
+* **ItemHelper:** unnecessary console.log ([9235143](https://github.com/cdmoro/bootstrap-vue-3/commit/92351435c82f8d1df17bee758704485e96057a62))
+
+
+### Reverts
+
+* test commit still ignore ([dd285ea](https://github.com/cdmoro/bootstrap-vue-3/commit/dd285eaa87b51147f78de2dc76c6d613a1d452e6))
+
 ## [0.2.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.11...v0.2.12) (2022-08-26)
 
 
