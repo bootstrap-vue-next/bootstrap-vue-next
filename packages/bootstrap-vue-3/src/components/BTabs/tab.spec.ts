@@ -1,11 +1,13 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BTab from './BTab.vue'
 // This exists, just TS being confused with *.vue vs the actual component import
 // Ie vite-end.d.ts vs the actual import which ts can't understand
 import {injectionKey} from './BTabs.vue'
 
 describe('tab', () => {
+  enableAutoUnmount(afterEach)
+
   it('tag is default div', () => {
     const wrapper = mount(BTab)
     expect(wrapper.element.tagName).toBe('DIV')

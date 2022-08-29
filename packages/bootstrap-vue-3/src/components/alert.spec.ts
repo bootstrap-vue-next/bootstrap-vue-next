@@ -1,15 +1,15 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BAlert from './BAlert.vue'
 
 describe('alert', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static class alert', () => {
     const wrapper = mount(BAlert, {
       props: {modelValue: true},
     })
     expect(wrapper.classes()).toContain('alert')
-
-    wrapper.unmount()
   })
 
   it('has static role set to alert', () => {
@@ -17,8 +17,6 @@ describe('alert', () => {
       props: {modelValue: true},
     })
     expect(wrapper.attributes('role')).toBe('alert')
-
-    wrapper.unmount()
   })
 
   it('has class alert-{type} when prop variant', async () => {
@@ -28,8 +26,6 @@ describe('alert', () => {
     expect(wrapper.classes()).toContain('alert-primary')
     await wrapper.setProps({variant: undefined})
     expect(wrapper.classes()).not.toContain('alert-primary')
-
-    wrapper.unmount()
   })
 
   it('has class show when prop modelValue', async () => {
@@ -39,8 +35,6 @@ describe('alert', () => {
     expect(wrapper.classes()).toContain('show')
     await wrapper.setProps({modelValue: false})
     expect(wrapper.classes()).not.toContain('show')
-
-    wrapper.unmount()
   })
 
   it('has class alert-dismissible when prop dismissible', async () => {
@@ -50,8 +44,6 @@ describe('alert', () => {
     expect(wrapper.classes()).toContain('alert-dismissible')
     await wrapper.setProps({dismissible: false})
     expect(wrapper.classes()).not.toContain('alert-dismissible')
-
-    wrapper.unmount()
   })
 
   it('has class fade when prop modelValue', async () => {
@@ -61,8 +53,6 @@ describe('alert', () => {
     expect(wrapper.classes()).toContain('fade')
     await wrapper.setProps({modelValue: false})
     expect(wrapper.classes()).not.toContain('fade')
-
-    wrapper.unmount()
   })
 
   it('component exists when modelValue true', () => {
@@ -71,8 +61,6 @@ describe('alert', () => {
     })
     const $div = wrapper.find('div')
     expect($div.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('component does not exist when modelValue false', () => {
@@ -81,8 +69,6 @@ describe('alert', () => {
     })
     const $div = wrapper.find('div')
     expect($div.exists()).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('component exists when show true', () => {
@@ -91,8 +77,6 @@ describe('alert', () => {
     })
     const $div = wrapper.find('div')
     expect($div.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('component does not exist when show false', () => {
@@ -101,8 +85,6 @@ describe('alert', () => {
     })
     const $div = wrapper.find('div')
     expect($div.exists()).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -111,8 +93,6 @@ describe('alert', () => {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('has button child if prop dismissible', () => {
@@ -121,8 +101,6 @@ describe('alert', () => {
     })
     const $button = wrapper.find('button')
     expect($button.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('does not have button child if prop dismissible false', () => {
@@ -131,8 +109,6 @@ describe('alert', () => {
     })
     const $button = wrapper.find('button')
     expect($button.exists()).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('button child has static attribute type button', () => {
@@ -141,8 +117,6 @@ describe('alert', () => {
     })
     const $button = wrapper.get('button')
     expect($button.attributes('type')).toBe('button')
-
-    wrapper.unmount()
   })
 
   it('button child has static class btn-close', () => {
@@ -151,8 +125,6 @@ describe('alert', () => {
     })
     const $button = wrapper.get('button')
     expect($button.classes()).toContain('btn-close')
-
-    wrapper.unmount()
   })
 
   it('button child has static attribute data-bs-dismiss alert', () => {
@@ -161,8 +133,6 @@ describe('alert', () => {
     })
     const $button = wrapper.get('button')
     expect($button.attributes('data-bs-dismiss')).toBe('alert')
-
-    wrapper.unmount()
   })
 
   it('button child has aria-label Close by default', () => {
@@ -171,8 +141,6 @@ describe('alert', () => {
     })
     const $button = wrapper.get('button')
     expect($button.attributes('aria-label')).toBe('Close')
-
-    wrapper.unmount()
   })
 
   it('button child has aria-label prop dismissLabel', () => {
@@ -181,8 +149,6 @@ describe('alert', () => {
     })
     const $button = wrapper.get('button')
     expect($button.attributes('aria-label')).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('button child on click emits update:modelValue', async () => {
@@ -192,8 +158,6 @@ describe('alert', () => {
     const $button = wrapper.get('button')
     await $button.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('update:modelValue')
-
-    wrapper.unmount()
   })
 
   it('button child on click emits dismissed', async () => {
@@ -203,8 +167,6 @@ describe('alert', () => {
     const $button = wrapper.get('button')
     await $button.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('dismissed')
-
-    wrapper.unmount()
   })
 
   it('button child on click emits update:modelValue and gives value false if prop modelValue boolean', async () => {
@@ -216,8 +178,6 @@ describe('alert', () => {
     expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
     const [event] = wrapper.emitted('update:modelValue') ?? []
     expect(event).toEqual([false])
-
-    wrapper.unmount()
   })
 
   it('button child on click emits update:modelValue and gives value 0 if prop modelValue number', async () => {
@@ -229,7 +189,5 @@ describe('alert', () => {
     expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
     const [event] = wrapper.emitted('update:modelValue') ?? []
     expect(event).toEqual([0])
-
-    wrapper.unmount()
   })
 })

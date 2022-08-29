@@ -1,10 +1,12 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BToaster from './BToaster.vue'
 import BToast from './BToast.vue'
 import {ToastInstance} from './plugin'
 
 describe('toaster', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static class b-toaster', () => {
     const wrapper = mount(BToaster)
     expect(wrapper.classes()).toContain('b-toaster')

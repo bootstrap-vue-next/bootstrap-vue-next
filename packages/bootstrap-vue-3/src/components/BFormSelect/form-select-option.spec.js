@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormSelectOption from './BFormSelectOption.vue'
-import {describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it} from 'vitest'
 
 describe('form-select-option', () => {
+  enableAutoUnmount(afterEach)
+
   it('has expected default structure', () => {
     const wrapper = mount(BFormSelectOption, {
       props: {
@@ -13,8 +15,6 @@ describe('form-select-option', () => {
     expect(wrapper.element.tagName).toBe('OPTION')
     expect(wrapper.attributes('value')).toEqual('foo')
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('renders default slot content', () => {
@@ -30,8 +30,6 @@ describe('form-select-option', () => {
     expect(wrapper.element.tagName).toBe('OPTION')
     expect(wrapper.attributes('value')).toEqual('foo')
     expect(wrapper.text()).toEqual('foobar')
-
-    wrapper.unmount()
   })
 
   it('renders HTML as default slot content', () => {
@@ -49,8 +47,6 @@ describe('form-select-option', () => {
 
     const $bold = wrapper.get('b')
     expect($bold.text()).toEqual('Bold')
-
-    wrapper.unmount()
   })
 
   it('has disabled attribute applied when disabled=true', () => {
@@ -65,7 +61,5 @@ describe('form-select-option', () => {
     expect(wrapper.attributes('value')).toEqual('foo')
     expect(wrapper.attributes('disabled')).toBeDefined()
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 })

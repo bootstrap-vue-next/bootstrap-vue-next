@@ -16,6 +16,10 @@
       "outputs": [],
       "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
     },
+    "test:coverage": {
+      "outputs": [],
+      "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
+    },
     "lint": {
       "outputs": []
     },

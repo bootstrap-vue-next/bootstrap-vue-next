@@ -1,14 +1,14 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BListGroup from './BListGroup.vue'
-import {describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it} from 'vitest'
 
 describe('list-group', () => {
+  enableAutoUnmount(afterEach)
+
   it('default should have tag div', () => {
     const wrapper = mount(BListGroup)
 
     expect(wrapper.element.tagName).toBe('DIV')
-
-    wrapper.unmount()
   })
 
   it('default should contain only single class of list-group', () => {
@@ -18,8 +18,6 @@ describe('list-group', () => {
     expect(wrapper.classes()).toContain('list-group')
     expect(wrapper.classes()).not.toContain('list-group-flush')
     expect(wrapper.classes()).not.toContain('list-group-horizontal')
-
-    wrapper.unmount()
   })
 
   it('should have tag ul then prop tag=ul', () => {
@@ -28,8 +26,6 @@ describe('list-group', () => {
     })
 
     expect(wrapper.element.tagName).toBe('UL')
-
-    wrapper.unmount()
   })
 
   it('should have tag ol then prop numbered=true', () => {
@@ -38,8 +34,6 @@ describe('list-group', () => {
     })
 
     expect(wrapper.element.tagName).toBe('OL')
-
-    wrapper.unmount()
   })
 
   it('should have class list-group-flush when prop flush=true', () => {
@@ -51,8 +45,6 @@ describe('list-group', () => {
     expect(wrapper.classes()).toContain('list-group')
     expect(wrapper.classes()).toContain('list-group-flush')
     expect(wrapper.classes()).not.toContain('list-group-horizontal')
-
-    wrapper.unmount()
   })
 
   it('should have class list-group-horizontal when prop horizontal=true', () => {
@@ -64,8 +56,6 @@ describe('list-group', () => {
     expect(wrapper.classes()).not.toContain('list-group-flush')
     expect(wrapper.classes()).toContain('list-group')
     expect(wrapper.classes()).toContain('list-group-horizontal')
-
-    wrapper.unmount()
   })
 
   it('should have class list-group-horizontal-md when prop horizontal=md', () => {
@@ -78,8 +68,6 @@ describe('list-group', () => {
     expect(wrapper.classes()).not.toContain('list-group-horizontal')
     expect(wrapper.classes()).toContain('list-group')
     expect(wrapper.classes()).toContain('list-group-horizontal-md')
-
-    wrapper.unmount()
   })
 
   it('should not have class list-group-horizontal when prop horizontal=true and flush=true', () => {
@@ -94,8 +82,6 @@ describe('list-group', () => {
     expect(wrapper.classes()).not.toContain('list-group-horizontal')
     expect(wrapper.classes()).toContain('list-group')
     expect(wrapper.classes()).toContain('list-group-flush')
-
-    wrapper.unmount()
   })
 
   it('should not have class list-group-horizontal-lg when prop horizontal=lg and flush=true', () => {
@@ -111,8 +97,6 @@ describe('list-group', () => {
     expect(wrapper.classes()).not.toContain('list-group-horizontal')
     expect(wrapper.classes()).toContain('list-group')
     expect(wrapper.classes()).toContain('list-group-flush')
-
-    wrapper.unmount()
   })
 
   it('should accept custom classes', () => {
@@ -125,7 +109,5 @@ describe('list-group', () => {
     expect(wrapper.classes().length).toBe(2)
     expect(wrapper.classes()).toContain('list-group')
     expect(wrapper.classes()).toContain('foobar')
-
-    wrapper.unmount()
   })
 })

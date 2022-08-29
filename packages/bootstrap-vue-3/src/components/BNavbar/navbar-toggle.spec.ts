@@ -1,20 +1,18 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BNavbarToggle from './BNavbarToggle.vue'
 
 describe('navbar-toggle', () => {
+  enableAutoUnmount(afterEach)
+
   it('contains static class navbar-toggler', () => {
     const wrapper = mount(BNavbarToggle)
     expect(wrapper.classes()).toContain('navbar-toggler')
-
-    wrapper.unmount()
   })
 
   it('tag is button', () => {
     const wrapper = mount(BNavbarToggle)
     expect(wrapper.element.tagName).toBe('BUTTON')
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -22,8 +20,6 @@ describe('navbar-toggle', () => {
     expect(wrapper.text()).toBe('')
     const $span = wrapper.get('span')
     expect($span.classes()).toContain('navbar-toggler-icon')
-
-    wrapper.unmount()
   })
 
   it('renders default slot custom content', () => {
@@ -31,22 +27,16 @@ describe('navbar-toggle', () => {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('button type is button', () => {
     const wrapper = mount(BNavbarToggle)
     expect(wrapper.attributes('type')).toBe('button')
-
-    wrapper.unmount()
   })
 
   it('has aria-label by default', () => {
     const wrapper = mount(BNavbarToggle)
     expect(wrapper.attributes('aria-label')).toBe('Toggle navigation')
-
-    wrapper.unmount()
   })
 
   it('has aria-label when aria-label prop', () => {
@@ -54,15 +44,11 @@ describe('navbar-toggle', () => {
       props: {label: 'abc'},
     })
     expect(wrapper.attributes('aria-label')).toBe('abc')
-
-    wrapper.unmount()
   })
 
   it('disabled attribute is undefined by default', () => {
     const wrapper = mount(BNavbarToggle)
     expect(wrapper.attributes('disabled')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('disabled attribute is empty string when true', () => {
@@ -70,8 +56,6 @@ describe('navbar-toggle', () => {
       props: {disabled: true},
     })
     expect(wrapper.attributes('disabled')).toBe('')
-
-    wrapper.unmount()
   })
 
   it('has disabled class when prop disabled', () => {
@@ -79,8 +63,6 @@ describe('navbar-toggle', () => {
       props: {disabled: true},
     })
     expect(wrapper.classes()).toContain('disabled')
-
-    wrapper.unmount()
   })
 
   it('emits click when not disabled', async () => {
@@ -89,8 +71,6 @@ describe('navbar-toggle', () => {
     })
     await wrapper.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
-
-    wrapper.unmount()
   })
 
   it('does not emit click when not disabled', async () => {
@@ -99,7 +79,5 @@ describe('navbar-toggle', () => {
     })
     await wrapper.trigger('click')
     expect(wrapper.emitted()).not.toHaveProperty('click')
-
-    wrapper.unmount()
   })
 })

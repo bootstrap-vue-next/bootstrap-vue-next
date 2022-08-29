@@ -1,13 +1,13 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BNavText from './BNavText.vue'
 
 describe('nav-text', () => {
+  enableAutoUnmount(afterEach)
+
   it('has class navbar-text', () => {
     const wrapper = mount(BNavText)
     expect(wrapper.classes()).toContain('navbar-text')
-
-    wrapper.unmount()
   })
 
   it('is tag li', () => {
@@ -22,7 +22,5 @@ describe('nav-text', () => {
       },
     })
     expect(wrapper.text()).toEqual('foobar')
-
-    wrapper.unmount()
   })
 })

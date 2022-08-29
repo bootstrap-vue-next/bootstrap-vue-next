@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BLink from './BLink.vue'
-import {describe, expect, it, vitest} from 'vitest'
+import {afterEach, describe, expect, it, vitest} from 'vitest'
 
 describe('link', () => {
+  enableAutoUnmount(afterEach)
+
   it('has expected default structure', () => {
     const wrapper = mount(BLink)
 
@@ -13,8 +15,6 @@ describe('link', () => {
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('renders content from default slot', () => {
@@ -31,8 +31,6 @@ describe('link', () => {
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
     expect(wrapper.text()).toEqual('foobar')
-
-    wrapper.unmount()
   })
 
   it('sets attribute href to user supplied value', () => {
@@ -49,8 +47,6 @@ describe('link', () => {
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('sets attribute href when user supplied href is hash target', () => {
@@ -67,8 +63,6 @@ describe('link', () => {
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('should set href to string `to` prop', () => {
@@ -85,8 +79,6 @@ describe('link', () => {
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('should set href to path from `to` prop', () => {
@@ -103,8 +95,6 @@ describe('link', () => {
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('should default rel to `noopener` when target==="_blank"', () => {
@@ -120,8 +110,6 @@ describe('link', () => {
     expect(wrapper.attributes('target')).toEqual('_blank')
     expect(wrapper.attributes('rel')).toEqual('noopener')
     expect(wrapper.classes().length).toBe(0)
-
-    wrapper.unmount()
   })
 
   it('should render the given rel to when target==="_blank"', () => {
@@ -138,8 +126,6 @@ describe('link', () => {
     expect(wrapper.attributes('target')).toEqual('_blank')
     expect(wrapper.attributes('rel')).toEqual('alternate')
     expect(wrapper.classes().length).toBe(0)
-
-    wrapper.unmount()
   })
 
   it('should add "active" class when prop active=true', () => {
@@ -152,8 +138,6 @@ describe('link', () => {
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.classes()).toContain('active')
     expect(wrapper.classes().length).toBe(1)
-
-    wrapper.unmount()
   })
 
   it('should add aria-disabled="true" when disabled', () => {
@@ -165,8 +149,6 @@ describe('link', () => {
 
     expect(wrapper.attributes('aria-disabled')).toBeDefined()
     expect(wrapper.attributes('aria-disabled')).toEqual('true')
-
-    wrapper.unmount()
   })
 
   it("should add '.disabled' class when prop disabled=true", () => {
@@ -177,8 +159,6 @@ describe('link', () => {
     })
 
     expect(wrapper.classes()).toContain('disabled')
-
-    wrapper.unmount()
   })
 
   describe('click handling', () => {
@@ -201,8 +181,6 @@ describe('link', () => {
       await wrapper.get('a').trigger('click')
       expect(called).toBe(1)
       expect(evt).toBeInstanceOf(MouseEvent)
-
-      wrapper.unmount()
     })
 
     it('should invoke multiple click handlers bound by Vue when clicked on', async () => {
@@ -221,8 +199,6 @@ describe('link', () => {
       await wrapper.get('a').trigger('click')
       expect(spy1).toHaveBeenCalled()
       expect(spy2).toHaveBeenCalled()
-
-      wrapper.unmount()
     })
 
     it('should NOT invoke click handler bound by Vue when disabled and clicked', async () => {
@@ -247,8 +223,6 @@ describe('link', () => {
       await wrapper.get('a').trigger('click')
       expect(called).toBe(0)
       expect(evt).toEqual(null)
-
-      wrapper.unmount()
     })
 
     it('should NOT invoke click handler bound via "addEventListener" when disabled and clicked', async () => {
@@ -264,8 +238,6 @@ describe('link', () => {
 
       await wrapper.get('a').trigger('click')
       expect(spy).not.toHaveBeenCalled()
-
-      wrapper.unmount()
     })
   })
 
@@ -347,7 +319,7 @@ describe('link', () => {
       expect($links[4].exists()).toBe(true)
       expect($links[4].findComponent(GLink).exists()).toBe(true)
 
-      wrapper.unmount()
+      
     })
   })
   */

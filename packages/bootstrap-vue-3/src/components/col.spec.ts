@@ -1,13 +1,13 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BCol from './BCol.vue'
 
 describe('col', () => {
+  enableAutoUnmount(afterEach)
+
   it('tag is default div', () => {
     const wrapper = mount(BCol)
     expect(wrapper.element.tagName).toBe('DIV')
-
-    wrapper.unmount()
   })
 
   it('tag is prop tag', () => {
@@ -15,8 +15,6 @@ describe('col', () => {
       props: {tag: 'span'},
     })
     expect(wrapper.element.tagName).toBe('SPAN')
-
-    wrapper.unmount()
   })
 
   it('has class col-{type} when prop cols', async () => {
@@ -26,8 +24,6 @@ describe('col', () => {
     expect(wrapper.classes()).toContain('col-6')
     await wrapper.setProps({cols: null})
     expect(wrapper.classes()).not.toContain('col-6')
-
-    wrapper.unmount()
   })
 
   it('has class offset-{type} when prop offset', async () => {
@@ -37,8 +33,6 @@ describe('col', () => {
     expect(wrapper.classes()).toContain('offset-6')
     await wrapper.setProps({offset: null})
     expect(wrapper.classes()).not.toContain('offset-6')
-
-    wrapper.unmount()
   })
 
   it('has class order-{type} when prop order', async () => {
@@ -48,8 +42,6 @@ describe('col', () => {
     expect(wrapper.classes()).toContain('order-6')
     await wrapper.setProps({order: null})
     expect(wrapper.classes()).not.toContain('order-6')
-
-    wrapper.unmount()
   })
 
   it('has class align-self-{type} when prop order', async () => {
@@ -59,8 +51,6 @@ describe('col', () => {
     expect(wrapper.classes()).toContain('align-self-baseline')
     await wrapper.setProps({alignSelf: null})
     expect(wrapper.classes()).not.toContain('align-self-baseline')
-
-    wrapper.unmount()
   })
 
   it('has class col when prop col', async () => {
@@ -68,8 +58,6 @@ describe('col', () => {
       props: {col: true, cols: 'auto'},
     })
     expect(wrapper.classes()).toContain('col')
-
-    wrapper.unmount()
   })
 
   // TODO this component almost always seems like it has col class
@@ -78,8 +66,6 @@ describe('col', () => {
       props: {col: false, cols: 'auto'},
     })
     expect(wrapper.classes()).not.toContain('col')
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -87,7 +73,5 @@ describe('col', () => {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 })

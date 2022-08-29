@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it, vitest} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BTr from './BTr.vue'
 
 describe('tr', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static attr role to be row', () => {
     const wrapper = mount(BTr)
     expect(wrapper.attributes('role')).toBe('row')

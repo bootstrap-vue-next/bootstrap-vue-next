@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BButtonGroup from './BButtonGroup.vue'
 
 describe('button-group', () => {
+  enableAutoUnmount(afterEach)
+
   it('tag is div by default', () => {
     const wrapper = mount(BButtonGroup)
     expect(wrapper.element.tagName).toBe('DIV')

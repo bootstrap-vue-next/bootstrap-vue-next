@@ -67,6 +67,9 @@ const config = defineConfig({
   test: {
     // globals: true,
     environment: 'jsdom',
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+    },
   },
 })
 

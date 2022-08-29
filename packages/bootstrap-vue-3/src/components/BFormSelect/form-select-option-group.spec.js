@@ -1,9 +1,11 @@
-import {mount} from '@vue/test-utils'
-import {afterAll, describe, expect, it, vitest} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterAll, afterEach, describe, expect, it, vitest} from 'vitest'
 import {h} from 'vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 
 describe('form-select-option-group', () => {
+  enableAutoUnmount(afterEach)
+
   afterAll(() => {
     console.warn.mockClear()
   })
@@ -18,8 +20,6 @@ describe('form-select-option-group', () => {
     expect(wrapper.element.tagName).toBe('OPTGROUP')
     expect(wrapper.attributes('label')).toEqual('foo')
     expect(wrapper.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('has option elements from simple options array', () => {
@@ -41,8 +41,6 @@ describe('form-select-option-group', () => {
     $options.forEach(($option) => {
       expect($option.attributes('disabled')).toBeUndefined()
     })
-
-    wrapper.unmount()
   })
 
   it('has option elements from options array of objects', () => {
@@ -71,8 +69,6 @@ describe('form-select-option-group', () => {
     expect($options[0].attributes('disabled')).toBeUndefined()
     expect($options[1].attributes('disabled')).toBeDefined()
     expect($options[2].attributes('disabled')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has option elements from options legacy object format', () => {
@@ -96,8 +92,6 @@ describe('form-select-option-group', () => {
     expect(spyWarn).toHaveBeenLastCalledWith(
       '[BootstrapVue warn]: BFormSelectOptionGroup - Setting prop "options" to an object is deprecated. Use the array format instead.'
     )
-
-    wrapper.unmount()
   })
 
   it('has option elements from default slot', () => {
@@ -125,7 +119,5 @@ describe('form-select-option-group', () => {
     expect($options[0].attributes('value')).toBe('1')
     expect($options[1].attributes('value')).toBe('2')
     expect($options[2].attributes('value')).toBe('3')
-
-    wrapper.unmount()
   })
 })

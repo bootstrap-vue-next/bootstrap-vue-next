@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BTableSimple from './BTableSimple.vue'
 
 describe('table-simple', () => {
+  enableAutoUnmount(afterEach)
+
   it('tag is div when prop responsive', () => {
     const wrapper = mount(BTableSimple, {
       props: {responsive: true},

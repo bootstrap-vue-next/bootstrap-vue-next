@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BTh from './BTh.vue'
 
 describe('th', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static attr role to be columnheader', () => {
     const wrapper = mount(BTh)
     expect(wrapper.attributes('role')).toBe('columnheader')

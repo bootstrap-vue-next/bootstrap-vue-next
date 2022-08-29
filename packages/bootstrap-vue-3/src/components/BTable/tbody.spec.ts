@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BTbody from './BTbody.vue'
 
 describe('tbody', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static attr role as rowgroup', () => {
     const wrapper = mount(BTbody)
     expect(wrapper.attributes('role')).toBe('rowgroup')

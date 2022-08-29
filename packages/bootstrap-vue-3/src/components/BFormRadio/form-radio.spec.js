@@ -1,4 +1,4 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 import {createContainer, waitRAF} from '../../../tests/utils'
 import {nextTick} from 'vue'
@@ -6,6 +6,7 @@ import BFormRadio from './BFormRadio.vue'
 
 describe('form-radio', () => {
   /* Custom radio structure, class and attributes tests */
+  enableAutoUnmount(afterEach)
 
   it('default has structure <div><input><label></label></div>', () => {
     const wrapper = mount(BFormRadio, {
@@ -23,8 +24,6 @@ describe('form-radio', () => {
     expect(children.length).toEqual(2)
     expect(children[0].tagName).toEqual('INPUT')
     expect(children[1].tagName).toEqual('LABEL')
-
-    wrapper.unmount()
   })
 
   it('default has wrapper class form-check', () => {
@@ -39,8 +38,6 @@ describe('form-radio', () => {
     })
     expect(wrapper.classes().length).toEqual(1)
     expect(wrapper.classes()).toContain('form-check')
-
-    wrapper.unmount()
   })
 
   it('default has input type radio', () => {
@@ -56,8 +53,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.attributes('type')).toBeDefined()
     expect(input.attributes('type')).toEqual('radio')
-
-    wrapper.unmount()
   })
 
   it('default has input class form-check-input', () => {
@@ -73,8 +68,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.classes().length).toEqual(1)
     expect(input.classes()).toContain('form-check-input')
-
-    wrapper.unmount()
   })
 
   it('default has label class form-check-label', () => {
@@ -90,8 +83,6 @@ describe('form-radio', () => {
     const input = wrapper.get('label')
     expect(input.classes().length).toEqual(1)
     expect(input.classes()).toContain('form-check-label')
-
-    wrapper.unmount()
   })
 
   it('has default slot content in label', () => {
@@ -106,8 +97,6 @@ describe('form-radio', () => {
     })
     const label = wrapper.get('label')
     expect(label.text()).toEqual('foobar')
-
-    wrapper.unmount()
   })
 
   it('default has no disabled attribute on input', () => {
@@ -122,8 +111,6 @@ describe('form-radio', () => {
     })
     const input = wrapper.get('input')
     expect(input.attributes('disabled')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has disabled attribute on input when prop disabled set', () => {
@@ -139,8 +126,6 @@ describe('form-radio', () => {
     })
     const input = wrapper.get('input')
     expect(input.attributes('disabled')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('default has no required attribute on input', () => {
@@ -155,8 +140,6 @@ describe('form-radio', () => {
     })
     const input = wrapper.get('input')
     expect(input.attributes('required')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not have required attribute on input when prop required set and name prop not provided', () => {
@@ -173,8 +156,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.attributes('required')).toBeUndefined()
     expect(input.attributes('aria-required')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has required attribute on input when prop required and name set', () => {
@@ -192,8 +173,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.attributes('required')).toBeDefined()
     expect(input.attributes('aria-required')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('default has no name attribute on input', () => {
@@ -208,8 +187,6 @@ describe('form-radio', () => {
     })
     const input = wrapper.get('input')
     expect(input.attributes('name')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has name attribute on input when name prop set', () => {
@@ -226,8 +203,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.attributes('name')).toBeDefined()
     expect(input.attributes('name')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('default has no form attribute on input', () => {
@@ -242,8 +217,6 @@ describe('form-radio', () => {
     })
     const input = wrapper.get('input')
     expect(input.attributes('form')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has form attribute on input when form prop set', () => {
@@ -260,8 +233,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.attributes('form')).toBeDefined()
     expect(input.attributes('form')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('has custom attributes transferred to input element', () => {
@@ -274,8 +245,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.attributes('foo')).toBeDefined()
     expect(input.attributes('foo')).toEqual('bar')
-
-    wrapper.unmount()
   })
 
   it('default has class form-check-inline when prop inline=true', () => {
@@ -292,8 +261,6 @@ describe('form-radio', () => {
     expect(wrapper.classes().length).toEqual(2)
     expect(wrapper.classes()).toContain('form-check')
     expect(wrapper.classes()).toContain('form-check-inline')
-
-    wrapper.unmount()
   })
 
   it('default has no input validation classes by default', () => {
@@ -310,8 +277,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).not.toContain('is-invalid')
     expect(input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('default has no input validation classes when state=undefined', () => {
@@ -329,8 +294,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).not.toContain('is-invalid')
     expect(input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('default has input validation class is-valid when state=true', () => {
@@ -348,8 +311,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).not.toContain('is-invalid')
     expect(input.classes()).toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('default has input validation class is-invalid when state=false', () => {
@@ -367,8 +328,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).toContain('is-invalid')
     expect(input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('has id attribute on input when id prop set', () => {
@@ -385,8 +344,6 @@ describe('form-radio', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
     expect($input.attributes('id')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('default has id attribute on input', () => {
@@ -401,8 +358,6 @@ describe('form-radio', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has for attribute on label when id prop set', () => {
@@ -419,8 +374,6 @@ describe('form-radio', () => {
     const $label = wrapper.get('label')
     expect($label.attributes('for')).toBeDefined()
     expect($label.attributes('for')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('default has for attribute on label equal to id property of input', () => {
@@ -439,8 +392,6 @@ describe('form-radio', () => {
     const $label = wrapper.get('label')
     expect($label.attributes('for')).toBeDefined()
     expect($input.attributes('id')).toEqual($label.attributes('for'))
-
-    wrapper.unmount()
   })
 
   it('default has unique id attribute on input', () => {
@@ -467,8 +418,6 @@ describe('form-radio', () => {
     expect($input.attributes('id')).toBeDefined()
     expect($input2.attributes('id')).toBeDefined()
     expect($input.attributes('id')).not.toEqual($input2.attributes('id'))
-
-    wrapper.unmount()
   })
   // --- Plain styling ---
 
@@ -489,8 +438,6 @@ describe('form-radio', () => {
     expect(children.length).toEqual(2)
     expect(children[0].tagName).toEqual('INPUT')
     expect(children[1].tagName).toEqual('LABEL')
-
-    wrapper.unmount()
   })
 
   it('plain has no wrapper class form-check', () => {
@@ -506,8 +453,6 @@ describe('form-radio', () => {
     })
     expect(wrapper.classes().length).toEqual(0)
     expect(wrapper.classes()).not.toContain('form-check')
-
-    wrapper.unmount()
   })
 
   it('plain has input type radio', () => {
@@ -524,8 +469,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.attributes('type')).toBeDefined()
     expect(input.attributes('type')).toEqual('radio')
-
-    wrapper.unmount()
   })
 
   it('plain has no input class form-check-input', () => {
@@ -542,8 +485,6 @@ describe('form-radio', () => {
     const input = wrapper.get('input')
     expect(input.classes()).not.toContain('form-check-input')
     expect(input.classes().length).toEqual(0)
-
-    wrapper.unmount()
   })
 
   it('plain has no label class form-check-label', () => {
@@ -560,8 +501,6 @@ describe('form-radio', () => {
     const input = wrapper.get('label')
     expect(input.classes()).not.toContain('form-check-label')
     expect(input.classes().length).toEqual(0)
-
-    wrapper.unmount()
   })
 
   it('plain has default slot content in label', () => {
@@ -577,8 +516,6 @@ describe('form-radio', () => {
     })
     const label = wrapper.get('label')
     expect(label.text()).toEqual('foobar')
-
-    wrapper.unmount()
   })
 
   it('plain has no input validation classes by default', () => {
@@ -596,8 +533,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).not.toContain('is-invalid')
     expect(input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('plain has no input validation classes when state=undefined', () => {
@@ -616,8 +551,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).not.toContain('is-invalid')
     expect(input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('plain has input validation class is-valid when state=true', () => {
@@ -636,8 +569,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).not.toContain('is-invalid')
     expect(input.classes()).toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('plain has input validation class is-invalid when state=false', () => {
@@ -656,8 +587,6 @@ describe('form-radio', () => {
     expect(input).toBeDefined()
     expect(input.classes()).toContain('is-invalid')
     expect(input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   // --- Button styling - stand-alone mode ---
@@ -680,8 +609,6 @@ describe('form-radio', () => {
     expect($children.length).toEqual(2)
     expect($children[0].tagName).toEqual('INPUT')
     expect($children[1].tagName).toEqual('LABEL')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has wrapper classes btn-check', () => {
@@ -698,8 +625,6 @@ describe('form-radio', () => {
     const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('btn-check')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label classes btn and btn-secondary when unchecked', () => {
@@ -720,8 +645,6 @@ describe('form-radio', () => {
     expect(label.classes()).not.toContain('focus')
     expect(label.classes()).toContain('btn')
     expect(label.classes()).toContain('btn-secondary')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label classes btn and btn-size when size property set', () => {
@@ -744,8 +667,6 @@ describe('form-radio', () => {
     expect(label.classes()).toContain('btn')
     expect(label.classes()).toContain('btn-secondary')
     expect(label.classes()).toContain('btn-lg')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label classes btn, btn-secondary and active when checked by default', () => {
@@ -766,8 +687,6 @@ describe('form-radio', () => {
     expect(label.classes()).toContain('btn')
     expect(label.classes()).toContain('btn-secondary')
     expect(label.classes()).toContain('active')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label class active when clicked (checked)', async () => {
@@ -800,8 +719,6 @@ describe('form-radio', () => {
     expect(label.classes()).toContain('active')
     expect(label.classes()).toContain('btn')
     expect(label.classes()).toContain('btn-secondary')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label class focus when input focused', async () => {
@@ -835,8 +752,6 @@ describe('form-radio', () => {
     await input.trigger('blur')
     expect(label.classes().length).toEqual(2)
     expect(label.classes()).not.toContain('focus')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label btn-primary when prop btn-variant set to primary', () => {
@@ -859,8 +774,6 @@ describe('form-radio', () => {
     expect(label.classes()).not.toContain('btn-secondary')
     expect(label.classes()).toContain('btn')
     expect(label.classes()).toContain('btn-primary')
-
-    wrapper.unmount()
   })
 
   // --- Functionality testing ---
@@ -878,8 +791,6 @@ describe('form-radio', () => {
     expect(wrapper.vm).toBeDefined()
     expect(wrapper.vm.modelValue).toBeDefined()
     expect(wrapper.vm.modelValue).toBe('')
-
-    wrapper.unmount()
   })
 
   it('default has internal modelValue set to value when checked=value', () => {
@@ -895,8 +806,6 @@ describe('form-radio', () => {
     expect(wrapper.vm).toBeDefined()
     expect(wrapper.vm.modelValue).toBeDefined()
     expect(wrapper.vm.modelValue).toEqual('bar')
-
-    wrapper.unmount()
   })
 
   it('default has internal modelValue set to value when checked changed to value', async () => {
@@ -921,8 +830,6 @@ describe('form-radio', () => {
     // const last = wrapper.emitted('input').length - 1
     // expect(wrapper.emitted('input')[last]).toBeDefined()
     // expect(wrapper.emitted('input')[last][0]).toEqual('bar')
-
-    wrapper.unmount()
   })
 
   it('emits a change event when clicked', async () => {
@@ -949,8 +856,6 @@ describe('form-radio', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
     expect(wrapper.emitted('change')[0][0]).toEqual('bar')
-
-    wrapper.unmount()
   })
 
   it('emits a change event when label clicked', async () => {
@@ -985,8 +890,6 @@ describe('form-radio', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(1)
     expect(wrapper.emitted('change')[0][0]).toEqual('bar')
-
-    wrapper.unmount()
   })
 
   it('does not emit a change event when clicked if disabled', async () => {
@@ -1012,8 +915,6 @@ describe('form-radio', () => {
 
     await $input.trigger('click')
     expect(wrapper.emitted('change')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not emit a change event when label clicked if disabled', async () => {
@@ -1038,8 +939,6 @@ describe('form-radio', () => {
 
     await $label.trigger('click')
     expect(wrapper.emitted('change')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('works when v-model bound to an array', async () => {
@@ -1102,8 +1001,6 @@ describe('form-radio', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
     expect(wrapper.emitted('change')[1][0]).toEqual(['bar'])
-
-    wrapper.unmount()
   })
 
   it('works when value is an object', async () => {
@@ -1130,8 +1027,6 @@ describe('form-radio', () => {
 
     await input.trigger('click')
     expect(wrapper.vm.modelValue).toEqual({bar: 1, baz: 2})
-
-    wrapper.unmount()
   })
 
   // These tests are wrapped in a new describe to limit the scope of the getBCR Mock
@@ -1175,8 +1070,6 @@ describe('form-radio', () => {
       expect(input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).toBe(input.element)
-
-      wrapper.unmount()
     })
 
     it('does not autofocus by default', async () => {
@@ -1197,8 +1090,6 @@ describe('form-radio', () => {
       expect(input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).not.toBe(input.element)
-
-      wrapper.unmount()
     })
   })
 })

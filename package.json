@@ -10,6 +10,7 @@
     "test": "turbo run test",
     "test:lint": "turbo run test:lint",
     "test:unit": "turbo run test:unit",
+    "test:coverage": "turbo run test:coverage",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install && turbo run build"

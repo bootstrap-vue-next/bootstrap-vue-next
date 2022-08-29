@@ -1,18 +1,18 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BBreadcrumb from './BBreadcrumb.vue'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 import type {BreadcrumbItem} from '../../types'
 import {BREADCRUMB_SYMBOL} from '../../composables/useBreadcrumb'
 
 describe('breadcrumb', () => {
+  enableAutoUnmount(afterEach)
+
   it('contains aria-label breadcrumb', () => {
     const wrapper = mount(BBreadcrumb, {
       global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('aria-label')).toBe('breadcrumb')
-
-    wrapper.unmount()
   })
 
   it('tag is nav', () => {
@@ -20,8 +20,6 @@ describe('breadcrumb', () => {
       global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
     })
     expect(wrapper.element.tagName).toBe('NAV')
-
-    wrapper.unmount()
   })
 
   it('child tag is ol', () => {
@@ -32,8 +30,6 @@ describe('breadcrumb', () => {
     // Rather, only that it is deeply nested inside the component
     const $ol = wrapper.find('ol')
     expect($ol.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('ol child has static class breadcrumb', () => {
@@ -44,8 +40,6 @@ describe('breadcrumb', () => {
     // Rather, only that it is deeply nested inside the component
     const $ol = wrapper.get('ol')
     expect($ol.classes()).toContain('breadcrumb')
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -54,8 +48,6 @@ describe('breadcrumb', () => {
       global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('renders prepend slot', () => {
@@ -64,8 +56,6 @@ describe('breadcrumb', () => {
       global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('renders append slot', () => {
@@ -74,8 +64,6 @@ describe('breadcrumb', () => {
       global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('renders all slots in correct order', () => {
@@ -84,8 +72,6 @@ describe('breadcrumb', () => {
       global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('prependdefaultappend')
-
-    wrapper.unmount()
   })
 
   it('has breadcrumbitem', () => {
@@ -95,8 +81,6 @@ describe('breadcrumb', () => {
     })
     const $bbreadcrumbitem = wrapper.findComponent(BBreadcrumbItem)
     expect($bbreadcrumbitem.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('renders bbreadcrumbitem before default slot and after prepend slot', () => {
@@ -106,8 +90,6 @@ describe('breadcrumb', () => {
       slots: {default: 'default', prepend: 'prepend'},
     })
     expect(wrapper.text()).toBe('prependfoodefault')
-
-    wrapper.unmount()
   })
 
   it('bbreadcrumbitem contains items as props', () => {
@@ -126,7 +108,5 @@ describe('breadcrumb', () => {
     expect($bbreadcrumbitem.props('disabled')).toBe(true)
     expect($bbreadcrumbitem.props('href')).toBe('href')
     expect($bbreadcrumbitem.props('to')).toBe('to')
-
-    wrapper.unmount()
   })
 })

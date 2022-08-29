@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BTd from './BTd.vue'
 
 describe('td', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static attr role to be cell', () => {
     const wrapper = mount(BTd)
     expect(wrapper.attributes('role')).toBe('cell')
