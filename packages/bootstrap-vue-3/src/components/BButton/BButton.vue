@@ -1,14 +1,15 @@
 <template>
   <component :is="computedTag" class="btn" :class="classes" v-bind="attrs" @click="clicked">
+    <BSpinner v-if="loading" class="btn-spinner" :small="size != 'lg'"></BSpinner>
     <slot />
   </component>
 </template>
 
 <script lang="ts">
-import {isLink} from '../../utils'
-import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
+import {isLink} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
@@ -27,6 +28,8 @@ export default defineComponent({
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     type: {type: String as PropType<ButtonType>, default: 'button'},
     variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
+    loading: {type: Boolean, default: false},
+    loadingDisabled: {type: Boolean, default: false},
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
