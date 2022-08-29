@@ -81,13 +81,6 @@
   background-color: #fff;
 }
 
-.table.b-table > tbody > tr > .table-b-table-default,
-.table.b-table > tfoot > tr > .table-b-table-default,
-.table.b-table > thead > tr > .table-b-table-default {
-  color: #212529;
-  background-color: #fff;
-}
-
 .table th {
   &.b-table-sortable-column {
     cursor: pointer;

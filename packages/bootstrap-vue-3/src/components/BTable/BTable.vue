@@ -193,12 +193,10 @@ const computedItems = computed(() =>
     : props.items
 )
 
-const responsiveClasses = computed(() => [
-  {
-    'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
-    [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
-  },
-])
+const responsiveClasses = computed(() => ({
+  'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
+  [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+}))
 
 const isSortable = computed(
   () =>

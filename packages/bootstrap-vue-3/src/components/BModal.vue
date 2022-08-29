@@ -22,8 +22,7 @@
           </div>
           <div class="modal-body" :class="computedBodyClasses">
             <Suspense v-if="!lazyBoolean || (lazyBoolean && modelValueBoolean === true)">
-              <!-- <slot /> -->
-              <ModalContentComponent></ModalContentComponent>
+              <slot />
             </Suspense>
           </div>
           <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">

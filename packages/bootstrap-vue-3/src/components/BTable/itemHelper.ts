@@ -29,7 +29,6 @@ const useItemHelper = () => {
     items: TableItem<Record<string, any>>[],
     sort?: {key?: string; desc?: boolean}
   ) => {
-    console.log(7777777)
     if (!sort || !sort.key) return items
     const sortKey = sort.key
     return items.sort((a, b) =>
