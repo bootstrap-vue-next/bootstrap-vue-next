@@ -21,7 +21,10 @@
             </button>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
-            <slot />
+            <Suspense v-if="!lazyBoolean || (lazyBoolean && modelValueBoolean == true)">
+              <!-- <slot /> -->
+              <ModalContentComponent></ModalContentComponent>
+            </Suspense>
           </div>
           <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">
             <slot name="footer">
@@ -29,22 +32,20 @@
                 v-if="!okOnlyBoolean"
                 type="button"
                 class="btn"
-                data-bs-dismiss="modal"
                 :disabled="disableCancel"
                 :size="buttonSize"
                 :variant="cancelVariant"
-                @click="$emit('cancel')"
+                @click="hide(), $emit('cancel')"
               >
                 {{ cancelTitle }}
               </b-button>
               <b-button
                 type="button"
                 class="btn"
-                data-bs-dismiss="modal"
                 :disabled="disableOk"
                 :size="buttonSize"
                 :variant="okVariant"
-                @click="$emit('ok')"
+                @click="hide(), $emit('ok')"
               >
                 {{ okTitle }}
               </b-button>
@@ -52,6 +53,11 @@
           </div>
         </div>
       </div>
+      <div
+        v-if="hideBackdropBoolean === false"
+        class="modal-backdrop fade show"
+        @click.prevent="noCloseOnBackdropBoolean === false && hide()"
+      ></div>
     </div>
   </teleport>
 </template>
@@ -59,16 +65,17 @@
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
-import BButton from './BButton/BButton.vue'
+import {computed, defineAsyncComponent, nextTick, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useEventListener} from '../composables'
-import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
+import BButton from './BButton/BButton.vue'
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
   bodyClass?: string
   bodyTextVariant?: ColorVariant
   busy?: Booleanish
+  lazy?: Booleanish
   buttonSize?: InputSize
   cancelDisabled?: Booleanish
   cancelTitle?: string
@@ -113,6 +120,7 @@ interface BModalProps {
 
 const props = withDefaults(defineProps<BModalProps>(), {
   busy: false,
+  lazy: false,
   buttonSize: 'md',
   cancelDisabled: false,
   cancelTitle: 'Cancel',
@@ -141,6 +149,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
 })
 
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
 const centeredBoolean = useBooleanish(toRef(props, 'centered'))
 const headerCloseWhiteBoolean = useBooleanish(toRef(props, 'headerCloseWhite'))
@@ -162,7 +171,7 @@ const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
   (e: 'show', value: Event): void
-  (e: 'shown', value: Event): void
+  (e: 'shown', value?: Event): void
   (e: 'hide', value: Event): void
   (e: 'hidden', value: Event): void
   (e: 'hide-prevented', value: Event): void
@@ -194,7 +203,12 @@ const modalDialogClasses = computed(() => [
   },
   props.dialogClass,
 ])
-
+const ModalContentComponent = defineAsyncComponent(
+  () =>
+    new Promise((resolve, reject) => {
+      resolve(slots.default as any)
+    })
+)
 const computedBodyClasses = computed(() => [
   {
     [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
@@ -242,42 +256,44 @@ const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean
 
 useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
 useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
-useEventListener(element, 'hidePrevented.bs.modal', (e) => emit('hide-prevented', e))
 
-useEventListener(element, 'show.bs.modal', (e) => {
-  emit('show', e)
-  if (!e.defaultPrevented) {
-    emit('update:modelValue', true)
-  }
-})
+const show = () => {
+  // if (modelValueBoolean.value == true) return;
+  emit('update:modelValue', true)
+  getInstance().show()
+}
 
-useEventListener(element, 'hide.bs.modal', (e) => {
-  emit('hide', e)
-  if (!e.defaultPrevented) {
-    emit('update:modelValue', false)
-  }
-})
+const hide = () => {
+  // if (modelValueBoolean.value == false) return;
+  emit('update:modelValue', false)
+  getInstance().hide()
+}
 
-onMounted(() => {
+const getInstance = () => {
+  if (instance.value !== undefined) return instance.value
   instance.value = new Modal(element.value as HTMLElement, {
-    backdrop: hideBackdropBoolean.value
-      ? false
-      : noCloseOnBackdropBoolean.value
-      ? 'static'
-      : !hideBackdropBoolean.value,
+    backdrop: false,
+    // backdrop: hideBackdropBoolean.value
+    //   ? false
+    //   : noCloseOnBackdropBoolean.value
+    //     ? 'static'
+    //     : !hideBackdropBoolean.value,
     keyboard: !noCloseOnEscBoolean.value,
     focus: !noFocusBoolean.value,
   })
+  return instance.value
+}
 
+onMounted(() => {
   if (modelValueBoolean.value) {
-    instance.value?.show()
+    getInstance().show()
   }
 })
 
 watch(
   () => props.noCloseOnBackdrop,
   (newValue) => {
-    ;(instance.value as unknown as {_config: Modal.Options})._config.backdrop = props.hideBackdrop
+    ;(getInstance() as unknown as {_config: Modal.Options})._config.backdrop = props.hideBackdrop
       ? false
       : newValue
       ? 'static'
@@ -288,18 +304,20 @@ watch(
 watch(
   () => props.noCloseOnEsc,
   (newValue) => {
-    ;(instance.value as unknown as {_config: Modal.Options})._config.keyboard = !newValue
+    ;(getInstance() as unknown as {_config: Modal.Options})._config.keyboard = !newValue
   }
 )
 
 watch(
   () => modelValueBoolean.value,
   (value) => {
-    if (value) {
-      instance.value?.show()
-    } else {
-      instance.value?.hide()
-    }
+    nextTick(() => {
+      if (value) {
+        show()
+      } else {
+        hide()
+      }
+    })
   }
 )
 </script>
@@ -309,3 +327,8 @@ export default {
   inheritAttrs: false,
 }
 </script>
+<style lang="scss" scoped>
+.modal-dialog {
+  z-index: 1051;
+}
+</style>
