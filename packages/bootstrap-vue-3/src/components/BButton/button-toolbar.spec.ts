@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BButtonToolbar from './BButtonToolbar.vue'
 
 describe('button-toolbar', () => {
+  enableAutoUnmount(afterEach)
+
   it('tag is div', () => {
     const wrapper = mount(BButtonToolbar)
     expect(wrapper.element.tagName).toBe('DIV')

@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BCloseButton from './BCloseButton.vue'
 
 describe('close-button', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static class btn-close', () => {
     const wrapper = mount(BCloseButton)
     expect(wrapper.classes()).toContain('btn-close')

@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormTag from './BFormTag.vue'
-import {describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it} from 'vitest'
 
 describe('form-tag', () => {
+  enableAutoUnmount(afterEach)
+
   it('has expected structure', () => {
     const wrapper = mount(BFormTag, {
       props: {
@@ -20,8 +22,6 @@ describe('form-tag', () => {
     expect($button.exists()).toBe(true)
     expect($button.classes()).toContain('b-form-tag-remove')
     expect($button.attributes('aria-label')).toBe('Remove tag')
-
-    wrapper.unmount()
   })
 
   it('renders custom root element', () => {
@@ -39,8 +39,6 @@ describe('form-tag', () => {
     expect(wrapper.text()).toContain('foobar')
 
     expect(wrapper.find('button').exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -59,8 +57,6 @@ describe('form-tag', () => {
     expect(wrapper.text()).not.toContain('foo')
 
     expect(wrapper.find('button').exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('has pill styles when `pill` prop set', () => {
@@ -79,8 +75,6 @@ describe('form-tag', () => {
     expect(wrapper.text()).toContain('foo')
 
     expect(wrapper.find('button').exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('has custom variant when `variant` prop set', () => {
@@ -99,8 +93,6 @@ describe('form-tag', () => {
     expect(wrapper.text()).toContain('foo')
 
     expect(wrapper.find('button').exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('emits "remove" event when button clicked', async () => {
@@ -122,8 +114,6 @@ describe('form-tag', () => {
     await $button.trigger('click')
     expect(wrapper.emitted('remove')).toBeDefined()
     expect(wrapper.emitted('remove')?.length).toBe(1)
-
-    wrapper.unmount()
   })
 
   it('does not have remove button when `disabled` prop is set', () => {
@@ -140,8 +130,6 @@ describe('form-tag', () => {
     expect(wrapper.text()).toContain('foobar')
 
     expect(wrapper.find('button').exists()).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('does not have remove button when `no-remove` prop is set', () => {
@@ -157,7 +145,5 @@ describe('form-tag', () => {
     expect(wrapper.text()).toContain('foobar')
 
     expect(wrapper.find('button').exists()).toBe(false)
-
-    wrapper.unmount()
   })
 })

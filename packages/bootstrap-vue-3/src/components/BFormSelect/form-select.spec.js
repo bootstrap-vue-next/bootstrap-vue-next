@@ -1,10 +1,12 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {createContainer, waitRAF} from '../../../tests/utils'
 import {h, nextTick} from 'vue'
 import BFormSelect from './BFormSelect.vue'
 import {afterAll, afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 
 describe('form-select', () => {
+  enableAutoUnmount(afterEach)
+
   afterAll(() => {
     console.warn.mockClear()
   })
@@ -13,8 +15,6 @@ describe('form-select', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.element.tagName).toBe('SELECT')
-
-    wrapper.unmount()
   })
 
   it('has class form-select', () => {
@@ -22,23 +22,17 @@ describe('form-select', () => {
 
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(1)
-
-    wrapper.unmount()
   })
 
   it('does not have attr multiple by default', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.attributes('multiple')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not have attr required by default', () => {
     const wrapper = mount(BFormSelect)
     expect(wrapper.attributes('required')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has attr required when required=true', () => {
@@ -49,16 +43,12 @@ describe('form-select', () => {
     })
 
     expect(wrapper.attributes('required')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('does not have attr form by default', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.attributes('form')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has attr form when form is set', () => {
@@ -70,8 +60,6 @@ describe('form-select', () => {
 
     expect(wrapper.attributes('form')).toBeDefined()
     expect(wrapper.attributes('form')).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('has attr multiple when multiple=true', () => {
@@ -83,8 +71,6 @@ describe('form-select', () => {
     })
 
     expect(wrapper.attributes('multiple')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has attr size when select-size is set', () => {
@@ -97,8 +83,6 @@ describe('form-select', () => {
     expect(wrapper.attributes('size')).toBeDefined()
     expect(wrapper.attributes('size')).toBe('4')
     expect(wrapper.attributes('multiple')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has auto ID attr by default', async () => {
@@ -107,8 +91,6 @@ describe('form-select', () => {
     await nextTick()
 
     expect(wrapper.attributes('id')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has user supplied ID attr when id is set', () => {
@@ -120,16 +102,12 @@ describe('form-select', () => {
 
     expect(wrapper.attributes('id')).toBeDefined()
     expect(wrapper.attributes('id')).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('does not have attr size by default', () => {
     const wrapper = mount(BFormSelect)
 
     expect(wrapper.attributes('size')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does have attr size when plain=true', () => {
@@ -141,8 +119,6 @@ describe('form-select', () => {
 
     expect(wrapper.attributes('size')).toBeDefined()
     expect(wrapper.attributes('size')).toBe('0')
-
-    wrapper.unmount()
   })
 
   it('has class form-select-sm when size=sm and plain=false', () => {
@@ -155,8 +131,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('form-select-sm')
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has class form-select-lg when size=lg and plain=false', () => {
@@ -169,8 +143,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('form-select-lg')
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has class form-select-foo when size=foo and plain=false', () => {
@@ -183,8 +155,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('form-select-foo')
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has class is-invalid and attr aria-invalid="true" when state=false', () => {
@@ -198,8 +168,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('is-invalid')
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has class is-valid when state=true', () => {
@@ -213,8 +181,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('is-valid')
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has attr aria-invalid="true" when aria-invalid="true"', () => {
@@ -227,8 +193,6 @@ describe('form-select', () => {
     expect(wrapper.attributes('aria-invalid')).toBe('true')
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(1)
-
-    wrapper.unmount()
   })
 
   it('has attr aria-invalid="true" when aria-invalid=true', () => {
@@ -241,8 +205,6 @@ describe('form-select', () => {
     expect(wrapper.attributes('aria-invalid')).toBe('true')
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes().length).toBe(1)
-
-    wrapper.unmount()
   })
 
   it('has class form-control when plain=true', () => {
@@ -255,8 +217,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('form-control')
     expect(wrapper.classes().length).toBe(1)
     expect(wrapper.element.tagName).toBe('SELECT')
-
-    wrapper.unmount()
   })
 
   it('has class form-control-lg when size=lg and plain=true', () => {
@@ -270,8 +230,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('form-control-lg')
     expect(wrapper.classes()).toContain('form-control')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has class form-control-sm when size=sm and plain=true', () => {
@@ -285,8 +243,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('form-control-sm')
     expect(wrapper.classes()).toContain('form-control')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has class form-control-foo when size=foo and plain=true', () => {
@@ -300,8 +256,6 @@ describe('form-select', () => {
     expect(wrapper.classes()).toContain('form-control-foo')
     expect(wrapper.classes()).toContain('form-control')
     expect(wrapper.classes().length).toBe(2)
-
-    wrapper.unmount()
   })
 
   it('has option elements from simple options array', () => {
@@ -319,8 +273,6 @@ describe('form-select', () => {
     $options.forEach(($option) => {
       expect($option.attributes('disabled')).toBeUndefined()
     })
-
-    wrapper.unmount()
   })
 
   it('has option elements from options array of objects', () => {
@@ -345,8 +297,6 @@ describe('form-select', () => {
     expect($options[0].attributes('disabled')).toBeUndefined()
     expect($options[1].attributes('disabled')).toBeDefined()
     expect($options[2].attributes('disabled')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has option elements from options array of objects with custom field names', () => {
@@ -381,8 +331,6 @@ describe('form-select', () => {
     expect($options[0].attributes('disabled')).toBeUndefined()
     expect($options[1].attributes('disabled')).toBeUndefined()
     expect($options[2].attributes('disabled')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has option group elements with options from options array of objects', () => {
@@ -428,8 +376,6 @@ describe('form-select', () => {
     expect($options[1].attributes('disabled')).toBeUndefined()
     expect($options[2].attributes('disabled')).toBeUndefined()
     expect($options[3].attributes('disabled')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has option group and option elements from options array of objects', () => {
@@ -468,8 +414,6 @@ describe('form-select', () => {
     expect($options[1].attributes('disabled')).toBeUndefined()
     expect($options[2].attributes('disabled')).toBeUndefined()
     expect($options[3].attributes('disabled')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has option elements from options legacy object format', () => {
@@ -492,8 +436,6 @@ describe('form-select', () => {
     expect(spyWarn).toHaveBeenLastCalledWith(
       '[BootstrapVue warn]: BFormSelect - Setting prop "options" to an object is deprecated. Use the array format instead.'
     )
-
-    wrapper.unmount()
   })
 
   it('has option elements from default slot', () => {
@@ -515,8 +457,6 @@ describe('form-select', () => {
     expect($options[0].attributes('value')).toBe('1')
     expect($options[1].attributes('value')).toBe('2')
     expect($options[2].attributes('value')).toBe('3')
-
-    wrapper.unmount()
   })
 
   it('displays option text when value not set', () => {
@@ -529,8 +469,6 @@ describe('form-select', () => {
     const $options = wrapper.findAll('option')
     expect($options.length).toBe(1)
     expect($options[0].text()).toBe('one')
-
-    wrapper.unmount()
   })
 
   it('updates v-model when option selected in single mode', async () => {
@@ -554,8 +492,6 @@ describe('form-select', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('update:modelValue')[0][0]).toBe('three')
     expect(wrapper.emitted('change')[0][0]).toBe('three')
-
-    wrapper.unmount()
   })
 
   it('updating v-model (value) when selects correct option', async () => {
@@ -577,8 +513,6 @@ describe('form-select', () => {
     // Select 3rd option
     await wrapper.setProps({modelValue: {three: 3}})
     expect($options[2].element.selected).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('updates v-model when option selected in single mode with complex values', async () => {
@@ -606,8 +540,6 @@ describe('form-select', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('update:modelValue')[0][0]).toEqual({c: 3})
     expect(wrapper.emitted('change')[0][0]).toEqual({c: 3})
-
-    wrapper.unmount()
   })
 
   it('updates v-model when option selected in multiple mode', async () => {
@@ -634,8 +566,6 @@ describe('form-select', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('update:modelValue')[0][0]).toEqual(['two', 'three'])
     expect(wrapper.emitted('change')[0][0]).toEqual(['two', 'three'])
-
-    wrapper.unmount()
   })
 
   it('updates v-model when option selected in multiple mode with complex values', async () => {
@@ -666,8 +596,6 @@ describe('form-select', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('update:modelValue')[0][0]).toEqual([{b: 2}, {c: 3}])
     expect(wrapper.emitted('change')[0][0]).toEqual([{b: 2}, {c: 3}])
-
-    wrapper.unmount()
   })
 
   // These tests are wrapped in a new describe to limit the scope of the getBCR Mock
@@ -709,8 +637,6 @@ describe('form-select', () => {
       expect(input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).toBe(input.element)
-
-      wrapper.unmount()
     })
 
     it('does not autofocus when false', async () => {
@@ -730,8 +656,6 @@ describe('form-select', () => {
       expect(input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).not.toBe(input.element)
-
-      wrapper.unmount()
     })
   })
 })

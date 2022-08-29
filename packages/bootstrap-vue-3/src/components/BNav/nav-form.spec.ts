@@ -1,14 +1,14 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BNavForm from './BNavForm.vue'
 import BForm from '../BForm/BForm.vue'
 
 describe('nav-form', () => {
+  enableAutoUnmount(afterEach)
+
   it('contains static class d-flex', () => {
     const wrapper = mount(BNavForm)
     expect(wrapper.classes()).toContain('d-flex')
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -16,16 +16,12 @@ describe('nav-form', () => {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('contains bform', () => {
     const wrapper = mount(BNavForm)
     const $bform = wrapper.findComponent(BForm)
     expect($bform.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('bform to have prop floating when prop floating', () => {
@@ -34,8 +30,6 @@ describe('nav-form', () => {
     })
     const $bform = wrapper.findComponent(BForm)
     expect($bform.props('floating')).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('bform to have attribute role when prop role', () => {
@@ -44,8 +38,6 @@ describe('nav-form', () => {
     })
     const $bform = wrapper.findComponent(BForm)
     expect($bform.attributes('role')).toBe('abc')
-
-    wrapper.unmount()
   })
 
   it('bform to have prop id when prop id', () => {
@@ -54,8 +46,6 @@ describe('nav-form', () => {
     })
     const $bform = wrapper.findComponent(BForm)
     expect($bform.props('id')).toBe('abc')
-
-    wrapper.unmount()
   })
 
   it('bform to have prop novalidate when prop novalidate', () => {
@@ -64,8 +54,6 @@ describe('nav-form', () => {
     })
     const $bform = wrapper.findComponent(BForm)
     expect($bform.props('novalidate')).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('bform to have prop validated when prop validated', () => {
@@ -74,7 +62,5 @@ describe('nav-form', () => {
     })
     const $bform = wrapper.findComponent(BForm)
     expect($bform.props('validated')).toBe(true)
-
-    wrapper.unmount()
   })
 })

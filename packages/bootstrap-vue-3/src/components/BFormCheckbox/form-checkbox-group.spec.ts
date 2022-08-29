@@ -1,6 +1,6 @@
-import {describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it} from 'vitest'
 import {nextTick} from 'vue'
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {createContainer} from '../../../tests/utils'
 import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
 import BFormCheckbox from './BFormCheckbox.vue'
@@ -8,6 +8,7 @@ import BFormCheckbox from './BFormCheckbox.vue'
 const global = {components: {BFormCheckbox}}
 
 describe('form-checkbox-group', () => {
+  enableAutoUnmount(afterEach)
   // --- Structure, class and attributes tests ---
 
   it('default has structure <div></div>', () => {
@@ -18,8 +19,6 @@ describe('form-checkbox-group', () => {
 
     const $children = wrapper.element.children
     expect($children.length).toEqual(0)
-
-    wrapper.unmount()
   })
 
   it('default has no classes on wrapper other than focus ring', () => {
@@ -27,8 +26,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
     expect(wrapper.classes().length).toEqual(1)
-
-    wrapper.unmount()
   })
 
   it('default has auto ID set', async () => {
@@ -41,8 +38,6 @@ describe('form-checkbox-group', () => {
 
     // Auto ID not generated until after mount
     expect(wrapper.attributes('id')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('default has tabindex set to -1', () => {
@@ -50,24 +45,18 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.attributes('tabindex')).toBeDefined()
     expect(wrapper.attributes('tabindex')).toBe('-1')
-
-    wrapper.unmount()
   })
 
   it('default does not have aria-required set', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper.attributes('aria-required')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('default does not have aria-invalid set', () => {
     const wrapper = mount(BFormCheckboxGroup, {global})
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('default has attribute role=group', () => {
@@ -75,8 +64,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.attributes('role')).toBeDefined()
     expect(wrapper.attributes('role')).toBe('group')
-
-    wrapper.unmount()
   })
 
   it('default has user provided ID', () => {
@@ -90,8 +77,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.attributes('id')).toBeDefined()
     expect(wrapper.attributes('id')).toBe('test')
-
-    wrapper.unmount()
   })
 
   it('default has class was-validated when validated=true', () => {
@@ -105,8 +90,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.classes()).toBeDefined()
     expect(wrapper.classes()).toContain('was-validated')
-
-    wrapper.unmount()
   })
 
   it('default has attribute aria-invalid=true when state=false', () => {
@@ -120,8 +103,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.attributes('aria-invalid')).toBeDefined()
     expect(wrapper.attributes('aria-invalid')).toBe('true')
-
-    wrapper.unmount()
   })
 
   it('default does not have attribute aria-invalid when state=true', () => {
@@ -134,8 +115,6 @@ describe('form-checkbox-group', () => {
     })
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('default does not have attribute aria-invalid when state=undefined', () => {
@@ -148,8 +127,6 @@ describe('form-checkbox-group', () => {
     })
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('default has attribute aria-invalid=true when aria-invalid=true', () => {
@@ -163,8 +140,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.attributes('aria-invalid')).toBeDefined()
     expect(wrapper.attributes('aria-invalid')).toBe('true')
-
-    wrapper.unmount()
   })
 
   it('default has attribute aria-invalid=true when aria-invalid="true"', () => {
@@ -178,8 +153,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.attributes('aria-invalid')).toBeDefined()
     expect(wrapper.attributes('aria-invalid')).toBe('true')
-
-    wrapper.unmount()
   })
 
   it('default has attribute aria-invalid=true when aria-invalid=""', () => {
@@ -193,8 +166,6 @@ describe('form-checkbox-group', () => {
 
     expect(wrapper.attributes('aria-invalid')).toBeDefined()
     expect(wrapper.attributes('aria-invalid')).toBe('true')
-
-    wrapper.unmount()
   })
 
   // --- Button mode structure ---
@@ -212,8 +183,6 @@ describe('form-checkbox-group', () => {
     expect(wrapper.classes().length).toBe(2)
     expect(wrapper.classes()).toContain('btn-group')
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
-
-    wrapper.unmount()
   })
 
   it('button mode has classes button-group-vertical and button-group-toggle when stacked=true', () => {
@@ -230,8 +199,6 @@ describe('form-checkbox-group', () => {
     expect(wrapper.classes().length).toBe(2)
     expect(wrapper.classes()).toContain('btn-group-vertical')
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
-
-    wrapper.unmount()
   })
 
   it('button mode has size class when size prop set', () => {
@@ -249,8 +216,6 @@ describe('form-checkbox-group', () => {
     expect(wrapper.classes()).toContain('btn-group')
     expect(wrapper.classes()).toContain('btn-group-lg')
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
-
-    wrapper.unmount()
   })
 
   it('button mode has size class when size prop set and stacked', () => {
@@ -269,8 +234,6 @@ describe('form-checkbox-group', () => {
     expect(wrapper.classes()).toContain('btn-group-vertical')
     expect(wrapper.classes()).toContain('btn-group-lg')
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
-
-    wrapper.unmount()
   })
 
   it('button mode button variant works', async () => {
@@ -299,8 +262,6 @@ describe('form-checkbox-group', () => {
     expect($btns[0].classes()).toContain('btn-primary')
     expect($btns[1].classes()).toContain('btn-primary')
     expect($btns[2].classes()).toContain('btn-danger')
-
-    wrapper.unmount()
   })
 
   // --- Functionality testing ---
@@ -318,8 +279,6 @@ describe('form-checkbox-group', () => {
     // expect(wrapper.vm.isRadioGroup).toEqual(false)
     expect(wrapper.vm.modelValue).toEqual([])
     expect(wrapper.findAll('input[type=checkbox]').length).toBe(3)
-
-    wrapper.unmount()
   })
 
   it('has checkboxes via options array which respect disabled', () => {
@@ -340,8 +299,6 @@ describe('form-checkbox-group', () => {
     expect($inputs[0].attributes('disabled')).toBeUndefined()
     expect($inputs[1].attributes('disabled')).toBeUndefined()
     expect($inputs[2].attributes('disabled')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('emits change event when checkbox clicked', async () => {
@@ -394,8 +351,6 @@ describe('form-checkbox-group', () => {
     expect($changed[3][0]).toEqual(['two', 'three'])
     expect($emitted.length).toBe(4)
     expect($emitted[3][0]).toEqual(['two', 'three'])
-
-    wrapper.unmount()
   })
 
   it('modelValue organizes based on options', async () => {
@@ -456,8 +411,6 @@ describe('form-checkbox-group', () => {
     expect(($inputs[0].element as HTMLInputElement).checked).toBe(true)
     expect(($inputs[1].element as HTMLInputElement).checked).toBe(false)
     expect(($inputs[2].element as HTMLInputElement).checked).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('child checkboxes have is-valid classes when group state set to valid', () => {
@@ -479,8 +432,6 @@ describe('form-checkbox-group', () => {
     $inputs.forEach(($input) => {
       expect($input.classes()).toContain('is-valid')
     })
-
-    wrapper.unmount()
   })
 
   it('child checkboxes have is-invalid classes when group state set to invalid', () => {
@@ -501,8 +452,6 @@ describe('form-checkbox-group', () => {
     $inputs.forEach(($input) => {
       expect($input.classes()).toContain('is-invalid')
     })
-
-    wrapper.unmount()
   })
 
   it('child checkboxes have disabled attribute when group disabled', () => {
@@ -523,8 +472,6 @@ describe('form-checkbox-group', () => {
     $inputs.forEach(($input) => {
       expect($input.attributes('disabled')).toBeDefined()
     })
-
-    wrapper.unmount()
   })
 
   it('child checkboxes have required attribute when group required', () => {
@@ -547,8 +494,6 @@ describe('form-checkbox-group', () => {
       expect($input.attributes('required')).toBeDefined()
       expect($input.attributes('aria-required')).toBe('true')
     })
-
-    wrapper.unmount()
   })
 
   it('child checkboxes have class form-check-inline when stacked=false', () => {
@@ -568,8 +513,6 @@ describe('form-checkbox-group', () => {
     $inputs.forEach(($input) => {
       expect($input.classes()).toContain('form-check-inline')
     })
-
-    wrapper.unmount()
   })
 
   it('child checkboxes do not have class custom-control-inline when stacked=true', () => {
@@ -589,7 +532,5 @@ describe('form-checkbox-group', () => {
     $inputs.forEach(($input) => {
       expect($input.classes()).not.toContain('form-check-inline')
     })
-
-    wrapper.unmount()
   })
 })

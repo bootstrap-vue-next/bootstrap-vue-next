@@ -1,20 +1,18 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BNavbarNav from './BNavbarNav.vue'
 
 describe('navbar-nav', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static class navbar-nav', () => {
     const wrapper = mount(BNavbarNav)
     expect(wrapper.classes()).toContain('navbar-nav')
-
-    wrapper.unmount()
   })
 
   it('is tag ul', () => {
     const wrapper = mount(BNavbarNav)
     expect(wrapper.element.tagName).toBe('UL')
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -22,8 +20,6 @@ describe('navbar-nav', () => {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('contains class nav-fill when prop fill set', async () => {
@@ -33,8 +29,6 @@ describe('navbar-nav', () => {
     expect(wrapper.classes()).toContain('nav-fill')
     await wrapper.setProps({fill: false})
     expect(wrapper.classes()).not.toContain('nav-fill')
-
-    wrapper.unmount()
   })
 
   it('contains class nav-justified when prop justified set', async () => {
@@ -44,8 +38,6 @@ describe('navbar-nav', () => {
     expect(wrapper.classes()).toContain('nav-justified')
     await wrapper.setProps({justified: false})
     expect(wrapper.classes()).not.toContain('nav-justified')
-
-    wrapper.unmount()
   })
 
   it('contains class small when prop small set', async () => {
@@ -55,8 +47,6 @@ describe('navbar-nav', () => {
     expect(wrapper.classes()).toContain('small')
     await wrapper.setProps({small: false})
     expect(wrapper.classes()).not.toContain('small')
-
-    wrapper.unmount()
   })
 
   it('contains class justify-content-{type} when prop align set', async () => {
@@ -66,7 +56,5 @@ describe('navbar-nav', () => {
     expect(wrapper.classes()).toContain('justify-content-start')
     await wrapper.setProps({align: undefined})
     expect(wrapper.classes()).not.toContain('justify-content-start')
-
-    wrapper.unmount()
   })
 })

@@ -1,27 +1,23 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BAvatarGroup from './BAvatarGroup.vue'
 
 describe('avatar-group', () => {
+  enableAutoUnmount(afterEach)
+
   it('has static class b-avatar-group', () => {
     const wrapper = mount(BAvatarGroup)
     expect(wrapper.classes()).toContain('b-avatar-group')
-
-    wrapper.unmount()
   })
 
   it('has role group attribute', () => {
     const wrapper = mount(BAvatarGroup)
     expect(wrapper.attributes('role')).toBe('group')
-
-    wrapper.unmount()
   })
 
   it('tag is div by default', () => {
     const wrapper = mount(BAvatarGroup)
     expect(wrapper.element.tagName).toBe('DIV')
-
-    wrapper.unmount()
   })
 
   it('tag changes with prop tag', () => {
@@ -29,8 +25,6 @@ describe('avatar-group', () => {
       props: {tag: 'span'},
     })
     expect(wrapper.element.tagName).toBe('SPAN')
-
-    wrapper.unmount()
   })
 
   it('has second child div', () => {
@@ -43,8 +37,6 @@ describe('avatar-group', () => {
     const wrapper = mount(BAvatarGroup)
     const [, $div] = wrapper.findAll('div')
     expect($div.classes()).toContain('b-avatar-group-inner')
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -53,8 +45,6 @@ describe('avatar-group', () => {
     })
     const [, $div] = wrapper.findAll('div')
     expect($div.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it.skip('div child has style attribute when size prop', () => {
@@ -64,7 +54,5 @@ describe('avatar-group', () => {
     })
     const [, $div] = wrapper.findAll('div')
     expect($div.html()).toBe('false')
-
-    wrapper.unmount()
   })
 })

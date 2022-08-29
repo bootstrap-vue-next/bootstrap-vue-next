@@ -1,17 +1,17 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 import {nextTick} from 'vue'
 import {createContainer, waitRAF} from '../../../tests/utils'
 import BFormInput from './BFormInput.vue'
 
 describe('form-input', () => {
+  enableAutoUnmount(afterEach)
+
   it('has class form-control', () => {
     const wrapper = mount(BFormInput)
 
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control')
-
-    wrapper.unmount()
   })
 
   it('has class form-control-lg when size=lg and plane=false', () => {
@@ -23,8 +23,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-lg')
-
-    wrapper.unmount()
   })
 
   it('has class form-control-sm when size=lg and plain=false', () => {
@@ -36,8 +34,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-sm')
-
-    wrapper.unmount()
   })
 
   it('does not have class form-control-plaintext when plaintext not set', () => {
@@ -46,8 +42,6 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.classes()).not.toContain('form-control-plaintext')
     expect($input.attributes('readonly')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has class form-control-plaintext when plaintext=true', () => {
@@ -59,8 +53,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-plaintext')
-
-    wrapper.unmount()
   })
 
   it('has attribute read-only when plaintext=true', () => {
@@ -73,8 +65,6 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-control-plaintext')
     expect($input.attributes('readonly')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has class custom-range instead of form-control when type=range', () => {
@@ -87,8 +77,6 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-range')
     expect($input.classes()).not.toContain('form-control')
-
-    wrapper.unmount()
   })
 
   it('does not have class form-control-plaintext when type=range and plaintext=true', () => {
@@ -103,8 +91,6 @@ describe('form-input', () => {
     expect($input.classes()).toContain('form-range')
     expect($input.classes()).not.toContain('form-control')
     expect($input.classes()).not.toContain('form-control-plaintext')
-
-    wrapper.unmount()
   })
 
   it('does not have class form-control-plaintext when type=color and plaintext=true', () => {
@@ -119,8 +105,6 @@ describe('form-input', () => {
     expect($input.classes()).not.toContain('custom-range')
     expect($input.classes()).not.toContain('form-control-plaintext')
     expect($input.classes()).toContain('form-control')
-
-    wrapper.unmount()
   })
 
   it('has user supplied id', () => {
@@ -132,8 +116,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('id')).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('has safeId after mount when no id provided', async () => {
@@ -146,8 +128,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has form attribute when form prop set', () => {
@@ -159,8 +139,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('form')).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('does not have list attribute when list prop not set', () => {
@@ -168,8 +146,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('list')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has list attribute when list prop set', () => {
@@ -181,8 +157,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('list')).toBe('foobar')
-
-    wrapper.unmount()
   })
 
   it('does not have list attribute when list prop set and type=password', () => {
@@ -195,8 +169,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('list')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('renders text input by default', () => {
@@ -204,8 +176,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('type')).toBe('text')
-
-    wrapper.unmount()
   })
 
   it('renders number input when type set to number', () => {
@@ -217,8 +187,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('type')).toBe('number')
-
-    wrapper.unmount()
   })
 
   it('renders text input when type not supported', () => {
@@ -239,8 +207,6 @@ describe('form-input', () => {
     expect($input.attributes('type')).toBe('text')
 
     expect(warnHandler).toHaveBeenCalled()
-
-    wrapper.unmount()
   })
 
   it('does not have is-valid or is-invalid classes when state is default', () => {
@@ -249,8 +215,6 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.classes()).not.toContain('is-valid')
     expect($input.classes()).not.toContain('is-invalid')
-
-    wrapper.unmount()
   })
 
   it('has class is-valid when state=true', () => {
@@ -263,8 +227,6 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('is-valid')
     expect($input.classes()).not.toContain('is-invalid')
-
-    wrapper.unmount()
   })
 
   it('has class is-invalid when state=false', () => {
@@ -277,16 +239,12 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('does not have aria-invalid attribute by default', () => {
     const wrapper = mount(BFormInput)
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not have aria-invalid attribute when state is true', () => {
@@ -297,8 +255,6 @@ describe('form-input', () => {
     })
 
     expect(wrapper.attributes('aria-invalid')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has aria-invalid attribute when state=false', () => {
@@ -310,8 +266,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('true')
-
-    wrapper.unmount()
   })
 
   it('has aria-invalid attribute when aria-invalid="true"', () => {
@@ -323,8 +277,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('true')
-
-    wrapper.unmount()
   })
 
   it('has aria-invalid attribute when aria-invalid=true', () => {
@@ -336,8 +288,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('true')
-
-    wrapper.unmount()
   })
 
   it('has aria-invalid attribute when aria-invalid="spelling"', () => {
@@ -349,8 +299,6 @@ describe('form-input', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('aria-invalid')).toBe('spelling')
-
-    wrapper.unmount()
   })
 
   it('is disabled when disabled=true', () => {
@@ -363,8 +311,6 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeDefined()
     expect($input.element.disabled).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('is not disabled when disabled=false', () => {
@@ -377,8 +323,6 @@ describe('form-input', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeUndefined()
     expect($input.element.disabled).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('emits an input event', async () => {
@@ -391,8 +335,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')).toBeDefined()
     expect(wrapper.emitted('input')[0].length).toEqual(1)
     expect(wrapper.emitted('input')[0][0]).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('emits a native focus event', async () => {
@@ -408,8 +350,6 @@ describe('form-input', () => {
 
     expect(wrapper.emitted()).toMatchObject({})
     expect(spy).toHaveBeenCalled()
-
-    wrapper.unmount()
   })
 
   it('emits a blur event with native event as only arg', async () => {
@@ -426,8 +366,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('blur')[0].length).toEqual(1)
     expect(wrapper.emitted('blur')[0][0] instanceof Event).toBe(true)
     expect(wrapper.emitted('blur')[0][0].type).toEqual('blur')
-
-    wrapper.unmount()
   })
 
   it('applies formatter on input when not lazy', async () => {
@@ -451,8 +389,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')).toBeDefined()
     expect(wrapper.emitted('input').length).toEqual(1)
     expect(wrapper.emitted('input')[0][0]).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('does not apply formatter on input when lazy', async () => {
@@ -481,8 +417,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('input').length).toEqual(1)
     expect(wrapper.emitted('input')[0][0]).toEqual('TEST')
     expect(wrapper.emitted('change')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('applies formatter on blur when lazy', async () => {
@@ -521,8 +455,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('change')).toBeUndefined()
     expect(wrapper.emitted('blur')).toBeDefined()
     expect(wrapper.emitted('blur').length).toEqual(1)
-
-    wrapper.unmount()
   })
 
   it('does not apply formatter when value supplied on mount and not lazy', () => {
@@ -541,8 +473,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
     expect(wrapper.emitted('blur')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not apply formatter when value prop updated and not lazy', async () => {
@@ -564,8 +494,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
     expect(wrapper.emitted('blur')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not apply formatter when value prop updated and lazy', async () => {
@@ -588,8 +516,6 @@ describe('form-input', () => {
     expect(wrapper.emitted('input')).toBeUndefined()
     expect(wrapper.emitted('change')).toBeUndefined()
     expect(wrapper.emitted('blur')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not update value when non-lazy formatter returns false', async () => {
@@ -618,8 +544,6 @@ describe('form-input', () => {
     expect(wrapper.vm.modelValue).toBe('abc')
     // Value in input should remain the same as entered
     expect($input.element.value).toEqual('TEST')
-
-    wrapper.unmount()
   })
 
   /* TODO: implement noWheel
@@ -647,7 +571,7 @@ describe('form-input', () => {
     // `:no-wheel="true"` will fire a blur event on the input when wheel fired
     expect(spy).toHaveBeenCalled()
 
-    wrapper.unmount()
+    
   })
 
 
@@ -677,7 +601,7 @@ describe('form-input', () => {
     // `:no-wheel="false"` will not fire a blur event on the input when wheel fired
     expect(spy).not.toHaveBeenCalled()
 
-    wrapper.unmount()
+    
   })
 
 
@@ -719,7 +643,7 @@ describe('form-input', () => {
     expect(document.activeElement).not.toBe(wrapper.element)
     expect(spy).toHaveBeenCalled()
 
-    wrapper.unmount()
+    
   })
   */
 
@@ -765,8 +689,6 @@ describe('form-input', () => {
     // Updating the `v-model` to new numeric value
     await wrapper.setProps({modelValue: 45.6})
     expect($input.element.value).toBe('45.6')
-
-    wrapper.unmount()
   })
 
   it('"lazy" modifier prop works', async () => {
@@ -819,8 +741,6 @@ describe('form-input', () => {
     // `v-model` update event should have emitted
     expect(wrapper.emitted('update:modelValue').length).toEqual(2)
     expect(wrapper.emitted('update:modelValue')[1][0]).toBe('abcd')
-
-    wrapper.unmount()
   })
 
   /* TODO: implement debounce
@@ -921,7 +841,7 @@ describe('form-input', () => {
     // `input` event should not have emitted new event
     expect(wrapper.emitted('input').length).toBe(6)
 
-    wrapper.unmount()
+    
   })
   */
 
@@ -962,8 +882,6 @@ describe('form-input', () => {
       expect($input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).toBe($input.element)
-
-      wrapper.unmount()
     })
 
     it('does not autofocus when false', async () => {
@@ -982,8 +900,6 @@ describe('form-input', () => {
       expect($input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).not.toBe($input.element)
-
-      wrapper.unmount()
     })
   })
 })

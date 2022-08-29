@@ -1,10 +1,11 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it, vitest} from 'vitest'
 import {nextTick} from 'vue'
 import {createContainer, waitRAF} from '../../../tests/utils'
 import BFormCheckbox from './BFormCheckbox.vue'
 
 describe('form-checkbox', () => {
+  enableAutoUnmount(afterEach)
   // --- Custom checkbox structure, class and attributes tests ---
 
   it('default has structure <div><input><label></label></div>', () => {
@@ -25,8 +26,6 @@ describe('form-checkbox', () => {
     expect($children.length).toEqual(2)
     expect($children[0].tagName).toEqual('INPUT')
     expect($children[1].tagName).toEqual('LABEL')
-
-    wrapper.unmount()
   })
 
   it('default has wrapper class form-check and custom-checkbox', () => {
@@ -42,8 +41,6 @@ describe('form-checkbox', () => {
 
     expect(wrapper.classes().length).toEqual(1)
     expect(wrapper.classes()).toContain('form-check')
-
-    wrapper.unmount()
   })
 
   it('default has input type checkbox', () => {
@@ -60,8 +57,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('type')).toBeDefined()
     expect($input.attributes('type')).toEqual('checkbox')
-
-    wrapper.unmount()
   })
 
   it('default does not have aria-label attribute on input', () => {
@@ -75,8 +70,6 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.get('input').attributes('aria-label')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has aria-label attribute on input when aria-label provided', () => {
@@ -91,8 +84,6 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.get('input').attributes('aria-label')).toBe('bar')
-
-    wrapper.unmount()
   })
 
   it('default has input class form-check-input', () => {
@@ -109,8 +100,6 @@ describe('form-checkbox', () => {
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('form-check-input')
     expect($input.classes()).not.toContain('position-static')
-
-    wrapper.unmount()
   })
 
   it('default has label class form-check-label', () => {
@@ -126,8 +115,6 @@ describe('form-checkbox', () => {
     const $label = wrapper.get('label')
     expect($label.classes().length).toEqual(1)
     expect($label.classes()).toContain('form-check-label')
-
-    wrapper.unmount()
   })
 
   it('has default slot content in label', () => {
@@ -142,8 +129,6 @@ describe('form-checkbox', () => {
 
     const $label = wrapper.get('label')
     expect($label.text()).toEqual('foobar')
-
-    wrapper.unmount()
   })
 
   it('has default has label when slot content not set', () => {
@@ -155,8 +140,6 @@ describe('form-checkbox', () => {
 
     const $label = wrapper.get('label')
     expect($label.text()).toEqual('')
-
-    wrapper.unmount()
   })
 
   it('default has no disabled attribute on input', () => {
@@ -171,8 +154,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has disabled attribute on input when prop disabled set', () => {
@@ -188,8 +169,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('disabled')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('default has no required attribute on input', () => {
@@ -204,8 +183,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('required')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not have required attribute on input when prop required set and name prop not provided', () => {
@@ -221,8 +198,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('required')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has required attribute on input when prop required and name set', () => {
@@ -239,8 +214,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('required')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('default has no name attribute on input', () => {
@@ -255,8 +228,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('name')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has name attribute on input when name prop set', () => {
@@ -273,8 +244,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('name')).toBeDefined()
     expect($input.attributes('name')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('default has no form attribute on input', () => {
@@ -289,8 +258,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('form')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('has form attribute on input when form prop set', () => {
@@ -307,8 +274,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('form')).toBeDefined()
     expect($input.attributes('form')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('has custom attributes transferred to input element', () => {
@@ -322,8 +287,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('foo')).toBeDefined()
     expect($input.attributes('foo')).toEqual('bar')
-
-    wrapper.unmount()
   })
 
   it('default has class form-check-inline when prop inline=true', () => {
@@ -340,8 +303,6 @@ describe('form-checkbox', () => {
     expect(wrapper.classes().length).toEqual(2)
     expect(wrapper.classes()).toContain('form-check')
     expect(wrapper.classes()).toContain('form-check-inline')
-
-    wrapper.unmount()
   })
 
   it('default has no input validation classes by default', () => {
@@ -358,8 +319,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('default has no input validation classes when state=undefined', () => {
@@ -377,8 +336,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('default has input validation class is-valid when state=true', () => {
@@ -396,8 +353,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('default has input validation class is-invalid when state=false', () => {
@@ -415,8 +370,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('has id attribute on input when id prop set', () => {
@@ -433,8 +386,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
     expect($input.attributes('id')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('default has id attribute on input', () => {
@@ -449,8 +400,6 @@ describe('form-checkbox', () => {
 
     const $input = wrapper.get('input')
     expect($input.attributes('id')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('has for attribute on label when id prop set', () => {
@@ -467,8 +416,6 @@ describe('form-checkbox', () => {
     const $label = wrapper.get('label')
     expect($label.attributes('for')).toBeDefined()
     expect($label.attributes('for')).toEqual('test')
-
-    wrapper.unmount()
   })
 
   it('default has for attribute on label equal to id property of input', () => {
@@ -487,8 +434,6 @@ describe('form-checkbox', () => {
     const $label = wrapper.get('label')
     expect($label.attributes('for')).toBeDefined()
     expect($input.attributes('id')).toEqual($label.attributes('for'))
-
-    wrapper.unmount()
   })
 
   it('default has unique id attribute on input', () => {
@@ -515,8 +460,6 @@ describe('form-checkbox', () => {
     expect($input.attributes('id')).toBeDefined()
     expect($input2.attributes('id')).toBeDefined()
     expect($input.attributes('id')).not.toEqual($input2.attributes('id'))
-
-    wrapper.unmount()
   })
   // --- plain styling ---
 
@@ -539,8 +482,6 @@ describe('form-checkbox', () => {
     expect($children.length).toEqual(2)
     expect($children[0].tagName).toEqual('INPUT')
     expect($children[1].tagName).toEqual('LABEL')
-
-    wrapper.unmount()
   })
 
   it('plain has no wrapper class form-check', () => {
@@ -557,8 +498,6 @@ describe('form-checkbox', () => {
 
     expect(wrapper.classes().length).toEqual(0)
     expect(wrapper.classes()).not.toContain('form-check')
-
-    wrapper.unmount()
   })
 
   it('plain has input type checkbox', () => {
@@ -576,8 +515,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('type')).toBeDefined()
     expect($input.attributes('type')).toEqual('checkbox')
-
-    wrapper.unmount()
   })
 
   it('plain has no input class form-check-input', () => {
@@ -594,8 +531,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(0)
     expect($input.classes()).not.toContain('form-check-input')
-
-    wrapper.unmount()
   })
 
   it('plain has no label class form-check-label', () => {
@@ -612,8 +547,6 @@ describe('form-checkbox', () => {
     const $label = wrapper.get('label')
     expect($label.classes()).not.toContain('form-check-label')
     expect($label.classes().length).toEqual(0)
-
-    wrapper.unmount()
   })
 
   it('plain has default slot content in label', () => {
@@ -629,8 +562,6 @@ describe('form-checkbox', () => {
 
     const $label = wrapper.get('label')
     expect($label.text()).toEqual('foobar')
-
-    wrapper.unmount()
   })
 
   it('plain does not have class position-static when label provided', () => {
@@ -645,8 +576,6 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.get('input').classes()).not.toContain('position-static')
-
-    wrapper.unmount()
   })
 
   it('plain has no label when no default slot content', () => {
@@ -657,8 +586,6 @@ describe('form-checkbox', () => {
       },
     })
     expect(wrapper.find('label').exists()).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('plain has class form-check-inline when prop inline=true', () => {
@@ -674,8 +601,6 @@ describe('form-checkbox', () => {
     })
 
     expect(wrapper.classes()).toContain('form-check-inline')
-
-    wrapper.unmount()
   })
 
   it('plain has no input validation classes by default', () => {
@@ -693,8 +618,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('plain has no input validation classes when state=undefined', () => {
@@ -713,8 +636,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('plain has input validation class is-valid when state=true', () => {
@@ -733,8 +654,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).not.toContain('is-invalid')
     expect($input.classes()).toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   it('plain has input validation class is-invalid when state=false', () => {
@@ -753,8 +672,6 @@ describe('form-checkbox', () => {
     expect($input).toBeDefined()
     expect($input.classes()).toContain('is-invalid')
     expect($input.classes()).not.toContain('is-valid')
-
-    wrapper.unmount()
   })
 
   // --- Switch styling - stand alone ---
@@ -778,8 +695,6 @@ describe('form-checkbox', () => {
     expect($children.length).toEqual(2)
     expect($children[0].tagName).toEqual('INPUT')
     expect($children[1].tagName).toEqual('LABEL')
-
-    wrapper.unmount()
   })
 
   it('switch has wrapper classes form-check and form-switch', () => {
@@ -797,8 +712,6 @@ describe('form-checkbox', () => {
     expect(wrapper.classes().length).toEqual(2)
     expect(wrapper.classes()).toContain('form-check')
     expect(wrapper.classes()).toContain('form-switch')
-
-    wrapper.unmount()
   })
 
   it('switch has input type checkbox', () => {
@@ -816,8 +729,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.attributes('type')).toBeDefined()
     expect($input.attributes('type')).toEqual('checkbox')
-
-    wrapper.unmount()
   })
 
   it('switch has input class form-check-input', () => {
@@ -834,8 +745,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('form-check-input')
-
-    wrapper.unmount()
   })
 
   it('switch has label class form-check-label', () => {
@@ -852,8 +761,6 @@ describe('form-checkbox', () => {
     const $label = wrapper.get('label')
     expect($label.classes().length).toEqual(1)
     expect($label.classes()).toContain('form-check-label')
-
-    wrapper.unmount()
   })
 
   // --- Button styling - stand-alone mode ---
@@ -877,8 +784,6 @@ describe('form-checkbox', () => {
     expect($children.length).toEqual(2)
     expect($children[0].tagName).toEqual('INPUT')
     expect($children[1].tagName).toEqual('LABEL')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has wrapper classes btn-check', () => {
@@ -896,8 +801,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('btn-check')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label classes btn and btn-secondary when unchecked', () => {
@@ -919,8 +822,6 @@ describe('form-checkbox', () => {
     expect($label.classes()).not.toContain('focus')
     expect($label.classes()).toContain('btn')
     expect($label.classes()).toContain('btn-secondary')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label classes btn, btn-secondary and active when checked by default', () => {
@@ -942,8 +843,6 @@ describe('form-checkbox', () => {
     expect($label.classes()).toContain('btn')
     expect($label.classes()).toContain('btn-secondary')
     expect($label.classes()).toContain('active')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label class active when clicked (checked)', async () => {
@@ -977,8 +876,6 @@ describe('form-checkbox', () => {
     expect($label.classes()).toContain('active')
     expect($label.classes()).toContain('btn')
     expect($label.classes()).toContain('btn-secondary')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label class focus when input focused', async () => {
@@ -1012,8 +909,6 @@ describe('form-checkbox', () => {
     await $input.trigger('blur')
     expect($label.classes().length).toEqual(2)
     expect($label.classes()).not.toContain('focus')
-
-    wrapper.unmount()
   })
 
   it('stand-alone button has label btn-primary when prop btn-variant set to primary', () => {
@@ -1037,8 +932,6 @@ describe('form-checkbox', () => {
     expect($label.classes()).not.toContain('btn-secondary')
     expect($label.classes()).toContain('btn')
     expect($label.classes()).toContain('btn-primary')
-
-    wrapper.unmount()
   })
 
   it('plain has no effect on stand-alone button', () => {
@@ -1057,8 +950,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input.classes().length).toEqual(1)
     expect($input.classes()).toContain('btn-check')
-
-    wrapper.unmount()
   })
 
   // --- Indeterminate testing ---
@@ -1076,8 +967,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.indeterminate).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('has input indeterminate set by when indeterminate=true', () => {
@@ -1094,8 +983,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.indeterminate).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('has input indeterminate set by when indeterminate set to true after mount', async () => {
@@ -1118,8 +1005,6 @@ describe('form-checkbox', () => {
 
     await wrapper.setProps({indeterminate: false})
     expect($input.element.indeterminate).toBe(false)
-
-    wrapper.unmount()
   })
 
   // --- Functionality testing ---
@@ -1141,8 +1026,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('default has internal modelValue=true when prop modelValue=true', () => {
@@ -1162,8 +1045,6 @@ describe('form-checkbox', () => {
     const $input = wrapper.get('input')
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('default has internal modelValue null', () => {
@@ -1179,8 +1060,6 @@ describe('form-checkbox', () => {
 
     expect(wrapper.vm).toBeDefined()
     expect(wrapper.vm.modelValue).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('default has internal modelValue set to checked prop', () => {
@@ -1198,8 +1077,6 @@ describe('form-checkbox', () => {
     expect(wrapper.vm).toBeDefined()
     expect(wrapper.vm.modelValue).toBeDefined()
     expect(wrapper.vm.modelValue).toEqual('foo')
-
-    wrapper.unmount()
   })
 
   it('default has internal modelValue set to value when checked=value', () => {
@@ -1217,8 +1094,6 @@ describe('form-checkbox', () => {
     expect(wrapper.vm).toBeDefined()
     expect(wrapper.vm.modelValue).toBeDefined()
     expect(wrapper.vm.modelValue).toEqual('bar')
-
-    wrapper.unmount()
   })
 
   it('emits a change event when clicked', async () => {
@@ -1252,8 +1127,6 @@ describe('form-checkbox', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
     expect(wrapper.emitted('change')[1][0]).toEqual('foo')
-
-    wrapper.unmount()
   })
 
   it('emits a change event when label clicked', async () => {
@@ -1287,8 +1160,6 @@ describe('form-checkbox', () => {
     expect(wrapper.emitted('change')).toBeDefined()
     expect(wrapper.emitted('change').length).toBe(2)
     expect(wrapper.emitted('change')[1][0]).toEqual('foo')
-
-    wrapper.unmount()
   })
 
   it('does not emit a change event when clicked if disabled', async () => {
@@ -1316,8 +1187,6 @@ describe('form-checkbox', () => {
 
     await $input.trigger('click')
     expect(wrapper.emitted('change')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('does not emit a change event when label clicked if disabled', async () => {
@@ -1345,8 +1214,6 @@ describe('form-checkbox', () => {
 
     await $label.trigger('click')
     expect(wrapper.emitted('change')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('works when v-model bound to an array', async () => {
@@ -1426,8 +1293,6 @@ describe('form-checkbox', () => {
 
     expect($input).toBeDefined()
     expect($input.element.checked).toBe(false)
-
-    wrapper.unmount()
   })
 
   it('should react to model changes when bound to an array', async () => {
@@ -1462,8 +1327,6 @@ describe('form-checkbox', () => {
     expect(wrapper.vm.modelValue.length).toBe(2)
     expect(wrapper.vm.modelValue[0]).toEqual('bar')
     expect(wrapper.vm.modelValue[1]).toEqual('foo')
-
-    wrapper.unmount()
   })
 
   it('works when value is an object', async () => {
@@ -1500,8 +1363,6 @@ describe('form-checkbox', () => {
     expect(Array.isArray(wrapper.vm.modelValue)).toBe(true)
     expect(wrapper.vm.modelValue.length).toBe(1)
     expect(wrapper.vm.modelValue[0]).toEqual('foo')
-
-    wrapper.unmount()
   })
   // These tests are wrapped in a new describe to limit the scope
   // of the `getBoundingClientRect()` mock
@@ -1546,8 +1407,6 @@ describe('form-checkbox', () => {
       expect($input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).toBe($input.element)
-
-      wrapper.unmount()
     })
 
     it('does not auto focus when false', async () => {
@@ -1570,8 +1429,6 @@ describe('form-checkbox', () => {
       expect($input.exists()).toBe(true)
       expect(document).toBeDefined()
       expect(document.activeElement).not.toBe($input.element)
-
-      wrapper.unmount()
     })
   })
 })

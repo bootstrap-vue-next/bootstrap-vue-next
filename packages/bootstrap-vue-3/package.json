@@ -30,7 +30,8 @@
     "format": "prettier . --write",
     "test": "pnpm run test:lint && pnpm run test:unit",
     "test:lint": "pnpm run lint",
-    "test:unit": "vitest"
+    "test:unit": "vitest",
+    "test:coverage": "vitest --coverage"
   },
   "peerDependencies": {
     "@popperjs/core": "^2.11.6",
@@ -41,6 +42,7 @@
     "@popperjs/core": "^2.11.6",
     "@types/bootstrap": "^5.2.2",
     "@vitejs/plugin-vue": "^3.0.0",
+    "@vitest/coverage-c8": "^0.22.1",
     "@vue/runtime-core": "^3.2.37",
     "@vue/shared": "^3.2.37",
     "@vue/test-utils": "^2.0.2",

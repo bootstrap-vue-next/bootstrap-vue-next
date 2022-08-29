@@ -8,7 +8,7 @@
 import {isLink} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
-import type {Booleanish, ButtonVariant, InputSize, LinkTarget} from '../../types'
+import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
@@ -19,13 +19,13 @@ export default defineComponent({
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     href: {type: String, required: false},
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    pressed: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: {type: String, default: null},
+    pressed: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    rel: {type: String, default: undefined},
     size: {type: String as PropType<InputSize>},
     squared: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'button'},
     target: {type: String as PropType<LinkTarget>, default: '_self'},
-    type: {type: String, default: 'button'},
+    type: {type: String as PropType<ButtonType>, default: 'button'},
     variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
   },
   emits: ['click', 'update:pressed'],
@@ -36,11 +36,15 @@ export default defineComponent({
     const pressedBoolean = useBooleanish(toRef(props, 'pressed'))
     const squaredBoolean = useBooleanish(toRef(props, 'squared'))
 
-    const isToggle = computed<boolean>(() => pressedBoolean.value !== null)
-    const isButton = computed<boolean>(() => props.tag === 'button' && !props.href && !props.to)
+    const isToggle = computed<boolean>(() => pressedBoolean.value === true)
+    const isButton = computed<boolean>(
+      () => props.tag === 'button' && props.href === undefined && props.to === null
+    )
     const link = computed<boolean>(() => isLink(props))
-    const isBLink = computed<boolean>(() => !!props.to)
-    const nonStandardTag = computed<boolean>(() => (props.href ? false : !isButton.value))
+    const isBLink = computed<boolean>(() => props.to !== null)
+    const nonStandardTag = computed<boolean>(() =>
+      props.href !== undefined ? false : !isButton.value
+    )
 
     const classes = computed(() => ({
       [`btn-${props.variant}`]: props.variant,
@@ -52,8 +56,9 @@ export default defineComponent({
     }))
 
     const attrs = computed(() => ({
-      'aria-disabled': nonStandardTag.value ? String(disabledBoolean.value) : null,
-      'aria-pressed': isToggle.value ? String(pressedBoolean.value) : null,
+      'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
+      // TODO this basically checks pressed twice.
+      'aria-pressed': isToggle.value ? pressedBoolean.value : null,
       'autocomplete': isToggle.value ? 'off' : null,
       'disabled': isButton.value ? disabledBoolean.value : null,
       'href': props.href,

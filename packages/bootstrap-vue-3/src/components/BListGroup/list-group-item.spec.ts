@@ -1,15 +1,15 @@
-import {mount} from '@vue/test-utils'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BListGroup from './BListGroup.vue'
 import BListGroupItem from './BListGroupItem.vue'
-import {describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it} from 'vitest'
 
 describe('list-group > list-group-item', () => {
+  enableAutoUnmount(afterEach)
+
   it('default should have tag div', () => {
     const wrapper = mount(BListGroupItem)
 
     expect(wrapper.element.tagName).toBe('DIV')
-
-    wrapper.unmount()
   })
 
   it('default should contain only single class of list-group-item', () => {
@@ -17,48 +17,36 @@ describe('list-group > list-group-item', () => {
 
     expect(wrapper.classes().length).toBe(1)
     expect(wrapper.classes()).toContain('list-group-item')
-
-    wrapper.unmount()
   })
 
   it('default should not have class list-group-item-action', () => {
     const wrapper = mount(BListGroupItem)
 
     expect(wrapper.classes()).not.toContain('list-group-item-action')
-
-    wrapper.unmount()
   })
 
   it('default should not have class active', () => {
     const wrapper = mount(BListGroupItem)
 
     expect(wrapper.classes()).not.toContain('active')
-
-    wrapper.unmount()
   })
 
   it('default should not have class disabled', () => {
     const wrapper = mount(BListGroupItem)
 
     expect(wrapper.classes()).not.toContain('disabled')
-
-    wrapper.unmount()
   })
 
   it('default should not have type attribute', () => {
     const wrapper = mount(BListGroupItem)
 
     expect(wrapper.attributes('type')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('default should not have disabled attribute', () => {
     const wrapper = mount(BListGroupItem)
 
     expect(wrapper.attributes('disabled')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('should have disabled class when disabled=true', () => {
@@ -67,8 +55,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.classes()).toContain('disabled')
-
-    wrapper.unmount()
   })
 
   it('should have active class when active=true', () => {
@@ -77,8 +63,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.classes()).toContain('active')
-
-    wrapper.unmount()
   })
 
   it('should have variant class and base class when variant set', () => {
@@ -88,8 +72,6 @@ describe('list-group > list-group-item', () => {
 
     expect(wrapper.classes()).toContain('list-group-item')
     expect(wrapper.classes()).toContain('list-group-item-danger')
-
-    wrapper.unmount()
   })
 
   it('should have tag a when href is set', () => {
@@ -98,8 +80,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.element.tagName).toBe('A')
-
-    wrapper.unmount()
   })
 
   it('should have class list-group-item-action when href is set', () => {
@@ -108,8 +88,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.classes()).toContain('list-group-item-action')
-
-    wrapper.unmount()
   })
 
   it('should have class list-group-item-action when action=true', () => {
@@ -118,8 +96,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.classes()).toContain('list-group-item-action')
-
-    wrapper.unmount()
   })
 
   it('should have class list-group-item-action when tag=a', () => {
@@ -128,8 +104,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.classes()).toContain('list-group-item-action')
-
-    wrapper.unmount()
   })
 
   it('should have href attribute when href is set', () => {
@@ -138,8 +112,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.attributes('href')).toBe('/foobar')
-
-    wrapper.unmount()
   })
 
   it('should have tag button when tag=button', () => {
@@ -148,8 +120,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.element.tagName).toBe('BUTTON')
-
-    wrapper.unmount()
   })
 
   it('should have tag a when tag=a', () => {
@@ -165,8 +135,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.element.tagName).toBe('BUTTON')
-
-    wrapper.unmount()
   })
 
   it('should have tag button when button=true and tag=foo', () => {
@@ -178,8 +146,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.element.tagName).toBe('BUTTON')
-
-    wrapper.unmount()
   })
 
   it('should not have href when button=true and href set', () => {
@@ -192,8 +158,6 @@ describe('list-group > list-group-item', () => {
 
     expect(wrapper.element.tagName).toBe('BUTTON')
     expect(wrapper.attributes('href')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('should have class list-group-item-action when button=true', () => {
@@ -202,8 +166,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.classes()).toContain('list-group-item-action')
-
-    wrapper.unmount()
   })
 
   it('should have type=button when button=true', () => {
@@ -212,8 +174,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.attributes('type')).toEqual('button')
-
-    wrapper.unmount()
   })
 
   it('should have type=submit when button=true and attr type=submit', () => {
@@ -223,8 +183,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.attributes('type')).toEqual('submit')
-
-    wrapper.unmount()
   })
 
   it('should not have attribute disabled when button=true and disabled not set', () => {
@@ -233,8 +191,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.attributes('disabled')).toBeUndefined()
-
-    wrapper.unmount()
   })
 
   it('should have attribute disabled when button=true and disabled=true', () => {
@@ -246,8 +202,6 @@ describe('list-group > list-group-item', () => {
     })
 
     expect(wrapper.attributes('disabled')).toBeDefined()
-
-    wrapper.unmount()
   })
 
   it('should have tag li when used within b-list-group with mounted=true', () => {
@@ -256,7 +210,5 @@ describe('list-group > list-group-item', () => {
     const $listItem = wrapper.findComponent(BListGroupItem)
     expect($listItem).toBeDefined()
     expect($listItem.element.tagName).toBe('LI')
-
-    wrapper.unmount()
   })
 })

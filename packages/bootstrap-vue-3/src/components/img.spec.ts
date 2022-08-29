@@ -1,8 +1,10 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BImg from './BImg.vue'
 
 describe('img', () => {
+  enableAutoUnmount(afterEach)
+
   it('tag is img', () => {
     const wrapper = mount(BImg)
     expect(wrapper.element.tagName).toBe('IMG')
@@ -15,8 +17,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('img-thumbnail')
     await wrapper.setProps({thumbnail: false})
     expect(wrapper.classes()).not.toContain('img-thumbnail')
-
-    wrapper.unmount()
   })
 
   it('has class img-fluid if prop fluid', async () => {
@@ -26,8 +26,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('img-fluid')
     await wrapper.setProps({fluid: false})
     expect(wrapper.classes()).not.toContain('img-fluid')
-
-    wrapper.unmount()
   })
 
   it('has class img-fluid if prop fluidGrow', async () => {
@@ -37,8 +35,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('img-fluid')
     await wrapper.setProps({fluidGrow: false})
     expect(wrapper.classes()).not.toContain('img-fluid')
-
-    wrapper.unmount()
   })
 
   it('has class w-100 if prop fluidGrow', async () => {
@@ -48,8 +44,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('w-100')
     await wrapper.setProps({fluidGrow: false})
     expect(wrapper.classes()).not.toContain('w-100')
-
-    wrapper.unmount()
   })
 
   it('has class rounded if prop rounded true', async () => {
@@ -59,8 +53,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('rounded')
     await wrapper.setProps({rounded: false})
     expect(wrapper.classes()).not.toContain('rounded')
-
-    wrapper.unmount()
   })
 
   it('has class rounded if prop rounded empty string', async () => {
@@ -70,8 +62,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('rounded')
     await wrapper.setProps({rounded: false})
     expect(wrapper.classes()).not.toContain('rounded')
-
-    wrapper.unmount()
   })
 
   it('has class rounded-{type} if prop rounded string', async () => {
@@ -81,8 +71,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('rounded-abc')
     await wrapper.setProps({rounded: false})
     expect(wrapper.classes()).not.toContain('rounded-abc')
-
-    wrapper.unmount()
   })
 
   it('has class d-block if prop block', async () => {
@@ -92,8 +80,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('d-block')
     await wrapper.setProps({block: false})
     expect(wrapper.classes()).not.toContain('d-block')
-
-    wrapper.unmount()
   })
 
   it('has class d-block if prop centerBoolean', async () => {
@@ -103,8 +89,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('d-block')
     await wrapper.setProps({center: false})
     expect(wrapper.classes()).not.toContain('d-block')
-
-    wrapper.unmount()
   })
 
   it('has class float-start if prop left', async () => {
@@ -114,8 +98,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('float-start')
     await wrapper.setProps({left: false})
     expect(wrapper.classes()).not.toContain('float-start')
-
-    wrapper.unmount()
   })
 
   it('has class float-end if prop right', async () => {
@@ -125,8 +107,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('float-end')
     await wrapper.setProps({right: false})
     expect(wrapper.classes()).not.toContain('float-end')
-
-    wrapper.unmount()
   })
 
   it('has class mx-auto if prop center', async () => {
@@ -136,8 +116,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('mx-auto')
     await wrapper.setProps({center: false})
     expect(wrapper.classes()).not.toContain('mx-auto')
-
-    wrapper.unmount()
   })
 
   it('has class float-start takes priority over prop right/center', async () => {
@@ -147,8 +125,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('float-start')
     await wrapper.setProps({left: false})
     expect(wrapper.classes()).toContain('float-end')
-
-    wrapper.unmount()
   })
 
   it('has class float-end takes priority over prop center', async () => {
@@ -158,8 +134,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('float-end')
     await wrapper.setProps({right: false})
     expect(wrapper.classes()).toContain('mx-auto')
-
-    wrapper.unmount()
   })
 
   it('does not have any alignment classes when all props are false', () => {
@@ -169,8 +143,6 @@ describe('img', () => {
     expect(wrapper.classes()).not.toContain('float-start')
     expect(wrapper.classes()).not.toContain('float-end')
     expect(wrapper.classes()).not.toContain('mx-auto')
-
-    wrapper.unmount()
   })
 
   it('has attr loading to be lazy when prop lazy', () => {

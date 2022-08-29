@@ -1,14 +1,14 @@
-import {mount} from '@vue/test-utils'
-import {describe, expect, it} from 'vitest'
+import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BNavbarBrand from './BNavbarBrand.vue'
 import BLink from '../BLink/BLink.vue'
 
 describe('navbar-brand', () => {
+  enableAutoUnmount(afterEach)
+
   it('contains static class navbar-brand', () => {
     const wrapper = mount(BNavbarBrand)
     expect(wrapper.classes()).toContain('navbar-brand')
-
-    wrapper.unmount()
   })
 
   it('contains blink when has to prop', () => {
@@ -19,8 +19,6 @@ describe('navbar-brand', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('contains blink when has href prop', () => {
@@ -31,15 +29,11 @@ describe('navbar-brand', () => {
     })
     const $blink = wrapper.findComponent(BLink)
     expect($blink.exists()).toBe(true)
-
-    wrapper.unmount()
   })
 
   it('tag is div when not isLink', () => {
     const wrapper = mount(BNavbarBrand)
     expect(wrapper.element.tagName).toBe('DIV')
-
-    wrapper.unmount()
   })
 
   it('tag is prop tag when set', () => {
@@ -49,8 +43,6 @@ describe('navbar-brand', () => {
       },
     })
     expect(wrapper.element.tagName).toBe('SPAN')
-
-    wrapper.unmount()
   })
 
   it('is still BLINK when tag is set, but isLink', () => {
@@ -61,8 +53,6 @@ describe('navbar-brand', () => {
       },
     })
     expect(wrapper.element.tagName).toBe('A')
-
-    wrapper.unmount()
   })
 
   it('renders default slot', () => {
@@ -72,7 +62,5 @@ describe('navbar-brand', () => {
       },
     })
     expect(wrapper.text()).toBe('foobar')
-
-    wrapper.unmount()
   })
 })
