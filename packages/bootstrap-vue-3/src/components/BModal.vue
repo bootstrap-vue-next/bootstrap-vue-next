@@ -2,7 +2,15 @@
   <teleport to="body">
     <div :id="id" ref="element" class="modal" :class="modalClasses" tabindex="-1" v-bind="$attrs">
       <div class="modal-dialog" :class="modalDialogClasses">
-        <div class="modal-content" :class="contentClass">
+        <div
+          v-if="
+            !lazyBoolean ||
+            (lazyBoolean && lazyLoadCompleted) ||
+            (lazyBoolean && modelValueBoolean === true)
+          "
+          class="modal-content"
+          :class="contentClass"
+        >
           <div v-if="!hideHeaderBoolean" class="modal-header" :class="computedHeaderClasses">
             <component :is="titleTag" class="modal-title" :class="computedTitleClasses">
               <slot name="title">
@@ -20,11 +28,7 @@
               <slot name="header-close"></slot>
             </button>
           </div>
-          <div
-            v-if="!lazyBoolean || (lazyBoolean && modelValueBoolean === true)"
-            class="modal-body"
-            :class="computedBodyClasses"
-          >
+          <div class="modal-body" :class="computedBodyClasses">
             <slot />
           </div>
           <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">
@@ -169,6 +173,8 @@ const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
 const showBoolean = useBooleanish(toRef(props, 'show'))
 const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 
+const lazyLoadCompleted = ref(false)
+
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
   (e: 'show', value: Event): void
@@ -250,8 +256,20 @@ const computedCloseButtonClasses = computed(() => [
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
 const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
 
-useEventListener(element, 'shown.bs.modal', (e) => emit('shown', e))
-useEventListener(element, 'hidden.bs.modal', (e) => emit('hidden', e))
+useEventListener(element, 'shown.bs.modal', (e) => modalShowed(e))
+useEventListener(element, 'hidden.bs.modal', (e) => modalHided(e))
+
+const modalShowed = (e: Event) => {
+  emit('shown', e)
+
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = true
+}
+
+const modalHided = (e: Event) => {
+  emit('hidden', e)
+
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = false
+}
 
 const show = () => {
   emit('update:modelValue', true)
