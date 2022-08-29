@@ -104,6 +104,7 @@ const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
 const showBadge = computed<string | boolean>(
   () => props.badge || props.badge === '' || hasBadgeSlot.value
 )
+
 const computedSize = computed<string | null>(() =>
   parentData?.size ? parentData.size : computeSize(props.size)
 )
