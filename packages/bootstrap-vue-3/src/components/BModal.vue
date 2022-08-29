@@ -20,10 +20,12 @@
               <slot name="header-close"></slot>
             </button>
           </div>
-          <div class="modal-body" :class="computedBodyClasses">
-            <Suspense v-if="!lazyBoolean || (lazyBoolean && modelValueBoolean === true)">
-              <slot />
-            </Suspense>
+          <div
+            v-if="!lazyBoolean || (lazyBoolean && modelValueBoolean === true)"
+            class="modal-body"
+            :class="computedBodyClasses"
+          >
+            <slot />
           </div>
           <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">
             <slot name="footer">
@@ -64,7 +66,7 @@
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
-import {computed, defineAsyncComponent, nextTick, onMounted, ref, toRef, useSlots, watch} from 'vue'
+import {computed, nextTick, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useEventListener} from '../composables'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
@@ -170,7 +172,7 @@ const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
   (e: 'show', value: Event): void
-  (e: 'shown', value?: Event): void
+  (e: 'shown', value: Event): void
   (e: 'hide', value: Event): void
   (e: 'hidden', value: Event): void
   (e: 'hide-prevented', value: Event): void
@@ -202,12 +204,7 @@ const modalDialogClasses = computed(() => [
   },
   props.dialogClass,
 ])
-const ModalContentComponent = defineAsyncComponent(
-  () =>
-    new Promise((resolve, reject) => {
-      resolve(slots.default as any)
-    })
-)
+
 const computedBodyClasses = computed(() => [
   {
     [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,

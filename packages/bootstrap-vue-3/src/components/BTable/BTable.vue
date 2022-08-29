@@ -52,8 +52,11 @@
         </tr>
       </thead>
       <tbody>
-        <!-- eslint-disable-next-line vue/require-v-for-key -->
-        <tr v-for="tr in computedItems" :class="tr._rowVariant ? `table-${tr._rowVariant}` : null">
+        <tr
+          v-for="(tr, ind) in computedItems"
+          :key="ind"
+          :class="tr._rowVariant ? `table-${tr._rowVariant}` : null"
+        >
           <td
             v-for="(field, index) in computedFields"
             :key="field.key"
@@ -222,7 +225,7 @@ const columnClicked = (field: TableField<Record<string, unknown>>) => {
 const getFieldColumnClasses = (field: TableFieldObject) => [
   field.class,
   field.thClass,
-  field.variant ? `table-${field.variant}` : '',
+  field.variant ? `table-${field.variant}` : undefined,
   {'b-table-sortable-column': isSortable.value && field.sortable},
 ]
 </script>
