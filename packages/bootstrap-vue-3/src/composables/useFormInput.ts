@@ -100,7 +100,6 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
     }
 
     if (props.lazy) return
-    emit('input', formattedValue)
 
     const nextModel = _getModelValue(formattedValue)
 
@@ -108,6 +107,8 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
       inputValue = value
       emit('update:modelValue', nextModel)
     }
+
+    emit('input', formattedValue)
   }
 
   const onChange = (evt: Event) => {
