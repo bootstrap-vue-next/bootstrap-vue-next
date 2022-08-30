@@ -1,7 +1,11 @@
 <template>
   <component :is="computedTag" class="btn" :class="classes" v-bind="attrs" @click="clicked">
-    <BSpinner v-if="loading" class="btn-spinner" :small="size !== 'lg'"></BSpinner>
-    <slot />
+    <BButtonLoading :loading="loading" :mode="loadingMode" :size="size">
+      <slot name="loading"></slot>
+    </BButtonLoading>
+    <div class="btn-content" :class="{'btn-loading-fill': loading && loadingMode == 'fill'}">
+      <slot />
+    </div>
   </component>
 </template>
 
@@ -11,9 +15,10 @@ import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {isLink} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
+import BButtonLoading from './BButtonLoading.vue'
 
 export default defineComponent({
-  components: {BLink},
+  components: {BLink, BButtonLoading},
   props: {
     ...BLINK_PROPS,
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -22,14 +27,14 @@ export default defineComponent({
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     pressed: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     rel: {type: String, default: undefined},
-    size: {type: String as PropType<InputSize>},
+    size: {type: String as PropType<InputSize>, default: 'md'},
     squared: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'button'},
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     type: {type: String as PropType<ButtonType>, default: 'button'},
     variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
     loading: {type: Boolean, default: false},
-    loadingDisabled: {type: Boolean, default: false},
+    loadingMode: {type: String as () => 'fill' | 'inline', default: 'inline'},
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
