@@ -25,8 +25,8 @@
               </span>
               <div>
                 <slot
-                  v-if="$slots['head(' + field.key + ')']"
-                  :name="'head(' + field.key + ')'"
+                  v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
+                  :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
                   :label="field.label"
                 />
                 <template v-else>{{ field.label }}</template>
@@ -71,11 +71,12 @@
             ]"
           >
             <slot
-              v-if="$slots['cell(' + field.key + ')']"
-              :name="'cell(' + field.key + ')'"
+              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
+              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
               :value="tr[field.key]"
               :index="index"
               :item="tr"
+              :field="field"
               :items="items"
             />
             <template v-else>{{ tr[field.key] }}</template>
