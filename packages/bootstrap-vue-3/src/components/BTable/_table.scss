@@ -86,3 +86,11 @@
     cursor: pointer;
   }
 }
+
+.table {
+  &.b-table-selectable {
+    tr {
+      cursor: pointer;
+    }
+  }
+}
