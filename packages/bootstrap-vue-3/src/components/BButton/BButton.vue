@@ -33,8 +33,8 @@ export default defineComponent({
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     type: {type: String as PropType<ButtonType>, default: 'button'},
     variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
-    loading: {type: Boolean, default: false},
-    loadingMode: {type: String as () => 'fill' | 'inline', default: 'inline'},
+    loading: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    loadingMode: {type: String as PropType<'fill' | 'inline'>, default: 'inline'},
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
