@@ -54,12 +54,12 @@ import {useBooleanish, useEventListener, useId} from '../../composables'
 // So some of them could be converted to their pure types similar to Popper.Boundary
 interface BDropdownProps {
   id?: string
-  menuClass?: Array<unknown> | Record<string, unknown> | string
+  menuClass?: Array<string> | Record<string, boolean | undefined | null> | string
   size?: Size
-  splitClass?: Array<unknown> | Record<string, unknown> | string
+  splitClass?: Array<string> | Record<string, boolean | undefined | null> | string
   splitVariant?: ButtonVariant
   text?: string
-  toggleClass?: Array<unknown> | Record<string, unknown> | string
+  toggleClass?: Array<string> | Record<string, boolean | undefined | null> | string
   autoClose?: boolean | 'inside' | 'outside'
   block?: Booleanish
   boundary?: Popper.Boundary
@@ -71,7 +71,7 @@ interface BDropdownProps {
   dropleft?: Booleanish
   noFlip?: Booleanish
   offset?: number | string
-  popperOpts?: Record<string, unknown>
+  popperOpts?: Record<string, unknown> // TODO find a way to get this strongly typed
   right?: Booleanish
   role?: string
   split?: Booleanish

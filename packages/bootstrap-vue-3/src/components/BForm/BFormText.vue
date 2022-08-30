@@ -27,7 +27,7 @@ const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 
 const classes = computed(() => ({
   'form-text': !inlineBoolean.value,
-  [`text-${props.textVariant}`]: props.textVariant,
+  [`text-${props.textVariant}`]: !!props.textVariant,
 }))
 
 const attrs = computed(() => ({

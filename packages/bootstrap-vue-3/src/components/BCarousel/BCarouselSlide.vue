@@ -94,8 +94,8 @@ const computedAttr = computed(() => ({
 }))
 
 const computedContentClasses = computed(() => ({
-  'd-none': props.contentVisibleUp,
-  [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp,
+  'd-none': props.contentVisibleUp !== undefined,
+  [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp !== undefined,
 }))
 const showText = computed<boolean | '' | undefined>(() => props.text && !props.textHtml)
 const showTextAsHtml = computed<string | undefined>(() => props.textHtml)

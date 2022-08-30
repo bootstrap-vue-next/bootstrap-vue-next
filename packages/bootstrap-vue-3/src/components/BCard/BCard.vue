@@ -55,21 +55,21 @@ interface BCardProps {
   align?: Alignment
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<unknown> | Record<string, unknown> | string // TODO record<string, unknown> can be replaced as a known object
-  bodyTag?: string // Above todo, also Array can be explicit
+  bodyClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  bodyTag?: string
   bodyTextVariant?: ColorVariant
   borderVariant?: ColorVariant
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: Array<unknown> | Record<string, unknown> | string
+  footerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: ColorVariant
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClass?: Array<unknown> | Record<string, unknown> | string
+  headerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   headerHtml?: string
   headerTag?: string
   headerTextVariant?: ColorVariant
@@ -124,10 +124,10 @@ const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
 const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
 const classes = computed(() => ({
-  [`text-${props.align}`]: props.align,
-  [`text-${props.textVariant}`]: props.textVariant,
-  [`bg-${props.bgVariant}`]: props.bgVariant,
-  [`border-${props.borderVariant}`]: props.borderVariant,
+  [`text-${props.align}`]: props.align !== undefined,
+  [`text-${props.textVariant}`]: props.textVariant !== undefined,
+  [`bg-${props.bgVariant}`]: props.bgVariant !== undefined,
+  [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
   'flex-row': imgLeftBoolean.value || imgStartBoolean.value,
   'flex-row-reverse': imgEndBoolean.value || imgRightBoolean.value,
 }))
@@ -135,20 +135,20 @@ const classes = computed(() => ({
 const bodyClasses = computed(() => ({
   'card-body': !noBodyBoolean.value,
   'card-img-overlay': overlayBoolean.value,
-  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
-  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
+  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
+  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
 }))
 
 const footerClasses = computed(() => ({
-  [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
-  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
-  [`text-${props.footerTextVariant}`]: props.footerTextVariant,
+  [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== undefined,
+  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== undefined,
+  [`text-${props.footerTextVariant}`]: props.footerTextVariant !== undefined,
 }))
 
 const headerClasses = computed(() => ({
-  [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
-  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
-  [`text-${props.headerTextVariant}`]: props.headerTextVariant,
+  [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== undefined,
+  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== undefined,
+  [`text-${props.headerTextVariant}`]: props.headerTextVariant !== undefined,
 }))
 
 const imgClasses = computed(() => ({
@@ -173,6 +173,6 @@ const imgAttr = computed(() => ({
 }))
 
 const subTitleClasses = computed(() => ({
-  [`text-${props.subTitleTextVariant}`]: props.subTitleTextVariant,
+  [`text-${props.subTitleTextVariant}`]: !!props.subTitleTextVariant,
 }))
 </script>

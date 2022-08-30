@@ -16,6 +16,6 @@ interface BTrProps {
 const props = defineProps<BTrProps>()
 
 const classes = computed(() => ({
-  [`table-${props.variant}`]: props.variant,
+  [`table-${props.variant}`]: props.variant !== undefined,
 }))
 </script>

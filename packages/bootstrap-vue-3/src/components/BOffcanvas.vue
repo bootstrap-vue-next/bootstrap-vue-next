@@ -95,7 +95,7 @@ onMounted((): void => {
 })
 
 const classes = computed(() => ({
-  [`offcanvas-${props.placement}`]: props.placement,
+  [`offcanvas-${props.placement}`]: !!props.placement,
 }))
 
 watch(

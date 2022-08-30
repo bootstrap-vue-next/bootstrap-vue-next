@@ -119,7 +119,7 @@ interface BFormTagsProps {
   disabled?: Booleanish
   duplicateTagText?: string
   inputAttrs?: Record<string, unknown>
-  inputClass?: Array<unknown> | Record<string, unknown> | string
+  inputClass?: Array<string> | Record<string, boolean | undefined | null> | string
   inputId?: string
   inputType?: InputType
   invalidTagText?: string
@@ -137,7 +137,7 @@ interface BFormTagsProps {
   separator?: string | Array<unknown>
   state?: Booleanish
   size?: InputSize
-  tagClass?: string | Array<unknown> | Record<string, unknown>
+  tagClass?: Array<string> | Record<string, boolean | undefined | null> | string
   tagPills?: Booleanish
   tagRemoveLabel?: string
   tagRemovedLabel?: string
@@ -225,7 +225,7 @@ const invalidTags = ref<Array<string>>([])
 const duplicateTags = ref<Array<string>>([])
 
 const classes = computed(() => ({
-  [`form-control-${props.size}`]: props.size,
+  [`form-control-${props.size}`]: props.size !== undefined,
   'disabled': disabledBoolean.value,
   'focus': focus.value,
   'is-invalid': stateBoolean.value === false,

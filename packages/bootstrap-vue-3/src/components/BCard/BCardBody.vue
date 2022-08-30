@@ -21,7 +21,7 @@ import {useBooleanish} from '../../composables'
 
 interface BCardBodyProps {
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<unknown> | Record<string, unknown> | string
+  bodyClass?: Array<string> | Record<string, boolean | undefined | null> | string
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   overlay?: Booleanish
@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
 const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
 const classes = computed(() => ({
-  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
-  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
+  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
+  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
 }))
 </script>

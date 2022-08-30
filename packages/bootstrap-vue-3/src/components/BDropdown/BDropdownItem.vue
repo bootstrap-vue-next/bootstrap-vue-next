@@ -21,7 +21,7 @@ import {useBooleanish} from '../../composables'
 
 interface BDropdownItemProps {
   href?: string
-  linkClass?: Array<unknown> | Record<string, unknown> | string
+  linkClass?: Array<string> | Record<string, boolean | undefined | null> | string
   active?: Booleanish
   disabled?: Booleanish
   rel?: string
@@ -51,7 +51,7 @@ const attrs = useAttrs()
 const classes = computed(() => ({
   active: activeBoolean.value,
   disabled: disabledBoolean.value,
-  [`text-${props.variant}`]: props.variant,
+  [`text-${props.variant}`]: !!props.variant,
 }))
 
 const tag = computed<'button' | 'a' | typeof BLink>(() =>

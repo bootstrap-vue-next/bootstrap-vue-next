@@ -33,7 +33,7 @@ export default defineComponent({
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
     const liClasses = computed(() => ({
-      active: props.active,
+      active: activeBoolean.value,
     }))
 
     const computedTag = computed<'span' | typeof BLink>(() =>

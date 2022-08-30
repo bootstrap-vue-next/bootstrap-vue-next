@@ -70,7 +70,7 @@ export default defineComponent({
     const isHiding = ref(false)
     const localShow = ref(false)
     const classes = computed(() => ({
-      [`b-toast-${props.variant}`]: props.variant,
+      [`b-toast-${props.variant}`]: props.variant !== undefined,
       show: localShow.value || isTransitioning.value,
     }))
 

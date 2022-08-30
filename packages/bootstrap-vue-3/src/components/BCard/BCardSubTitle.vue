@@ -23,6 +23,6 @@ const props = withDefaults(defineProps<BCardSubtitleProps>(), {
 })
 
 const classes = computed(() => ({
-  [`text-${props.subTitleTextVariant}`]: props.subTitleTextVariant,
+  [`text-${props.subTitleTextVariant}`]: !!props.subTitleTextVariant,
 }))
 </script>

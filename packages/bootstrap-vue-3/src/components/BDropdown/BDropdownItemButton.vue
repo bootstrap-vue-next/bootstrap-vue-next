@@ -13,7 +13,7 @@ import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BDropdownItemButtonProps {
-  buttonClass?: string | Array<unknown> | Record<string, unknown>
+  buttonClass?: Array<string> | Record<string, boolean | undefined | null> | string
   active?: Booleanish
   activeClass?: string
   disabled?: Booleanish
@@ -39,7 +39,7 @@ const emit = defineEmits<BDropdownItemButtonEmits>()
 const classes = computed(() => ({
   [props.activeClass]: activeBoolean.value,
   disabled: disabledBoolean.value,
-  [`text-${props.variant}`]: props.variant,
+  [`text-${props.variant}`]: !!props.variant,
 }))
 
 const attrs = computed(() => ({

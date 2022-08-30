@@ -54,6 +54,7 @@ const props = withDefaults(defineProps<BFormTagProps>(), {
 
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const noRemoveBoolean = useBooleanish(toRef(props, 'noRemove'))
+const pillBoolean = useBooleanish(toRef(props, 'pill'))
 
 interface BFormTagEmits {
   (e: 'remove', value?: VNodeNormalizedChildren): void
@@ -73,7 +74,7 @@ const classes = computed(() => [
   `bg-${props.variant}`,
   {
     'text-dark': ['warning', 'info', 'light'].includes(props.variant),
-    'rounded-pill': props.pill,
+    'rounded-pill': pillBoolean.value,
     'disabled': disabledBoolean.value,
   },
 ])
