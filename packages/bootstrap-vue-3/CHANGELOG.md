@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.3.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.13...v0.3.0) (2022-08-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* BButton content is now wrapped into an inline-block div
+
+### Features
+
+* added BButton #loading slot to replace the standard spinner with your own creative element. ([dffb4b0](https://github.com/cdmoro/bootstrap-vue-3/commit/dffb4b0201dce101c8e4068f4a9415c452bf9010))
+* added BButton loading-mode, loading modes are [inline, fill]. ([dffb4b0](https://github.com/cdmoro/bootstrap-vue-3/commit/dffb4b0201dce101c8e4068f4a9415c452bf9010))
+* **BButton:** add loading prop that makes spinner ([a91df8b](https://github.com/cdmoro/bootstrap-vue-3/commit/a91df8ba1347f72e9c0f9197f85c613d602eebb0))
+* **BModal:** lazily load entire modal when prop lazy ([a91df8b](https://github.com/cdmoro/bootstrap-vue-3/commit/a91df8ba1347f72e9c0f9197f85c613d602eebb0))
+
+
+### Bug Fixes
+
+* expand classes prop object to null & undefine ([9fc780b](https://github.com/cdmoro/bootstrap-vue-3/commit/9fc780ba9c0f30536b89054308fad79ee9e474f2))
+* explicit checks for dynamic classes ([ada6fe8](https://github.com/cdmoro/bootstrap-vue-3/commit/ada6fe8228575c9091a4433404ba3692b909608b))
+* strongly type prop *class* in various comps ([ada6fe8](https://github.com/cdmoro/bootstrap-vue-3/commit/ada6fe8228575c9091a4433404ba3692b909608b))
+
 ## [0.2.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.12...v0.2.13) (2022-08-29)
 
 
