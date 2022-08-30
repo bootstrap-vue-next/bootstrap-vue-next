@@ -1,6 +1,6 @@
 <template>
   <component :is="computedTag" class="btn" :class="classes" v-bind="attrs" @click="clicked">
-    <BSpinner v-if="loading" class="btn-spinner" :small="size != 'lg'"></BSpinner>
+    <BSpinner v-if="loading" class="btn-spinner" :small="size !== 'lg'"></BSpinner>
     <slot />
   </component>
 </template>
