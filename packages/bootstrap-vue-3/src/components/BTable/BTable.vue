@@ -175,13 +175,13 @@ const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 const classes = computed(() => [
   'table',
   {
-    [`align-${props.align}`]: props.align,
-    [`table-${props.variant}`]: props.variant,
+    [`align-${props.align}`]: props.align !== undefined,
+    [`table-${props.variant}`]: props.variant !== undefined,
     'table-striped': stripedBoolean.value,
     'table-hover': hoverBoolean.value,
     'table-dark': darkBoolean.value,
     'table-bordered': borderedBoolean.value,
-    [`border-${props.borderVariant}`]: props.borderVariant,
+    [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
     'table-borderless': borderlessBoolean.value,
     'table-sm': smallBoolean.value,
     'caption-top': captionTopBoolean.value,

@@ -41,7 +41,7 @@ export default defineComponent({
     const classes = computed(() => ({
       'form-control': !props.plaintext,
       'form-control-plaintext': props.plaintext,
-      [`form-control-${props.size}`]: props.size,
+      [`form-control-${props.size}`]: !!props.size,
       'is-valid': props.state === true,
       'is-invalid': props.state === false,
     }))

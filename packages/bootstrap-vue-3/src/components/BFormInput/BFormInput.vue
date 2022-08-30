@@ -67,7 +67,7 @@ export default defineComponent({
         'form-control': isColor || (!props.plaintext && !isRange),
         'form-control-color': isColor,
         'form-control-plaintext': props.plaintext && !isRange && !isColor,
-        [`form-control-${props.size}`]: props.size,
+        [`form-control-${props.size}`]: !!props.size,
         'is-valid': props.state === true,
         'is-invalid': props.state === false,
       }

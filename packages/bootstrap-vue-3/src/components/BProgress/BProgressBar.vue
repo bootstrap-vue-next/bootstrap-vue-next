@@ -30,7 +30,7 @@ export default defineComponent({
       'progress-bar-animated': animatedBoolean.value || parent?.animated,
       'progress-bar-striped':
         stripedBoolean.value || parent?.striped || animatedBoolean.value || parent?.animated,
-      [`bg-${props.variant}`]: props.variant,
+      [`bg-${props.variant}`]: props.variant !== undefined,
     }))
 
     const computedLabel = computed<string>(() => {

@@ -17,7 +17,7 @@ interface BCardHeaderProps {
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClass?: Array<unknown> | Record<string, unknown> | string
+  headerClass?: Array<string> | Record<string, boolean> | string
   headerHtml?: string
   headerTag?: string
   headerTextVariant?: ColorVariant
@@ -28,8 +28,8 @@ const props = withDefaults(defineProps<BCardHeaderProps>(), {
 })
 
 const classes = computed(() => ({
-  [`text-${props.headerTextVariant}`]: props.headerTextVariant,
-  [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
-  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
+  [`text-${props.headerTextVariant}`]: props.headerTextVariant !== undefined,
+  [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== undefined,
+  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== undefined,
 }))
 </script>

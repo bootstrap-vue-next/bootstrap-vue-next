@@ -26,7 +26,7 @@ interface BTableSimpleProps {
   stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
   striped?: Booleanish
   small?: Booleanish
-  tableClass?: Array<unknown> | Record<string, unknown> | string
+  tableClass?: Array<string> | Record<string, boolean> | string
   tableVariant?: string
 }
 
@@ -56,7 +56,7 @@ const classes = computed(() => [
   {
     'table-bordered': borderedBoolean.value,
     'table-borderless': borderlessBoolean.value,
-    [`border-${props.borderVariant}`]: props.borderVariant,
+    [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
     'caption-top': captionTopBoolean.value,
     'table-dark': darkBoolean.value,
     'table-hover': hoverBoolean.value,
@@ -64,7 +64,7 @@ const classes = computed(() => [
     [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
     'table-striped': stripedBoolean.value,
     'table-sm': smallBoolean.value,
-    [`table-${props.tableVariant}`]: props.tableVariant,
+    [`table-${props.tableVariant}`]: props.tableVariant !== undefined,
   },
   props.tableClass,
 ])

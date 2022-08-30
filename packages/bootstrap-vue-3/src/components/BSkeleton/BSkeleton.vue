@@ -25,8 +25,8 @@ const classes = computed(() => [
   `b-skeleton-${props.type}`,
   {
     [`b-skeleton-animate-${props.animation}`]:
-      typeof props.animation === 'boolean' ? undefined : props.animation,
-    [`bg-${props.variant}`]: props.variant,
+      typeof props.animation === 'boolean' ? false : props.animation,
+    [`bg-${props.variant}`]: props.variant !== undefined,
   },
 ])
 

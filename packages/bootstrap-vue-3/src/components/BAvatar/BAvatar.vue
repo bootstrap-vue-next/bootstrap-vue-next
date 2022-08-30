@@ -123,7 +123,7 @@ const attrs = computed(() => ({
 }))
 
 const badgeClasses = computed(() => ({
-  [`bg-${props.badgeVariant}`]: props.badgeVariant,
+  [`bg-${props.badgeVariant}`]: !!props.badgeVariant,
 }))
 
 const badgeText = computed<string | false>(() => (props.badge === true ? '' : props.badge))
@@ -133,8 +133,8 @@ const badgeTextClasses = computed<string>(() => {
 })
 
 const classes = computed(() => ({
-  [`b-avatar-${props.size}`]: props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
-  [`bg-${computedVariant.value}`]: computedVariant.value,
+  [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
+  [`bg-${computedVariant.value}`]: !!computedVariant.value,
   [`badge`]: !buttonBoolean.value && computedVariant.value && hasDefaultSlot.value,
   rounded: computedRounded.value === '' || computedRounded.value === true,
   [`rounded-circle`]: !squareBoolean.value && computedRounded.value === 'circle',
@@ -146,7 +146,7 @@ const classes = computed(() => ({
   [`rounded-start`]: !squareBoolean.value && computedRounded.value === 'left',
   [`rounded-end`]: !squareBoolean.value && computedRounded.value === 'right',
   btn: buttonBoolean.value,
-  [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value : null,
+  [`btn-${computedVariant.value}`]: buttonBoolean.value ? !!computedVariant.value : false,
 }))
 
 const textClasses = computed<string>(() => {

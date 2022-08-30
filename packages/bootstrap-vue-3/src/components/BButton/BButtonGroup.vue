@@ -28,6 +28,6 @@ const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 const classes = computed(() => ({
   'btn-group': !verticalBoolean.value,
   'btn-group-vertical': verticalBoolean.value,
-  [`btn-group-${props.size}`]: props.size,
+  [`btn-group-${props.size}`]: props.size !== undefined,
 }))
 </script>

@@ -17,7 +17,7 @@ interface BCardFooterProps {
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: Array<unknown> | Record<string, unknown> | string
+  footerClass?: Array<string> | Record<string, boolean> | string
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant
@@ -28,8 +28,8 @@ const props = withDefaults(defineProps<BCardFooterProps>(), {
 })
 
 const classes = computed(() => ({
-  [`text-${props.footerTextVariant}`]: props.footerTextVariant,
-  [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
-  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
+  [`text-${props.footerTextVariant}`]: props.footerTextVariant !== undefined,
+  [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== undefined,
+  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== undefined,
 }))
 </script>

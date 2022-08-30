@@ -75,7 +75,7 @@ const classes = computed(() => {
     buttonBoolean.value ||
     ['a', 'router-link', 'button', 'b-link'].includes(props.tag)
   return {
-    [`list-group-item-${props.variant}`]: props.variant,
+    [`list-group-item-${props.variant}`]: props.variant !== undefined,
     'list-group-item-action': action,
     'active': activeBoolean.value,
     'disabled': disabledBoolean.value,

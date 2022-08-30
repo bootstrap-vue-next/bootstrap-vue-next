@@ -27,9 +27,9 @@ interface BTabProps {
   lazy?: Booleanish
   noBody?: boolean | string
   tag?: string
-  titleItemClass?: Array<unknown> | Record<string, unknown> | string
+  titleItemClass?: Array<string> | Record<string, boolean> | string
   titleLinkAttributes?: Record<string, unknown>
-  titleLinkClass?: Array<unknown> | Record<string, unknown> | string
+  titleLinkClass?: Array<string> | Record<string, boolean> | string
 }
 
 const props = withDefaults(defineProps<BTabProps>(), {

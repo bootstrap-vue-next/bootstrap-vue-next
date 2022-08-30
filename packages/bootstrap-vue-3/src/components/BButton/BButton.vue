@@ -47,8 +47,8 @@ export default defineComponent({
     )
 
     const classes = computed(() => ({
-      [`btn-${props.variant}`]: props.variant,
-      [`btn-${props.size}`]: props.size,
+      [`btn-${props.variant}`]: !!props.variant,
+      [`btn-${props.size}`]: !!props.size,
       'active': activeBoolean.value || pressedBoolean.value,
       'rounded-pill': pillBoolean.value,
       'rounded-0': squaredBoolean.value,

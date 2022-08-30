@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<BTdProps>(), {
 const stickyColumnBoolean = useBooleanish(toRef(props, 'stickyColumn'))
 
 const classes = computed(() => ({
-  [`table-${props.variant}`]: props.variant,
+  [`table-${props.variant}`]: props.variant !== undefined,
   'b-table-sticky-column': stickyColumnBoolean.value,
   'table-b-table-default': stickyColumnBoolean.value && !props.variant,
 }))
