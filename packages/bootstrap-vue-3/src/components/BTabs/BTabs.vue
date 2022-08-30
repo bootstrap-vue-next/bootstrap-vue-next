@@ -70,18 +70,18 @@ import {useBooleanish} from '../../composables'
 import type {Alignment, Booleanish} from '../../types'
 
 interface BTabsProps {
-  activeNavItemClass?: Array<string> | Record<string, boolean> | string
-  activeTabClass?: Array<string> | Record<string, boolean> | string
+  activeNavItemClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  activeTabClass?: Array<string> | Record<string, boolean | undefined | null> | string
   align?: Alignment
   card?: Booleanish
-  contentClass?: Array<string> | Record<string, boolean> | string
+  contentClass?: Array<string> | Record<string, boolean | undefined | null> | string
   end?: Booleanish
   fill?: Booleanish
   id?: string
   justified?: Booleanish
   lazy?: Booleanish
-  navClass?: Array<string> | Record<string, boolean> | string
-  navWrapperClass?: Array<string> | Record<string, boolean> | string
+  navClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  navWrapperClass?: Array<string> | Record<string, boolean | undefined | null> | string
   noFade?: Booleanish
   // noKeyNav?: Booleanish
   noNavStyle?: Booleanish

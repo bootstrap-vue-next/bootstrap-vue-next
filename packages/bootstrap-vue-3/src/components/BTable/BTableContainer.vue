@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 interface BTableContainerProps {
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-  responsiveClasses?: Array<string> | Record<string, boolean> | string
+  responsiveClasses?: Array<string> | Record<string, boolean | undefined | null> | string
 }
 
 withDefaults(defineProps<BTableContainerProps>(), {

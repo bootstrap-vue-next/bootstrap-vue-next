@@ -26,7 +26,7 @@ interface BTableSimpleProps {
   stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
   striped?: Booleanish
   small?: Booleanish
-  tableClass?: Array<string> | Record<string, boolean> | string
+  tableClass?: Array<string> | Record<string, boolean | undefined | null> | string
   tableVariant?: string
 }
 

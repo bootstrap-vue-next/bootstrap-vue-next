@@ -17,7 +17,7 @@ interface BCardFooterProps {
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: Array<string> | Record<string, boolean> | string
+  footerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant

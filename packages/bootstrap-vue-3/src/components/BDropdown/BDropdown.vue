@@ -54,12 +54,12 @@ import {useBooleanish, useEventListener, useId} from '../../composables'
 // So some of them could be converted to their pure types similar to Popper.Boundary
 interface BDropdownProps {
   id?: string
-  menuClass?: Array<string> | Record<string, boolean> | string
+  menuClass?: Array<string> | Record<string, boolean | undefined | null> | string
   size?: Size
-  splitClass?: Array<string> | Record<string, boolean> | string
+  splitClass?: Array<string> | Record<string, boolean | undefined | null> | string
   splitVariant?: ButtonVariant
   text?: string
-  toggleClass?: Array<string> | Record<string, boolean> | string
+  toggleClass?: Array<string> | Record<string, boolean | undefined | null> | string
   autoClose?: boolean | 'inside' | 'outside'
   block?: Booleanish
   boundary?: Popper.Boundary

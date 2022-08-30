@@ -21,7 +21,7 @@ import {useBooleanish} from '../../composables'
 
 interface BCardBodyProps {
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<string> | Record<string, boolean> | string
+  bodyClass?: Array<string> | Record<string, boolean | undefined | null> | string
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   overlay?: Booleanish

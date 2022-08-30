@@ -21,7 +21,7 @@ import {useBooleanish} from '../../composables'
 
 interface BDropdownItemProps {
   href?: string
-  linkClass?: Array<string> | Record<string, boolean> | string
+  linkClass?: Array<string> | Record<string, boolean | undefined | null> | string
   active?: Booleanish
   disabled?: Booleanish
   rel?: string

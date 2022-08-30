@@ -119,7 +119,7 @@ interface BFormTagsProps {
   disabled?: Booleanish
   duplicateTagText?: string
   inputAttrs?: Record<string, unknown>
-  inputClass?: Array<string> | Record<string, boolean> | string
+  inputClass?: Array<string> | Record<string, boolean | undefined | null> | string
   inputId?: string
   inputType?: InputType
   invalidTagText?: string
@@ -137,7 +137,7 @@ interface BFormTagsProps {
   separator?: string | Array<unknown>
   state?: Booleanish
   size?: InputSize
-  tagClass?: Array<string> | Record<string, boolean> | string
+  tagClass?: Array<string> | Record<string, boolean | undefined | null> | string
   tagPills?: Booleanish
   tagRemoveLabel?: string
   tagRemovedLabel?: string

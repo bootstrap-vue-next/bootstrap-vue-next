@@ -17,7 +17,7 @@ interface BCardHeaderProps {
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClass?: Array<string> | Record<string, boolean> | string
+  headerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   headerHtml?: string
   headerTag?: string
   headerTextVariant?: ColorVariant

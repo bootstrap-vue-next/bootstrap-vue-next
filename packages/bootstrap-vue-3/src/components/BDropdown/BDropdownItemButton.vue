@@ -13,7 +13,7 @@ import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BDropdownItemButtonProps {
-  buttonClass?: Array<string> | Record<string, boolean> | string
+  buttonClass?: Array<string> | Record<string, boolean | undefined | null> | string
   active?: Booleanish
   activeClass?: string
   disabled?: Booleanish

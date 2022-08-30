@@ -55,21 +55,21 @@ interface BCardProps {
   align?: Alignment
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<string> | Record<string, boolean> | string
+  bodyClass?: Array<string> | Record<string, boolean | undefined | null> | string
   bodyTag?: string
   bodyTextVariant?: ColorVariant
   borderVariant?: ColorVariant
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: Array<string> | Record<string, boolean> | string
+  footerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: ColorVariant
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClass?: Array<string> | Record<string, boolean> | string
+  headerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   headerHtml?: string
   headerTag?: string
   headerTextVariant?: ColorVariant
