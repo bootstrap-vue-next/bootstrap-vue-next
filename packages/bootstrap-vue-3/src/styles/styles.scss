@@ -12,6 +12,11 @@
 @import "../components/BTable/table";
 @import "../components/BToast/index";
 
+.container,
+.container-fluid {
+  display: block;
+}
+
 .input-group
   > .form-floating:not(:first-child)
   > :not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
