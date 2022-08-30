@@ -1,8 +1,14 @@
 <template>
   <component :is="computedTag" class="btn" :class="classes" v-bind="attrs" @click="clicked">
-    <BButtonLoading :loading="loading" :mode="loadingMode" :size="size">
-      <slot name="loading"></slot>
-    </BButtonLoading>
+    <div
+      v-if="loading"
+      class="btn-loading"
+      :class="{'mode-fill': loadingMode === 'fill', 'mode-inline': loadingMode === 'inline'}"
+    >
+      <slot name="loading">
+        <BSpinner class="btn-spinner" :small="size !== 'lg'"></BSpinner>
+      </slot>
+    </div>
     <div class="btn-content" :class="{'btn-loading-fill': loading && loadingMode == 'fill'}">
       <slot />
     </div>
@@ -15,10 +21,9 @@ import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {isLink} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
-import BButtonLoading from './BButtonLoading.vue'
 
 export default defineComponent({
-  components: {BLink, BButtonLoading},
+  components: {BLink},
   props: {
     ...BLINK_PROPS,
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
