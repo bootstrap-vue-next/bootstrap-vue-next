@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.3.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.14...v0.3.0) (2022-08-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* The  event output value was changed to an object with 'sort[string]' and 'desc[boolean]' for better ts type support.
+
+### Features
+
+* Added 'tag' prop to BContainer ([a4363b4](https://github.com/cdmoro/bootstrap-vue-3/commit/a4363b482fff78a8b3edf87c06b1a857ffc952a1))
+* Added Btable select-head prop to show an extra Head & Cell to the table, Added selectHead & selectCell slots to customize the selection extra head & cells. ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* Added BTable selectable prop that adds the selection functionality to the table, Added select-mode prop with value of [multi, single, range] to expend the table selection can be used with. ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* BTable selection-variant prop was added, gives the ability to use bootstrap's colors as bg to the selected rows ([b4a9d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/b4a9d4b82fea63686453ad4ec47993ae0bc0a671))
+
+
+### Bug Fixes
+
+* added few missing props to the BTable.d.ts file ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* **BTable:** include prop field in slot cell ([012289d](https://github.com/cdmoro/bootstrap-vue-3/commit/012289d58c89b6b60d3268699f4ef9ac21c09c0e))
+* include prop field in slot cell. ([e4850c7](https://github.com/cdmoro/bootstrap-vue-3/commit/e4850c7e40a5d4520f124d01f11809778dcc4b73))
+* replaced BTable emits definition array with a typescript interface for better type support ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* update date type of few of BTable props ([24292ba](https://github.com/cdmoro/bootstrap-vue-3/commit/24292ba3bd375d3e552d84958509ae3a4c64b422))
+* updated the data type of a few of BTable props ([7992762](https://github.com/cdmoro/bootstrap-vue-3/commit/799276299bd3f09648bc88eb62b9db5b464d6e44))
+
 ## [0.2.14](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.13...v0.2.14) (2022-08-30)
 
 
