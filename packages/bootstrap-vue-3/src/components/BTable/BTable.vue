@@ -158,6 +158,7 @@ interface BTableProps {
   selectable?: boolean
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
+  selectionVariant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -176,6 +177,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   selectable: false,
   selectHead: true,
   selectMode: 'single',
+  selectionVariant: 'primary',
 })
 
 interface BTableEmits {
@@ -306,6 +308,9 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
 
 const getRowClasses = (item: TableItem) => [
   item._rowVariant ? `table-${item._rowVariant}` : null,
-  selectableBoolean.value && selectedItems.value.has(item) ? `selected table-primary` : null,
+  item._rowVariant ? `table-${item._rowVariant}` : null,
+  selectableBoolean.value && selectedItems.value.has(item)
+    ? `selected table-${props.selectionVariant}`
+    : null,
 ]
 </script>
