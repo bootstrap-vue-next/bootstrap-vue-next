@@ -241,7 +241,7 @@ const responsiveClasses = computed(() => ({
 }))
 
 const addSelectableCell = computed(
-  () => selectableBoolean.value && (props.selectHead || slots.selectHead !== undefined)
+  () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
 
 const isSortable = computed(
