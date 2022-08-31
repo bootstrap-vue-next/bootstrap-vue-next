@@ -16,6 +16,9 @@ export interface Props {
   small?: boolean
   striped?: boolean
   variant?: ColorVariant
+  sortInternal?: boolean
+  selectable?: boolean
+  selectMode?: 'multi' | 'single' | 'range'
 }
 // Emits
 

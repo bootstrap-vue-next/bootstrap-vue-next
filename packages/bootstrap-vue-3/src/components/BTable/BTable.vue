@@ -4,6 +4,11 @@
       <thead>
         <slot v-if="$slots['thead-top']" name="thead-top" />
         <tr>
+          <th v-if="addSelectableCell">
+            <slot name="selectHead">
+              {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
+            </slot>
+          </th>
           <th
             v-for="field in computedFields"
             :key="field.key"
@@ -25,8 +30,8 @@
               </span>
               <div>
                 <slot
-                  v-if="$slots['head(' + field.key + ')']"
-                  :name="'head(' + field.key + ')'"
+                  v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
+                  :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
                   :label="field.label"
                 />
                 <template v-else>{{ field.label }}</template>
@@ -55,8 +60,14 @@
         <tr
           v-for="(tr, ind) in computedItems"
           :key="ind"
-          :class="tr._rowVariant ? `table-${tr._rowVariant}` : null"
+          :class="getRowClasses(tr)"
+          @click.prevent="onRowClick(tr, ind, $event)"
         >
+          <td v-if="addSelectableCell">
+            <slot name="selectCell">
+              <span :class="selectedItems.has(tr) ? 'text-primary' : ''">🗹</span>
+            </slot>
+          </td>
           <td
             v-for="(field, index) in computedFields"
             :key="field.key"
@@ -71,11 +82,12 @@
             ]"
           >
             <slot
-              v-if="$slots['cell(' + field.key + ')']"
-              :name="'cell(' + field.key + ')'"
+              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
+              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
               :value="tr[field.key]"
               :index="index"
               :item="tr"
+              :field="field"
               :items="items"
             />
             <template v-else>{{ tr[field.key] }}</template>
@@ -112,7 +124,7 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed, ref, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {
   Booleanish,
@@ -142,8 +154,12 @@ interface BTableProps {
   striped?: Booleanish
   variant?: ColorVariant
   sortBy?: string
-  sortDesc?: boolean
-  sortInternal?: boolean
+  sortDesc?: Booleanish
+  sortInternal?: Booleanish
+  selectable?: Booleanish
+  selectHead?: boolean | string
+  selectMode?: 'multi' | 'single' | 'range'
+  selectionVariant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -158,10 +174,25 @@ const props = withDefaults(defineProps<BTableProps>(), {
   responsive: false,
   small: false,
   striped: false,
-  sortInternal: true,
+  sortDesc: false,
+  sortInternal: false,
+  selectable: false,
+  selectHead: true,
+  selectMode: 'single',
+  selectionVariant: 'primary',
 })
 
-const emits = defineEmits(['update:sortBy', 'update:sortDesc', 'sorted'])
+interface BTableEmits {
+  (e: 'rowSelected', value: TableItem): void
+  (e: 'rowUnselected', value: TableItem): void
+  (e: 'selection', value: TableItem[]): void
+  (e: 'update:sortBy', value: string): void
+  (e: 'update:sortDesc', value: boolean): void
+  (e: 'sorted', ...value: Parameters<(sort?: {by?: string; desc?: boolean}) => any>): void
+}
+
+const emits = defineEmits<BTableEmits>()
+const slots = useSlots()
 
 const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
 const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
@@ -171,6 +202,9 @@ const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
 const hoverBoolean = useBooleanish(toRef(props, 'hover'))
 const smallBoolean = useBooleanish(toRef(props, 'small'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
+const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
+const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
 
 const classes = computed(() => [
   'table',
@@ -185,14 +219,20 @@ const classes = computed(() => [
     'table-borderless': borderlessBoolean.value,
     'table-sm': smallBoolean.value,
     'caption-top': captionTopBoolean.value,
+    'b-table-selectable': selectableBoolean.value,
+    [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
+    'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
   },
 ])
 
 const itemHelper = useItemHelper()
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 const computedItems = computed(() =>
-  props.sortInternal
-    ? itemHelper.sortItems(props.fields, props.items, {key: props.sortBy, desc: props.sortDesc})
+  sortInternalBoolean.value === true
+    ? itemHelper.sortItems(props.fields, props.items, {
+        key: props.sortBy,
+        desc: sortDescBoolean.value,
+      })
     : props.items
 )
 
@@ -200,6 +240,10 @@ const responsiveClasses = computed(() => ({
   'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
   [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
 }))
+
+const addSelectableCell = computed(
+  () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
+)
 
 const isSortable = computed(
   () =>
@@ -213,13 +257,52 @@ const columnClicked = (field: TableField<Record<string, unknown>>) => {
   const fieldSortable = typeof field === 'string' ? false : field.sortable
   if (isSortable.value === true && fieldSortable === true) {
     if (fieldKey === props.sortBy) {
-      emits('update:sortDesc', !props.sortDesc)
+      emits('update:sortDesc', !sortDescBoolean.value)
     } else {
       emits('update:sortBy', typeof field === 'string' ? field : field.key)
       emits('update:sortDesc', false)
     }
-    emits('sorted', props.sortBy, props.sortDesc)
+    emits('sorted', {by: props.sortBy, desc: sortDescBoolean.value})
   }
+}
+
+const selectedItems = ref<Set<TableItem>>(new Set([]))
+const isSelecting = computed(() => selectedItems.value.size > 0)
+
+const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
+  handleRowSelection(row, index, e.shiftKey)
+}
+
+const handleRowSelection = (row: TableItem, index: number, shiftClicked = false) => {
+  if (!selectableBoolean.value) return
+
+  if (selectedItems.value.has(row)) {
+    selectedItems.value.delete(row)
+    emits('rowUnselected', row)
+  } else {
+    if (props.selectMode === 'single' && selectedItems.value.size > 0) {
+      selectedItems.value.forEach((item) => emits('rowUnselected', item))
+      selectedItems.value.clear()
+    }
+
+    if (props.selectMode === 'range' && selectedItems.value.size > 0 && shiftClicked) {
+      const lastSelectedItem = Array.from(selectedItems.value).pop()
+      const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
+      const selectStartIndex = Math.min(lastSelectedIndex, index)
+      const selectEndIndex = Math.max(lastSelectedIndex, index)
+      computedItems.value.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
+        if (!selectedItems.value.has(item)) {
+          selectedItems.value.add(item)
+          emits('rowSelected', item)
+        }
+      })
+    } else {
+      selectedItems.value.add(row)
+      emits('rowSelected', row)
+    }
+  }
+
+  emits('selection', Array.from(selectedItems.value))
 }
 
 const getFieldColumnClasses = (field: TableFieldObject) => [
@@ -227,5 +310,13 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   field.thClass,
   field.variant ? `table-${field.variant}` : undefined,
   {'b-table-sortable-column': isSortable.value && field.sortable},
+]
+
+const getRowClasses = (item: TableItem) => [
+  item._rowVariant ? `table-${item._rowVariant}` : null,
+  item._rowVariant ? `table-${item._rowVariant}` : null,
+  selectableBoolean.value && selectedItems.value.has(item)
+    ? `selected table-${props.selectionVariant}`
+    : null,
 ]
 </script>

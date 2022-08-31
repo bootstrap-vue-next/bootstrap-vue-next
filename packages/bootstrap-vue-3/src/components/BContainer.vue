@@ -1,8 +1,8 @@
 <script lang="ts">
-import type {Breakpoint, Position} from '../types'
 import {computed, defineComponent, h, onMounted, PropType, ref, VNode} from 'vue'
-import {ToastInstance, useToast} from './BToast/plugin'
+import type {Breakpoint, Position} from '../types'
 import BToaster from './BToast/BToaster.vue'
+import {ToastInstance, useToast} from './BToast/plugin'
 export default defineComponent({
   name: 'BContainer',
   props: {
@@ -11,6 +11,7 @@ export default defineComponent({
     fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
     toast: {type: Object},
     position: {type: String as PropType<Position>, required: false},
+    tag: {type: String, default: 'div'},
   },
   setup(props, {slots, expose}) {
     const container = ref()
@@ -45,7 +46,7 @@ export default defineComponent({
         subContainers.push(h(BToaster, {key: position, instance: toastInstance, position}))
       })
 
-      return h('div', {class: [classes.value, props.position], ref: container}, [
+      return h(props.tag, {class: [classes.value, props.position], ref: container}, [
         ...subContainers,
         slots.default?.(),
       ])
