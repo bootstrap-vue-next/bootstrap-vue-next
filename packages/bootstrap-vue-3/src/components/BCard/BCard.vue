@@ -1,5 +1,6 @@
 <template>
   <component :is="tag" class="card" :class="classes">
+    <!-- replace with BCardImg -->
     <img v-if="imgSrc && !imgBottomBoolean" v-bind="imgAttr" :class="imgClasses" />
     <component
       :is="headerTag"
@@ -57,7 +58,7 @@ interface BCardProps {
   bodyBgVariant?: ColorVariant
   bodyClass?: Array<string> | Record<string, boolean | undefined | null> | string
   bodyTag?: string
-  bodyTextVariant?: ColorVariant
+  bodyTextVariant?: TextColorVariant
   borderVariant?: ColorVariant
   footer?: string
   footerBgVariant?: ColorVariant
@@ -65,14 +66,14 @@ interface BCardProps {
   footerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   footerHtml?: string
   footerTag?: string
-  footerTextVariant?: ColorVariant
+  footerTextVariant?: TextColorVariant
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
   headerClass?: Array<string> | Record<string, boolean | undefined | null> | string
   headerHtml?: string
   headerTag?: string
-  headerTextVariant?: ColorVariant
+  headerTextVariant?: TextColorVariant
   imgAlt?: string
   imgBottom?: Booleanish
   imgEnd?: Booleanish
@@ -168,8 +169,14 @@ const imgClasses = computed(() => ({
 const imgAttr = computed(() => ({
   src: props.imgSrc,
   alt: props.imgAlt,
-  height: props.imgHeight,
-  width: props.imgWidth,
+  height:
+    (typeof props.imgHeight === 'number'
+      ? props.imgHeight
+      : parseInt(props.imgHeight as string, 10)) || undefined,
+  width:
+    (typeof props.imgWidth === 'number'
+      ? props.imgWidth
+      : parseInt(props.imgWidth as string, 10)) || undefined,
 }))
 
 const subTitleClasses = computed(() => ({

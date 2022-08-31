@@ -25,7 +25,11 @@ const props = withDefaults(defineProps<BCardGroupProps>(), {
 const columnsBoolean = useBooleanish(toRef(props, 'columns'))
 const deckBoolean = useBooleanish(toRef(props, 'deck'))
 
-const classes = computed(() =>
+const cardTypeClass = computed(() =>
   deckBoolean.value ? 'card-deck' : columnsBoolean.value ? 'card-columns' : 'card-group'
 )
+
+const classes = computed(() => ({
+  [cardTypeClass.value]: !!cardTypeClass.value,
+}))
 </script>

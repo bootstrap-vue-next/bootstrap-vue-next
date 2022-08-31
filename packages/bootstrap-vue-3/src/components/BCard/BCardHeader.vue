@@ -1,9 +1,9 @@
 <template>
-  <component :is="headerTag" class="card-header" :class="[headerClass, classes]">
+  <component :is="tag" class="card-header" :class="classes">
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="!!headerHtml" v-html="headerHtml" />
+    <div v-if="!!html" v-html="html" />
     <slot v-else>
-      {{ header }}
+      {{ text }}
     </slot>
   </component>
 </template>
@@ -11,25 +11,24 @@
 <script setup lang="ts">
 // import type {BCardHeaderProps} from '../../types/components'
 import {computed} from 'vue'
-import type {ColorVariant} from '../../types'
+import type {ColorVariant, TextColorVariant} from '../../types'
 
 interface BCardHeaderProps {
-  header?: string
-  headerBgVariant?: ColorVariant
-  headerBorderVariant?: ColorVariant
-  headerClass?: Array<string> | Record<string, boolean | undefined | null> | string
-  headerHtml?: string
-  headerTag?: string
-  headerTextVariant?: ColorVariant
+  text?: string
+  bgVariant?: ColorVariant
+  borderVariant?: ColorVariant
+  html?: string
+  tag?: string
+  textVariant?: TextColorVariant
 }
 
 const props = withDefaults(defineProps<BCardHeaderProps>(), {
-  headerTag: 'div',
+  tag: 'div',
 })
 
 const classes = computed(() => ({
-  [`text-${props.headerTextVariant}`]: props.headerTextVariant !== undefined,
-  [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== undefined,
-  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== undefined,
+  [`text-${props.textVariant}`]: props.textVariant !== undefined,
+  [`bg-${props.bgVariant}`]: props.bgVariant !== undefined,
+  [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
 }))
 </script>
