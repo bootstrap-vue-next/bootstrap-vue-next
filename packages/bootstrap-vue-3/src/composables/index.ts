@@ -15,7 +15,6 @@ import {
 import useFormInput, {COMMON_INPUT_PROPS} from './useFormInput'
 import {normalizeOptions} from './useFormSelect'
 import useId from './useId'
-import useTitleCase from './useTitleCase'
 
 export {
   useAlignment,
@@ -24,7 +23,6 @@ export {
   useEventListener,
   bindGroupProps,
   useBooleanish,
-  useTitleCase,
   getClasses,
   getGroupAttr,
   getGroupClasses,

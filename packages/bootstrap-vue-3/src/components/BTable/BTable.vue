@@ -126,7 +126,8 @@
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
 import {computed, ref, toRef, useSlots} from 'vue'
-import {useBooleanish, useTitleCase} from '../../composables'
+import {useBooleanish} from '../../composables'
+import {titleCase} from '../../utils/stringUtils'
 
 import type {
   Booleanish,
@@ -250,9 +251,9 @@ const responsiveClasses = computed(() => ({
 }))
 
 const getFieldHeadLabel = (field: TableField) => {
-  if (typeof field === 'string') return useTitleCase(field)
+  if (typeof field === 'string') return titleCase(field)
   if (field.label !== undefined) return field.label
-  if (typeof field.key === 'string') return useTitleCase(field.key)
+  if (typeof field.key === 'string') return titleCase(field.key)
   return field.key
 }
 
