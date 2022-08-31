@@ -339,7 +339,17 @@ const selectAllRows = () => {
   emits('selection', Array.from(selectedItems.value))
 }
 
+const clearSelected = () => {
+  if (!selectableBoolean.value) return
+  selectedItems.value.forEach((item) => {
+    emits('rowUnselected', item)
+  })
+  selectedItems.value = new Set([])
+  emits('selection', Array.from(selectedItems.value))
+}
+
 defineExpose({
   selectAllRows,
+  clearSelected,
 })
 </script>
