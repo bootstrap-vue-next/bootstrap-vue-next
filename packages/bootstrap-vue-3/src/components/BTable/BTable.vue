@@ -173,7 +173,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   responsive: false,
   small: false,
   striped: false,
-  sortInternal: true,
+  sortInternal: false,
   selectable: false,
   selectHead: true,
   selectMode: 'single',
