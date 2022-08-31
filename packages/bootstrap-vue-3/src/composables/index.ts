@@ -1,4 +1,5 @@
 import useAlignment from './useAlignment'
+import useBooleanish from './useBooleanish'
 import {createBreadcrumb, useBreadcrumb} from './useBreadcrumb'
 import useEventListener from './useEventListener'
 import {
@@ -13,8 +14,8 @@ import {
 } from './useFormCheck'
 import useFormInput, {COMMON_INPUT_PROPS} from './useFormInput'
 import {normalizeOptions} from './useFormSelect'
-import useBooleanish from './useBooleanish'
 import useId from './useId'
+import useTitleCase from './useTitleCase'
 
 export {
   useAlignment,
@@ -23,6 +24,7 @@ export {
   useEventListener,
   bindGroupProps,
   useBooleanish,
+  useTitleCase,
   getClasses,
   getGroupAttr,
   getGroupClasses,

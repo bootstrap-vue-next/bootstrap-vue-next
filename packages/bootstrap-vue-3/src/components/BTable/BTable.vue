@@ -34,7 +34,7 @@
                   :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
                   :label="field.label"
                 />
-                <template v-else>{{ field.label }}</template>
+                <template v-else>{{ getFieldHeadLabel(field) }}</template>
               </div>
             </div>
           </th>
@@ -125,7 +125,8 @@
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
 import {computed, ref, toRef, useSlots} from 'vue'
-import {useBooleanish} from '../../composables'
+import {useBooleanish, useTitleCase} from '../../composables'
+
 import type {
   Booleanish,
   ColorVariant,
@@ -240,6 +241,13 @@ const responsiveClasses = computed(() => ({
   'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
   [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
 }))
+
+const getFieldHeadLabel = (field: TableField) => {
+  if (typeof field === 'string') return useTitleCase(field)
+  if (field.label !== undefined) return field.label
+  if (typeof field.key === 'string') return useTitleCase(field.key)
+  return field.key
+}
 
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
