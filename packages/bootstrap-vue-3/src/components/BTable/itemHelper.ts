@@ -1,4 +1,4 @@
-import type {TableField, TableFieldObject, TableItem} from '../../types'
+import type {Booleanish, TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, isString, startCase} from '../../utils'
 
 const useItemHelper = () => {
@@ -27,7 +27,7 @@ const useItemHelper = () => {
   const sortItems = (
     fields: TableField[],
     items: TableItem<Record<string, any>>[],
-    sort?: {key?: string; desc?: boolean}
+    sort?: {key?: string; desc?: Booleanish}
   ) => {
     if (!sort || !sort.key) return items
     const sortKey = sort.key

@@ -153,9 +153,9 @@ interface BTableProps {
   striped?: Booleanish
   variant?: ColorVariant
   sortBy?: string
-  sortDesc?: boolean
-  sortInternal?: boolean
-  selectable?: boolean
+  sortDesc?: Booleanish
+  sortInternal?: Booleanish
+  selectable?: Booleanish
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
   selectionVariant?: ColorVariant
@@ -185,8 +185,8 @@ interface BTableEmits {
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
   (e: 'update:sortBy', value: string): void
-  (e: 'update:sortDesc', value: boolean): void
-  (e: 'sorted', ...value: Parameters<(sort?: {by?: string; desc?: boolean}) => any>): void
+  (e: 'update:sortDesc', value: Booleanish): void
+  (e: 'sorted', ...value: Parameters<(sort?: {by?: string; desc?: Booleanish}) => any>): void
 }
 
 const emits = defineEmits<BTableEmits>()
@@ -236,7 +236,7 @@ const responsiveClasses = computed(() => ({
 }))
 
 const addSelectableCell = computed(
-  () => selectableBoolean && (props.selectHead || slots.selectHead !== undefined)
+  () => selectableBoolean.value && (props.selectHead || slots.selectHead !== undefined)
 )
 
 const isSortable = computed(
