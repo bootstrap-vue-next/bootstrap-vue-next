@@ -280,7 +280,10 @@ const isSelecting = computed(() => selectedItems.value.size > 0)
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   handleRowSelection(row, index, e.shiftKey)
 }
-
+const notifySelectionEvent = () => {
+  if (!selectableBoolean.value) return
+  emits('selection', Array.from(selectedItems.value))
+}
 const handleRowSelection = (row: TableItem, index: number, shiftClicked = false) => {
   if (!selectableBoolean.value) return
 
@@ -310,7 +313,7 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
     }
   }
 
-  emits('selection', Array.from(selectedItems.value))
+  notifySelectionEvent()
 }
 
 const getFieldColumnClasses = (field: TableFieldObject) => [
@@ -336,7 +339,7 @@ const selectAllRows = () => {
     if (unselectableItems.includes(item)) return
     emits('rowSelected', item)
   })
-  emits('selection', Array.from(selectedItems.value))
+  notifySelectionEvent()
 }
 
 const clearSelected = () => {
@@ -345,7 +348,7 @@ const clearSelected = () => {
     emits('rowUnselected', item)
   })
   selectedItems.value = new Set([])
-  emits('selection', Array.from(selectedItems.value))
+  notifySelectionEvent()
 }
 
 const selectRow = (index: number) => {
@@ -354,6 +357,7 @@ const selectRow = (index: number) => {
   if (!item || selectedItems.value.has(item)) return
   selectedItems.value.add(item)
   emits('rowSelected', item)
+  notifySelectionEvent()
 }
 const unselectRow = (index: number) => {
   if (!selectableBoolean.value) return
@@ -361,6 +365,7 @@ const unselectRow = (index: number) => {
   if (!item || !selectedItems.value.has(item)) return
   selectedItems.value.delete(item)
   emits('rowUnselected', item)
+  notifySelectionEvent()
 }
 
 defineExpose({
