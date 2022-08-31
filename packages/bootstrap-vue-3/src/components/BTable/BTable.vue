@@ -62,6 +62,9 @@
           :key="ind"
           :class="getRowClasses(tr)"
           @click.prevent="onRowClick(tr, ind, $event)"
+          @dblclick.prevent="onRowDblClick(tr, ind, $event)"
+          @mouseenter.prevent="onRowMouseEnter(tr, ind, $event)"
+          @mouseleave.prevent="onRowMouseLeave(tr, ind, $event)"
         >
           <td v-if="addSelectableCell">
             <slot name="selectCell">
@@ -196,6 +199,18 @@ interface BTableEmits {
     e: 'rowClicked',
     ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
   ): void
+  (
+    e: 'rowDblClicked',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowHovered',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowUnhovered',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
   (e: 'rowSelected', value: TableItem): void
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
@@ -272,6 +287,12 @@ const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
 
   handleRowSelection(row, index, e.shiftKey)
 }
+const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
+  emits('rowDblClicked', row, index, e)
+const onRowMouseEnter = (row: TableItem, index: number, e: MouseEvent) =>
+  emits('rowHovered', row, index, e)
+const onRowMouseLeave = (row: TableItem, index: number, e: MouseEvent) =>
+  emits('rowUnhovered', row, index, e)
 
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
