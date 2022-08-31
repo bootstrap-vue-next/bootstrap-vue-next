@@ -87,6 +87,7 @@
               :value="tr[field.key]"
               :index="index"
               :item="tr"
+              :field="field"
               :items="items"
             />
             <template v-else>{{ tr[field.key] }}</template>
