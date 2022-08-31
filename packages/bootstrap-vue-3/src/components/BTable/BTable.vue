@@ -327,4 +327,13 @@ const getRowClasses = (item: TableItem) => [
     ? `selected table-${props.selectionVariant}`
     : null,
 ]
+
+const selectAllRows = () => {
+  if (!selectableBoolean.value) return
+  selectedItems.value = new Set([...computedItems.value])
+}
+
+defineExpose({
+  selectAllRows,
+})
 </script>
