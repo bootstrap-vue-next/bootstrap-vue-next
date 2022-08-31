@@ -18,7 +18,7 @@
             :abbr="field.headerAbbr"
             :style="field.thStyle"
             v-bind="field.thAttr"
-            @click="columnClicked(field)"
+            @click="headerClicked(field, $event)"
           >
             <div class="d-flex flex-nowrap align-items-center gap-1">
               <span
@@ -105,6 +105,7 @@
             :title="field.headerTitle"
             :abbr="field.headerAbbr"
             :style="field.thStyle"
+            @click="headerClicked(field, $event, true)"
           >
             {{ field.label }}
           </th>
@@ -184,6 +185,12 @@ const props = withDefaults(defineProps<BTableProps>(), {
 })
 
 interface BTableEmits {
+  (
+    e: 'headClicked',
+    ...value: Parameters<
+      (key: TableFieldObject['key'], field: TableField, event: MouseEvent, isFooter: boolean) => any
+    >
+  ): void
   (e: 'rowSelected', value: TableItem): void
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
@@ -249,6 +256,13 @@ const getFieldHeadLabel = (field: TableField) => {
   return field.key
 }
 
+const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) => {
+  const fieldKey = typeof field === 'string' ? field : field.key
+  emits('headClicked', fieldKey, field, event, isFooter)
+
+  handleFieldSorting(field)
+}
+
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
@@ -257,9 +271,8 @@ const isSortable = computed(
   () =>
     props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
 )
-const columnClicked = (field: TableField<Record<string, unknown>>) => {
-  //!! make sure to enable this flag after implementing the table.busy feature.
-  // if (props.busy) return;
+const handleFieldSorting = (field: TableField) => {
+  if (!isSortable.value) return
 
   const fieldKey = typeof field === 'string' ? field : field.key
   const fieldSortable = typeof field === 'string' ? false : field.sortable
