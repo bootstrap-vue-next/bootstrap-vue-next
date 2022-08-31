@@ -1,5 +1,5 @@
 <template>
-  <option :value="value ?? ''" :disabled="disabledBoolean">
+  <option :value="value" :disabled="disabledBoolean">
     <slot />
   </option>
 </template>
