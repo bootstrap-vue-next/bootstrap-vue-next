@@ -192,6 +192,10 @@ interface BTableEmits {
       (key: TableFieldObject['key'], field: TableField, event: MouseEvent, isFooter: boolean) => any
     >
   ): void
+  (
+    e: 'rowClicked',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
   (e: 'rowSelected', value: TableItem): void
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
@@ -263,6 +267,11 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 
   handleFieldSorting(field)
 }
+const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
+  emits('rowClicked', row, index, e)
+
+  handleRowSelection(row, index, e.shiftKey)
+}
 
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
@@ -291,9 +300,6 @@ const handleFieldSorting = (field: TableField) => {
 const selectedItems = ref<Set<TableItem>>(new Set([]))
 const isSelecting = computed(() => selectedItems.value.size > 0)
 
-const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
-  handleRowSelection(row, index, e.shiftKey)
-}
 const notifySelectionEvent = () => {
   if (!selectableBoolean.value) return
   emits('selection', Array.from(selectedItems.value))
