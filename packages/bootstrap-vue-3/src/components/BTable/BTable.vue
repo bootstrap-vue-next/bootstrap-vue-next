@@ -348,8 +348,25 @@ const clearSelected = () => {
   emits('selection', Array.from(selectedItems.value))
 }
 
+const selectRow = (index: number) => {
+  if (!selectableBoolean.value) return
+  const item = computedItems.value[index]
+  if (!item || selectedItems.value.has(item)) return
+  selectedItems.value.add(item)
+  emits('rowSelected', item)
+}
+const unselectRow = (index: number) => {
+  if (!selectableBoolean.value) return
+  const item = computedItems.value[index]
+  if (!item || !selectedItems.value.has(item)) return
+  selectedItems.value.delete(item)
+  emits('rowUnselected', item)
+}
+
 defineExpose({
   selectAllRows,
   clearSelected,
+  selectRow,
+  unselectRow,
 })
 </script>
