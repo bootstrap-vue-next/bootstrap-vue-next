@@ -173,6 +173,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   responsive: false,
   small: false,
   striped: false,
+  sortDesc: false,
   sortInternal: false,
   selectable: false,
   selectHead: true,
@@ -185,8 +186,8 @@ interface BTableEmits {
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
   (e: 'update:sortBy', value: string): void
-  (e: 'update:sortDesc', value: Booleanish): void
-  (e: 'sorted', ...value: Parameters<(sort?: {by?: string; desc?: Booleanish}) => any>): void
+  (e: 'update:sortDesc', value: boolean): void
+  (e: 'sorted', ...value: Parameters<(sort?: {by?: string; desc?: boolean}) => any>): void
 }
 
 const emits = defineEmits<BTableEmits>()
@@ -200,6 +201,7 @@ const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
 const hoverBoolean = useBooleanish(toRef(props, 'hover'))
 const smallBoolean = useBooleanish(toRef(props, 'small'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
 const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
 const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
 
@@ -226,7 +228,10 @@ const itemHelper = useItemHelper()
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 const computedItems = computed(() =>
   sortInternalBoolean.value === true
-    ? itemHelper.sortItems(props.fields, props.items, {key: props.sortBy, desc: props.sortDesc})
+    ? itemHelper.sortItems(props.fields, props.items, {
+        key: props.sortBy,
+        desc: sortDescBoolean.value,
+      })
     : props.items
 )
 
@@ -251,12 +256,12 @@ const columnClicked = (field: TableField<Record<string, unknown>>) => {
   const fieldSortable = typeof field === 'string' ? false : field.sortable
   if (isSortable.value === true && fieldSortable === true) {
     if (fieldKey === props.sortBy) {
-      emits('update:sortDesc', !props.sortDesc)
+      emits('update:sortDesc', !sortDescBoolean.value)
     } else {
       emits('update:sortBy', typeof field === 'string' ? field : field.key)
       emits('update:sortDesc', false)
     }
-    emits('sorted', {by: props.sortBy, desc: props.sortDesc})
+    emits('sorted', {by: props.sortBy, desc: sortDescBoolean.value})
   }
 }
 
