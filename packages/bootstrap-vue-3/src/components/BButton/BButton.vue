@@ -1,15 +1,18 @@
 <template>
   <component :is="computedTag" class="btn" :class="classes" v-bind="attrs" @click="clicked">
     <div
-      v-if="loading"
+      v-if="loadingBoolean"
       class="btn-loading"
       :class="{'mode-fill': loadingMode === 'fill', 'mode-inline': loadingMode === 'inline'}"
     >
       <slot name="loading">
-        <BSpinner class="btn-spinner" :small="size !== 'lg'"></BSpinner>
+        <b-spinner class="btn-spinner" :small="size !== 'lg'" />
       </slot>
     </div>
-    <div class="btn-content" :class="{'btn-loading-fill': loading && loadingMode == 'fill'}">
+    <div
+      class="btn-content"
+      :class="{'btn-loading-fill': loadingBoolean && loadingMode === 'fill'}"
+    >
       <slot />
     </div>
   </component>
@@ -17,13 +20,14 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType, toRef} from 'vue'
+import BSpinner from '../BSpinner.vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {isLink} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 export default defineComponent({
-  components: {BLink},
+  components: {BLink, BSpinner},
   props: {
     ...BLINK_PROPS,
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -48,6 +52,7 @@ export default defineComponent({
     const pillBoolean = useBooleanish(toRef(props, 'pill'))
     const pressedBoolean = useBooleanish(toRef(props, 'pressed'))
     const squaredBoolean = useBooleanish(toRef(props, 'squared'))
+    const loadingBoolean = useBooleanish(toRef(props, 'loading'))
 
     const isToggle = computed<boolean>(() => pressedBoolean.value === true)
     const isButton = computed<boolean>(
@@ -111,6 +116,7 @@ export default defineComponent({
       attrs,
       computedTag,
       clicked,
+      loadingBoolean,
     }
   },
 })

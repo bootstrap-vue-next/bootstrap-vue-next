@@ -1,5 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
+import BSpinner from '../BSpinner.vue'
 import BButton from './BButton.vue'
 import BLink from '../BLink/BLink.vue'
 
@@ -460,5 +461,140 @@ describe('button', () => {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('contains div child when prop loading', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+    })
+    const $div = wrapper.find('div')
+    expect($div.exists()).toBe(true)
+  })
+
+  it('first div child has static class btn-loading', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+    })
+    const $div = wrapper.get('div')
+    expect($div.classes()).toContain('btn-loading')
+  })
+
+  it('first div child has class mode-fill when prop loadingMode is fill', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'fill'},
+    })
+    const $div = wrapper.get('div')
+    expect($div.classes()).toContain('mode-fill')
+  })
+
+  it('first div child has class mode-inline when prop loadingMode is inline', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'inline'},
+    })
+    const $div = wrapper.get('div')
+    expect($div.classes()).toContain('mode-inline')
+  })
+
+  it('first div child has nested BSpinner by default', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'inline'},
+    })
+    const $div = wrapper.get('div')
+    const $bspinner = $div.findComponent(BSpinner)
+    expect($bspinner.exists()).toBe(true)
+  })
+
+  it('first div child nested BSpinner has static class btn-spinner', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'inline'},
+    })
+    const $div = wrapper.get('div')
+    const $bspinner = $div.getComponent(BSpinner)
+    expect($bspinner.classes()).toContain('btn-spinner')
+  })
+
+  it('first div child nested BSpinner has prop small true when size is not lg', async () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'inline'},
+    })
+    const $div = wrapper.get('div')
+    const $bspinner = $div.getComponent(BSpinner)
+    expect($bspinner.props('small')).toBe(true)
+    await wrapper.setProps({size: 'lg'})
+    expect($bspinner.props('small')).toBe(false)
+  })
+
+  it('first div child does not have bspinner when slot loading', async () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'inline'},
+      slots: {loading: 'loading...'},
+    })
+    const $div = wrapper.get('div')
+    const $bspinner = $div.findComponent(BSpinner)
+    expect($bspinner.exists()).toBe(false)
+  })
+
+  it('first div child renders slot loading', async () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'inline'},
+      slots: {loading: 'loading...'},
+    })
+    const $div = wrapper.get('div')
+    expect($div.text()).toBe('loading...')
+  })
+
+  it('both child divs exist when prop loading', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+    })
+    const [$first, $second] = wrapper.findAll('div')
+    expect($first.exists()).toBe(true)
+    expect($second.exists()).toBe(true)
+  })
+
+  it('has a second child div when not prop loading', () => {
+    const wrapper = mount(BButton)
+    const $div = wrapper.find('div')
+    expect($div.exists()).toBe(true)
+  })
+
+  it('second child div has static class btn-content', () => {
+    const wrapper = mount(BButton)
+    const $div = wrapper.get('div')
+    expect($div.classes()).toContain('btn-content')
+  })
+
+  it('second child div does not have class btn-loading-fill when prop loading false', () => {
+    const wrapper = mount(BButton)
+    const $div = wrapper.get('div')
+    expect($div.classes()).not.toContain('btn-loading-fill')
+  })
+
+  it('second child div has class btn-loading-fill when prop loading and loadingMode is fill', async () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingMode: 'fill'},
+    })
+    const [, $div] = wrapper.findAll('div')
+    expect($div.classes()).toContain('btn-loading-fill')
+    await wrapper.setProps({loadingMode: 'inline'})
+    expect($div.classes()).not.toContain('btn-loading-fill')
+  })
+
+  it('second child div renders default slot', () => {
+    const wrapper = mount(BButton, {
+      slots: {default: 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    expect($div.text()).toBe('foobar')
+  })
+
+  it('renders both slots when prop loading in correct order', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+      slots: {default: 'foobar', loading: 'loading'},
+    })
+    const [$first, $second] = wrapper.findAll('div')
+    expect($first.text()).toBe('loading')
+    expect($second.text()).toBe('foobar')
   })
 })
