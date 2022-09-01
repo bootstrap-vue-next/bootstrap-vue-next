@@ -19,7 +19,7 @@ feat(utils): update encode to support unicode
   Source-Link: googleapis/googleapis@e5eef86
 ```
 
-Conventional commits are required for the automation of Changelog and tag releases. Additional information on how to write commits can be found here [release-please](https://github.com/googleapis/release-please#how-should-i-write-my-commits)
+Conventional commits are required for the automation of Changelog and tag releases. Information on how to write commits can be found at <https://www.conventionalcommits.org/>. Additional information on how to do things like introduce multiple fixes in a single commit, or fixing release notes can be found at [release-please](https://github.com/googleapis/release-please#how-should-i-write-my-commits)
 
 ## Setting Up Your Workspace
 
@@ -82,6 +82,10 @@ Running `pnpm dev` at the root of the project will start all developable project
 ## Ask for Help
 
 Working on the app is not a solo job. It is always fine to ask how something should be done, or how something can be improved. Ask for help when you are stuck!
+
+## Safety Information
+
+In general, always be careful when clicking external links. As programmers, it should be obvious that any links opened should be scanned for authenticity. No malicious intent has ever been found anywhere in the documentation, issues, or pull requests, but always be aware. If you have noticed anything that may be malicious in this repository, open an issue **immediately**. At this time, the repository does not have a dedicated security policy
 
 ## For Collaborators: Making a New Release
 
