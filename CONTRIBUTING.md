@@ -53,8 +53,8 @@ This will begin the process to merge your changes into the upstream repository's
 
 For adding a new component, there are some notes...
 
-* They should only exist in the ./packages/bootstrap-vue-3/src/components directory
-* You should first review the ./packages/bootstrap-vue-3/src/types directory and get familiar with the internal types that you can use
+* They should only exist in the `./packages/bootstrap-vue-3/src/components` directory
+* You should first review the `./packages/bootstrap-vue-3/src/types` directory and get familiar with the internal types that you can use
 * They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are *some* exceptions to this rule regarding Vue SFC being unable to import or extend types
 * If the component is a native [Bootstrap](https://getbootstrap.com/) component, you will need to read about that component and have a thorough understanding of how it works and appears
 * If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.org/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
@@ -62,8 +62,8 @@ For adding a new component, there are some notes...
 
 After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
 
-1. Add the component to the import/export list, located in ./packages/bootstrap-vue-3/src/components/index.ts
-2. Next, it must be imported into ./packages/bootstrap-vue-3/BootstrapVue.ts *please ensure that your import is made directly to the component, and not to the previous index.ts file*
+1. Add the component to the import/export list, located in `./packages/bootstrap-vue-3/src/components/index.ts`
+2. Next, it must be imported into `./packages/bootstrap-vue-3/BootstrapVue.ts` *please ensure that your import is made directly to the component, and not to the previous index.ts file*
 3. After that, export it in the `export {}` list that contains the other components to be exported
 4. Finally, it must be included in the exported interface of **GlobalComponents**, following the pattern of `BComponent: typeof BComponent`
 
@@ -75,7 +75,7 @@ To fix an already made component, or to add a new feature to a component is a bi
 
 ## Developing
 
-The project uses a monorepo architecture. The main source files for the package exist in ./packages/bootstrap-vue-3, this is primarily where developing is done. You can make use of the ./apps/playground directory. The ./apps/playground directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, since it does not contain native hot-reloading, it makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`)
+The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-3`, this is primarily where developing is done. You can make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, since it does not contain native hot-reloading, it makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`)
 
 Running `pnpm dev` at the root of the project will start all developable projects in the workspace, including the main package, docs, and playground, In addition, running `pnpm build` will also build all relevant code-bases
 
