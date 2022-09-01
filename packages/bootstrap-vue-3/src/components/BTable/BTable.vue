@@ -309,13 +309,11 @@ const handleFieldSorting = (field: TableField) => {
   const fieldSortable = typeof field === 'string' ? false : field.sortable
   if (isSortable.value === true && fieldSortable === true) {
     const sortDesc = !sortDescBoolean.value
-    if (fieldKey === props.sortBy) {
-      emits('update:sortDesc', sortDesc)
-    } else {
-      emits('update:sortBy', typeof field === 'string' ? field : field.key)
-      emits('update:sortDesc', false)
+    if (fieldKey !== props.sortBy) {
+      emits('update:sortBy', fieldKey)
     }
-    if (props.sortBy !== undefined) emits('sorted', props.sortBy, sortDesc)
+    emits('update:sortDesc', sortDesc)
+    emits('sorted', fieldKey, sortDesc)
   }
 }
 
