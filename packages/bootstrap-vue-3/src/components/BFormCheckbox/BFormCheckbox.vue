@@ -32,14 +32,7 @@
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
 import {computed, onMounted, reactive, Ref, ref, toRef} from 'vue'
-import {
-  getClasses,
-  getInputClasses,
-  getLabelClasses,
-  useBooleanish,
-  useBooleanishUndefined,
-  useId,
-} from '../../composables'
+import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 
 interface BFormCheckboxProps {
@@ -87,15 +80,17 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   value: true,
 })
 
-const indeterminateBoolean = useBooleanishUndefined(toRef(props, 'indeterminate'))
+const indeterminateBoolean = useBooleanish(
+  toRef(props, 'indeterminate') as Ref<Booleanish | undefined>
+)
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
 const switchBoolean = useBooleanish(toRef(props, 'switch'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
-const requiredBoolean = useBooleanishUndefined(toRef(props, 'required'))
-const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
+const requiredBoolean = useBooleanish(toRef(props, 'required') as Ref<Booleanish | undefined>)
+const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 
 interface BFormCheckboxEmits {
   (e: 'update:modelValue', value: unknown): void

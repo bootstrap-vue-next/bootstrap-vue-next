@@ -13,12 +13,11 @@ import {
 } from './useFormCheck'
 import useFormInput, {COMMON_INPUT_PROPS} from './useFormInput'
 import {normalizeOptions} from './useFormSelect'
-import {useBooleanish, useBooleanishUndefined} from './useBooleanish'
+import useBooleanish from './useBooleanish'
 import useId from './useId'
 
 export {
   useAlignment,
-  useBooleanishUndefined,
   createBreadcrumb,
   useBreadcrumb,
   useEventListener,
@@ -45,7 +44,6 @@ export default {
   useEventListener,
   bindGroupProps,
   getClasses,
-  useBooleanishUndefined,
   getGroupAttr,
   getGroupClasses,
   getInputClasses,

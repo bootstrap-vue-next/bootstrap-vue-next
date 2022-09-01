@@ -31,15 +31,8 @@
 <script setup lang="ts">
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
-import {
-  getClasses,
-  getInputClasses,
-  getLabelClasses,
-  useBooleanish,
-  useBooleanishUndefined,
-  useId,
-} from '../../composables'
-import {computed, onMounted, reactive, ref, toRef} from 'vue'
+import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
+import {computed, onMounted, reactive, Ref, ref, toRef} from 'vue'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -90,7 +83,7 @@ const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
+const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 
 interface BFormRadioEmits {
   (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void

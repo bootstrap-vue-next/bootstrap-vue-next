@@ -20,7 +20,7 @@
 <script setup lang="ts">
 // import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, reactive, toRef, useSlots} from 'vue'
+import {computed, reactive, Ref, toRef, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import {
   bindGroupProps,
@@ -29,7 +29,6 @@ import {
   optionToElement,
   slotsToElements,
   useBooleanish,
-  useBooleanishUndefined,
   useId,
 } from '../../composables'
 
@@ -93,7 +92,7 @@ const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
+const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 // TODO validated is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))

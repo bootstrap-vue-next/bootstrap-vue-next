@@ -60,4 +60,10 @@ describe('useBooleanish blackbox test', () => {
     prop.value = false
     expect(value.value).toBe(false)
   })
+
+  it('returns value undefined when undefined', () => {
+    const prop: {value: Booleanish | undefined} = reactive({value: undefined})
+    const value = useBooleanish(toRef(prop, 'value'))
+    expect(value.value).toBeUndefined()
+  })
 })

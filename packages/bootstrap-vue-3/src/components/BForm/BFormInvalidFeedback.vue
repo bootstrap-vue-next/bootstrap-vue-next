@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 // import type {BFormInvalidFeedbackProps} from '../../types/components'
-import {computed, toRef} from 'vue'
+import {computed, Ref, toRef} from 'vue'
 import type {Booleanish} from '../../types'
-import {useBooleanish, useBooleanishUndefined} from '../../composables'
+import {useBooleanish} from '../../composables'
 
 interface BFormInvalidFeedbackProps {
   ariaLive?: string
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
 })
 
 const forceShowBoolean = useBooleanish(toRef(props, 'forceShow'))
-const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
+const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
 
 const computedShow = computed<boolean>(
