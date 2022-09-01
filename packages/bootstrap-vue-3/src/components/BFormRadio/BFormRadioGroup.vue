@@ -29,6 +29,7 @@ import {
   optionToElement,
   slotsToElements,
   useBooleanish,
+  useBooleanishUndefined,
   useId,
 } from '../../composables'
 
@@ -92,8 +93,7 @@ const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 // TODO state is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stateBoolean =
-  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
+const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
 // TODO validated is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))

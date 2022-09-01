@@ -44,7 +44,7 @@ import type {AriaInvalid, Booleanish, Size} from '../../types'
 import {computed, nextTick, onActivated, onMounted, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {normalizeOptions, useBooleanish, useId} from '../../composables'
+import {normalizeOptions, useBooleanish, useBooleanishUndefined, useId} from '../../composables'
 
 interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -93,8 +93,7 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const multipleBoolean = useBooleanish(toRef(props, 'multiple'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean =
-  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
+const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
 
 interface BFormSelectEmits {
   (e: 'input', value: unknown): void

@@ -32,6 +32,7 @@ import {
   optionToElement,
   slotsToElements,
   useBooleanish,
+  useBooleanishUndefined,
   useId,
 } from '../../composables'
 
@@ -89,8 +90,7 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
-const stateBoolean =
-  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
+const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
 const switchesBoolean = useBooleanish(toRef(props, 'switches'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 

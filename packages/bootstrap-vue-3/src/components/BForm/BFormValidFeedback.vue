@@ -8,7 +8,7 @@
 // import type {BFormValidFeedbackProps} from '../../types/components'
 import {computed, toRef} from 'vue'
 import type {Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
+import {useBooleanish, useBooleanishUndefined} from '../../composables'
 
 interface BFormValidFeedbackProps {
   ariaLive?: string
@@ -28,8 +28,7 @@ const props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
 })
 
 const forceShowBoolean = useBooleanish(toRef(props, 'forceShow'))
-const stateBoolean =
-  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
+const stateBoolean = useBooleanishUndefined(toRef(props, 'state'))
 const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
 
 const computedShow = computed<boolean>(
