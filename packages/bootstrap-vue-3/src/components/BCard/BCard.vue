@@ -15,11 +15,11 @@
     <!-- Body -->
     <b-card-body v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
       <slot>
-        {{ text }}
+        {{ bodyText }}
       </slot>
     </b-card-body>
     <slot v-else>
-      {{ text }}
+      {{ bodyText }}
     </slot>
     <!-- Footer -->
     <b-card-footer
@@ -87,7 +87,7 @@ interface BCardProps {
   textVariant?: TextColorVariant
   title?: string
   titleTag?: string
-  text?: string
+  bodyText?: string
 }
 
 const props = withDefaults(defineProps<BCardProps>(), {
@@ -101,7 +101,7 @@ const props = withDefaults(defineProps<BCardProps>(), {
   imgLeft: false,
   imgRight: false,
   imgStart: false,
-  text: '',
+  bodyText: '',
   imgTop: false,
   noBody: false,
   overlay: false,
