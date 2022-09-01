@@ -16,6 +16,7 @@ interface BCardImgProps {
   left?: Booleanish
   right?: Booleanish
   src?: string
+  lazy?: Booleanish
   start?: Booleanish
   top?: Booleanish
   width?: number | string
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<BCardImgProps>(), {
   left: false,
   right: false,
   alt: undefined,
+  lazy: false,
   start: false,
   top: false,
 })
@@ -37,8 +39,10 @@ const leftBoolean = useBooleanish(toRef(props, 'left'))
 const rightBoolean = useBooleanish(toRef(props, 'right'))
 const startBoolean = useBooleanish(toRef(props, 'start'))
 const topBoolean = useBooleanish(toRef(props, 'top'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 
 const attrs = computed(() => ({
+  loading: lazyBoolean.value ? 'lazy' : 'eager',
   src: props.src,
   alt: props.alt,
   width:
@@ -49,24 +53,24 @@ const attrs = computed(() => ({
     undefined,
 }))
 
-const classes = computed(() => {
-  const align = leftBoolean.value ? 'float-left' : rightBoolean.value ? 'float-right' : ''
+const alignment = computed(() =>
+  leftBoolean.value ? 'float-left' : rightBoolean.value ? 'float-right' : ''
+)
 
-  let baseClass = 'card-img'
+const baseClass = computed(() =>
+  topBoolean.value
+    ? 'card-img-top'
+    : rightBoolean.value || endBoolean.value
+    ? 'card-img-right'
+    : bottomBoolean.value
+    ? 'card-img-bottom'
+    : leftBoolean.value || startBoolean.value
+    ? 'card-img-left'
+    : 'card-img'
+)
 
-  if (topBoolean.value) {
-    baseClass += '-top'
-  } else if (rightBoolean.value || endBoolean.value) {
-    baseClass += '-right'
-  } else if (bottomBoolean.value) {
-    baseClass += '-bottom'
-  } else if (leftBoolean.value || startBoolean.value) {
-    baseClass += '-left'
-  }
-
-  return {
-    [align]: !!align,
-    [baseClass]: true,
-  }
-})
+const classes = computed(() => ({
+  [alignment.value]: !!alignment.value,
+  [baseClass.value]: !!baseClass.value,
+}))
 </script>

@@ -1,35 +1,26 @@
 <template>
-  <component :is="footerTag" class="card-footer" :class="[footerClass, classes]">
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="!!footerHtml" v-html="footerHtml" />
-    <slot v-else>
-      {{ footer }}
+  <b-card-head-foot class="card-footer" v-bind="$props">
+    <slot>
+      {{ text }}
     </slot>
-  </component>
+  </b-card-head-foot>
 </template>
 
 <script setup lang="ts">
-// import type {BCardFooterProps} from '../../types/components'
+// import type {BCardHeaderProps} from '../../types/components'
 import type {ColorVariant, TextColorVariant} from '../../types'
-import {computed} from 'vue'
+import BCardHeadFoot from './BCardHeadFoot.vue'
 
 interface BCardFooterProps {
-  footer?: string
-  footerBgVariant?: ColorVariant
-  footerBorderVariant?: ColorVariant
-  footerClass?: Array<string> | Record<string, boolean | undefined | null> | string
-  footerHtml?: string
-  footerTag?: string
-  footerTextVariant?: TextColorVariant
+  text?: string
+  bgVariant?: ColorVariant
+  borderVariant?: ColorVariant
+  html?: string
+  tag?: string
+  textVariant?: TextColorVariant
 }
 
-const props = withDefaults(defineProps<BCardFooterProps>(), {
-  footerTag: 'div',
+withDefaults(defineProps<BCardFooterProps>(), {
+  tag: 'div',
 })
-
-const classes = computed(() => ({
-  [`text-${props.footerTextVariant}`]: props.footerTextVariant !== undefined,
-  [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== undefined,
-  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== undefined,
-}))
 </script>

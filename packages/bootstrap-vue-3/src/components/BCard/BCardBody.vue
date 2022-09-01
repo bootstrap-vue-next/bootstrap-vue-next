@@ -1,13 +1,24 @@
 <template>
   <component :is="bodyTag" class="card-body" :class="classes">
-    <b-card-title v-if="title" :title-tag="titleTag" :title="title" />
+    <b-card-title v-if="!!title || $slots.title" :tag="titleTag">
+      <slot name="title">
+        {{ title }}
+      </slot>
+    </b-card-title>
+
     <b-card-sub-title
-      v-if="subTitle"
-      :sub-title-tag="subTitleTag"
-      :sub-title="subTitle"
-      :sub-title-text-variant="subTitleTextVariant"
-    />
-    <slot />
+      v-if="!!subTitle || !!$slots.subTitle"
+      :tag="subTitleTag"
+      :text-variant="subTitleTextVariant"
+    >
+      <slot name="subTitle">
+        {{ subTitle }}
+      </slot>
+    </b-card-sub-title>
+
+    <slot>
+      {{ text }}
+    </slot>
   </component>
 </template>
 
@@ -21,7 +32,6 @@ import {useBooleanish} from '../../composables'
 
 interface BCardBodyProps {
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<string> | Record<string, boolean | undefined | null> | string
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   overlay?: Booleanish
@@ -30,6 +40,7 @@ interface BCardBodyProps {
   subTitleTextVariant?: TextColorVariant
   title?: string
   titleTag?: string
+  text?: string
 }
 
 const props = withDefaults(defineProps<BCardBodyProps>(), {
@@ -39,11 +50,10 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   subTitleTag: 'h4',
 })
 
-// TODO overlay is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
 const classes = computed(() => ({
+  'card-img-overlay': overlayBoolean.value,
   [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
   [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
 }))

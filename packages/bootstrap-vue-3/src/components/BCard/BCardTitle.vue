@@ -1,7 +1,7 @@
 <template>
-  <component :is="titleTag" class="card-title">
+  <component :is="tag" class="card-title">
     <slot>
-      {{ title }}
+      {{ text }}
     </slot>
   </component>
 </template>
@@ -10,11 +10,11 @@
 // import type {BCardTitleProps} from '../../types/components'
 
 interface BCardTitleProps {
-  title?: string
-  titleTag?: string
+  text?: string
+  tag?: string
 }
 
 withDefaults(defineProps<BCardTitleProps>(), {
-  titleTag: 'h4',
+  tag: 'h4',
 })
 </script>

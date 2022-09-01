@@ -1,14 +1,10 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterAll, afterEach, describe, expect, it, vitest} from 'vitest'
+import {afterEach, describe, expect, it, vitest} from 'vitest'
 import {h} from 'vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 
 describe('form-select-option-group', () => {
   enableAutoUnmount(afterEach)
-
-  afterAll(() => {
-    console.warn.mockClear()
-  })
 
   it('has expected default structure', () => {
     const wrapper = mount(BFormSelectOptionGroup, {

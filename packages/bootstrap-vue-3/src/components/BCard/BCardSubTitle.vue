@@ -1,7 +1,7 @@
 <template>
-  <component :is="subTitleTag" class="card-subtitle mb-2" :class="classes">
+  <component :is="tag" class="card-subtitle mb-2" :class="classes">
     <slot>
-      {{ subTitle }}
+      {{ text }}
     </slot>
   </component>
 </template>
@@ -12,17 +12,17 @@ import type {TextColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BCardSubtitleProps {
-  subTitle?: string
-  subTitleTag?: string
-  subTitleTextVariant?: TextColorVariant
+  text?: string
+  tag?: string
+  textVariant?: TextColorVariant
 }
 
 const props = withDefaults(defineProps<BCardSubtitleProps>(), {
-  subTitleTag: 'h6',
-  subTitleTextVariant: 'muted',
+  tag: 'h6',
+  textVariant: 'muted',
 })
 
 const classes = computed(() => ({
-  [`text-${props.subTitleTextVariant}`]: !!props.subTitleTextVariant,
+  [`text-${props.textVariant}`]: !!props.textVariant,
 }))
 </script>

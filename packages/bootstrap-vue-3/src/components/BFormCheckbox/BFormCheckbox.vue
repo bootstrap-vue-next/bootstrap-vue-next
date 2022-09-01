@@ -80,20 +80,17 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   value: true,
 })
 
-const indeterminateBoolean =
-  props.indeterminate !== undefined
-    ? useBooleanish(toRef(props, 'indeterminate') as Ref<Booleanish>)
-    : computed(() => undefined)
+const indeterminateBoolean = useBooleanish(
+  toRef(props, 'indeterminate') as Ref<Booleanish | undefined>
+)
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
 const switchBoolean = useBooleanish(toRef(props, 'switch'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
-const requiredBoolean =
-  props.required !== undefined ? useBooleanish(toRef(props, 'required')) : computed(() => undefined)
-const stateBoolean =
-  props.state !== undefined ? useBooleanish(toRef(props, 'state')) : computed(() => undefined)
+const requiredBoolean = useBooleanish(toRef(props, 'required') as Ref<Booleanish | undefined>)
+const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 
 interface BFormCheckboxEmits {
   (e: 'update:modelValue', value: unknown): void
