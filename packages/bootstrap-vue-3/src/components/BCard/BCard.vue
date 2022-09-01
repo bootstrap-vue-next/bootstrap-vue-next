@@ -1,8 +1,6 @@
 <template>
   <component :is="tag" class="card" :class="classes">
-    <!-- Img if on top -->
     <b-card-img v-if="imgSrc && !imgBottomBoolean" v-bind="imgAttr" />
-    <!-- Header -->
     <b-card-header
       v-if="header || $slots.header || headerHtml"
       v-bind="headerAttrs"
@@ -12,7 +10,6 @@
         {{ header }}
       </slot>
     </b-card-header>
-    <!-- Body -->
     <b-card-body v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
       <slot>
         {{ bodyText }}
@@ -21,7 +18,6 @@
     <slot v-else>
       {{ bodyText }}
     </slot>
-    <!-- Footer -->
     <b-card-footer
       v-if="footer || $slots.footer || footerHtml"
       v-bind="footerAttrs"
@@ -31,7 +27,6 @@
         {{ footer }}
       </slot>
     </b-card-footer>
-    <!-- Img if on bottom -->
     <b-card-img v-if="imgSrc && imgBottomBoolean" v-bind="imgAttr" />
   </component>
 </template>
@@ -149,7 +144,7 @@ const bodyAttrs = computed(() => ({
 
 const footerAttrs = computed(() => ({
   bgVariant: props.footerBgVariant,
-  borderVariant: props.borderVariant,
+  borderVariant: props.footerBorderVariant,
   html: props.footerHtml,
   tag: props.footerTag,
   textVariant: props.footerTextVariant,
