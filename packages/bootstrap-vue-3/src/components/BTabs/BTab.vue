@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 // import type {BTabProps} from '../../types/components'
-import type {Booleanish, ClassAttr} from '../../types'
+import type {Booleanish, ClassValue} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, inject, toRef} from 'vue'
 import {injectionKey} from './BTabs.vue'
@@ -27,9 +27,9 @@ interface BTabProps {
   lazy?: Booleanish
   noBody?: boolean | string
   tag?: string
-  titleItemClass?: ClassAttr
+  titleItemClass?: ClassValue
   titleLinkAttributes?: Record<string, unknown>
-  titleLinkClass?: ClassAttr
+  titleLinkClass?: ClassValue
 }
 
 const props = withDefaults(defineProps<BTabProps>(), {

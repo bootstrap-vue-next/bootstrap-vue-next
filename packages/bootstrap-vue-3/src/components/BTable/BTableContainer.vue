@@ -8,11 +8,11 @@
 </template>
 
 <script lang="ts" setup>
-import type {ClassAttr} from '../../types'
+import type {ClassValue} from '../../types'
 
 interface BTableContainerProps {
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-  responsiveClasses?: ClassAttr
+  responsiveClasses?: ClassValue
 }
 
 withDefaults(defineProps<BTableContainerProps>(), {

@@ -121,7 +121,7 @@ import {useBooleanish, useId} from '../../composables'
 import type {
   Booleanish,
   ButtonVariant,
-  ClassAttr,
+  ClassValue,
   ColorVariant,
   InputSize,
   InputType,
@@ -135,7 +135,7 @@ interface BFormTagsProps {
   disabled?: Booleanish
   duplicateTagText?: string
   inputAttrs?: Record<string, unknown>
-  inputClass?: ClassAttr
+  inputClass?: ClassValue
   inputId?: string
   inputType?: InputType
   invalidTagText?: string
@@ -153,7 +153,7 @@ interface BFormTagsProps {
   separator?: string | Array<unknown>
   state?: Booleanish
   size?: InputSize
-  tagClass?: ClassAttr
+  tagClass?: ClassValue
   tagPills?: Booleanish
   tagRemoveLabel?: string
   tagRemovedLabel?: string
