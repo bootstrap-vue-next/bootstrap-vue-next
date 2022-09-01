@@ -46,7 +46,7 @@ import type Popper from '@popperjs/core'
 import {Dropdown} from 'bootstrap'
 import {ComponentPublicInstance, computed, onMounted, ref, toRef} from 'vue'
 import BButton from '../BButton/BButton.vue'
-import type {Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
+import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {mergeDeep} from '../../utils'
 import {useBooleanish, useEventListener, useId} from '../../composables'
 
@@ -54,12 +54,12 @@ import {useBooleanish, useEventListener, useId} from '../../composables'
 // So some of them could be converted to their pure types similar to Popper.Boundary
 interface BDropdownProps {
   id?: string
-  menuClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  menuClass?: ClassValue
   size?: Size
-  splitClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  splitClass?: ClassValue
   splitVariant?: ButtonVariant
   text?: string
-  toggleClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  toggleClass?: ClassValue
   autoClose?: boolean | 'inside' | 'outside'
   block?: Booleanish
   boundary?: Popper.Boundary

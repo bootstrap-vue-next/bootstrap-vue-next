@@ -38,7 +38,7 @@
 
 BootstrapVue3 is an attempt to have [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have components written in a simple and readable way.
 
-As you may suppose, this library is heavily inspired by **BootstrapVue**, as well as the components properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with **BootstrapVue**, so it will be easy to switch between libraries.
+As you may suppose, this library is heavily inspired by **BootstrapVue**, as well as its component properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with **BootstrapVue**, so it will be easy to switch between libraries.
 
 # Install
 
@@ -59,7 +59,7 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 
 - submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues/new)
 - or better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls)
-- or even better, visit [my patreon page](https://patreon.com/cdmoro) and support me 😄
+- or even better, visit [my Patreon page](https://patreon.com/cdmoro) and support me 😄
 
 Read our [Contribution Guide](https://github.com/cdmoro/bootstrap-vue-3/blob/main/CONTRIBUTING.md) on how to start helping
 
