@@ -18,7 +18,7 @@
             :abbr="field.headerAbbr"
             :style="field.thStyle"
             v-bind="field.thAttr"
-            @click="columnClicked(field)"
+            @click="headerClicked(field, $event)"
           >
             <div class="d-flex flex-nowrap align-items-center gap-1">
               <span
@@ -34,7 +34,7 @@
                   :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
                   :label="field.label"
                 />
-                <template v-else>{{ field.label }}</template>
+                <template v-else>{{ getFieldHeadLabel(field) }}</template>
               </div>
             </div>
           </th>
@@ -62,6 +62,9 @@
           :key="ind"
           :class="getRowClasses(tr)"
           @click.prevent="onRowClick(tr, ind, $event)"
+          @dblclick.prevent="onRowDblClick(tr, ind, $event)"
+          @mouseenter.prevent="onRowMouseEnter(tr, ind, $event)"
+          @mouseleave.prevent="onRowMouseLeave(tr, ind, $event)"
         >
           <td v-if="addSelectableCell">
             <slot name="selectCell">
@@ -105,6 +108,7 @@
             :title="field.headerTitle"
             :abbr="field.headerAbbr"
             :style="field.thStyle"
+            @click="headerClicked(field, $event, true)"
           >
             {{ field.label }}
           </th>
@@ -126,6 +130,8 @@
 // import type {Breakpoint} from '../../types'
 import {computed, ref, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
+import {titleCase} from '../../utils/stringUtils'
+
 import type {
   Booleanish,
   ColorVariant,
@@ -183,12 +189,34 @@ const props = withDefaults(defineProps<BTableProps>(), {
 })
 
 interface BTableEmits {
+  (
+    e: 'headClicked',
+    ...value: Parameters<
+      (key: TableFieldObject['key'], field: TableField, event: MouseEvent, isFooter: boolean) => any
+    >
+  ): void
+  (
+    e: 'rowClicked',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowDblClicked',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowHovered',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowUnhovered',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
   (e: 'rowSelected', value: TableItem): void
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
   (e: 'update:sortBy', value: string): void
   (e: 'update:sortDesc', value: boolean): void
-  (e: 'sorted', ...value: Parameters<(sort?: {by?: string; desc?: boolean}) => any>): void
+  (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
 }
 
 const emits = defineEmits<BTableEmits>()
@@ -241,6 +269,31 @@ const responsiveClasses = computed(() => ({
   [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
 }))
 
+const getFieldHeadLabel = (field: TableField) => {
+  if (typeof field === 'string') return titleCase(field)
+  if (field.label !== undefined) return field.label
+  if (typeof field.key === 'string') return titleCase(field.key)
+  return field.key
+}
+
+const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) => {
+  const fieldKey = typeof field === 'string' ? field : field.key
+  emits('headClicked', fieldKey, field, event, isFooter)
+
+  handleFieldSorting(field)
+}
+const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
+  emits('rowClicked', row, index, e)
+
+  handleRowSelection(row, index, e.shiftKey)
+}
+const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
+  emits('rowDblClicked', row, index, e)
+const onRowMouseEnter = (row: TableItem, index: number, e: MouseEvent) =>
+  emits('rowHovered', row, index, e)
+const onRowMouseLeave = (row: TableItem, index: number, e: MouseEvent) =>
+  emits('rowUnhovered', row, index, e)
+
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
@@ -249,30 +302,28 @@ const isSortable = computed(
   () =>
     props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
 )
-const columnClicked = (field: TableField<Record<string, unknown>>) => {
-  //!! make sure to enable this flag after implementing the table.busy feature.
-  // if (props.busy) return;
+const handleFieldSorting = (field: TableField) => {
+  if (!isSortable.value) return
 
   const fieldKey = typeof field === 'string' ? field : field.key
   const fieldSortable = typeof field === 'string' ? false : field.sortable
   if (isSortable.value === true && fieldSortable === true) {
-    if (fieldKey === props.sortBy) {
-      emits('update:sortDesc', !sortDescBoolean.value)
-    } else {
-      emits('update:sortBy', typeof field === 'string' ? field : field.key)
-      emits('update:sortDesc', false)
+    const sortDesc = !sortDescBoolean.value
+    if (fieldKey !== props.sortBy) {
+      emits('update:sortBy', fieldKey)
     }
-    emits('sorted', {by: props.sortBy, desc: sortDescBoolean.value})
+    emits('update:sortDesc', sortDesc)
+    emits('sorted', fieldKey, sortDesc)
   }
 }
 
 const selectedItems = ref<Set<TableItem>>(new Set([]))
 const isSelecting = computed(() => selectedItems.value.size > 0)
 
-const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
-  handleRowSelection(row, index, e.shiftKey)
+const notifySelectionEvent = () => {
+  if (!selectableBoolean.value) return
+  emits('selection', Array.from(selectedItems.value))
 }
-
 const handleRowSelection = (row: TableItem, index: number, shiftClicked = false) => {
   if (!selectableBoolean.value) return
 
@@ -302,7 +353,7 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
     }
   }
 
-  emits('selection', Array.from(selectedItems.value))
+  notifySelectionEvent()
 }
 
 const getFieldColumnClasses = (field: TableFieldObject) => [
@@ -319,4 +370,48 @@ const getRowClasses = (item: TableItem) => [
     ? `selected table-${props.selectionVariant}`
     : null,
 ]
+
+const selectAllRows = () => {
+  if (!selectableBoolean.value) return
+  const unselectableItems = selectedItems.value.size > 0 ? Array.from(selectedItems.value) : []
+  selectedItems.value = new Set([...computedItems.value])
+  selectedItems.value.forEach((item) => {
+    if (unselectableItems.includes(item)) return
+    emits('rowSelected', item)
+  })
+  notifySelectionEvent()
+}
+
+const clearSelected = () => {
+  if (!selectableBoolean.value) return
+  selectedItems.value.forEach((item) => {
+    emits('rowUnselected', item)
+  })
+  selectedItems.value = new Set([])
+  notifySelectionEvent()
+}
+
+const selectRow = (index: number) => {
+  if (!selectableBoolean.value) return
+  const item = computedItems.value[index]
+  if (!item || selectedItems.value.has(item)) return
+  selectedItems.value.add(item)
+  emits('rowSelected', item)
+  notifySelectionEvent()
+}
+const unselectRow = (index: number) => {
+  if (!selectableBoolean.value) return
+  const item = computedItems.value[index]
+  if (!item || !selectedItems.value.has(item)) return
+  selectedItems.value.delete(item)
+  emits('rowUnselected', item)
+  notifySelectionEvent()
+}
+
+defineExpose({
+  selectAllRows,
+  clearSelected,
+  selectRow,
+  unselectRow,
+})
 </script>
