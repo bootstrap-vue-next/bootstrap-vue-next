@@ -1,44 +1,97 @@
-# Contribution workflow
+# Contribution Workflow
 
-## Setting up your workspace
+## Use [Conventional Commit](https://www.conventionalcommits.org/) for Commit Messages
 
-Setting up your workspace is simple and follows other open-source rules, if you are new and unfamiliar with the flow: Fork the repository, then git clone your own repository. You can make any changes you want to in this repository of yours. You can commit and push changes without any changes to the main package. After you have pushed changes up to GitHub in your own repository, visit your GitHub's repository, there should be a notification at the top saying changes have been made, you can click that prompt, or the "Contribute" button and open a pull request to the main package. This pull request, if merged, will affect the main package. **Please use [conventional commit](https://www.conventionalcommits.org/) messages**
+It is vital to use the conventional commit standard when writing your commit messages. If your commit contains many fixes or enhancements you can use footers, for example:
 
-## Registering new components
+```txt
+feat: adds v4 UUID to crypto
 
-For adding a new component, the general workflow is to add the new component in the ./packages/bootstrap-vue-3/src/components dir. They should follow the same `<script setup>` syntax as other components, with props and emits strongly typed as pure Typescript interfaces. For building the component, it's relatively simple, you're not reinventing the wheel. A first place to start with gathering information on props/etc, is to check <https://bootstrap-vue.org/> on their implementation of the component. Since some features may have changed, after an initial "copy" of their props and features, you would like to then check <https://getbootstrap.com/> to see if anything has changed. This is where the bulk of the research is done, because it requires a bit of knowledge about how their components work. In general, most components are just some div's with some classes, some slots, and some props. Simply copy the classes directly from bootstrap's website, as they will work automatically, no sass required. Some notes:
+This adds support for v4 UUIDs to the library.
 
-* Preferably, a copy of the props and emits interfaces also exist in the ./packages/bootstrap-vue-3/src/types/components directory. This is in anticipation for when (hopefully) Vue's compiler can scrub and use external interfaces for props and emits.
-* It is beneficial for when building a new component, to create your own tests. It takes longer to develop, but as the author you should generally know your component the best.
-* Become familiar with the ./packages/bootstrap-vue-3/src/types files in the library. If a type is the same, it is great to have it stored in one place. The more strongly-typed code we can get, the better.
+fix(utils): unicode no longer throws exception
+  PiperOrigin-RevId: 345559154
+  BREAKING-CHANGE: encode method no longer throws.
+  Source-Link: googleapis/googleapis@5e0dcb2
 
-After a component is finished, there are two places where it needs to be exposed in order for users of the library to use it
+feat(utils): update encode to support unicode
+  PiperOrigin-RevId: 345559182
+  Source-Link: googleapis/googleapis@e5eef86
+```
 
-1. Add it to the import/export list in ./packages/bootstrap-vue-3/src/components/index.ts
-2. Next, it must be also imported/exported from ./packages/bootstrap-vue-3/BootstrapVue.ts. This ensures that it is able to be used by the user.
-3. In addition to exporting it from ./packages/bootstrap-vue-3/BootstrapVue.ts, you need to add the component into the "GlobalComponents" Typescript interface in that file. This ensures users get proper intellisense when using the component. This should be self explanitory on how to do when you read the file.
+Conventional commits are required for the automation of Changelog and tag releases. Additional information on how to write commits can be found here [release-please](https://github.com/googleapis/release-please#how-should-i-write-my-commits)
 
-## Fixing old components
+## Setting Up Your Workspace
 
-Significantly easier, is fixing bugs on other people's components. They are generally fairly small fixes requiring little code. Fix the component, make a test to ensure it doesn't happen again, then PR it.
+Setting up your workspace follows traditional open-source flows, if you are already familiar with the process, you can most likely skip this section:
+
+1. Go to the [GitHub](https://github.com/cdmoro/bootstrap-vue-3) URL
+2. Click **Fork** at the top
+3. On your IDE of choice, clone your own, new, forked repository
+
+This repository is where you will make your changes to. You can safely run `git push ...` and other commands in this repository
+
+When opening your repository, it is usually best to open the **root** folder, not a subdirectory such as `./packages/bootstrap-vue-3`. Eslint rules can sometimes get lost when opening a subdirectory of a workspace. If you do not have the recommended IDE extensions, it will usually suggest that you install them, but this is technically optional. You can finally run at the root:
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Only pnpm is allowed, attempting to run any other package manager tool will cause a warning error. View pnpm installation [here](https://pnpm.io/installation)
+
+Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
+
+1. Go to your forked repository on [GitHub](https://github.com/)
+2. Switch to the correct branch that you have been working on, this is usually the `main` branch, for simplicity
+3. Click the **Contribute** button near the top of the page
+4. Click **Open pull request**
+
+This will begin the process to merge your changes into the [upstream](https://github.com/cdmoro/bootstrap-vue-3) repository's main branch
+
+## Registering New Components
+
+For adding a new component, there are some notes...
+
+* They should only exist in the ./packages/bootstrap-vue-3/src/components directory
+* You should first review the ./packages/bootstrap-vue-3/src/types directory and get familiar with the internal types that you can use
+* They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are *some* exceptions to this rule regarding Vue SFC being unable to import or extend types
+* If the component is a native [Bootstrap](https://getbootstrap.com/) component, you will need to read about that component and have a thorough understanding of how it works and appears
+* If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.org/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
+* All Props and Emits should be fully written as TypeScript interfaces, the more strongly typed, the better
+
+After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
+
+1. Add the component to the import/export list, located in ./packages/bootstrap-vue-3/src/components/index.ts
+2. Next, it must be imported into ./packages/bootstrap-vue-3/BootstrapVue.ts *please ensure that your import is made directly to the component, and not to the previous index.ts file*
+3. After that, export it in the `export {}` list that contains the other components to be exported
+4. Finally, it must be included in the exported interface of **GlobalComponents**, following the pattern of `BComponent: typeof BComponent`
+
+That is it!
+
+## Fixing or Adding Features to Components
+
+To fix an already made component, or to add a new feature to a component is a bit easier. You will need to identify a need for the fix, understand the file in question, then apply the change. It is not as complex as making an entirely new component. After you are finished with your change and are making a pull request, it can sometimes be very beneficial to include a code reproduction that shows the changes visually but is not required
 
 ## Developing
 
-The project uses a monorepo architecture. The main source files for the package exist in ./packages/bootstrap-vue-3, but for ease of use, there is a test playground in ./apps/playground. This is where you can test out your Vue code, as it mimics using the library just as a user would.
+The project uses a monorepo architecture. The main source files for the package exist in ./packages/bootstrap-vue-3, this is primarily where developing is done. You can make use of the ./apps/playground directory. The ./apps/playground directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, since it does not contain native hot-reloading, it makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`)
 
-## Ask for help
+Running `pnpm dev` at the root of the project will start all developable projects in the workspace, including the main package, docs, and playground, In addition, running `pnpm build` will also build all relevant code-bases
 
-Working on the app is not a solo job. It is always fine to ask on how something should be done, or how something can be improved. Ask for help when you're stuck!
+## Ask for Help
 
-## Making a new release
+Working on the app is not a solo job. It is always fine to ask how something should be done, or how something can be improved. Ask for help when you are stuck!
 
-Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yaml` workflow will auto generate releases when using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
+## For Collaborators: Making a New Release
+
+Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yaml` workflow will auto-generate releases when using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
 
 The workflow `.github/workflows/npm-publish.yaml` will then auto-publish at <https://www.npmjs.com/package/bootstrap-vue-3>
 
-## Manual releases
+## For Collaborators: Manual Releases
 
-One could also manually create a release PR using the cli, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto generate a PR containing the new release notes
+One could also manually create a release PR using the CLI, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto-generate a PR containing the new release notes
 
 It will then auto-publish as stated before
 
