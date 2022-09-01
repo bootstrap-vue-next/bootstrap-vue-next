@@ -216,7 +216,7 @@ interface BTableEmits {
   (e: 'selection', value: TableItem[]): void
   (e: 'update:sortBy', value: string): void
   (e: 'update:sortDesc', value: boolean): void
-  (e: 'sorted', ...value: Parameters<(sort?: {by?: string; desc?: boolean}) => any>): void
+  (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
 }
 
 const emits = defineEmits<BTableEmits>()
@@ -308,13 +308,14 @@ const handleFieldSorting = (field: TableField) => {
   const fieldKey = typeof field === 'string' ? field : field.key
   const fieldSortable = typeof field === 'string' ? false : field.sortable
   if (isSortable.value === true && fieldSortable === true) {
+    const sortDesc = !sortDescBoolean.value
     if (fieldKey === props.sortBy) {
-      emits('update:sortDesc', !sortDescBoolean.value)
+      emits('update:sortDesc', sortDesc)
     } else {
       emits('update:sortBy', typeof field === 'string' ? field : field.key)
       emits('update:sortDesc', false)
     }
-    emits('sorted', {by: props.sortBy, desc: sortDescBoolean.value})
+    if (props.sortBy !== undefined) emits('sorted', props.sortBy, sortDesc)
   }
 }
 
