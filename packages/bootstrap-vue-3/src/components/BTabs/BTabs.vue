@@ -67,21 +67,21 @@ import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
 import {BvEvent, getID, isFunction} from '../../utils'
 import {useBooleanish} from '../../composables'
-import type {Alignment, Booleanish} from '../../types'
+import type {Alignment, Booleanish, ClassType} from '../../types'
 
 interface BTabsProps {
-  activeNavItemClass?: Array<string> | Record<string, boolean | undefined | null> | string
-  activeTabClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  activeNavItemClass?: ClassType
+  activeTabClass?: ClassType
   align?: Alignment
   card?: Booleanish
-  contentClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  contentClass?: ClassType
   end?: Booleanish
   fill?: Booleanish
   id?: string
   justified?: Booleanish
   lazy?: Booleanish
-  navClass?: Array<string> | Record<string, boolean | undefined | null> | string
-  navWrapperClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  navClass?: ClassType
+  navWrapperClass?: ClassType
   noFade?: Booleanish
   // noKeyNav?: Booleanish
   noNavStyle?: Booleanish

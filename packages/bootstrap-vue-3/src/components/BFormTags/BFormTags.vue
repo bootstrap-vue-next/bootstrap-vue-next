@@ -118,7 +118,14 @@ import {
 } from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, ButtonVariant, ColorVariant, InputSize, InputType} from '../../types'
+import type {
+  Booleanish,
+  ButtonVariant,
+  ClassType,
+  ColorVariant,
+  InputSize,
+  InputType,
+} from '../../types'
 
 interface BFormTagsProps {
   addButtonText?: string
@@ -128,7 +135,7 @@ interface BFormTagsProps {
   disabled?: Booleanish
   duplicateTagText?: string
   inputAttrs?: Record<string, unknown>
-  inputClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  inputClass?: ClassType
   inputId?: string
   inputType?: InputType
   invalidTagText?: string
@@ -146,7 +153,7 @@ interface BFormTagsProps {
   separator?: string | Array<unknown>
   state?: Booleanish
   size?: InputSize
-  tagClass?: Array<string> | Record<string, boolean | undefined | null> | string
+  tagClass?: ClassType
   tagPills?: Booleanish
   tagRemoveLabel?: string
   tagRemovedLabel?: string
