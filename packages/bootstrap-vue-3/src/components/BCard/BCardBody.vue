@@ -50,11 +50,10 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   subTitleTag: 'h4',
 })
 
-// TODO overlay is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
 const classes = computed(() => ({
+  'card-img-overlay': overlayBoolean.value,
   [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
   [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
 }))

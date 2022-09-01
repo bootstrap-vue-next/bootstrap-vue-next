@@ -1,17 +1,13 @@
 <template>
-  <component :is="tag" class="card-header" :class="classes">
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="!!html" v-html="html" />
-    <slot v-else>
-      {{ text }}
-    </slot>
-  </component>
+  <b-card-head-foot class="card-header" v-bind="$props">
+    <slot />
+  </b-card-head-foot>
 </template>
 
 <script setup lang="ts">
 // import type {BCardHeaderProps} from '../../types/components'
-import {computed} from 'vue'
 import type {ColorVariant, TextColorVariant} from '../../types'
+import BCardHeadFoot from './BCardHeadFoot.vue'
 
 interface BCardHeaderProps {
   text?: string
@@ -22,13 +18,7 @@ interface BCardHeaderProps {
   textVariant?: TextColorVariant
 }
 
-const props = withDefaults(defineProps<BCardHeaderProps>(), {
+withDefaults(defineProps<BCardHeaderProps>(), {
   tag: 'div',
 })
-
-const classes = computed(() => ({
-  [`text-${props.textVariant}`]: props.textVariant !== undefined,
-  [`bg-${props.bgVariant}`]: props.bgVariant !== undefined,
-  [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
-}))
 </script>

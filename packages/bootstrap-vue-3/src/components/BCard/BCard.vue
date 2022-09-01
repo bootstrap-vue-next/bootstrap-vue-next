@@ -1,48 +1,38 @@
 <template>
   <component :is="tag" class="card" :class="classes">
-    <!-- replace with BCardImg -->
-    <img v-if="imgSrc && !imgBottomBoolean" v-bind="imgAttr" :class="imgClasses" />
-    <component
-      :is="headerTag"
+    <!-- Img if on top -->
+    <b-card-img v-if="imgSrc && !imgBottomBoolean" v-bind="imgAttr" />
+    <!-- Header -->
+    <b-card-header
       v-if="header || $slots.header || headerHtml"
-      class="card-header"
-      :class="[headerClass, headerClasses]"
+      v-bind="headerAttrs"
+      :class="headerClass"
     >
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-if="!!headerHtml" v-html="headerHtml" />
-      <slot v-else name="header">
+      <slot name="header">
         {{ header }}
       </slot>
-    </component>
-
-    <component :is="bodyTag" v-if="!noBodyBoolean" :class="[bodyClass, bodyClasses]">
-      <component :is="titleTag" v-if="title && !noBodyBoolean" class="card-title">
-        {{ title }}
-      </component>
-      <component
-        :is="subTitleTag"
-        v-if="subTitle && !noBodyBoolean"
-        class="card-subtitle mb-2"
-        :class="subTitleClasses"
-      >
-        {{ subTitle }}
-      </component>
-      <slot />
-    </component>
-    <slot v-if="noBodyBoolean" />
-    <component
-      :is="footerTag"
+    </b-card-header>
+    <!-- Body -->
+    <b-card-body v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
+      <slot>
+        {{ text }}
+      </slot>
+    </b-card-body>
+    <slot v-else>
+      {{ text }}
+    </slot>
+    <!-- Footer -->
+    <b-card-footer
       v-if="footer || $slots.footer || footerHtml"
-      class="card-footer"
-      :class="[footerClass, footerClasses]"
+      v-bind="footerAttrs"
+      :class="footerClass"
     >
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-if="!!footerHtml" v-html="footerHtml" />
-      <slot v-else name="footer">
+      <slot name="footer">
         {{ footer }}
       </slot>
-    </component>
-    <img v-if="imgSrc && imgBottomBoolean" v-bind="imgAttr" :class="imgClasses" />
+    </b-card-footer>
+    <!-- Img if on bottom -->
+    <b-card-img v-if="imgSrc && imgBottomBoolean" v-bind="imgAttr" />
   </component>
 </template>
 
@@ -51,6 +41,10 @@
 import type {Alignment, Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
+import BCardImg from './BCardImg.vue'
+import BCardHeader from './BCardHeader.vue'
+import BCardBody from './BCardBody.vue'
+import BCardFooter from './BCardFooter.vue'
 
 interface BCardProps {
   align?: Alignment
@@ -93,6 +87,7 @@ interface BCardProps {
   textVariant?: TextColorVariant
   title?: string
   titleTag?: string
+  text?: string
 }
 
 const props = withDefaults(defineProps<BCardProps>(), {
@@ -106,6 +101,7 @@ const props = withDefaults(defineProps<BCardProps>(), {
   imgLeft: false,
   imgRight: false,
   imgStart: false,
+  text: '',
   imgTop: false,
   noBody: false,
   overlay: false,
@@ -120,9 +116,7 @@ const imgEndBoolean = useBooleanish(toRef(props, 'imgEnd'))
 const imgLeftBoolean = useBooleanish(toRef(props, 'imgLeft'))
 const imgRightBoolean = useBooleanish(toRef(props, 'imgRight'))
 const imgStartBoolean = useBooleanish(toRef(props, 'imgStart'))
-const imgTopBoolean = useBooleanish(toRef(props, 'imgTop'))
 const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
-const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
 const classes = computed(() => ({
   [`text-${props.align}`]: props.align !== undefined,
@@ -133,53 +127,44 @@ const classes = computed(() => ({
   'flex-row-reverse': imgEndBoolean.value || imgRightBoolean.value,
 }))
 
-const bodyClasses = computed(() => ({
-  'card-body': !noBodyBoolean.value,
-  'card-img-overlay': overlayBoolean.value,
-  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
-  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
+const headerAttrs = computed(() => ({
+  bgVariant: props.headerBgVariant,
+  borderVariant: props.headerBorderVariant,
+  html: props.headerHtml,
+  tag: props.headerTag,
+  textVariant: props.headerTextVariant,
 }))
 
-const footerClasses = computed(() => ({
-  [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== undefined,
-  [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== undefined,
-  [`text-${props.footerTextVariant}`]: props.footerTextVariant !== undefined,
+const bodyAttrs = computed(() => ({
+  overlay: props.overlay,
+  bodyBgVariant: props.bodyBgVariant,
+  bodyTag: props.bodyTag,
+  bodyTextVariant: props.bodyTextVariant,
+  subTitle: props.subTitle,
+  subTitleTag: props.subTitleTag,
+  subTitleTextVariant: props.subTitleTextVariant,
+  title: props.title,
+  titleTag: props.titleTag,
 }))
 
-const headerClasses = computed(() => ({
-  [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== undefined,
-  [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== undefined,
-  [`text-${props.headerTextVariant}`]: props.headerTextVariant !== undefined,
-}))
-
-const imgClasses = computed(() => ({
-  'card-img':
-    !imgEndBoolean.value &&
-    !imgRightBoolean.value &&
-    !imgStartBoolean.value &&
-    !imgLeftBoolean.value &&
-    !imgTopBoolean.value &&
-    !imgTopBoolean.value,
-  'card-img-right': imgEndBoolean.value || imgRightBoolean.value,
-  'card-img-left': imgStartBoolean.value || imgLeftBoolean.value,
-  'card-img-top': imgTopBoolean.value,
-  'card-img-bottom': imgBottomBoolean.value,
+const footerAttrs = computed(() => ({
+  bgVariant: props.footerBgVariant,
+  borderVariant: props.borderVariant,
+  html: props.footerHtml,
+  tag: props.footerTag,
+  textVariant: props.footerTextVariant,
 }))
 
 const imgAttr = computed(() => ({
   src: props.imgSrc,
   alt: props.imgAlt,
-  height:
-    (typeof props.imgHeight === 'number'
-      ? props.imgHeight
-      : parseInt(props.imgHeight as string, 10)) || undefined,
-  width:
-    (typeof props.imgWidth === 'number'
-      ? props.imgWidth
-      : parseInt(props.imgWidth as string, 10)) || undefined,
-}))
-
-const subTitleClasses = computed(() => ({
-  [`text-${props.subTitleTextVariant}`]: !!props.subTitleTextVariant,
+  height: props.imgHeight,
+  width: props.imgWidth,
+  bottom: props.imgBottom,
+  end: props.imgEnd,
+  left: props.imgLeft,
+  right: props.imgRight,
+  start: props.imgStart,
+  top: props.imgTop,
 }))
 </script>

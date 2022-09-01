@@ -170,4 +170,13 @@ describe('card-body', () => {
     })
     expect(wrapper.text()).toBe('titlesubtitledefault')
   })
+
+  it('has class card-img-overlay when prop overlay', async () => {
+    const wrapper = mount(BCardBody, {
+      props: {overlay: true},
+    })
+    expect(wrapper.classes()).toContain('card-img-overlay')
+    await wrapper.setProps({overlay: false})
+    expect(wrapper.classes()).not.toContain('card-img-overlay')
+  })
 })
