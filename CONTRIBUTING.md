@@ -19,13 +19,13 @@ feat(utils): update encode to support unicode
   Source-Link: googleapis/googleapis@e5eef86
 ```
 
-Conventional commits are required for the automation of Changelog and tag releases. Information on how to write commits can be found at <https://www.conventionalcommits.org/>. Additional information on how to do things like introduce multiple fixes in a single commit, or fixing release notes can be found at [release-please](https://github.com/googleapis/release-please#how-should-i-write-my-commits)
+Conventional commits are required for the automation of Changelog and tag releases. Information on how to write commits can be found at <https://www.conventionalcommits.org/>. Additional information on how to do things like introduce multiple fixes in a single commit, or fixing release notes can be found at <https://github.com/googleapis/release-please#how-should-i-write-my-commits>
 
 ## Setting Up Your Workspace
 
 Setting up your workspace follows traditional open-source flows, if you are already familiar with the process, you can most likely skip this section:
 
-1. Go to the [GitHub](https://github.com/cdmoro/bootstrap-vue-3) URL
+1. Go to the <https://github.com/cdmoro/bootstrap-vue-3>
 2. Click **Fork** at the top
 3. On your IDE of choice, clone your own, new, forked repository
 
@@ -38,16 +38,16 @@ pnpm install
 pnpm dev
 ```
 
-Only pnpm is allowed, attempting to run any other package manager tool will cause a warning error. View pnpm installation [here](https://pnpm.io/installation)
+Only pnpm is allowed, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
 
 Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
 
-1. Go to your forked repository on [GitHub](https://github.com/)
+1. Go to your forked repository on <https://github.com/>
 2. Switch to the correct branch that you have been working on, this is usually the `main` branch, for simplicity
 3. Click the **Contribute** button near the top of the page
 4. Click **Open pull request**
 
-This will begin the process to merge your changes into the [upstream](https://github.com/cdmoro/bootstrap-vue-3) repository's main branch
+This will begin the process to merge your changes into the upstream repository's main branch
 
 ## Registering New Components
 
@@ -89,13 +89,13 @@ In general, always be careful when clicking external links. As programmers, it s
 
 ## For Collaborators: Making a New Release
 
-Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yaml` workflow will auto-generate releases when using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
+Bootstrap Vue 3 uses <https://github.com/googleapis/release-please> to automate releases using workflows. The `.github/workflows/release-please.yaml` workflow will auto-generate releases when using conventional commits. We encourage all commit messages to follow conventional commit guidelines to keep commits clean and automate releases
 
 The workflow `.github/workflows/npm-publish.yaml` will then auto-publish at <https://www.npmjs.com/package/bootstrap-vue-3>
 
 ## For Collaborators: Manual Releases
 
-One could also manually create a release PR using the CLI, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto-generate a PR containing the new release notes
+One could also manually create a release PR using the CLI, directions at <https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli>. Follow the directions for bootstrapping and creating a release, then it will auto-generate a PR containing the new release notes
 
 It will then auto-publish as stated before
 
