@@ -19,7 +19,7 @@ feat(utils): update encode to support unicode
   Source-Link: googleapis/googleapis@e5eef86
 ```
 
-Conventional commits are required for the automation of Changelog and tag releases. Information on how to write commits can be found at <https://www.conventionalcommits.org/>. Additional information on how to do things like introduce multiple fixes in a single commit, or fixing release notes can be found at <https://github.com/googleapis/release-please#how-should-i-write-my-commits>
+Conventional commits are required for the automation of changelog and tag releases. Information on how to write commits can be found at <https://www.conventionalcommits.org/>. Additional information on how to do things like introduce multiple fixes in a single commit, or fixing release notes can be found at <https://github.com/googleapis/release-please#how-should-i-write-my-commits>
 
 ## Setting Up Your Workspace
 
