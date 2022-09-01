@@ -16,12 +16,12 @@
 // import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
 import BLink from '../BLink/BLink.vue'
 import {computed, toRef, useAttrs} from 'vue'
-import type {Booleanish, ClassType, ColorVariant, LinkTarget} from '../../types'
+import type {Booleanish, ClassAttr, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface BDropdownItemProps {
   href?: string
-  linkClass?: ClassType
+  linkClass?: ClassAttr
   active?: Booleanish
   disabled?: Booleanish
   rel?: string

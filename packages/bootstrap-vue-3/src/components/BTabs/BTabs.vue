@@ -67,21 +67,21 @@ import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
 import {BvEvent, getID, isFunction} from '../../utils'
 import {useBooleanish} from '../../composables'
-import type {Alignment, Booleanish, ClassType} from '../../types'
+import type {Alignment, Booleanish, ClassAttr} from '../../types'
 
 interface BTabsProps {
-  activeNavItemClass?: ClassType
-  activeTabClass?: ClassType
+  activeNavItemClass?: ClassAttr
+  activeTabClass?: ClassAttr
   align?: Alignment
   card?: Booleanish
-  contentClass?: ClassType
+  contentClass?: ClassAttr
   end?: Booleanish
   fill?: Booleanish
   id?: string
   justified?: Booleanish
   lazy?: Booleanish
-  navClass?: ClassType
-  navWrapperClass?: ClassType
+  navClass?: ClassAttr
+  navWrapperClass?: ClassAttr
   noFade?: Booleanish
   // noKeyNav?: Booleanish
   noNavStyle?: Booleanish

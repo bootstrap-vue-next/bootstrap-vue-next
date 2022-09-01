@@ -25,14 +25,14 @@
 
 <script setup lang="ts">
 // import type {BDropdownGroupProps} from '../../types/components'
-import type {ClassType, ColorVariant} from '../../types'
+import type {ClassAttr, ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BDropdownGroupProps {
   id?: string
   ariaDescribedby?: string
   header?: string
-  headerClasses?: ClassType
+  headerClasses?: ClassAttr
   headerTag?: string
   headerVariant?: ColorVariant
 }

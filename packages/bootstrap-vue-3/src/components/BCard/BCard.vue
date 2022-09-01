@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
-import type {Alignment, Booleanish, ClassType, ColorVariant, TextColorVariant} from '../../types'
+import type {Alignment, Booleanish, ClassAttr, ColorVariant, TextColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
@@ -45,21 +45,21 @@ interface BCardProps {
   align?: Alignment
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
-  bodyClass?: ClassType
+  bodyClass?: ClassAttr
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   borderVariant?: ColorVariant
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: ClassType
+  footerClass?: ClassAttr
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClass?: ClassType
+  headerClass?: ClassAttr
   headerHtml?: string
   headerTag?: string
   headerTextVariant?: TextColorVariant

@@ -8,12 +8,12 @@
 
 <script setup lang="ts">
 // import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '../../types/components'
-import type {Booleanish, ButtonType, ClassType, ColorVariant} from '../../types'
+import type {Booleanish, ButtonType, ClassAttr, ColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BDropdownItemButtonProps {
-  buttonClass?: ClassType
+  buttonClass?: ClassAttr
   active?: Booleanish
   activeClass?: string
   disabled?: Booleanish
