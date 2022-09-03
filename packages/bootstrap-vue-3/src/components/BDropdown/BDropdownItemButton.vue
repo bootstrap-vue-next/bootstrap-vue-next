@@ -1,6 +1,14 @@
 <template>
   <li role="presentation">
-    <button class="dropdown-item" :class="[classes, buttonClass]" v-bind="attrs" @click="clicked">
+    <!-- Should click be click.prevent ? -->
+    <button
+      role="menu"
+      type="button"
+      class="dropdown-item"
+      :class="[classes, buttonClass]"
+      v-bind="attrs"
+      @click="clicked"
+    >
       <slot />
     </button>
   </li>
@@ -8,7 +16,7 @@
 
 <script setup lang="ts">
 // import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '../../types/components'
-import type {Booleanish, ButtonType, ClassValue, ColorVariant} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
@@ -23,7 +31,6 @@ interface BDropdownItemButtonProps {
 const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
-  variant: undefined,
   disabled: false,
 })
 
@@ -39,12 +46,10 @@ const emit = defineEmits<BDropdownItemButtonEmits>()
 const classes = computed(() => ({
   [props.activeClass]: activeBoolean.value,
   disabled: disabledBoolean.value,
-  [`text-${props.variant}`]: !!props.variant,
+  [`text-${props.variant}`]: props.variant !== undefined,
 }))
 
 const attrs = computed(() => ({
-  role: 'menuitem',
-  type: 'button' as ButtonType,
   disabled: disabledBoolean.value,
 }))
 
