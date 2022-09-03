@@ -19,13 +19,13 @@ feat(utils): update encode to support unicode
   Source-Link: googleapis/googleapis@e5eef86
 ```
 
-Conventional commits are required for the automation of Changelog and tag releases. Additional information on how to write commits can be found here [release-please](https://github.com/googleapis/release-please#how-should-i-write-my-commits)
+Conventional commits are required for the automation of changelog and tag releases. Information on how to write commits can be found at <https://www.conventionalcommits.org/>. Additional information on how to do things like introduce multiple fixes in a single commit, or fixing release notes can be found at <https://github.com/googleapis/release-please#how-should-i-write-my-commits>
 
 ## Setting Up Your Workspace
 
 Setting up your workspace follows traditional open-source flows, if you are already familiar with the process, you can most likely skip this section:
 
-1. Go to the [GitHub](https://github.com/cdmoro/bootstrap-vue-3) URL
+1. Go to the <https://github.com/cdmoro/bootstrap-vue-3>
 2. Click **Fork** at the top
 3. On your IDE of choice, clone your own, new, forked repository
 
@@ -38,23 +38,23 @@ pnpm install
 pnpm dev
 ```
 
-Only pnpm is allowed, attempting to run any other package manager tool will cause a warning error. View pnpm installation [here](https://pnpm.io/installation)
+Only pnpm is allowed, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
 
 Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
 
-1. Go to your forked repository on [GitHub](https://github.com/)
+1. Go to your forked repository on <https://github.com/>
 2. Switch to the correct branch that you have been working on, this is usually the `main` branch, for simplicity
 3. Click the **Contribute** button near the top of the page
 4. Click **Open pull request**
 
-This will begin the process to merge your changes into the [upstream](https://github.com/cdmoro/bootstrap-vue-3) repository's main branch
+This will begin the process to merge your changes into the upstream repository's main branch
 
 ## Registering New Components
 
 For adding a new component, there are some notes...
 
-* They should only exist in the ./packages/bootstrap-vue-3/src/components directory
-* You should first review the ./packages/bootstrap-vue-3/src/types directory and get familiar with the internal types that you can use
+* They should only exist in the `./packages/bootstrap-vue-3/src/components` directory
+* You should first review the `./packages/bootstrap-vue-3/src/types` directory and get familiar with the internal types that you can use
 * They should follow `<script setup lang="ts">` syntax, to ensure uniformity, there are *some* exceptions to this rule regarding Vue SFC being unable to import or extend types
 * If the component is a native [Bootstrap](https://getbootstrap.com/) component, you will need to read about that component and have a thorough understanding of how it works and appears
 * If the component is custom, or taken from [Bootstrap-vue](https://bootstrap-vue.org/) you will need to read the component documentation, then attempt to recreate that component using `<template>` and `<script setup lang="ts">` syntax. If a Bootstrap-vue component is based on a native Bootstrap component, then you should read Bootstrap's implementation first, and ensure any changes are made to correct for the v5 release of Bootstrap
@@ -62,8 +62,8 @@ For adding a new component, there are some notes...
 
 After the implementation of the component, based on Bootstrap's details, you can finally begin introducing the component to be exported by the main package, and usable by users of the library. To do that you will need to:
 
-1. Add the component to the import/export list, located in ./packages/bootstrap-vue-3/src/components/index.ts
-2. Next, it must be imported into ./packages/bootstrap-vue-3/BootstrapVue.ts *please ensure that your import is made directly to the component, and not to the previous index.ts file*
+1. Add the component to the import/export list, located in `./packages/bootstrap-vue-3/src/components/index.ts`
+2. Next, it must be imported into `./packages/bootstrap-vue-3/BootstrapVue.ts` *please ensure that your import is made directly to the component, and not to the previous index.ts file*
 3. After that, export it in the `export {}` list that contains the other components to be exported
 4. Finally, it must be included in the exported interface of **GlobalComponents**, following the pattern of `BComponent: typeof BComponent`
 
@@ -75,7 +75,7 @@ To fix an already made component, or to add a new feature to a component is a bi
 
 ## Developing
 
-The project uses a monorepo architecture. The main source files for the package exist in ./packages/bootstrap-vue-3, this is primarily where developing is done. You can make use of the ./apps/playground directory. The ./apps/playground directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, since it does not contain native hot-reloading, it makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`)
+The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-3`, this is primarily where developing is done. You can make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, since it does not contain native hot-reloading, it makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`)
 
 Running `pnpm dev` at the root of the project will start all developable projects in the workspace, including the main package, docs, and playground, In addition, running `pnpm build` will also build all relevant code-bases
 
@@ -83,15 +83,19 @@ Running `pnpm dev` at the root of the project will start all developable project
 
 Working on the app is not a solo job. It is always fine to ask how something should be done, or how something can be improved. Ask for help when you are stuck!
 
+## Safety Information
+
+In general, always be careful when clicking external links. As programmers, it should be obvious that any links opened should be scanned for authenticity. No malicious intent has ever been found anywhere in the documentation, issues, or pull requests, but always be aware. If you have noticed anything that may be malicious in this repository, open an issue **immediately**. At this time, the repository does not have a dedicated security policy
+
 ## For Collaborators: Making a New Release
 
-Bootstrap Vue 3 uses [release-please](https://github.com/googleapis/release-please) to automate releases using workflows. The `.github/workflows/release-please.yaml` workflow will auto-generate releases when using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). We encourage your commit message to follow conventional commit guidelines to keep commits clean and automate releases
+Bootstrap Vue 3 uses <https://github.com/googleapis/release-please> to automate releases using workflows. The `.github/workflows/release-please.yaml` workflow will auto-generate releases when using conventional commits. We encourage all commit messages to follow conventional commit guidelines to keep commits clean and automate releases
 
 The workflow `.github/workflows/npm-publish.yaml` will then auto-publish at <https://www.npmjs.com/package/bootstrap-vue-3>
 
 ## For Collaborators: Manual Releases
 
-One could also manually create a release PR using the CLI, directions [here](https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli). Follow the directions for bootstrapping and creating a release, then it will auto-generate a PR containing the new release notes
+One could also manually create a release PR using the CLI, directions at <https://github.com/googleapis/release-please/blob/main/docs/cli.md#running-release-please-cli>. Follow the directions for bootstrapping and creating a release, then it will auto-generate a PR containing the new release notes
 
 It will then auto-publish as stated before
 
