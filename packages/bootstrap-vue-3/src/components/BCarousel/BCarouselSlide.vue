@@ -24,16 +24,16 @@
       :class="computedContentClasses"
     >
       <component :is="captionTag" v-if="caption || captionHtml">
-        <span v-if="showCaption">{{ caption }}</span>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="showCaptionAsHtml" v-html="captionHtml"></span>
+        <span v-if="captionHtml" v-html="captionHtml" />
+        <span v-else>{{ caption }}</span>
       </component>
       <component :is="textTag" v-if="text || textHtml">
-        <span v-if="showText">{{ text }}</span>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="showTextAsHtml" v-html="textHtml"></span>
+        <span v-if="textHtml" v-html="textHtml" />
+        <span v-else>{{ text }}</span>
       </component>
-      <slot> </slot>
+      <slot />
     </component>
   </div>
 </template>
@@ -49,8 +49,8 @@ import BImg from '../BImg.vue'
 
 interface BCarouselSlideProps {
   imgSrc?: string
-  imgHeight?: string
-  imgWidth?: string
+  imgHeight?: string | number
+  imgWidth?: string | number
   interval?: string | number
   active?: Booleanish
   background?: string
@@ -97,10 +97,7 @@ const computedContentClasses = computed(() => ({
   'd-none': props.contentVisibleUp !== undefined,
   [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp !== undefined,
 }))
-const showText = computed<boolean | '' | undefined>(() => props.text && !props.textHtml)
-const showTextAsHtml = computed<string | undefined>(() => props.textHtml)
-const showCaption = computed<boolean | '' | undefined>(() => props.caption && !props.captionHtml)
-const showCaptionAsHtml = computed<string | undefined>(() => props.captionHtml)
+
 const parentWidth = computed<string | undefined>(() => parentData.width)
 const parentHeight = computed<string | undefined>(() => parentData.height)
 </script>

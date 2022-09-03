@@ -2,14 +2,14 @@
   <div :id="computedId" ref="element" class="carousel slide" data-bs-ride="carousel">
     <div v-if="indicatorsBoolean" class="carousel-indicators">
       <button
-        v-for="(slide, i) of slides"
+        v-for="(_, i) of slides"
         :key="i"
         type="button"
         :data-bs-target="`#${computedId}`"
         :data-bs-slide-to="i"
         :class="i === 0 ? 'active' : ''"
         aria-current="true"
-        :aria-label="`Slide ${i}`"
+        :aria-label="`${indicatorsButtonLabel} ${i}`"
       />
     </div>
 
@@ -25,7 +25,7 @@
         data-bs-slide="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true" />
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden">{{ controlsPrevText }}</span>
       </button>
       <button
         class="carousel-control-next"
@@ -34,7 +34,7 @@
         data-bs-slide="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true" />
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden">{{ controlsNextText }}</span>
       </button>
     </template>
   </div>
@@ -59,6 +59,9 @@ interface BCarouselProps {
   interval?: number
   noTouch?: Booleanish
   noWrap?: Booleanish
+  controlsPrevText?: string
+  controlsNextText?: string
+  indicatorsButtonLabel?: string
 }
 
 const props = withDefaults(defineProps<BCarouselProps>(), {
@@ -68,6 +71,9 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   interval: 5000,
   noTouch: false,
   noWrap: false,
+  controlsNextText: 'Next',
+  controlsPrevText: 'Previous',
+  indicatorsButtonLabel: 'Slide',
 })
 
 const controlsBoolean = useBooleanish(toRef(props, 'controls'))
