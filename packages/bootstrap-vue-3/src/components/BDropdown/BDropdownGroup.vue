@@ -40,11 +40,10 @@ interface BDropdownGroupProps {
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   headerTag: 'header',
   headerClasses: undefined,
-  headerVariant: undefined,
 })
 
 const headerId = computed<string | undefined>(() =>
-  props.id ? [props.id, 'group_dd_header'].join('_') : undefined
+  props.id ? `${props.id}_group_dd_header` : undefined
 )
 
 const headerRole = computed<'heading' | undefined>(() =>
@@ -52,7 +51,7 @@ const headerRole = computed<'heading' | undefined>(() =>
 )
 
 const classes = computed(() => ({
-  [`text-${props.headerVariant}`]: !!props.headerVariant,
+  [`text-${props.headerVariant}`]: props.headerVariant !== undefined,
 }))
 </script>
 
