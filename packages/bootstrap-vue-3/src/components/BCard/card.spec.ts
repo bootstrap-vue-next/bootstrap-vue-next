@@ -190,9 +190,9 @@ describe('card', () => {
     expect($header.exists()).toBe(true)
   })
 
-  it('child BCardHeader is given class of headerClass', () => {
+  it('child BCardHeader is given class of headerClasses', () => {
     const wrapper = mount(BCard, {
-      props: {header: 'foobar', headerClass: ['foobar']},
+      props: {header: 'foobar', headerClasses: ['foobar']},
     })
     const $header = wrapper.getComponent(BCardHeader)
     expect($header.classes()).toContain('foobar')
@@ -325,9 +325,9 @@ describe('card', () => {
     expect(wrapper.text()).toBe('slots')
   })
 
-  it('child BCardBody is given prop bodyClass', () => {
+  it('child BCardBody is given prop bodyClasses', () => {
     const wrapper = mount(BCard, {
-      props: {bodyClass: ['foobar']},
+      props: {bodyClasses: ['foobar']},
     })
     const $body = wrapper.getComponent(BCardBody)
     expect($body.classes()).toContain('foobar')
@@ -435,9 +435,9 @@ describe('card', () => {
     expect($footer.exists()).toBe(true)
   })
 
-  it('child BCardFooter contains class prop footerClass', () => {
+  it('child BCardFooter contains class prop footerClasses', () => {
     const wrapper = mount(BCard, {
-      props: {footer: 'foobar', footerClass: ['foobar']},
+      props: {footer: 'foobar', footerClasses: ['foobar']},
     })
     const $footer = wrapper.getComponent(BCardFooter)
     expect($footer.classes()).toContain('foobar')
