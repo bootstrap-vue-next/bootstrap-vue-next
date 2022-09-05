@@ -4,7 +4,13 @@
       <thead>
         <slot v-if="$slots['thead-top']" name="thead-top" />
         <tr>
-          <th v-if="addSelectableCell">
+          <th
+            v-if="addSelectableCell"
+            class="b-table-selection-column"
+            :class="{
+              'b-table-sticky-column': stickySelectBoolean,
+            }"
+          >
             <slot name="selectHead">
               {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
             </slot>
@@ -57,43 +63,60 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(tr, ind) in computedItems"
-          :key="ind"
-          :class="getRowClasses(tr)"
-          @click.prevent="onRowClick(tr, ind, $event)"
-          @dblclick.prevent="onRowDblClick(tr, ind, $event)"
-          @mouseenter.prevent="onRowMouseEnter(tr, ind, $event)"
-          @mouseleave.prevent="onRowMouseLeave(tr, ind, $event)"
-        >
-          <td v-if="addSelectableCell">
-            <slot name="selectCell">
-              <span :class="selectedItems.has(tr) ? 'text-primary' : ''">🗹</span>
-            </slot>
-          </td>
-          <td
-            v-for="(field, index) in computedFields"
-            :key="field.key"
-            v-bind="field.tdAttr"
-            :class="[
-              field.class,
-              field.tdClass,
-              field.variant ? `table-${field.variant}` : '',
-              tr?._cellVariants && tr?._cellVariants[field.key]
-                ? `table-${tr?._cellVariants[field.key]}`
-                : '',
-            ]"
+        <template v-for="(tr, ind) in computedItems" :key="ind">
+          <tr
+            :class="getRowClasses(tr)"
+            @click.prevent="onRowClick(tr, ind, $event)"
+            @dblclick.prevent="onRowDblClick(tr, ind, $event)"
+            @mouseenter.prevent="onRowMouseEnter(tr, ind, $event)"
+            @mouseleave.prevent="onRowMouseLeave(tr, ind, $event)"
           >
-            <slot
-              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
-              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-              :value="tr[field.key]"
-              :index="index"
-              :item="tr"
-              :field="field"
-              :items="items"
-            />
-            <template v-else>{{ tr[field.key] }}</template>
+            <td
+              v-if="addSelectableCell"
+              class="b-table-selection-column"
+              :class="{
+                'b-table-sticky-column': stickySelectBoolean,
+              }"
+            >
+              <slot name="selectCell">
+                <span :class="selectedItems.has(tr) ? 'text-primary' : ''">🗹</span>
+              </slot>
+            </td>
+            <td
+              v-for="(field, index) in computedFields"
+              :key="field.key"
+              v-bind="field.tdAttr"
+              :class="getFieldRowClasses(field, tr)"
+            >
+              <slot
+                v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
+                :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
+                :value="tr[field.key]"
+                :index="index"
+                :item="tr"
+                :field="field"
+                :items="items"
+                :toggle-details="() => toggleRowDetails(tr)"
+                :details-showing="tr._showDetails"
+              />
+              <template v-else>{{ tr[field.key] }}</template>
+            </td>
+          </tr>
+
+          <tr v-if="tr._showDetails === true && $slots['row-details']" :class="getRowClasses(tr)">
+            <td :colspan="computedFieldsTotal">
+              <slot name="row-details" :item="tr" :toggle-details="() => toggleRowDetails(tr)" />
+            </td>
+          </tr>
+        </template>
+        <tr v-if="busyBoolean" class="b-table-busy-slot">
+          <td :colspan="computedFieldsTotal">
+            <slot name="table-busy">
+              <div class="d-flex align-items-center justify-content-center gap-2">
+                <b-spinner class="align-middle"></b-spinner>
+                <strong>Loading...</strong>
+              </div>
+            </slot>
           </td>
         </tr>
       </tbody>
@@ -131,6 +154,7 @@
 import {computed, ref, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import {titleCase} from '../../utils/stringUtils'
+import BSpinner from '../BSpinner.vue'
 
 import type {
   Booleanish,
@@ -163,9 +187,12 @@ interface BTableProps {
   sortDesc?: Booleanish
   sortInternal?: Booleanish
   selectable?: Booleanish
+  stickySelect?: Booleanish
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
   selectionVariant?: ColorVariant
+  stickyHeader?: Booleanish
+  busy?: Booleanish
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -183,10 +210,28 @@ const props = withDefaults(defineProps<BTableProps>(), {
   sortDesc: false,
   sortInternal: false,
   selectable: false,
+  stickySelect: false,
   selectHead: true,
   selectMode: 'single',
   selectionVariant: 'primary',
+  stickyHeader: false,
+  busy: false,
 })
+
+const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
+const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
+const borderedBoolean = useBooleanish(toRef(props, 'bordered'))
+const darkBoolean = useBooleanish(toRef(props, 'dark'))
+const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
+const hoverBoolean = useBooleanish(toRef(props, 'hover'))
+const smallBoolean = useBooleanish(toRef(props, 'small'))
+const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
+const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
+const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
+const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
+const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
+const busyBoolean = useBooleanish(toRef(props, 'busy'))
 
 interface BTableEmits {
   (
@@ -222,20 +267,8 @@ interface BTableEmits {
 const emits = defineEmits<BTableEmits>()
 const slots = useSlots()
 
-const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
-const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
-const borderedBoolean = useBooleanish(toRef(props, 'bordered'))
-const darkBoolean = useBooleanish(toRef(props, 'dark'))
-const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
-const hoverBoolean = useBooleanish(toRef(props, 'hover'))
-const smallBoolean = useBooleanish(toRef(props, 'small'))
-const stripedBoolean = useBooleanish(toRef(props, 'striped'))
-const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
-const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
-const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
-
 const classes = computed(() => [
-  'table',
+  'table b-table',
   {
     [`align-${props.align}`]: props.align !== undefined,
     [`table-${props.variant}`]: props.variant !== undefined,
@@ -250,11 +283,15 @@ const classes = computed(() => [
     'b-table-selectable': selectableBoolean.value,
     [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
     'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
+    'b-table-busy': busyBoolean.value,
   },
 ])
 
 const itemHelper = useItemHelper()
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
+const computedFieldsTotal = computed(
+  () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
+)
 const computedItems = computed(() =>
   sortInternalBoolean.value === true
     ? itemHelper.sortItems(props.fields, props.items, {
@@ -267,6 +304,7 @@ const computedItems = computed(() =>
 const responsiveClasses = computed(() => ({
   'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
   [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+  'b-table-sticky-header': stickyHeaderBoolean.value,
 }))
 
 const getFieldHeadLabel = (field: TableField) => {
@@ -356,11 +394,27 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
   notifySelectionEvent()
 }
 
+const toggleRowDetails = (tr: TableItem) => {
+  tr._showDetails = !tr._showDetails
+}
+
 const getFieldColumnClasses = (field: TableFieldObject) => [
   field.class,
   field.thClass,
   field.variant ? `table-${field.variant}` : undefined,
-  {'b-table-sortable-column': isSortable.value && field.sortable},
+  {
+    'b-table-sortable-column': isSortable.value && field.sortable,
+    'b-table-sticky-column': field.stickyColumn,
+  },
+]
+const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
+  field.class,
+  field.tdClass,
+  field.variant ? `table-${field.variant}` : '',
+  tr?._cellVariants && tr?._cellVariants[field.key] ? `table-${tr?._cellVariants[field.key]}` : '',
+  {
+    'b-table-sticky-column': field.stickyColumn,
+  },
 ]
 
 const getRowClasses = (item: TableItem) => [

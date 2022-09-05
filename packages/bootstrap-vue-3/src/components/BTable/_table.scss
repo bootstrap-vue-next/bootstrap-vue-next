@@ -51,27 +51,80 @@
   margin: 0;
 }
 
-.b-table-sticky-header > .table.b-table > tbody > tr > .b-table-sticky-column,
-.b-table-sticky-header > .table.b-table > tfoot > tr > .b-table-sticky-column,
-.table-responsive > .table.b-table > tbody > tr > .b-table-sticky-column,
-.table-responsive > .table.b-table > tfoot > tr > .b-table-sticky-column,
-[class*="table-responsive-"] > .table.b-table > tbody > tr > .b-table-sticky-column,
-[class*="table-responsive-"] > .table.b-table > tfoot > tr > .b-table-sticky-column {
-  z-index: 2;
+.b-table-sticky-header,
+.table-responsive,
+[class*="table-responsive-"] {
+  // Move the table bottom margin to the wrapper
+  margin-bottom: $spacer;
+
+  > .table {
+    // Reset `margin-bottom` to we don't get a space after
+    // the table inside the scroll area
+    margin-bottom: 0;
+  }
 }
 
-.b-table-sticky-header > .table.b-table > tbody > tr > .b-table-sticky-column,
-.b-table-sticky-header > .table.b-table > tfoot > tr > .b-table-sticky-column,
-.b-table-sticky-header > .table.b-table > thead > tr > .b-table-sticky-column,
-.table-responsive > .table.b-table > tbody > tr > .b-table-sticky-column,
-.table-responsive > .table.b-table > tfoot > tr > .b-table-sticky-column,
-.table-responsive > .table.b-table > thead > tr > .b-table-sticky-column,
-[class*="table-responsive-"] > .table.b-table > tbody > tr > .b-table-sticky-column,
-[class*="table-responsive-"] > .table.b-table > tfoot > tr > .b-table-sticky-column,
-[class*="table-responsive-"] > .table.b-table > thead > tr > .b-table-sticky-column {
-  position: -webkit-sticky;
-  position: sticky;
-  left: 0;
+.b-table-sticky-header {
+  overflow-y: auto;
+  // Annoyingly, when overflow-y is set, browsers convert
+  // 'overflow-x: visible' to 'overflow-x: auto' - so it becomes
+  // responsive in the x axis automatically
+  // Default `max-height` before a scrollbar will show
+  // We don't use `height` as table could be shorter than this value
+}
+
+@media print {
+  // Override any styles (including inline styles)
+  // when printing
+  .b-table-sticky-header {
+    overflow-y: visible !important;
+    max-height: none !important;
+  }
+}
+
+@supports (position: sticky) {
+  // Positioning of sticky headers
+  .b-table-sticky-header > .table.b-table > thead > tr > th {
+    // Header cells need to be sticky on top
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  // Positioning of sticky columns
+  // Sticky columns only work when table has sticky
+  // headers and/or is responsive
+  .b-table-sticky-header,
+  .table-responsive,
+  [class*="table-responsive-"] {
+    > .table.b-table {
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr > .b-table-sticky-column {
+          position: sticky;
+          left: 0;
+        }
+      }
+
+      > thead {
+        > tr > .b-table-sticky-column {
+          // z-index needs to be higher than sticky columns and
+          // sticky headers for correct layering
+          z-index: 5;
+        }
+      }
+
+      > tbody,
+      > tfoot {
+        > tr > .b-table-sticky-column {
+          // z-index needs to be lower than sticky header that
+          // is also a sticky column
+          z-index: 2;
+        }
+      }
+    }
+  }
 }
 
 .table.b-table > tbody > tr > .table-b-table-default,
@@ -87,10 +140,31 @@
   }
 }
 
-.table {
+.b-table {
   &.b-table-selectable {
     td {
       cursor: pointer;
+    }
+  }
+
+  &.b-table-busy {
+    position: relative;
+
+    .b-table-busy-slot {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffffa8;
+
+      & > td {
+        border: none;
+        padding: 0;
+      }
     }
   }
 }
