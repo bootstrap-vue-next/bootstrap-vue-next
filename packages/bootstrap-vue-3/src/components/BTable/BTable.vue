@@ -75,14 +75,7 @@
             v-for="(field, index) in computedFields"
             :key="field.key"
             v-bind="field.tdAttr"
-            :class="[
-              field.class,
-              field.tdClass,
-              field.variant ? `table-${field.variant}` : '',
-              tr?._cellVariants && tr?._cellVariants[field.key]
-                ? `table-${tr?._cellVariants[field.key]}`
-                : '',
-            ]"
+            :class="getFieldRowClasses(field, tr)"
           >
             <slot
               v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
@@ -365,6 +358,15 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   field.thClass,
   field.variant ? `table-${field.variant}` : undefined,
   {'b-table-sortable-column': isSortable.value && field.sortable},
+]
+const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
+  field.class,
+  field.tdClass,
+  field.variant ? `table-${field.variant}` : '',
+  tr?._cellVariants && tr?._cellVariants[field.key] ? `table-${tr?._cellVariants[field.key]}` : '',
+  {
+    'b-table-sticky-column': field.stickyColumn,
+  },
 ]
 
 const getRowClasses = (item: TableItem) => [
