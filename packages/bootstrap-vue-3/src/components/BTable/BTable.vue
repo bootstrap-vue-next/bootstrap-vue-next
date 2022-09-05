@@ -4,7 +4,13 @@
       <thead>
         <slot v-if="$slots['thead-top']" name="thead-top" />
         <tr>
-          <th v-if="addSelectableCell">
+          <th
+            v-if="addSelectableCell"
+            class="b-table-selection-column"
+            :class="{
+              'b-table-sticky-column': stickySelectBoolean,
+            }"
+          >
             <slot name="selectHead">
               {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
             </slot>
@@ -66,7 +72,13 @@
           @mouseenter.prevent="onRowMouseEnter(tr, ind, $event)"
           @mouseleave.prevent="onRowMouseLeave(tr, ind, $event)"
         >
-          <td v-if="addSelectableCell">
+          <td
+            v-if="addSelectableCell"
+            class="b-table-selection-column"
+            :class="{
+              'b-table-sticky-column': stickySelectBoolean,
+            }"
+          >
             <slot name="selectCell">
               <span :class="selectedItems.has(tr) ? 'text-primary' : ''">🗹</span>
             </slot>
@@ -156,6 +168,7 @@ interface BTableProps {
   sortDesc?: Booleanish
   sortInternal?: Booleanish
   selectable?: Booleanish
+  stickySelect?: Booleanish
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
   selectionVariant?: ColorVariant
@@ -177,6 +190,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   sortDesc: false,
   sortInternal: false,
   selectable: false,
+  stickySelect: false,
   selectHead: true,
   selectMode: 'single',
   selectionVariant: 'primary',
@@ -195,6 +209,7 @@ const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
 const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
 const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
 const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
+const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
 
 interface BTableEmits {
   (
