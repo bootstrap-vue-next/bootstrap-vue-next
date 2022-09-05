@@ -51,7 +51,7 @@ interface BAvatarProps {
   square?: Booleanish
   src?: string
   text?: string
-  textVariant?: ColorVariant // not standard BootstrapVue props
+  textVariant?: ColorVariant
   variant?: ColorVariant
 }
 

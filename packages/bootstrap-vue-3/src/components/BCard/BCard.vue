@@ -4,13 +4,13 @@
     <b-card-header
       v-if="header || $slots.header || headerHtml"
       v-bind="headerAttrs"
-      :class="headerClasses"
+      :class="headerClass"
     >
       <slot name="header">
         {{ header }}
       </slot>
     </b-card-header>
-    <b-card-body v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClasses">
+    <b-card-body v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
       <slot>
         {{ bodyText }}
       </slot>
@@ -21,7 +21,7 @@
     <b-card-footer
       v-if="footer || $slots.footer || footerHtml"
       v-bind="footerAttrs"
-      :class="footerClasses"
+      :class="footerClass"
     >
       <slot name="footer">
         {{ footer }}
@@ -45,21 +45,21 @@ interface BCardProps {
   align?: Alignment
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
-  bodyClasses?: ClassValue
+  bodyClass?: ClassValue
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   borderVariant?: ColorVariant
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClasses?: ClassValue
+  footerClass?: ClassValue
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClasses?: ClassValue
+  headerClass?: ClassValue
   headerHtml?: string
   headerTag?: string
   headerTextVariant?: TextColorVariant

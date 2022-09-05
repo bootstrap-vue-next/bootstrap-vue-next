@@ -74,6 +74,7 @@ const makeBlankImgSrc = (width: any, height: any, color: string): string => {
 }
 
 const attrs = computed(() => {
+  // TODO decompose this and make business logic into separate computed functions
   let {src} = props
   let width =
     (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
@@ -109,6 +110,7 @@ const attrs = computed(() => {
       height = 1
     }
     // Make a blank SVG image
+    // TODO unexpected mutation of props
     src = makeBlankImgSrc(width, height, props.blankColor || 'transparent')
     // Disable srcset and sizes
     srcset = ''
