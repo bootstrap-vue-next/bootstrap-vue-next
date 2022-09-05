@@ -111,9 +111,9 @@ describe('dropdown-form', () => {
     expect($header.classes()).toContain('dropdown-header')
   })
 
-  it('dynamic header tag has class to include prop headerClasses', () => {
+  it('dynamic header tag has class to include prop headerClass', () => {
     const wrapper = mount(BDropdownGroup, {
-      props: {headerClasses: ['foo']},
+      props: {headerClass: ['foo']},
     })
     const $header = wrapper.get('header')
     expect($header.classes()).toContain('foo')
