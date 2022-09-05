@@ -104,7 +104,7 @@
           </tr>
 
           <tr v-if="tr._showDetails === true && $slots['row-details']" :class="getRowClasses(tr)">
-            <td :colspan="computedFields.length + (selectableBoolean ? 1 : 0)">
+            <td :colspan="computedFieldsTotal">
               <slot name="row-details" :item="tr" :toggle-details="() => toggleRowDetails(tr)" />
             </td>
           </tr>
@@ -274,6 +274,9 @@ const classes = computed(() => [
 
 const itemHelper = useItemHelper()
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
+const computedFieldsTotal = computed(
+  () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
+)
 const computedItems = computed(() =>
   sortInternalBoolean.value === true
     ? itemHelper.sortItems(props.fields, props.items, {
