@@ -4,7 +4,7 @@
       :is="headerTag"
       :id="headerId"
       class="dropdown-header"
-      :class="[classes, headerClasses]"
+      :class="[classes, headerClass]"
       :role="headerRole"
     >
       <slot name="header">
@@ -32,14 +32,14 @@ interface BDropdownGroupProps {
   id?: string
   ariaDescribedby?: string
   header?: string
-  headerClasses?: ClassValue
+  headerClass?: ClassValue
   headerTag?: string
   headerVariant?: ColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   headerTag: 'header',
-  headerClasses: undefined,
+  headerClass: undefined,
 })
 
 const headerId = computed<string | undefined>(() =>

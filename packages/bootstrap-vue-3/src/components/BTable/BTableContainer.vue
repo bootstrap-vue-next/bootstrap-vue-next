@@ -1,5 +1,5 @@
 <template>
-  <div v-if="responsive" :class="responsiveClasses">
+  <div v-if="responsive" :class="responsiveClass">
     <slot />
   </div>
   <template v-else>
@@ -12,7 +12,7 @@ import type {ClassValue} from '../../types'
 
 interface BTableContainerProps {
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-  responsiveClasses?: ClassValue
+  responsiveClass?: ClassValue
 }
 
 withDefaults(defineProps<BTableContainerProps>(), {
