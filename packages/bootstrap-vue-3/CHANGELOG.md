@@ -1,5 +1,90 @@
 # Changelog
 
+## [0.3.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.14...v0.3.0) (2022-09-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BCardFooter:** footerClass prop was removed instead use :class
+* **BCardBody:** bodyClass was removed instead use :class
+* **BCardHeader:** headerClass removed instead use :class
+* **BCardSubTitle:** prop subtitle replaced with text
+* **BCardSubTitle:** prop subTitleTag replaced with tag
+* **BCardSubTitle:** prop subTitleTextVariant replace with textVariant
+* **BCardFooter:** prop footer replaced with prop text
+* **BCardFooter:** prop footerBgVariant replaced with bgVariant
+* **BCardFooter:** prop footerBorderVariant replaced with borderVariant
+* **BCardFooter:** footerHtml replaced with html
+* **BCardFooter:** footerTag removed use tag
+* **BCardFooter:** footerTextVariant removed use textVariant
+* **BCardTitle:** prop title replaced with prop text
+* **BCardTitle:** prop titleTag replaced with prop tag
+* many of the components in the BCard space have props that prepend their name, for example, footerBgVariant, footerBorderVariant, footerHtml, etc. These have been replaced with each corresponding prop, without it's appended name to follow simplicity and single responsiblity.
+* The  event output value was changed to an object with 'sort[string]' and 'desc[boolean]' for better ts type support.
+
+### Features
+
+* Added 'tag' prop to BContainer ([a4363b4](https://github.com/cdmoro/bootstrap-vue-3/commit/a4363b482fff78a8b3edf87c06b1a857ffc952a1))
+* Added Btable select-head prop to show an extra Head & Cell to the table, Added selectHead & selectCell slots to customize the selection extra head & cells. ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* Added BTable selectable prop that adds the selection functionality to the table, Added select-mode prop with value of [multi, single, range] to expend the table selection can be used with. ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* added titleCase utility to stringUtils ([60aa7ff](https://github.com/cdmoro/bootstrap-vue-3/commit/60aa7ff1bdd2f295915a39864e3cf76119b07da1))
+* **BCardBody:** bodyClass was removed instead use :class ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardBody:** can also use prop text instead of default slot ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardBody:** prop overlay actually causes affect ([d998f7b](https://github.com/cdmoro/bootstrap-vue-3/commit/d998f7ba7fc8332fc0b102f200b709e1f5cae22d))
+* **BCardFooter:** footerClass prop was removed instead use :class ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardFooter:** footerHtml replaced with html ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardFooter:** footerTag removed use tag ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardFooter:** footerTextVariant removed use textVariant ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardFooter:** prop footer replaced with prop text ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardFooter:** prop footerBgVariant replaced with bgVariant ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardFooter:** prop footerBorderVariant replaced with borderVariant ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardHeader:** headerClass removed instead use :class ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* BCardImg includes lazy ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardSubTitle:** prop subtitle replaced with text ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardSubTitle:** prop subTitleTag replaced with tag ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardSubTitle:** prop subTitleTextVariant replace with textVariant ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardText:** expand to include dynamic tag ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardText:** expand to include prop text ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardTitle:** prop title replaced with prop text ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BCardTitle:** prop titleTag replaced with prop tag ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+* **BDropdownText:** Can use text prop in place of slot ([1067d4f](https://github.com/cdmoro/bootstrap-vue-3/commit/1067d4ff74a94d59787f4e9246b8ae6c0b9812c2))
+* BTable selection-variant prop was added, gives the ability to use bootstrap's colors as bg to the selected rows ([b4a9d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/b4a9d4b82fea63686453ad4ec47993ae0bc0a671))
+* **BTable:** added clearSelected method that unselect all of the selected items and notify the updates through rowUnselectedand selection events ([1b38e4c](https://github.com/cdmoro/bootstrap-vue-3/commit/1b38e4c92c4d70efe71b3acdca5b6068d51d62c4))
+* **BTable:** added head-clicked event functionality, according to the docs of vue2-bootstrap ([c3adc35](https://github.com/cdmoro/bootstrap-vue-3/commit/c3adc35929bfd577eba4761c5916061746495a4a))
+* **BTable:** added row-clicked event functionality, according to the docs of vue2-bootstrap ([a975610](https://github.com/cdmoro/bootstrap-vue-3/commit/a97561046b2b5b940ac32f716b4611f3f812d6bd))
+* **BTable:** added row-unhovered events functionality, according to the docs of vue2-bootstrap ([86a27fc](https://github.com/cdmoro/bootstrap-vue-3/commit/86a27fc90f62c39a3bbb9af3744fd7071d36ccb8))
+* **BTable:** added selectAllRows method that select all of the give items when selectable prop is 'true' ([1cce4cd](https://github.com/cdmoro/bootstrap-vue-3/commit/1cce4cd5478e09a95e71ab028aa71624e1730c29))
+* **BTable:** added selectRow and unselectRow methods, both methods take a number input which is the index of the item to either select or unselect its row. ([48c4291](https://github.com/cdmoro/bootstrap-vue-3/commit/48c4291b5eb76af82558dfad4126f1134858e884))
+* **BTable:** Fields keys now appear in the headers when the given field has no Label. ([7fa842f](https://github.com/cdmoro/bootstrap-vue-3/commit/7fa842f4d31b365815266c8fe73d2265e59cc689))
+* standardize props in multiple comps ([e86b6e0](https://github.com/cdmoro/bootstrap-vue-3/commit/e86b6e089b53005079b41c77e69bd1c9979f0afe))
+
+
+### Bug Fixes
+
+* **#613:** separate computed breaks reactivity ([3534780](https://github.com/cdmoro/bootstrap-vue-3/commit/3534780bfe22114dee615ad3d723db171b6965cc))
+* added few missing props to the BTable.d.ts file ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* **BButton:** import child component BSpinner ([3cf3524](https://github.com/cdmoro/bootstrap-vue-3/commit/3cf3524f287d1069e1a29f252f4026eecfcc1467))
+* **BButton:** loading checks against resolved boolean ([3cf3524](https://github.com/cdmoro/bootstrap-vue-3/commit/3cf3524f287d1069e1a29f252f4026eecfcc1467))
+* **BCard:** footer border variant uses footer prop ([1defb70](https://github.com/cdmoro/bootstrap-vue-3/commit/1defb70a22d30004549a90e54ae75cef70841105))
+* **BTable:** fix(BTable): fixed 'selection' event not being emitted when selecting the row by index through 'selectRow' method. ([54aa0c2](https://github.com/cdmoro/bootstrap-vue-3/commit/54aa0c272abb14c89892658a39af5941ba6d3998))
+* **BTable:** fixes 'sorted' event not emitted with fully synced values ([77fb7f4](https://github.com/cdmoro/bootstrap-vue-3/commit/77fb7f4d6914b459b7b3dde2e9d1b093df66ceb4))
+* **BTable:** fixes sorted event not being emitted with the correct values. ([e6a72de](https://github.com/cdmoro/bootstrap-vue-3/commit/e6a72deb5c544b0cbd4cdd4a2d7c94104ac59800))
+* **BTable:** Hotfix to selectAllRows method, Calling the method now emits the selection events correctly. ([40b30a0](https://github.com/cdmoro/bootstrap-vue-3/commit/40b30a01922a437921764a4e5f004b6182a1c184))
+* **BTable:** include prop field in slot cell ([012289d](https://github.com/cdmoro/bootstrap-vue-3/commit/012289d58c89b6b60d3268699f4ef9ac21c09c0e))
+* **carousel.spec.ts:** cannot use internal method ([cadbca6](https://github.com/cdmoro/bootstrap-vue-3/commit/cadbca6c660d3d20bd09181108afcfa922c3ee53))
+* include prop field in slot cell. ([e4850c7](https://github.com/cdmoro/bootstrap-vue-3/commit/e4850c7e40a5d4520f124d01f11809778dcc4b73))
+* **Option:** prevent casting null to empty string ([3cf3524](https://github.com/cdmoro/bootstrap-vue-3/commit/3cf3524f287d1069e1a29f252f4026eecfcc1467))
+* replaced BTable emits definition array with a typescript interface for better type support ([9ecc735](https://github.com/cdmoro/bootstrap-vue-3/commit/9ecc735d99372a8cb5c82570c3c125c1df843b7e))
+* **Table:** update field labeled key to use titleCase from stringUtils ([60aa7ff](https://github.com/cdmoro/bootstrap-vue-3/commit/60aa7ff1bdd2f295915a39864e3cf76119b07da1))
+* update date type of few of BTable props ([24292ba](https://github.com/cdmoro/bootstrap-vue-3/commit/24292ba3bd375d3e552d84958509ae3a4c64b422))
+* updated the data type of a few of BTable props ([7992762](https://github.com/cdmoro/bootstrap-vue-3/commit/799276299bd3f09648bc88eb62b9db5b464d6e44))
+
+
+### Miscellaneous Chores
+
+* release 0.2.15 ([2d53fbb](https://github.com/cdmoro/bootstrap-vue-3/commit/2d53fbbb6596a9a1302d3bc3a32a1b55708eb4e3))
+* release 0.3.0 ([6b6ea80](https://github.com/cdmoro/bootstrap-vue-3/commit/6b6ea80775b533430fc9b8ca25d4ab9837241dcd))
+
 ## [0.2.14](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.13...v0.2.14) (2022-08-30)
 
 

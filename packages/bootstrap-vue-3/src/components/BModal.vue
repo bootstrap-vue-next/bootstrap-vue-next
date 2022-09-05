@@ -258,6 +258,8 @@ const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean
 
 useEventListener(element, 'shown.bs.modal', (e) => modalShowed(e))
 useEventListener(element, 'hidden.bs.modal', (e) => modalHided(e))
+useEventListener(element, 'show.bs.modal', (e) => modalShow(e))
+useEventListener(element, 'hide.bs.modal', (e) => modalHide(e))
 
 const modalShowed = (e: Event) => {
   emit('shown', e)
@@ -269,6 +271,14 @@ const modalHided = (e: Event) => {
   emit('hidden', e)
 
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
+}
+
+const modalShow = (e: Event) => {
+  emit('show', e)
+}
+
+const modalHide = (e: Event) => {
+  emit('hide', e)
 }
 
 const show = () => {

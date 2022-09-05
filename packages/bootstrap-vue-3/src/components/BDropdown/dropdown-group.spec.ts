@@ -2,7 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BDropdownGroup from './BDropdownGroup.vue'
 
-describe('dropdown-form', () => {
+describe('dropdown-group', () => {
   enableAutoUnmount(afterEach)
 
   it('is tag li', () => {
