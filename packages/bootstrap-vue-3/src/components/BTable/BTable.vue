@@ -166,6 +166,7 @@ interface BTableProps {
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
   selectionVariant?: ColorVariant
+  stickyHeader?: Booleanish
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -186,7 +187,21 @@ const props = withDefaults(defineProps<BTableProps>(), {
   selectHead: true,
   selectMode: 'single',
   selectionVariant: 'primary',
+  stickyHeader: false,
 })
+
+const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
+const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
+const borderedBoolean = useBooleanish(toRef(props, 'bordered'))
+const darkBoolean = useBooleanish(toRef(props, 'dark'))
+const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
+const hoverBoolean = useBooleanish(toRef(props, 'hover'))
+const smallBoolean = useBooleanish(toRef(props, 'small'))
+const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
+const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
+const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
+const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 
 interface BTableEmits {
   (
@@ -222,20 +237,8 @@ interface BTableEmits {
 const emits = defineEmits<BTableEmits>()
 const slots = useSlots()
 
-const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
-const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
-const borderedBoolean = useBooleanish(toRef(props, 'bordered'))
-const darkBoolean = useBooleanish(toRef(props, 'dark'))
-const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
-const hoverBoolean = useBooleanish(toRef(props, 'hover'))
-const smallBoolean = useBooleanish(toRef(props, 'small'))
-const stripedBoolean = useBooleanish(toRef(props, 'striped'))
-const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
-const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
-const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
-
 const classes = computed(() => [
-  'table',
+  'table b-table',
   {
     [`align-${props.align}`]: props.align !== undefined,
     [`table-${props.variant}`]: props.variant !== undefined,
@@ -267,6 +270,7 @@ const computedItems = computed(() =>
 const responsiveClasses = computed(() => ({
   'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
   [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+  'b-table-sticky-header': stickyHeaderBoolean.value,
 }))
 
 const getFieldHeadLabel = (field: TableField) => {
