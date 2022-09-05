@@ -357,7 +357,10 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   field.class,
   field.thClass,
   field.variant ? `table-${field.variant}` : undefined,
-  {'b-table-sortable-column': isSortable.value && field.sortable},
+  {
+    'b-table-sortable-column': isSortable.value && field.sortable,
+    'b-table-sticky-column': field.stickyColumn,
+  },
 ]
 const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
   field.class,
