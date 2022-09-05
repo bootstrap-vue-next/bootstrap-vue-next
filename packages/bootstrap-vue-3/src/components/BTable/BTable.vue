@@ -109,6 +109,16 @@
             </td>
           </tr>
         </template>
+        <tr v-if="busyBoolean" class="b-table-busy-slot">
+          <td :colspan="computedFieldsTotal">
+            <slot name="table-busy">
+              <div class="d-flex align-items-center justify-content-center gap-2">
+                <b-spinner class="align-middle"></b-spinner>
+                <strong>Loading...</strong>
+              </div>
+            </slot>
+          </td>
+        </tr>
       </tbody>
       <tfoot v-if="footCloneBoolean">
         <tr>
@@ -144,6 +154,7 @@
 import {computed, ref, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import {titleCase} from '../../utils/stringUtils'
+import BSpinner from '../BSpinner.vue'
 
 import type {
   Booleanish,
@@ -181,6 +192,7 @@ interface BTableProps {
   selectMode?: 'multi' | 'single' | 'range'
   selectionVariant?: ColorVariant
   stickyHeader?: Booleanish
+  busy?: Booleanish
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -203,6 +215,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   selectMode: 'single',
   selectionVariant: 'primary',
   stickyHeader: false,
+  busy: false,
 })
 
 const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
@@ -218,6 +231,7 @@ const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
 const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
 const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
+const busyBoolean = useBooleanish(toRef(props, 'busy'))
 
 interface BTableEmits {
   (
@@ -269,6 +283,7 @@ const classes = computed(() => [
     'b-table-selectable': selectableBoolean.value,
     [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
     'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
+    'b-table-busy': busyBoolean.value,
   },
 ])
 
