@@ -88,4 +88,4 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: Test unit
-        run: pnpm run test:unit --coverage --maxWorkers=2
+        run: npm run test:unit --coverage --maxWorkers=2
