@@ -16,7 +16,7 @@
           },
           {
             "prop": "ariaControls",
-            "description": "If this component controls another component or element, set this to the ID of the controlled component or element"
+            "description": "If this component controls another component or element, set this to the Id of the controlled component or element"
           },
           {
             "prop": "disabled",

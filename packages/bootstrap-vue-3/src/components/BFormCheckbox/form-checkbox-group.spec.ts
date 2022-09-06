@@ -28,7 +28,7 @@ describe('form-checkbox-group', () => {
     expect(wrapper.classes().length).toEqual(1)
   })
 
-  it('default has auto ID set', async () => {
+  it('default has auto Id set', async () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,
@@ -36,7 +36,7 @@ describe('form-checkbox-group', () => {
 
     await nextTick()
 
-    // Auto ID not generated until after mount
+    // Auto Id not generated until after mount
     expect(wrapper.attributes('id')).toBeDefined()
   })
 
@@ -66,7 +66,7 @@ describe('form-checkbox-group', () => {
     expect(wrapper.attributes('role')).toBe('group')
   })
 
-  it('default has user provided ID', () => {
+  it('default has user provided Id', () => {
     const wrapper = mount(BFormCheckboxGroup, {
       attachTo: createContainer(),
       global,

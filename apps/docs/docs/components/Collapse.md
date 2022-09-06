@@ -156,18 +156,18 @@ support.
 ## Trigger multiple collapse elements
 
 You can even collapse multiple `<b-collapse>` components via a single `v-b-toggle` by providing
-multiple target IDs using _modifiers_.
+multiple target Ids using _modifiers_.
 
-You can also pass multiple target IDs via the directive _value_ in BootstrapVue release v2.14.0+.
+You can also pass multiple target Ids via the directive _value_ in BootstrapVue release v2.14.0+.
 
 <ClientOnly>
   <b-card>
     <div>
       <!-- Via multiple directive modifiers -->
       <b-button v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</b-button>
-      <!-- Via space separated string of IDs passed to directive value -->
+      <!-- Via space separated string of Ids passed to directive value -->
       <b-button v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</b-button>
-      <!-- Via array of string IDs passed to directive value -->
+      <!-- Via array of string Ids passed to directive value -->
       <b-button v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</b-button>
       <!-- Elements to collapse -->
       <b-collapse id="collapse-a" class="mt-2">
@@ -184,9 +184,9 @@ You can also pass multiple target IDs via the directive _value_ in BootstrapVue 
 <div>
   <!-- Via multiple directive modifiers -->
   <b-button v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</b-button>
-  <!-- Via space separated string of IDs passed to directive value -->
+  <!-- Via space separated string of Ids passed to directive value -->
   <b-button v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</b-button>
-  <!-- Via array of string IDs passed to directive value -->
+  <!-- Via array of string Ids passed to directive value -->
   <b-button v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</b-button>
   <!-- Elements to collapse -->
   <b-collapse id="collapse-a" class="mt-2">
@@ -373,7 +373,7 @@ The default slot can be optionally scoped. The following scope properties are av
 The `v-b-toggle` directive will automatically add the ARIA attributes `aria-controls` and
 `aria-expanded` to the component that the directive appears on (as well as add the class `collapsed`
 when not expanded). `aria-expanded` will reflect the state of the target `<b-collapse>` component,
-while `aria-controls` will be set to the ID(s) of the target `<b-collapse>` component(s).
+while `aria-controls` will be set to the Id(s) of the target `<b-collapse>` component(s).
 
 If using `v-model` to set the visible state instead of the directive `v-b-toggle`, you will be
 required to, on the toggle element, add the `aria-controls` and other appropriate attributes and
@@ -401,10 +401,10 @@ apply those roles for you automatically, as it depends on your final document ma
 | ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `accordion`  | `String`  |         | The id of the accordion group that this collapse belongs to                                                                   |
 | ~~`appear`~~ | `Boolean` | `false` | When set, and prop 'visible' is true on mount, will animate on initial mount                                                  |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | ~~`isNav`~~  | `Boolean` | `false` | When set, and prop 'visible' is true on mount, will animate on initial mount                                                  |
 | `modelValue` | `Boolean` | `false` | When 'true', expands the collapse. Do not use together with visible                                                           |
-| `tag`        | `String`  | `div`   | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `tag`        | `String`  | `div`   | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `visble`     | `Boolean` | `false` | When 'true', expands the collapse. Do not use together with v-model                                                           |
 
 #### v-model

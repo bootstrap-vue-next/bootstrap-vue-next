@@ -1,4 +1,4 @@
-import {getID} from '../utils'
+import {getId} from '../utils'
 import {computed, ComputedRef, Ref} from 'vue'
 
 /**
@@ -7,4 +7,4 @@ import {computed, ComputedRef, Ref} from 'vue'
  * @returns
  */
 export default (id?: Ref<string | undefined>, suffix?: string): ComputedRef<string> =>
-  computed(() => id?.value || getID(suffix))
+  computed(() => id?.value || getId(suffix))

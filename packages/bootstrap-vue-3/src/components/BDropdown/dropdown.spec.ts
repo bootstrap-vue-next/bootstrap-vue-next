@@ -158,10 +158,10 @@ describe('dropdown', () => {
 
   it('first child BButton prop size is prop size', () => {
     const wrapper = mount(BDropdown, {
-      props: {size: 'md'},
+      props: {size: 'sm'},
     })
     const $bbutton = wrapper.getComponent(BButton)
-    expect($bbutton.props('size')).toBe('md')
+    expect($bbutton.props('size')).toBe('sm')
   })
 
   it('first child BButton has class nav-link when prop isNav', async () => {
@@ -400,10 +400,10 @@ describe('dropdown', () => {
 
   it('second child BButton has prop size to be prop size', async () => {
     const wrapper = mount(BDropdown, {
-      props: {split: true, size: 'md'},
+      props: {split: true, size: 'sm'},
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.props('size')).toBe('md')
+    expect($bbutton.props('size')).toBe('sm')
     await wrapper.setProps({size: 'lg'})
     expect($bbutton.props('size')).toBe('lg')
   })

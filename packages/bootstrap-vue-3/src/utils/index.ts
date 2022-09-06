@@ -28,7 +28,7 @@ import {
 } from './dom'
 import getBreakpointProps from './getBreakpointProps'
 import getClasses from './getClasses'
-import getID from './getID'
+import getId from './getId'
 import resolveAriaInvalid from './resolveAriaInvalid'
 import {
   isArray,
@@ -103,7 +103,7 @@ export {
   IS_BROWSER,
   getBreakpointProps,
   getClasses,
-  getID,
+  getId,
   isArray,
   isBoolean,
   isFunction,
@@ -168,7 +168,7 @@ export default {
   IS_BROWSER,
   getBreakpointProps,
   getClasses,
-  getID,
+  getId,
   isArray,
   isBoolean,
   isFunction,

@@ -340,7 +340,7 @@ The default slot scope properties are as follows:
 | `form`             | String                   | The value of the `form` prop                                                                                                                           |
 | `inputAttrs`       | Object                   | Object of attributes to apply to the new tag input element via `v-bind="inputAttrs"`. See below for details                                            |
 | `inputHandlers`    | Object                   | Object of event handlers to apply to the new tag input element via `v-on="inputHandlers"`. See below for details                                       |
-| `inputId`          | String                   | ID to add to the new tag input element. Defaults to prop `input-id`. If not provided a unique ID is auto-generated. Also available via 'inputAttrs.id' |
+| `inputId`          | String                   | Id to add to the new tag input element. Defaults to prop `input-id`. If not provided a unique Id is auto-generated. Also available via 'inputAttrs.id' |
 | `inputType`        | String                   | Type of input to render (normalized version of prop `input-type`)                                                                                      |
 | `invalidTagText`   | String                   | The value of the `invalid-tag-text` prop                                                                                                               |
 | `invalidTags`      | Array                    | Array of the invalid tag(s) the user has entered                                                                                                       |

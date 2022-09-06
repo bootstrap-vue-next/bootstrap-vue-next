@@ -26,7 +26,7 @@ describe('form-radio-group', () => {
     expect(wrapper.classes()).toContain('bv-no-focus-ring')
   })
 
-  it('default has auto ID set', async () => {
+  it('default has auto Id set', async () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,
@@ -63,7 +63,7 @@ describe('form-radio-group', () => {
     expect(wrapper.attributes('role')).toBe('radiogroup')
   })
 
-  it('default has user provided ID', () => {
+  it('default has user provided Id', () => {
     const wrapper = mount(BFormRadioGroup, {
       attachTo: createContainer(),
       global,

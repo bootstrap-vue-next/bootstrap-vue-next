@@ -85,7 +85,7 @@ describe('form-select', () => {
     expect(wrapper.attributes('multiple')).toBeUndefined()
   })
 
-  it('has auto ID attr by default', async () => {
+  it('has auto Id attr by default', async () => {
     const wrapper = mount(BFormSelect)
 
     await nextTick()
@@ -93,7 +93,7 @@ describe('form-select', () => {
     expect(wrapper.attributes('id')).toBeDefined()
   })
 
-  it('has user supplied ID attr when id is set', () => {
+  it('has user supplied Id attr when id is set', () => {
     const wrapper = mount(BFormSelect, {
       props: {
         id: 'foobar',
