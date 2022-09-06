@@ -10,8 +10,9 @@
       v-bind="buttonAttr"
       @click="onSplitClick"
     >
-      {{ text }}
-      <slot name="button-content" />
+      <slot name="button-content">
+        {{ text }}
+      </slot>
     </b-button>
     <b-button
       v-if="splitBoolean"
@@ -26,7 +27,9 @@
       @click="emit('toggle')"
     >
       <span class="visually-hidden">
-        {{ toggleText }}
+        <slot name="toggle-text">
+          {{ toggleText }}
+        </slot>
       </span>
     </b-button>
     <ul
@@ -137,7 +140,7 @@ useEventListener(parent, 'shown.bs.dropdown', () => emit('shown'))
 useEventListener(parent, 'hide.bs.dropdown', () => emit('hide'))
 useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'))
 
-const onSplitClick = (event: Event) => {
+const onSplitClick = (event: MouseEvent) => {
   if (splitBoolean.value) {
     emit('click', event)
   }
