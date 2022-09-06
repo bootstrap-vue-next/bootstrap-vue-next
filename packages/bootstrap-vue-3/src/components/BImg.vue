@@ -77,7 +77,7 @@ const makeBlankImgSrc = (
   return `data:image/svg+xml;charset=UTF-8,${src}`
 }
 
-const computedSrcset = computed<string>(() =>
+const computedSrcset = computed<string | undefined>(() =>
   typeof props.srcset === 'string'
     ? props.srcset
         .split(',')
@@ -85,10 +85,10 @@ const computedSrcset = computed<string>(() =>
         .join(',')
     : Array.isArray(props.srcset)
     ? props.srcset.filter((x) => x).join(',')
-    : ''
+    : undefined
 )
 
-const computedSizes = computed<string>(() =>
+const computedSizes = computed<string | undefined>(() =>
   typeof props.sizes === 'string'
     ? props.sizes
         .split(',')
@@ -96,7 +96,7 @@ const computedSizes = computed<string>(() =>
         .join(',')
     : Array.isArray(props.sizes)
     ? props.sizes.filter((x) => x).join(',')
-    : ''
+    : undefined
 )
 
 const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
@@ -136,8 +136,8 @@ const attrs = computed(() => ({
   alt: props.alt,
   width: computedDimentions.value.width || undefined,
   height: computedDimentions.value.height || undefined,
-  srcset: !blankBoolean.value ? computedSrcset.value || undefined : undefined,
-  sizes: !blankBoolean.value ? computedSizes.value || undefined : undefined,
+  srcset: !blankBoolean.value ? computedSrcset.value : undefined,
+  sizes: !blankBoolean.value ? computedSizes.value : undefined,
   loading: lazyBoolean.value ? 'lazy' : 'eager',
 }))
 
