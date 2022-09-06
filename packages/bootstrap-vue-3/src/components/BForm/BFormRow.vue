@@ -1,6 +1,6 @@
 <template>
   <component :is="tag" class="row d-flex flex-wrap">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
