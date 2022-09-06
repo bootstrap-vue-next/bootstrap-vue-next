@@ -64,7 +64,11 @@ const BLANK_TEMPLATE =
   '<rect width="100%" height="100%" style="fill:%{f};"></rect>' +
   '</svg>'
 
-const makeBlankImgSrc = (width: any, height: any, color: string): string => {
+const makeBlankImgSrc = (
+  width: number | undefined,
+  height: number | undefined,
+  color: string
+): string => {
   const src = encodeURIComponent(
     BLANK_TEMPLATE.replace('%{w}', String(width))
       .replace('%{h}', String(height))
@@ -73,61 +77,71 @@ const makeBlankImgSrc = (width: any, height: any, color: string): string => {
   return `data:image/svg+xml;charset=UTF-8,${src}`
 }
 
-const attrs = computed(() => {
-  // TODO decompose this and make business logic into separate computed functions
-  let {src} = props
-  let width =
-    (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
-    undefined
-  let height =
-    (typeof props.height === 'number' ? props.height : parseInt(props.height as string, 10)) ||
-    undefined
+const computedSrcset = computed<string>(() =>
+  typeof props.srcset === 'string'
+    ? props.srcset
+        .split(',')
+        .filter((x) => x)
+        .join(',')
+    : Array.isArray(props.srcset)
+    ? props.srcset.filter((x) => x).join(',')
+    : ''
+)
 
-  let srcset = ''
-  if (typeof props.srcset === 'string')
-    srcset = props.srcset
-      .split(',')
-      .filter((x) => x)
-      .join(',')
-  else if (Array.isArray(props.srcset)) srcset = props.srcset.filter((x) => x).join(',')
+const computedSizes = computed<string>(() =>
+  typeof props.sizes === 'string'
+    ? props.sizes
+        .split(',')
+        .filter((x) => x)
+        .join(',')
+    : Array.isArray(props.sizes)
+    ? props.sizes.filter((x) => x).join(',')
+    : ''
+)
 
-  let sizes = ''
-  if (typeof props.sizes === 'string')
-    sizes = props.sizes
-      .split(',')
-      .filter((x) => x)
-      .join(',')
-  else if (Array.isArray(props.sizes)) sizes = props.sizes.filter((x) => x).join(',')
-
+const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
+  const width =
+    typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10) || undefined
+  const height =
+    typeof props.height === 'number'
+      ? props.height
+      : parseInt(props.height as string, 10) || undefined
   if (blankBoolean.value) {
-    if (!height && width) {
-      height = width
-    } else if (!width && height) {
-      width = height
+    if (!!width && !height) {
+      return {height: width, width}
+    }
+    if (!width && !!height) {
+      return {height, width: height}
     }
     if (!width && !height) {
-      width = 1
-      height = 1
+      return {height: 1, width: 1}
     }
-    // Make a blank SVG image
-    // TODO unexpected mutation of props
-    src = makeBlankImgSrc(width, height, props.blankColor || 'transparent')
-    // Disable srcset and sizes
-    srcset = ''
-    sizes = ''
   }
   return {
-    src,
-    alt: props.alt,
-    width: width || undefined,
-    height: height || undefined,
-    srcset: srcset || undefined,
-    sizes: sizes || undefined,
-    loading: lazyBoolean.value ? 'lazy' : 'eager',
+    width,
+    height,
   }
 })
 
-const alignment = computed(() =>
+const computedBlankImgSrc = computed(() =>
+  makeBlankImgSrc(
+    computedDimentions.value.width,
+    computedDimentions.value.height,
+    props.blankColor || 'transparent'
+  )
+)
+
+const attrs = computed(() => ({
+  src: !blankBoolean.value ? props.src : computedBlankImgSrc.value,
+  alt: props.alt,
+  width: computedDimentions.value.width || undefined,
+  height: computedDimentions.value.height || undefined,
+  srcset: !blankBoolean.value ? computedSrcset.value || undefined : undefined,
+  sizes: !blankBoolean.value ? computedSizes.value || undefined : undefined,
+  loading: lazyBoolean.value ? 'lazy' : 'eager',
+}))
+
+const alignment = computed<'float-start' | 'float-end' | 'mx-auto' | undefined>(() =>
   leftBoolean.value
     ? 'float-start'
     : rightBoolean.value
