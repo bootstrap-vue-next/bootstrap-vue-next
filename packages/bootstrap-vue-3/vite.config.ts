@@ -68,7 +68,8 @@ const config = defineConfig({
     // globals: true,
     environment: 'jsdom',
     coverage: {
-      reporter: ['text', 'json', 'html'],
+      provider: 'c8',
+      reporter: ['text', 'html'],
     },
   },
 })

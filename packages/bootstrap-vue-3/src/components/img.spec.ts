@@ -248,7 +248,7 @@ describe('img', () => {
     expect(wrapper.attributes('width')).toBe('100')
   })
 
-  it('has width and height 1 when prop blank', () => {
+  it('has width and height 1 when prop blank and no height or width', () => {
     const wrapper = mount(BImg, {
       props: {blank: true},
     })
