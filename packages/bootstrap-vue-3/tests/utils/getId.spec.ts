@@ -1,5 +1,5 @@
 import {getId} from '../../src/utils'
-import {describe, expect, it, vi} from 'vitest'
+import {describe, expect, it} from 'vitest'
 
 describe('getId', () => {
   it('returns something', () => {
