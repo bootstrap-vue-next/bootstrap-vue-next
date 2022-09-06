@@ -527,7 +527,7 @@ input groups. However, the inputs inside the input group do support contextual s
 | -------------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `append`       | `String` |         | Text to append to the input group                                                                                             |
 | `append-html`  | `String` |         | HTML string to append to the input group. Has precedence over 'append' prop                                                   |
-| `id`           | `String` |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`           | `String` |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `prepend`      | `String` |         | Text to prepend to the input group                                                                                            |
 | `prepend-html` | `String` |         | HTML string to prepend to the input group. Has precedence over 'append' prop                                                  |
 | `size`         | `String` |         | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                     |
@@ -547,7 +547,7 @@ input groups. However, the inputs inside the input group do support contextual s
 
 | Property  | Type      | Default | Description                                                                                                                   |
 | --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
 | `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
 
@@ -563,7 +563,7 @@ input groups. However, the inputs inside the input group do support contextual s
 
 | Property  | Type      | Default | Description                                                                                                                   |
 | --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
 | `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
 
@@ -596,7 +596,7 @@ input groups. However, the inputs inside the input group do support contextual s
 | Property  | Type      | Default | Description                                                                                                                   |
 | --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `append`  | `Boolean` | `false` | When set to 'true' sets the addon as being appended. defaults to 'false' which is prepended                                   |
-| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
 | `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
 

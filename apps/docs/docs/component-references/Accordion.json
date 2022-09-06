@@ -18,7 +18,7 @@
           },
           {
             "prop": "id",
-            "description": "The ID to be injected to accordian items and used to in b-collaspe for state managment"
+            "description": "The Id to be injected to accordian items and used to in b-collaspe for state managment"
           }
         ],
         "emits": []

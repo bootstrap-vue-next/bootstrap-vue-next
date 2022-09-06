@@ -401,10 +401,10 @@ or the `force-show` prop to display the feedback.
 <b-card>
   <div>
     <b-form  @submit.stop.prevent>
-      <label for="feedback-user">User ID</label>
+      <label for="feedback-user">User Id</label>
       <b-form-input v-model="userId" :state="validation" id="feedback-user"></b-form-input>
       <b-form-invalid-feedback :state="validation">
-        Your user ID must be 5-12 characters long.
+        Your user Id must be 5-12 characters long.
       </b-form-invalid-feedback>
       <b-form-valid-feedback :state="validation">
         Looks Good.
@@ -419,10 +419,10 @@ or the `force-show` prop to display the feedback.
   <b-card>
     <div>
       <b-form @submit.stop.prevent>
-        <label for="feedback-user">User ID</label>
+        <label for="feedback-user">User Id</label>
         <b-form-input v-model="userId" :state="validation" id="feedback-user"></b-form-input>
         <b-form-invalid-feedback :state="validation">
-          Your user ID must be 5-12 characters long.
+          Your user Id must be 5-12 characters long.
         </b-form-invalid-feedback>
         <b-form-valid-feedback :state="validation"> Looks Good. </b-form-valid-feedback>
       </b-form>
@@ -466,7 +466,7 @@ for details on the Bootstrap v5 validation states.
 
 | Property     | Type      | Default | Description                                                                                                                   |
 | ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `novalidate` | `Boolean` | `false` | When set, disables browser native HTML5 validation on controls in the form                                                    |
 | `validated`  | `Boolean` | `false` | When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states               |
 
@@ -490,7 +490,7 @@ for details on the Bootstrap v5 validation states.
 
 | Property       | Type      | Default | Description                                                                                                                   |
 | -------------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`           | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`           | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `inline`       | `Boolean` | `false` | When set, renders the help text as an inline element, rather than a block element                                             |
 | `tag`          | `String`  | `small` | Specify the HTML tag to render instead of the default tag                                                                     |
 | `text-variant` | `String`  | `muted` | Applies one of the Bootstrap theme color variants to the text                                                                 |
@@ -511,7 +511,7 @@ for details on the Bootstrap v5 validation states.
 | ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `aria-live`  | `String`  |         | When the rendered element is an `aria-live` region (for screen reader users), set to either 'polite' or 'assertive'           |
 | `force-show` | `Boolean` | `false` | Shows the feedback text, regardless of the value of the 'state' prop                                                          |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `role`       | `String`  |         | Sets the ARIA attribute `role` to a specific value                                                                            |
 | `state`      | `Boolean` | `null`  | When explicitly 'false', forces the feedback to show                                                                          |
 | `tag`        | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
@@ -533,7 +533,7 @@ for details on the Bootstrap v5 validation states.
 | ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `aria-live`  | `String`  |         | When the rendered element is an `aria-live` region (for screen reader users), set to either 'polite' or 'assertive'           |
 | `force-show` | `Boolean` | `false` | Shows the feedback text, regardless of the value of the 'state' prop                                                          |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `role`       | `String`  |         | Sets the ARIA attribute `role` to a specific value                                                                            |
 | `state`      | `Boolean` | `null`  | When explicitly 'true', forces the feedback to show                                                                           |
 | `tag`        | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |

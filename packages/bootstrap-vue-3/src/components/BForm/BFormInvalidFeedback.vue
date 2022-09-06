@@ -1,6 +1,8 @@
 <template>
   <component :is="tag" :class="classes" v-bind="attrs">
-    <slot />
+    <slot>
+      {{ text }}
+    </slot>
   </component>
 </template>
 
@@ -14,6 +16,7 @@ interface BFormInvalidFeedbackProps {
   ariaLive?: string
   forceShow?: Booleanish
   id?: string
+  text?: string
   role?: string
   state?: Booleanish
   tag?: string
@@ -42,9 +45,9 @@ const classes = computed(() => ({
 }))
 
 const attrs = computed(() => ({
-  'id': props.id || null,
-  'role': props.role || null,
-  'aria-live': props.ariaLive || null,
-  'aria-atomic': props.ariaLive ? 'true' : null,
+  'id': props.id,
+  'role': props.role,
+  'aria-live': props.ariaLive,
+  'aria-atomic': props.ariaLive ? 'true' : undefined,
 }))
 </script>

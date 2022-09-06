@@ -1,6 +1,8 @@
 <template>
   <component :is="tag" :class="classes" v-bind="attrs">
-    <slot />
+    <slot>
+      {{ text }}
+    </slot>
   </component>
 </template>
 
@@ -15,6 +17,7 @@ interface BFormValidFeedbackProps {
   forceShow?: Booleanish
   id?: string
   role?: string
+  text?: string
   state?: Booleanish
   tag?: string
   tooltip?: Booleanish

@@ -27,13 +27,13 @@ const resolveToggleType = (el: HTMLElement): string => {
  */
 const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   const {modifiers, arg, value} = binding
-  // Any modifiers are considered target IDs
+  // Any modifiers are considered target Ids
   const targets = Object.keys(modifiers || {})
 
   // If value is a string, split out individual targets (if space delimited)
   const localValue = isString(value) ? value.split(RX_SPACE_SPLIT) : value
 
-  // Support target ID as link href (`href="#id"`)
+  // Support target Id as link href (`href="#id"`)
   if (isTag(el.tagName, 'a')) {
     const href = getAttr(el, 'href') || ''
     if (RX_HASH_ID.test(href)) {
@@ -41,12 +41,12 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
     }
   }
 
-  // Add ID from `arg` (if provided), and support value
-  // as a single string ID or an array of string IDs
+  // Add Id from `arg` (if provided), and support value
+  // as a single string Id or an array of string Ids
   // If `value` is not an array or string, then it gets filtered out
   concat(arg, localValue).forEach((t) => isString(t) && targets.push(t))
 
-  // Return only unique and truthy target IDs
+  // Return only unique and truthy target Ids
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 

@@ -17,7 +17,7 @@
 import {computed, onMounted, ref, toRef, watch} from 'vue'
 import {Collapse} from 'bootstrap'
 import {useBooleanish, useEventListener} from '../composables'
-import {getID} from '../utils'
+import {getId} from '../utils'
 import type {Booleanish} from '../types'
 
 interface BCollapseProps {
@@ -32,7 +32,7 @@ interface BCollapseProps {
 }
 
 const props = withDefaults(defineProps<BCollapseProps>(), {
-  id: getID(),
+  id: getId(),
   modelValue: false,
   tag: 'div',
   toggle: false,

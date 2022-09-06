@@ -742,7 +742,7 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 | `content-class`         | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the tab-content wrapper                                                                             |
 | `end`                   | `Boolean`                       | `false` | Place the tab controls at the bottom (horizontal tabs), or right (vertical tabs)                                                       |
 | `fill`                  | `Boolean`                       | `false` | Proportionately fills all horizontal space with nav items. All horizontal space is occupied, but not every nav item has the same width |
-| `id`                    | `String`                        |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed          |
+| `id`                    | `String`                        |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed          |
 | `justified`             | `Boolean`                       | `false` | Fills all horizontal space with nav items, but unlike 'fill', every nav item will be the same width                                    |
 | `lazy`                  | `Boolean`                       | `false` | Lazily render the b-tab contents when shown                                                                                            |
 | `lazy`                  | `Boolean`                       | `false` | Lazily render the b-tab contents when shown                                                                                            |
@@ -785,9 +785,9 @@ It is recommended to use the `disabled` attribute on the `<b-tab>` component ins
 | Property                | Type                            | Default | Description                                                                                                                   |
 | ----------------------- | ------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `active`                | `Boolean`                       | `false` | When set to `true`, places the component in the active state with active styling                                              |
-| `button-id`             | `String`                        |         | Use a specific ID for this tab's tab control button. If not provided, one will automatically be generated                     |
+| `button-id`             | `String`                        |         | Use a specific Id for this tab's tab control button. If not provided, one will automatically be generated                     |
 | `disabled`              | `Boolean`                       | `false` | When set to `true`, disables the component's functionality and places it in a disabled state                                  |
-| `id`                    | `String`                        |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed |
+| `id`                    | `String`                        |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
 | `lazy`                  | `Boolean`                       | `false` | Lazily render this tab's content when shown                                                                                   |
 | `no-body`               | `Boolean`                       | `false` | When the parent b-tabs has the 'card' prop set, do not render a card-body wrapper                                             |
 | `tag`                   | `String`                        | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |

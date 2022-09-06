@@ -1,7 +1,13 @@
 <template>
   <div class="form-floating">
-    <slot />
-    <label :for="labelFor">{{ label }}</label>
+    <slot>
+      {{ text }}
+    </slot>
+    <label :for="labelFor">
+      <slot name="label">
+        {{ label }}
+      </slot>
+    </label>
   </div>
 </template>
 
@@ -11,6 +17,7 @@
 interface BFormFloatingLabelProps {
   labelFor?: string
   label?: string
+  text?: string
 }
 
 defineProps<BFormFloatingLabelProps>()

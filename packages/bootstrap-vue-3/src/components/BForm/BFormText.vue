@@ -1,6 +1,8 @@
 <template>
   <component :is="tag" :class="classes" v-bind="attrs">
-    <slot />
+    <slot>
+      {{ text }}
+    </slot>
   </component>
 </template>
 
@@ -14,6 +16,7 @@ interface BFormTextProps {
   id?: string
   inline?: Booleanish
   tag?: string
+  text?: string
   textVariant?: TextColorVariant
 }
 
@@ -31,6 +34,6 @@ const classes = computed(() => ({
 }))
 
 const attrs = computed(() => ({
-  id: props.id || null,
+  id: props.id,
 }))
 </script>

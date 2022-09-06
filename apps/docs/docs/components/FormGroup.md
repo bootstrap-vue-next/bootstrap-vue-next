@@ -57,7 +57,7 @@ using the named slot `label`, You may optionally visually hide the label text wh
 available to screen readers by setting the prop `label-sr-only`.
 
 `<b-form-group>` will render a `<fieldset>` with `<legend>` if the `label-for` prop is not set. If
-an input ID is provided to the `label-for` prop, then a `<div>` with `<label>` will be rendered.
+an input Id is provided to the `label-for` prop, then a `<div>` with `<label>` will be rendered.
 
 If you provide an input `id` value to the `label-for` prop (the `id` must exist on the input
 contained within the `<b-form-group>`), a `<label>` element will be rendered instead of a `<legend>`
@@ -455,7 +455,7 @@ element. By nature of this markup, the legend content is automatically associate
 input control(s).
 
 It is **highly recommended** that you provide a unique `id` prop on your input element and set the
-`label-for` prop to this ID, when you have only a single input in the `<b-form-group>`.
+`label-for` prop to this Id, when you have only a single input in the `<b-form-group>`.
 
 When multiple form controls are placed inside `<b-form-group>` (i.e. a series or radio or checkbox
 inputs, or a series of related inputs), **do not set** the `label-for` prop, as a label can only be
@@ -492,7 +492,7 @@ scoped `default` slot.
 | `disabled`                                                    | `Boolean`                                                                | `false`     | Disabled the fieldset element, which in turn disables the form controls (on browsers that support disabled fieldsets). Has no effect if `label-for` is set      |
 | <span style="white-space:nowrap;">`feedback-aria-live`</span> | `String`                                                                 | `assertive` | Value to use for the `aria-live` attribute on the feedback text                                                                                                 |
 | `floating`                                                    | `Boolean`                                                                | `false`     | When set to true, enables floating labels. Has no effect in horizontal layout.                                                                                  |
-| `id`                                                          | `String`                                                                 |             | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed                                   |
+| `id`                                                          | `String`                                                                 |             | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed                                   |
 | `invalid-feedback`                                            | `String`                                                                 |             | Text to show when the form group has an invalid state                                                                                                           |
 | `label`                                                       | `String`                                                                 |             | Text to place in the label/legend of the form group                                                                                                             |
 | `label-align`                                                 | `String`                                                                 |             | Text alignment 'left', 'center', 'right' for the label 'xs' screens and up                                                                                      |
@@ -506,7 +506,7 @@ scoped `default` slot.
 | `label-cols-md`                                               | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'md' screens and up                                                                                                       |
 | `label-cols-sm`                                               | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'sm' screens and up                                                                                                       |
 | `label-cols-xl`                                               | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'xl' screens and up                                                                                                       |
-| `label-for`                                                   | `String`                                                                 |             | Set to the ID of the singular form control in the form group. Do not set a value if there is more than one form control in the group                            |
+| `label-for`                                                   | `String`                                                                 |             | Set to the Id of the singular form control in the form group. Do not set a value if there is more than one form control in the group                            |
 | `label-size`                                                  | `String`                                                                 |             | Sets the text size of the label: 'sm', 'md' (default) or 'lg'. Use this prop to have the label size match the form control size                                 |
 | `label-sr-only`                                               | `Boolean`                                                                | `false`     | Visually hides the label content, but makes it available to screen reader users                                                                                 |
 | `state`                                                       | `Boolean`                                                                | `null`      | Controls the validation state of the feedback. `true` force shows valid-feedback, `false` force shows invalid feedback, `null` does not force show the feedback |
@@ -529,9 +529,9 @@ scoped `default` slot.
 | Property          | Type     | Description                                                                                                                               |
 | ----------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `ariaDescribedby` | `String` | The value for the `aria-describedby` attribute for input elements in the form group. Will be auto-assigned when `label-for` prop is given |
-| `id `             | `String` | The ID of the form group. Will equal `id` prop, when provided                                                                             |
-| `descriptionId`   | `String` | The ID of the description element. Will be `null` when no description content given                                                       |
-| `labelId`         | `String` | The ID of the label element. Will be `null` when no description content given                                                             |
+| `id `             | `String` | The Id of the form group. Will equal `id` prop, when provided                                                                             |
+| `descriptionId`   | `String` | The Id of the description element. Will be `null` when no description content given                                                       |
+| `labelId`         | `String` | The Id of the label element. Will be `null` when no description content given                                                             |
 
 <ClientOnly>
 

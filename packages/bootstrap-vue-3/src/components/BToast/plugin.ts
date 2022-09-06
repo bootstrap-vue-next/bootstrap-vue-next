@@ -1,5 +1,5 @@
 import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '../../types'
-import {getID} from '../../utils'
+import {getId} from '../../utils'
 import {
   App,
   ComponentPublicInstance,
@@ -101,7 +101,7 @@ export class ToastInstance {
   }
 
   show(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
-    const topts: ToastOptions = {id: getID(), ...defaultToastOptions, ...options}
+    const topts: ToastOptions = {id: getId(), ...defaultToastOptions, ...options}
 
     const toast: Toast = {
       options: reactive(topts),

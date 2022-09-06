@@ -65,7 +65,7 @@
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
-import {BvEvent, getID, isFunction} from '../../utils'
+import {BvEvent, getId, isFunction} from '../../utils'
 import {useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
 
@@ -158,8 +158,8 @@ const tabs = computed(() => {
     tabs = getTabs(slots).map((tab: any, idx) => {
       if (!tab.props) tab.props = {}
 
-      const buttonId = tab.props['button-id'] || getID('tab')
-      const contentId = tab.props.id || getID()
+      const buttonId = tab.props['button-id'] || getId('tab')
+      const contentId = tab.props.id || getId()
       const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
       const titleItemClass = tab.props['title-item-class']
       const titleLinkAttributes = tab.props['title-link-attributes']

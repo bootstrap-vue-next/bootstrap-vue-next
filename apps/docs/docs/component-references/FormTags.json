@@ -48,7 +48,7 @@
           {
             "prop": "inputId",
             "type": "String",
-            "description": "ID to apply to the new tag input element. If not provided, a unique ID will be auto generated"
+            "description": "Id to apply to the new tag input element. If not provided, a unique Id will be auto generated"
           },
           {
             "prop": "inputType",
@@ -297,7 +297,7 @@
               {
                 "prop": "inputId",
                 "type": "String",
-                "description": "ID to add to the new tag input element. Defaults to prop 'input-id'. If not provided a unique ID is auto-generated. Also available via 'inputAttrs.id'"
+                "description": "Id to add to the new tag input element. Defaults to prop 'input-id'. If not provided a unique Id is auto-generated. Also available via 'inputAttrs.id'"
               },
               {
                 "prop": "inputType",

@@ -6,7 +6,7 @@ import {
   attemptFocus,
   cssEscape,
   getAttr,
-  getID,
+  getId,
   IS_BROWSER,
   isBoolean,
   isVisible,
@@ -121,7 +121,7 @@ export default defineComponent({
     const content = ref()
 
     // Sets the `aria-describedby` attribute on the input if `labelFor` is set
-    // Optionally accepts a string of IDs to remove as the second parameter
+    // Optionally accepts a string of Ids to remove as the second parameter
     // Preserves any `aria-describedby` value(s) user may have on input
     const updateAriaDescribedby = (newValue: string | null, oldValue: string | null = null) => {
       if (IS_BROWSER && props.labelFor) {
@@ -132,8 +132,8 @@ export default defineComponent({
           const newIds = (newValue || '').split(RX_SPACE_SPLIT)
           const oldIds = (oldValue || '').split(RX_SPACE_SPLIT)
 
-          // Update ID list, preserving any original IDs
-          // and ensuring the ID's are unique
+          // Update Id list, preserving any original Ids
+          // and ensuring the Id's are unique
           const ids = (getAttr($input, attr) || '')
             .split(RX_SPACE_SPLIT)
             .filter((id) => !arrayIncludes(oldIds, id))
@@ -239,7 +239,7 @@ export default defineComponent({
 
     let $label: any = null
     const labelContent = normalizeSlot(SLOT_NAME_LABEL, {}, slots) || props.label
-    const labelId = labelContent ? getID('_BV_label_') : null
+    const labelId = labelContent ? getId('_BV_label_') : null
 
     if (labelContent || this.isHorizontal) {
       const labelTag: string = isFieldset ? 'legend' : 'label'
@@ -292,7 +292,7 @@ export default defineComponent({
     let $invalidFeedback = null
     const invalidFeedbackContent =
       normalizeSlot(SLOT_NAME_INVALID_FEEDBACK, {}, slots) || this.invalidFeedback
-    const invalidFeedbackId = invalidFeedbackContent ? getID('_BV_feedback_invalid_') : undefined
+    const invalidFeedbackId = invalidFeedbackContent ? getId('_BV_feedback_invalid_') : undefined
 
     if (invalidFeedbackContent) {
       $invalidFeedback = h(
@@ -310,7 +310,7 @@ export default defineComponent({
     let $validFeedback = null
     const validFeedbackContent =
       normalizeSlot(SLOT_NAME_VALID_FEEDBACK, {}, slots) || this.validFeedback
-    const validFeedbackId = validFeedbackContent ? getID('_BV_feedback_valid_') : undefined
+    const validFeedbackId = validFeedbackContent ? getId('_BV_feedback_valid_') : undefined
 
     if (validFeedbackContent) {
       $validFeedback = h(
@@ -328,7 +328,7 @@ export default defineComponent({
 
     let $description = null
     const descriptionContent = normalizeSlot(SLOT_NAME_DESCRIPTION, {}, slots) || this.description
-    const descriptionId = descriptionContent ? getID('_BV_description_') : undefined
+    const descriptionId = descriptionContent ? getId('_BV_description_') : undefined
     if (descriptionContent) {
       $description = h(
         BFormText,
@@ -342,7 +342,7 @@ export default defineComponent({
     // Update `ariaDescribedby`
     // Screen readers will read out any content linked to by `aria-describedby`
     // even if the content is hidden with `display: none;`, hence we only include
-    // feedback IDs if the form group's state is explicitly valid or invalid
+    // feedback Ids if the form group's state is explicitly valid or invalid
     const ariaDescribedby = (this.ariaDescribedby =
       [
         descriptionId,
