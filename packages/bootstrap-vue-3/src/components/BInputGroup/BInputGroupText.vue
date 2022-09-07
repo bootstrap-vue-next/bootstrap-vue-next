@@ -1,6 +1,8 @@
 <template>
   <component :is="tag" class="input-group-text">
-    <slot />
+    <slot>
+      {{ text }}
+    </slot>
   </component>
 </template>
 
@@ -9,6 +11,7 @@
 
 interface BInputGroupTextProps {
   tag?: string
+  text?: string
 }
 
 withDefaults(defineProps<BInputGroupTextProps>(), {

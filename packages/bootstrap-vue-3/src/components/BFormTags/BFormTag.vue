@@ -22,7 +22,7 @@
       :aria-controls="id"
       :aria-describedby="taglabelId"
       @click="emit('remove', tagText)"
-    ></button>
+    />
   </component>
 </template>
 

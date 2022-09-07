@@ -113,7 +113,7 @@
           <td :colspan="computedFieldsTotal">
             <slot name="table-busy">
               <div class="d-flex align-items-center justify-content-center gap-2">
-                <b-spinner class="align-middle"></b-spinner>
+                <b-spinner class="align-middle" />
                 <strong>Loading...</strong>
               </div>
             </slot>

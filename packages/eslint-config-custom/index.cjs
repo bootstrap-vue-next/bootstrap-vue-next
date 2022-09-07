@@ -66,5 +66,17 @@ module.exports = {
     'yoda': 'warn',
     '@typescript-eslint/no-explicit-any': 'off',
     'vue/require-default-prop': 'off',
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always',
+          normal: 'always',
+          component: 'always',
+        },
+        svg: 'always',
+        math: 'always',
+      },
+    ],
   },
 }
