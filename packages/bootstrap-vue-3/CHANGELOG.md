@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.3.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.0...v0.3.1) (2022-09-07)
+
+
+### Features
+
+* **BFormFloatingLabel:** make props for text opti ([dea872d](https://github.com/cdmoro/bootstrap-vue-3/commit/dea872d674979910e0a4c3983c4453c9a062c9f3))
+* **BFormInvalidFeedback:** make props for text option ([dea872d](https://github.com/cdmoro/bootstrap-vue-3/commit/dea872d674979910e0a4c3983c4453c9a062c9f3))
+* **BFormText:** make props for text option ([dea872d](https://github.com/cdmoro/bootstrap-vue-3/commit/dea872d674979910e0a4c3983c4453c9a062c9f3))
+* **BFormValidFeedback:** make props for text option ([dea872d](https://github.com/cdmoro/bootstrap-vue-3/commit/dea872d674979910e0a4c3983c4453c9a062c9f3))
+* **BInputGroupText:** add optional text prop ([c3ba8e4](https://github.com/cdmoro/bootstrap-vue-3/commit/c3ba8e4fec28e019016f4d1db01795d12a2ebe25))
+* **BModal:** emit hide and show on modal ([f478f5e](https://github.com/cdmoro/bootstrap-vue-3/commit/f478f5efc633eca63b13936a5c02e0b8baf88ef0))
+* **BTable:** added busy prop logic, the prop shows a spinner and message that can be replaced through a slot template #table-busy ([8d91f6c](https://github.com/cdmoro/bootstrap-vue-3/commit/8d91f6c6fee27397ad3f552997764b3c05ca6b49))
+* **BTable:** added sticky-header prop feature, according to bootstrap-vue2 docs ([899f316](https://github.com/cdmoro/bootstrap-vue-3/commit/899f3167b3db53c0403406a6efdc074a7819f122))
+* **BTable:** completed the Table Item -> sticky-column feature, according to bootstrap-vue2 docs ([d493002](https://github.com/cdmoro/bootstrap-vue-3/commit/d493002e74f2a09a979ae03360e63af7ace515b4))
+* **BTable:** new sticky-select prop was added, the prop converts the selection column to the sticky mode when the selectable prop is passed as true to the table ([6889dbb](https://github.com/cdmoro/bootstrap-vue-3/commit/6889dbb3a84aa71d5fbf71f6c9ba4e9bede13de4))
+* **BTable:** row's _showDetails prop logic was completed ([33f30a5](https://github.com/cdmoro/bootstrap-vue-3/commit/33f30a55eafa009d5329109cd33b4e6d60df1d2a))
+
+
+### Bug Fixes
+
+* **BCard:** bodyClass prop renamed to bodyClasses ([83f5e53](https://github.com/cdmoro/bootstrap-vue-3/commit/83f5e53bbd5686fc426681523105c0252986bc62))
+* **BCard:** footerClass prop renamed to footerClasses ([83f5e53](https://github.com/cdmoro/bootstrap-vue-3/commit/83f5e53bbd5686fc426681523105c0252986bc62))
+* **BCard:** headerClass renamed to headerClasses ([83f5e53](https://github.com/cdmoro/bootstrap-vue-3/commit/83f5e53bbd5686fc426681523105c0252986bc62))
+* **BDropdown:** event to be MouseEvent on click ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
+* **BDropdownGroup:** rename headerClasses prop to headerClass ([3c72126](https://github.com/cdmoro/bootstrap-vue-3/commit/3c721260160970fe3898b196ae6365a67745828e))
+* **BDropdownItem:** contains disabled on button ([972c452](https://github.com/cdmoro/bootstrap-vue-3/commit/972c452efe168bfcbfb926b51e47031bfed81ac0))
+* **Bdropdown:** slot button-content to not render both prop text andslot ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
+* **Bdropdown:** toggleText prop given additional slot opt ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
+* **BTableContainer:** rename prop responsiveClasses to responsiveClass ([3c72126](https://github.com/cdmoro/bootstrap-vue-3/commit/3c721260160970fe3898b196ae6365a67745828e))
+* **composables:** Do not spread array inside `concat` function ([f9841f5](https://github.com/cdmoro/bootstrap-vue-3/commit/f9841f511c1370a6ac09fd5eedc7648cfff91f25))
+* **composables:** Spread out children from Fragment slots ([963f7a6](https://github.com/cdmoro/bootstrap-vue-3/commit/963f7a6c680a40409c0987ceb674a32cd971df84))
+* **composables:** Use correct properties to check for types ([91d97b0](https://github.com/cdmoro/bootstrap-vue-3/commit/91d97b0bf2a1c34ca121147fd3e09e4453850eec))
+
+
+### Performance Improvements
+
+* **BDropdownGroup:** array.join replaced with template literal ([83f5e53](https://github.com/cdmoro/bootstrap-vue-3/commit/83f5e53bbd5686fc426681523105c0252986bc62))
+
+
+### Reverts
+
+* **83f5e53:** rename to remove 'es' at end ([3c72126](https://github.com/cdmoro/bootstrap-vue-3/commit/3c721260160970fe3898b196ae6365a67745828e))
+
 ## [0.3.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.2.14...v0.3.0) (2022-09-03)
 
 
