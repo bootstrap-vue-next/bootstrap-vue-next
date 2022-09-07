@@ -84,6 +84,8 @@ const getGroupClasses = (items: {
     [`btn-group-${items.size}`]: items.size,
   }))
 
+// TODO this function is similarly used in BTabs and may be capable of being a util function
+// Investigate if it can be done to reduce complexity
 /**
  * @param slots
  * @param nodeType
