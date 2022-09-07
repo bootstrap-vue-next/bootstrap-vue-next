@@ -25,7 +25,7 @@
               data-bs-dismiss="modal"
               :aria-label="headerCloseLabel"
             >
-              <slot name="header-close"></slot>
+              <slot name="header-close" />
             </button>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
@@ -62,7 +62,7 @@
         v-if="hideBackdropBoolean === false"
         class="modal-backdrop fade show"
         @click.prevent="noCloseOnBackdropBoolean === false && hide()"
-      ></div>
+      />
     </div>
   </teleport>
 </template>

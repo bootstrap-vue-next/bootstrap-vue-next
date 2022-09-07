@@ -18,7 +18,7 @@
     </span>
 
     <span v-if="showBadge" class="b-avatar-badge" :class="badgeClasses" :style="badgeStyle">
-      <slot v-if="hasBadgeSlot" name="badge"></slot>
+      <slot v-if="hasBadgeSlot" name="badge" />
       <span v-else :class="badgeTextClasses">{{ badgeText }}</span>
     </span>
   </component>

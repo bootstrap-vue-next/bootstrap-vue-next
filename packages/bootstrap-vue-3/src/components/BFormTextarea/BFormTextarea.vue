@@ -19,7 +19,7 @@
     @input="onInput($event)"
     @change="onChange($event)"
     @blur="onBlur($event)"
-  ></textarea>
+  />
 </template>
 
 <script lang="ts">

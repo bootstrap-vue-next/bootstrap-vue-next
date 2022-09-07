@@ -2,7 +2,9 @@
 
 A clear and concise description of what the pull request does.
 
-_This can be a copy/paste of all **Conventional Commits** messages_
+## Small replication
+
+If the change is large enough, a small replication can help demonstrate the changes made. This is optional, but can help observe the intended changes. A mentioned issue that contains a replication also works.
 
 ## PR checklist
 

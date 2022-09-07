@@ -2,9 +2,9 @@
   <component :is="tag" :id="id" class="input-group" :class="classes" role="group">
     <slot name="prepend">
       <span v-if="hasPrepend" class="input-group-text">
-        <span v-if="!showPrependHtml">{{ prepend }}</span>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="showPrependHtml" v-html="prependHtml"></span>
+        <span v-if="!!prependHtml" v-html="prependHtml" />
+        <span v-else>{{ prepend }}</span>
       </span>
     </slot>
 
@@ -12,9 +12,9 @@
 
     <slot name="append">
       <span v-if="hasAppend" class="input-group-text">
-        <span v-if="!showAppendHtml">{{ append }}</span>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="showAppendHtml" v-html="appendHtml"></span>
+        <span v-if="!!appendHtml" v-html="appendHtml" />
+        <span v-else>{{ append }}</span>
       </span>
     </slot>
   </component>
@@ -38,6 +38,8 @@ const props = withDefaults(defineProps<BInputGroupProps>(), {
   tag: 'div',
 })
 
+// TODO size md does not seem to do anything. Consider adding
+// Exclude<InputSize, 'md'> to props
 const classes = computed(() => ({
   'input-group-sm': props.size === 'sm',
   'input-group-lg': props.size === 'lg',
@@ -45,6 +47,4 @@ const classes = computed(() => ({
 
 const hasAppend = computed<boolean>(() => !!props.append || !!props.appendHtml)
 const hasPrepend = computed<boolean>(() => !!props.prepend || !!props.prependHtml)
-const showAppendHtml = computed<boolean>(() => !!props.appendHtml)
-const showPrependHtml = computed<boolean>(() => !!props.prependHtml)
 </script>
