@@ -92,6 +92,8 @@ const getGroupClasses = (items: {
  */
 const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean) =>
   slots
+    .reduce((acc: Array<any>, slot: any) => slot.type.name === 'Symbol(Fragment)' ?
+        acc.concat(...slot.children) : acc.concat([slot]), [])
     .filter((e: any) => e.type.name === nodeType)
     .map((e: any) => {
       const txtChild = (e.children.default ? e.children.default() : []).find(
