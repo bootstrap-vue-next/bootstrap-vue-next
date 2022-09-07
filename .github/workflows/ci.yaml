@@ -90,9 +90,6 @@ jobs:
       - name: Test unit
         run: pnpm run test:unit
 
-      - name: Test coverage
-        run: pnpm run test:coverage
-
   test-coverage:
     runs-on: ${{ matrix.os }}
 
