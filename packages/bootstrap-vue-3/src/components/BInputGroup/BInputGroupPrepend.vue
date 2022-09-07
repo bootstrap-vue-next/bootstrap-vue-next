@@ -1,5 +1,5 @@
 <template>
-  <b-input-group-addon :id="id" :is-text="isTextBoolean" :tag="tag" :append="false">
+  <b-input-group-addon v-bind="computedAttrs">
     <slot />
   </b-input-group-addon>
 </template>
@@ -7,8 +7,7 @@
 <script setup lang="ts">
 // import type {BInputGroupPrependProps} from '../../types/components'
 import BInputGroupAddon from './BInputGroupAddon.vue'
-import {toRef} from 'vue'
-import {useBooleanish} from '../../composables'
+import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 
 interface BInputGroupPrependProps {
@@ -22,5 +21,10 @@ const props = withDefaults(defineProps<BInputGroupPrependProps>(), {
   isText: false,
 })
 
-const isTextBoolean = useBooleanish(toRef(props, 'isText'))
+const computedAttrs = computed(() => ({
+  id: props.id,
+  isText: props.isText,
+  tag: props.tag,
+  append: false,
+}))
 </script>

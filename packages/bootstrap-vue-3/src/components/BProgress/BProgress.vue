@@ -1,18 +1,7 @@
 <template>
   <div class="progress" :style="{height}">
     <slot>
-      <b-progress-bar
-        v-bind="{
-          animated: animatedBoolean,
-          max,
-          precision,
-          showProgress: showProgressBoolean,
-          showValue: showValueBoolean,
-          striped: stripedBoolean,
-          value,
-          variant,
-        }"
-      />
+      <b-progress-bar v-bind="computedAttrs" />
     </slot>
   </div>
 </template>
@@ -22,7 +11,7 @@
 import BProgressBar from './BProgressBar.vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
-import {InjectionKey, provide, toRef} from 'vue'
+import {computed, InjectionKey, provide, toRef} from 'vue'
 
 interface BProgressProps {
   variant?: ColorVariant
@@ -49,6 +38,17 @@ const animatedBoolean = useBooleanish(toRef(props, 'animated'))
 const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
 const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+
+const computedAttrs = computed(() => ({
+  animated: animatedBoolean.value,
+  max: props.max,
+  precision: props.precision,
+  showProgress: showProgressBoolean.value,
+  showValue: showValueBoolean.value,
+  striped: stripedBoolean.value,
+  value: props.value,
+  variant: props.variant,
+}))
 
 // TODO check and see if doing animatedBoolean.value is reactive for provide
 // It may be possible that a toRef() is required for these types of systems.
