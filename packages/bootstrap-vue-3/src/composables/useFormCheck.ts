@@ -84,6 +84,8 @@ const getGroupClasses = (items: {
     [`btn-group-${items.size}`]: items.size,
   }))
 
+// TODO this function is similarly used in BTabs and may be capable of being a util function
+// Investigate if it can be done to reduce complexity
 /**
  * @param slots
  * @param nodeType
@@ -92,7 +94,9 @@ const getGroupClasses = (items: {
  */
 const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean) =>
   slots
-    .filter((e: any) => e.type.name === nodeType)
+    .reduce((acc: Array<any>, slot: any) => slot.type.toString() === 'Symbol(Fragment)' ?
+        acc.concat(slot.children) : acc.concat([slot]), [])
+    .filter((e: any) => (e.type.__name || e.type.name) === nodeType)
     .map((e: any) => {
       const txtChild = (e.children.default ? e.children.default() : []).find(
         (e: any) => e.type.toString() === 'Symbol(Text)'
