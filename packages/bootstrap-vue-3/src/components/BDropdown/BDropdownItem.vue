@@ -67,7 +67,7 @@ const componentAttrs = computed(() => ({
   ...(attrs.to ? {activeClass: 'active', ...attrs} : {}),
 }))
 
-// Pretty sure this emits if tag is not button and is diabled
+// Pretty sure this emits if tag is not button and is disabled
 const clicked = (e: MouseEvent): void => emit('click', e)
 </script>
 
