@@ -128,7 +128,7 @@ const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 interface BTabsEmits {
   (e: 'update:modelValue', value: number): void
   (e: 'activate-tab', v1: number, v2: number, v3: BvEvent): void
-  (e: 'click'): void
+  (e: 'click'): void // TODO click event is never used
 }
 
 const emit = defineEmits<BTabsEmits>()
