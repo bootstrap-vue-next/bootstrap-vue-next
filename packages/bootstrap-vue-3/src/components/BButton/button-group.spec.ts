@@ -52,10 +52,15 @@ describe('button-group', () => {
 
   it('has class btn-group-{type} prop size', async () => {
     const wrapper = mount(BButtonGroup, {
-      props: {size: 'foobar'},
+      props: {size: 'sm'},
     })
-    expect(wrapper.classes()).toContain('btn-group-foobar')
+    expect(wrapper.classes()).toContain('btn-group-sm')
     await wrapper.setProps({size: undefined})
-    expect(wrapper.classes()).not.toContain('btn-group-foobar')
+    expect(wrapper.classes()).not.toContain('btn-group-sm')
+  })
+
+  it('has class btn-group when prop size is undefined', () => {
+    const wrapper = mount(BButtonGroup, {props: {size: undefined}})
+    expect(wrapper.classes()).toContain('btn-group')
   })
 })
