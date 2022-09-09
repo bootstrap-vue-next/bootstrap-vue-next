@@ -29,11 +29,8 @@
             <div class="d-flex flex-nowrap align-items-center gap-1">
               <span
                 v-if="isSortable && field.sortable && field.key === sortBy"
-                class="text-muted small"
-              >
-                <span v-show="sortDesc === true">▼</span>
-                <span v-show="sortDesc === false">▲</span>
-              </span>
+                class="b-table-sort-icon text-muted small"
+              />
               <div>
                 <slot
                   v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
@@ -291,6 +288,9 @@ const classes = computed(() => [
     [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
     'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
     'b-table-busy': busyBoolean.value,
+    'b-table-sortable': isSortable.value,
+    'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
+    'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
   },
 ])
 
