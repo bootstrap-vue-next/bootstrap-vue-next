@@ -27,16 +27,19 @@ const useItemHelper = () => {
 
   const mapItems = (
     fields: TableField[],
-    items: TableItem<Record<string, any>>[],
+    items: TableItem<any>[],
     props: any,
     flags: Record<string, Ref<boolean>>
-  ): TableItem<Record<string, any>>[] => {
-    let result = Object.assign([], props.items)
+  ): TableItem<any>[] => {
+    let result: TableItem<any>[] = Object.assign([], items)
     if ('isSortable' in flags && flags.isSortable.value === true) {
       result = sortItems(fields, result, {
         key: props.sortBy,
         desc: flags.sortDescBoolean.value,
       })
+    }
+    if (props.perPage !== undefined) {
+      result = result.splice(0, props.perPage)
     }
     return result
   }
