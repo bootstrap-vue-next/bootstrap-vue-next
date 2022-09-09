@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.1...v0.3.2) (2022-09-09)
+
+
+### Bug Fixes
+
+* **BTable:** row.index is now correctly passed to the cell slot template ([69f4777](https://github.com/cdmoro/bootstrap-vue-3/commit/69f4777657083f30f1db5d7334daeac60b6660cc))
+
 ## [0.3.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.0...v0.3.1) (2022-09-07)
 
 
