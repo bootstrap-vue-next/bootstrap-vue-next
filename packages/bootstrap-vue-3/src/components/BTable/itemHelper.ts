@@ -1,3 +1,4 @@
+import {Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, isString, startCase} from '../../utils'
 
@@ -24,6 +25,22 @@ const useItemHelper = () => {
     return fields
   }
 
+  const mapItems = (
+    fields: TableField[],
+    items: TableItem<Record<string, any>>[],
+    props: any,
+    flags: Record<string, Ref<boolean>>
+  ): TableItem<Record<string, any>>[] => {
+    let result = Object.assign([], props.items)
+    if ('isSortable' in flags && flags.isSortable.value === true) {
+      result = sortItems(fields, result, {
+        key: props.sortBy,
+        desc: flags.sortDescBoolean.value,
+      })
+    }
+    return result
+  }
+
   const sortItems = (
     fields: TableField[],
     items: TableItem<Record<string, any>>[],
@@ -46,7 +63,7 @@ const useItemHelper = () => {
 
   return {
     normaliseFields,
-    sortItems,
+    mapItems,
   }
 }
 

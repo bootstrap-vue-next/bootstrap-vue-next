@@ -197,6 +197,8 @@ interface BTableProps {
   selectionVariant?: ColorVariant
   stickyHeader?: Booleanish
   busy?: Booleanish
+  perPage?: number
+  currentPage?: number
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -220,6 +222,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   selectionVariant: 'primary',
   stickyHeader: false,
   busy: false,
+  currentPage: 1,
 })
 
 const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
@@ -299,11 +302,13 @@ const computedFields = computed(() => itemHelper.normaliseFields(props.fields, p
 const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
 )
+
+const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
 const computedItems = computed(() =>
-  sortInternalBoolean.value === true
-    ? itemHelper.sortItems(props.fields, props.items, {
-        key: props.sortBy,
-        desc: sortDescBoolean.value,
+  requireItemsMapping.value
+    ? itemHelper.mapItems(props.fields, props.items, props, {
+        isSortable,
+        sortDescBoolean,
       })
     : props.items
 )
