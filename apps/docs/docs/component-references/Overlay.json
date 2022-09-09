@@ -1,0 +1,110 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/overlay",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Overlay",
+    "description": "",
+    "components": [
+      {
+        "component": "BOverlay",
+        "props": [
+          {
+            "name": "bgColor",
+            "type": "string"
+          },
+          {
+            "name": "blur",
+            "type": "string"
+          },
+          {
+            "name": "fixed",
+            "type": "Booleanish"
+          },
+          {
+            "name": "noCenter",
+            "type": "Booleanish"
+          },
+          {
+            "name": "noFade",
+            "type": "Booleanish"
+          },
+          {
+            "name": "noWrap",
+            "type": "Booleanish"
+          },
+          {
+            "name": "opacity",
+            "type": "number | string"
+          },
+          {
+            "name": "overlayTag",
+            "type": "string"
+          },
+          {
+            "name": "rounded",
+            "type": "boolean | string"
+          },
+          {
+            "name": "show",
+            "type": "Booleanish"
+          },
+          {
+            "name": "spinnerSmall",
+            "type": "Booleanish"
+          },
+          {
+            "name": "spinnerType",
+            "type": "string"
+          },
+          {
+            "name": "spinnerVariant",
+            "type": "string"
+          },
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          },
+          {
+            "name": "wrapTag",
+            "type": "string"
+          },
+          {
+            "name": "zIndex",
+            "type": "number | string"
+          }
+        ],
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "click",
+                "description": "",
+                "type": "MouseEvent"
+              }
+            ],
+            "description": "",
+            "emit": "click"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "hidden"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "shown"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

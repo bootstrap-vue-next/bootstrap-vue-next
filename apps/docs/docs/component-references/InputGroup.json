@@ -1,0 +1,133 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/input-group",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Input Group",
+    "description": "",
+    "components": [
+      {
+        "component": "BInputGroup",
+        "props": [
+          {
+            "name": "append",
+            "type": "string"
+          },
+          {
+            "name": "appendHtml",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "prepend",
+            "type": "string"
+          },
+          {
+            "name": "prependHtml",
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "type": "InputSize"
+          },
+          {
+            "name": "tag",
+            "type": "string"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "prepend",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "append",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BInputGroupAppend",
+        "props": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "isText",
+            "type": "Booleanish"
+          },
+          {
+            "name": "tag",
+            "type": "string"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BInputGroupPrepend",
+        "props": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "isText",
+            "type": "Booleanish"
+          },
+          {
+            "name": "tag",
+            "type": "string"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BInputGroupText",
+        "props": [
+          {
+            "name": "tag",
+            "type": "string"
+          },
+          {
+            "name": "text",
+            "type": "string"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

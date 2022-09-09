@@ -1,0 +1,107 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/skeleton",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Skeleton",
+    "description": "",
+    "components": [
+      {
+        "component": "BSkeleton",
+        "props": [
+          {
+            "name": "height",
+            "type": "string"
+          },
+          {
+            "name": "width",
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "type": "string"
+          },
+          {
+            "name": "animation",
+            "type": "SkeletonAnimation"
+          },
+          {
+            "name": "type",
+            "type": "SkeletonType"
+          },
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          }
+        ],
+        "emits": [],
+        "slots": []
+      },
+      {
+        "component": "BSkeletonIcon",
+        "props": [
+          {
+            "name": "animation",
+            "type": "SkeletonAnimation"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BSkeletonTable",
+        "props": [
+          {
+            "name": "animation",
+            "type": "SkeletonAnimation"
+          },
+          {
+            "name": "columns",
+            "type": "number"
+          },
+          {
+            "name": "hideHeader",
+            "type": "Booleanish"
+          },
+          {
+            "name": "rows",
+            "type": "number"
+          },
+          {
+            "name": "showFooter",
+            "type": "Booleanish"
+          },
+          {
+            "name": "tableProps",
+            "type": "Record<string, unknown>"
+          }
+        ],
+        "emits": [],
+        "slots": []
+      },
+      {
+        "component": "BSkeletonWrapper",
+        "props": [
+          {
+            "name": "loading",
+            "type": "Booleanish"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

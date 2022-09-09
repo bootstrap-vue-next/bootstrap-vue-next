@@ -1,0 +1,83 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/Offcanvas",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Offcanvas",
+    "description": "",
+    "components": [
+      {
+        "component": "BOffcanvas",
+        "props": [
+          {
+            "name": "dismissLabel",
+            "type": "string"
+          },
+          {
+            "name": "modelValue",
+            "type": "Booleanish"
+          },
+          {
+            "name": "bodyScrolling",
+            "type": "Booleanish"
+          },
+          {
+            "name": "backdrop",
+            "type": "Booleanish"
+          },
+          {
+            "name": "placement",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          }
+        ],
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "update:modelValue",
+                "description": "",
+                "type": "boolean"
+              }
+            ]
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "show"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "shown"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "hide"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "hidden"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "title",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

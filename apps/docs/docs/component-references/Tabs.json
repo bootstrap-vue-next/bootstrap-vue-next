@@ -1,0 +1,93 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/tabs",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Tabs",
+    "description": "",
+    "components": [
+      {
+        "component": "BTab",
+        "props": [
+          { "name": "id", "type": "string" }, 
+          { "name": "title", "type": "string" }, 
+          { "name": "active", "type": "Booleanish" }, 
+          { "name": "buttonId", "type": "string" }, 
+          { "name": "disabled", "type": "Booleanish" }, 
+          { "name": "lazy", "type": "Booleanish" }, 
+          { "name": "noBody", "type": "boolean | string" }, 
+          { "name": "tag", "type": "string" }, 
+          { "name": "titleItemClass", "type": "ClassValue" }, 
+          { "name": "titleLinkAttributes", "type": "Record<string, unknown>" }, 
+          { "name": "titleLinkClass", "type": "ClassValue" }
+        ],
+        "emits": [
+          
+        ],
+        "slots": [
+{
+  "description": "", "name": "default", "scope": []
+}
+        ]
+      },
+      {
+        "component": "BTabs",
+        "props": [
+          { "name": "activeNavItemClass", "type": "ClassValue" }, 
+          { "name": "activeTabClass", "type": "ClassValue" }, 
+          { "name": "align", "type": "Alignment" }, 
+          { "name": "card", "type": "Booleanish" }, 
+          { "name": "contentClass", "type": "ClassValue" }, 
+          { "name": "end", "type": "Booleanish" }, 
+          { "name": "fill", "type": "Booleanish" }, 
+          { "name": "id", "type": "string" }, 
+          { "name": "justified", "type": "Booleanish" }, 
+          { "name": "lazy", "type": "Booleanish" }, 
+          { "name": "navClass", "type": "ClassValue" }, 
+          { "name": "navWrapperClass", "type": "ClassValue" }, 
+          { "name": "noFade", "type": "Booleanish" }, 
+          { "name": "noNavStyle", "type": "Booleanish" }, 
+          { "name": "pills", "type": "Booleanish" }, 
+          { "name": "small", "type": "Booleanish" }, 
+          { "name": "tag", "type": "string" }, 
+          { "name": "vertical", "type": "Booleanish" }, 
+          { "name": "modelValue", "type": "number" }
+        ],
+        "emits": [
+          {
+            "args": [{"arg": "update:modelValue", "description": "", "type": "number"}],
+            "description": "", "emit": "update:modelValue"
+          },
+          {
+            "args": [
+              {
+                "arg": "v1", "description": "", "type": "number"
+              },
+              {
+                "arg": "v2", "description": "", "type": "number"
+              },
+              {
+                "arg": "v3", "description": "", "type": "BvEvent"
+              }
+            ], "description": "", "emit": "activate-tab"
+          },
+          { 
+            "emit": "click", "description": "", "args": []
+          }
+          
+        ],
+        "slots": [
+{
+  "description": "", "name": "empty", "scope": []
+},
+{
+   "description": "", "name": "tabs-start", "scope": []
+  
+},
+{"description": "", "name": "tabs-end", "scope": []},
+{"description": "", "name": "empty", "scope": []}
+        ]
+      }
+    ]
+  }
+}
