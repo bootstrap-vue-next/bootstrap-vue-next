@@ -63,13 +63,13 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="(tr, ind) in computedItems" :key="ind">
+        <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
           <tr
-            :class="getRowClasses(tr)"
-            @click.prevent="onRowClick(tr, ind, $event)"
-            @dblclick.prevent="onRowDblClick(tr, ind, $event)"
-            @mouseenter.prevent="onRowMouseEnter(tr, ind, $event)"
-            @mouseleave.prevent="onRowMouseLeave(tr, ind, $event)"
+            :class="getRowClasses(item)"
+            @click.prevent="onRowClick(item, itemIndex, $event)"
+            @dblclick.prevent="onRowDblClick(item, itemIndex, $event)"
+            @mouseenter.prevent="onRowMouseEnter(item, itemIndex, $event)"
+            @mouseleave.prevent="onRowMouseLeave(item, itemIndex, $event)"
           >
             <td
               v-if="addSelectableCell"
@@ -79,33 +79,40 @@
               }"
             >
               <slot name="selectCell">
-                <span :class="selectedItems.has(tr) ? 'text-primary' : ''">🗹</span>
+                <span :class="selectedItems.has(item) ? 'text-primary' : ''">🗹</span>
               </slot>
             </td>
             <td
-              v-for="(field, index) in computedFields"
+              v-for="field in computedFields"
               :key="field.key"
               v-bind="field.tdAttr"
-              :class="getFieldRowClasses(field, tr)"
+              :class="getFieldRowClasses(field, item)"
             >
               <slot
                 v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
                 :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-                :value="tr[field.key]"
-                :index="index"
-                :item="tr"
+                :value="item[field.key]"
+                :index="itemIndex"
+                :item="item"
                 :field="field"
                 :items="items"
-                :toggle-details="() => toggleRowDetails(tr)"
-                :details-showing="tr._showDetails"
+                :toggle-details="() => toggleRowDetails(item)"
+                :details-showing="item._showDetails"
               />
-              <template v-else>{{ tr[field.key] }}</template>
+              <template v-else>{{ item[field.key] }}</template>
             </td>
           </tr>
 
-          <tr v-if="tr._showDetails && $slots['row-details']" :class="getRowClasses(tr)">
+          <tr
+            v-if="item._showDetails === true && $slots['row-details']"
+            :class="getRowClasses(item)"
+          >
             <td :colspan="computedFieldsTotal">
-              <slot name="row-details" :item="tr" :toggle-details="() => toggleRowDetails(tr)" />
+              <slot
+                name="row-details"
+                :item="item"
+                :toggle-details="() => toggleRowDetails(item)"
+              />
             </td>
           </tr>
         </template>
