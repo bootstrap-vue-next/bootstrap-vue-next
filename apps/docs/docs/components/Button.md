@@ -369,45 +369,9 @@ disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.
 When the `href` is set to any other value (~~or the `to` prop is used~~), `role="button"` will not be
 added, nor will the keyboard event listeners be enabled.
 
-## Component reference
-
-### `<b-button>`
-
-#### Properties
-
-| Property   | Type                 | Default     | Description                                                                                                                                                                                                          |
-| ---------- | -------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `active`   | `Boolean`            | `false`     | When set to `true`, places the component in the active state with active styling                                                                                                                                     |
-| `disabled` | `Boolean`            | `false`     | When set to `true`, disables the component's functionality and places it in a disabled state                                                                                                                         |
-| `href`     | `String`             |             | `<b-link>` prop: Denotes the target URL of the link for standard a links                                                                                                                                             |
-| `pill`     | `Boolean`            | `false`     | Renders the button with the pill style appearance when set to true'                                                                                                                                                  |
-| `pressed`  | `Boolean`            | `null`      | When set to 'true', gives the button the appearance of being pressed and adds attribute 'aria-pressed="true"'. When set to `false` adds attribute 'aria-pressed="false"'. Tri-state prop. Can be used as a v-model   |
-| `rel`      | `String`             |             | `<b-link>` prop: Sets the `rel` attribute on the rendered link                                                                                                                                                       |
-| `size`     | `String`             |             | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                                                                                                            |
-| `squared`  | `Boolean`            | `false`     | Renders the button with non-rounded corners when set to 'true'                                                                                                                                                       |
-| `tag`      | `String`             | `button`    | Specify the HTML tag to render instead of the default tag                                                                                                                                                            |
-| `target`   | `String`             | `_self`     | `<b-link>` prop: Sets the `target` attribute on the rendered link tag                                                                                                                                                |
-| `to`       | `Object` or `String` | `_self`     | `<router-link>` prop: Denotes the target route of the link. When clicked, the value of the to prop will be passed to `router.push()` internally, so the value can be either a string or a Location descriptor object |
-| `type`     | `String`             | `button`    | The value to set the button's 'type' attribute to. Can be one of 'button', 'submit', or 'reset'                                                                                                                      |
-| `variant`  | `String`             | `secondary` | Applies one of the Bootstrap theme color variants to the component                                                                                                                                                   |
-
-#### v-model
-
-| Property  | Event  |
-| --------- | ------ |
-| `pressed` | update |
-
-#### Slots
-
-| Name      | Scoped | Description                    |
-| --------- | ------ | ------------------------------ |
-| `default` | No     | Content to place in the button |
-
-#### Events
-
-| Name    | Argument                  | Description                              |
-| ------- | ------------------------- | ---------------------------------------- |
-| `click` | Native click event object | Emitted when non-disabled button clicked |
+<ClientOnly>
+<ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang='ts' setup>
   import {ref, computed} from 'vue'

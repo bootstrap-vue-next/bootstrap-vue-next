@@ -277,7 +277,7 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
 
 | Property     | Type                  | Default | Description                                                                                                                              |
 | ------------ | --------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `modelValue` | `Boolean` or `Number` | `false` | When set, shows the alert. Set to a number (seconds) to show and automatically dismiss the alert after the number of seconds has elapsed |
+| `modelValue` | `boolean` or `number` | `false` | When set, shows the alert. Set to a number (seconds) to show and automatically dismiss the alert after the number of seconds has elapsed |
 
 #### slots
 
