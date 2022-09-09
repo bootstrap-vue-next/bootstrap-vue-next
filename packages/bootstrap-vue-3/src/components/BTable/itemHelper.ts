@@ -39,7 +39,8 @@ const useItemHelper = () => {
       })
     }
     if (props.perPage !== undefined) {
-      result = result.splice(0, props.perPage)
+      const startIndex = (props.currentPage - 1) * props.perPage
+      result = result.splice(startIndex, props.perPage)
     }
     return result
   }
