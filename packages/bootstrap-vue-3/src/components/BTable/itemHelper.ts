@@ -52,17 +52,19 @@ const useItemHelper = () => {
   ) => {
     if (!sort || !sort.key) return items
     const sortKey = sort.key
-    return items.sort((a, b) =>
-      a[sortKey] > b[sortKey]
-        ? sort.desc
-          ? -1
-          : 1
-        : b[sortKey] > a[sortKey]
-        ? sort.desc
-          ? 1
-          : -1
-        : 0
-    )
+
+    return items.sort((a, b) => {
+      const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
+      const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
+      if (aHigher) {
+        return sort.desc ? -1 : 1
+      }
+      const bHigher = realVal(b[sortKey]) > realVal(a[sortKey])
+      if (bHigher) {
+        return sort.desc ? 1 : -1
+      }
+      return 0
+    })
   }
 
   return {
