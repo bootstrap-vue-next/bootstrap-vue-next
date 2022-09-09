@@ -103,7 +103,7 @@
             </td>
           </tr>
 
-          <tr v-if="tr._showDetails === true && $slots['row-details']" :class="getRowClasses(tr)">
+          <tr v-if="tr._showDetails && $slots['row-details']" :class="getRowClasses(tr)">
             <td :colspan="computedFieldsTotal">
               <slot name="row-details" :item="tr" :toggle-details="() => toggleRowDetails(tr)" />
             </td>
@@ -151,7 +151,7 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, ref, toRef, useSlots} from 'vue'
+import {computed, isReactive, isRef, ref, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
@@ -395,7 +395,11 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
 }
 
 const toggleRowDetails = (tr: TableItem) => {
-  tr._showDetails = !tr._showDetails
+  if (!isRef(tr._showDetails)) {
+    tr._showDetails = ref(tr._showDetails)
+  }
+
+  tr._showDetails.value = !tr?._showDetails?.value
 }
 
 const getFieldColumnClasses = (field: TableFieldObject) => [
