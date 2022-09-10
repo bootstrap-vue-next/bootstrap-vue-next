@@ -1,4 +1,4 @@
-// import {isObject} from './inspect'
+import {isPlainObject} from './inspect'
 
 /**
  * @param target
@@ -43,3 +43,16 @@ export const omit = (obj: any, props: any): any =>
  * @returns
  */
 export const readonlyDescriptor = () => ({enumerable: true, configurable: false, writable: false})
+
+export const cloneDeep = (obj: any, defaultValue = obj): any => {
+  if (Array.isArray(obj)) {
+    return obj.reduce((result, val) => [...result, cloneDeep(val, val)], [])
+  }
+  if (isPlainObject(obj)) {
+    return Object.keys(obj).reduce(
+      (result, key) => ({...result, [key]: cloneDeep(obj[key], obj[key])}),
+      {}
+    )
+  }
+  return defaultValue
+}
