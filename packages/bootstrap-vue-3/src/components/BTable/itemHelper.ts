@@ -1,6 +1,7 @@
-import {Ref} from 'vue'
+import {ref, Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, isString, startCase} from '../../utils'
+import {cloneDeep} from '../../utils/object'
 
 const useItemHelper = () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
@@ -31,9 +32,12 @@ const useItemHelper = () => {
     props: any,
     flags: Record<string, Ref<boolean>>
   ): TableItem[] => {
-    let result: TableItem[] = Object.assign([], items)
+    let result: TableItem[] = cloneDeep(items)
     if ('isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter) {
       result = filterItems(result, props.filter, props.filterable)
+      if (filterEvent.value) {
+        filterEvent.value(result)
+      }
     }
     if ('isSortable' in flags && flags.isSortable.value === true) {
       result = sortItems(fields, result, {
@@ -47,6 +51,8 @@ const useItemHelper = () => {
     }
     return result
   }
+
+  const filterEvent: Ref<((items: TableItem[]) => void) | undefined> = ref(undefined)
 
   const sortItems = (
     fields: TableField[],
@@ -95,6 +101,7 @@ const useItemHelper = () => {
   return {
     normaliseFields,
     mapItems,
+    filterEvent,
   }
 }
 

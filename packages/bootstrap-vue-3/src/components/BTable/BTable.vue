@@ -155,8 +155,9 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, ref, toRef, useSlots} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
+import {cloneDeep} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 
@@ -271,6 +272,7 @@ interface BTableEmits {
   (e: 'update:sortBy', value: string): void
   (e: 'update:sortDesc', value: boolean): void
   (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
+  (e: 'filtered', value: TableItem[]): void
 }
 
 const emits = defineEmits<BTableEmits>()
@@ -300,6 +302,11 @@ const classes = computed(() => [
 ])
 
 const itemHelper = useItemHelper()
+
+itemHelper.filterEvent.value = (items) => {
+  emits('filtered', cloneDeep(items))
+}
+
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
@@ -478,6 +485,15 @@ const unselectRow = (index: number) => {
   emits('rowUnselected', item)
   notifySelectionEvent()
 }
+
+watch(
+  () => props.filter,
+  (filter) => {
+    if (!filter) {
+      emits('filtered', cloneDeep(props.items))
+    }
+  }
+)
 
 defineExpose({
   selectAllRows,
