@@ -27,11 +27,14 @@ const useItemHelper = () => {
 
   const mapItems = (
     fields: TableField[],
-    items: TableItem<any>[],
+    items: TableItem[],
     props: any,
     flags: Record<string, Ref<boolean>>
-  ): TableItem<any>[] => {
-    let result: TableItem<any>[] = Object.assign([], items)
+  ): TableItem[] => {
+    let result: TableItem[] = Object.assign([], items)
+    if ('isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter) {
+      result = filterItems(result, props.filter, props.filterable)
+    }
     if ('isSortable' in flags && flags.isSortable.value === true) {
       result = sortItems(fields, result, {
         key: props.sortBy,
@@ -52,7 +55,6 @@ const useItemHelper = () => {
   ) => {
     if (!sort || !sort.key) return items
     const sortKey = sort.key
-
     return items.sort((a, b) => {
       const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
       const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
@@ -64,6 +66,29 @@ const useItemHelper = () => {
         return sort.desc ? 1 : -1
       }
       return 0
+    })
+  }
+
+  const filterItems = (
+    items: TableItem<Record<string, any>>[],
+    filter: string,
+    filterable: string[]
+  ) => {
+    return items.filter((item) => {
+      return (
+        Object.entries(item).filter((item) => {
+          const key = item[0]
+          if (key[0] === '_' || (filterable.length > 0 && !filterable.includes(key))) return false
+          const val: any = item[1]
+          const itemValue: string =
+            typeof val === 'object'
+              ? JSON.stringify(Object.values(val))
+              : typeof val === 'string'
+              ? val
+              : val.toString()
+          return itemValue.toLowerCase().includes(filter.toLowerCase())
+        }).length > 0
+      )
     })
   }
 

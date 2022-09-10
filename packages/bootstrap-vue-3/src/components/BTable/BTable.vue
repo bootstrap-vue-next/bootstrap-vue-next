@@ -199,6 +199,8 @@ interface BTableProps {
   busy?: Booleanish
   perPage?: number
   currentPage?: number
+  filter?: string
+  filterable?: string[]
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -303,11 +305,14 @@ const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
 )
 
+const isFilterableTable = computed(() => props.filter !== undefined)
+
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
 const computedItems = computed(() =>
   requireItemsMapping.value
     ? itemHelper.mapItems(props.fields, props.items, props, {
         isSortable,
+        isFilterableTable,
         sortDescBoolean,
       })
     : props.items
