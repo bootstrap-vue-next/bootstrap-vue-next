@@ -26,7 +26,7 @@
             v-bind="field.thAttr"
             @click="headerClicked(field, $event)"
           >
-            <div class="d-flex flex-nowrap align-items-center gap-1">
+            <div class="d-inline-flex flex-nowrap align-items-center gap-1">
               <span
                 v-if="isSortable && field.sortable && field.key === sortBy"
                 class="b-table-sort-icon text-muted small"
