@@ -1,7 +1,7 @@
 import {ref, Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, isString, startCase} from '../../utils'
-import {cloneDeep} from '../../utils/object'
+import {cloneDeep} from './../../utils/object'
 
 const useItemHelper = () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
@@ -26,30 +26,32 @@ const useItemHelper = () => {
     return fields
   }
 
+  const internalItems = ref<TableItem[]>([])
+
   const mapItems = (
     fields: TableField[],
     items: TableItem[],
     props: any,
     flags: Record<string, Ref<boolean>>
   ): TableItem[] => {
-    let result: TableItem[] = cloneDeep(items)
+    internalItems.value = cloneDeep(items)
     if ('isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter) {
-      result = filterItems(result, props.filter, props.filterable)
+      internalItems.value = filterItems(internalItems.value, props.filter, props.filterable)
       if (filterEvent.value) {
-        filterEvent.value(result)
+        filterEvent.value(internalItems.value)
       }
     }
     if ('isSortable' in flags && flags.isSortable.value === true) {
-      result = sortItems(fields, result, {
+      internalItems.value = sortItems(fields, internalItems.value, {
         key: props.sortBy,
         desc: flags.sortDescBoolean.value,
       })
     }
     if (props.perPage !== undefined) {
       const startIndex = (props.currentPage - 1) * props.perPage
-      result = result.splice(startIndex, props.perPage)
+      internalItems.value = internalItems.value.splice(startIndex, props.perPage)
     }
-    return result
+    return internalItems.value
   }
 
   const filterEvent: Ref<((items: TableItem[]) => void) | undefined> = ref(undefined)
