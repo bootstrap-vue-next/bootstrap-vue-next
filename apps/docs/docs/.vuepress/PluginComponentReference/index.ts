@@ -27,7 +27,6 @@ export const componentReference: Plugin<ComponentReferenceOptions> = ({
   clientConfigFile: path.resolve(__dirname, './client.ts'),
   extendsPage(page, app: App) {
     const {filePath} = resolvePageComponentReferencePath(baseDir, page, app)
-    console.log(filePath)
     let componentReference = null
     if (fs.existsSync(filePath)) {
       componentReference = require(filePath)
