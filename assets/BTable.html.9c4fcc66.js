@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-24b3986d","path":"/components/BTable.html","title":"Table","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1662990637000},"filePathRelative":"components/BTable.md","componentReference":null}');export{e as data};
