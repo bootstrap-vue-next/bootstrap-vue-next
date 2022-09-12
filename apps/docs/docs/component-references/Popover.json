@@ -1,10 +1,10 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue/popover",
+  "name": "@bootstrap-vue-3/popover",
   "version": "1.0.0",
   "meta": {
     "title": "Popover",
-    "description": "",
+    "description": "Build vertically",
     "components": [
       {
         "component": "BPopover",

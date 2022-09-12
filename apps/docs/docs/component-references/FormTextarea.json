@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue/form-textarea",
+  "name": "@bootstrap-vue-3/form-textarea",
   "version": "1.0.0",
   "meta": {
     "title": "Form Textarea",

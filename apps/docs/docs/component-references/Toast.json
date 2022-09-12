@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue/toast",
+  "name": "@bootstrap-vue-3/toast",
   "version": "1.0.0",
   "meta": {
     "title": "Toast",

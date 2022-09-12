@@ -81,13 +81,12 @@ const useItemHelper = () => {
     items: TableItem<Record<string, any>>[],
     filter: string,
     filterable: string[]
-  ) => {
-    return items.filter((item) => {
-      return (
+  ) =>
+    items.filter(
+      (item) =>
         Object.entries(item).filter((item) => {
-          const key = item[0]
+          const [key, val] = item
           if (key[0] === '_' || (filterable.length > 0 && !filterable.includes(key))) return false
-          const val: any = item[1]
           const itemValue: string =
             typeof val === 'object'
               ? JSON.stringify(Object.values(val))
@@ -96,9 +95,7 @@ const useItemHelper = () => {
               : val.toString()
           return itemValue.toLowerCase().includes(filter.toLowerCase())
         }).length > 0
-      )
-    })
-  }
+    )
 
   return {
     normaliseFields,

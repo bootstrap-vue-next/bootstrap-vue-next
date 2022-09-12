@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue/navbar",
+  "name": "@bootstrap-vue-3/navbar",
   "version": "1.0.0",
   "meta": {
     "title": "Navbar",

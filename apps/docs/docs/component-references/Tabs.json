@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue/tabs",
+  "name": "@bootstrap-vue-3/tabs",
   "version": "1.0.0",
   "meta": {
     "title": "Tabs",

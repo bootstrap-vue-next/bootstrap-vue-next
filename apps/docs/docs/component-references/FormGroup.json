@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue/form-group",
+  "name": "@bootstrap-vue-3/form-group",
   "version": "1.0.0",
   "meta": {
     "title": "Form Group",
