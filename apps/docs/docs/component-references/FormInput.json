@@ -1,0 +1,72 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/form-input",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Form Input",
+    "description": "",
+    "components": [
+      {
+        "component": "BBFormInput",
+        "props": [
+          {
+            "name": "max",
+            "type": "string | number"
+          },
+          {
+            "name": "min",
+            "type": "string | number"
+          },
+          {
+            "name": "step",
+            "type": "string | number"
+          },
+          {
+            "name": "type",
+            "type": "InputType"
+          }
+        ],
+        "emits": [
+          {
+            "emit": "update:modelValue",
+            "description": ""
+          },
+          {
+            "emit": "change",
+            "description": "",
+            "args": [
+              {
+                "arg": "change",
+                "description": "",
+                "type": "Event"
+              }
+            ]
+          },
+          {
+            "emit": "blur",
+            "description": "",
+            "args": [
+              {
+                "arg": "blur",
+                "description": "",
+                "type": "FocusEvent"
+              }
+            ]
+          },
+          {
+            "emit": "input",
+            "description": "",
+            "args": [
+              {
+                "arg": "change",
+                "description": "",
+                "type": "Event"
+              }
+            ]
+          }
+        ],
+        "slots": []
+      }
+    ]
+  }
+}

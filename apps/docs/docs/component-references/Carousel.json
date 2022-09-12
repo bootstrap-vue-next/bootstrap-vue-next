@@ -1,0 +1,189 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/carousel",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Carousel",
+    "description": "",
+    "components": [
+      {
+        "component": "BCarousel",
+        "props": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "imgHeight",
+            "type": "string"
+          },
+          {
+            "name": "imgWidth",
+            "type": "string"
+          },
+          {
+            "name": "background",
+            "type": "string"
+          },
+          {
+            "name": "modelValue",
+            "type": "number"
+          },
+          {
+            "name": "controls",
+            "type": "Booleanish"
+          },
+          {
+            "name": "indicators",
+            "type": "Booleanish"
+          },
+          {
+            "name": "interval",
+            "type": "number"
+          },
+          {
+            "name": "noTouch",
+            "type": "Booleanish"
+          },
+          {
+            "name": "noWrap",
+            "type": "Booleanish"
+          },
+          {
+            "name": "controlsPrevText",
+            "type": "string"
+          },
+          {
+            "name": "controlsNextText",
+            "type": "string"
+          },
+          {
+            "name": "indicatorsButtonLabel",
+            "type": "string"
+          }
+        ],
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "sliding-start",
+                "description": "",
+                "type": "Event"
+              }
+            ],
+            "description": "",
+            "emit": "sliding-start"
+          },
+          {
+            "args": [
+              {
+                "arg": "sliding-end",
+                "description": "",
+                "type": "Event"
+              }
+            ],
+            "description": "",
+            "emit": "sliding-end"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BCarouselSlide",
+        "emits": [],
+        "props": [
+          {
+            "name": "imgSrc",
+            "type": "string"
+          },
+          {
+            "name": "imgHeight",
+            "type": "string | number"
+          },
+          {
+            "name": "imgWidth",
+            "type": "string | number"
+          },
+          {
+            "name": "interval",
+            "type": "string | number"
+          },
+          {
+            "name": "active",
+            "type": "Booleanish"
+          },
+          {
+            "name": "background",
+            "type": "string"
+          },
+          {
+            "name": "caption",
+            "type": "string"
+          },
+          {
+            "name": "captionHtml",
+            "type": "string"
+          },
+          {
+            "name": "captionTag",
+            "type": "string"
+          },
+          {
+            "name": "contentTag",
+            "type": "string"
+          },
+          {
+            "name": "contentVisibleUp",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "imgAlt",
+            "type": "string"
+          },
+          {
+            "name": "imgBlank",
+            "type": "Booleanish"
+          },
+          {
+            "name": "imgBlankColor",
+            "type": "string"
+          },
+          {
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "name": "textHtml",
+            "type": "string"
+          },
+          {
+            "name": "textTag",
+            "type": "string"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "img",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

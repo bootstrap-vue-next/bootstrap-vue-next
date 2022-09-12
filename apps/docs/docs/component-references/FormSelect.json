@@ -1,0 +1,208 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/form-select",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Form Select",
+    "description": "",
+    "components": [
+      {
+        "component": "BFormSelect",
+        "props": [
+          {
+            "name": "ariaInvalid",
+            "type": "AriaInvalid"
+          },
+          {
+            "name": "autofocus",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabledField",
+            "type": "string"
+          },
+          {
+            "name": "form",
+            "type": "string"
+          },
+          {
+            "name": "htmlField",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "labelField",
+            "type": "string"
+          },
+          {
+            "name": "multiple",
+            "type": "Booleanish"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "type": "Array<unknown> | Record<string, unknown>"
+          },
+          {
+            "name": "optionsField",
+            "type": "string"
+          },
+          {
+            "name": "plain",
+            "type": "Booleanish"
+          },
+          {
+            "name": "required",
+            "type": "Booleanish"
+          },
+          {
+            "name": "selectSize",
+            "type": "number"
+          },
+          {
+            "name": "size",
+            "type": "Size"
+          },
+          {
+            "name": "state",
+            "type": "Booleanish"
+          },
+          {
+            "name": "textField",
+            "type": "string"
+          },
+          {
+            "name": "valueField",
+            "type": "string"
+          },
+          {
+            "name": "modelValue",
+            "type": "string | Array<unknown> | Record<string, unknown> | number"
+          }
+        ],
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "input",
+                "description": "",
+                "type": "unknown"
+              }
+            ],
+            "description": "",
+            "emit": "input"
+          },
+          {
+            "args": [
+              {
+                "arg": "update:modelValue",
+                "description": "",
+                "type": "unknown"
+              }
+            ],
+            "description": "",
+            "emit": "update:modelValue"
+          },
+          {
+            "args": [
+              {
+                "arg": "change",
+                "description": "",
+                "type": "unknown"
+              }
+            ],
+            "description": "",
+            "emit": "change"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "first",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BFormSelectOption",
+        "emits": [],
+        "props": [
+          {
+            "description": "",
+            "prop": "value",
+            "type": "unknown"
+          },
+          {
+            "description": "",
+            "prop": "disabled",
+            "type": "Booleanish"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BFormSelectOptionGroup",
+        "props": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "disabledField",
+            "type": "string"
+          },
+          {
+            "name": "htmlField",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "type": "Array<unknown> | Record<string, unknown>"
+          },
+          {
+            "name": "textField",
+            "type": "string"
+          },
+          {
+            "name": "valueField",
+            "type": "string"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "first",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

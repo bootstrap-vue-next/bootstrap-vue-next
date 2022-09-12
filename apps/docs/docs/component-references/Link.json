@@ -1,27 +1,89 @@
 {
-  "name": "@bootstrap-vue-3/Blink",
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/link",
   "version": "1.0.0",
   "meta": {
+    "title": "Link",
+    "description": "",
     "components": [
       {
         "component": "BLink",
         "props": [
           {
-            "prop" : "href",
-            "description" : "define an external link. Note if href and to are passed, `:to will be prioritzed ",
-            "type" : "String"
+            "name": "active",
+            "type": "Booleanish"
           },
           {
-            "prop" : "routerTag",
-            "description" : "Component to be used  as the router link. This is the component that will be assigned the `href`",
-            "type" : "String"
+            "name": "activeClass",
+            "type": "string"
+          },
+          {
+            "name": "append",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "event",
+            "type": "string | Array<unknown>"
+          },
+          {
+            "name": "exact",
+            "type": "Booleanish"
+          },
+          {
+            "name": "exactActiveClass",
+            "type": "string"
+          },
+          {
+            "name": "rel",
+            "type": "string"
+          },
+          {
+            "name": "replace",
+            "type": "Booleanish"
+          },
+          {
+            "name": "routerComponentName",
+            "type": "string"
+          },
+          {
+            "name": "target",
+            "type": "LinkTarget"
+          },
+          {
+            "name": "to",
+            "type": "RouteLocationRaw"
+          },
+          {
+            "prop": "href",
+            "description": "define an external link. Note if href and to are passed, `:to will be prioritzed ",
+            "type": "String"
+          },
+          {
+            "prop": "routerTag",
+            "description": "Component to be used  as the router link. This is the component that will be assigned the `href`",
+            "type": "String"
           }
         ],
         "emits": [
+          {
+            "args": [
+              {
+                "arg": "click",
+                "description": "",
+                "type": "MouseEvent"
+              }
+            ],
+            "description": "",
+            "emit": "click"
+          }
         ],
         "slots": [
           {
-            "name": "Root Component = <Router-Link>",
+            "name": "default",
             "description": "If Vue-Router has be employed and the `routerComponentName` is `<router-link>` this slot scope is used",
             "scope": [
               {

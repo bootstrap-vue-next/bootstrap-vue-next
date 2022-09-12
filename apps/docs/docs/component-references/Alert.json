@@ -1,5 +1,6 @@
 {
-  "name": "@bootstrap-vue-3/Alert",
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/alert",
   "version": "Alpha",
   "meta": {
     "title": "Alert",
@@ -10,22 +11,33 @@
         "props": [
           {
             "prop": "dismissLabel",
+            "type": "string",
             "description": "Value for the 'aria-label' attribute on the dismiss button"
           },
           {
             "prop": "dismissible",
-            "description": "When set, enables the dismiss close button"
+            "type": "Booleanish",
+            "description": "When set, enables the dismiss close button",
+            "default": "abc"
+          },
+          {
+            "description": "",
+            "prop": "modelValue",
+            "type": "boolean | number"
           },
           {
             "prop": "fade",
+            "type": "Booleanish",
             "description": "When set to true, enables the fade animation/transition on the component"
           },
           {
             "prop": "show",
+            "type": "Booleanish",
             "description": "When set, shows the alert. Do not use together with v-model"
           },
           {
             "prop": "variant",
+            "type": "ColorVariant",
             "description": "Applies one of the Bootstrap theme color variants to the component"
           }
         ],
@@ -40,14 +52,21 @@
             "args": [
               {
                 "arg": "dismissCountDown",
-                "description": " Time remaining to dismissed"
+                "description": " Time remaining to dismissed",
+                "type": "number"
               }
             ]
           },
           {
             "emit": "update:modelValue",
             "description": "Standard event to update the v-model",
-            "args": []
+            "args": [
+              {
+                "arg": "update:modelValue",
+                "description": "modelValue",
+                "type": "boolean | number"
+              }
+            ]
           }
         ]
       }

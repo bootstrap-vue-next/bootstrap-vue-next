@@ -1,0 +1,247 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue/form-radio",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Form Radio",
+    "description": "",
+    "components": [
+      {
+        "component": "BFormRadio",
+        "props": [
+          {
+            "name": "ariaLabel",
+            "type": "string"
+          },
+          {
+            "name": "ariaLabelledBy",
+            "type": "string"
+          },
+          {
+            "name": "form",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "type": "InputSize"
+          },
+          {
+            "name": "autofocus",
+            "type": "Booleanish"
+          },
+          {
+            "name": "modelValue",
+            "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+          },
+          {
+            "name": "plain",
+            "type": "Booleanish"
+          },
+          {
+            "name": "button",
+            "type": "Booleanish"
+          },
+          {
+            "name": "switch",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "buttonVariant",
+            "type": "ButtonVariant"
+          },
+          {
+            "name": "inline",
+            "type": "Booleanish"
+          },
+          {
+            "name": "required",
+            "type": "Booleanish"
+          },
+          {
+            "name": "state",
+            "type": "Booleanish"
+          },
+          {
+            "name": "value",
+            "type": "string | boolean | Record<string, unknown> | number"
+          }
+        ],
+        "emits": [
+          {
+            "emit": "input",
+            "description": "",
+            "args": [
+              {
+                "arg": "input",
+                "description": "",
+                "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+              }
+            ]
+          },
+          {
+            "emit": "change",
+            "description": "",
+            "args": [
+              {
+                "arg": "change",
+                "description": "",
+                "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+              }
+            ]
+          },
+          {
+            "emit": "update:modelValue",
+            "description": "",
+            "args": [
+              {
+                "arg": "update:modelValue",
+                "description": "",
+                "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+              }
+            ]
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BFormRadioGroup",
+        "props": [
+          {
+            "name": "size",
+            "type": "Size"
+          },
+          {
+            "name": "form",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "modelValue",
+            "type": "string | boolean | Array<unknown> | Record<string, unknown> | number"
+          },
+          {
+            "name": "ariaInvalid",
+            "type": "AriaInvalid"
+          },
+          {
+            "name": "autofocus",
+            "type": "Booleanish"
+          },
+          {
+            "name": "buttonVariant",
+            "type": "ButtonVariant"
+          },
+          {
+            "name": "buttons",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabledField",
+            "type": "string"
+          },
+          {
+            "name": "htmlField",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "type": "Array<unknown>"
+          },
+          {
+            "name": "plain",
+            "type": "Booleanish"
+          },
+          {
+            "name": "required",
+            "type": "Booleanish"
+          },
+          {
+            "name": "stacked",
+            "type": "Booleanish"
+          },
+          {
+            "name": "state",
+            "type": "Booleanish"
+          },
+          {
+            "name": "textField",
+            "type": "string"
+          },
+          {
+            "name": "validated",
+            "type": "Booleanish"
+          },
+          {
+            "name": "valueField",
+            "type": "string"
+          }
+        ],
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "input",
+                "description": "",
+                "type": "unknown"
+              }
+            ],
+            "description": "",
+            "emit": "input"
+          },
+          {
+            "args": [
+              {
+                "arg": "update:modelValue",
+                "description": "",
+                "type": "unknown"
+              }
+            ],
+            "description": "",
+            "emit": "update:modelValue"
+          },
+          {
+            "args": [
+              {
+                "arg": "change",
+                "description": "",
+                "type": "unknown"
+              }
+            ],
+            "description": "",
+            "emit": "change"
+          }
+        ],
+        "slots": []
+      }
+    ]
+  }
+}

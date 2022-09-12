@@ -122,55 +122,9 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 </b-breadcrumb>
 ```
 
-## Component reference
-
-### `<b-breadcrumb>`
-
-#### Properties
-
-| Property | Type    | Default | Description                         |
-| -------- | ------- | ------- | ----------------------------------- |
-| `items`  | `Array` |         | Array of breadcrumb items to render |
-
-#### Slots
-
-| Name      | Description                                           |
-| --------- | ----------------------------------------------------- |
-| `default` | Content (breadcrumb items) to place in the breadcrumb |
-| `append`  | Content to place after the breadcrumb                 |
-| `prepend` | Content to place before the breadcrumb                |
-
-### `<b-breadcrumb-item>`
-
-#### Properties
-
-| Property             | Type                 | Default    | Description                                                                                                                                                                                    |
-| -------------------- | -------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `active`             | `Boolean`            | `false`    | When set to `true`, places the component in the active state with active styling                                                                                                               |
-| `active-class`       | `String`             |            | `<router-link>` prop: Configure the active CSS class applied when the link is active. Typically you will want to set this to class name 'active'                                               |
-| `append`             | `Boolean`            | `false`    | `<router-link>` prop: Setting append prop always appends the relative path to the current path                                                                                                 |
-| `aria-current`       | `String`             | `location` | Sets the value of the 'aria-current' attribute (when the item is the active item). Supported string values are 'location', 'page', or 'true'                                                   |
-| `disabled`           | `Boolean`            | `false`    | When set to `true`, disables the component's functionality and places it in a disabled state                                                                                                   |
-| `exact`              | `Boolean`            | `false`    | `<router-link>` prop: The default active class matching behavior is inclusive match. Setting this prop forces the mode to exactly match the route                                              |
-| `exact-active-class` | `String`             |            | `<router-link>` prop: Configure the active CSS class applied when the link is active with exact match. Typically you will want to set this to class name 'active'                              |
-| `href`               | `String`             |            | Denotes the target URL of the link for standard a links                                                                                                                                        |
-| `rel`                | `String`             | `null`     | `<b-link>` prop: Sets the `rel` attribute on the rendered link                                                                                                                                 |
-| `replace`            | `Boolean`            | `false`    | `<router-link>` prop: Setting the replace prop will call `router.replace()` instead of `router.push()` when clicked, so the navigation will not leave a history record                         |
-| `target`             | `String`             | `\_self`   | Sets the `target` attribute on the rendered link item                                                                                                                                          |
-| `text`               | `String`             |            | Text to render in the breadcrumb item                                                                                                                                                          |
-| `to`                 | `Object` or `String` |            | Denotes the target route of the link. When clicked, the value of the to prop will be passed to `router.push()` internally, so the value can be either a string or a Location descriptor object |
-
-#### Slots
-
-| Name      | Description                             |
-| --------- | --------------------------------------- |
-| `default` | Content to place in the breadcrumb item |
-
-#### Events
-
-| Name    | Arguments                           | Description                             |
-| ------- | ----------------------------------- | --------------------------------------- |
-| `click` | `event` - Native click event object | Content to place in the breadcrumb item |
+<ClientOnly>
+<ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, Ref} from 'vue';

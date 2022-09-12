@@ -1,5 +1,5 @@
 <template>
-  <BForm v-bind="attrs" class="d-flex">
+  <BForm v-bind="attrs" class="d-flex" @submit.prevent="submitted">
     <slot />
   </BForm>
 </template>
@@ -22,6 +22,14 @@ const props = withDefaults(defineProps<Props>(), {
   novalidate: false,
   validated: false,
 })
+
+interface BNavFormEmits {
+  (e: 'submit', value: Event): void
+}
+
+const emit = defineEmits<BNavFormEmits>()
+
+const submitted = (e: Event): void => emit('submit', e)
 
 const attrs = computed(() => ({
   floating: props.floating,
