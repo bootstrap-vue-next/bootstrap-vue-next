@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue/transition",
+  "name": "@bootstrap-vue-3/transition",
   "version": "1.0.0",
   "meta": {
     "title": "Transition",

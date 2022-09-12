@@ -13,10 +13,12 @@ import {
  * @param spaces
  * @returns
  */
-export const toString = (val: any, spaces = 2): string =>
+export const toString = (val: unknown, spaces = 2): string =>
   isUndefinedOrNull(val)
     ? ''
-    : isArray(val) || (isPlainObject(val) && val.toString === Object.prototype.toString)
+    : isArray(val) ||
+      (isPlainObject(val) &&
+        (val as Record<string, unknown>).toString === Object.prototype.toString)
     ? JSON.stringify(val, null, spaces)
     : String(val)
 
