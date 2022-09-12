@@ -1,6 +1,11 @@
 <template>
   <teleport to="body">
     <div :id="id" ref="element" class="modal" :class="modalClasses" tabindex="-1" v-bind="$attrs">
+      <div
+        v-if="hideBackdropBoolean === false"
+        class="modal-backdrop fade show"
+        @click.prevent="noCloseOnBackdropBoolean === false && hide()"
+      />
       <div class="modal-dialog" :class="modalDialogClasses">
         <div
           v-if="
@@ -58,11 +63,6 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="hideBackdropBoolean === false"
-        class="modal-backdrop fade show"
-        @click.prevent="noCloseOnBackdropBoolean === false && hide()"
-      />
     </div>
   </teleport>
 </template>
