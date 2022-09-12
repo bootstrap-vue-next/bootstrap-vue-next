@@ -1,5 +1,5 @@
 <template>
-  <BTableContainer :responsive="responsive" :responsive-classes="responsiveClasses">
+  <BTableContainer :responsive="responsive" :responsive-class="responsiveClasses">
     <table :class="classes">
       <thead>
         <slot v-if="$slots['thead-top']" name="thead-top" />
@@ -26,14 +26,11 @@
             v-bind="field.thAttr"
             @click="headerClicked(field, $event)"
           >
-            <div class="d-flex flex-nowrap align-items-center gap-1">
+            <div class="d-inline-flex flex-nowrap align-items-center gap-1">
               <span
                 v-if="isSortable && field.sortable && field.key === sortBy"
-                class="text-muted small"
-              >
-                <span v-show="sortDesc === true">▼</span>
-                <span v-show="sortDesc === false">▲</span>
-              </span>
+                class="b-table-sort-icon text-muted small"
+              />
               <div>
                 <slot
                   v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
@@ -158,8 +155,9 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, ref, toRef, useSlots} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
+import {cloneDeep} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 
@@ -200,6 +198,10 @@ interface BTableProps {
   selectionVariant?: ColorVariant
   stickyHeader?: Booleanish
   busy?: Booleanish
+  perPage?: number
+  currentPage?: number
+  filter?: string
+  filterable?: string[]
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -223,6 +225,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   selectionVariant: 'primary',
   stickyHeader: false,
   busy: false,
+  currentPage: 1,
 })
 
 const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
@@ -269,6 +272,7 @@ interface BTableEmits {
   (e: 'update:sortBy', value: string): void
   (e: 'update:sortDesc', value: boolean): void
   (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
+  (e: 'filtered', value: TableItem[]): void
 }
 
 const emits = defineEmits<BTableEmits>()
@@ -291,19 +295,32 @@ const classes = computed(() => [
     [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
     'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
     'b-table-busy': busyBoolean.value,
+    'b-table-sortable': isSortable.value,
+    'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
+    'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
   },
 ])
 
 const itemHelper = useItemHelper()
+
+itemHelper.filterEvent.value = (items) => {
+  emits('filtered', cloneDeep(items))
+}
+
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
 )
+
+const isFilterableTable = computed(() => props.filter !== undefined)
+
+const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
 const computedItems = computed(() =>
-  sortInternalBoolean.value === true
-    ? itemHelper.sortItems(props.fields, props.items, {
-        key: props.sortBy,
-        desc: sortDescBoolean.value,
+  requireItemsMapping.value
+    ? itemHelper.mapItems(props.fields, props.items, props, {
+        isSortable,
+        isFilterableTable,
+        sortDescBoolean,
       })
     : props.items
 )
@@ -468,6 +485,15 @@ const unselectRow = (index: number) => {
   emits('rowUnselected', item)
   notifySelectionEvent()
 }
+
+watch(
+  () => props.filter,
+  (filter) => {
+    if (!filter) {
+      emits('filtered', cloneDeep(props.items))
+    }
+  }
+)
 
 defineExpose({
   selectAllRows,
