@@ -142,7 +142,12 @@
         </tr>
       </tfoot>
       <tfoot v-else-if="$slots['custom-foot']">
-        <slot name="custom-foot" :fields="computedFields" :items="items" :columns="computedFields?.length"></slot>
+        <slot
+          name="custom-foot"
+          :fields="computedFields"
+          :items="items"
+          :columns="computedFields?.length"
+        />
       </tfoot>
       <caption v-if="$slots['table-caption']">
         <slot name="table-caption" />
