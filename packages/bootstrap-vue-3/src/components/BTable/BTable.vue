@@ -135,11 +135,7 @@
         <tr v-if="showEmptyBoolean && computedItems.length === 0" class="b-table-empty-slot">
           <td :colspan="computedFieldsTotal">
             <slot name="empty" :items="computedItems" :filtered="isFilterableTable">
-              {{
-                isFilterableTable
-                  ? 'There are no records matching your request'
-                  : 'There are no records to show'
-              }}
+              {{ isFilterableTable ? emptyFilteredText : emptyText }}
             </slot>
           </td>
         </tr>
@@ -231,6 +227,8 @@ interface BTableProps {
   currentPage?: number
   filter?: string
   filterable?: string[]
+  emptyText?: string
+  emptyFilteredText?: string
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
@@ -256,6 +254,8 @@ const props = withDefaults(defineProps<BTableProps>(), {
   busy: false,
   showEmpty: false,
   currentPage: 1,
+  emptyText: 'There are no records to show',
+  emptyFilteredText: 'There are no records matching your request',
 })
 
 const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
@@ -343,7 +343,7 @@ const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
 )
 
-const isFilterableTable = computed(() => props.filter !== undefined)
+const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
 
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
 const computedItems = computed(() =>
