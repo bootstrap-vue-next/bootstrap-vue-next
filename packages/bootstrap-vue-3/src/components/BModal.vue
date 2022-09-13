@@ -24,6 +24,7 @@
               :class="computedCloseButtonClasses"
               data-bs-dismiss="modal"
               :aria-label="headerCloseLabel"
+              @click="hide()"
             >
               <slot name="header-close" />
             </button>
@@ -282,12 +283,12 @@ const modalHide = (e: Event) => {
 }
 
 const show = () => {
-  emit('update:modelValue', true)
+  if (modelValueBoolean.value) emit('update:modelValue', true)
   getInstance().show()
 }
 
 const hide = () => {
-  emit('update:modelValue', false)
+  if (modelValueBoolean.value) emit('update:modelValue', false)
   getInstance().hide()
 }
 
