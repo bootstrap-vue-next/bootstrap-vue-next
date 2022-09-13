@@ -27,10 +27,19 @@
             @click="headerClicked(field, $event)"
           >
             <div class="d-inline-flex flex-nowrap align-items-center gap-1">
-              <span
-                v-if="isSortable && field.sortable && field.key === sortBy"
-                class="b-table-sort-icon text-muted small"
-              />
+              <slot
+                name="sortIcon"
+                :field="field"
+                :sort-by="sortBy"
+                :selected="field.key === sortBy"
+                :is-desc="sortDescBoolean"
+                :direction="sortDescBoolean ? 'desc' : 'asc'"
+              >
+                <span
+                  v-if="isSortable && field.sortable && field.key === sortBy"
+                  class="b-table-sort-icon text-muted small"
+                />
+              </slot>
               <div>
                 <slot
                   v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
