@@ -198,7 +198,8 @@ const tabs = computed(() => {
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
 const classes = computed(() => ({
-  'd-flex align-items-start': verticalBoolean.value,
+  'd-flex': verticalBoolean.value,
+  'align-items-start': verticalBoolean.value,
 }))
 
 const navTabsClasses = computed(() => ({
