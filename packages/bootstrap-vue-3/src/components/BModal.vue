@@ -269,6 +269,10 @@ const modalShowed = (e: Event) => {
 
 const modalHided = (e: Event) => {
   emit('hidden', e)
+  
+  if (modelValueBoolean.value) {
+    emit('update:modelValue', false)
+  }
 
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
