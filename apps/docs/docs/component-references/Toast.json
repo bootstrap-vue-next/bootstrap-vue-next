@@ -92,7 +92,7 @@
           },
           {
             "prop": "toastClass",
-            "type": "Array<string>",
+            "type": "string[]",
             "description": "CSS class (or classes) to add to the toast wrapper element"
           },
           {

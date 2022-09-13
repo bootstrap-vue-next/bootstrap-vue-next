@@ -27,7 +27,7 @@
           },
           {
             "prop": "event",
-            "type": "string | Array<unknown>"
+            "type": "string | unknown[]"
           },
           {
             "prop": "exact",

@@ -39,7 +39,7 @@
           },
           {
             "prop": "modelValue",
-            "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+            "type": "boolean | string | unknown[] | Record<string, unknown> | number"
           },
           {
             "prop": "plain",
@@ -86,7 +86,7 @@
               {
                 "arg": "input",
                 "description": "",
-                "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+                "type": "boolean | string | unknown[] | Record<string, unknown> | number"
               }
             ]
           },
@@ -97,7 +97,7 @@
               {
                 "arg": "change",
                 "description": "",
-                "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+                "type": "boolean | string | unknown[] | Record<string, unknown> | number"
               }
             ]
           },
@@ -108,7 +108,7 @@
               {
                 "arg": "update:modelValue",
                 "description": "",
-                "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
+                "type": "boolean | string | unknown[] | Record<string, unknown> | number"
               }
             ]
           }
@@ -142,7 +142,7 @@
           },
           {
             "prop": "modelValue",
-            "type": "string | boolean | Array<unknown> | Record<string, unknown> | number"
+            "type": "string | boolean | unknown[] | Record<string, unknown> | number"
           },
           {
             "prop": "ariaInvalid",
@@ -174,7 +174,7 @@
           },
           {
             "prop": "options",
-            "type": "Array<unknown>"
+            "type": "unknown[]"
           },
           {
             "prop": "plain",

@@ -192,7 +192,7 @@
           },
           {
             "prop": "separator",
-            "type": "string | Array<unknown>",
+            "type": "string | unknown[]",
             "description": "Separator character(s) that will trigger a tag to be created"
           },
           {
@@ -440,7 +440,7 @@
               },
               {
                 "prop": "separator",
-                "type": "string | Array<unknown>",
+                "type": "string | unknown[]",
                 "description": "The value of the 'separator' prop"
               },
               {

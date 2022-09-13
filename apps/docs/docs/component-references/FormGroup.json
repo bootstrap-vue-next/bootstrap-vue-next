@@ -75,7 +75,7 @@
           },
           {
             "prop": "labelClass",
-            "type": "Array<string> | Record<string, unknown> | string"
+            "type": "string[] | Record<string, unknown> | string"
           },
           {
             "prop": "labelCols",

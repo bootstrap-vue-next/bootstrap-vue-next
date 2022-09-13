@@ -51,7 +51,7 @@
           },
           {
             "prop": "options",
-            "type": "Array<unknown> | Record<string, unknown>"
+            "type": "unknown[] | Record<string, unknown>"
           },
           {
             "prop": "optionsField",
@@ -87,7 +87,7 @@
           },
           {
             "prop": "modelValue",
-            "type": "string | Array<unknown> | Record<string, unknown> | number"
+            "type": "string | unknown[] | Record<string, unknown> | number"
           }
         ],
         "emits": [
@@ -178,7 +178,7 @@
           },
           {
             "prop": "options",
-            "type": "Array<unknown> | Record<string, unknown>"
+            "type": "unknown[] | Record<string, unknown>"
           },
           {
             "prop": "textField",
