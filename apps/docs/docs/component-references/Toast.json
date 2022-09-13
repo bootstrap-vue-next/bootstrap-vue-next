@@ -101,6 +101,7 @@
             "description": "Applies one of the Bootstrap theme color variants to the component"
           }
         ],
+        "slots": [],
         "emits": [
           {
             "emit": "update:modelValue",
@@ -129,6 +130,7 @@
       {
         "component": "BToaster",
         "emits": [],
+        "slots": [],
         "props": [
           {
             "description": "",

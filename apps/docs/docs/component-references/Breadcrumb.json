@@ -38,6 +38,7 @@
         "component": "BBreadcrumbItem",
         "emits": [
           {
+            "emit": "click",
             "args": [
               {
                 "type": "MouseEvent",

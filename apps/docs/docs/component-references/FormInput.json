@@ -28,6 +28,7 @@
         ],
         "emits": [
           {
+            "args": [],
             "emit": "update:modelValue",
             "description": ""
           },

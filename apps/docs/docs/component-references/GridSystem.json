@@ -1,8 +1,10 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/Grid System",
+  "name": "@bootstrap-vue-3/grid-system",
   "version": "1.0.0",
   "meta": {
+    "title": "Grid System",
+    "description": "",
     "components": [
       {
         "component": "BContainer",

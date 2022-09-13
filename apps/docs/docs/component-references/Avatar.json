@@ -81,9 +81,7 @@
             "prop": "variant",
             "type": "ColorVariant"
           }
-        ]
-      },
-      {
+        ],
         "emits": [
           {
             "emit": "click",
@@ -155,7 +153,8 @@
             "description": "",
             "scope": []
           }
-        ]
+        ],
+        "emits": []
       }
     ]
   }
