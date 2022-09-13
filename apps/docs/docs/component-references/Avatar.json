@@ -10,75 +10,75 @@
         "component": "BAvatar",
         "props": [
           {
-            "name": "alt",
+            "prop": "alt",
             "type": "string"
           },
           {
-            "name": "ariaLabel",
+            "prop": "ariaLabel",
             "type": "string"
           },
           {
-            "name": "badge",
+            "prop": "badge",
             "type": "boolean | string"
           },
           {
-            "name": "badgeLeft",
+            "prop": "badgeLeft",
             "type": "Booleanish"
           },
           {
-            "name": "badgeOffset",
+            "prop": "badgeOffset",
             "type": "string"
           },
           {
-            "name": "badgeTop",
+            "prop": "badgeTop",
             "type": "Booleanish"
           },
           {
-            "name": "badgeVariant",
+            "prop": "badgeVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "button",
+            "prop": "button",
             "type": "Booleanish"
           },
           {
-            "name": "buttonType",
+            "prop": "buttonType",
             "type": "string"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "icon",
+            "prop": "icon",
             "type": "string"
           },
           {
-            "name": "rounded",
+            "prop": "rounded",
             "type": "boolean | string"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "'sm' | 'md' | 'lg' | string"
           },
           {
-            "name": "square",
+            "prop": "square",
             "type": "Booleanish"
           },
           {
-            "name": "src",
+            "prop": "src",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "textVariant",
+            "prop": "textVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ]
@@ -125,27 +125,27 @@
         "component": "BAvatarGroup",
         "props": [
           {
-            "name": "overlap",
+            "prop": "overlap",
             "type": "number | string"
           },
           {
-            "name": "rounded",
+            "prop": "rounded",
             "type": "boolean | string"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "'sm' | 'md' | 'lg' | string"
           },
           {
-            "name": "square",
+            "prop": "square",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],

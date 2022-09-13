@@ -265,19 +265,6 @@ input groups and dropdowns, by setting the prop `justify`.
 </div>
 ```
 
-## Component reference
-
-### `<b-button-toolbar>`
-
-#### Properties
-
-| Property    | Type      | Default | Description                                                                                                                    |
-| ----------- | --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `aria-role` | `String`  | `group` | Sets the ARIA attribute `role` to a specific value                                                                             |
-| `justify`   | `Boolean` | `false` | Make the toolbar span the maximum available width, by increasing spacing between the button groups, input groups and dropdowns |
-
-#### Slots
-
-| Name      | Scoped | Description                            |
-| --------- | ------ | -------------------------------------- |
-| `default` | No     | Content to place in the button toolbar |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>

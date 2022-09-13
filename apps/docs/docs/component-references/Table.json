@@ -10,103 +10,103 @@
         "component": "BTable",
         "props": [
           {
-            "name": "align",
+            "prop": "align",
             "type": "VerticalAlign"
           },
           {
-            "name": "caption",
+            "prop": "caption",
             "type": "string"
           },
           {
-            "name": "captionTop",
+            "prop": "captionTop",
             "type": "Booleanish"
           },
           {
-            "name": "borderless",
+            "prop": "borderless",
             "type": "Booleanish"
           },
           {
-            "name": "bordered",
+            "prop": "bordered",
             "type": "Booleanish"
           },
           {
-            "name": "borderVariant",
+            "prop": "borderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "dark",
+            "prop": "dark",
             "type": "Booleanish"
           },
           {
-            "name": "fields",
+            "prop": "fields",
             "type": "Array<TableField>"
           },
           {
-            "name": "footClone",
+            "prop": "footClone",
             "type": "Booleanish"
           },
           {
-            "name": "hover",
+            "prop": "hover",
             "type": "Booleanish"
           },
           {
-            "name": "items",
+            "prop": "items",
             "type": "Array<TableItem>"
           },
           {
-            "name": "responsive",
+            "prop": "responsive",
             "type": "boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'"
           },
           {
-            "name": "small",
+            "prop": "small",
             "type": "Booleanish"
           },
           {
-            "name": "striped",
+            "prop": "striped",
             "type": "Booleanish"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           },
           {
-            "name": "sortBy",
+            "prop": "sortBy",
             "type": "string"
           },
           {
-            "name": "sortDesc",
+            "prop": "sortDesc",
             "type": "Booleanish"
           },
           {
-            "name": "sortInternal",
+            "prop": "sortInternal",
             "type": "Booleanish"
           },
           {
-            "name": "selectable",
+            "prop": "selectable",
             "type": "Booleanish"
           },
           {
-            "name": "stickySelect",
+            "prop": "stickySelect",
             "type": "Booleanish"
           },
           {
-            "name": "selectHead",
+            "prop": "selectHead",
             "type": "boolean | string"
           },
           {
-            "name": "selectMode",
+            "prop": "selectMode",
             "type": "'multi' | 'single' | 'range'"
           },
           {
-            "name": "selectionVariant",
+            "prop": "selectionVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "stickyHeader",
+            "prop": "stickyHeader",
             "type": "Booleanish"
           },
           {
-            "name": "busy",
+            "prop": "busy",
             "type": "Booleanish"
           }
         ],
@@ -340,11 +340,11 @@
         "component": "BTableContainer",
         "props": [
           {
-            "name": "responsive",
+            "prop": "responsive",
             "type": "boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'"
           },
           {
-            "name": "responsiveClass",
+            "prop": "responsiveClass",
             "type": "ClassValue"
           }
         ],
@@ -361,51 +361,51 @@
         "component": "BTableSimple",
         "props": [
           {
-            "name": "bordered",
+            "prop": "bordered",
             "type": "Booleanish"
           },
           {
-            "name": "borderless",
+            "prop": "borderless",
             "type": "Booleanish"
           },
           {
-            "name": "borderVariant",
+            "prop": "borderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "captionTop",
+            "prop": "captionTop",
             "type": "Booleanish"
           },
           {
-            "name": "dark",
+            "prop": "dark",
             "type": "Booleanish"
           },
           {
-            "name": "hover",
+            "prop": "hover",
             "type": "Booleanish"
           },
           {
-            "name": "responsive",
+            "prop": "responsive",
             "type": "boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' "
           },
           {
-            "name": "stacked",
+            "prop": "stacked",
             "type": "boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' "
           },
           {
-            "name": "striped",
+            "prop": "striped",
             "type": "Booleanish"
           },
           {
-            "name": "small",
+            "prop": "small",
             "type": "Booleanish"
           },
           {
-            "name": "tableClass",
+            "prop": "tableClass",
             "type": "ClassValue"
           },
           {
-            "name": "tableVariant",
+            "prop": "tableVariant",
             "type": "string"
           }
         ],
@@ -422,7 +422,7 @@
         "component": "BTbody",
         "props": [
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
@@ -439,23 +439,23 @@
         "component": "BTd",
         "props": [
           {
-            "name": "colspan",
+            "prop": "colspan",
             "type": "string | number"
           },
           {
-            "name": "rowspan",
+            "prop": "rowspan",
             "type": "string | number"
           },
           {
-            "name": "stackedHeading",
+            "prop": "stackedHeading",
             "type": "string"
           },
           {
-            "name": "stickyColumn",
+            "prop": "stickyColumn",
             "type": "Booleanish"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
@@ -472,7 +472,7 @@
         "component": "BTfoot",
         "props": [
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
@@ -489,23 +489,23 @@
         "component": "BTh",
         "props": [
           {
-            "name": "colspan",
+            "prop": "colspan",
             "type": "string | number"
           },
           {
-            "name": "rowspan",
+            "prop": "rowspan",
             "type": "string | number"
           },
           {
-            "name": "stackedHeading",
+            "prop": "stackedHeading",
             "type": "string"
           },
           {
-            "name": "stickyColumn",
+            "prop": "stickyColumn",
             "type": "Booleanish"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
@@ -522,7 +522,7 @@
         "component": "BThead",
         "props": [
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
@@ -539,7 +539,7 @@
         "component": "BTr",
         "props": [
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],

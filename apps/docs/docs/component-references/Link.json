@@ -10,51 +10,51 @@
         "component": "BLink",
         "props": [
           {
-            "name": "active",
+            "prop": "active",
             "type": "Booleanish"
           },
           {
-            "name": "activeClass",
+            "prop": "activeClass",
             "type": "string"
           },
           {
-            "name": "append",
+            "prop": "append",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "event",
+            "prop": "event",
             "type": "string | Array<unknown>"
           },
           {
-            "name": "exact",
+            "prop": "exact",
             "type": "Booleanish"
           },
           {
-            "name": "exactActiveClass",
+            "prop": "exactActiveClass",
             "type": "string"
           },
           {
-            "name": "rel",
+            "prop": "rel",
             "type": "string"
           },
           {
-            "name": "replace",
+            "prop": "replace",
             "type": "Booleanish"
           },
           {
-            "name": "routerComponentName",
+            "prop": "routerComponentName",
             "type": "string"
           },
           {
-            "name": "target",
+            "prop": "target",
             "type": "LinkTarget"
           },
           {
-            "name": "to",
+            "prop": "to",
             "type": "RouteLocationRaw"
           },
           {

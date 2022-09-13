@@ -928,55 +928,9 @@ body only the modal body will be obscured. If you wish to obscure the entire mod
 header and footer), you will need to set the `<b-modal>` prop `body-class` to `position-static`, and
 also set the `rounded` prop on `<b-overlay>`.
 
-## Component reference
-
-### `<b-overlay>`
-
-#### Properties
-
-| Property                                                   | Type                  | Default  | Description                                                                                                                                               |
-| ---------------------------------------------------------- | --------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bg-color`                                                 | `String`              |          | CSS color to use as the opaque overlay backdrop color. If set, overrides the `variant` prop                                                               |
-| `blur`                                                     | `String`              | `2px`    | Value for the CSS blur backdrop-filter. Be sure to include the CSS units. Not supported in IE 11. Set to null or an empty string to disable blurring      |
-| `fixed`                                                    | `Boolean`             | `false`  | When prop `no-wrap` is set, will use fixed positioning instead of absolute positioning. Handy if you want to obscure the entire application page          |
-| `no-center`                                                | `Boolean`             | `false`  | When set, disables the vertical and horizontal centering of the overlay content                                                                           |
-| `no-fade`                                                  | `Boolean`             | `false`  | Disables the fade transition of the overlay                                                                                                               |
-| `no-wrap`                                                  | `Boolean`             | `false`  | Disabled generating the wrapper element, and ignored the default slot. Requires that `<b-overlay>` be placed in an element with position relative set     |
-| `opacity`                                                  | `Number` or `String`  | `0.85`   | Opacity of the overlay backdrop. Valid range is `0` to `1`                                                                                                |
-| `overlay-tag`                                              | `String`              | `div`    | Element tag to use as for the overlay element                                                                                                             |
-| `rounded`                                                  | `Boolean` or `String` | `false`  | Apply rounding to the overlay to match your content routing. Valid values are `true`, `'sm'`, `lg`, `circle`, `pill`, `top`, `right`, `bottom`, or `left` |
-| `show`                                                     | `Boolean`             | `false`  | When set, shows the overlay                                                                                                                               |
-| `spinner-small`                                            | `Boolean`             | `false`  | When set, renders the default spinner in a smaller size                                                                                                   |
-| `spinner-type`                                             | `String`              | `border` | Type of the default spinner to show. Current supported types are 'border' and 'grow'                                                                      |
-| <span style="white-space:nowrap;">`spinner-variant`</span> | `String`              |          | Applies one of the Bootstrap theme color variants to the default spinner. Default is to use the current font color                                        |
-| `variant`                                                  | `String`              | `light`  | Background theme color variant to use for the overlay backdrop                                                                                            |
-| `z-index`                                                  | `String`              | `10`     | Element tag to use for the overall wrapper element. Has no effect if prop `no-wrap` is set                                                                |
-| `opacity`                                                  | `Number` or `String`  | `0.85`   | Opacity of the overlay backdrop. Valid range is `0` to `1`                                                                                                |
-
-#### slots
-
-| Property  | Scoped | Description                                                                           |
-| --------- | ------ | ------------------------------------------------------------------------------------- |
-| `default` | No     | The content to be overlayed. The default slot is ignored if the prop `no-wrap` is set |
-| `overlay` | Yes    | Custom content to replace the default overlay spinner                                 |
-
-##### overlay slot scope
-
-| Property         | Type      | Description                         |
-| ---------------- | --------- | ----------------------------------- |
-| `spinnerSmall`   | `Boolean` | Value of the `spinner-small` prop   |
-| `spinnerType`    | `String`  | Value of the `spinner-type` prop    |
-| `spinnerVariant` | `String`  | Value of the `spinner-variant` prop |
-
-#### Events
-
-| Name     | Argument                            | Description                              |
-| -------- | ----------------------------------- | ---------------------------------------- |
-| `click`  | `event` - Native click event object | Emitted when overlay is clicked          |
-| `hidden` |                                     | Emitted when the overlay has been hidden |
-| `shown`  |                                     | Emitted when the overlay has been shown  |
-
 <ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, nextTick} from 'vue';
@@ -1100,5 +1054,3 @@ also set the `rounded` prop on `<b-overlay>`.
   }
 
 </script>
-
-</ClientOnly>

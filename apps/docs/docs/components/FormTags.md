@@ -975,12 +975,11 @@ Tags that are too wide for their parent container will automatically have their 
 Note `<b-form-tag>` requires BootstrapVue3's custom CSS/SCSS for proper styling.
 
 <ClientOnly>
-  <doc-reference :reference="FormTags" />
+  <ComponentReference></ComponentReference>
 </ClientOnly>
 
 <script setup lang="ts">
   import { ref, computed, watch } from 'vue'
-  import FormTags from '../../../../component-references/FormTags.json'
 
   // #1 example
   const value = ref(['apple', 'orange'])

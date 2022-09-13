@@ -156,5 +156,5 @@ Use the `<b-nav-text>` child component to place plain text content into the nav:
 ```
 
 <ClientOnly>
-<ComponentReference></ComponentReference>
+  <ComponentReference></ComponentReference>
 </ClientOnly>

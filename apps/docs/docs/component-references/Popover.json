@@ -10,63 +10,63 @@
         "component": "BPopover",
         "props": [
           {
-            "name": "container",
+            "prop": "container",
             "type": "string | ComponentPublicInstance<HTMLElement> | HTMLElement"
           },
           {
-            "name": "content",
+            "prop": "content",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "customClass",
+            "prop": "customClass",
             "type": "string"
           },
           {
-            "name": "noninteractive",
+            "prop": "noninteractive",
             "type": "Booleanish"
           },
           {
-            "name": "placement",
+            "prop": "placement",
             "type": "Popover.Options['placement']"
           },
           {
-            "name": "target",
+            "prop": "target",
             "type": "string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined"
           },
           {
-            "name": "title",
+            "prop": "title",
             "type": "string"
           },
           {
-            "name": "delay",
+            "prop": "delay",
             "type": "number | BPopoverDelayObject>"
           },
           {
-            "name": "triggers",
+            "prop": "triggers",
             "type": "Popover.Options['trigger']"
           },
           {
-            "name": "show",
+            "prop": "show",
             "type": "Booleanish"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           },
           {
-            "name": "html",
+            "prop": "html",
             "type": "Booleanish"
           },
           {
-            "name": "sanitize",
+            "prop": "sanitize",
             "type": "Booleanish"
           },
           {
-            "name": "offset",
+            "prop": "offset",
             "type": "Popover.Options['offset']"
           }
         ],

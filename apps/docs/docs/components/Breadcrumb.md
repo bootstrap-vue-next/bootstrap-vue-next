@@ -123,7 +123,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 ```
 
 <ClientOnly>
-<ComponentReference></ComponentReference>
+  <ComponentReference></ComponentReference>
 </ClientOnly>
 
 <script lang="ts" setup>

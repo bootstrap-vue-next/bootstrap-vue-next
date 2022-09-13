@@ -9,83 +9,200 @@
       {
         "component": "BTab",
         "props": [
-          { "name": "id", "type": "string" }, 
-          { "name": "title", "type": "string" }, 
-          { "name": "active", "type": "Booleanish" }, 
-          { "name": "buttonId", "type": "string" }, 
-          { "name": "disabled", "type": "Booleanish" }, 
-          { "name": "lazy", "type": "Booleanish" }, 
-          { "name": "noBody", "type": "boolean | string" }, 
-          { "name": "tag", "type": "string" }, 
-          { "name": "titleItemClass", "type": "ClassValue" }, 
-          { "name": "titleLinkAttributes", "type": "Record<string, unknown>" }, 
-          { "name": "titleLinkClass", "type": "ClassValue" }
+          {
+            "prop": "id",
+            "type": "string"
+          },
+          {
+            "prop": "title",
+            "type": "string"
+          },
+          {
+            "prop": "active",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "buttonId",
+            "type": "string"
+          },
+          {
+            "prop": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "lazy",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "noBody",
+            "type": "boolean | string"
+          },
+          {
+            "prop": "tag",
+            "type": "string"
+          },
+          {
+            "prop": "titleItemClass",
+            "type": "ClassValue"
+          },
+          {
+            "prop": "titleLinkAttributes",
+            "type": "Record<string, unknown>"
+          },
+          {
+            "prop": "titleLinkClass",
+            "type": "ClassValue"
+          }
         ],
-        "emits": [
-          
-        ],
+        "emits": [],
         "slots": [
-{
-  "description": "", "name": "default", "scope": []
-}
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
         ]
       },
       {
         "component": "BTabs",
         "props": [
-          { "name": "activeNavItemClass", "type": "ClassValue" }, 
-          { "name": "activeTabClass", "type": "ClassValue" }, 
-          { "name": "align", "type": "Alignment" }, 
-          { "name": "card", "type": "Booleanish" }, 
-          { "name": "contentClass", "type": "ClassValue" }, 
-          { "name": "end", "type": "Booleanish" }, 
-          { "name": "fill", "type": "Booleanish" }, 
-          { "name": "id", "type": "string" }, 
-          { "name": "justified", "type": "Booleanish" }, 
-          { "name": "lazy", "type": "Booleanish" }, 
-          { "name": "navClass", "type": "ClassValue" }, 
-          { "name": "navWrapperClass", "type": "ClassValue" }, 
-          { "name": "noFade", "type": "Booleanish" }, 
-          { "name": "noNavStyle", "type": "Booleanish" }, 
-          { "name": "pills", "type": "Booleanish" }, 
-          { "name": "small", "type": "Booleanish" }, 
-          { "name": "tag", "type": "string" }, 
-          { "name": "vertical", "type": "Booleanish" }, 
-          { "name": "modelValue", "type": "number" }
+          {
+            "prop": "activeNavItemClass",
+            "type": "ClassValue"
+          },
+          {
+            "prop": "activeTabClass",
+            "type": "ClassValue"
+          },
+          {
+            "prop": "align",
+            "type": "Alignment"
+          },
+          {
+            "prop": "card",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "contentClass",
+            "type": "ClassValue"
+          },
+          {
+            "prop": "end",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "fill",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "id",
+            "type": "string"
+          },
+          {
+            "prop": "justified",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "lazy",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "navClass",
+            "type": "ClassValue"
+          },
+          {
+            "prop": "navWrapperClass",
+            "type": "ClassValue"
+          },
+          {
+            "prop": "noFade",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "noNavStyle",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "pills",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "small",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "tag",
+            "type": "string"
+          },
+          {
+            "prop": "vertical",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "modelValue",
+            "type": "number"
+          }
         ],
         "emits": [
           {
-            "args": [{"arg": "update:modelValue", "description": "", "type": "number"}],
-            "description": "", "emit": "update:modelValue"
+            "args": [
+              {
+                "arg": "update:modelValue",
+                "description": "",
+                "type": "number"
+              }
+            ],
+            "description": "",
+            "emit": "update:modelValue"
           },
           {
             "args": [
               {
-                "arg": "v1", "description": "", "type": "number"
+                "arg": "v1",
+                "description": "",
+                "type": "number"
               },
               {
-                "arg": "v2", "description": "", "type": "number"
+                "arg": "v2",
+                "description": "",
+                "type": "number"
               },
               {
-                "arg": "v3", "description": "", "type": "BvEvent"
+                "arg": "v3",
+                "description": "",
+                "type": "BvEvent"
               }
-            ], "description": "", "emit": "activate-tab"
+            ],
+            "description": "",
+            "emit": "activate-tab"
           },
-          { 
-            "emit": "click", "description": "", "args": []
+          {
+            "emit": "click",
+            "description": "",
+            "args": []
           }
-          
         ],
         "slots": [
-{
-  "description": "", "name": "empty", "scope": []
-},
-{
-   "description": "", "name": "tabs-start", "scope": []
-  
-},
-{"description": "", "name": "tabs-end", "scope": []},
-{"description": "", "name": "empty", "scope": []}
+          {
+            "description": "",
+            "name": "empty",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "tabs-start",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "tabs-end",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "empty",
+            "scope": []
+          }
         ]
       }
     ]

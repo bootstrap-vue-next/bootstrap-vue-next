@@ -10,123 +10,123 @@
         "component": "BFormGroup",
         "props": [
           {
-            "name": "contentCols",
+            "prop": "contentCols",
             "type": "boolean | string | number"
           },
           {
-            "name": "contentColsLg",
+            "prop": "contentColsLg",
             "type": "boolean | string | number"
           },
           {
-            "name": "contentColsMd",
+            "prop": "contentColsMd",
             "type": "boolean | string | number"
           },
           {
-            "name": "contentColsSm",
+            "prop": "contentColsSm",
             "type": "boolean | string | number"
           },
           {
-            "name": "contentColsXl",
+            "prop": "contentColsXl",
             "type": "boolean | string | number"
           },
           {
-            "name": "description",
+            "prop": "description",
             "type": "string"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "feedbackAriaLive",
+            "prop": "feedbackAriaLive",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "invalidFeedback",
+            "prop": "invalidFeedback",
             "type": "string"
           },
           {
-            "name": "label",
+            "prop": "label",
             "type": "string"
           },
           {
-            "name": "labelAlign",
+            "prop": "labelAlign",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelAlignLg",
+            "prop": "labelAlignLg",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelAlignMd",
+            "prop": "labelAlignMd",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelAlignSm",
+            "prop": "labelAlignSm",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelAlignXl",
+            "prop": "labelAlignXl",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelClass",
+            "prop": "labelClass",
             "type": "Array<string> | Record<string, unknown> | string"
           },
           {
-            "name": "labelCols",
+            "prop": "labelCols",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelColsLg",
+            "prop": "labelColsLg",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelColsMd",
+            "prop": "labelColsMd",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelColsSm",
+            "prop": "labelColsSm",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelColsXl",
+            "prop": "labelColsXl",
             "type": "boolean | string | number"
           },
           {
-            "name": "labelFor",
+            "prop": "labelFor",
             "type": "string"
           },
           {
-            "name": "labelSize",
+            "prop": "labelSize",
             "type": "string"
           },
           {
-            "name": "labelSrOnly",
+            "prop": "labelSrOnly",
             "type": "Booleanish"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "tooltip",
+            "prop": "tooltip",
             "type": "Booleanish"
           },
           {
-            "name": "validFeedback",
+            "prop": "validFeedback",
             "type": "string"
           },
           {
-            "name": "validated",
+            "prop": "validated",
             "type": "Booleanish"
           },
           {
-            "name": "floating",
+            "prop": "floating",
             "type": "Booleanish"
           }
         ],

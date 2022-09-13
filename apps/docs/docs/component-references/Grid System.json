@@ -8,27 +8,27 @@
         "component": "BContainer",
         "props": [
           {
-            "name": "gutterX",
+            "prop": "gutterX",
             "type": "string"
           },
           {
-            "name": "gutterY",
+            "prop": "gutterY",
             "type": "string"
           },
           {
-            "name": "fluid",
+            "prop": "fluid",
             "type": "boolean | Breakpoint"
           },
           {
-            "name": "toast",
+            "prop": "toast",
             "type": "Record<string, unknown>"
           },
           {
-            "name": "position",
+            "prop": "position",
             "type": "Position"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],
@@ -45,31 +45,31 @@
         "component": "BRow",
         "props": [
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "gutterX",
+            "prop": "gutterX",
             "type": "string"
           },
           {
-            "name": "gutterY",
+            "prop": "gutterY",
             "type": "string"
           },
           {
-            "name": "noGutters",
+            "prop": "noGutters",
             "type": "Booleanish"
           },
           {
-            "name": "alignV",
+            "prop": "alignV",
             "type": "Alignment.Vertical"
           },
           {
-            "name": "alignH",
+            "prop": "alignH",
             "type": "Alignment.Horizontal"
           },
           {
-            "name": "alignContent",
+            "prop": "alignContent",
             "type": "Alignment.Content"
           }
         ],

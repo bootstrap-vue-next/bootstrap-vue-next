@@ -10,71 +10,71 @@
         "component": "BFormRadio",
         "props": [
           {
-            "name": "ariaLabel",
+            "prop": "ariaLabel",
             "type": "string"
           },
           {
-            "name": "ariaLabelledBy",
+            "prop": "ariaLabelledBy",
             "type": "string"
           },
           {
-            "name": "form",
+            "prop": "form",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "name",
+            "prop": "name",
             "type": "string"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "InputSize"
           },
           {
-            "name": "autofocus",
+            "prop": "autofocus",
             "type": "Booleanish"
           },
           {
-            "name": "modelValue",
+            "prop": "modelValue",
             "type": "boolean | string | Array<unknown> | Record<string, unknown> | number"
           },
           {
-            "name": "plain",
+            "prop": "plain",
             "type": "Booleanish"
           },
           {
-            "name": "button",
+            "prop": "button",
             "type": "Booleanish"
           },
           {
-            "name": "switch",
+            "prop": "switch",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "buttonVariant",
+            "prop": "buttonVariant",
             "type": "ButtonVariant"
           },
           {
-            "name": "inline",
+            "prop": "inline",
             "type": "Booleanish"
           },
           {
-            "name": "required",
+            "prop": "required",
             "type": "Booleanish"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "value",
+            "prop": "value",
             "type": "string | boolean | Record<string, unknown> | number"
           }
         ],
@@ -125,83 +125,83 @@
         "component": "BFormRadioGroup",
         "props": [
           {
-            "name": "size",
+            "prop": "size",
             "type": "Size"
           },
           {
-            "name": "form",
+            "prop": "form",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "name",
+            "prop": "name",
             "type": "string"
           },
           {
-            "name": "modelValue",
+            "prop": "modelValue",
             "type": "string | boolean | Array<unknown> | Record<string, unknown> | number"
           },
           {
-            "name": "ariaInvalid",
+            "prop": "ariaInvalid",
             "type": "AriaInvalid"
           },
           {
-            "name": "autofocus",
+            "prop": "autofocus",
             "type": "Booleanish"
           },
           {
-            "name": "buttonVariant",
+            "prop": "buttonVariant",
             "type": "ButtonVariant"
           },
           {
-            "name": "buttons",
+            "prop": "buttons",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "disabledField",
+            "prop": "disabledField",
             "type": "string"
           },
           {
-            "name": "htmlField",
+            "prop": "htmlField",
             "type": "string"
           },
           {
-            "name": "options",
+            "prop": "options",
             "type": "Array<unknown>"
           },
           {
-            "name": "plain",
+            "prop": "plain",
             "type": "Booleanish"
           },
           {
-            "name": "required",
+            "prop": "required",
             "type": "Booleanish"
           },
           {
-            "name": "stacked",
+            "prop": "stacked",
             "type": "Booleanish"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "textField",
+            "prop": "textField",
             "type": "string"
           },
           {
-            "name": "validated",
+            "prop": "validated",
             "type": "Booleanish"
           },
           {
-            "name": "valueField",
+            "prop": "valueField",
             "type": "string"
           }
         ],

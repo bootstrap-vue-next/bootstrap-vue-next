@@ -528,91 +528,9 @@ Supported `invalid` values are:
 
 When `state` is set to `false`, aria-invalid will also be set to true.
 
-## Component reference
-
-### `<b-form-select>`
-
-#### Properties
-
-| Property                                                  | Type                  | Default    | Description                                                                                                                                                            |
-| --------------------------------------------------------- | --------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `aria-invalid`                                            | `Boolean` or `String` | `false`    | Optional value to set for the 'aria-invalid' attribute. Supported values are 'true' and 'false'. If not set, the 'state' prop will dictate the value                   |
-| `autofocus`                                               | `Boolean`             | `false`    | When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control |
-| `disabled`                                                | `Boolean`             | `false`    | When set to `true`, disables the component's functionality and places it in a disabled state                                                                           |
-| <span style="white-space:nowrap;">`disabled-field`</span> | `String`              | `disabled` | Field name in the `options` array that should be used for the disabled state                                                                                           |
-| `form`                                                    | `String`              |            | Id of the form that the form control belongs to. Sets the `form` attribute on the control                                                                              |
-| `html-field`                                              | `String`              | `html`     | Field name in the `options` array that should be used for the html label instead of text field                                                                         |
-| `id`                                                      | `String`              |            | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed                                          |
-| `label-field`                                             | `String`              | `label`    | The key to use from the option object to get the label                                                                                                                 |
-| `multiple`                                                | `Boolean`             | `false`    | When set, allows multiple options to be selected (multi-select)                                                                                                        |
-| `name`                                                    | `String`              |            | Sets the value of the `name` attribute on the form control                                                                                                             |
-| `options`                                                 | `Array` or `Object`   | [ ]        | Array of items to render in the component                                                                                                                              |
-| `options-field`                                           | `String`              | `options`  | The key to use from the option object to get the options                                                                                                               |
-| `required`                                                | `Boolean`             | `false`    | Adds the `required` attribute to the form control                                                                                                                      |
-| `select-size`                                             | `Number`              | `0`        | When set to a number larger than 0, will set the number of display option rows. Note not all browser will respect this setting                                         |
-| `size`                                                    | `String`              |            | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                                                              |
-| `state`                                                   | `Boolean`             | `null`     | Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state                                    |
-| `text-field`                                              | `String`              | `text`     | Field name in the `options` array that should be used for the text label                                                                                               |
-| `value-field`                                             | `String`              | `text`     | Field name in the `options` array that should be used for the value                                                                                                    |
-
-#### v-model
-
-| Property           | Type                                    | Default | Description                                                                            |
-| ------------------ | --------------------------------------- | ------- | -------------------------------------------------------------------------------------- |
-| default modelValue | `String`, `Number`, `Array` or `Object` | `null`  | Current value of the select. Should be set to an array when the 'multiple' prop is set |
-
-#### Slots
-
-| Name      | Description                                                                          |
-| --------- | ------------------------------------------------------------------------------------ |
-| `default` | Content to place in the form select                                                  |
-| `first`   | Slot to place options or option groups above options provided via the 'options' prop |
-
-#### Events
-
-| Name                | Argument                                          | Description                                                |
-| ------------------- | ------------------------------------------------- | ---------------------------------------------------------- |
-| `change`            | `value` - Current selected value(s) of the select | Emitted when the select value changes via user interaction |
-| `input`             | `value` - Current selected value(s) of the select | Emitted when the select value changes                      |
-| `update:modelValue` | `value` - Current selected value(s) of the select | Default event for v-model                                  |
-
-### `<b-form-select-option>`
-
-#### Properties
-
-| Property   | Type      | Default | Description                                                                                  |
-| ---------- | --------- | ------- | -------------------------------------------------------------------------------------------- |
-| `disabled` | `Boolean` | `false` | When set to `true`, disables the component's functionality and places it in a disabled state |
-| `value`    | `Any`     |         | The value of the option                                                                      |
-
-#### Slots
-
-| Name      | Description                                |
-| --------- | ------------------------------------------ |
-| `default` | Content to place in the form select option |
-
-### `<b-form-select-group>`
-
-#### Properties
-
-| Property                                                  | Type                | Default    | Description                                                                                    |
-| --------------------------------------------------------- | ------------------- | ---------- | ---------------------------------------------------------------------------------------------- |
-| <span style="white-space:nowrap;">`disabled-field`</span> | `String`            | `disabled` | Field name in the `options` array that should be used for the disabled state                   |
-| `html-field`                                              | `String`            | `html`     | Field name in the `options` array that should be used for the html label instead of text field |
-| `label` <br/><span class="badge bg-info">Required</span>  | `String`            |            | The label for the option group                                                                 |
-| `options`                                                 | `Array` or `Object` | [ ]        | Array of items to render in the component                                                      |
-| `text-field`                                              | `String`            | `text`     | Field name in the `options` array that should be used for the html label instead of text field |
-| `value-field`                                             | `String`            | `text`     | Field name in the `options` array that should be used for the value                            |
-
-#### Slots
-
-| Name      | Description                                                         |
-| --------- | ------------------------------------------------------------------- |
-| `default` | Content to place in the form select option                          |
-| `first`   | Slot to place options above options provided via the 'options' prop |
-
-<!-- ------------------------------------------------------------------ -->
 <ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
@@ -670,5 +588,3 @@ When `state` is set to `false`, aria-invalid will also be set to true.
   ]
 
 </script>
-
-</ClientOnly>

@@ -10,111 +10,111 @@
         "component": "BDropdown",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "menuClass",
+            "prop": "menuClass",
             "type": "ClassValue"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "Size"
           },
           {
-            "name": "splitClass",
+            "prop": "splitClass",
             "type": "ClassValue"
           },
           {
-            "name": "splitVariant",
+            "prop": "splitVariant",
             "type": "ButtonVariant"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "toggleClass",
+            "prop": "toggleClass",
             "type": "ClassValue"
           },
           {
-            "name": "autoClose",
+            "prop": "autoClose",
             "type": "boolean | 'inside' | 'outside'"
           },
           {
-            "name": "block",
+            "prop": "block",
             "type": "Booleanish"
           },
           {
-            "name": "boundary",
+            "prop": "boundary",
             "type": "Popper.Boundary"
           },
           {
-            "name": "dark",
+            "prop": "dark",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "isNav",
+            "prop": "isNav",
             "type": "Booleanish"
           },
           {
-            "name": "dropup",
+            "prop": "dropup",
             "type": "Booleanish"
           },
           {
-            "name": "dropright",
+            "prop": "dropright",
             "type": "Booleanish"
           },
           {
-            "name": "dropleft",
+            "prop": "dropleft",
             "type": "Booleanish"
           },
           {
-            "name": "noFlip",
+            "prop": "noFlip",
             "type": "Booleanish"
           },
           {
-            "name": "offset",
+            "prop": "offset",
             "type": "number | string"
           },
           {
-            "name": "popperOpts",
+            "prop": "popperOpts",
             "type": "Record<string, unknown>"
           },
           {
-            "name": "right",
+            "prop": "right",
             "type": "Booleanish"
           },
           {
-            "name": "role",
+            "prop": "role",
             "type": "string"
           },
           {
-            "name": "split",
+            "prop": "split",
             "type": "Booleanish"
           },
           {
-            "name": "splitButtonType",
+            "prop": "splitButtonType",
             "type": "ButtonType"
           },
           {
-            "name": "splitHref",
+            "prop": "splitHref",
             "type": "string"
           },
           {
-            "name": "noCaret",
+            "prop": "noCaret",
             "type": "Booleanish"
           },
           {
-            "name": "toggleText",
+            "prop": "toggleText",
             "type": "string"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ButtonVariant"
           }
         ],
@@ -194,27 +194,27 @@
         "emits": [],
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "ariaDescribedby",
+            "prop": "ariaDescribedby",
             "type": "string"
           },
           {
-            "name": "header",
+            "prop": "header",
             "type": "string"
           },
           {
-            "name": "headerClass",
+            "prop": "headerClass",
             "type": "ClassValue"
           },
           {
-            "name": "headerTag",
+            "prop": "headerTag",
             "type": "string"
           },
           {
-            "name": "headerVariant",
+            "prop": "headerVariant",
             "type": "ColorVariant"
           }
         ],
@@ -257,31 +257,31 @@
         ],
         "props": [
           {
-            "name": "href",
+            "prop": "href",
             "type": "string"
           },
           {
-            "name": "linkClass",
+            "prop": "linkClass",
             "type": "ClassValue"
           },
           {
-            "name": "active",
+            "prop": "active",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "rel",
+            "prop": "rel",
             "type": "string"
           },
           {
-            "name": "target",
+            "prop": "target",
             "type": "LinkTarget"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
@@ -310,23 +310,23 @@
         ],
         "props": [
           {
-            "name": "buttonClass",
+            "prop": "buttonClass",
             "type": "ClassValue"
           },
           {
-            "name": "active",
+            "prop": "active",
             "type": "Booleanish"
           },
           {
-            "name": "activeClass",
+            "prop": "activeClass",
             "type": "string"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
