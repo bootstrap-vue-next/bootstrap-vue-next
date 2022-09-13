@@ -1,7 +1,14 @@
 import {Directive, DirectiveBinding} from 'vue'
 import {Tooltip} from 'bootstrap'
 
-const resolveTrigger = (modifiers: DirectiveBinding['modifiers']): Tooltip.Options['trigger'] => {
+const resolveTrigger = (
+  modifiers: DirectiveBinding['modifiers'],
+  value: DirectiveBinding['value']
+): Tooltip.Options['trigger'] => {
+  if (value?.trigger) {
+    return value.trigger
+  }
+
   if (modifiers.manual) {
     return 'manual'
   }
@@ -28,8 +35,13 @@ const resolveTrigger = (modifiers: DirectiveBinding['modifiers']): Tooltip.Optio
 }
 
 const resolvePlacement = (
-  modifiers: DirectiveBinding['modifiers']
+  modifiers: DirectiveBinding['modifiers'],
+  value: DirectiveBinding['value']
 ): Tooltip.Options['placement'] => {
+  if (value?.placement) {
+    return value.placement
+  }
+
   if (modifiers.left) {
     return 'left'
   }
@@ -53,16 +65,22 @@ const resolveDelay = (values: DirectiveBinding['value']): Tooltip.Options['delay
   return 0
 }
 
+const resolveTitle = (values: DirectiveBinding['value']): Tooltip.Options['title'] =>
+  typeof values === 'object' ? values?.title : values
+
 /**
  * @external
  */
 const BTooltip: Directive<HTMLElement> = {
   beforeMount(el, binding) {
     el.setAttribute('data-bs-toggle', 'tooltip')
+    if (!el.getAttribute('title')) {
+      el.setAttribute('title', resolveTitle(binding.value).toString())
+    }
 
     const isHtml = /<("[^"]*"|'[^']*'|[^'">])*>/.test(el.title)
-    const trigger = resolveTrigger(binding.modifiers)
-    const placement = resolvePlacement(binding.modifiers)
+    const trigger = resolveTrigger(binding.modifiers, binding.value)
+    const placement = resolvePlacement(binding.modifiers, binding.value)
     const delay = resolveDelay(binding.value)
     const title = el.getAttribute('title')
 
@@ -77,7 +95,11 @@ const BTooltip: Directive<HTMLElement> = {
       el.setAttribute('data-bs-original-title', title)
     }
   },
-  updated(el) {
+  updated(el, binding) {
+    if (!el.getAttribute('title')) {
+      el.setAttribute('title', resolveTitle(binding.value).toString())
+    }
+
     const title = el.getAttribute('title')
     const originalTitle = el.getAttribute('data-bs-original-title')
     const instance = Tooltip.getInstance(el)

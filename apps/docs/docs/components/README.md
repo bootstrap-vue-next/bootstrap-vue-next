@@ -53,6 +53,10 @@ const componentList = {
         name: 'Card',
         description: 'A flexible and extensible content container. It includes options for headers and footers, a wide variety of content.'
     },
+    Carousel: {
+        name: 'Carousel',
+        description: 'A slideshow component for cycling through elements—images or slides of text—like a carousel.'
+    },
     Collapse: {
         name: 'Collapse',
         description: 'Easily toggle visibility of almost any content on your pages in a vertically collapsing container.'

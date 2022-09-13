@@ -81,6 +81,66 @@
       </template>
     </b-table>
   </div>
+  <div v-if="slots && slots.length > 0" class="bd-content">
+    <anchored-heading :id="`comp-ref-${componentName}-slots`" level="4" class="mb-3">
+      Slots
+    </anchored-heading>
+    <b-table
+        :items="slotsItems"
+        :fields="slotsFields"
+        primary-key="name"
+        table-class="bv-docs-table"
+        responsive="sm"
+        sort-icon-left
+        bordered
+        striped
+      >
+        <template #cell(name)="{ value, item }">
+          <code class="text-nowrap notranslate" translate="no">{{ value }}</code>
+          <b-badge v-if="item.version" variant="secondary">v{{ item.version }}+</b-badge>
+        </template>
+        <template #cell(scope)="{ value, detailsShowing, toggleDetails, item }">
+        <b-button
+            v-if="value"
+            variant="outline-info"
+            size="sm"
+            class="py-0"
+            @click="toggleDetails()"
+          >
+          {{item}}
+          </b-button>
+        </template>
+        <template #row-details="{ item }">
+          <b-table
+            :items="item.scope"
+            :fields="[{ key: 'prop', label: 'Property' }, 'type', 'description']"
+            primary-key="prop"
+            class="m-0"
+            dark
+            caption-top
+            small
+          >
+            <template #thead-top>
+              <b-tr>
+                <b-th colspan="3" class="text-center">
+                  <code class="text-nowrap notranslate" translate="no">{{ item.name }}</code>
+                  Slot scoped properties
+                </b-th>
+              </b-tr>
+            </template>
+            <template #cell(prop)="{ value, item: cellItem }">
+              <code class="text-nowrap notranslate" translate="no">{{ value }}</code>
+              <b-badge v-if="cellItem.version" variant="secondary">v{{ cellItem.version }}+</b-badge>
+            </template>
+            <template #cell(type)="{ value }">
+              <code class="text-nowrap notranslate" translate="no">{{ value || 'Any' }}</code>
+            </template>
+          </b-table>
+        </template>
+
+      </b-table>
+
+  </div>
 </template>
 <script lang="ts">
 import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent} from 'vue'
@@ -245,6 +305,20 @@ export default defineComponent({
       ]
     })
 
+    const slotsFields: ComputedRef<any> = computed(() => {
+      const sortable = props.slots.length >= SORT_THRESHOLD
+      const hasScopedSlots = props.slots.some(s => s.scope)
+      return [
+        { key: 'name', label: 'Name', sortable },
+        ...(hasScopedSlots ? [{ key: 'scope', label: 'Scoped' }] : []),
+        { key: 'description', label: 'Description' }
+      ]
+    })
+
+    const slotsItems: ComputedRef<any> = computed(() => {
+      return props.slots ? props.slots.map(slot => ({ ...slot as any})) : []
+    })
+
     const vmodelItems: ComputedRef<any> = computed(() => {
       //TODO loop through props and emits to determine v-model
       // let match = VMODEL_REGEX.exec(myString);
@@ -258,6 +332,8 @@ export default defineComponent({
     return {
       componentName,
       emitsFields,
+      slotsItems,
+      slotsFields,
       propsItems,
       propFields,
       githubURL,
