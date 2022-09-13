@@ -120,18 +120,22 @@
         ],
         "emits": [
           {
+            "args": [],
             "emit": "show",
             "description": ""
           },
           {
+            "args": [],
             "emit": "shown",
             "description": ""
           },
           {
+            "args": [],
             "emit": "hide",
             "description": ""
           },
           {
+            "args": [],
             "emit": "hidden",
             "description": ""
           },
@@ -147,6 +151,7 @@
             ]
           },
           {
+            "args": [],
             "emit": "toggle",
             "description": ""
           }
@@ -154,13 +159,16 @@
         "slots": [
           {
             "description": "",
+            "scope": [],
             "name": "button-content"
           },
           {
             "description": "",
+            "scope": [],
             "name": "toggle-text"
           },
           {
+            "scope": [],
             "description": "",
             "name": "default"
           }
@@ -184,6 +192,7 @@
         "props": [],
         "slots": [
           {
+            "scope": [],
             "description": "",
             "name": "default"
           }
@@ -221,9 +230,11 @@
         "slots": [
           {
             "description": "",
+            "scope": [],
             "name": "default"
           },
           {
+            "scope": [],
             "description": "",
             "name": "header"
           }
@@ -235,6 +246,7 @@
         "props": [],
         "slots": [
           {
+            "scope": [],
             "description": "",
             "name": "default"
           }

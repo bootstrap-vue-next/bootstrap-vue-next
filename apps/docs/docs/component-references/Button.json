@@ -118,61 +118,7 @@
         ]
       },
       {
-        "component": "BButtonGroup",
-        "props": [
-          {
-            "description": "",
-            "prop": "ariaLabel",
-            "type": "string"
-          },
-          {
-            "description": "Applies class btn-group-{size}",
-            "prop": "size",
-            "type": "Exclude<InputSize, 'md'>"
-          },
-          {
-            "description": "",
-            "prop": "tag",
-            "type": "string"
-          },
-          {
-            "description": "Applies class btn-group-vertical",
-            "prop": "vertical",
-            "type": "Booleanish"
-          }
-        ],
-        "slots": [
-          {
-            "description": "",
-            "name": "default",
-            "scope": []
-          }
-        ]
-      },
-      {
-        "component": "BButtonToolbar",
-        "props": [
-          {
-            "description": "",
-            "prop": "ariaLabel",
-            "type": "string"
-          },
-          {
-            "description": "Applies class justify-content-between",
-            "prop": "justify",
-            "type": "Booleanish"
-          }
-        ],
-        "slots": [
-          {
-            "description": "",
-            "name": "default",
-            "scope": []
-          }
-        ]
-      },
-      {
-        "component": "BButtonClose",
+        "component": "BCloseButton",
         "props": [
           {
             "description": "",
@@ -189,7 +135,9 @@
             "prop": "ariaLabel",
             "type": "string"
           }
-        ]
+        ],
+        "emits": [],
+        "slots": []
       }
     ]
   }

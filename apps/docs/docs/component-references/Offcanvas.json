@@ -36,6 +36,7 @@
         ],
         "emits": [
           {
+            "emit": "update:modelValue",
             "args": [
               {
                 "arg": "update:modelValue",

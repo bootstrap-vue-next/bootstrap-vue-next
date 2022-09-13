@@ -4,6 +4,11 @@
   "title": "Component Schema",
   "description": "A schema for component-references",
   "type": "object",
+  "required": [
+    "name",
+    "version",
+    "meta"
+  ],
   "properties": {
     "name": {
       "description": "The name of the component",
@@ -14,6 +19,11 @@
       "type": "string"
     },
     "meta": {
+      "required": [
+        "title",
+        "description",
+        "components"
+      ],
       "type": "object",
       "properties": {
         "title": {
@@ -26,6 +36,12 @@
           "type": "array",
           "items": {
             "type": "object",
+            "required": [
+              "component",
+              "props",
+              "emits",
+              "slots"
+            ],
             "properties": {
               "component": {
                 "type": "string"
@@ -34,6 +50,10 @@
                 "type": "array",
                 "items": {
                   "type": "object",
+                  "required": [
+                    "prop",
+                    "type"
+                  ],
                   "properties": {
                     "prop": {
                       "type": "string"
@@ -57,6 +77,10 @@
                 "type": "array",
                 "items": {
                   "type": "object",
+                  "required": [
+                    "emit",
+                    "args"
+                  ],
                   "properties": {
                     "emit": {
                       "type": "string"
@@ -68,6 +92,10 @@
                       "type": "array",
                       "items": {
                         "type": "object",
+                        "required": [
+                          "arg",
+                          "type"
+                        ],
                         "properties": {
                           "arg": {
                             "type": "string"
@@ -88,6 +116,7 @@
                 "type": "array",
                 "items": {
                   "type": "object",
+                  "required": ["name", "scope"],
                   "properties": {
                     "name": {
                       "type": "string"

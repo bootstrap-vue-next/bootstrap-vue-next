@@ -16,7 +16,7 @@ import {isLink, normalizeSlot, requestAF, toInteger} from '../../utils'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
-import BButtonClose from '../BButton/BCloseButton.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import {BodyProp} from './plugin'
 
@@ -214,7 +214,7 @@ export default defineComponent({
 
         if (!noCloseButtonBoolean.value && $headerContent.length !== 0) {
           $headerContent.push(
-            h(BButtonClose, {
+            h(BCloseButton, {
               class: ['btn-close'],
               onClick: () => {
                 hide()
