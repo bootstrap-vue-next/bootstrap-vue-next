@@ -59,7 +59,7 @@
           },
           {
             "prop": "sizes",
-            "type": "string | Array<string>"
+            "type": "string | string[]"
           },
           {
             "prop": "src",
@@ -67,7 +67,7 @@
           },
           {
             "prop": "srcset",
-            "type": "string | Array<string>"
+            "type": "string | string[]"
           },
           {
             "prop": "thumbnail",

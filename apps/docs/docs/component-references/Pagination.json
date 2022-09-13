@@ -31,7 +31,7 @@
           },
           {
             "prop": "ellipsisClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'ellipsis' placeholders"
           },
           {
@@ -41,7 +41,7 @@
           },
           {
             "prop": "firstClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to first page' button"
           },
           {
@@ -91,7 +91,7 @@
           },
           {
             "prop": "lastClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to last page' button"
           },
           {
@@ -111,7 +111,7 @@
           },
           {
             "prop": "nextClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to next page' button"
           },
           {
@@ -121,7 +121,7 @@
           },
           {
             "prop": "pageClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to page #' buttons"
           },
           {
@@ -136,7 +136,7 @@
           },
           {
             "prop": "prevClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to previous page' button"
           },
           {

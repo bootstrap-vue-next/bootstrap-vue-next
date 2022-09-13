@@ -109,7 +109,7 @@
           },
           {
             "prop": "target",
-            "type": "string | Array<string>"
+            "type": "string | string[]"
           }
         ],
         "emits": [

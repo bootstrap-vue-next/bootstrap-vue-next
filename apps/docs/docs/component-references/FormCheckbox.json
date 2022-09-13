@@ -75,15 +75,15 @@
           },
           {
             "prop": "uncheckedValue",
-            "type": "Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number"
+            "type": "unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number"
           },
           {
             "prop": "value",
-            "type": "Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number"
+            "type": "unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number"
           },
           {
             "prop": "modelValue",
-            "type": "Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number"
+            "type": "unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number"
           }
         ],
         "emits": [
@@ -142,7 +142,7 @@
           },
           {
             "prop": "modelValue",
-            "type": "Array<string | number | Record<string, unknown>>"
+            "type": "string | number | Record<string, unknown>[]"
           },
           {
             "prop": "ariaInvalid",
@@ -178,7 +178,7 @@
           },
           {
             "prop": "options",
-            "type": "Array<string | Record<string, unknown>>"
+            "type": "string | Record<string, unknown>[]"
           },
           {
             "prop": "plain",
@@ -225,7 +225,7 @@
               {
                 "arg": "input",
                 "description": "",
-                "type": " Array<string | number | Record<string, unknown>>"
+                "type": "string | number | Record<string, unknown>[]"
               }
             ]
           },
@@ -236,7 +236,7 @@
               {
                 "arg": "update:modelValue",
                 "description": "",
-                "type": " Array<string | number | Record<string, unknown>>"
+                "type": "string | number | Record<string, unknown>[]"
               }
             ]
           },
@@ -247,7 +247,7 @@
               {
                 "arg": "change",
                 "description": "",
-                "type": " Array<string | number | Record<string, unknown>>"
+                "type": "string | number | Record<string, unknown>[]"
               }
             ]
           }

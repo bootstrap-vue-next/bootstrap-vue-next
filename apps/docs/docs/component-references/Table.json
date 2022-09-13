@@ -39,7 +39,7 @@
           },
           {
             "prop": "fields",
-            "type": "Array<TableField>"
+            "type": "TableField[]"
           },
           {
             "prop": "footClone",
@@ -51,7 +51,7 @@
           },
           {
             "prop": "items",
-            "type": "Array<TableItem>"
+            "type": "TableItem[]"
           },
           {
             "prop": "responsive",
@@ -248,7 +248,7 @@
               {
                 "arg": "selection",
                 "description": "",
-                "type": "Array<TableItem>"
+                "type": "TableItem[]"
               }
             ],
             "emit": "selection",
