@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.3.3](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.2...v0.3.3) (2022-09-13)
+
+
+### Features
+
+* adds slots to component reference docs ([1e9026b](https://github.com/cdmoro/bootstrap-vue-3/commit/1e9026b943acc0b303655801a287aaea209cdd9d))
+* **b-dropdown-item:** :sparkles: Bind class attribute to the root ([f0063ef](https://github.com/cdmoro/bootstrap-vue-3/commit/f0063efa8c0744a0528ce4249ae695f69d6a5e70))
+* **BNavText:** add optional text prop ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+* **BTab:** added new lazyOnce prop, The prop works similar to the lazy prop but it mounts the child component only once. ([5f4240b](https://github.com/cdmoro/bootstrap-vue-3/commit/5f4240b0eb2bae717440187241dddb95f6853ee3))
+* **BTable:** added filter prop to filter the table content, added filterable prop to specify which fields should be filtered ([2e37dc1](https://github.com/cdmoro/bootstrap-vue-3/commit/2e37dc154ebb4e4b4da89da922cf30b452b641e8))
+* **BTable:** added functionality to current-page prop, The prop shows a specific page of the given items when the per-page prop is passed. ([f177563](https://github.com/cdmoro/bootstrap-vue-3/commit/f177563eca1a015c90ada2be9ad9c52536845dfe))
+* **BTable:** implemented per page prop ([f5d52d3](https://github.com/cdmoro/bootstrap-vue-3/commit/f5d52d3b8be8a95a33b588d76b4d0d7932063b82))
+* **Btable:** sortable tables now have the sort icon added using CSS which makes it globally customizable ([0639fce](https://github.com/cdmoro/bootstrap-vue-3/commit/0639fcea30017b6576feccdc20466344a399e149))
+* **BTable:** sortInternal default to true ([aac2b68](https://github.com/cdmoro/bootstrap-vue-3/commit/aac2b68f7bc8672246107c650e7c928dd336c201))
+
+
+### Bug Fixes
+
+* **BButtonGroup:** strong type prop size ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+* **BDropdown:** click event emits MouseEvent ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+* **BNavbarToggle:** click event emits MouseEvent ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+* **BNavForm:** pass submit event up ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+* **BTable:** fixed incorrect responsive-class prop name which was disabling the responsive functionality ([eb3ca5c](https://github.com/cdmoro/bootstrap-vue-3/commit/eb3ca5cf110063185a014f6d4a2eb2bcccacc3b6))
+* **BTable:** Fixed sorting when sorting had no effect when trying to sort an object-formed column that includes multiple properties (ex: name: { first: 'Dickerson', last: 'Macdonald' }) ([658d2ec](https://github.com/cdmoro/bootstrap-vue-3/commit/658d2ec776775ff5137b70832128b0a2e403beed))
+* **BTable:** header display changed to be inline to allow few abilties such as centering text using CSS ([caf495e](https://github.com/cdmoro/bootstrap-vue-3/commit/caf495e9e8575cc2279680b94324d86dd7cd1b59))
+
 ## [0.3.2](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.1...v0.3.2) (2022-09-09)
 
 ### Bug Fixes
