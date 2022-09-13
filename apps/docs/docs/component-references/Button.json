@@ -1,0 +1,196 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/button",
+  "version": "Alpha",
+  "meta": {
+    "title": "Button",
+    "description": "",
+    "components": [
+      {
+        "component": "BButton",
+        "props": [
+          {
+            "prop": "active",
+            "description": "",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "disabled",
+            "description": "",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "href",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "prop": "pill",
+            "description": "",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "pressed",
+            "description": "",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "rel",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "prop": "size",
+            "description": "",
+            "type": "InputSize"
+          },
+          {
+            "prop": "squared",
+            "description": "",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "tag",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "prop": "target",
+            "description": "",
+            "type": "LinkTarget"
+          },
+          {
+            "prop": "type",
+            "description": "",
+            "type": "ButtonType"
+          },
+          {
+            "prop": "variant",
+            "description": "",
+            "type": "ButtonVariant"
+          },
+          {
+            "prop": "loading",
+            "description": "",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "loadingMode",
+            "description": "",
+            "type": "'fill' | 'inline'"
+          }
+        ],
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "click",
+                "description": "",
+                "type": "MouseEvent"
+              }
+            ],
+            "description": "On click event",
+            "emit": "click"
+          },
+          {
+            "args": [
+              {
+                "arg": "update:pressed",
+                "description": "",
+                "type": "boolean"
+              }
+            ],
+            "description": "",
+            "emit": "update:pressed"
+          }
+        ],
+        "slots": [
+          {
+            "name": "default",
+            "description": "",
+            "scope": []
+          },
+          {
+            "name": "loading",
+            "description": "The content to replace the default loader",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BButtonGroup",
+        "props": [
+          {
+            "description": "",
+            "prop": "ariaLabel",
+            "type": "string"
+          },
+          {
+            "description": "Applies class btn-group-{size}",
+            "prop": "size",
+            "type": "Exclude<InputSize, 'md'>"
+          },
+          {
+            "description": "",
+            "prop": "tag",
+            "type": "string"
+          },
+          {
+            "description": "Applies class btn-group-vertical",
+            "prop": "vertical",
+            "type": "Booleanish"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BButtonToolbar",
+        "props": [
+          {
+            "description": "",
+            "prop": "ariaLabel",
+            "type": "string"
+          },
+          {
+            "description": "Applies class justify-content-between",
+            "prop": "justify",
+            "type": "Booleanish"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BButtonClose",
+        "props": [
+          {
+            "description": "",
+            "prop": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "description": "Applies class btn-close-white",
+            "prop": "white",
+            "type": "Booleanish"
+          },
+          {
+            "description": "",
+            "prop": "ariaLabel",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

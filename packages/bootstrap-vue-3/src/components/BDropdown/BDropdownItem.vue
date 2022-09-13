@@ -1,5 +1,5 @@
 <template>
-  <li role="presentation">
+  <li role="presentation" :class="$attrs.class">
     <component
       :is="tag"
       class="dropdown-item"

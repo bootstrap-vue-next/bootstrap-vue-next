@@ -1,5 +1,5 @@
 <template>
-  <li role="presentation">
+  <li role="presentation" :class="$attrs.class">
     <!-- Should click be click.prevent ? -->
     <button
       role="menu"

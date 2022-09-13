@@ -12,7 +12,7 @@ import {useBooleanish} from '../../composables'
 
 interface BButtonGroupProps {
   ariaLabel?: string
-  size?: string
+  size?: 'sm' | 'lg' // Exclude<InputSize, 'md'>
   tag?: string
   vertical?: Booleanish
 }
@@ -26,8 +26,8 @@ const props = withDefaults(defineProps<BButtonGroupProps>(), {
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
 const classes = computed(() => ({
-  'btn-group': !verticalBoolean.value,
-  'btn-group-vertical': verticalBoolean.value,
+  'btn-group': !verticalBoolean.value && props.size === undefined,
   [`btn-group-${props.size}`]: props.size !== undefined,
+  'btn-group-vertical': verticalBoolean.value,
 }))
 </script>

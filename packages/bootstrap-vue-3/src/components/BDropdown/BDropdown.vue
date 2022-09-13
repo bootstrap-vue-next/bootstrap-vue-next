@@ -124,7 +124,7 @@ interface BDropdownEmits {
   (e: 'shown'): void
   (e: 'hide'): void
   (e: 'hidden'): void
-  (e: 'click', event: Event): void
+  (e: 'click', event: MouseEvent): void
   (e: 'toggle'): void
 }
 

@@ -1,0 +1,115 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/popover",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Popover",
+    "description": "Build vertically",
+    "components": [
+      {
+        "component": "BPopover",
+        "props": [
+          {
+            "name": "container",
+            "type": "string | ComponentPublicInstance<HTMLElement> | HTMLElement"
+          },
+          {
+            "name": "content",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "customClass",
+            "type": "string"
+          },
+          {
+            "name": "noninteractive",
+            "type": "Booleanish"
+          },
+          {
+            "name": "placement",
+            "type": "Popover.Options['placement']"
+          },
+          {
+            "name": "target",
+            "type": "string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "delay",
+            "type": "number | BPopoverDelayObject>"
+          },
+          {
+            "name": "triggers",
+            "type": "Popover.Options['trigger']"
+          },
+          {
+            "name": "show",
+            "type": "Booleanish"
+          },
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          },
+          {
+            "name": "html",
+            "type": "Booleanish"
+          },
+          {
+            "name": "sanitize",
+            "type": "Booleanish"
+          },
+          {
+            "name": "offset",
+            "type": "Popover.Options['offset']"
+          }
+        ],
+        "emits": [
+          {
+            "args": [],
+            "description": "",
+            "emit": "show"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "shown"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "hide"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "hidden"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "inserted"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "title",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

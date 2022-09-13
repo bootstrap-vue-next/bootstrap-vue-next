@@ -1,0 +1,113 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/progress",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Progress",
+    "description": "",
+    "components": [
+      {
+        "component": "BProgress",
+        "props": [
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          },
+          {
+            "name": "max",
+            "type": "number | string"
+          },
+          {
+            "name": "height",
+            "type": "string"
+          },
+          {
+            "name": "animated",
+            "type": "Booleanish"
+          },
+          {
+            "name": "precision",
+            "type": "number | string"
+          },
+          {
+            "name": "showProgress",
+            "type": "Booleanish"
+          },
+          {
+            "name": "showValue",
+            "type": "Booleanish"
+          },
+          {
+            "name": "striped",
+            "type": "Booleanish"
+          },
+          {
+            "name": "value",
+            "type": "number | string"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BProgressBar",
+        "props": [
+          {
+            "name": "animated",
+            "type": "Booleanish"
+          },
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "labelHtml",
+            "type": "string"
+          },
+          {
+            "name": "max",
+            "type": "number | string"
+          },
+          {
+            "name": "precision",
+            "type": "number | string"
+          },
+          {
+            "name": "showProgress",
+            "type": "Booleanish"
+          },
+          {
+            "name": "showValue",
+            "type": "Booleanish"
+          },
+          {
+            "name": "striped",
+            "type": "Booleanish"
+          },
+          {
+            "name": "value",
+            "type": "number | string"
+          },
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

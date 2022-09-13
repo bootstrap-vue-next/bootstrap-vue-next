@@ -1,0 +1,84 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/collapse",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Collapse",
+    "description": "",
+    "components": [
+      {
+        "component": "BCollapse",
+        "props": [
+          {
+            "name": "accordion",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "modelValue",
+            "type": "Booleanish"
+          },
+          {
+            "name": "tag",
+            "type": "string"
+          },
+          {
+            "name": "toggle",
+            "type": "Booleanish"
+          },
+          {
+            "name": "visible",
+            "type": "Booleanish"
+          },
+          {
+            "name": "isNav",
+            "type": "Booleanish"
+          }
+        ],
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "update:modelValue",
+                "description": "",
+                "type": "boolean"
+              }
+            ],
+            "description": "",
+            "emit": "update:modelValue"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "show"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "shown"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "hide"
+          },
+          {
+            "args": [],
+            "description": "",
+            "emit": "hidden"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

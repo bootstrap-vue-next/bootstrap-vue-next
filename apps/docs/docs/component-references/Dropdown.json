@@ -1,0 +1,361 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/dropdown",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Dropdown",
+    "description": "",
+    "components": [
+      {
+        "component": "BDropdown",
+        "props": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "menuClass",
+            "type": "ClassValue"
+          },
+          {
+            "name": "size",
+            "type": "Size"
+          },
+          {
+            "name": "splitClass",
+            "type": "ClassValue"
+          },
+          {
+            "name": "splitVariant",
+            "type": "ButtonVariant"
+          },
+          {
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "name": "toggleClass",
+            "type": "ClassValue"
+          },
+          {
+            "name": "autoClose",
+            "type": "boolean | 'inside' | 'outside'"
+          },
+          {
+            "name": "block",
+            "type": "Booleanish"
+          },
+          {
+            "name": "boundary",
+            "type": "Popper.Boundary"
+          },
+          {
+            "name": "dark",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "isNav",
+            "type": "Booleanish"
+          },
+          {
+            "name": "dropup",
+            "type": "Booleanish"
+          },
+          {
+            "name": "dropright",
+            "type": "Booleanish"
+          },
+          {
+            "name": "dropleft",
+            "type": "Booleanish"
+          },
+          {
+            "name": "noFlip",
+            "type": "Booleanish"
+          },
+          {
+            "name": "offset",
+            "type": "number | string"
+          },
+          {
+            "name": "popperOpts",
+            "type": "Record<string, unknown>"
+          },
+          {
+            "name": "right",
+            "type": "Booleanish"
+          },
+          {
+            "name": "role",
+            "type": "string"
+          },
+          {
+            "name": "split",
+            "type": "Booleanish"
+          },
+          {
+            "name": "splitButtonType",
+            "type": "ButtonType"
+          },
+          {
+            "name": "splitHref",
+            "type": "string"
+          },
+          {
+            "name": "noCaret",
+            "type": "Booleanish"
+          },
+          {
+            "name": "toggleText",
+            "type": "string"
+          },
+          {
+            "name": "variant",
+            "type": "ButtonVariant"
+          }
+        ],
+        "emits": [
+          {
+            "emit": "show",
+            "description": ""
+          },
+          {
+            "emit": "shown",
+            "description": ""
+          },
+          {
+            "emit": "hide",
+            "description": ""
+          },
+          {
+            "emit": "hidden",
+            "description": ""
+          },
+          {
+            "emit": "click",
+            "description": "",
+            "args": [
+              {
+                "arg": "click",
+                "description": "",
+                "type": "MouseEvent"
+              }
+            ]
+          },
+          {
+            "emit": "toggle",
+            "description": ""
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "button-content"
+          },
+          {
+            "description": "",
+            "name": "toggle-text"
+          },
+          {
+            "description": "",
+            "name": "default"
+          }
+        ]
+      },
+      {
+        "component": "BDropdownDivider",
+        "emits": [],
+        "slots": [],
+        "props": [
+          {
+            "description": "",
+            "prop": "tag",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "component": "BDropdownForm",
+        "emits": [],
+        "props": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default"
+          }
+        ]
+      },
+      {
+        "component": "BDropdownGroup",
+        "emits": [],
+        "props": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "ariaDescribedby",
+            "type": "string"
+          },
+          {
+            "name": "header",
+            "type": "string"
+          },
+          {
+            "name": "headerClass",
+            "type": "ClassValue"
+          },
+          {
+            "name": "headerTag",
+            "type": "string"
+          },
+          {
+            "name": "headerVariant",
+            "type": "ColorVariant"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default"
+          },
+          {
+            "description": "",
+            "name": "header"
+          }
+        ]
+      },
+      {
+        "component": "BDropdownHeader",
+        "emits": [],
+        "props": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default"
+          }
+        ]
+      },
+      {
+        "component": "BDropdownItem",
+        "emits": [
+          {
+            "emit": "click",
+            "args": [
+              {
+                "arg": "click",
+                "description": "",
+                "type": "MouseEvent"
+              }
+            ],
+            "description": ""
+          }
+        ],
+        "props": [
+          {
+            "name": "href",
+            "type": "string"
+          },
+          {
+            "name": "linkClass",
+            "type": "ClassValue"
+          },
+          {
+            "name": "active",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "rel",
+            "type": "string"
+          },
+          {
+            "name": "target",
+            "type": "LinkTarget"
+          },
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BDropdownItemButton",
+        "emits": [
+          {
+            "args": [
+              {
+                "arg": "click",
+                "description": "",
+                "type": "MouseEvent"
+              }
+            ],
+            "description": "",
+            "emit": "click"
+          }
+        ],
+        "props": [
+          {
+            "name": "buttonClass",
+            "type": "ClassValue"
+          },
+          {
+            "name": "active",
+            "type": "Booleanish"
+          },
+          {
+            "name": "activeClass",
+            "type": "string"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BDropdownText",
+        "emits": [],
+        "props": [
+          {
+            "description": "",
+            "prop": "text",
+            "type": "string"
+          }
+        ],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

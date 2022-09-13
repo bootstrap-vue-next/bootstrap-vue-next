@@ -1,0 +1,89 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/list-group",
+  "version": "1.0.0",
+  "meta": {
+    "title": "List Group",
+    "description": "",
+    "components": [
+      {
+        "component": "BListGroup",
+        "props": [
+          {
+            "name": "flush",
+            "type": "Booleanish"
+          },
+          {
+            "name": "horizontal",
+            "type": "boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'"
+          },
+          {
+            "name": "numbered",
+            "type": "Booleanish"
+          },
+          {
+            "name": "tag",
+            "type": "string"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      },
+      {
+        "component": "BListGroupItem",
+        "props": [
+          {
+            "name": "action",
+            "type": "Booleanish"
+          },
+          {
+            "name": "active",
+            "type": "Booleanish"
+          },
+          {
+            "name": "button",
+            "type": "Booleanish"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "href",
+            "type": "string"
+          },
+          {
+            "name": "tag",
+            "type": "string"
+          },
+          {
+            "name": "target",
+            "type": "LinkTarget"
+          },
+          {
+            "name": "to",
+            "type": "RouteLocationRaw"
+          },
+          {
+            "name": "variant",
+            "type": "ColorVariant"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

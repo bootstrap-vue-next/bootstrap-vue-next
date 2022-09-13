@@ -1,0 +1,138 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/form-group",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Form Group",
+    "description": "",
+    "components": [
+      {
+        "component": "BFormGroup",
+        "props": [
+          {
+            "name": "contentCols",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "contentColsLg",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "contentColsMd",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "contentColsSm",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "contentColsXl",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "disabled",
+            "type": "Booleanish"
+          },
+          {
+            "name": "feedbackAriaLive",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "invalidFeedback",
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "labelAlign",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelAlignLg",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelAlignMd",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelAlignSm",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelAlignXl",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelClass",
+            "type": "Array<string> | Record<string, unknown> | string"
+          },
+          {
+            "name": "labelCols",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelColsLg",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelColsMd",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelColsSm",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelColsXl",
+            "type": "boolean | string | number"
+          },
+          {
+            "name": "labelFor",
+            "type": "string"
+          },
+          {
+            "name": "labelSize",
+            "type": "string"
+          },
+          {
+            "name": "labelSrOnly",
+            "type": "Booleanish"
+          },
+          {
+            "name": "state",
+            "type": "Booleanish"
+          },
+          {
+            "name": "tooltip",
+            "type": "Booleanish"
+          },
+          {
+            "name": "validFeedback",
+            "type": "string"
+          },
+          {
+            "name": "validated",
+            "type": "Booleanish"
+          },
+          {
+            "name": "floating",
+            "type": "Booleanish"
+          }
+        ],
+        "emits": [],
+        "slots": []
+      }
+    ]
+  }
+}

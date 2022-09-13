@@ -1,0 +1,42 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/img",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Img",
+    "description": "",
+    "components": [
+      {
+        "component": "BImg",
+        "props": [
+          { "name": "alt", "type": "string" }, 
+          { "name": "blank", "type": "Booleanish" }, 
+          { "name": "blankColor", "type": "string" }, 
+          { "name": "block", "type": "Booleanish" }, 
+          { "name": "center", "type": "Booleanish" }, 
+          { "name": "fluid", "type": "Booleanish" }, 
+          { "name": "lazy", "type": "Booleanish" }, 
+          { "name": "fluidGrow", "type": "Booleanish" }, 
+          { "name": "height", "type": "number | string" }, 
+          { "name": "left", "type": "Booleanish" }, 
+          { "name": "right", "type": "Booleanish" }, 
+          { "name": "rounded", "type": "boolean | string" }, 
+          { "name": "sizes", "type": "string | Array<string>" }, 
+          { "name": "src", "type": "string" }, 
+          { "name": "srcset", "type": "string | Array<string>" }, 
+          { "name": "thumbnail", "type": "Booleanish" }, 
+          { "name": "width", "type": "number | string" }
+        ],
+        "emits": [
+          {
+            "args": [{"arg": "load", "description": "", "type": "Event"}],
+            "description": "", "emit": "load"
+          }
+        ],
+        "slots": [
+
+        ]
+      }
+    ]
+  }
+}

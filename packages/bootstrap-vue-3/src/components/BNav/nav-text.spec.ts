@@ -21,6 +21,21 @@ describe('nav-text', () => {
         default: 'foobar',
       },
     })
-    expect(wrapper.text()).toEqual('foobar')
+    expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('renders content from prop text', () => {
+    const wrapper = mount(BNavText, {
+      props: {text: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('prefers to render default slot over prop text', () => {
+    const wrapper = mount(BNavText, {
+      props: {text: 'props'},
+      slots: {default: 'slots'},
+    })
+    expect(wrapper.text()).toBe('slots')
   })
 })

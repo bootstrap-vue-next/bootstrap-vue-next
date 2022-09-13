@@ -1,5 +1,6 @@
 {
-  "name": "@bootstrap-vue-3/Badge",
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/badge",
   "version": "Alpha",
   "meta": {
     "title": "Badge",
@@ -10,26 +11,38 @@
         "props": [
           {
             "prop": "dotIndicator",
-            "description": "Indication position and dot styling applied"
+            "description": "Indication position and dot styling applied",
+            "type": "Booleanish"
           },
           {
             "prop": "textIndicator",
-            "description": "Indication position applied"
+            "description": "Indication position applied",
+            "type": "Booleanish"
           },
           {
             "prop": "pill",
-            "description": "When set to 'true', renders the badge in pill style"
+            "description": "When set to 'true', renders the badge in pill style",
+            "type": "Booleanish"
           },
           {
             "prop": "variant",
-            "description": "Applies one of the Bootstrap theme color variants to the component"
+            "description": "Applies one of the Bootstrap theme color variants to the component",
+            "type": "ColorVariant"
           },
           {
             "prop": "tag",
-            "description": "Specify the HTML tag to render instead of the default tag"
+            "description": "Specify the HTML tag to render instead of the default tag",
+            "type": "string"
           }
         ],
-        "emits": []
+        "emits": [],
+        "slots": [
+          {
+            "name": "default",
+            "description": "",
+            "scope": []
+          }
+        ]
       }
     ]
   }

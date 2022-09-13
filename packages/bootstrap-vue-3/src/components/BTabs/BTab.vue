@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 // import type {BTabProps} from '../../types/components'
-import type {Booleanish, ClassValue} from '../../types'
+import {computed, inject, ref, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
-import {computed, inject, toRef} from 'vue'
+import type {Booleanish, ClassValue} from '../../types'
 import {injectionKey} from './BTabs.vue'
 
 interface BTabProps {
@@ -25,6 +25,7 @@ interface BTabProps {
   buttonId?: string
   disabled?: Booleanish
   lazy?: Booleanish
+  lazyOnce?: Booleanish
   noBody?: boolean | string
   tag?: string
   titleItemClass?: ClassValue
@@ -36,7 +37,8 @@ const props = withDefaults(defineProps<BTabProps>(), {
   active: false,
   buttonId: undefined,
   disabled: false,
-  lazy: false,
+  lazy: undefined,
+  lazyOnce: undefined,
   noBody: false,
   tag: 'div',
   titleItemClass: undefined,
@@ -44,19 +46,34 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkClass: undefined,
 })
 
+const lazyRenderCompleted = ref(false)
+
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+const lazyBoolean = useBooleanish(toRef(props, props.lazyOnce !== undefined ? 'lazyOnce' : 'lazy'))
 
 const parentData = inject(injectionKey, null)
 
 const computedLazy = computed<boolean>(() => parentData?.lazy || lazyBoolean.value)
+const computedLazyOnce = computed<boolean>(() => props.lazyOnce !== undefined)
+
 const computedActive = computed<boolean>(() => activeBoolean.value && !disabledBoolean.value)
-const showSlot = computed<boolean>(() => computedActive.value || !computedLazy.value)
+const showSlot = computed<boolean>(() => {
+  const hasLazyRenderedOnce =
+    computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value
+  return computedActive.value || !computedLazy.value || hasLazyRenderedOnce
+})
 
 const classes = computed(() => ({
   'active': activeBoolean.value,
   'show': activeBoolean.value,
   'card-body': parentData?.card && props.noBody === false,
 }))
+
+watch(
+  () => showSlot.value,
+  (shown) => {
+    if (shown && !lazyRenderCompleted.value) lazyRenderCompleted.value = true
+  }
+)
 </script>

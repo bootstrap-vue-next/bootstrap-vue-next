@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema.json",
   "name": "@bootstrap-vue-3/Grid System",
   "version": "1.0.0",
   "meta": {
@@ -6,28 +7,122 @@
       {
         "component": "BContainer",
         "props": [
+          {
+            "name": "gutterX",
+            "type": "string"
+          },
+          {
+            "name": "gutterY",
+            "type": "string"
+          },
+          {
+            "name": "fluid",
+            "type": "boolean | Breakpoint"
+          },
+          {
+            "name": "toast",
+            "type": "Record<string, unknown>"
+          },
+          {
+            "name": "position",
+            "type": "Position"
+          },
+          {
+            "name": "tag",
+            "type": "string"
+          }
         ],
-        "emits": [
-        ],
+        "emits": [],
         "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
         ]
       },
       {
         "component": "BRow",
         "props": [
+          {
+            "name": "tag",
+            "type": "string"
+          },
+          {
+            "name": "gutterX",
+            "type": "string"
+          },
+          {
+            "name": "gutterY",
+            "type": "string"
+          },
+          {
+            "name": "noGutters",
+            "type": "Booleanish"
+          },
+          {
+            "name": "alignV",
+            "type": "Alignment.Vertical"
+          },
+          {
+            "name": "alignH",
+            "type": "Alignment.Horizontal"
+          },
+          {
+            "name": "alignContent",
+            "type": "Alignment.Content"
+          }
         ],
-        "emits": [
-        ],
+        "emits": [],
         "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
         ]
       },
       {
         "component": "BCol",
         "props": [
+          {
+            "description": "",
+            "prop": "col",
+            "type": "Booleanish"
+          },
+          {
+            "description": "",
+            "prop": "cols",
+            "type": "string | number"
+          },
+          {
+            "description": "",
+            "prop": "offset",
+            "type": "string | number"
+          },
+          {
+            "description": "",
+            "prop": "order",
+            "type": "string | number"
+          },
+          {
+            "description": "",
+            "prop": "alignSelf",
+            "type": "Alignment.Vertical | 'auto'"
+          },
+          {
+            "description": "",
+            "prop": "tag",
+            "type": "string"
+          }
         ],
-        "emits": [
-        ],
+        "emits": [],
         "slots": [
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
         ]
       }
     ]

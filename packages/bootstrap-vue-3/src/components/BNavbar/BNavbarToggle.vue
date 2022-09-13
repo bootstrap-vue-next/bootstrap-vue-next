@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
 interface Emits {
-  (e: 'click'): void
+  (e: 'click', value: MouseEvent): void
 }
 
 const emit = defineEmits<Emits>()
@@ -47,9 +47,9 @@ const classes = computed(() => ({
   disabled: disabledBoolean.value,
 }))
 
-const onClick = (): void => {
+const onClick = (e: MouseEvent): void => {
   if (!disabledBoolean.value) {
-    emit('click')
+    emit('click', e)
   }
 }
 </script>

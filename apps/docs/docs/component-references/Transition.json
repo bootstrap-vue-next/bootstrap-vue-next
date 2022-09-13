@@ -1,0 +1,36 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/transition",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Transition",
+    "description": "",
+    "components": [
+      {
+        "component": "BTransition",
+        "props": [
+          {
+            "description": "", "prop": "appear", "type": "Booleanish"
+          },
+          {
+            "description": "", "prop": "mode", "type": "TransitionMode"
+          },
+          {
+            "description": "", "prop": "noFade", "type": "Booleanish"
+          },
+          {
+            "description": "", "prop": "transProps", "type": "Record<string, unknown>"
+          }
+        ],
+        "emits": [
+          
+        ],
+        "slots": [
+{
+  "description": "", "name": "default", "scope": []
+}
+        ]
+      }
+    ]
+  }
+}
