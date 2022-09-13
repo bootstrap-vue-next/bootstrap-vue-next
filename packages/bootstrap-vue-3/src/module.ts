@@ -1,7 +1,16 @@
 import {addComponentsDir, addImports, addPlugin, defineNuxtModule, resolveModule} from '@nuxt/kit'
 import {name as packageName, version as packageVersion} from '../package.json'
 
-export default defineNuxtModule({
+interface ModuleOptions {
+  plugins: {
+    popover: boolean
+    toggle: boolean
+    tooltip: boolean
+    visible: boolean
+  }
+}
+
+export default defineNuxtModule<ModuleOptions>({
   meta: {
     compatibility: {
       bridge: true,
@@ -10,6 +19,14 @@ export default defineNuxtModule({
     version: packageVersion,
     configKey: 'BootstrapVue3',
     name: packageName,
+  },
+  defaults: {
+    plugins: {
+      popover: true,
+      toggle: true,
+      tooltip: true,
+      visible: true,
+    },
   },
   async setup(options, nuxt) {
     const prefix = 'Bv'
@@ -38,12 +55,45 @@ export default defineNuxtModule({
       },
     ])
     // Directives
-    addImports([
-      {name: 'BPopover', as: 'VBPopover', from: resolveModule('./directives/BPopover')},
-      {name: 'BToggle', as: 'VBToggle', from: resolveModule('./directives/BToggle')},
-      {name: 'BTooltip', as: 'VBTooltip', from: resolveModule('./directives/BTooltip')},
-      {name: 'BVisible', as: 'VBVisible', from: resolveModule('./directives/BVisible')},
-    ])
+    // TODO clean this up, but follow this style for importing
+
+    const directiveImports: Parameters<typeof addImports>[0] = []
+    if (options.plugins.popover === true) {
+      directiveImports.push({
+        name: 'BPopover',
+        as: 'VBPopover',
+        from: resolveModule('./directives/BPopover'),
+      })
+    }
+    if (options.plugins.toggle === true) {
+      directiveImports.push({
+        name: 'BToggle',
+        as: 'VBToggle',
+        from: resolveModule('./directives/BToggle'),
+      })
+    }
+    if (options.plugins.tooltip === true) {
+      directiveImports.push({
+        name: 'BTooltip',
+        as: 'VBTooltip',
+        from: resolveModule('./directives/BTooltip'),
+      })
+    }
+    if (options.plugins.tooltip === true) {
+      directiveImports.push({
+        name: 'BTooltip',
+        as: 'VBTooltip',
+        from: resolveModule('./directives/BTooltip'),
+      })
+    }
+    if (options.plugins.visible === true) {
+      directiveImports.push({
+        name: 'BVisible',
+        as: 'VBVisible',
+        from: resolveModule('./directives/BVisible'),
+      })
+    }
+    addImports(directiveImports)
     // Plugins
     addPlugin(resolveModule('./components/BToast/plugin'))
     // Utils
