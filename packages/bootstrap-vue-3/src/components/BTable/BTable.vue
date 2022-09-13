@@ -132,6 +132,17 @@
             </slot>
           </td>
         </tr>
+        <tr v-if="showEmptyBoolean && computedItems.length === 0" class="b-table-empty-slot">
+          <td :colspan="computedFieldsTotal">
+            <slot name="empty" :items="computedItems" :filtered="isFilterableTable">
+              {{
+                isFilterableTable
+                  ? 'There are no records matching your request'
+                  : 'There are no records to show'
+              }}
+            </slot>
+          </td>
+        </tr>
       </tbody>
       <tfoot v-if="footCloneBoolean">
         <tr>
@@ -215,6 +226,7 @@ interface BTableProps {
   selectionVariant?: ColorVariant
   stickyHeader?: Booleanish
   busy?: Booleanish
+  showEmpty?: Booleanish
   perPage?: number
   currentPage?: number
   filter?: string
@@ -242,6 +254,7 @@ const props = withDefaults(defineProps<BTableProps>(), {
   selectionVariant: 'primary',
   stickyHeader: false,
   busy: false,
+  showEmpty: false,
   currentPage: 1,
 })
 
@@ -259,6 +272,7 @@ const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
 const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
+const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
 
 interface BTableEmits {
   (
