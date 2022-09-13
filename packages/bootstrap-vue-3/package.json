@@ -12,7 +12,7 @@
       "require": "./dist/bootstrap-vue-3.umd.js"
     },
     "./dist/bootstrap-vue-3.css": "./dist/bootstrap-vue-3.css",
-    "./nuxt": "./nuxt.js",
+    "./nuxt": "./nuxt",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
   },
   "files": [
@@ -31,14 +31,23 @@
     "test": "pnpm run test:lint && pnpm run test:unit",
     "test:lint": "pnpm run lint",
     "test:unit": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "nuxt:build": "nuxt-module-build"
   },
   "peerDependencies": {
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.0",
     "vue": "^3.2.37"
   },
+  "dependencies": {
+    "@nuxt/kit": "^3.0.0-rc.9"
+  },
   "devDependencies": {
+    "@nuxt/module-builder": "latest",
+    "@nuxt/schema": "^3.0.0-rc.9",
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "eslint": "latest",
+    "nuxt": "^3.0.0-rc.9",
     "@popperjs/core": "^2.11.6",
     "@types/bootstrap": "^5.2.2",
     "@vitejs/plugin-vue": "^3.0.0",
