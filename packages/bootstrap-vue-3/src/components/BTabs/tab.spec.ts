@@ -143,5 +143,44 @@ describe('tab', () => {
     expect(wrapper.text()).toBe('')
   })
 
-  // TODO test the showSlot v-if branch
+  it('renders slot if prop active', () => {
+    const wrapper = mount(BTab, {
+      props: {active: true},
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('does not render slot if not prop active but prop lazy true', () => {
+    const wrapper = mount(BTab, {
+      props: {active: false, lazy: true},
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('')
+  })
+
+  it('does not render slot if prop active but not prop disabled and prop lazy true', () => {
+    const wrapper = mount(BTab, {
+      props: {active: false, disabled: true, lazy: true},
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('')
+  })
+
+  it('does not render slot if prop active but not prop disabled and parentData lazy true', () => {
+    const wrapper = mount(BTab, {
+      props: {active: false, disabled: true},
+      global: {provide: {[injectionKey as unknown as symbol]: {lazy: true}}},
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('')
+  })
+
+  it('renders if prop active and not prop boolean, but has lazyOnce true', () => {
+    const wrapper = mount(BTab, {
+      props: {active: true, disabled: false, lazyOnce: true, lazy: true},
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+  })
 })

@@ -273,19 +273,6 @@ To create a `<b-alert>` that dismisses automatically after a period of time, set
   <ComponentReference></ComponentReference>
 </ClientOnly>
 
-#### v-model
-
-| Property     | Type                  | Default | Description                                                                                                                              |
-| ------------ | --------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `modelValue` | `boolean` or `number` | `false` | When set, shows the alert. Set to a number (seconds) to show and automatically dismiss the alert after the number of seconds has elapsed |
-
-#### slots
-
-| Property      | Description                    |
-| ------------- | ------------------------------ |
-| `default`     | Content to place in the alert  |
-| ~~`dismiss`~~ | Content for the dismiss button |
-
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
 

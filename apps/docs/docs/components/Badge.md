@@ -187,9 +187,3 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
 <ClientOnly>
     <ComponentReference></ComponentReference>
 </ClientOnly>
-
-### Slots
-
-| Name      | Description                   |
-| --------- | ----------------------------- |
-| `default` | Content to place in the badge |

@@ -548,46 +548,9 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
 </b-list-group>
 ```
 
-## Component reference
-
-### `<b-list-group>`
-
-#### Properties
-
-| Property     | Type                  | Default | Description                                                                       |
-| ------------ | --------------------- | ------- | --------------------------------------------------------------------------------- |
-| `flush`      | `Boolean`             | `false` | When set, renders a flush list group with no left and right borders               |
-| `horizontal` | `Boolean` or `String` | `false` | When set, renders the list-group horizontally rather than the default of vertical |
-| `numbered`   | `Boolean`             | `false` | When set, renders the list-group as a numbered list                               |
-| `tag`        | `String`              | `'div'` | Specify the HTML tag to render instead of the default tag                         |
-
-#### Slots
-
-| Name      | Scoped | Description                                |
-| --------- | ------ | ------------------------------------------ |
-| `default` | No     | Content (items) to place in the list group |
-
-### `<b-list-group-item>`
-
-#### Properties
-
-| Property   | Type                 | Default   | Description                                                                                                                                                                                                          |
-| ---------- | -------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action`   | `Boolean`            | `false`   | When set, give the item the appearance of having an action. Not needed when props 'to', 'href' or 'button' are used                                                                                                  |
-| `active`   | `Boolean`            | `false`   | When set to `true`, places the component in the active state with active styling                                                                                                                                     |
-| `button`   | `Boolean`            | `false`   | When true renders the list-group-item as a button element                                                                                                                                                            |
-| `disabled` | `Boolean`            | `false`   | When set to `true`, disables the component's functionality and places it in a disabled state                                                                                                                         |
-| `href`     | `String`             |           | Denotes the target URL of the link for standard a links                                                                                                                                                              |
-| `tag`      | `String`             | `'div'`   | Specify the HTML tag to render instead of the default tag                                                                                                                                                            |
-| `target`   | `String`             | `'_self'` | Sets the `target` attribute on the rendered link                                                                                                                                                                     |
-| `to`       | `Object` or `String` | `_self`   | `<router-link>` prop: Denotes the target route of the link. When clicked, the value of the to prop will be passed to `router.push()` internally, so the value can be either a string or a Location descriptor object |
-| `variant`  | `String`             |           | Applies one of the Bootstrap theme color variants to the component                                                                                                                                                   |
-
-#### Slots
-
-| Name      | Scoped | Description                             |
-| --------- | ------ | --------------------------------------- |
-| `default` | No     | Content to place in the list group item |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <style lang="scss" scoped>
     .bd-example > .card-body > .list-group {

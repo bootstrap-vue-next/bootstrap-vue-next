@@ -779,64 +779,9 @@ Avatars are based upon `<b-badge>` and `<b-button>` components, and as such, rel
 `badge-*` and `btn-*` variant classes, as well as the `rounded-*`
 [utility classes](/docs/reference/utility-classes).
 
-## Component reference
-
-### `<b-avatar>`
-
-#### Properties
-
-| Property        | Type                  | Default     | Description                                                                                                                       |
-| --------------- | --------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `alt`           | `String`              | `avatar`    | Value to place in the 'alt' attribute for image and icon avatars                                                                  |
-| `aria-label`    | `String`              |             | Sets the value of `aria-label` attribute on the rendered element                                                                  |
-| `badge`         | `Boolean` or `String` | `false`     | When `true` shows an empty badge on the avatar, alternatively set to a string for content in the badge                            |
-| `badge-left`    | `Boolean`             | `false`     | When `true` places the badge at the left instead of the right avatars                                                             |
-| `badge-offset`  | `String`              |             | CSS length to offset the badge. Positive values move the badge inwards, while negative values move the badge outwards             |
-| `badge-top`     | `Boolean`             | `false`     | When `true` places the badge at the top instead of the bottom                                                                     |
-| `badge-variant` | `String`              | `primary`   | Applies one of the Bootstrap theme color variants to the badge                                                                    |
-| `button`        | `Boolean`             | `false`     | When set to `true`, renders the avatar as a button                                                                                |
-| `button-type`   | `String `             | `button`    | Type of button to render (i.e. `button`, `submit`, `reset`). Has no effect if prop button is not set                              |
-| `disabled`      | `Boolean `            | `false`     | When set to `true`, disables the component's functionality and places it in a disabled state                                      |
-| `icon`          | `String `             |             | Icon name to use for the avatar. Must be all lowercase. Defaults to `person-fill` if `text` or `src` props not provided           |
-| `icon-variant`  | `String`              |             | Sets the color variant for the icon                                                                                               |
-| `rounded`       | `Boolean` or `String` | `false`     | Specifies the type of rounding to apply to the avatar. The `square` prop takes precedence. Refer to the documentation for details |
-| `size`          | `Number` or `String`  |             | Size of the avatar. Refer to the documentation for details                                                                        |
-| `square`        | `Boolean`             | `false`     | Disables rounding of the avatar, rending the avatar with square corners                                                           |
-| `src`           | `String`              |             | Image URL to use for the avatar                                                                                                   |
-| `text`          | `String`              |             | Text to place in the avatar                                                                                                       |
-| `variant`       | `String`              | `secondary` | Applies one of the Bootstrap theme color variants to the component                                                                |
-
-#### slots
-
-| Property  | Description                                                                    |
-| --------- | ------------------------------------------------------------------------------ |
-| `badge`   | Content to place in the avatars optional badge. Overrides the `badge` prop     |
-| `default` | Content to place in the avatar. Overrides props `text`, `src`, and `icon-name` |
-
-#### Events
-
-| Event       | Arguments                   | Description                                                                                 |
-| ----------- | --------------------------- | ------------------------------------------------------------------------------------------- |
-| `click`     | event - Native Event object | Emitted when the avatar is clicked when rendered as a button or link. Not emitted otherwise |
-| `img-error` | event - Native Event object | Emitted if an image `src` is provided and the image fails to load                           |
-
-### `<b-avatar-group>`
-
-#### Properties
-
-| Property  | Type                  | Default | Description                                                                                                                                     |
-| --------- | --------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `overlap` | `Number` or `String`  | 0.3     | Floating point number specifying the amount of overlap where `0` is no overlap and `1` is 100% overlap. Only has effect when `size` is also set |
-| `rounded` | `Boolean` or `String` | `false` | Specifies the type of rounding to apply to the avatar. The `square` prop takes precedence. Refer to the documentation for details               |
-| `size`    | `Number` or `String`  |         | Size of the avatar. Refer to the documentation for details                                                                                      |
-| `tag`     | `String`              | `div`   | Specify the HTML tag to render instead of the default tag                                                                                       |
-| `variant` | `String`              |         | Applies one of the Bootstrap theme color variants to all child avatars                                                                          |
-
-#### slots
-
-| Property  | Description                                    |
-| --------- | ---------------------------------------------- |
-| `default` | Content (avatars) to place in the avatar group |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, Ref} from 'vue';

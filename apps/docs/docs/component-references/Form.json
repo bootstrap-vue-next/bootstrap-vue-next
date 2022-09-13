@@ -10,19 +10,19 @@
         "component": "BForm",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "floating",
+            "prop": "floating",
             "type": "Booleanish"
           },
           {
-            "name": "novalidate",
+            "prop": "novalidate",
             "type": "Booleanish"
           },
           {
-            "name": "validated",
+            "prop": "validated",
             "type": "Booleanish"
           }
         ],
@@ -51,15 +51,15 @@
         "component": "BFormFloatingLabel",
         "props": [
           {
-            "name": "labelFor",
+            "prop": "labelFor",
             "type": "string"
           },
           {
-            "name": "label",
+            "prop": "label",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           }
         ],
@@ -81,35 +81,35 @@
         "component": "BFormInvalidFeedback",
         "props": [
           {
-            "name": "ariaLive",
+            "prop": "ariaLive",
             "type": "string"
           },
           {
-            "name": "forceShow",
+            "prop": "forceShow",
             "type": "Booleanish"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "role",
+            "prop": "role",
             "type": "string"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "tooltip",
+            "prop": "tooltip",
             "type": "Booleanish"
           }
         ],
@@ -144,23 +144,23 @@
         "component": "BFormText",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "inline",
+            "prop": "inline",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "textVariant",
+            "prop": "textVariant",
             "type": "TextColorVariant"
           }
         ],
@@ -177,35 +177,35 @@
         "component": "BFormValidFeedback",
         "props": [
           {
-            "name": "ariaLive",
+            "prop": "ariaLive",
             "type": "string"
           },
           {
-            "name": "forceShow",
+            "prop": "forceShow",
             "type": "Booleanish"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "role",
+            "prop": "role",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "tooltip",
+            "prop": "tooltip",
             "type": "Booleanish"
           }
         ],

@@ -15,35 +15,35 @@
             "type": "Alignment"
           },
           {
-            "name": "cardHeader",
+            "prop": "cardHeader",
             "type": "Booleanish"
           },
           {
-            "name": "fill",
+            "prop": "fill",
             "type": "Booleanish"
           },
           {
-            "name": "justified",
+            "prop": "justified",
             "type": "Booleanish"
           },
           {
-            "name": "pills",
+            "prop": "pills",
             "type": "Booleanish"
           },
           {
-            "name": "small",
+            "prop": "small",
             "type": "Booleanish"
           },
           {
-            "name": "tabs",
+            "prop": "tabs",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "vertical",
+            "prop": "vertical",
             "type": "Booleanish"
           }
         ],
@@ -60,23 +60,23 @@
         "component": "BNavForm",
         "props": [
           {
-            "name": "role",
+            "prop": "role",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string "
           },
           {
-            "name": "floating",
+            "prop": "floating",
             "type": "Booleanish"
           },
           {
-            "name": "novalidate",
+            "prop": "novalidate",
             "type": "Booleanish"
           },
           {
-            "name": "validated",
+            "prop": "validated",
             "type": "Booleanish"
           }
         ],
@@ -117,63 +117,63 @@
         "component": "BNavItemDropdown",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "Size"
           },
           {
-            "name": "offset",
+            "prop": "offset",
             "type": "string"
           },
           {
-            "name": "autoClose",
+            "prop": "autoClose",
             "type": "boolean | 'inside' | 'outside'"
           },
           {
-            "name": "dark",
+            "prop": "dark",
             "type": "boolean"
           },
           {
-            "name": "dropleft",
+            "prop": "dropleft",
             "type": "boolean"
           },
           {
-            "name": "dropright",
+            "prop": "dropright",
             "type": "boolean"
           },
           {
-            "name": "dropup",
+            "prop": "dropup",
             "type": "boolean"
           },
           {
-            "name": "right",
+            "prop": "right",
             "type": "boolean"
           },
           {
-            "name": "left",
+            "prop": "left",
             "type": "boolean | string"
           },
           {
-            "name": "split",
+            "prop": "split",
             "type": "boolean"
           },
           {
-            "name": "splitVariant",
+            "prop": "splitVariant",
             "type": "ButtonVariant"
           },
           {
-            "name": "noCaret",
+            "prop": "noCaret",
             "type": "boolean"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ButtonVariant"
           }
         ],

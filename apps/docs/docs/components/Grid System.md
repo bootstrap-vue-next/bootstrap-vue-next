@@ -154,5 +154,5 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
 ```
 
 <ClientOnly>
-<ComponentReference></ComponentReference>
+  <ComponentReference></ComponentReference>
 </ClientOnly>

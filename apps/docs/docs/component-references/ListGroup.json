@@ -10,19 +10,19 @@
         "component": "BListGroup",
         "props": [
           {
-            "name": "flush",
+            "prop": "flush",
             "type": "Booleanish"
           },
           {
-            "name": "horizontal",
+            "prop": "horizontal",
             "type": "boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'"
           },
           {
-            "name": "numbered",
+            "prop": "numbered",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],
@@ -39,39 +39,39 @@
         "component": "BListGroupItem",
         "props": [
           {
-            "name": "action",
+            "prop": "action",
             "type": "Booleanish"
           },
           {
-            "name": "active",
+            "prop": "active",
             "type": "Booleanish"
           },
           {
-            "name": "button",
+            "prop": "button",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "href",
+            "prop": "href",
             "type": "string"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "target",
+            "prop": "target",
             "type": "LinkTarget"
           },
           {
-            "name": "to",
+            "prop": "to",
             "type": "RouteLocationRaw"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],

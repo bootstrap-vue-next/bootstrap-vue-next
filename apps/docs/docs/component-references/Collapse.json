@@ -10,31 +10,31 @@
         "component": "BCollapse",
         "props": [
           {
-            "name": "accordion",
+            "prop": "accordion",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "modelValue",
+            "prop": "modelValue",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "toggle",
+            "prop": "toggle",
             "type": "Booleanish"
           },
           {
-            "name": "visible",
+            "prop": "visible",
             "type": "Booleanish"
           },
           {
-            "name": "isNav",
+            "prop": "isNav",
             "type": "Booleanish"
           }
         ],

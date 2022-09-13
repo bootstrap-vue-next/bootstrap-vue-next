@@ -633,56 +633,9 @@ these methods and properties. Support will vary based on input type.
 </script>
 ```
 
-## Component reference
-
-### `<b-form-input>`
-
-#### Properties
-
-| Property                                                  | Type                  | Default | Description                                                                                                                                                            |
-| --------------------------------------------------------- | --------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `aria-invalid`                                            | `Boolean` or `String` | `false` | Sets the 'aria-invalid' attribute with the specified value                                                                                                             |
-| `autocomplete`                                            | `String`              |         | Sets the 'autocomplete' attribute value on the form control                                                                                                            |
-| `autofocus`                                               | `Boolean`             | `false` | When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control |
-| `disabled`                                                | `Boolean`             | `false` | When set to `true`, disables the component's functionality and places it in a disabled state                                                                           |
-| `form`                                                    | `String`              |         | Id of the form that the form control belongs to. Sets the `form` attribute on the control                                                                              |
-| `formatter`                                               | `Function`            |         | Reference to a function for formatting the input                                                                                                                       |
-| `id`                                                      | `String`              |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed                                          |
-| `lazy`                                                    | `Boolean`             | `false` | When set, updates the v-model on 'change'/'blur' events instead of 'input'. Emulates the Vue '.lazy' v-model modifier                                                  |
-| <span style="white-space:nowrap;">`lazy-formatter`</span> | `Boolean`             | `false` | When set, the input is formatted on blur instead of each keystroke (if there is a formatter specified)                                                                 |
-| `list`                                                    | `String`              |         | The Id of the associated datalist element or component                                                                                                                 |
-| `max`                                                     | `Number`or `String`   |         | Value to set in the 'max' attribute on the input. Used by number-like inputs                                                                                           |
-| `min`                                                     | `Number`or `String`   |         | Value to set in the 'min' attribute on the input. Used by number-like inputs                                                                                           |
-| `name`                                                    | `String`              |         | Sets the value of the `name` attribute on the form control                                                                                                             |
-| `number`                                                  | `Boolean`             | `false` | When set attempts to convert the input value to a native number. Emulates the Vue '.number' v-model modifier                                                           |
-| `placeholder`                                             | `String`              |         | Sets the `placeholder` attribute value on the form control                                                                                                             |
-| `plaintext`                                               | `Boolean`             | `false` | Set the form control as readonly and renders the control to look like plain text (no borders)                                                                          |
-| `readonly`                                                | `Boolean`             | `false` | Sets the `readonly` attribute on the form control                                                                                                                      |
-| `required`                                                | `Boolean`             | `false` | Adds the `required` attribute to the form control                                                                                                                      |
-| `size`                                                    | `String`              |         | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                                                              |
-| `state`                                                   | `Boolean`             | `null`  | Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state                                    |
-| `step`                                                    | `Number`or `String`   |         | Value to set in the 'step' attribute on the input. Used by number-like inputs                                                                                          |
-| `trim`                                                    | `Boolean`             | `false` | When set, trims any leading and trailing white space from the input value. Emulates the Vue '.trim' v-model modifier                                                   |
-| `type`                                                    | `String`              | `text`  | The type of input to render. See the docs for supported types                                                                                                          |
-
-#### v-model
-
-| Property           | Type                 | Default | Description                                                                                           |
-| ------------------ | -------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
-| default modelValue | `Number` or `String` | `''`    | The current value of the input. Result will always be a string, except when the `number` prop is used |
-
-#### Events
-
-| Name                | Argument                                                                                      | Description                                                                                                                                        |
-| ------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `blur`              | `event` - Native blur event (before any formatting)                                           | Emitted after the input looses focus                                                                                                               |
-| `change`            | `modelValue` - Current value of input                                                         | Change event triggered by user interaction. Emitted after any formatting (not including 'trim' or 'number' props) and after the v-model is updated |
-| `input`             | `modelValue` - Current value of input                                                         | Input event triggered by user interaction. Emitted after any formatting (not including 'trim' or 'number' props) and after the v-model is updated  |
-| `update:modelValue` | `modelValue` - Value of input, after any formatting. Not emitted if the value does not change | Emitted to update the v-model                                                                                                                      |
-
-<!-- --------------------------------------------------------------------------------------------- -->
-
 <ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
@@ -716,5 +669,3 @@ these methods and properties. Support will vary based on input type.
 
   const selectAllText = () => inputRef.value.input.select()
 </script>
-
-</ClientOnly>

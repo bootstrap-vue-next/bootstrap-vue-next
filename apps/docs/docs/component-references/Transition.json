@@ -10,25 +10,33 @@
         "component": "BTransition",
         "props": [
           {
-            "description": "", "prop": "appear", "type": "Booleanish"
+            "description": "",
+            "prop": "appear",
+            "type": "Booleanish"
           },
           {
-            "description": "", "prop": "mode", "type": "TransitionMode"
+            "description": "",
+            "prop": "mode",
+            "type": "TransitionMode"
           },
           {
-            "description": "", "prop": "noFade", "type": "Booleanish"
+            "description": "",
+            "prop": "noFade",
+            "type": "Booleanish"
           },
           {
-            "description": "", "prop": "transProps", "type": "Record<string, unknown>"
+            "description": "",
+            "prop": "transProps",
+            "type": "Record<string, unknown>"
           }
         ],
-        "emits": [
-          
-        ],
+        "emits": [],
         "slots": [
-{
-  "description": "", "name": "default", "scope": []
-}
+          {
+            "description": "",
+            "name": "default",
+            "scope": []
+          }
         ]
       }
     ]

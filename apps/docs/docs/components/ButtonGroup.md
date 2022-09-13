@@ -189,21 +189,6 @@ that split dropdown menus are not supported when prop `vertical` is set.
 Also check out the [`<b-button-toolbar>`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
 
-## Component reference
-
-### `<b-button-group>`
-
-#### Properties
-
-| Property    | Type      | Default | Description                                                               |
-| ----------- | --------- | ------- | ------------------------------------------------------------------------- |
-| `aria-role` | `String`  | `group` | Sets the ARIA attribute `role` to a specific value                        |
-| `size`      | `String`  |         | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg' |
-| `tag`       | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                 |
-| `vertical`  | `Boolean` | `false` | When set, rendered the button group in vertical mode                      |
-
-#### Slots
-
-| Name      | Scoped | Description                                    |
-| --------- | ------ | ---------------------------------------------- |
-| `default` | No     | Content (buttons) to place in the button group |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>

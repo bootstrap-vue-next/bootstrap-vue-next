@@ -391,43 +391,9 @@ inside an element with `role="tablist"` and set `role="tab"` on each trigger ele
 order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVue cannot
 apply those roles for you automatically, as it depends on your final document markup.
 
-## Component reference
-
-### `<b-collapse>`
-
-#### Properties
-
-| Property     | Type      | Default | Description                                                                                                                   |
-| ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `accordion`  | `String`  |         | The id of the accordion group that this collapse belongs to                                                                   |
-| ~~`appear`~~ | `Boolean` | `false` | When set, and prop 'visible' is true on mount, will animate on initial mount                                                  |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| ~~`isNav`~~  | `Boolean` | `false` | When set, and prop 'visible' is true on mount, will animate on initial mount                                                  |
-| `modelValue` | `Boolean` | `false` | When 'true', expands the collapse. Do not use together with visible                                                           |
-| `tag`        | `String`  | `div`   | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `visble`     | `Boolean` | `false` | When 'true', expands the collapse. Do not use together with v-model                                                           |
-
-#### v-model
-
-| Property     | Event               |
-| ------------ | ------------------- |
-| `modelValue` | `update:modelValue` |
-
-#### slots
-
-| Property  | Description                         |
-| --------- | ----------------------------------- |
-| `default` | Content to place in the collapsable |
-
-#### Events
-
-| Name                | Argument                                          | Description                                |
-| ------------------- | ------------------------------------------------- | ------------------------------------------ |
-| `hidden`            |                                                   | Emitted when collapse has finished closing |
-| `hide`              |                                                   | Emitted when collapse has started to close |
-| `show`              |                                                   | Emitted when collapse has started to open  |
-| `shown`             |                                                   | Emitted when collapse has finished opening |
-| `update:modelValue` | `visible` Will be true if the collapse is visible | Emitted when collapse has finished opening |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, computed} from 'vue'

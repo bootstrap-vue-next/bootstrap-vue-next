@@ -10,183 +10,183 @@
         "component": "BModal",
         "props": [
           {
-            "name": "bodyBgVariant",
+            "prop": "bodyBgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "bodyClass",
+            "prop": "bodyClass",
             "type": "string"
           },
           {
-            "name": "bodyTextVariant",
+            "prop": "bodyTextVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "busy",
+            "prop": "busy",
             "type": "Booleanish"
           },
           {
-            "name": "lazy",
+            "prop": "lazy",
             "type": "Booleanish"
           },
           {
-            "name": "buttonSize",
+            "prop": "buttonSize",
             "type": "InputSize"
           },
           {
-            "name": "cancelDisabled",
+            "prop": "cancelDisabled",
             "type": "Booleanish"
           },
           {
-            "name": "cancelTitle",
+            "prop": "cancelTitle",
             "type": "string"
           },
           {
-            "name": "cancelVariant",
+            "prop": "cancelVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "centered",
+            "prop": "centered",
             "type": "Booleanish"
           },
           {
-            "name": "contentClass",
+            "prop": "contentClass",
             "type": "string"
           },
           {
-            "name": "dialogClass",
+            "prop": "dialogClass",
             "type": "string"
           },
           {
-            "name": "footerBgVariant",
+            "prop": "footerBgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "footerBorderVariant",
+            "prop": "footerBorderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "footerClass",
+            "prop": "footerClass",
             "type": "string"
           },
           {
-            "name": "footerTextVariant",
+            "prop": "footerTextVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "fullscreen",
+            "prop": "fullscreen",
             "type": "boolean | string"
           },
           {
-            "name": "headerBgVariant",
+            "prop": "headerBgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "headerBorderVariant",
+            "prop": "headerBorderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "headerClass",
+            "prop": "headerClass",
             "type": "string"
           },
           {
-            "name": "headerCloseLabel",
+            "prop": "headerCloseLabel",
             "type": "string"
           },
           {
-            "name": "headerCloseWhite",
+            "prop": "headerCloseWhite",
             "type": "Booleanish"
           },
           {
-            "name": "headerTextVariant",
+            "prop": "headerTextVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "hideBackdrop",
+            "prop": "hideBackdrop",
             "type": "Booleanish"
           },
           {
-            "name": "hideFooter",
+            "prop": "hideFooter",
             "type": "Booleanish"
           },
           {
-            "name": "hideHeader",
+            "prop": "hideHeader",
             "type": "Booleanish"
           },
           {
-            "name": "hideHeaderClose",
+            "prop": "hideHeaderClose",
             "type": "Booleanish"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "modalClass",
+            "prop": "modalClass",
             "type": "string"
           },
           {
-            "name": "modelValue",
+            "prop": "modelValue",
             "type": "Booleanish"
           },
           {
-            "name": "noCloseOnBackdrop",
+            "prop": "noCloseOnBackdrop",
             "type": "Booleanish"
           },
           {
-            "name": "noCloseOnEsc",
+            "prop": "noCloseOnEsc",
             "type": "Booleanish"
           },
           {
-            "name": "noFade",
+            "prop": "noFade",
             "type": "Booleanish"
           },
           {
-            "name": "noFocus",
+            "prop": "noFocus",
             "type": "Booleanish"
           },
           {
-            "name": "okDisabled",
+            "prop": "okDisabled",
             "type": "Booleanish"
           },
           {
-            "name": "okOnly",
+            "prop": "okOnly",
             "type": "Booleanish"
           },
           {
-            "name": "okTitle",
+            "prop": "okTitle",
             "type": "string"
           },
           {
-            "name": "okVariant",
+            "prop": "okVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "scrollable",
+            "prop": "scrollable",
             "type": "Booleanish"
           },
           {
-            "name": "show",
+            "prop": "show",
             "type": "Booleanish"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "string"
           },
           {
-            "name": "title",
+            "prop": "title",
             "type": "string"
           },
           {
-            "name": "titleClass",
+            "prop": "titleClass",
             "type": "string"
           },
           {
-            "name": "titleSrOnly",
+            "prop": "titleSrOnly",
             "type": "Booleanish"
           },
           {
-            "name": "titleTag",
+            "prop": "titleTag",
             "type": "string"
           }
         ],

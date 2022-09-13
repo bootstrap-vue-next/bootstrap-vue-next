@@ -505,54 +505,9 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
 Refer to https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement for more information on
 these methods and properties. Support will vary based on input type.
 
-## Component reference
-
-### `<b-textarea>`
-
-#### Properties
-
-| Property             | Type                 | Default | Description                                                                                                                                                            |
-| -------------------- | -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `aria-invalid`       | `Boolean`or `String` | `false` | Sets the 'aria-invalid' attribute with the specified value                                                                                                             |
-| `autocomplete`       | `String`             |         | Sets the 'autocomplete' attribute value on the form control                                                                                                            |
-| `autofocus`          | `Boolean`            | `false` | When set to `true`, attempts to auto-focus the control when it is mounted, or re-activated when in a keep-alive. Does not set the `autofocus` attribute on the control |
-| ~~`debounce`~~       | `Number`or `String`  | `0`     | When set to a number of milliseconds greater than zero, will debounce the user input. Has no effect if prop 'lazy' is set                                              |
-| `disabled`           | `Boolean`            | `false` | When set to `true`, disables the component's functionality and places it in a disabled state                                                                           |
-| `form`               | `String`             |         | Id of the form that the form control belongs to. Sets the `form` attribute on the control                                                                              |
-| `formatter`          | `Function`           |         | Reference to a function for formatting the textarea                                                                                                                    |
-| `id`                 | `String`             |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed                                          |
-| ~~`lazy`~~           | `Boolean`            | `false` | When set, updates the v-model on 'change'/'blur' events instead of 'input'. Emulates the Vue '.lazy' v-model modifier                                                  |
-| ~~`max-rows`~~       | `Number`or `String`  |         | The maximum number of rows to show. When provided, the textarea will grow (or shrink) to fit the content up to maximum rows                                            |
-| `name`               | `String`             |         | Sets the value of the `name` attribute on the form control                                                                                                             |
-| ~~`no-auto-shrink`~~ | `Boolean`            | `false` | When set, prevents the auto height textarea from shrinking to fit the content                                                                                          |
-| `no-resize`          | `Boolean`            | `false` | When set, disabled the browser's resize handle which prevents the user from changing the height of the textarea. Automatically set when in auto height mode            |
-| `number`             | `Boolean`            | `false` | When set attempts to convert the input value to a native number. Emulates the Vue '.number' v-model modifier                                                           |
-| `placeholder`        | `String`             |         | Sets the `placeholder` attribute value on the form control                                                                                                             |
-| `plaintext`          | `Boolean`            | `false` | Set the form control as readonly and renders the control to look like plain text (no borders)                                                                          |
-| `readonly`           | `Boolean`            | `false` | Sets the `readonly` attribute on the form control                                                                                                                      |
-| `required`           | `Boolean`            | `false` | Adds the `required` attribute to the form control                                                                                                                      |
-| `rows`               | `Number`or `String`  | `2`     | The minimum number of rows to display. Must be a value greater than 1                                                                                                  |
-| `size`               | `String`             |         | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                                                              |
-| `state`              | `Boolean`            | `null`  | Controls the validation state appearance of the component. `true` for valid, `false` for invalid, or `null` for no validation state                                    |
-| `trim`               | `Boolean`            | `false` | When set, trims any leading and trailing white space from the input value. Emulates the Vue '.trim' v-model modifier                                                   |
-| `wrap`               | `String`             | `soft`  | The value to place on the textarea's 'wrap' attribute. Controls how line break are returned                                                                            |
-
-#### v-model
-
-| Property           | Type                 | Default | Description                                                                                           |
-| ------------------ | -------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
-| default modelValue | `Number` or `String` | `''`    | The current value of the input. Result will always be a string, except when the `number` prop is used |
-
-#### Events
-
-| Name                | Argument                                                                                      | Description                                                                                                                                        |
-| ------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `blur`              | `event` - Native blur event (before any formatting)                                           | Emitted after the input looses focus                                                                                                               |
-| `change`            | `modelValue` - Current value of input                                                         | Change event triggered by user interaction. Emitted after any formatting (not including 'trim' or 'number' props) and after the v-model is updated |
-| `input`             | `modelValue` - Current value of input                                                         | Input event triggered by user interaction. Emitted after any formatting (not including 'trim' or 'number' props) and after the v-model is updated  |
-| `update:modelValue` | `modelValue` - Value of input, after any formatting. Not emitted if the value does not change | Emitted to update the v-model                                                                                                                      |
-
 <ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
@@ -573,5 +528,3 @@ these methods and properties. Support will vary based on input type.
     textArea.value.input.select()
   }
 </script>
-
-</ClientOnly>

@@ -65,9 +65,6 @@ External Links can be specified with the `href` prop.
   </b-link>
 ```
 
-
-
-
 <ClientOnly>
   <ComponentReference></ComponentReference>
 </ClientOnly>

@@ -10,27 +10,27 @@
         "component": "BSpinner",
         "props": [
           {
-            "name": "label",
+            "prop": "label",
             "type": "string"
           },
           {
-            "name": "role",
+            "prop": "role",
             "type": "string"
           },
           {
-            "name": "small",
+            "prop": "small",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "type",
+            "prop": "type",
             "type": "SpinnerType"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],

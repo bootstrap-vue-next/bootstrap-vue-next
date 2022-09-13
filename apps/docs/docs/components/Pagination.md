@@ -452,32 +452,8 @@ recommended unless the content of the button textually conveys its purpose.
 ### Keyboard navigation support
 
 <ClientOnly>
-<ComponentReference></ComponentReference>
+  <ComponentReference></ComponentReference>
 </ClientOnly>
-
-#### v-model
-
-| Property           | Type     | Default | Description                          |
-| ------------------ | -------- | ------- | ------------------------------------ |
-| default modelValue | `Number` |         | Current page number, starting from 1 |
-
-#### Slots
-
-| Name            | Scoped | Description                                                     |
-| --------------- | ------ | --------------------------------------------------------------- |
-| `ellipsis-text` | No     | The '...' indicator content. Overrides the `ellipsis-text` prop |
-| `first-text`    | Yes    | The 'Go to first page' button content                           |
-| `last-text`     | Yes    | The 'Go to last page' button content                            |
-| `next-text`     | Yes    | The 'Go to next page' button content                            |
-| `page`          | Yes    | Page number button content                                      |
-| `prev-text`     | Yes    | The 'Go to previous page' button content                        |
-
-#### Events
-
-| Name                | Argument                                                                                    | Description                                        |
-| ------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| `update:modelValue` | `current page` - Value of he current page                                                   |                                                    |
-| `page-click`        | `bvEvent ` - The `BvEvent` object. Call `bvEvent.preventDefault()` to cancel page selection | Emitted when a page button was clicked. Cancelable |
 
 <script lang='ts' setup>
   import {ref, computed} from 'vue'
