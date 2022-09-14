@@ -1,6 +1,13 @@
 <template>
   <teleport to="body">
-    <div :id="id" ref="element" class="modal" :class="modalClasses" tabindex="-1" v-bind="$attrs">
+    <div
+      :id="computedId"
+      ref="element"
+      class="modal"
+      :class="modalClasses"
+      tabindex="-1"
+      v-bind="$attrs"
+    >
       <div class="modal-dialog" :class="modalDialogClasses">
         <div
           v-if="
@@ -72,7 +79,7 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
 import {computed, nextTick, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {useBooleanish, useEventListener} from '../composables'
+import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
 
@@ -176,6 +183,8 @@ const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 
 const lazyLoadCompleted = ref(false)
 
+const computedId = useId(toRef(props, 'id'), 'modal')
+
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
   (e: 'show', value: Event): void
@@ -266,12 +275,20 @@ const modalShowed = (e: Event) => {
   emit('shown', e)
 
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
+  if (modelValueBoolean.value === false) emit('update:modelValue', true)
+  ;(e.target as HTMLElement).focus()
 }
 
 const modalHided = (e: Event) => {
   emit('hidden', e)
 
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
+  if (modelValueBoolean.value === true) emit('update:modelValue', false)
+
+  const parentModal = document.querySelector('.modal')
+  if (parentModal) {
+    ;(parentModal as HTMLElement).focus()
+  }
 }
 
 const modalShow = (e: Event) => {
