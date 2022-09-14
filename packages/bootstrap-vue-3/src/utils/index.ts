@@ -1,4 +1,3 @@
-import {arrayIncludes, concat, from} from './array'
 import BvEvent from './bvEvent'
 import cssEscape from './cssEscape'
 import {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROWSER} from './env'
@@ -30,33 +29,19 @@ import getBreakpointProps from './getBreakpointProps'
 import getClasses from './getClasses'
 import getId from './getId'
 import resolveAriaInvalid from './resolveAriaInvalid'
-import {
-  isArray,
-  isBoolean,
-  isFunction,
-  isNull,
-  isNumber,
-  isNumeric,
-  isObject,
-  isPlainObject,
-  isString,
-  isUndefined,
-  isUndefinedOrNull,
-  toType,
-} from './inspect'
+import {isNumeric, isObject, isPlainObject} from './inspect'
 import mergeDeep from './mergeDeep'
 import normalizeSlot from './normalizeSlot'
 import {stringToInteger, toFloat, toInteger, toPercison} from './number'
-import {assign, defineProperties, defineProperty, omit, readonlyDescriptor} from './object'
+import {cloneDeep, omit, readonlyDescriptor} from './object'
 import {pluckProps, suffixPropName} from './props'
 import {isBooleanish, resolveBooleanish} from './booleanish'
 import isLink from './isLink'
-import {startCase, toString, upperFirst} from './stringUtils'
+import {startCase, titleCase, toString, upperFirst} from './stringUtils'
 
 export {
-  arrayIncludes,
-  concat,
-  from,
+  titleCase,
+  cloneDeep,
   BvEvent,
   isBooleanish,
   cssEscape,
@@ -75,9 +60,6 @@ export {
   suffixPropName,
   resolveBooleanish,
   toPercison,
-  assign,
-  defineProperties,
-  defineProperty,
   omit,
   readonlyDescriptor,
   mergeDeep,
@@ -104,28 +86,17 @@ export {
   getBreakpointProps,
   getClasses,
   getId,
-  isArray,
-  isBoolean,
-  isFunction,
-  isNull,
-  isNumber,
   isNumeric,
   isObject,
   isPlainObject,
-  isString,
-  isUndefined,
-  isUndefinedOrNull,
-  toType,
 }
 
 export default {
-  arrayIncludes,
-  concat,
-  from,
   BvEvent,
   cssEscape,
   attemptBlur,
   startCase,
+  titleCase,
   toString,
   upperFirst,
   attemptFocus,
@@ -138,9 +109,7 @@ export default {
   suffixPropName,
   resolveBooleanish,
   toPercison,
-  assign,
-  defineProperties,
-  defineProperty,
+  cloneDeep,
   omit,
   readonlyDescriptor,
   mergeDeep,
@@ -169,16 +138,7 @@ export default {
   getBreakpointProps,
   getClasses,
   getId,
-  isArray,
-  isBoolean,
-  isFunction,
-  isNull,
-  isNumber,
   isNumeric,
   isObject,
   isPlainObject,
-  isString,
-  isUndefined,
-  isUndefinedOrNull,
-  toType,
 }

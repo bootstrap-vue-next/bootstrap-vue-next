@@ -1,41 +1,17 @@
-import {isPlainObject} from './inspect'
-
 /**
- * @param target
- * @param args
+ * Removes properties from an object, based on the values in an array, and returns the new object
+ *
+ * @param {Record<PropertyKey, unknown>} objToPluck
+ * @param {ReadonlyArray<PropertyKey>} keysToPluck
  * @returns
  */
-export const assign = (target: any, ...args: any[]) => Object.assign(target, ...args)
-
-/**
- * @param obj
- * @param props
- * @returns
- */
-export const defineProperties = (obj: any, props: PropertyDescriptorMap & ThisType<any>) =>
-  Object.defineProperties(obj, props)
-
-/**
- * @param obj
- * @param prop
- * @param descriptor
- * @returns
- */
-export const defineProperty = (
-  obj: any,
-  prop: string | number | symbol,
-  descriptor: PropertyDescriptor & ThisType<any>
-): any => Object.defineProperty(obj, prop, descriptor)
-
-/**
- * @param obj
- * @param props
- * @returns
- */
-export const omit = (obj: any, props: any): any =>
-  Object.keys(obj)
-    .filter((key) => props.indexOf(key) === -1)
-    .reduce((result, key) => ({...result, [key]: obj[key]}), {})
+export const omit = <A extends Record<PropertyKey, unknown>, B extends ReadonlyArray<PropertyKey>>(
+  objToPluck: A,
+  keysToPluck: B
+): Omit<A, B[number]> =>
+  Object.keys(objToPluck)
+    .filter((key) => !keysToPluck.includes(key))
+    .reduce((result, key) => ({...result, [key]: objToPluck[key]}), {} as Omit<A, B[number]>)
 
 /**
  * Convenience method to create a read-only descriptor
@@ -44,15 +20,21 @@ export const omit = (obj: any, props: any): any =>
  */
 export const readonlyDescriptor = () => ({enumerable: true, configurable: false, writable: false})
 
-export const cloneDeep = (obj: any, defaultValue = obj): any => {
-  if (Array.isArray(obj)) {
-    return obj.reduce((result, val) => [...result, cloneDeep(val, val)], [])
-  }
-  if (isPlainObject(obj)) {
-    return Object.keys(obj).reduce(
-      (result, key) => ({...result, [key]: cloneDeep(obj[key], obj[key])}),
-      {}
-    )
-  }
-  return defaultValue
-}
+/**
+ * Deeply clones an item
+ *
+ * @param {T} source
+ * @returns
+ */
+export const cloneDeep = <T>(source: T): T =>
+  Array.isArray(source)
+    ? source.map((item) => cloneDeep(item))
+    : source instanceof Date
+    ? new Date(source.getTime())
+    : source && typeof source === 'object'
+    ? Object.getOwnPropertyNames(source).reduce((o, prop) => {
+        Object.defineProperty(o, prop, Object.getOwnPropertyDescriptor(source, prop) ?? {})
+        o[prop] = cloneDeep((source as unknown as {[key: string]: unknown})[prop])
+        return o
+      }, Object.create(Object.getPrototypeOf(source)))
+    : source

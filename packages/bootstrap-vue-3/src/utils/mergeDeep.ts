@@ -1,4 +1,5 @@
-const _isObject = (item: any) => item && typeof item === 'object' && item.constructor === Object
+const _isObject = (item: unknown): boolean =>
+  !!item && typeof item === 'object' && item.constructor === Object
 
 /**
  * @param target

@@ -11,7 +11,7 @@ import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
-const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
+const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
 export default defineComponent({
   components: {BLink},
@@ -45,7 +45,7 @@ export default defineComponent({
 
     return {
       classes,
-      props: link.value ? pluckProps(linkProps, props) : {},
+      props: link.value ? pluckProps(props, linkProps) : {},
       computedTag,
     }
   },

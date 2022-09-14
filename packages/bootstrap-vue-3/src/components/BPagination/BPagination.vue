@@ -1,5 +1,5 @@
 <script lang="ts">
-import {BvEvent, isUndefinedOrNull, normalizeSlot, toInteger} from '../../utils'
+import {BvEvent, normalizeSlot, toInteger} from '../../utils'
 import {computed, defineComponent, h, PropType, reactive, toRef, watch} from 'vue'
 import type {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
@@ -235,7 +235,7 @@ export default defineComponent({
     )
 
     watch(pagination, (oldValue, newValue) => {
-      if (!isUndefinedOrNull(oldValue)) {
+      if (!(oldValue === undefined || oldValue === null)) {
         if (newValue.pageSize !== oldValue.pageSize && newValue.totalRows === oldValue.totalRows) {
           // If the page size changes, reset to page 1
           emit('update:modelValue', 1)

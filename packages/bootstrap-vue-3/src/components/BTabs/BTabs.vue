@@ -65,7 +65,7 @@
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
-import {BvEvent, getId, isFunction} from '../../utils'
+import {BvEvent, getId} from '../../utils'
 import {useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
 
@@ -242,7 +242,7 @@ const handleClick = (event: MouseEvent, index: number) => {
     index >= 0 &&
     !tabs.value[index].disabled &&
     tabs.value[index]?.onClick &&
-    isFunction(tabs.value[index].onClick)
+    typeof tabs.value[index].onClick === 'function'
   ) {
     tabs.value[index].onClick(event)
   }

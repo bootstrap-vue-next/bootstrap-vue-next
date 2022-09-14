@@ -56,4 +56,9 @@ describe('toString', () => {
     const value = toString(false)
     expect(value).toBe('false')
   })
+
+  it('returns same string when string', () => {
+    const value = toString('abc')
+    expect(value).toBe('abc')
+  })
 })

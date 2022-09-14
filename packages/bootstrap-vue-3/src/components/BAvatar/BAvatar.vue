@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
-import {isEmptySlot, isNumber, isNumeric, isString, toFloat} from '../../utils'
+import {isEmptySlot, isNumeric, toFloat} from '../../utils'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
@@ -200,7 +200,7 @@ const onImgError = (e: Event): void => emit('img-error', e)
 
 <script lang="ts">
 export const computeSize = (value: any): string | null => {
-  const calcValue = isString(value) && isNumeric(value) ? toFloat(value, 0) : value
-  return isNumber(calcValue) ? `${calcValue}px` : calcValue || null
+  const calcValue = typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value
+  return typeof calcValue === 'number' ? `${calcValue}px` : calcValue || null
 }
 </script>
