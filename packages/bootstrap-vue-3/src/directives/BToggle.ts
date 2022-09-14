@@ -1,5 +1,5 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
-import {concat, getAttr, isString, isTag} from '../utils'
+import {getAttr, isTag} from '../utils'
 import {Directive, DirectiveBinding} from 'vue'
 
 /**
@@ -31,7 +31,7 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   const targets = Object.keys(modifiers || {})
 
   // If value is a string, split out individual targets (if space delimited)
-  const localValue = isString(value) ? value.split(RX_SPACE_SPLIT) : value
+  const localValue = typeof value === 'string' ? value.split(RX_SPACE_SPLIT) : value
 
   // Support target Id as link href (`href="#id"`)
   if (isTag(el.tagName, 'a')) {
@@ -44,7 +44,9 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   // Add Id from `arg` (if provided), and support value
   // as a single string Id or an array of string Ids
   // If `value` is not an array or string, then it gets filtered out
-  concat(arg, localValue).forEach((t) => isString(t) && targets.push(t))
+  Array.prototype.concat
+    .apply([], [arg, localValue])
+    .forEach((t) => typeof t === 'string' && targets.push(t))
 
   // Return only unique and truthy target Ids
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)

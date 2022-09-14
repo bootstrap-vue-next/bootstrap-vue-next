@@ -9,7 +9,7 @@ import {isLink, omit, pluckProps} from '../../utils'
 import {computed, defineComponent} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
-const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
+const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
 export default defineComponent({
   components: {
@@ -24,7 +24,7 @@ export default defineComponent({
     const computedTag = computed<string | typeof BLink>(() => (link.value ? BLink : props.tag))
 
     return {
-      props: link.value ? pluckProps(linkProps, props) : {},
+      props: link.value ? pluckProps(props, linkProps) : {},
       computedTag,
     }
   },

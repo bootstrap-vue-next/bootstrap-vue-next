@@ -1,5 +1,3 @@
-// Number utilities
-
 /**
  * Validates a number is an integer. If not return NaN
  *
@@ -39,4 +37,5 @@ export const toFloat = (value: number | string, defaultValue = NaN): number => {
  * @param precision
  * @returns
  */
-export const toPercison = (val: number, precision: number) => toFloat(val).toPrecision(precision)
+export const toPercison = (val: number, precision: number): string =>
+  toFloat(val).toPrecision(precision)

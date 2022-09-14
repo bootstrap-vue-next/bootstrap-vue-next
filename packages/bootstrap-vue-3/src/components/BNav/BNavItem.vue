@@ -17,12 +17,10 @@ import {omit} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {defineComponent, toRef} from 'vue'
 
-const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'])
-
 export default defineComponent({
   components: {BLink},
   props: {
-    ...linkProps,
+    ...omit(BLINK_PROPS, ['event', 'routerTag'] as const),
   },
   setup(props) {
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))

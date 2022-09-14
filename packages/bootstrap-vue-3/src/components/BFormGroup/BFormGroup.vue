@@ -2,13 +2,11 @@
 import {useBooleanish, useId} from '../../composables'
 import {RX_SPACE_SPLIT} from '../../constants/regex'
 import {
-  arrayIncludes,
   attemptFocus,
   cssEscape,
   getAttr,
   getId,
   IS_BROWSER,
-  isBoolean,
   isVisible,
   normalizeSlot,
   removeAttr,
@@ -102,7 +100,7 @@ export default defineComponent({
         // which represents `true`
         propValue = propValue === '' ? true : propValue || false
 
-        if (!isBoolean(propValue) && propValue !== 'auto') {
+        if (!(typeof propValue === 'boolean') && propValue !== 'auto') {
           // Convert to column size to number
           propValue = stringToInteger(propValue, 0)
           // Ensure column size is greater than `0`
@@ -113,7 +111,7 @@ export default defineComponent({
         // If breakpoint is '' (`${prefix}Cols` is `true`), then we use
         // the 'col' prop to make equal width at 'xs'
         if (propValue) {
-          result[breakpoint || (isBoolean(propValue) ? 'col' : 'cols')] = propValue
+          result[breakpoint || (typeof propValue === 'boolean' ? 'col' : 'cols')] = propValue
         }
         return result
       }, {})
@@ -136,7 +134,7 @@ export default defineComponent({
           // and ensuring the Id's are unique
           const ids = (getAttr($input, attr) || '')
             .split(RX_SPACE_SPLIT)
-            .filter((id) => !arrayIncludes(oldIds, id))
+            .filter((id) => !oldIds.includes(id))
             .concat(newIds)
             .filter((id, index, ids) => ids.indexOf(id) === index)
             .filter((x) => x)
@@ -163,7 +161,7 @@ export default defineComponent({
     )
     const computedState = computed(() =>
       // If not a boolean, ensure that value is null
-      isBoolean(stateBoolean.value) ? stateBoolean.value : null
+      typeof stateBoolean.value === 'boolean' ? stateBoolean.value : null
     )
     const stateClass = computed(() => {
       const state = computedState.value
