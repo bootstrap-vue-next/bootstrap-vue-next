@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <div
-      :id="elementId"
+      :id="computedId"
       ref="element"
       class="modal"
       :class="modalClasses"
@@ -79,9 +79,8 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
 import {computed, nextTick, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {useBooleanish, useEventListener} from '../composables'
+import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
-import {getId} from './../utils'
 import BButton from './BButton/BButton.vue'
 
 interface BModalProps {
@@ -184,8 +183,7 @@ const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 
 const lazyLoadCompleted = ref(false)
 
-const bsId = ref(getId('bmodal'))
-const elementId = computed(() => props.id ?? bsId.value)
+const computedId = useId(toRef(props, 'id'), 'modal')
 
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
