@@ -97,9 +97,15 @@ const useItemHelper = () => {
         }).length > 0
     )
 
+  const updateInternalItems = (items: TableItem<Record<string, any>>[]) => {
+    internalItems.value = cloneDeep(items)
+  }
+
   return {
     normaliseFields,
     mapItems,
+    internalItems,
+    updateInternalItems,
     filterEvent,
   }
 }

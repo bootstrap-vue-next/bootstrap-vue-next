@@ -122,7 +122,11 @@
             </td>
           </tr>
         </template>
-        <tr v-if="busyBoolean" class="b-table-busy-slot">
+        <tr
+          v-if="internalBusyFlag"
+          class="b-table-busy-slot"
+          :class="{'b-table-static-busy': computedItems.length == 0}"
+        >
           <td :colspan="computedFieldsTotal">
             <slot name="table-busy">
               <div class="d-flex align-items-center justify-content-center gap-2">
@@ -179,7 +183,7 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import {cloneDeep} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
@@ -193,6 +197,7 @@ import type {
   TableItem,
   VerticalAlign,
 } from '../../types'
+import type {BTableProvider} from '../../types/components'
 import BTableContainer from './BTableContainer.vue'
 import useItemHelper from './itemHelper'
 
@@ -208,6 +213,7 @@ interface BTableProps {
   footClone?: Booleanish
   hover?: Booleanish
   items?: Array<TableItem>
+  provider?: BTableProvider
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   small?: Booleanish
   striped?: Booleanish
@@ -274,6 +280,8 @@ const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
 const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
 
+const internalBusyFlag = ref(busyBoolean.value)
+
 interface BTableEmits {
   (
     e: 'headClicked',
@@ -300,6 +308,7 @@ interface BTableEmits {
   (e: 'rowSelected', value: TableItem): void
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
+  (e: 'update:busy', value: boolean): void
   (e: 'update:sortBy', value: string): void
   (e: 'update:sortDesc', value: boolean): void
   (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
@@ -325,7 +334,7 @@ const classes = computed(() => [
     'b-table-selectable': selectableBoolean.value,
     [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
     'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
-    'b-table-busy': busyBoolean.value,
+    'b-table-busy': internalBusyFlag.value,
     'b-table-sortable': isSortable.value,
     'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
     'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
@@ -335,6 +344,10 @@ const classes = computed(() => [
 const itemHelper = useItemHelper()
 
 itemHelper.filterEvent.value = (items) => {
+  if (usesProvider.value) {
+    callItemsProvider()
+    return
+  }
   emits('filtered', cloneDeep(items))
 }
 
@@ -344,17 +357,19 @@ const computedFieldsTotal = computed(
 )
 
 const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
+const usesProvider = computed(() => props.provider !== undefined)
 
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
-const computedItems = computed(() =>
-  requireItemsMapping.value
+const computedItems = computed(() => {
+  if (usesProvider.value) return itemHelper.internalItems.value
+  return requireItemsMapping.value
     ? itemHelper.mapItems(props.fields, props.items, props, {
         isSortable,
         isFilterableTable,
         sortDescBoolean,
       })
     : props.items
-)
+})
 
 const responsiveClasses = computed(() => ({
   'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
@@ -449,6 +464,33 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
   notifySelectionEvent()
 }
 
+const callItemsProvider = () => {
+  if (!usesProvider.value || !props.provider || internalBusyFlag.value) return
+  internalBusyFlag.value = true
+  const response = props.provider(
+    {
+      currentPage: props.currentPage,
+      filter: props.filter,
+      sortBy: props.sortBy,
+      sortDesc: props.sortDesc,
+      perPage: props.perPage,
+    },
+    itemHelper.updateInternalItems
+  )
+  if (response === undefined) return
+  if (response instanceof Promise) {
+    response
+      .then((items) => {
+        if (!Array.isArray(items)) return
+        itemHelper.updateInternalItems(items)
+      })
+      .finally(() => (internalBusyFlag.value = false))
+    return
+  }
+  itemHelper.updateInternalItems(response)
+  internalBusyFlag.value = false
+}
+
 const toggleRowDetails = (tr: TableItem) => {
   tr._showDetails = !tr._showDetails
 }
@@ -508,6 +550,7 @@ const selectRow = (index: number) => {
   emits('rowSelected', item)
   notifySelectionEvent()
 }
+
 const unselectRow = (index: number) => {
   if (!selectableBoolean.value) return
   const item = computedItems.value[index]
@@ -517,13 +560,50 @@ const unselectRow = (index: number) => {
   notifySelectionEvent()
 }
 
+onMounted(() => {
+  if (usesProvider.value) {
+    callItemsProvider()
+  }
+})
+
 watch(
   () => props.filter,
-  (filter) => {
+  (filter, oldFilter) => {
+    if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
       emits('filtered', cloneDeep(props.items))
     }
   }
+)
+
+const providerPropsWatch = (prop: string, val: any, oldVal: any) => {
+  if (val === oldVal) return
+  callItemsProvider()
+}
+
+watch(
+  () => internalBusyFlag.value,
+  () => emits('update:busy', internalBusyFlag.value)
+)
+watch(
+  () => props.filter,
+  (val, oldVal) => providerPropsWatch('filter', val, oldVal)
+)
+watch(
+  () => props.currentPage,
+  (val, oldVal) => providerPropsWatch('currentPage', val, oldVal)
+)
+watch(
+  () => props.perPage,
+  (val, oldVal) => providerPropsWatch('perPage', val, oldVal)
+)
+watch(
+  () => props.sortBy,
+  (val, oldVal) => providerPropsWatch('sortBy', val, oldVal)
+)
+watch(
+  () => props.sortDesc,
+  (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
 )
 
 defineExpose({

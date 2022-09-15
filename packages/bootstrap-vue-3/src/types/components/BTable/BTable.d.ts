@@ -23,3 +23,14 @@ export interface Props {
 // Emits
 
 // Other
+export type BTableProviderContext = {
+  filter?: string
+  currentPage?: number
+  perPage?: number
+  sortBy?: string
+  sortDesc?: Booleanish
+}
+export type BTableProvider = (
+  context: BTableProviderContext,
+  provide: (items: Array<TableItem>) => void
+) => Promise<Array<TableItem> | undefined> | Array<TableItem> | undefined
