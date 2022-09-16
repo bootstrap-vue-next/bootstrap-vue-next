@@ -9,17 +9,21 @@
     :data-bs-scroll="bodyScrollingBoolean"
   >
     <div class="offcanvas-header">
-      <h5 id="offcanvasLabel" class="offcanvas-title">
-        <slot name="title">
-          {{ title }}
-        </slot>
-      </h5>
-      <button
-        type="button"
-        class="btn-close text-reset"
-        data-bs-dismiss="offcanvas"
-        :aria-label="dismissLabel"
-      />
+      <slot name="header" v-bind="{visible: modelValue, placement, hide}">
+        <h5 id="offcanvasLabel" class="offcanvas-title">
+          <slot name="title">
+            {{ title }}
+          </slot>
+        </h5>
+        <button
+          v-if="!noHeaderCloseBoolean"
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          :aria-label="dismissLabel"
+        />
+      </slot>
+
       <!-- TODO in v0.2.10 this was fixed to include a dynamic aria-label -->
       <!-- My note still persists, that perhaps we should include native multilanguage support similar to Vuetify -->
       <!-- Regardless, if native multilanguage support is included or not, -->
@@ -28,6 +32,9 @@
     </div>
     <div class="offcanvas-body">
       <slot />
+    </div>
+    <div v-if="$slots.footer">
+      <slot name="footer" v-bind="{visible: modelValue, placement, hide}" />
     </div>
   </div>
 </template>
@@ -46,6 +53,7 @@ interface BOffcanvasProps {
   backdrop?: Booleanish
   placement?: string
   title?: string
+  noHeaderClose?: Booleanish
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
@@ -54,11 +62,13 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   bodyScrolling: false,
   backdrop: true,
   placement: 'start',
+  noHeaderClose: false,
 })
 
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
 const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
+const noHeaderCloseBoolean = useBooleanish(toRef(props, 'noHeaderClose'))
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void
@@ -76,14 +86,22 @@ const instance = ref<Offcanvas>()
 useEventListener(element, 'shown.bs.offcanvas', () => emit('shown'))
 useEventListener(element, 'hidden.bs.offcanvas', () => emit('hidden'))
 
-useEventListener(element, 'show.bs.offcanvas', () => {
+const show = () => {
   emit('show')
   emit('update:modelValue', true)
+}
+
+const hide = () => {
+  emit('hide')
+  emit('update:modelValue', false)
+}
+
+useEventListener(element, 'show.bs.offcanvas', () => {
+  show()
 })
 
 useEventListener(element, 'hide.bs.offcanvas', () => {
-  emit('hide')
-  emit('update:modelValue', false)
+  hide()
 })
 
 onMounted((): void => {

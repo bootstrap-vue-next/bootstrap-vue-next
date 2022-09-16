@@ -5,6 +5,7 @@ export interface Props {
   backdrop?: boolean
   placement?: string
   title?: string
+  noHeaderClose?: boolean
 }
 // Emits
 export interface Emits {
