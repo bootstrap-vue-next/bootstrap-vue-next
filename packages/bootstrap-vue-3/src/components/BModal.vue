@@ -55,7 +55,7 @@
                 :disabled="disableCancel"
                 :size="buttonSize"
                 :variant="cancelVariant"
-                @click="hide(), $emit('cancel')"
+                @click="hide(), emit('cancel')"
               >
                 {{ cancelTitle }}
               </b-button>
@@ -65,7 +65,7 @@
                 :disabled="disableOk"
                 :size="buttonSize"
                 :variant="okVariant"
-                @click="hide(), $emit('ok')"
+                @click="hide(), emit('ok')"
               >
                 {{ okTitle }}
               </b-button>
