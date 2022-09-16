@@ -6,6 +6,7 @@ export interface Props {
   placement?: string
   title?: string
   noHeaderClose?: boolean
+  noHeader?: boolean
 }
 // Emits
 export interface Emits {

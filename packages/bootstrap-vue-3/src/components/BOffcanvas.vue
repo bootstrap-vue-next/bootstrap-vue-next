@@ -8,7 +8,7 @@
     :data-bs-backdrop="backdropBoolean"
     :data-bs-scroll="bodyScrollingBoolean"
   >
-    <div class="offcanvas-header">
+    <div v-if="!noHeaderBoolean" class="offcanvas-header">
       <slot name="header" v-bind="{visible: modelValue, placement, hide}">
         <h5 id="offcanvasLabel" class="offcanvas-title">
           <slot name="title">
@@ -54,6 +54,7 @@ interface BOffcanvasProps {
   placement?: string
   title?: string
   noHeaderClose?: Booleanish
+  noHeader?: Booleanish
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
@@ -63,12 +64,14 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   backdrop: true,
   placement: 'start',
   noHeaderClose: false,
+  noHeader: false,
 })
 
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
 const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
 const noHeaderCloseBoolean = useBooleanish(toRef(props, 'noHeaderClose'))
+const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void
