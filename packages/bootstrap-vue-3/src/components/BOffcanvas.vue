@@ -15,20 +15,14 @@
             {{ title }}
           </slot>
         </h5>
-        <button
+        <b-close-button
           v-if="!noHeaderCloseBoolean"
           type="button"
-          class="btn-close text-reset"
+          class="text-reset"
           data-bs-dismiss="offcanvas"
           :aria-label="dismissLabel"
         />
       </slot>
-
-      <!-- TODO in v0.2.10 this was fixed to include a dynamic aria-label -->
-      <!-- My note still persists, that perhaps we should include native multilanguage support similar to Vuetify -->
-      <!-- Regardless, if native multilanguage support is included or not, -->
-      <!-- It will need to be reviewed through and ensure that any aria-{type} can be modified by a user -->
-      <!-- of course, ignoring true static aria tags like the above aria-labelledby -->
     </div>
     <div class="offcanvas-body">
       <slot />
@@ -45,6 +39,7 @@ import {computed, onMounted, ref, toRef, watch} from 'vue'
 import {Offcanvas} from 'bootstrap'
 import {useBooleanish, useEventListener} from '../composables'
 import type {Booleanish} from '../types'
+import BCloseButton from './BButton/BCloseButton.vue'
 
 interface BOffcanvasProps {
   dismissLabel?: string
