@@ -3,6 +3,8 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BContainer from './BContainer.vue'
 
 describe('container', () => {
+  enableAutoUnmount(afterEach)
+
   it('renders default slot', () => {
     const wrapper = mount(BContainer, {
       slots: {default: 'foobar'},

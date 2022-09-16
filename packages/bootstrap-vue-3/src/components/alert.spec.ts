@@ -1,6 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BAlert from './BAlert.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
 
 describe('alert', () => {
   enableAutoUnmount(afterEach)
@@ -95,60 +96,36 @@ describe('alert', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('has button child if prop dismissible', () => {
+  it('does not have BCloseButton when prop dismissible is false', () => {
     const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true},
+      props: {dismissible: false},
     })
-    const $button = wrapper.find('button')
-    expect($button.exists()).toBe(true)
+    const $closebutton = wrapper.findComponent(BCloseButton)
+    expect($closebutton.exists()).toBe(false)
   })
 
-  it('does not have button child if prop dismissible false', () => {
+  it('button is BCloseButton when not slot dismissible', () => {
     const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: false},
+      props: {dismissible: true, modelValue: true},
     })
-    const $button = wrapper.find('button')
-    expect($button.exists()).toBe(false)
+    const $closebutton = wrapper.findComponent(BCloseButton)
+    expect($closebutton.exists()).toBe(true)
   })
 
-  it('button child has static attribute type button', () => {
+  it('BCloseButton is given prop ariaLabel to be dismissLabel', () => {
     const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true},
+      props: {dismissible: true, modelValue: true, dismissLabel: 'foobar'},
     })
-    const $button = wrapper.get('button')
-    expect($button.attributes('type')).toBe('button')
+    const $closebutton = wrapper.getComponent(BCloseButton)
+    expect($closebutton.props('ariaLabel')).toBe('foobar')
   })
 
-  it('button child has static class btn-close', () => {
+  it('BCloseButton has attr data-bs-dismiss to be alert', () => {
     const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true},
+      props: {dismissible: true, modelValue: true},
     })
-    const $button = wrapper.get('button')
-    expect($button.classes()).toContain('btn-close')
-  })
-
-  it('button child has static attribute data-bs-dismiss alert', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true},
-    })
-    const $button = wrapper.get('button')
-    expect($button.attributes('data-bs-dismiss')).toBe('alert')
-  })
-
-  it('button child has aria-label Close by default', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true},
-    })
-    const $button = wrapper.get('button')
-    expect($button.attributes('aria-label')).toBe('Close')
-  })
-
-  it('button child has aria-label prop dismissLabel', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, dismissLabel: 'foobar'},
-    })
-    const $button = wrapper.get('button')
-    expect($button.attributes('aria-label')).toBe('foobar')
+    const $closebutton = wrapper.getComponent(BCloseButton)
+    expect($closebutton.attributes('data-bs-dismiss')).toBe('alert')
   })
 
   it('button child on click emits update:modelValue', async () => {
@@ -183,6 +160,95 @@ describe('alert', () => {
   it('button child on click emits update:modelValue and gives value 0 if prop modelValue number', async () => {
     const wrapper = mount(BAlert, {
       props: {modelValue: 1000, dismissible: true},
+    })
+    const $button = wrapper.get('button')
+    await $button.trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
+    const [event] = wrapper.emitted('update:modelValue') ?? []
+    expect(event).toEqual([0])
+  })
+
+  it('does not have BCloseButton when slot dismissible', () => {
+    const wrapper = mount(BAlert, {
+      props: {dismissible: true, modelValue: true},
+      slots: {dismissible: 'foobar'},
+    })
+    const $closebutton = wrapper.findComponent(BCloseButton)
+    expect($closebutton.exists()).toBe(false)
+  })
+
+  it('has button child if prop dismissible and slot dismissible', () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true},
+      slots: {dismissible: 'foobar'},
+    })
+    const $button = wrapper.find('button')
+    expect($button.exists()).toBe(true)
+  })
+
+  it('does not have button child if prop dismissible false', () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: false},
+      slots: {dismissible: 'foobar'},
+    })
+    const $button = wrapper.find('button')
+    expect($button.exists()).toBe(false)
+  })
+
+  it('button child has static attribute type button', () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true},
+      slots: {dismissible: 'foobar'},
+    })
+    const $button = wrapper.get('button')
+    expect($button.attributes('type')).toBe('button')
+  })
+
+  it('button child has static attribute data-bs-dismiss alert', () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true},
+      slots: {dismissible: 'foobar'},
+    })
+    const $button = wrapper.get('button')
+    expect($button.attributes('data-bs-dismiss')).toBe('alert')
+  })
+
+  it('button child on click emits update:modelValue', async () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true},
+      slots: {dismissible: 'foobar'},
+    })
+    const $button = wrapper.get('button')
+    await $button.trigger('click')
+    expect(wrapper.emitted()).toHaveProperty('update:modelValue')
+  })
+
+  it('button child on click emits dismissed', async () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true},
+      slots: {dismissible: 'foobar'},
+    })
+    const $button = wrapper.get('button')
+    await $button.trigger('click')
+    expect(wrapper.emitted()).toHaveProperty('dismissed')
+  })
+
+  it('button child on click emits update:modelValue and gives value false if prop modelValue boolean', async () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true},
+      slots: {dismissible: 'foobar'},
+    })
+    const $button = wrapper.get('button')
+    await $button.trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
+    const [event] = wrapper.emitted('update:modelValue') ?? []
+    expect(event).toEqual([false])
+  })
+
+  it('button child on click emits update:modelValue and gives value 0 if prop modelValue number', async () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: 1000, dismissible: true},
+      slots: {dismissible: 'foobar'},
     })
     const $button = wrapper.get('button')
     await $button.trigger('click')

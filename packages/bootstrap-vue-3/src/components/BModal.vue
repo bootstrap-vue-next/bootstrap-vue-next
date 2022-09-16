@@ -17,17 +17,24 @@
                 {{ title }}
               </slot>
             </component>
-            <button
-              v-if="!hideHeaderCloseBoolean"
-              type="button"
-              class="btn-close"
-              :class="computedCloseButtonClasses"
-              data-bs-dismiss="modal"
-              :aria-label="headerCloseLabel"
-              @click="hide()"
-            >
-              <slot name="header-close" />
-            </button>
+            <template v-if="!hideHeaderCloseBoolean">
+              <button
+                v-if="$slots['header-close']"
+                type="button"
+                data-bs-dismiss="modal"
+                @click="hide()"
+              >
+                <slot name="header-close" />
+              </button>
+              <b-close-button
+                v-else
+                type="button"
+                :aria-label="headerCloseLabel"
+                data-bs-dismiss="modal"
+                :white="headerCloseWhiteBoolean"
+                @click="hide()"
+              />
+            </template>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
             <slot />
@@ -243,15 +250,6 @@ const computedTitleClasses = computed(() => [
     ['visually-hidden']: titleSrOnlyBoolean.value,
   },
   props.titleClass,
-])
-
-const hasHeaderCloseSlot = computed<boolean>(() => !!slots['header-close'])
-const computedCloseButtonClasses = computed(() => [
-  {
-    [`btn-close-content`]: hasHeaderCloseSlot.value,
-    [`d-flex`]: hasHeaderCloseSlot.value,
-    [`btn-close-white`]: !hasHeaderCloseSlot.value && headerCloseWhiteBoolean.value,
-  },
 ])
 
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
