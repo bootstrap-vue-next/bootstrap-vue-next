@@ -8,21 +8,27 @@
     :data-bs-backdrop="backdropBoolean"
     :data-bs-scroll="bodyScrollingBoolean"
   >
-    <div class="offcanvas-header">
-      <h5 id="offcanvasLabel" class="offcanvas-title">
-        <slot name="title">
-          {{ title }}
-        </slot>
-      </h5>
-      <b-close-button
-        type="button"
-        class="text-reset"
-        data-bs-dismiss="offcanvas"
-        :aria-label="dismissLabel"
-      />
+    <div v-if="!noHeaderBoolean" class="offcanvas-header">
+      <slot name="header" v-bind="{visible: modelValue, placement, hide}">
+        <h5 id="offcanvasLabel" class="offcanvas-title">
+          <slot name="title">
+            {{ title }}
+          </slot>
+        </h5>
+        <b-close-button
+          v-if="!noHeaderCloseBoolean"
+          type="button"
+          class="text-reset"
+          data-bs-dismiss="offcanvas"
+          :aria-label="dismissLabel"
+        />
+      </slot>
     </div>
     <div class="offcanvas-body">
       <slot />
+    </div>
+    <div v-if="$slots.footer">
+      <slot name="footer" v-bind="{visible: modelValue, placement, hide}" />
     </div>
   </div>
 </template>
@@ -42,6 +48,8 @@ interface BOffcanvasProps {
   backdrop?: Booleanish
   placement?: string
   title?: string
+  noHeaderClose?: Booleanish
+  noHeader?: Booleanish
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
@@ -50,11 +58,15 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   bodyScrolling: false,
   backdrop: true,
   placement: 'start',
+  noHeaderClose: false,
+  noHeader: false,
 })
 
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
 const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
+const noHeaderCloseBoolean = useBooleanish(toRef(props, 'noHeaderClose'))
+const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void
@@ -72,14 +84,22 @@ const instance = ref<Offcanvas>()
 useEventListener(element, 'shown.bs.offcanvas', () => emit('shown'))
 useEventListener(element, 'hidden.bs.offcanvas', () => emit('hidden'))
 
-useEventListener(element, 'show.bs.offcanvas', () => {
+const show = () => {
   emit('show')
   emit('update:modelValue', true)
+}
+
+const hide = () => {
+  emit('hide')
+  emit('update:modelValue', false)
+}
+
+useEventListener(element, 'show.bs.offcanvas', () => {
+  show()
 })
 
 useEventListener(element, 'hide.bs.offcanvas', () => {
-  emit('hide')
-  emit('update:modelValue', false)
+  hide()
 })
 
 onMounted((): void => {
