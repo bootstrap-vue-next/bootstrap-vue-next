@@ -89,6 +89,7 @@ import {computed, nextTick, onMounted, ref, toRef, watch} from 'vue'
 import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
