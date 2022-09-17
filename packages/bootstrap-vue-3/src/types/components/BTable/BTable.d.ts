@@ -32,5 +32,5 @@ export type BTableProviderContext = {
 }
 export type BTableProvider = (
   context: BTableProviderContext,
-  provide: (items: Array<TableItem>) => void
+  provide: (items: Array<TableItem>) => Promise<TableItem[] | undefined>
 ) => Promise<Array<TableItem> | undefined> | Array<TableItem> | undefined
