@@ -107,7 +107,7 @@
             class="py-0"
             @click="toggleDetails()"
           >
-          {{item}}
+          {{ detailsShowing ? 'Hide scope' : 'Show scope' }}
           </b-button>
         </template>
         <template #row-details="{ item }">
@@ -143,7 +143,7 @@
   </div>
 </template>
 <script lang="ts">
-import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent} from 'vue'
+import {resolveComponent, defineComponent, computed, ComputedRef, ConcreteComponent, ref, Ref} from 'vue'
 import AnchoredHeading from './anchored-heading'
 import {hyphenate} from '../../../utils'
 // type definitions
@@ -315,9 +315,10 @@ export default defineComponent({
       ]
     })
 
-    const slotsItems: ComputedRef<any> = computed(() => {
-      return props.slots ? props.slots.map(slot => ({ ...slot as any})) : []
-    })
+    const slotsItems: Ref<any[]> = ref(
+       props.slots ? props.slots.map(slot => ({ ...slot as any})) : []
+    )
+
 
     const vmodelItems: ComputedRef<any> = computed(() => {
       //TODO loop through props and emits to determine v-model
