@@ -1,5 +1,4 @@
 import type {Slots, VNode} from 'vue'
-import {isFunction} from '.'
 
 /**
  * @param name
@@ -16,5 +15,5 @@ export default (name: string, scope = {}, $slots: Slots = {}): VNode => {
     slot = $slots[name]
   }
   // Note: in Vue 3.x, slots have been unified. No more scoped slots and all slots are exposed as functions
-  return (slot && isFunction(slot) ? slot(scope) : slot) as unknown as VNode
+  return (slot && typeof slot === 'function' ? slot(scope) : slot) as unknown as VNode
 }

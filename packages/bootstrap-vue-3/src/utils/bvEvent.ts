@@ -1,5 +1,5 @@
 import {Component} from 'vue'
-import {assign, defineProperties, defineProperty, readonlyDescriptor} from '.'
+import {readonlyDescriptor} from './object'
 
 /**
  * @external
@@ -29,10 +29,10 @@ export default class BvEvent {
     // TODO: Find a better way to avoid the original error...
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    assign(this, BvEvent.Defaults, this.constructor.Defaults, eventInit, {eventType})
+    Object.assign(this, BvEvent.Defaults, this.constructor.Defaults, eventInit, {eventType})
 
     // Freeze some props as readonly, but leave them enumerable
-    defineProperties(this, {
+    Object.defineProperties(this, {
       type: readonlyDescriptor(),
       cancelable: readonlyDescriptor(),
       nativeEvent: readonlyDescriptor(),
@@ -53,7 +53,7 @@ export default class BvEvent {
 
     // Create `defaultPrevented` publicly accessible prop that
     // can only be altered by the preventDefault method
-    defineProperty(this, 'defaultPrevented', {
+    Object.defineProperty(this, 'defaultPrevented', {
       enumerable: true,
       get() {
         return defaultPrevented

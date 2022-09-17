@@ -1,5 +1,6 @@
 import {AnimationFrame, DOCUMENT} from '../types/safeTypes'
-import {from as arrayFrom, HAS_WINDOW_SUPPORT, toString} from '.'
+import {HAS_WINDOW_SUPPORT} from './env'
+import {toString} from './stringUtils'
 import {Comment, Slot, VNode} from 'vue'
 
 /**
@@ -140,7 +141,7 @@ export const select = (selector: any, root: any) =>
  * @returns
  */
 export const selectAll = (selector: any, root: any) =>
-  arrayFrom((isElement(root) ? root : DOCUMENT).querySelectorAll(selector))
+  Array.from([(isElement(root) ? root : DOCUMENT).querySelectorAll(selector)])
 
 /**
  * @param el

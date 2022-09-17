@@ -24,17 +24,24 @@
                 {{ title }}
               </slot>
             </component>
-            <button
-              v-if="!hideHeaderCloseBoolean"
-              type="button"
-              class="btn-close"
-              :class="computedCloseButtonClasses"
-              data-bs-dismiss="modal"
-              :aria-label="headerCloseLabel"
-              @click="hide()"
-            >
-              <slot name="header-close" />
-            </button>
+            <template v-if="!hideHeaderCloseBoolean">
+              <button
+                v-if="$slots['header-close']"
+                type="button"
+                data-bs-dismiss="modal"
+                @click="hide()"
+              >
+                <slot name="header-close" />
+              </button>
+              <b-close-button
+                v-else
+                type="button"
+                :aria-label="headerCloseLabel"
+                data-bs-dismiss="modal"
+                :white="headerCloseWhiteBoolean"
+                @click="hide()"
+              />
+            </template>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
             <slot />
@@ -78,10 +85,11 @@
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
-import {computed, nextTick, onMounted, ref, toRef, useSlots, watch} from 'vue'
+import {computed, nextTick, onMounted, ref, toRef, watch} from 'vue'
 import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
@@ -198,8 +206,6 @@ interface BModalEmits {
 
 const emit = defineEmits<BModalEmits>()
 
-const slots = useSlots()
-
 const element = ref<HTMLElement>()
 const instance = ref<Modal>()
 const modalClasses = computed(() => [
@@ -252,15 +258,6 @@ const computedTitleClasses = computed(() => [
     ['visually-hidden']: titleSrOnlyBoolean.value,
   },
   props.titleClass,
-])
-
-const hasHeaderCloseSlot = computed<boolean>(() => !!slots['header-close'])
-const computedCloseButtonClasses = computed(() => [
-  {
-    [`btn-close-content`]: hasHeaderCloseSlot.value,
-    [`d-flex`]: hasHeaderCloseSlot.value,
-    [`btn-close-white`]: !hasHeaderCloseSlot.value && headerCloseWhiteBoolean.value,
-  },
 ])
 
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)

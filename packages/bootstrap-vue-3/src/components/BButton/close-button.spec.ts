@@ -10,9 +10,16 @@ describe('close-button', () => {
     expect(wrapper.classes()).toContain('btn-close')
   })
 
-  it('has static attr type as button', () => {
+  it('has attr type to be button by default', () => {
     const wrapper = mount(BCloseButton)
     expect(wrapper.attributes('type')).toBe('button')
+  })
+
+  it('has attr type to be prop type', () => {
+    const wrapper = mount(BCloseButton, {
+      props: {type: 'submit'},
+    })
+    expect(wrapper.attributes('type')).toBe('submit')
   })
 
   it('has attr aria-label when prop ariaLabel', async () => {

@@ -10,13 +10,14 @@
 
 <script setup lang="ts">
 // import type {BNavItemDropdownProps} from '../types/components'
-import type {ButtonVariant, Size} from '../../types'
+import type {ButtonVariant, ClassValue, Size} from '../../types'
 import BDropdown from '../BDropdown/BDropdown.vue'
 
 // Unsure of how to include booleanish here
 interface BNavItemDropdownProps {
   id?: string
   text?: string
+  toggleClass?: ClassValue
   size?: Size
   offset?: string
   autoClose?: boolean | 'inside' | 'outside'

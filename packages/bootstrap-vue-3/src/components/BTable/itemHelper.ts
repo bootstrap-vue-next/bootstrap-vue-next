@@ -1,6 +1,6 @@
 import {ref, Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
-import {isObject, isString, startCase} from '../../utils'
+import {isObject, startCase} from '../../utils'
 import {cloneDeep} from './../../utils/object'
 
 const useItemHelper = () => {
@@ -16,7 +16,7 @@ const useItemHelper = () => {
       origFields.forEach((f) => {
         if (typeof f === 'string') {
           fields.push({key: f, label: startCase(f)})
-        } else if (isObject(f) && f.key && isString(f.key)) {
+        } else if (isObject(f) && f.key && typeof f.key === 'string') {
           fields.push({...f})
         }
         // todo handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
