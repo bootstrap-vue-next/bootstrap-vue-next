@@ -1,183 +1,176 @@
 <template>
-  <BTableContainer :responsive="responsive" :responsive-class="responsiveClasses">
-    <table :class="classes">
-      <thead>
-        <slot v-if="$slots['thead-top']" name="thead-top" />
-        <tr>
-          <th
+  <BTableContainer :responsive="responsive" :responsive-class="responsiveClasses" :class="classes">
+    <!-- <table :class="classes"> -->
+    <thead>
+      <slot v-if="$slots['thead-top']" name="thead-top" />
+      <tr>
+        <th
+          v-if="addSelectableCell"
+          class="b-table-selection-column"
+          :class="{
+            'b-table-sticky-column': stickySelectBoolean,
+          }"
+        >
+          <slot name="selectHead">
+            {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
+          </slot>
+        </th>
+        <th
+          v-for="field in computedFields"
+          :key="field.key"
+          scope="col"
+          :class="getFieldColumnClasses(field)"
+          :title="field.headerTitle"
+          :abbr="field.headerAbbr"
+          :style="field.thStyle"
+          v-bind="field.thAttr"
+          @click="headerClicked(field, $event)"
+        >
+          <div class="d-inline-flex flex-nowrap align-items-center gap-1">
+            <slot
+              name="sortIcon"
+              :field="field"
+              :sort-by="sortBy"
+              :selected="field.key === sortBy"
+              :is-desc="sortDescBoolean"
+              :direction="sortDescBoolean ? 'desc' : 'asc'"
+            >
+              <span
+                v-if="isSortable && field.sortable && field.key === sortBy"
+                class="b-table-sort-icon text-muted small"
+              />
+            </slot>
+            <div>
+              <slot
+                v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
+                :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
+                :label="field.label"
+              />
+              <template v-else>{{ getFieldHeadLabel(field) }}</template>
+            </div>
+          </div>
+        </th>
+      </tr>
+      <tr v-if="$slots['thead-sub']">
+        <td
+          v-for="field in computedFields"
+          :key="field.key"
+          scope="col"
+          :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+        >
+          <slot
+            v-if="$slots['thead-sub']"
+            name="thead-sub"
+            :items="computedFields"
+            v-bind="field"
+          />
+          <template v-else>{{ field.label }}</template>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
+        <tr
+          :class="getRowClasses(item)"
+          @click.prevent="onRowClick(item, itemIndex, $event)"
+          @dblclick.prevent="onRowDblClick(item, itemIndex, $event)"
+          @mouseenter.prevent="onRowMouseEnter(item, itemIndex, $event)"
+          @mouseleave.prevent="onRowMouseLeave(item, itemIndex, $event)"
+        >
+          <td
             v-if="addSelectableCell"
             class="b-table-selection-column"
             :class="{
               'b-table-sticky-column': stickySelectBoolean,
             }"
           >
-            <slot name="selectHead">
-              {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
+            <slot name="selectCell">
+              <span :class="selectedItems.has(item) ? 'text-primary' : ''">🗹</span>
             </slot>
-          </th>
-          <th
-            v-for="field in computedFields"
-            :key="field.key"
-            scope="col"
-            :class="getFieldColumnClasses(field)"
-            :title="field.headerTitle"
-            :abbr="field.headerAbbr"
-            :style="field.thStyle"
-            v-bind="field.thAttr"
-            @click="headerClicked(field, $event)"
-          >
-            <div class="d-inline-flex flex-nowrap align-items-center gap-1">
-              <slot
-                name="sortIcon"
-                :field="field"
-                :sort-by="sortBy"
-                :selected="field.key === sortBy"
-                :is-desc="sortDescBoolean"
-                :direction="sortDescBoolean ? 'desc' : 'asc'"
-              >
-                <span
-                  v-if="isSortable && field.sortable && field.key === sortBy"
-                  class="b-table-sort-icon text-muted small"
-                />
-              </slot>
-              <div>
-                <slot
-                  v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
-                  :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
-                  :label="field.label"
-                />
-                <template v-else>{{ getFieldHeadLabel(field) }}</template>
-              </div>
-            </div>
-          </th>
-        </tr>
-        <tr v-if="$slots['thead-sub']">
+          </td>
           <td
             v-for="field in computedFields"
             :key="field.key"
-            scope="col"
-            :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+            v-bind="field.tdAttr"
+            :class="getFieldRowClasses(field, item)"
           >
             <slot
-              v-if="$slots['thead-sub']"
-              name="thead-sub"
-              :items="computedFields"
-              v-bind="field"
+              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
+              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
+              :value="item[field.key]"
+              :index="itemIndex"
+              :item="item"
+              :field="field"
+              :items="items"
+              :toggle-details="() => toggleRowDetails(item)"
+              :details-showing="item._showDetails"
             />
-            <template v-else>{{ field.label }}</template>
+            <template v-else>{{ item[field.key] }}</template>
           </td>
         </tr>
-      </thead>
-      <tbody>
-        <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
-          <tr
-            :class="getRowClasses(item)"
-            @click.prevent="onRowClick(item, itemIndex, $event)"
-            @dblclick.prevent="onRowDblClick(item, itemIndex, $event)"
-            @mouseenter.prevent="onRowMouseEnter(item, itemIndex, $event)"
-            @mouseleave.prevent="onRowMouseLeave(item, itemIndex, $event)"
-          >
-            <td
-              v-if="addSelectableCell"
-              class="b-table-selection-column"
-              :class="{
-                'b-table-sticky-column': stickySelectBoolean,
-              }"
-            >
-              <slot name="selectCell">
-                <span :class="selectedItems.has(item) ? 'text-primary' : ''">🗹</span>
-              </slot>
-            </td>
-            <td
-              v-for="field in computedFields"
-              :key="field.key"
-              v-bind="field.tdAttr"
-              :class="getFieldRowClasses(field, item)"
-            >
-              <slot
-                v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
-                :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-                :value="item[field.key]"
-                :index="itemIndex"
-                :item="item"
-                :field="field"
-                :items="items"
-                :toggle-details="() => toggleRowDetails(item)"
-                :details-showing="item._showDetails"
-              />
-              <template v-else>{{ item[field.key] }}</template>
-            </td>
-          </tr>
 
-          <tr
-            v-if="item._showDetails === true && $slots['row-details']"
-            :class="getRowClasses(item)"
-          >
-            <td :colspan="computedFieldsTotal">
-              <slot
-                name="row-details"
-                :item="item"
-                :toggle-details="() => toggleRowDetails(item)"
-              />
-            </td>
-          </tr>
-        </template>
-        <tr
-          v-if="internalBusyFlag"
-          class="b-table-busy-slot"
-          :class="{'b-table-static-busy': computedItems.length == 0}"
+        <tr v-if="item._showDetails === true && $slots['row-details']" :class="getRowClasses(item)">
+          <td :colspan="computedFieldsTotal">
+            <slot name="row-details" :item="item" :toggle-details="() => toggleRowDetails(item)" />
+          </td>
+        </tr>
+      </template>
+      <tr
+        v-if="internalBusyFlag"
+        class="b-table-busy-slot"
+        :class="{'b-table-static-busy': computedItems.length == 0}"
+      >
+        <td :colspan="computedFieldsTotal">
+          <slot name="table-busy">
+            <div class="d-flex align-items-center justify-content-center gap-2">
+              <b-spinner class="align-middle" />
+              <strong>Loading...</strong>
+            </div>
+          </slot>
+        </td>
+      </tr>
+      <tr v-if="showEmptyBoolean && computedItems.length === 0" class="b-table-empty-slot">
+        <td :colspan="computedFieldsTotal">
+          <slot name="empty" :items="computedItems" :filtered="isFilterableTable">
+            {{ isFilterableTable ? emptyFilteredText : emptyText }}
+          </slot>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot v-if="footCloneBoolean">
+      <tr>
+        <th
+          v-for="field in computedFields"
+          :key="field.key"
+          v-bind="field.thAttr"
+          scope="col"
+          :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+          :title="field.headerTitle"
+          :abbr="field.headerAbbr"
+          :style="field.thStyle"
+          @click="headerClicked(field, $event, true)"
         >
-          <td :colspan="computedFieldsTotal">
-            <slot name="table-busy">
-              <div class="d-flex align-items-center justify-content-center gap-2">
-                <b-spinner class="align-middle" />
-                <strong>Loading...</strong>
-              </div>
-            </slot>
-          </td>
-        </tr>
-        <tr v-if="showEmptyBoolean && computedItems.length === 0" class="b-table-empty-slot">
-          <td :colspan="computedFieldsTotal">
-            <slot name="empty" :items="computedItems" :filtered="isFilterableTable">
-              {{ isFilterableTable ? emptyFilteredText : emptyText }}
-            </slot>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot v-if="footCloneBoolean">
-        <tr>
-          <th
-            v-for="field in computedFields"
-            :key="field.key"
-            v-bind="field.thAttr"
-            scope="col"
-            :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
-            :title="field.headerTitle"
-            :abbr="field.headerAbbr"
-            :style="field.thStyle"
-            @click="headerClicked(field, $event, true)"
-          >
-            {{ field.label }}
-          </th>
-        </tr>
-      </tfoot>
-      <tfoot v-else-if="$slots['custom-foot']">
-        <slot
-          name="custom-foot"
-          :fields="computedFields"
-          :items="items"
-          :columns="computedFields?.length"
-        />
-      </tfoot>
-      <caption v-if="$slots['table-caption']">
-        <slot name="table-caption" />
-      </caption>
-      <caption v-else-if="caption">
-        {{
-          caption
-        }}
-      </caption>
-    </table>
+          {{ field.label }}
+        </th>
+      </tr>
+    </tfoot>
+    <tfoot v-else-if="$slots['custom-foot']">
+      <slot
+        name="custom-foot"
+        :fields="computedFields"
+        :items="items"
+        :columns="computedFields?.length"
+      />
+    </tfoot>
+    <caption v-if="$slots['table-caption']">
+      <slot name="table-caption" />
+    </caption>
+    <caption v-else-if="caption">
+      {{
+        caption
+      }}
+    </caption>
+    <!-- </table> -->
   </BTableContainer>
 </template>
 
@@ -185,7 +178,7 @@
 // import type {Breakpoint} from '../../types'
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
-import {cloneDeep} from '../../utils/object'
+import {cloneDeepAsync} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 
@@ -352,12 +345,13 @@ const classes = computed(() => [
 
 const itemHelper = useItemHelper()
 
-itemHelper.filterEvent.value = (items) => {
+itemHelper.filterEvent.value = async (items) => {
   if (usesProvider.value) {
-    callItemsProvider()
+    await callItemsProvider()
     return
   }
-  emits('filtered', cloneDeep(items))
+  const clone = await cloneDeepAsync(items)
+  emits('filtered', clone)
 }
 
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
@@ -473,7 +467,7 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
   notifySelectionEvent()
 }
 
-const callItemsProvider = () => {
+const callItemsProvider = async () => {
   if (!usesProvider.value || !props.provider || internalBusyFlag.value) return
   internalBusyFlag.value = true
   const context = new Proxy(
@@ -497,17 +491,26 @@ const callItemsProvider = () => {
   const response = props.provider(context, itemHelper.updateInternalItems)
   if (response === undefined) return
   if (response instanceof Promise) {
-    return response
-      .then(async (items) => {
-        if (!Array.isArray(items)) return
-        const internalItems = itemHelper.updateInternalItems(items)
-        return internalItems
-      })
-      .finally(() => (internalBusyFlag.value = false))
+    try {
+      const items = await response
+      if (!Array.isArray(items)) return
+      const internalItems = await itemHelper.updateInternalItems(items)
+      return internalItems
+    } finally {
+      if (!internalBusyFlag.value) {
+        internalBusyFlag.value = false
+      }
+    }
   }
-  return itemHelper.updateInternalItems(response).finally(() => {
-    internalBusyFlag.value = false
-  })
+
+  try {
+    const internalItems = await itemHelper.updateInternalItems(response)
+    return internalItems
+  } finally {
+    if (internalBusyFlag.value) {
+      internalBusyFlag.value = false
+    }
+  }
 }
 
 const toggleRowDetails = (tr: TableItem) => {
@@ -590,12 +593,12 @@ watch(
   (filter, oldFilter) => {
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
-      emits('filtered', cloneDeep(props.items))
+      cloneDeepAsync(props.items).then((item) => emits('filtered', item))
     }
   }
 )
 
-const providerPropsWatch = (prop: string, val: any, oldVal: any) => {
+const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
   if (val === oldVal) return
 
   //stop provide when paging
@@ -614,7 +617,7 @@ const providerPropsWatch = (prop: string, val: any, oldVal: any) => {
     return
   }
 
-  callItemsProvider()
+  await callItemsProvider()
 }
 
 watch(

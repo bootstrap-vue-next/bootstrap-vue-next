@@ -1,7 +1,7 @@
 import {ref, Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, startCase} from '../../utils'
-import {cloneDeep} from './../../utils/object'
+import {cloneDeep, cloneDeepAsync} from './../../utils/object'
 
 const useItemHelper = () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
@@ -101,12 +101,11 @@ const useItemHelper = () => {
     items: TableItem<Record<string, any>>[]
   ): Promise<TableItem[] | undefined> => {
     try {
-      internalItems.value = await cloneDeep(items)
+      internalItems.value = await cloneDeepAsync(items)
       return internalItems.value
     } catch (err) {
-      console.error(err)
+      return undefined
     }
-    return undefined
   }
 
   return {
