@@ -44,8 +44,7 @@ const overlapScale = computed<number>(
 )
 
 const paddingStyle = computed<StyleValue>(() => {
-  let {value} = computedSize
-  value = value ? `calc(${value} * ${overlapScale.value})` : null
+  const value = computedSize.value ? `calc(${computedSize.value} * ${overlapScale.value})` : null
   return value ? {paddingLeft: value, paddingRight: value} : {}
 })
 

@@ -54,6 +54,7 @@ const fadeBoolean = useBooleanish(toRef(props, 'fade'))
 const showBoolean = useBooleanish(toRef(props, 'show'))
 
 interface BAlertEmits {
+  // TODO rename dismissed to closed
   (e: 'dismissed'): void
   (e: 'dismiss-count-down', value: number): void
   (e: 'update:modelValue', value: boolean | number): void
