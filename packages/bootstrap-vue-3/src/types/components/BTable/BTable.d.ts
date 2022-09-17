@@ -24,11 +24,11 @@ export interface Props {
 
 // Other
 export type BTableProviderContext = {
-  filter?: string
-  currentPage?: number
-  perPage?: number
-  sortBy?: string
-  sortDesc?: Booleanish
+  readonly filter?: string
+  readonly currentPage?: number
+  readonly perPage?: number
+  readonly sortBy?: string
+  readonly sortDesc?: Booleanish
 }
 export type BTableProvider = (
   context: BTableProviderContext,

@@ -476,7 +476,7 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
 const callItemsProvider = () => {
   if (!usesProvider.value || !props.provider || internalBusyFlag.value) return
   internalBusyFlag.value = true
-  const response = props.provider(
+  const context = new Proxy(
     {
       currentPage: props.currentPage,
       filter: props.filter,
@@ -484,18 +484,26 @@ const callItemsProvider = () => {
       sortDesc: props.sortDesc,
       perPage: props.perPage,
     },
-    itemHelper.updateInternalItems
+    {
+      get(target: any, prop) {
+        return prop in target ? target[prop] : undefined
+      },
+      set() {
+        console.error('BTable provider context is a read-only object.')
+        return true
+      },
+    }
   )
+  const response = props.provider(context, itemHelper.updateInternalItems)
   if (response === undefined) return
   if (response instanceof Promise) {
-    response
+    return response
       .then(async (items) => {
         if (!Array.isArray(items)) return
-        const internalItems = await itemHelper.updateInternalItems(items)
+        const internalItems = itemHelper.updateInternalItems(items)
         return internalItems
       })
       .finally(() => (internalBusyFlag.value = false))
-    return
   }
   return itemHelper.updateInternalItems(response).finally(() => {
     internalBusyFlag.value = false
