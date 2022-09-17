@@ -201,6 +201,8 @@ import type {BTableProvider} from '../../types/components'
 import BTableContainer from './BTableContainer.vue'
 import useItemHelper from './itemHelper'
 
+type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
+
 interface BTableProps {
   align?: VerticalAlign
   caption?: string
@@ -214,7 +216,10 @@ interface BTableProps {
   hover?: Booleanish
   items?: Array<TableItem>
   provider?: BTableProvider
-  noProviding?: Array<'paging' | 'sorting' | 'filtering'>
+  noProvider?: Array<NoProviderTypes>
+  noProviderPaging?: Booleanish
+  noProviderSorting?: Booleanish
+  noProviderFiltering?: Booleanish
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   small?: Booleanish
   striped?: Booleanish
@@ -280,6 +285,9 @@ const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
 const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderPagingBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderSortingBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderFilteringBoolean = useBooleanish(toRef(props, 'showEmpty'))
 
 const internalBusyFlag = ref(busyBoolean.value)
 
@@ -581,15 +589,20 @@ watch(
 
 const providerPropsWatch = (prop: string, val: any, oldVal: any) => {
   if (val === oldVal) return
-  if (
-    (['currentPage', 'perPage'].includes(prop) &&
-      props.noProviding &&
-      props.noProviding.includes('paging')) ||
-    (['filter'].includes(prop) && props.noProviding && props.noProviding.includes('filtering')) ||
-    (['sortBy', 'sortDesc'].includes(prop) &&
-      props.noProviding &&
-      props.noProviding.includes('sorting'))
-  ) {
+
+  //stop provide when paging
+  const inNoProvider = (key: NoProviderTypes) => props.noProvider && props.noProvider.includes(key)
+  const noProvideWhenPaging =
+    ['currentPage', 'perPage'].includes(prop) &&
+    (inNoProvider('paging') || noProviderPagingBoolean.value === true)
+  const noProvideWhenFiltering =
+    ['filter'].includes(prop) &&
+    (inNoProvider('filtering') || noProviderFilteringBoolean.value === true)
+  const noProvideWhenSorting =
+    ['sortBy', 'sortDesc'].includes(prop) &&
+    (inNoProvider('sorting') || noProviderSortingBoolean.value === true)
+
+  if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) {
     return
   }
 
