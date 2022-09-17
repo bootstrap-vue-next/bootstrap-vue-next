@@ -214,6 +214,7 @@ interface BTableProps {
   hover?: Booleanish
   items?: Array<TableItem>
   provider?: BTableProvider
+  noProviding?: Array<'paging' | 'sorting' | 'filtering'>
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   small?: Booleanish
   striped?: Booleanish
@@ -578,6 +579,18 @@ watch(
 
 const providerPropsWatch = (prop: string, val: any, oldVal: any) => {
   if (val === oldVal) return
+  if (
+    (['currentPage', 'perPage'].includes(prop) &&
+      props.noProviding &&
+      props.noProviding.includes('paging')) ||
+    (['filter'].includes(prop) && props.noProviding && props.noProviding.includes('filtering')) ||
+    (['sortBy', 'sortDesc'].includes(prop) &&
+      props.noProviding &&
+      props.noProviding.includes('sorting'))
+  ) {
+    return
+  }
+
   callItemsProvider()
 }
 
