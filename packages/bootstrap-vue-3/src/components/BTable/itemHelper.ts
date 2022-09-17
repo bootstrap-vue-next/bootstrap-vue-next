@@ -97,8 +97,16 @@ const useItemHelper = () => {
         }).length > 0
     )
 
-  const updateInternalItems = (items: TableItem<Record<string, any>>[]) => {
-    internalItems.value = cloneDeep(items)
+  const updateInternalItems = async (
+    items: TableItem<Record<string, any>>[]
+  ): Promise<TableItem[] | undefined> => {
+    try {
+      internalItems.value = await cloneDeep(items)
+      return internalItems.value
+    } catch (err) {
+      console.error(err)
+    }
+    return undefined
   }
 
   return {

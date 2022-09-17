@@ -481,15 +481,17 @@ const callItemsProvider = () => {
   if (response === undefined) return
   if (response instanceof Promise) {
     response
-      .then((items) => {
+      .then(async (items) => {
         if (!Array.isArray(items)) return
-        itemHelper.updateInternalItems(items)
+        const internalItems = await itemHelper.updateInternalItems(items)
+        return internalItems
       })
       .finally(() => (internalBusyFlag.value = false))
     return
   }
-  itemHelper.updateInternalItems(response)
-  internalBusyFlag.value = false
+  return itemHelper.updateInternalItems(response).finally(() => {
+    internalBusyFlag.value = false
+  })
 }
 
 const toggleRowDetails = (tr: TableItem) => {
@@ -596,7 +598,11 @@ const providerPropsWatch = (prop: string, val: any, oldVal: any) => {
 
 watch(
   () => internalBusyFlag.value,
-  () => emits('update:busy', internalBusyFlag.value)
+  () => internalBusyFlag.value !== busyBoolean.value && emits('update:busy', internalBusyFlag.value)
+)
+watch(
+  () => busyBoolean.value,
+  () => internalBusyFlag.value !== busyBoolean.value && (internalBusyFlag.value = busyBoolean.value)
 )
 watch(
   () => props.filter,
