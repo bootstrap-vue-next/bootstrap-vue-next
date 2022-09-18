@@ -1,5 +1,9 @@
 <template>
-  <BTableContainer :responsive="responsive" :responsive-class="responsiveClasses" :table-class="classes">
+  <BTableContainer
+    :responsive="responsive"
+    :responsive-class="responsiveClasses"
+    :table-class="tableClasses"
+  >
     <!-- <table :class="classes"> -->
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
@@ -320,7 +324,7 @@ interface BTableEmits {
 const emits = defineEmits<BTableEmits>()
 const slots = useSlots()
 
-const classes = computed(() => [
+const tableClasses = computed(() => [
   'table b-table',
   {
     [`align-${props.align}`]: props.align !== undefined,
