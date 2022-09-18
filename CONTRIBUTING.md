@@ -38,7 +38,7 @@ pnpm install
 pnpm dev
 ```
 
-__Only pnpm is allowed__, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
+**Only pnpm is allowed**, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
 
 Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
 
