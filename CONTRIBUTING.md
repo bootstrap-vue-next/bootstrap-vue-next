@@ -49,6 +49,14 @@ Finally, after you have made sufficient changes and you are ready to publish you
 
 This will begin the process to merge your changes into the upstream repository's main branch
 
+## Developing
+
+The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-3`, this is primarily where developing is done. You can then run `pnpm dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-3:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-3/src/app.vue` file as a test area for any changes that you make
+
+You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`)
+
+You can also use `pnpm dev --filter bootstrap-vue-3` to only open the main host
+
 ## Registering New Components
 
 For adding a new component, there are some notes...
@@ -72,12 +80,6 @@ That is it!
 ## Fixing or Adding Features to Components
 
 To fix an already made component, or to add a new feature to a component is a bit easier. You will need to identify a need for the fix, understand the file in question, then apply the change. It is not as complex as making an entirely new component. After you are finished with your change and are making a pull request, it can sometimes be very beneficial to include a code reproduction that shows the changes visually but is not required
-
-## Developing
-
-The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-3`, this is primarily where developing is done. You can make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, since it does not contain native hot-reloading, it makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`)
-
-Running `pnpm dev` at the root of the project will start all developable projects in the workspace, including the main package, docs, and playground, In addition, running `pnpm build` will also build all relevant code-bases
 
 ## Ask for Help
 
