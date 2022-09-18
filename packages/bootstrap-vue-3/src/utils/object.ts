@@ -39,3 +39,6 @@ export const cloneDeep = <T>(source: T): T =>
         return o
       }, Object.create(Object.getPrototypeOf(source)))
     : source
+
+export const cloneDeepAsync = <T>(source: T): Promise<T> =>
+  new Promise((resolve) => resolve(cloneDeep(source)))

@@ -1,187 +1,188 @@
 <template>
-  <BTableContainer :responsive="responsive" :responsive-class="responsiveClasses">
-    <table :class="classes">
-      <thead>
-        <slot v-if="$slots['thead-top']" name="thead-top" />
-        <tr>
-          <th
+  <BTableContainer
+    :responsive="responsive"
+    :responsive-class="responsiveClasses"
+    :table-class="tableClasses"
+  >
+    <!-- <table :class="classes"> -->
+    <thead>
+      <slot v-if="$slots['thead-top']" name="thead-top" />
+      <tr>
+        <th
+          v-if="addSelectableCell"
+          class="b-table-selection-column"
+          :class="{
+            'b-table-sticky-column': stickySelectBoolean,
+          }"
+        >
+          <slot name="selectHead">
+            {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
+          </slot>
+        </th>
+        <th
+          v-for="field in computedFields"
+          :key="field.key"
+          scope="col"
+          :class="getFieldColumnClasses(field)"
+          :title="field.headerTitle"
+          :abbr="field.headerAbbr"
+          :style="field.thStyle"
+          v-bind="field.thAttr"
+          @click="headerClicked(field, $event)"
+        >
+          <div class="d-inline-flex flex-nowrap align-items-center gap-1">
+            <slot
+              name="sortIcon"
+              :field="field"
+              :sort-by="sortBy"
+              :selected="field.key === sortBy"
+              :is-desc="sortDescBoolean"
+              :direction="sortDescBoolean ? 'desc' : 'asc'"
+            >
+              <span
+                v-if="isSortable && field.sortable && field.key === sortBy"
+                class="b-table-sort-icon text-muted small"
+              />
+            </slot>
+            <div>
+              <slot
+                v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
+                :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
+                :label="field.label"
+              />
+              <template v-else>{{ getFieldHeadLabel(field) }}</template>
+            </div>
+          </div>
+        </th>
+      </tr>
+      <tr v-if="$slots['thead-sub']">
+        <td
+          v-for="field in computedFields"
+          :key="field.key"
+          scope="col"
+          :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+        >
+          <slot
+            v-if="$slots['thead-sub']"
+            name="thead-sub"
+            :items="computedFields"
+            v-bind="field"
+          />
+          <template v-else>{{ field.label }}</template>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
+        <tr
+          :class="getRowClasses(item)"
+          @click.prevent="onRowClick(item, itemIndex, $event)"
+          @dblclick.prevent="onRowDblClick(item, itemIndex, $event)"
+          @mouseenter.prevent="onRowMouseEnter(item, itemIndex, $event)"
+          @mouseleave.prevent="onRowMouseLeave(item, itemIndex, $event)"
+        >
+          <td
             v-if="addSelectableCell"
             class="b-table-selection-column"
             :class="{
               'b-table-sticky-column': stickySelectBoolean,
             }"
           >
-            <slot name="selectHead">
-              {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
+            <slot name="selectCell">
+              <span :class="selectedItems.has(item) ? 'text-primary' : ''">🗹</span>
             </slot>
-          </th>
-          <th
-            v-for="field in computedFields"
-            :key="field.key"
-            scope="col"
-            :class="getFieldColumnClasses(field)"
-            :title="field.headerTitle"
-            :abbr="field.headerAbbr"
-            :style="field.thStyle"
-            v-bind="field.thAttr"
-            @click="headerClicked(field, $event)"
-          >
-            <div class="d-inline-flex flex-nowrap align-items-center gap-1">
-              <slot
-                name="sortIcon"
-                :field="field"
-                :sort-by="sortBy"
-                :selected="field.key === sortBy"
-                :is-desc="sortDescBoolean"
-                :direction="sortDescBoolean ? 'desc' : 'asc'"
-              >
-                <span
-                  v-if="isSortable && field.sortable && field.key === sortBy"
-                  class="b-table-sort-icon text-muted small"
-                />
-              </slot>
-              <div>
-                <slot
-                  v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
-                  :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
-                  :label="field.label"
-                />
-                <template v-else>{{ getFieldHeadLabel(field) }}</template>
-              </div>
-            </div>
-          </th>
-        </tr>
-        <tr v-if="$slots['thead-sub']">
+          </td>
           <td
             v-for="field in computedFields"
             :key="field.key"
-            scope="col"
-            :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+            v-bind="field.tdAttr"
+            :class="getFieldRowClasses(field, item)"
           >
             <slot
-              v-if="$slots['thead-sub']"
-              name="thead-sub"
-              :items="computedFields"
-              v-bind="field"
+              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
+              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
+              :value="item[field.key]"
+              :index="itemIndex"
+              :item="item"
+              :field="field"
+              :items="items"
+              :toggle-details="() => toggleRowDetails(item)"
+              :details-showing="item._showDetails"
             />
-            <template v-else>{{ field.label }}</template>
+            <template v-else>{{ item[field.key] }}</template>
           </td>
         </tr>
-      </thead>
-      <tbody>
-        <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
-          <tr
-            :class="getRowClasses(item)"
-            @click.prevent="onRowClick(item, itemIndex, $event)"
-            @dblclick.prevent="onRowDblClick(item, itemIndex, $event)"
-            @mouseenter.prevent="onRowMouseEnter(item, itemIndex, $event)"
-            @mouseleave.prevent="onRowMouseLeave(item, itemIndex, $event)"
-          >
-            <td
-              v-if="addSelectableCell"
-              class="b-table-selection-column"
-              :class="{
-                'b-table-sticky-column': stickySelectBoolean,
-              }"
-            >
-              <slot name="selectCell">
-                <span :class="selectedItems.has(item) ? 'text-primary' : ''">🗹</span>
-              </slot>
-            </td>
-            <td
-              v-for="field in computedFields"
-              :key="field.key"
-              v-bind="field.tdAttr"
-              :class="getFieldRowClasses(field, item)"
-            >
-              <slot
-                v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
-                :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-                :value="item[field.key]"
-                :index="itemIndex"
-                :item="item"
-                :field="field"
-                :items="items"
-                :toggle-details="() => toggleRowDetails(item)"
-                :details-showing="item._showDetails"
-              />
-              <template v-else>{{ item[field.key] }}</template>
-            </td>
-          </tr>
 
-          <tr
-            v-if="item._showDetails === true && $slots['row-details']"
-            :class="getRowClasses(item)"
-          >
-            <td :colspan="computedFieldsTotal">
-              <slot
-                name="row-details"
-                :item="item"
-                :toggle-details="() => toggleRowDetails(item)"
-              />
-            </td>
-          </tr>
-        </template>
-        <tr v-if="busyBoolean" class="b-table-busy-slot">
+        <tr v-if="item._showDetails === true && $slots['row-details']" :class="getRowClasses(item)">
           <td :colspan="computedFieldsTotal">
-            <slot name="table-busy">
-              <div class="d-flex align-items-center justify-content-center gap-2">
-                <b-spinner class="align-middle" />
-                <strong>Loading...</strong>
-              </div>
-            </slot>
+            <slot name="row-details" :item="item" :toggle-details="() => toggleRowDetails(item)" />
           </td>
         </tr>
-        <tr v-if="showEmptyBoolean && computedItems.length === 0" class="b-table-empty-slot">
-          <td :colspan="computedFieldsTotal">
-            <slot name="empty" :items="computedItems" :filtered="isFilterableTable">
-              {{ isFilterableTable ? emptyFilteredText : emptyText }}
-            </slot>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot v-if="footCloneBoolean">
-        <tr>
-          <th
-            v-for="field in computedFields"
-            :key="field.key"
-            v-bind="field.thAttr"
-            scope="col"
-            :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
-            :title="field.headerTitle"
-            :abbr="field.headerAbbr"
-            :style="field.thStyle"
-            @click="headerClicked(field, $event, true)"
-          >
-            {{ field.label }}
-          </th>
-        </tr>
-      </tfoot>
-      <tfoot v-else-if="$slots['custom-foot']">
-        <slot
-          name="custom-foot"
-          :fields="computedFields"
-          :items="items"
-          :columns="computedFields?.length"
-        />
-      </tfoot>
-      <caption v-if="$slots['table-caption']">
-        <slot name="table-caption" />
-      </caption>
-      <caption v-else-if="caption">
-        {{
-          caption
-        }}
-      </caption>
-    </table>
+      </template>
+      <tr
+        v-if="internalBusyFlag"
+        class="b-table-busy-slot"
+        :class="{'b-table-static-busy': computedItems.length == 0}"
+      >
+        <td :colspan="computedFieldsTotal">
+          <slot name="table-busy">
+            <div class="d-flex align-items-center justify-content-center gap-2">
+              <b-spinner class="align-middle" />
+              <strong>Loading...</strong>
+            </div>
+          </slot>
+        </td>
+      </tr>
+      <tr v-if="showEmptyBoolean && computedItems.length === 0" class="b-table-empty-slot">
+        <td :colspan="computedFieldsTotal">
+          <slot name="empty" :items="computedItems" :filtered="isFilterableTable">
+            {{ isFilterableTable ? emptyFilteredText : emptyText }}
+          </slot>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot v-if="footCloneBoolean">
+      <tr>
+        <th
+          v-for="field in computedFields"
+          :key="field.key"
+          v-bind="field.thAttr"
+          scope="col"
+          :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+          :title="field.headerTitle"
+          :abbr="field.headerAbbr"
+          :style="field.thStyle"
+          @click="headerClicked(field, $event, true)"
+        >
+          {{ field.label }}
+        </th>
+      </tr>
+    </tfoot>
+    <tfoot v-else-if="$slots['custom-foot']">
+      <slot
+        name="custom-foot"
+        :fields="computedFields"
+        :items="items"
+        :columns="computedFields?.length"
+      />
+    </tfoot>
+    <caption v-if="$slots['table-caption']">
+      <slot name="table-caption" />
+    </caption>
+    <caption v-else-if="caption">
+      {{
+        caption
+      }}
+    </caption>
+    <!-- </table> -->
   </BTableContainer>
 </template>
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
-import {cloneDeep} from '../../utils/object'
+import {cloneDeepAsync} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 
@@ -193,8 +194,11 @@ import type {
   TableItem,
   VerticalAlign,
 } from '../../types'
+import type {BTableProvider} from '../../types/components'
 import BTableContainer from './BTableContainer.vue'
 import useItemHelper from './itemHelper'
+
+type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
 interface BTableProps {
   align?: VerticalAlign
@@ -208,6 +212,11 @@ interface BTableProps {
   footClone?: Booleanish
   hover?: Booleanish
   items?: Array<TableItem>
+  provider?: BTableProvider
+  noProvider?: Array<NoProviderTypes>
+  noProviderPaging?: Booleanish
+  noProviderSorting?: Booleanish
+  noProviderFiltering?: Booleanish
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   small?: Booleanish
   striped?: Booleanish
@@ -273,6 +282,11 @@ const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
 const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderPagingBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderSortingBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderFilteringBoolean = useBooleanish(toRef(props, 'showEmpty'))
+
+const internalBusyFlag = ref(busyBoolean.value)
 
 interface BTableEmits {
   (
@@ -300,6 +314,7 @@ interface BTableEmits {
   (e: 'rowSelected', value: TableItem): void
   (e: 'rowUnselected', value: TableItem): void
   (e: 'selection', value: TableItem[]): void
+  (e: 'update:busy', value: boolean): void
   (e: 'update:sortBy', value: string): void
   (e: 'update:sortDesc', value: boolean): void
   (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
@@ -309,7 +324,7 @@ interface BTableEmits {
 const emits = defineEmits<BTableEmits>()
 const slots = useSlots()
 
-const classes = computed(() => [
+const tableClasses = computed(() => [
   'table b-table',
   {
     [`align-${props.align}`]: props.align !== undefined,
@@ -325,7 +340,7 @@ const classes = computed(() => [
     'b-table-selectable': selectableBoolean.value,
     [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
     'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
-    'b-table-busy': busyBoolean.value,
+    'b-table-busy': internalBusyFlag.value,
     'b-table-sortable': isSortable.value,
     'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
     'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
@@ -334,8 +349,13 @@ const classes = computed(() => [
 
 const itemHelper = useItemHelper()
 
-itemHelper.filterEvent.value = (items) => {
-  emits('filtered', cloneDeep(items))
+itemHelper.filterEvent.value = async (items) => {
+  if (usesProvider.value) {
+    await callItemsProvider()
+    return
+  }
+  const clone = await cloneDeepAsync(items)
+  emits('filtered', clone)
 }
 
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
@@ -344,17 +364,19 @@ const computedFieldsTotal = computed(
 )
 
 const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
+const usesProvider = computed(() => props.provider !== undefined)
 
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
-const computedItems = computed(() =>
-  requireItemsMapping.value
+const computedItems = computed(() => {
+  if (usesProvider.value) return itemHelper.internalItems.value
+  return requireItemsMapping.value
     ? itemHelper.mapItems(props.fields, props.items, props, {
         isSortable,
         isFilterableTable,
         sortDescBoolean,
       })
     : props.items
-)
+})
 
 const responsiveClasses = computed(() => ({
   'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
@@ -449,6 +471,52 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
   notifySelectionEvent()
 }
 
+const callItemsProvider = async () => {
+  if (!usesProvider.value || !props.provider || internalBusyFlag.value) return
+  internalBusyFlag.value = true
+  const context = new Proxy(
+    {
+      currentPage: props.currentPage,
+      filter: props.filter,
+      sortBy: props.sortBy,
+      sortDesc: props.sortDesc,
+      perPage: props.perPage,
+    },
+    {
+      get(target: any, prop) {
+        return prop in target ? target[prop] : undefined
+      },
+      set() {
+        console.error('BTable provider context is a read-only object.')
+        return true
+      },
+    }
+  )
+  const response = props.provider(context, itemHelper.updateInternalItems)
+  if (response === undefined) return
+  if (response instanceof Promise) {
+    try {
+      const items = await response
+      if (!Array.isArray(items)) return
+      const internalItems = await itemHelper.updateInternalItems(items)
+      return internalItems
+    } finally {
+      if (!internalBusyFlag.value) {
+        internalBusyFlag.value = false
+      }
+    }
+  }
+
+  try {
+    const internalItems = await itemHelper.updateInternalItems(response)
+    return internalItems
+  } finally {
+    if (internalBusyFlag.value) {
+      internalBusyFlag.value = false
+    }
+  }
+}
+
 const toggleRowDetails = (tr: TableItem) => {
   tr._showDetails = !tr._showDetails
 }
@@ -508,6 +576,7 @@ const selectRow = (index: number) => {
   emits('rowSelected', item)
   notifySelectionEvent()
 }
+
 const unselectRow = (index: number) => {
   if (!selectableBoolean.value) return
   const item = computedItems.value[index]
@@ -517,13 +586,71 @@ const unselectRow = (index: number) => {
   notifySelectionEvent()
 }
 
+onMounted(() => {
+  if (usesProvider.value) {
+    callItemsProvider()
+  }
+})
+
 watch(
   () => props.filter,
-  (filter) => {
+  (filter, oldFilter) => {
+    if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
-      emits('filtered', cloneDeep(props.items))
+      cloneDeepAsync(props.items).then((item) => emits('filtered', item))
     }
   }
+)
+
+const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
+  if (val === oldVal) return
+
+  //stop provide when paging
+  const inNoProvider = (key: NoProviderTypes) => props.noProvider && props.noProvider.includes(key)
+  const noProvideWhenPaging =
+    ['currentPage', 'perPage'].includes(prop) &&
+    (inNoProvider('paging') || noProviderPagingBoolean.value === true)
+  const noProvideWhenFiltering =
+    ['filter'].includes(prop) &&
+    (inNoProvider('filtering') || noProviderFilteringBoolean.value === true)
+  const noProvideWhenSorting =
+    ['sortBy', 'sortDesc'].includes(prop) &&
+    (inNoProvider('sorting') || noProviderSortingBoolean.value === true)
+
+  if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) {
+    return
+  }
+
+  await callItemsProvider()
+}
+
+watch(
+  () => internalBusyFlag.value,
+  () => internalBusyFlag.value !== busyBoolean.value && emits('update:busy', internalBusyFlag.value)
+)
+watch(
+  () => busyBoolean.value,
+  () => internalBusyFlag.value !== busyBoolean.value && (internalBusyFlag.value = busyBoolean.value)
+)
+watch(
+  () => props.filter,
+  (val, oldVal) => providerPropsWatch('filter', val, oldVal)
+)
+watch(
+  () => props.currentPage,
+  (val, oldVal) => providerPropsWatch('currentPage', val, oldVal)
+)
+watch(
+  () => props.perPage,
+  (val, oldVal) => providerPropsWatch('perPage', val, oldVal)
+)
+watch(
+  () => props.sortBy,
+  (val, oldVal) => providerPropsWatch('sortBy', val, oldVal)
+)
+watch(
+  () => props.sortDesc,
+  (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
 )
 
 defineExpose({
