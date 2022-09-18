@@ -1,5 +1,5 @@
 <template>
-  <BTableContainer :responsive="responsive" :responsive-class="responsiveClasses" :class="classes">
+  <BTableContainer :responsive="responsive" :responsive-class="responsiveClasses" :table-class="classes">
     <!-- <table :class="classes"> -->
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
