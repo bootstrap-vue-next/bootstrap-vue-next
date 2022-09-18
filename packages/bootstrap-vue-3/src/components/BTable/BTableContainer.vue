@@ -18,7 +18,7 @@ interface BTableContainerProps {
   responsiveClass?: ClassValue
 }
 
-const props = withDefaults(defineProps<BTableContainerProps>(), {
+withDefaults(defineProps<BTableContainerProps>(), {
   responsive: false,
 })
 </script>
