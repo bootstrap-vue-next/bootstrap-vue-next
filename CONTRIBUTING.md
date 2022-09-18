@@ -25,6 +25,8 @@ Conventional commits are required for the automation of changelog and tag releas
 
 Setting up your workspace follows traditional open-source flows, if you are already familiar with the process, you can most likely skip this section:
 
+**Only pnpm is allowed**, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
+
 1. Go to the <https://github.com/cdmoro/bootstrap-vue-3>
 2. Click **Fork** at the top
 3. On your IDE of choice, clone your own, new, forked repository
@@ -37,8 +39,6 @@ When opening your repository, it is usually best to open the **root** folder, no
 pnpm install
 pnpm dev
 ```
-
-**Only pnpm is allowed**, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
 
 Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
 
