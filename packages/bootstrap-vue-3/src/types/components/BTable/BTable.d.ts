@@ -23,3 +23,14 @@ export interface Props {
 // Emits
 
 // Other
+export type BTableProviderContext = {
+  readonly filter?: string
+  readonly currentPage?: number
+  readonly perPage?: number
+  readonly sortBy?: string
+  readonly sortDesc?: Booleanish
+}
+export type BTableProvider = (
+  context: BTableProviderContext,
+  provide: (items: Array<TableItem>) => Promise<TableItem[] | undefined>
+) => Promise<Array<TableItem> | undefined> | Array<TableItem> | undefined
