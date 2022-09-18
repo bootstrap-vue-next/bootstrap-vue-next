@@ -53,7 +53,7 @@ This will begin the process to merge your changes into the upstream repository's
 
 The project uses a monorepo architecture. The main source files for the package exist in `./packages/bootstrap-vue-3`, this is primarily where developing is done. You can then run `pnpm dev` and it will start all possible development environments. When developing the main package, you will want to open the **bootstrap-vue-3:dev** host. This has hot-reloading to make developing easier. You can use the `./packages/bootstrap-vue-3/src/app.vue` file as a test area for any changes that you make
 
-You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`). The playground is not typically used for developing. It is more of a place to view the full behavior of a component
+You can also make use of the `./apps/playground` directory. The `./apps/playground` directory mimics a user's library and can demonstrate some bugs that may not be visible in the main package. However, it does not contain native hot-reloading and makes for a poor development experience since it requires a built dist copy of the main package (simply run `pnpm build`). The playground is not typically used for development. It is more of a place to view the full behavior of a component
 
 You can also use `pnpm dev --filter bootstrap-vue-3` to only open the main host
 
