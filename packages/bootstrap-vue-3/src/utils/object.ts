@@ -1,5 +1,6 @@
 /**
- * Removes properties from an object, based on the values in an array, and returns the new object
+ * Removes properties from an object, based on the values in an array, and returns the new object.
+ * Equivalent to an object version of TS Omit<>
  *
  * @param {Record<PropertyKey, unknown>} objToPluck
  * @param {ReadonlyArray<PropertyKey>} keysToPluck

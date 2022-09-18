@@ -59,12 +59,9 @@ export default defineComponent({
   emits: ['click'],
   setup(props, {emit, attrs}) {
     const activeBoolean = useBooleanish(toRef(props, 'active'))
-    // TODO append is never used
     const appendBoolean = useBooleanish(toRef(props, 'append'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-    // TODO exact is never used
     const exactBoolean = useBooleanish(toRef(props, 'exact'))
-    // TODO replace is never used
     const replaceBoolean = useBooleanish(toRef(props, 'replace'))
 
     const instance = getCurrentInstance()

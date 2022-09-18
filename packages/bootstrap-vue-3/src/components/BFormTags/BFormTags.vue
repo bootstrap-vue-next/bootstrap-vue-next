@@ -6,7 +6,7 @@
     role="group"
     tabindex="-1"
     @focusin="onFocusin"
-    @focusout="$emit('focusout', $event)"
+    @focusout="emit('focusout', $event)"
   >
     <output
       :id="`${computedId}selected_tags__`"
