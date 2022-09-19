@@ -1,5 +1,9 @@
 <template>
-  <BTableSimple :responsive="responsive" :sticky-header="stickyHeader" :table-class="tableClasses">
+  <BTableSimple
+    :responsive="responsive"
+    :sticky-header="stickyHeaderBoolean"
+    :table-class="tableClasses"
+  >
     <!-- <table :class="classes"> -->
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
