@@ -76,10 +76,10 @@
       <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
         <tr
           :class="getRowClasses(item)"
-          @click.prevent="onRowClick(item, itemIndex, $event)"
-          @dblclick.prevent="onRowDblClick(item, itemIndex, $event)"
-          @mouseenter.prevent="onRowMouseEnter(item, itemIndex, $event)"
-          @mouseleave.prevent="onRowMouseLeave(item, itemIndex, $event)"
+          @click="onRowClick(item, itemIndex, $event)"
+          @dblclick="onRowDblClick(item, itemIndex, $event)"
+          @mouseenter="onRowMouseEnter(item, itemIndex, $event)"
+          @mouseleave="onRowMouseLeave(item, itemIndex, $event)"
         >
           <td
             v-if="addSelectableCell"
