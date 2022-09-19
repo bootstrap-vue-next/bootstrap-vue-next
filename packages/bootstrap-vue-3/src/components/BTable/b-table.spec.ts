@@ -63,7 +63,7 @@ describe('b-table', () => {
       props: {borderless: true},
     })
     const $table = wrapper.get('table')
-    expect($table.classes().includes('table-borderless')).toBe(true)
+    expect($table.classes()).toContain('table-borderless')
   })
 
   it('has bordered class when passing bordered prop', () => {
@@ -71,7 +71,7 @@ describe('b-table', () => {
       props: {bordered: true},
     })
     const $table = wrapper.get('table')
-    expect($table.classes().includes('table-bordered')).toBe(true)
+    expect($table.classes()).toContain('table-bordered')
   })
 
   it('has varianted border class when passing borderVariant prop', () => {
@@ -79,7 +79,7 @@ describe('b-table', () => {
       props: {borderVariant: 'danger'},
     })
     const $table = wrapper.get('table')
-    expect($table.classes().includes('border-danger')).toBe(true)
+    expect($table.classes()).toContain('border-danger')
   })
 
   it('has dark theme class when passing dark prop', () => {
@@ -87,7 +87,7 @@ describe('b-table', () => {
       props: {dark: true},
     })
     const $table = wrapper.get('table')
-    expect($table.classes().includes('table-dark')).toBe(true)
+    expect($table.classes()).toContain('table-dark')
   })
 
   it('has fields when fields prop is labeled', () => {
@@ -242,7 +242,7 @@ describe('b-table', () => {
       },
     })
     const $table = wrapper.get('table')
-    expect($table.classes().includes('b-table-busy')).toBe(true)
+    expect($table.classes()).toContain('b-table-busy')
     expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
   })
 
@@ -257,7 +257,7 @@ describe('b-table', () => {
       },
     })
     const $table = wrapper.get('table')
-    expect($table.classes().includes('b-table-busy')).toBe(true)
+    expect($table.classes()).toContain('b-table-busy')
     expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
   })
 })
