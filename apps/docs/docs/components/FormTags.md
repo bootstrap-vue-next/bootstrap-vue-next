@@ -418,8 +418,8 @@ The following example includes the suggested ARIA attributes and roles needed fo
           :key="tag"
           :id="`my-custom-tags-tag_${tag.replace(/\s/g, '_')}_`"
           tag="li"
-          class="mt-1 mr-1"
-          body-class="py-1 pr-2 text-nowrap"
+          class="mt-1 me-1"
+          body-class="py-1 pe-2 text-nowrap"
         >
           <strong>{{ tag }}</strong>
           <b-button
@@ -464,8 +464,8 @@ The following example includes the suggested ARIA attributes and roles needed fo
           :key="tag"
           :id="`my-custom-tags-tag_${tag.replace(/\s/g, '_')}_`"
           tag="li"
-          class="mt-1 mr-1"
-          body-class="py-1 pr-2 text-nowrap"
+          class="mt-1 me-1"
+          body-class="py-1 pe-2 text-nowrap"
         >
           <strong>{{ tag }}</strong>
           <b-button
@@ -515,7 +515,7 @@ In this example, we are using the [`<b-form-tag>` helper component](#b-form-tag-
         :key="tag"
         :title="tag"
         :variant="tagVariant"
-        class="mr-1"
+        class="me-1"
       >{{ tag }}</b-form-tag>
     </div>
   </template>
@@ -544,7 +544,7 @@ In this example, we are using the [`<b-form-tag>` helper component](#b-form-tag-
           :key="tag"
           :title="tag"
           :variant="tagVariant"
-          class="mr-1"
+          class="me-1"
           >{{ tag }}</b-form-tag
         >
       </div>
@@ -707,7 +707,7 @@ Duplicate tag value cannot be added again!
   <ul v-if="tags.length > 0" class="mb-0">
     <li v-for="tag in tags" :key="tag" :title="`Tag: ${tag}`" class="mt-2">
       <span  class="d-flex align-items-center">
-        <span class="mr-2">{{ tag }}</span>
+        <span class="me-2">{{ tag }}</span>
         <b-button
           :disabled="disabled"
           size="sm"
@@ -759,7 +759,7 @@ Duplicate tag value cannot be added again!
       <ul v-if="tags.length > 0" class="mb-0">
         <li v-for="tag in tags" :key="tag" :title="`Tag: ${tag}`" class="mt-2">
           <span class="d-flex align-items-center">
-            <span class="mr-2">{{ tag }}</span>
+            <span class="me-2">{{ tag }}</span>
             <b-button
               :disabled="disabled"
               size="sm"

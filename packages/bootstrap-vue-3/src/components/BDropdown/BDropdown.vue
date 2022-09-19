@@ -160,7 +160,7 @@ const buttonClasses = computed(() => ({
 
 const dropdownMenuClasses = computed(() => ({
   'dropdown-menu-dark': darkBoolean.value,
-  'dropdown-menu-right': rightBoolean.value,
+  'dropdown-menu-end': rightBoolean.value,
 }))
 
 const buttonAttr = computed(() => ({
