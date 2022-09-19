@@ -54,7 +54,7 @@ const attrs = computed(() => ({
 }))
 
 const alignment = computed(() =>
-  leftBoolean.value ? 'float-left' : rightBoolean.value ? 'float-right' : ''
+  leftBoolean.value ? 'float-start' : rightBoolean.value ? 'float-end' : ''
 )
 
 const baseClass = computed(() =>

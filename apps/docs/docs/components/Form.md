@@ -172,7 +172,7 @@ visitors with class `.visually-hidden`.
         <div class="col-lg-3">
           <b-form-input
             id="inline-form-input-name"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             placeholder="Jane Doe"
           ></b-form-input>
         </div>
@@ -180,11 +180,11 @@ visitors with class `.visually-hidden`.
           >Username</label
         >
         <div class="col-lg-3">
-          <b-input-group prepend="@" class="col-lg-4 mb-2 mr-sm-2 mb-sm-0">
+          <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
             <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
           </b-input-group>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-2 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
           >Remember me</b-form-checkbox
         >
         <div class="col-lg-1">
@@ -205,7 +205,7 @@ visitors with class `.visually-hidden`.
         <div class="col-lg-3">
           <b-form-input
             id="inline-form-input-name"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             placeholder="Jane Doe"
           ></b-form-input>
         </div>
@@ -213,11 +213,11 @@ visitors with class `.visually-hidden`.
           >Username</label
         >
         <div class="col-lg-3">
-          <b-input-group prepend="@" class="col-lg-4 mb-2 mr-sm-2 mb-sm-0">
+          <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
             <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
           </b-input-group>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-2 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
           >Remember me</b-form-checkbox
         >
         <div class="col-lg-1">
@@ -236,18 +236,18 @@ Custom form controls and selects are also supported.
   <div>
     <b-form>
       <div class="row">
-        <label class="col-form-label col-lg-2 mr-sm-2" for="inline-form-custom-select-pref"
+        <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
           >Preference</label
         >
         <div class="col-lg-2">
           <b-form-select
             id="inline-form-custom-select-pref"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
             :value="null"
           ></b-form-select>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-3 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
           >Remember my preference</b-form-checkbox
         >
         <div class="col-lg-2 col-form-label">
@@ -264,18 +264,18 @@ Custom form controls and selects are also supported.
   <div>
     <b-form>
       <div class="row">
-        <label class="col-form-label col-lg-2 mr-sm-2" for="inline-form-custom-select-pref"
+        <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
           >Preference</label
         >
         <div class="col-lg-2">
           <b-form-select
             id="inline-form-custom-select-pref"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
             :value="null"
           ></b-form-select>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-3 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
           >Remember my preference</b-form-checkbox
         >
         <div class="col-lg-2 col-form-label">

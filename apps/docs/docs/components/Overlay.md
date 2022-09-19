@@ -511,7 +511,7 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
 <ClientOnly>
   <b-card>
     <div class="position-relative p-4 bg-info">
-      <p class="text-light font-weight-bold">
+      <p class="text-light fw-bold">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       <b-card title="Card with parent overlay">
@@ -521,7 +521,7 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
           Show overlay
         </b-button>
       </b-card>
-      <p class="text-light font-weight-bold mb-0">
+      <p class="text-light fw-bold mb-0">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       <b-overlay :show="showNoWrapEx" no-wrap>
@@ -535,7 +535,7 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
 <template>
   <b-card>
     <div class="position-relative p-4 bg-info">
-      <p class="text-light font-weight-bold">
+      <p class="text-light fw-bold">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       <b-card title="Card with parent overlay">
@@ -545,7 +545,7 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
           Show overlay
         </b-button>
       </b-card>
-      <p class="text-light font-weight-bold mb-0">
+      <p class="text-light fw-bold mb-0">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       <b-overlay :show="showNoWrapEx" no-wrap> </b-overlay>
@@ -803,7 +803,7 @@ This example also demonstrates additional accessibility markup.
           >
             <p><strong id="form-confirm-label">Are you sure?</strong></p>
             <div class="d-flex"  style="column-gap: 5%;">
-              <b-button variant="outline-danger" class="mr-3" @click="onFormCancel">
+              <b-button variant="outline-danger" class="me-3" @click="onFormCancel">
                 Cancel
               </b-button>
               <b-button variant="outline-success" @click="onFormOK">OK</b-button>
@@ -855,7 +855,7 @@ This example also demonstrates additional accessibility markup.
           >
             <p><strong id="form-confirm-label">Are you sure?</strong></p>
             <div class="d-flex" style="column-gap: 5%;">
-              <b-button variant="outline-danger" class="mr-3" @click="onFormCancel">
+              <b-button variant="outline-danger" class="me-3" @click="onFormCancel">
                 Cancel
               </b-button>
               <b-button variant="outline-success" @click="onFormOK">OK</b-button>
