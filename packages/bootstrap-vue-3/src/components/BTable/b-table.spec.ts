@@ -3,6 +3,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {ref} from 'vue'
 import {TableField, TableItem} from '../../types'
 import BTable from './BTable.vue'
+import BTableContainer from './BTableContainer.vue'
 
 const fields: Array<TableField> = [{key: 'name'}, {key: 'age'}]
 const items: Array<TableItem> = [
@@ -13,16 +14,40 @@ const items: Array<TableItem> = [
 describe('b-table', () => {
   enableAutoUnmount(afterEach)
 
-  it('tag is table by default', () => {
+  it('element is BTableContainer', () => {
     const wrapper = mount(BTable)
-    expect(wrapper.element.tagName).toBe('TABLE')
+    const $tablecontainer = wrapper.findComponent(BTableContainer)
+    expect($tablecontainer.exists()).toBe(true)
   })
 
-  it('tag is div when prop responsive', () => {
+  it('tablecontainer is given prop responsive', async () => {
     const wrapper = mount(BTable, {
       props: {responsive: true},
     })
-    expect(wrapper.element.tagName).toBe('DIV')
+    const $tablecontainer = wrapper.getComponent(BTableContainer)
+    expect($tablecontainer.props('responsive')).toBe(true)
+    await wrapper.setProps({responsive: false})
+    expect($tablecontainer.props('responsive')).toBe(false)
+  })
+
+  it('tablecontainer is given prop responsiveClass', async () => {
+    const wrapper = mount(BTable, {
+      props: {responsiveClass: true},
+    })
+    const $tablecontainer = wrapper.getComponent(BTableContainer)
+    expect($tablecontainer.props('responsiveClass')).toBe(true)
+    await wrapper.setProps({responsiveClass: false})
+    expect($tablecontainer.props('responsiveClass')).toBe(false)
+  })
+
+  it('tablecontainer is given prop tableClass', async () => {
+    const wrapper = mount(BTable, {
+      props: {tableClass: true},
+    })
+    const $tablecontainer = wrapper.getComponent(BTableContainer)
+    expect($tablecontainer.props('tableClass')).toBe(true)
+    await wrapper.setProps({tableClass: false})
+    expect($tablecontainer.props('tableClass')).toBe(false)
   })
 
   it('has a nested table when tag is div', () => {
@@ -37,32 +62,32 @@ describe('b-table', () => {
     const wrapper = mount(BTable, {
       props: {borderless: true},
     })
-    const $table = wrapper.find('table')
-    expect($table.classes().includes('table-borderless')).toBe(true)
+    const $table = wrapper.get('table')
+    expect($table.classes()).toContain('table-borderless')
   })
 
   it('has bordered class when passing bordered prop', () => {
     const wrapper = mount(BTable, {
       props: {bordered: true},
     })
-    const $table = wrapper.find('table')
-    expect($table.classes().includes('table-bordered')).toBe(true)
+    const $table = wrapper.get('table')
+    expect($table.classes()).toContain('table-bordered')
   })
 
   it('has varianted border class when passing borderVariant prop', () => {
     const wrapper = mount(BTable, {
       props: {borderVariant: 'danger'},
     })
-    const $table = wrapper.find('table')
-    expect($table.classes().includes('border-danger')).toBe(true)
+    const $table = wrapper.get('table')
+    expect($table.classes()).toContain('border-danger')
   })
 
   it('has dark theme class when passing dark prop', () => {
     const wrapper = mount(BTable, {
       props: {dark: true},
     })
-    const $table = wrapper.find('table')
-    expect($table.classes().includes('table-dark')).toBe(true)
+    const $table = wrapper.get('table')
+    expect($table.classes()).toContain('table-dark')
   })
 
   it('has fields when fields prop is labeled', () => {
@@ -71,8 +96,8 @@ describe('b-table', () => {
         fields: [{key: 'name', label: 'Name'}],
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.find('thead tr th').text()).toBe('Name')
+    const $table = wrapper.get('table')
+    expect($table.get('thead tr th').text()).toBe('Name')
   })
 
   it('has fields when fields prop not labeled', () => {
@@ -81,8 +106,8 @@ describe('b-table', () => {
         fields: [{key: 'name'}],
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.find('thead tr th').text()).toBe('Name')
+    const $table = wrapper.get('table')
+    expect($table.get('thead tr th').text()).toBe('Name')
   })
 
   it('has fields when fields prop is array of strings', () => {
@@ -91,8 +116,8 @@ describe('b-table', () => {
         fields: ['name'],
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.find('thead tr th').text()).toBe('Name')
+    const $table = wrapper.get('table')
+    expect($table.get('thead tr th').text()).toBe('Name')
   })
 
   it('has items when fields prop is array of strings', () => {
@@ -102,8 +127,8 @@ describe('b-table', () => {
         items,
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.find('tbody tr td').text()).toBe('hossam')
+    const $table = wrapper.get('table')
+    expect($table.get('tbody tr td').text()).toBe('hossam')
   })
 
   it('has items when fields prop is an object', () => {
@@ -113,14 +138,12 @@ describe('b-table', () => {
         items,
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.find('tbody tr td').text()).toBe('hossam')
+    const $table = wrapper.get('table')
+    expect($table.get('tbody tr td').text()).toBe('hossam')
   })
 
   it('has items when using a provider function', async () => {
-    const myProvider = (ctx: any, callback: (items: any) => any) => {
-      return items
-    }
+    const myProvider = (ctx: any, callback: (items: any) => any) => items
 
     const wrapper = mount(BTable, {
       props: {
@@ -131,18 +154,17 @@ describe('b-table', () => {
 
     await flushPromises()
 
-    const $table = await wrapper.find('table')
-    const $firstRow = await $table.find('tbody tr td')
+    const $table = wrapper.get('table')
+    const $firstRow = $table.get('tbody tr td')
 
     expect($firstRow.text()).toBe('hossam')
   })
 
   it('has items when using a provider promise', async () => {
-    const myProvider = async (ctx: any, callback: (items: any) => any) => {
-      return new Promise<Array<TableItem> | undefined>((resolve, reject) => {
+    const myProvider = async (ctx: any, callback: (items: any) => any) =>
+      new Promise<Array<TableItem> | undefined>((resolve) => {
         resolve(items)
       })
-    }
     const busyRef = ref(false)
     const wrapper = mount(BTable, {
       props: {
@@ -154,8 +176,8 @@ describe('b-table', () => {
 
     await flushPromises()
 
-    const $table = await wrapper.find('table')
-    const $firstRow = await $table.find('tbody tr td')
+    const $table = wrapper.get('table')
+    const $firstRow = $table.get('tbody tr td')
 
     expect($firstRow.text()).toBe('hossam')
   })
@@ -176,8 +198,8 @@ describe('b-table', () => {
 
     await flushPromises()
 
-    const $table = await wrapper.find('table')
-    const $firstRow = await $table.find('tbody tr td')
+    const $table = wrapper.get('table')
+    const $firstRow = $table.get('tbody tr td')
 
     expect($firstRow.text()).toBe('hossam')
   })
@@ -190,8 +212,8 @@ describe('b-table', () => {
         sortBy: 'age',
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.find('tbody tr td:last-child').text()).toBe('1')
+    const $table = wrapper.get('table')
+    expect($table.get('tbody tr td:last-child').text()).toBe('1')
   })
 
   it('has desc sorted items when sortDesc prop is true', () => {
@@ -205,8 +227,8 @@ describe('b-table', () => {
         sortDesc: true,
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.find('tbody tr:first-child td:last-child').text()).toBe('2')
+    const $table = wrapper.get('table')
+    expect($table.get('tbody tr:first-child td:last-child').text()).toBe('2')
   })
 
   it('has busy class & element when busy prop is true', () => {
@@ -219,8 +241,8 @@ describe('b-table', () => {
         busy: true,
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.classes().includes('b-table-busy')).toBe(true)
+    const $table = wrapper.get('table')
+    expect($table.classes()).toContain('b-table-busy')
     expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
   })
 
@@ -234,8 +256,8 @@ describe('b-table', () => {
         busy: true,
       },
     })
-    const $table = wrapper.find('table')
-    expect($table.classes().includes('b-table-busy')).toBe(true)
+    const $table = wrapper.get('table')
+    expect($table.classes()).toContain('b-table-busy')
     expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
   })
 })
