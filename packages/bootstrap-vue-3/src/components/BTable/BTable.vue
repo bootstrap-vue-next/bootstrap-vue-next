@@ -321,7 +321,7 @@ interface BTableEmits {
   (e: 'filtered', value: TableItem[]): void
 }
 
-const emits = defineEmits<BTableEmits>()
+const emit = defineEmits<BTableEmits>()
 const slots = useSlots()
 
 const tableClasses = computed(() => [
@@ -355,7 +355,7 @@ itemHelper.filterEvent.value = async (items) => {
     return
   }
   const clone = await cloneDeepAsync(items)
-  emits('filtered', clone)
+  emit('filtered', clone)
 }
 
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
@@ -393,21 +393,21 @@ const getFieldHeadLabel = (field: TableField) => {
 
 const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) => {
   const fieldKey = typeof field === 'string' ? field : field.key
-  emits('headClicked', fieldKey, field, event, isFooter)
+  emit('headClicked', fieldKey, field, event, isFooter)
 
   handleFieldSorting(field)
 }
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
-  emits('rowClicked', row, index, e)
+  emit('rowClicked', row, index, e)
 
   handleRowSelection(row, index, e.shiftKey)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
-  emits('rowDblClicked', row, index, e)
+  emit('rowDblClicked', row, index, e)
 const onRowMouseEnter = (row: TableItem, index: number, e: MouseEvent) =>
-  emits('rowHovered', row, index, e)
+  emit('rowHovered', row, index, e)
 const onRowMouseLeave = (row: TableItem, index: number, e: MouseEvent) =>
-  emits('rowUnhovered', row, index, e)
+  emit('rowUnhovered', row, index, e)
 
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
@@ -425,10 +425,10 @@ const handleFieldSorting = (field: TableField) => {
   if (isSortable.value === true && fieldSortable === true) {
     const sortDesc = !sortDescBoolean.value
     if (fieldKey !== props.sortBy) {
-      emits('update:sortBy', fieldKey)
+      emit('update:sortBy', fieldKey)
     }
-    emits('update:sortDesc', sortDesc)
-    emits('sorted', fieldKey, sortDesc)
+    emit('update:sortDesc', sortDesc)
+    emit('sorted', fieldKey, sortDesc)
   }
 }
 
@@ -437,17 +437,17 @@ const isSelecting = computed(() => selectedItems.value.size > 0)
 
 const notifySelectionEvent = () => {
   if (!selectableBoolean.value) return
-  emits('selection', Array.from(selectedItems.value))
+  emit('selection', Array.from(selectedItems.value))
 }
 const handleRowSelection = (row: TableItem, index: number, shiftClicked = false) => {
   if (!selectableBoolean.value) return
 
   if (selectedItems.value.has(row)) {
     selectedItems.value.delete(row)
-    emits('rowUnselected', row)
+    emit('rowUnselected', row)
   } else {
     if (props.selectMode === 'single' && selectedItems.value.size > 0) {
-      selectedItems.value.forEach((item) => emits('rowUnselected', item))
+      selectedItems.value.forEach((item) => emit('rowUnselected', item))
       selectedItems.value.clear()
     }
 
@@ -459,12 +459,12 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
       computedItems.value.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
         if (!selectedItems.value.has(item)) {
           selectedItems.value.add(item)
-          emits('rowSelected', item)
+          emit('rowSelected', item)
         }
       })
     } else {
       selectedItems.value.add(row)
-      emits('rowSelected', row)
+      emit('rowSelected', row)
     }
   }
 
@@ -554,7 +554,7 @@ const selectAllRows = () => {
   selectedItems.value = new Set([...computedItems.value])
   selectedItems.value.forEach((item) => {
     if (unselectableItems.includes(item)) return
-    emits('rowSelected', item)
+    emit('rowSelected', item)
   })
   notifySelectionEvent()
 }
@@ -562,7 +562,7 @@ const selectAllRows = () => {
 const clearSelected = () => {
   if (!selectableBoolean.value) return
   selectedItems.value.forEach((item) => {
-    emits('rowUnselected', item)
+    emit('rowUnselected', item)
   })
   selectedItems.value = new Set([])
   notifySelectionEvent()
@@ -573,7 +573,7 @@ const selectRow = (index: number) => {
   const item = computedItems.value[index]
   if (!item || selectedItems.value.has(item)) return
   selectedItems.value.add(item)
-  emits('rowSelected', item)
+  emit('rowSelected', item)
   notifySelectionEvent()
 }
 
@@ -582,7 +582,7 @@ const unselectRow = (index: number) => {
   const item = computedItems.value[index]
   if (!item || !selectedItems.value.has(item)) return
   selectedItems.value.delete(item)
-  emits('rowUnselected', item)
+  emit('rowUnselected', item)
   notifySelectionEvent()
 }
 
@@ -597,7 +597,7 @@ watch(
   (filter, oldFilter) => {
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
-      cloneDeepAsync(props.items).then((item) => emits('filtered', item))
+      cloneDeepAsync(props.items).then((item) => emit('filtered', item))
     }
   }
 )
@@ -626,7 +626,7 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
 
 watch(
   () => internalBusyFlag.value,
-  () => internalBusyFlag.value !== busyBoolean.value && emits('update:busy', internalBusyFlag.value)
+  () => internalBusyFlag.value !== busyBoolean.value && emit('update:busy', internalBusyFlag.value)
 )
 watch(
   () => busyBoolean.value,
