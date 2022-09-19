@@ -374,8 +374,8 @@ To apply classes to the currently active control or tab use the `active-nav-item
 <ClientOnly>
   <b-card no-body>
     <b-tabs
-      active-nav-item-class="font-weight-bold text-uppercase text-danger"
-      active-tab-class="font-weight-bold text-success"
+      active-nav-item-class="fw-bold text-uppercase text-danger"
+      active-tab-class="fw-bold text-success"
       content-class="mt-3"
     >
       <b-tab title="First" active><p>I'm the first tab</p></b-tab>
@@ -388,8 +388,8 @@ To apply classes to the currently active control or tab use the `active-nav-item
 ```html
 <div>
   <b-tabs
-    active-nav-item-class="font-weight-bold text-uppercase text-danger"
-    active-tab-class="font-weight-bold text-success"
+    active-nav-item-class="fw-bold text-uppercase text-danger"
+    active-tab-class="fw-bold text-success"
     content-class="mt-3"
   >
     <b-tab title="First" active><p>I'm the first tab</p></b-tab>

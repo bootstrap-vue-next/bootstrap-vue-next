@@ -94,14 +94,14 @@ describe('dropdown', () => {
     expect($ul.classes()).not.toContain('dropdown-menu-dark')
   })
 
-  it('child ul has class dropdown-menu-right when prop right', async () => {
+  it('child ul has class dropdown-menu-end when prop right', async () => {
     const wrapper = mount(BDropdown, {
       props: {right: true},
     })
     const $ul = wrapper.get('ul')
-    expect($ul.classes()).toContain('dropdown-menu-right')
+    expect($ul.classes()).toContain('dropdown-menu-end')
     await wrapper.setProps({right: false})
-    expect($ul.classes()).not.toContain('dropdown-menu-right')
+    expect($ul.classes()).not.toContain('dropdown-menu-end')
   })
 
   it('child ul renders default slot', () => {
