@@ -109,10 +109,10 @@ export {useToast, useBreadcrumb}
 
 // Export available directives
 export {
-  BPopover as VBPopover,
-  BToggle as VBToggle,
-  BTooltip as VBTooltip,
-  BVisible as VBVisible,
+  BPopover as vBPopover,
+  BToggle as vBToggle,
+  BTooltip as vBTooltip,
+  BVisible as vBVisible,
 } from './directives'
 
 // Export available plugins
