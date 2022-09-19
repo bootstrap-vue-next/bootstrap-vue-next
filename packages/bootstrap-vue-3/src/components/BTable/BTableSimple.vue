@@ -12,8 +12,8 @@
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
 import {computed, toRef} from 'vue'
-import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 
 interface BTableSimpleProps {
   bordered?: Booleanish
@@ -28,6 +28,7 @@ interface BTableSimpleProps {
   small?: Booleanish
   tableClass?: ClassValue
   tableVariant?: string
+  stickyHeader?: Booleanish
 }
 
 const props = withDefaults(defineProps<BTableSimpleProps>(), {
@@ -40,6 +41,7 @@ const props = withDefaults(defineProps<BTableSimpleProps>(), {
   stacked: false,
   striped: false,
   small: false,
+  stickyHeader: false,
 })
 
 const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
@@ -49,6 +51,7 @@ const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const hoverBoolean = useBooleanish(toRef(props, 'hover'))
 const smallBoolean = useBooleanish(toRef(props, 'small'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 
 const classes = computed(() => [
   'table',
@@ -73,6 +76,7 @@ const responsiveClasses = computed(() => [
   {
     'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
     [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+    'b-table-sticky-header': stickyHeaderBoolean.value,
   },
 ])
 </script>
