@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import {inject, toRef} from 'vue'
 import BCollapse from '../BCollapse.vue'
-import vBToggle from '../../directives/BToggle'
+import {BToggle as vBToggle} from '../../directives'
 import {useBooleanish, useId} from '../../composables'
 import {injectionKey} from './BAccordion.vue'
 import type {Booleanish} from '../../types'

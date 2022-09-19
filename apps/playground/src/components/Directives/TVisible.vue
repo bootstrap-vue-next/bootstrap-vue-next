@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {VBVisible} from 'bootstrap-vue-3'
+import {vBVisible} from 'bootstrap-vue-3'
 
 const handledVisible = ref(false)
 
