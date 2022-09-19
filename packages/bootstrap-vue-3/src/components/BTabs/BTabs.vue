@@ -1,9 +1,14 @@
 <template>
   <component :is="tag" :id="id" class="tabs" :class="classes">
     <div v-if="endBoolean" class="tab-content" :class="contentClass">
-      <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
-        <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
-      </template>
+      <component
+        :is="tab"
+        v-for="({tab, contentId, tabClasses, active}, i) in tabs"
+        :id="contentId"
+        :key="i"
+        :class="tabClasses"
+        :active="active"
+      />
       <div
         v-if="showEmpty"
         key="bv-empty-tab"
@@ -46,9 +51,14 @@
       </ul>
     </div>
     <div v-if="!endBoolean" class="tab-content" :class="contentClass">
-      <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
-        <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
-      </template>
+      <component
+        :is="tab"
+        v-for="({tab, contentId, tabClasses, active}, i) in tabs"
+        :id="contentId"
+        :key="i"
+        :class="tabClasses"
+        :active="active"
+      />
       <div
         v-if="showEmpty"
         key="bv-empty-tab"
@@ -93,18 +103,11 @@ interface BTabsProps {
 }
 
 const props = withDefaults(defineProps<BTabsProps>(), {
-  activeNavItemClass: undefined,
-  activeTabClass: undefined,
-  align: undefined,
   card: false,
-  contentClass: undefined,
   end: false,
   fill: false,
-  id: undefined,
   justified: false,
   lazy: false,
-  navClass: undefined,
-  navWrapperClass: undefined,
   noFade: false,
   noNavStyle: false,
   pills: false,
@@ -205,7 +208,7 @@ const classes = computed(() => ({
 const navTabsClasses = computed(() => ({
   'nav-pills': pillsBoolean.value,
   'flex-column me-3': verticalBoolean.value,
-  [`justify-content-${props.align}`]: !!props.align,
+  [`justify-content-${props.align}`]: props.align !== undefined,
   'nav-fill': fillBoolean.value,
   'card-header-tabs': cardBoolean.value,
   'nav-justified': justifiedBoolean.value,
