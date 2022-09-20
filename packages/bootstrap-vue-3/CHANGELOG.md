@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.3.4](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.3...v0.3.4) (2022-09-20)
+
+
+### Features
+
+* add props toggleClass to BnavItemDropdown ([d90611a](https://github.com/cdmoro/bootstrap-vue-3/commit/d90611aef4bb2652562bb482deaf2344cf1b59ec))
+* **BAlert:** slot dismissible overwrites close ([804e8b2](https://github.com/cdmoro/bootstrap-vue-3/commit/804e8b2cab3fa4fe8e27a46f53faae572e32e7a7))
+* **BCloseButton:** add in optional prop type to override type=button default ([804e8b2](https://github.com/cdmoro/bootstrap-vue-3/commit/804e8b2cab3fa4fe8e27a46f53faae572e32e7a7))
+* **BTable:** added emptyText and emptyFilteredText props to customize the shown message when the table is empty and show-empty prop is set to true ([1336537](https://github.com/cdmoro/bootstrap-vue-3/commit/1336537aa2fbd572e3a3e84b606d2e14b29ffef8))
+* **BTable:** added no-provider-paging, no-provider-sorting, and no-provider-filtering props for an easier switch from BSV2 (can be used with/without or replace the no-provider prop) ([82b0b36](https://github.com/cdmoro/bootstrap-vue-3/commit/82b0b36ea9c379ba8890f0ff1cf3aa74caf25bc2))
+* **BTable:** added no-providing prop which is an alternative to the no-provider-.. props of BSV2 ([c40ac06](https://github.com/cdmoro/bootstrap-vue-3/commit/c40ac06c146ee7a9bb794e49763f4f9740e29cc5))
+* **BTable:** added show-empty prop along with the #empty slot to customize the empty message ([0918583](https://github.com/cdmoro/bootstrap-vue-3/commit/0918583e2f4ff7f94b91502beae5fd959d7cd9b2))
+* **BTable:** added sortIcon slot, the slot allows you to customize the table's sort icons by providing you some info about the applied sort ([24cd37f](https://github.com/cdmoro/bootstrap-vue-3/commit/24cd37fe1e0f9acb8a795835e0864ea85ccdb899))
+* **Offcanvas:** add noHeader prop ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
+* **Offcanvas:** add noHeaderClose prop ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
+* **Offcanvas:** add slot footer ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
+* **Offcanvas:** add slot for header ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
+
+
+### Bug Fixes
+
+* **BAvatarGroup:** attempted mutation of readonly ([f2fcd74](https://github.com/cdmoro/bootstrap-vue-3/commit/f2fcd74c9f91f1195da909e90fcf06e93b783f10))
+* **BModal:** Fixed escape key close event not updating v-model prop ([57801a4](https://github.com/cdmoro/bootstrap-vue-3/commit/57801a4643453e2ab0ab1b4561ffe897e73a2226))
+* **BModal:** fixed the modal's close button located in the header where the button click was not updating ``v-model`` value ([35a11da](https://github.com/cdmoro/bootstrap-vue-3/commit/35a11da233e1ddfc9420916342bc96d9aaec6b70))
+* **BModal:** fixed the modal's close button located in the header where the button click was not updating v-model value ([fe00e61](https://github.com/cdmoro/bootstrap-vue-3/commit/fe00e61879655d324cb49e200d6a23faf59797e9))
+* **BModal:** include explicit import of BCloseButton ([fd445e0](https://github.com/cdmoro/bootstrap-vue-3/commit/fd445e09181e73e9e44433f54df76c73e369bb29))
+* **BTableContainer:** fix up new classes prop ([75509ef](https://github.com/cdmoro/bootstrap-vue-3/commit/75509ef112e259f30125c3d5d0935078acfba93e))
+* **BTable:** fixed anchor tags not working inside the table rows ([7d521dd](https://github.com/cdmoro/bootstrap-vue-3/commit/7d521ddfab45177ac3afb5e1f360603a03b480ee))
+* **directives:** export proper naming schemes ([f8adcaa](https://github.com/cdmoro/bootstrap-vue-3/commit/f8adcaa162a7d3b2109847da6e5985fd54621256))
+* **pluckProps:** fix wrong ts ([f2fcd74](https://github.com/cdmoro/bootstrap-vue-3/commit/f2fcd74c9f91f1195da909e90fcf06e93b783f10))
+* prop name ([a72cd1d](https://github.com/cdmoro/bootstrap-vue-3/commit/a72cd1df5eed621a94292c0cbf9881f1f6d9e34b))
+* renamed bootstrap 5 utilities classes ([a68bb52](https://github.com/cdmoro/bootstrap-vue-3/commit/a68bb5250a96bb50de0d337e0244af5e5b568ac8))
+
 ## [0.3.3](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.2...v0.3.3) (2022-09-13)
 
 
