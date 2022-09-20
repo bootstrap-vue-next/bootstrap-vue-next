@@ -518,8 +518,10 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
 const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
   field.class,
   field.tdClass,
-  field.variant ? `table-${field.variant}` : '',
-  tr?._cellVariants && tr?._cellVariants[field.key] ? `table-${tr?._cellVariants[field.key]}` : '',
+  field.variant ? `table-${field.variant}` : undefined,
+  tr?._cellVariants && tr?._cellVariants[field.key]
+    ? `table-${tr?._cellVariants[field.key]}`
+    : undefined,
   {
     'b-table-sticky-column': field.stickyColumn,
   },
