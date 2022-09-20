@@ -4,7 +4,7 @@
 
 ## Deprecation warning
 
-This component is soon to be deprecated in favor of native using Bootstrap [https://getbootstrap.com/docs/5.2/components/placeholders/](placeholder) components
+This component is soon to be deprecated in favor of native using Bootstrap [placeholder](https://getbootstrap.com/docs/5.2/components/placeholders/) components
 
 **Example: Basic usage**
 
@@ -318,62 +318,9 @@ Utilize `<b-skeleton>` helper components to quickly scaffold existing components
 </b-skeleton-icon>
 ```
 
-## Component reference
-
-### `<b-skeleton>`
-
-#### Properties
-
-| Property    | Type     | Default  | Description                                                                     |
-| ----------- | -------- | -------- | ------------------------------------------------------------------------------- |
-| `animation` | `String` | `'wave'` | Changes the component animation, leave empty or `null` to disable the animation |
-| `height`    | `String` |          | Sets the `height` of the component                                              |
-| `size`      | `String` |          | Sets the `width` and `height` of the component                                  |
-| `type`      | `String` | `'text'` | Changes the type, refer to the [types](#types) section                          |
-| `variant`   | `String` |          | Applies one of the Bootstrap theme color variants to the component              |
-| `width`     | `String` |          | Sets the `width` of the component                                               |
-
-### `<b-skeleton-wrapper>`
-
-#### Properties
-
-| Property  | Type      | Default | Description                                             |
-| --------- | --------- | ------- | ------------------------------------------------------- |
-| `loading` | `Boolean` | `false` | Determines whether the loading slot should be displayed |
-
-#### Slots
-
-| Name      | Description                                        |
-| --------- | -------------------------------------------------- |
-| `default` | Content to show when the `loading` prop is `false` |
-| `loading` | Content to show when the `loading` prop is `true`  |
-
-### `<b-skeleton-table>`
-
-#### Properties
-
-| Property      | Type      | Default | Description                                                                                   |
-| ------------- | --------- | ------- | --------------------------------------------------------------------------------------------- |
-| `animation`   | `String`  |         | Animation used for the component in each cell, leave empty or `null` to disable the animation |
-| `columns`     | `Number`  | `5`     | Amount of columns to display                                                                  |
-| `hide-header` | `Boolean` | `false` | Hides the header of the table                                                                 |
-| `rows`        | `Number`  | `3`     | Amount of rows to display                                                                     |
-| `show-footer` | `Boolean` | `false` | Enables the footer of the table                                                               |
-| `table-props` | `Object`  | `{}`    | Supports the same props as `<b-table-simple>`                                                 |
-
-### `<b-skeleton-icon>`
-
-#### Properties
-
-| Property    | Type     | Default  | Description                                                                      |
-| ----------- | -------- | -------- | -------------------------------------------------------------------------------- |
-| `animation` | `String` | `'wave'` | Animation used for the component, leave empty or `null` to disable the animation |
-
-#### Slots
-
-| Name      | Description                     |
-| --------- | ------------------------------- |
-| `default` | Content to show the SVG element |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'

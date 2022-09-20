@@ -1,4 +1,4 @@
-import {isArray, isPlainObject, isString, isUndefinedOrNull} from '.'
+import {isPlainObject} from './inspect'
 import {
   RX_FIRST_START_SPACE_WORD,
   RX_LOWER_UPPER,
@@ -14,9 +14,11 @@ import {
  * @returns
  */
 export const toString = (val: unknown, spaces = 2): string =>
-  isUndefinedOrNull(val)
+  typeof val === 'string'
+    ? val
+    : val === undefined || val === null
     ? ''
-    : isArray(val) ||
+    : Array.isArray(val) ||
       (isPlainObject(val) &&
         (val as Record<string, unknown>).toString === Object.prototype.toString)
     ? JSON.stringify(val, null, spaces)
@@ -26,21 +28,21 @@ export const toString = (val: unknown, spaces = 2): string =>
  * @param str
  * @returns
  */
-export const startCase: (str: string) => string = (str) =>
+export const startCase = (str: string): string =>
   str
     .replace(RX_UNDERSCORE, ' ')
-    .replace(RX_LOWER_UPPER, (str, $1, $2) => `${$1} ${$2}`)
-    .replace(RX_FIRST_START_SPACE_WORD, (str, $1, $2) => $1 + $2.toUpperCase())
+    .replace(RX_LOWER_UPPER, (_, $1, $2) => `${$1} ${$2}`)
+    .replace(RX_FIRST_START_SPACE_WORD, (_, $1, $2) => $1 + $2.toUpperCase())
 
 /**
  * @param str
  * @returns
  */
-export const titleCase: (str: string) => string = (str) =>
+export const titleCase = (str: string): string =>
   str
     .replace(RX_UNDERSCORE, ' ')
-    .replace(RX_LOWER_UPPER, (str, $1, $2) => `${$1} ${$2}`)
-    .replace(RX_START_SPACE_WORD, (str, $1, $2) => $1 + $2.toUpperCase())
+    .replace(RX_LOWER_UPPER, (_, $1, $2) => `${$1} ${$2}`)
+    .replace(RX_START_SPACE_WORD, (_, $1, $2) => $1 + $2.toUpperCase())
 
 /**
  * Uppercases the first letter of a string and returns a new string
@@ -48,7 +50,7 @@ export const titleCase: (str: string) => string = (str) =>
  * @param str
  * @returns
  */
-export const upperFirst = (str: any): string => {
-  str = isString(str) ? str.trim() : String(str)
-  return str.charAt(0).toUpperCase() + str.slice(1)
+export const upperFirst = (str: string): string => {
+  const trim = str.trim()
+  return trim.charAt(0).toUpperCase() + trim.slice(1)
 }

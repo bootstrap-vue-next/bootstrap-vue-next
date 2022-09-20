@@ -70,6 +70,7 @@
         ],
         "slots": [
           {
+            "scope": [],
             "name": "default",
             "description": "Content to place in the tag. Overrides the `title` prop"
           }
@@ -191,7 +192,7 @@
           },
           {
             "prop": "separator",
-            "type": "string | Array<unknown>",
+            "type": "string | unknown[]",
             "description": "Separator character(s) that will trigger a tag to be created"
           },
           {
@@ -306,8 +307,10 @@
             ]
           }
         ],
+        "emits": [],
         "slots": [
           {
+            "scope": [],
             "name": "add-button-text",
             "description": "Content to place in the built in  'Add' button. Takes precedence over the 'add-button-text' prop. Not used when the default scoped slot is provided"
           },
@@ -437,7 +440,7 @@
               },
               {
                 "prop": "separator",
-                "type": "string | Array<unknown>",
+                "type": "string | unknown[]",
                 "description": "The value of the 'separator' prop"
               },
               {

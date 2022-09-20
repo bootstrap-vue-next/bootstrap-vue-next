@@ -10,67 +10,67 @@
         "component": "BOverlay",
         "props": [
           {
-            "name": "bgColor",
+            "prop": "bgColor",
             "type": "string"
           },
           {
-            "name": "blur",
+            "prop": "blur",
             "type": "string"
           },
           {
-            "name": "fixed",
+            "prop": "fixed",
             "type": "Booleanish"
           },
           {
-            "name": "noCenter",
+            "prop": "noCenter",
             "type": "Booleanish"
           },
           {
-            "name": "noFade",
+            "prop": "noFade",
             "type": "Booleanish"
           },
           {
-            "name": "noWrap",
+            "prop": "noWrap",
             "type": "Booleanish"
           },
           {
-            "name": "opacity",
+            "prop": "opacity",
             "type": "number | string"
           },
           {
-            "name": "overlayTag",
+            "prop": "overlayTag",
             "type": "string"
           },
           {
-            "name": "rounded",
+            "prop": "rounded",
             "type": "boolean | string"
           },
           {
-            "name": "show",
+            "prop": "show",
             "type": "Booleanish"
           },
           {
-            "name": "spinnerSmall",
+            "prop": "spinnerSmall",
             "type": "Booleanish"
           },
           {
-            "name": "spinnerType",
+            "prop": "spinnerType",
             "type": "string"
           },
           {
-            "name": "spinnerVariant",
+            "prop": "spinnerVariant",
             "type": "string"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           },
           {
-            "name": "wrapTag",
+            "prop": "wrapTag",
             "type": "string"
           },
           {
-            "name": "zIndex",
+            "prop": "zIndex",
             "type": "number | string"
           }
         ],

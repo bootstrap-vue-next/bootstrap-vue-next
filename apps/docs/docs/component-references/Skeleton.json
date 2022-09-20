@@ -10,27 +10,27 @@
         "component": "BSkeleton",
         "props": [
           {
-            "name": "height",
+            "prop": "height",
             "type": "string"
           },
           {
-            "name": "width",
+            "prop": "width",
             "type": "string"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "string"
           },
           {
-            "name": "animation",
+            "prop": "animation",
             "type": "SkeletonAnimation"
           },
           {
-            "name": "type",
+            "prop": "type",
             "type": "SkeletonType"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],
@@ -41,7 +41,7 @@
         "component": "BSkeletonIcon",
         "props": [
           {
-            "name": "animation",
+            "prop": "animation",
             "type": "SkeletonAnimation"
           }
         ],
@@ -58,27 +58,27 @@
         "component": "BSkeletonTable",
         "props": [
           {
-            "name": "animation",
+            "prop": "animation",
             "type": "SkeletonAnimation"
           },
           {
-            "name": "columns",
+            "prop": "columns",
             "type": "number"
           },
           {
-            "name": "hideHeader",
+            "prop": "hideHeader",
             "type": "Booleanish"
           },
           {
-            "name": "rows",
+            "prop": "rows",
             "type": "number"
           },
           {
-            "name": "showFooter",
+            "prop": "showFooter",
             "type": "Booleanish"
           },
           {
-            "name": "tableProps",
+            "prop": "tableProps",
             "type": "Record<string, unknown>"
           }
         ],
@@ -89,7 +89,7 @@
         "component": "BSkeletonWrapper",
         "props": [
           {
-            "name": "loading",
+            "prop": "loading",
             "type": "Booleanish"
           }
         ],

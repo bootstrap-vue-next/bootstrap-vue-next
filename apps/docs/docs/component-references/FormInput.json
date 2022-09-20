@@ -7,27 +7,28 @@
     "description": "",
     "components": [
       {
-        "component": "BBFormInput",
+        "component": "BFormInput",
         "props": [
           {
-            "name": "max",
+            "prop": "max",
             "type": "string | number"
           },
           {
-            "name": "min",
+            "prop": "min",
             "type": "string | number"
           },
           {
-            "name": "step",
+            "prop": "step",
             "type": "string | number"
           },
           {
-            "name": "type",
+            "prop": "type",
             "type": "InputType"
           }
         ],
         "emits": [
           {
+            "args": [],
             "emit": "update:modelValue",
             "description": ""
           },

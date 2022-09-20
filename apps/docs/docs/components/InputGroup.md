@@ -260,7 +260,7 @@ the addon:
     <div>
       <b-input-group class="mb-2">
         <b-input-group-prepend is-text>
-          <b-form-checkbox class="mr-n2">
+          <b-form-checkbox class="me-n2">
             <span class="visually-hidden">Checkbox for following text input</span>
           </b-form-checkbox>
         </b-input-group-prepend>
@@ -268,7 +268,7 @@ the addon:
       </b-input-group>
       <b-input-group class="mb-2">
         <b-input-group-prepend is-text>
-          <b-form-radio class="mr-n2">
+          <b-form-radio class="me-n2">
             <span class="visually-hidden">Radio for following text input</span>
           </b-form-radio>
         </b-input-group-prepend>
@@ -276,7 +276,7 @@ the addon:
       </b-input-group>
       <b-input-group>
         <b-input-group-prepend is-text>
-          <b-form-checkbox switch class="mr-n2">
+          <b-form-checkbox switch class="me-n2">
             <span class="visually-hidden">Switch for following text input</span>
           </b-form-checkbox>
         </b-input-group-prepend>
@@ -290,7 +290,7 @@ the addon:
 <div>
   <b-input-group class="mb-2">
     <b-input-group-prepend is-text>
-      <b-form-checkbox class="mr-n2">
+      <b-form-checkbox class="me-n2">
         <span class="visually-hidden">Checkbox for following text input</span>
       </b-form-checkbox>
     </b-input-group-prepend>
@@ -298,7 +298,7 @@ the addon:
   </b-input-group>
   <b-input-group class="mb-2">
     <b-input-group-prepend is-text>
-      <b-form-radio class="mr-n2">
+      <b-form-radio class="me-n2">
         <span class="visually-hidden">Radio for following text input</span>
       </b-form-radio>
     </b-input-group-prepend>
@@ -306,7 +306,7 @@ the addon:
   </b-input-group>
   <b-input-group>
     <b-input-group-prepend is-text>
-      <b-form-checkbox switch class="mr-n2">
+      <b-form-checkbox switch class="me-n2">
         <span class="visually-hidden">Switch for following text input</span>
       </b-form-checkbox>
     </b-input-group-prepend>
@@ -317,7 +317,7 @@ the addon:
 
 In the above example, we have used the `.visually-hidden` class on a `<span>` to visually hide the custom
 control's label content (while making them still accessible to screen reader users), and used the
-utility class `.mr-n2` to add a negative right margin to compensate for the "gutter" space between
+utility class `.me-n2` to add a negative right margin to compensate for the "gutter" space between
 the control and the hidden label.
 
 ## Multiple inputs
@@ -471,7 +471,7 @@ required to make everything fit correctly, depending on the size chosen:
       <b-input-group size="sm" prepend="Small" class="mb-2">
         <b-form-input aria-label="Small text input with custom switch"></b-form-input>
         <b-input-group-append is-text>
-        <b-form-checkbox switch class="mr-n2 mb-n1">
+        <b-form-checkbox switch class="me-n2 mb-n1">
             <span class="visually-hidden">Checkbox for previous text input</span>
         </b-form-checkbox>
         </b-input-group-append>
@@ -479,7 +479,7 @@ required to make everything fit correctly, depending on the size chosen:
       <b-input-group size="lg" prepend="Large" class="mb-2">
         <b-form-input aria-label="Large text input with switch"></b-form-input>
         <b-input-group-append is-text>
-          <b-form-checkbox switch class="mr-n2">
+          <b-form-checkbox switch class="me-n2">
             <span class="visually-hidden">Switch for previous text input</span>
           </b-form-checkbox>
         </b-input-group-append>
@@ -493,7 +493,7 @@ required to make everything fit correctly, depending on the size chosen:
   <b-input-group size="sm" prepend="Small" class="mb-2">
     <b-form-input aria-label="Small text input with custom switch"></b-form-input>
     <b-input-group-append is-text>
-      <b-form-checkbox switch class="mr-n2 mb-n1">
+      <b-form-checkbox switch class="me-n2 mb-n1">
         <span class="visually-hidden">Checkbox for previous text input</span>
       </b-form-checkbox>
     </b-input-group-append>
@@ -501,7 +501,7 @@ required to make everything fit correctly, depending on the size chosen:
   <b-input-group size="lg" prepend="Large" class="mb-2">
     <b-form-input aria-label="Large text input with switch"></b-form-input>
     <b-input-group-append is-text>
-      <b-form-checkbox switch class="mr-n2">
+      <b-form-checkbox switch class="me-n2">
         <span class="visually-hidden">Switch for previous text input</span>
       </b-form-checkbox>
     </b-input-group-append>
@@ -517,91 +517,6 @@ margin, via the use of the `.mb-n1` [utility class](/docs/reference/utility-clas
 Bootstrap v5 currently **does not** support contextual state styling (i.e. valid or invalid) of
 input groups. However, the inputs inside the input group do support contextual state.
 
-## Component reference
-
-### `<b-input-group>`
-
-#### Properties
-
-| Property       | Type     | Default | Description                                                                                                                   |
-| -------------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `append`       | `String` |         | Text to append to the input group                                                                                             |
-| `append-html`  | `String` |         | HTML string to append to the input group. Has precedence over 'append' prop                                                   |
-| `id`           | `String` |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `prepend`      | `String` |         | Text to prepend to the input group                                                                                            |
-| `prepend-html` | `String` |         | HTML string to prepend to the input group. Has precedence over 'append' prop                                                  |
-| `size`         | `String` |         | Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'                                                     |
-| `tag`          | `String` | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
-
-#### Slots
-
-| Name      | Scoped | Description                         |
-| --------- | ------ | ----------------------------------- |
-| `append`  | No     | Append attachment                   |
-| `default` | No     | Content to place in the input group |
-| `prepend` | No     | Prepend attachment                  |
-
-### `<b-input-group-prepend>`
-
-**Note** Bootstrap 5 dropped `.input-group-prepend`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-prepend>` is added for compatibility reasons.
-
-| Property  | Type      | Default | Description                                                                                                                   |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
-| `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
-
-#### Slots
-
-| Name      | Scoped | Description                                 |
-| --------- | ------ | ------------------------------------------- |
-| `default` | No     | Content to place in the input group prepend |
-
-### `<b-input-group-append>`
-
-**Note** Bootstrap 5 dropped `.input-group-append`. You can now just add buttons and `.input-group-text` as direct children of the input groups. `<b-input-group-append>` is added for compatibility reasons.
-
-| Property  | Type      | Default | Description                                                                                                                   |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
-| `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
-
-#### Slots
-
-| Name      | Scoped | Description                                |
-| --------- | ------ | ------------------------------------------ |
-| `default` | No     | Content to place in the input group append |
-
-### `<b-input-group-text>`
-
-**Note** `<b-input-group-text>` is added for compatibility reasons.
-
-| Property | Type     | Default | Description                                               |
-| -------- | -------- | ------- | --------------------------------------------------------- |
-| `tag`    | `String` | `div`   | Specify the HTML tag to render instead of the default tag |
-
-#### Slots
-
-| Name      | Scoped | Description                              |
-| --------- | ------ | ---------------------------------------- |
-| `default` | No     | Content to place in the input group text |
-
-### `<b-input-group-addon>`
-
-**Note** `<b-input-group-addon>` is added for compatibility reasons.
-
-#### Properties
-
-| Property  | Type      | Default | Description                                                                                                                   |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `append`  | `Boolean` | `false` | When set to 'true' sets the addon as being appended. defaults to 'false' which is prepended                                   |
-| `id`      | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `is-text` | `Boolean` | `false` | When 'true', wraps the content in a b-input-group-text component                                                              |
-| `tag`     | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
-
-#### Slots
-
-| Name      | Scoped | Description                               |
-| --------- | ------ | ----------------------------------------- |
-| `default` | No     | Content to place in the input group addon |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>

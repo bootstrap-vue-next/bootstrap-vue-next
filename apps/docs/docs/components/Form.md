@@ -172,7 +172,7 @@ visitors with class `.visually-hidden`.
         <div class="col-lg-3">
           <b-form-input
             id="inline-form-input-name"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             placeholder="Jane Doe"
           ></b-form-input>
         </div>
@@ -180,11 +180,11 @@ visitors with class `.visually-hidden`.
           >Username</label
         >
         <div class="col-lg-3">
-          <b-input-group prepend="@" class="col-lg-4 mb-2 mr-sm-2 mb-sm-0">
+          <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
             <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
           </b-input-group>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-2 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
           >Remember me</b-form-checkbox
         >
         <div class="col-lg-1">
@@ -205,7 +205,7 @@ visitors with class `.visually-hidden`.
         <div class="col-lg-3">
           <b-form-input
             id="inline-form-input-name"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             placeholder="Jane Doe"
           ></b-form-input>
         </div>
@@ -213,11 +213,11 @@ visitors with class `.visually-hidden`.
           >Username</label
         >
         <div class="col-lg-3">
-          <b-input-group prepend="@" class="col-lg-4 mb-2 mr-sm-2 mb-sm-0">
+          <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
             <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
           </b-input-group>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-2 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
           >Remember me</b-form-checkbox
         >
         <div class="col-lg-1">
@@ -236,18 +236,18 @@ Custom form controls and selects are also supported.
   <div>
     <b-form>
       <div class="row">
-        <label class="col-form-label col-lg-2 mr-sm-2" for="inline-form-custom-select-pref"
+        <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
           >Preference</label
         >
         <div class="col-lg-2">
           <b-form-select
             id="inline-form-custom-select-pref"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
             :value="null"
           ></b-form-select>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-3 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
           >Remember my preference</b-form-checkbox
         >
         <div class="col-lg-2 col-form-label">
@@ -264,18 +264,18 @@ Custom form controls and selects are also supported.
   <div>
     <b-form>
       <div class="row">
-        <label class="col-form-label col-lg-2 mr-sm-2" for="inline-form-custom-select-pref"
+        <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
           >Preference</label
         >
         <div class="col-lg-2">
           <b-form-select
             id="inline-form-custom-select-pref"
-            class="mb-2 mr-sm-2 mb-sm-0"
+            class="mb-2 me-sm-2 mb-sm-0"
             :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
             :value="null"
           ></b-form-select>
         </div>
-        <b-form-checkbox class="col-form-label col-lg-3 mb-2 mr-sm-2 mb-sm-0"
+        <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
           >Remember my preference</b-form-checkbox
         >
         <div class="col-lg-2 col-form-label">
@@ -458,92 +458,9 @@ Refer to the
 [Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.0/forms/validation/)
 for details on the Bootstrap v5 validation states.
 
-## Component reference
-
-### `<b-form>`
-
-#### Properties
-
-| Property     | Type      | Default | Description                                                                                                                   |
-| ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `novalidate` | `Boolean` | `false` | When set, disables browser native HTML5 validation on controls in the form                                                    |
-| `validated`  | `Boolean` | `false` | When set, adds the Bootstrap class 'was-validated' on the form, triggering the native browser validation states               |
-
-#### slots
-
-| Property  | Description                  |
-| --------- | ---------------------------- |
-| `default` | Content to place in the form |
-
-#### Events
-
-| Name     | Argument                      | Description                              |
-| -------- | ----------------------------- | ---------------------------------------- |
-| `submit` | `event` - Native submit event | Emitted when the form is being submitted |
-
-## Component reference
-
-### `<b-form-text>`
-
-#### Properties
-
-| Property       | Type      | Default | Description                                                                                                                   |
-| -------------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `id`           | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `inline`       | `Boolean` | `false` | When set, renders the help text as an inline element, rather than a block element                                             |
-| `tag`          | `String`  | `small` | Specify the HTML tag to render instead of the default tag                                                                     |
-| `text-variant` | `String`  | `muted` | Applies one of the Bootstrap theme color variants to the text                                                                 |
-
-#### slots
-
-| Property  | Description                       |
-| --------- | --------------------------------- |
-| `default` | Content to place in the form text |
-
-## Component reference
-
-### `<b-form-invalid-feedback>`
-
-#### Properties
-
-| Property     | Type      | Default | Description                                                                                                                   |
-| ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `aria-live`  | `String`  |         | When the rendered element is an `aria-live` region (for screen reader users), set to either 'polite' or 'assertive'           |
-| `force-show` | `Boolean` | `false` | Shows the feedback text, regardless of the value of the 'state' prop                                                          |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `role`       | `String`  |         | Sets the ARIA attribute `role` to a specific value                                                                            |
-| `state`      | `Boolean` | `null`  | When explicitly 'false', forces the feedback to show                                                                          |
-| `tag`        | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
-| `tooltip`    | `Boolean` | `false` | Renders the feedback text in a rudimentary tooltip style                                                                      |
-
-#### slots
-
-| Property  | Description                                   |
-| --------- | --------------------------------------------- |
-| `default` | Content to place in the form invalid feedback |
-
-## Component reference
-
-### `<b-form-invalid-feedback>`
-
-#### Properties
-
-| Property     | Type      | Default | Description                                                                                                                   |
-| ------------ | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `aria-live`  | `String`  |         | When the rendered element is an `aria-live` region (for screen reader users), set to either 'polite' or 'assertive'           |
-| `force-show` | `Boolean` | `false` | Shows the feedback text, regardless of the value of the 'state' prop                                                          |
-| `id`         | `String`  |         | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed |
-| `role`       | `String`  |         | Sets the ARIA attribute `role` to a specific value                                                                            |
-| `state`      | `Boolean` | `null`  | When explicitly 'true', forces the feedback to show                                                                           |
-| `tag`        | `String`  | `div`   | Specify the HTML tag to render instead of the default tag                                                                     |
-| `tooltip`    | `Boolean` | `false` | Renders the feedback text in a rudimentary tooltip style                                                                      |
-
-#### slots
-
-| Property  | Description                                         |
-| --------- | --------------------------------------------------- |
-| `default` | Content to place in the form valid feedback element |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang='ts' setup>
   import {ref, computed, reactive, nextTick} from 'vue'

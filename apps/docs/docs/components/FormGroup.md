@@ -475,65 +475,9 @@ auto-assigned to the input. When the form group has multiple form controls, make
 attribute to each control yourself by using the `ariaDescribedby` prop value from the optionally
 scoped `default` slot.
 
-## Component reference
-
-### `<b-form-group>`
-
-#### Properties
-
-| Property                                                      | Type                                                                     | Default     | Description                                                                                                                                                     |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `content-cols`                                                | <span style="white-space:nowrap;">`Boolean`, `Number` or `String`</span> |             | Number of columns for the content width 'xs' screens and up                                                                                                     |
-| `content-cols-lg`                                             | `Boolean`, `Number` or `String`                                          |             | Number of columns for the content width 'lg' screens and up                                                                                                     |
-| `content-cols-md`                                             | `Boolean`, `Number` or `String`                                          |             | Number of columns for the content width 'md' screens and up                                                                                                     |
-| `content-cols-sm`                                             | `Boolean`, `Number` or `String`                                          |             | Number of columns for the content width 'sm' screens and up                                                                                                     |
-| `content-cols-xl`                                             | `Boolean`, `Number` or `String`                                          |             | Number of columns for the content width 'xl' screens and up                                                                                                     |
-| `description`                                                 | `String`                                                                 |             | Text to place in the help text area of the form group                                                                                                           |
-| `disabled`                                                    | `Boolean`                                                                | `false`     | Disabled the fieldset element, which in turn disables the form controls (on browsers that support disabled fieldsets). Has no effect if `label-for` is set      |
-| <span style="white-space:nowrap;">`feedback-aria-live`</span> | `String`                                                                 | `assertive` | Value to use for the `aria-live` attribute on the feedback text                                                                                                 |
-| `floating`                                                    | `Boolean`                                                                | `false`     | When set to true, enables floating labels. Has no effect in horizontal layout.                                                                                  |
-| `id`                                                          | `String`                                                                 |             | Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element Ids as needed                                   |
-| `invalid-feedback`                                            | `String`                                                                 |             | Text to show when the form group has an invalid state                                                                                                           |
-| `label`                                                       | `String`                                                                 |             | Text to place in the label/legend of the form group                                                                                                             |
-| `label-align`                                                 | `String`                                                                 |             | Text alignment 'left', 'center', 'right' for the label 'xs' screens and up                                                                                      |
-| `label-align-lg`                                              | `String`                                                                 |             | Text alignment 'left', 'center', 'right' for the label 'lg' screens and up                                                                                      |
-| `label-align-md`                                              | `String`                                                                 |             | Text alignment 'left', 'center', 'right' for the label 'md' screens and up                                                                                      |
-| `label-align-sm`                                              | `String`                                                                 |             | Text alignment 'left', 'center', 'right' for the label 'sm' screens and up                                                                                      |
-| `label-align-xl`                                              | `String`                                                                 |             | Text alignment 'left', 'center', 'right' for the label 'xl' screens and up                                                                                      |
-| `label-class`                                                 | `Array`, `Object` or `String`                                            |             | CSS class (or classes) to add to the label/legend element                                                                                                       |
-| `label-cols`                                                  | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'xs' screens and up                                                                                                       |
-| `label-cols-lg`                                               | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'lg' screens and up                                                                                                       |
-| `label-cols-md`                                               | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'md' screens and up                                                                                                       |
-| `label-cols-sm`                                               | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'sm' screens and up                                                                                                       |
-| `label-cols-xl`                                               | `Boolean`, `Number` or `String`                                          |             | Number of columns for the label width 'xl' screens and up                                                                                                       |
-| `label-for`                                                   | `String`                                                                 |             | Set to the Id of the singular form control in the form group. Do not set a value if there is more than one form control in the group                            |
-| `label-size`                                                  | `String`                                                                 |             | Sets the text size of the label: 'sm', 'md' (default) or 'lg'. Use this prop to have the label size match the form control size                                 |
-| `label-sr-only`                                               | `Boolean`                                                                | `false`     | Visually hides the label content, but makes it available to screen reader users                                                                                 |
-| `state`                                                       | `Boolean`                                                                | `null`      | Controls the validation state of the feedback. `true` force shows valid-feedback, `false` force shows invalid feedback, `null` does not force show the feedback |
-| `tooltip`                                                     | `Boolean`                                                                | `false`     | Renders the feedback text in a rudimentary tooltip style                                                                                                        |
-| `valid-feedback`                                              | `String`                                                                 |             | Text to show when the form group has a valid state                                                                                                              |
-| `validated`                                                   | `Boolean`                                                                | `false`     | When set, adds the Bootstrap validation trigger class 'was-validated' on the component                                                                          |
-
-#### Slots
-
-| Name               | Scoped | Description                                                                          |
-| ------------------ | ------ | ------------------------------------------------------------------------------------ |
-| `default`          |        | Content to place in the form group                                                   |
-| `description`      | No     | Content to place in the description area. Overrides the `description` prop           |
-| `invalid-feedback` | No     | Content to place in the invalid feedback area. Overrides the `invalid-feedback` prop |
-| `label`            | No     | Content to place inside the label element. Overrides the `label` prop                |
-| `valid-feedback`   | No     | Content to place in the valid feedback area. Overrides the `valid-feedback` prop     |
-
-##### default slot scope
-
-| Property          | Type     | Description                                                                                                                               |
-| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `ariaDescribedby` | `String` | The value for the `aria-describedby` attribute for input elements in the form group. Will be auto-assigned when `label-for` prop is given |
-| `id `             | `String` | The Id of the form group. Will equal `id` prop, when provided                                                                             |
-| `descriptionId`   | `String` | The Id of the description element. Will be `null` when no description content given                                                       |
-| `labelId`         | `String` | The Id of the label element. Will be `null` when no description content given                                                             |
-
 <ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {computed, ref} from 'vue'
@@ -551,5 +495,3 @@ scoped `default` slot.
   )
 
 </script>
-
-</ClientOnly>

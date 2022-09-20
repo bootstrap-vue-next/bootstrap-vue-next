@@ -10,55 +10,55 @@
         "component": "BCarousel",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "imgHeight",
+            "prop": "imgHeight",
             "type": "string"
           },
           {
-            "name": "imgWidth",
+            "prop": "imgWidth",
             "type": "string"
           },
           {
-            "name": "background",
+            "prop": "background",
             "type": "string"
           },
           {
-            "name": "modelValue",
+            "prop": "modelValue",
             "type": "number"
           },
           {
-            "name": "controls",
+            "prop": "controls",
             "type": "Booleanish"
           },
           {
-            "name": "indicators",
+            "prop": "indicators",
             "type": "Booleanish"
           },
           {
-            "name": "interval",
+            "prop": "interval",
             "type": "number"
           },
           {
-            "name": "noTouch",
+            "prop": "noTouch",
             "type": "Booleanish"
           },
           {
-            "name": "noWrap",
+            "prop": "noWrap",
             "type": "Booleanish"
           },
           {
-            "name": "controlsPrevText",
+            "prop": "controlsPrevText",
             "type": "string"
           },
           {
-            "name": "controlsNextText",
+            "prop": "controlsNextText",
             "type": "string"
           },
           {
-            "name": "indicatorsButtonLabel",
+            "prop": "indicatorsButtonLabel",
             "type": "string"
           }
         ],
@@ -99,75 +99,75 @@
         "emits": [],
         "props": [
           {
-            "name": "imgSrc",
+            "prop": "imgSrc",
             "type": "string"
           },
           {
-            "name": "imgHeight",
+            "prop": "imgHeight",
             "type": "string | number"
           },
           {
-            "name": "imgWidth",
+            "prop": "imgWidth",
             "type": "string | number"
           },
           {
-            "name": "interval",
+            "prop": "interval",
             "type": "string | number"
           },
           {
-            "name": "active",
+            "prop": "active",
             "type": "Booleanish"
           },
           {
-            "name": "background",
+            "prop": "background",
             "type": "string"
           },
           {
-            "name": "caption",
+            "prop": "caption",
             "type": "string"
           },
           {
-            "name": "captionHtml",
+            "prop": "captionHtml",
             "type": "string"
           },
           {
-            "name": "captionTag",
+            "prop": "captionTag",
             "type": "string"
           },
           {
-            "name": "contentTag",
+            "prop": "contentTag",
             "type": "string"
           },
           {
-            "name": "contentVisibleUp",
+            "prop": "contentVisibleUp",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "imgAlt",
+            "prop": "imgAlt",
             "type": "string"
           },
           {
-            "name": "imgBlank",
+            "prop": "imgBlank",
             "type": "Booleanish"
           },
           {
-            "name": "imgBlankColor",
+            "prop": "imgBlankColor",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "textHtml",
+            "prop": "textHtml",
             "type": "string"
           },
           {
-            "name": "textTag",
+            "prop": "textTag",
             "type": "string"
           }
         ],

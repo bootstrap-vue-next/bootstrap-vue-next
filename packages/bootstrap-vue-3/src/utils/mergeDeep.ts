@@ -1,4 +1,5 @@
-const _isObject = (item: any) => item && typeof item === 'object' && item.constructor === Object
+const _isObject = (item: unknown): boolean =>
+  !!item && typeof item === 'object' && item.constructor === Object
 
 /**
  * @param target
@@ -9,7 +10,7 @@ const _isObject = (item: any) => item && typeof item === 'object' && item.constr
 const mergeDeep = (target: any, source: any, extendArray = true) => {
   const output =
     target instanceof Date && typeof target.getMonth === 'function'
-      ? new Date(target)
+      ? new Date(target.getTime())
       : Object.assign({}, target)
   if (_isObject(target) && _isObject(source)) {
     Object.keys(source).forEach((key) => {
@@ -20,7 +21,9 @@ const mergeDeep = (target: any, source: any, extendArray = true) => {
         Object.assign(output, {
           [key]: !extendArray
             ? source[key]
-            : target[key].concat(source[key].filter((item: any) => !target[key].includes(item))),
+            : target[key].concat(
+                source[key].filter((item: unknown) => !target[key].includes(item))
+              ),
         })
       } else {
         Object.assign(output, {[key]: source[key]})

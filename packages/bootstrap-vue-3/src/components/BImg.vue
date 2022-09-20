@@ -29,7 +29,6 @@ interface BImgProps {
 }
 
 const props = withDefaults(defineProps<BImgProps>(), {
-  alt: undefined,
   blank: false,
   lazy: false,
   blankColor: 'transparent',

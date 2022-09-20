@@ -370,7 +370,7 @@ When the `href` is set to any other value (~~or the `to` prop is used~~), `role=
 added, nor will the keyboard event listeners be enabled.
 
 <ClientOnly>
-<ComponentReference></ComponentReference>
+  <ComponentReference></ComponentReference>
 </ClientOnly>
 
 <script lang='ts' setup>

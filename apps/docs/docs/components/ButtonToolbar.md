@@ -52,12 +52,12 @@
   <b-card>
     <div>
       <b-button-toolbar aria-label="Toolbar with button groups and input groups">
-        <b-button-group size="sm" class="mr-1">
+        <b-button-group size="sm" class="me-1">
           <b-button>Save</b-button>
           <b-button>Cancel</b-button>
         </b-button-group>
         <b-input-group size="sm" prepend="$" append=".00">
-          <b-form-input value="100" class="text-right"></b-form-input>
+          <b-form-input value="100" class="text-end"></b-form-input>
         </b-input-group>
       </b-button-toolbar>
     </div>
@@ -67,12 +67,12 @@
 ```html
 <div>
   <b-button-toolbar aria-label="Toolbar with button groups and input groups">
-    <b-button-group size="sm" class="mr-1">
+    <b-button-group size="sm" class="me-1">
       <b-button>Save</b-button>
       <b-button>Cancel</b-button>
     </b-button-group>
     <b-input-group size="sm" prepend="$" append=".00">
-      <b-form-input value="100" class="text-right"></b-form-input>
+      <b-form-input value="100" class="text-end"></b-form-input>
     </b-input-group>
   </b-button-toolbar>
 </div>
@@ -265,19 +265,6 @@ input groups and dropdowns, by setting the prop `justify`.
 </div>
 ```
 
-## Component reference
-
-### `<b-button-toolbar>`
-
-#### Properties
-
-| Property    | Type      | Default | Description                                                                                                                    |
-| ----------- | --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `aria-role` | `String`  | `group` | Sets the ARIA attribute `role` to a specific value                                                                             |
-| `justify`   | `Boolean` | `false` | Make the toolbar span the maximum available width, by increasing spacing between the button groups, input groups and dropdowns |
-
-#### Slots
-
-| Name      | Scoped | Description                            |
-| --------- | ------ | -------------------------------------- |
-| `default` | No     | Content to place in the button toolbar |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>

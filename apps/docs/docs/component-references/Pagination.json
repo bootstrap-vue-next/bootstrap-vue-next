@@ -17,7 +17,6 @@
           {
             "prop": "ariaLabel",
             "type": "string",
-            
             "description": "Value to place in the 'aria-label' attribute of the pagination control"
           },
           {
@@ -32,7 +31,7 @@
           },
           {
             "prop": "ellipsisClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'ellipsis' placeholders"
           },
           {
@@ -42,7 +41,7 @@
           },
           {
             "prop": "firstClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to first page' button"
           },
           {
@@ -92,7 +91,7 @@
           },
           {
             "prop": "lastClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to last page' button"
           },
           {
@@ -112,19 +111,17 @@
           },
           {
             "prop": "nextClass",
-            "type": "Array<string> | string",
-            
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to next page' button"
           },
           {
             "prop": "nextText",
             "type": "string",
-            
             "description": "Content to place in the goto next page button"
           },
           {
             "prop": "pageClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to page #' buttons"
           },
           {
@@ -139,7 +136,7 @@
           },
           {
             "prop": "prevClass",
-            "type": "Array<string> | string",
+            "type": "string[] | string",
             "description": "Class(es) to apply to the 'Go to previous page' button"
           },
           {
@@ -169,6 +166,7 @@
             "description": "Emitted when page changes via user interaction",
             "args": [
               {
+                "type": "number",
                 "arg": "page",
                 "description": "Selected page number (starting with `1`)"
               }
@@ -184,6 +182,7 @@
                 "description": "The `BvEvent` object. Call `bvEvent.preventDefault()` to cancel page selection"
               },
               {
+                "type": "number",
                 "arg": "page",
                 "description": "Page number to select (starting with `1`)"
               }
@@ -193,6 +192,7 @@
         "slots": [
           {
             "name": "ellipsis-text",
+            "scope": [],
             "description": "The '...' indicator content. Overrides the `ellipsis-text` prop"
           },
           {

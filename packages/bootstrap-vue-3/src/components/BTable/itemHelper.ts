@@ -1,7 +1,7 @@
 import {ref, Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
-import {isObject, isString, startCase} from '../../utils'
-import {cloneDeep} from './../../utils/object'
+import {isObject, startCase} from '../../utils'
+import {cloneDeep, cloneDeepAsync} from './../../utils/object'
 
 const useItemHelper = () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
@@ -16,7 +16,7 @@ const useItemHelper = () => {
       origFields.forEach((f) => {
         if (typeof f === 'string') {
           fields.push({key: f, label: startCase(f)})
-        } else if (isObject(f) && f.key && isString(f.key)) {
+        } else if (isObject(f) && f.key && typeof f.key === 'string') {
           fields.push({...f})
         }
         // todo handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
@@ -97,9 +97,22 @@ const useItemHelper = () => {
         }).length > 0
     )
 
+  const updateInternalItems = async (
+    items: TableItem<Record<string, any>>[]
+  ): Promise<TableItem[] | undefined> => {
+    try {
+      internalItems.value = await cloneDeepAsync(items)
+      return internalItems.value
+    } catch (err) {
+      return undefined
+    }
+  }
+
   return {
     normaliseFields,
     mapItems,
+    internalItems,
+    updateInternalItems,
     filterEvent,
   }
 }

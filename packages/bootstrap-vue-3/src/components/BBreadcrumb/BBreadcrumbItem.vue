@@ -18,10 +18,12 @@ import {computed, defineComponent, PropType, toRef} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import type {Booleanish} from '../../types'
 
+const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
+
 export default defineComponent({
   components: {BLink},
   props: {
-    ...omit(BLINK_PROPS, ['event', 'routerTag']),
+    ...linkProps,
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     ariaCurrent: {type: String, default: 'location'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},

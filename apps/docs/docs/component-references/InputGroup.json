@@ -10,31 +10,31 @@
         "component": "BInputGroup",
         "props": [
           {
-            "name": "append",
+            "prop": "append",
             "type": "string"
           },
           {
-            "name": "appendHtml",
+            "prop": "appendHtml",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "prepend",
+            "prop": "prepend",
             "type": "string"
           },
           {
-            "name": "prependHtml",
+            "prop": "prependHtml",
             "type": "string"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "InputSize"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],
@@ -61,15 +61,15 @@
         "component": "BInputGroupAppend",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "isText",
+            "prop": "isText",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],
@@ -86,15 +86,15 @@
         "component": "BInputGroupPrepend",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "isText",
+            "prop": "isText",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],
@@ -111,11 +111,11 @@
         "component": "BInputGroupText",
         "props": [
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           }
         ],

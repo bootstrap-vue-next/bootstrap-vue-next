@@ -1,6 +1,13 @@
 <template>
   <teleport to="body">
-    <div :id="id" ref="element" class="modal" :class="modalClasses" tabindex="-1" v-bind="$attrs">
+    <div
+      :id="computedId"
+      ref="element"
+      class="modal"
+      :class="modalClasses"
+      tabindex="-1"
+      v-bind="$attrs"
+    >
       <div class="modal-dialog" :class="modalDialogClasses">
         <div
           v-if="
@@ -17,16 +24,24 @@
                 {{ title }}
               </slot>
             </component>
-            <button
-              v-if="!hideHeaderCloseBoolean"
-              type="button"
-              class="btn-close"
-              :class="computedCloseButtonClasses"
-              data-bs-dismiss="modal"
-              :aria-label="headerCloseLabel"
-            >
-              <slot name="header-close" />
-            </button>
+            <template v-if="!hideHeaderCloseBoolean">
+              <button
+                v-if="$slots['header-close']"
+                type="button"
+                data-bs-dismiss="modal"
+                @click="hide()"
+              >
+                <slot name="header-close" />
+              </button>
+              <b-close-button
+                v-else
+                type="button"
+                :aria-label="headerCloseLabel"
+                data-bs-dismiss="modal"
+                :white="headerCloseWhiteBoolean"
+                @click="hide()"
+              />
+            </template>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
             <slot />
@@ -40,7 +55,7 @@
                 :disabled="disableCancel"
                 :size="buttonSize"
                 :variant="cancelVariant"
-                @click="hide(), $emit('cancel')"
+                @click="hide(), emit('cancel')"
               >
                 {{ cancelTitle }}
               </b-button>
@@ -50,7 +65,7 @@
                 :disabled="disableOk"
                 :size="buttonSize"
                 :variant="okVariant"
-                @click="hide(), $emit('ok')"
+                @click="hide(), emit('ok')"
               >
                 {{ okTitle }}
               </b-button>
@@ -70,10 +85,11 @@
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
-import {computed, nextTick, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {useBooleanish, useEventListener} from '../composables'
+import {computed, nextTick, onMounted, ref, toRef, watch} from 'vue'
+import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
@@ -175,6 +191,8 @@ const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 
 const lazyLoadCompleted = ref(false)
 
+const computedId = useId(toRef(props, 'id'), 'modal')
+
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
   (e: 'show', value: Event): void
@@ -187,8 +205,6 @@ interface BModalEmits {
 }
 
 const emit = defineEmits<BModalEmits>()
-
-const slots = useSlots()
 
 const element = ref<HTMLElement>()
 const instance = ref<Modal>()
@@ -244,15 +260,6 @@ const computedTitleClasses = computed(() => [
   props.titleClass,
 ])
 
-const hasHeaderCloseSlot = computed<boolean>(() => !!slots['header-close'])
-const computedCloseButtonClasses = computed(() => [
-  {
-    [`btn-close-content`]: hasHeaderCloseSlot.value,
-    [`d-flex`]: hasHeaderCloseSlot.value,
-    [`btn-close-white`]: !hasHeaderCloseSlot.value && headerCloseWhiteBoolean.value,
-  },
-])
-
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
 const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
 
@@ -265,12 +272,20 @@ const modalShowed = (e: Event) => {
   emit('shown', e)
 
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
+  if (modelValueBoolean.value === false) emit('update:modelValue', true)
+  ;(e.target as HTMLElement).focus()
 }
 
 const modalHided = (e: Event) => {
   emit('hidden', e)
 
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
+  if (modelValueBoolean.value === true) emit('update:modelValue', false)
+
+  const parentModal = document.querySelector('.modal')
+  if (parentModal) {
+    ;(parentModal as HTMLElement).focus()
+  }
 }
 
 const modalShow = (e: Event) => {
@@ -282,12 +297,12 @@ const modalHide = (e: Event) => {
 }
 
 const show = () => {
-  emit('update:modelValue', true)
+  if (modelValueBoolean.value) emit('update:modelValue', true)
   getInstance().show()
 }
 
 const hide = () => {
-  emit('update:modelValue', false)
+  if (modelValueBoolean.value) emit('update:modelValue', false)
   getInstance().hide()
 }
 

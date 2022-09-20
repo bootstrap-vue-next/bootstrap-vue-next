@@ -1,6 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BOffcanvas from './BOffcanvas.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
 
 describe('offcanvas', () => {
   enableAutoUnmount(afterEach)
@@ -84,41 +85,41 @@ describe('offcanvas', () => {
     expect($h5.text()).toBe('foobar')
   })
 
-  it('first child div has child button has static type button', () => {
+  it('first child div has child BCloseButton', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.get('button')
-    expect($button.attributes('type')).toBe('button')
+    const $closebutton = $div.findComponent(BCloseButton)
+    expect($closebutton.exists()).toBe(true)
   })
 
-  it('first child div has child button has static class btn-close', () => {
+  it('first child div child BCloseButton has prop type to be button', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.get('button')
-    expect($button.classes()).toContain('btn-close')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.props('type')).toBe('button')
   })
 
-  it('first child div has child button has aria-label close', () => {
+  it('first child div child BCloseButton has prop ariaLabel to be default close', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.get('button')
-    expect($button.attributes('aria-label')).toBe('Close')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.props('ariaLabel')).toBe('Close')
   })
 
-  it('first child div has child button has aria-label prop dismissLabel', () => {
+  it('first child div child BCloseButton has prop ariaLabel to be prop dismissLabel', () => {
     const wrapper = mount(BOffcanvas, {
       props: {dismissLabel: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.get('button')
-    expect($button.attributes('aria-label')).toBe('foobar')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.props('ariaLabel')).toBe('foobar')
   })
 
-  it('first child div has child button has static class text-reset', () => {
+  it('first child div child BCloseButton has static class text-reset', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
-    const $button = $div.get('button')
-    expect($button.classes()).toContain('text-reset')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.classes()).toContain('text-reset')
   })
 
   it('second child div has static class offcanvas-body', () => {

@@ -10,80 +10,80 @@
         "component": "BFormCheckbox",
         "props": [
           {
-            "name": "ariaLabel",
+            "prop": "ariaLabel",
             "type": "string"
           },
           {
-            "name": "ariaLabelledBy",
+            "prop": "ariaLabelledBy",
             "type": "string"
           },
           {
-            "name": "form",
+            "prop": "form",
             "type": "string"
           },
           {
-            "name": "indeterminate",
+            "prop": "indeterminate",
             "type": "Booleanish"
           },
           {
-            "name": "name",
+            "prop": "name",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "autofocus",
+            "prop": "autofocus",
             "type": "Booleanish"
           },
           {
-            "name": "plain",
+            "prop": "plain",
             "type": "Booleanish"
           },
           {
-            "name": "button",
+            "prop": "button",
             "type": "Booleanish"
           },
           {
-            "name": "switch",
+            "prop": "switch",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "buttonVariant",
+            "prop": "buttonVariant",
             "type": "ButtonVariant"
           },
           {
-            "name": "inline",
+            "prop": "inline",
             "type": "Booleanish"
           },
           {
-            "name": "required",
+            "prop": "required",
             "type": "Booleanish"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "InputSize"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "uncheckedValue",
-            "type": "Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number"
+            "prop": "uncheckedValue",
+            "type": "unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number"
           },
           {
-            "name": "value",
-            "type": "Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number"
+            "prop": "value",
+            "type": "unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number"
           },
           {
-            "name": "modelValue",
-            "type": "Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number"
+            "prop": "modelValue",
+            "type": "unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number"
           }
         ],
         "emits": [
@@ -133,87 +133,87 @@
         "component": "BFormCheckboxGroup",
         "props": [
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "form",
+            "prop": "form",
             "type": "string"
           },
           {
-            "name": "modelValue",
-            "type": "Array<string | number | Record<string, unknown>>"
+            "prop": "modelValue",
+            "type": "string | number | Record<string, unknown>[]"
           },
           {
-            "name": "ariaInvalid",
+            "prop": "ariaInvalid",
             "type": "AriaInvalid"
           },
           {
-            "name": "autofocus",
+            "prop": "autofocus",
             "type": "Booleanish"
           },
           {
-            "name": "buttonVariant",
+            "prop": "buttonVariant",
             "type": "ButtonVariant"
           },
           {
-            "name": "buttons",
+            "prop": "buttons",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "disabledField",
+            "prop": "disabledField",
             "type": "string"
           },
           {
-            "name": "htmlField",
+            "prop": "htmlField",
             "type": "string"
           },
           {
-            "name": "name",
+            "prop": "name",
             "type": "string"
           },
           {
-            "name": "options",
-            "type": "Array<string | Record<string, unknown>>"
+            "prop": "options",
+            "type": "string | Record<string, unknown>[]"
           },
           {
-            "name": "plain",
+            "prop": "plain",
             "type": "Booleanish"
           },
           {
-            "name": "required",
+            "prop": "required",
             "type": "Booleanish"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "Size"
           },
           {
-            "name": "stacked",
+            "prop": "stacked",
             "type": "Booleanish"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "switches",
+            "prop": "switches",
             "type": "Booleanish"
           },
           {
-            "name": "textField",
+            "prop": "textField",
             "type": "string"
           },
           {
-            "name": "validated",
+            "prop": "validated",
             "type": "Booleanish"
           },
           {
-            "name": "valueField",
+            "prop": "valueField",
             "type": "string"
           }
         ],
@@ -225,7 +225,7 @@
               {
                 "arg": "input",
                 "description": "",
-                "type": " Array<string | number | Record<string, unknown>>"
+                "type": "string | number | Record<string, unknown>[]"
               }
             ]
           },
@@ -236,7 +236,7 @@
               {
                 "arg": "update:modelValue",
                 "description": "",
-                "type": " Array<string | number | Record<string, unknown>>"
+                "type": "string | number | Record<string, unknown>[]"
               }
             ]
           },
@@ -247,7 +247,7 @@
               {
                 "arg": "change",
                 "description": "",
-                "type": " Array<string | number | Record<string, unknown>>"
+                "type": "string | number | Record<string, unknown>[]"
               }
             ]
           }

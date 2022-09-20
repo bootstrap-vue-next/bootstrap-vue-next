@@ -10,167 +10,167 @@
         "component": "BCard",
         "props": [
           {
-            "name": "align",
+            "prop": "align",
             "type": "Alignment"
           },
           {
-            "name": "bgVariant",
+            "prop": "bgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "bodyBgVariant",
+            "prop": "bodyBgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "bodyClass",
+            "prop": "bodyClass",
             "type": "ClassValue"
           },
           {
-            "name": "bodyTag",
+            "prop": "bodyTag",
             "type": "string"
           },
           {
-            "name": "bodyTextVariant",
+            "prop": "bodyTextVariant",
             "type": "TextColorVariant"
           },
           {
-            "name": "borderVariant",
+            "prop": "borderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "footer",
+            "prop": "footer",
             "type": "string"
           },
           {
-            "name": "footerBgVariant",
+            "prop": "footerBgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "footerBorderVariant",
+            "prop": "footerBorderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "footerClass",
+            "prop": "footerClass",
             "type": "ClassValue"
           },
           {
-            "name": "footerHtml",
+            "prop": "footerHtml",
             "type": "string"
           },
           {
-            "name": "footerTag",
+            "prop": "footerTag",
             "type": "string"
           },
           {
-            "name": "footerTextVariant",
+            "prop": "footerTextVariant",
             "type": "TextColorVariant"
           },
           {
-            "name": "header",
+            "prop": "header",
             "type": "string"
           },
           {
-            "name": "headerBgVariant",
+            "prop": "headerBgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "headerBorderVariant",
+            "prop": "headerBorderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "headerClass",
+            "prop": "headerClass",
             "type": "ClassValue"
           },
           {
-            "name": "headerHtml",
+            "prop": "headerHtml",
             "type": "string"
           },
           {
-            "name": "headerTag",
+            "prop": "headerTag",
             "type": "string"
           },
           {
-            "name": "headerTextVariant",
+            "prop": "headerTextVariant",
             "type": "TextColorVariant"
           },
           {
-            "name": "imgAlt",
+            "prop": "imgAlt",
             "type": "string"
           },
           {
-            "name": "imgBottom",
+            "prop": "imgBottom",
             "type": "Booleanish"
           },
           {
-            "name": "imgEnd",
+            "prop": "imgEnd",
             "type": "Booleanish"
           },
           {
-            "name": "imgHeight",
+            "prop": "imgHeight",
             "type": "string | number"
           },
           {
-            "name": "imgLeft",
+            "prop": "imgLeft",
             "type": "Booleanish"
           },
           {
-            "name": "imgRight",
+            "prop": "imgRight",
             "type": "Booleanish"
           },
           {
-            "name": "imgSrc",
+            "prop": "imgSrc",
             "type": "string"
           },
           {
-            "name": "imgStart",
+            "prop": "imgStart",
             "type": "Booleanish"
           },
           {
-            "name": "imgTop",
+            "prop": "imgTop",
             "type": "Booleanish"
           },
           {
-            "name": "imgWidth",
+            "prop": "imgWidth",
             "type": "string | number"
           },
           {
-            "name": "noBody",
+            "prop": "noBody",
             "type": "Booleanish"
           },
           {
-            "name": "overlay",
+            "prop": "overlay",
             "type": "Booleanish"
           },
           {
-            "name": "subTitle",
+            "prop": "subTitle",
             "type": "string"
           },
           {
-            "name": "subTitleTag",
+            "prop": "subTitleTag",
             "type": "string"
           },
           {
-            "name": "subTitleTextVariant",
+            "prop": "subTitleTextVariant",
             "type": "TextColorVariant"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "textVariant",
+            "prop": "textVariant",
             "type": "TextColorVariant"
           },
           {
-            "name": "title",
+            "prop": "title",
             "type": "string"
           },
           {
-            "name": "titleTag",
+            "prop": "titleTag",
             "type": "string"
           },
           {
-            "name": "bodyText",
+            "prop": "bodyText",
             "type": "string"
           }
         ],
@@ -198,43 +198,43 @@
         "emits": [],
         "props": [
           {
-            "name": "bodyBgVariant",
+            "prop": "bodyBgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "bodyTag",
+            "prop": "bodyTag",
             "type": "string"
           },
           {
-            "name": "bodyTextVariant",
+            "prop": "bodyTextVariant",
             "type": "TextColorVariant"
           },
           {
-            "name": "overlay",
+            "prop": "overlay",
             "type": "Booleanish"
           },
           {
-            "name": "subTitle",
+            "prop": "subTitle",
             "type": "string"
           },
           {
-            "name": "subTitleTag",
+            "prop": "subTitleTag",
             "type": "string"
           },
           {
-            "name": "subTitleTextVariant",
+            "prop": "subTitleTextVariant",
             "type": "TextColorVariant"
           },
           {
-            "name": "title",
+            "prop": "title",
             "type": "string"
           },
           {
-            "name": "titleTag",
+            "prop": "titleTag",
             "type": "string"
           },
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           }
         ],
@@ -256,27 +256,27 @@
         "emits": [],
         "props": [
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "bgVariant",
+            "prop": "bgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "borderVariant",
+            "prop": "borderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "html",
+            "prop": "html",
             "type": "string"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "textVariant",
+            "prop": "textVariant",
             "type": "TextColorVariant"
           }
         ],
@@ -293,15 +293,15 @@
         "emits": [],
         "props": [
           {
-            "name": "columns",
+            "prop": "columns",
             "type": "Booleanish"
           },
           {
-            "name": "deck",
+            "prop": "deck",
             "type": "Booleanish"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],
@@ -318,27 +318,27 @@
         "emits": [],
         "props": [
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "bgVariant",
+            "prop": "bgVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "borderVariant",
+            "prop": "borderVariant",
             "type": "ColorVariant"
           },
           {
-            "name": "html",
+            "prop": "html",
             "type": "string"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "textVariant",
+            "prop": "textVariant",
             "type": "TextColorVariant"
           }
         ],
@@ -355,47 +355,47 @@
         "emits": [],
         "props": [
           {
-            "name": "alt",
+            "prop": "alt",
             "type": "string"
           },
           {
-            "name": "bottom",
+            "prop": "bottom",
             "type": "Booleanish"
           },
           {
-            "name": "end",
+            "prop": "end",
             "type": "Booleanish"
           },
           {
-            "name": "height",
+            "prop": "height",
             "type": "number | string"
           },
           {
-            "name": "left",
+            "prop": "left",
             "type": "Booleanish"
           },
           {
-            "name": "right",
+            "prop": "right",
             "type": "Booleanish"
           },
           {
-            "name": "src",
+            "prop": "src",
             "type": "string"
           },
           {
-            "name": "lazy",
+            "prop": "lazy",
             "type": "Booleanish"
           },
           {
-            "name": "start",
+            "prop": "start",
             "type": "Booleanish"
           },
           {
-            "name": "top",
+            "prop": "top",
             "type": "Booleanish"
           },
           {
-            "name": "width",
+            "prop": "width",
             "type": "number | string"
           }
         ],
@@ -406,15 +406,15 @@
         "emits": [],
         "props": [
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           },
           {
-            "name": "textVariant",
+            "prop": "textVariant",
             "type": "TextColorVariant"
           }
         ],
@@ -425,11 +425,11 @@
         "emits": [],
         "props": [
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],
@@ -446,11 +446,11 @@
         "emits": [],
         "props": [
           {
-            "name": "text",
+            "prop": "text",
             "type": "string"
           },
           {
-            "name": "tag",
+            "prop": "tag",
             "type": "string"
           }
         ],

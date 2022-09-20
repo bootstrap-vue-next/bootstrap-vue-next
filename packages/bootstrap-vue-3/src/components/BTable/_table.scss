@@ -165,6 +165,12 @@
         border: none;
         padding: 0;
       }
+
+      &.b-table-static-busy {
+        position: initial;
+        width: 100%;
+        display: table-row;
+      }
     }
   }
 

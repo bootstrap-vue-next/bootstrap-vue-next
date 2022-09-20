@@ -10,17 +10,15 @@
     <span :id="taglabelId" class="b-form-tag-content flex-grow-1 text-truncate">
       <slot>{{ tagText }}</slot>
     </span>
-    <button
+    <b-close-button
       v-if="!disabledBoolean && !noRemoveBoolean"
       aria-keyshortcuts="Delete"
       type="button"
       :aria-label="removeLabel"
-      class="btn-close b-form-tag-remove"
-      :class="{
-        'btn-close-white': !['warning', 'info', 'light'].includes(variant),
-      }"
-      :aria-controls="id"
+      class="b-form-tag-remove"
+      :white="!['warning', 'info', 'light'].includes(variant)"
       :aria-describedby="taglabelId"
+      :aria-controls="id"
       @click="emit('remove', tagText)"
     />
   </component>
@@ -31,6 +29,7 @@
 import {computed, toRef, useSlots, VNodeNormalizedChildren} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
+import BCloseButton from '../BButton/BCloseButton.vue'
 
 interface BFormTagProps {
   id?: string

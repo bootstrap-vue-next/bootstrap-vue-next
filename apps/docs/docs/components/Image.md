@@ -273,37 +273,13 @@ guide.
   overwrite the loader limits: `require('!!url-loader?limit=0!./assets/photo.jpg')`
 - Support for `srcset` and `sizes` was added in release `2.1.0`
 
-## ~~Lazy loaded images~~
+## Lazy loaded images
 
-> ~~Use our complementary `<b-img-lazy>` image component (based on `<b-img>`) to lazy load images as they are scrolled into view (or within `offset` pixels of the viewport).~~
+Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time.
 
-## Component reference
-
-### `<b-img>`
-
-#### Properties
-
-| Property                                               | Type                  | Default       | Description                                                                                                                                                     |
-| ------------------------------------------------------ | --------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alt`                                                  | `String`              |               | Value to set for the `alt` attribute                                                                                                                            |
-| `blank`                                                | `Boolean`             | `false`       | Creates a blank/transparent image via an SVG data URI                                                                                                           |
-| <span style="white-space:nowrap;">`blank-color`</span> | `String`              | `transparent` | Sets the color of the blank image to the CSS color value specified                                                                                              |
-| `block`                                                | `Boolean`             | `false`       | Forces the image to display as a block element rather than the browser default of inline-block element                                                          |
-| `center`                                               | `Boolean`             | `false`       | Centers the image horizontally                                                                                                                                  |
-| `fluid`                                                | `Boolean`             | `false`       | Makes the image responsive. The image will shrink as needed or grow up the the image's native width                                                             |
-| `fluid-grow`                                           | `Boolean`             | `false`       | Similar to the 'fluid' prop, but allows the image to scale up past its native width                                                                             |
-| `height`                                               | `Number` or `String`  |               | The value to set on the image's 'height' attribute                                                                                                              |
-| `left`                                                 | `Boolean`             | `false`       | Floats the image to the left when set                                                                                                                           |
-| `right`                                                | `Boolean`             | `false`       | Floats the image to the right when set                                                                                                                          |
-| `rounded`                                              | `Boolean` or `String` | `false`       | When set to 'true', makes the image corners slightly rounded. Can also be used to disable rounded corners or make the image a circle/oval. See docs for details |
-| `sizes`                                                | `Array` or `String`   |               | One or more strings separated by commas (or an array of strings), indicating a set of source sizes. Optionally used in combination with the srcset prop         |
-| `src`                                                  | `String`              |               | URL to set for the `src` attribute                                                                                                                              |
-| `srcset`                                               | `Array` or `String`   |               | One or more strings separated by commas (or an array of strings), indicating possible image sources for the user agent to use                                   |
-| `thumbnail`                                            | `Boolean`             | `false`       | Adds a thumbnail border around the image                                                                                                                        |
-| `width`                                                | `Number` or `String`  |               | The value to set on the image's 'width' attribute                                                                                                               |
-
-<!-- ------------------------------------------------------------------ -->
 <ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>
 
 <script lang="ts" setup>
   import {ref, computed} from 'vue'
@@ -312,5 +288,3 @@ guide.
   const propsTr = {blank: true, width: 75, height: 75, class: 'm1'}
   
 </script>
-
-</ClientOnly>

@@ -10,39 +10,39 @@
         "component": "BProgress",
         "props": [
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           },
           {
-            "name": "max",
+            "prop": "max",
             "type": "number | string"
           },
           {
-            "name": "height",
+            "prop": "height",
             "type": "string"
           },
           {
-            "name": "animated",
+            "prop": "animated",
             "type": "Booleanish"
           },
           {
-            "name": "precision",
+            "prop": "precision",
             "type": "number | string"
           },
           {
-            "name": "showProgress",
+            "prop": "showProgress",
             "type": "Booleanish"
           },
           {
-            "name": "showValue",
+            "prop": "showValue",
             "type": "Booleanish"
           },
           {
-            "name": "striped",
+            "prop": "striped",
             "type": "Booleanish"
           },
           {
-            "name": "value",
+            "prop": "value",
             "type": "number | string"
           }
         ],
@@ -59,43 +59,43 @@
         "component": "BProgressBar",
         "props": [
           {
-            "name": "animated",
+            "prop": "animated",
             "type": "Booleanish"
           },
           {
-            "name": "label",
+            "prop": "label",
             "type": "string"
           },
           {
-            "name": "labelHtml",
+            "prop": "labelHtml",
             "type": "string"
           },
           {
-            "name": "max",
+            "prop": "max",
             "type": "number | string"
           },
           {
-            "name": "precision",
+            "prop": "precision",
             "type": "number | string"
           },
           {
-            "name": "showProgress",
+            "prop": "showProgress",
             "type": "Booleanish"
           },
           {
-            "name": "showValue",
+            "prop": "showValue",
             "type": "Booleanish"
           },
           {
-            "name": "striped",
+            "prop": "striped",
             "type": "Booleanish"
           },
           {
-            "name": "value",
+            "prop": "value",
             "type": "number | string"
           },
           {
-            "name": "variant",
+            "prop": "variant",
             "type": "ColorVariant"
           }
         ],

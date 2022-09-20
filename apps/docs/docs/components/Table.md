@@ -39,7 +39,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
       <b-tbody>
         <b-tr>
           <b-th rowspan="3">Belgium</b-th>
-          <b-th class="text-right">Antwerp</b-th>
+          <b-th class="text-end">Antwerp</b-th>
           <b-td>56</b-td>
           <b-td>22</b-td>
           <b-td>43</b-td>
@@ -47,7 +47,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
           <b-td>23</b-td>
         </b-tr>
         <b-tr>
-          <b-th class="text-right">Gent</b-th>
+          <b-th class="text-end">Gent</b-th>
           <b-td>46</b-td>
           <b-td variant="warning">18</b-td>
           <b-td>50</b-td>
@@ -55,7 +55,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
           <b-td variant="danger">15</b-td>
         </b-tr>
         <b-tr>
-          <b-th class="text-right">Brussels</b-th>
+          <b-th class="text-end">Brussels</b-th>
           <b-td>51</b-td>
           <b-td>27</b-td>
           <b-td>38</b-td>
@@ -64,7 +64,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
         </b-tr>
         <b-tr>
           <b-th rowspan="2">The Netherlands</b-th>
-          <b-th class="text-right">Amsterdam</b-th>
+          <b-th class="text-end">Amsterdam</b-th>
           <b-td variant="success">89</b-td>
           <b-td>34</b-td>
           <b-td>69</b-td>
@@ -72,7 +72,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
           <b-td>38</b-td>
         </b-tr>
         <b-tr>
-          <b-th class="text-right">Utrecht</b-th>
+          <b-th class="text-end">Utrecht</b-th>
           <b-td>80</b-td>
           <b-td variant="danger">12</b-td>
           <b-td>43</b-td>
@@ -82,7 +82,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
       </b-tbody>
       <b-tfoot>
         <b-tr>
-          <b-td colspan="7" variant="secondary" class="text-right">
+          <b-td colspan="7" variant="secondary" class="text-end">
             Total Rows: <b>5</b>
           </b-td>
         </b-tr>
@@ -127,7 +127,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
   <b-tbody>
     <b-tr>
       <b-th rowspan="3">Belgium</b-th>
-      <b-th class="text-right">Antwerp</b-th>
+      <b-th class="text-end">Antwerp</b-th>
       <b-td>56</b-td>
       <b-td>22</b-td>
       <b-td>43</b-td>
@@ -135,7 +135,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
       <b-td>23</b-td>
     </b-tr>
     <b-tr>
-      <b-th class="text-right">Gent</b-th>
+      <b-th class="text-end">Gent</b-th>
       <b-td>46</b-td>
       <b-td variant="warning">18</b-td>
       <b-td>50</b-td>
@@ -143,7 +143,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
       <b-td variant="danger">15</b-td>
     </b-tr>
     <b-tr>
-      <b-th class="text-right">Brussels</b-th>
+      <b-th class="text-end">Brussels</b-th>
       <b-td>51</b-td>
       <b-td>27</b-td>
       <b-td>38</b-td>
@@ -152,7 +152,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
     </b-tr>
     <b-tr>
       <b-th rowspan="2">The Netherlands</b-th>
-      <b-th class="text-right">Amsterdam</b-th>
+      <b-th class="text-end">Amsterdam</b-th>
       <b-td variant="success">89</b-td>
       <b-td>34</b-td>
       <b-td>69</b-td>
@@ -160,7 +160,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
       <b-td>38</b-td>
     </b-tr>
     <b-tr>
-      <b-th class="text-right">Utrecht</b-th>
+      <b-th class="text-end">Utrecht</b-th>
       <b-td>80</b-td>
       <b-td variant="danger">12</b-td>
       <b-td>43</b-td>
@@ -170,7 +170,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
   </b-tbody>
   <b-tfoot>
     <b-tr>
-      <b-td colspan="7" variant="secondary" class="text-right"> Total Rows: <b>5</b> </b-td>
+      <b-td colspan="7" variant="secondary" class="text-end"> Total Rows: <b>5</b> </b-td>
     </b-tr>
   </b-tfoot>
 </b-table-simple>
@@ -211,7 +211,7 @@ Here is the same table as above, set to be always stacked, which has the extra m
       <b-tbody>
         <b-tr>
           <b-th rowspan="3" class="text-center">Belgium (3 Cities)</b-th>
-          <b-th stacked-heading="City" class="text-left">Antwerp</b-th>
+          <b-th stacked-heading="City" class="text-start">Antwerp</b-th>
           <b-td stacked-heading="Clothes: Trousers">56</b-td>
           <b-td stacked-heading="Clothes: Skirts">22</b-td>
           <b-td stacked-heading="Clothes: Dresses">43</b-td>
@@ -254,7 +254,7 @@ Here is the same table as above, set to be always stacked, which has the extra m
       </b-tbody>
       <b-tfoot>
         <b-tr>
-          <b-td colspan="7" variant="secondary" class="text-right">
+          <b-td colspan="7" variant="secondary" class="text-end">
             Total Rows: <b>5</b>
           </b-td>
         </b-tr>
@@ -299,7 +299,7 @@ Here is the same table as above, set to be always stacked, which has the extra m
   <b-tbody>
     <b-tr>
       <b-th rowspan="3" class="text-center">Belgium (3 Cities)</b-th>
-      <b-th stacked-heading="City" class="text-left">Antwerp</b-th>
+      <b-th stacked-heading="City" class="text-start">Antwerp</b-th>
       <b-td stacked-heading="Clothes: Trousers">56</b-td>
       <b-td stacked-heading="Clothes: Skirts">22</b-td>
       <b-td stacked-heading="Clothes: Dresses">43</b-td>
@@ -342,7 +342,7 @@ Here is the same table as above, set to be always stacked, which has the extra m
   </b-tbody>
   <b-tfoot>
     <b-tr>
-      <b-td colspan="7" variant="secondary" class="text-right"> Total Rows: <b>5</b> </b-td>
+      <b-td colspan="7" variant="secondary" class="text-end"> Total Rows: <b>5</b> </b-td>
     </b-tr>
   </b-tfoot>
 </b-table-simple>
@@ -436,115 +436,6 @@ Sticky columns are supported with `<b-table-simple>`, but you will need to set t
 
 As with `<b-table>` and `<b-table-lite>`, sticky columns are not supported when the stacked prop is set on `<b-table-simple>`.
 
-## Component reference
-
-### `<b-table-simple>`
-
-#### Properties
-
-| Property        | Type                            | Default | Description                                                                                                                                                                                        |
-| --------------- | ------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bordered`      | `Boolean`                       | `false` | Adds borders to all the cells and headers                                                                                                                                                          |
-| `borderless`    | `Boolean`                       | `false` | Removes all borders from cells                                                                                                                                                                     |
-| `caption-top`   | `Boolean`                       | `false` | Visually place the table caption above the table. Default is below                                                                                                                                 |
-| `dark`          | `Boolean`                       | `false` | Places the table in dark mode                                                                                                                                                                      |
-| `hover`         | `Boolean`                       | `false` | Enables hover styling on rows                                                                                                                                                                      |
-| `outlined`      | `Boolean`                       | `false` | Adds an outline border to the table element                                                                                                                                                        |
-| `responsive`    | `Boolean` or `String`           | `false` | Makes the table responsive in width, adding a horizontal scrollbar. Set to true for always responsive or set to one of the breakpoints to switch from responsive to normal: 'sm', 'md', 'lg', 'xl' |
-| `small`         | `Boolean`                       | `false` | Renders the table with smaller cell padding                                                                                                                                                        |
-| `stacked`       | `Boolean` or `String`           | `false` | Place the table in stacked mode. Set to true for always stacked, or set to one of the breakpoints to switch from stacked to normal: 'sm', 'md', 'lg', 'xl'                                         |
-| `striped`       | `Boolean`                       | `false` | Applies striping to the tbody rows                                                                                                                                                                 |
-| `table-class`   | `Array` or `Object` or `String` |         | CSS class (or classes) to apply to the table element                                                                                                                                               |
-| `table-variant` | `String`                        |         | Apply a Bootstrap theme color variant to the entire table                                                                                                                                          |
-
-#### Slots
-
-| Name      | Description                   |
-| --------- | ----------------------------- |
-| `default` | Content to place in the table |
-
-### `<b-tbody>`
-
-#### Slots
-
-| Name      | Description                   |
-| --------- | ----------------------------- |
-| `default` | Content to place in the tbody |
-
-### `<b-thead>`
-
-#### Properties
-
-| Property       | Type     | Default | Description                                 |
-| -------------- | -------- | ------- | ------------------------------------------- |
-| `head-variant` | `String` |         | Header variant: 'light' or 'dark', or unset |
-
-#### Slots
-
-| Name      | Description                   |
-| --------- | ----------------------------- |
-| `default` | Content to place in the thead |
-
-### `<b-tfoot>`
-
-#### Properties
-
-| Property       | Type     | Default | Description                                 |
-| -------------- | -------- | ------- | ------------------------------------------- |
-| `foot-variant` | `String` |         | Footer variant: 'light' or 'dark', or unset |
-
-#### Slots
-
-| Name      | Description                   |
-| --------- | ----------------------------- |
-| `default` | Content to place in the tfoot |
-
-### `<b-tr>`
-
-#### Properties
-
-| Property  | Type     | Default | Description                                                        |
-| --------- | -------- | ------- | ------------------------------------------------------------------ |
-| `variant` | `String` |         | Applies one of the Bootstrap theme color variants to the component |
-
-#### Slots
-
-| Name      | Description                |
-| --------- | -------------------------- |
-| `default` | Content to place in the tr |
-
-### `<b-td>`
-
-#### Properties
-
-| Property          | Type                 | Default | Description                                                                                                                        |
-| ----------------- | -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `colspan`         | `Number` or `String` | `null`  | Number of columns this cell spans                                                                                                  |
-| `rowspan`         | `Number` or `String` | `null`  | Number of rows this cell spans                                                                                                     |
-| `stacked-heading` | `String`             |         | Heading for the cell when in stacked mode. Only applicable to cells in the 'tbody' element                                         |
-| `sticky-column`   | `Boolean`            | `false` | If this will be a sticky colum. Must be set on all cells in this column. table must be in sticky-header or responsive mode to work |
-| `variant`         | `String`             |         | Applies one of the Bootstrap theme color variants to the component                                                                 |
-
-#### Slots
-
-| Name      | Description                |
-| --------- | -------------------------- |
-| `default` | Content to place in the td |
-
-### `<b-th>`
-
-#### Properties
-
-| Property          | Type                 | Default | Description                                                                                                                        |
-| ----------------- | -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `colspan`         | `Number` or `String` | `null`  | Number of columns this cell spans                                                                                                  |
-| `rowspan`         | `Number` or `String` | `null`  | Number of rows this cell spans                                                                                                     |
-| `stacked-heading` | `String`             |         | Heading for the cell when in stacked mode. Only applicable to cells in the 'tbody' element                                         |
-| `sticky-column`   | `Boolean`            | `false` | If this will be a sticky colum. Must be set on all cells in this column. table must be in sticky-header or responsive mode to work |
-| `variant`         | `String`             |         | Applies one of the Bootstrap theme color variants to the component                                                                 |
-
-#### Slots
-
-| Name      | Description                |
-| --------- | -------------------------- |
-| `default` | Content to place in the th |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>

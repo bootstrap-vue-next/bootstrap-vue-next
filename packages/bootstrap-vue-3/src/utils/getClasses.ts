@@ -10,10 +10,10 @@ export interface ComponentProps {
  * @returns
  */
 export default (
-  props: any,
+  props: Record<PropertyKey, unknown>,
   els: ComponentProps,
   propPrefix: string,
-  classPrefix: string = propPrefix
+  classPrefix = propPrefix
 ): string[] =>
   Object.keys(els).reduce((arr: string[], prop) => {
     if (!props[prop]) return arr

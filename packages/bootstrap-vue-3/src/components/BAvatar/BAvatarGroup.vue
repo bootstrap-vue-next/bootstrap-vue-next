@@ -11,7 +11,7 @@
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, InjectionKey, provide, StyleValue, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {isNumeric, isString, toFloat} from '../../utils'
+import {isNumeric, toFloat} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
 
@@ -37,15 +37,14 @@ const squareBoolean = useBooleanish(toRef(props, 'square'))
 const computedSize = computed<string | null>(() => computeSize(props.size))
 
 const computeOverlap = (value: any): number =>
-  isString(value) && isNumeric(value) ? toFloat(value, 0) : value || 0
+  typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value || 0
 
 const overlapScale = computed<number>(
   () => Math.min(Math.max(computeOverlap(props.overlap), 0), 1) / 2
 )
 
 const paddingStyle = computed<StyleValue>(() => {
-  let {value} = computedSize
-  value = value ? `calc(${value} * ${overlapScale.value})` : null
+  const value = computedSize.value ? `calc(${computedSize.value} * ${overlapScale.value})` : null
   return value ? {paddingLeft: value, paddingRight: value} : {}
 })
 

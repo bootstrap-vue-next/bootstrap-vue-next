@@ -1,14 +1,22 @@
 <template>
   <div v-if="isAlertVisible" ref="element" class="alert" role="alert" :class="classes">
     <slot />
-    <button
-      v-if="dismissibleBoolean"
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      :aria-label="dismissLabel"
-      @click="dismissClicked"
-    />
+    <template v-if="dismissibleBoolean">
+      <button
+        v-if="$slots.dismissible"
+        type="button"
+        data-bs-dismiss="alert"
+        @click="dismissClicked"
+      >
+        <slot name="dismissible" />
+      </button>
+      <b-close-button
+        v-else
+        :aria-label="dismissLabel"
+        data-bs-dismiss="alert"
+        @click="dismissClicked"
+      />
+    </template>
   </div>
 </template>
 
@@ -19,6 +27,7 @@ import {computed, onBeforeUnmount, ref, toRef, watch} from 'vue'
 import {Alert} from 'bootstrap'
 import {toInteger} from '../utils'
 import {useBooleanish} from '../composables'
+import BCloseButton from './BButton/BCloseButton.vue'
 
 interface BAlertProps {
   dismissLabel?: string
@@ -45,6 +54,7 @@ const fadeBoolean = useBooleanish(toRef(props, 'fade'))
 const showBoolean = useBooleanish(toRef(props, 'show'))
 
 interface BAlertEmits {
+  // TODO rename dismissed to closed
   (e: 'dismissed'): void
   (e: 'dismiss-count-down', value: number): void
   (e: 'update:modelValue', value: boolean | number): void

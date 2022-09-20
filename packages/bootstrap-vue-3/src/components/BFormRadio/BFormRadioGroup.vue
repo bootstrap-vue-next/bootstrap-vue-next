@@ -77,24 +77,14 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
 // TODO autofocus is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-// TODO buttons is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const buttonsBoolean = useBooleanish(toRef(props, 'buttons'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 // TODO plain is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
-// TODO required is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
-// TODO stacked is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
-// TODO state is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
-// TODO validated is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
 interface BFormRadioGroupEmits {

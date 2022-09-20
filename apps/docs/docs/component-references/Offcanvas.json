@@ -10,32 +10,33 @@
         "component": "BOffcanvas",
         "props": [
           {
-            "name": "dismissLabel",
+            "prop": "dismissLabel",
             "type": "string"
           },
           {
-            "name": "modelValue",
+            "prop": "modelValue",
             "type": "Booleanish"
           },
           {
-            "name": "bodyScrolling",
+            "prop": "bodyScrolling",
             "type": "Booleanish"
           },
           {
-            "name": "backdrop",
+            "prop": "backdrop",
             "type": "Booleanish"
           },
           {
-            "name": "placement",
+            "prop": "placement",
             "type": "string"
           },
           {
-            "name": "title",
+            "prop": "title",
             "type": "string"
           }
         ],
         "emits": [
           {
+            "emit": "update:modelValue",
             "args": [
               {
                 "arg": "update:modelValue",

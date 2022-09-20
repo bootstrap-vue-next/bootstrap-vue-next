@@ -270,21 +270,6 @@ For accessibility purposes, each spinner will automatically have a `role="status
 
 As well, when no label is provided, the spinner will automatically have the attribute `aria-hidden="true"` to hide the spinner from screen reader users.
 
-## Component reference
-
-### Properties
-
-| Property  | Type      | Default    | Description                                                              |
-| --------- | --------- | ---------- | ------------------------------------------------------------------------ |
-| `label`   | `String`  |            | Text content to place in the visually-hidden label                       |
-| `role`    | `String`  | `'status'` | Sets the ARIA attribute `role` to a specific value                       |
-| `small`   | `Boolean` | `false`    | When set, rendered a smaller spinner suitable for placing in buttons     |
-| `tag`     | `String`  | `'span'`   | Specify the HTML tag to render instead of the default tag                |
-| `type`    | `String`  | `'border'` | Type of spinner to show. Current supported types are 'border' and 'grow' |
-| `variant` | `String`  |            | Applies one of the Bootstrap theme color variants to the component       |
-
-### Slots
-
-| Name    | Description                                   |
-| ------- | --------------------------------------------- |
-| `label` | Content to place in the visually-hidden label |
+<ClientOnly>
+  <ComponentReference></ComponentReference>
+</ClientOnly>

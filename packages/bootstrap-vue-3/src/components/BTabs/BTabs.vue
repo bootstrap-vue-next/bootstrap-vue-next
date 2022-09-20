@@ -1,9 +1,14 @@
 <template>
   <component :is="tag" :id="id" class="tabs" :class="classes">
     <div v-if="endBoolean" class="tab-content" :class="contentClass">
-      <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
-        <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
-      </template>
+      <component
+        :is="tab"
+        v-for="({tab, contentId, tabClasses, active}, i) in tabs"
+        :id="contentId"
+        :key="i"
+        :class="tabClasses"
+        :active="active"
+      />
       <div
         v-if="showEmpty"
         key="bv-empty-tab"
@@ -46,9 +51,14 @@
       </ul>
     </div>
     <div v-if="!endBoolean" class="tab-content" :class="contentClass">
-      <template v-for="({tab, contentId, tabClasses, active}, i) in tabs" :key="i">
-        <component :is="tab" :id="contentId" :class="tabClasses" :active="active" />
-      </template>
+      <component
+        :is="tab"
+        v-for="({tab, contentId, tabClasses, active}, i) in tabs"
+        :id="contentId"
+        :key="i"
+        :class="tabClasses"
+        :active="active"
+      />
       <div
         v-if="showEmpty"
         key="bv-empty-tab"
@@ -65,7 +75,7 @@
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
-import {BvEvent, getId, isFunction} from '../../utils'
+import {BvEvent, getId} from '../../utils'
 import {useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
 
@@ -93,18 +103,11 @@ interface BTabsProps {
 }
 
 const props = withDefaults(defineProps<BTabsProps>(), {
-  activeNavItemClass: undefined,
-  activeTabClass: undefined,
-  align: undefined,
   card: false,
-  contentClass: undefined,
   end: false,
   fill: false,
-  id: undefined,
   justified: false,
   lazy: false,
-  navClass: undefined,
-  navWrapperClass: undefined,
   noFade: false,
   noNavStyle: false,
   pills: false,
@@ -198,13 +201,14 @@ const tabs = computed(() => {
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
 const classes = computed(() => ({
-  'd-flex align-items-start': verticalBoolean.value,
+  'd-flex': verticalBoolean.value,
+  'align-items-start': verticalBoolean.value,
 }))
 
 const navTabsClasses = computed(() => ({
   'nav-pills': pillsBoolean.value,
   'flex-column me-3': verticalBoolean.value,
-  [`justify-content-${props.align}`]: !!props.align,
+  [`justify-content-${props.align}`]: props.align !== undefined,
   'nav-fill': fillBoolean.value,
   'card-header-tabs': cardBoolean.value,
   'nav-justified': justifiedBoolean.value,
@@ -241,7 +245,7 @@ const handleClick = (event: MouseEvent, index: number) => {
     index >= 0 &&
     !tabs.value[index].disabled &&
     tabs.value[index]?.onClick &&
-    isFunction(tabs.value[index].onClick)
+    typeof tabs.value[index].onClick === 'function'
   ) {
     tabs.value[index].onClick(event)
   }

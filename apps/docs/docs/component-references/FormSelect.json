@@ -10,84 +10,84 @@
         "component": "BFormSelect",
         "props": [
           {
-            "name": "ariaInvalid",
+            "prop": "ariaInvalid",
             "type": "AriaInvalid"
           },
           {
-            "name": "autofocus",
+            "prop": "autofocus",
             "type": "Booleanish"
           },
           {
-            "name": "disabled",
+            "prop": "disabled",
             "type": "Booleanish"
           },
           {
-            "name": "disabledField",
+            "prop": "disabledField",
             "type": "string"
           },
           {
-            "name": "form",
+            "prop": "form",
             "type": "string"
           },
           {
-            "name": "htmlField",
+            "prop": "htmlField",
             "type": "string"
           },
           {
-            "name": "id",
+            "prop": "id",
             "type": "string"
           },
           {
-            "name": "labelField",
+            "prop": "labelField",
             "type": "string"
           },
           {
-            "name": "multiple",
+            "prop": "multiple",
             "type": "Booleanish"
           },
           {
-            "name": "name",
+            "prop": "name",
             "type": "string"
           },
           {
-            "name": "options",
-            "type": "Array<unknown> | Record<string, unknown>"
+            "prop": "options",
+            "type": "unknown[] | Record<string, unknown>"
           },
           {
-            "name": "optionsField",
+            "prop": "optionsField",
             "type": "string"
           },
           {
-            "name": "plain",
+            "prop": "plain",
             "type": "Booleanish"
           },
           {
-            "name": "required",
+            "prop": "required",
             "type": "Booleanish"
           },
           {
-            "name": "selectSize",
+            "prop": "selectSize",
             "type": "number"
           },
           {
-            "name": "size",
+            "prop": "size",
             "type": "Size"
           },
           {
-            "name": "state",
+            "prop": "state",
             "type": "Booleanish"
           },
           {
-            "name": "textField",
+            "prop": "textField",
             "type": "string"
           },
           {
-            "name": "valueField",
+            "prop": "valueField",
             "type": "string"
           },
           {
-            "name": "modelValue",
-            "type": "string | Array<unknown> | Record<string, unknown> | number"
+            "prop": "modelValue",
+            "type": "string | unknown[] | Record<string, unknown> | number"
           }
         ],
         "emits": [
@@ -165,27 +165,27 @@
         "component": "BFormSelectOptionGroup",
         "props": [
           {
-            "name": "label",
+            "prop": "label",
             "type": "string"
           },
           {
-            "name": "disabledField",
+            "prop": "disabledField",
             "type": "string"
           },
           {
-            "name": "htmlField",
+            "prop": "htmlField",
             "type": "string"
           },
           {
-            "name": "options",
-            "type": "Array<unknown> | Record<string, unknown>"
+            "prop": "options",
+            "type": "unknown[] | Record<string, unknown>"
           },
           {
-            "name": "textField",
+            "prop": "textField",
             "type": "string"
           },
           {
-            "name": "valueField",
+            "prop": "valueField",
             "type": "string"
           }
         ],
