@@ -1,6 +1,5 @@
 <template>
   <div
-    :id="computedId"
     class="carousel-item"
     :class="{active: activeBoolean}"
     :data-bs-interval="interval"
@@ -77,11 +76,13 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
   textTag: 'p',
 })
 
+// instead of using this property, it would be nice to use `startingSlide`
+// of the parent Carousel in order to set the proper active slide
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const imgBlankBoolean = useBooleanish(toRef(props, 'imgBlank'))
 
 const parentData = inject<BCarouselParentData>(injectionKey, {})
-const computedId = useId(toRef(props, 'id'), 'accordion')
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const img = computed<string | true | undefined>(() =>
   imgBlankBoolean.value ? imgBlankBoolean.value : props.imgSrc

@@ -1,17 +1,19 @@
 <template>
   <div :id="computedId" ref="element" class="carousel slide" data-bs-ride="carousel">
-    <div v-if="indicatorsBoolean" class="carousel-indicators">
-      <button
-        v-for="(_, i) of slides"
-        :key="i"
-        type="button"
-        :data-bs-target="`#${computedId}`"
-        :data-bs-slide-to="i"
-        :class="i === 0 ? 'active' : ''"
-        aria-current="true"
-        :aria-label="`${indicatorsButtonLabel} ${i}`"
-      />
-    </div>
+    <template v-if="indicatorsBoolean">
+      <div class="carousel-indicators">
+        <button
+          v-for="(_, i) of slides"
+          :key="i"
+          type="button"
+          :data-bs-target="`#${computedId}`"
+          :data-bs-slide-to="i"
+          :class="i === startingSlide ? 'active' : ''"
+          aria-current="true"
+          :aria-label="`${indicatorsButtonLabel} ${i}`"
+        />
+      </div>
+    </template>
 
     <div class="carousel-inner">
       <slot />
@@ -49,6 +51,7 @@ import {useBooleanish, useEventListener, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 
 interface BCarouselProps {
+  startingSlide?: number
   id?: string
   imgHeight?: string
   imgWidth?: string
@@ -65,6 +68,7 @@ interface BCarouselProps {
 }
 
 const props = withDefaults(defineProps<BCarouselProps>(), {
+  startingSlide: 0,
   modelValue: 0,
   controls: false,
   indicators: false,
@@ -94,7 +98,7 @@ const slots = useSlots()
 
 const element = ref<HTMLElement>()
 const instance = ref<Carousel>()
-const computedId = useId(toRef(props, 'id'), 'accordion')
+const computedId = useId(toRef(props, 'id'), 'carousel')
 const slides = ref<VNode[]>([])
 
 useEventListener(element, 'slide.bs.carousel', (payload) => emit('sliding-start', payload))
@@ -108,7 +112,7 @@ onMounted(() => {
   })
 
   if (slots.default) {
-    slides.value = slots.default().filter((child: any) => child.type?.name === 'BCarouselSlide')
+    slides.value = slots.default().filter((child: any) => child.type?.__name === 'BCarouselSlide')
   }
 })
 
