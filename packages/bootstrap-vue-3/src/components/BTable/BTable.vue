@@ -1,7 +1,7 @@
 <template>
-  <BTableContainer
+  <BTableSimple
     :responsive="responsive"
-    :responsive-class="responsiveClasses"
+    :sticky-header="stickyHeaderBoolean"
     :table-class="tableClasses"
   >
     <!-- <table :class="classes"> -->
@@ -76,10 +76,10 @@
       <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
         <tr
           :class="getRowClasses(item)"
-          @click.prevent="onRowClick(item, itemIndex, $event)"
-          @dblclick.prevent="onRowDblClick(item, itemIndex, $event)"
-          @mouseenter.prevent="onRowMouseEnter(item, itemIndex, $event)"
-          @mouseleave.prevent="onRowMouseLeave(item, itemIndex, $event)"
+          @click="onRowClick(item, itemIndex, $event)"
+          @dblclick="onRowDblClick(item, itemIndex, $event)"
+          @mouseenter="onRowMouseEnter(item, itemIndex, $event)"
+          @mouseleave="onRowMouseLeave(item, itemIndex, $event)"
         >
           <td
             v-if="addSelectableCell"
@@ -175,7 +175,7 @@
       }}
     </caption>
     <!-- </table> -->
-  </BTableContainer>
+  </BTableSimple>
 </template>
 
 <script setup lang="ts">
@@ -195,7 +195,7 @@ import type {
   VerticalAlign,
 } from '../../types'
 import type {BTableProvider} from '../../types/components'
-import BTableContainer from './BTableContainer.vue'
+import BTableSimple from './BTableSimple.vue'
 import useItemHelper from './itemHelper'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
@@ -377,12 +377,6 @@ const computedItems = computed(() => {
       })
     : props.items
 })
-
-const responsiveClasses = computed(() => ({
-  'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
-  [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
-  'b-table-sticky-header': stickyHeaderBoolean.value,
-}))
 
 const getFieldHeadLabel = (field: TableField) => {
   if (typeof field === 'string') return titleCase(field)

@@ -3,7 +3,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {ref} from 'vue'
 import {TableField, TableItem} from '../../types'
 import BTable from './BTable.vue'
-import BTableContainer from './BTableContainer.vue'
+import BTableSimple from './BTableSimple.vue'
 
 const fields: Array<TableField> = [{key: 'name'}, {key: 'age'}]
 const items: Array<TableItem> = [
@@ -14,9 +14,9 @@ const items: Array<TableItem> = [
 describe('b-table', () => {
   enableAutoUnmount(afterEach)
 
-  it('element is BTableContainer', () => {
+  it('element is BTableSimple', () => {
     const wrapper = mount(BTable)
-    const $tablecontainer = wrapper.findComponent(BTableContainer)
+    const $tablecontainer = wrapper.findComponent(BTableSimple)
     expect($tablecontainer.exists()).toBe(true)
   })
 
@@ -24,27 +24,17 @@ describe('b-table', () => {
     const wrapper = mount(BTable, {
       props: {responsive: true},
     })
-    const $tablecontainer = wrapper.getComponent(BTableContainer)
+    const $tablecontainer = wrapper.getComponent(BTableSimple)
     expect($tablecontainer.props('responsive')).toBe(true)
     await wrapper.setProps({responsive: false})
     expect($tablecontainer.props('responsive')).toBe(false)
-  })
-
-  it('tablecontainer is given prop responsiveClass', async () => {
-    const wrapper = mount(BTable, {
-      props: {responsiveClass: true},
-    })
-    const $tablecontainer = wrapper.getComponent(BTableContainer)
-    expect($tablecontainer.props('responsiveClass')).toBe(true)
-    await wrapper.setProps({responsiveClass: false})
-    expect($tablecontainer.props('responsiveClass')).toBe(false)
   })
 
   it('tablecontainer is given prop tableClass', async () => {
     const wrapper = mount(BTable, {
       props: {tableClass: true},
     })
-    const $tablecontainer = wrapper.getComponent(BTableContainer)
+    const $tablecontainer = wrapper.getComponent(BTableSimple)
     expect($tablecontainer.props('tableClass')).toBe(true)
     await wrapper.setProps({tableClass: false})
     expect($tablecontainer.props('tableClass')).toBe(false)
