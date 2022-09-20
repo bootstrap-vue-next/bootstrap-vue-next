@@ -1,9 +1,5 @@
 <template>
-  <BTableSimple
-    :responsive="responsive"
-    :sticky-header="stickyHeaderBoolean"
-    :table-class="tableClasses"
-  >
+  <b-table-simple v-bind="containerAttrs">
     <!-- <table :class="classes"> -->
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
@@ -175,7 +171,7 @@
       }}
     </caption>
     <!-- </table> -->
-  </BTableSimple>
+  </b-table-simple>
 </template>
 
 <script setup lang="ts">
@@ -267,18 +263,10 @@ const props = withDefaults(defineProps<BTableProps>(), {
   emptyFilteredText: 'There are no records matching your request',
 })
 
-const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
-const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
-const borderedBoolean = useBooleanish(toRef(props, 'bordered'))
-const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
-const hoverBoolean = useBooleanish(toRef(props, 'hover'))
-const smallBoolean = useBooleanish(toRef(props, 'small'))
-const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
 const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
 const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
-const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
 const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
@@ -324,28 +312,31 @@ interface BTableEmits {
 const emit = defineEmits<BTableEmits>()
 const slots = useSlots()
 
-const tableClasses = computed(() => [
-  'table b-table',
-  {
-    [`align-${props.align}`]: props.align !== undefined,
-    [`table-${props.variant}`]: props.variant !== undefined,
-    'table-striped': stripedBoolean.value,
-    'table-hover': hoverBoolean.value,
-    'table-dark': darkBoolean.value,
-    'table-bordered': borderedBoolean.value,
-    [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
-    'table-borderless': borderlessBoolean.value,
-    'table-sm': smallBoolean.value,
-    'caption-top': captionTopBoolean.value,
-    'b-table-selectable': selectableBoolean.value,
-    [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
-    'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
-    'b-table-busy': internalBusyFlag.value,
-    'b-table-sortable': isSortable.value,
-    'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
-    'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
-  },
-])
+const tableClasses = computed(() => ({
+  [`align-${props.align}`]: props.align !== undefined,
+  'b-table-selectable': selectableBoolean.value,
+  [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
+  'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
+  'b-table-busy': internalBusyFlag.value,
+  'b-table-sortable': isSortable.value,
+  'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
+  'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
+}))
+
+const containerAttrs = computed(() => ({
+  bordered: props.bordered,
+  borderless: props.borderless,
+  borderVariant: props.borderVariant,
+  captionTop: props.captionTop,
+  dark: props.dark,
+  hover: props.hover,
+  responsive: props.responsive,
+  striped: props.striped,
+  small: props.small,
+  tableClass: tableClasses.value,
+  tableVariant: props.variant,
+  stickyHeader: props.stickyHeader,
+}))
 
 const itemHelper = useItemHelper()
 
@@ -527,8 +518,10 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
 const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
   field.class,
   field.tdClass,
-  field.variant ? `table-${field.variant}` : '',
-  tr?._cellVariants && tr?._cellVariants[field.key] ? `table-${tr?._cellVariants[field.key]}` : '',
+  field.variant ? `table-${field.variant}` : undefined,
+  tr?._cellVariants && tr?._cellVariants[field.key]
+    ? `table-${tr?._cellVariants[field.key]}`
+    : undefined,
   {
     'b-table-sticky-column': field.stickyColumn,
   },

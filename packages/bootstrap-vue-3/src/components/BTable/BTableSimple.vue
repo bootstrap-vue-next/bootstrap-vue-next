@@ -27,7 +27,7 @@ interface BTableSimpleProps {
   striped?: Booleanish
   small?: Booleanish
   tableClass?: ClassValue
-  tableVariant?: string
+  tableVariant?: ColorVariant
   stickyHeader?: Booleanish
 }
 
@@ -74,7 +74,7 @@ const classes = computed(() => [
 
 const responsiveClasses = computed(() => [
   {
-    'table-responsive': typeof props.responsive === 'boolean' && props.responsive,
+    'table-responsive': props.responsive === true,
     [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
     'b-table-sticky-header': stickyHeaderBoolean.value,
   },
