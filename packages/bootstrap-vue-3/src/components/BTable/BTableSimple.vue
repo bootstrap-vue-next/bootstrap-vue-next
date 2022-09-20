@@ -27,7 +27,7 @@ interface BTableSimpleProps {
   striped?: Booleanish
   small?: Booleanish
   tableClass?: ClassValue
-  tableVariant?: string
+  tableVariant?: ColorVariant
   stickyHeader?: Booleanish
 }
 
