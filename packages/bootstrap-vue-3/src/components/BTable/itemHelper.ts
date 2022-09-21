@@ -1,6 +1,7 @@
 import {ref, Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, startCase} from '../../utils'
+import {BTableSortCompare} from './../../types/components/BTable/BTable.d'
 import {cloneDeep, cloneDeepAsync} from './../../utils/object'
 
 const useItemHelper = () => {
@@ -64,8 +65,8 @@ const useItemHelper = () => {
   const sortItems = (
     fields: TableField[],
     items: TableItem<Record<string, any>>[],
-    sort?: {key?: string; desc?: boolean},
-    sorter?: (...p: any) => number
+    sort: {key: string; desc: boolean},
+    sorter?: BTableSortCompare
   ) => {
     if (!sort || !sort.key) return items
     const sortKey = sort.key

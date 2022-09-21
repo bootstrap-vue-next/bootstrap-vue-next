@@ -34,3 +34,10 @@ export type BTableProvider = (
   context: BTableProviderContext,
   provide: (items: Array<TableItem>) => Promise<TableItem[] | undefined>
 ) => Promise<Array<TableItem> | undefined> | Array<TableItem> | undefined
+
+export type BTableSortCompare = (
+  aRow: TableItem,
+  bRow: TableItem,
+  fieldKey: string,
+  sortDesc: boolean
+) => number

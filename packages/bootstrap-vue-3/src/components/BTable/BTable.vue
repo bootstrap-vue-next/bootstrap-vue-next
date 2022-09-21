@@ -182,6 +182,7 @@ import {cloneDeepAsync} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 
+import {BTableSortCompare} from 'src/types/components/BTable/BTable'
 import type {
   Booleanish,
   ColorVariant,
@@ -209,7 +210,7 @@ interface BTableProps {
   hover?: Booleanish
   items?: Array<TableItem>
   provider?: BTableProvider
-  sortCompare?: (aRow: TableItem, bRow: TableItem, fieldKey: string, sortDesc: boolean) => number
+  sortCompare?: BTableSortCompare
   noProvider?: Array<NoProviderTypes>
   noProviderPaging?: Booleanish
   noProviderSorting?: Booleanish
