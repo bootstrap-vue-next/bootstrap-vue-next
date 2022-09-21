@@ -1,7 +1,7 @@
 import {ref, Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, startCase} from '../../utils'
-import {BTableSortCompare} from './../../types/components/BTable/BTable.d'
+import {BTableSortCompare} from './../../types/components'
 import {cloneDeep, cloneDeepAsync} from './../../utils/object'
 
 const useItemHelper = () => {

@@ -182,7 +182,6 @@ import {cloneDeepAsync} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 
-import {BTableSortCompare} from 'src/types/components/BTable/BTable'
 import type {
   Booleanish,
   ColorVariant,
@@ -191,7 +190,7 @@ import type {
   TableItem,
   VerticalAlign,
 } from '../../types'
-import type {BTableProvider} from '../../types/components'
+import {type BTableProvider, type BTableSortCompare} from '../../types/components'
 import BTableSimple from './BTableSimple.vue'
 import useItemHelper from './itemHelper'
 
