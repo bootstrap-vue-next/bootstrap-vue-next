@@ -42,10 +42,15 @@ const useItemHelper = () => {
       }
     }
     if ('isSortable' in flags && flags.isSortable.value === true) {
-      internalItems.value = sortItems(fields, internalItems.value, {
-        key: props.sortBy,
-        desc: flags.sortDescBoolean.value,
-      })
+      internalItems.value = sortItems(
+        fields,
+        internalItems.value,
+        {
+          key: props.sortBy,
+          desc: flags.sortDescBoolean.value,
+        },
+        props.sortCompare
+      )
     }
     if (props.perPage !== undefined) {
       const startIndex = (props.currentPage - 1) * props.perPage
@@ -59,11 +64,15 @@ const useItemHelper = () => {
   const sortItems = (
     fields: TableField[],
     items: TableItem<Record<string, any>>[],
-    sort?: {key?: string; desc?: boolean}
+    sort?: {key?: string; desc?: boolean},
+    sorter?: (...p: any) => number
   ) => {
     if (!sort || !sort.key) return items
     const sortKey = sort.key
     return items.sort((a, b) => {
+      if (sorter !== undefined) {
+        return sorter(a, b, sort.key, sort.desc)
+      }
       const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
       const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
       if (aHigher) {

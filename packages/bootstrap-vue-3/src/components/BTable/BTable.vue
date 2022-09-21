@@ -209,6 +209,7 @@ interface BTableProps {
   hover?: Booleanish
   items?: Array<TableItem>
   provider?: BTableProvider
+  sortCompare?: (aRow: TableItem, bRow: TableItem, fieldKey: string, sortDesc: boolean) => number
   noProvider?: Array<NoProviderTypes>
   noProviderPaging?: Booleanish
   noProviderSorting?: Booleanish
