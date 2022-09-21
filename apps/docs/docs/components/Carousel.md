@@ -59,21 +59,16 @@ Note that one of the `b-carousel-slide` must be `active`. Otherwise the carousel
 ## Slide options
 
 <ClientOnly>
-  <b-carousel  
-    controls
-    indicators>
-
+  <b-carousel controls indicators>
     <b-carousel-slide active img-src="https://picsum.photos/1024/480/?image=30">
       <h1>First slide</h1>
       <p>Some more detailed description or whatever content.</p>
     </b-carousel-slide>
-
     <b-carousel-slide
       caption="Second slide"
       text="Does the same, just a bit differently."
       img-src="https://picsum.photos/1024/480/?image=31"
     />
-
     <b-carousel-slide>
       <template #img>
         <img
@@ -86,7 +81,6 @@ Note that one of the `b-carousel-slide` must be `active`. Otherwise the carousel
       <h1>Third slide</h1>
       <p>Constains a customized background image</p>
     </b-carousel-slide>
-
     <b-carousel-slide img-height="480px" img-blank img-blank-color="pink" img-alt="Blank image">
       <h1>Fourth slide</h1>
       <p>No background image</p>
