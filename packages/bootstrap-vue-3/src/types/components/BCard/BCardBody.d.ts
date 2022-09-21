@@ -6,9 +6,9 @@ export interface Props {
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   overlay?: boolean
-  subTitle?: string
-  subTitleTag?: string
-  subTitleTextVariant?: TextColorVariant
+  subtitle?: string
+  subtitleTag?: string
+  subtitleTextVariant?: TextColorVariant
   title?: string
   titleTag?: string
 }

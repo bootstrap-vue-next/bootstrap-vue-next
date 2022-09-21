@@ -171,9 +171,9 @@ describe('table', () => {
     expect($thead.text()).toBe('foobar')
   })
 
-  it('thead renders slot selectHead when prop selectable true', () => {
+  it('thead renders slot select-head when prop selectable true', () => {
     const wrapper = mount(BTable, {
-      slots: {selectHead: 'foobar'},
+      slots: {'select-head': 'foobar'},
       props: {selectable: true},
     })
     const $thead = wrapper.get('thead')
@@ -204,10 +204,10 @@ describe('table', () => {
     expect($thead.text()).toBe('')
   })
 
-  it('thead renders slot selectHead over prop selectHead', () => {
+  it('thead renders slot select-head over prop selectHead', () => {
     const wrapper = mount(BTable, {
       props: {selectable: true, selectHead: 'props'},
-      slots: {selectHead: 'slots'},
+      slots: {'select-head': 'slots'},
     })
     const $thead = wrapper.get('thead')
     expect($thead.text()).toBe('slots')

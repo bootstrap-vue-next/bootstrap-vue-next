@@ -34,9 +34,9 @@ export interface Props {
   imgWidth?: string | number
   noBody?: boolean
   overlay?: boolean
-  subTitle?: string
-  subTitleTag?: string
-  subTitleTextVariant?: TextColorVariant
+  subtitle?: string
+  subtitleTag?: string
+  subtitleTextVariant?: TextColorVariant
   tag?: string
   textVariant?: TextColorVariant
   title?: string

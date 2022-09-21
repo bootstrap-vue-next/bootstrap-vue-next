@@ -142,15 +142,15 @@
             "type": "Booleanish"
           },
           {
-            "prop": "subTitle",
+            "prop": "subtitle",
             "type": "string"
           },
           {
-            "prop": "subTitleTag",
+            "prop": "subtitleTag",
             "type": "string"
           },
           {
-            "prop": "subTitleTextVariant",
+            "prop": "subtitleTextVariant",
             "type": "TextColorVariant"
           },
           {
@@ -214,15 +214,15 @@
             "type": "Booleanish"
           },
           {
-            "prop": "subTitle",
+            "prop": "subtitle",
             "type": "string"
           },
           {
-            "prop": "subTitleTag",
+            "prop": "subtitleTag",
             "type": "string"
           },
           {
-            "prop": "subTitleTextVariant",
+            "prop": "subtitleTextVariant",
             "type": "TextColorVariant"
           },
           {
@@ -246,7 +246,7 @@
           },
           {
             "description": "",
-            "name": "subTitle",
+            "name": "subtitle",
             "scope": []
           }
         ]

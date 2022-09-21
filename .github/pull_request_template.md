@@ -20,4 +20,4 @@ If the change is large enough, a small replication can help demonstrate the chan
 
 **The PR fulfills these requirements:**
 
-- [ ] Pull request title and all commits follow the [**Conventional Commits**](https://www.conventionalcommits.org/) naming convention **This is very important, as the `CHANGELOG` is generated from these messages, and determines the next version type**
+- [ ] Pull request title and all commits follow the [**Conventional Commits**](https://www.conventionalcommits.org/) naming convention or contains a [**override**](https://github.com/googleapis/release-please#how-can-i-fix-release-notes) in this PR body **This is very important, as the `CHANGELOG` is generated from these messages, and determines the next version type**

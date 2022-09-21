@@ -7,12 +7,12 @@
     </b-card-title>
 
     <b-card-sub-title
-      v-if="!!subTitle || !!$slots.subTitle"
-      :tag="subTitleTag"
-      :text-variant="subTitleTextVariant"
+      v-if="!!subtitle || !!$slots['subtitle']"
+      :tag="subtitleTag"
+      :text-variant="subtitleTextVariant"
     >
-      <slot name="subTitle">
-        {{ subTitle }}
+      <slot name="subtitle">
+        {{ subtitle }}
       </slot>
     </b-card-sub-title>
 
@@ -35,9 +35,9 @@ interface BCardBodyProps {
   bodyTag?: string
   bodyTextVariant?: TextColorVariant
   overlay?: Booleanish
-  subTitle?: string
-  subTitleTag?: string
-  subTitleTextVariant?: TextColorVariant
+  subtitle?: string
+  subtitleTag?: string
+  subtitleTextVariant?: TextColorVariant
   title?: string
   titleTag?: string
   text?: string
@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   bodyTag: 'div',
   overlay: false,
   titleTag: 'h4',
-  subTitleTag: 'h4',
+  subtitleTag: 'h4',
 })
 
 const overlayBoolean = useBooleanish(toRef(props, 'overlay'))

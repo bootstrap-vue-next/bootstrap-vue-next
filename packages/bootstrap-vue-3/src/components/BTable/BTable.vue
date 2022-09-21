@@ -11,7 +11,7 @@
             'b-table-sticky-column': stickySelectBoolean,
           }"
         >
-          <slot name="selectHead">
+          <slot name="select-head">
             {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
           </slot>
         </th>
@@ -28,7 +28,7 @@
         >
           <div class="d-inline-flex flex-nowrap align-items-center gap-1">
             <slot
-              name="sortIcon"
+              name="sort-icon"
               :field="field"
               :sort-by="sortBy"
               :selected="field.key === sortBy"
@@ -84,7 +84,7 @@
               'b-table-sticky-column': stickySelectBoolean,
             }"
           >
-            <slot name="selectCell">
+            <slot name="select-cell">
               <span :class="selectedItems.has(item) ? 'text-primary' : ''">🗹</span>
             </slot>
           </td>
