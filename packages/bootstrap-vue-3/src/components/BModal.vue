@@ -305,7 +305,7 @@ const hide = () => {
   getInstance().hide()
 }
 
-const getInstance = () => {
+const getInstance = (): Modal => {
   if (instance.value !== undefined) return instance.value
   instance.value = new Modal(element.value as HTMLElement, {
     backdrop: false,
@@ -363,6 +363,7 @@ export default {
   inheritAttrs: false,
 }
 </script>
+
 <style lang="scss" scoped>
 .modal-dialog {
   z-index: 1051;

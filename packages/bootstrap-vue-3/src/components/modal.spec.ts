@@ -198,5 +198,131 @@ describe('modal', () => {
     expect($div2.classes()).not.toContain('modal-dialog-scrollable')
   })
 
+  it('does not have element with class modal-backdrop when hideBackdrop is true', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {hideBackdrop: true},
+    })
+    const $div = wrapper.find('.modal-backdrop')
+    expect($div.exists()).toBe(false)
+  })
+
+  it('has an element with class modal-backdrop by default', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.find('.modal-backdrop')
+    expect($div.exists()).toBe(true)
+  })
+
+  it('element with class modal-backdrop is tag DIV', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('.modal-backdrop')
+    expect($div.element.tagName).toBe('DIV')
+  })
+
+  it('element with class modal-backdrop has static class fade', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('.modal-backdrop')
+    expect($div.classes()).toContain('fade')
+  })
+
+  it('element with class modal-backdrop has static class show', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('.modal-backdrop')
+    expect($div.classes()).toContain('show')
+  })
+
+  it('element with class modal-backdrop text is empty', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('.modal-backdrop')
+    expect($div.text()).toBe('')
+  })
+
+  it('second div has another div by default', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('div')
+    const $div2 = $div.get('div')
+    const $div3 = $div2.find('div')
+    expect($div3.exists()).toBe(true)
+  })
+
+  it('third nested div has static class modal-content', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('div')
+    const $div2 = $div.get('div')
+    const $div3 = $div2.get('div')
+    expect($div3.classes()).toContain('modal-content')
+  })
+
+  it('third nested div has class from prop contentClass', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {contentClass: ['foo']},
+    })
+    const $div = wrapper.get('div')
+    const $div2 = $div.get('div')
+    const $div3 = $div2.get('div')
+    expect($div3.classes()).toContain('foo')
+  })
+
+  it('second div has does not have nested div when prop lazy', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {lazy: true},
+    })
+    const $div = wrapper.get('div')
+    const $div2 = $div.get('div')
+    const $div3 = $div2.find('div')
+    expect($div3.exists()).toBe(false)
+  })
+
+  it('second div has nested div when not prop lazy', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {lazy: false},
+    })
+    const $div = wrapper.get('div')
+    const $div2 = $div.get('div')
+    const $div3 = $div2.find('div')
+    expect($div3.exists()).toBe(true)
+  })
+
+  // Any attempt at modifying modelValue with teleport fails
+  it.skip('second div has nested div when not prop lazy and prop modelValue', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {lazy: true, modelValue: true},
+    })
+    const $div = wrapper.get('div')
+    const $div2 = $div.get('div')
+    const $div3 = $div2.find('div')
+    expect($div3.exists()).toBe(true)
+  })
+
+  it.skip('third nested div has another div', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('div')
+    const $div2 = $div.get('div')
+    const $div3 = $div2.find('div')
+    expect($div3.exists()).toBe(true)
+  })
+
+  // Cannot test emit due to teleport
+
   // TODO finished modalDialogClasses on second nested div
 })
