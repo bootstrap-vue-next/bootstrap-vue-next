@@ -7,7 +7,7 @@
     </b-card-title>
 
     <b-card-sub-title
-      v-if="!!subtitle || !!$slots['subtitle']"
+      v-if="!!subtitle || !!$slots.subtitle"
       :tag="subtitleTag"
       :text-variant="subtitleTextVariant"
     >
