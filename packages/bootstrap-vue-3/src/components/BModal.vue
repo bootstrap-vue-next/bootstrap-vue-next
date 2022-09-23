@@ -87,13 +87,13 @@
 import {Modal} from 'bootstrap'
 import {computed, nextTick, onMounted, ref, toRef, watch} from 'vue'
 import {useBooleanish, useEventListener, useId} from '../composables'
-import type {Booleanish, ColorVariant, InputSize} from '../types'
+import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
-  bodyClass?: string
+  bodyClass?: ClassValue
   bodyTextVariant?: ColorVariant
   busy?: Booleanish
   lazy?: Booleanish
@@ -102,16 +102,16 @@ interface BModalProps {
   cancelTitle?: string
   cancelVariant?: ColorVariant
   centered?: Booleanish
-  contentClass?: string
-  dialogClass?: string
+  contentClass?: ClassValue
+  dialogClass?: ClassValue
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: string
+  footerClass?: ClassValue
   footerTextVariant?: ColorVariant
   fullscreen?: boolean | string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClass?: string
+  headerClass?: ClassValue
   headerCloseLabel?: string
   headerCloseWhite?: Booleanish
   headerTextVariant?: ColorVariant
@@ -120,7 +120,7 @@ interface BModalProps {
   hideHeader?: Booleanish
   hideHeaderClose?: Booleanish
   id?: string
-  modalClass?: string
+  modalClass?: ClassValue
   modelValue?: Booleanish
   noCloseOnBackdrop?: Booleanish
   noCloseOnEsc?: Booleanish
@@ -132,7 +132,7 @@ interface BModalProps {
   okVariant?: ColorVariant
   scrollable?: Booleanish
   show?: Booleanish
-  size?: string
+  size?: 'sm' | 'lg' | 'xl'
   title?: string
   titleClass?: string
   titleSrOnly?: Booleanish
@@ -217,10 +217,9 @@ const modalClasses = computed(() => [
 ])
 const modalDialogClasses = computed(() => [
   {
-    'modal-fullscreen': typeof props.fullscreen === 'boolean' ? props.fullscreen : false,
-    [`modal-fullscreen-${props.fullscreen}-down`]:
-      typeof props.fullscreen === 'string' ? props.fullscreen : false,
-    [`modal-${props.size}`]: props.size,
+    'modal-fullscreen': props.fullscreen === true,
+    [`modal-fullscreen-${props.fullscreen}-down`]: typeof props.fullscreen === 'string',
+    [`modal-${props.size}`]: props.size !== undefined,
     'modal-dialog-centered': centeredBoolean.value,
     'modal-dialog-scrollable': scrollableBoolean.value,
   },
@@ -306,7 +305,7 @@ const hide = () => {
   getInstance().hide()
 }
 
-const getInstance = () => {
+const getInstance = (): Modal => {
   if (instance.value !== undefined) return instance.value
   instance.value = new Modal(element.value as HTMLElement, {
     backdrop: false,
@@ -364,6 +363,7 @@ export default {
   inheritAttrs: false,
 }
 </script>
+
 <style lang="scss" scoped>
 .modal-dialog {
   z-index: 1051;

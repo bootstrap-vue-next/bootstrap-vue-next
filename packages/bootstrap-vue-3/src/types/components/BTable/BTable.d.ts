@@ -1,4 +1,11 @@
-import type {Breakpoint, ColorVariant, TableField, TableItem, VerticalAlign} from '../..'
+import type {
+  Booleanish,
+  Breakpoint,
+  ColorVariant,
+  TableField,
+  TableItem,
+  VerticalAlign,
+} from '../..'
 // Props
 export interface Props {
   caption?: string

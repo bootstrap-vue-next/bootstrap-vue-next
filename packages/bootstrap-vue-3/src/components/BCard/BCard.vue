@@ -75,9 +75,9 @@ interface BCardProps {
   imgWidth?: string | number
   noBody?: Booleanish
   overlay?: Booleanish
-  subTitle?: string
-  subTitleTag?: string
-  subTitleTextVariant?: TextColorVariant
+  subtitle?: string
+  subtitleTag?: string
+  subtitleTextVariant?: TextColorVariant
   tag?: string
   textVariant?: TextColorVariant
   title?: string
@@ -100,8 +100,8 @@ const props = withDefaults(defineProps<BCardProps>(), {
   imgTop: false,
   noBody: false,
   overlay: false,
-  subTitleTag: 'h6',
-  subTitleTextVariant: 'muted',
+  subtitleTag: 'h6',
+  subtitleTextVariant: 'muted',
   tag: 'div',
   titleTag: 'h4',
 })
@@ -135,9 +135,9 @@ const bodyAttrs = computed(() => ({
   bodyBgVariant: props.bodyBgVariant,
   bodyTag: props.bodyTag,
   bodyTextVariant: props.bodyTextVariant,
-  subTitle: props.subTitle,
-  subTitleTag: props.subTitleTag,
-  subTitleTextVariant: props.subTitleTextVariant,
+  subtitle: props.subtitle,
+  subtitleTag: props.subtitleTag,
+  subtitleTextVariant: props.subtitleTextVariant,
   title: props.title,
   titleTag: props.titleTag,
 }))

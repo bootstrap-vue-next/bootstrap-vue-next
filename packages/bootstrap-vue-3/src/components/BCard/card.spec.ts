@@ -365,28 +365,28 @@ describe('card', () => {
     expect($body.props('bodyTextVariant')).toBe('danger')
   })
 
-  it('child BCardHeader has internal prop subTitle as prop subTitle', () => {
+  it('child BCardHeader has internal prop subtitle as prop subtitle', () => {
     const wrapper = mount(BCard, {
-      props: {subTitle: 'foobar'},
+      props: {subtitle: 'foobar'},
     })
     const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('subTitle')).toBe('foobar')
+    expect($body.props('subtitle')).toBe('foobar')
   })
 
-  it('child BCardHeader has internal prop subTitleTag as prop subTitleTag', () => {
+  it('child BCardHeader has internal prop subtitleTag as prop subtitleTag', () => {
     const wrapper = mount(BCard, {
-      props: {subTitleTag: 'span'},
+      props: {subtitleTag: 'span'},
     })
     const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('subTitleTag')).toBe('span')
+    expect($body.props('subtitleTag')).toBe('span')
   })
 
-  it('child BCardHeader has internal prop subTitleTextVariant as prop subTitleTextVariant', () => {
+  it('child BCardHeader has internal prop subtitleTextVariant as prop subtitleTextVariant', () => {
     const wrapper = mount(BCard, {
-      props: {subTitleTextVariant: 'danger'},
+      props: {subtitleTextVariant: 'danger'},
     })
     const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('subTitleTextVariant')).toBe('danger')
+    expect($body.props('subtitleTextVariant')).toBe('danger')
   })
 
   it('child BCardHeader has internal prop title as prop title', () => {
