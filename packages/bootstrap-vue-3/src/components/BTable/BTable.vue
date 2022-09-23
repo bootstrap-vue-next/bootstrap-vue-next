@@ -190,7 +190,7 @@ import type {
   TableItem,
   VerticalAlign,
 } from '../../types'
-import type {BTableProvider} from '../../types/components'
+import type {BTableProvider, BTableSortCompare} from '../../types/components'
 import BTableSimple from './BTableSimple.vue'
 import useItemHelper from './itemHelper'
 
@@ -209,6 +209,7 @@ interface BTableProps {
   hover?: Booleanish
   items?: Array<TableItem>
   provider?: BTableProvider
+  sortCompare?: BTableSortCompare
   noProvider?: Array<NoProviderTypes>
   noProviderPaging?: Booleanish
   noProviderSorting?: Booleanish

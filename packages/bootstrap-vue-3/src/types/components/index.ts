@@ -134,7 +134,12 @@ export type {Props as BSkeletonTableProps} from './BSkeleton/BSkeletonTable'
 export type {Props as BSkeletonWrapperProps} from './BSkeleton/BSkeletonWrapper'
 export type {Props as BSpinnerProps} from './BSpinner'
 // BTable
-export type {BTableProvider, BTableProviderContext, Props as BTableProps} from './BTable/BTable'
+export type {
+  BTableProvider,
+  BTableProviderContext,
+  BTableSortCompare,
+  Props as BTableProps,
+} from './BTable/BTable'
 export type {Props as BTableSimpleProps} from './BTable/BTableSimple'
 export type {Props as BTBodyProps} from './BTable/BTbody'
 export type {Props as BTdProps} from './BTable/BTd'
