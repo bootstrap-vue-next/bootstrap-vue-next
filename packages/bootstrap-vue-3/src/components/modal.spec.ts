@@ -55,6 +55,17 @@ describe('modal', () => {
     expect($div.classes()).toContain('foo')
   })
 
+  it.skip('div has class fade when not prop noFade', async () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {noFade: false},
+    })
+    const $div = wrapper.get('div')
+    expect($div.classes()).toContain('fade')
+    await wrapper.setProps({noFade: true})
+    expect($div.classes()).not.toContain('fade')
+  })
+
   it('div has class fade when not prop noFade', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
