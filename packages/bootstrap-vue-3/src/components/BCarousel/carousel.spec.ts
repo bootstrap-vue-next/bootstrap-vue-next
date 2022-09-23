@@ -35,7 +35,7 @@ describe('carousel', () => {
   it('has attr id when prop id', () => {
     const wrapper = mount(BCarousel)
     expect(wrapper.attributes('id')).toBeDefined()
-    expect(wrapper.attributes('id')).toContain('accordion')
+    expect(wrapper.attributes('id')).toContain('carousel')
   })
 
   it('has div with class carousel-inner', () => {

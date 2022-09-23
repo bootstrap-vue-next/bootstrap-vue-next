@@ -20,11 +20,6 @@ describe('carousel-slide', () => {
     expect(wrapper.classes()).toContain('carousel-item')
   })
 
-  it('has attr id as always defined', () => {
-    const wrapper = mount(BCarouselSlide)
-    expect(wrapper.attributes('id')).toBeDefined()
-  })
-
   it('has class active when prop active', async () => {
     const wrapper = mount(BCarouselSlide, {
       props: {active: true},
