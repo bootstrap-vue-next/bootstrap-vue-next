@@ -85,9 +85,16 @@ export default defineComponent({
 
     const getAlignClasses = (props: any, prefix: string) =>
       breakPoints.reduce((result: string[], breakpoint) => {
-        const propValue: string = props[suffixPropName(breakpoint, `${prefix}Align`)] || null
+        const suffix = suffixPropName(breakpoint, `${prefix}Align`)
+        if (breakpoint === 'xs') {
+          const value = props[suffix.slice(0, suffix.toLowerCase().lastIndexOf(breakpoint))] || null
+          if (value) {
+            result.push(`text-${value}`)
+          }
+        }
+        const propValue: string = props[suffix] || null
         if (propValue) {
-          result.push(['text', breakpoint, propValue].filter((p) => p).join('-'))
+          result.push(`text-${breakpoint}-${propValue}`)
         }
 
         return result
