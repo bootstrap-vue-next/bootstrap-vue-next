@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.3.5](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.4...v0.3.5) (2022-09-23)
+
+
+### Features
+
+* **BTable:** added a simple version of sort-compare prop ([7373350](https://github.com/cdmoro/bootstrap-vue-3/commit/7373350d72759582c83651f3d1f88da08ab17708))
+* **Carousel:** create a startingSlide prop ([4a34ade](https://github.com/cdmoro/bootstrap-vue-3/commit/4a34adea10d9d732ce53cfa018d045faf7469d87))
+
+
+### Bug Fixes
+
+* **BFormGroup:** label-align prop not working ([398744a](https://github.com/cdmoro/bootstrap-vue-3/commit/398744aebb65fb8f2c3a814b51a4840f9277c8cd))
+* **BModal:** strongly type props ([8776e40](https://github.com/cdmoro/bootstrap-vue-3/commit/8776e40c9677c1493ed214f8cb68e1934f960a51))
+* **Card:** subTitle prop renamed to subtitle as it is one word ([8776e40](https://github.com/cdmoro/bootstrap-vue-3/commit/8776e40c9677c1493ed214f8cb68e1934f960a51))
+* **Carousel:** get it to work again due to broken useSlot() features ([4a34ade](https://github.com/cdmoro/bootstrap-vue-3/commit/4a34adea10d9d732ce53cfa018d045faf7469d87))
+* non imported items in dts files ([5981902](https://github.com/cdmoro/bootstrap-vue-3/commit/598190280758fd532f75290646a4435cd4741fb2))
+
 ## [0.3.4](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.3...v0.3.4) (2022-09-20)
 
 
