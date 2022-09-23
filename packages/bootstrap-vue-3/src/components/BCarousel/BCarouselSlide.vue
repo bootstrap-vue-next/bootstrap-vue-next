@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
-import {useBooleanish, useId} from '../../composables'
+import {useBooleanish} from '../../composables'
 import {computed, inject, toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import type {BCarouselParentData} from '../../types/components'
