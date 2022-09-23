@@ -190,7 +190,7 @@ import type {
   TableItem,
   VerticalAlign,
 } from '../../types'
-import {type BTableProvider, type BTableSortCompare} from '../../types/components'
+import type {BTableProvider, BTableSortCompare} from '../../types/components'
 import BTableSimple from './BTableSimple.vue'
 import useItemHelper from './itemHelper'
 
