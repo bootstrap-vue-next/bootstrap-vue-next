@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 import BInputGroupText from './BInputGroupText.vue'
-import {afterEach, describe, expect, it} from 'vitest'
 
 describe('input-group-addon', () => {
   enableAutoUnmount(afterEach)
@@ -27,9 +27,9 @@ describe('input-group-addon', () => {
     expect(wrapper.attributes('id')).toBe('bar')
   })
 
-  it('has static class d-flex', () => {
+  it('has static class input-group', () => {
     const wrapper = mount(BInputGroupAddon)
-    expect(wrapper.classes()).toContain('d-flex')
+    expect(wrapper.classes()).toContain('input-group')
   })
 
   it('has class input-group-append when prop append', () => {
