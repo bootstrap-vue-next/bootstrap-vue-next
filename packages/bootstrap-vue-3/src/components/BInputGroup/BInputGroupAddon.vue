@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :id="id" class="d-flex" :class="computedClasses">
+  <component :is="tag" :id="id" class="input-group w-auto" :class="computedClasses">
     <b-input-group-text v-if="isTextBoolean">
       <slot />
     </b-input-group-text>
@@ -9,9 +9,9 @@
 
 <script setup lang="ts">
 // import type {BInputGroupAddonProps} from '../../types/components'
-import type {Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
+import type {Booleanish} from '../../types'
 import BInputGroupText from './BInputGroupText.vue'
 
 interface BInputGroupAddonProps {
