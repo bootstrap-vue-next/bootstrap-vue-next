@@ -7,9 +7,9 @@
 
 <script setup lang="ts">
 // import type {BInputGroupAddonProps} from '../../types/components'
-import type {Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
 import {toRef} from 'vue'
+import {useBooleanish} from '../../composables'
+import type {Booleanish} from '../../types'
 import BInputGroupText from './BInputGroupText.vue'
 
 interface BInputGroupAddonProps {

@@ -1,8 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 import BInputGroupText from './BInputGroupText.vue'
-import {afterEach, describe, expect, it} from 'vitest'
-import {h} from 'vue'
 
 describe('input-group-addon', () => {
   enableAutoUnmount(afterEach)

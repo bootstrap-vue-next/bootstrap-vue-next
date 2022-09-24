@@ -5,9 +5,8 @@
 </template>
 
 <script setup lang="ts">
-// import type {BInputGroupPrependProps} from '../../types/components'
-import BInputGroupAddon from './BInputGroupAddon.vue'
 import type {Booleanish} from '../../types'
+import BInputGroupAddon from './BInputGroupAddon.vue'
 
 interface BInputGroupPrependProps {
   isText?: Booleanish
