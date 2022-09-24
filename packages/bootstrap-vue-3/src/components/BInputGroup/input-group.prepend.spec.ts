@@ -12,16 +12,6 @@ describe('input-group-prepend', () => {
     expect($inputgroupaddon.exists()).toBe(true)
   })
 
-  it('BInputGroupAddon is given prop id', async () => {
-    const wrapper = mount(BInputGroupPrepend, {
-      props: {id: 'foobar'},
-    })
-    const $inputgroupaddon = wrapper.getComponent(BInputGroupAddon)
-    expect($inputgroupaddon.props('id')).toBe('foobar')
-    await wrapper.setProps({id: 'foo'})
-    expect($inputgroupaddon.props('id')).toBe('foo')
-  })
-
   it('BInputGroupAddon is given prop isText', async () => {
     const wrapper = mount(BInputGroupPrepend, {
       props: {isText: true},
@@ -32,19 +22,10 @@ describe('input-group-prepend', () => {
     expect($inputgroupaddon.props('isText')).toBe(false)
   })
 
-  it('BInputGroupAddon is given prop tag', async () => {
+  it('renders default slot', () => {
     const wrapper = mount(BInputGroupPrepend, {
-      props: {tag: 'span'},
+      slots: {default: 'foobar'},
     })
-    const $inputgroupaddon = wrapper.getComponent(BInputGroupAddon)
-    expect($inputgroupaddon.props('tag')).toBe('span')
-    await wrapper.setProps({tag: 'div'})
-    expect($inputgroupaddon.props('tag')).toBe('div')
-  })
-
-  it('BInputGroupAddon is given prop append to be false', () => {
-    const wrapper = mount(BInputGroupPrepend)
-    const $inputgroupaddon = wrapper.getComponent(BInputGroupAddon)
-    expect($inputgroupaddon.props('append')).toBe(false)
+    expect(wrapper.text()).toBe('foobar')
   })
 })
