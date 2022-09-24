@@ -90,7 +90,7 @@ app.mount('#app')
 
 ### Installation - Nuxt.js 3
 
-**Nuxt is not officially supported**. Some required Bootstrapjs contains references to 'Document' and 'Window', which will cause breaking issues during server-side rendering. Until Bootstrap v5 implements fixes for these, Bootstrap-vue-3 cannot officially support Nuxt3 and SSR applications 
+**Nuxt is not officially supported**. Various Bootstrap JavaScript elements contain references to 'Document' and 'Window', which will cause breaking issues during server-side rendering. Until Bootstrap v5 implements fixes for these, Bootstrap-vue-3 cannot officially support Nuxt3 and SSR applications 
 
 As with the Vue.js installation.
 
