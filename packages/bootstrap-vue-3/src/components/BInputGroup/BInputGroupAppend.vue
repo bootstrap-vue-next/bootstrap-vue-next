@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BInputGroupAppendProps} from '../../types/components'
 import type {Booleanish} from '../../types'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 
