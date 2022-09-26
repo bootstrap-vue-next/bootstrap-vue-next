@@ -6,7 +6,7 @@
       </slot>
     </b-card-title>
 
-    <b-card-sub-title
+    <b-card-subtitle
       v-if="!!subtitle || !!$slots.subtitle"
       :tag="subtitleTag"
       :text-variant="subtitleTextVariant"
@@ -14,7 +14,7 @@
       <slot name="subtitle">
         {{ subtitle }}
       </slot>
-    </b-card-sub-title>
+    </b-card-subtitle>
 
     <slot>
       {{ text }}
@@ -26,7 +26,7 @@
 // import type {BCardBodyProps} from '../../types/components'
 import {computed, toRef} from 'vue'
 import BCardTitle from './BCardTitle.vue'
-import BCardSubTitle from './BCardSubTitle.vue'
+import BCardSubtitle from './BCardSubtitle.vue'
 import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 

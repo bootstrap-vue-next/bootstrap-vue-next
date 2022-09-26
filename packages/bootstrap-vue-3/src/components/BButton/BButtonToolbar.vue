@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" class="btn-toolbar" role="toolbar" :aria-label="ariaLabel">
+  <div :class="classes" class="btn-toolbar" :role="role" :aria-label="ariaLabel">
     <slot />
   </div>
 </template>
@@ -13,10 +13,12 @@ import {useBooleanish} from '../../composables'
 interface BButtonToolbarProps {
   ariaLabel?: string
   justify?: Booleanish
+  role?: string
   // keyNav?: Booleanish
 }
 
 const props = withDefaults(defineProps<BButtonToolbarProps>(), {
+  role: 'toolbar',
   ariaLabel: 'Group',
   justify: false,
 })

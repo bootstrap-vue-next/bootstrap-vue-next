@@ -15,7 +15,7 @@
 
           <b-card-body>
             <b-card-title>Card Title</b-card-title>
-            <b-card-sub-title class="mb-2">Card Sub Title</b-card-sub-title>
+            <b-card-subtitle class="mb-2">Card Sub Title</b-card-subtitle>
             <b-card-text>
               Some quick example text to build on the card title and make up the bulk of the card's
               content.

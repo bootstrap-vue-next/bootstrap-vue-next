@@ -5,6 +5,7 @@
     :disabled="disabledBoolean"
     :class="classes"
     :aria-label="ariaLabel"
+    @click="emit('click', $event)"
   />
 </template>
 
@@ -15,9 +16,9 @@ import type {Booleanish, ButtonType} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface BCloseButtonProps {
+  ariaLabel?: string
   disabled?: Booleanish
   white?: Booleanish
-  ariaLabel?: string
   type?: ButtonType
 }
 
@@ -27,6 +28,12 @@ const props = withDefaults(defineProps<BCloseButtonProps>(), {
   white: false,
   type: 'button',
 })
+
+interface BCloseButtonEmits {
+  (e: 'click', value: MouseEvent): void
+}
+
+const emit = defineEmits<BCloseButtonEmits>()
 
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const whiteBoolean = useBooleanish(toRef(props, 'white'))

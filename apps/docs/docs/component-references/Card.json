@@ -402,7 +402,7 @@
         "slots": []
       },
       {
-        "component": "BCardSubTitle",
+        "component": "BCardSubtitle",
         "emits": [],
         "props": [
           {

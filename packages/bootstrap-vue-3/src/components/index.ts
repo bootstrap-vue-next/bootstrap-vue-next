@@ -16,7 +16,7 @@ import BCardFooter from './BCard/BCardFooter.vue'
 import BCardGroup from './BCard/BCardGroup.vue'
 import BCardHeader from './BCard/BCardHeader.vue'
 import BCardImg from './BCard/BCardImg.vue'
-import BCardSubTitle from './BCard/BCardSubTitle.vue'
+import BCardSubtitle from './BCard/BCardSubtitle.vue'
 import BCardText from './BCard/BCardText.vue'
 import BCardTitle from './BCard/BCardTitle.vue'
 import BCarousel from './BCarousel/BCarousel.vue'
@@ -115,7 +115,7 @@ export default {
   BCardGroup,
   BCardHeader,
   BCardImg,
-  BCardSubTitle,
+  BCardSubtitle,
   BCardText,
   BCardTitle,
   BCarousel,

@@ -2,19 +2,14 @@
   <div v-if="isAlertVisible" ref="element" class="alert" role="alert" :class="classes">
     <slot />
     <template v-if="dismissibleBoolean">
-      <button
-        v-if="$slots.dismissible"
-        type="button"
-        data-bs-dismiss="alert"
-        @click="dismissClicked"
-      >
-        <slot name="dismissible" />
+      <button v-if="$slots.close" type="button" data-bs-dismiss="alert" @click="closeClicked">
+        <slot name="close" />
       </button>
       <b-close-button
         v-else
         :aria-label="dismissLabel"
         data-bs-dismiss="alert"
-        @click="dismissClicked"
+        @click="closeClicked"
       />
     </template>
   </div>
@@ -54,21 +49,22 @@ const fadeBoolean = useBooleanish(toRef(props, 'fade'))
 const showBoolean = useBooleanish(toRef(props, 'show'))
 
 interface BAlertEmits {
-  // TODO rename dismissed to closed
-  (e: 'dismissed'): void
-  (e: 'dismiss-count-down', value: number): void
+  (e: 'closed'): void
+  (e: 'close-count-down', value: number): void
   (e: 'update:modelValue', value: boolean | number): void
 }
 
 const emit = defineEmits<BAlertEmits>()
 
-const element = ref<HTMLElement>()
+const element = ref<HTMLElement | null>(null)
 const instance = ref<Alert>()
 const classes = computed(() => ({
   [`alert-${props.variant}`]: !!props.variant,
   'show': !!props.modelValue,
   'alert-dismissible': dismissibleBoolean.value,
   // TODO it seems like fade is probably used here
+  // It seems like the issue with trying to set fade is that when using transitions,
+  // The element is null when it's trying to set the transition
   'fade': !!props.modelValue,
 }))
 
@@ -117,13 +113,13 @@ const handleShowAndModelChanged = (): void => {
     instance.value = new Alert(element.value as HTMLElement)
 }
 
-const dismissClicked = (): void => {
+const closeClicked = (): void => {
   if (typeof props.modelValue === 'boolean') {
     emit('update:modelValue', false)
   } else {
     emit('update:modelValue', 0)
   }
-  emit('dismissed')
+  emit('closed')
 }
 
 watch(() => props.modelValue, handleShowAndModelChanged)
@@ -132,9 +128,9 @@ watch(() => showBoolean.value, handleShowAndModelChanged)
 watch(countDown, (newValue) => {
   clearCountDownInterval()
   if (typeof props.modelValue === 'boolean') return
-  emit('dismiss-count-down', newValue)
+  emit('close-count-down', newValue)
 
-  if (newValue === 0 && props.modelValue > 0) emit('dismissed')
+  if (newValue === 0 && props.modelValue > 0) emit('closed')
   if (props.modelValue !== newValue) emit('update:modelValue', newValue)
   if (newValue > 0) {
     _countDownTimeout = setTimeout(() => {

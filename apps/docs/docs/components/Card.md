@@ -114,7 +114,7 @@ on the `<b-card>`.
 </b-card>
 ```
 
-Note that with `no-body` enabled, the content of the `title` and `sub-title` props will not be
+Note that with `no-body` enabled, the content of the `title` and `subtitle` props will not be
 rendered.
 
 Use the `<b-card-body>` sub-component to place your own card body anywhere in a `<b-card>` component
@@ -122,9 +122,9 @@ that has `no-body` set.
 
 #### Titles, text, and links
 
-_Card titles_ are adding via the `title` prop, and _sub titles_ are added via the `sub-title` prop.
+_Card titles_ are adding via the `title` prop, and _sub titles_ are added via the `subtitle` prop.
 The title is rendered using the sub-component `<b-card-title>` while the Sub Title is rendered using
-the sub-component `<b-card-sub-title>`.
+the sub-component `<b-card-subtitle>`.
 
 With sub-component `<b-card-text>`, paragraph text can be added to the card. The last
 `<b-card-text>` in the card body will have its bottom margin automatically removed (via CSS). Text
@@ -135,7 +135,7 @@ Links can be added and placed next to each other by adding the `.card-link` clas
 
 <ClientOnly>
   <b-card>
-    <b-card title="Card title" sub-title="Card subtitle">
+    <b-card title="Card title" subtitle="Card subtitle">
       <b-card-text>
         Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
         content.
@@ -149,7 +149,7 @@ Links can be added and placed next to each other by adding the `.card-link` clas
 
 ```html
 <b-card>
-  <b-card title="Card title" sub-title="Card subtitle">
+  <b-card title="Card title" subtitle="Card subtitle">
     <b-card-text>
       Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
       content.
@@ -254,7 +254,7 @@ Place the image in the background of the card by setting the boolean prop `overl
         img-alt="Card Image"
         text-variant="white"
         title="Image Overlay"
-        sub-title="Subtitle"
+        subtitle="Subtitle"
     >
       <b-card-text>
         Some quick example text to build on the card and make up the bulk of the card's content.
@@ -271,7 +271,7 @@ Place the image in the background of the card by setting the boolean prop `overl
     img-alt="Card Image"
     text-variant="white"
     title="Image Overlay"
-    sub-title="Subtitle"
+    subtitle="Subtitle"
   >
     <b-card-text>
       Some quick example text to build on the card and make up the bulk of the card's content.
@@ -282,9 +282,7 @@ Place the image in the background of the card by setting the boolean prop `overl
 
 #### Lazy loaded images
 
-Use the `<b-card-img-lazy>` sub-component to lazy load images as they scroll into view.
-`<b-card-img-lazy>` supports the same props as `<b-card-img>` as well as many of the props of the
-[`<b-img-lazy>`](/docs/components/image#lazy-loaded-images) component.
+`<b-card-img-lazy>` has been removed in favor of using a standalone prop on b-img. Use prop `lazy` on b-img and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers
 
 ### Header and footer
 
@@ -366,7 +364,7 @@ card.
       </template>
       <b-card-body>
         <b-card-title>Card Title</b-card-title>
-        <b-card-sub-title class="mb-2">Card Sub Title</b-card-sub-title>
+        <b-card-subtitle class="mb-2">Card Sub Title</b-card-subtitle>
         <b-card-text>
           Some quick example text to build on the card title and make up the bulk of the card's
           content.
@@ -401,7 +399,7 @@ card.
     </template>
     <b-card-body>
       <b-card-title>Card Title</b-card-title>
-      <b-card-sub-title class="mb-2">Card Sub Title</b-card-sub-title>
+      <b-card-subtitle class="mb-2">Card Sub Title</b-card-subtitle>
       <b-card-text>
         Some quick example text to build on the card title and make up the bulk of the card's
         content.

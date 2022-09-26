@@ -29,12 +29,12 @@
 import {isEmptySlot, isNumeric, toFloat} from '../../utils'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
 import {useBooleanish} from '../../composables'
 
 interface BAvatarProps {
-  alt?: string // TODO each complex variant should contain a note about it's type
+  alt?: string
   ariaLabel?: string
   badge?: boolean | string
   badgeLeft?: Booleanish
@@ -46,12 +46,11 @@ interface BAvatarProps {
   disabled?: Booleanish
   icon?: string
   rounded?: boolean | string
-  size?: 'sm' | 'md' | 'lg' | string
-  // size?: InputSize | string
+  size?: 'sm' | 'md' | 'lg' | string // InputSize | string
   square?: Booleanish
   src?: string
   text?: string
-  textVariant?: ColorVariant
+  textVariant?: TextColorVariant
   variant?: ColorVariant
 }
 
@@ -185,6 +184,7 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
+// TODO this is incorrect. If buttonType is 'submit' and prop button is true, it will break the component
 const tag = computed<string>(() => (buttonBoolean.value ? props.buttonType : 'span'))
 const tagStyle = computed(() => ({
   ...marginStyle.value,

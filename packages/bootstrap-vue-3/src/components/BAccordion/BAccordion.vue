@@ -20,7 +20,6 @@ interface BAccordionProps {
 const props = withDefaults(defineProps<BAccordionProps>(), {
   flush: false,
   free: false,
-  id: undefined,
 })
 
 const computedId = useId(toRef(props, 'id'), 'accordion')
