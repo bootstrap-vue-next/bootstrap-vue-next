@@ -2,7 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BCardSubtitle from './BCardSubtitle.vue'
 
-describe('card-sub-title', () => {
+describe('card-subtitle', () => {
   enableAutoUnmount(afterEach)
 
   it('tag is h4 by default', () => {
