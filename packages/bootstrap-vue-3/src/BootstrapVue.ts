@@ -24,7 +24,7 @@ import BCardFooter from './components/BCard/BCardFooter.vue'
 import BCardGroup from './components/BCard/BCardGroup.vue'
 import BCardHeader from './components/BCard/BCardHeader.vue'
 import BCardImg from './components/BCard/BCardImg.vue'
-import BCardSubTitle from './components/BCard/BCardSubTitle.vue'
+import BCardSubtitle from './components/BCard/BCardSubtitle.vue'
 import BCardText from './components/BCard/BCardText.vue'
 import BCardTitle from './components/BCard/BCardTitle.vue'
 import BCarousel from './components/BCarousel/BCarousel.vue'
@@ -141,7 +141,7 @@ export {
   BCardGroup,
   BCardHeader,
   BCardImg,
-  BCardSubTitle,
+  BCardSubtitle,
   BCardText,
   BCardTitle,
   BNavForm,
@@ -270,7 +270,7 @@ declare module '@vue/runtime-core' {
     BCardGroup: typeof BCardGroup
     BCardHeader: typeof BCardHeader
     BCardImg: typeof BCardImg
-    BCardSubTitle: typeof BCardSubTitle
+    BCardSubtitle: typeof BCardSubtitle
     BCardText: typeof BCardText
     BCardTitle: typeof BCardTitle
     BCarousel: typeof BCarousel

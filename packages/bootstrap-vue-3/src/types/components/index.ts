@@ -29,7 +29,7 @@ export type {Props as BCardFooterProps} from './BCard/BCardFooter'
 export type {Props as BCardGroupProps} from './BCard/BCardGroup'
 export type {Props as BCardHeaderProps} from './BCard/BCardHeader'
 export type {Props as BCardImgProps} from './BCard/BCardImg'
-export type {Props as BCardSubtitleProps} from './BCard/BCardSubTitle'
+export type {Props as BCardSubtitleProps} from './BCard/BCardSubtitle'
 export type {Props as BCardTitleProps} from './BCard/BCardTitle'
 // BCarousel
 export type {
