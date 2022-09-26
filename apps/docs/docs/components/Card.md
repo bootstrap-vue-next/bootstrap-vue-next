@@ -282,7 +282,7 @@ Place the image in the background of the card by setting the boolean prop `overl
 
 #### Lazy loaded images
 
-b-card-img-lazy has been removed in favor of using a standalone prop on b-img. Use prop `lazy` on b-img and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers
+`<b-card-img-lazy>` has been removed in favor of using a standalone prop on b-img. Use prop `lazy` on b-img and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers
 
 ### Header and footer
 
