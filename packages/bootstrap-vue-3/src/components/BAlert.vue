@@ -2,8 +2,8 @@
   <div v-if="isAlertVisible" ref="element" class="alert" role="alert" :class="classes">
     <slot />
     <template v-if="dismissibleBoolean">
-      <button v-if="$slots.dismissible" type="button" data-bs-dismiss="alert" @click="closeClicked">
-        <slot name="dismiss" />
+      <button v-if="$slots.close" type="button" data-bs-dismiss="alert" @click="closeClicked">
+        <slot name="close" />
       </button>
       <b-close-button
         v-else

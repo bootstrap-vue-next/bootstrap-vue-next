@@ -18,8 +18,7 @@ import {computeSize} from './BAvatar.vue'
 interface BAvatarGroupProps {
   overlap?: number | string
   rounded?: boolean | string
-  size?: 'sm' | 'md' | 'lg' | string
-  // size?: InputSize | string
+  size?: 'sm' | 'md' | 'lg' | string // size?: InputSize | string
   square?: Booleanish
   tag?: string
   variant?: ColorVariant

@@ -8,6 +8,8 @@ import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
 
+// TODO how does this separate from a simple b-img?
+
 interface BCardImgProps {
   alt?: string
   bottom?: Booleanish
