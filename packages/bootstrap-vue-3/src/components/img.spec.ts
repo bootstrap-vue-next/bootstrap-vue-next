@@ -192,6 +192,13 @@ describe('img', () => {
     expect(wrapper.attributes('width')).toBe('100')
   })
 
+  it('has attr height is undefined when prop height is 0', () => {
+    const wrapper = mount(BImg, {
+      props: {width: 0},
+    })
+    expect(wrapper.attributes('width')).toBeUndefined()
+  })
+
   it('has attr height when prop height is string', () => {
     const wrapper = mount(BImg, {
       props: {height: '100'},
@@ -204,6 +211,13 @@ describe('img', () => {
       props: {height: 100},
     })
     expect(wrapper.attributes('height')).toBe('100')
+  })
+
+  it('has attr height is undefined when prop height is 0', () => {
+    const wrapper = mount(BImg, {
+      props: {height: 0},
+    })
+    expect(wrapper.attributes('height')).toBeUndefined()
   })
 
   it('has attr srcset when prop srcset is string', () => {
