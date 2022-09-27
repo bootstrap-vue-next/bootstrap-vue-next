@@ -298,4 +298,19 @@ describe('img', () => {
     expect(wrapper.attributes('src')).toBeDefined()
     expect(wrapper.attributes('src')).not.toBe('abc')
   })
+
+  it('emits load event on load', async () => {
+    const wrapper = mount(BImg)
+    const $img = wrapper.get('img')
+    await $img.trigger('load')
+    expect(wrapper.emitted()).toHaveProperty('load')
+  })
+
+  it('load event value is instanceof Event', async () => {
+    const wrapper = mount(BImg)
+    const $img = wrapper.get('img')
+    await $img.trigger('load')
+    const emitted = wrapper.emitted('load') ?? []
+    expect(emitted[0][0] instanceof Event).toBe(true)
+  })
 })

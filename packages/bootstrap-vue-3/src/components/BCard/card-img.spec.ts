@@ -274,4 +274,19 @@ describe('card-img', () => {
     const $img = wrapper.getComponent(BImg)
     expect($img.props('bottom')).toBeUndefined()
   })
+
+  it('emits load event on load', async () => {
+    const wrapper = mount(BCardImg)
+    const $img = wrapper.getComponent(BImg)
+    await $img.trigger('load')
+    expect(wrapper.emitted()).toHaveProperty('load')
+  })
+
+  it('load event value is instanceof Event', async () => {
+    const wrapper = mount(BCardImg)
+    const $img = wrapper.getComponent(BImg)
+    await $img.trigger('load')
+    const emitted = wrapper.emitted('load') ?? []
+    expect(emitted[0][0] instanceof Event).toBe(true)
+  })
 })
