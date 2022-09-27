@@ -81,6 +81,10 @@ import BNavbarToggle from './components/BNavbar/BNavbarToggle.vue'
 import BOffcanvas from './components/BOffcanvas.vue'
 import BOverlay from './components/BOverlay/BOverlay.vue'
 import BPagination from './components/BPagination/BPagination.vue'
+import BPlaceholder from './components/BPlaceholder/BPlaceholder.vue'
+import BPlaceholderCard from './components/BPlaceholder/BPlaceholderCard.vue'
+import BPlaceholderTable from './components/BPlaceholder/BPlaceholderTable.vue'
+import BPlaceholderWrapper from './components/BPlaceholder/BPlaceholderWrapper.vue'
 import BPopover from './components/BPopover.vue'
 import BProgress from './components/BProgress/BProgress.vue'
 import BProgressBar from './components/BProgress/BProgressBar.vue'
@@ -198,6 +202,10 @@ export {
   BOffcanvas,
   BOverlay,
   BPagination,
+  BPlaceholder,
+  BPlaceholderCard,
+  BPlaceholderTable,
+  BPlaceholderWrapper,
   BPopover,
   BProgress,
   BProgressBar,
@@ -327,6 +335,10 @@ declare module '@vue/runtime-core' {
     BOffcanvas: typeof BOffcanvas
     BOverlay: typeof BOverlay
     BPagination: typeof BPagination
+    BPlaceholder: typeof BPlaceholder
+    BPlaceholderCard: typeof BPlaceholderCard
+    BPlaceholderTable: typeof BPlaceholderTable
+    BPlaceholderWrapper: typeof BPlaceholderWrapper
     BPopover: typeof BPopover
     BProgress: typeof BProgress
     BProgressBar: typeof BProgressBar

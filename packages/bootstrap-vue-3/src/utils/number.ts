@@ -15,7 +15,7 @@ export const toInteger = (value: number, defaultValue = NaN): number =>
  */
 export const stringToInteger = (value: string, defaultValue = NaN): number => {
   const integer = parseInt(value, 10)
-  return isNaN(integer) ? defaultValue : integer
+  return Number.isNaN(integer) ? defaultValue : integer
 }
 
 /**
@@ -26,8 +26,8 @@ export const stringToInteger = (value: string, defaultValue = NaN): number => {
  * @returns
  */
 export const toFloat = (value: number | string, defaultValue = NaN): number => {
-  const float = parseFloat(value.toString())
-  return isNaN(float) ? defaultValue : float
+  const float = Number.parseFloat(value.toString())
+  return Number.isNaN(float) ? defaultValue : float
 }
 
 /**

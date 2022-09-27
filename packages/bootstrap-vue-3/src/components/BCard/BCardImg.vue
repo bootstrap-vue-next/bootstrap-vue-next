@@ -1,14 +1,13 @@
 <template>
-  <img :class="classes" v-bind="attrs" />
+  <b-img :class="classes" v-bind="attrs" @load="emit('load', $event)" />
 </template>
 
 <script setup lang="ts">
 // import type {BCardImgProps} from '../../types/components'
+import BImg from '../BImg.vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
-
-// TODO how does this separate from a simple b-img?
 
 interface BCardImgProps {
   alt?: string
@@ -22,6 +21,10 @@ interface BCardImgProps {
   start?: Booleanish
   top?: Booleanish
   width?: number | string
+  blank?: Booleanish
+  blankColor?: string
+  sizes?: string | Array<string>
+  srcset?: string | Array<string>
 }
 
 const props = withDefaults(defineProps<BCardImgProps>(), {
@@ -29,11 +32,17 @@ const props = withDefaults(defineProps<BCardImgProps>(), {
   end: false,
   left: false,
   right: false,
-  alt: undefined,
   lazy: false,
   start: false,
   top: false,
+  blank: false,
 })
+
+interface Emits {
+  (e: 'load', value: Event): void
+}
+
+const emit = defineEmits<Emits>()
 
 const bottomBoolean = useBooleanish(toRef(props, 'bottom'))
 const endBoolean = useBooleanish(toRef(props, 'end'))
@@ -41,23 +50,6 @@ const leftBoolean = useBooleanish(toRef(props, 'left'))
 const rightBoolean = useBooleanish(toRef(props, 'right'))
 const startBoolean = useBooleanish(toRef(props, 'start'))
 const topBoolean = useBooleanish(toRef(props, 'top'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
-
-const attrs = computed(() => ({
-  loading: lazyBoolean.value ? 'lazy' : 'eager',
-  src: props.src,
-  alt: props.alt,
-  width:
-    (typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10)) ||
-    undefined,
-  height:
-    (typeof props.height === 'number' ? props.height : parseInt(props.height as string, 10)) ||
-    undefined,
-}))
-
-const alignment = computed(() =>
-  leftBoolean.value ? 'float-start' : rightBoolean.value ? 'float-end' : ''
-)
 
 const baseClass = computed(() =>
   topBoolean.value
@@ -71,8 +63,20 @@ const baseClass = computed(() =>
     : 'card-img'
 )
 
-const classes = computed(() => ({
-  [alignment.value]: !!alignment.value,
-  [baseClass.value]: !!baseClass.value,
+/**
+ * Removes the above baseClass used props so it does not cause potential issues
+ */
+const attrs = computed(() => ({
+  alt: props.alt,
+  height: props.height,
+  src: props.src,
+  lazy: props.lazy,
+  width: props.width,
+  blank: props.blank,
+  blankColor: props.blankColor,
+  sizes: props.sizes,
+  srcset: props.srcset,
 }))
+
+const classes = computed(() => [baseClass.value])
 </script>

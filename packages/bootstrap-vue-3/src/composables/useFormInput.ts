@@ -67,7 +67,7 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
 
   const _getModelValue = (value: any) => {
     if (props.trim) return value.trim()
-    if (props.number) return parseFloat(value)
+    if (props.number) return Number.parseFloat(value)
 
     return value
   }

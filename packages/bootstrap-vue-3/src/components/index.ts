@@ -72,6 +72,10 @@ import BNavbarToggle from './BNavbar/BNavbarToggle.vue'
 import BOffcanvas from './BOffcanvas.vue'
 import BOverlay from './BOverlay/BOverlay.vue'
 import BPagination from './BPagination/BPagination.vue'
+import BPlaceholder from './BPlaceholder/BPlaceholder.vue'
+import BPlaceholderCard from './BPlaceholder/BPlaceholderCard.vue'
+import BPlaceholderTable from './BPlaceholder/BPlaceholderTable.vue'
+import BPlaceholderWrapper from './BPlaceholder/BPlaceholderWrapper.vue'
 import BPopover from './BPopover.vue'
 import BProgress from './BProgress/BProgress.vue'
 import BProgressBar from './BProgress/BProgressBar.vue'
@@ -170,6 +174,10 @@ export default {
   BOffcanvas,
   BOverlay,
   BPagination,
+  BPlaceholder,
+  BPlaceholderCard,
+  BPlaceholderTable,
+  BPlaceholderWrapper,
   BPopover,
   BProgress,
   BProgressBar,
