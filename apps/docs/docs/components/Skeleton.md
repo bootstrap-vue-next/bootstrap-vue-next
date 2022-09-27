@@ -4,7 +4,7 @@
 
 ## Deprecation warning
 
-This component is soon to be deprecated in favor of native using Bootstrap [placeholder](https://getbootstrap.com/docs/5.2/components/placeholders/) components
+This component is soon to be deprecated in favor of native using Bootstrap [placeholder](https://getbootstrap.com/docs/5.2/components/placeholders/) components. Scheduled for removal in v0.4.0
 
 **Example: Basic usage**
 
