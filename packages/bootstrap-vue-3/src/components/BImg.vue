@@ -19,7 +19,9 @@ interface BImgProps {
   fluidGrow?: Booleanish
   height?: number | string
   left?: Booleanish
+  start?: Booleanish
   right?: Booleanish
+  end?: Booleanish
   rounded?: boolean | string
   sizes?: string | Array<string>
   src?: string
@@ -38,6 +40,8 @@ const props = withDefaults(defineProps<BImgProps>(), {
   fluidGrow: false,
   left: false,
   right: false,
+  end: false,
+  start: false,
   rounded: false,
   thumbnail: false,
 })
@@ -55,7 +59,9 @@ const centerBoolean = useBooleanish(toRef(props, 'center'))
 const fluidBoolean = useBooleanish(toRef(props, 'fluid'))
 const fluidGrowBoolean = useBooleanish(toRef(props, 'fluidGrow'))
 const leftBoolean = useBooleanish(toRef(props, 'left'))
+const startBoolean = useBooleanish(toRef(props, 'start'))
 const rightBoolean = useBooleanish(toRef(props, 'right'))
+const endBoolean = useBooleanish(toRef(props, 'end'))
 const thumbnailBoolean = useBooleanish(toRef(props, 'thumbnail'))
 
 const BLANK_TEMPLATE =
@@ -99,20 +105,22 @@ const computedSizes = computed<string | undefined>(() =>
 )
 
 const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
-  const width =
-    typeof props.width === 'number' ? props.width : parseInt(props.width as string, 10) || undefined
-  const height =
-    typeof props.height === 'number'
-      ? props.height
-      : parseInt(props.height as string, 10) || undefined
+  const parser = (str: string | number | undefined): number | undefined =>
+    str === undefined
+      ? undefined
+      : typeof str === 'number'
+      ? str
+      : Number.parseInt(str, 10) || undefined
+  const width = parser(props.width)
+  const height = parser(props.height)
   if (blankBoolean.value) {
-    if (!!width && !height) {
+    if (width !== undefined && height === undefined) {
       return {height: width, width}
     }
-    if (!width && !!height) {
+    if (width === undefined && height !== undefined) {
       return {height, width: height}
     }
-    if (!width && !height) {
+    if (width === undefined && height === undefined) {
       return {height: 1, width: 1}
     }
   }
@@ -123,11 +131,7 @@ const computedDimentions = computed<{height: number | undefined; width: number |
 })
 
 const computedBlankImgSrc = computed(() =>
-  makeBlankImgSrc(
-    computedDimentions.value.width,
-    computedDimentions.value.height,
-    props.blankColor || 'transparent'
-  )
+  makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 
 const attrs = computed(() => ({
@@ -141,9 +145,9 @@ const attrs = computed(() => ({
 }))
 
 const alignment = computed<'float-start' | 'float-end' | 'mx-auto' | undefined>(() =>
-  leftBoolean.value
+  leftBoolean.value || startBoolean.value
     ? 'float-start'
-    : rightBoolean.value
+    : rightBoolean.value || endBoolean.value
     ? 'float-end'
     : centerBoolean.value
     ? 'mx-auto'
