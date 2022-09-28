@@ -1,5 +1,65 @@
 # Changelog
 
+## [0.3.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.5...v0.3.6) (2022-09-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BAlert:** rename slot dismissible to close
+* rename component card-sub-title to card-subtitle
+* remove last remants of SubTitle to Subtitle
+* **BAlert:** rename dismiss event to close
+* remove last remants of SubTitle to Subtitle
+* **BAlert:** rename slot dismissible to close
+* **BAlert:** rename dismiss event to close
+* **BInputGroupPrepend:** remove useless props
+* **BInputGroupAppend:** remove useless props
+
+### Features
+
+* **BAlert:** rename slot dismissible to close ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+* **BAlert:** rename slot dismissible to close ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
+* **BCardImg:** add blank img options to cardimg ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
+* **BCardImg:** add prop sizes and srcset ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
+* **BCardImg:** emit up load event ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
+* **BImg:** add start and end props ([d6d354b](https://github.com/cdmoro/bootstrap-vue-3/commit/d6d354b7c3894c4e93e4c7db1400c4a6793abdd8))
+* **BInputGroupAppend:** remove useless props ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
+* **BInputGroupPrepend:** remove useless props ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
+* BPlaceholder.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+* **BPlaceholder:** allow any width ([9153b43](https://github.com/cdmoro/bootstrap-vue-3/commit/9153b437c9592e6144c71644ac4dc9723a4eeedc))
+* **BPlaceholder:** allow any width ([355b774](https://github.com/cdmoro/bootstrap-vue-3/commit/355b7743299a5df969ed3433fe5ddd78e088637f))
+* BPlaceholderCard.vue -- work in progress ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+* BPlaceholderTable.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+* BPlaceholderWrapper.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+* **ButtonToolbar:** make prop role ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+* **ButtonToolbar:** make prop role ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
+* **CloseButton:** emit click event up ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+* **CloseButton:** emit click event up ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
+
+
+### Bug Fixes
+
+* **#470:** no rounded corners when using BInputGrooupPrepend or BInputGroupAppend ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
+* **#714:** v-bind={text} causes breaking items to not display text in nested BLink component ([9153b43](https://github.com/cdmoro/bootstrap-vue-3/commit/9153b437c9592e6144c71644ac4dc9723a4eeedc))
+* **#714:** v-bind={text} causes breaking items to not display text in nested BLink component ([9d4060f](https://github.com/cdmoro/bootstrap-vue-3/commit/9d4060fa5d41a52c4aba623d1ed6ac40b420d72c))
+* **BAlert:** rename dismiss event to close ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+* **BAlert:** rename dismiss event to close ([534bfa5](https://github.com/cdmoro/bootstrap-vue-3/commit/534bfa59ed83f8785b18ef234f25bbd9f337dbe3))
+* **BAvatar:** fix tag to be button and has attr type when prop button and prop buttonType ([0448cfa](https://github.com/cdmoro/bootstrap-vue-3/commit/0448cfa34b5bbeac3376d00b9b02b4ac2e672a71))
+* **BInputGroup:** fixed BInputGroup awareness of its nested children borders radius ([5679c29](https://github.com/cdmoro/bootstrap-vue-3/commit/5679c29df6869773fb89e296ec831b9fa93f9994))
+* **BPlaceholder:** limit when both cols and width ([78b2dba](https://github.com/cdmoro/bootstrap-vue-3/commit/78b2dba4f004edbcd330ccc783b35150ed23ea78))
+* remove last remants of SubTitle to Subtitle ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+* remove last remants of SubTitle to Subtitle ([ac66fe4](https://github.com/cdmoro/bootstrap-vue-3/commit/ac66fe441e3a9b90bd37a22e0244f7f7294f159c))
+* rename component card-sub-title to card-subtitle ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+* workaround for git being dumb ([2ac043f](https://github.com/cdmoro/bootstrap-vue-3/commit/2ac043ff59378bf49cced314047344f3f43589f9))
+* workaround for git being dumb ([3ced7ef](https://github.com/cdmoro/bootstrap-vue-3/commit/3ced7ef3c0e9ba7110735916c040a156cfa7082c))
+* workaround for git being dumb ([06f1581](https://github.com/cdmoro/bootstrap-vue-3/commit/06f1581e09f849837a8df5ab6b084cbf0d05156e))
+* workaround for git being dumb ([4dbdc3d](https://github.com/cdmoro/bootstrap-vue-3/commit/4dbdc3dce6505140143ccb1c6ed3febc3c3a8d86))
+
+
+### Miscellaneous Chores
+
+* release 0.3.6 ([17ceb11](https://github.com/cdmoro/bootstrap-vue-3/commit/17ceb11477897bdd44e7545a3710dc169703ff7f))
+
 ## [0.3.5](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.4...v0.3.5) (2022-09-23)
 
 
