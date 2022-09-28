@@ -52,12 +52,21 @@ describe('breadcrumb-item', () => {
     expect($blink.emitted()).toHaveProperty('click')
   })
 
-  it('does not emit click event when prop disabled', async () => {
+  it('does not emit click event when prop disabled and blink clicked', async () => {
     const wrapper = mount(BBreadcrumbItem, {
       props: {disabled: true},
     })
     const $blink = wrapper.getComponent(BLink)
     await $blink.trigger('click')
+    expect(wrapper.emitted('click')).toBeUndefined()
+  })
+
+  it('does not emit click event when prop active and span clicked', async () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: true},
+    })
+    const $span = wrapper.get('span')
+    await $span.trigger('click')
     expect(wrapper.emitted('click')).toBeUndefined()
   })
 
@@ -76,5 +85,94 @@ describe('breadcrumb-item', () => {
     })
     const $span = wrapper.get('span')
     expect($span.text()).toBe('foobar')
+  })
+
+  it('renders prop text in child when child is span', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: true, text: 'foobar'},
+    })
+    const $span = wrapper.get('span')
+    expect($span.text()).toBe('foobar')
+  })
+
+  it('renders prop text in child when child is span', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: true, text: 'props'},
+      slots: {default: 'slots'},
+    })
+    const $span = wrapper.get('span')
+    expect($span.text()).toBe('slots')
+  })
+
+  it('does not give prop active to child', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: true},
+    })
+    const $span = wrapper.get('span')
+    expect($span.attributes('active')).toBeUndefined()
+  })
+
+  it('does not give prop ariaCurrent to child', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: true, ariaCurrent: 'foobar'},
+    })
+    const $span = wrapper.get('span')
+    expect($span.attributes('ariaCurrent')).toBeUndefined()
+  })
+
+  it('does not give prop disabled to child', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: true, disabled: true},
+    })
+    const $span = wrapper.get('span')
+    expect($span.attributes('disabled')).toBeUndefined()
+  })
+
+  it('does not give prop text to child', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: true, text: 'foobar'},
+    })
+    const $span = wrapper.get('span')
+    expect($span.attributes('text')).toBeUndefined()
+  })
+
+  it('gives prop active to child when blink', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: false},
+    })
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('active')).toBe(false)
+  })
+
+  it('does not give prop ariaCurrent to child when blink', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: false, ariaCurrent: 'foobar'},
+    })
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('ariaCurrent')).toBeUndefined()
+  })
+
+  it('gives prop disabled to child when blink', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: false, disabled: true},
+    })
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('disabled')).toBe(true)
+  })
+
+  it('does not give prop text to child when blink', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {active: false, text: 'foobar'},
+    })
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('text')).toBeUndefined()
+  })
+
+  it('gives prop activeClass to blink', () => {
+    const wrapper = mount(BBreadcrumbItem, {
+      props: {activeClass: 'foobar'},
+    })
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('activeClass')).toBe('foobar')
   })
 })
