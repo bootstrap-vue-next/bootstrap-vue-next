@@ -3,6 +3,7 @@
     <b-link
       class="nav-link"
       v-bind="$props"
+      active-class="active"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
     >
