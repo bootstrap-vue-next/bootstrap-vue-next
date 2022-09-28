@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.6...v0.3.7) (2022-09-28)
+
+
+### Bug Fixes
+
+* dts build error on breadcrumbitem ([8ee6b8e](https://github.com/cdmoro/bootstrap-vue-3/commit/8ee6b8e98c631fca1b82757e9568dcfd376f1973))
+
 ## [0.3.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.5...v0.3.6) (2022-09-28)
 
 
