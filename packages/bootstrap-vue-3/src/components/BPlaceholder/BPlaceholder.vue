@@ -38,7 +38,7 @@ const colsString = computed<string | undefined>(() =>
 )
 
 const classes = computed(() => ({
-  [`col-${colsString.value}`]: colsString.value !== undefined,
+  [`col-${colsString.value}`]: colsString.value !== undefined && widthString.value === undefined,
   [`bg-${props.variant}`]: props.variant !== undefined,
   [`placeholder-${props.size}`]: props.size !== undefined,
   [`placeholder-${props.animation}`]: props.animation !== undefined,
