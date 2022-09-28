@@ -92,7 +92,7 @@ describe('breadcrumb', () => {
     expect(wrapper.text()).toBe('prependfoodefault')
   })
 
-  it('bbreadcrumbitem contains items as props', () => {
+  it('bbreadcrumbitem exists when items array item is object', () => {
     const wrapper = mount(BBreadcrumb, {
       global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
       props: {
@@ -103,10 +103,60 @@ describe('breadcrumb', () => {
       slots: {default: 'default', prepend: 'prepend'},
     })
     const $bbreadcrumbitem = wrapper.findComponent(BBreadcrumbItem)
+    expect($bbreadcrumbitem.exists()).toBe(true)
+  })
+
+  it('bbreadcrumbitem contains items as props', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
+      props: {
+        items: [
+          {text: 'foo', active: true, disabled: true, href: 'href', to: 'to'},
+        ] as Array<BreadcrumbItem>,
+      },
+      slots: {default: 'default', prepend: 'prepend'},
+    })
+    const $bbreadcrumbitem = wrapper.getComponent(BBreadcrumbItem)
     expect($bbreadcrumbitem.props('text')).toBe('foo')
     expect($bbreadcrumbitem.props('active')).toBe(true)
     expect($bbreadcrumbitem.props('disabled')).toBe(true)
     expect($bbreadcrumbitem.props('href')).toBe('href')
     expect($bbreadcrumbitem.props('to')).toBe('to')
+  })
+
+  it('breadcrumbitem exists when items array item is string', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
+      props: {items: ['foobar']},
+    })
+    const $bbreadcrumbitem = wrapper.findComponent(BBreadcrumbItem)
+    expect($bbreadcrumbitem.exists()).toBe(true)
+  })
+
+  it('breadcrumbitem has prop text to be string when prop items array item is string', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
+      props: {items: ['foobar']},
+    })
+    const $bbreadcrumbitem = wrapper.getComponent(BBreadcrumbItem)
+    expect($bbreadcrumbitem.props('text')).toBe('foobar')
+  })
+
+  it('breadcrumbitem components have prop href to be # when their index is less than items length', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
+      props: {items: ['foo', 'bar']},
+    })
+    const [$bbreadcrumbitem] = wrapper.findAllComponents(BBreadcrumbItem)
+    expect($bbreadcrumbitem.props('href')).toBe('#')
+  })
+
+  it('breadcrumbitem components dont have prop href to be # when their index is items length', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {provide: {[BREADCRUMB_SYMBOL as unknown as symbol]: {}}},
+      props: {items: ['foo', 'bar']},
+    })
+    const [, $bbreadcrumbitem] = wrapper.findAllComponents(BBreadcrumbItem)
+    expect($bbreadcrumbitem.props('href')).toBeUndefined()
   })
 })

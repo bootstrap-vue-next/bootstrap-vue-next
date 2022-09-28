@@ -22,14 +22,14 @@ describe('input-group-addon', () => {
     expect($inputgrouptext.exists()).toBe(true)
   })
 
-  it('renders default sloot when not prop isText', () => {
+  it('renders default slot when not prop isText', () => {
     const wrapper = mount(BInputGroupAddon, {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('renders default sloot when not prop isText', () => {
+  it('renders default slot in BInputGroupText when not prop isText', () => {
     const wrapper = mount(BInputGroupAddon, {
       slots: {default: 'foobar'},
       props: {isText: true},
