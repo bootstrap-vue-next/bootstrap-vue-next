@@ -10,7 +10,10 @@
       :is="routerTag"
       ref="link"
       :href="href"
-      :class="[isActive && activeClass, isExactActive && exactActiveClass]"
+      :class="[
+        (isActive || activeBoolean) && activeClass,
+        (isExactActive || exactBoolean) && exactActiveClass,
+      ]"
       v-bind="$attrs"
       @click="navigate"
     >
