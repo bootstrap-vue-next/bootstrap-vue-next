@@ -3,7 +3,7 @@
     <component
       :is="computedTag"
       :aria-current="computedAriaCurrent"
-      v-bind="computedTag !== 'span' ? pluckedLinkProps : undefined"
+      v-bind="props"
       @click="clicked"
     >
       <slot>
@@ -57,13 +57,8 @@ export default defineComponent({
       if (!disabledBoolean.value) emit('click', e)
     }
 
-    // TODO test and make sure that only the correct props are given to BLINK
-    // Since the BLink resolved to an <a>, passing "text" prop down caused
-    // <a> slot text to be overwritten by prop text!
-    const pluckedLinkProps = computed(() => pluckProps(props, linkProps))
-
     return {
-      pluckedLinkProps,
+      props: computedTag.value !== 'span' ? pluckProps(props, linkProps) : {},
       liClasses,
       computedTag,
       computedAriaCurrent,
