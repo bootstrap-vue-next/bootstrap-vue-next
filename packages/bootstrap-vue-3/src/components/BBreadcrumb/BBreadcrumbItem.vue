@@ -3,16 +3,18 @@
     <component
       :is="computedTag"
       :aria-current="computedAriaCurrent"
-      v-bind="$props"
+      v-bind="computedTag !== 'span' ? pluckedLinkProps : undefined"
       @click="clicked"
     >
-      <slot />
+      <slot>
+        {{ text }}
+      </slot>
     </component>
   </li>
 </template>
 
 <script lang="ts">
-import {omit} from '../../utils'
+import {omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
@@ -55,7 +57,13 @@ export default defineComponent({
       if (!disabledBoolean.value) emit('click', e)
     }
 
+    // TODO test and make sure that only the correct props are given to BLINK
+    // Since the BLink resolved to an <a>, passing "text" prop down caused
+    // <a> slot text to be overwritten by prop text!
+    const pluckedLinkProps = computed(() => pluckProps(props, linkProps))
+
     return {
+      pluckedLinkProps,
       liClasses,
       computedTag,
       computedAriaCurrent,
