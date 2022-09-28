@@ -38,34 +38,27 @@ describe('placeholder', () => {
     expect(wrapper.classes()).toContain('col-6')
   })
 
-  it('has class col-{type} when prop cols is string and contains %', () => {
-    const wrapper = mount(BPlaceholder, {
-      props: {cols: '%6%'},
-    })
-    expect(wrapper.classes()).toContain('col-6')
-  })
-
-  it('has class w-{type} when prop width is number', async () => {
+  it('has style width: {type}%; when prop width is number', async () => {
     const wrapper = mount(BPlaceholder, {
       props: {width: 6},
     })
-    expect(wrapper.classes()).toContain('w-6')
+    expect(wrapper.attributes('style')).toContain('width: 6%;')
     await wrapper.setProps({width: undefined})
-    expect(wrapper.classes()).not.toContain('w-6')
+    expect(wrapper.attributes('style')).toBeUndefined()
   })
 
-  it('has class w-{type} when prop width is string', () => {
+  it('has style width: {type}%; when prop width is string', () => {
     const wrapper = mount(BPlaceholder, {
       props: {width: '6'},
     })
-    expect(wrapper.classes()).toContain('w-6')
+    expect(wrapper.attributes('style')).toContain('width: 6%;')
   })
 
-  it('has class w-{type} when prop width is string and contains %', () => {
+  it('has style width: {type}%; when prop width is string and contains %', () => {
     const wrapper = mount(BPlaceholder, {
       props: {width: '%6%'},
     })
-    expect(wrapper.classes()).toContain('w-6')
+    expect(wrapper.attributes('style')).toContain('width: 6%;')
   })
 
   it('has class bg-{type} when prop variant', async () => {
