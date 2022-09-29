@@ -85,7 +85,7 @@
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
-import {computed, nextTick, onMounted, ref, toRef, watch} from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, toRef, watch} from 'vue'
 import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
@@ -324,6 +324,11 @@ onMounted(() => {
   if (modelValueBoolean.value) {
     getInstance().show()
   }
+})
+
+onBeforeUnmount((): void => {
+  instance.value?.dispose()
+  instance.value = undefined
 })
 
 watch(
