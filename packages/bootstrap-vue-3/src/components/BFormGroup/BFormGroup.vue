@@ -85,16 +85,12 @@ export default defineComponent({
 
     const getAlignClasses = (props: any, prefix: string) =>
       breakPoints.reduce((result: string[], breakpoint) => {
-        const suffix = suffixPropName(breakpoint, `${prefix}Align`)
-        if (breakpoint === 'xs') {
-          const value = props[suffix.slice(0, suffix.toLowerCase().lastIndexOf(breakpoint))] || null
-          if (value) {
-            result.push(`text-${value}`)
-          }
-        }
+        const suffix = suffixPropName(breakpoint === 'xs' ? '' : breakpoint, `${prefix}Align`)
         const propValue: string = props[suffix] || null
         if (propValue) {
-          result.push(`text-${breakpoint}-${propValue}`)
+          breakpoint === 'xs'
+            ? result.push(`text-${propValue}`)
+            : result.push(`text-${breakpoint}-${propValue}`)
         }
 
         return result
@@ -102,7 +98,8 @@ export default defineComponent({
 
     const getColProps = (props: any, prefix: string) =>
       breakPoints.reduce((result: any, breakpoint: string) => {
-        let propValue = props[suffixPropName(breakpoint, `${prefix}Cols`)]
+        const suffix = suffixPropName(breakpoint === 'xs' ? '' : breakpoint, `${prefix}Cols`)
+        let propValue = props[suffix]
         // Handle case where the prop's value is an empty string,
         // which represents `true`
         propValue = propValue === '' ? true : propValue || false
@@ -118,7 +115,13 @@ export default defineComponent({
         // If breakpoint is '' (`${prefix}Cols` is `true`), then we use
         // the 'col' prop to make equal width at 'xs'
         if (propValue) {
-          result[breakpoint || (typeof propValue === 'boolean' ? 'col' : 'cols')] = propValue
+          // Extra care is required for xs since it does not have a BCol breakpoint prop
+          // Xs breakpoint is simply 'cols'
+          if (breakpoint === 'xs') {
+            result.cols = propValue
+          } else {
+            result[breakpoint || (typeof propValue === 'boolean' ? 'col' : 'cols')] = propValue
+          }
         }
         return result
       }, {})
@@ -247,7 +250,7 @@ export default defineComponent({
     const labelId = labelContent ? getId('_BV_label_') : null
 
     if (labelContent || this.isHorizontal) {
-      const labelTag: string = isFieldset ? 'legend' : 'label'
+      const labelTag: 'legend' | 'label' = isFieldset ? 'legend' : 'label'
       if (this.labelSrOnlyBoolean) {
         if (labelContent) {
           $label = h(
