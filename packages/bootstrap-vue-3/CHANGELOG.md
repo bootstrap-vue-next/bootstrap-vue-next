@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.7...v0.3.8) (2022-09-30)
+
+
+### Bug Fixes
+
+* **#697:** labelCols class not working ([5162eb9](https://github.com/cdmoro/bootstrap-vue-3/commit/5162eb9987e3bd654286dd5a6cf2d40adad54f07))
+* **BLink:** has class activeClass when prop active ([064fef9](https://github.com/cdmoro/bootstrap-vue-3/commit/064fef9624448c5fd711086e519d66bf83eefff7))
+* **BLink:** has class exactActiveClass when prop exact ([064fef9](https://github.com/cdmoro/bootstrap-vue-3/commit/064fef9624448c5fd711086e519d66bf83eefff7))
+* **BModal:** dispose modal before unmount ([1c54484](https://github.com/cdmoro/bootstrap-vue-3/commit/1c54484d2f60a32dedd541966c9c8d360976c295))
+* **BNavItem:** passes activeClass to be active ([5e1348a](https://github.com/cdmoro/bootstrap-vue-3/commit/5e1348a6b2c552197f8d651043d22a310249846c))
+
 ## [0.3.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.6...v0.3.7) (2022-09-28)
 
 
