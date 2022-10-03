@@ -12,13 +12,11 @@
       </slot>
     </template>
     <slot>
-      <div>
-        <b-placeholder cols="7" />
-        <b-placeholder cols="4" />
-        <b-placeholder cols="4" />
-        <b-placeholder cols="6" />
-        <b-placeholder cols="8" />
-      </div>
+      <b-placeholder cols="7" />
+      <b-placeholder cols="4" />
+      <b-placeholder cols="4" />
+      <b-placeholder cols="6" />
+      <b-placeholder cols="8" />
     </slot>
     <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
@@ -32,7 +30,7 @@
 import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
-import {Booleanish, ColorVariant} from '../../types'
+import {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
@@ -40,15 +38,15 @@ interface Props {
   noHeader?: Booleanish
   headerWidth?: string | number
   headerVariant?: ColorVariant
-  headerAnimation?: 'glow' | 'wave'
-  headerSize?: 'xs' | 'sm' | 'lg'
+  headerAnimation?: PlaceholderAnimation
+  headerSize?: PlaceholderSize
   noFooter?: Booleanish
   footerWidth?: string | number
   footerVariant?: ColorVariant
-  footerAnimation?: 'glow' | 'wave'
-  footerSize?: 'xs' | 'sm' | 'lg'
-  animation?: 'glow' | 'wave'
-  size?: 'xs' | 'sm' | 'lg'
+  footerAnimation?: PlaceholderAnimation
+  footerSize?: PlaceholderSize
+  animation?: PlaceholderAnimation
+  size?: PlaceholderSize
   variant?: ColorVariant
   noButton?: Booleanish
   imgBottom?: Booleanish

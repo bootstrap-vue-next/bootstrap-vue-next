@@ -4,15 +4,15 @@
 
 <script setup lang="ts">
 import {computed, StyleValue} from 'vue'
-import {ColorVariant} from '../../types'
+import {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
 interface Props {
   tag?: string
   width?: string | number
   cols?: string | number
   variant?: ColorVariant
-  size?: 'xs' | 'sm' | 'lg'
-  animation?: 'glow' | 'wave'
+  size?: PlaceholderSize
+  animation?: PlaceholderAnimation
 }
 
 const props = withDefaults(defineProps<Props>(), {
