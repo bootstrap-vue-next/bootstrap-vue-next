@@ -19,35 +19,37 @@
           :class="contentClass"
         >
           <div v-if="!hideHeaderBoolean" class="modal-header" :class="computedHeaderClasses">
-            <component :is="titleTag" class="modal-title" :class="computedTitleClasses">
-              <slot name="title">
-                {{ title }}
-              </slot>
-            </component>
-            <template v-if="!hideHeaderCloseBoolean">
-              <button
-                v-if="$slots['header-close']"
-                type="button"
-                data-bs-dismiss="modal"
-                @click="hide()"
-              >
-                <slot name="header-close" />
-              </button>
-              <b-close-button
-                v-else
-                type="button"
-                :aria-label="headerCloseLabel"
-                data-bs-dismiss="modal"
-                :white="headerCloseWhiteBoolean"
-                @click="hide()"
-              />
-            </template>
+            <slot name="modal-header">
+              <component :is="titleTag" class="modal-title" :class="computedTitleClasses">
+                <slot name="title">
+                  {{ title }}
+                </slot>
+              </component>
+              <template v-if="!hideHeaderCloseBoolean">
+                <button
+                  v-if="$slots['header-close']"
+                  type="button"
+                  data-bs-dismiss="modal"
+                  @click="hide()"
+                >
+                  <slot name="header-close" />
+                </button>
+                <b-close-button
+                  v-else
+                  type="button"
+                  :aria-label="headerCloseLabel"
+                  data-bs-dismiss="modal"
+                  :white="headerCloseWhiteBoolean"
+                  @click="hide()"
+                />
+              </template>
+            </slot>
           </div>
           <div class="modal-body" :class="computedBodyClasses">
             <slot />
           </div>
           <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">
-            <slot name="footer">
+            <slot name="modal-footer">
               <b-button
                 v-if="!okOnlyBoolean"
                 type="button"
@@ -85,7 +87,7 @@
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {Modal} from 'bootstrap'
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, toRef, watch} from 'vue'
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, toRef, watch} from 'vue'
 import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
