@@ -40,20 +40,17 @@ import BPlaceholder from './BPlaceholder.vue'
 
 interface BSkeletonTableProps {
   rows?: number
-
   columns?: number
   cellWidth?: string | number
   size?: PlaceholderSize
   animation?: PlaceholderAnimation
   variant?: ColorVariant
-
   headerColumns?: number
   hideHeader?: Booleanish
   headerCellWidth?: string | number
   headerSize?: PlaceholderSize
   headerAnimation?: PlaceholderAnimation
   headerVariant?: ColorVariant
-
   footerColumns?: number
   showFooter?: Booleanish
   footerCellWidth?: string | number
