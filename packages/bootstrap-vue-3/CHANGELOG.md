@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.8...v0.3.9) (2022-10-03)
+
+
+### Features
+
+* **BModal:** :sparkles: Add modal-header slot and rename footer slot ([8e0da98](https://github.com/cdmoro/bootstrap-vue-3/commit/8e0da985a1039548111792ffb8e6af992c853473))
+
 ## [0.3.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.7...v0.3.8) (2022-09-30)
 
 
