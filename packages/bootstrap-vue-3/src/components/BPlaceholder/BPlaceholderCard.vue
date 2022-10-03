@@ -1,7 +1,11 @@
 <template>
-  <b-card>
-    <!-- TODO add possible blank Img? -->
-    <!-- Problem is BCard doesn't have an option for blank imgs -->
+  <b-card :img-bottom="imgBottomBoolean">
+    <template v-if="!noImgBoolean" #img>
+      <slot name="img">
+        <b-card-img v-bind="imgAttrs" />
+      </slot>
+    </template>
+
     <template v-if="!noHeaderBoolean" #header>
       <slot name="header">
         <b-placeholder v-bind="headerAttrs" />
@@ -26,6 +30,7 @@
 
 <script setup lang="ts">
 import BCard from '../BCard/BCard.vue'
+import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {Booleanish, ColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
@@ -37,17 +42,20 @@ interface Props {
   headerVariant?: ColorVariant
   headerAnimation?: 'glow' | 'wave'
   headerSize?: 'xs' | 'sm' | 'lg'
-
   noFooter?: Booleanish
   footerWidth?: string | number
   footerVariant?: ColorVariant
   footerAnimation?: 'glow' | 'wave'
   footerSize?: 'xs' | 'sm' | 'lg'
-
   animation?: 'glow' | 'wave'
   size?: 'xs' | 'sm' | 'lg'
   variant?: ColorVariant
   noButton?: Booleanish
+  imgBottom?: Booleanish
+  imgSrc?: string
+  imgBlankColor?: string
+  imgHeight?: string | number
+  noImg?: Booleanish
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -56,11 +64,17 @@ const props = withDefaults(defineProps<Props>(), {
   footerWidth: 100,
   noHeader: false,
   noFooter: false,
+  imgBlankColor: '#868e96',
+  imgHeight: 100,
+  imgBottom: false,
+  noImg: false,
 })
 
 const noButtonBoolean = useBooleanish(toRef(props, 'noButton'))
 const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
 const noFooterBoolean = useBooleanish(toRef(props, 'noFooter'))
+const noImgBoolean = useBooleanish(toRef(props, 'noImg'))
+const imgBottomBoolean = useBooleanish(toRef(props, 'imgBottom'))
 
 const headerAttrs = computed(() => ({
   width: props.headerWidth,
@@ -82,5 +96,14 @@ const footerAttrs = computed(() => ({
   animation: props.footerAnimation,
   size: props.footerSize,
   variant: props.footerVariant,
+}))
+
+const imgAttrs = computed(() => ({
+  blank: !props.imgSrc ? true : false,
+  blankColor: props.imgBlankColor,
+  height: !props.imgSrc ? props.imgHeight : undefined,
+  src: props.imgSrc,
+  top: !imgBottomBoolean.value,
+  bottom: imgBottomBoolean.value,
 }))
 </script>
