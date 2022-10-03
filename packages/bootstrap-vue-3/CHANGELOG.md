@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.3.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.9...v0.3.10) (2022-10-03)
+
+
+### Features
+
+* **BCard:** add img slot above or below header ([ac71dee](https://github.com/cdmoro/bootstrap-vue-3/commit/ac71dee331da231884411b875f6d4049189ffbc2))
+* **BPlaceholderCard:** add placeholder img ([041156d](https://github.com/cdmoro/bootstrap-vue-3/commit/041156d92177760c20fd13fe1789c8cb8a272e02))
+* **BPlaceholderTable:** bplaceholder tfoot attrs are separated ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+* **BPlaceholderTable:** bplaceholder thead attrs are separated ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+* **BPlaceholderTable:** slot tfoot to overwrite default tfoot ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+* **BPlaceholderTable:** slot thead to overwrite default thead ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+
+
+### Bug Fixes
+
+* **BPlaceholderCard:** remove unnecessary inner div on body ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+
 ## [0.3.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.8...v0.3.9) (2022-10-03)
 
 
