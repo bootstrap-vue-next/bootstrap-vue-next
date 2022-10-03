@@ -98,6 +98,37 @@ describe('card', () => {
     expect(wrapper.classes()).not.toContain('flex-row-reverse')
   })
 
+  it('renders img slot', () => {
+    const wrapper = mount(BCard, {
+      slots: {img: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('renders img in correct order when not prop imgBottom', () => {
+    const wrapper = mount(BCard, {
+      props: {header: 'header', bodyText: 'bodyText', footer: 'footer', imgBottom: false},
+      slots: {img: 'img'},
+    })
+    expect(wrapper.text()).toBe('imgheaderbodyTextfooter')
+  })
+
+  it('does not render b-card-img when slot img', () => {
+    const wrapper = mount(BCard, {
+      slots: {img: 'img'},
+    })
+    const $cardimg = wrapper.findComponent(BCardImg)
+    expect($cardimg.exists()).toBe(false)
+  })
+
+  it('renders img in correct order when prop imgBottom', () => {
+    const wrapper = mount(BCard, {
+      props: {header: 'header', bodyText: 'bodyText', footer: 'footer', imgBottom: true},
+      slots: {img: 'img'},
+    })
+    expect(wrapper.text()).toBe('headerbodyTextfooterimg')
+  })
+
   it('does not have child BCardImg by default', () => {
     const wrapper = mount(BCard)
     const $img = wrapper.findComponent(BCardImg)
