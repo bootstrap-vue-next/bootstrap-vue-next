@@ -141,6 +141,10 @@ const componentList = {
         name: 'Pagination',
         description: 'Quick first, previous, next, last, and page buttons for pagination control of another component'
     },
+    Placeholder: {
+        name: 'Placeholder',
+        description: 'Placeholder components can create a unique appearance to indicate something may still be loading'
+    },
     Popover: {
         name: 'Popover',
         description: 'Popover provides a tooltip behavior over another component'

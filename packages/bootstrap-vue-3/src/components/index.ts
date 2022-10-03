@@ -73,6 +73,7 @@ import BOffcanvas from './BOffcanvas.vue'
 import BOverlay from './BOverlay/BOverlay.vue'
 import BPagination from './BPagination/BPagination.vue'
 import BPlaceholder from './BPlaceholder/BPlaceholder.vue'
+import BPlaceholderButton from './BPlaceholder/BPlaceholderButton.vue'
 import BPlaceholderCard from './BPlaceholder/BPlaceholderCard.vue'
 import BPlaceholderTable from './BPlaceholder/BPlaceholderTable.vue'
 import BPlaceholderWrapper from './BPlaceholder/BPlaceholderWrapper.vue'
@@ -175,6 +176,7 @@ export default {
   BOverlay,
   BPagination,
   BPlaceholder,
+  BPlaceholderButton,
   BPlaceholderCard,
   BPlaceholderTable,
   BPlaceholderWrapper,

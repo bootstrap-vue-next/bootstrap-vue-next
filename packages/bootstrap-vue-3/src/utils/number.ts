@@ -14,7 +14,7 @@ export const toInteger = (value: number, defaultValue = NaN): number =>
  * @returns
  */
 export const stringToInteger = (value: string, defaultValue = NaN): number => {
-  const integer = parseInt(value, 10)
+  const integer = Number.parseInt(value, 10)
   return Number.isNaN(integer) ? defaultValue : integer
 }
 

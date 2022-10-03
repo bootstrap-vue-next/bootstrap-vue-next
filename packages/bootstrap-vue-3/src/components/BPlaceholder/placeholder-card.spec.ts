@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BPlaceholderCard from './BPlaceholderCard.vue'
 import BPlaceholder from './BPlaceholder.vue'
+import BPlaceholderButton from './BPlaceholderButton.vue'
 import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 
@@ -332,9 +333,19 @@ describe('placeholder-card', () => {
     expect($card.text()).toBe('foobar')
   })
 
-  it('has a placeholder for the footer', () => {
+  it('has BPlaceholderButton when prop noButton false', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
+      props: {noHeader: true, noButton: false},
+      slots: {default: 'foo'},
+    })
+    const $card = wrapper.getComponent(BCard)
+    const $placeholder = $card.findComponent(BPlaceholderButton)
+    expect($placeholder.exists()).toBe(true)
+  })
+
+  it('has BPlaceholder when prop noButton true', () => {
+    const wrapper = mount(BPlaceholderCard, {
+      props: {noHeader: true, noButton: true},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -342,39 +353,9 @@ describe('placeholder-card', () => {
     expect($placeholder.exists()).toBe(true)
   })
 
-  it('footer placeholder has prop tag to div by default', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
-      slots: {default: 'foo'},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.props('tag')).toBe('div')
-  })
-
-  it('footer placeholder has prop tag to div when prop noButton false', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, noButton: false},
-      slots: {default: 'foo'},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.props('tag')).toBe('div')
-  })
-
-  it('footer placeholder has prop to be span when prop noButton true', () => {
+  it('BPlaceholder is given prop width to be 100 by default', () => {
     const wrapper = mount(BPlaceholderCard, {
       props: {noHeader: true, noButton: true},
-      slots: {default: 'foo'},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.props('tag')).toBe('span')
-  })
-
-  it('footer placeholder has prop width to 100 by default', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -382,9 +363,9 @@ describe('placeholder-card', () => {
     expect($placeholder.props('width')).toBe(100)
   })
 
-  it('footer placeholder has prop width to be prop footerWidth', () => {
+  it('BPlaceholder is given prop width to be prop footerWidth', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, footerWidth: 1000},
+      props: {noHeader: true, noButton: true, footerWidth: 1000},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -392,9 +373,9 @@ describe('placeholder-card', () => {
     expect($placeholder.props('width')).toBe(1000)
   })
 
-  it('footer placeholder has prop animation to undefined by default', () => {
+  it('BPlaceholder is given prop animation to be undefined by default', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
+      props: {noHeader: true, noButton: true},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -402,9 +383,9 @@ describe('placeholder-card', () => {
     expect($placeholder.props('animation')).toBeUndefined()
   })
 
-  it('footer placeholder has prop animation to be prop footerAnimation', () => {
+  it('BPlaceholder is given prop animation to be prop footerAnimation', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, footerAnimation: 'glow'},
+      props: {noHeader: true, noButton: true, footerAnimation: 'glow'},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -412,9 +393,9 @@ describe('placeholder-card', () => {
     expect($placeholder.props('animation')).toBe('glow')
   })
 
-  it('footer placeholder has prop size to undefined by default', () => {
+  it('BPlaceholder is given prop size to be undefined by default', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
+      props: {noHeader: true, noButton: true},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -422,9 +403,9 @@ describe('placeholder-card', () => {
     expect($placeholder.props('size')).toBeUndefined()
   })
 
-  it('footer placeholder has prop size to be prop footerSize', () => {
+  it('BPlaceholder is given prop size to be prop footerSize', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, footerSize: 'xs'},
+      props: {noHeader: true, noButton: true, footerSize: 'xs'},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -432,9 +413,9 @@ describe('placeholder-card', () => {
     expect($placeholder.props('size')).toBe('xs')
   })
 
-  it('footer placeholder has prop variant to undefined by default', () => {
+  it('BPlaceholder is given prop variant to be undefined by default', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
+      props: {noHeader: true, noButton: true},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -442,9 +423,9 @@ describe('placeholder-card', () => {
     expect($placeholder.props('variant')).toBeUndefined()
   })
 
-  it('footer placeholder has prop variant to be prop footerVariant', () => {
+  it('BPlaceholder is given prop variant to be prop footerVariant', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, footerVariant: 'danger'},
+      props: {noHeader: true, noButton: true, footerVariant: 'danger'},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
@@ -452,104 +433,84 @@ describe('placeholder-card', () => {
     expect($placeholder.props('variant')).toBe('danger')
   })
 
-  it('footer placeholder has class btn by default', () => {
+  it('BPlaceholderButton is given prop width to be 100 by default', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
+      props: {noHeader: true, noButton: false},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('btn')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('width')).toBe(100)
   })
 
-  it('footer placeholder does not have class btn when prop noButton true', () => {
+  it('BPlaceholderButton is given prop width to be prop footerWidth', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, noButton: true},
+      props: {noHeader: true, noButton: false, footerWidth: 1000},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).not.toContain('btn')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('width')).toBe(1000)
   })
 
-  it('footer placeholder has class disabled by default', () => {
+  it('BPlaceholderButton is given prop animation to be undefined by default', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
+      props: {noHeader: true, noButton: false},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('disabled')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('animation')).toBeUndefined()
   })
 
-  it('footer placeholder does not have class disabled when prop noButton true', () => {
+  it('BPlaceholderButton is given prop animation to be prop footerAnimation', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, noButton: true},
+      props: {noHeader: true, noButton: false, footerAnimation: 'glow'},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).not.toContain('disabled')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('animation')).toBe('glow')
   })
 
-  it('footer placeholder has class btn-primary by default', () => {
+  it('BPlaceholderButton is given prop size to be undefined by default', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
+      props: {noHeader: true, noButton: false},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('btn-primary')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('size')).toBeUndefined()
   })
 
-  it('footer placeholder has class btn-{type} where type is prop footerVariant by default', () => {
+  it('BPlaceholderButton is not given prop size to be footerSize', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, footerVariant: 'danger'},
+      props: {noHeader: true, noButton: false, footerSize: 'xs'},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('btn-danger')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('size')).toBeUndefined()
   })
 
-  it('footer placeholder does not have class btn-primary when prop noButton true', () => {
+  it('BPlaceholderButton is given prop variant to be primary by default', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, noButton: true},
+      props: {noHeader: true, noButton: false},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).not.toContain('btn-primary')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('variant')).toBe('primary')
   })
 
-  it('footer placeholder does not have class btn-{type} where type is prop footerVariant when prop noButton true', () => {
+  it('BPlaceholderButton is given prop variant to be prop footerVariant', () => {
     const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true, footerVariant: 'danger', noButton: true},
+      props: {noHeader: true, noButton: false, footerVariant: 'danger'},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.classes()).not.toContain('btn-danger')
-  })
-
-  it('renders slot footer over placeholder', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {noHeader: true},
-      slots: {default: '', footer: 'foobar'},
-    })
-    const $card = wrapper.getComponent(BCard)
-    const $placeholder = $card.findComponent(BPlaceholder)
-    expect($placeholder.exists()).toBe(true)
-    expect($card.text()).toBe('foobar')
-  })
-
-  it('does not render slot footer when prop noFooter', () => {
-    const wrapper = mount(BPlaceholderCard, {
-      props: {noFooter: true},
-      slots: {footer: 'foobar'},
-    })
-    const $card = wrapper.getComponent(BCard)
-    expect($card.text()).toBe('')
+    const $placeholderbutton = $card.getComponent(BPlaceholderButton)
+    expect($placeholderbutton.props('variant')).toBe('danger')
   })
 
   it('renders all in correct order', () => {

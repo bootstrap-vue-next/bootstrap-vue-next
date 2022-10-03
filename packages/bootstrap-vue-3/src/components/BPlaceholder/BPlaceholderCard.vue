@@ -20,7 +20,8 @@
     </slot>
     <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
-        <b-placeholder v-bind="footerAttrs" />
+        <b-placeholder-button v-if="!noButtonBoolean" v-bind="footerAttrs" />
+        <b-placeholder v-else v-bind="footerAttrs" />
       </slot>
     </template>
   </b-card>
@@ -30,6 +31,7 @@
 import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
+import BPlaceholderButton from './BPlaceholderButton.vue'
 import {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
@@ -81,18 +83,10 @@ const headerAttrs = computed(() => ({
   size: props.headerSize,
 }))
 
-const ButtonClasses = computed<Array<string>>(() => [
-  'btn',
-  `btn-${props.footerVariant ?? 'primary'}`,
-  'disabled',
-])
-
 const footerAttrs = computed(() => ({
-  class: !noButtonBoolean.value ? ButtonClasses.value : undefined,
-  tag: !noButtonBoolean.value ? 'div' : undefined,
   width: props.footerWidth,
   animation: props.footerAnimation,
-  size: props.footerSize,
+  size: noButtonBoolean.value ? props.footerSize : undefined,
   variant: props.footerVariant,
 }))
 
