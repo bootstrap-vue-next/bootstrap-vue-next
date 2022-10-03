@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.10...v0.3.11) (2022-10-03)
+
+
+### Features
+
+* **BPlaceholderButton:** create BPlaceholderButton ([51c2532](https://github.com/cdmoro/bootstrap-vue-3/commit/51c25327befe4fd21617007d888442247c2054ee))
+* **BPlaceholderTable:** props columns and rows can now be string or number ([51c2532](https://github.com/cdmoro/bootstrap-vue-3/commit/51c25327befe4fd21617007d888442247c2054ee))
+
 ## [0.3.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.9...v0.3.10) (2022-10-03)
 
 
