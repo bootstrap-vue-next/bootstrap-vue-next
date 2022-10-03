@@ -82,6 +82,7 @@ import BOffcanvas from './components/BOffcanvas.vue'
 import BOverlay from './components/BOverlay/BOverlay.vue'
 import BPagination from './components/BPagination/BPagination.vue'
 import BPlaceholder from './components/BPlaceholder/BPlaceholder.vue'
+import BPlaceholderButton from './components/BPlaceholder/BPlaceholderButton.vue'
 import BPlaceholderCard from './components/BPlaceholder/BPlaceholderCard.vue'
 import BPlaceholderTable from './components/BPlaceholder/BPlaceholderTable.vue'
 import BPlaceholderWrapper from './components/BPlaceholder/BPlaceholderWrapper.vue'
@@ -203,6 +204,7 @@ export {
   BOverlay,
   BPagination,
   BPlaceholder,
+  BPlaceholderButton,
   BPlaceholderCard,
   BPlaceholderTable,
   BPlaceholderWrapper,
@@ -336,6 +338,7 @@ declare module '@vue/runtime-core' {
     BOverlay: typeof BOverlay
     BPagination: typeof BPagination
     BPlaceholder: typeof BPlaceholder
+    BPlaceholderButton: typeof BPlaceholderButton
     BPlaceholderCard: typeof BPlaceholderCard
     BPlaceholderTable: typeof BPlaceholderTable
     BPlaceholderWrapper: typeof BPlaceholderWrapper

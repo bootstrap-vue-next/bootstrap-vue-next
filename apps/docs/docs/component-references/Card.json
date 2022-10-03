@@ -190,6 +190,11 @@
             "name": "footer",
             "description": "",
             "scope": []
+          },
+          {
+            "description": "",
+            "name": "img",
+            "scope": []
           }
         ]
       },
