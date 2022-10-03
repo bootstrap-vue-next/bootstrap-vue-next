@@ -19,7 +19,7 @@
           :class="contentClass"
         >
           <div v-if="!hideHeaderBoolean" class="modal-header" :class="computedHeaderClasses">
-            <slot name="modal-header">
+            <slot name="header">
               <component :is="titleTag" class="modal-title" :class="computedTitleClasses">
                 <slot name="title">
                   {{ title }}
@@ -49,7 +49,7 @@
             <slot />
           </div>
           <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">
-            <slot name="modal-footer">
+            <slot name="footer">
               <b-button
                 v-if="!okOnlyBoolean"
                 type="button"
