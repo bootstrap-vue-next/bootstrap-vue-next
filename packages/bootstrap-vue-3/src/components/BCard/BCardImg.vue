@@ -11,20 +11,20 @@ import {computed, toRef} from 'vue'
 
 interface BCardImgProps {
   alt?: string
-  bottom?: Booleanish
-  end?: Booleanish
-  height?: number | string
-  left?: Booleanish
-  right?: Booleanish
-  src?: string
-  lazy?: Booleanish
-  start?: Booleanish
-  top?: Booleanish
-  width?: number | string
   blank?: Booleanish
   blankColor?: string
+  bottom?: Booleanish
+  lazy?: Booleanish
+  height?: number | string
+  left?: Booleanish
+  start?: Booleanish
+  right?: Booleanish
+  end?: Booleanish
   sizes?: string | Array<string>
+  src?: string
   srcset?: string | Array<string>
+  top?: Booleanish
+  width?: number | string
 }
 
 const props = withDefaults(defineProps<BCardImgProps>(), {

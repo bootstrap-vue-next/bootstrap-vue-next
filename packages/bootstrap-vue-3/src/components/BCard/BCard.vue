@@ -1,6 +1,8 @@
 <template>
   <component :is="tag" class="card" :class="classes">
-    <b-card-img v-if="imgSrc && !imgBottomBoolean" v-bind="imgAttr" />
+    <slot v-if="!imgBottomBoolean" name="img">
+      <b-card-img v-if="imgSrc" v-bind="imgAttr" />
+    </slot>
     <b-card-header
       v-if="header || $slots.header || headerHtml"
       v-bind="headerAttrs"
@@ -27,7 +29,9 @@
         {{ footer }}
       </slot>
     </b-card-footer>
-    <b-card-img v-if="imgSrc && imgBottomBoolean" v-bind="imgAttr" />
+    <slot v-if="imgBottomBoolean" name="img">
+      <b-card-img v-if="imgSrc" v-bind="imgAttr" />
+    </slot>
   </component>
 </template>
 
