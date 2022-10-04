@@ -2,7 +2,8 @@
  * @param obj
  * @returns
  */
-export const isObject = (obj: unknown): boolean => obj !== null && typeof obj === 'object'
+export const isObject = (obj: unknown): obj is Record<PropertyKey, unknown> =>
+  obj !== null && typeof obj === 'object'
 
 /**
  * @param value

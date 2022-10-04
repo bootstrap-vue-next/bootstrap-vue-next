@@ -32,7 +32,7 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 

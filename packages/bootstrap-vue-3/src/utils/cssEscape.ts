@@ -5,16 +5,16 @@ const escapeChar = (value: string) => `\\${value}`
 /**
  * The `cssEscape()` util is based on this `CSS.escape()` polyfill: https://github.com/mathiasbynens/CSS.escape
  *
- * @param {any} value
+ * @param {unknown} value
  */
-export default (value: any): string => {
-  value = toString(value)
+export default (value: unknown): string => {
+  const val = toString(value)
 
-  const {length} = value
-  const firstCharCode = value.charCodeAt(0)
+  const {length} = val
+  const firstCharCode = val.charCodeAt(0)
 
-  return value.split('').reduce((result: string, char: string, index: number) => {
-    const charCode = value.charCodeAt(index)
+  return val.split('').reduce((result: string, char: string, index: number) => {
+    const charCode = val.charCodeAt(index)
 
     // If the character is NULL (U+0000), use (U+FFFD) as replacement
     if (charCode === 0x0000) {
