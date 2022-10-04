@@ -16,5 +16,5 @@ export const isNumeric = (value: unknown): boolean => /^[0-9]*\.?[0-9]+$/.test(S
  * @param obj
  * @returns
  */
-export const isPlainObject = (obj: unknown): boolean =>
+export const isPlainObject = (obj: unknown): obj is Record<PropertyKey, unknown> =>
   Object.prototype.toString.call(obj) === '[object Object]'

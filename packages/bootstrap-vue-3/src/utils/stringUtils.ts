@@ -18,9 +18,7 @@ export const toString = (val: unknown, spaces = 2): string =>
     ? val
     : val === undefined || val === null
     ? ''
-    : Array.isArray(val) ||
-      (isPlainObject(val) &&
-        (val as Record<string, unknown>).toString === Object.prototype.toString)
+    : Array.isArray(val) || (isPlainObject(val) && val.toString === Object.prototype.toString)
     ? JSON.stringify(val, null, spaces)
     : String(val)
 
