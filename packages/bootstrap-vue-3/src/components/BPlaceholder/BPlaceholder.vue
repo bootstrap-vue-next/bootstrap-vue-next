@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import {computed, StyleValue} from 'vue'
-import {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
 interface Props {
   tag?: string
