@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import type {Booleanish, TransitionMode} from '../../types'
-import {isPlainObject} from '../../utils'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
@@ -46,7 +45,7 @@ const fadeProperties = computed(() => {
 const baseProperties = computed(() => ({mode: props.mode, css: true, ...fadeProperties.value}))
 
 const computedAttrs = computed(() =>
-  isPlainObject(props.transProps)
+  props.transProps !== undefined
     ? {
         // Order matters here since the props.transProps would get overwritten if it came first
         // But the goal of props.transProps is to overwrite base properties
