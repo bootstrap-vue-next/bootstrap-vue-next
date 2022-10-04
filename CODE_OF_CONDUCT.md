@@ -58,7 +58,7 @@ representative at an online or offline event.
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders via a GitHub issue. Please create an issue there commenting that you have a complaint, **but do not include details of the event**. Then a community leader will give you details on a preferred private contact method so we can respect the privacy of the reporter.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders via a GitHub issue. Please create an issue there commenting that there is a complaint, **but do not include details of the event**. Then a community leader will give the reporter details on a preferred private contact method to respect the privacy of the reporter. No matter the chosen forum to privately handle the situation, the community leader agrees to act on behalf of the organization.
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
