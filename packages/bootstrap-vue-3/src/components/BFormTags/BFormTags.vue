@@ -33,16 +33,19 @@
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
-        <b-form-tag
-          v-for="tag in tags"
-          :key="tag"
-          :class="tagClass"
-          tag="li"
-          :variant="tagVariant"
-          :pill="tagPillsBoolean"
-          @remove="removeTag"
-          >{{ tag }}</b-form-tag
-        >
+        <template v-for="tag in tags">
+          <slot name="tag" v-bind="{tag, tagClass, tagVariant, tagPillsBoolean, removeTag}">
+            <b-form-tag
+              :key="tag"
+              :class="tagClass"
+              tag="li"
+              :variant="tagVariant"
+              :pill="tagPillsBoolean"
+              @remove="removeTag"
+              >{{ tag }}</b-form-tag
+            >
+          </slot>
+        </template>
         <li
           role="none"
           aria-live="off"
