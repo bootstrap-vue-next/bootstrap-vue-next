@@ -574,17 +574,6 @@ describe('', () => {
     expect($spinner.props('type')).toBe('grow')
   })
 
-  it('child BTransition child div second child div BSpinner is given prop type to be default when prop spinnerType is empty string', () => {
-    const wrapper = mount(BOverlay, {
-      props: {show: true, spinnerType: ''},
-    })
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    const [, $third] = $div.findAll('div')
-    const $spinner = $third.getComponent(BSpinner)
-    expect($spinner.props('type')).toBe('border')
-  })
-
   it('child BTransition child div second child div BSpinner is given prop type to be prop spinnerType', () => {
     const wrapper = mount(BOverlay, {
       props: {show: true, spinnerVariant: 'danger'},
@@ -594,17 +583,6 @@ describe('', () => {
     const [, $third] = $div.findAll('div')
     const $spinner = $third.getComponent(BSpinner)
     expect($spinner.props('variant')).toBe('danger')
-  })
-
-  it('child BTransition child div second child div BSpinner is given prop type to be prop spinnerType', () => {
-    const wrapper = mount(BOverlay, {
-      props: {show: true, spinnerVariant: ''},
-    })
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    const [, $third] = $div.findAll('div')
-    const $spinner = $third.getComponent(BSpinner)
-    expect($spinner.props('variant')).toBeUndefined()
   })
 
   it('child BTransition child div second child div BSpinner is given prop type to be prop spinnerType', () => {

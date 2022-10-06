@@ -28,13 +28,11 @@
 </template>
 
 <script setup lang="ts">
+import {computed, toRef} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, CSSProperties, toRef} from 'vue'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
-
-const POSITION_COVER: CSSProperties = {top: 0, left: 0, bottom: 0, right: 0}
 
 interface Props {
   bgColor?: string
@@ -90,6 +88,8 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
+const positionStyles = {top: 0, left: 0, bottom: 0, right: 0}
+
 const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
 const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
 const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
@@ -118,7 +118,7 @@ const spinnerAttrs = computed(() => ({
 }))
 
 const overlayStyles = computed(() => ({
-  ...POSITION_COVER,
+  ...positionStyles,
   zIndex: props.zIndex || 10,
 }))
 
@@ -133,7 +133,7 @@ const overlayClasses = computed(() => [
 const blurClasses = computed(() => [computedVariant.value, computedRounded.value])
 
 const blurStyles = computed(() => ({
-  ...POSITION_COVER,
+  ...positionStyles,
   opacity: props.opacity,
   backgroundColor: props.bgColor || undefined,
   backdropFilter: blur ? `blur(${blur})` : undefined,
@@ -141,7 +141,7 @@ const blurStyles = computed(() => ({
 
 const spinWrapperStyles = computed(() =>
   noCenterBoolean.value
-    ? {...POSITION_COVER}
+    ? positionStyles
     : {
         top: '50%',
         left: '50%',
