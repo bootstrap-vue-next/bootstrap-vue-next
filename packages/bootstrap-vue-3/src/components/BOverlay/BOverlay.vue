@@ -1,157 +1,151 @@
-<script lang="ts">
-import type {Booleanish, ColorVariant} from '../../types'
-import {normalizeSlot, toFloat} from '../../utils'
+<template>
+  <component :is="wrapTag" class="b-overlay-wrap position-relative" :aria-busy="computedAriaBusy">
+    <slot />
+    <b-transition
+      :no-fade="noFadeBoolean"
+      :trans-props="{enterToClass: 'show'}"
+      name="fade"
+      @on-after-enter="emit('shown')"
+      @on-after-leave="emit('hidden')"
+    >
+      <component
+        :is="overlayTag"
+        v-if="showBoolean"
+        :class="overlayClasses"
+        :style="overlayStyles"
+        @click="emit('click', $event)"
+      >
+        <div class="position-absolute" :class="blurClasses" :style="blurStyles" />
+
+        <div class="position-absolute" :style="spinWrapperStyles">
+          <slot name="overlay" v-bind="spinnerAttrs">
+            <b-spinner v-bind="spinnerAttrs" />
+          </slot>
+        </div>
+      </component>
+    </b-transition>
+  </component>
+</template>
+
+<script setup lang="ts">
+import type {Booleanish, ColorVariant, SpinnerType} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, h, PropType, resolveComponent, toRef} from 'vue'
+import {computed, CSSProperties, toRef} from 'vue'
 import BTransition from '../BTransition/BTransition.vue'
+import BSpinner from '../BSpinner.vue'
 
-const POSITION_COVER = {top: 0, left: 0, bottom: 0, right: 0}
-const SLOT_NAME_DEFAULT = 'default'
-const SLOT_NAME_OVERLAY = 'overlay'
+const POSITION_COVER: CSSProperties = {top: 0, left: 0, bottom: 0, right: 0}
 
-interface ISlotScope {
-  spinnerType: string | null
-  spinnerVariant: string | null
-  spinnerSmall: boolean
+interface Props {
+  bgColor?: string
+  blur?: string
+  fixed?: Booleanish
+  noCenter?: Booleanish
+  noFade?: Booleanish
+  noWrap?: Booleanish
+  opacity?: number | string
+  overlayTag?: string
+  rounded?: boolean | string
+  show?: Booleanish
+  spinnerSmall?: Booleanish
+  spinnerType?: SpinnerType
+  spinnerVariant?: ColorVariant
+  variant?:
+    | 'transparent'
+    | 'white'
+    | 'light'
+    | 'dark'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info' // ColorVariant | 'white' | 'transparent'
+  wrapTag?: string
+  zIndex?: number | string
 }
 
-export default defineComponent({
-  components: {BTransition},
-  props: {
-    bgColor: {type: String, required: false},
-    blur: {type: String, default: '2px'},
-    fixed: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    noCenter: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    noFade: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // If `true, does not render the default slot
-    // and switches to absolute positioning
-    noWrap: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    opacity: {
-      type: [Number, String],
-      default: 0.85,
-      validator: (value: number | string) => {
-        const number = toFloat(value, 0)
-        return number >= 0 && number <= 1
-      },
-    },
-    overlayTag: {type: String, default: 'div'},
-    rounded: {type: [Boolean, String], default: false},
-    show: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    spinnerSmall: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    spinnerType: {type: String, default: 'border'},
-    spinnerVariant: {type: String, required: false},
-    variant: {type: String as PropType<ColorVariant>, default: 'light'},
-    wrapTag: {type: String, default: 'div'},
-    zIndex: {type: [Number, String], default: 10},
-  },
-  emits: ['click', 'hidden', 'shown'],
-  setup(props, {slots, emit}) {
-    const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
-    const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
-    const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
-    const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
-    const showBoolean = useBooleanish(toRef(props, 'show'))
-    const spinnerSmallBoolean = useBooleanish(toRef(props, 'spinnerSmall'))
-
-    const computedRounded = computed(() =>
-      props.rounded === true || props.rounded === ''
-        ? 'rounded'
-        : !props.rounded
-        ? ''
-        : `rounded-${props.rounded}`
-    )
-
-    const computedVariant = computed(() =>
-      props.variant && !props.bgColor ? `bg-${props.variant}` : ''
-    )
-
-    const computedSlotScope = computed(() => ({
-      spinnerType: props.spinnerType || null,
-      spinnerVariant: props.spinnerVariant || null,
-      spinnerSmall: spinnerSmallBoolean.value,
-    }))
-
-    return () => {
-      const defaultOverlayFn = (scope: ISlotScope) =>
-        h(resolveComponent('BSpinner'), {
-          type: scope.spinnerType,
-          variant: scope.spinnerVariant,
-          small: spinnerSmallBoolean.value,
-        })
-
-      let $overlay: any = ''
-
-      if (showBoolean.value) {
-        const $background = h('div', {
-          class: ['position-absolute', computedVariant.value, computedRounded.value],
-          style: {
-            ...POSITION_COVER,
-            opacity: props.opacity,
-            backgroundColor: props.bgColor || null,
-            backdropFilter: props.blur ? `blur(${props.blur})` : null,
-          },
-        })
-
-        const $content = h(
-          'div',
-          {
-            class: 'position-absolute',
-            style: noCenterBoolean.value
-              ? {...POSITION_COVER}
-              : {top: '50%', left: '50%', transform: 'translateX(-50%) translateY(-50%)'},
-          },
-          normalizeSlot(SLOT_NAME_OVERLAY, computedSlotScope.value, slots) ||
-            defaultOverlayFn(computedSlotScope.value) ||
-            ''
-        )
-
-        $overlay = h(
-          props.overlayTag,
-          {
-            class: [
-              'b-overlay',
-              {
-                'position-absolute':
-                  !noWrapBoolean.value || (noWrapBoolean.value && !fixedBoolean.value),
-                'position-fixed': noWrapBoolean.value && fixedBoolean.value,
-              },
-            ],
-            style: {
-              ...POSITION_COVER,
-              zIndex: props.zIndex || 10,
-            },
-            onClick: (event: MouseEvent) => emit('click', event),
-            key: 'overlay',
-          },
-          [$background, $content]
-        )
-      }
-
-      const getOverlayTransition = () =>
-        h(
-          BTransition,
-          {
-            noFade: noFadeBoolean.value,
-            transProps: {enterToClass: 'show'},
-            name: 'fade',
-            onAfterEnter: () => emit('shown'),
-            onAfterLeave: () => emit('hidden'),
-          },
-          {default: () => $overlay}
-        )
-
-      if (noWrapBoolean.value) return getOverlayTransition()
-
-      const wrapper = h(
-        props.wrapTag,
-        {
-          'class': ['b-overlay-wrap position-relative'],
-          'aria-busy': showBoolean.value ? 'true' : null,
-        },
-        [h('span', normalizeSlot(SLOT_NAME_DEFAULT, {}, slots)), getOverlayTransition()]
-      )
-      return wrapper
-    }
-  },
+const props = withDefaults(defineProps<Props>(), {
+  blur: '2px',
+  fixed: false,
+  noCenter: false,
+  noFade: false,
+  noWrap: false,
+  opacity: 0.85,
+  overlayTag: 'div',
+  rounded: false,
+  show: false,
+  spinnerSmall: false,
+  spinnerType: 'border',
+  variant: 'light',
+  wrapTag: 'div',
+  zIndex: 10,
 })
+
+interface Emits {
+  (e: 'click', value: MouseEvent): void
+  (e: 'hidden'): void
+  (e: 'shown'): void
+}
+
+const emit = defineEmits<Emits>()
+
+const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
+const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
+const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
+const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
+const showBoolean = useBooleanish(toRef(props, 'show'))
+const spinnerSmallBoolean = useBooleanish(toRef(props, 'spinnerSmall'))
+
+const computedRounded = computed(() =>
+  props.rounded === true || props.rounded === ''
+    ? 'rounded'
+    : props.rounded === false
+    ? ''
+    : `rounded-${props.rounded}`
+)
+
+const computedVariant = computed(() =>
+  props.variant && !props.bgColor ? `bg-${props.variant}` : ''
+)
+
+const computedAriaBusy = computed(() => (showBoolean.value ? 'true' : null))
+
+const spinnerAttrs = computed(() => ({
+  type: props.spinnerType || undefined,
+  variant: props.spinnerVariant || undefined,
+  small: spinnerSmallBoolean.value,
+}))
+
+const overlayStyles = computed(() => ({
+  ...POSITION_COVER,
+  zIndex: props.zIndex || 10,
+}))
+
+const overlayClasses = computed(() => [
+  'b-overlay',
+  {
+    'position-absolute': !noWrapBoolean.value || !fixedBoolean.value,
+    'position-fixed': noWrapBoolean.value && fixedBoolean.value,
+  },
+])
+
+const blurClasses = computed(() => [computedVariant.value, computedRounded.value])
+
+const blurStyles = computed(() => ({
+  ...POSITION_COVER,
+  opacity: props.opacity,
+  backgroundColor: props.bgColor || undefined,
+  backdropFilter: blur ? `blur(${blur})` : undefined,
+}))
+
+const spinWrapperStyles = computed(() =>
+  noCenterBoolean.value
+    ? {...POSITION_COVER}
+    : {
+        top: '50%',
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+      }
+)
 </script>

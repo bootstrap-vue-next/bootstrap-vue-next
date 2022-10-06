@@ -56,6 +56,7 @@ describe('transition', () => {
     expect($transition.props('enterActiveClass')).toBe('foo')
   })
 
+  // TODO
   // Test for when appear is true but trans props is also true
 
   // Test for when appear is false but trans props is also true
