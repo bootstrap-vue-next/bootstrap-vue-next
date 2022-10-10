@@ -36,7 +36,6 @@
                 </button>
                 <b-close-button
                   v-else
-                  type="button"
                   :aria-label="headerCloseLabel"
                   data-bs-dismiss="modal"
                   :white="headerCloseWhiteBoolean"

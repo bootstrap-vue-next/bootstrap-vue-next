@@ -17,7 +17,6 @@
         </h5>
         <b-close-button
           v-if="!noHeaderCloseBoolean"
-          type="button"
           class="text-reset"
           data-bs-dismiss="offcanvas"
           :aria-label="dismissLabel"

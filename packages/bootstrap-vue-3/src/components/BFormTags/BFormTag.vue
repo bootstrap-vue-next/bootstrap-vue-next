@@ -13,7 +13,6 @@
     <b-close-button
       v-if="!disabledBoolean && !noRemoveBoolean"
       aria-keyshortcuts="Delete"
-      type="button"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
       :white="!['warning', 'info', 'light'].includes(variant)"
