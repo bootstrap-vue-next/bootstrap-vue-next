@@ -1,7 +1,7 @@
 <template>
   <div
     class="progress-bar"
-    :class="classes"
+    :class="computedClasses"
     role="progressbar"
     :aria-valuenow="value"
     aria-valuemin="0"
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
 import type {BProgressParentData} from '../../types/components'
-import {useBooleanish} from '../../composables'
+import {eagerComputed, useBooleanish} from '../../composables'
 import {computed, inject, toRef} from 'vue'
 import {injectionKey} from './BProgress.vue'
 
@@ -43,25 +43,25 @@ const props = withDefaults(defineProps<Props>(), {
   value: 0,
 })
 
+const parent = inject<BProgressParentData>(injectionKey)
+
 const animatedBoolean = useBooleanish(toRef(props, 'animated'))
 const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
 const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
-const parent = inject<BProgressParentData>(injectionKey)
-
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'progress-bar-animated': animatedBoolean.value || parent?.animated,
   'progress-bar-striped':
     stripedBoolean.value || parent?.striped || animatedBoolean.value || parent?.animated,
   [`bg-${props.variant}`]: props.variant !== undefined,
 }))
 
-const numberPrecision = computed<number>(() =>
+const numberPrecision = eagerComputed<number>(() =>
   typeof props.precision === 'number' ? props.precision : Number.parseFloat(props.precision)
 )
 
-const numberValue = computed<number>(() =>
+const numberValue = eagerComputed<number>(() =>
   typeof props.value === 'number' ? props.value : Number.parseFloat(props.value)
 )
 

@@ -20,7 +20,7 @@
         <div v-if="modelValueBoolean" class="toast" :class="toastClasses" tabindex="0">
           <component
             :is="headerTag"
-            v-if="!!$slots.title || !!title"
+            v-if="hasTitleSlot || !!title"
             :class="headerClass"
             class="toast-header"
           >
@@ -34,7 +34,7 @@
           <component
             :is="computedTag"
             v-bind="computedLinkProps"
-            v-if="!!$slots.default || !!body"
+            v-if="hasDefaultSlot || !!body"
             class="toast-body"
             :class="bodyClass"
             @click="onBodyClick"
@@ -49,8 +49,8 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, PropType, ref, toRef} from 'vue'
-import {isLink, pluckProps, toInteger} from '../../utils'
-import {useBooleanish} from '../../composables'
+import {isEmptySlot, isLink, pluckProps, toInteger} from '../../utils'
+import {eagerComputed, useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -81,8 +81,14 @@ export default defineComponent({
     toaster: {type: String, default: 'b-toaster-top-right'},
   },
   emits: ['update:modelValue', 'hide', 'hidden', 'show', 'shown', 'paused', 'unPaused'],
-  setup(props, {emit}) {
+  setup(props, {emit, slots}) {
     const MIN_DURATION = 1000
+
+    // This would be a lot better if the timer was separated from the logic and was an external function
+    // create a timer
+    let dismissTimer: ReturnType<typeof setTimeout> | undefined
+    let dismissStarted: number
+    let resumeDismiss: number
 
     const isStatusBoolean = useBooleanish(toRef(props, 'isStatus'))
     const autoHideBoolean = useBooleanish(toRef(props, 'autoHide'))
@@ -95,10 +101,15 @@ export default defineComponent({
     const staticBoolean = useBooleanish(toRef(props, 'static'))
     const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 
+    // This ref is required for the teleport to work, in it's current system.
+    // Since the teleport target doesn't exist at the same time as it's being mounted, you must wait
+    // Alternatively, remove this component completely and make a pristine plugin to take it's place
     const isMounted = ref(false)
-    onMounted(() => {
-      isMounted.value = true
-    })
+
+    const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
+    const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
+
+    const computedLink = eagerComputed<boolean>(() => isLink(props))
 
     const toastClasses = computed(() => [
       props.toastClass,
@@ -118,23 +129,29 @@ export default defineComponent({
 
     const computedAriaAtomic = computed(() => (!modelValueBoolean.value ? undefined : 'true'))
 
-    const computedTag = computed<'div' | typeof BLink>(() => (isLink(props) ? BLink : 'div'))
+    const computedTag = computed<'div' | typeof BLink>(() => (computedLink.value ? BLink : 'div'))
+
+    const teleportAttrs = computed(() => ({
+      // to: `#${props.toaster}`,
+      to: isMounted.value ? `#${props.toaster}` : 'body',
+      disabled: staticBoolean.value,
+    }))
+
+    const computedLinkProps = computed(() =>
+      computedLink.value ? pluckProps(props, BLINK_PROPS) : {}
+    )
+
+    const computedDuration = computed(() => Math.max(toInteger(props.delay, 0), MIN_DURATION))
 
     const hide = () => {
       emit('update:modelValue', false)
     }
 
     const onBodyClick = () => {
-      if (!isLink(props)) return
+      if (!computedLink.value) return
       hide()
     }
 
-    // This would be a lot better if the timer was separated from the logic and was an external function
-    // create a timer
-    let dismissTimer: ReturnType<typeof setTimeout> | undefined
-    let dismissStarted: number
-    let resumeDismiss: number
-    const computedDuration = computed(() => Math.max(toInteger(props.delay, 0), MIN_DURATION))
     // start the timer
     const startDismissTimer = () => {
       clearDismissTimer()
@@ -164,6 +181,7 @@ export default defineComponent({
         resumeDismiss = Math.max(computedDuration.value - passed, MIN_DURATION)
       }
     }
+    // Unpause the timer
     const unPauseTimer = () => {
       if (!autoHideBoolean.value || noHoverPauseBoolean.value || !resumeDismiss) {
         resumeDismiss = dismissStarted = 0
@@ -198,15 +216,13 @@ export default defineComponent({
       }
     }
 
-    const teleportAttrs = computed(() => ({
-      // to: `#${props.toaster}`,
-      to: isMounted.value ? `#${props.toaster}` : 'body',
-      disabled: staticBoolean.value,
-    }))
-
-    const computedLinkProps = computed(() => (isLink(props) ? pluckProps(props, BLINK_PROPS) : {}))
+    onMounted(() => {
+      isMounted.value = true
+    })
 
     return {
+      hasTitleSlot,
+      hasDefaultSlot,
       computedLinkProps,
       computedRole,
       computedAriaLive,

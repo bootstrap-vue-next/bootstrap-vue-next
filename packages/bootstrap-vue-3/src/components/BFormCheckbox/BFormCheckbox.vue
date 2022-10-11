@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes">
+  <div :class="computedClasses">
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -20,7 +20,7 @@
       @blur="isFocused = false"
     />
     <label
-      v-if="$slots.default || !plainBoolean"
+      v-if="hasDefaultSlot || !plainBoolean"
       :for="computedId"
       :class="[labelClasses, {active: isChecked, focus: isFocused}]"
     >
@@ -31,7 +31,8 @@
 
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
-import {computed, onMounted, reactive, Ref, ref, toRef} from 'vue'
+import {isEmptySlot} from '../../utils'
+import {computed, onMounted, reactive, Ref, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 
@@ -80,6 +81,18 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   value: true,
 })
 
+interface BFormCheckboxEmits {
+  (e: 'update:modelValue', value: unknown): void
+  (e: 'input', value: unknown): void
+  (e: 'change', value: unknown): void
+}
+
+const emit = defineEmits<BFormCheckboxEmits>()
+
+const slots = useSlots()
+
+const computedId = useId(toRef(props, 'id'), 'form-check')
+
 const indeterminateBoolean = useBooleanish(
   toRef(props, 'indeterminate') as Ref<Booleanish | undefined>
 )
@@ -92,17 +105,10 @@ const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = useBooleanish(toRef(props, 'required') as Ref<Booleanish | undefined>)
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 
-interface BFormCheckboxEmits {
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'input', value: unknown): void
-  (e: 'change', value: unknown): void
-}
-
-const emit = defineEmits<BFormCheckboxEmits>()
-
-const computedId = useId(toRef(props, 'id'), 'form-check')
 const input = ref<HTMLElement>(null as unknown as HTMLElement)
 const isFocused = ref<boolean>(false)
+
+const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
   get: (): unknown[] | Set<unknown> | boolean | undefined => {
@@ -154,7 +160,7 @@ const classesObject = reactive({
   state: toRef(stateBoolean, 'value'),
   buttonVariant: toRef(props, 'buttonVariant'),
 })
-const classes = getClasses(classesObject)
+const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
 

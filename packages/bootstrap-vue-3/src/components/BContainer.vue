@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" ref="container" :class="[classes, position]">
+  <component :is="tag" ref="container" :class="computedClasses">
     <!-- <b-toaster
       v-for="(pos, index) in toasts"
       :key="index"
@@ -32,13 +32,16 @@ const props = withDefaults(defineProps<Props>(), {
 
 const container = ref()
 
-const classes = computed(() => ({
-  container: props.fluid === false,
-  [`container-fluid`]: props.fluid === true,
-  [`container-${props.fluid}`]: typeof props.fluid === 'string',
-  [`gx-${props.gutterX}`]: props.gutterX !== undefined,
-  [`gy-${props.gutterY}`]: props.gutterY !== undefined,
-}))
+const computedClasses = computed(() => [
+  props.position,
+  {
+    container: props.fluid === false,
+    [`container-fluid`]: props.fluid === true,
+    [`container-${props.fluid}`]: typeof props.fluid === 'string',
+    [`gx-${props.gutterX}`]: props.gutterX !== undefined,
+    [`gy-${props.gutterY}`]: props.gutterY !== undefined,
+  },
+])
 
 /* TODO finish this system
 const toasts = computed(() => toastInstance?.containerPositions.value)

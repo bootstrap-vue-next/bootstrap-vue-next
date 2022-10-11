@@ -1,5 +1,5 @@
 <template>
-  <img :class="classes" v-bind="attrs" @load="emit('load', $event)" />
+  <img :class="computedClasses" v-bind="computedAttrs" @load="emit('load', $event)" />
 </template>
 
 <script setup lang="ts">
@@ -52,6 +52,11 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
+const BLANK_TEMPLATE =
+  '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +
+  '<rect width="100%" height="100%" style="fill:%{f};"></rect>' +
+  '</svg>'
+
 const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const blankBoolean = useBooleanish(toRef(props, 'blank'))
 const blockBoolean = useBooleanish(toRef(props, 'block'))
@@ -63,24 +68,6 @@ const startBoolean = useBooleanish(toRef(props, 'start'))
 const rightBoolean = useBooleanish(toRef(props, 'right'))
 const endBoolean = useBooleanish(toRef(props, 'end'))
 const thumbnailBoolean = useBooleanish(toRef(props, 'thumbnail'))
-
-const BLANK_TEMPLATE =
-  '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +
-  '<rect width="100%" height="100%" style="fill:%{f};"></rect>' +
-  '</svg>'
-
-const makeBlankImgSrc = (
-  width: number | undefined,
-  height: number | undefined,
-  color: string
-): string => {
-  const src = encodeURIComponent(
-    BLANK_TEMPLATE.replace('%{w}', String(width))
-      .replace('%{h}', String(height))
-      .replace('%{f}', color)
-  )
-  return `data:image/svg+xml;charset=UTF-8,${src}`
-}
 
 const computedSrcset = computed<string | undefined>(() =>
   typeof props.srcset === 'string'
@@ -134,7 +121,7 @@ const computedBlankImgSrc = computed(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 
-const attrs = computed(() => ({
+const computedAttrs = computed(() => ({
   src: !blankBoolean.value ? props.src : computedBlankImgSrc.value,
   alt: props.alt,
   width: computedDimentions.value.width || undefined,
@@ -154,7 +141,7 @@ const alignment = computed<'float-start' | 'float-end' | 'mx-auto' | undefined>(
     : undefined
 )
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'img-thumbnail': thumbnailBoolean.value,
   'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
   'w-100': fluidGrowBoolean.value,
@@ -163,4 +150,17 @@ const classes = computed(() => ({
   [`${alignment.value}`]: alignment.value !== undefined,
   'd-block': blockBoolean.value || centerBoolean.value,
 }))
+
+const makeBlankImgSrc = (
+  width: number | undefined,
+  height: number | undefined,
+  color: string
+): string => {
+  const src = encodeURIComponent(
+    BLANK_TEMPLATE.replace('%{w}', String(width))
+      .replace('%{h}', String(height))
+      .replace('%{f}', color)
+  )
+  return `data:image/svg+xml;charset=UTF-8,${src}`
+}
 </script>

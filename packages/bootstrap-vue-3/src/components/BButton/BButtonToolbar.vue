@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" class="btn-toolbar" :role="role" :aria-label="ariaLabel">
+  <div :class="computedClasses" class="btn-toolbar" :role="role" :aria-label="ariaLabel">
     <slot />
   </div>
 </template>
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<BButtonToolbarProps>(), {
 
 const justifyBoolean = useBooleanish(toRef(props, 'justify'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'justify-content-between': justifyBoolean.value,
 }))
 </script>

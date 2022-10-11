@@ -18,7 +18,7 @@
     </slot>
     <component
       :is="contentTag"
-      v-if="caption || captionHtml || text || textHtml || $slots.default"
+      v-if="caption || captionHtml || text || textHtml || hasDefaultSlot"
       class="carousel-caption"
       :class="computedContentClasses"
     >
@@ -40,11 +40,12 @@
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
 import {useBooleanish} from '../../composables'
-import {computed, inject, toRef} from 'vue'
+import {computed, inject, toRef, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
 import type {BCarouselParentData} from '../../types/components'
 import {injectionKey} from './BCarousel.vue'
 import BImg from '../BImg.vue'
+import {isEmptySlot} from '../../utils'
 
 interface BCarouselSlideProps {
   imgSrc?: string
@@ -76,12 +77,16 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
   textTag: 'p',
 })
 
+const slots = useSlots()
+
+const parentData = inject<BCarouselParentData>(injectionKey, {})
+
 // instead of using this property, it would be nice to use `startingSlide`
 // of the parent Carousel in order to set the proper active slide
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const imgBlankBoolean = useBooleanish(toRef(props, 'imgBlank'))
 
-const parentData = inject<BCarouselParentData>(injectionKey, {})
+const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const img = computed<string | true | undefined>(() =>

@@ -1,7 +1,7 @@
 <template>
   <div
     class="b-skeleton-icon-wrapper position-relative d-inline-block overflow-hidden"
-    :class="classes"
+    :class="computedClasses"
   >
     <slot />
   </div>
@@ -20,5 +20,5 @@ const props = withDefaults(defineProps<BSkeletonIconProps>(), {
   animation: 'wave',
 })
 
-const classes = computed(() => [`b-skeleton-animate-${props.animation}`])
+const computedClasses = computed(() => [`b-skeleton-animate-${props.animation}`])
 </script>

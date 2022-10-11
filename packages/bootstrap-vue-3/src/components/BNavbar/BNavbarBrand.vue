@@ -1,5 +1,5 @@
 <template>
-  <component :is="computedTag" class="navbar-brand" v-bind="props">
+  <component :is="computedTag" class="navbar-brand" v-bind="computedLinkProps">
     <slot />
   </component>
 </template>
@@ -8,6 +8,7 @@
 import {isLink, omit, pluckProps} from '../../utils'
 import {computed, defineComponent} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
+import {eagerComputed} from '../../composables'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
@@ -20,11 +21,17 @@ export default defineComponent({
     ...linkProps,
   },
   setup(props) {
-    const link = computed<boolean>(() => isLink(props))
-    const computedTag = computed<string | typeof BLink>(() => (link.value ? BLink : props.tag))
+    const computedLink = eagerComputed<boolean>(() => isLink(props))
+    const computedTag = computed<string | typeof BLink>(() =>
+      computedLink.value ? BLink : props.tag
+    )
+
+    const computedLinkProps = computed(() =>
+      computedLink.value ? pluckProps(props, linkProps) : {}
+    )
 
     return {
-      props: link.value ? pluckProps(props, linkProps) : {},
+      computedLinkProps,
       computedTag,
     }
   },

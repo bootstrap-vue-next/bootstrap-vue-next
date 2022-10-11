@@ -1,5 +1,5 @@
 <template>
-  <tr role="row" :class="classes">
+  <tr role="row" :class="computedClasses">
     <slot />
   </tr>
 </template>
@@ -15,7 +15,7 @@ interface BTrProps {
 
 const props = defineProps<BTrProps>()
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== undefined,
 }))
 </script>

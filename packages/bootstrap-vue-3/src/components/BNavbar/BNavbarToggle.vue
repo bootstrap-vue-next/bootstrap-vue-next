@@ -3,8 +3,8 @@
     v-b-toggle="!disabledBoolean ? target : undefined"
     class="navbar-toggler"
     type="button"
-    :class="classes"
-    v-bind="attrs"
+    :class="computedClasses"
+    v-bind="computedAttrs"
     @click="onClick"
   >
     <slot>
@@ -30,20 +30,20 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
 })
 
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-
 interface Emits {
   (e: 'click', value: MouseEvent): void
 }
 
 const emit = defineEmits<Emits>()
 
-const attrs = computed(() => ({
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+
+const computedAttrs = computed(() => ({
   'disabled': disabledBoolean.value,
   'aria-label': props.label,
 }))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   disabled: disabledBoolean.value,
 }))
 

@@ -24,7 +24,7 @@
     :is="tag"
     v-else
     ref="link"
-    :class="{active: activeBoolean, disabled: disabledBoolean}"
+    :class="computedLinkClasses"
     v-bind="routerAttr"
     @click="clicked"
   >
@@ -120,6 +120,11 @@ export default defineComponent({
       'aria-disabled': disabledBoolean.value ? 'true' : null,
     }))
 
+    const computedLinkClasses = computed(() => ({
+      active: activeBoolean.value,
+      disabled: disabledBoolean.value,
+    }))
+
     const clicked = (e: MouseEvent): void => {
       if (disabledBoolean.value) {
         e.preventDefault()
@@ -130,6 +135,7 @@ export default defineComponent({
     }
 
     return {
+      computedLinkClasses,
       tag,
       routerAttr,
       link,

@@ -1,5 +1,12 @@
 <template>
-  <component :is="tag" :class="classes" v-bind="attrs">
+  <component
+    :is="tag"
+    :id="id"
+    :role="role"
+    :aria-live="ariaLive"
+    :aria-atomic="computedAriaAtomic"
+    :class="computedClasses"
+  >
     <slot>
       {{ text }}
     </slot>
@@ -10,7 +17,7 @@
 // import type {BFormValidFeedbackProps} from '../../types/components'
 import {computed, Ref, toRef} from 'vue'
 import type {Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
+import {eagerComputed, useBooleanish} from '../../composables'
 
 interface BFormValidFeedbackProps {
   ariaLive?: string
@@ -34,20 +41,15 @@ const forceShowBoolean = useBooleanish(toRef(props, 'forceShow'))
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
 
-const computedShow = computed<boolean>(
+const computedShow = eagerComputed<boolean>(
   () => forceShowBoolean.value === true || stateBoolean.value === true
 )
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'd-block': computedShow.value,
   'valid-feedback': !tooltipBoolean.value,
   'valid-tooltip': tooltipBoolean.value,
 }))
 
-const attrs = computed(() => ({
-  'id': props.id || null,
-  'role': props.role || null,
-  'aria-live': props.ariaLive || null,
-  'aria-atomic': props.ariaLive ? 'true' : null,
-}))
+const computedAriaAtomic = computed(() => (props.ariaLive ? 'true' : undefined))
 </script>

@@ -1,10 +1,10 @@
 <template>
-  <div ref="parent" :class="classes" class="btn-group">
+  <div ref="parent" :class="computedClasses" class="btn-group">
     <b-button
       :id="computedId"
       :variant="splitVariant || variant"
       :size="size"
-      :class="[buttonClasses, splitBoolean ? splitClass : toggleClass]"
+      :class="buttonClasses"
       :disabled="disabledBoolean"
       :type="splitButtonType"
       v-bind="buttonAttr"
@@ -34,7 +34,7 @@
     </b-button>
     <ul
       class="dropdown-menu"
-      :class="[menuClass, dropdownMenuClasses]"
+      :class="dropdownMenuClasses"
       :aria-labelledby="computedId"
       :role="role"
     >
@@ -108,17 +108,6 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   variant: 'secondary',
 })
 
-const blockBoolean = useBooleanish(toRef(props, 'block'))
-const darkBoolean = useBooleanish(toRef(props, 'dark'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
-const droprightBoolean = useBooleanish(toRef(props, 'dropright'))
-const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
-const dropleftBoolean = useBooleanish(toRef(props, 'dropleft'))
-const rightBoolean = useBooleanish(toRef(props, 'right'))
-const splitBoolean = useBooleanish(toRef(props, 'split'))
-const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
-
 interface BDropdownEmits {
   (e: 'show'): void
   (e: 'shown'): void
@@ -130,38 +119,45 @@ interface BDropdownEmits {
 
 const emit = defineEmits<BDropdownEmits>()
 
+const computedId = useId(toRef(props, 'id'), 'dropdown')
+
+const blockBoolean = useBooleanish(toRef(props, 'block'))
+const darkBoolean = useBooleanish(toRef(props, 'dark'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
+const droprightBoolean = useBooleanish(toRef(props, 'dropright'))
+const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
+const dropleftBoolean = useBooleanish(toRef(props, 'dropleft'))
+const rightBoolean = useBooleanish(toRef(props, 'right'))
+const splitBoolean = useBooleanish(toRef(props, 'split'))
+const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
+
 const parent = ref<HTMLElement>()
 const dropdown = ref<ComponentPublicInstance<HTMLElement>>()
 const instance = ref<Dropdown>()
-const computedId = useId(toRef(props, 'id'), 'dropdown')
 
-useEventListener(parent, 'show.bs.dropdown', () => emit('show'))
-useEventListener(parent, 'shown.bs.dropdown', () => emit('shown'))
-useEventListener(parent, 'hide.bs.dropdown', () => emit('hide'))
-useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'))
-
-const onSplitClick = (event: MouseEvent) => {
-  if (splitBoolean.value) {
-    emit('click', event)
-  }
-}
-
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'd-grid': blockBoolean.value,
   'd-flex': blockBoolean.value && splitBoolean.value,
 }))
 
-const buttonClasses = computed(() => ({
-  'nav-link': isNavBoolean.value,
-  'dropdown-toggle': !splitBoolean.value,
-  'dropdown-toggle-no-caret': noCaretBoolean.value && !splitBoolean.value,
-  'w-100': splitBoolean.value && blockBoolean.value,
-}))
+const buttonClasses = computed(() => [
+  splitBoolean.value ? props.splitClass : props.toggleClass,
+  {
+    'nav-link': isNavBoolean.value,
+    'dropdown-toggle': !splitBoolean.value,
+    'dropdown-toggle-no-caret': noCaretBoolean.value && !splitBoolean.value,
+    'w-100': splitBoolean.value && blockBoolean.value,
+  },
+])
 
-const dropdownMenuClasses = computed(() => ({
-  'dropdown-menu-dark': darkBoolean.value,
-  'dropdown-menu-end': rightBoolean.value,
-}))
+const dropdownMenuClasses = computed(() => [
+  props.menuClass,
+  {
+    'dropdown-menu-dark': darkBoolean.value,
+    'dropdown-menu-end': rightBoolean.value,
+  },
+])
 
 const buttonAttr = computed(() => ({
   'data-bs-toggle': splitBoolean.value ? undefined : 'dropdown',
@@ -177,6 +173,17 @@ const splitAttr = computed(() => ({
 const hide = (): void => {
   instance.value?.hide()
 }
+
+const onSplitClick = (event: MouseEvent) => {
+  if (splitBoolean.value) {
+    emit('click', event)
+  }
+}
+
+useEventListener(parent, 'show.bs.dropdown', () => emit('show'))
+useEventListener(parent, 'shown.bs.dropdown', () => emit('shown'))
+useEventListener(parent, 'hide.bs.dropdown', () => emit('hide'))
+useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'))
 
 onMounted((): void => {
   instance.value = new Dropdown(dropdown.value?.$el, {

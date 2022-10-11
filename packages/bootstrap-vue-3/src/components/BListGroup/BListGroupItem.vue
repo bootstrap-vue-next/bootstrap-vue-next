@@ -2,12 +2,12 @@
   <component
     :is="tagComputed"
     class="list-group-item"
-    :class="classes"
-    :aria-current="activeBoolean ? true : null"
-    :aria-disabled="disabledBoolean ? true : null"
-    :target="link ? target : null"
-    :href="!buttonBoolean ? href : null"
-    :to="!buttonBoolean ? to : null"
+    :class="computedClasses"
+    :aria-current="activeBoolean ? true : undefined"
+    :aria-disabled="disabledBoolean ? true : undefined"
+    :target="link ? target : undefined"
+    :href="!buttonBoolean ? href : undefined"
+    :to="!buttonBoolean ? to : undefined"
     v-bind="computedAttrs"
   >
     <slot />
@@ -53,14 +53,14 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
   target: '_self',
 })
 
+const attrs = useAttrs()
+
+const parentData = inject(injectionKey, null)
+
 const actionBoolean = useBooleanish(toRef(props, 'action'))
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-
-const attrs = useAttrs()
-
-const parentData = inject(injectionKey, null)
 
 const link = computed<boolean>(() => !buttonBoolean.value && (!!props.href || !!props.to))
 
@@ -68,15 +68,15 @@ const tagComputed = computed<string | typeof BLink>(() =>
   parentData?.numbered ? 'li' : buttonBoolean.value ? 'button' : !link.value ? props.tag : BLink
 )
 
-const classes = computed(() => {
-  const action =
+const computedClasses = computed(() => {
+  const isAction =
     actionBoolean.value ||
     link.value ||
     buttonBoolean.value ||
     ['a', 'router-link', 'button', 'b-link'].includes(props.tag)
   return {
     [`list-group-item-${props.variant}`]: props.variant !== undefined,
-    'list-group-item-action': action,
+    'list-group-item-action': isAction,
     'active': activeBoolean.value,
     'disabled': disabledBoolean.value,
   }

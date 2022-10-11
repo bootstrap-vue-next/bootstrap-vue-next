@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="navbar" :class="classes" :role="computedRole">
+  <component :is="tag" class="navbar" :class="computedClasses" :role="computedRole">
     <div v-if="container !== false" :class="containerClass">
       <slot />
     </div>
@@ -54,7 +54,7 @@ const containerClass = computed<'container' | 'container-fluid' | undefined>(() 
     : `container-${props.container}`
 )
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'd-print': printBoolean.value,
   [`sticky-${props.sticky}`]: props.sticky !== undefined,
   'navbar-dark': darkBoolean.value,

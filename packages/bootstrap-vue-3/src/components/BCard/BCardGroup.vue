@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="classes">
+  <component :is="tag" :class="computedClasses">
     <slot />
   </component>
 </template>
@@ -29,7 +29,5 @@ const cardTypeClass = computed(() =>
   deckBoolean.value ? 'card-deck' : columnsBoolean.value ? 'card-columns' : 'card-group'
 )
 
-const classes = computed(() => ({
-  [cardTypeClass.value]: !!cardTypeClass.value,
-}))
+const computedClasses = computed(() => [cardTypeClass.value])
 </script>

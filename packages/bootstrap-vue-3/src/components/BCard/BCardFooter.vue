@@ -1,5 +1,5 @@
 <template>
-  <b-card-head-foot class="card-footer" v-bind="$props">
+  <b-card-head-foot class="card-footer" v-bind="props">
     <slot>
       {{ text }}
     </slot>
@@ -20,7 +20,7 @@ interface BCardFooterProps {
   textVariant?: TextColorVariant
 }
 
-withDefaults(defineProps<BCardFooterProps>(), {
+const props = withDefaults(defineProps<BCardFooterProps>(), {
   tag: 'div',
 })
 </script>

@@ -35,9 +35,6 @@ const squareBoolean = useBooleanish(toRef(props, 'square'))
 
 const computedSize = computed<string | null>(() => computeSize(props.size))
 
-const computeOverlap = (value: any): number =>
-  typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value || 0
-
 const overlapScale = computed<number>(
   () => Math.min(Math.max(computeOverlap(props.overlap), 0), 1) / 2
 )
@@ -46,6 +43,9 @@ const paddingStyle = computed<StyleValue>(() => {
   const value = computedSize.value ? `calc(${computedSize.value} * ${overlapScale.value})` : null
   return value ? {paddingLeft: value, paddingRight: value} : {}
 })
+
+const computeOverlap = (value: any): number =>
+  typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value || 0
 
 provide<BAvatarGroupParentData>(injectionKey, {
   overlapScale,

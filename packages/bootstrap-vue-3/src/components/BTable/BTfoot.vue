@@ -1,5 +1,5 @@
 <template>
-  <tfoot role="rowgroup" :class="classes">
+  <tfoot role="rowgroup" :class="computedClasses">
     <slot />
   </tfoot>
 </template>
@@ -15,7 +15,7 @@ interface BTfootProps {
 
 const props = defineProps<BTfootProps>()
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== undefined,
 }))
 </script>

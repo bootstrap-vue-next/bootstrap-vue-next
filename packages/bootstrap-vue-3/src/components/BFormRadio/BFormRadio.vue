@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes">
+  <div :class="computedClasses">
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -19,7 +19,7 @@
       @blur="isFocused = false"
     />
     <label
-      v-if="$slots.default || !plainBoolean"
+      v-if="hasDefaultSlot || !plainBoolean"
       :for="computedId"
       :class="[labelClasses, {active: isChecked, focus: isFocused}]"
     >
@@ -32,7 +32,8 @@
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import {computed, onMounted, reactive, Ref, ref, toRef} from 'vue'
+import {computed, onMounted, reactive, Ref, ref, toRef, useSlots} from 'vue'
+import {isEmptySlot} from '../../utils'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -68,6 +69,21 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   value: true,
 })
 
+interface BFormRadioEmits {
+  (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
+  (e: 'change', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
+  (
+    e: 'update:modelValue',
+    value: boolean | string | Array<unknown> | Record<string, unknown> | number
+  ): void
+}
+
+const emit = defineEmits<BFormRadioEmits>()
+
+const slots = useSlots()
+
+const computedId = useId(toRef(props, 'id'), 'form-check')
+
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 // TODO button is unused
@@ -85,19 +101,7 @@ const requiredBoolean = useBooleanish(toRef(props, 'required'))
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 
-interface BFormRadioEmits {
-  (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
-  (e: 'change', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
-  (
-    e: 'update:modelValue',
-    value: boolean | string | Array<unknown> | Record<string, unknown> | number
-  ): void
-}
-
-const emit = defineEmits<BFormRadioEmits>()
-
-const computedId = useId(toRef(props, 'id'), 'form-check')
-const input = ref<HTMLElement>(null as unknown as HTMLElement)
+const input = ref<HTMLElement | null>(null)
 const isFocused = ref<boolean>(false)
 
 const localValue = computed<unknown>({
@@ -118,6 +122,8 @@ const isChecked = computed<unknown>(() => {
   return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
 })
 
+const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
+
 const classesObject = reactive({
   plain: toRef(plainBoolean, 'value'),
   button: toRef(buttonBoolean, 'value'),
@@ -127,13 +133,13 @@ const classesObject = reactive({
   state: toRef(stateBoolean, 'value'),
   buttonVariant: toRef(props, 'buttonVariant'),
 })
-const classes = getClasses(classesObject)
+const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 onMounted(() => {
-  if (autofocusBoolean.value) {
+  if (autofocusBoolean.value && input.value !== null) {
     input.value.focus()
   }
 })

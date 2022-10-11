@@ -1,22 +1,21 @@
 <template>
   <component
-    :is="tag"
+    :is="computedTag"
     class="b-avatar"
-    :class="classes"
-    :style="tagStyle"
-    v-bind="attrs"
+    :class="computedClasses"
+    :style="computedStyle"
+    v-bind="computedAttrs"
     @click="clicked"
   >
     <span v-if="hasDefaultSlot" class="b-avatar-custom">
       <slot />
     </span>
-    <span v-else-if="src" class="b-avatar-img">
+    <span v-else-if="!!src" class="b-avatar-img">
       <img :src="src" :alt="alt" @error="onImgError" />
     </span>
-    <span v-else-if="text" class="b-avatar-text" :class="textClasses" :style="fontStyle">
+    <span v-else-if="!!text" class="b-avatar-text" :class="textClasses" :style="textFontStyle">
       {{ text }}
     </span>
-
     <span v-if="showBadge" class="b-avatar-badge" :class="badgeClasses" :style="badgeStyle">
       <slot v-if="hasBadgeSlot" name="badge" />
       <span v-else :class="badgeTextClasses">{{ badgeText }}</span>
@@ -31,7 +30,7 @@ import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
-import {useBooleanish} from '../../composables'
+import {eagerComputed, useBooleanish} from '../../composables'
 
 interface BAvatarProps {
   alt?: string
@@ -62,18 +61,11 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   badgeVariant: 'primary',
   button: false,
   buttonType: 'button',
-  textVariant: undefined,
   disabled: false,
   rounded: 'circle',
   square: false,
   variant: 'secondary',
 })
-
-const badgeLeftBoolean = useBooleanish(toRef(props, 'badgeLeft'))
-const badgeTopBoolean = useBooleanish(toRef(props, 'badgeTop'))
-const buttonBoolean = useBooleanish(toRef(props, 'button'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const squareBoolean = useBooleanish(toRef(props, 'square'))
 
 interface BAvatarEmits {
   (e: 'click', value: MouseEvent): void
@@ -84,55 +76,49 @@ const emit = defineEmits<BAvatarEmits>()
 
 const slots = useSlots()
 
+const parentData = inject<BAvatarGroupParentData | null>(injectionKey, null)
+
 const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
-const parentData = inject<BAvatarGroupParentData | null>(injectionKey, null)
-
-const computeContrastVariant = (colorVariant: ColorVariant): ColorVariant => {
-  const variant = colorVariant
-
-  if (variant === 'light') return 'dark'
-  if (variant === 'warning') return 'dark'
-  return 'light'
-}
+const badgeLeftBoolean = useBooleanish(toRef(props, 'badgeLeft'))
+const badgeTopBoolean = useBooleanish(toRef(props, 'badgeTop'))
+const buttonBoolean = useBooleanish(toRef(props, 'button'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const squareBoolean = useBooleanish(toRef(props, 'square'))
 
 const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
-const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
-const showBadge = computed<string | boolean>(
-  () => props.badge || props.badge === '' || hasBadgeSlot.value
-)
 
-const computedSize = computed<string | null>(() =>
+const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
+
+const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
+
+const computedSize = eagerComputed<string | null>(() =>
   parentData?.size ? parentData.size : computeSize(props.size)
 )
 
-const computedVariant = computed<ColorVariant>(() =>
+const computedVariant = eagerComputed<ColorVariant>(() =>
   parentData?.variant ? parentData.variant : props.variant
 )
 
-const computedRounded = computed<string | boolean>(() =>
+const computedRounded = eagerComputed<string | boolean>(() =>
   parentData?.rounded ? parentData.rounded : props.rounded
 )
 
-const attrs = computed(() => ({
+const computedAttrs = computed(() => ({
   'type': buttonBoolean.value ? props.buttonType : undefined,
   'aria-label': props.ariaLabel || null,
   'disabled': disabledBoolean.value || null,
 }))
 
-const badgeClasses = computed(() => ({
-  [`bg-${props.badgeVariant}`]: !!props.badgeVariant,
-}))
+const badgeClasses = computed(() => [`bg-${props.badgeVariant}`])
 
 const badgeText = computed<string | false>(() => (props.badge === true ? '' : props.badge))
-const badgeTextClasses = computed<string>(() => {
-  const textVariant = computeContrastVariant(props.badgeVariant)
-  return `text-${textVariant}`
-})
 
-const classes = computed(() => ({
+const badgeTextClasses = computed(() => [[`text-${computeContrastVariant(props.badgeVariant)}`]])
+
+const computedClasses = computed(() => ({
   [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
   [`bg-${computedVariant.value}`]: !!computedVariant.value,
   [`badge`]: !buttonBoolean.value && computedVariant.value && hasDefaultSlot.value,
@@ -149,10 +135,9 @@ const classes = computed(() => ({
   [`btn-${computedVariant.value}`]: buttonBoolean.value ? !!computedVariant.value : false,
 }))
 
-const textClasses = computed<string>(() => {
-  const textVariant = props.textVariant || computeContrastVariant(computedVariant.value)
-  return `text-${textVariant}`
-})
+const textClasses = computed(() => [
+  [`text-${props.textVariant || computeContrastVariant(computedVariant.value)}`],
+])
 
 const badgeStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset || '0px'
@@ -169,7 +154,7 @@ const badgeStyle = computed<StyleValue>(() => {
   }
 })
 
-const fontStyle = computed<StyleValue>(() => {
+const textFontStyle = computed<StyleValue>(() => {
   const fontSize =
     SIZES.indexOf(computedSize.value || null) === -1
       ? `calc(${computedSize.value} * ${FONT_SIZE_SCALE})`
@@ -185,16 +170,21 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const tag = computed<'button' | 'span'>(() => (buttonBoolean.value ? 'button' : 'span'))
-const tagStyle = computed(() => ({
+const computedTag = computed<'button' | 'span'>(() => (buttonBoolean.value ? 'button' : 'span'))
+
+const computedStyle = computed(() => ({
   ...marginStyle.value,
   width: computedSize.value,
   height: computedSize.value,
 }))
 
+const computeContrastVariant = (colorVariant: ColorVariant): 'dark' | 'light' =>
+  colorVariant === 'light' || colorVariant === 'warning' ? 'dark' : 'light'
+
 const clicked = (e: MouseEvent): void => {
   if (!disabledBoolean.value && buttonBoolean.value) emit('click', e)
 }
+
 const onImgError = (e: Event): void => emit('img-error', e)
 </script>
 

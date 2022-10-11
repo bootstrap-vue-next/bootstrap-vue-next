@@ -1,9 +1,9 @@
 <template>
   <div
-    v-bind="attrs"
+    v-bind="computedAttrs"
     :id="computedId"
     role="group"
-    :class="classes"
+    :class="computedClasses"
     class="bv-no-focus-ring"
     tabindex="-1"
   >
@@ -79,6 +79,21 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   valueField: 'value',
 })
 
+interface BFormCheckboxGroupEmits {
+  (e: 'input', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
+  (e: 'update:modelValue', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
+  (e: 'change', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
+}
+
+const emit = defineEmits<BFormCheckboxGroupEmits>()
+
+const slots = useSlots()
+
+const slotsName = 'BFormCheckbox'
+
+const computedId = useId(toRef(props, 'id'), 'checkbox')
+const computedName = useId(toRef(props, 'name'), 'checkbox')
+
 // TODO autofocus is not used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
@@ -92,20 +107,6 @@ const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 const switchesBoolean = useBooleanish(toRef(props, 'switches'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
-
-interface BFormCheckboxGroupEmits {
-  (e: 'input', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
-  (e: 'update:modelValue', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
-  (e: 'change', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
-}
-
-const emit = defineEmits<BFormCheckboxGroupEmits>()
-
-const slots = useSlots()
-
-const slotsName = 'BFormCheckbox'
-const computedId = useId(toRef(props, 'id'), 'checkbox')
-const computedName = useId(toRef(props, 'name'), 'checkbox')
 
 const localValue = computed({
   get: () => props.modelValue,
@@ -156,8 +157,8 @@ const classesObject = reactive({
   stacked: toRef(stackedBoolean, 'value'),
   size: toRef(props, 'size'),
 })
-const attrs = getGroupAttr(classesObject)
-const classes = getGroupClasses(classesObject)
+const computedAttrs = getGroupAttr(classesObject)
+const computedClasses = getGroupClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 </script>

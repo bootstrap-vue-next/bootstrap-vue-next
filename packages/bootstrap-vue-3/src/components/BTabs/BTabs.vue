@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :id="id" class="tabs" :class="classes">
+  <component :is="tag" :id="id" class="tabs" :class="computedClasses">
     <div v-if="endBoolean" class="tab-content" :class="contentClass">
       <component
         :is="tab"
@@ -200,7 +200,7 @@ const tabs = computed(() => {
 
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'd-flex': verticalBoolean.value,
   'align-items-start': verticalBoolean.value,
 }))

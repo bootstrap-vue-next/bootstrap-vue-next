@@ -1,12 +1,12 @@
 <template>
-  <component :is="computedTag" class="badge" :class="classes" v-bind="props">
+  <component :is="computedTag" class="badge" :class="computedClasses" v-bind="computedLinkProps">
     <slot />
   </component>
 </template>
 
 <script lang="ts">
 import {isLink, omit, pluckProps} from '../../utils'
-import {useBooleanish} from '../../composables'
+import {eagerComputed, useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
@@ -24,28 +24,39 @@ export default defineComponent({
     ...linkProps,
   },
   setup(props) {
-    const link = computed<boolean>(() => isLink(props))
-    const computedTag = computed<string | typeof BLink>(() => (link.value ? BLink : props.tag))
-
     const pillBoolean = useBooleanish(toRef(props, 'pill'))
     const textIndicatorBoolean = useBooleanish(toRef(props, 'textIndicator'))
     const dotIndicatorBoolean = useBooleanish(toRef(props, 'dotIndicator'))
+    const activeBoolean = useBooleanish(toRef(props, 'active'))
+    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
-    const classes = computed(() => ({
-      [`bg-${props.variant}`]: props.variant,
-      'active': props.active,
-      'disabled': props.disabled,
-      'text-dark': ['warning', 'info', 'light'].includes(props.variant),
-      'rounded-pill': pillBoolean.value,
-      'position-absolute top-0 start-100 translate-middle':
-        textIndicatorBoolean.value || dotIndicatorBoolean.value,
-      'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
-      'text-decoration-none': link.value,
-    }))
+    const computedLink = eagerComputed<boolean>(() => isLink(props))
+
+    const computedTag = computed<string | typeof BLink>(() =>
+      computedLink.value ? BLink : props.tag
+    )
+
+    const computedClasses = computed(() => [
+      [`bg-${props.variant}`],
+      {
+        'active': activeBoolean.value,
+        'disabled': disabledBoolean.value,
+        'text-dark': ['warning', 'info', 'light'].includes(props.variant),
+        'rounded-pill': pillBoolean.value,
+        'position-absolute top-0 start-100 translate-middle':
+          textIndicatorBoolean.value || dotIndicatorBoolean.value,
+        'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
+        'text-decoration-none': computedLink.value,
+      },
+    ])
+
+    const computedLinkProps = computed(() =>
+      computedLink.value ? pluckProps(props, linkProps) : {}
+    )
 
     return {
-      classes,
-      props: link.value ? pluckProps(props, linkProps) : {},
+      computedClasses,
+      computedLinkProps,
       computedTag,
     }
   },

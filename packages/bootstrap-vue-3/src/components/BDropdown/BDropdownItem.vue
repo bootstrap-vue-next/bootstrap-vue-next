@@ -3,7 +3,7 @@
     <component
       :is="tag"
       class="dropdown-item"
-      :class="[classes, linkClass]"
+      :class="computedClasses"
       v-bind="componentAttrs"
       @click="clicked"
     >
@@ -47,11 +47,14 @@ const emit = defineEmits<BDropdownItemEmits>()
 
 const attrs = useAttrs()
 
-const classes = computed(() => ({
-  active: activeBoolean.value,
-  disabled: disabledBoolean.value,
-  [`text-${props.variant}`]: props.variant !== undefined,
-}))
+const computedClasses = computed(() => [
+  props.linkClass,
+  {
+    active: activeBoolean.value,
+    disabled: disabledBoolean.value,
+    [`text-${props.variant}`]: props.variant !== undefined,
+  },
+])
 
 const tag = computed<'button' | 'a' | typeof BLink>(() =>
   props.href ? 'a' : attrs.to ? BLink : 'button'

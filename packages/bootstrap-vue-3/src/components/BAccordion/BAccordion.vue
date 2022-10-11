@@ -1,5 +1,5 @@
 <template>
-  <div :id="computedId" class="accordion" :class="classes">
+  <div :id="computedId" class="accordion" :class="computedClasses">
     <slot />
   </div>
 </template>
@@ -27,12 +27,12 @@ const computedId = useId(toRef(props, 'id'), 'accordion')
 const flushBoolean = useBooleanish(toRef(props, 'flush'))
 const freeBoolean = useBooleanish(toRef(props, 'free'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'accordion-flush': flushBoolean.value,
 }))
 
 if (!freeBoolean.value) {
-  provide(injectionKey, computedId.value.toString())
+  provide(injectionKey, computedId.value)
 }
 </script>
 
