@@ -8,7 +8,6 @@ import dts from 'vite-plugin-dts'
 
 const config = defineConfig({
   build: {
-    sourcemap: true,
     minify: true,
     lib: {
       entry: resolve(__dirname, 'src/BootstrapVue.ts'),
