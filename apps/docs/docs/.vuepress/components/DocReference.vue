@@ -4,7 +4,7 @@
     reference
   </h2>
 
-  <template v-for="component in reference.meta.components">
+  <template v-for="(component, index) in reference.meta.components" :key="index">
     <h3 :id="component.component" tabindex="-1">
       <a class="header-anchor" :href="`#${component.component}`" aria-hidden="true">#</a>
       <code>&lt;{{ component.component }}&gt;</code>
