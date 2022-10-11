@@ -487,7 +487,7 @@ const callItemsProvider = async () => {
       const internalItems = await itemHelper.updateInternalItems(items)
       return internalItems
     } finally {
-      if (!internalBusyFlag.value) {
+      if (internalBusyFlag.value) {
         internalBusyFlag.value = false
       }
     }
