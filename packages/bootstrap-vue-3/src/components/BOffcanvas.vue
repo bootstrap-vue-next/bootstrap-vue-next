@@ -9,7 +9,7 @@
     :data-bs-scroll="bodyScrollingBoolean"
   >
     <div v-if="!noHeaderBoolean" class="offcanvas-header">
-      <slot name="header" v-bind="{visible: modelValue, placement, hide}">
+      <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
         <h5 id="offcanvasLabel" class="offcanvas-title">
           <slot name="title">
             {{ title }}
@@ -27,7 +27,7 @@
       <slot />
     </div>
     <div v-if="$slots.footer">
-      <slot name="footer" v-bind="{visible: modelValue, placement, hide}" />
+      <slot name="footer" v-bind="{visible: modelValueBoolean, placement, hide}" />
     </div>
   </div>
 </template>
