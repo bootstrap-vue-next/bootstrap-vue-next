@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.3.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.11...v0.3.12) (2022-10-11)
+
+
+### Features
+
+* **BFormTags:** Add tag scoped slot ([600c129](https://github.com/cdmoro/bootstrap-vue-3/commit/600c129f64aa6e10bbcfc639ef00632fd6209cf7))
+
+
+### Bug Fixes
+
+* BOverlay build issues ([b7106f4](https://github.com/cdmoro/bootstrap-vue-3/commit/b7106f400e37aeaa9c2e8295eaafe5c296625d53))
+* **BOverlay:** strongly type some props ([53e6777](https://github.com/cdmoro/bootstrap-vue-3/commit/53e67776b8b7c632e9b2bd3f0aba5280411e355f))
+* **BTable:** [[#742](https://github.com/cdmoro/bootstrap-vue-3/issues/742)] BTable with provider never hides the busy loader ([affcacf](https://github.com/cdmoro/bootstrap-vue-3/commit/affcacffe47261000deca775e4be8dc6dc22ac8a))
+* **BTransition:** allowTransProps to work ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
+* transProps working in BTransition cascades fixes for components that rely on it, ex: Overlay noFade ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
+
+
+### Performance Improvements
+
+* **BTransition:** replace ref with cached computed properties ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
+
 ## [0.3.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.10...v0.3.11) (2022-10-03)
 
 
