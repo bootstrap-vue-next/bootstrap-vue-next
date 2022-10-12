@@ -46,12 +46,8 @@ const computedNavbarExpand = computed<undefined | string>(() =>
     : undefined
 )
 
-const containerClass = computed<'container' | 'container-fluid' | undefined>(() =>
-  props.container === false
-    ? undefined
-    : props.container === true
-    ? 'container'
-    : `container-${props.container}`
+const containerClass = computed<'container' | 'container-fluid'>(() =>
+  props.container === true ? 'container' : `container-fluid`
 )
 
 const computedClasses = computed(() => ({

@@ -86,19 +86,11 @@ const computedId = useId(toRef(props, 'id'), 'form-check')
 
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
-// TODO button is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
-// TODO switch is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const switchBoolean = useBooleanish(toRef(props, 'switch'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-// TODO inline is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
-// TODO state is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 
 const input = ref<HTMLElement | null>(null)

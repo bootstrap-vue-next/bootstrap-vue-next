@@ -53,8 +53,6 @@ import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../.
 import {mergeDeep} from '../../utils'
 import {useBooleanish, useEventListener, useId} from '../../composables'
 
-// TODO it seems that some of these props are actually just Popper options
-// So some of them could be converted to their pure types similar to Popper.Boundary
 interface BDropdownProps {
   id?: string
   menuClass?: ClassValue
@@ -74,7 +72,7 @@ interface BDropdownProps {
   dropleft?: Booleanish
   noFlip?: Booleanish
   offset?: number | string
-  popperOpts?: Record<string, unknown> // TODO find a way to get this strongly typed
+  popperOpts?: Partial<Popper.Options>
   right?: Booleanish
   role?: string
   split?: Booleanish

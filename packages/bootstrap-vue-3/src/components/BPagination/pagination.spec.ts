@@ -66,7 +66,6 @@ describe('pagination', () => {
     expect(wrapper.classes()).not.toContain('b-pagination-pills')
   })
 
-  // TODO use coverage test to determine if useAlignment needs to be fully tested
   it('has class justify-content-start', () => {
     const wrapper = mount(BPagination)
     expect(wrapper.classes()).toContain('justify-content-start')

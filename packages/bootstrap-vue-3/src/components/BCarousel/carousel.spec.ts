@@ -50,15 +50,6 @@ describe('carousel', () => {
     expect($div.element.tagName).toBe('DIV')
   })
 
-  // TODO causes some weird warning
-  it.skip('element that has class carousel-inner renders default slot', () => {
-    const wrapper = mount(BCarousel, {
-      slots: {default: 'foobar'},
-    })
-    const $div = wrapper.get('.carousel-inner')
-    expect($div.text()).toBe('foobar')
-  })
-
   it('does not have element with class carousel-indicators by default', () => {
     const wrapper = mount(BCarousel)
     const $div = wrapper.find('.carousel-indicators')
@@ -90,7 +81,6 @@ describe('carousel', () => {
     expect($button.exists()).toBe(false)
   })
 
-  // TODO at this point, the component breaks down
   it.skip('div with carousel-indicators class has no button child by default', () => {
     const wrapper = mount(BCarousel, {
       props: {indicators: true},

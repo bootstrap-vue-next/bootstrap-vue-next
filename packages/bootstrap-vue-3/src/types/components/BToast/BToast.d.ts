@@ -27,6 +27,6 @@ export interface Props extends BLinkProps {
 // Emits
 export interface Emits {
   (e: 'destroyed', value: Props['id']): void
-  (e: 'update:modelValue', value: Props['modelValue']): void // TODO replace all self referencing syntax to this style
+  (e: 'update:modelValue', value: Props['modelValue']): void
 }
 // Other

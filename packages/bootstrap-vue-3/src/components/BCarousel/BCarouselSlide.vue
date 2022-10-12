@@ -84,14 +84,8 @@ const parentData = inject<BCarouselParentData>(injectionKey, {})
 // instead of using this property, it would be nice to use `startingSlide`
 // of the parent Carousel in order to set the proper active slide
 const activeBoolean = useBooleanish(toRef(props, 'active'))
-const imgBlankBoolean = useBooleanish(toRef(props, 'imgBlank'))
 
 const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const img = computed<string | true | undefined>(() =>
-  imgBlankBoolean.value ? imgBlankBoolean.value : props.imgSrc
-)
 
 const computedAttr = computed(() => ({
   background: `${

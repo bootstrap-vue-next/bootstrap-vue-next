@@ -50,8 +50,6 @@ const computedAttrs = computed(() => ({
   variant: props.variant,
 }))
 
-// TODO check and see if doing animatedBoolean.value is reactive for provide
-// It may be possible that a toRef() is required for these types of systems.
 provide(injectionKey, {
   animated: animatedBoolean.value,
   max: props.max,

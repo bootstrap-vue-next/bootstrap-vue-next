@@ -53,20 +53,19 @@ describe('carousel-slide', () => {
     expect(wrapper.attributes('style')).toContain('background: ')
   })
 
-  // TODO these two break the style attr
-  it.skip('has style background to include prop background', () => {
+  it('has style background to include prop background', () => {
     const wrapper = mount(BCarouselSlide, {
-      props: {background: 'foobar'},
+      props: {background: 'black'},
       global: {provide: {[injectionKey as unknown as symbol]: {background: ''}}},
     })
-    expect(wrapper.attributes('style')).toContain('foobar')
+    expect(wrapper.attributes('style')).toContain('background: black')
   })
 
-  it.skip('has style background to include parentData background', () => {
+  it('has style background to include parentData background', () => {
     const wrapper = mount(BCarouselSlide, {
-      global: {provide: {[injectionKey as unknown as symbol]: {background: 'foobar'}}},
+      global: {provide: {[injectionKey as unknown as symbol]: {background: 'black'}}},
     })
-    expect(wrapper.attributes('style')).toContain('foobar')
+    expect(wrapper.attributes('style')).toContain('background: black')
   })
 
   it('contains a BImg in slot img', () => {

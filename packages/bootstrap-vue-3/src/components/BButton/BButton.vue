@@ -83,7 +83,6 @@ export default defineComponent({
 
     const computedAttrs = computed(() => ({
       'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
-      // TODO this basically checks pressed twice.
       'aria-pressed': isToggle.value ? pressedBoolean.value : null,
       'autocomplete': isToggle.value ? 'off' : null,
       'disabled': isButton.value ? disabledBoolean.value : null,
