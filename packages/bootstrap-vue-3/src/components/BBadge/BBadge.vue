@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {isLink, omit, pluckProps} from '../../utils'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
@@ -30,7 +30,7 @@ export default defineComponent({
     const activeBoolean = useBooleanish(toRef(props, 'active'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
-    const computedLink = eagerComputed<boolean>(() => isLink(props))
+    const computedLink = computed<boolean>(() => isLink(props))
 
     const computedTag = computed<string | typeof BLink>(() =>
       computedLink.value ? BLink : props.tag

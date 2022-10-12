@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
 import type {BProgressParentData} from '../../types/components'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 import {computed, inject, toRef} from 'vue'
 import {injectionKey} from './BProgress.vue'
 
@@ -57,11 +57,11 @@ const computedClasses = computed(() => ({
   [`bg-${props.variant}`]: props.variant !== undefined,
 }))
 
-const numberPrecision = eagerComputed<number>(() =>
+const numberPrecision = computed<number>(() =>
   typeof props.precision === 'number' ? props.precision : Number.parseFloat(props.precision)
 )
 
-const numberValue = eagerComputed<number>(() =>
+const numberValue = computed<number>(() =>
   typeof props.value === 'number' ? props.value : Number.parseFloat(props.value)
 )
 

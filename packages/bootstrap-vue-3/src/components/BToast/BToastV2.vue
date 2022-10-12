@@ -50,7 +50,7 @@
 <script lang="ts">
 import {computed, defineComponent, onMounted, PropType, ref, toRef} from 'vue'
 import {isEmptySlot, isLink, pluckProps, toInteger} from '../../utils'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -109,7 +109,7 @@ export default defineComponent({
     const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
     const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
 
-    const computedLink = eagerComputed<boolean>(() => isLink(props))
+    const computedLink = computed<boolean>(() => isLink(props))
 
     const toastClasses = computed(() => [
       props.toastClass,

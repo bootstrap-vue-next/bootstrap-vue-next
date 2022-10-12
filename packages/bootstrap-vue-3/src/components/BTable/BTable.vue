@@ -177,7 +177,7 @@
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 import {cloneDeepAsync} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
@@ -344,13 +344,13 @@ const containerAttrs = computed(() => ({
 }))
 
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
-const computedFieldsTotal = eagerComputed(
+const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
 )
 
-const isFilterableTable = eagerComputed(() => props.filter !== undefined && props.filter !== '')
+const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
 
-const usesProvider = eagerComputed(() => props.provider !== undefined)
+const usesProvider = computed(() => props.provider !== undefined)
 
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
 
@@ -365,14 +365,14 @@ const computedItems = computed(() => {
     : props.items
 })
 
-const addSelectableCell = eagerComputed(
+const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
 const isSortable = computed(
   () =>
     props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
 )
-const isSelecting = eagerComputed(() => selectedItems.value.size > 0)
+const isSelecting = computed(() => selectedItems.value.size > 0)
 
 watch(
   () => props.filter,

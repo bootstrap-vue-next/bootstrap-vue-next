@@ -122,7 +122,7 @@ import {
   watch,
 } from 'vue'
 import BFormTag from './BFormTag.vue'
-import {eagerComputed, useBooleanish, useId} from '../../composables'
+import {useBooleanish, useId} from '../../composables'
 import type {
   Booleanish,
   ButtonVariant,
@@ -239,9 +239,9 @@ const isDuplicate = computed<boolean>(() => tags.value.includes(inputValue.value
 const isInvalid = computed<boolean>(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = eagerComputed<boolean>(() => tags.value.length === props.limit)
+const isLimitReached = computed<boolean>(() => tags.value.length === props.limit)
 
-const disableAddButton = eagerComputed<boolean>(() => !isInvalid.value && !isDuplicate.value)
+const disableAddButton = computed<boolean>(() => !isInvalid.value && !isDuplicate.value)
 
 const slotAttrs = computed(() => ({
   addButtonText: props.addButtonText,

@@ -10,7 +10,7 @@
 // import type {BFormInvalidFeedbackProps} from '../../types/components'
 import {computed, Ref, toRef} from 'vue'
 import type {Booleanish} from '../../types'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 
 interface BFormInvalidFeedbackProps {
   ariaLive?: string
@@ -34,7 +34,7 @@ const forceShowBoolean = useBooleanish(toRef(props, 'forceShow'))
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
 
-const computedShow = eagerComputed<boolean>(
+const computedShow = computed<boolean>(
   () => forceShowBoolean.value === true || stateBoolean.value === false
 )
 

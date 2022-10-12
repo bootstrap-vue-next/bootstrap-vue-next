@@ -8,7 +8,6 @@
 import {isLink, omit, pluckProps} from '../../utils'
 import {computed, defineComponent} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
-import {eagerComputed} from '../../composables'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
@@ -21,7 +20,7 @@ export default defineComponent({
     ...linkProps,
   },
   setup(props) {
-    const computedLink = eagerComputed<boolean>(() => isLink(props))
+    const computedLink = computed<boolean>(() => isLink(props))
     const computedTag = computed<string | typeof BLink>(() =>
       computedLink.value ? BLink : props.tag
     )

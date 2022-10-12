@@ -27,7 +27,7 @@
 <script lang="ts">
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {isLink} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
@@ -60,13 +60,13 @@ export default defineComponent({
     const squaredBoolean = useBooleanish(toRef(props, 'squared'))
     const loadingBoolean = useBooleanish(toRef(props, 'loading'))
 
-    const isToggle = eagerComputed<boolean>(() => pressedBoolean.value === true)
-    const isButton = eagerComputed<boolean>(
+    const isToggle = computed<boolean>(() => pressedBoolean.value === true)
+    const isButton = computed<boolean>(
       () => props.tag === 'button' && props.href === undefined && props.to === null
     )
-    const computedLink = eagerComputed<boolean>(() => isLink(props))
-    const isBLink = eagerComputed<boolean>(() => props.to !== null)
-    const nonStandardTag = eagerComputed<boolean>(() =>
+    const computedLink = computed<boolean>(() => isLink(props))
+    const isBLink = computed<boolean>(() => props.to !== null)
+    const nonStandardTag = computed<boolean>(() =>
       props.href !== undefined ? false : !isButton.value
     )
 

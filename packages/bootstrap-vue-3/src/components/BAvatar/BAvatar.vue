@@ -30,7 +30,7 @@ import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 
 interface BAvatarProps {
   alt?: string
@@ -94,15 +94,15 @@ const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
 
 const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 
-const computedSize = eagerComputed<string | null>(() =>
+const computedSize = computed<string | null>(() =>
   parentData?.size ? parentData.size : computeSize(props.size)
 )
 
-const computedVariant = eagerComputed<ColorVariant>(() =>
+const computedVariant = computed<ColorVariant>(() =>
   parentData?.variant ? parentData.variant : props.variant
 )
 
-const computedRounded = eagerComputed<string | boolean>(() =>
+const computedRounded = computed<string | boolean>(() =>
   parentData?.rounded ? parentData.rounded : props.rounded
 )
 

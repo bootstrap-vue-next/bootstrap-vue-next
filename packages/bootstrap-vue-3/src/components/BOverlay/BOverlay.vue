@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../../types'
-import {eagerComputed, useBooleanish} from '../../composables'
+import {useBooleanish} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
 
@@ -97,7 +97,7 @@ const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
 const showBoolean = useBooleanish(toRef(props, 'show'))
 const spinnerSmallBoolean = useBooleanish(toRef(props, 'spinnerSmall'))
 
-const computedRounded = eagerComputed(() =>
+const computedRounded = computed(() =>
   props.rounded === true || props.rounded === ''
     ? 'rounded'
     : props.rounded === false
@@ -105,7 +105,7 @@ const computedRounded = eagerComputed(() =>
     : `rounded-${props.rounded}`
 )
 
-const computedVariant = eagerComputed(() =>
+const computedVariant = computed(() =>
   props.variant && !props.bgColor ? `bg-${props.variant}` : ''
 )
 
