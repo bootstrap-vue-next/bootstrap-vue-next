@@ -43,7 +43,7 @@ export default defineComponent({
     const computedClasses = computed(() => [
       classList.value,
       {
-        col: colBoolean.value || !classList.value.some((e) => /^col-/.test(e) && !props.cols),
+        col: colBoolean.value || (!classList.value.some((e) => /^col-/.test(e)) && !props.cols),
         [`col-${props.cols}`]: !!props.cols,
         [`offset-${props.offset}`]: !!props.offset,
         [`order-${props.order}`]: !!props.order,
