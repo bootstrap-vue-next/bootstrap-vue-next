@@ -30,7 +30,7 @@
                 </component>
                 <template v-if="!hideHeaderCloseBoolean">
                   <button
-                    v-if="$slots['header-close']"
+                    v-if="hasHeaderCloseSlot"
                     type="button"
                     data-bs-dismiss="modal"
                     @click="hide()"
@@ -91,7 +91,8 @@
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {isEmptySlot} from '../utils'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
@@ -188,6 +189,8 @@ interface BModalEmits {
 
 const emit = defineEmits<BModalEmits>()
 
+const slots = useSlots()
+
 const computedId = useId(toRef(props, 'id'), 'modal')
 
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
@@ -217,6 +220,8 @@ const modalClasses = computed(() => [
     fade: !noFadeBoolean.value,
   },
 ])
+
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,
