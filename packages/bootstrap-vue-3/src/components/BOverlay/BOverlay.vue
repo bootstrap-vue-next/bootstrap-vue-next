@@ -2,7 +2,7 @@
   <component :is="wrapTag" class="b-overlay-wrap position-relative" :aria-busy="computedAriaBusy">
     <slot />
     <b-transition
-      :no-fade="noFadeBoolean"
+      :no-fade="noFade"
       :trans-props="{enterToClass: 'show'}"
       name="fade"
       @on-after-enter="emit('shown')"
@@ -92,7 +92,6 @@ const positionStyles = {top: 0, left: 0, bottom: 0, right: 0}
 
 const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
 const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
-const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
 const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
 const showBoolean = useBooleanish(toRef(props, 'show'))
 const spinnerSmallBoolean = useBooleanish(toRef(props, 'spinnerSmall'))

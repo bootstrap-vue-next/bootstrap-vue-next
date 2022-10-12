@@ -11,7 +11,7 @@
       @mouseleave="unPauseTimer"
     >
       <b-transition
-        :no-fade="noFadeBoolean"
+        :no-fade="noFade"
         @before-enter="onBeforeEnter"
         @after-enter="onAfterEnter"
         @before-leave="onBeforeLeave"
@@ -93,7 +93,6 @@ export default defineComponent({
     const isStatusBoolean = useBooleanish(toRef(props, 'isStatus'))
     const autoHideBoolean = useBooleanish(toRef(props, 'autoHide'))
     const noCloseButtonBoolean = useBooleanish(toRef(props, 'noCloseButton'))
-    const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
     const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
     // TODO even though solid correctly appears in the class list,
     // The basic toast does not have a translucent background
@@ -229,7 +228,6 @@ export default defineComponent({
       computedAriaAtomic,
       pauseTimer,
       unPauseTimer,
-      noFadeBoolean,
       onBeforeEnter,
       onAfterEnter,
       onBeforeLeave,

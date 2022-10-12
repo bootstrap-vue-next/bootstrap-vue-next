@@ -17,7 +17,7 @@
     <b-collapse
       :id="computedId"
       class="accordion-collapse"
-      :visible="visibleBoolean"
+      :visible="visible"
       :accordion="parent"
       :aria-labelledby="`heading${computedId}`"
     >

@@ -40,12 +40,12 @@ const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
 const computedAttrs = computed(() => ({
-  animated: animatedBoolean.value,
+  animated: props.animated,
   max: props.max,
   precision: props.precision,
-  showProgress: showProgressBoolean.value,
-  showValue: showValueBoolean.value,
-  striped: stripedBoolean.value,
+  showProgress: props.showProgress,
+  showValue: props.showValue,
+  striped: props.striped,
   value: props.value,
   variant: props.variant,
 }))

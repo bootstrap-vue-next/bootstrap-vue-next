@@ -42,7 +42,7 @@
               :class="tagClass"
               tag="li"
               :variant="tagVariant"
-              :pill="tagPillsBoolean"
+              :pill="tagPills"
               @remove="removeTag"
               >{{ tag }}</b-form-tag
             >

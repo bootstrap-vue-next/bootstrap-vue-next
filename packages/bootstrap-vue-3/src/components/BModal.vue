@@ -41,7 +41,7 @@
                     v-else
                     :aria-label="headerCloseLabel"
                     data-bs-dismiss="modal"
-                    :white="headerCloseWhiteBoolean"
+                    :white="headerCloseWhite"
                     @click="hide()"
                   />
                 </template>
@@ -194,7 +194,6 @@ const busyBoolean = useBooleanish(toRef(props, 'busy'))
 const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
 const centeredBoolean = useBooleanish(toRef(props, 'centered'))
-const headerCloseWhiteBoolean = useBooleanish(toRef(props, 'headerCloseWhite'))
 const hideBackdropBoolean = useBooleanish(toRef(props, 'hideBackdrop'))
 const hideFooterBoolean = useBooleanish(toRef(props, 'hideFooter'))
 const hideHeaderBoolean = useBooleanish(toRef(props, 'hideHeader'))

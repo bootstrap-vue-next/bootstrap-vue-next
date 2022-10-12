@@ -5,7 +5,7 @@
       :variant="splitVariant || variant"
       :size="size"
       :class="buttonClasses"
-      :disabled="disabledBoolean"
+      :disabled="disabled"
       :type="splitButtonType"
       v-bind="buttonAttr"
       @click="onSplitClick"
@@ -18,7 +18,7 @@
       v-if="splitBoolean"
       :variant="variant"
       :size="size"
-      :disabled="disabledBoolean"
+      :disabled="disabled"
       v-bind="splitAttr"
       :class="toggleClass"
       class="dropdown-toggle-split dropdown-toggle"
@@ -123,7 +123,6 @@ const computedId = useId(toRef(props, 'id'), 'dropdown')
 
 const blockBoolean = useBooleanish(toRef(props, 'block'))
 const darkBoolean = useBooleanish(toRef(props, 'dark'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
 const droprightBoolean = useBooleanish(toRef(props, 'dropright'))
 const isNavBoolean = useBooleanish(toRef(props, 'isNav'))

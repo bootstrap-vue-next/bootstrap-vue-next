@@ -12,7 +12,7 @@
         :src="imgSrc"
         :width="imgWidth || parentWidth"
         :height="imgHeight || parentHeight"
-        :blank="imgBlankBoolean"
+        :blank="imgBlank"
         :blank-color="imgBlankColor"
       />
     </slot>
