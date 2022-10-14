@@ -2,7 +2,6 @@
 // import {defaultTheme} from '@vuepress/theme-default'
 import {searchPlugin} from '@vuepress/plugin-search'
 import {componentReference} from './PluginComponentReference'
-import {componentPropsPlugin} from './PluginComponentProps'
 import {path} from '@vuepress/utils'
 import {defineUserConfig, defaultTheme, viteBundler} from 'vuepress'
 
