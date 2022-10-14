@@ -1,4 +1,3 @@
-// @vitest-environment jsdom
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vitest} from 'vitest'
 import {h} from 'vue'
