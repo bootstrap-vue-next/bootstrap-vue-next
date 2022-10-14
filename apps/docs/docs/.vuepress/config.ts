@@ -2,6 +2,8 @@
 // import {defaultTheme} from '@vuepress/theme-default'
 import {searchPlugin} from '@vuepress/plugin-search'
 import {componentReference} from './PluginComponentReference'
+import {componentPropsPlugin} from './PluginComponentProps'
+import {path} from '@vuepress/utils'
 import {defineUserConfig, defaultTheme, viteBundler} from 'vuepress'
 
 export default defineUserConfig({
@@ -17,7 +19,13 @@ export default defineUserConfig({
         },
       },
     }),
-    componentReference,
+    componentReference({},
+    { rootPath : "../../packages/bootstrap-vue-3", 
+      componentsDir: '../../packages/bootstrap-vue-3/src' , 
+      metaCheckerOptions : {forceUseTs: true,
+      schema: { ignore: ['MyIgnoredNestedProps'] },
+      printer: { newLine: 1 },}
+    }),
   ],
   bundler: viteBundler(),
   theme: defaultTheme({
