@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {createContainer, waitRAF} from '../../../tests/utils'
 import {h, nextTick} from 'vue'

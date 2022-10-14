@@ -66,7 +66,7 @@ const config = defineConfig({
 
   test: {
     // globals: true,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     coverage: {
       provider: 'c8',
       reporter: ['text', 'html'],
