@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body">
+  <teleport to="body" :disabled="staticBoolean">
     <b-transition
       :no-fade="true"
       :trans-props="{enterToClass: 'show'}"
@@ -98,6 +98,9 @@ import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
+import BTransition from './BTransition/BTransition.vue'
+
+// TODO build lazy system
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
@@ -145,6 +148,7 @@ interface BModalProps {
   titleClass?: string
   titleSrOnly?: Booleanish
   titleTag?: string
+  static?: Booleanish
 }
 
 const props = withDefaults(defineProps<BModalProps>(), {
@@ -170,6 +174,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   okDisabled: false,
   okOnly: false,
   okTitle: 'Ok',
+  static: false,
   okVariant: 'primary',
   scrollable: false,
   show: false,
@@ -213,6 +218,7 @@ const okDisabledBoolean = useBooleanish(toRef(props, 'okDisabled'))
 const okOnlyBoolean = useBooleanish(toRef(props, 'okOnly'))
 const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
 const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
+const staticBoolean = useBooleanish(toRef(props, 'static'))
 
 const element = ref<HTMLElement | null>(null)
 

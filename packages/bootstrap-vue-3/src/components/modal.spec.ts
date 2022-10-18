@@ -1,8 +1,9 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BModal from './BModal.vue'
+import BTransition from './BTransition/BTransition.vue'
 
-describe.skip('modal', () => {
+describe('modal', () => {
   enableAutoUnmount(afterEach)
   // Having issues getting the 'body' from the VDOM
   it('has body element', () => {
@@ -55,17 +56,6 @@ describe.skip('modal', () => {
     expect($div.classes()).toContain('foo')
   })
 
-  it.skip('div has class fade when not prop noFade', async () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {noFade: false},
-    })
-    const $div = wrapper.get('div')
-    expect($div.classes()).toContain('fade')
-    await wrapper.setProps({noFade: true})
-    expect($div.classes()).not.toContain('fade')
-  })
-
   it('div has class fade when not prop noFade', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
@@ -82,15 +72,6 @@ describe.skip('modal', () => {
     })
     const $div = wrapper.get('div')
     expect($div.classes()).not.toContain('fade')
-  })
-
-  it('div has class show when not prop show', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {show: true},
-    })
-    const $div = wrapper.get('div')
-    expect($div.classes()).toContain('show')
   })
 
   it('div has class show when prop show', () => {
@@ -289,17 +270,6 @@ describe.skip('modal', () => {
     expect($div3.classes()).toContain('foo')
   })
 
-  it('second div has does not have nested div when prop lazy', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {lazy: true},
-    })
-    const $div = wrapper.get('div')
-    const $div2 = $div.get('div')
-    const $div3 = $div2.find('div')
-    expect($div3.exists()).toBe(false)
-  })
-
   it('second div has nested div when not prop lazy', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
@@ -311,19 +281,7 @@ describe.skip('modal', () => {
     expect($div3.exists()).toBe(true)
   })
 
-  // Any attempt at modifying modelValue with teleport fails
-  it.skip('second div has nested div when not prop lazy and prop modelValue', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {lazy: true, modelValue: true},
-    })
-    const $div = wrapper.get('div')
-    const $div2 = $div.get('div')
-    const $div3 = $div2.find('div')
-    expect($div3.exists()).toBe(true)
-  })
-
-  it.skip('third nested div has another div', () => {
+  it('third nested div has another div', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
     })
@@ -333,7 +291,7 @@ describe.skip('modal', () => {
     expect($div3.exists()).toBe(true)
   })
 
-  // Cannot test emit due to teleport
+  // Test isActive states
 
-  // TODO finished modalDialogClasses on second nested div
+  // Test emit states
 })
