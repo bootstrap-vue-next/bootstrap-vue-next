@@ -2,10 +2,11 @@
   <teleport to="body">
     <b-transition
       :no-fade="true"
-      enter-to-class="show"
+      :trans-props="{enterToClass: 'show'}"
       @before-enter="onBeforeEnter"
       @after-enter="onAfterEnter"
       @before-leave="onBeforeLeave"
+      @leave="onLeave"
       @after-leave="onAfterLeave"
     >
       <div
@@ -14,13 +15,13 @@
         ref="element"
         class="modal"
         :class="modalClasses"
-        style="display: block"
+        :style="{display: 'block'}"
         tabindex="-1"
         v-bind="$attrs"
         @keyup.esc="onEsc"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
-          <div v-if="renderLazy" class="modal-content" :class="contentClass">
+          <div class="modal-content" :class="contentClass">
             <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
               <slot name="header">
                 <component :is="titleTag" class="modal-title" :class="titleClasses">
@@ -191,10 +192,12 @@ const emit = defineEmits<BModalEmits>()
 
 const slots = useSlots()
 
+const isActive = ref(false)
+
 const computedId = useId(toRef(props, 'id'), 'modal')
 
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+// const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
 const centeredBoolean = useBooleanish(toRef(props, 'centered'))
 const hideBackdropBoolean = useBooleanish(toRef(props, 'hideBackdrop'))
@@ -212,12 +215,12 @@ const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
 const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 
 const element = ref<HTMLElement | null>(null)
-const lazyLoadCompleted = ref(false)
 
 const modalClasses = computed(() => [
   props.modalClass,
   {
     fade: !noFadeBoolean.value,
+    show: isActive.value,
   },
 ])
 
@@ -268,12 +271,6 @@ const titleClasses = computed(() => [
 ])
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
 const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
-const renderLazy = computed(
-  () =>
-    !lazyBoolean.value ||
-    (lazyBoolean.value && lazyLoadCompleted.value) ||
-    (lazyBoolean.value && modelValueBoolean.value)
-)
 
 const hide = () => emit('update:modelValue', false)
 
@@ -284,8 +281,14 @@ const onEsc = (e: KeyboardEvent) => {
 }
 
 const onBeforeEnter = () => emit('show')
-const onAfterEnter = () => emit('shown')
+const onAfterEnter = () => {
+  isActive.value = true
+  emit('shown')
+}
 const onBeforeLeave = () => emit('hide')
+const onLeave = () => {
+  isActive.value = false
+}
 const onAfterLeave = () => emit('hidden')
 
 watch(
