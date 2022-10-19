@@ -15,6 +15,9 @@
         ref="element"
         class="modal"
         :class="modalClasses"
+        role="dialog"
+        :aria-labelledby="`${computedId}-label`"
+        :aria-describedby="`${computedId}-body`"
         :style="{display: 'block'}"
         tabindex="-1"
         v-bind="$attrs"
@@ -24,7 +27,12 @@
           <div class="modal-content" :class="contentClass">
             <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
               <slot name="header">
-                <component :is="titleTag" class="modal-title" :class="titleClasses">
+                <component
+                  :is="titleTag"
+                  :id="`${computedId}-label`"
+                  class="modal-title"
+                  :class="titleClasses"
+                >
                   <slot name="title">
                     {{ title }}
                   </slot>
@@ -48,7 +56,7 @@
                 </template>
               </slot>
             </div>
-            <div class="modal-body" :class="bodyClasses">
+            <div :id="`${computedId}-body`" class="modal-body" :class="bodyClasses">
               <slot />
             </div>
             <div v-if="!hideFooterBoolean" class="modal-footer" :class="footerClasses">
@@ -101,6 +109,12 @@ import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
 
 // TODO build lazy system
+// aria
+// autofocus
+// close on escape when autofocus
+
+// Note, attempt to return focus to item that openned the modal after close
+// Implement auto focus props like autoFocusButton
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
