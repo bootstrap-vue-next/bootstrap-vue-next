@@ -72,10 +72,10 @@
       <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
         <tr
           :class="getRowClasses(item)"
-          @click="onRowClick(item, itemIndex, $event)"
-          @dblclick="onRowDblClick(item, itemIndex, $event)"
-          @mouseenter="onRowMouseEnter(item, itemIndex, $event)"
-          @mouseleave="onRowMouseLeave(item, itemIndex, $event)"
+          @click="!filterEvent($event) && onRowClick(item, itemIndex, $event)"
+          @dblclick="!filterEvent($event) && onRowDblClick(item, itemIndex, $event)"
+          @mouseenter="!filterEvent($event) && onRowMouseEnter(item, itemIndex, $event)"
+          @mouseleave="!filterEvent($event) && onRowMouseLeave(item, itemIndex, $event)"
         >
           <td
             v-if="addSelectableCell"
@@ -192,6 +192,7 @@ import type {
 } from '../../types'
 import type {BTableProvider, BTableSortCompare} from '../../types/components'
 import BTableSimple from './BTableSimple.vue'
+import {filterEvent} from './helpers/filter-event'
 import useItemHelper from './itemHelper'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
