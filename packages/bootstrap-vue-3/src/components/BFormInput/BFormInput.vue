@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts">
-import type {InputType} from '../../types'
-import {computed, defineComponent, PropType} from 'vue'
+import {computed, defineComponent, PropType, ref} from 'vue'
 import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
+import type {InputType} from '../../types'
 
 const allowedTypes = [
   'text',
@@ -63,6 +63,7 @@ export default defineComponent({
       const isRange = props.type === 'range'
       const isColor = props.type === 'color'
       return {
+        'form-control-highlighted': isHighlighted.value,
         'form-range': isRange,
         'form-control': isColor || (!props.plaintext && !isRange),
         'form-control-color': isColor,
@@ -80,6 +81,15 @@ export default defineComponent({
     const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
       useFormInput(props, emit)
 
+    const isHighlighted = ref(false)
+    const highlight = () => {
+      if (isHighlighted.value === true) return
+      isHighlighted.value = true
+      setTimeout(() => {
+        isHighlighted.value = false
+      }, 2000)
+    }
+
     return {
       classes,
       localType,
@@ -91,6 +101,7 @@ export default defineComponent({
       onBlur,
       focus,
       blur,
+      highlight,
     }
   },
 })
