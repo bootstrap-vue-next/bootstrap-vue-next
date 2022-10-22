@@ -18,7 +18,6 @@
         role="dialog"
         :aria-labelledby="`${computedId}-label`"
         :aria-describedby="`${computedId}-body`"
-        :style="{display: 'block'}"
         tabindex="-1"
         v-bind="$attrs"
         @keyup.esc="onEsc"
@@ -101,9 +100,9 @@
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, ref, toRef, useSlots, watch} from 'vue'
-import {isEmptySlot} from '../utils'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
+import {isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
@@ -328,6 +327,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.modal {
+  display: block;
+}
+
 .modal-dialog {
   z-index: 1051;
 }
