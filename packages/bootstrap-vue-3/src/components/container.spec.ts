@@ -68,13 +68,4 @@ describe('container', () => {
     await wrapper.setProps({gutterY: undefined})
     expect(wrapper.classes()).not.toContain('gy-xxl')
   })
-
-  it('has class from prop position', async () => {
-    const wrapper = mount(BContainer, {
-      props: {position: 'position-sticky'},
-    })
-    expect(wrapper.classes()).toContain('position-sticky')
-    await wrapper.setProps({position: undefined})
-    expect(wrapper.classes()).not.toContain('position-sticky')
-  })
 })

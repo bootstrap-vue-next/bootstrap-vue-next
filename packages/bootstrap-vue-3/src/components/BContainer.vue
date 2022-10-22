@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import type {Position} from '../types'
+// import type {Position} from '../types'
 // import BToaster from './BToast/BToaster.vue'
 // import {ToastInstance} from './BToast/plugin'
 
@@ -20,8 +20,8 @@ interface Props {
   gutterX?: string
   gutterY?: string
   fluid?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
-  toast?: Record<string, unknown> // Make this strongly typed
-  position?: Position
+  // toast?: Record<string, unknown> // Make this strongly typed
+  // position?: Position
   tag?: string
 }
 
@@ -32,16 +32,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 const container = ref()
 
-const computedClasses = computed(() => [
-  props.position,
-  {
-    container: props.fluid === false,
-    [`container-fluid`]: props.fluid === true,
-    [`container-${props.fluid}`]: typeof props.fluid === 'string',
-    [`gx-${props.gutterX}`]: props.gutterX !== undefined,
-    [`gy-${props.gutterY}`]: props.gutterY !== undefined,
-  },
-])
+const computedClasses = computed(() => ({
+  container: props.fluid === false,
+  [`container-fluid`]: props.fluid === true,
+  [`container-${props.fluid}`]: typeof props.fluid === 'string',
+  [`gx-${props.gutterX}`]: props.gutterX !== undefined,
+  [`gy-${props.gutterY}`]: props.gutterY !== undefined,
+}))
 
 /* TODO finish this system
 const toasts = computed(() => toastInstance?.containerPositions.value)
