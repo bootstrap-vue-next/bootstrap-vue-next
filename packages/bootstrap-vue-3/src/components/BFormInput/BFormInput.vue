@@ -2,7 +2,7 @@
   <input
     :id="computedId"
     ref="input"
-    :class="classes"
+    :class="computedClasses"
     :name="name || undefined"
     :form="form || undefined"
     :type="localType"
@@ -59,9 +59,11 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
+    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} = useFormInput(props, emit)
+  
     const isHighlighted = ref(false)
 
-    const classes = computed(() => {
+    const computedClasses = computed(() => {
       const isRange = props.type === 'range'
       const isColor = props.type === 'color'
       return {
@@ -80,9 +82,6 @@ export default defineComponent({
       allowedTypes.includes(props.type) ? props.type : 'text'
     )
 
-    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-      useFormInput(props, emit)
-
     const highlight = () => {
       if (isHighlighted.value === true) return
       isHighlighted.value = true
@@ -92,7 +91,7 @@ export default defineComponent({
     }
 
     return {
-      classes,
+      computedClasses,
       localType,
       input,
       computedId,
