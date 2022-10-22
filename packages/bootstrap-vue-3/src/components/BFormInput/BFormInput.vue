@@ -59,6 +59,8 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
+    const isHighlighted = ref(false)
+
     const classes = computed(() => {
       const isRange = props.type === 'range'
       const isColor = props.type === 'color'
@@ -81,7 +83,6 @@ export default defineComponent({
     const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
       useFormInput(props, emit)
 
-    const isHighlighted = ref(false)
     const highlight = () => {
       if (isHighlighted.value === true) return
       isHighlighted.value = true

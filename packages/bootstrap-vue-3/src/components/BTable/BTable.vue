@@ -265,19 +265,6 @@ const props = withDefaults(defineProps<BTableProps>(), {
   emptyFilteredText: 'There are no records matching your request',
 })
 
-const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
-const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
-const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
-const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
-const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
-const busyBoolean = useBooleanish(toRef(props, 'busy'))
-const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
-const noProviderPagingBoolean = useBooleanish(toRef(props, 'showEmpty'))
-const noProviderSortingBoolean = useBooleanish(toRef(props, 'showEmpty'))
-const noProviderFilteringBoolean = useBooleanish(toRef(props, 'showEmpty'))
-
-const internalBusyFlag = ref(busyBoolean.value)
-
 interface BTableEmits {
   (
     e: 'headClicked',
@@ -314,6 +301,32 @@ interface BTableEmits {
 const emit = defineEmits<BTableEmits>()
 const slots = useSlots()
 
+const itemHelper = useItemHelper()
+
+const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
+const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
+const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
+const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
+const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
+const busyBoolean = useBooleanish(toRef(props, 'busy'))
+const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderPagingBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderSortingBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderFilteringBoolean = useBooleanish(toRef(props, 'showEmpty'))
+
+const internalBusyFlag = ref(busyBoolean.value)
+itemHelper.filterEvent.value = async (items) => {
+  if (usesProvider.value) {
+    await callItemsProvider()
+    return
+  }
+  const clone = await cloneDeepAsync(items)
+  emit('filtered', clone)
+}
+
+const selectedItems = ref<Set<TableItem>>(new Set([]))
+const isSelecting = computed(() => selectedItems.value.size > 0)
+
 const tableClasses = computed(() => ({
   [`align-${props.align}`]: props.align !== undefined,
   'b-table-selectable': selectableBoolean.value,
@@ -340,17 +353,6 @@ const containerAttrs = computed(() => ({
   stickyHeader: props.stickyHeader,
 }))
 
-const itemHelper = useItemHelper()
-
-itemHelper.filterEvent.value = async (items) => {
-  if (usesProvider.value) {
-    await callItemsProvider()
-    return
-  }
-  const clone = await cloneDeepAsync(items)
-  emit('filtered', clone)
-}
-
 const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
 const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
@@ -358,6 +360,15 @@ const computedFieldsTotal = computed(
 
 const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
 const usesProvider = computed(() => props.provider !== undefined)
+
+const addSelectableCell = computed(
+  () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
+)
+
+const isSortable = computed(
+  () =>
+    props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
+)
 
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
 const computedItems = computed(() => {
@@ -384,6 +395,7 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 
   handleFieldSorting(field)
 }
+
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   emit('rowClicked', row, index, e)
 
@@ -391,19 +403,13 @@ const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowDblClicked', row, index, e)
+
 const onRowMouseEnter = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowHovered', row, index, e)
+
 const onRowMouseLeave = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowUnhovered', row, index, e)
 
-const addSelectableCell = computed(
-  () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
-)
-
-const isSortable = computed(
-  () =>
-    props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
-)
 const handleFieldSorting = (field: TableField) => {
   if (!isSortable.value) return
 
@@ -419,13 +425,11 @@ const handleFieldSorting = (field: TableField) => {
   }
 }
 
-const selectedItems = ref<Set<TableItem>>(new Set([]))
-const isSelecting = computed(() => selectedItems.value.size > 0)
-
 const notifySelectionEvent = () => {
   if (!selectableBoolean.value) return
   emit('selection', Array.from(selectedItems.value))
 }
+
 const handleRowSelection = (row: TableItem, index: number, shiftClicked = false) => {
   if (!selectableBoolean.value) return
 
@@ -517,6 +521,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
     'b-table-sticky-column': field.stickyColumn,
   },
 ]
+
 const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
   field.class,
   field.tdClass,
@@ -575,22 +580,6 @@ const unselectRow = (index: number) => {
   notifySelectionEvent()
 }
 
-onMounted(() => {
-  if (usesProvider.value) {
-    callItemsProvider()
-  }
-})
-
-watch(
-  () => props.filter,
-  (filter, oldFilter) => {
-    if (filter === oldFilter || usesProvider.value) return
-    if (!filter) {
-      cloneDeepAsync(props.items).then((item) => emit('filtered', item))
-    }
-  }
-)
-
 const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
   if (val === oldVal) return
 
@@ -612,6 +601,16 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
 
   await callItemsProvider()
 }
+
+watch(
+  () => props.filter,
+  (filter, oldFilter) => {
+    if (filter === oldFilter || usesProvider.value) return
+    if (!filter) {
+      cloneDeepAsync(props.items).then((item) => emit('filtered', item))
+    }
+  }
+)
 
 watch(
   () => internalBusyFlag.value,
@@ -641,6 +640,12 @@ watch(
   () => props.sortDesc,
   (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
 )
+
+onMounted(() => {
+  if (usesProvider.value) {
+    callItemsProvider()
+  }
+})
 
 defineExpose({
   selectAllRows,
