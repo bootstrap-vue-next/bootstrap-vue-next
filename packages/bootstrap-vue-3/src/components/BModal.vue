@@ -23,7 +23,15 @@
         @keyup.esc="onEsc"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
-          <div class="modal-content" :class="contentClass">
+          <div
+            v-if="
+              !lazyBoolean ||
+              (lazyBoolean && lazyLoadCompleted) ||
+              (lazyBoolean && modelValueBoolean === true)
+            "
+            class="modal-content"
+            :class="contentClass"
+          >
             <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
               <slot name="header">
                 <component
@@ -99,7 +107,7 @@
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import {isEmptySlot} from '../utils'
@@ -210,12 +218,10 @@ const emit = defineEmits<BModalEmits>()
 
 const slots = useSlots()
 
-const isActive = ref(false)
-
 const computedId = useId(toRef(props, 'id'), 'modal')
 
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
-// const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
 const centeredBoolean = useBooleanish(toRef(props, 'centered'))
 const hideBackdropBoolean = useBooleanish(toRef(props, 'hideBackdrop'))
@@ -233,7 +239,9 @@ const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
 const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 const staticBoolean = useBooleanish(toRef(props, 'static'))
 
+const isActive = ref(false)
 const element = ref<HTMLElement | null>(null)
+const lazyLoadCompleted = ref(false)
 
 const modalClasses = computed(() => [
   props.modalClass,
@@ -303,18 +311,24 @@ const onBeforeEnter = () => emit('show')
 const onAfterEnter = () => {
   isActive.value = true
   emit('shown')
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
 const onBeforeLeave = () => emit('hide')
 const onLeave = () => {
   isActive.value = false
 }
-const onAfterLeave = () => emit('hidden')
+const onAfterLeave = () => {
+  emit('hidden')
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = false
+}
 
 watch(
   () => modelValueBoolean.value,
   (newValue) => {
-    if (newValue === true && !noFocusBoolean.value && element.value !== null) {
-      element.value.focus()
+    if (newValue === true && !noFocusBoolean.value) {
+      nextTick(() => {
+        if (element.value !== null) element.value.focus()
+      })
     }
   }
 )
