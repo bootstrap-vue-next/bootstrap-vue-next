@@ -3,9 +3,10 @@
     <slot name="first" />
     <!-- eslint-disable vue/no-v-text-v-html-on-component -->
     <!-- eslint-disable vue/no-v-html -->
+    <!-- TODO these options don't seem right for the component -->
     <b-form-select-option
       v-for="(option, index) in formOptions"
-      :key="`option_${index}`"
+      :key="index"
       :value="option.value"
       :disabled="option.disabled"
       v-bind="$attrs"

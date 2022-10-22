@@ -8,6 +8,7 @@ import dts from 'vite-plugin-dts'
 
 const config = defineConfig({
   build: {
+    sourcemap: true,
     minify: true,
     lib: {
       entry: resolve(__dirname, 'src/BootstrapVue.ts'),
@@ -66,7 +67,7 @@ const config = defineConfig({
 
   test: {
     // globals: true,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     coverage: {
       provider: 'c8',
       reporter: ['text', 'html'],

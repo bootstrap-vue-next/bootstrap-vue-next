@@ -1,11 +1,11 @@
 <template>
   <component
     :is="tag"
-    :class="classes"
-    :role="label || $slots.label ? role : null"
-    :aria-hidden="label || $slots.label ? null : true"
+    :class="computedClasses"
+    :role="label || hasLabelSlot ? role : null"
+    :aria-hidden="label || hasLabelSlot ? null : true"
   >
-    <span v-if="label || $slots.label" class="visually-hidden">
+    <span v-if="label || hasLabelSlot" class="visually-hidden">
       <slot name="label">{{ label }}</slot>
     </span>
   </component>
@@ -13,9 +13,10 @@
 
 <script setup lang="ts">
 // import type {BSpinnerProps} from '../types/components'
-import {computed, toRef} from 'vue'
+import {computed, toRef, useSlots} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../types'
 import {useBooleanish} from '../composables'
+import {isEmptySlot} from '../utils'
 
 interface BSpinnerProps {
   label?: string
@@ -33,13 +34,17 @@ const props = withDefaults(defineProps<BSpinnerProps>(), {
   type: 'border',
 })
 
+const slots = useSlots()
+
 const smallBoolean = useBooleanish(toRef(props, 'small'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'spinner-border': props.type === 'border',
   'spinner-border-sm': props.type === 'border' && smallBoolean.value,
   'spinner-grow': props.type === 'grow',
   'spinner-grow-sm': props.type === 'grow' && smallBoolean.value,
   [`text-${props.variant}`]: props.variant !== undefined,
 }))
+
+const hasLabelSlot = computed<boolean>(() => !isEmptySlot(slots.label))
 </script>

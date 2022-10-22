@@ -4,7 +4,7 @@ export interface Props {
   align?: Alignment
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<unknown> | Record<string, unknown> | string // TODO record<string, unknown> can be replaced as a known object
+  bodyClass?: Array<unknown> | Record<string, unknown> | string
   bodyTag?: string // Above todo, also Array can be explicit
   bodyTextVariant?: ColorVariant
   borderVariant?: ColorVariant

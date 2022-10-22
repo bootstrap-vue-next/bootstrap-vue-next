@@ -1,7 +1,7 @@
 <template>
   <li class="nav-item dropdown">
-    <b-dropdown v-bind="$props" is-nav>
-      <template v-for="(_, slot) in $slots" #[slot]="scope">
+    <b-dropdown v-bind="props" is-nav>
+      <template v-for="(_, slot, index) in $slots" :key="index" #[slot]="scope">
         <slot :name="slot" v-bind="scope || {}" />
       </template>
     </b-dropdown>
@@ -34,7 +34,7 @@ interface BNavItemDropdownProps {
   variant?: ButtonVariant
 }
 
-withDefaults(defineProps<BNavItemDropdownProps>(), {
+const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
   autoClose: true,
   dark: false,
   dropleft: false,

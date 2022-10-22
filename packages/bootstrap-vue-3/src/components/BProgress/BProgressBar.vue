@@ -1,7 +1,7 @@
 <template>
   <div
     class="progress-bar"
-    :class="classes"
+    :class="computedClasses"
     role="progressbar"
     :aria-valuenow="value"
     aria-valuemin="0"
@@ -43,14 +43,14 @@ const props = withDefaults(defineProps<Props>(), {
   value: 0,
 })
 
+const parent = inject<BProgressParentData>(injectionKey)
+
 const animatedBoolean = useBooleanish(toRef(props, 'animated'))
 const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
 const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
-const parent = inject<BProgressParentData>(injectionKey)
-
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'progress-bar-animated': animatedBoolean.value || parent?.animated,
   'progress-bar-striped':
     stripedBoolean.value || parent?.striped || animatedBoolean.value || parent?.animated,

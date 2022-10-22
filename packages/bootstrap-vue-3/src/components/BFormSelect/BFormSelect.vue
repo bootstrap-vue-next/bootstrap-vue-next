@@ -4,7 +4,7 @@
     ref="input"
     v-bind="$attrs"
     v-model="localValue"
-    :class="classes"
+    :class="computedClasses"
     :name="name"
     :form="form || undefined"
     :multiple="multipleBoolean || undefined"
@@ -15,10 +15,9 @@
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
-    <template v-for="(option, index) in formOptions">
+    <template v-for="(option, index) in formOptions" :key="index">
       <b-form-select-option-group
         v-if="Array.isArray(option.options)"
-        :key="`option_${index}`"
         :label="option.label"
         :options="option.options"
       />
@@ -26,7 +25,6 @@
       <!-- eslint-disable vue/no-v-html -->
       <b-form-select-option
         v-else
-        :key="`option2_${index}`"
         :value="option.value"
         :disabled="option.disabled"
         v-html="option.html || option.text"
@@ -88,13 +86,6 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   modelValue: '',
 })
 
-const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const multipleBoolean = useBooleanish(toRef(props, 'multiple'))
-const plainBoolean = useBooleanish(toRef(props, 'plain'))
-const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
-
 interface BFormSelectEmits {
   (e: 'input', value: unknown): void
   (e: 'update:modelValue', value: unknown): void
@@ -103,22 +94,18 @@ interface BFormSelectEmits {
 
 const emit = defineEmits<BFormSelectEmits>()
 
-const input = ref<HTMLElement>()
 const computedId = useId(toRef(props, 'id'), 'input')
 
-// lifecycle events
-const handleAutofocus = () => {
-  nextTick(() => {
-    if (autofocusBoolean.value) input.value?.focus()
-  })
-}
-onMounted(handleAutofocus)
-onActivated(handleAutofocus)
-// /lifecycle events
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const multipleBoolean = useBooleanish(toRef(props, 'multiple'))
+const plainBoolean = useBooleanish(toRef(props, 'plain'))
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
+const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 
-// computed
-// noinspection PointlessBooleanExpressionJS
-const classes = computed(() => ({
+const input = ref<HTMLElement>()
+
+const computedClasses = computed(() => ({
   'form-control': plainBoolean.value,
   [`form-control-${props.size}`]: props.size && plainBoolean.value,
   'form-select': !plainBoolean.value,
@@ -152,10 +139,6 @@ const localValue = computed({
   },
 })
 
-// /computed
-
-// methods
-
 const focus = () => {
   if (!disabledBoolean.value) input.value?.focus()
 }
@@ -165,7 +148,15 @@ const blur = () => {
     input.value?.blur()
   }
 }
-// /methods
+
+const handleAutofocus = () => {
+  nextTick(() => {
+    if (autofocusBoolean.value) input.value?.focus()
+  })
+}
+
+onMounted(handleAutofocus)
+onActivated(handleAutofocus)
 
 defineExpose({
   blur,

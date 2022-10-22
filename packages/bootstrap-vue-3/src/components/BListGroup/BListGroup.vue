@@ -1,5 +1,5 @@
 <template>
-  <component :is="computedTag" class="list-group" :class="classes">
+  <component :is="computedTag" class="list-group" :class="computedClasses">
     <slot />
   </component>
 </template>
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<BListGroupProps>(), {
 const flushBoolean = useBooleanish(toRef(props, 'flush'))
 const numberedBoolean = useBooleanish(toRef(props, 'numbered'))
 
-const classes = computed(() => {
+const computedClasses = computed(() => {
   const horizontal = flushBoolean.value ? false : props.horizontal
   return {
     'list-group-flush': flushBoolean.value,

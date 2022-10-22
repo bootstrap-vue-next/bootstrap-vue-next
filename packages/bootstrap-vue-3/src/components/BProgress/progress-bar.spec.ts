@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BProgressBar from './BProgressBar.vue'
 import {afterEach, describe, expect, it} from 'vitest'

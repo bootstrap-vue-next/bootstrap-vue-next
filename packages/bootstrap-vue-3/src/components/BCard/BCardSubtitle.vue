@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="card-subtitle mb-2" :class="classes">
+  <component :is="tag" class="card-subtitle mb-2" :class="coomputedClasses">
     <slot>
       {{ text }}
     </slot>
@@ -22,7 +22,5 @@ const props = withDefaults(defineProps<BCardSubtitleProps>(), {
   textVariant: 'muted',
 })
 
-const classes = computed(() => ({
-  [`text-${props.textVariant}`]: !!props.textVariant,
-}))
+const coomputedClasses = computed(() => [`text-${props.textVariant}`])
 </script>

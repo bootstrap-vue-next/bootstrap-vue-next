@@ -3,7 +3,7 @@
     :id="id"
     ref="element"
     class="popover b-popover"
-    :class="classes"
+    :class="computedClasses"
     role="tooltip"
     tabindex="-1"
   >
@@ -80,7 +80,8 @@ export default defineComponent({
     const instance = ref<Popover>()
     const titleRef = ref<HTMLElement>()
     const contentRef = ref<HTMLElement>()
-    const classes = computed(() => ({
+
+    const computedClasses = computed(() => ({
       [`b-popover-${props.variant}`]: props.variant !== undefined,
     }))
 
@@ -125,22 +126,6 @@ export default defineComponent({
       })
     }
 
-    onMounted(() => {
-      nextTick(() => {
-        generatePopoverInstance(props.target)
-      })
-
-      element.value?.parentNode?.removeChild(element.value)
-
-      if (showBoolean.value) {
-        instance.value?.show()
-      }
-    })
-
-    onBeforeUnmount(() => {
-      instance.value?.dispose()
-    })
-
     watch(
       () => props.target,
       (newValue) => {
@@ -148,7 +133,6 @@ export default defineComponent({
         generatePopoverInstance(newValue)
       }
     )
-
     watch(
       () => showBoolean.value,
       (show, oldVal) => {
@@ -168,11 +152,27 @@ export default defineComponent({
     useEventListener(target, 'hidden.bs.popover', () => emit('hidden'))
     useEventListener(target, 'inserted.bs.popover', () => emit('inserted'))
 
+    onMounted(() => {
+      nextTick(() => {
+        generatePopoverInstance(props.target)
+      })
+
+      element.value?.parentNode?.removeChild(element.value)
+
+      if (showBoolean.value) {
+        instance.value?.show()
+      }
+    })
+
+    onBeforeUnmount(() => {
+      instance.value?.dispose()
+    })
+
     return {
       element,
       titleRef,
       contentRef,
-      classes,
+      computedClasses,
     }
   },
 })

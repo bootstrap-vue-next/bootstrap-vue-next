@@ -4,7 +4,7 @@
       :is="headerTag"
       :id="headerId"
       class="dropdown-header"
-      :class="[classes, headerClass]"
+      :class="computedClasses"
       :role="headerRole"
     >
       <slot name="header">
@@ -39,7 +39,6 @@ interface BDropdownGroupProps {
 
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   headerTag: 'header',
-  headerClass: undefined,
 })
 
 const headerId = computed<string | undefined>(() =>
@@ -50,9 +49,12 @@ const headerRole = computed<'heading' | undefined>(() =>
   props.headerTag === 'header' ? undefined : 'heading'
 )
 
-const classes = computed(() => ({
-  [`text-${props.headerVariant}`]: props.headerVariant !== undefined,
-}))
+const computedClasses = computed(() => [
+  props.headerClass,
+  {
+    [`text-${props.headerVariant}`]: props.headerVariant !== undefined,
+  },
+])
 </script>
 
 <script lang="ts">

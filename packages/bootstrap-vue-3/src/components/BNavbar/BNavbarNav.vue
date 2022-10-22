@@ -1,5 +1,5 @@
 <template>
-  <ul class="navbar-nav" :class="classes">
+  <ul class="navbar-nav" :class="computedClasses">
     <slot />
   </ul>
 </template>
@@ -28,7 +28,7 @@ const fillBoolean = useBooleanish(toRef(props, 'fill'))
 const justifiedBoolean = useBooleanish(toRef(props, 'justified'))
 const smallBoolean = useBooleanish(toRef(props, 'small'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'nav-fill': fillBoolean.value,
   'nav-justified': justifiedBoolean.value,
   [`justify-content-${props.align}`]: props.align !== undefined,

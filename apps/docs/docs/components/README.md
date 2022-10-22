@@ -4,7 +4,7 @@ BootstrapVue 3 components
 
 <ClientOnly>
     <b-list-group>
-        <b-list-group-item v-for="(component, key)  in componentList">
+        <b-list-group-item v-for="(component, key)  in componentList" :key="key">
             <RouterLink :to="`./${key}.html`">{{component.name}}</RouterLink>
             <b-badge v-if="component.status=='todo'" variant="warning" pill>TODO</b-badge>
             <b-badge v-else-if="component.status=='wip'" variant="warning" pill>WIP</b-badge>

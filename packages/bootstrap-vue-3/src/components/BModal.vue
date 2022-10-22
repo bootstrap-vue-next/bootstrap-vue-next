@@ -1,97 +1,120 @@
 <template>
-  <teleport to="body">
-    <div
-      :id="computedId"
-      ref="element"
-      class="modal"
-      :class="modalClasses"
-      tabindex="-1"
-      v-bind="$attrs"
+  <teleport to="body" :disabled="staticBoolean">
+    <b-transition
+      :no-fade="true"
+      :trans-props="{enterToClass: 'show'}"
+      @before-enter="onBeforeEnter"
+      @after-enter="onAfterEnter"
+      @before-leave="onBeforeLeave"
+      @leave="onLeave"
+      @after-leave="onAfterLeave"
     >
-      <div class="modal-dialog" :class="modalDialogClasses">
-        <div
-          v-if="
-            !lazyBoolean ||
-            (lazyBoolean && lazyLoadCompleted) ||
-            (lazyBoolean && modelValueBoolean === true)
-          "
-          class="modal-content"
-          :class="contentClass"
-        >
-          <div v-if="!hideHeaderBoolean" class="modal-header" :class="computedHeaderClasses">
-            <slot name="header">
-              <component :is="titleTag" class="modal-title" :class="computedTitleClasses">
-                <slot name="title">
-                  {{ title }}
-                </slot>
-              </component>
-              <template v-if="!hideHeaderCloseBoolean">
-                <button
-                  v-if="$slots['header-close']"
-                  type="button"
-                  data-bs-dismiss="modal"
-                  @click="hide()"
+      <div
+        v-show="modelValueBoolean"
+        :id="computedId"
+        ref="element"
+        class="modal"
+        :class="modalClasses"
+        role="dialog"
+        :aria-labelledby="`${computedId}-label`"
+        :aria-describedby="`${computedId}-body`"
+        :style="{display: 'block'}"
+        tabindex="-1"
+        v-bind="$attrs"
+        @keyup.esc="onEsc"
+      >
+        <div class="modal-dialog" :class="modalDialogClasses">
+          <div class="modal-content" :class="contentClass">
+            <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
+              <slot name="header">
+                <component
+                  :is="titleTag"
+                  :id="`${computedId}-label`"
+                  class="modal-title"
+                  :class="titleClasses"
                 >
-                  <slot name="header-close" />
-                </button>
-                <b-close-button
-                  v-else
-                  type="button"
-                  :aria-label="headerCloseLabel"
-                  data-bs-dismiss="modal"
-                  :white="headerCloseWhiteBoolean"
-                  @click="hide()"
-                />
-              </template>
-            </slot>
-          </div>
-          <div class="modal-body" :class="computedBodyClasses">
-            <slot />
-          </div>
-          <div v-if="!hideFooterBoolean" class="modal-footer" :class="computedFooterClasses">
-            <slot name="footer">
-              <b-button
-                v-if="!okOnlyBoolean"
-                type="button"
-                class="btn"
-                :disabled="disableCancel"
-                :size="buttonSize"
-                :variant="cancelVariant"
-                @click="hide(), emit('cancel')"
-              >
-                {{ cancelTitle }}
-              </b-button>
-              <b-button
-                type="button"
-                class="btn"
-                :disabled="disableOk"
-                :size="buttonSize"
-                :variant="okVariant"
-                @click="hide(), emit('ok')"
-              >
-                {{ okTitle }}
-              </b-button>
-            </slot>
+                  <slot name="title">
+                    {{ title }}
+                  </slot>
+                </component>
+                <template v-if="!hideHeaderCloseBoolean">
+                  <button
+                    v-if="hasHeaderCloseSlot"
+                    type="button"
+                    data-bs-dismiss="modal"
+                    @click="hide()"
+                  >
+                    <slot name="header-close" />
+                  </button>
+                  <b-close-button
+                    v-else
+                    :aria-label="headerCloseLabel"
+                    data-bs-dismiss="modal"
+                    :white="headerCloseWhite"
+                    @click="hide()"
+                  />
+                </template>
+              </slot>
+            </div>
+            <div :id="`${computedId}-body`" class="modal-body" :class="bodyClasses">
+              <slot />
+            </div>
+            <div v-if="!hideFooterBoolean" class="modal-footer" :class="footerClasses">
+              <slot name="footer">
+                <slot name="cancel">
+                  <b-button
+                    v-if="!okOnlyBoolean"
+                    type="button"
+                    class="btn"
+                    :disabled="disableCancel"
+                    :size="buttonSize"
+                    :variant="cancelVariant"
+                    @click="hide(), emit('cancel')"
+                  >
+                    {{ cancelTitle }}
+                  </b-button>
+                </slot>
+                <slot name="ok">
+                  <b-button
+                    type="button"
+                    class="btn"
+                    :disabled="disableOk"
+                    :size="buttonSize"
+                    :variant="okVariant"
+                    @click="hide(), emit('ok')"
+                  >
+                    {{ okTitle }}
+                  </b-button>
+                </slot>
+              </slot>
+            </div>
           </div>
         </div>
+        <slot v-if="!hideBackdropBoolean" name="backdrop">
+          <div class="modal-backdrop fade show" @click="!noCloseOnBackdropBoolean && hide()" />
+        </slot>
       </div>
-      <div
-        v-if="hideBackdropBoolean === false"
-        class="modal-backdrop fade show"
-        @click.prevent="noCloseOnBackdropBoolean === false && hide()"
-      />
-    </div>
+    </b-transition>
   </teleport>
 </template>
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import {Modal} from 'bootstrap'
-import {computed, nextTick, onBeforeUnmount, onMounted, ref, toRef, watch} from 'vue'
-import {useBooleanish, useEventListener, useId} from '../composables'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {isEmptySlot} from '../utils'
+import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
+import BTransition from './BTransition/BTransition.vue'
+
+// TODO build lazy system
+// aria
+// autofocus
+// close on escape when autofocus
+
+// Note, attempt to return focus to item that openned the modal after close
+// Implement auto focus props like autoFocusButton
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
@@ -139,6 +162,7 @@ interface BModalProps {
   titleClass?: string
   titleSrOnly?: Booleanish
   titleTag?: string
+  static?: Booleanish
 }
 
 const props = withDefaults(defineProps<BModalProps>(), {
@@ -164,6 +188,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   okDisabled: false,
   okOnly: false,
   okTitle: 'Ok',
+  static: false,
   okVariant: 'primary',
   scrollable: false,
   show: false,
@@ -171,11 +196,29 @@ const props = withDefaults(defineProps<BModalProps>(), {
   titleTag: 'h5',
 })
 
+interface BModalEmits {
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'show'): void
+  (e: 'shown'): void
+  (e: 'hide'): void
+  (e: 'hidden'): void
+  (e: 'hide-prevented', value: Event): void
+  (e: 'ok'): void
+  (e: 'cancel'): void
+}
+
+const emit = defineEmits<BModalEmits>()
+
+const slots = useSlots()
+
+const isActive = ref(false)
+
+const computedId = useId(toRef(props, 'id'), 'modal')
+
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+// const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
 const centeredBoolean = useBooleanish(toRef(props, 'centered'))
-const headerCloseWhiteBoolean = useBooleanish(toRef(props, 'headerCloseWhite'))
 const hideBackdropBoolean = useBooleanish(toRef(props, 'hideBackdrop'))
 const hideFooterBoolean = useBooleanish(toRef(props, 'hideFooter'))
 const hideHeaderBoolean = useBooleanish(toRef(props, 'hideHeader'))
@@ -188,36 +231,23 @@ const noFocusBoolean = useBooleanish(toRef(props, 'noFocus'))
 const okDisabledBoolean = useBooleanish(toRef(props, 'okDisabled'))
 const okOnlyBoolean = useBooleanish(toRef(props, 'okOnly'))
 const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
-const showBoolean = useBooleanish(toRef(props, 'show'))
 const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
+const staticBoolean = useBooleanish(toRef(props, 'static'))
 
-const lazyLoadCompleted = ref(false)
+const element = ref<HTMLElement | null>(null)
 
-const computedId = useId(toRef(props, 'id'), 'modal')
-
-interface BModalEmits {
-  (e: 'update:modelValue', value: boolean): void
-  (e: 'show', value: Event): void
-  (e: 'shown', value: Event): void
-  (e: 'hide', value: Event): void
-  (e: 'hidden', value: Event): void
-  (e: 'hide-prevented', value: Event): void
-  (e: 'ok'): void
-  (e: 'cancel'): void
-}
-
-const emit = defineEmits<BModalEmits>()
-
-const element = ref<HTMLElement>()
-const instance = ref<Modal>()
 const modalClasses = computed(() => [
+  props.modalClass,
   {
     fade: !noFadeBoolean.value,
-    show: showBoolean.value,
+    show: isActive.value,
   },
-  props.modalClass,
 ])
+
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
+
 const modalDialogClasses = computed(() => [
+  props.dialogClass,
   {
     'modal-fullscreen': props.fullscreen === true,
     [`modal-fullscreen-${props.fullscreen}-down`]: typeof props.fullscreen === 'string',
@@ -225,142 +255,68 @@ const modalDialogClasses = computed(() => [
     'modal-dialog-centered': centeredBoolean.value,
     'modal-dialog-scrollable': scrollableBoolean.value,
   },
-  props.dialogClass,
 ])
 
-const computedBodyClasses = computed(() => [
-  {
-    [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant,
-    [`text-${props.bodyTextVariant}`]: props.bodyTextVariant,
-  },
+const bodyClasses = computed(() => [
   props.bodyClass,
+  {
+    [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
+    [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
+  },
 ])
 
-const computedHeaderClasses = computed(() => [
-  {
-    [`bg-${props.headerBgVariant}`]: props.headerBgVariant,
-    [`border-${props.headerBorderVariant}`]: props.headerBorderVariant,
-    [`text-${props.headerTextVariant}`]: props.headerTextVariant,
-  },
+const headerClasses = computed(() => [
   props.headerClass,
-])
-
-const computedFooterClasses = computed(() => [
   {
-    [`bg-${props.footerBgVariant}`]: props.footerBgVariant,
-    [`border-${props.footerBorderVariant}`]: props.footerBorderVariant,
-    [`text-${props.footerTextVariant}`]: props.footerTextVariant,
+    [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== undefined,
+    [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== undefined,
+    [`text-${props.headerTextVariant}`]: props.headerTextVariant !== undefined,
   },
-  props.footerClass,
 ])
 
-const computedTitleClasses = computed(() => [
+const footerClasses = computed(() => [
+  props.footerClass,
+  {
+    [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== undefined,
+    [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== undefined,
+    [`text-${props.footerTextVariant}`]: props.footerTextVariant !== undefined,
+  },
+])
+
+const titleClasses = computed(() => [
+  props.titleClass,
   {
     ['visually-hidden']: titleSrOnlyBoolean.value,
   },
-  props.titleClass,
 ])
-
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
 const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
 
-useEventListener(element, 'shown.bs.modal', (e) => modalShowed(e))
-useEventListener(element, 'hidden.bs.modal', (e) => modalHided(e))
-useEventListener(element, 'show.bs.modal', (e) => modalShow(e))
-useEventListener(element, 'hide.bs.modal', (e) => modalHide(e))
+const hide = () => emit('update:modelValue', false)
 
-const modalShowed = (e: Event) => {
-  emit('shown', e)
-
-  if (lazyBoolean.value === true) lazyLoadCompleted.value = true
-  if (modelValueBoolean.value === false) emit('update:modelValue', true)
-  ;(e.target as HTMLElement).focus()
-}
-
-const modalHided = (e: Event) => {
-  emit('hidden', e)
-
-  if (lazyBoolean.value === true) lazyLoadCompleted.value = false
-  if (modelValueBoolean.value === true) emit('update:modelValue', false)
-
-  const parentModal = document.querySelector('.modal')
-  if (parentModal) {
-    ;(parentModal as HTMLElement).focus()
+const onEsc = (e: KeyboardEvent) => {
+  if (!noCloseOnEscBoolean.value && modelValueBoolean.value && e.key === 'Escape') {
+    hide()
   }
 }
 
-const modalShow = (e: Event) => {
-  emit('show', e)
+const onBeforeEnter = () => emit('show')
+const onAfterEnter = () => {
+  isActive.value = true
+  emit('shown')
 }
-
-const modalHide = (e: Event) => {
-  emit('hide', e)
+const onBeforeLeave = () => emit('hide')
+const onLeave = () => {
+  isActive.value = false
 }
-
-const show = () => {
-  if (modelValueBoolean.value) emit('update:modelValue', true)
-  getInstance().show()
-}
-
-const hide = () => {
-  if (modelValueBoolean.value) emit('update:modelValue', false)
-  getInstance().hide()
-}
-
-const getInstance = (): Modal => {
-  if (instance.value !== undefined) return instance.value
-  instance.value = new Modal(element.value as HTMLElement, {
-    backdrop: false,
-    // backdrop: hideBackdropBoolean.value
-    //   ? false
-    //   : noCloseOnBackdropBoolean.value
-    //     ? 'static'
-    //     : !hideBackdropBoolean.value,
-    keyboard: !noCloseOnEscBoolean.value,
-    focus: !noFocusBoolean.value,
-  })
-  return instance.value
-}
-
-onMounted(() => {
-  if (modelValueBoolean.value) {
-    getInstance().show()
-  }
-})
-
-onBeforeUnmount((): void => {
-  instance.value?.dispose()
-  instance.value = undefined
-})
-
-watch(
-  () => props.noCloseOnBackdrop,
-  (newValue) => {
-    ;(getInstance() as unknown as {_config: Modal.Options})._config.backdrop = props.hideBackdrop
-      ? false
-      : newValue
-      ? 'static'
-      : !props.hideBackdrop
-  }
-)
-
-watch(
-  () => props.noCloseOnEsc,
-  (newValue) => {
-    ;(getInstance() as unknown as {_config: Modal.Options})._config.keyboard = !newValue
-  }
-)
+const onAfterLeave = () => emit('hidden')
 
 watch(
   () => modelValueBoolean.value,
-  (value) => {
-    nextTick(() => {
-      if (value) {
-        show()
-      } else {
-        hide()
-      }
-    })
+  (newValue) => {
+    if (newValue === true && !noFocusBoolean.value && element.value !== null) {
+      element.value.focus()
+    }
   }
 )
 </script>

@@ -16,12 +16,11 @@ describe('progress', () => {
     expect(wrapper.classes()).toContain('progress')
   })
 
-  // TODO this does not work for some reason
-  it.skip('has style to be prop height', async () => {
+  it('has style to be prop height', async () => {
     const wrapper = mount(BProgress, {
-      props: {height: '100'},
+      props: {height: '100px'},
     })
-    expect(wrapper.attributes('style')).toContain('height: 100')
+    expect(wrapper.attributes('style')).toContain('height: 100px;')
   })
 
   it('has BProgressBar in slot by default', () => {

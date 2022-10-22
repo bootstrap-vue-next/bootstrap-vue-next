@@ -2,7 +2,7 @@
   <th
     role="columnheader"
     :scope="scope"
-    :class="classes"
+    :class="computedClasses"
     :colspan="colspan"
     :rowspan="rowspan"
     :data-label="stackedHeading"
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<BThProps>(), {
 
 const stickyColumnBoolean = useBooleanish(toRef(props, 'stickyColumn'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== undefined,
   'b-table-sticky-column': stickyColumnBoolean.value,
   'table-b-table-default': stickyColumnBoolean.value && props.variant === undefined,

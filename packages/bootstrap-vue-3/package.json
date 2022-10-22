@@ -38,6 +38,9 @@
     "bootstrap": "^5.2.0",
     "vue": "^3.2.37"
   },
+  "dependencies": {
+    "@nuxt/kit": "3.0.0-rc.12"
+  },
   "devDependencies": {
     "@popperjs/core": "^2.11.6",
     "@types/bootstrap": "^5.2.2",
@@ -48,6 +51,7 @@
     "@vue/test-utils": "^2.0.2",
     "bootstrap": "^5.2.0",
     "c8": "^7.12.0",
+    "happy-dom": "^7.5.12",
     "jsdom": "^20.0.0",
     "rollup": "^2.78.1",
     "rollup-plugin-visualizer": "^5.7.1",
@@ -70,13 +74,13 @@
   },
   "homepage": "https://github.com/cdmoro/bootstrap-vue-3",
   "keywords": [
+    "vue3",
+    "vue",
     "bootstrap",
     "components",
     "typescript",
-    "vue",
     "component-library",
-    "bootstrapvue",
-    "vue3"
+    "bootstrapvue"
   ],
   "lint-staged": {
     "*.{js,vue}": "eslint --cache --fix",

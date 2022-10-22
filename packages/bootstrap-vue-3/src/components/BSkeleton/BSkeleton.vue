@@ -1,5 +1,5 @@
 <template>
-  <div class="b-skeleton" :class="classes" :style="style" />
+  <div class="b-skeleton" :class="computedClasses" :style="style" />
 </template>
 
 <script setup lang="ts">
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<BSkeletonProps>(), {
   type: 'text',
 })
 
-const classes = computed(() => [
+const computedClasses = computed(() => [
   `b-skeleton-${props.type}`,
   {
     [`b-skeleton-animate-${props.animation}`]:

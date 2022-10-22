@@ -1,0 +1,12 @@
+{
+  "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "vue-router": ["node_modules/vue-router"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+  "references": [{"path": "./tsconfig.node.json"}]
+}

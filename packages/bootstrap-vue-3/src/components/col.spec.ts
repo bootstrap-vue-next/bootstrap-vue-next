@@ -60,8 +60,7 @@ describe('col', () => {
     expect(wrapper.classes()).toContain('col')
   })
 
-  // TODO this component almost always seems like it has col class
-  it.skip('does not have class col when prop col false and prop cols Truthy', async () => {
+  it('does not have class col when prop col false and prop cols Truthy', async () => {
     const wrapper = mount(BCol, {
       props: {col: false, cols: 'auto'},
     })

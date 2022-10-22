@@ -4,7 +4,7 @@
     :id="id"
     ref="element"
     class="collapse"
-    :class="classes"
+    :class="computedClasses"
     :data-bs-parent="accordion || null"
     :is-nav="isNavBoolean"
   >
@@ -57,36 +57,13 @@ const emit = defineEmits<BCollapseEmits>()
 
 const element = ref<HTMLElement>()
 const instance = ref<Collapse>()
-const classes = computed(() => ({
+
+const computedClasses = computed(() => ({
   'show': modelValueBoolean.value,
   'navbar-collapse': isNavBoolean.value,
 }))
 
 const close = () => emit('update:modelValue', false)
-
-useEventListener(element, 'show.bs.collapse', () => {
-  emit('show')
-  emit('update:modelValue', true)
-})
-
-useEventListener(element, 'hide.bs.collapse', () => {
-  emit('hide')
-  emit('update:modelValue', false)
-})
-
-useEventListener(element, 'shown.bs.collapse', () => emit('shown'))
-useEventListener(element, 'hidden.bs.collapse', () => emit('hidden'))
-
-onMounted(() => {
-  instance.value = new Collapse(element.value as HTMLElement, {
-    parent: props.accordion ? `#${props.accordion}` : undefined,
-    toggle: toggleBoolean.value,
-  })
-  if (visibleBoolean.value || modelValueBoolean.value) {
-    emit('update:modelValue', true)
-    instance.value?.show()
-  }
-})
 
 watch(
   () => modelValueBoolean.value,
@@ -110,4 +87,27 @@ watch(
     }
   }
 )
+
+useEventListener(element, 'show.bs.collapse', () => {
+  emit('show')
+  emit('update:modelValue', true)
+})
+
+useEventListener(element, 'hide.bs.collapse', () => {
+  emit('hide')
+  emit('update:modelValue', false)
+})
+useEventListener(element, 'shown.bs.collapse', () => emit('shown'))
+useEventListener(element, 'hidden.bs.collapse', () => emit('hidden'))
+
+onMounted(() => {
+  instance.value = new Collapse(element.value as HTMLElement, {
+    parent: props.accordion ? `#${props.accordion}` : undefined,
+    toggle: toggleBoolean.value,
+  })
+  if (visibleBoolean.value || modelValueBoolean.value) {
+    emit('update:modelValue', true)
+    instance.value?.show()
+  }
+})
 </script>

@@ -1,19 +1,22 @@
 <template>
   <div
-    v-bind="attrs"
+    v-bind="computedAttrs"
     :id="computedId"
     role="radiogroup"
-    :class="classes"
+    :class="computedClasses"
     class="bv-no-focus-ring"
     tabindex="-1"
   >
-    <template v-for="(item, key) in checkboxList" :key="key">
-      <b-form-radio v-model="localValue" v-bind="item.props">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="item.html" v-html="item.html" />
-        <span v-else v-text="item.text" />
-      </b-form-radio>
-    </template>
+    <b-form-radio
+      v-for="(item, key) in checkboxList"
+      :key="key"
+      v-model="localValue"
+      v-bind="item.props"
+    >
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <span v-if="item.html" v-html="item.html" />
+      <span v-else v-text="item.text" />
+    </b-form-radio>
   </div>
 </template>
 
@@ -74,6 +77,21 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   valueField: 'value',
 })
 
+interface BFormRadioGroupEmits {
+  (e: 'input', value: unknown): void
+  (e: 'update:modelValue', value: unknown): void
+  (e: 'change', value: unknown): void
+}
+
+const emit = defineEmits<BFormRadioGroupEmits>()
+
+const slots = useSlots()
+
+const slotsName = 'BFormRadio'
+
+const computedId = useId(toRef(props, 'id'), 'radio')
+const computedName = useId(toRef(props, 'name'), 'checkbox')
+
 // TODO autofocus is unused
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
@@ -86,20 +104,6 @@ const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
-
-interface BFormRadioGroupEmits {
-  (e: 'input', value: unknown): void
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'change', value: unknown): void
-}
-
-const emit = defineEmits<BFormRadioGroupEmits>()
-
-const slots = useSlots()
-
-const slotsName = 'BFormRadio'
-const computedId = useId(toRef(props, 'id'), 'radio')
-const computedName = useId(toRef(props, 'name'), 'checkbox')
 
 const localValue = computed<string | boolean | Array<unknown> | Record<string, unknown> | number>({
   get: () => props.modelValue,
@@ -129,8 +133,8 @@ const classesObject = reactive({
   stacked: toRef(stackedBoolean, 'value'),
   size: toRef(props, 'size'),
 })
-const attrs = getGroupAttr(classesObject)
-const classes = getGroupClasses(classesObject)
+const computedAttrs = getGroupAttr(classesObject)
+const computedClasses = getGroupClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
 </script>
