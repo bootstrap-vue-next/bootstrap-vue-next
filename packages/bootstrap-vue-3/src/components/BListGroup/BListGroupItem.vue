@@ -68,19 +68,20 @@ const tagComputed = computed<string | typeof BLink>(() =>
   parentData?.numbered ? 'li' : buttonBoolean.value ? 'button' : !link.value ? props.tag : BLink
 )
 
-const computedClasses = computed(() => {
-  const isAction =
+const isAction = computed(
+  () =>
     actionBoolean.value ||
     link.value ||
     buttonBoolean.value ||
     ['a', 'router-link', 'button', 'b-link'].includes(props.tag)
-  return {
-    [`list-group-item-${props.variant}`]: props.variant !== undefined,
-    'list-group-item-action': isAction,
-    'active': activeBoolean.value,
-    'disabled': disabledBoolean.value,
-  }
-})
+)
+
+const computedClasses = computed(() => ({
+  [`list-group-item-${props.variant}`]: props.variant !== undefined,
+  'list-group-item-action': isAction.value,
+  'active': activeBoolean.value,
+  'disabled': disabledBoolean.value,
+}))
 
 const computedAttrs = computed(() => {
   const localAttrs = {} as {type?: string; disabled?: boolean}
