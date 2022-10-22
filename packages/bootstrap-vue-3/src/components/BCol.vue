@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="[classes, classList]">
+  <component :is="tag" :class="computedClasses">
     <slot />
   </component>
 </template>
@@ -28,29 +28,31 @@ export default defineComponent({
     tag: {type: String, default: 'div'},
   },
   setup(props) {
-    const colBoolean = useBooleanish(toRef(props, 'col'))
-
     const properties = [
       {content: breakpointCol, propPrefix: 'cols', classPrefix: 'col'},
       {content: breakpointOffset, propPrefix: 'offset'},
       {content: breakpointOrder, propPrefix: 'order'},
     ]
 
+    const colBoolean = useBooleanish(toRef(props, 'col'))
+
     const classList = computed(() =>
       properties.flatMap((el) => getClasses(props, el.content, el.propPrefix, el.classPrefix))
     )
 
-    const classes = computed(() => ({
-      col: colBoolean.value || !classList.value.some((e) => /^col-/.test(e) && !props.cols),
-      [`col-${props.cols}`]: !!props.cols,
-      [`offset-${props.offset}`]: !!props.offset,
-      [`order-${props.order}`]: !!props.order,
-      [`align-self-${props.alignSelf}`]: !!props.alignSelf,
-    }))
+    const computedClasses = computed(() => [
+      classList.value,
+      {
+        col: colBoolean.value || (!classList.value.some((e) => /^col-/.test(e)) && !props.cols),
+        [`col-${props.cols}`]: !!props.cols,
+        [`offset-${props.offset}`]: !!props.offset,
+        [`order-${props.order}`]: !!props.order,
+        [`align-self-${props.alignSelf}`]: !!props.alignSelf,
+      },
+    ])
 
     return {
-      classes,
-      classList,
+      computedClasses,
     }
   },
 })

@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="row" :class="[classes, rowColsClasses]">
+  <component :is="tag" class="row" :class="computedClasses">
     <slot />
   </component>
 </template>
@@ -26,20 +26,23 @@ export default defineComponent({
   },
   setup(props) {
     const noGuttersBoolean = useBooleanish(toRef(props, 'noGutters'))
-    const rowColsClasses = getClasses(props, rowColsProps, 'cols', 'row-cols')
 
-    const classes = computed(() => ({
-      [`gx-${props.gutterX}`]: props.gutterX !== null,
-      [`gy-${props.gutterY}`]: props.gutterY !== null,
-      'g-0': noGuttersBoolean.value,
-      [`align-items-${props.alignV}`]: props.alignV !== null,
-      [`justify-content-${props.alignH}`]: props.alignH !== null,
-      [`align-content-${props.alignContent}`]: props.alignContent !== null,
-    }))
+    const rowColsClasses = computed(() => getClasses(props, rowColsProps, 'cols', 'row-cols'))
+
+    const computedClasses = computed(() => [
+      rowColsClasses.value,
+      {
+        [`gx-${props.gutterX}`]: props.gutterX !== null,
+        [`gy-${props.gutterY}`]: props.gutterY !== null,
+        'g-0': noGuttersBoolean.value,
+        [`align-items-${props.alignV}`]: props.alignV !== null,
+        [`justify-content-${props.alignH}`]: props.alignH !== null,
+        [`align-content-${props.alignContent}`]: props.alignContent !== null,
+      },
+    ])
 
     return {
-      classes,
-      rowColsClasses,
+      computedClasses,
     }
   },
 })

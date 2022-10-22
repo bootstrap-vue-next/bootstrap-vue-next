@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="classes" v-bind="attrs">
+  <component :is="tag" :class="computedClasses" v-bind="computedAttrs">
     <slot>
       {{ text }}
     </slot>
@@ -38,13 +38,13 @@ const computedShow = computed<boolean>(
   () => forceShowBoolean.value === true || stateBoolean.value === false
 )
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'd-block': computedShow.value,
   'invalid-feedback': !tooltipBoolean.value,
   'invalid-tooltip': tooltipBoolean.value,
 }))
 
-const attrs = computed(() => ({
+const computedAttrs = computed(() => ({
   'id': props.id,
   'role': props.role,
   'aria-live': props.ariaLive,

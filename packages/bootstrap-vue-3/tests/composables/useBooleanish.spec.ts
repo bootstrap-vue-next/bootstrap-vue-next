@@ -11,12 +11,6 @@ describe('useBooleanish blackbox test', () => {
     expect(value).toHaveProperty('value')
   })
 
-  it('value to contain property effect', () => {
-    const prop: {value: Booleanish} = {value: 'false'}
-    const value = useBooleanish(toRef(prop, 'value'))
-    expect(value).toHaveProperty('effect')
-  })
-
   it("value to return bool false, when 'false'", () => {
     const prop: {value: Booleanish} = {value: 'false'}
     const value = useBooleanish(toRef(prop, 'value'))

@@ -1,5 +1,5 @@
 <template>
-  <b-card :img-bottom="imgBottomBoolean">
+  <b-card :img-bottom="imgBottom">
     <template v-if="!noImgBoolean" #img>
       <slot name="img">
         <b-card-img v-bind="imgAttrs" />
@@ -74,7 +74,6 @@ const noButtonBoolean = useBooleanish(toRef(props, 'noButton'))
 const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
 const noFooterBoolean = useBooleanish(toRef(props, 'noFooter'))
 const noImgBoolean = useBooleanish(toRef(props, 'noImg'))
-const imgBottomBoolean = useBooleanish(toRef(props, 'imgBottom'))
 
 const headerAttrs = computed(() => ({
   width: props.headerWidth,
@@ -95,7 +94,7 @@ const imgAttrs = computed(() => ({
   blankColor: props.imgBlankColor,
   height: !props.imgSrc ? props.imgHeight : undefined,
   src: props.imgSrc,
-  top: !imgBottomBoolean.value,
-  bottom: imgBottomBoolean.value,
+  top: !props.imgBottom,
+  bottom: props.imgBottom,
 }))
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="nav" :class="classes">
+  <component :is="tag" class="nav" :class="computedClasses">
     <slot />
   </component>
 </template>
@@ -41,7 +41,7 @@ const smallBoolean = useBooleanish(toRef(props, 'small'))
 const tabsBoolean = useBooleanish(toRef(props, 'tabs'))
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'nav-tabs': tabsBoolean.value,
   'nav-pills': pillsBoolean.value && !tabsBoolean.value,
   'card-header-tabs': !verticalBoolean.value && cardHeaderBoolean.value && tabsBoolean.value,

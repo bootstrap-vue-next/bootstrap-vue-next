@@ -80,13 +80,6 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   indicatorsButtonLabel: 'Slide',
 })
 
-const controlsBoolean = useBooleanish(toRef(props, 'controls'))
-const indicatorsBoolean = useBooleanish(toRef(props, 'indicators'))
-const noTouchBoolean = useBooleanish(toRef(props, 'noTouch'))
-// TODO no wrap is never used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
-
 interface BCarouselEmits {
   (e: 'sliding-start', value: Event): void
   (e: 'sliding-end', value: Event): void
@@ -96,9 +89,17 @@ const emit = defineEmits<BCarouselEmits>()
 
 const slots = useSlots()
 
+const computedId = useId(toRef(props, 'id'), 'carousel')
+
+const controlsBoolean = useBooleanish(toRef(props, 'controls'))
+const indicatorsBoolean = useBooleanish(toRef(props, 'indicators'))
+const noTouchBoolean = useBooleanish(toRef(props, 'noTouch'))
+// TODO no wrap is never used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
+
 const element = ref<HTMLElement>()
 const instance = ref<Carousel>()
-const computedId = useId(toRef(props, 'id'), 'carousel')
 const slides = ref<VNode[]>([])
 
 useEventListener(element, 'slide.bs.carousel', (payload) => emit('sliding-start', payload))

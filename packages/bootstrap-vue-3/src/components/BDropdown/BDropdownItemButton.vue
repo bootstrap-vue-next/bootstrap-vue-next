@@ -5,8 +5,8 @@
       role="menu"
       type="button"
       class="dropdown-item"
-      :class="[classes, buttonClass]"
-      v-bind="attrs"
+      :class="computedClasses"
+      :disabled="disabledBoolean"
       @click="clicked"
     >
       <slot />
@@ -43,15 +43,14 @@ interface BDropdownItemButtonEmits {
 
 const emit = defineEmits<BDropdownItemButtonEmits>()
 
-const classes = computed(() => ({
-  [props.activeClass]: activeBoolean.value,
-  disabled: disabledBoolean.value,
-  [`text-${props.variant}`]: props.variant !== undefined,
-}))
-
-const attrs = computed(() => ({
-  disabled: disabledBoolean.value,
-}))
+const computedClasses = computed(() => [
+  props.buttonClass,
+  {
+    [props.activeClass]: activeBoolean.value,
+    disabled: disabledBoolean.value,
+    [`text-${props.variant}`]: props.variant !== undefined,
+  },
+])
 
 const clicked = (e: MouseEvent): void => emit('click', e)
 </script>

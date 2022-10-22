@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="classes" role="group" :aria-label="ariaLabel">
+  <component :is="tag" :class="computedClasses" role="group" :aria-label="ariaLabel">
     <slot />
   </component>
 </template>
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<BButtonGroupProps>(), {
 
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'btn-group': !verticalBoolean.value && props.size === undefined,
   [`btn-group-${props.size}`]: props.size !== undefined,
   'btn-group-vertical': verticalBoolean.value,

@@ -1,29 +1,48 @@
-<script lang="ts">
-import {computed, defineComponent, h, onMounted, PropType, ref, VNode} from 'vue'
-import type {Breakpoint, Position} from '../types'
-import BToaster from './BToast/BToaster.vue'
-import {ToastInstance, useToast} from './BToast/plugin'
-export default defineComponent({
-  name: 'BContainer',
-  props: {
-    gutterX: {type: String, default: null},
-    gutterY: {type: String, default: null},
-    fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
-    toast: {type: Object},
-    position: {type: String as PropType<Position>, required: false},
-    tag: {type: String, default: 'div'},
-  },
-  setup(props, {slots, expose}) {
-    const container = ref()
-    let toastInstance: ToastInstance | undefined
+<template>
+  <component :is="tag" ref="container" :class="computedClasses">
+    <!-- <b-toaster
+      v-for="(pos, index) in toasts"
+      :key="index"
+      :instance="toastInstance"
+      :position="pos"
+    /> -->
+    <slot />
+  </component>
+</template>
 
-    const classes = computed(() => ({
-      container: !props.fluid,
-      [`container-fluid`]: typeof props.fluid === 'boolean' && props.fluid,
-      [`container-${props.fluid}`]: typeof props.fluid === 'string',
-      [`gx-${props.gutterX}`]: props.gutterX !== null,
-      [`gy-${props.gutterY}`]: props.gutterY !== null,
-    }))
+<script setup lang="ts">
+import {computed, ref} from 'vue'
+// import type {Position} from '../types'
+// import BToaster from './BToast/BToaster.vue'
+// import {ToastInstance} from './BToast/plugin'
+
+interface Props {
+  gutterX?: string
+  gutterY?: string
+  fluid?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
+  // toast?: Record<string, unknown> // Make this strongly typed
+  // position?: Position
+  tag?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  fluid: false,
+  tag: 'div',
+})
+
+const container = ref()
+
+const computedClasses = computed(() => ({
+  container: props.fluid === false,
+  [`container-fluid`]: props.fluid === true,
+  [`container-${props.fluid}`]: typeof props.fluid === 'string',
+  [`gx-${props.gutterX}`]: props.gutterX !== undefined,
+  [`gy-${props.gutterY}`]: props.gutterY !== undefined,
+}))
+
+/* TODO finish this system
+const toasts = computed(() => toastInstance?.containerPositions.value)
+    let toastInstance: ToastInstance | undefined
 
     onMounted(() => {
       if (props.toast) {
@@ -51,7 +70,6 @@ export default defineComponent({
         slots.default?.(),
       ])
     }
-  },
-  methods: {},
-})
+}
+  */
 </script>

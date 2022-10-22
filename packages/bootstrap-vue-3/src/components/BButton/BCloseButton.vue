@@ -3,7 +3,7 @@
     :type="type"
     class="btn-close"
     :disabled="disabledBoolean"
-    :class="classes"
+    :class="computedClasses"
     :aria-label="ariaLabel"
     @click="emit('click', $event)"
   />
@@ -38,7 +38,7 @@ const emit = defineEmits<BCloseButtonEmits>()
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const whiteBoolean = useBooleanish(toRef(props, 'white'))
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'btn-close-white': whiteBoolean.value,
 }))
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="classes">
+  <component :is="tag" :class="computedClasses">
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="!!html" v-html="html" />
     <slot v-else>
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<BCardHeaderProps>(), {
   tag: 'div',
 })
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== undefined,
   [`bg-${props.bgVariant}`]: props.bgVariant !== undefined,
   [`border-${props.borderVariant}`]: props.borderVariant !== undefined,

@@ -2,7 +2,7 @@
   <div
     :id="computedId"
     class="b-form-tags form-control h-auto"
-    :class="classes"
+    :class="computedClasses"
     role="group"
     tabindex="-1"
     @focusin="onFocusin"
@@ -33,14 +33,16 @@
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
-        <template v-for="tag in tags">
-          <slot name="tag" v-bind="{tag, tagClass, tagVariant, tagPillsBoolean, removeTag}">
+        <template v-for="(tag, index) in tags" :key="index">
+          <slot
+            name="tag"
+            v-bind="{tag, tagClass, tagVariant, tagPills: tagPillsBoolean, removeTag}"
+          >
             <b-form-tag
-              :key="tag"
               :class="tagClass"
               tag="li"
               :variant="tagVariant"
-              :pill="tagPillsBoolean"
+              :pill="tagPills"
               @remove="removeTag"
               >{{ tag }}</b-form-tag
             >
@@ -102,7 +104,7 @@
       </div>
     </slot>
     <template v-if="name">
-      <input v-for="tag in tags" :key="tag" type="hidden" :name="name" :value="tag" />
+      <input v-for="(tag, index) in tags" :key="index" type="hidden" :name="name" :value="tag" />
     </template>
   </div>
 </template>
@@ -188,17 +190,6 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   tagVariant: 'secondary',
 })
 
-const addOnChangeBoolean = useBooleanish(toRef(props, 'addOnChange'))
-const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const noAddOnEnterBoolean = useBooleanish(toRef(props, 'noAddOnEnter'))
-const noOuterFocusBoolean = useBooleanish(toRef(props, 'noOuterFocus'))
-const noTagRemoveBoolean = useBooleanish(toRef(props, 'noTagRemove'))
-const removeOnDeleteBoolean = useBooleanish(toRef(props, 'removeOnDelete'))
-const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
-const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
-
 interface BFormTagsEmits {
   (e: 'update:modelValue', value: Array<string>): void
   (e: 'input', value: Array<string>): void
@@ -211,38 +202,31 @@ interface BFormTagsEmits {
 
 const emit = defineEmits<BFormTagsEmits>()
 
-const input = ref<HTMLInputElement | null>(null)
 const computedId = useId()
+
+const addOnChangeBoolean = useBooleanish(toRef(props, 'addOnChange'))
+const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const noAddOnEnterBoolean = useBooleanish(toRef(props, 'noAddOnEnter'))
+const noOuterFocusBoolean = useBooleanish(toRef(props, 'noOuterFocus'))
+const noTagRemoveBoolean = useBooleanish(toRef(props, 'noTagRemove'))
+const removeOnDeleteBoolean = useBooleanish(toRef(props, 'removeOnDelete'))
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
+const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
+const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
+
+const input = ref<HTMLInputElement | null>(null)
 const _inputId = computed<string>(() => props.inputId || `${computedId.value}input__`)
-
-onMounted(() => {
-  checkAutofocus()
-
-  if (props.modelValue.length > 0) {
-    shouldRemoveOnDelete.value = true
-  }
-})
-
-onActivated(() => checkAutofocus())
-
-watch(
-  () => props.modelValue,
-  (newVal) => {
-    tags.value = newVal
-  }
-)
-
 const tags = ref<Array<string>>(props.modelValue)
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(false)
 const focus = ref<boolean>(false)
 const lastRemovedTag = ref<string>('')
-
 const validTags = ref<Array<string>>([])
 const invalidTags = ref<Array<string>>([])
 const duplicateTags = ref<Array<string>>([])
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   [`form-control-${props.size}`]: props.size !== undefined,
   'disabled': disabledBoolean.value,
   'focus': focus.value,
@@ -258,6 +242,57 @@ const isInvalid = computed<boolean>(() =>
 const isLimitReached = computed<boolean>(() => tags.value.length === props.limit)
 
 const disableAddButton = computed<boolean>(() => !isInvalid.value && !isDuplicate.value)
+
+const slotAttrs = computed(() => ({
+  addButtonText: props.addButtonText,
+  addButtonVariant: props.addButtonVariant,
+  addTag,
+  disableAddButton: disableAddButton.value,
+  disabled: disabledBoolean.value,
+  duplicateTagText: props.duplicateTagText,
+  duplicateTags: duplicateTags.value,
+  form: props.form,
+  inputAttrs: {
+    ...props.inputAttrs,
+    disabled: disabledBoolean.value,
+    form: props.form,
+    id: _inputId,
+    value: inputValue,
+  },
+  inputHandlers: {
+    input: onInput,
+    keydown: onKeydown,
+    change: onChange,
+  },
+  inputId: _inputId,
+  inputType: props.inputType,
+  invalidTagText: props.invalidTagText,
+  invalidTags: invalidTags.value,
+  isDuplicate: isDuplicate.value,
+  isInvalid: isInvalid.value,
+  isLimitReached: isLimitReached.value,
+  limitTagsText: props.limitTagsText,
+  limit: props.limit,
+  noTagRemove: noTagRemoveBoolean.value,
+  placeholder: props.placeholder,
+  removeTag,
+  required: requiredBoolean.value,
+  separator: props.separator,
+  size: props.size,
+  state: stateBoolean.value,
+  tagClass: props.tagClass,
+  tagPills: tagPillsBoolean.value,
+  tagRemoveLabel: props.tagRemoveLabel,
+  tagVariant: props.tagVariant,
+  tags: tags.value,
+}))
+
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    tags.value = newVal
+  }
+)
 
 const checkAutofocus = () => {
   if (autofocusBoolean.value) {
@@ -371,66 +406,13 @@ const removeTag = (tag?: VNodeNormalizedChildren): void => {
   emit('update:modelValue', tags.value)
 }
 
-const slotAttrs = computed(() => {
-  const {
-    addButtonText,
-    addButtonVariant,
-    duplicateTagText,
-    inputAttrs,
-    form,
-    inputType,
-    invalidTagText,
-    limitTagsText,
-    limit,
-    placeholder,
-    separator,
-    size,
-    tagClass,
-    tagRemoveLabel,
-    tagVariant,
-  } = props
-  return {
-    addButtonText,
-    addButtonVariant,
-    addTag,
-    disableAddButton,
-    disabled: disabledBoolean.value,
-    duplicateTagText,
-    duplicateTags,
-    form,
-    inputAttrs: {
-      ...inputAttrs,
-      disabled: disabledBoolean.value,
-      form,
-      id: _inputId,
-      value: inputValue,
-    },
-    inputHandlers: {
-      input: onInput,
-      keydown: onKeydown,
-      change: onChange,
-    },
-    inputId: _inputId,
-    inputType,
-    invalidTagText,
-    invalidTags,
-    isDuplicate,
-    isInvalid,
-    isLimitReached,
-    limitTagsText,
-    limit,
-    noTagRemove: noTagRemoveBoolean.value,
-    placeholder,
-    removeTag,
-    required: requiredBoolean.value,
-    separator,
-    size,
-    state: stateBoolean.value,
-    tagClass,
-    tagPills: tagPillsBoolean.value,
-    tagRemoveLabel,
-    tagVariant,
-    tags,
+onMounted(() => {
+  checkAutofocus()
+
+  if (props.modelValue.length > 0) {
+    shouldRemoveOnDelete.value = true
   }
 })
+
+onActivated(() => checkAutofocus())
 </script>

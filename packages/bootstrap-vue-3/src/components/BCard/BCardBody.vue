@@ -1,13 +1,13 @@
 <template>
-  <component :is="bodyTag" class="card-body" :class="classes">
-    <b-card-title v-if="!!title || $slots.title" :tag="titleTag">
+  <component :is="bodyTag" class="card-body" :class="computedClasses">
+    <b-card-title v-if="!!title || hasTitleSlot" :tag="titleTag">
       <slot name="title">
         {{ title }}
       </slot>
     </b-card-title>
 
     <b-card-subtitle
-      v-if="!!subtitle || !!$slots.subtitle"
+      v-if="!!subtitle || hasSubtitleSlot"
       :tag="subtitleTag"
       :text-variant="subtitleTextVariant"
     >
@@ -24,11 +24,12 @@
 
 <script setup lang="ts">
 // import type {BCardBodyProps} from '../../types/components'
-import {computed, toRef} from 'vue'
+import {computed, toRef, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import BCardSubtitle from './BCardSubtitle.vue'
 import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
+import {isEmptySlot} from '../../utils'
 
 interface BCardBodyProps {
   bodyBgVariant?: ColorVariant
@@ -50,9 +51,14 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   subtitleTag: 'h4',
 })
 
+const slots = useSlots()
+
 const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
-const classes = computed(() => ({
+const hasTitleSlot = computed<boolean>(() => !isEmptySlot(slots.title))
+const hasSubtitleSlot = computed<boolean>(() => !isEmptySlot(slots.subtitle))
+
+const computedClasses = computed(() => ({
   'card-img-overlay': overlayBoolean.value,
   [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
   [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,

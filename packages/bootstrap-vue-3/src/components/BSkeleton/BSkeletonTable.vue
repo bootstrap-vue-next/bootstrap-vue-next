@@ -2,21 +2,21 @@
   <b-table-simple v-bind="tableProps">
     <thead v-if="!hideHeaderBoolean">
       <tr>
-        <th v-for="(th, i) in columns" :key="i">
+        <th v-for="(_th, i) in columns" :key="i">
           <b-skeleton />
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(tr, j) in rows" :key="j">
-        <td v-for="(td, k) in columns" :key="k">
+      <tr v-for="(_tr, j) in rows" :key="j">
+        <td v-for="(_td, k) in columns" :key="k">
           <b-skeleton width="75%" />
         </td>
       </tr>
     </tbody>
     <tfoot v-if="showFooterBoolean">
       <tr>
-        <th v-for="(th, l) in columns" :key="l">
+        <th v-for="(_th, l) in columns" :key="l">
           <b-skeleton />
         </th>
       </tr>

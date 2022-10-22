@@ -46,13 +46,4 @@ describe('avatar-group', () => {
     const [, $div] = wrapper.findAll('div')
     expect($div.text()).toBe('foobar')
   })
-
-  it.skip('div child has style attribute when size prop', () => {
-    // TODO it doesn't seem that the computeSize function in BAvatar returns anything when string
-    const wrapper = mount(BAvatarGroup, {
-      props: {size: '128'},
-    })
-    const [, $div] = wrapper.findAll('div')
-    expect($div.html()).toBe('false')
-  })
 })

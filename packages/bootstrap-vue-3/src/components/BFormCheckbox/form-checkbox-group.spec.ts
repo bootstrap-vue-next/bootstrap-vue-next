@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import {afterEach, describe, expect, it} from 'vitest'
 import {nextTick} from 'vue'
 import {enableAutoUnmount, mount} from '@vue/test-utils'

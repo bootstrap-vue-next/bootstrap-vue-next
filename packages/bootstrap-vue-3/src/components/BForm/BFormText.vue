@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="classes" v-bind="attrs">
+  <component :is="tag" :id="id" :class="computedClasses">
     <slot>
       {{ text }}
     </slot>
@@ -28,12 +28,10 @@ const props = withDefaults(defineProps<BFormTextProps>(), {
 
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 
-const classes = computed(() => ({
-  'form-text': !inlineBoolean.value,
-  [`text-${props.textVariant}`]: !!props.textVariant,
-}))
-
-const attrs = computed(() => ({
-  id: props.id,
-}))
+const computedClasses = computed(() => [
+  [`text-${props.textVariant}`],
+  {
+    'form-text': !inlineBoolean.value,
+  },
+])
 </script>

@@ -2,7 +2,7 @@
   <textarea
     :id="computedId"
     ref="input"
-    :class="classes"
+    :class="computedClasses"
     :name="name || undefined"
     :form="form || undefined"
     :disabled="disabled"
@@ -36,9 +36,12 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
+    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
+      useFormInput(props, emit)
+
     const noResizeBoolean = useBooleanish(toRef(props, 'noResize'))
 
-    const classes = computed(() => ({
+    const computedClasses = computed(() => ({
       'form-control': !props.plaintext,
       'form-control-plaintext': props.plaintext,
       [`form-control-${props.size}`]: !!props.size,
@@ -50,9 +53,6 @@ export default defineComponent({
       noResizeBoolean.value ? {resize: 'none'} : undefined
     )
 
-    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-      useFormInput(props, emit)
-
     return {
       input,
       computedId,
@@ -62,7 +62,7 @@ export default defineComponent({
       onBlur,
       focus,
       blur,
-      classes,
+      computedClasses,
       computedStyles,
     }
   },

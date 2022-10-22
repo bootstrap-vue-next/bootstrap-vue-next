@@ -1,5 +1,5 @@
 <template>
-  <b-card-head-foot class="card-header" v-bind="$props">
+  <b-card-head-foot class="card-header" v-bind="props">
     <slot />
   </b-card-head-foot>
 </template>
@@ -18,7 +18,7 @@ interface BCardHeaderProps {
   textVariant?: TextColorVariant
 }
 
-withDefaults(defineProps<BCardHeaderProps>(), {
+const props = withDefaults(defineProps<BCardHeaderProps>(), {
   tag: 'div',
 })
 </script>

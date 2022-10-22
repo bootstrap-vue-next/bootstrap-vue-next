@@ -1,5 +1,10 @@
 <template>
-  <form :id="id" :novalidate="novalidateBoolean" :class="classes" @submit.prevent="submitted">
+  <form
+    :id="id"
+    :novalidate="novalidateBoolean"
+    :class="computedClasses"
+    @submit.prevent="submitted"
+  >
     <slot />
   </form>
 </template>
@@ -33,7 +38,7 @@ interface BFormEmits {
 
 const emit = defineEmits<BFormEmits>()
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'form-floating': floatingBoolean.value,
   'was-validated': validatedBoolean.value,
 }))

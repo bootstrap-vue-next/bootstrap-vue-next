@@ -1,5 +1,5 @@
 <template>
-  <thead role="rowgroup" :class="classes">
+  <thead role="rowgroup" :class="computedClasses">
     <slot />
   </thead>
 </template>
@@ -15,7 +15,7 @@ interface BTheadProps {
 
 const props = defineProps<BTheadProps>()
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== undefined,
 }))
 </script>

@@ -125,7 +125,7 @@ const paginationPageNumber = ref(19)
 const paginationLimit = ref(8)
 const paginationPerPage = ref(2)
 const paginationRows = ref(40)
-const paginationDangerClasses = ref(['border-danger', 'border-5', 'border'])
+const paginationDangerClasses = ['border-danger', 'border-5', 'border']
 
 const handlePaginationPageClick = (event: BvEvent, page: number) => {
   if (page === 7) {

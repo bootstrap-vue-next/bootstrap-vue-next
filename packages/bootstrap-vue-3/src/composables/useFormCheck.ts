@@ -12,28 +12,24 @@ const getClasses = (items: {
   inline?: boolean
   switch?: boolean
   size?: InputSize
-}): ComputedRef =>
+}) =>
   computed(() => ({
     'form-check': !items.plain && !items.button,
-    'form-check-inline': items.inline,
-    'form-switch': items.switch,
-    [`form-control-${items.size}`]: items.size && items.size !== 'md',
+    'form-check-inline': items.inline === true,
+    'form-switch': items.switch === true,
+    [`form-control-${items.size}`]: items.size !== undefined && items.size !== 'md',
   }))
 
 /**
  * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
  * @returns
  */
-const getInputClasses = (items: {
-  plain?: boolean
-  button?: boolean
-  state?: boolean
-}): ComputedRef =>
+const getInputClasses = (items: {plain?: boolean; button?: boolean; state?: boolean}) =>
   computed(() => ({
     'form-check-input': !items.plain && !items.button,
     'is-valid': items.state === true,
     'is-invalid': items.state === false,
-    'btn-check': items.button,
+    'btn-check': items.button === true,
   }))
 
 /**
@@ -45,11 +41,11 @@ const getLabelClasses = (items: {
   button?: boolean
   buttonVariant?: ButtonVariant
   size?: InputSize
-}): ComputedRef =>
+}) =>
   computed(() => ({
     'form-check-label': !items.plain && !items.button,
-    'btn': items.button,
-    [`btn-${items.buttonVariant}`]: items.button,
+    'btn': items.button === true,
+    [`btn-${items.buttonVariant}`]: items.button === true && items.buttonVariant !== undefined,
     [`btn-${items.size}`]: items.button && items.size && items.size !== 'md',
   }))
 
@@ -57,14 +53,10 @@ const getLabelClasses = (items: {
  * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
  * @returns
  */
-const getGroupAttr = (items: {
-  required?: boolean
-  ariaInvalid?: AriaInvalid
-  state?: boolean
-}): ComputedRef =>
+const getGroupAttr = (items: {required?: boolean; ariaInvalid?: AriaInvalid; state?: boolean}) =>
   computed(() => ({
     'aria-invalid': resolveAriaInvalid(items.ariaInvalid, items.state),
-    'aria-required': items.required?.toString() === 'true' ? 'true' : null,
+    'aria-required': items.required === true ? true : undefined,
   }))
 
 /**
@@ -76,12 +68,12 @@ const getGroupClasses = (items: {
   buttons?: boolean
   stacked?: boolean
   size?: InputSize
-}): ComputedRef =>
+}) =>
   computed(() => ({
-    'was-validated': items.validated,
-    'btn-group': items.buttons && !items.stacked,
-    'btn-group-vertical': items.stacked,
-    [`btn-group-${items.size}`]: items.size,
+    'was-validated': items.validated === true,
+    'btn-group': items.buttons === true && !items.stacked,
+    'btn-group-vertical': items.stacked === true,
+    [`btn-group-${items.size}`]: items.size !== undefined,
   }))
 
 // TODO this function is similarly used in BTabs and may be capable of being a util function
@@ -155,8 +147,8 @@ const bindGroupProps = (
   el: any,
   idx: number,
   props: any,
-  computedName: ComputedRef,
-  computedId: ComputedRef
+  computedName: ComputedRef<string>,
+  computedId: ComputedRef<string>
 ): any => ({
   ...el,
   props: {

@@ -1,5 +1,11 @@
 <template>
-  <component :is="computedTag" class="btn" :class="classes" v-bind="attrs" @click="clicked">
+  <component
+    :is="computedTag"
+    class="btn"
+    :class="computedClasses"
+    v-bind="computedAttrs"
+    @click="clicked"
+  >
     <div
       v-if="loadingBoolean"
       class="btn-loading"
@@ -58,34 +64,35 @@ export default defineComponent({
     const isButton = computed<boolean>(
       () => props.tag === 'button' && props.href === undefined && props.to === null
     )
-    const link = computed<boolean>(() => isLink(props))
+    const computedLink = computed<boolean>(() => isLink(props))
     const isBLink = computed<boolean>(() => props.to !== null)
     const nonStandardTag = computed<boolean>(() =>
       props.href !== undefined ? false : !isButton.value
     )
 
-    const classes = computed(() => ({
-      [`btn-${props.variant}`]: !!props.variant,
-      [`btn-${props.size}`]: !!props.size,
-      'active': activeBoolean.value || pressedBoolean.value,
-      'rounded-pill': pillBoolean.value,
-      'rounded-0': squaredBoolean.value,
-      'disabled': disabledBoolean.value,
-    }))
+    const computedClasses = computed(() => [
+      [`btn-${props.variant}`],
+      [`btn-${props.size}`],
+      {
+        'active': activeBoolean.value || pressedBoolean.value,
+        'rounded-pill': pillBoolean.value,
+        'rounded-0': squaredBoolean.value,
+        'disabled': disabledBoolean.value,
+      },
+    ])
 
-    const attrs = computed(() => ({
+    const computedAttrs = computed(() => ({
       'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
-      // TODO this basically checks pressed twice.
       'aria-pressed': isToggle.value ? pressedBoolean.value : null,
       'autocomplete': isToggle.value ? 'off' : null,
       'disabled': isButton.value ? disabledBoolean.value : null,
       'href': props.href,
-      'rel': link.value ? props.rel : null,
-      'role': nonStandardTag.value || link.value ? 'button' : null,
-      'target': link.value ? props.target : null,
+      'rel': computedLink.value ? props.rel : null,
+      'role': nonStandardTag.value || computedLink.value ? 'button' : null,
+      'target': computedLink.value ? props.target : null,
       'type': isButton.value ? props.type : null,
       'to': !isButton.value ? props.to : null,
-      'append': link.value ? props.append : null,
+      'append': computedLink.value ? props.append : null,
       'activeClass': isBLink.value ? props.activeClass : null,
       'event': isBLink.value ? props.event : null,
       'exact': isBLink.value ? props.exact : null,
@@ -112,8 +119,8 @@ export default defineComponent({
     }
 
     return {
-      classes,
-      attrs,
+      computedClasses,
+      computedAttrs,
       computedTag,
       clicked,
       loadingBoolean,

@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="navbar" :class="classes" :role="computedRole">
+  <component :is="tag" class="navbar" :class="computedClasses" :role="computedRole">
     <div v-if="container !== false" :class="containerClass">
       <slot />
     </div>
@@ -46,15 +46,11 @@ const computedNavbarExpand = computed<undefined | string>(() =>
     : undefined
 )
 
-const containerClass = computed<'container' | 'container-fluid' | undefined>(() =>
-  props.container === false
-    ? undefined
-    : props.container === true
-    ? 'container'
-    : `container-${props.container}`
+const containerClass = computed<'container' | 'container-fluid'>(() =>
+  props.container === true ? 'container' : `container-fluid`
 )
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'd-print': printBoolean.value,
   [`sticky-${props.sticky}`]: props.sticky !== undefined,
   'navbar-dark': darkBoolean.value,
