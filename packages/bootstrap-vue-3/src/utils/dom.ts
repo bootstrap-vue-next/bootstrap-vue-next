@@ -1,13 +1,24 @@
-import {AnimationFrame, DOCUMENT} from '../types/safeTypes'
+import {Comment, Slot, VNode} from 'vue'
+import {DOCUMENT} from '../constants/env'
+import {AnimationFrame} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from './env'
 import {toString} from './stringUtils'
-import {Comment, Slot, VNode} from 'vue'
+
+const ELEMENT_PROTO = Element.prototype
+
+// See: https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+/* istanbul ignore next */
+export const matchesEl =
+  ELEMENT_PROTO.matches ||
+  (ELEMENT_PROTO as any).msMatchesSelector ||
+  ELEMENT_PROTO.webkitMatchesSelector
 
 /**
  * @param el
  * @returns
  */
-export const isElement = (el: HTMLElement): boolean => !!(el && el.nodeType === Node.ELEMENT_NODE)
+export const isElement = (el: HTMLElement | Element): boolean =>
+  !!(el && el.nodeType === Node.ELEMENT_NODE)
 
 /**
  * @param el
@@ -148,8 +159,12 @@ export const selectAll = (selector: any, root: any) =>
  * @param attr
  * @returns
  */
-export const getAttr = (el: HTMLElement, attr: string): string | null =>
+export const getAttr = (el: HTMLElement | Element, attr: string): string | null =>
   attr && isElement(el) ? el.getAttribute(attr) : null
+
+// Get an element given an ID
+export const getById = (id: string) =>
+  DOCUMENT.getElementById(/^#/.test(id) ? id.slice(1) : id) || null
 
 /**
  * @param el
@@ -192,3 +207,37 @@ export const requestAF: AnimationFrame = HAS_WINDOW_SUPPORT
     // Only needed for Opera Mini
     ((cb) => setTimeout(cb, 16))
   : (cb) => setTimeout(cb, 0)
+
+// Determine if an element matches a selector
+export const matches = (el: Element, selector: string) =>
+  isElement(el) ? matchesEl.call(el, selector) : false
+
+// See: https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+/* istanbul ignore next */
+export const closestEl =
+  ELEMENT_PROTO.closest ||
+  function (this: Element, sel: string) {
+    let el = this
+    if (!el) return null
+    do {
+      // Use our "patched" matches function
+      if (matches(el, sel)) {
+        return el
+      }
+      el = el.parentElement || (el.parentNode as any)
+    } while (el !== null && el.nodeType === Node.ELEMENT_NODE)
+    return null
+  }
+
+// Finds closest element matching selector. Returns `null` if not found
+export const closest = (selector: string, root: Element, includeRoot = false) => {
+  if (!isElement(root)) {
+    return null
+  }
+  const el = closestEl.call(root, selector)
+
+  // Native closest behaviour when `includeRoot` is truthy,
+  // else emulate jQuery closest and return `null` if match is
+  // the passed in root element when `includeRoot` is falsey
+  return includeRoot ? el : el === root ? null : el
+}
