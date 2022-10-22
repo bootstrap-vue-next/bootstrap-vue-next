@@ -1,199 +1,210 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {waitRAF} from '../../../tests/utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BToast from './BToast.vue'
-import BCloseButton from '../BButton/BCloseButton.vue'
-import {waitRAF} from '../../../tests/utils'
 import {nextTick} from 'vue'
-import BTransition from '../BTransition/BTransition.vue'
 
 describe('toast', () => {
   enableAutoUnmount(afterEach)
 
-  /**
-   * Waits for two transitions to finish
-   */
-  const waitTransitions = async () => {
-    await nextTick()
-    await waitRAF()
-    await nextTick()
-    await waitRAF()
-  }
-
-  it('tag is div by default', () => {
-    const wrapper = mount(BToast)
-    expect(wrapper.element.tagName).toBe('DIV')
-  })
-
-  it('has static class b-toast', () => {
+  it('contains static class b-toast', () => {
     const wrapper = mount(BToast)
     expect(wrapper.classes()).toContain('b-toast')
   })
 
-  it('has attr id to be prop id', async () => {
-    const wrapper = mount(BToast, {
-      props: {id: 'foobar'},
-    })
-    expect(wrapper.attributes('id')).toBe('foobar')
-    await wrapper.setProps({id: undefined})
-    expect(wrapper.attributes('id')).toBeUndefined()
-  })
-
-  it('has attr role to be alert by default', () => {
+  it('tag is div', () => {
     const wrapper = mount(BToast)
-    expect(wrapper.attributes('role')).toBe('alert')
+    expect(wrapper.element.tagName).toBe('DIV')
   })
 
-  it('has attr role to be status when prop isStatus', async () => {
+  it('child div with toast class exists', async () => {
     const wrapper = mount(BToast, {
-      props: {isStatus: true},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    expect(wrapper.attributes('role')).toBe('status')
-    await wrapper.setProps({isStatus: false})
-    expect(wrapper.attributes('role')).toBe('alert')
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.find('.toast')
+    expect($toast.exists()).toBe(true)
   })
 
-  it('has attr aria-live to be assertive by default', () => {
-    const wrapper = mount(BToast)
-    expect(wrapper.attributes('aria-live')).toBe('assertive')
-  })
-
-  it('has attr aria-live to be polite when prop isStatus', async () => {
+  it('child element is tag div', async () => {
     const wrapper = mount(BToast, {
-      props: {isStatus: true},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    expect(wrapper.attributes('aria-live')).toBe('polite')
-    await wrapper.setProps({isStatus: false})
-    expect(wrapper.attributes('aria-live')).toBe('assertive')
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    expect($toast.element.tagName).toBe('DIV')
   })
 
-  // TODO test for isHiding branches
-
-  it.skip('onPause', async () => {
-    const wrapper = mount(BToast)
-    await wrapper.trigger('mouseenter')
-  })
-
-  it.skip('onPause', async () => {
-    const wrapper = mount(BToast)
-    await wrapper.trigger('mouseleave')
-  })
-
-  it('has BCloseButton when prop title and is showing', async () => {
+  it('child div has static class toast', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true, title: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $closebutton = wrapper.findComponent(BCloseButton)
-    expect($closebutton.exists()).toBe(true)
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    // Not sure why this is a test, considering it targets whoever has class toast
+    expect($toast.classes()).toContain('toast')
   })
 
-  it('role is undefined when isHiding', async () => {
+  it('child div has child whos class is toast-header', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true, title: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $closebutton = wrapper.getComponent(BCloseButton)
-    await $closebutton.trigger('click')
-    expect(wrapper.attributes('role')).toBeUndefined()
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $toastHeader = $toast.find('.toast-header')
+    expect($toastHeader.exists()).toBe(true)
   })
 
-  it('aria-live is undefined when isHiding', async () => {
+  it('child div whos child has toast-header has element strong', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true, title: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $closebutton = wrapper.getComponent(BCloseButton)
-    await $closebutton.trigger('click')
-    expect(wrapper.attributes('aria-live')).toBeUndefined()
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $toastHeader = $toast.get('.toast-header')
+    const $strong = $toastHeader.find('strong')
+    expect($strong.exists()).toBe(true)
   })
 
-  it('aria-atomic is undefined when isHiding', async () => {
+  it('child divs child header child strong renders text of prop title', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true, title: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $closebutton = wrapper.getComponent(BCloseButton)
-    await $closebutton.trigger('click')
-    expect(wrapper.attributes('aria-atomic')).toBeUndefined()
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $toastHeader = $toast.get('.toast-header')
+    const $strong = $toastHeader.get('strong')
+    expect($strong.text()).toBe('Test')
   })
 
-  it('has child BTransition', () => {
-    const wrapper = mount(BToast)
-    const $transition = wrapper.findComponent(BTransition)
-    expect($transition.exists()).toBe(true)
-  })
-
-  it('BTransition has prop noFade to be prop noFade', async () => {
+  it('child divs child header child strong has static class me-auto', async () => {
     const wrapper = mount(BToast, {
-      props: {noFade: true},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    const $transition = wrapper.getComponent(BTransition)
-    expect($transition.props('noFade')).toBe(true)
-    await wrapper.setProps({noFade: false})
-    expect($transition.props('noFade')).toBe(false)
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $toastHeader = $toast.get('.toast-header')
+    const $strong = $toastHeader.get('strong')
+    expect($strong.classes()).toContain('me-auto')
   })
 
-  it('BTransition renders nothing by default', async () => {
-    const wrapper = mount(BToast)
-    const $transition = wrapper.getComponent(BTransition)
-    expect($transition.text()).toBe('')
-  })
-
-  it('BTransition has div when wrapper shown', async () => {
+  it('child div whos child has toast-header has element button', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true},
-      slots: {default: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.find('div')
-    expect($div.exists()).toBe(true)
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $toastHeader = $toast.get('.toast-header')
+    const $button = $toastHeader.find('button')
+    expect($button.exists()).toBe(true)
   })
 
-  it('BTransition child div when shown has static class toast', async () => {
+  it('child divs child header child button has static class btn-close', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true},
-      slots: {default: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    expect($div.classes()).toContain('toast')
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $toastHeader = $toast.get('.toast-header')
+    const $button = $toastHeader.find('button')
+    expect($button.classes()).toContain('btn-close')
   })
 
-  it('BTransition child div when shown has classes from prop toastClass', async () => {
+  it('child div has element with class toast-body', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true, toastClass: ['foo']},
-      slots: {default: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    expect($div.classes()).toContain('foo')
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $body = $toast.find('.toast-body')
+    expect($body.exists()).toBe(true)
   })
 
-  it('BTransition child div when shown has static attr tabindex to be 0', async () => {
+  it('child div child whos class is toast-body is tag div', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true},
-      slots: {default: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    expect($div.attributes('tabindex')).toBe('0')
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $body = $toast.get('.toast-body')
+    expect($body.element.tagName).toBe('DIV')
   })
 
-  it('BTransition child div when shown has class b-toast-{type} when prop variant', async () => {
+  it('child div child whos class is toast-body has classes length of 1', async () => {
     const wrapper = mount(BToast, {
-      props: {modelValue: true, variant: 'danger'},
-      slots: {default: 'foobar'},
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
     })
-    await waitTransitions()
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    expect($div.classes()).toContain('b-toast-danger')
-    await wrapper.setProps({variant: undefined})
-    const $div2 = $transition.get('div') //.Rebuilts div when rerendering props
-    expect($div2.classes()).not.toContain('b-toast-danger')
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $body = $toast.get('.toast-body')
+    expect($body.classes().length).toBe(1)
   })
+
+  it('child div child whos class is toast-body div renders text of prop body', async () => {
+    const wrapper = mount(BToast, {
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
+    })
+    await nextTick()
+    await waitRAF()
+    await nextTick()
+    await waitRAF()
+    const $toast = wrapper.get('.toast')
+    const $body = $toast.get('.toast-body')
+    expect($body.text()).toEqual('Test Body')
+  })
+
+  it('emits destroyed when component is unmounted', async () => {
+    const wrapper = mount(BToast, {
+      props: {modelValue: true, title: 'Test', body: 'Test Body'},
+    })
+    wrapper.unmount()
+    expect(wrapper.emitted()).toHaveProperty('destroyed')
+  })
+
+  it('destroyed emit gives value prop id', async () => {
+    const wrapper = mount(BToast, {
+      props: {modelValue: true, title: 'Test', body: 'Test Body', id: 'foobar'},
+    })
+    wrapper.unmount()
+    const $emitted = wrapper.emitted('destroyed') ?? []
+    expect($emitted[0][0]).toBe('foobar')
+  })
+
+  // TODO test when emits to update:modelValue
 })

@@ -69,7 +69,7 @@ export default defineComponent({
     const isTransitioning = ref(false)
     const isHiding = ref(false)
     const localShow = ref(false)
-    const computedClasses = computed(() => ({
+    const classes = computed(() => ({
       [`b-toast-${props.variant}`]: props.variant !== undefined,
       show: localShow.value || isTransitioning.value,
     }))
@@ -249,7 +249,7 @@ export default defineComponent({
         return h(
           'div',
           {
-            class: ['toast', props.toastClass, computedClasses.value],
+            class: ['toast', props.toastClass, classes.value],
             tabindex: '0',
           },
           $innertoast

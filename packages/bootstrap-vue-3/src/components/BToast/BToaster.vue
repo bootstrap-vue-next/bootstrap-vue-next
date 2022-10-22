@@ -1,5 +1,5 @@
 <template>
-  <div :id="name" :class="[positionClass]" class="b-toaster position-fixed p-3" style="z-index: 11">
+  <div :class="[positionClass]" class="b-toaster position-fixed p-3" style="z-index: 11">
     <b-toast
       v-for="toast in instance?.toasts(position).value"
       :id="toast.options.id"
@@ -25,14 +25,11 @@ import BToast from './BToast.vue'
 interface BToasterProps {
   position?: ContainerPosition
   instance?: ToastInstance
-  name?: string
   // appendToast?: Booleanish
 }
 
 const props = withDefaults(defineProps<BToasterProps>(), {
   position: 'top-right',
-  // TODO get the name right for b-toast
-  name: 'b-toaster-top-right',
 })
 
 const toastPositions = {
