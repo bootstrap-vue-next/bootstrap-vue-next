@@ -1,17 +1,17 @@
 import {Comment, Slot, VNode} from 'vue'
-import {DOCUMENT} from '../constants/env'
+import {DOCUMENT, HAS_ELEMENT_SUPPORT} from '../constants/env'
 import {AnimationFrame} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from './env'
 import {toString} from './stringUtils'
 
-const ELEMENT_PROTO = Element.prototype
+const ELEMENT_PROTO = HAS_ELEMENT_SUPPORT ? Element.prototype : undefined
 
 // See: https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
 /* istanbul ignore next */
 export const matchesEl =
-  ELEMENT_PROTO.matches ||
-  (ELEMENT_PROTO as any).msMatchesSelector ||
-  ELEMENT_PROTO.webkitMatchesSelector
+  ELEMENT_PROTO?.matches ||
+  (ELEMENT_PROTO as any)?.msMatchesSelector ||
+  ELEMENT_PROTO?.webkitMatchesSelector
 
 /**
  * @param el
@@ -215,7 +215,7 @@ export const matches = (el: Element, selector: string) =>
 // See: https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 /* istanbul ignore next */
 export const closestEl =
-  ELEMENT_PROTO.closest ||
+  ELEMENT_PROTO?.closest ||
   function (this: Element, sel: string) {
     let el = this
     if (!el) return null
