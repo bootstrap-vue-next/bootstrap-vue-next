@@ -1,0 +1,25 @@
+.form-control-highlighted {
+  border-color: $input-focus-border-color;
+
+  transition: box-shadow 0.3s ease-in-out;
+  animation: form-control-highlighted-blink 1s infinite;
+}
+
+@keyframes form-control-highlighted-blink {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  50% {
+    @if $enable-shadows {
+      @include box-shadow($input-box-shadow, $input-focus-box-shadow);
+    } @else {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      box-shadow: $input-focus-box-shadow;
+    }
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}

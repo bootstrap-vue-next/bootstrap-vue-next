@@ -11,6 +11,7 @@
 @import "../components/BTransition/transition";
 @import "../components/BTable/table";
 @import "../components/BToast/index";
+@import "../components/BFormInput/form-input";
 
 .container,
 .container-fluid {
@@ -36,6 +37,7 @@
 .dropdown-toggle.dropdown-toggle-no-caret:after {
   display: none !important;
 }
+
 // No focus outline helper (use sparingly)
 .bv-no-focus-ring:focus {
   outline: none;

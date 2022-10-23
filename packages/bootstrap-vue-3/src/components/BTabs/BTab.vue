@@ -3,7 +3,7 @@
     :is="tag"
     :id="id"
     class="tab-pane"
-    :class="classes"
+    :class="computedClasses"
     role="tabpanel"
     aria-labelledby="profile-tab"
   >
@@ -41,18 +41,16 @@ const props = withDefaults(defineProps<BTabProps>(), {
   lazyOnce: undefined,
   noBody: false,
   tag: 'div',
-  titleItemClass: undefined,
   titleLinkAttributes: undefined,
-  titleLinkClass: undefined,
 })
 
-const lazyRenderCompleted = ref(false)
+const parentData = inject(injectionKey, null)
 
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const lazyBoolean = useBooleanish(toRef(props, props.lazyOnce !== undefined ? 'lazyOnce' : 'lazy'))
 
-const parentData = inject(injectionKey, null)
+const lazyRenderCompleted = ref(false)
 
 const computedLazy = computed<boolean>(() => parentData?.lazy || lazyBoolean.value)
 const computedLazyOnce = computed<boolean>(() => props.lazyOnce !== undefined)
@@ -64,7 +62,7 @@ const showSlot = computed<boolean>(() => {
   return computedActive.value || !computedLazy.value || hasLazyRenderedOnce
 })
 
-const classes = computed(() => ({
+const computedClasses = computed(() => ({
   'active': activeBoolean.value,
   'show': activeBoolean.value,
   'card-body': parentData?.card && props.noBody === false,

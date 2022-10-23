@@ -1,10 +1,10 @@
 <template>
-  <component :is="tag" class="card" :class="classes">
+  <component :is="tag" class="card" :class="computedClasses">
     <slot v-if="!imgBottomBoolean" name="img">
       <b-card-img v-if="imgSrc" v-bind="imgAttr" />
     </slot>
     <b-card-header
-      v-if="header || $slots.header || headerHtml"
+      v-if="header || hasHeaderSlot || headerHtml"
       v-bind="headerAttrs"
       :class="headerClass"
     >
@@ -21,7 +21,7 @@
       {{ bodyText }}
     </slot>
     <b-card-footer
-      v-if="footer || $slots.footer || footerHtml"
+      v-if="footer || hasFooterSlot || footerHtml"
       v-bind="footerAttrs"
       :class="footerClass"
     >
@@ -38,12 +38,13 @@
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
 import type {Alignment, Booleanish, ClassValue, ColorVariant, TextColorVariant} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
+import {isEmptySlot} from '../../utils'
 
 interface BCardProps {
   align?: Alignment
@@ -110,6 +111,8 @@ const props = withDefaults(defineProps<BCardProps>(), {
   titleTag: 'h4',
 })
 
+const slots = useSlots()
+
 const imgBottomBoolean = useBooleanish(toRef(props, 'imgBottom'))
 const imgEndBoolean = useBooleanish(toRef(props, 'imgEnd'))
 const imgLeftBoolean = useBooleanish(toRef(props, 'imgLeft'))
@@ -117,7 +120,10 @@ const imgRightBoolean = useBooleanish(toRef(props, 'imgRight'))
 const imgStartBoolean = useBooleanish(toRef(props, 'imgStart'))
 const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
 
-const classes = computed(() => ({
+const hasHeaderSlot = computed<boolean>(() => !isEmptySlot(slots.header))
+const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+
+const computedClasses = computed(() => ({
   [`text-${props.align}`]: props.align !== undefined,
   [`text-${props.textVariant}`]: props.textVariant !== undefined,
   [`bg-${props.bgVariant}`]: props.bgVariant !== undefined,

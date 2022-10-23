@@ -2,7 +2,7 @@
   <input
     :id="computedId"
     ref="input"
-    :class="classes"
+    :class="computedClasses"
     :name="name || undefined"
     :form="form || undefined"
     :type="localType"
@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts">
-import type {InputType} from '../../types'
-import {computed, defineComponent, PropType} from 'vue'
+import {computed, defineComponent, PropType, ref} from 'vue'
 import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
+import type {InputType} from '../../types'
 
 const allowedTypes = [
   'text',
@@ -59,10 +59,15 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
-    const classes = computed(() => {
+    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} = useFormInput(props, emit)
+  
+    const isHighlighted = ref(false)
+
+    const computedClasses = computed(() => {
       const isRange = props.type === 'range'
       const isColor = props.type === 'color'
       return {
+        'form-control-highlighted': isHighlighted.value,
         'form-range': isRange,
         'form-control': isColor || (!props.plaintext && !isRange),
         'form-control-color': isColor,
@@ -77,11 +82,16 @@ export default defineComponent({
       allowedTypes.includes(props.type) ? props.type : 'text'
     )
 
-    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-      useFormInput(props, emit)
+    const highlight = () => {
+      if (isHighlighted.value === true) return
+      isHighlighted.value = true
+      setTimeout(() => {
+        isHighlighted.value = false
+      }, 2000)
+    }
 
     return {
-      classes,
+      computedClasses,
       localType,
       input,
       computedId,
@@ -91,6 +101,7 @@ export default defineComponent({
       onBlur,
       focus,
       blur,
+      highlight,
     }
   },
 })

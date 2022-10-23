@@ -33,8 +33,6 @@ describe('spinner', () => {
     expect(wrapper.classes()).toContain('spinner-border-sm')
     await wrapper.setProps({type: 'grow'})
     expect(wrapper.classes()).not.toContain('spinner-border-sm')
-
-    // TODO bspinner has both spinner-border and spinner-border-sm , is this intentional?
   })
 
   it('has class spinner-grow when prop type is grow', async () => {

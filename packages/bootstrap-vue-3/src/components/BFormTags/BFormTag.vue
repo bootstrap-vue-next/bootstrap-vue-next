@@ -4,7 +4,7 @@
     :id="computedId"
     :title="tagText"
     class="badge b-form-tag d-inline-flex align-items-center mw-100"
-    :class="classes"
+    :class="computedClasses"
     :aria-labelledby="taglabelId"
   >
     <span :id="taglabelId" class="b-form-tag-content flex-grow-1 text-truncate">
@@ -13,7 +13,6 @@
     <b-close-button
       v-if="!disabledBoolean && !noRemoveBoolean"
       aria-keyshortcuts="Delete"
-      type="button"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
       :white="!['warning', 'info', 'light'].includes(variant)"
@@ -51,10 +50,6 @@ const props = withDefaults(defineProps<BFormTagProps>(), {
   variant: 'secondary',
 })
 
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const noRemoveBoolean = useBooleanish(toRef(props, 'noRemove'))
-const pillBoolean = useBooleanish(toRef(props, 'pill'))
-
 interface BFormTagEmits {
   (e: 'remove', value?: VNodeNormalizedChildren): void
 }
@@ -63,13 +58,19 @@ const emit = defineEmits<BFormTagEmits>()
 
 const slots = useSlots()
 
+const computedId = useId(toRef(props, 'id'))
+
+const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const noRemoveBoolean = useBooleanish(toRef(props, 'noRemove'))
+const pillBoolean = useBooleanish(toRef(props, 'pill'))
+
 const tagText = computed<string>(
   () => (slots.default?.()[0].children?.toString() || props.title) ?? ''
 )
-const computedId = useId(toRef(props, 'id'))
+
 const taglabelId = computed<string>(() => `${computedId.value}taglabel__`)
 
-const classes = computed(() => [
+const computedClasses = computed(() => [
   `bg-${props.variant}`,
   {
     'text-dark': ['warning', 'info', 'light'].includes(props.variant),

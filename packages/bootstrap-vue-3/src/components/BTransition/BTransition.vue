@@ -6,14 +6,14 @@
 
 <script setup lang="ts">
 import type {Booleanish, TransitionMode} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed, toRef, TransitionProps} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface Props {
   appear?: Booleanish
   mode?: TransitionMode
   noFade?: Booleanish
-  transProps?: Record<string, unknown>
+  transProps?: TransitionProps
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -9,7 +9,6 @@ export interface Props {
   // If `true, does not render the default slot
   // and switches to absolute positioning
   noWrap?: boolean
-  // TODO validators not exactly supported
   // opacity?: {
   //   type: [Number, String],
   //   default: 0.85,

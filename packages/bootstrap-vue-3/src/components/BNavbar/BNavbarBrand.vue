@@ -1,5 +1,5 @@
 <template>
-  <component :is="computedTag" class="navbar-brand" v-bind="props">
+  <component :is="computedTag" class="navbar-brand" v-bind="computedLinkProps">
     <slot />
   </component>
 </template>
@@ -20,11 +20,17 @@ export default defineComponent({
     ...linkProps,
   },
   setup(props) {
-    const link = computed<boolean>(() => isLink(props))
-    const computedTag = computed<string | typeof BLink>(() => (link.value ? BLink : props.tag))
+    const computedLink = computed<boolean>(() => isLink(props))
+    const computedTag = computed<string | typeof BLink>(() =>
+      computedLink.value ? BLink : props.tag
+    )
+
+    const computedLinkProps = computed(() =>
+      computedLink.value ? pluckProps(props, linkProps) : {}
+    )
 
     return {
-      props: link.value ? pluckProps(props, linkProps) : {},
+      computedLinkProps,
       computedTag,
     }
   },

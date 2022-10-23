@@ -40,18 +40,16 @@ const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
 const computedAttrs = computed(() => ({
-  animated: animatedBoolean.value,
+  animated: props.animated,
   max: props.max,
   precision: props.precision,
-  showProgress: showProgressBoolean.value,
-  showValue: showValueBoolean.value,
-  striped: stripedBoolean.value,
+  showProgress: props.showProgress,
+  showValue: props.showValue,
+  striped: props.striped,
   value: props.value,
   variant: props.variant,
 }))
 
-// TODO check and see if doing animatedBoolean.value is reactive for provide
-// It may be possible that a toRef() is required for these types of systems.
 provide(injectionKey, {
   animated: animatedBoolean.value,
   max: props.max,

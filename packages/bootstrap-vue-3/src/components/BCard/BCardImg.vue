@@ -1,5 +1,5 @@
 <template>
-  <b-img :class="classes" v-bind="attrs" @load="emit('load', $event)" />
+  <b-img :class="baseClass" v-bind="computedAttrs" @load="emit('load', $event)" />
 </template>
 
 <script setup lang="ts">
@@ -64,9 +64,9 @@ const baseClass = computed(() =>
 )
 
 /**
- * Removes the above baseClass used props so it does not cause potential issues
+ * Does not include the above baseClass used props so it does not cause potential issues
  */
-const attrs = computed(() => ({
+const computedAttrs = computed(() => ({
   alt: props.alt,
   height: props.height,
   src: props.src,
@@ -77,6 +77,4 @@ const attrs = computed(() => ({
   sizes: props.sizes,
   srcset: props.srcset,
 }))
-
-const classes = computed(() => [baseClass.value])
 </script>

@@ -2,14 +2,14 @@
   <div
     ref="element"
     class="offcanvas"
-    :class="classes"
+    :class="computedClasses"
     tabindex="-1"
     aria-labelledby="offcanvasLabel"
     :data-bs-backdrop="backdropBoolean"
     :data-bs-scroll="bodyScrollingBoolean"
   >
     <div v-if="!noHeaderBoolean" class="offcanvas-header">
-      <slot name="header" v-bind="{visible: modelValue, placement, hide}">
+      <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
         <h5 id="offcanvasLabel" class="offcanvas-title">
           <slot name="title">
             {{ title }}
@@ -17,7 +17,6 @@
         </h5>
         <b-close-button
           v-if="!noHeaderCloseBoolean"
-          type="button"
           class="text-reset"
           data-bs-dismiss="offcanvas"
           :aria-label="dismissLabel"
@@ -27,19 +26,20 @@
     <div class="offcanvas-body">
       <slot />
     </div>
-    <div v-if="$slots.footer">
-      <slot name="footer" v-bind="{visible: modelValue, placement, hide}" />
+    <div v-if="hasFooterSlot">
+      <slot name="footer" v-bind="{visible: modelValueBoolean, placement, hide}" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 // import type {BOffcanvasEmits, BOffcanvasProps} from '../types/components'
-import {computed, onMounted, ref, toRef, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {Offcanvas} from 'bootstrap'
 import {useBooleanish, useEventListener} from '../composables'
 import type {Booleanish} from '../types'
 import BCloseButton from './BButton/BCloseButton.vue'
+import {isEmptySlot} from '../utils'
 
 interface BOffcanvasProps {
   dismissLabel?: string
@@ -78,11 +78,13 @@ interface BOffcanvasEmits {
 
 const emit = defineEmits<BOffcanvasEmits>()
 
+const slots = useSlots()
+
 const element = ref<HTMLElement>()
 const instance = ref<Offcanvas>()
 
-useEventListener(element, 'shown.bs.offcanvas', () => emit('shown'))
-useEventListener(element, 'hidden.bs.offcanvas', () => emit('hidden'))
+const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const computedClasses = computed(() => [`offcanvas-${props.placement}`])
 
 const show = () => {
   emit('show')
@@ -93,6 +95,20 @@ const hide = () => {
   emit('hide')
   emit('update:modelValue', false)
 }
+
+watch(
+  () => modelValueBoolean.value,
+  (value) => {
+    if (value) {
+      instance.value?.show(element.value as HTMLElement)
+    } else {
+      instance.value?.hide()
+    }
+  }
+)
+
+useEventListener(element, 'shown.bs.offcanvas', () => emit('shown'))
+useEventListener(element, 'hidden.bs.offcanvas', () => emit('hidden'))
 
 useEventListener(element, 'show.bs.offcanvas', () => {
   show()
@@ -109,19 +125,4 @@ onMounted((): void => {
     instance.value?.show(element.value as HTMLElement)
   }
 })
-
-const classes = computed(() => ({
-  [`offcanvas-${props.placement}`]: !!props.placement,
-}))
-
-watch(
-  () => modelValueBoolean.value,
-  (value) => {
-    if (value) {
-      instance.value?.show(element.value as HTMLElement)
-    } else {
-      instance.value?.hide()
-    }
-  }
-)
 </script>

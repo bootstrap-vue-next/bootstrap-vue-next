@@ -1,9 +1,9 @@
 <template>
-  <li class="breadcrumb-item" :class="liClasses">
+  <li class="breadcrumb-item" :class="computedClasses">
     <component
       :is="computedTag"
       :aria-current="computedAriaCurrent"
-      v-bind="props"
+      v-bind="computedLinkProps"
       @click="clicked"
     >
       <slot>
@@ -36,7 +36,7 @@ export default defineComponent({
     const activeBoolean = useBooleanish(toRef(props, 'active'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 
-    const liClasses = computed(() => ({
+    const computedClasses = computed(() => ({
       active: activeBoolean.value,
     }))
 
@@ -46,6 +46,10 @@ export default defineComponent({
 
     const computedAriaCurrent = computed(() =>
       activeBoolean.value ? props.ariaCurrent : undefined
+    )
+
+    const computedLinkProps = computed(() =>
+      computedTag.value !== 'span' ? pluckProps(props, linkProps) : {}
     )
 
     const clicked = (e: MouseEvent): void => {
@@ -58,8 +62,8 @@ export default defineComponent({
     }
 
     return {
-      props: computedTag.value !== 'span' ? pluckProps(props, linkProps) : {},
-      liClasses,
+      computedLinkProps,
+      computedClasses,
       computedTag,
       computedAriaCurrent,
       clicked,

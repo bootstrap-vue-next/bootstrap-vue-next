@@ -61,7 +61,4 @@ describe('collapse', () => {
     })
     expect(wrapper.text()).toBe('foobar')
   })
-
-  // TODO :visible prop on default slot does not seem to have any affect on slot being visible
-  // Perhaps it was supposed to be v-if/v-show?
 })

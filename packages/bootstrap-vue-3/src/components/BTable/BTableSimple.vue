@@ -1,9 +1,9 @@
 <template>
-  <table v-if="!responsive" role="table" :class="classes">
+  <table v-if="!responsive" role="table" :class="computedClasses">
     <slot />
   </table>
   <div v-else :class="responsiveClasses">
-    <table role="table" :class="classes">
+    <table role="table" :class="computedClasses">
       <slot />
     </table>
   </div>
@@ -53,7 +53,7 @@ const smallBoolean = useBooleanish(toRef(props, 'small'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
 
-const classes = computed(() => [
+const computedClasses = computed(() => [
   'table',
   'b-table',
   {

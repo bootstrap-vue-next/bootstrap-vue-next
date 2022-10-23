@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BImg from './BImg.vue'

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="isAlertVisible" ref="element" class="alert" role="alert" :class="classes">
+  <div v-if="isAlertVisible" ref="element" class="alert" role="alert" :class="computedClasses">
     <slot />
     <template v-if="dismissibleBoolean">
-      <button v-if="$slots.close" type="button" data-bs-dismiss="alert" @click="closeClicked">
+      <button v-if="hasCloseSlot" type="button" data-bs-dismiss="alert" @click="closeClicked">
         <slot name="close" />
       </button>
       <b-close-button
@@ -18,9 +18,9 @@
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
 import type {Booleanish, ColorVariant} from '../types'
-import {computed, onBeforeUnmount, ref, toRef, watch} from 'vue'
+import {computed, onBeforeUnmount, ref, toRef, useSlots, watch} from 'vue'
 import {Alert} from 'bootstrap'
-import {toInteger} from '../utils'
+import {isEmptySlot, toInteger} from '../utils'
 import {useBooleanish} from '../composables'
 import BCloseButton from './BButton/BCloseButton.vue'
 
@@ -56,19 +56,28 @@ interface BAlertEmits {
 
 const emit = defineEmits<BAlertEmits>()
 
-const element = ref<HTMLElement | null>(null)
-const instance = ref<Alert>()
-const classes = computed(() => ({
-  [`alert-${props.variant}`]: !!props.variant,
-  'show': !!props.modelValue,
-  'alert-dismissible': dismissibleBoolean.value,
-  // TODO it seems like fade is probably used here
-  // It seems like the issue with trying to set fade is that when using transitions,
-  // The element is null when it's trying to set the transition
-  'fade': !!props.modelValue,
-}))
+const slots = useSlots()
 
 let _countDownTimeout: undefined | ReturnType<typeof setTimeout>
+
+const element = ref<HTMLElement | null>(null)
+const instance = ref<Alert>()
+
+const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
+
+const isAlertVisible = computed<boolean>(() => !!props.modelValue || showBoolean.value)
+
+const computedClasses = computed(() => [
+  [`alert-${props.variant}`],
+  {
+    'show': !!props.modelValue,
+    'alert-dismissible': dismissibleBoolean.value,
+    // TODO it seems like fade is probably used here
+    // It seems like the issue with trying to set fade is that when using transitions,
+    // The element is null when it's trying to set the transition
+    'fade': !!props.modelValue,
+  },
+])
 
 const parseCountDown = (value: boolean | number): number => {
   if (typeof value === 'boolean') {
@@ -79,20 +88,7 @@ const parseCountDown = (value: boolean | number): number => {
   return numberValue > 0 ? numberValue : 0
 }
 
-const clearCountDownInterval = (): void => {
-  if (_countDownTimeout === undefined) return
-  clearTimeout(_countDownTimeout)
-  _countDownTimeout = undefined
-}
-
 const countDown = ref<number>(parseCountDown(props.modelValue))
-const isAlertVisible = computed<boolean>(() => !!props.modelValue || showBoolean.value)
-
-onBeforeUnmount((): void => {
-  clearCountDownInterval()
-  instance.value?.dispose()
-  instance.value = undefined
-})
 
 const parsedModelValue = computed<boolean>(() => {
   if (props.modelValue === true) {
@@ -106,6 +102,12 @@ const parsedModelValue = computed<boolean>(() => {
   }
   return !!props.modelValue
 })
+
+const clearCountDownInterval = (): void => {
+  if (_countDownTimeout === undefined) return
+  clearTimeout(_countDownTimeout)
+  _countDownTimeout = undefined
+}
 
 const handleShowAndModelChanged = (): void => {
   countDown.value = parseCountDown(props.modelValue)
@@ -137,5 +139,11 @@ watch(countDown, (newValue) => {
       countDown.value--
     }, 1000)
   }
+})
+
+onBeforeUnmount((): void => {
+  clearCountDownInterval()
+  instance.value?.dispose()
+  instance.value = undefined
 })
 </script>
