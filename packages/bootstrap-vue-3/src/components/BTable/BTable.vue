@@ -38,7 +38,10 @@
               <span
                 v-if="isSortable && field.sortable"
                 class="b-table-sort-icon text-muted small"
-                :class="{sorted: field.key === sortBy}"
+                :class="{
+                  sorted: field.key === sortBy,
+                  [`sorted-${sortDescBoolean ? 'desc' : 'asc'}`]: field.key === sortBy,
+                }"
               />
             </slot>
             <div>
