@@ -4,7 +4,7 @@ import {arrayIncludes} from './array'
 
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
-export const parseEventOptions = (options): boolean | EventListenerOptions | undefined => {
+export const parseEventOptions = (options: any): boolean | EventListenerOptions | undefined => {
   /* istanbul ignore else: can't test in JSDOM, as it supports passive */
   if (HAS_PASSIVE_EVENT_SUPPORT) {
     return isObject(options) ? options : {capture: !!options || false}
@@ -40,9 +40,9 @@ export const eventOff = (
 
 // Utility method to add/remove a event listener based on first argument (boolean)
 // It passes all other arguments to the `eventOn()` or `eventOff` method
-export const eventOnOff = (on: Boolean, ...args: any[]) => {
+export const eventOnOff = (on: Boolean, eventParams: Parameters<typeof eventOff>) => {
   const method = on ? eventOn : eventOff
-  method(...args)
+  method(...eventParams)
 }
 
 //checks to see if keyboard event

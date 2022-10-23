@@ -18,7 +18,9 @@ export const HAS_PASSIVE_EVENT_SUPPORT = (() => {
           return
         },
       }
+      // @ts-ignore
       WINDOW.addEventListener('test', options, options)
+      // @ts-ignore
       WINDOW.removeEventListener('test', options, options)
     } catch {
       /* istanbul ignore next: will never be called in JSDOM */

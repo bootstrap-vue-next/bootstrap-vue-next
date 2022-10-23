@@ -6,9 +6,8 @@ import {isNull} from '../../utils/inspect'
 import {isLocaleRTL} from '../../utils/locale'
 import {arrayIncludes} from '../../utils/array'
 import {eventOnOff, stopEvent} from '../../utils/event'
-import {attemptBlur, attemptFocus} from '../../utils/dom'
-import {normalizeSlot} from '../../utils'
-// import { BIconPlus, BIconDash } from '../../icons/icons'
+import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
+// import { BIconPlus, BIconDash } from '../BIcon/BIcon.vue'
 
 import {
   CODE_DOWN,
@@ -39,6 +38,8 @@ export default defineComponent({
   props: {
     ariaControls: {type: String, required: false},
     ariaLabel: {type: String, required: false},
+    labelIncrement: {type: String, default: 'Increment'},
+    labelDecrement: {type: String, default: 'Decrement'},
     modelValue: {type: Number, default: null}, // V-model prop
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     locale: {type: String, default: 'locale'},
@@ -73,7 +74,7 @@ export default defineComponent({
     state: {type: [Boolean, String] as PropType<Booleanish | null>, default: null},
   },
   emits: ['update:modelValue', 'change'],
-  setup(props, {emit}) {
+  setup(props, {emit, slots}) {
     const hasFocus = ref(false)
     const spinId = computed(() => 1)
 
@@ -133,7 +134,7 @@ export default defineComponent({
 
     const computedLocale = computed(() => {
       //todo
-      const locales = props.locale as Array<string>
+      const locales = [props.locale]
       const nf = new Intl.NumberFormat(locales)
       return nf.resolvedOptions().locale
     })
@@ -331,8 +332,8 @@ export default defineComponent({
       // Enable or disabled the body mouseup/touchend handlers
       // Use try/catch to handle case when called server side
       try {
-        eventOnOff(on, document.body, 'mouseup', onMouseup, false)
-        eventOnOff(on, document.body, 'touchend', onMouseup, false)
+        // eventOnOff(on, document.body, 'mouseup', onMouseup, false)
+        // eventOnOff(on, document.body, 'touchend', onMouseup, false)
       } catch {
         return 0
       }
@@ -351,11 +352,11 @@ export default defineComponent({
     }
 
     const makeButton = (
-      stepper,
+      stepper: (multiplier?: number) => void,
       label: string,
       IconCmp: any,
       keyRef: string,
-      shortcut,
+      shortcut: any,
       btnDisabled: boolean,
       slotName: string
     ) => {
@@ -368,10 +369,10 @@ export default defineComponent({
       const handler = (event: Event) => {
         if (!props.disabled && !props.readonly) {
           stopEvent(event, {propagation: false})
-          this.setMouseup(true)
+          setMouseup(true)
           // Since we `preventDefault()`, we must manually focus the button
-          attemptFocus(event.currentTarget)
-          handleStepRepeat(event, stepper)
+          // attemptFocus(event.currentTarget)
+          // handleStepRepeat(event, stepper)
         }
       }
 
@@ -393,6 +394,25 @@ export default defineComponent({
         [normalizeSlot(slotName, scope) || $icon]
       )
     }
+
+    const $increment = makeButton(
+      stepUp,
+      props.labelIncrement,
+      'BIconPlus',
+      'inc',
+      'ArrowUp',
+      false,
+      'increment'
+    )
+    const $decrement = makeButton(
+      stepDown,
+      props.labelDecrement,
+      'BIconDash',
+      'dec',
+      'ArrowDown',
+      false,
+      'decrement'
+    )
 
     // Render Helping functions
     return () => h('div', {}, 'c')
