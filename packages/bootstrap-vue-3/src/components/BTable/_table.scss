@@ -175,11 +175,11 @@
   }
 
   &.b-table-sortable {
-    &.b-table-sort-asc .b-table-sort-icon::before {
+    &.b-table-sort-asc .sorted.b-table-sort-icon::before {
       content: "▲";
     }
 
-    &.b-table-sort-desc .b-table-sort-icon::before {
+    &.b-table-sort-desc .sorted.b-table-sort-icon::before {
       content: "▼";
     }
   }
