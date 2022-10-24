@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.4.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.12...v0.4.0) (2022-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BContainer:** remove toast props as they didn't work
+
+### Features
+
+* add static prop ability ([41d752a](https://github.com/cdmoro/bootstrap-vue-3/commit/41d752ac786510a2022e2160d815487a2961dbcc))
+* begin development of bootstrap-vue-3-icons ([c1dac9c](https://github.com/cdmoro/bootstrap-vue-3/commit/c1dac9cd641236aea9510a4bb931f86fb0ca7080))
+* **BFormInput:** added highlight method to active a simple highlight animation for a few seconds ([2d34305](https://github.com/cdmoro/bootstrap-vue-3/commit/2d343056fdf2bc0d0954abf11df04ffec18a82ef))
+* **BModal:** :bug: warning prop lazy does not currently work due to a constrant with updating to remove bootstrap js ([af2e95b](https://github.com/cdmoro/bootstrap-vue-3/commit/af2e95b8a2fc1bd4204bdc6cc52c45aa629129c2))
+* **BModal:** remove bootstrapjs ([af2e95b](https://github.com/cdmoro/bootstrap-vue-3/commit/af2e95b8a2fc1bd4204bdc6cc52c45aa629129c2))
+* create eagerComputed component ([c038674](https://github.com/cdmoro/bootstrap-vue-3/commit/c038674d712615bb04512a86969580c74aec15a6))
+
+
+### Bug Fixes
+
+* **BCol:** incorrectly keeps col class when also has col-{n} class ([7619630](https://github.com/cdmoro/bootstrap-vue-3/commit/7619630e14b387549f676405b083f9907041628b))
+* **BContainer:** remove toast props as they didn't work ([c91801d](https://github.com/cdmoro/bootstrap-vue-3/commit/c91801dee1e9264588d88d8998288d13b3a64402))
+* better checking for when a slot is empty ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
+* **BListGroupItem:** stop giving a TS breaking null attr and use undefined instead ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
+* **BModal:** explicit check for empty slot ([760c013](https://github.com/cdmoro/bootstrap-vue-3/commit/760c013d3b0febee8c21bea56561c36d6b0a257e))
+* **BModal:** fixed lazy rendering ([65e14f0](https://github.com/cdmoro/bootstrap-vue-3/commit/65e14f0a8b0c12a1323bcde908eb963470a396e0))
+* **BModal:** fixes the visibility issue where having more than one modal will overlap each other ([f8b83dc](https://github.com/cdmoro/bootstrap-vue-3/commit/f8b83dcc7297b097f33f69890732f1edce4fd86c))
+* **BRow:** rowClasses are computed... Unsure if this was an accident before or my mistake now ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
+* some v-fors in docs missing :key attr ([c91801d](https://github.com/cdmoro/bootstrap-vue-3/commit/c91801dee1e9264588d88d8998288d13b3a64402))
+
+
+### Performance Improvements
+
+* remove possible duplicate computeds ([7fb7342](https://github.com/cdmoro/bootstrap-vue-3/commit/7fb7342bd1e9339bc2d35ba2b68da5be74e3d672))
+* **useBooleanish:** use eagerComputed instead since the resolved type usually can benefit from it ([c038674](https://github.com/cdmoro/bootstrap-vue-3/commit/c038674d712615bb04512a86969580c74aec15a6))
+
+
+### Reverts
+
+* **BToast:** revert btoast changes move to other branch ([012d441](https://github.com/cdmoro/bootstrap-vue-3/commit/012d4413f4f2d164e8be49f0153f24ec45220fee))
+* some previous eagerComputed changes ([ab663ec](https://github.com/cdmoro/bootstrap-vue-3/commit/ab663ecc6865567f5aceb6b728776a41b60963ed))
+
 ## [0.3.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.11...v0.3.12) (2022-10-11)
 
 
