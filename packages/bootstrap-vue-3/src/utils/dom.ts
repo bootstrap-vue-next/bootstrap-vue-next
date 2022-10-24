@@ -214,6 +214,7 @@ export const matches = (el: Element, selector: string) =>
 
 // See: https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 /* istanbul ignore next */
+/* eslint-disable @typescript-eslint/no-this-alias */
 export const closestEl =
   ELEMENT_PROTO?.closest ||
   function (this: Element, sel: string) {
