@@ -41,9 +41,13 @@ export default defineComponent({
     labelIncrement: {type: String, default: 'Increment'},
     labelDecrement: {type: String, default: 'Decrement'},
     modelValue: {type: Number, default: null}, // V-model prop
+    name: {type: String, default: 'BFormSpinbutton'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    placeholder: {type: String, required: false},
     locale: {type: String, default: 'locale'},
+    form: {type: String, required: false},
     inline: {type: Boolean, default: false},
+    size: {type: String, required: false},
     formatterFn: {
       type: Function as PropType<(value: number) => [any]>,
       default: (value: number) => value,
@@ -144,7 +148,7 @@ export default defineComponent({
       isLocaleRTL(computedLocale.value)
     )
 
-    const defaultFormatter = computed(() => {
+    const defaultFormatter = () => {
       //locale needs to be resolved
       // Returns and `Intl.NumberFormat` formatter method reference
       const precision = computedPrecision.value
@@ -158,15 +162,17 @@ export default defineComponent({
       })
 
       return nf.format
-    })
+    }
+    //TODO allow for prop formatter function
+    const computedFormatter = computed(() => defaultFormatter())
 
-    const computedFormatter = computed(() => defaultFormatter)
     const computedAttrs = computed(() => ({
       role: 'group',
       lang: computedLocale.value,
       tabindex: props.disabled ? null : '-1',
       title: props.ariaLabel,
     }))
+
     const computedSpinAttrs = computed(() => {
       const s = {
         spinId: spinId.value,
@@ -181,6 +187,8 @@ export default defineComponent({
         temp: 1,
       }
     })
+
+    const hasValue = !isNull(props.modelValue)
 
     // methods
 
@@ -351,6 +359,7 @@ export default defineComponent({
       $_keyIsDown = false
     }
 
+    // Render Helping functions
     const makeButton = (
       stepper: (multiplier?: number) => void,
       label: string,
@@ -364,6 +373,7 @@ export default defineComponent({
         props: {scale: hasFocus.value ? 1.5 : 1.25},
         attrs: {'aria-hidden': 'true'},
       })
+
       const scope = {hasFocus: hasFocus.value}
 
       const handler = (event: Event) => {
@@ -395,6 +405,7 @@ export default defineComponent({
       )
     }
 
+    //component definitions
     const $increment = makeButton(
       stepUp,
       props.labelIncrement,
@@ -409,13 +420,80 @@ export default defineComponent({
       props.labelDecrement,
       'BIconDash',
       'dec',
-      'ArrowDown',
+      'ArrowDown', // TODO pass icon component
       false,
       'decrement'
     )
 
-    // Render Helping functions
-    return () => h('div', {}, 'c')
+    const $hidden = []
+
+    if (props.name && !props.disabled) {
+      $hidden.push(
+        h('input', {
+          attrs: {
+            type: 'hidden',
+            name: props.name,
+            form: props.form || null,
+            // TODO: Should this be set to '' if value is out of range?
+            value: valueAsFixed.value,
+          },
+          key: 'hidden',
+        })
+      )
+    }
+
+    props.modelValue
+
+    const $spin = h(
+      // We use 'output' element to make this accept a `<label for="id">` (Except IE)
+      'output',
+      {
+        class: [
+          {'d-flex': props.vertical},
+          {'align-self-center': !props.vertical},
+          {'align-items-center': props.vertical},
+          {'border-top': props.vertical},
+          {'border-bottom': props.vertical},
+          {'border-left': !props.vertical},
+          {'border-right': !props.vertical},
+          'flex-grow-1',
+        ],
+        attrs: computedSpinAttrs.value,
+        key: 'output',
+        ref: 'spinner',
+      },
+      [h('bdi', hasValue ? computedFormatter.value(props.modelValue) : props.placeholder || '')]
+    )
+
+    return () => {
+      h(
+        'div',
+        {
+          'staticClass': 'b-form-spinbutton form-control',
+          'class': [
+            'b-form-spinbutton form-control',
+            {disabled: props.disabled},
+            {readonly: props.readonly},
+            {focus: hasFocus},
+            {'d-inline-flex': props.inline || props.vertical},
+            {'d-flex': !props.inline && !props.vertical},
+            {'align-items-stretch': !props.vertical},
+            {'flex-column': props.vertical},
+            // sizeFormClass,
+            // this.stateClass
+          ],
+          ...computedAttrs,
+          'onkeydown': onKeydown,
+          'onkeyup': onKeyup,
+          // We use capture phase (`!` prefix) since focus and blur do not bubble
+          '!focus': onFocusBlur,
+          '!blur': onFocusBlur,
+        },
+        props.vertical
+          ? [$increment, $hidden, $spin, $decrement]
+          : [$decrement, $hidden, $spin, $increment]
+      )
+    }
   },
 })
 </script>
