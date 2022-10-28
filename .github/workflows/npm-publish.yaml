@@ -38,6 +38,9 @@ jobs:
       - name: Test library
         run: pnpm test
 
+      - name: Git status
+        run: git status
+
       - name: Publish
         run: pnpm publish --filter bootstrap-vue-3
         env:
