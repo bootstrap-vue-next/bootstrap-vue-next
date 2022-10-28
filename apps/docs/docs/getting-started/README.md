@@ -116,7 +116,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 #### Legacy Installation
 
-- This is the old installation method. It is recommended to use the preferred installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method
+- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method
 
 Install the necessary packages for `bootstrap-vue-3`:
 
