@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.1...v0.4.2) (2022-10-28)
+
+
+### Miscellaneous Chores
+
+* release 0.4.2 ([01c1172](https://github.com/cdmoro/bootstrap-vue-3/commit/01c1172e05c4fb3359c17faf579f2e4600843646))
+
 ## [0.4.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.0...v0.4.1) (2022-10-28)
 
 
