@@ -44,7 +44,7 @@ describe('placeholder', () => {
     })
     expect(wrapper.attributes('style')).toContain('width: 6%;')
     await wrapper.setProps({width: undefined})
-    expect(wrapper.attributes('style')).toBeUndefined()
+    expect(wrapper.attributes('style')).toBe('')
   })
 
   it('has style width: {type}%; when prop width is string', () => {

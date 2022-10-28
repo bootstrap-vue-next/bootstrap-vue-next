@@ -59,8 +59,9 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change', 'blur', 'input'],
   setup(props, {emit}) {
-    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} = useFormInput(props, emit)
-  
+    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
+      useFormInput(props, emit)
+
     const isHighlighted = ref(false)
 
     const computedClasses = computed(() => {
