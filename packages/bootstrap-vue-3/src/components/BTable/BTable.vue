@@ -385,14 +385,21 @@ const isSortable = computed(
 
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
 const computedItems = computed(() => {
-  if (usesProvider.value) return itemHelper.internalItems.value
-  return requireItemsMapping.value
+  const items = usesProvider.value
+    ? itemHelper.internalItems.value
+    : requireItemsMapping.value
     ? itemHelper.mapItems(props.fields, props.items, props, {
         isSortable,
         isFilterableTable,
         sortDescBoolean,
       })
     : props.items
+
+  if (props.perPage !== undefined) {
+    const startIndex = (props.currentPage - 1) * props.perPage
+    return items.splice(startIndex, props.perPage)
+  }
+  return items
 })
 
 const getFieldHeadLabel = (field: TableField) => {
@@ -598,6 +605,7 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
 
   //stop provide when paging
   const inNoProvider = (key: NoProviderTypes) => props.noProvider && props.noProvider.includes(key)
+  const notifyFiltered = !['currentPage', 'perPage'].includes(prop)
   const noProvideWhenPaging =
     ['currentPage', 'perPage'].includes(prop) &&
     (inNoProvider('paging') || noProviderPagingBoolean.value === true)
@@ -613,6 +621,8 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
   }
 
   await callItemsProvider()
+
+  if (notifyFiltered) itemHelper.notifyFilteredItems()
 }
 
 watch(
