@@ -1,5 +1,6 @@
 .b-table-stacked-label {
   display: none;
+  font-weight: bold;
 }
 
 @each $breakpoint in map-keys($grid-breakpoints) {

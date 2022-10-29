@@ -98,7 +98,7 @@
             v-bind="field.tdAttr"
             :class="getFieldRowClasses(field, item)"
           >
-            <label v-if="stacked" class="b-table-stacked-label">{{
+            <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">{{
               getFieldHeadLabel(field)
             }}</label>
             <slot
