@@ -96,7 +96,8 @@ const useItemHelper = () => {
       (item) =>
         Object.entries(item).filter((item) => {
           const [key, val] = item
-          if (key[0] === '_' || (filterable.length > 0 && !filterable.includes(key))) return false
+          if (!val || key[0] === '_' || (filterable.length > 0 && !filterable.includes(key)))
+            return false
           const itemValue: string =
             typeof val === 'object'
               ? JSON.stringify(Object.values(val))
