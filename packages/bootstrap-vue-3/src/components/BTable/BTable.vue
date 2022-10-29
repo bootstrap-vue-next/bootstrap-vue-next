@@ -98,6 +98,9 @@
             v-bind="field.tdAttr"
             :class="getFieldRowClasses(field, item)"
           >
+            <label v-if="stacked" class="b-table-stacked-label">{{
+              getFieldHeadLabel(field)
+            }}</label>
             <slot
               v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
               :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
@@ -222,6 +225,8 @@ interface BTableProps {
   responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   small?: Booleanish
   striped?: Booleanish
+  stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
+  labelStacked?: boolean
   variant?: ColorVariant
   sortBy?: string
   sortDesc?: Booleanish
@@ -254,6 +259,8 @@ const props = withDefaults(defineProps<BTableProps>(), {
   responsive: false,
   small: false,
   striped: false,
+  labelStacked: false,
+  stacked: false,
   sortDesc: false,
   sortInternal: true,
   selectable: false,
@@ -312,11 +319,12 @@ const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
 const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
 const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
 const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
+const labelStackedBoolean = useBooleanish(toRef(props, 'labelStacked'))
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
 const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
-const noProviderPagingBoolean = useBooleanish(toRef(props, 'showEmpty'))
-const noProviderSortingBoolean = useBooleanish(toRef(props, 'showEmpty'))
-const noProviderFilteringBoolean = useBooleanish(toRef(props, 'showEmpty'))
+const noProviderPagingBoolean = useBooleanish(toRef(props, 'noProviderPaging'))
+const noProviderSortingBoolean = useBooleanish(toRef(props, 'noProviderSorting'))
+const noProviderFilteringBoolean = useBooleanish(toRef(props, 'noProviderFiltering'))
 
 const internalBusyFlag = ref(busyBoolean.value)
 itemHelper.filterEvent.value = async (items) => {
@@ -351,6 +359,7 @@ const containerAttrs = computed(() => ({
   hover: props.hover,
   responsive: props.responsive,
   striped: props.striped,
+  stacked: props.stacked,
   small: props.small,
   tableClass: tableClasses.value,
   tableVariant: props.variant,
