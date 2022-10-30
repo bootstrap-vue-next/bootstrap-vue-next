@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4.3](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.2...v0.4.3) (2022-10-30)
+
+
+### Features
+
+* **BTable:** added ``label-stacked`` prop to label the stacked rows with the field's label ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+
+
+### Bug Fixes
+
+* **BTable, BTableSimple:** Added the needed CSS to make the ``stacked`` prop take effect from a specific screen-size breakpoint. ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+* **BTable:** fixed ``filtered`` event being emitted when using pagination (more details: https://github.com/cdmoro/bootstrap-vue-3/issues/768). ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+* **BTable:** fixed filtering undefined table item values (more details: https://github.com/cdmoro/bootstrap-vue-3/issues/770). ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+* **BTable:** provided typescript hints for a stacked prop. ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+
 ## [0.4.2](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.1...v0.4.2) (2022-10-28)
 
 
