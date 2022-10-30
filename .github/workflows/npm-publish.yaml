@@ -18,18 +18,27 @@ jobs:
 
     steps:
       - name: Clone repository
+        with: 
+          ref: 'main'
         uses: actions/checkout@v3
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
         with:
           version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
         
       - name: Publish
         run: pnpm publish --tag latest --filter bootstrap-vue-3
