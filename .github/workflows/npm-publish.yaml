@@ -46,4 +46,4 @@ jobs:
       - name: Publish
         run: pnpm publish --tag latest --filter bootstrap-vue-3
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          "npm_config_//registry.npmjs.org/:_authToken": ${{ secrets.NPM_TOKEN }}
