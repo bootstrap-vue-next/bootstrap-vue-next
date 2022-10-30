@@ -38,9 +38,9 @@ const useItemHelper = () => {
     internalItems.value = cloneDeep(items)
     if ('isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter) {
       internalItems.value = filterItems(internalItems.value, props.filter, props.filterable)
-      if (filterEvent.value) {
-        filterEvent.value(internalItems.value)
-      }
+      // if (filterEvent.value) {
+      //   filterEvent.value(internalItems.value)
+      // }
     }
     if ('isSortable' in flags && flags.isSortable.value === true) {
       internalItems.value = sortItems(
@@ -53,10 +53,10 @@ const useItemHelper = () => {
         props.sortCompare
       )
     }
-    if (props.perPage !== undefined) {
-      const startIndex = (props.currentPage - 1) * props.perPage
-      internalItems.value = internalItems.value.splice(startIndex, props.perPage)
-    }
+    // if (props.perPage !== undefined) {
+    //   const startIndex = (props.currentPage - 1) * props.perPage
+    //   internalItems.value = internalItems.value.splice(startIndex, props.perPage)
+    // }
     return internalItems.value
   }
 
@@ -96,7 +96,8 @@ const useItemHelper = () => {
       (item) =>
         Object.entries(item).filter((item) => {
           const [key, val] = item
-          if (key[0] === '_' || (filterable.length > 0 && !filterable.includes(key))) return false
+          if (!val || key[0] === '_' || (filterable.length > 0 && !filterable.includes(key)))
+            return false
           const itemValue: string =
             typeof val === 'object'
               ? JSON.stringify(Object.values(val))
@@ -118,12 +119,19 @@ const useItemHelper = () => {
     }
   }
 
+  const notifyFilteredItems = () => {
+    if (filterEvent.value) {
+      filterEvent.value(internalItems.value)
+    }
+  }
+
   return {
     normaliseFields,
     mapItems,
     internalItems,
     updateInternalItems,
     filterEvent,
+    notifyFilteredItems,
   }
 }
 
