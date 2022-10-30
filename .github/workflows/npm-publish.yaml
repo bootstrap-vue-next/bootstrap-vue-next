@@ -40,10 +40,18 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
         
       - name: Publish
-        run: pnpm publish --tag latest --filter bootstrap-vue-3
+        run: pnpm publish --tag latest --filter bootstrap-vue-3 --access=public
         env:
-          "npm_config_//registry.npmjs.org/:_authToken": ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

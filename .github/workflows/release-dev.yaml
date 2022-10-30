@@ -58,8 +58,8 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
         if: ${{ steps.release.outputs.releases_created }}
 
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -72,7 +72,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
-        run: pnpm publish --tag develop --filter bootstrap-vue-3
+        run: pnpm publish --tag develop --filter bootstrap-vue-3 --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created }}
