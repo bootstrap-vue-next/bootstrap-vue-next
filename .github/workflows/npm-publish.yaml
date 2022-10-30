@@ -39,6 +39,9 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts --frozen-lockfile
         
       - name: Publish
         run: pnpm publish --tag latest --filter bootstrap-vue-3

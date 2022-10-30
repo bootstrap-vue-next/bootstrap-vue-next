@@ -67,6 +67,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
         if: ${{ steps.release.outputs.releases_created }}
 
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts --frozen-lockfile
+        if: ${{ steps.release.outputs.releases_created }}
+
       - name: Publish 
         run: pnpm publish --tag develop --filter bootstrap-vue-3
         env:
