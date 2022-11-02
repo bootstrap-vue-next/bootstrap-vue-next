@@ -38,6 +38,8 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
   - `title` (optional) : string or an array of `VNodes`
   - `body` : string or an array of `VNodes`
 - `options`: an optional options object for changing position and delay hidden
+  - `autoHide` (optional) : true/false - by default is true
+  - `noCloseButton` (optional) : true/false - by default is false
   - `pos`: 'top-left', 'top-center', 'top-right', 'middle-left', 'middle-center', 'middle-right', 'bottom-left', 'bottom-center', 'bottom-right'
   - `delay`: number
   - `variant` : string ColorVariant
