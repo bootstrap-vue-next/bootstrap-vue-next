@@ -19,10 +19,12 @@ export interface ToastContent {
 }
 
 export interface ToastOptions {
-  id?: string
-  value?: boolean // show or hide
+  autoHide?: boolean
   delay?: number
+  id?: string
+  noCloseButton?: boolean
   pos?: ContainerPosition
+  value?: boolean // show or hide
   variant?: ColorVariant
 }
 
@@ -50,7 +52,7 @@ interface ToastContainers {
   [key: symbol]: ToastVM
 }
 
-const defaultToastOptions: ToastOptions = {delay: 5000, value: true, pos: 'top-right'}
+const defaultToastOptions: ToastOptions = {autoHide: true, delay: 5000, noCloseButton: false, pos: 'top-right', value: true}
 
 export class ToastInstance {
   vm: ToastVM
