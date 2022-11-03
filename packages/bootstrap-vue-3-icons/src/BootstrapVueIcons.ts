@@ -13,6 +13,10 @@ export {BIcon, BIconstack}
 // Export types
 export type {Animation, IconSize} from './types'
 
+export {kebabCase, pascalCase} from './utils'
+
+export * from './components/icons/icons'
+
 // Inject all components into the global @vue/runtime-core
 // This allows intellisense in templates w/out direct importing
 declare module '@vue/runtime-core' {

@@ -38,7 +38,7 @@ export default /* #__PURE__ */ defineComponent({
 
     const hasScale = computed(() => props.flipH || props.flipV || computedScale.value !== 1)
     const hasShift = computed(() => computedShiftH.value || computedShiftV.value)
-    // const hasContent = computed(() => props.content !== null && props.content !== undefined)
+    const hasContent = computed(() => props.content !== null && props.content !== undefined)
     const hasTransforms = computed(() => hasScale.value || props.rotate)
 
     const transforms = computed(() =>
@@ -93,8 +93,9 @@ export default /* #__PURE__ */ defineComponent({
         'g',
         {
           transform: svgTransform.value,
+          innerHTML: hasContent ?  props.content || ''  : {}
         },
-        [props.content, normalizeSlot('default', {}, slots)]
+        [normalizeSlot('default', {}, slots)]
       )
 
       // If needed, we wrap in an additional `<g>` in order to handle the shifting

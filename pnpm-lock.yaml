@@ -14,7 +14,7 @@ importers:
       husky: 8.0.1
       lint-staged: 13.0.3
       release-please: 14.15.0
-      turbo: 1.6.2
+      turbo: 1.6.3
 
   apps/docs:
     specifiers:
@@ -130,8 +130,10 @@ importers:
       '@vue/test-utils': ^2.0.2
       bootstrap: ^5.2.0
       bootstrap-icons: ^1.5.0
+      bootstrap-vue-3: workspace:*
       c8: ^7.12.0
       happy-dom: ^7.5.12
+      lodash: ^4.17.21
       rollup: ^2.78.1
       rollup-plugin-visualizer: ^5.7.1
       sass: ^1.54.4
@@ -145,6 +147,7 @@ importers:
       vue-tsc: ^0.38.4
     dependencies:
       '@nuxt/kit': 3.0.0-rc.12
+      bootstrap-vue-3: link:../bootstrap-vue-3
     devDependencies:
       '@popperjs/core': 2.11.6
       '@types/bootstrap': 5.2.5
@@ -157,6 +160,7 @@ importers:
       bootstrap-icons: 1.9.1
       c8: 7.12.0
       happy-dom: 7.6.6
+      lodash: 4.17.21
       rollup: 2.79.1
       rollup-plugin-visualizer: 5.8.3_rollup@2.79.1
       sass: 1.55.0
@@ -5563,65 +5567,65 @@ packages:
       typescript: 4.8.4
     dev: true
 
-  /turbo-darwin-64/1.6.2:
-    resolution: {integrity: sha512-qzqVdJZcVeu1d0mzeSxffgeOToSgM+Hl1y9yDiJQ4QQjiR/WGCzS9FtydLnk0ori8T1j/lxiiQz2sHjHYfLCTg==}
+  /turbo-darwin-64/1.6.3:
+    resolution: {integrity: sha512-QmDIX0Yh1wYQl0bUS0gGWwNxpJwrzZU2GIAYt3aOKoirWA2ecnyb3R6ludcS1znfNV2MfunP+l8E3ncxUHwtjA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.6.2:
-    resolution: {integrity: sha512-EJvgWSjLwzJbAsqRuqeaYSdXNKwyiUfOfEOPerYCvwxC+ILiqpladjteMCzzF/z2OmIbPzuqZpyik30TfpIC9A==}
+  /turbo-darwin-arm64/1.6.3:
+    resolution: {integrity: sha512-75DXhFpwE7CinBbtxTxH08EcWrxYSPFow3NaeFwsG8aymkWXF+U2aukYHJA6I12n9/dGqf7yRXzkF0S/9UtdyQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.6.2:
-    resolution: {integrity: sha512-SJ5ThDApOyOavjvkYb6a1MKJbOvX4JEvSYxoZv+ZpN8g7A7x1SE9b7EnxFl26S4eyy0J4+r+YJBDBZ7sFkqRWQ==}
+  /turbo-linux-64/1.6.3:
+    resolution: {integrity: sha512-O9uc6J0yoRPWdPg9THRQi69K6E2iZ98cRHNvus05lZbcPzZTxJYkYGb5iagCmCW/pq6fL4T4oLWAd6evg2LGQA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.6.2:
-    resolution: {integrity: sha512-0vHojVlvAelsYZo6p/xE9H9Dg8spNjXx+PO5RwP12ui8GuEqHb3Vomdb7AKDnWkIH7bpysNb9GbKEk7awQpGSg==}
+  /turbo-linux-arm64/1.6.3:
+    resolution: {integrity: sha512-dCy667qqEtZIhulsRTe8hhWQNCJO0i20uHXv7KjLHuFZGCeMbWxB8rsneRoY+blf8+QNqGuXQJxak7ayjHLxiA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.6.2:
-    resolution: {integrity: sha512-j4mJmY5pEt7OaBXDM99BpDnJuSpiLVbVbUl4Ezp8w3gyIcGuxy3wAfLbQyZSLu8ke6R9SdmXIBAM2Y0MjS/Z1g==}
+  /turbo-windows-64/1.6.3:
+    resolution: {integrity: sha512-lKRqwL3mrVF09b9KySSaOwetehmGknV9EcQTF7d2dxngGYYX1WXoQLjFP9YYH8ZV07oPm+RUOAKSCQuDuMNhiA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.6.2:
-    resolution: {integrity: sha512-AlDYjxPU21YSefP3qMl/Zys5spglXtaBt2ZF5N2+OWcjiJZ/0mIIc69oFdzuAuiyoYkyWMdkoCSGwuljtl31vg==}
+  /turbo-windows-arm64/1.6.3:
+    resolution: {integrity: sha512-BXY1sDPEA1DgPwuENvDCD8B7Hb0toscjus941WpL8CVd10hg9pk/MWn9CNgwDO5Q9ks0mw+liDv2EMnleEjeNA==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.6.2:
-    resolution: {integrity: sha512-a6UM9HaAjM5ai+vxDFI/z0l4Bf6zWjf7wCf9Ip2iyd4XZkZZnhRtM6FpaUWzorjz9Dsqnfwu3nkWY3wPdH02IQ==}
+  /turbo/1.6.3:
+    resolution: {integrity: sha512-FtfhJLmEEtHveGxW4Ye/QuY85AnZ2ZNVgkTBswoap7UMHB1+oI4diHPNyqrQLG4K1UFtCkjOlVoLsllUh/9QRw==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.6.2
-      turbo-darwin-arm64: 1.6.2
-      turbo-linux-64: 1.6.2
-      turbo-linux-arm64: 1.6.2
-      turbo-windows-64: 1.6.2
-      turbo-windows-arm64: 1.6.2
+      turbo-darwin-64: 1.6.3
+      turbo-darwin-arm64: 1.6.3
+      turbo-linux-64: 1.6.3
+      turbo-linux-arm64: 1.6.3
+      turbo-windows-64: 1.6.3
+      turbo-windows-arm64: 1.6.3
     dev: true
 
   /type-check/0.3.2:
