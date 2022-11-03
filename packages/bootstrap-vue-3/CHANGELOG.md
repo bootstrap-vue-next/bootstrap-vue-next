@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.4](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.3...v0.4.4) (2022-11-03)
+
+
+### Features
+
+* **BToast:** Add options autoHide, noCloseButton ([338cc1e](https://github.com/cdmoro/bootstrap-vue-3/commit/338cc1e1c4d3903c8bb9e66a0144610f92b9e568))
+* **BToast:** Add options autoHide, noCloseButton. ([24110d0](https://github.com/cdmoro/bootstrap-vue-3/commit/24110d05aaabc2fc1187d93d30187fc771f972cf))
+
 ## [0.4.3](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.2...v0.4.3) (2022-10-30)
 
 
