@@ -85,6 +85,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created }}
 
+      - name: status
+        run: git status
+
       - name: Publish 
         run: pnpm publish --tag latest --filter bootstrap-vue-3 --access=public
         if: ${{ steps.release.outputs.releases_created }}
