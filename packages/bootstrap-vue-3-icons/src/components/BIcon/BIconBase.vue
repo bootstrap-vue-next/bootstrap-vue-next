@@ -93,7 +93,7 @@ export default /* #__PURE__ */ defineComponent({
         'g',
         {
           transform: svgTransform.value,
-          innerHTML: hasContent ?  props.content || ''  : {}
+          innerHTML: hasContent.value ? props.content || '' : {},
         },
         [normalizeSlot('default', {}, slots)]
       )
