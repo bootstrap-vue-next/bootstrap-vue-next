@@ -85,7 +85,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created }}
 
-      - name: status
+      - name: stShow git statusatus
         run: git status
         if: ${{ steps.release.outputs.releases_created }}
 
