@@ -36,7 +36,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v3
         if: ${{ steps.release.outputs.releases_created }}
-
+        
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -78,4 +78,7 @@ jobs:
 
       - name: Publish 
         run: pnpm publish --tag latest --filter bootstrap-vue-3 --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created }}
+        
