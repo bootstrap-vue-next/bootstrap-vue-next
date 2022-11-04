@@ -80,7 +80,10 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Set publishing config
-        run: pnpm config set '//registry.npmjs.org/:_authToken' "${secrets.NPM_TOKEN}"
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
         run: pnpm publish --tag latest --filter bootstrap-vue-3 --access=public
