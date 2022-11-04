@@ -1,10 +1,10 @@
 /**
- * @external BaseInputSize
+ * @external
  */
-export interface BaseInputSize {
-  sm: unknown
-  md: unknown
-  lg: unknown
+ export interface BaseInputSize {
+  'sm': unknown,
+  'md': unknown,
+  'lg': unknown,
 }
 
 type InputSize = keyof BaseInputSize

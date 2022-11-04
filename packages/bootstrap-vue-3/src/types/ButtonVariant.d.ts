@@ -1,5 +1,8 @@
-import {BaseColorVariant} from './ColorVariant'
+import {BaseColorVariant} from '.'
 
+/**
+ * @external
+ */
 export interface BaseButtonVariant extends BaseColorVariant {
   'link': unknown
   'outline-primary': unknown
@@ -12,9 +15,6 @@ export interface BaseButtonVariant extends BaseColorVariant {
   'outline-dark': unknown
 }
 
-/**
- * @external ButtonVariant
- */
 type ButtonVariant = keyof BaseButtonVariant
 
 export default ButtonVariant
