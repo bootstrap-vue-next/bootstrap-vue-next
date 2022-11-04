@@ -61,6 +61,9 @@ jobs:
         run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: status
+        run: git status
         
       - name: Publish
         run: pnpm publish --tag latest --filter bootstrap-vue-3 --access=public
