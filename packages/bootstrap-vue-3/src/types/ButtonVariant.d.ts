@@ -1,18 +1,20 @@
-import type {ColorVariant} from '.'
+import {BaseColorVariant} from '.'
 
 /**
  * @external
  */
-type ButtonVariant =
-  | ColorVariant
-  | 'link'
-  | 'outline-primary'
-  | 'outline-secondary'
-  | 'outline-success'
-  | 'outline-danger'
-  | 'outline-warning'
-  | 'outline-info'
-  | 'outline-light'
-  | 'outline-dark'
+export interface BaseButtonVariant extends BaseColorVariant {
+  'link': unknown
+  'outline-primary': unknown
+  'outline-secondary': unknown
+  'outline-success': unknown
+  'outline-danger': unknown
+  'outline-warning': unknown
+  'outline-info': unknown
+  'outline-light': unknown
+  'outline-dark': unknown
+}
+
+type ButtonVariant = keyof BaseButtonVariant
 
 export default ButtonVariant
