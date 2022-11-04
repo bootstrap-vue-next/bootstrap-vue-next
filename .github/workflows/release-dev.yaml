@@ -75,18 +75,10 @@ jobs:
         run: pnpm run build
         if: ${{ steps.release.outputs.releases_created }}
 
-      - name: Test library
-        run: pnpm test
-        if: ${{ steps.release.outputs.releases_created }}
-
       - name: Set publishing config
         run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.release.outputs.releases_created }}
-
-      - name: Show git status
-        run: git status
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
