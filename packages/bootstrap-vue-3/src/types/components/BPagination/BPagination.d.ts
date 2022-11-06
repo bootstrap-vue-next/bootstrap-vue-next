@@ -1,7 +1,7 @@
 import type {Alignment, InputSize} from '../..'
 // Props
 export interface Props {
-  align?: Alignment
+  align?: Alignment.Horizontal
   ariaControls?: string
   ariaLabel?: string
   disabled?: boolean
