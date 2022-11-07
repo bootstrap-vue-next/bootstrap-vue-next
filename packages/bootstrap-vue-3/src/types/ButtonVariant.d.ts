@@ -1,4 +1,4 @@
-import {BaseColorVariant} from './ColorVariant'
+import type {BaseColorVariant} from './ColorVariant'
 
 export interface BaseButtonVariant extends BaseColorVariant {
   'link': unknown
