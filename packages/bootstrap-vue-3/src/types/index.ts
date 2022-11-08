@@ -1,4 +1,4 @@
-export type {default as Alignment} from './Alignment'
+export * as Alignment from './Alignment'
 export type {default as Animation} from './Animation'
 export type {default as AriaInvalid} from './AriaInvalid'
 export type {default as Booleanish} from './Booleanish'

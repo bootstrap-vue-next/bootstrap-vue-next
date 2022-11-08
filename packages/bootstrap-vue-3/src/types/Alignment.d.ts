@@ -1,14 +1,6 @@
-/**
- * @external
- */
 declare type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
-
-declare namespace Alignment {
-  type Vertical = CommonAlignment | 'baseline' | 'stretch'
-  type Horizontal = CommonAlignment | 'between' | 'around'
-  type Content = CommonAlignment | 'between' | 'around' | 'stretch'
-  type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
-  type TextHorizontal = 'start' | 'end' | 'center'
-}
-
-export default Alignment
+export type Vertical = CommonAlignment | 'baseline' | 'stretch'
+export type Horizontal = CommonAlignment | 'between' | 'around'
+export type Content = CommonAlignment | 'between' | 'around' | 'stretch'
+export type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+export type TextHorizontal = 'start' | 'end' | 'center'
