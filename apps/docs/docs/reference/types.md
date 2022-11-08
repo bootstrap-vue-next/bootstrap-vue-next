@@ -10,13 +10,11 @@ sidebar: auto
 
 ```ts
 type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
-namespace Alignment {
-    type Vertical = CommonAlignment | 'baseline' | 'stretch'
-    type Horizontal = CommonAlignment | 'between' | 'around'
-    type Content = CommonAlignment | 'between' | 'around' | 'stretch'
-    type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
-    type TextHorizontal = 'start' | 'end' | 'center'
-}
+type Vertical = CommonAlignment | 'baseline' | 'stretch'
+type Horizontal = CommonAlignment | 'between' | 'around'
+type Content = CommonAlignment | 'between' | 'around' | 'stretch'
+type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+type TextHorizontal = 'start' | 'end' | 'center'
 ```
 
 ## Booleanish
