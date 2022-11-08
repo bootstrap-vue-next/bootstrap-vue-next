@@ -1,20 +1,17 @@
+import type {BaseColorVariant} from '.'
+
 /**
  * @external
  */
-type TextColorVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'danger'
-  | 'warning'
-  | 'info'
-  | 'light'
-  | 'dark'
-  | 'white'
-  | 'body'
-  | 'muted'
-  | 'black-50'
-  | 'white-50'
-  | 'reset'
+ export interface BaseTextColorVariant extends BaseColorVariant {
+  'white': unknown
+  'body': unknown
+  'muted': unknown
+  'black-50': unknown
+  'white-50': unknown
+  'reset': unknown
+}
+
+type TextColorVariant = keyof BaseTextColorVariant
 
 export default TextColorVariant
