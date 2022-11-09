@@ -72,7 +72,7 @@ export default defineComponent({
     const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 
     const justifyAlign = computed((): Alignment.JustifyContent => {
-          return props.align == 'fill' ? 'start' : props.align
+          return props.align === 'fill' ? 'start' : props.align
     });
     const alignment = useAlignment(toRef(justifyAlign, 'value'))
 
