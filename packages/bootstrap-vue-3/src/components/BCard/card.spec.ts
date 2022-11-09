@@ -28,7 +28,7 @@ describe('card', () => {
 
   it('has class text-{type} when prop align', async () => {
     const wrapper = mount(BCard, {
-      props: {align: 'fill'},
+      props: {align: 'start'},
     })
     expect(wrapper.classes()).toContain('text-fill')
     await wrapper.setProps({align: undefined})
