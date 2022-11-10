@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.6...v0.4.7) (2022-11-10)
+
+
+### Features
+
+* add the ability to extend certain built in types ([4bd4bee](https://github.com/cdmoro/bootstrap-vue-3/commit/4bd4beefddfba524be31e77c7078340ea85f08b0))
+
+
+### Bug Fixes
+
+* **BModal:** moved the modal's css props to global style file to fix modal not showing up & backdrop not appearing correctly in some cases ([c20da57](https://github.com/cdmoro/bootstrap-vue-3/commit/c20da573595b02bdae74177b2c60a274f5f24427))
+
 ## [0.4.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.5...v0.4.6) (2022-11-04)
 
 
