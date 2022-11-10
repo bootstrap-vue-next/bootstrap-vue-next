@@ -39,17 +39,17 @@ export default defineComponent({
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     href: {type: String, required: false},
+    loading: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    loadingMode: {type: String as PropType<'fill' | 'inline'>, default: 'inline'},
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     pressed: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     rel: {type: String, default: undefined},
-    size: {type: String as PropType<InputSize>, default: 'md'},
+    size: {type: String as PropType<InputSize>, default: undefined},
     squared: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'button'},
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     type: {type: String as PropType<ButtonType>, default: 'button'},
-    variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
-    loading: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    loadingMode: {type: String as PropType<'fill' | 'inline'>, default: 'inline'},
+    variant: {type: String as PropType<ButtonVariant>, default: undefined },
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
@@ -61,25 +61,19 @@ export default defineComponent({
     const loadingBoolean = useBooleanish(toRef(props, 'loading'))
 
     const isToggle = computed<boolean>(() => pressedBoolean.value === true)
-    const isButton = computed<boolean>(
-      () => props.tag === 'button' && props.href === undefined && props.to === null
-    )
+    const isButton = computed<boolean>(() => props.tag === 'button' && props.href === undefined && !props.to)
     const computedLink = computed<boolean>(() => isLink(props))
-    const isBLink = computed<boolean>(() => props.to !== null)
-    const nonStandardTag = computed<boolean>(() =>
-      props.href !== undefined ? false : !isButton.value
-    )
+    const isBLink = computed<boolean>(() => !!props.to)
+    const nonStandardTag = computed<boolean>(() => !props.href && !isButton.value)
 
-    const computedClasses = computed(() => [
-      [`btn-${props.variant}`],
-      [`btn-${props.size}`],
-      {
+    const computedClasses = computed(() => ({
+        [`btn-${props.size}`]: !!props.size,
+        [`btn-${props.variant}`]: !!props.variant,
         'active': activeBoolean.value || pressedBoolean.value,
         'rounded-pill': pillBoolean.value,
         'rounded-0': squaredBoolean.value,
         'disabled': disabledBoolean.value,
-      },
-    ])
+    }))
 
     const computedAttrs = computed(() => ({
       'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
