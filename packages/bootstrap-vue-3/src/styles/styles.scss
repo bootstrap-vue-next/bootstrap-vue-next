@@ -42,3 +42,11 @@
 .bv-no-focus-ring:focus {
   outline: none;
 }
+
+.modal {
+  display: block;
+}
+
+.modal-dialog {
+  z-index: 1051;
+}
