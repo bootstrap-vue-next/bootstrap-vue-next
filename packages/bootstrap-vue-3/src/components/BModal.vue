@@ -109,7 +109,7 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
-import type {BgColorVariant, Booleanish, BorderColorVariant, ButtonVariant, ClassValue, InputSize, TextColorVariant} from '../types'
+import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import {isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
@@ -124,29 +124,29 @@ import BTransition from './BTransition/BTransition.vue'
 // Implement autofocus props like autoFocusButton
 
 interface BModalProps {
-  bodyBgVariant?: BgColorVariant
+  bodyBgVariant?: ColorVariant
   bodyClass?: ClassValue
-  bodyTextVariant?: TextColorVariant
+  bodyTextVariant?: ColorVariant
   busy?: Booleanish
   lazy?: Booleanish
   buttonSize?: InputSize
   cancelDisabled?: Booleanish
   cancelTitle?: string
-  cancelVariant?: ButtonVariant | undefined
+  cancelVariant?: ColorVariant | undefined
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
-  footerBgVariant?: BgColorVariant
-  footerBorderVariant?: BorderColorVariant
+  footerBgVariant?: ColorVariant
+  footerBorderVariant?: ColorVariant
   footerClass?: ClassValue
-  footerTextVariant?: TextColorVariant
+  footerTextVariant?: ColorVariant
   fullscreen?: boolean | string
-  headerBgVariant?: BgColorVariant
-  headerBorderVariant?: BorderColorVariant
+  headerBgVariant?: ColorVariant
+  headerBorderVariant?: ColorVariant
   headerClass?: ClassValue
   headerCloseLabel?: string
   headerCloseWhite?: Booleanish
-  headerTextVariant?: TextColorVariant
+  headerTextVariant?: ColorVariant
   hideBackdrop?: Booleanish
   hideFooter?: Booleanish
   hideHeader?: Booleanish
@@ -161,7 +161,7 @@ interface BModalProps {
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
-  okVariant?: ButtonVariant | undefined
+  okVariant?: ColorVariant | undefined
   scrollable?: Booleanish
   show?: Booleanish
   size?: 'sm' | 'lg' | 'xl'

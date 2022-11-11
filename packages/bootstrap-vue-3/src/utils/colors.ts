@@ -1,3 +1,3 @@
-import {BgColorVariant} from '../types'
+import { ColorVariant } from "../types";
 
-export const textVariantDarkTypes: BgColorVariant[] = ['warning', 'info', 'light']
+export const textVariantDarkTypes: ColorVariant[] = ['warning', 'info', 'light']

@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
-import type {Booleanish, BasicColorVariant} from '../types'
+import type {Booleanish, ColorVariant} from '../types'
 import {computed, onBeforeUnmount, ref, toRef, useSlots, watch} from 'vue'
 import {Alert} from 'bootstrap'
 import {isEmptySlot, toInteger} from '../utils'
@@ -30,7 +30,7 @@ interface BAlertProps {
   fade?: Booleanish
   modelValue?: boolean | number
   show?: Booleanish
-  variant?: BasicColorVariant | undefined
+  variant?: ColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BAlertProps>(), {

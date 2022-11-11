@@ -8,7 +8,7 @@
 import {isLink, omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
-import type {BgColorVariant, Booleanish} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import {textVariantDarkTypes} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
@@ -19,7 +19,7 @@ export default defineComponent({
   props: {
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'span'},
-    variant: {type: String as PropType<BgColorVariant | undefined>, default: 'secondary'},
+    variant: {type: String as PropType<ColorVariant | undefined>, default: 'secondary'},
     textIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     dotIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     ...linkProps,

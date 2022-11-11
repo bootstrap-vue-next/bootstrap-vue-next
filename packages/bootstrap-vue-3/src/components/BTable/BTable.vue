@@ -190,9 +190,8 @@ import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 
 import type {
-  BasicColorVariant,
   Booleanish,
-  BorderColorVariant,
+  ColorVariant,
   TableField,
   TableFieldObject,
   TableItem,
@@ -211,7 +210,7 @@ interface BTableProps {
   captionTop?: Booleanish
   borderless?: Booleanish
   bordered?: Booleanish
-  borderVariant?: BorderColorVariant | undefined
+  borderVariant?: ColorVariant
   dark?: Booleanish
   fields?: Array<TableField>
   footClone?: Booleanish
@@ -228,7 +227,7 @@ interface BTableProps {
   striped?: Booleanish
   stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
   labelStacked?: boolean
-  variant?: BasicColorVariant | undefined
+  variant?: ColorVariant
   sortBy?: string
   sortDesc?: Booleanish
   sortInternal?: Booleanish
@@ -236,7 +235,7 @@ interface BTableProps {
   stickySelect?: Booleanish
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
-  selectionVariant?: BasicColorVariant | undefined
+  selectionVariant?: ColorVariant | undefined
   stickyHeader?: Booleanish
   busy?: Booleanish
   showEmpty?: Booleanish
