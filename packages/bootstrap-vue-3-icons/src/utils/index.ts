@@ -15,7 +15,7 @@ import {
 import normalizeSlot from './normalize-slot'
 import {stringToInteger, toFloat, toInteger, toPrecison} from './number'
 
-import { kebabCase, pascalCase  } from './string'
+import {kebabCase, pascalCase} from './string'
 
 export {
   stringToInteger,
@@ -35,10 +35,9 @@ export {
   isUndefined,
   isUndefinedOrNull,
   toType,
-  kebabCase, 
-  pascalCase
+  kebabCase,
+  pascalCase,
 }
-
 
 export default {
   toString,
@@ -59,6 +58,6 @@ export default {
   isUndefined,
   isUndefinedOrNull,
   toType,
-  kebabCase, 
-  pascalCase
+  kebabCase,
+  pascalCase,
 }
