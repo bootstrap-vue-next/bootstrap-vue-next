@@ -11,7 +11,7 @@
  * @license MIT
  * https://github.com/twbs/icons/blob/master/LICENSE.md
  */
-import { makeIcon } from './helpers/make-icon'
+import {makeIcon} from './helpers/make-icon'
 // --- BootstrapVue custom icons ---
 export const BIconBlank = /*#__PURE__*/ makeIcon('Blank', '')
 // --- Bootstrap Icons ---
@@ -3011,10 +3011,7 @@ export const BIconCircle = /*#__PURE__*/ makeIcon(
 )
 
 // eslint-disable-next-line
-export const BIconCircleFill = /*#__PURE__*/ makeIcon(
-  'CircleFill',
-  '<circle cx="8" cy="8" r="8"/>'
-)
+export const BIconCircleFill = /*#__PURE__*/ makeIcon('CircleFill', '<circle cx="8" cy="8" r="8"/>')
 
 // eslint-disable-next-line
 export const BIconCircleHalf = /*#__PURE__*/ makeIcon(
