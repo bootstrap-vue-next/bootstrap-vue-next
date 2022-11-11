@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 // import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '../../types/components'
-import type {Booleanish, ClassValue, TextColorVariant} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
@@ -25,7 +25,7 @@ interface BDropdownItemButtonProps {
   active?: Booleanish
   activeClass?: string
   disabled?: Booleanish
-  variant?: TextColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {

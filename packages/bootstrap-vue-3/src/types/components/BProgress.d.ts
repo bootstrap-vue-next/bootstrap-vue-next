@@ -1,7 +1,7 @@
-import type {BgColorVariant} from '..'
+import type {ColorVariant} from '..'
 // Props
 export interface Props {
-  variant?: BgColorVariant
+  variant?: ColorVariant.BgColorVariant
   max?: number | string
   height?: string
   animated?: boolean

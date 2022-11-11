@@ -1,9 +1,9 @@
-import type {TextColorVariant} from '../..'
+import type {ColorVariant} from '../..'
 // Props
 export interface Props {
   text?: string
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: ColorVariant.TextColorVariant
 }
 // Emits
 

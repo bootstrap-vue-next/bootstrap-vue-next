@@ -13,12 +13,12 @@
 // import type {Breakpoint} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
-import type {BasicColorVariant, Booleanish, BorderColorVariant, ClassValue} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 
 interface BTableSimpleProps {
   bordered?: Booleanish
   borderless?: Booleanish
-  borderVariant?: BorderColorVariant
+  borderVariant?: ColorVariant.BorderColorVariant
   captionTop?: Booleanish
   dark?: Booleanish
   hover?: Booleanish
@@ -27,7 +27,7 @@ interface BTableSimpleProps {
   striped?: Booleanish
   small?: Booleanish
   tableClass?: ClassValue
-  tableVariant?: BasicColorVariant
+  tableVariant?: ColorVariant.BasicColorVariant
   stickyHeader?: Booleanish
 }
 

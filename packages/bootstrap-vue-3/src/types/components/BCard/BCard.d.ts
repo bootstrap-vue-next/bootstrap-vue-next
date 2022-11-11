@@ -1,27 +1,27 @@
-import type {Alignment, BgColorVariant, TextColorVariant} from '../..'
+import type {Alignment, ColorVariant} from '../..'
 // Props
 export interface Props {
   align?: Alignment
-  bgVariant?: BgColorVariant
-  bodyBgVariant?: BgColorVariant
+  bgVariant?: ColorVariant.BgColorVariant
+  bodyBgVariant?: ColorVariant.BgColorVariant
   bodyClass?: Array<unknown> | Record<string, unknown> | string
   bodyTag?: string // Above todo, also Array can be explicit
-  bodyTextVariant?: TextColorVariant
-  borderVariant?: BorderColorVariant
+  bodyTextVariant?: ColorVariant.TextColorVariant
+  borderVariant?: ColorVariant.BorderColorVariant
   footer?: string
-  footerBgVariant?: BgColorVariant
-  footerBorderVariant?: BorderColorVariant
+  footerBgVariant?: ColorVariant.BgColorVariant
+  footerBorderVariant?: ColorVariant.BorderColorVariant
   footerClass?: Array<unknown> | Record<string, unknown> | string
   footerHtml?: string
   footerTag?: string
-  footerTextVariant?: TextColorVariant
+  footerTextVariant?: ColorVariant.TextColorVariant
   header?: string
-  headerBgVariant?: BgColorVariant
-  headerBorderVariant?: BorderColorVariant
+  headerBgVariant?: ColorVariant.BgColorVariant
+  headerBorderVariant?: ColorVariant.BorderColorVariant
   headerClass?: Array<unknown> | Record<string, unknown> | string
   headerHtml?: string
   headerTag?: string
-  headerTextVariant?: TextColorVariant
+  headerTextVariant?: ColorVariant.TextColorVariant
   imgAlt?: string
   imgBottom?: boolean
   imgEnd?: boolean
@@ -36,9 +36,9 @@ export interface Props {
   overlay?: boolean
   subtitle?: string
   subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant
+  subtitleTextVariant?: ColorVariant.TextColorVariant
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: ColorVariant.TextColorVariant
   title?: string
   titleTag?: string
 }

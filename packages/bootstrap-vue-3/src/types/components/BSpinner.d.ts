@@ -1,4 +1,4 @@
-import type {SpinnerType, TextColorVariant} from '..'
+import type {ColorVariant, SpinnerType} from '..'
 // Props
 export interface Props {
   label?: string
@@ -6,7 +6,7 @@ export interface Props {
   small?: boolean
   tag?: string
   type?: SpinnerType
-  variant?: TextColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 // Emits
 

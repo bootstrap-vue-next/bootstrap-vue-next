@@ -1,8 +1,7 @@
 import type {
-  BasicColorVariant,
   Booleanish,
-  BorderColorVariant,
   Breakpoint,
+  ColorVariant,
   TableField,
   TableItem,
   VerticalAlign,
@@ -11,7 +10,7 @@ import type {
 export interface Props {
   caption?: string
   align?: VerticalAlign
-  borderVariant?: BorderColorVariant
+  borderVariant?: ColorVariant.BorderColorVariant
   captionTop?: boolean
   borderless?: boolean
   bordered?: boolean
@@ -23,7 +22,7 @@ export interface Props {
   responsive?: boolean | Breakpoint
   small?: boolean
   striped?: boolean
-  variant?: BasicColorVariant
+  variant?: ColorVariant.BasicColorVariant
   sortInternal?: boolean
   selectable?: boolean
   selectMode?: 'multi' | 'single' | 'range'

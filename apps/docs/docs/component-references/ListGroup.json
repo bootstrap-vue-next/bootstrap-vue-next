@@ -72,7 +72,7 @@
           },
           {
             "prop": "variant",
-            "type": "BasicColorVariant"
+            "type": "ColorVariant.BasicColorVariant"
           }
         ],
         "emits": [],

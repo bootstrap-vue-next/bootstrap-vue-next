@@ -27,7 +27,7 @@
           {
             "prop": "variant",
             "description": "Applies one of the Bootstrap theme color variants to the component",
-            "type": "BgColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "prop": "tag",

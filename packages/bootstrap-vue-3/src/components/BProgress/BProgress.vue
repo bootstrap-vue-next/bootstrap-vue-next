@@ -9,12 +9,12 @@
 <script setup lang="ts">
 // import type {BProgressProps} from '../types/components'
 import BProgressBar from './BProgressBar.vue'
-import type {BgColorVariant, Booleanish} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, InjectionKey, provide, toRef} from 'vue'
 
 interface BProgressProps {
-  variant?: BgColorVariant
+  variant?: ColorVariant.BgColorVariant
   max?: number | string
   height?: string
   animated?: Booleanish

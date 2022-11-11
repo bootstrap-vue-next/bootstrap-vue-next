@@ -1,4 +1,4 @@
-import type {BgColorVariant} from '..'
+import type {ColorVariant} from '..'
 // Props
 export interface Props {
   label?: string
@@ -10,7 +10,7 @@ export interface Props {
   showValue?: boolean
   striped?: boolean
   value?: number | string
-  variant?: BgColorVariant
+  variant?: ColorVariant.BgColorVariant
 }
 // Emits
 

@@ -1,4 +1,4 @@
-import type {TextColorVariant} from '../..'
+import type {ColorVariant} from '../..'
 // Props
 export interface Props {
   id?: string
@@ -6,7 +6,7 @@ export interface Props {
   header?: string
   headerClasses?: string | Array<unknown> | Record<string, unknown>
   headerTag?: string
-  headerVariant?: TextColorVariant
+  headerVariant?: ColorVariant.TextColorVariant
 }
 // Emits
 

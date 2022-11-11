@@ -37,7 +37,7 @@
           },
           {
             "prop": "variant",
-            "type": "BasicColorVariant",
+            "type": "ColorVariant.BasicColorVariant",
             "description": "Applies one of the Bootstrap theme color variants to the component"
           }
         ],

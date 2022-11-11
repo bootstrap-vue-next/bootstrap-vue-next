@@ -1,4 +1,4 @@
-import type {LinkTarget, TextColorVariant} from '../..'
+import type {ColorVariant, LinkTarget} from '../..'
 
 // Props
 export interface Props {
@@ -8,7 +8,7 @@ export interface Props {
   disabled?: boolean
   rel?: string
   target?: LinkTarget
-  variant?: TextColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 // Emits
 export interface Emits {

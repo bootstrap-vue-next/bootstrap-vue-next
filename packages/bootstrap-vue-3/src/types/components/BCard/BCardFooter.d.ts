@@ -1,13 +1,13 @@
-import type {BgColorVariant, BorderColorVariant, TextColorVariant} from '../..'
+import type {ColorVariant} from '../..'
 // Props
 export interface Props {
   footer?: string
-  footerBgVariant?: BgColorVariant
-  footerBorderVariant?: BorderColorVariant
+  footerBgVariant?: ColorVariant.BgColorVariant
+  footerBorderVariant?: ColorVariant.BorderColorVariant
   footerClass?: Array<unknown> | Record<string, unknown> | string
   footerHtml?: string
   footerTag?: string
-  footerTextVariant?: TextColorVariant
+  footerTextVariant?: ColorVariant.TextColorVariant
 }
 // Emits
 

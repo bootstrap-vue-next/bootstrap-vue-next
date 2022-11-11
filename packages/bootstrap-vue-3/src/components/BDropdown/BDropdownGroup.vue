@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 // import type {BDropdownGroupProps} from '../../types/components'
-import type {ClassValue, TextColorVariant} from '../../types'
+import type {ClassValue, ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BDropdownGroupProps {
@@ -34,7 +34,7 @@ interface BDropdownGroupProps {
   header?: string
   headerClass?: ClassValue
   headerTag?: string
-  headerVariant?: TextColorVariant
+  headerVariant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {

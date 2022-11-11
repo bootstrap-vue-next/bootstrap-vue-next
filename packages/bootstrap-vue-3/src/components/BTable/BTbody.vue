@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 // import type {BTBodyProps} from '../../types/components'
-import type {BasicColorVariant} from '../../types'
+import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BTBodyProps {
-  variant?: BasicColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 
 const props = defineProps<BTBodyProps>()

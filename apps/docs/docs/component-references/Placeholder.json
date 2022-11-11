@@ -27,7 +27,7 @@
           {
             "description": "Applies one of the Bootstrap theme color variants to the component",
             "prop": "variant",
-            "type": "BgColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "description": "Enlargens the vertical size of the Placeholder. Does not affect width",
@@ -60,7 +60,7 @@
           {
             "description": "Passes the variant to the Placeholder located in the header",
             "prop": "headerVariant",
-            "type": "BgColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "description": "Passes the animation to the Placeholder located in the header",
@@ -85,7 +85,7 @@
           {
             "description": "Passes the variant to the Placeholder located in the footer",
             "prop": "footerVariant",
-            "type": "ButtonVariant | BgColorVariant"
+            "type": "ButtonVariant | ColorVariant.BgColorVariant"
           },
           {
             "description": "Passes the animation to the Placeholder located in the footer",
@@ -216,7 +216,7 @@
           {
             "description": "Passes the variant to the Placeholders located in the body",
             "prop": "variant",
-            "type": "BgColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "description": "The number of columns to display in the header of the PlaceholderTable",
@@ -246,7 +246,7 @@
           {
             "description": "Passes the variant to the Placeholders located in the header",
             "prop": "headerVariant",
-            "type": "BgColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "description": "The number of columns to display in the footer of the PlaceholderTable",
@@ -281,7 +281,7 @@
           {
             "description": "Passes the variant to the Placeholders located in the footer",
             "prop": "footerVariant",
-            "type": "BgColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           }
         ],
         "slots": [

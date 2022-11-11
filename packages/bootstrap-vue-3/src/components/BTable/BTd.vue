@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BasicColorVariant, Booleanish} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
 
@@ -24,7 +24,7 @@ interface BTdProps {
   rowspan?: string | number
   stackedHeading?: string
   stickyColumn?: Booleanish
-  variant?: BasicColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 
 const props = withDefaults(defineProps<BTdProps>(), {

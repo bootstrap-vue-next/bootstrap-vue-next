@@ -16,7 +16,7 @@
 // import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
 import BLink from '../BLink/BLink.vue'
 import {computed, toRef, useAttrs} from 'vue'
-import type {Booleanish, ClassValue, LinkTarget, TextColorVariant} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface BDropdownItemProps {
@@ -26,7 +26,7 @@ interface BDropdownItemProps {
   disabled?: Booleanish
   rel?: string
   target?: LinkTarget
-  variant?: TextColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownItemProps>(), {

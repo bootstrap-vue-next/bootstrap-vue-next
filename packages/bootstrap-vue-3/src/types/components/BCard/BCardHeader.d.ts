@@ -1,13 +1,13 @@
-import type {BgColorVariant, BorderColorVariant, TextColorVariant} from '../..'
+import type {ColorVariant} from '../..'
 // Props
 export interface Props {
   header?: string
-  headerBgVariant?: BgColorVariant
-  headerBorderVariant?: BorderColorVariant
+  headerBgVariant?: ColorVariant.BgColorVariant
+  headerBorderVariant?: ColorVariant.BorderColorVariant
   headerClass?: Array<unknown> | Record<string, unknown> | string
   headerHtml?: string
   headerTag?: string
-  headerTextVariant?: TextColorVariant
+  headerTextVariant?: ColorVariant.TextColorVariant
 }
 // Emits
 

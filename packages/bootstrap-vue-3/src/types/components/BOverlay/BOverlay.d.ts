@@ -1,4 +1,4 @@
-import type {BgColorVariant} from '../..'
+import type {ColorVariant} from '../..'
 // Props
 export interface Props {
   bgColor?: string
@@ -23,7 +23,7 @@ export interface Props {
   spinnerSmall?: boolean
   spinnerType?: string
   spinnerVariant?: string
-  variant?: BgColorVariant
+  variant?: ColorVariant.BgColorVariant
   wrapTag?: string
   zIndex?: number | string
 }

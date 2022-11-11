@@ -1,4 +1,4 @@
-import type {BasicColorVariant, LinkTarget} from '../..'
+import type {ColorVariant, LinkTarget} from '../..'
 import type {RouteLocationRaw} from 'vue-router'
 
 // Props
@@ -20,7 +20,7 @@ export interface Props {
   tag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-  variant?: BasicColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 // Emits
 

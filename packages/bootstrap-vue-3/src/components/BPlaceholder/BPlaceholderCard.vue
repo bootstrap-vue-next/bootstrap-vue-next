@@ -28,23 +28,24 @@
 </template>
 
 <script setup lang="ts">
+import { ButtonVariant } from "../../types";
 import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {BgColorVariant, Booleanish, ButtonVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface Props {
   noHeader?: Booleanish
   headerWidth?: string | number
-  headerVariant?: BgColorVariant
+  headerVariant?: ColorVariant.BgColorVariant
   headerAnimation?: PlaceholderAnimation
   headerSize?: PlaceholderSize
   noFooter?: Booleanish
   footerWidth?: string | number
-  footerVariant?: ButtonVariant | BgColorVariant
+  footerVariant?: ButtonVariant | ColorVariant.BgColorVariant
   footerAnimation?: PlaceholderAnimation
   footerSize?: PlaceholderSize
   animation?: PlaceholderAnimation
@@ -85,7 +86,7 @@ const footerAttrs = computed(() => ({
     width: props.footerWidth,
     animation: props.footerAnimation,
     size: noButtonBoolean.value ? props.footerSize : undefined,
-    variant: props.footerVariant as BgColorVariant,
+    variant: props.footerVariant as ColorVariant.BgColorVariant,
 }))
 
 const footerButtonAttrs = computed(() => ({

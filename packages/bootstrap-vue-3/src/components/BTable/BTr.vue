@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 // import type {BTrProps} from '../../types/components'
-import type {BasicColorVariant} from '../../types'
+import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BTrProps {
-  variant?: BasicColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 
 const props = defineProps<BTrProps>()

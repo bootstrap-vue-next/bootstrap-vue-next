@@ -1,4 +1,4 @@
-import type {BasicColorVariant} from '..'
+import type {ColorVariant} from '..'
 // Props
 export interface Props {
   dismissLabel?: string
@@ -6,7 +6,7 @@ export interface Props {
   fade?: boolean
   modelValue?: boolean | number
   show?: boolean
-  variant?: BasicColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 // Emits
 export interface Emits {
