@@ -163,7 +163,7 @@ interface BFormTagsProps {
   tagRemoveLabel?: string
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
-  tagVariant?: ColorVariant.BgColorVariant | undefined
+  tagVariant?: ColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BFormTagsProps>(), {

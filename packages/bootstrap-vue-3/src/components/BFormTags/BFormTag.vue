@@ -39,7 +39,7 @@ interface BFormTagProps {
   pill?: Booleanish
   removeLabel?: string
   tag?: string
-  variant?: ColorVariant.BgColorVariant | undefined
+  variant?: ColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BFormTagProps>(), {

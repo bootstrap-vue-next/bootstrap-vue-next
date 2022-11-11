@@ -109,7 +109,7 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
-import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, InputSize} from '../types'
+import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import {isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
@@ -124,29 +124,29 @@ import BTransition from './BTransition/BTransition.vue'
 // Implement autofocus props like autoFocusButton
 
 interface BModalProps {
-  bodyBgVariant?: ColorVariant.BgColorVariant
+  bodyBgVariant?: ColorVariant
   bodyClass?: ClassValue
-  bodyTextVariant?: ColorVariant.TextColorVariant
+  bodyTextVariant?: ColorVariant
   busy?: Booleanish
   lazy?: Booleanish
   buttonSize?: InputSize
   cancelDisabled?: Booleanish
   cancelTitle?: string
-  cancelVariant?: ButtonVariant | undefined
+  cancelVariant?: ColorVariant | undefined
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
-  footerBgVariant?: ColorVariant.BgColorVariant
-  footerBorderVariant?: ColorVariant.BorderColorVariant
+  footerBgVariant?: ColorVariant
+  footerBorderVariant?: ColorVariant
   footerClass?: ClassValue
-  footerTextVariant?: ColorVariant.TextColorVariant
+  footerTextVariant?: ColorVariant
   fullscreen?: boolean | string
-  headerBgVariant?: ColorVariant.BgColorVariant
-  headerBorderVariant?: ColorVariant.BorderColorVariant
+  headerBgVariant?: ColorVariant
+  headerBorderVariant?: ColorVariant
   headerClass?: ClassValue
   headerCloseLabel?: string
   headerCloseWhite?: Booleanish
-  headerTextVariant?: ColorVariant.TextColorVariant
+  headerTextVariant?: ColorVariant
   hideBackdrop?: Booleanish
   hideFooter?: Booleanish
   hideHeader?: Booleanish
@@ -161,7 +161,7 @@ interface BModalProps {
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
-  okVariant?: ButtonVariant | undefined
+  okVariant?: ColorVariant | undefined
   scrollable?: Booleanish
   show?: Booleanish
   size?: 'sm' | 'lg' | 'xl'
