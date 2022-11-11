@@ -92,7 +92,7 @@
     "typescript",
     "component-library",
     "icons",
-    "bootstrap-vue-icons"
+    "bootstrap-vue-3-icons"
   ],
   "lint-staged": {
     "*.{js,vue}": "eslint --cache --fix",
