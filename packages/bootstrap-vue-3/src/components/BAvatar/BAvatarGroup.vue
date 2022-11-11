@@ -10,18 +10,19 @@
 // import type { BAvatarGroupParentData, BAvatarGroupProps, InputSize } from '../types/components'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, InjectionKey, provide, StyleValue, toRef} from 'vue'
-import type {Booleanish, ColorVariant, InputSize, RoundedTypes} from '../../types'
+import type {Booleanish, ButtonVariant, ColorVariant, InputSize, RoundedTypes} from '../../types'
 import {isNumeric, toFloat} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
 
 interface BAvatarGroupProps {
+  bgVariant?: ColorVariant.BgColorVariant
   overlap?: number | string
   rounded?: RoundedTypes.RoundedTypesAll
   size?: InputSize
   square?: Booleanish
   tag?: string
-  variant?: ColorVariant
+  variant?: ButtonVariant
 }
 
 const props = withDefaults(defineProps<BAvatarGroupProps>(), {

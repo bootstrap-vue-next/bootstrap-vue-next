@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import BPlaceholder from './BPlaceholder.vue'
-import type {ColorVariant, PlaceholderAnimation} from '../../types'
+import type { ButtonVariant, PlaceholderAnimation } from "../../types";
 import {computed} from 'vue'
 
 interface Props {
   tag?: string
   width?: string | number
   cols?: string | number
-  variant?: ColorVariant | undefined
+  variant?: ButtonVariant | undefined
   animation?: PlaceholderAnimation
 }
 
