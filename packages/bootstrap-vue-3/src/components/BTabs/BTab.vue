@@ -16,6 +16,7 @@
 import {computed, inject, ref, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'
+import { ParentData } from "../../types/components/BTabs/BTabs";
 import {injectionKey} from './BTabs.vue'
 
 interface BTabProps {
@@ -44,7 +45,7 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkAttributes: undefined,
 })
 
-const parentData = inject(injectionKey, null)
+const parentData = inject<ParentData | null>(injectionKey, null)
 
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
@@ -52,7 +53,7 @@ const lazyBoolean = useBooleanish(toRef(props, props.lazyOnce !== undefined ? 'l
 
 const lazyRenderCompleted = ref(false)
 
-const computedLazy = computed<boolean>(() => parentData?.lazy || lazyBoolean.value)
+const computedLazy = computed<boolean>(() => parentData?.lazy ?? lazyBoolean.value ?? false)
 const computedLazyOnce = computed<boolean>(() => props.lazyOnce !== undefined)
 
 const computedActive = computed<boolean>(() => activeBoolean.value && !disabledBoolean.value)

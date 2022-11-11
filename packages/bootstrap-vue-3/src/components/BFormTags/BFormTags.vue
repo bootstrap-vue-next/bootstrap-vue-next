@@ -134,7 +134,7 @@ import type {
 
 interface BFormTagsProps {
   addButtonText?: string
-  addButtonVariant?: ButtonVariant
+  addButtonVariant?: ButtonVariant | undefined
   addOnChange?: Booleanish
   autofocus?: Booleanish
   disabled?: Booleanish
@@ -163,7 +163,7 @@ interface BFormTagsProps {
   tagRemoveLabel?: string
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
-  tagVariant?: ColorVariant
+  tagVariant?: ColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BFormTagsProps>(), {

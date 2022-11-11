@@ -9,6 +9,7 @@ import {isLink, omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
+import {textVariantDarkTypes} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
@@ -18,7 +19,7 @@ export default defineComponent({
   props: {
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'span'},
-    variant: {type: String as PropType<ColorVariant>, default: 'secondary'},
+    variant: {type: String as PropType<ColorVariant | undefined>, default: 'secondary'},
     textIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     dotIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     ...linkProps,
@@ -41,7 +42,7 @@ export default defineComponent({
       {
         'active': activeBoolean.value,
         'disabled': disabledBoolean.value,
-        'text-dark': ['warning', 'info', 'light'].includes(props.variant),
+        'text-dark': props.variant && textVariantDarkTypes.includes(props.variant),
         'rounded-pill': pillBoolean.value,
         'position-absolute top-0 start-100 translate-middle':
           textIndicatorBoolean.value || dotIndicatorBoolean.value,

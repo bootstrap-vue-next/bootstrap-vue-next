@@ -41,7 +41,7 @@ interface BFormCheckboxGroupProps {
   modelValue?: Array<string | number | Record<string, unknown>>
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
-  buttonVariant?: ButtonVariant
+  buttonVariant?: ButtonVariant | undefined
   buttons?: Booleanish
   disabled?: Booleanish
   disabledField?: string

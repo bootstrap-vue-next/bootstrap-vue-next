@@ -6,13 +6,13 @@
 
 <script setup lang="ts">
 // import type {BButtonGroupProps} from '../../types/components'
-import type {Booleanish} from '../../types'
+import type {Booleanish, InputSize} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BButtonGroupProps {
   ariaLabel?: string
-  size?: 'sm' | 'lg' // Exclude<InputSize, 'md'>
+  size?: Exclude<InputSize, 'md'>
   tag?: string
   vertical?: Booleanish
 }

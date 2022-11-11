@@ -120,8 +120,8 @@ import BTransition from './BTransition/BTransition.vue'
 // autofocus
 // close on escape when autofocus
 
-// Note, attempt to return focus to item that openned the modal after close
-// Implement auto focus props like autoFocusButton
+// Note, attempt to return focus to item that opened the modal after close
+// Implement autofocus props like autoFocusButton
 
 interface BModalProps {
   bodyBgVariant?: ColorVariant
@@ -132,7 +132,7 @@ interface BModalProps {
   buttonSize?: InputSize
   cancelDisabled?: Booleanish
   cancelTitle?: string
-  cancelVariant?: ColorVariant
+  cancelVariant?: ColorVariant | undefined
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
@@ -161,7 +161,7 @@ interface BModalProps {
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
-  okVariant?: ColorVariant
+  okVariant?: ColorVariant | undefined
   scrollable?: Booleanish
   show?: Booleanish
   size?: 'sm' | 'lg' | 'xl'

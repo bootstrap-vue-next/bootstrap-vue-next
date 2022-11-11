@@ -15,7 +15,7 @@
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
-      :white="!['warning', 'info', 'light'].includes(variant)"
+      :white="!textVariantDarkTypes.includes(variant)"
       :aria-describedby="taglabelId"
       :aria-controls="id"
       @click="emit('remove', tagText)"
@@ -28,6 +28,7 @@
 import {computed, toRef, useSlots, VNodeNormalizedChildren} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
+import {textVariantDarkTypes} from '../../utils'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
 interface BFormTagProps {
@@ -38,7 +39,7 @@ interface BFormTagProps {
   pill?: Booleanish
   removeLabel?: string
   tag?: string
-  variant?: ColorVariant
+  variant?: ColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BFormTagProps>(), {
@@ -73,7 +74,7 @@ const taglabelId = computed<string>(() => `${computedId.value}taglabel__`)
 const computedClasses = computed(() => [
   `bg-${props.variant}`,
   {
-    'text-dark': ['warning', 'info', 'light'].includes(props.variant),
+    'text-dark': props.variant && textVariantDarkTypes.includes(props.variant),
     'rounded-pill': pillBoolean.value,
     'disabled': disabledBoolean.value,
   },

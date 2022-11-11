@@ -31,7 +31,7 @@ interface BNavItemDropdownProps {
   split?: boolean
   splitVariant?: ButtonVariant
   noCaret?: boolean
-  variant?: ButtonVariant
+  variant?: ButtonVariant | undefined
 }
 
 const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
