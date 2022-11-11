@@ -163,12 +163,11 @@ describe('icon', () => {
     const $use = wrapper.find('use')
     expect($use.exists()).toBe(true)
   })
+
   // TODO the svgSprite computed is not tested
   it('use has attribute xlink', () => {
     const wrapper = mount(BIcon)
     const $use = wrapper.get('use')
-    expect($use.attributes('href')).toBe(
-      '/@fs/home/issayah/Documents/Apps/bootstrap-vue-3/node_modules/.pnpm/bootstrap-icons@1.9.1/node_modules/bootstrap-icons/bootstrap-icons.svg#undefined'
-    )
+    expect($use.attributes('href')).toBeDefined()
   })
 })
