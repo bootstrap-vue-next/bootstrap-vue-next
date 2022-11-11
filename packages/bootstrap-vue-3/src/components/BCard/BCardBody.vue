@@ -27,18 +27,18 @@
 import {computed, toRef, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import BCardSubtitle from './BCardSubtitle.vue'
-import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {isEmptySlot} from '../../utils'
 
 interface BCardBodyProps {
-  bodyBgVariant?: ColorVariant
+  bodyBgVariant?: ColorVariant.BgColorVariant
   bodyTag?: string
-  bodyTextVariant?: TextColorVariant
+  bodyTextVariant?: ColorVariant.TextColorVariant
   overlay?: Booleanish
   subtitle?: string
   subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant
+  subtitleTextVariant?: ColorVariant.TextColorVariant
   title?: string
   titleTag?: string
   text?: string

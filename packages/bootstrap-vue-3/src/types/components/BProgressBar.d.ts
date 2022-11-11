@@ -10,7 +10,7 @@ export interface Props {
   showValue?: boolean
   striped?: boolean
   value?: number | string
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
 }
 // Emits
 

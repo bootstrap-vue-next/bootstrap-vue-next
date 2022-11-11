@@ -31,7 +31,7 @@ export interface Props {
   tagRemoveLabel?: string
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
-  tagVariant?: ColorVariant
+  tagVariant?: ColorVariant.BgColorVariant
 }
 // Emits
 export interface Emits {

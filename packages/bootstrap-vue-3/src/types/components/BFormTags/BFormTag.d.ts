@@ -9,7 +9,7 @@ export interface Props {
   pill?: boolean
   removeLabel?: string
   tag?: string
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
 }
 // Emits
 export interface Emits {

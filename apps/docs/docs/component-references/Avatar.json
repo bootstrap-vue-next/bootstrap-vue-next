@@ -35,7 +35,11 @@
           },
           {
             "prop": "badgeVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BgColorVariant"
+          },
+          {
+            "prop": "bgVariant",
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "prop": "button",
@@ -75,11 +79,11 @@
           },
           {
             "prop": "textVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.TextColorVariant"
           },
           {
             "prop": "variant",
-            "type": "ColorVariant"
+            "type": "ButtonVariant"
           }
         ],
         "emits": [
@@ -123,6 +127,10 @@
         "component": "BAvatarGroup",
         "props": [
           {
+            "prop": "bgVariant",
+            "type": "ColorVariant.BgColorVariant"
+          },
+          {
             "prop": "overlap",
             "type": "number | string"
           },
@@ -144,7 +152,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant"
+            "type": "ButtonVariant"
           }
         ],
         "slots": [

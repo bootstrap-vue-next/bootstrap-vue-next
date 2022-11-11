@@ -16,7 +16,7 @@ export interface TableFieldObject<T = Record<string, unknown>> {
   tdClass?: string | string[]
   thClass?: string | string[]
   thStyle?: StyleValue
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
   tdAttr?: TdHTMLAttributes
   thAttr?: ThHTMLAttributes
   isRowHeader?: boolean

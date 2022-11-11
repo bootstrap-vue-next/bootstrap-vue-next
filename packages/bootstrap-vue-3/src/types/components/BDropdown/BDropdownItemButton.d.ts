@@ -6,7 +6,7 @@ export interface Props {
   active?: boolean
   activeClass?: string
   disabled?: boolean
-  variant?: ColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 // Emits
 export interface Emits {

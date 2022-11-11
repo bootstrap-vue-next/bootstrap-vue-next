@@ -10,7 +10,7 @@ import type {
 export interface Props {
   caption?: string
   align?: VerticalAlign
-  borderVariant?: ColorVariant
+  borderVariant?: ColorVariant.BorderColorVariant
   captionTop?: boolean
   borderless?: boolean
   bordered?: boolean
@@ -22,7 +22,7 @@ export interface Props {
   responsive?: boolean | Breakpoint
   small?: boolean
   striped?: boolean
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
   sortInternal?: boolean
   selectable?: boolean
   selectMode?: 'multi' | 'single' | 'range'

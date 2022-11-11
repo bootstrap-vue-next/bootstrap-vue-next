@@ -241,7 +241,6 @@ export type {
   LinkTarget,
   ButtonVariant,
   Alignment,
-  TextColorVariant,
   Size,
   ButtonType,
   InputType,

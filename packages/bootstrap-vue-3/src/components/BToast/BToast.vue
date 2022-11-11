@@ -46,7 +46,7 @@ export default defineComponent({
     title: {type: String},
     modelValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     toastClass: {type: Array as PropType<Array<string>>},
-    variant: {type: String as PropType<ColorVariant>},
+    variant: {type: String as PropType<ColorVariant.BasicColorVariant>},
   },
   emits: ['destroyed', 'update:modelValue'],
   setup(props, {emit, slots}) {

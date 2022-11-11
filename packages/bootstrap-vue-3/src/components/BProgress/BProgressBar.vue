@@ -31,7 +31,7 @@ interface Props {
   showValue?: Booleanish
   striped?: Booleanish
   value?: string | number
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
 }
 
 const props = withDefaults(defineProps<Props>(), {

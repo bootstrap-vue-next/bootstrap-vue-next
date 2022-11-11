@@ -1,17 +1,28 @@
-/**
- * @external
- */
- export interface BaseColorVariant {
-  'primary': unknown
-  'secondary': unknown
-  'success': unknown
-  'danger': unknown
-  'warning': unknown
-  'info': unknown
-  'light': unknown
-  'dark': unknown
-}
+export type BasicColorVariant =
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark'
 
-type ColorVariant = keyof BaseColorVariant
+export type BgColorVariant =
+    BasicColorVariant
+    | 'body'
+    | 'white'
+    | 'transparent'
 
-export default ColorVariant
+export type BorderColorVariant =
+    BasicColorVariant
+    | 'white'
+
+export type TextColorVariant =
+    BasicColorVariant
+    | 'body'
+    | 'muted'
+    | 'white'
+    | 'black-50'
+    | 'white-50'
+    | 'reset'

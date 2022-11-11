@@ -22,7 +22,7 @@ export interface Props extends BLinkProps {
   static?: boolean
   modelValue?: boolean
   toastClass?: Array<unknown>
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 // Emits
 export interface Emits {

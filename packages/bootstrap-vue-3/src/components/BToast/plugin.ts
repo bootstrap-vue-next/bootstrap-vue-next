@@ -25,7 +25,7 @@ export interface ToastOptions {
   noCloseButton?: boolean
   pos?: ContainerPosition
   value?: boolean // show or hide
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 
 export interface Toast {

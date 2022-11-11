@@ -54,10 +54,6 @@
             "type": "Booleanish"
           },
           {
-            "prop": "variant",
-            "type": "ColorVariant"
-          },
-          {
             "prop": "html",
             "type": "Booleanish"
           },

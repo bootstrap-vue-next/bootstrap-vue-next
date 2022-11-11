@@ -20,7 +20,7 @@ export interface Props {
   tag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 // Emits
 

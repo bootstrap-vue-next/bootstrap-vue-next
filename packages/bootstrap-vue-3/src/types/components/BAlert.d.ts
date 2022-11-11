@@ -6,7 +6,7 @@ export interface Props {
   fade?: boolean
   modelValue?: boolean | number
   show?: boolean
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 // Emits
 export interface Emits {

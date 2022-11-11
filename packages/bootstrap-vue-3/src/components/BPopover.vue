@@ -3,7 +3,6 @@
     :id="id"
     ref="element"
     class="popover b-popover"
-    :class="computedClasses"
     role="tooltip"
     tabindex="-1"
   >
@@ -36,7 +35,7 @@ import {
 import {Popover} from 'bootstrap'
 import {useBooleanish, useEventListener} from '../composables'
 import type {BPopoverDelayObject} from '../types/components'
-import type {Booleanish, ColorVariant} from '../types'
+import type {Booleanish} from '../types'
 
 export default defineComponent({
   props: {
@@ -61,7 +60,6 @@ export default defineComponent({
     delay: {type: [Number, Object] as PropType<number | BPopoverDelayObject>, default: 0},
     triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
     show: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    variant: {type: String as PropType<ColorVariant>, default: undefined},
     html: {type: [Boolean, String] as PropType<Booleanish>, default: true},
     sanitize: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     offset: {type: String as PropType<Popover.Options['offset']>, default: '0'},
@@ -80,10 +78,6 @@ export default defineComponent({
     const instance = ref<Popover>()
     const titleRef = ref<HTMLElement>()
     const contentRef = ref<HTMLElement>()
-
-    const computedClasses = computed(() => ({
-      [`b-popover-${props.variant}`]: props.variant !== undefined,
-    }))
 
     const cleanElementProp = (
       target: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
@@ -172,7 +166,6 @@ export default defineComponent({
       element,
       titleRef,
       contentRef,
-      computedClasses,
     }
   },
 })

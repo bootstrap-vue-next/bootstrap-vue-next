@@ -24,7 +24,7 @@ interface BSpinnerProps {
   small?: Booleanish
   tag?: string
   type?: SpinnerType
-  variant?: ColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BSpinnerProps>(), {

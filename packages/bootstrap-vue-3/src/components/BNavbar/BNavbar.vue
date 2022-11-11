@@ -19,7 +19,7 @@ interface Props {
   tag?: string
   toggleable?: boolean | 'sm' | 'md' | 'lg' | 'xl' // Type Omit<Breakpoint, 'xxl'>
   dark?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
   container?: 'fluid' | boolean
 }
 

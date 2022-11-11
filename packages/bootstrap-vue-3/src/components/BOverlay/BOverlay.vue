@@ -47,18 +47,8 @@ interface Props {
   show?: Booleanish
   spinnerSmall?: Booleanish
   spinnerType?: SpinnerType
-  spinnerVariant?: ColorVariant
-  variant?:
-    | 'transparent'
-    | 'white'
-    | 'light'
-    | 'dark'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info' // ColorVariant | 'white' | 'transparent'
+  spinnerVariant?: ColorVariant.TextColorVariant
+  variant?: ColorVariant.BgColorVariant | undefined
   wrapTag?: string
   zIndex?: number | string
 }

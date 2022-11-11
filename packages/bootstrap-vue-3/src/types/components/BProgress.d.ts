@@ -1,7 +1,7 @@
 import type {ColorVariant} from '..'
 // Props
 export interface Props {
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
   max?: number | string
   height?: string
   animated?: boolean

@@ -10,7 +10,7 @@ import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BTBodyProps {
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 
 const props = defineProps<BTBodyProps>()

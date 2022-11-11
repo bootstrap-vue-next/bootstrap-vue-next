@@ -1,28 +1,28 @@
-import type {ColorVariant, InputSize} from '..'
+import type {ButtonVariant, ColorVariant, InputSize} from '..'
 // Props
 export interface Props {
-  bodyBgVariant?: ColorVariant
+  bodyBgVariant?: ColorVariant.BgColorVariant
   bodyClass?: string
-  bodyTextVariant?: ColorVariant
+  bodyTextVariant?: ColorVariant.TextColorVariant
   busy?: boolean
   buttonSize?: InputSize
   cancelDisabled?: boolean
   cancelTitle?: string
-  cancelVariant?: ColorVariant
+  cancelVariant?: ButtonVariant
   centered?: boolean
   contentClass?: string
   dialogClass?: string
-  footerBgVariant?: ColorVariant
-  footerBorderVariant?: ColorVariant
+  footerBgVariant?: ColorVariant.BgColorVariant
+  footerBorderVariant?: ColorVariant.BorderColorVariant
   footerClass?: string
-  footerTextVariant?: ColorVariant
+  footerTextVariant?: ColorVariant.TextColorVariant
   fullscreen?: boolean | string
-  headerBgVariant?: ColorVariant
-  headerBorderVariant?: ColorVariant
+  headerBgVariant?: ColorVariant.BgColorVariant
+  headerBorderVariant?: ColorVariant.BorderColorVariant
   headerClass?: string
   headerCloseLabel?: string
   headerCloseWhite?: boolean
-  headerTextVariant?: ColorVariant
+  headerTextVariant?: ColorVariant.TextColorVariant
   hideBackdrop?: boolean
   hideFooter?: boolean
   hideHeader?: boolean
@@ -37,7 +37,7 @@ export interface Props {
   okDisabled?: boolean
   okOnly?: boolean
   okTitle?: string
-  okVariant?: ColorVariant
+  okVariant?: ButtonVariant
   scrollable?: boolean
   show?: boolean
   size?: string

@@ -26,7 +26,7 @@ interface BDropdownItemProps {
   disabled?: Booleanish
   rel?: string
   target?: LinkTarget
-  variant?: ColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownItemProps>(), {

@@ -13,7 +13,6 @@ export interface Props {
   delay?: number | DelayObject
   triggers?: Popover.Options['trigger']
   show?: boolean
-  variant?: ColorVariant
   html?: boolean
   sanitize?: boolean
   offset?: Popover.Options['offset']

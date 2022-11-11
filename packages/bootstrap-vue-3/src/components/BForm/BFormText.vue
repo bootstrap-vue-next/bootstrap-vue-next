@@ -9,7 +9,7 @@
 <script setup lang="ts">
 // import type {BFormTextProps} from '../../types/components'
 import {computed, toRef} from 'vue'
-import type {Booleanish, TextColorVariant} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface BFormTextProps {
@@ -17,7 +17,7 @@ interface BFormTextProps {
   inline?: Booleanish
   tag?: string
   text?: string
-  textVariant?: TextColorVariant | undefined
+  textVariant?: ColorVariant.TextColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BFormTextProps>(), {

@@ -23,7 +23,7 @@ export interface Props {
   spinnerSmall?: boolean
   spinnerType?: string
   spinnerVariant?: string
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
   wrapTag?: string
   zIndex?: number | string
 }

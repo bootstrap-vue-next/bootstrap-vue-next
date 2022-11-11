@@ -20,7 +20,7 @@
     </slot>
     <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
-        <b-placeholder-button v-if="!noButtonBoolean" v-bind="footerAttrs" />
+        <b-placeholder-button v-if="!noButtonBoolean" v-bind="footerButtonAttrs" />
         <b-placeholder v-else v-bind="footerAttrs" />
       </slot>
     </template>
@@ -28,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import { ButtonVariant } from "../../types";
 import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
@@ -39,17 +40,16 @@ import {useBooleanish} from '../../composables'
 interface Props {
   noHeader?: Booleanish
   headerWidth?: string | number
-  headerVariant?: ColorVariant
+  headerVariant?: ColorVariant.BgColorVariant
   headerAnimation?: PlaceholderAnimation
   headerSize?: PlaceholderSize
   noFooter?: Booleanish
   footerWidth?: string | number
-  footerVariant?: ColorVariant
+  footerVariant?: ButtonVariant | ColorVariant.BgColorVariant
   footerAnimation?: PlaceholderAnimation
   footerSize?: PlaceholderSize
   animation?: PlaceholderAnimation
   size?: PlaceholderSize
-  variant?: ColorVariant
   noButton?: Booleanish
   imgBottom?: Booleanish
   imgSrc?: string
@@ -83,14 +83,21 @@ const headerAttrs = computed(() => ({
 }))
 
 const footerAttrs = computed(() => ({
-  width: props.footerWidth,
-  animation: props.footerAnimation,
-  size: noButtonBoolean.value ? props.footerSize : undefined,
-  variant: props.footerVariant,
+    width: props.footerWidth,
+    animation: props.footerAnimation,
+    size: noButtonBoolean.value ? props.footerSize : undefined,
+    variant: props.footerVariant as ColorVariant.BgColorVariant,
+}))
+
+const footerButtonAttrs = computed(() => ({
+    width: props.footerWidth,
+    animation: props.footerAnimation,
+    size: noButtonBoolean.value ? props.footerSize : undefined,
+    variant: props.footerVariant as ButtonVariant,
 }))
 
 const imgAttrs = computed(() => ({
-  blank: !props.imgSrc ? true : false,
+  blank: !props.imgSrc,
   blankColor: props.imgBlankColor,
   height: !props.imgSrc ? props.imgHeight : undefined,
   src: props.imgSrc,
