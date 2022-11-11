@@ -16,6 +16,6 @@ interface BTBodyProps {
 const props = defineProps<BTBodyProps>()
 
 const computedClasses = computed(() => ({
-  [`thead-${props.variant}`]: props.variant !== undefined,
+  [`table-${props.variant}`]: !!props.variant,
 }))
 </script>

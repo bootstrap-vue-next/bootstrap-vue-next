@@ -67,11 +67,20 @@ describe('img', () => {
 
   it('has class rounded-{type} if prop rounded string', async () => {
     const wrapper = mount(BImg, {
-      props: {rounded: 'abc'},
+      props: {rounded: 'start'},
     })
-    expect(wrapper.classes()).toContain('rounded-abc')
+    expect(wrapper.classes()).toContain('rounded-start')
     await wrapper.setProps({rounded: false})
-    expect(wrapper.classes()).not.toContain('rounded-abc')
+    expect(wrapper.classes()).not.toContain('rounded-start')
+  })
+
+  it('has class rounded-{type} if prop rounded numeric', async () => {
+    const wrapper = mount(BImg, {
+      props: {rounded: 0},
+    })
+    expect(wrapper.classes()).toContain('rounded-0')
+    await wrapper.setProps({rounded: false})
+    expect(wrapper.classes()).not.toContain('rounded-0')
   })
 
   it('has class d-block if prop block', async () => {

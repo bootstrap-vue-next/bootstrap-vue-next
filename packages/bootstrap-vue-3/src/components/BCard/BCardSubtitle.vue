@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="card-subtitle mb-2" :class="coomputedClasses">
+  <component :is="tag" class="card-subtitle mb-2" :class="computedClasses">
     <slot>
       {{ text }}
     </slot>
@@ -14,7 +14,7 @@ import {computed} from 'vue'
 interface BCardSubtitleProps {
   text?: string
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: TextColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BCardSubtitleProps>(), {
@@ -22,5 +22,5 @@ const props = withDefaults(defineProps<BCardSubtitleProps>(), {
   textVariant: 'muted',
 })
 
-const coomputedClasses = computed(() => [`text-${props.textVariant}`])
+const computedClasses = computed(() => [`text-${props.textVariant}`])
 </script>

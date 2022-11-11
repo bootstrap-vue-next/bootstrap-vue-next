@@ -28,7 +28,7 @@
 import {isEmptySlot, isNumeric, toFloat} from '../../utils'
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
-import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
+import type {Booleanish, ButtonType, ColorVariant, InputSize, RoundedTypes, TextColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
 import {useBooleanish} from '../../composables'
 
@@ -39,18 +39,18 @@ interface BAvatarProps {
   badgeLeft?: Booleanish
   badgeOffset?: string
   badgeTop?: Booleanish
-  badgeVariant?: ColorVariant
+  badgeVariant?: ColorVariant | undefined
   button?: Booleanish
   buttonType?: ButtonType
   disabled?: Booleanish
   icon?: string
-  rounded?: boolean | string
-  size?: 'sm' | 'md' | 'lg' | string // InputSize | string
+  rounded?: RoundedTypes.RoundedTypesAll | undefined
+  size?: InputSize // InputSize | string
   square?: Booleanish
   src?: string
   text?: string
   textVariant?: TextColorVariant
-  variant?: ColorVariant
+  variant?: ColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
@@ -98,13 +98,8 @@ const computedSize = computed<string | null>(() =>
   parentData?.size ? parentData.size : computeSize(props.size)
 )
 
-const computedVariant = computed<ColorVariant>(() =>
-  parentData?.variant ? parentData.variant : props.variant
-)
-
-const computedRounded = computed<string | boolean>(() =>
-  parentData?.rounded ? parentData.rounded : props.rounded
-)
+const computedVariant = computed<ColorVariant | undefined>(() => parentData?.variant ?? props.variant)
+const computedRounded = computed<RoundedTypes.RoundedTypesAll | undefined>(() => parentData?.rounded ?? props.rounded)
 
 const computedAttrs = computed(() => ({
   'type': buttonBoolean.value ? props.buttonType : undefined,
@@ -116,28 +111,19 @@ const badgeClasses = computed(() => [`bg-${props.badgeVariant}`])
 
 const badgeText = computed<string | false>(() => (props.badge === true ? '' : props.badge))
 
-const badgeTextClasses = computed(() => [[`text-${computeContrastVariant(props.badgeVariant)}`]])
+const badgeTextClasses = computed(() => (props.badgeVariant ? [`text-${computeContrastVariant(props.badgeVariant)}`] : []))
 
 const computedClasses = computed(() => ({
   [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
   [`bg-${computedVariant.value}`]: !!computedVariant.value,
   [`badge`]: !buttonBoolean.value && computedVariant.value && hasDefaultSlot.value,
-  rounded: computedRounded.value === '' || computedRounded.value === true,
-  [`rounded-circle`]: !squareBoolean.value && computedRounded.value === 'circle',
-  [`rounded-0`]: squareBoolean.value || computedRounded.value === '0',
-  [`rounded-1`]: !squareBoolean.value && computedRounded.value === 'sm',
-  [`rounded-3`]: !squareBoolean.value && computedRounded.value === 'lg',
-  [`rounded-top`]: !squareBoolean.value && computedRounded.value === 'top',
-  [`rounded-bottom`]: !squareBoolean.value && computedRounded.value === 'bottom',
-  [`rounded-start`]: !squareBoolean.value && computedRounded.value === 'left',
-  [`rounded-end`]: !squareBoolean.value && computedRounded.value === 'right',
+  rounded: !squareBoolean.value && (computedRounded.value === '' || computedRounded.value === true),
+  [`rounded-${computedRounded.value}`]: !squareBoolean.value && typeof computedRounded.value !== "undefined" && !(computedRounded.value === true || computedRounded.value === false || computedRounded.value === ''),
   btn: buttonBoolean.value,
   [`btn-${computedVariant.value}`]: buttonBoolean.value ? !!computedVariant.value : false,
 }))
 
-const textClasses = computed(() => [
-  [`text-${props.textVariant || computeContrastVariant(computedVariant.value)}`],
-])
+const textClasses = computed(() => (props.textVariant || computedVariant.value ? `text-${props.textVariant || computedVariant.value && computeContrastVariant(computedVariant.value)}` : undefined))
 
 const badgeStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset || '0px'

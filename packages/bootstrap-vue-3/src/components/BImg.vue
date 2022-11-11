@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 // import type {BImgProps} from '../types/components'
-import type {Booleanish} from '../types'
+import type {Booleanish, RoundedTypes} from '../types'
 import {useBooleanish} from '../composables'
 import {computed, toRef} from 'vue'
 
@@ -22,7 +22,7 @@ interface BImgProps {
   start?: Booleanish
   right?: Booleanish
   end?: Booleanish
-  rounded?: boolean | string
+  rounded?: RoundedTypes.RoundedTypesAll
   sizes?: string | Array<string>
   src?: string
   srcset?: string | Array<string>
@@ -146,7 +146,7 @@ const computedClasses = computed(() => ({
   'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
   'w-100': fluidGrowBoolean.value,
   'rounded': props.rounded === '' || props.rounded === true,
-  [`rounded-${props.rounded}`]: typeof props.rounded === 'string' && props.rounded !== '',
+  [`rounded-${props.rounded}`]: typeof props.rounded !== "undefined" && !(props.rounded === true || props.rounded === false || props.rounded === ''),
   [`${alignment.value}`]: alignment.value !== undefined,
   'd-block': blockBoolean.value || centerBoolean.value,
 }))

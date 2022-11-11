@@ -30,7 +30,7 @@ interface BAlertProps {
   fade?: Booleanish
   modelValue?: boolean | number
   show?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BAlertProps>(), {

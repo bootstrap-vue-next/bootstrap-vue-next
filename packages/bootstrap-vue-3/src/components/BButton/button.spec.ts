@@ -79,6 +79,15 @@ describe('button', () => {
     expect(wrapper.classes()).not.toContain('btn-primary')
   })
 
+  it('has not class btn-{type} when prop variant is undefined', async () => {
+    const wrapper = mount(BButton, {
+      props: {variant: undefined},
+    })
+    expect(wrapper.classes()).not.toContain('btn-secondary')
+    await wrapper.setProps({variant: 'secondary'})
+    expect(wrapper.classes()).toContain('btn-secondary')
+  })
+
   it('has class btn-{type} when prop size', async () => {
     const wrapper = mount(BButton, {
       props: {size: 'sm'},

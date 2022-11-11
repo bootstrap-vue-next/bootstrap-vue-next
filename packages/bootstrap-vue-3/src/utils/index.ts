@@ -5,6 +5,7 @@ import {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROW
 // Moving ./env lower than ./dom, causes it to have cannot use before init errors
 // I couldn't manage to recreate it for a bug report to Vite/vue-tsc/"Someone"... It may be an issue with our config
 // Perhaps someone in the future could solve the issue better, than my temporary solution of just moving the import up
+import {textVariantDarkTypes} from './colors'
 import {
   attemptBlur,
   attemptFocus,
@@ -89,6 +90,7 @@ export {
   isNumeric,
   isObject,
   isPlainObject,
+  textVariantDarkTypes,
 }
 
 export default {

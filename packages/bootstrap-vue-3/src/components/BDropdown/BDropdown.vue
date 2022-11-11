@@ -80,7 +80,7 @@ interface BDropdownProps {
   splitHref?: string
   noCaret?: Booleanish
   toggleText?: string
-  variant?: ButtonVariant
+  variant?: ButtonVariant | undefined
 }
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
