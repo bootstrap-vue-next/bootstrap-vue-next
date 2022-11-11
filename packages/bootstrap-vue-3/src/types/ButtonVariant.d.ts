@@ -1,4 +1,4 @@
-import { BasicColorVariant } from "./ColorVariant";
+import {BasicColorVariant} from './ColorVariant'
 
 /**
  * @external
