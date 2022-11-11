@@ -7,7 +7,7 @@ export interface Props {
   noCenter?: boolean
   noFade?: boolean
   // If `true, does not render the default slot
-  // and switches to absolute positioning
+  // and switches to absolutely positioning
   noWrap?: boolean
   // opacity?: {
   //   type: [Number, String],
