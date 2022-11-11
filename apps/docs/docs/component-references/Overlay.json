@@ -63,7 +63,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant"
+            "type": "ColorVariant | white | transparent"
           },
           {
             "prop": "wrapTag",

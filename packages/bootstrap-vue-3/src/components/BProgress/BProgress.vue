@@ -14,7 +14,7 @@ import {useBooleanish} from '../../composables'
 import {computed, InjectionKey, provide, toRef} from 'vue'
 
 interface BProgressProps {
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
   max?: number | string
   height?: string
   animated?: Booleanish

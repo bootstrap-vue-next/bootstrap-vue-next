@@ -2,12 +2,12 @@ import type {ColorVariant} from '../..'
 // Props
 export interface Props {
   header?: string
-  headerBgVariant?: ColorVariant
-  headerBorderVariant?: ColorVariant
+  headerBgVariant?: ColorVariant.BgColorVariant
+  headerBorderVariant?: ColorVariant.BorderColorVariant
   headerClass?: Array<unknown> | Record<string, unknown> | string
   headerHtml?: string
   headerTag?: string
-  headerTextVariant?: ColorVariant
+  headerTextVariant?: ColorVariant.TextColorVariant
 }
 // Emits
 

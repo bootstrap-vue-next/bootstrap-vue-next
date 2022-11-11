@@ -31,7 +31,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.TextColorVariant"
           }
         ],
         "emits": [],

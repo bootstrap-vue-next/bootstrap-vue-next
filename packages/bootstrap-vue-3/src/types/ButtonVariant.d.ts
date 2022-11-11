@@ -1,10 +1,10 @@
-import type {ColorVariant} from '.'
+import { BasicColorVariant } from "./ColorVariant";
 
 /**
  * @external
  */
 type ButtonVariant =
-  | ColorVariant
+  | BasicColorVariant
   | 'link'
   | 'outline-primary'
   | 'outline-secondary'

@@ -25,10 +25,10 @@
 
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
-import {isEmptySlot, isNumeric, toFloat} from '../../utils'
+import { isEmptySlot, isNumeric, textVariantDarkTypes, toFloat } from "../../utils";
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
-import type {Booleanish, ButtonType, ColorVariant, InputSize, RoundedTypes, TextColorVariant} from '../../types'
+import type {Booleanish, ButtonType, ButtonVariant, ColorVariant, InputSize, RoundedTypes} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
 import {useBooleanish} from '../../composables'
 
@@ -39,7 +39,8 @@ interface BAvatarProps {
   badgeLeft?: Booleanish
   badgeOffset?: string
   badgeTop?: Booleanish
-  badgeVariant?: ColorVariant | undefined
+  badgeVariant?: ColorVariant.BgColorVariant | undefined
+  bgVariant?: ColorVariant.BgColorVariant | undefined
   button?: Booleanish
   buttonType?: ButtonType
   disabled?: Booleanish
@@ -49,8 +50,8 @@ interface BAvatarProps {
   square?: Booleanish
   src?: string
   text?: string
-  textVariant?: TextColorVariant
-  variant?: ColorVariant | undefined
+  textVariant?: ColorVariant.TextColorVariant
+  variant?: ButtonVariant | undefined
 }
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
@@ -59,6 +60,7 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   badgeLeft: false,
   badgeTop: false,
   badgeVariant: 'primary',
+  bgVariant: 'secondary',
   button: false,
   buttonType: 'button',
   disabled: false,
@@ -98,7 +100,8 @@ const computedSize = computed<string | null>(() =>
   parentData?.size ? parentData.size : computeSize(props.size)
 )
 
-const computedVariant = computed<ColorVariant | undefined>(() => parentData?.variant ?? props.variant)
+const computedBgVariant = computed<ColorVariant.BgColorVariant | undefined>(() => parentData?.bgVariant ?? props.bgVariant)
+const computedVariant = computed<ButtonVariant | undefined>(() => parentData?.variant ?? props.variant)
 const computedRounded = computed<RoundedTypes.RoundedTypesAll | undefined>(() => parentData?.rounded ?? props.rounded)
 
 const computedAttrs = computed(() => ({
@@ -111,19 +114,26 @@ const badgeClasses = computed(() => [`bg-${props.badgeVariant}`])
 
 const badgeText = computed<string | false>(() => (props.badge === true ? '' : props.badge))
 
-const badgeTextClasses = computed(() => (props.badgeVariant ? [`text-${computeContrastVariant(props.badgeVariant)}`] : []))
+const badgeTextClasses = computed(() => (props.badgeVariant && props.badgeVariant ? `text-${computeContrastVariant(props.badgeVariant)}` : undefined))
 
 const computedClasses = computed(() => ({
   [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
-  [`bg-${computedVariant.value}`]: !!computedVariant.value,
-  [`badge`]: !buttonBoolean.value && computedVariant.value && hasDefaultSlot.value,
+  [`bg-${computedBgVariant.value}`]: !!computedBgVariant.value,
+  [`badge`]: !buttonBoolean.value && computedBgVariant.value && hasDefaultSlot.value,
   rounded: !squareBoolean.value && (computedRounded.value === '' || computedRounded.value === true),
   [`rounded-${computedRounded.value}`]: !squareBoolean.value && typeof computedRounded.value !== "undefined" && !(computedRounded.value === true || computedRounded.value === false || computedRounded.value === ''),
   btn: buttonBoolean.value,
-  [`btn-${computedVariant.value}`]: buttonBoolean.value ? !!computedVariant.value : false,
+  [`btn-${computedVariant.value}`]:  buttonBoolean.value && !!computedVariant.value,
 }))
 
-const textClasses = computed(() => (props.textVariant || computedVariant.value ? `text-${props.textVariant || computedVariant.value && computeContrastVariant(computedVariant.value)}` : undefined))
+const textClasses = computed(() => {
+    let textVariant: ColorVariant.TextColorVariant | undefined
+    if (props.textVariant)
+        textVariant = props.textVariant
+    else if(computedBgVariant.value)
+        textVariant = computeContrastVariant(computedBgVariant.value)
+    return textVariant ? `text-${textVariant}` : undefined
+})
 
 const badgeStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset || '0px'
@@ -164,8 +174,7 @@ const computedStyle = computed(() => ({
   height: computedSize.value,
 }))
 
-const computeContrastVariant = (colorVariant: ColorVariant): 'dark' | 'light' =>
-  colorVariant === 'light' || colorVariant === 'warning' ? 'dark' : 'light'
+const computeContrastVariant = (colorVariant: ColorVariant.BgColorVariant): 'dark' | 'light' => textVariantDarkTypes.includes(colorVariant) ? 'dark' : 'light'
 
 const clicked = (e: MouseEvent): void => {
   if (!disabledBoolean.value && buttonBoolean.value) emit('click', e)

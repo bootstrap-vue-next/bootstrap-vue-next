@@ -11,7 +11,7 @@
         "props": [
           {
             "prop": "variant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "prop": "max",
@@ -96,7 +96,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           }
         ],
         "emits": [],

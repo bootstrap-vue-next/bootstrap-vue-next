@@ -10,7 +10,7 @@ interface Props {
   tag?: string
   width?: string | number
   cols?: string | number
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
   size?: PlaceholderSize
   animation?: PlaceholderAnimation
 }

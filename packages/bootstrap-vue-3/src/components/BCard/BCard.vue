@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
-import type {Alignment, Booleanish, ClassValue, ColorVariant, TextColorVariant} from '../../types'
+import type {Alignment, Booleanish, ClassValue, ColorVariant} from '../../types'
 import {computed, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
@@ -48,26 +48,26 @@ import {isEmptySlot} from '../../utils'
 
 interface BCardProps {
   align?: Alignment
-  bgVariant?: ColorVariant
-  bodyBgVariant?: ColorVariant
+  bgVariant?: ColorVariant.BgColorVariant
+  bodyBgVariant?: ColorVariant.BgColorVariant
   bodyClass?: ClassValue
   bodyTag?: string
-  bodyTextVariant?: TextColorVariant
-  borderVariant?: ColorVariant
+  bodyTextVariant?: ColorVariant.TextColorVariant
+  borderVariant?: ColorVariant.BorderColorVariant
   footer?: string
-  footerBgVariant?: ColorVariant
-  footerBorderVariant?: ColorVariant
+  footerBgVariant?: ColorVariant.BgColorVariant
+  footerBorderVariant?: ColorVariant.BorderColorVariant
   footerClass?: ClassValue
   footerHtml?: string
   footerTag?: string
-  footerTextVariant?: TextColorVariant
+  footerTextVariant?: ColorVariant.TextColorVariant
   header?: string
-  headerBgVariant?: ColorVariant
-  headerBorderVariant?: ColorVariant
+  headerBgVariant?: ColorVariant.BgColorVariant
+  headerBorderVariant?: ColorVariant.BorderColorVariant
   headerClass?: ClassValue
   headerHtml?: string
   headerTag?: string
-  headerTextVariant?: TextColorVariant
+  headerTextVariant?: ColorVariant.TextColorVariant
   imgAlt?: string
   imgBottom?: Booleanish
   imgEnd?: Booleanish
@@ -82,9 +82,9 @@ interface BCardProps {
   overlay?: Booleanish
   subtitle?: string
   subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant
+  subtitleTextVariant?: ColorVariant.TextColorVariant
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: ColorVariant.TextColorVariant
   title?: string
   titleTag?: string
   bodyText?: string

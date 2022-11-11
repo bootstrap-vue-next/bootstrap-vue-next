@@ -6,7 +6,7 @@ export interface Props {
   small?: boolean
   tag?: string
   type?: SpinnerType
-  variant?: ColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 // Emits
 

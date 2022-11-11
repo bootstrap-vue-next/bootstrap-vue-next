@@ -8,7 +8,7 @@ export interface Props {
   disabled?: boolean
   rel?: string
   target?: LinkTarget
-  variant?: ColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 // Emits
 export interface Emits {

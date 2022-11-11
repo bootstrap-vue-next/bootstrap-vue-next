@@ -24,7 +24,7 @@ interface BTdProps {
   rowspan?: string | number
   stackedHeading?: string
   stickyColumn?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 
 const props = withDefaults(defineProps<BTdProps>(), {

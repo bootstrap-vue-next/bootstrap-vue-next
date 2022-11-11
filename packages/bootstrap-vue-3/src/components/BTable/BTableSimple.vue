@@ -18,7 +18,7 @@ import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 interface BTableSimpleProps {
   bordered?: Booleanish
   borderless?: Booleanish
-  borderVariant?: ColorVariant
+  borderVariant?: ColorVariant.BorderColorVariant
   captionTop?: Booleanish
   dark?: Booleanish
   hover?: Booleanish
@@ -27,7 +27,7 @@ interface BTableSimpleProps {
   striped?: Booleanish
   small?: Booleanish
   tableClass?: ClassValue
-  tableVariant?: ColorVariant
+  tableVariant?: ColorVariant.BasicColorVariant
   stickyHeader?: Booleanish
 }
 

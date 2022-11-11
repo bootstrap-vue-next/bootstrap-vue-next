@@ -25,7 +25,7 @@ interface BDropdownItemButtonProps {
   active?: Booleanish
   activeClass?: string
   disabled?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {

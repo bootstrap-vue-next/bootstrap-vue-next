@@ -110,6 +110,7 @@
 import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
+import ButtonVariant from "../types/ButtonVariant";
 import {isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
@@ -124,29 +125,29 @@ import BTransition from './BTransition/BTransition.vue'
 // Implement autofocus props like autoFocusButton
 
 interface BModalProps {
-  bodyBgVariant?: ColorVariant
+  bodyBgVariant?: ColorVariant.BgColorVariant
   bodyClass?: ClassValue
-  bodyTextVariant?: ColorVariant
+  bodyTextVariant?: ColorVariant.TextColorVariant
   busy?: Booleanish
   lazy?: Booleanish
   buttonSize?: InputSize
   cancelDisabled?: Booleanish
   cancelTitle?: string
-  cancelVariant?: ColorVariant | undefined
+  cancelVariant?: ButtonVariant | undefined
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
-  footerBgVariant?: ColorVariant
-  footerBorderVariant?: ColorVariant
+  footerBgVariant?: ColorVariant.BgColorVariant
+  footerBorderVariant?: ColorVariant.BorderColorVariant
   footerClass?: ClassValue
-  footerTextVariant?: ColorVariant
+  footerTextVariant?: ColorVariant.TextColorVariant
   fullscreen?: boolean | string
-  headerBgVariant?: ColorVariant
-  headerBorderVariant?: ColorVariant
+  headerBgVariant?: ColorVariant.BgColorVariant
+  headerBorderVariant?: ColorVariant.BorderColorVariant
   headerClass?: ClassValue
   headerCloseLabel?: string
   headerCloseWhite?: Booleanish
-  headerTextVariant?: ColorVariant
+  headerTextVariant?: ColorVariant.TextColorVariant
   hideBackdrop?: Booleanish
   hideFooter?: Booleanish
   hideHeader?: Booleanish
@@ -161,7 +162,7 @@ interface BModalProps {
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
-  okVariant?: ColorVariant | undefined
+  okVariant?: ButtonVariant | undefined
   scrollable?: Booleanish
   show?: Booleanish
   size?: 'sm' | 'lg' | 'xl'

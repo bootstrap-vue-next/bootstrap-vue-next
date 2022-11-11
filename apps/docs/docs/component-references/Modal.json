@@ -11,7 +11,7 @@
         "props": [
           {
             "prop": "bodyBgVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "prop": "bodyClass",
@@ -19,7 +19,7 @@
           },
           {
             "prop": "bodyTextVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.TextColorVariant"
           },
           {
             "prop": "busy",
@@ -43,7 +43,7 @@
           },
           {
             "prop": "cancelVariant",
-            "type": "ColorVariant"
+            "type": "ButtonVariant"
           },
           {
             "prop": "centered",
@@ -59,11 +59,11 @@
           },
           {
             "prop": "footerBgVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "prop": "footerBorderVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BorderColorVariant"
           },
           {
             "prop": "footerClass",
@@ -71,7 +71,7 @@
           },
           {
             "prop": "footerTextVariant",
-            "type": "ColorVariant"
+            "type": "ColorVarian.TextColorVariantt"
           },
           {
             "prop": "fullscreen",
@@ -79,11 +79,11 @@
           },
           {
             "prop": "headerBgVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "prop": "headerBorderVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BorderColorVariant"
           },
           {
             "prop": "headerClass",
@@ -99,7 +99,7 @@
           },
           {
             "prop": "headerTextVariant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.TextColorVariant"
           },
           {
             "prop": "hideBackdrop",
@@ -159,7 +159,7 @@
           },
           {
             "prop": "okVariant",
-            "type": "ColorVariant"
+            "type": "ButtonVariant"
           },
           {
             "prop": "scrollable",

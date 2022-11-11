@@ -13,7 +13,7 @@ interface BSkeletonProps {
   size?: string
   animation?: SkeletonAnimation
   type?: SkeletonType
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
 }
 
 const props = withDefaults(defineProps<BSkeletonProps>(), {

@@ -14,15 +14,15 @@
 
 // import type {BCardHeaderProps} from '../../types/components'
 import {computed} from 'vue'
-import type {ColorVariant, TextColorVariant} from '../../types'
+import type {ColorVariant} from '../../types'
 
 interface BCardHeaderProps {
   text?: string
-  bgVariant?: ColorVariant
-  borderVariant?: ColorVariant
+  bgVariant?: ColorVariant.BgColorVariant
+  borderVariant?: ColorVariant.BorderColorVariant
   html?: string
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BCardHeaderProps>(), {

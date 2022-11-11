@@ -41,7 +41,7 @@ interface BListGroupItemProps {
   tag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-  variant?: ColorVariant
+  variant?: ColorVariant.BasicColorVariant
 }
 
 const props = withDefaults(defineProps<BListGroupItemProps>(), {

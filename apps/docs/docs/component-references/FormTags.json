@@ -50,7 +50,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant",
+            "type": "ColorVariant.BgColorVariant",
             "default": "secondary",
             "description": "Applies one of the Bootstrap theme color variants to the component"
           }
@@ -475,7 +475,7 @@
               },
               {
                 "prop": "tagVariant",
-                "type": "ColorVariant",
+                "type": "ColorVariant.BgColorVariant",
                 "description": "Value of the 'tag-variant' prop"
               }
             ]

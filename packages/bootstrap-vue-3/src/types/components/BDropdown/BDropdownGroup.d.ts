@@ -6,7 +6,7 @@ export interface Props {
   header?: string
   headerClasses?: string | Array<unknown> | Record<string, unknown>
   headerTag?: string
-  headerVariant?: ColorVariant
+  headerVariant?: ColorVariant.TextColorVariant
 }
 // Emits
 

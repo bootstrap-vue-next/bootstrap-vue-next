@@ -34,7 +34,7 @@ interface BDropdownGroupProps {
   header?: string
   headerClass?: ClassValue
   headerTag?: string
-  headerVariant?: ColorVariant
+  headerVariant?: ColorVariant.TextColorVariant
 }
 
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {

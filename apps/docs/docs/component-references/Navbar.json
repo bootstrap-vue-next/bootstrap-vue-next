@@ -35,7 +35,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant"
+            "type": "ColorVariant.BgColorVariant"
           },
           {
             "prop": "container",

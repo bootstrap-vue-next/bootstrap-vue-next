@@ -45,19 +45,19 @@ interface BSkeletonTableProps {
   cellWidth?: string | number
   size?: PlaceholderSize
   animation?: PlaceholderAnimation
-  variant?: ColorVariant
+  variant?: ColorVariant.BgColorVariant
   headerColumns?: string | number
   hideHeader?: Booleanish
   headerCellWidth?: string | number
   headerSize?: PlaceholderSize
   headerAnimation?: PlaceholderAnimation
-  headerVariant?: ColorVariant
+  headerVariant?: ColorVariant.BgColorVariant
   footerColumns?: string | number
   showFooter?: Booleanish
   footerCellWidth?: string | number
   footerSize?: PlaceholderSize
   footerAnimation?: PlaceholderAnimation
-  footerVariant?: ColorVariant
+  footerVariant?: ColorVariant.BgColorVariant
 }
 
 const props = withDefaults(defineProps<BSkeletonTableProps>(), {
