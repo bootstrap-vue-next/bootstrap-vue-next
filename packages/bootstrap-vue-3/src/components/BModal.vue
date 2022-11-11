@@ -109,8 +109,7 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
-import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
-import ButtonVariant from "../types/ButtonVariant";
+import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, InputSize} from '../types'
 import {isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
