@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import BPlaceholder from './BPlaceholder.vue'
-import type { ButtonVariant, PlaceholderAnimation } from "../../types";
+import type {ButtonVariant, PlaceholderAnimation} from '../../types'
 import {computed} from 'vue'
 
 interface Props {
