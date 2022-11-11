@@ -1,45 +1,33 @@
-<script lang="ts">
-import normalizeSlot from '../../utils/normalize-slot'
-import {defineComponent, h, PropType, VNode, VNodeArrayChildren} from 'vue'
-import {Animation, ColorVariant, IconSize} from '../../types'
+<template>
+  <b-icon-base class="b-icon-stack" v-bind="props">
+    <slot />
+  </b-icon-base>
+</template>
+
+<script setup lang="ts">
+import type {Animation, ColorVariant, IconSize} from '../../types'
 import BIconBase from './BIconBase.vue'
 
-export default /* #__PURE__ */ defineComponent({
-  name: 'BIconstack',
-  components: {BIconBase},
-  props: {
-    animation: {type: String as PropType<Animation>},
-    content: {
-      type: [String, Object] as PropType<string | number | boolean | VNode | VNodeArrayChildren>,
-      required: false,
-    },
-    flipH: {type: Boolean, default: false},
-    flipV: {type: Boolean, default: false},
-    fontScale: {type: [Number, String], default: 1},
-    rotate: {
-      type: [String, Number],
-      required: false,
-      validator: (value: string | number) => value >= -360 && value <= 360,
-    },
-    scale: {type: [Number, String], default: 1},
-    shiftH: {type: [Number, String], default: 0},
-    shiftV: {type: [Number, String], default: 0},
-    size: {type: String as PropType<IconSize>, required: false},
-    title: {type: String, required: false},
-    variant: {type: String as PropType<ColorVariant>, required: false},
-  },
-  setup(props, {slots}) {
-    return () =>
-      h(
-        BIconBase,
-        {
-          ...props,
-          class: 'b-icon-stack',
-        },
-        {
-          default: () => normalizeSlot('default', {}, slots) || '',
-        }
-      )
-  },
+interface Props {
+  animation?: Animation
+  flipH?: boolean
+  flipV?: boolean
+  fontScale?: number | string
+  rotate?: string | number
+  scale?: number | string
+  shiftH?: number | string
+  shiftV?: number | string
+  size?: IconSize
+  title?: string
+  variant?: ColorVariant
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  shiftH: 0,
+  shiftV: 0,
+  scaale: 1,
+  fontScale: 1,
+  flipV: false,
+  flipH: false,
 })
 </script>
