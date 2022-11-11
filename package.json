@@ -4,6 +4,13 @@
     "packages/*",
     "apps/*"
   ],
+  "contributors": [
+    {
+      "email": "kwiksilver344@gmail.com",
+      "name": "Issayah",
+      "url": "https://github.com/VividLemon"
+    }
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
