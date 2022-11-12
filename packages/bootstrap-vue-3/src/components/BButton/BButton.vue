@@ -48,6 +48,7 @@ export default defineComponent({
     squared: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'button'},
     target: {type: String as PropType<LinkTarget>, default: '_self'},
+    title: {type: String, default: undefined},
     type: {type: String as PropType<ButtonType>, default: 'button'},
     variant: {type: String as PropType<ButtonVariant | undefined>, default: "secondary" },
   },
@@ -76,24 +77,25 @@ export default defineComponent({
     }))
 
     const computedAttrs = computed(() => ({
+      'activeClass': isBLink.value ? props.activeClass : null,
+      'append': computedLink.value ? props.append : null,
       'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
       'aria-pressed': isToggle.value ? pressedBoolean.value : null,
       'autocomplete': isToggle.value ? 'off' : null,
       'disabled': isButton.value ? disabledBoolean.value : null,
-      'href': props.href,
-      'rel': computedLink.value ? props.rel : null,
-      'role': nonStandardTag.value || computedLink.value ? 'button' : null,
-      'target': computedLink.value ? props.target : null,
-      'type': isButton.value ? props.type : null,
-      'to': !isButton.value ? props.to : null,
-      'append': computedLink.value ? props.append : null,
-      'activeClass': isBLink.value ? props.activeClass : null,
       'event': isBLink.value ? props.event : null,
       'exact': isBLink.value ? props.exact : null,
       'exactActiveClass': isBLink.value ? props.exactActiveClass : null,
+      'href': props.href,
+      'rel': computedLink.value ? props.rel : null,
       'replace': isBLink.value ? props.replace : null,
+      'role': nonStandardTag.value || computedLink.value ? 'button' : null,
       'routerComponentName': isBLink.value ? props.routerComponentName : null,
       'routerTag': isBLink.value ? props.routerTag : null,
+      'target': computedLink.value ? props.target : null,
+      'title': props.title ?? null,
+      'to': !isButton.value ? props.to : null,
+      'type': isButton.value ? props.type : null,
     }))
 
     const computedTag = computed<string | typeof BLink>(() =>
