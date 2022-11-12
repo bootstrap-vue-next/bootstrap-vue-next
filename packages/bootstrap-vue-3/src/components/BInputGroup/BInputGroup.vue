@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import type {InputSize} from '../../types'
+import {InputSizeOnlySmallOrLarge} from '../../types'
 import {computed} from 'vue'
 
 interface BInputGroupProps {
@@ -28,7 +28,7 @@ interface BInputGroupProps {
   id?: string
   prepend?: string
   prependHtml?: string
-  size?: Exclude<InputSize, 'md'>
+  size?: InputSizeOnlySmallOrLarge
   tag?: string
 }
 

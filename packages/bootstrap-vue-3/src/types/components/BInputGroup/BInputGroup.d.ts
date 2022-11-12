@@ -1,4 +1,4 @@
-import type {InputSize} from '../..'
+import {InputSizeOnlySmallOrLarge} from '../..'
 // Props
 export interface Props {
   append?: string
@@ -6,7 +6,7 @@ export interface Props {
   id?: string
   prepend?: string
   prependHtml?: string
-  size?: InputSize
+  size?: InputSizeOnlySmallOrLarge
   tag?: string
 }
 // Emits

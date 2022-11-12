@@ -7,6 +7,5 @@ export interface BaseInputSize {
   lg: unknown
 }
 
-type InputSize = keyof BaseInputSize
-
-export default InputSize
+export type InputSize = keyof BaseInputSize
+export type InputSizeOnlySmallOrLarge = Exclude<InputSize, 'md'>
