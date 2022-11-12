@@ -9,12 +9,12 @@ sidebar: auto
 ## Alignment
 
 ```ts
-type Alignment = 'start' | 'end' | 'center' | 'fill'
-namespace Alignment {
-  type Vertical = Alignment | 'baseline' | 'stretch'
-  type Horizontal = Alignment | 'between' | 'around'
-  type Content = Alignment | 'between' | 'around' | 'stretch'
-}
+type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
+type Vertical = CommonAlignment | 'baseline' | 'stretch'
+type Horizontal = CommonAlignment | 'between' | 'around'
+type Content = CommonAlignment | 'between' | 'around' | 'stretch'
+type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+type TextHorizontal = 'start' | 'end' | 'center'
 ```
 
 ## Booleanish

@@ -7,11 +7,11 @@
 <script setup lang="ts">
 // import type {BNavProps} from '../types/components'
 import type {Alignment, Booleanish} from '../../types'
-import {useBooleanish} from '../../composables'
+import {useAlignment, useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
 
 interface BNavProps {
-  align?: Alignment
+  align?: Alignment.JustifyContent
   cardHeader?: Booleanish
   fill?: Booleanish
   justified?: Booleanish
@@ -40,6 +40,7 @@ const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 const smallBoolean = useBooleanish(toRef(props, 'small'))
 const tabsBoolean = useBooleanish(toRef(props, 'tabs'))
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
+const alignment = useAlignment(toRef(props, 'align'))
 
 const computedClasses = computed(() => ({
   'nav-tabs': tabsBoolean.value,
@@ -50,7 +51,7 @@ const computedClasses = computed(() => ({
   'flex-column': verticalBoolean.value,
   'nav-fill': !verticalBoolean.value && fillBoolean.value,
   'nav-justified': !verticalBoolean.value && justifiedBoolean.value,
-  [`justify-content-${props.align}`]: !verticalBoolean.value && props.align !== undefined,
+  [alignment.value]: !verticalBoolean.value && props.align !== undefined,
   'small': smallBoolean.value,
 }))
 </script>

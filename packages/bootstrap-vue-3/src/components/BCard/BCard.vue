@@ -54,7 +54,7 @@ import BCardFooter from './BCardFooter.vue'
 import {isEmptySlot} from '../../utils'
 
 interface BCardProps {
-  align?: Alignment
+  align?: Alignment.TextHorizontal
   bgVariant?: BgColorVariant
   bodyBgVariant?: BgColorVariant
   bodyClass?: ClassValue

@@ -11,7 +11,7 @@
         "props": [
           {
             "prop": "align",
-            "type": "Alignment"
+            "type": "Alignment.TextHorizontal"
           },
           {
             "prop": "bgVariant",

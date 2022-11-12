@@ -3,16 +3,11 @@ import type {Alignment} from '../types'
 
 /**
  *
- * @param props
+ * @param align
  * @returns
  */
-export default (
-  align: Ref<Alignment>
-): ComputedRef<'justify-content-center' | 'justify-content-end' | 'justify-content-start'> =>
-  computed(() =>
-    align.value === 'center'
-      ? 'justify-content-center'
-      : align.value === 'end'
-      ? 'justify-content-end'
-      : 'justify-content-start'
-  )
+export default (align: Ref<Alignment.JustifyContent | undefined>): ComputedRef<string> =>
+  computed(() => {
+    if (!align.value) return ''
+    return `justify-content-${align.value}`
+  })

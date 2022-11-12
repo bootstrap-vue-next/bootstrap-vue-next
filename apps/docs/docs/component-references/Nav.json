@@ -12,7 +12,7 @@
           {
             "prop": "align",
             "description": "Alignment of NavBar",
-            "type": "Alignment"
+            "type": "Alignment.JustifyContent"
           },
           {
             "prop": "cardHeader",
