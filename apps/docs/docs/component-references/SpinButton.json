@@ -1,0 +1,19 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-3/SpinButton",
+  "version": "1.0.0",
+  "meta": {
+    "title": "SpinButton",
+    "description": "",
+    "components": [
+      {
+        "component": "BFormSpinButton",
+        "props": [
+        ],
+        "emits": [],
+        "slots": [
+        ]
+      }
+    ]
+  }
+}

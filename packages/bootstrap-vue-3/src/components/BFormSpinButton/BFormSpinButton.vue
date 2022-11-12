@@ -506,7 +506,7 @@ export default defineComponent({
             {'d-flex': !props.inline && !props.vertical},
             {'align-items-stretch': !props.vertical},
             {'flex-column': props.vertical},
-            // sizeFormClass, //TODO
+            props.size ? `form-control-${props.size}` : null,
             // this.stateClass //TODO
           ],
           ...computedAttrs.value,
