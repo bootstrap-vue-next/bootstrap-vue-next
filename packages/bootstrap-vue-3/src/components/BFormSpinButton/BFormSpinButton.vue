@@ -81,7 +81,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'change'],
   setup(props, {emit, slots}) {
     const hasFocus = ref(false)
-    const spinId = computed(() => 1)
+    const spinId = computed(() => 1) //TODO
 
     const emitChange = () => {
       emit('change', localValue.value)
@@ -478,8 +478,8 @@ export default defineComponent({
             {'align-items-center': props.vertical},
             {'border-top': props.vertical},
             {'border-bottom': props.vertical},
-            {'border-left': !props.vertical},
-            {'border-right': !props.vertical},
+            {'border-start': !props.vertical},
+            {'border-end': !props.vertical},
             'flex-grow-1',
           ],
           ...computedSpinAttrs.value,
@@ -506,15 +506,15 @@ export default defineComponent({
             {'d-flex': !props.inline && !props.vertical},
             {'align-items-stretch': !props.vertical},
             {'flex-column': props.vertical},
-            // sizeFormClass,
-            // this.stateClass
+            // sizeFormClass, //TODO
+            // this.stateClass //TODO
           ],
           ...computedAttrs.value,
           onkeydown: onKeydown,
           onkeyup: onKeyup,
           // We use capture phase (`!` prefix) since focus and blur do not bubble
-          // 'focus': onFocusBlur,
-          // 'blur': onFocusBlur,
+          // 'focus': onFocusBlur, //TODO
+          // 'blur': onFocusBlur, //TODO
         },
         props.vertical
           ? [$increment, $hidden, $spin, $decrement]
