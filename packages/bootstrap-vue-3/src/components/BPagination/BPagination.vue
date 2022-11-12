@@ -71,9 +71,9 @@ export default defineComponent({
     const lastNumberBoolean = useBooleanish(toRef(props, 'lastNumber'))
     const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 
-    const justifyAlign = computed((): Alignment.JustifyContent => {
-          return props.align === 'fill' ? 'start' : props.align
-    });
+    const justifyAlign = computed<Alignment.JustifyContent>(() =>
+      props.align === 'fill' ? 'start' : props.align
+    )
     const alignment = useAlignment(toRef(justifyAlign, 'value'))
 
     // Use Active to on page-item to denote active tab
