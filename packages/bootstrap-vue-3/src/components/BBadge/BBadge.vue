@@ -5,11 +5,10 @@
 </template>
 
 <script lang="ts">
-import {isLink, omit, pluckProps} from '../../utils'
+import {isLink, omit, pluckProps, textVariantDarkTypes} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed, defineComponent, PropType, toRef} from 'vue'
 import type {BgColorVariant, Booleanish} from '../../types'
-import {textVariantDarkTypes} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
