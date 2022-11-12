@@ -289,6 +289,8 @@ type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'te
 You can extend some types to use your own values (e.g. colors, sizes). This requires the use of interface augmentation. You can augment next interfaces:
 
 - BaseColorVariant
+- BaseBgColorVariant (extends BaseColorVariant)
+- BaseBorderColorVariant (extends BaseColorVariant)
 - BaseButtonVariant (extends BaseColorVariant)
 - BaseTextColorVariant (extends BaseColorVariant)
 - BaseSize
@@ -305,6 +307,12 @@ import 'bootstrap-vue-3'
 declare module 'bootstrap-vue-3/dist/types' {
   export interface BaseColorVariant {
     'purple': unknown // we use unknown type because it does not matter here
+  }
+   export interface BaseBgColorVariant {
+    // there is no need to add "purple" (it inherits from BaseColorVariant)
+  }
+  export interface BaseBorderColorVariant {
+    // there is no need to add "purple" (it inherits from BaseColorVariant)
   }
   export interface BaseButtonVariant {
     // there is no need to add "purple" (it inherits from BaseColorVariant)
