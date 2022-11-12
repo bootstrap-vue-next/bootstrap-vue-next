@@ -2,7 +2,9 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BContainer from './BContainer.vue'
 
-describe('container', () => {
+// Skipped because this test is for the updated container, it was reverted
+// Can be moved back when Toast functionality is finished
+describe.skip('container', () => {
   enableAutoUnmount(afterEach)
 
   it('tag is default div', () => {
