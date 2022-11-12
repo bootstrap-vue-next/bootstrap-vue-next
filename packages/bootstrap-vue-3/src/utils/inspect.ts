@@ -26,4 +26,4 @@ export const isPlainObject = (obj: unknown): obj is Record<PropertyKey, unknown>
  * @param obj
  * @returns
  */
-export const isNull = (value: unknown): Boolean => value === null
+export const isNull = (value: unknown): value is null => value === null

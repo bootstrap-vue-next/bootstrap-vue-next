@@ -1,6 +1,5 @@
 import {HAS_PASSIVE_EVENT_SUPPORT} from './env'
 import {isObject} from './inspect'
-import {arrayIncludes} from './array'
 
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
@@ -46,9 +45,9 @@ export const eventOnOff = (on: Boolean, eventParams: Parameters<typeof eventOff>
 }
 
 //checks to see if keyboard event
-export const isKeyBoardEvent = (event: Event): event is KeyboardEvent => {
-  return arrayIncludes(['keydown', 'keypress', 'keyup'], event.type)
-}
+export const isKeyBoardEvent = (event: Event): event is KeyboardEvent =>
+  ['keydown', 'keypress', 'keyup'].includes(event.type)
+
 // Utility method to prevent the default event handling and propagation
 export const stopEvent = (
   event: Event,

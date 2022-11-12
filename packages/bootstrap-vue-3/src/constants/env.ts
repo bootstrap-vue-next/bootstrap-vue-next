@@ -3,6 +3,7 @@ declare var MozMutationObserver: any
 
 export const HAS_WINDOW_SUPPORT = typeof window !== 'undefined'
 export const HAS_DOCUMENT_SUPPORT = typeof document !== 'undefined'
+export const HAS_ELEMENT_SUPPORT = typeof Element !== 'undefined'
 export const HAS_NAVIGATOR_SUPPORT = typeof navigator !== 'undefined'
 export const HAS_PROMISE_SUPPORT = typeof Promise !== 'undefined'
 

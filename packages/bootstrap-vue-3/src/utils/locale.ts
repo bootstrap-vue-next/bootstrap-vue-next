@@ -1,5 +1,4 @@
 import {RX_STRIP_LOCALE_MODS} from '../constants/regex'
-import {arrayIncludes} from './array'
 import {toString} from './stringUtils'
 
 // Languages that are RTL
@@ -26,5 +25,5 @@ export const isLocaleRTL = (locale: string) => {
   const parts = toString(locale).toLowerCase().replace(RX_STRIP_LOCALE_MODS, '').split('-')
   const locale1 = parts.slice(0, 2).join('-')
   const locale2 = parts[0]
-  return arrayIncludes(RTL_LANGS, locale1) || arrayIncludes(RTL_LANGS, locale2)
+  return RTL_LANGS.includes(locale1) || RTL_LANGS.includes(locale2)
 }

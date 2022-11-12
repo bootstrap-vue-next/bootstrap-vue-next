@@ -1,10 +1,9 @@
 <script lang="ts">
-import {computed, defineComponent, h, PropType, ref, Ref} from 'vue'
+import {computed, ComputedRef, defineComponent, h, PropType, ref, Ref} from 'vue'
 import type {Booleanish} from '../../types'
 import {toFloat, toInteger} from '../../utils/number'
 import {isNull} from '../../utils/inspect'
 import {isLocaleRTL} from '../../utils/locale'
-import {arrayIncludes} from '../../utils/array'
 import {eventOnOff, stopEvent} from '../../utils/event'
 import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
 //TODO alias
@@ -50,8 +49,7 @@ export default defineComponent({
     inline: {type: Boolean, default: false},
     size: {type: String, required: false},
     formatterFn: {
-      type: Function as PropType<(value: number) => [any]>,
-      default: (value: number) => value,
+      type: Function as PropType<(value: number) => any>,
     },
     readonly: {type: Boolean, default: false},
     vertical: {type: Boolean, default: false},
@@ -180,7 +178,9 @@ export default defineComponent({
       return nf.format
     }
     //TODO allow for prop formatter function
-    const computedFormatter = computed(() => defaultFormatter())
+    const computedFormatter = computed(() =>
+      props.formatterFn ? props.formatterFn : defaultFormatter()
+    )
 
     const computedAttrs = computed(() => ({
       role: 'group',
@@ -188,7 +188,7 @@ export default defineComponent({
       tabindex: props.disabled ? null : '-1',
       title: props.ariaLabel,
     }))
-    const hasValue = computed(() => !isNull(props.modelValue) || !isNull(lvalue.value))
+    const hasValue: ComputedRef = computed(() => !isNull(props.modelValue) || !isNull(lvalue.value))
 
     const computedSpinAttrs = computed(() => ({
       'dir': computedRTL.value,
@@ -202,9 +202,10 @@ export default defineComponent({
       'aria-required': props.required ? 'true' : null,
       'aria-valuemin': computedMin.value,
       'aria-valuemax': computedMax.value,
-      'aria-valuenow': localValue.value !== null ? localValue.value : null,
-      'aria-valuetext':
-        localValue.value !== null ? computedFormatter.value(localValue.value) : null,
+      'aria-valuenow': !isNull(localValue.value) ? localValue.value : null,
+      'aria-valuetext': !isNull(localValue.value)
+        ? computedFormatter.value(localValue.value)
+        : null,
     }))
 
     // methods
@@ -213,7 +214,7 @@ export default defineComponent({
       // Sets a new incremented or decremented value, supporting optional wrapping
       // Direction is either +1 or -1 (or a multiple thereof)
       let {value} = localValue
-      if (!props.disabled && value !== null) {
+      if (!props.disabled && !isNull(value)) {
         const step = computedStep.value * direction
         const min = computedMin.value
         const max = computedMax.value
@@ -247,9 +248,7 @@ export default defineComponent({
       }
     }
 
-    const onKeydown = (
-      event: (KeyboardEvent & {button: undefined}) | (MouseEvent & {code: undefined})
-    ) => {
+    const onKeydown = (event: KeyboardEvent) => {
       const {code, altKey, ctrlKey, metaKey} = event
 
       /* istanbul ignore if */
@@ -257,7 +256,7 @@ export default defineComponent({
         return
       }
 
-      if (arrayIncludes(KEY_CODES, code)) {
+      if (KEY_CODES.includes(code)) {
         // https://w3c.github.io/aria-practices/#spinbutton
         stopEvent(event, {propagation: false})
         /* istanbul ignore if */
@@ -267,7 +266,7 @@ export default defineComponent({
         }
 
         resetTimers()
-        if (arrayIncludes([CODE_UP, CODE_DOWN], code)) {
+        if ([CODE_UP, CODE_DOWN].includes(code)) {
           // The following use the custom auto-repeat handling
 
           $_keyIsDown = true
@@ -299,7 +298,7 @@ export default defineComponent({
       if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) {
         return
       }
-      if (arrayIncludes(KEY_CODES, code)) {
+      if (KEY_CODES.includes(code)) {
         stopEvent(event, {propagation: false})
         resetTimers()
         $_keyIsDown = false
@@ -489,7 +488,9 @@ export default defineComponent({
         [
           h(
             'bdi',
-            localValue.value ? computedFormatter.value(localValue.value) : props.placeholder || ''
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore How can we narrow this type down
+            hasValue.value ? computedFormatter.value(localValue.value) : props.placeholder || ''
           ),
         ]
       )
