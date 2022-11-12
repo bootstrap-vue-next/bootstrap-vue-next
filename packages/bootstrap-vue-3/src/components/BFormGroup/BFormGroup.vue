@@ -390,6 +390,7 @@ export default defineComponent({
     // to an inner wrapper div when horizontal and using a fieldset
     const rowProps = {
       'class': [
+        // TODO consider removing this static class when refactored to <template> syntax
         'mb-3',
         this.stateClass,
         {
