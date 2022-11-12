@@ -224,7 +224,7 @@
           },
           {
             "prop": "headerVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           }
         ],
         "slots": [
@@ -294,7 +294,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           }
         ],
         "slots": [
@@ -339,7 +339,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           }
         ],
         "slots": [

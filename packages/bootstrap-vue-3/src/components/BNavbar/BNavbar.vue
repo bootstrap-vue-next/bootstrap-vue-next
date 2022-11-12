@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {BgColorVariant, Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
   tag?: string
   toggleable?: boolean | 'sm' | 'md' | 'lg' | 'xl' // Type Omit<Breakpoint, 'xxl'>
   dark?: Booleanish
-  variant?: ColorVariant.BgColorVariant
+  variant?: BgColorVariant
   container?: 'fluid' | boolean
 }
 

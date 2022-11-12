@@ -1,5 +1,5 @@
 import type {VNodeNormalizedChildren} from 'vue'
-import type {ColorVariant} from '../..'
+import type {TextColorVariant} from '../..'
 // Props
 export interface Props {
   id?: string
@@ -9,7 +9,7 @@ export interface Props {
   pill?: boolean
   removeLabel?: string
   tag?: string
-  variant?: ColorVariant.BgColorVariant
+  variant?: BgColorVariant
 }
 // Emits
 export interface Emits {

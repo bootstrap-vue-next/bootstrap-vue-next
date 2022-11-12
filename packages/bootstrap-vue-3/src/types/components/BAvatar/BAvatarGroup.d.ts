@@ -1,8 +1,8 @@
 import type {ComputedRef} from 'vue'
-import type {ButtonVariant, ColorVariant, InputSize, RoundedTypes} from '../..'
+import type {BgColorVariant, ButtonVariant, InputSize, RoundedTypes} from '../..'
 // Props
 export interface Props {
-  bgVariant?: ColorVariant.BgColorVariant
+  bgVariant?: BgColorVariant
   overlap?: number | string
   rounded?: boolean | string
   size?: InputSize | string
@@ -14,7 +14,7 @@ export interface Props {
 
 // Other
 export interface ParentData {
-  bgVariant?: ColorVariant.BgColorVariant
+  bgVariant?: BgColorVariant
   overlapScale: ComputedRef<number>
   size?: InputSize | string
   square: boolean

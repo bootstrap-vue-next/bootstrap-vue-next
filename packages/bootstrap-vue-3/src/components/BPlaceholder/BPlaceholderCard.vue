@@ -33,19 +33,19 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {Booleanish, ButtonVariant, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {BgColorVariant, Booleanish, ButtonVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface Props {
   noHeader?: Booleanish
   headerWidth?: string | number
-  headerVariant?: ColorVariant.BgColorVariant
+  headerVariant?: BgColorVariant
   headerAnimation?: PlaceholderAnimation
   headerSize?: PlaceholderSize
   noFooter?: Booleanish
   footerWidth?: string | number
-  footerVariant?: ButtonVariant | ColorVariant.BgColorVariant
+  footerVariant?: ButtonVariant | BgColorVariant
   footerAnimation?: PlaceholderAnimation
   footerSize?: PlaceholderSize
   animation?: PlaceholderAnimation
@@ -86,7 +86,7 @@ const footerAttrs = computed(() => ({
     width: props.footerWidth,
     animation: props.footerAnimation,
     size: noButtonBoolean.value ? props.footerSize : undefined,
-    variant: props.footerVariant as ColorVariant.BgColorVariant,
+    variant: props.footerVariant as BgColorVariant,
 }))
 
 const footerButtonAttrs = computed(() => ({

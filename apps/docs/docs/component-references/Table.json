@@ -31,7 +31,7 @@
           },
           {
             "prop": "borderVariant",
-            "type": "ColorVariant.BorderColorVariant"
+            "type": "BorderColorVariant"
           },
           {
             "prop": "dark",
@@ -67,7 +67,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           },
           {
             "prop": "sortBy",
@@ -99,7 +99,7 @@
           },
           {
             "prop": "selectionVariant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           },
           {
             "prop": "stickyHeader",
@@ -349,7 +349,7 @@
           },
           {
             "prop": "borderVariant",
-            "type": "ColorVariant.BorderColorVariant"
+            "type": "BorderColorVariant"
           },
           {
             "prop": "captionTop",
@@ -402,7 +402,7 @@
         "props": [
           {
             "prop": "variant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           }
         ],
         "emits": [],
@@ -435,7 +435,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           }
         ],
         "emits": [],
@@ -452,7 +452,7 @@
         "props": [
           {
             "prop": "variant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           }
         ],
         "emits": [],
@@ -485,7 +485,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           }
         ],
         "emits": [],
@@ -502,7 +502,7 @@
         "props": [
           {
             "prop": "variant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           }
         ],
         "emits": [],
@@ -519,7 +519,7 @@
         "props": [
           {
             "prop": "variant",
-            "type": "ColorVariant.BasicColorVariant"
+            "type": "BasicColorVariant"
           }
         ],
         "emits": [],

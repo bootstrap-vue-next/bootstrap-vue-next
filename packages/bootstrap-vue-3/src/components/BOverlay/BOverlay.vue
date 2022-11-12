@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {Booleanish, ColorVariant, RoundedTypes, SpinnerType} from '../../types'
+import type {BgColorVariant, Booleanish, RoundedTypes, SpinnerType, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
@@ -47,8 +47,8 @@ interface Props {
   show?: Booleanish
   spinnerSmall?: Booleanish
   spinnerType?: SpinnerType
-  spinnerVariant?: ColorVariant.TextColorVariant
-  variant?: ColorVariant.BgColorVariant | undefined
+  spinnerVariant?: TextColorVariant
+  variant?: BgColorVariant | undefined
   wrapTag?: string
   zIndex?: number | string
 }

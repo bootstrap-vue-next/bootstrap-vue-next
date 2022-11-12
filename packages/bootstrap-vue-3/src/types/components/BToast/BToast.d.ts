@@ -1,5 +1,5 @@
 import type {BodyProp} from '../../../components/BToast/plugin'
-import type {ColorVariant} from '../..'
+import type {BasicColorVariant} from '../..'
 import type {BLinkProps} from '..'
 // Props
 export interface Props extends BLinkProps {
@@ -22,7 +22,7 @@ export interface Props extends BLinkProps {
   static?: boolean
   modelValue?: boolean
   toastClass?: Array<unknown>
-  variant?: ColorVariant.BasicColorVariant
+  variant?: BasicColorVariant
 }
 // Emits
 export interface Emits {

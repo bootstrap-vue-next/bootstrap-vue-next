@@ -1,4 +1,4 @@
-import type {ColorVariant, SkeletonAnimation, SkeletonType} from '../..'
+import type {BgColorVariant, SkeletonAnimation, SkeletonType} from '../..'
 // Props
 export interface Props {
   height?: string
@@ -6,7 +6,7 @@ export interface Props {
   size?: string
   animation?: SkeletonAnimation
   type?: SkeletonType
-  variant?: ColorVariant.BgColorVariant
+  variant?: BgColorVariant
 }
 // Emits
 

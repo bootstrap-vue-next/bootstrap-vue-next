@@ -1,4 +1,4 @@
-import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '../../types'
+import type {BasicColorVariant, BootstrapVueOptions, ContainerPosition} from '../../types'
 import {getId} from '../../utils'
 import {
   App,
@@ -25,7 +25,7 @@ export interface ToastOptions {
   noCloseButton?: boolean
   pos?: ContainerPosition
   value?: boolean // show or hide
-  variant?: ColorVariant.BasicColorVariant
+  variant?: BasicColorVariant
 }
 
 export interface Toast {
@@ -156,7 +156,7 @@ export class ToastController {
       return vm
     }
     if (vm.root) {
-      // lets see if we have a root instance
+      // let's see if we have a root instance
       if (this.rootInstance) {
         return this.vms[this.rootInstance]
       }

@@ -1,14 +1,14 @@
-import type {ColorVariant} from '../..'
+import type {BgColorVariant, TextColorVariant} from '../..'
 // Props
 export interface Props {
-  bodyBgVariant?: ColorVariant.BgColorVariant
+  bodyBgVariant?: BgColorVariant
   bodyClass?: Array<unknown> | Record<string, unknown> | string
   bodyTag?: string
-  bodyTextVariant?: ColorVariant.TextColorVariant
+  bodyTextVariant?: TextColorVariant
   overlay?: boolean
   subtitle?: string
   subtitleTag?: string
-  subtitleTextVariant?: ColorVariant.TextColorVariant
+  subtitleTextVariant?: TextColorVariant
   title?: string
   titleTag?: string
 }

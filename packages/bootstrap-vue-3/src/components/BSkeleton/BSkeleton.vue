@@ -5,7 +5,7 @@
 <script setup lang="ts">
 // import type {BSkeletonProps} from '../../types/components'
 import {computed, StyleValue} from 'vue'
-import type {ColorVariant, SkeletonAnimation, SkeletonType} from '../../types'
+import type {BgColorVariant, SkeletonAnimation, SkeletonType} from '../../types'
 
 interface BSkeletonProps {
   height?: string
@@ -13,7 +13,7 @@ interface BSkeletonProps {
   size?: string
   animation?: SkeletonAnimation
   type?: SkeletonType
-  variant?: ColorVariant.BgColorVariant
+  variant?: BgColorVariant
 }
 
 const props = withDefaults(defineProps<BSkeletonProps>(), {

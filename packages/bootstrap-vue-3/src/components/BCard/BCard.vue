@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
-import type {Alignment, Booleanish, ClassValue, ColorVariant} from '../../types'
+import type {Alignment, BgColorVariant, Booleanish, BorderColorVariant, ClassValue, TextColorVariant} from '../../types'
 import {computed, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
@@ -48,26 +48,26 @@ import {isEmptySlot} from '../../utils'
 
 interface BCardProps {
   align?: Alignment
-  bgVariant?: ColorVariant.BgColorVariant
-  bodyBgVariant?: ColorVariant.BgColorVariant
+  bgVariant?: BgColorVariant
+  bodyBgVariant?: BgColorVariant
   bodyClass?: ClassValue
   bodyTag?: string
-  bodyTextVariant?: ColorVariant.TextColorVariant
-  borderVariant?: ColorVariant.BorderColorVariant
+  bodyTextVariant?: TextColorVariant
+  borderVariant?: BorderColorVariant
   footer?: string
-  footerBgVariant?: ColorVariant.BgColorVariant
-  footerBorderVariant?: ColorVariant.BorderColorVariant
+  footerBgVariant?: BgColorVariant
+  footerBorderVariant?: BorderColorVariant
   footerClass?: ClassValue
   footerHtml?: string
   footerTag?: string
-  footerTextVariant?: ColorVariant.TextColorVariant
+  footerTextVariant?: TextColorVariant
   header?: string
-  headerBgVariant?: ColorVariant.BgColorVariant
-  headerBorderVariant?: ColorVariant.BorderColorVariant
+  headerBgVariant?: BgColorVariant
+  headerBorderVariant?: BorderColorVariant
   headerClass?: ClassValue
   headerHtml?: string
   headerTag?: string
-  headerTextVariant?: ColorVariant.TextColorVariant
+  headerTextVariant?: TextColorVariant
   imgAlt?: string
   imgBottom?: Booleanish
   imgEnd?: Booleanish
@@ -82,9 +82,9 @@ interface BCardProps {
   overlay?: Booleanish
   subtitle?: string
   subtitleTag?: string
-  subtitleTextVariant?: ColorVariant.TextColorVariant
+  subtitleTextVariant?: TextColorVariant
   tag?: string
-  textVariant?: ColorVariant.TextColorVariant
+  textVariant?: TextColorVariant
   title?: string
   titleTag?: string
   bodyText?: string
