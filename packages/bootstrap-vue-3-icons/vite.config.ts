@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
-import {defineConfig, PluginOption} from 'vite'
+import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import {visualizer} from 'rollup-plugin-visualizer'
@@ -18,34 +18,15 @@ const config = defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: [
-        'bootstrap',
-        'bootstrap/js/dist/alert',
-        'bootstrap/js/dist/collapse',
-        'bootstrap/js/dist/modal',
-        'bootstrap/js/dist/offcanvas',
-        'bootstrap/js/dist/popover',
-        'bootstrap/js/dist/carousel',
-        'bootstrap/js/dist/dropdown',
-        'bootstrap/js/dist/tooltip',
-        'vue',
-      ],
+      external: ['bootstrap', 'vue'],
       output: {
         exports: 'named',
         assetFileNames: `bootstrap-vue-3-icons.[ext]`, //without this, it generates build/styles.css
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
-          'vue': 'Vue',
-          'bootstrap': 'Bootstrap',
-          'bootstrap/js/dist/collapse': 'Collapse',
-          'bootstrap/js/dist/alert': 'Alert',
-          'bootstrap/js/dist/carousel': 'Carousel',
-          'bootstrap/js/dist/dropdown': 'Dropdown',
-          'bootstrap/js/dist/modal': 'Modal',
-          'bootstrap/js/dist/offcanvas': 'Offcanvas',
-          'bootstrap/js/dist/popover': 'Popover',
-          'bootstrap/js/dist/tooltip': 'Tooltip',
+          vue: 'Vue',
+          bootstrap: 'Bootstrap',
         },
       },
     },
@@ -57,6 +38,7 @@ const config = defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
+    visualizer(),
     dts({skipDiagnostics: false, logDiagnostics: true}),
   ],
 
@@ -65,7 +47,6 @@ const config = defineConfig({
   },
 
   test: {
-    // globals: true,
     environment: 'happy-dom',
     coverage: {
       provider: 'c8',

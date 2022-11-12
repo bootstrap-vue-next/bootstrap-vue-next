@@ -9,12 +9,12 @@ sidebar: auto
 ## Alignment
 
 ```ts
-type Alignment = 'start' | 'end' | 'center' | 'fill'
-namespace Alignment {
-  type Vertical = Alignment | 'baseline' | 'stretch'
-  type Horizontal = Alignment | 'between' | 'around'
-  type Content = Alignment | 'between' | 'around' | 'stretch'
-}
+type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
+type Vertical = CommonAlignment | 'baseline' | 'stretch'
+type Horizontal = CommonAlignment | 'between' | 'around'
+type Content = CommonAlignment | 'between' | 'around' | 'stretch'
+type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+type TextHorizontal = 'start' | 'end' | 'center'
 ```
 
 ## Booleanish
@@ -240,4 +240,49 @@ type TransitionMode = 'in-out' | 'out-in'
 
 ```ts
 type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom'
+```
+
+## Extending types
+
+You can extend some types to use your own values (e.g. colors, sizes). This requires the use of interface augmentation. You can augment next interfaces:
+
+- BaseColorVariant
+- BaseButtonVariant (extends BaseColorVariant)
+- BaseTextColorVariant (extends BaseColorVariant)
+- BaseSize
+- BaseInputSize
+
+Suppose we want to add a purple style and extra-large (xl) sizes.
+We need to create a declaration file in the root of vue project.
+
+**shims-bootstrap-vue-3.d.ts**
+
+```ts
+import 'bootstrap-vue-3'
+
+declare module 'bootstrap-vue-3/dist/types' {
+  export interface BaseColorVariant {
+    'purple': unknown // we use unknown type because it does not matter here
+  }
+  export interface BaseButtonVariant {
+    // there is no need to add "purple" (it inherits from BaseColorVariant)
+    'outline-purple': unknown // outline purple button
+  }
+  export interface BaseTextColorVariant {
+    // there is no need to add "purple" (it inherits from BaseColorVariant)
+  }
+  export interface BaseSize {
+    'xl': unknown // extra large
+  }
+  export interface BaseInputSize {
+    'xl': unknown // extra large (not inherits from BaseSize)
+  }
+}
+```
+
+New values can be used now and the type check will be successful:
+
+```html
+<b-button variant="purple" size="xl">Extra large purple button</b-button>
+<b-button variant="outline-purple">Outline purple button</b-button>
 ```

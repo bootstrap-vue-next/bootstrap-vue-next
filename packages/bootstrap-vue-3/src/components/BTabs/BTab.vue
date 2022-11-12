@@ -52,7 +52,7 @@ const lazyBoolean = useBooleanish(toRef(props, props.lazyOnce !== undefined ? 'l
 
 const lazyRenderCompleted = ref(false)
 
-const computedLazy = computed<boolean>(() => parentData?.lazy || lazyBoolean.value)
+const computedLazy = computed<boolean>(() => !!(parentData?.lazy || lazyBoolean.value))
 const computedLazyOnce = computed<boolean>(() => props.lazyOnce !== undefined)
 
 const computedActive = computed<boolean>(() => activeBoolean.value && !disabledBoolean.value)

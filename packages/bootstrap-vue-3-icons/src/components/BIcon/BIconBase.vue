@@ -1,81 +1,126 @@
-<script lang="ts">
-// https://github.com/dvuckovic/vue3-bootstrap-icons
-import normalizeSlot from '../../utils/normalize-slot'
-import {computed, defineComponent, h, PropType, VNode, VNodeArrayChildren} from 'vue'
-import {Animation, IconSize, TextColorVariant} from '../../types'
+<template>
+  <svg :class="computedClasses" v-bind="computedAttrs" :style="computedStyle">
+    <title v-if="$slots.title || title">
+      <slot name="title">
+      {{ title }}
+      </slot>
+    </title>
+    <!-- Both hasShift and stacked -->
+    <g v-if="hasShift && stacked">
+      <g :transform="computedTranslatedShift">
+        <!-- Main -->
+        <g :transform="svgTransform">
+          <slot />
+        </g>
+      </g>
+    </g>
+    <!-- Stacked only -->
+    <g v-else-if="stacked">
+      <g :transform="svgTransform">
+        <!-- Main -->
+        <slot />
+      </g>
+    </g>
+    <!-- hasShift only -->
+    <g v-else-if="hasShift" :transform="computedTranslatedShift">
+      <!-- Main -->
+      <g :transform="svgTransform">
+        <slot />
+      </g>
+    </g>
+    <!-- Neither hasShift nor stacked -->
+    <g v-else :transform="svgTransform">
+      <slot />
+    </g>
+  </svg>
+</template>
+
+<script setup lang="ts">
+import {computed} from 'vue'
+import type {Animation, IconSize, TextColorVariant} from '../../types'
 import {toFloat} from '../../utils/number'
 
-export default /* #__PURE__ */ defineComponent({
-  name: 'BIcon',
-  props: {
-    animation: {type: String as PropType<Animation>},
-    class: {type: [Array, Object, String], required: false},
-    content: {
-      type: [String, Object] as PropType<string | number | boolean | VNode | VNodeArrayChildren>,
-      required: false,
-    },
-    flipH: {type: Boolean, default: false},
-    flipV: {type: Boolean, default: false},
-    fontScale: {type: [Number, String], default: 1},
-    rotate: {
-      type: [String, Number],
-      required: false,
-      validator: (value: string | number) => value >= -360 && value <= 360,
-    },
-    scale: {type: [Number, String], default: 1},
-    shiftH: {type: [Number, String], default: 0},
-    shiftV: {type: [Number, String], default: 0},
-    size: {type: String as PropType<IconSize>, required: false},
-    stacked: {type: Boolean, default: false},
-    title: {type: String, required: false},
-    variant: {type: String as PropType<TextColorVariant>, required: false},
+interface Props {
+  animation?: Animation
+  class?: Array<unknown> | Record<string, unknown> | string
+  flipH?: boolean
+  flipV?: boolean
+  fontScale?: number | string
+  rotate?: string | number
+  scale?: number | string
+  shiftH?: number | string
+  shiftV?: number | string
+  size?: IconSize
+  stacked?: boolean
+  title?: string
+  variant?: TextColorVariant
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  flipH: false,
+  flipV: false,
+  fontScale: 1,
+  scale: 1,
+  shiftH: 0,
+  shiftV: 0,
+  stacked: false,
+})
+
+const computedFontScale = computed(() => Math.max(toFloat(props.fontScale, 1), 0) || 1)
+const computedScale = computed(() => Math.max(toFloat(props.scale, 1), 0) || 1)
+const computedShiftH = computed(() => toFloat(props.shiftH, 0))
+const computedShiftV = computed(() => toFloat(props.shiftV, 0))
+
+const hasScale = computed(() => props.flipH || props.flipV || computedScale.value !== 1)
+const hasShift = computed(() => computedShiftH.value || computedShiftV.value)
+const hasTransforms = computed(() => hasScale.value || props.rotate)
+
+const transforms = computed(() =>
+  [
+    hasTransforms.value ? 'translate(8 8)' : null,
+    hasTransforms.value ? 'translate(-8 -8)' : null,
+    hasScale.value
+      ? `scale(${(props.flipH ? -1 : 1) * computedScale.value} ${
+          (props.flipV ? -1 : 1) * computedScale.value
+        })`
+      : null,
+    props.rotate ? `rotate(${props.rotate})` : null,
+  ].filter((p) => p)
+)
+
+const computedClasses = computed(() => [
+  'bootstrap-icon',
+  props.class,
+  {
+    [`bootstrap-icon--variant-${props.variant}`]: props.variant !== undefined,
+    [`bootstrap-icon--size-${props.size}`]: props.size !== undefined,
+    [`bootstrap-icon--animation-${props.animation}`]: props.animation !== undefined,
   },
-  setup(props, {slots}) {
-    const computedFontScale = computed(() => Math.max(toFloat(props.fontScale, 1), 0) || 1)
-    const computedScale = computed(() => Math.max(toFloat(props.scale, 1), 0) || 1)
-    const computedShiftH = computed(() => toFloat(props.shiftH, 0))
-    const computedShiftV = computed(() => toFloat(props.shiftV, 0))
+])
 
-    const hasScale = computed(() => props.flipH || props.flipV || computedScale.value !== 1)
-    const hasShift = computed(() => computedShiftH.value || computedShiftV.value)
-    const hasContent = computed(() => props.content !== null && props.content !== undefined)
-    const hasTransforms = computed(() => hasScale.value || props.rotate)
+const computedTranslatedShift = computed(
+  () => `translate(${computedShiftH.value} ${-1 * computedShiftV.value})`
+)
 
-    const transforms = computed(() =>
-      [
-        hasTransforms.value ? 'translate(8 8)' : null,
-        hasScale.value
-          ? `scale(${(props.flipH ? -1 : 1) * computedScale.value} ${
-              (props.flipV ? -1 : 1) * computedScale.value
-            })`
-          : null,
-        props.rotate ? `rotate(${props.rotate})` : null,
-        hasTransforms.value ? 'translate(-8 -8)' : null,
-      ].filter((p) => p)
-    )
+const computedStyle = computed(() => ({
+  'font-size':
+    !props.stacked || computedFontScale.value === 1
+      ? undefined
+      : `${computedFontScale.value * 100}%`,
+}))
 
-    const cssClasses = computed((): string[] => {
-      const classes = []
-
-      if (props.variant) classes.push(`bootstrap-icon--variant-${props.variant}`)
-      if (props.size) classes.push(`bootstrap-icon--size-${props.size}`)
-      if (props.animation) classes.push(`bootstrap-icon--animation-${props.animation}`)
-
-      return classes
-    })
-
-    let baseAttrs: any = {
-      viewBox: '0 0 16 16',
-      // 'width': '1em',
-      // 'height': '1em',
-      // 'focusable': 'false',
-      // 'role': 'img',
-      // 'aria-label': 'icon',
-      // 'xmlns': 'http://www.w3.org/2000/svg',
-    }
-
-    if (!props.stacked) {
-      baseAttrs = {
+const computedAttrs = computed(() => {
+  const baseAttrs = {
+    viewBox: '0 0 16 16',
+    // 'width': '1em',
+    // 'height': '1em',
+    // 'focusable': 'false',
+    // 'role': 'img',
+    // 'aria-label': 'icon',
+    // 'xmlns': 'http://www.w3.org/2000/svg',
+  }
+  return !props.stacked
+    ? {
         ...baseAttrs,
         'width': '1em',
         'height': '1em',
@@ -84,56 +129,8 @@ export default /* #__PURE__ */ defineComponent({
         'aria-label': 'icon',
         'xmlns': 'http://www.w3.org/2000/svg',
       }
-    }
-
-    const svgTransform = computed((): string | undefined => transforms.value.join(' ') || undefined)
-
-    return () => {
-      let $inner = h(
-        'g',
-        {
-          transform: svgTransform.value,
-          innerHTML: hasContent.value ? props.content || '' : {},
-        },
-        [normalizeSlot('default', {}, slots)]
-      )
-
-      // If needed, we wrap in an additional `<g>` in order to handle the shifting
-      if (hasShift.value) {
-        $inner = h(
-          'g',
-          {
-            transform: `translate(${(16 * computedShiftH.value) / 16} ${
-              (-16 * computedShiftV.value) / 16
-            })`,
-          },
-          [$inner]
-        )
-      }
-
-      // Wrap in an additional `<g>` for proper animation handling if stacked
-      if (props.stacked) {
-        $inner = h('g', [$inner])
-      }
-
-      const $title = props.title ? h('title', props.title) : null
-      const $content = [$title, $inner].filter((p) => p)
-
-      return h(
-        'svg',
-        {
-          class: ['bootstrap-icon', cssClasses.value, props.class],
-          ...baseAttrs,
-          style: props.stacked
-            ? {}
-            : {
-                'font-size':
-                  computedFontScale.value === 1 ? null : `${computedFontScale.value * 100}%`,
-              },
-        },
-        $content
-      )
-    }
-  },
+    : baseAttrs
 })
+
+const svgTransform = computed(() => transforms.value.join(' ') || undefined)
 </script>

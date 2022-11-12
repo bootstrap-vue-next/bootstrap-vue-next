@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.4.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.7...v0.4.8) (2022-11-12)
+
+
+### Features
+
+* **BPagination:** Extend justify content types for between, around and evenly ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+* refactor icons ([76baf45](https://github.com/cdmoro/bootstrap-vue-3/commit/76baf45c60e7a6782ddfa97b18c8634dee1f62f7))
+
+
+### Bug Fixes
+
+* **BCard:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+* **BNavbarNav:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+* **BNav:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+* **BPagination:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+* **BRow:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+* **BTabs:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+* **BTooltip:** Error toString if value is undefined. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+
+
+### Reverts
+
+* **BContainer:** revert to fix usage with toast ([818865c](https://github.com/cdmoro/bootstrap-vue-3/commit/818865cdf32de1a68342ded7674b96fdd81252db))
+
+## [0.4.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.6...v0.4.7) (2022-11-10)
+
+
+### Features
+
+* add the ability to extend certain built in types ([4bd4bee](https://github.com/cdmoro/bootstrap-vue-3/commit/4bd4beefddfba524be31e77c7078340ea85f08b0))
+
+
+### Bug Fixes
+
+* **BModal:** moved the modal's css props to global style file to fix modal not showing up & backdrop not appearing correctly in some cases ([c20da57](https://github.com/cdmoro/bootstrap-vue-3/commit/c20da573595b02bdae74177b2c60a274f5f24427))
+
 ## [0.4.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.5...v0.4.6) (2022-11-04)
 
 

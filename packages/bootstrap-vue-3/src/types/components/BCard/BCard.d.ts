@@ -1,7 +1,7 @@
 import type {Alignment, ColorVariant, TextColorVariant} from '../..'
 // Props
 export interface Props {
-  align?: Alignment
+  align?: Alignment.TextHorizontal
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
   bodyClass?: Array<unknown> | Record<string, unknown> | string

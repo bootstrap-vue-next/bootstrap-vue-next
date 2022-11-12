@@ -3,7 +3,7 @@ import type {Alignment} from '../..'
 export interface Props {
   activeNavItemClass?: Array<unknown> | Record<string, unknown> | string
   activeTabClass?: Array<unknown> | Record<string, unknown> | string
-  align?: Alignment
+  align?: Alignment.Horizontal
   card?: boolean
   contentClass?: Array<unknown> | Record<string, unknown> | string
   end?: boolean

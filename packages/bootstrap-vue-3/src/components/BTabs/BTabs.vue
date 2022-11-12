@@ -76,13 +76,13 @@
 import type {BTabsParentData} from '../../types/components'
 import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
 import {BvEvent, getId} from '../../utils'
-import {useBooleanish} from '../../composables'
+import {useAlignment, useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
 
 interface BTabsProps {
   activeNavItemClass?: ClassValue
   activeTabClass?: ClassValue
-  align?: Alignment
+  align?: Alignment.JustifyContent
   card?: Booleanish
   contentClass?: ClassValue
   end?: Booleanish
@@ -205,10 +205,12 @@ const computedClasses = computed(() => ({
   'align-items-start': verticalBoolean.value,
 }))
 
+const alignment = useAlignment(toRef(props, 'align'))
+
 const navTabsClasses = computed(() => ({
   'nav-pills': pillsBoolean.value,
   'flex-column me-3': verticalBoolean.value,
-  [`justify-content-${props.align}`]: props.align !== undefined,
+  [alignment.value]: props.align !== undefined,
   'nav-fill': fillBoolean.value,
   'card-header-tabs': cardBoolean.value,
   'nav-justified': justifiedBoolean.value,
