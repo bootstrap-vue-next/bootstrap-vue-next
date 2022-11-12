@@ -17,12 +17,12 @@ describe('tbody', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('has class thead-{type} when prop variant', async () => {
+  it('has class table-{type} when prop variant', async () => {
     const wrapper = mount(BTbody, {
       props: {variant: 'primary'},
     })
-    expect(wrapper.classes()).toContain('thead-primary')
+    expect(wrapper.classes()).toContain('table-primary')
     await wrapper.setProps({variant: undefined})
-    expect(wrapper.classes()).not.toContain('thead-primary')
+    expect(wrapper.classes()).not.toContain('table-primary')
   })
 })
