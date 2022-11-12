@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, BgColorVariant} from '../../types'
+import type {BgColorVariant, Booleanish} from '../../types'
 import type {BProgressParentData} from '../../types/components'
 import {useBooleanish} from '../../composables'
 import {computed, inject, toRef} from 'vue'

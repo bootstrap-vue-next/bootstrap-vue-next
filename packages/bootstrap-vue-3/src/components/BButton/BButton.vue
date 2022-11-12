@@ -50,7 +50,7 @@ export default defineComponent({
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     title: {type: String, default: undefined},
     type: {type: String as PropType<ButtonType>, default: 'button'},
-    variant: {type: String as PropType<ButtonVariant | undefined>, default: "secondary" },
+    variant: {type: String as PropType<ButtonVariant | undefined>, default: 'secondary'},
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
@@ -62,18 +62,20 @@ export default defineComponent({
     const loadingBoolean = useBooleanish(toRef(props, 'loading'))
 
     const isToggle = computed<boolean>(() => pressedBoolean.value === true)
-    const isButton = computed<boolean>(() => props.tag === 'button' && props.href === undefined && !props.to)
+    const isButton = computed<boolean>(
+      () => props.tag === 'button' && props.href === undefined && !props.to
+    )
     const computedLink = computed<boolean>(() => isLink(props))
     const isBLink = computed<boolean>(() => !!props.to)
     const nonStandardTag = computed<boolean>(() => !props.href && !isButton.value)
 
     const computedClasses = computed(() => ({
-        [`btn-${props.size}`]: !!props.size,
-        [`btn-${props.variant}`]: !!props.variant,
-        'active': activeBoolean.value || pressedBoolean.value,
-        'rounded-pill': pillBoolean.value,
-        'rounded-0': squaredBoolean.value,
-        'disabled': disabledBoolean.value,
+      [`btn-${props.size}`]: !!props.size,
+      [`btn-${props.variant}`]: !!props.variant,
+      'active': activeBoolean.value || pressedBoolean.value,
+      'rounded-pill': pillBoolean.value,
+      'rounded-0': squaredBoolean.value,
+      'disabled': disabledBoolean.value,
     }))
 
     const computedAttrs = computed(() => ({

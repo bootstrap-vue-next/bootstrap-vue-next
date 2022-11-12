@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
-import type {Booleanish, BasicColorVariant} from '../types'
+import type {BasicColorVariant, Booleanish} from '../types'
 import {computed, onBeforeUnmount, ref, toRef, useSlots, watch} from 'vue'
 import {Alert} from 'bootstrap'
 import {isEmptySlot, toInteger} from '../utils'

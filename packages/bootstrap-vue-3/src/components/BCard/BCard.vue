@@ -37,7 +37,14 @@
 
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
-import type {Alignment, BgColorVariant, Booleanish, BorderColorVariant, ClassValue, TextColorVariant} from '../../types'
+import type {
+  Alignment,
+  BgColorVariant,
+  Booleanish,
+  BorderColorVariant,
+  ClassValue,
+  TextColorVariant,
+} from '../../types'
 import {computed, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'

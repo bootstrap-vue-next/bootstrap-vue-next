@@ -29,7 +29,13 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {BgColorVariant, Booleanish, RoundedTypes, SpinnerType, TextColorVariant} from '../../types'
+import type {
+  BgColorVariant,
+  Booleanish,
+  RoundedTypes,
+  SpinnerType,
+  TextColorVariant,
+} from '../../types'
 import {useBooleanish} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
@@ -89,7 +95,7 @@ const spinnerSmallBoolean = useBooleanish(toRef(props, 'spinnerSmall'))
 const computedRounded = computed(() =>
   props.rounded === true || props.rounded === ''
     ? 'rounded'
-    : (props.rounded === false || typeof props.rounded === "undefined")
+    : props.rounded === false || typeof props.rounded === 'undefined'
     ? ''
     : `rounded-${props.rounded}`
 )

@@ -124,10 +124,10 @@ import {
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId} from '../../composables'
 import type {
+  BgColorVariant,
   Booleanish,
   ButtonVariant,
   ClassValue,
-  BgColorVariant,
   InputSize,
   InputType,
 } from '../../types'

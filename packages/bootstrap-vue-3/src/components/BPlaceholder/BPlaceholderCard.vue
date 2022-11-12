@@ -32,7 +32,13 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {BgColorVariant, Booleanish, ButtonVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {
+  BgColorVariant,
+  Booleanish,
+  ButtonVariant,
+  PlaceholderAnimation,
+  PlaceholderSize,
+} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
@@ -82,17 +88,17 @@ const headerAttrs = computed(() => ({
 }))
 
 const footerAttrs = computed(() => ({
-    width: props.footerWidth,
-    animation: props.footerAnimation,
-    size: noButtonBoolean.value ? props.footerSize : undefined,
-    variant: props.footerVariant as BgColorVariant,
+  width: props.footerWidth,
+  animation: props.footerAnimation,
+  size: noButtonBoolean.value ? props.footerSize : undefined,
+  variant: props.footerVariant as BgColorVariant,
 }))
 
 const footerButtonAttrs = computed(() => ({
-    width: props.footerWidth,
-    animation: props.footerAnimation,
-    size: noButtonBoolean.value ? props.footerSize : undefined,
-    variant: props.footerVariant as ButtonVariant,
+  width: props.footerWidth,
+  animation: props.footerAnimation,
+  size: noButtonBoolean.value ? props.footerSize : undefined,
+  variant: props.footerVariant as ButtonVariant,
 }))
 
 const imgAttrs = computed(() => ({

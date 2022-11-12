@@ -146,7 +146,9 @@ const computedClasses = computed(() => ({
   'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
   'w-100': fluidGrowBoolean.value,
   'rounded': props.rounded === '' || props.rounded === true,
-  [`rounded-${props.rounded}`]: typeof props.rounded !== "undefined" && !(props.rounded === true || props.rounded === false || props.rounded === ''),
+  [`rounded-${props.rounded}`]:
+    typeof props.rounded !== 'undefined' &&
+    !(props.rounded === true || props.rounded === false || props.rounded === ''),
   [`${alignment.value}`]: alignment.value !== undefined,
   'd-block': blockBoolean.value || centerBoolean.value,
 }))

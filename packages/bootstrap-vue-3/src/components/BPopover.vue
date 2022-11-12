@@ -1,11 +1,5 @@
 <template>
-  <div
-    :id="id"
-    ref="element"
-    class="popover b-popover"
-    role="tooltip"
-    tabindex="-1"
-  >
+  <div :id="id" ref="element" class="popover b-popover" role="tooltip" tabindex="-1">
     <div ref="titleRef">
       <slot name="title">
         {{ title }}
