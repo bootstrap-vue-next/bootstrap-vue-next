@@ -11,7 +11,7 @@ const getClasses = (items: {
   button?: boolean
   inline?: boolean
   switch?: boolean
-  size?: InputSize
+  size?: InputSize | null
 }) =>
   computed(() => ({
     'form-check': !items.plain && !items.button,
@@ -39,8 +39,8 @@ const getInputClasses = (items: {plain?: boolean; button?: boolean; state?: bool
 const getLabelClasses = (items: {
   plain?: boolean
   button?: boolean
-  buttonVariant?: ButtonVariant
-  size?: InputSize
+  buttonVariant?: ButtonVariant | null
+  size?: InputSize | null
 }) =>
   computed(() => ({
     'form-check-label': !items.plain && !items.button,

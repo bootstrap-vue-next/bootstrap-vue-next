@@ -48,10 +48,10 @@ interface BFormCheckboxProps {
   button?: Booleanish
   switch?: Booleanish
   disabled?: Booleanish
-  buttonVariant?: ButtonVariant | undefined
+  buttonVariant?: ButtonVariant | null
   inline?: Booleanish
   required?: Booleanish
-  size?: InputSize | undefined
+  size?: InputSize | null
   state?: Booleanish
   uncheckedValue?:
     | Array<unknown>

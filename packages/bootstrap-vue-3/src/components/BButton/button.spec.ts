@@ -81,7 +81,7 @@ describe('button', () => {
 
   it('has not class btn-{type} when prop variant is undefined', async () => {
     const wrapper = mount(BButton, {
-      props: {variant: undefined},
+      props: {variant: null},
     })
     expect(wrapper.classes()).not.toContain('btn-secondary')
     await wrapper.setProps({variant: 'secondary'})

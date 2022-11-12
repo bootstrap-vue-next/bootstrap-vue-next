@@ -140,7 +140,7 @@ interface BModalProps {
   buttonSize?: InputSize
   cancelDisabled?: Booleanish
   cancelTitle?: string
-  cancelVariant?: ButtonVariant | undefined
+  cancelVariant?: ButtonVariant | null
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
@@ -169,7 +169,7 @@ interface BModalProps {
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
-  okVariant?: ButtonVariant | undefined
+  okVariant?: ButtonVariant | null
   scrollable?: Booleanish
   show?: Booleanish
   size?: 'sm' | 'lg' | 'xl'

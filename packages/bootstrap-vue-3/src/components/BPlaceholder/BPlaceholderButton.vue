@@ -11,7 +11,7 @@ interface Props {
   tag?: string
   width?: string | number
   cols?: string | number
-  variant?: ButtonVariant | undefined
+  variant?: ButtonVariant | null
   animation?: PlaceholderAnimation
 }
 

@@ -18,7 +18,7 @@ export default defineComponent({
   props: {
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'span'},
-    variant: {type: String as PropType<BgColorVariant | undefined>, default: 'secondary'},
+    variant: {type: String as PropType<BgColorVariant | null>, default: 'secondary'},
     textIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     dotIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     ...linkProps,

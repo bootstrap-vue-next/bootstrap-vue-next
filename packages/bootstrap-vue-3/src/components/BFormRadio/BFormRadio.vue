@@ -48,7 +48,7 @@ interface BFormRadioProps {
   button?: Booleanish
   switch?: Booleanish
   disabled?: Booleanish
-  buttonVariant?: ButtonVariant | undefined
+  buttonVariant?: ButtonVariant | null
   inline?: Booleanish
   required?: Booleanish
   state?: Booleanish

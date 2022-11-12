@@ -3,7 +3,7 @@ import type {TextColorVariant} from '../..'
 export interface Props {
   text?: string
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: TextColorVariant | null
 }
 // Emits
 

@@ -15,7 +15,7 @@
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
-      :white="!textVariantDarkTypes.includes(variant)"
+      :white="!!variant && !textVariantDarkTypes.includes(variant)"
       :aria-describedby="taglabelId"
       :aria-controls="id"
       @click="emit('remove', tagText)"
@@ -39,7 +39,7 @@ interface BFormTagProps {
   pill?: Booleanish
   removeLabel?: string
   tag?: string
-  variant?: BgColorVariant | undefined
+  variant?: BgColorVariant | null
 }
 
 const props = withDefaults(defineProps<BFormTagProps>(), {

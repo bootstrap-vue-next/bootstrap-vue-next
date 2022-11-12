@@ -47,19 +47,19 @@ interface BAvatarProps {
   badgeLeft?: Booleanish
   badgeOffset?: string
   badgeTop?: Booleanish
-  badgeVariant?: BgColorVariant | undefined
-  bgVariant?: BgColorVariant | undefined
+  badgeVariant?: BgColorVariant | null
+  bgVariant?: BgColorVariant | null
   button?: Booleanish
   buttonType?: ButtonType
   disabled?: Booleanish
   icon?: string
-  rounded?: RoundedTypes.RoundedTypesAll | undefined
+  rounded?: RoundedTypes.RoundedTypesAll | null
   size?: InputSize // InputSize | string
   square?: Booleanish
   src?: string
   text?: string
   textVariant?: TextColorVariant
-  variant?: ButtonVariant | undefined
+  variant?: ButtonVariant | null
 }
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
@@ -109,13 +109,13 @@ const computedSize = computed<string | null>(() =>
 )
 
 const computedBgVariant = computed<BgColorVariant | undefined>(
-  () => parentData?.bgVariant ?? props.bgVariant
+  () => parentData?.bgVariant || props.bgVariant || undefined
 )
 const computedVariant = computed<ButtonVariant | undefined>(
-  () => parentData?.variant ?? props.variant
+  () => parentData?.variant || props.variant || undefined
 )
 const computedRounded = computed<RoundedTypes.RoundedTypesAll | undefined>(
-  () => parentData?.rounded ?? props.rounded
+  () => parentData?.rounded || props.rounded || undefined
 )
 
 const computedAttrs = computed(() => ({

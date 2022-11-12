@@ -1,4 +1,10 @@
-import type {BgColorVariant, BorderColorVariant, ButtonVariant, InputSize, TextColorVariant} from '..'
+import type {
+  BgColorVariant,
+  BorderColorVariant,
+  ButtonVariant,
+  InputSize,
+  TextColorVariant,
+} from '..'
 // Props
 export interface Props {
   bodyBgVariant?: BgColorVariant
@@ -8,7 +14,7 @@ export interface Props {
   buttonSize?: InputSize
   cancelDisabled?: boolean
   cancelTitle?: string
-  cancelVariant?: ButtonVariant
+  cancelVariant?: ButtonVariant | null
   centered?: boolean
   contentClass?: string
   dialogClass?: string
@@ -37,7 +43,7 @@ export interface Props {
   okDisabled?: boolean
   okOnly?: boolean
   okTitle?: string
-  okVariant?: ButtonVariant
+  okVariant?: ButtonVariant | null
   scrollable?: boolean
   show?: boolean
   size?: string

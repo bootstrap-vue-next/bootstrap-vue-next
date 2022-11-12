@@ -5,7 +5,7 @@ export interface Props {
   id?: string
   inline?: boolean
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: TextColorVariant | null
 }
 // Emits
 

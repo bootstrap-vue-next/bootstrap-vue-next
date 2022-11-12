@@ -54,7 +54,7 @@ interface Props {
   spinnerSmall?: Booleanish
   spinnerType?: SpinnerType
   spinnerVariant?: TextColorVariant
-  variant?: BgColorVariant | undefined
+  variant?: BgColorVariant | null
   wrapTag?: string
   zIndex?: number | string
 }

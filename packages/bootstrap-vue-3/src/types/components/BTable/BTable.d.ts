@@ -9,12 +9,12 @@ import type {
 } from '../..'
 // Props
 export interface Props {
-  caption?: string
   align?: VerticalAlign
-  borderVariant?: BorderColorVariant
-  captionTop?: boolean
-  borderless?: boolean
   bordered?: boolean
+  borderless?: boolean
+  borderVariant?: BorderColorVariant
+  caption?: string
+  captionTop?: boolean
   dark?: boolean
   fields?: Array<TableField>
   footClone?: boolean
@@ -22,11 +22,11 @@ export interface Props {
   items?: Array<TableItem>
   responsive?: boolean | Breakpoint
   small?: boolean
-  striped?: boolean
-  variant?: BasicColorVariant
   sortInternal?: boolean
+  striped?: boolean
   selectable?: boolean
   selectMode?: 'multi' | 'single' | 'range'
+  variant?: BasicColorVariant | null
 }
 // Emits
 

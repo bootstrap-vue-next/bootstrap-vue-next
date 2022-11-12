@@ -2,7 +2,7 @@ import type {BgColorVariant, ButtonVariant, InputSize, InputType} from '../..'
 // Props
 export interface Props {
   addButtonText?: string
-  addButtonVariant?: ButtonVariant
+  addButtonVariant?: ButtonVariant | null
   addOnChange?: boolean
   autofocus?: boolean
   disabled?: boolean
@@ -31,7 +31,7 @@ export interface Props {
   tagRemoveLabel?: string
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
-  tagVariant?: BgColorVariant
+  tagVariant?: BgColorVariant | null
 }
 // Emits
 export interface Emits {

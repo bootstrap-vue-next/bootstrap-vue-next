@@ -27,7 +27,7 @@ export interface Props {
   splitHref?: string
   noCaret?: boolean
   toggleText?: string
-  variant?: ButtonVariant
+  variant?: ButtonVariant | null
 }
 // Emits
 export interface Emits {

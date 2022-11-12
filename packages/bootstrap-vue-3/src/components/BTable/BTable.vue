@@ -211,7 +211,7 @@ interface BTableProps {
   captionTop?: Booleanish
   borderless?: Booleanish
   bordered?: Booleanish
-  borderVariant?: BorderColorVariant | undefined
+  borderVariant?: BorderColorVariant
   dark?: Booleanish
   fields?: Array<TableField>
   footClone?: Booleanish
@@ -228,7 +228,7 @@ interface BTableProps {
   striped?: Booleanish
   stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
   labelStacked?: boolean
-  variant?: BasicColorVariant | undefined
+  variant?: BasicColorVariant | null
   sortBy?: string
   sortDesc?: Booleanish
   sortInternal?: Booleanish
@@ -236,7 +236,7 @@ interface BTableProps {
   stickySelect?: Booleanish
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
-  selectionVariant?: BasicColorVariant | undefined
+  selectionVariant?: BasicColorVariant | null
   stickyHeader?: Booleanish
   busy?: Booleanish
   showEmpty?: Booleanish

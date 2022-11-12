@@ -3,7 +3,7 @@ import type {BasicColorVariant, BorderColorVariant, Breakpoint} from '../..'
 export interface Props {
   borderVariant?: BorderColorVariant
   tableClass?: Array<unknown> | Record<string, unknown> | string
-  tableVariant?: BasicColorVariant
+  tableVariant?: BasicColorVariant | null
   bordered?: boolean
   borderless?: boolean
   captionTop?: boolean

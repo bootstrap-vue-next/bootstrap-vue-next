@@ -12,10 +12,10 @@ export interface Props {
   button?: boolean
   switch?: boolean
   disabled?: boolean
-  buttonVariant?: ButtonVariant
+  buttonVariant?: ButtonVariant | null
   inline?: boolean
   required?: boolean
-  size?: InputSize
+  size?: InputSize | null
   state?: boolean
   uncheckedValue?: Array<unknown> | Set<unknown> | boolean
   value?: Array<unknown> | Set<unknown> | boolean

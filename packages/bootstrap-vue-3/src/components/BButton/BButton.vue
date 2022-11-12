@@ -50,7 +50,7 @@ export default defineComponent({
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     title: {type: String, default: undefined},
     type: {type: String as PropType<ButtonType>, default: 'button'},
-    variant: {type: String as PropType<ButtonVariant | undefined>, default: 'secondary'},
+    variant: {type: String as PropType<ButtonVariant | null>, default: 'secondary'},
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {

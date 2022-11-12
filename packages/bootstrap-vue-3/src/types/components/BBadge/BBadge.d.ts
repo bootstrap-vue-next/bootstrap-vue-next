@@ -4,7 +4,7 @@ import type {BLinkProps} from '..'
 export interface Props extends Omit<BLinkProps, 'event' | 'routerTag'> {
   pill?: boolean
   tag?: string
-  variant?: BgColorVariant
+  variant?: BgColorVariant | null
   textIndicator?: boolean
   dotIndicator?: boolean
 }

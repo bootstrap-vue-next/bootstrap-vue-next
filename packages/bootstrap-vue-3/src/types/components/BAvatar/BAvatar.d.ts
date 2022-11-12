@@ -1,3 +1,4 @@
+import {RoundedTypes} from '../..'
 import type {BgColorVariant, ButtonVariant, InputSize, TextColorVariant} from '../..'
 
 // Props
@@ -8,19 +9,19 @@ export interface Props {
   badgeLeft?: boolean
   badgeOffset?: string
   badgeTop?: boolean
-  badgeVariant?: BgColorVariant
-  bgVariant?: BgColorVariant
+  badgeVariant?: BgColorVariant | null
+  bgVariant?: BgColorVariant | null
   button?: boolean
   buttonType?: string
   disabled?: boolean
   icon?: string
-  rounded?: boolean | string
+  rounded?: RoundedTypes.RoundedTypesAll | null
   size?: InputSize | string | number
   square?: boolean
   src?: string
   text?: string
   textVariant?: TextColorVariant // not standard BootstrapVue props
-  variant?: ButtonVariant
+  variant?: ButtonVariant | null
 }
 // Emits
 export interface Emits {

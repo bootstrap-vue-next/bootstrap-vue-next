@@ -43,7 +43,7 @@ interface BFormRadioGroupProps {
   modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
-  buttonVariant?: ButtonVariant | undefined
+  buttonVariant?: ButtonVariant | null
   buttons?: Booleanish
   disabled?: Booleanish
   disabledField?: string

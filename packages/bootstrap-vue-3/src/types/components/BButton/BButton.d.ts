@@ -13,7 +13,7 @@ export interface Props extends BLinkProps {
   tag?: string
   target?: LinkTarget
   type?: string
-  variant?: ButtonVariant
+  variant?: ButtonVariant | null
 }
 // Emits
 export interface Emits {

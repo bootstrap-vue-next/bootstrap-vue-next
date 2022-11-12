@@ -17,7 +17,7 @@ interface BFormTextProps {
   inline?: Booleanish
   tag?: string
   text?: string
-  textVariant?: TextColorVariant | undefined
+  textVariant?: TextColorVariant | null
 }
 
 const props = withDefaults(defineProps<BFormTextProps>(), {

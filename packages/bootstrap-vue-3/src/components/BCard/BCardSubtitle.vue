@@ -14,7 +14,7 @@ import {computed} from 'vue'
 interface BCardSubtitleProps {
   text?: string
   tag?: string
-  textVariant?: TextColorVariant | undefined
+  textVariant?: TextColorVariant | null
 }
 
 const props = withDefaults(defineProps<BCardSubtitleProps>(), {

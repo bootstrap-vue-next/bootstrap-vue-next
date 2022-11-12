@@ -13,7 +13,7 @@ export interface Props {
   button?: boolean
   switch?: boolean
   disabled?: boolean
-  buttonVariant?: ButtonVariant
+  buttonVariant?: ButtonVariant | null
   inline?: boolean
   required?: boolean
   state?: boolean | null

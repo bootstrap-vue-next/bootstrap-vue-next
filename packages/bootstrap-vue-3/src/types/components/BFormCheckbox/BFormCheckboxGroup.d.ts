@@ -6,7 +6,7 @@ export interface Props {
   modelValue?: Array<unknown>
   ariaInvalid?: boolean | string
   autofocus?: boolean
-  buttonVariant?: ButtonVariant
+  buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
   disabledField?: string

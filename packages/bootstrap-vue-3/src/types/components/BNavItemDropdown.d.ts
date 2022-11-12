@@ -15,7 +15,7 @@ export interface Props {
   offsetParent?: boolean
   split?: boolean
   splitVariant?: ButtonVariant
-  variant?: ButtonVariant
+  variant?: ButtonVariant | null
 }
 // Emits
 
