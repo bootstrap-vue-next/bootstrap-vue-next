@@ -16,7 +16,6 @@
 <script lang="ts">
 import {
   ComponentPublicInstance,
-  computed,
   defineComponent,
   nextTick,
   onBeforeUnmount,
