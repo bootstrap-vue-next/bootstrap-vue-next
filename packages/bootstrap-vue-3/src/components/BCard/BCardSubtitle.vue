@@ -8,13 +8,13 @@
 
 <script setup lang="ts">
 // import type {BCardSubtitleProps} from '../../types/components'
-import type {ColorVariant} from '../../types'
+import type {TextColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BCardSubtitleProps {
   text?: string
   tag?: string
-  textVariant?: ColorVariant.TextColorVariant | undefined
+  textVariant?: TextColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BCardSubtitleProps>(), {

@@ -71,11 +71,54 @@ type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 type ButtonType = 'button' | 'submit' | 'reset'
 ```
 
-## ButtonVariant
+## Color variants
+
+### Basic
+
+```ts
+type BasicColorVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'info'
+  | 'light'
+  | 'dark'
+```
+
+### Background
+
+```ts
+export type BgColorVariant =
+    BasicColorVariant
+    | 'body'
+    | 'white'
+    | 'transparent'
+```
+
+### Borders
+
+```ts
+export type BorderColorVariant =
+    BasicColorVariant
+    | 'white'
+
+export type TextColorVariant =
+    BasicColorVariant
+    | 'body'
+    | 'muted'
+    | 'white'
+    | 'black-50'
+    | 'white-50'
+    | 'reset'
+```
+
+### Buttons
 
 ```ts
 type ButtonVariant =
-  | ColorVariant
+  | BasicColorVariant
   | 'link'
   | 'outline-primary'
   | 'outline-secondary'
@@ -87,18 +130,17 @@ type ButtonVariant =
   | 'outline-dark'
 ```
 
-## ColorVariant
+### Text
 
 ```ts
-type ColorVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'danger'
-  | 'warning'
-  | 'info'
-  | 'light'
-  | 'dark'
+export type TextColorVariant =
+    BasicColorVariant
+    | 'body'
+    | 'muted'
+    | 'white'
+    | 'black-50'
+    | 'white-50'
+    | 'reset'
 ```
 
 ## ContainerPosition
@@ -204,8 +246,8 @@ type TableField<T = Record<string, unknown>> = string | TableFieldObject<T>
 
 ```ts
 type TableItem<T = Record<string, unknown>> = T & {
-  _rowVariant?: ColorVariant
-  _cellVariants?: Partial<Record<keyof T, ColorVariant>>
+  _rowVariant?: BasicColorVariant
+  _cellVariants?: Partial<Record<keyof T, BasicColorVariant>>
   _showDetails?: boolean
 }
 ```

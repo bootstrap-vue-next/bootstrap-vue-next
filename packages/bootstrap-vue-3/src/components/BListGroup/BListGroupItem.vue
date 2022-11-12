@@ -18,7 +18,7 @@
 // import type {BListGroupItemProps} from '../../types/components'
 import {computed, inject, toRef, useAttrs} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
-import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
+import type {BasicColorVariant, Booleanish, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 import {injectionKey} from './BListGroup.vue'
@@ -41,7 +41,7 @@ interface BListGroupItemProps {
   tag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-  variant?: ColorVariant.BasicColorVariant
+  variant?: BasicColorVariant
 }
 
 const props = withDefaults(defineProps<BListGroupItemProps>(), {

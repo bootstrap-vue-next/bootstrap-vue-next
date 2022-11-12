@@ -1,4 +1,4 @@
-import type {ColorVariant} from '../..'
+import type {TextColorVariant} from '../..'
 
 // Props
 export interface Props {
@@ -6,7 +6,7 @@ export interface Props {
   active?: boolean
   activeClass?: string
   disabled?: boolean
-  variant?: ColorVariant.TextColorVariant
+  variant?: TextColorVariant
 }
 // Emits
 export interface Emits {

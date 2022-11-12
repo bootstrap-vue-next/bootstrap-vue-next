@@ -1,11 +1,11 @@
-import type {ColorVariant} from '.'
+import type {BasicColorVariant} from '.'
 
 /**
  * @external
  */
 type TableItem<T = Record<string, unknown>> = T & {
-  _rowVariant?: ColorVariant.BasicColorVariant
-  _cellVariants?: Partial<Record<keyof T, ColorVariant>>
+  _rowVariant?: BasicColorVariant
+  _cellVariants?: Partial<Record<keyof T, BasicColorVariant>>
   _showDetails?: boolean
 }
 

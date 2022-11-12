@@ -28,7 +28,7 @@
 import { isEmptySlot, isNumeric, textVariantDarkTypes, toFloat } from "../../utils";
 import type {BAvatarGroupParentData} from '../../types/components'
 import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
-import type {Booleanish, ButtonType, ButtonVariant, ColorVariant, InputSize, RoundedTypes} from '../../types'
+import type {BgColorVariant, Booleanish, ButtonType, ButtonVariant, InputSize, RoundedTypes, TextColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
 import {useBooleanish} from '../../composables'
 
@@ -39,8 +39,8 @@ interface BAvatarProps {
   badgeLeft?: Booleanish
   badgeOffset?: string
   badgeTop?: Booleanish
-  badgeVariant?: ColorVariant.BgColorVariant | undefined
-  bgVariant?: ColorVariant.BgColorVariant | undefined
+  badgeVariant?: BgColorVariant | undefined
+  bgVariant?: BgColorVariant | undefined
   button?: Booleanish
   buttonType?: ButtonType
   disabled?: Booleanish
@@ -50,7 +50,7 @@ interface BAvatarProps {
   square?: Booleanish
   src?: string
   text?: string
-  textVariant?: ColorVariant.TextColorVariant
+  textVariant?: TextColorVariant
   variant?: ButtonVariant | undefined
 }
 
@@ -100,7 +100,7 @@ const computedSize = computed<string | null>(() =>
   parentData?.size ? parentData.size : computeSize(props.size)
 )
 
-const computedBgVariant = computed<ColorVariant.BgColorVariant | undefined>(() => parentData?.bgVariant ?? props.bgVariant)
+const computedBgVariant = computed<BgColorVariant | undefined>(() => parentData?.bgVariant ?? props.bgVariant)
 const computedVariant = computed<ButtonVariant | undefined>(() => parentData?.variant ?? props.variant)
 const computedRounded = computed<RoundedTypes.RoundedTypesAll | undefined>(() => parentData?.rounded ?? props.rounded)
 
@@ -127,7 +127,7 @@ const computedClasses = computed(() => ({
 }))
 
 const textClasses = computed(() => {
-    let textVariant: ColorVariant.TextColorVariant | undefined
+    let textVariant: TextColorVariant | undefined
     if (props.textVariant)
         textVariant = props.textVariant
     else if(computedBgVariant.value)
@@ -174,7 +174,7 @@ const computedStyle = computed(() => ({
   height: computedSize.value,
 }))
 
-const computeContrastVariant = (colorVariant: ColorVariant.BgColorVariant): 'dark' | 'light' => textVariantDarkTypes.includes(colorVariant) ? 'dark' : 'light'
+const computeContrastVariant = (colorVariant: BgColorVariant): 'dark' | 'light' => textVariantDarkTypes.includes(colorVariant) ? 'dark' : 'light'
 
 const clicked = (e: MouseEvent): void => {
   if (!disabledBoolean.value && buttonBoolean.value) emit('click', e)

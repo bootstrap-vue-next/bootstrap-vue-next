@@ -14,7 +14,7 @@ import {
 } from 'vue'
 import {isLink, normalizeSlot, requestAF, toInteger} from '../../utils'
 import {useBooleanish} from '../../composables'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {BasicColorVariant, Booleanish} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
@@ -46,7 +46,7 @@ export default defineComponent({
     title: {type: String},
     modelValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     toastClass: {type: Array as PropType<Array<string>>},
-    variant: {type: String as PropType<ColorVariant.BasicColorVariant>},
+    variant: {type: String as PropType<BasicColorVariant>},
   },
   emits: ['destroyed', 'update:modelValue'],
   setup(props, {emit, slots}) {

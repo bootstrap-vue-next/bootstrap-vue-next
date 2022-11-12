@@ -33,7 +33,7 @@
 <script setup lang="ts">
 // import type {BSkeletonTableProps} from '../../types/components'
 import {computed, toRef} from 'vue'
-import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {BgColorVariant, Booleanish, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {useBooleanish} from '../../composables'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
@@ -45,19 +45,19 @@ interface BSkeletonTableProps {
   cellWidth?: string | number
   size?: PlaceholderSize
   animation?: PlaceholderAnimation
-  variant?: ColorVariant.BgColorVariant
+  variant?: BgColorVariant
   headerColumns?: string | number
   hideHeader?: Booleanish
   headerCellWidth?: string | number
   headerSize?: PlaceholderSize
   headerAnimation?: PlaceholderAnimation
-  headerVariant?: ColorVariant.BgColorVariant
+  headerVariant?: BgColorVariant
   footerColumns?: string | number
   showFooter?: Booleanish
   footerCellWidth?: string | number
   footerSize?: PlaceholderSize
   footerAnimation?: PlaceholderAnimation
-  footerVariant?: ColorVariant.BgColorVariant
+  footerVariant?: BgColorVariant
 }
 
 const props = withDefaults(defineProps<BSkeletonTableProps>(), {

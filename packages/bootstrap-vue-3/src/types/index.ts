@@ -14,7 +14,7 @@ export type {
 export type {default as ButtonType} from './ButtonType'
 export type {default as ButtonVariant} from './ButtonVariant'
 export type {default as ClassValue} from './ClassValue'
-export * as ColorVariant from './ColorVariant'
+export * from './ColorVariant'
 export type {ContainerHorizontalAlign, ContainerPosition, ContainerVerticalAlign} from './Container'
 export type {default as InputSize} from './InputSize'
 export type {default as InputType} from './InputType'

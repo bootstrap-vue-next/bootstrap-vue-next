@@ -15,11 +15,11 @@
           },
           {
             "prop": "bgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "bodyBgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "bodyClass",
@@ -31,11 +31,11 @@
           },
           {
             "prop": "bodyTextVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "borderVariant",
-            "type": "ColorVariant.BorderColorVariant"
+            "type": "BorderColorVariant"
           },
           {
             "prop": "footer",
@@ -43,11 +43,11 @@
           },
           {
             "prop": "footerBgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "footerBorderVariant",
-            "type": "ColorVariant.BorderColorVariant"
+            "type": "BorderColorVariant"
           },
           {
             "prop": "footerClass",
@@ -63,7 +63,7 @@
           },
           {
             "prop": "footerTextVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "header",
@@ -71,11 +71,11 @@
           },
           {
             "prop": "headerBgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "headerBorderVariant",
-            "type": "ColorVariant.BorderColorVariant"
+            "type": "BorderColorVariant"
           },
           {
             "prop": "headerClass",
@@ -91,7 +91,7 @@
           },
           {
             "prop": "headerTextVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "imgAlt",
@@ -151,7 +151,7 @@
           },
           {
             "prop": "subtitleTextVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "tag",
@@ -159,7 +159,7 @@
           },
           {
             "prop": "textVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "title",
@@ -204,7 +204,7 @@
         "props": [
           {
             "prop": "bodyBgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "bodyTag",
@@ -212,7 +212,7 @@
           },
           {
             "prop": "bodyTextVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "overlay",
@@ -228,7 +228,7 @@
           },
           {
             "prop": "subtitleTextVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "title",
@@ -266,11 +266,11 @@
           },
           {
             "prop": "bgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "borderVariant",
-            "type": "ColorVariant.BorderColorVariant"
+            "type": "BorderColorVariant"
           },
           {
             "prop": "html",
@@ -282,7 +282,7 @@
           },
           {
             "prop": "textVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           }
         ],
         "slots": [
@@ -328,11 +328,11 @@
           },
           {
             "prop": "bgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "borderVariant",
-            "type": "ColorVariant.BorderColorVariant"
+            "type": "BorderColorVariant"
           },
           {
             "prop": "html",
@@ -344,7 +344,7 @@
           },
           {
             "prop": "textVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           }
         ],
         "slots": [
@@ -420,7 +420,7 @@
           },
           {
             "prop": "textVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           }
         ],
         "slots": []

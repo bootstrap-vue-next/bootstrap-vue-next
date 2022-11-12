@@ -35,11 +35,11 @@
           },
           {
             "prop": "badgeVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "bgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "button",
@@ -79,7 +79,7 @@
           },
           {
             "prop": "textVariant",
-            "type": "ColorVariant.TextColorVariant"
+            "type": "TextColorVariant"
           },
           {
             "prop": "variant",
@@ -128,7 +128,7 @@
         "props": [
           {
             "prop": "bgVariant",
-            "type": "ColorVariant.BgColorVariant"
+            "type": "BgColorVariant"
           },
           {
             "prop": "overlap",

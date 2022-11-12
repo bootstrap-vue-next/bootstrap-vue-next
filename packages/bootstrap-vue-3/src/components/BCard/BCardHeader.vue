@@ -6,16 +6,16 @@
 
 <script setup lang="ts">
 // import type {BCardHeaderProps} from '../../types/components'
-import type {ColorVariant} from '../../types'
+import type {BgColorVariant, BorderColorVariant, TextColorVariant} from '../../types'
 import BCardHeadFoot from './BCardHeadFoot.vue'
 
 interface BCardHeaderProps {
   text?: string
-  bgVariant?: ColorVariant.BgColorVariant
-  borderVariant?: ColorVariant.BorderColorVariant
+  bgVariant?: BgColorVariant
+  borderVariant?: BorderColorVariant
   html?: string
   tag?: string
-  textVariant?: ColorVariant.TextColorVariant
+  textVariant?: TextColorVariant
 }
 
 const props = withDefaults(defineProps<BCardHeaderProps>(), {

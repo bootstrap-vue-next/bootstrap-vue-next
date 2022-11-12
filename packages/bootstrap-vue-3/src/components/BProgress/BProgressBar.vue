@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, BgColorVariant} from '../../types'
 import type {BProgressParentData} from '../../types/components'
 import {useBooleanish} from '../../composables'
 import {computed, inject, toRef} from 'vue'
@@ -31,7 +31,7 @@ interface Props {
   showValue?: Booleanish
   striped?: Booleanish
   value?: string | number
-  variant?: ColorVariant.BgColorVariant
+  variant?: BgColorVariant
 }
 
 const props = withDefaults(defineProps<Props>(), {

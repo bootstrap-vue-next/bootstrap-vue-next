@@ -63,7 +63,7 @@
           },
           {
             "prop": "variant",
-            "type": "ColorVariant | white | transparent"
+            "type": "BgColorVariant | white | transparent"
           },
           {
             "prop": "wrapTag",

@@ -1,9 +1,9 @@
-import type {Breakpoint, ColorVariant} from '../..'
+import type {BasicColorVariant, BorderColorVariant, Breakpoint} from '../..'
 // Props
 export interface Props {
-  borderVariant?: ColorVariant.BorderColorVariant
+  borderVariant?: BorderColorVariant
   tableClass?: Array<unknown> | Record<string, unknown> | string
-  tableVariant?: ColorVariant.BasicColorVariant
+  tableVariant?: BasicColorVariant
   bordered?: boolean
   borderless?: boolean
   captionTop?: boolean

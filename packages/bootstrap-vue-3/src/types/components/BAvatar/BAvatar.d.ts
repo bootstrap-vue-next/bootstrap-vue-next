@@ -1,4 +1,4 @@
-import type {ButtonVariant, ColorVariant, InputSize} from '../..'
+import type {BgColorVariant, ButtonVariant, InputSize, TextColorVariant} from '../..'
 
 // Props
 export interface Props {
@@ -8,8 +8,8 @@ export interface Props {
   badgeLeft?: boolean
   badgeOffset?: string
   badgeTop?: boolean
-  badgeVariant?: ColorVariant.BgColorVariant
-  bgVariant?: ColorVariant.BgColorVariant
+  badgeVariant?: BgColorVariant
+  bgVariant?: BgColorVariant
   button?: boolean
   buttonType?: string
   disabled?: boolean
@@ -19,7 +19,7 @@ export interface Props {
   square?: boolean
   src?: string
   text?: string
-  textVariant?: ColorVariant.TextColorVariant // not standard BootstrapVue props
+  textVariant?: TextColorVariant // not standard BootstrapVue props
   variant?: ButtonVariant
 }
 // Emits

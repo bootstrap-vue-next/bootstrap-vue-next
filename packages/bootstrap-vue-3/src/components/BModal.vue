@@ -109,8 +109,7 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
-import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
-import ButtonVariant from "../types/ButtonVariant";
+import type {BgColorVariant, Booleanish, BorderColorVariant, ButtonVariant, ClassValue, InputSize, TextColorVariant} from '../types'
 import {isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
@@ -125,9 +124,9 @@ import BTransition from './BTransition/BTransition.vue'
 // Implement autofocus props like autoFocusButton
 
 interface BModalProps {
-  bodyBgVariant?: ColorVariant.BgColorVariant
+  bodyBgVariant?: BgColorVariant
   bodyClass?: ClassValue
-  bodyTextVariant?: ColorVariant.TextColorVariant
+  bodyTextVariant?: TextColorVariant
   busy?: Booleanish
   lazy?: Booleanish
   buttonSize?: InputSize
@@ -137,17 +136,17 @@ interface BModalProps {
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
-  footerBgVariant?: ColorVariant.BgColorVariant
-  footerBorderVariant?: ColorVariant.BorderColorVariant
+  footerBgVariant?: BgColorVariant
+  footerBorderVariant?: BorderColorVariant
   footerClass?: ClassValue
-  footerTextVariant?: ColorVariant.TextColorVariant
+  footerTextVariant?: TextColorVariant
   fullscreen?: boolean | string
-  headerBgVariant?: ColorVariant.BgColorVariant
-  headerBorderVariant?: ColorVariant.BorderColorVariant
+  headerBgVariant?: BgColorVariant
+  headerBorderVariant?: BorderColorVariant
   headerClass?: ClassValue
   headerCloseLabel?: string
   headerCloseWhite?: Booleanish
-  headerTextVariant?: ColorVariant.TextColorVariant
+  headerTextVariant?: TextColorVariant
   hideBackdrop?: Booleanish
   hideFooter?: Booleanish
   hideHeader?: Booleanish

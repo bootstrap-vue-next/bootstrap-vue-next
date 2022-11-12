@@ -14,7 +14,7 @@
 <script setup lang="ts">
 // import type {BSpinnerProps} from '../types/components'
 import {computed, toRef, useSlots} from 'vue'
-import type {Booleanish, ColorVariant, SpinnerType} from '../types'
+import type {Booleanish, SpinnerType, TextColorVariant} from '../types'
 import {useBooleanish} from '../composables'
 import {isEmptySlot} from '../utils'
 
@@ -24,7 +24,7 @@ interface BSpinnerProps {
   small?: Booleanish
   tag?: string
   type?: SpinnerType
-  variant?: ColorVariant.TextColorVariant
+  variant?: TextColorVariant
 }
 
 const props = withDefaults(defineProps<BSpinnerProps>(), {

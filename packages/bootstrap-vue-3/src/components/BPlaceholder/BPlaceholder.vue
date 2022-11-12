@@ -4,13 +4,13 @@
 
 <script setup lang="ts">
 import {computed, StyleValue} from 'vue'
-import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {BgColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
 interface Props {
   tag?: string
   width?: string | number
   cols?: string | number
-  variant?: ColorVariant.BgColorVariant
+  variant?: BgColorVariant
   size?: PlaceholderSize
   animation?: PlaceholderAnimation
 }

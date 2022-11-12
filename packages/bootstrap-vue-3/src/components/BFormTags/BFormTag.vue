@@ -27,7 +27,7 @@
 // import type {BFormTagEmits, BFormTagProps} from '../../types/components'
 import {computed, toRef, useSlots, VNodeNormalizedChildren} from 'vue'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {BgColorVariant, Booleanish} from '../../types'
 import {textVariantDarkTypes} from '../../utils'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
@@ -39,7 +39,7 @@ interface BFormTagProps {
   pill?: Booleanish
   removeLabel?: string
   tag?: string
-  variant?: ColorVariant.BgColorVariant | undefined
+  variant?: BgColorVariant | undefined
 }
 
 const props = withDefaults(defineProps<BFormTagProps>(), {
