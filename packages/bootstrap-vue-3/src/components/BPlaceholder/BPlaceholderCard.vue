@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { ButtonVariant } from "../../types";
 import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
