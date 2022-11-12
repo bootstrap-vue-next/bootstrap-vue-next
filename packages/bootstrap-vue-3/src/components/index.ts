@@ -86,6 +86,7 @@ import BSkeletonIcon from './BSkeleton/BSkeletonIcon.vue'
 import BSkeletonTable from './BSkeleton/BSkeletonTable.vue'
 import BSkeletonWrapper from './BSkeleton/BSkeletonWrapper.vue'
 import BSpinner from './BSpinner.vue'
+import BFormSpinButton from './BFormSpinButton/BFormSpinButton.vue'
 import BTable from './BTable/BTable.vue'
 import BTableSimple from './BTable/BTableSimple.vue'
 import BTbody from './BTable/BTbody.vue'
@@ -189,6 +190,7 @@ export default {
   BSkeletonTable,
   BSkeletonWrapper,
   BSpinner,
+  BFormSpinButton,
   BTab,
   BTable,
   BTableSimple,

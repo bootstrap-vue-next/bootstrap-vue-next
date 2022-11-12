@@ -1,5 +1,5 @@
 <script lang="ts">
-import {computed, defineComponent, h, PropType, ref} from 'vue'
+import {computed, defineComponent, h, PropType, ref, Ref} from 'vue'
 import type {Booleanish} from '../../types'
 import {toFloat, toInteger} from '../../utils/number'
 import {isNull} from '../../utils/inspect'
@@ -8,7 +8,7 @@ import {arrayIncludes} from '../../utils/array'
 import {eventOnOff, stopEvent} from '../../utils/event'
 import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
 //TODO alias
-import { BIconPlus, BIconDash } from '../../../../bootstrap-vue-3-icons/src/components/icons/icons'
+import {BIconDash, BIconPlus} from '../../../../bootstrap-vue-3-icons/src/components/icons/icons'
 
 import {
   CODE_DOWN,
@@ -84,9 +84,24 @@ export default defineComponent({
     const spinId = computed(() => 1)
 
     const emitChange = () => {
-      emit('change', props.modelValue)
+      emit('change', localValue.value)
     }
 
+    // due to modelValue being optional we will need to store changes locally
+    const lvalue: Ref<null | number> = ref(null)
+
+    const localValue = computed({
+      get() {
+        return isNull(props.modelValue) ? lvalue.value : props.modelValue
+      },
+      set(newValue) {
+        if (isNull(props.modelValue)) {
+          lvalue.value = newValue
+        } else {
+          emit('update:modelValue', newValue)
+        }
+      },
+    })
     //non reactive properties
     let $_autoDelayTimer: ReturnType<typeof setTimeout> | undefined
     let $_autoRepeatTimer: ReturnType<typeof setTimeout> | undefined
@@ -133,8 +148,8 @@ export default defineComponent({
     const computedMultiplier = computed(() => Math.pow(10, computedPrecision.value || 0))
 
     const valueAsFixed = computed(() => {
-      const value = props.modelValue
-      return isNull(value) ? '' : value.toFixed(computedPrecision.value)
+      const {value} = localValue
+      return value === null ? '' : value.toFixed(computedPrecision.value)
     })
 
     const computedLocale = computed(() => {
@@ -173,34 +188,32 @@ export default defineComponent({
       tabindex: props.disabled ? null : '-1',
       title: props.ariaLabel,
     }))
-    const hasValue = computed(()=>!isNull(props.modelValue))
+    const hasValue = computed(() => !isNull(props.modelValue) || !isNull(lvalue.value))
 
-    const computedSpinAttrs = computed(() => {
-      return {
-        dir : computedRTL.value,
-        spinId: spinId.value,
-        role : 'spinbutton',
-        tabindex: props.disabled ? null : '0',
-        'aria-live': 'off',
-        'aria-label': props.ariaLabel || null,
-        'aria-controls': props.ariaControls || null,
-        'aria-invalid': props.state === false || (!hasValue.value && props.required) ? 'true' : null,
-        'aria-required': props.required ? 'true' : null,
-        'aria-valuemin': computedMin.value,
-        'aria-valuemax': computedMax.value,
-        'aria-valuenow': hasValue.value ? props.modelValue : null,
-        'aria-valuetext': hasValue.value ? computedFormatter.value(props.modelValue) : null
-      }
-    })
-
+    const computedSpinAttrs = computed(() => ({
+      'dir': computedRTL.value,
+      'spinId': spinId.value,
+      'tabindex': props.disabled ? null : '0',
+      'role': 'spinbutton',
+      'aria-live': 'off',
+      'aria-label': props.ariaLabel || null,
+      'aria-controls': props.ariaControls || null,
+      'aria-invalid': props.state === false || (!hasValue.value && props.required) ? 'true' : null,
+      'aria-required': props.required ? 'true' : null,
+      'aria-valuemin': computedMin.value,
+      'aria-valuemax': computedMax.value,
+      'aria-valuenow': localValue.value !== null ? localValue.value : null,
+      'aria-valuetext':
+        localValue.value !== null ? computedFormatter.value(localValue.value) : null,
+    }))
 
     // methods
 
     const stepValue = (direction: number) => {
       // Sets a new incremented or decremented value, supporting optional wrapping
       // Direction is either +1 or -1 (or a multiple thereof)
-      let value = props.modelValue
-      if (!props.disabled && !isNull(value)) {
+      let {value} = localValue
+      if (!props.disabled && value !== null) {
         const step = computedStep.value * direction
         const min = computedMin.value
         const max = computedMax.value
@@ -211,10 +224,8 @@ export default defineComponent({
         // We ensure that precision is maintained (decimals)
         value = Math.round(value * multiplier) / multiplier
         // Handle if wrapping is enabled
-        emit(
-          'update:modelValue',
+        localValue.value =
           value > max ? (wrap ? min : max) : value < min ? (wrap ? max : min) : value
-        )
       }
     }
     const onFocusBlur = (event: FocusEvent) => {
@@ -222,18 +233,15 @@ export default defineComponent({
     }
 
     const stepUp = (multiplier = 1) => {
-      const value = props.modelValue
-      console.log(value)
-      if (isNull(value)) {
-        emit('update:modelValue', computedMin.value)
+      if (isNull(localValue.value)) {
+        localValue.value = computedMin.value
       } else {
         stepValue(+1 * multiplier)
       }
     }
     const stepDown = (multiplier = 1) => {
-      const value = props.modelValue
-      if (isNull(value)) {
-        emit('update:modelValue', props.wrap ? computedMax.value : computedMin.value)
+      if (isNull(localValue.value)) {
+        localValue.value = props.wrap ? computedMax.value : computedMin.value
       } else {
         stepValue(-1 * multiplier)
       }
@@ -243,10 +251,12 @@ export default defineComponent({
       event: (KeyboardEvent & {button: undefined}) | (MouseEvent & {code: undefined})
     ) => {
       const {code, altKey, ctrlKey, metaKey} = event
+
       /* istanbul ignore if */
       if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) {
         return
       }
+
       if (arrayIncludes(KEY_CODES, code)) {
         // https://w3c.github.io/aria-practices/#spinbutton
         stopEvent(event, {propagation: false})
@@ -255,9 +265,11 @@ export default defineComponent({
           // Keypress is already in progress
           return
         }
+
         resetTimers()
         if (arrayIncludes([CODE_UP, CODE_DOWN], code)) {
           // The following use the custom auto-repeat handling
+
           $_keyIsDown = true
           if (code === CODE_UP) {
             handleStepRepeat(event, stepUp)
@@ -271,16 +283,18 @@ export default defineComponent({
           } else if (code === CODE_PAGEDOWN) {
             stepDown(computedStepMultiplier.value)
           } else if (code === CODE_HOME) {
-            emit('update:modelValue', computedMin.value)
+            localValue.value = computedMin.value
           } else if (code === CODE_END) {
-            emit('update:modelValue', computedMax.value)
+            localValue.value = computedMax.value
           }
         }
       }
     }
     const onKeyup = (event: KeyboardEvent) => {
       // Emit a change event when the keyup happens
+
       const {code, altKey, ctrlKey, metaKey} = event
+
       /* istanbul ignore if */
       if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) {
         return
@@ -294,19 +308,17 @@ export default defineComponent({
     }
 
     // takes in a mount or Keyboard Event
-    const handleStepRepeat = (
-      event: Event ,
-      stepper: (step: number) => void
-    ) => {
+    const handleStepRepeat = (event: Event, stepper: (step: number) => void) => {
       const {type} = event || {}
+
       if (!props.disabled && !props.readonly) {
         /* istanbul ignore if */
-      if (isMouseEvent(event)){
-        if (type === 'mousedown' && event.button) {
-          // We only respond to left (main === 0) button clicks
-          return
+        if (isMouseEvent(event)) {
+          if (type === 'mousedown' && event.button) {
+            // We only respond to left (main === 0) button clicks
+            return
+          }
         }
-      }
         resetTimers()
         // Step the counter initially
         stepper(1)
@@ -333,20 +345,18 @@ export default defineComponent({
     function isMouseEvent(evt: Event): evt is MouseEvent {
       return evt.type === 'mouseup' || evt.type === 'mousedown'
     }
-
-    const onMouseup: EventListener  = (event: Event) => {
+    // eslint-disable-next-line no-undef
+    const onMouseup: EventListener = (event: Event) => {
       // `<body>` listener, only enabled when mousedown starts
-      
-      
 
       /* istanbul ignore if */
-      if (isMouseEvent(event)){
+      if (isMouseEvent(event)) {
         if (event.type === 'mouseup' && event.button) {
           // Ignore non left button (main === 0) mouse button click
           return
         }
       }
-      
+
       stopEvent(event, {propagation: false})
       resetTimers()
       setMouseup(false)
@@ -423,67 +433,71 @@ export default defineComponent({
       )
     }
     return () => {
-    //component definitions
-    const $increment = makeButton(
-      stepUp,
-      props.labelIncrement,
-      BIconPlus,
-      'inc',
-      'ArrowUp',
-      false,
-      'increment'
-    )
-    const $decrement = makeButton(
-      stepDown,
-      props.labelDecrement,
-      BIconDash,
-      'dec',
-      'ArrowDown', 
-      false,
-      'decrement'
-    )
-
-    const $hidden = []
-
-    if (props.name && !props.disabled) {
-      $hidden.push(
-        h('input', {
-          type: 'hidden',
-          name: props.name,
-          form: props.form || null,
-          // TODO: Should this be set to '' if value is out of range?
-          value: valueAsFixed.value,
-          key: 'hidden',
-        })
+      //component definitions
+      const $increment = makeButton(
+        stepUp,
+        props.labelIncrement,
+        BIconPlus,
+        'inc',
+        'ArrowUp',
+        false,
+        'increment'
       )
-    }
+      const $decrement = makeButton(
+        stepDown,
+        props.labelDecrement,
+        BIconDash,
+        'dec',
+        'ArrowDown',
+        false,
+        'decrement'
+      )
 
+      const $hidden = []
 
-    const $spin = h(
-      // We use 'output' element to make this accept a `<label for="id">` (Except IE)
-      'output',
-      {
-        class: [
-          {'d-flex': props.vertical},
-          {'align-self-center': !props.vertical},
-          {'align-items-center': props.vertical},
-          {'border-top': props.vertical},
-          {'border-bottom': props.vertical},
-          {'border-left': !props.vertical},
-          {'border-right': !props.vertical},
-          'flex-grow-1',
-        ],
-        ...computedSpinAttrs.value,
-        key: 'output',
-        // ref: 'spinner',
-      },
-      [h('bdi', hasValue ? computedFormatter.value(props.modelValue) : props.placeholder || '')]
-    )
+      if (props.name && !props.disabled) {
+        $hidden.push(
+          h('input', {
+            type: 'hidden',
+            name: props.name,
+            form: props.form || null,
+            // TODO: Should this be set to '' if value is out of range?
+            value: valueAsFixed.value,
+            key: 'hidden',
+          })
+        )
+      }
+
+      const $spin = h(
+        // We use 'output' element to make this accept a `<label for="id">` (Except IE)
+        'output',
+        {
+          class: [
+            {'d-flex': props.vertical},
+            {'align-self-center': !props.vertical},
+            {'align-items-center': props.vertical},
+            {'border-top': props.vertical},
+            {'border-bottom': props.vertical},
+            {'border-left': !props.vertical},
+            {'border-right': !props.vertical},
+            'flex-grow-1',
+          ],
+          ...computedSpinAttrs.value,
+          key: 'output',
+          // ref: 'spinner',
+        },
+        [
+          h(
+            'bdi',
+            localValue.value ? computedFormatter.value(localValue.value) : props.placeholder || ''
+          ),
+        ]
+      )
 
       return h(
         'div',
         {
-          'class': [
+          class: [
             'b-form-spinbutton form-control',
             {disabled: props.disabled},
             {readonly: props.readonly},
@@ -495,12 +509,12 @@ export default defineComponent({
             // sizeFormClass,
             // this.stateClass
           ],
-          // ...computedAttrs,
-          'onkeydown': onKeydown,
-          'onkeyup': onKeyup,
+          ...computedAttrs.value,
+          onkeydown: onKeydown,
+          onkeyup: onKeyup,
           // We use capture phase (`!` prefix) since focus and blur do not bubble
-          // '!focus': onFocusBlur,
-          // '!blur': onFocusBlur,
+          // 'focus': onFocusBlur,
+          // 'blur': onFocusBlur,
         },
         props.vertical
           ? [$increment, $hidden, $spin, $decrement]
