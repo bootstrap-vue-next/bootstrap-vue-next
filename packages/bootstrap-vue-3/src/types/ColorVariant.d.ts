@@ -1,28 +1,49 @@
-export type BasicColorVariant =
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark'
+export interface BaseColorVariant {
+  primary: unknown
+  secondary: unknown
+  success: unknown
+  danger: unknown
+  warning: unknown
+  info: unknown
+  light: unknown
+  dark: unknown
+}
 
-export type BgColorVariant =
-    BasicColorVariant
-    | 'body'
-    | 'white'
-    | 'transparent'
+/**
+ * @external BasicColorVariant
+ */
+export type BasicColorVariant = keyof BaseColorVariant
 
-export type BorderColorVariant =
-    BasicColorVariant
-    | 'white'
+export interface BaseBgColorVariant extends BaseColorVariant {
+  body: unknown
+  white: unknown
+  transparent: unknown
+}
 
-export type TextColorVariant =
-    BasicColorVariant
-    | 'body'
-    | 'muted'
-    | 'white'
-    | 'black-50'
-    | 'white-50'
-    | 'reset'
+/**
+ * @external BgColorVariant
+ */
+export type BgColorVariant = keyof BaseBgColorVariant
+
+export interface BaseBorderColorVariant extends BaseColorVariant {
+  white: unknown
+}
+
+/**
+ * @external BorderColorVariant
+ */
+export type BorderColorVariant = keyof BaseBorderColorVariant
+
+export interface BaseTextColorVariant extends BaseColorVariant {
+  'body': unknown
+  'muted': unknown
+  'white': unknown
+  'black-50': unknown
+  'white-50': unknown
+  'reset': unknown
+}
+
+/**
+ * @external TextColorVariant
+ */
+export type TextColorVariant = keyof BaseTextColorVariant

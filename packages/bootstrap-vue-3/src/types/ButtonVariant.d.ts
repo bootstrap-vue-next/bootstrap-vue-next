@@ -1,18 +1,20 @@
-import {BasicColorVariant} from './ColorVariant'
+import {BaseColorVariant} from './ColorVariant'
+
+export interface BaseButtonVariant extends BaseColorVariant {
+  'link': unknown
+  'outline-primary': unknown
+  'outline-secondary': unknown
+  'outline-success': unknown
+  'outline-danger': unknown
+  'outline-warning': unknown
+  'outline-info': unknown
+  'outline-light': unknown
+  'outline-dark': unknown
+}
 
 /**
- * @external
+ * @external ButtonVariant
  */
-type ButtonVariant =
-  | BasicColorVariant
-  | 'link'
-  | 'outline-primary'
-  | 'outline-secondary'
-  | 'outline-success'
-  | 'outline-danger'
-  | 'outline-warning'
-  | 'outline-info'
-  | 'outline-light'
-  | 'outline-dark'
+type ButtonVariant = keyof BaseButtonVariant
 
 export default ButtonVariant
