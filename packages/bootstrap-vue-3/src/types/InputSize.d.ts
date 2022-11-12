@@ -8,4 +8,3 @@ export interface BaseInputSize {
 }
 
 export type InputSize = keyof BaseInputSize
-export type InputSizeOnlySmallOrLarge = Exclude<InputSize, 'md'>
