@@ -31,7 +31,7 @@ const sanitizeCurrentPage = (value: number, numberOfPages: number) => {
 export default defineComponent({
   name: 'BPagination',
   props: {
-    align: {type: String as PropType<Alignment>, default: 'start'},
+    align: {type: String as PropType<Alignment.JustifyContent | 'fill'>, default: 'start'},
     ariaControls: {type: String, required: false},
     ariaLabel: {type: String, default: 'Pagination'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -71,7 +71,10 @@ export default defineComponent({
     const lastNumberBoolean = useBooleanish(toRef(props, 'lastNumber'))
     const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 
-    const alignment = useAlignment(toRef(props, 'align'))
+    const justifyAlign = computed((): Alignment.JustifyContent => {
+          return props.align === 'fill' ? 'start' : props.align
+    });
+    const alignment = useAlignment(toRef(justifyAlign, 'value'))
 
     // Use Active to on page-item to denote active tab
     const numberOfPages = computed(() =>
@@ -261,7 +264,7 @@ export default defineComponent({
 
     return () => {
       const buttons = []
-      const pageNumbers = pages.value.map((p) => p.number) // array of numbers.. Used in first and last number comparisons
+      const pageNumbers = pages.value.map((p) => p.number) // array of numbers... Used in first and last number comparisons
       const isActivePage = (pageNumber: number) => pageNumber === props.modelValue
       const noCurrentPage: boolean = props.modelValue < 1
       const fill = props.align === 'fill'

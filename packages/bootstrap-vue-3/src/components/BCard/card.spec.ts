@@ -28,11 +28,11 @@ describe('card', () => {
 
   it('has class text-{type} when prop align', async () => {
     const wrapper = mount(BCard, {
-      props: {align: 'fill'},
+      props: {align: 'start'},
     })
-    expect(wrapper.classes()).toContain('text-fill')
+    expect(wrapper.classes()).toContain('text-start')
     await wrapper.setProps({align: undefined})
-    expect(wrapper.classes()).not.toContain('text-fill')
+    expect(wrapper.classes()).not.toContain('text-start')
   })
 
   it('has class text-{type} when prop textVariant', async () => {
