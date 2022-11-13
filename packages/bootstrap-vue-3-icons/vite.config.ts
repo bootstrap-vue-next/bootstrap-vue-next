@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
-import {defineConfig} from 'vite'
+import {defineConfig, PluginOption} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import {visualizer} from 'rollup-plugin-visualizer'
@@ -38,8 +38,8 @@ const config = defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
-    visualizer(),
-    dts({skipDiagnostics: false, logDiagnostics: true}),
+    visualizer() as unknown as PluginOption,
+    dts(),
   ],
 
   server: {
