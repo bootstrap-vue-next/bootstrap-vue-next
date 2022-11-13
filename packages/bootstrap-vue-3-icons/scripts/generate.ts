@@ -6,6 +6,10 @@ import {fileURLToPath} from 'node:url'
 import {basename, dirname, extname, join, resolve} from 'node:path'
 import {pascalCase} from '../src/utils'
 import {template} from 'lodash-es'
+import {createRequire} from 'module'
+import {Console} from 'node:console'
+
+const require = createRequire(import.meta.url)
 
 interface Data {
   version: string
@@ -19,11 +23,14 @@ interface Data {
 // /bootstrap-vue-3/packages/bootstrap-vue-3-icons/scripts
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
+//Bootstrap vue 3
 const packageDir = join(__dirname, '../')
-
-const iconsOutputDir = join(packageDir, 'icons/')
-
 const iconsBase = join(packageDir, 'src', 'components', 'icons')
+const iconsOutputDir = join(packageDir, 'components/icons')
+
+//Bootstrap icon asssets and SVGs
+const bootstrapIconsBase = dirname(require.resolve('bootstrap-icons/package.json'))
+const bootstrapIconsDir = join(bootstrapIconsBase, 'icons/')
 
 const iconsFile = resolve(iconsBase, 'icons.ts')
 const pluginFile = resolve(iconsBase, 'plugin.js')
@@ -124,7 +131,7 @@ export declare class <%= component %> extends BvComponent {}
 
 // Parses a single SVG File
 const processFile = async (file: string, data: Data): Promise<void> => {
-  file = join(iconsOutputDir, file)
+  file = join(bootstrapIconsDir, file)
   if (extname(file) !== '.svg') {
     return
   }
@@ -179,13 +186,11 @@ const main = async () => {
   console.log(`  Reading SVGs from bootstrap-icons version ${data.version}`)
 
   // Read in the list of SVG Files
-  const files = await readdir(iconsOutputDir)
+  const files = await readdir(bootstrapIconsDir)
   // Process the SVG Data for all files
   await Promise.all(files.map((file) => processFile(file, data)))
   // Sort the icon component names
   data.componentNames = data.componentNames.sort()
-  console.log(iconsOutputDir)
-  await mkdir(iconsOutputDir)
 
   console.log(`  Read ${data.componentNames.length} SVGs...`)
 
