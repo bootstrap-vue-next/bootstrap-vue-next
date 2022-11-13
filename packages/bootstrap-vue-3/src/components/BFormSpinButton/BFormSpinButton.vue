@@ -7,7 +7,7 @@ import {isLocaleRTL} from '../../utils/locale'
 import {eventOnOff, stopEvent} from '../../utils/event'
 import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
 //TODO alias
-import {BIconDash, BIconPlus} from '../../../../bootstrap-vue-3-icons/src/components/icons/icons'
+import {BIconDash, BIconPlus} from 'bootstrap-vue-3-icons'
 
 import {
   CODE_DOWN,
