@@ -32,7 +32,7 @@
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
 import {isEmptySlot} from '../../utils'
-import {computed, onMounted, reactive, Ref, ref, toRef, useSlots} from 'vue'
+import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 
@@ -93,17 +93,15 @@ const slots = useSlots()
 
 const computedId = useId(toRef(props, 'id'), 'form-check')
 
-const indeterminateBoolean = useBooleanish(
-  toRef(props, 'indeterminate') as Ref<Booleanish | undefined>
-)
+const indeterminateBoolean = useBooleanish(toRef(props, 'indeterminate'))
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
 const switchBoolean = useBooleanish(toRef(props, 'switch'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
-const requiredBoolean = useBooleanish(toRef(props, 'required') as Ref<Booleanish | undefined>)
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
+const requiredBoolean = useBooleanish(toRef(props, 'required'))
+const stateBoolean = useBooleanish(toRef(props, 'state'))
 
 const input = ref<HTMLElement>(null as unknown as HTMLElement)
 const isFocused = ref<boolean>(false)

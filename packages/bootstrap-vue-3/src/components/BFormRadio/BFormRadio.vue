@@ -8,18 +8,18 @@
       :class="inputClasses"
       type="radio"
       :disabled="disabledBoolean"
-      :required="!!name && !!requiredBoolean"
+      :required="!!name && requiredBoolean"
       :name="name"
       :form="form"
       :aria-label="ariaLabel"
-      :aria-labelledby="ariaLabelledBy"
+      :aria-labelledby="ariaLabelledby"
       :value="value"
-      :aria-required="name && requiredBoolean ? true : undefined"
+      :aria-required="!!name && requiredBoolean ? true : undefined"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
     <label
-      v-if="hasDefaultSlot || !plainBoolean"
+      v-if="hasDefaultSlot || plainBoolean === false"
       :for="computedId"
       :class="[labelClasses, {active: isChecked, focus: isFocused}]"
     >
@@ -32,12 +32,12 @@
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import {computed, onMounted, reactive, Ref, ref, toRef, useSlots} from 'vue'
+import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
 import {isEmptySlot} from '../../utils'
 
 interface BFormRadioProps {
   ariaLabel?: string
-  ariaLabelledBy?: string
+  ariaLabelledby?: string
   form?: string
   id?: string
   name?: string
@@ -91,14 +91,14 @@ const switchBoolean = useBooleanish(toRef(props, 'switch'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
+const stateBoolean = useBooleanish(toRef(props, 'state'))
 
 const input = ref<HTMLElement | null>(null)
 const isFocused = ref<boolean>(false)
 
 const localValue = computed<unknown>({
   get: () => (Array.isArray(props.modelValue) ? props.modelValue[0] : props.modelValue),
-  set: (newValue: any) => {
+  set: (newValue) => {
     const value = newValue ? props.value : false
     const emitValue = Array.isArray(props.modelValue) ? [value] : value
     emit('input', emitValue)

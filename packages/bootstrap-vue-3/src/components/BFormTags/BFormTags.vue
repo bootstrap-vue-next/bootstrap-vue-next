@@ -111,16 +111,7 @@
 
 <script setup lang="ts">
 // import type {BFormTagsEmits, BFormTagsProps} from '../types/components'
-import {
-  computed,
-  onActivated,
-  onMounted,
-  ref,
-  Ref,
-  toRef,
-  VNodeNormalizedChildren,
-  watch,
-} from 'vue'
+import {computed, onActivated, onMounted, ref, toRef, VNodeNormalizedChildren, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId} from '../../composables'
 import type {
@@ -212,7 +203,7 @@ const noOuterFocusBoolean = useBooleanish(toRef(props, 'noOuterFocus'))
 const noTagRemoveBoolean = useBooleanish(toRef(props, 'noTagRemove'))
 const removeOnDeleteBoolean = useBooleanish(toRef(props, 'removeOnDelete'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
+const stateBoolean = useBooleanish(toRef(props, 'state'))
 const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
 
 const input = ref<HTMLInputElement | null>(null)

@@ -65,7 +65,7 @@ const noRemoveBoolean = useBooleanish(toRef(props, 'noRemove'))
 const pillBoolean = useBooleanish(toRef(props, 'pill'))
 
 const tagText = computed<string>(
-  () => (slots.default?.()[0].children?.toString() || props.title) ?? ''
+  () => ((slots.default?.()[0].children ?? '').toString() || props.title) ?? ''
 )
 
 const taglabelId = computed<string>(() => `${computedId.value}taglabel__`)
