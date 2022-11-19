@@ -63,7 +63,7 @@ yarn add unplugin-vue-components -D
   <CodeGroupItem title="NPM">
 
 ```bash
-npm install bootstrap bootstrap-vue-3 @popperjs/core
+npm i bootstrap bootstrap-vue-3 @popperjs/core
 
 npm i unplugin-vue-components -D
 ```
@@ -87,7 +87,7 @@ The following is an example of a basic `vite.config.js/ts`. All you need to do i
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVue3Resolver} from 'unplugin-vue-components/resolvers'
+import { BootstrapVue3Resolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   plugins: [
@@ -132,7 +132,7 @@ yarn add bootstrap bootstrap-vue-3 @popperjs/core
   <CodeGroupItem title="NPM">
 
 ```bash
-npm install bootstrap bootstrap-vue-3 @popperjs/core
+npm i bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -149,7 +149,7 @@ pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 Then, add to your `main.js/ts`:
 
 ```javascript
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import BootstrapVue3 from 'bootstrap-vue-3'
 
 // Optional, since every component imports their Bootstrap functionality
@@ -201,7 +201,7 @@ pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-3`. The components will be imported automatically as needed
 
 ```javascript
-import {defineNuxtConfig} from 'nuxt3'
+import { defineNuxtConfig } from 'nuxt3'
 
 export default defineNuxtConfig({
   modules: ['bootstrap-vue-3/nuxt'],
