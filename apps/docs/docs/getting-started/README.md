@@ -176,7 +176,7 @@ In your Nuxt3 application, install the necessary packages for `bootstrap-vue-3`
   <CodeGroupItem title="YARN" active>
 
 ```bash
-yarn add bootstrap bootstrap-vue-3 @popperjs/core
+yarn add bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
@@ -184,7 +184,7 @@ yarn add bootstrap bootstrap-vue-3 @popperjs/core
   <CodeGroupItem title="NPM">
 
 ```bash
-npm i bootstrap bootstrap-vue-3 @popperjs/core
+npm i bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
@@ -192,7 +192,7 @@ npm i bootstrap bootstrap-vue-3 @popperjs/core
   <CodeGroupItem title="PNPM">
 
 ```bash
-pnpm add bootstrap bootstrap-vue-3 @popperjs/core
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
