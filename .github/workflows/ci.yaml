@@ -188,6 +188,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
+      
+      - name: Build library
+        run: pnpm run build
 
       - name: Test coverage
         run: pnpm run test:coverage
