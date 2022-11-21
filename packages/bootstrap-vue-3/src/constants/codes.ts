@@ -1,0 +1,14 @@
+export const CODE_BACKSPACE: string = 'Backspace'
+export const CODE_BREAK = 19
+export const CODE_DELETE = 46
+export const CODE_DOWN: string = 'ArrowDown'
+export const CODE_END: string = 'End'
+export const CODE_ENTER = 13
+export const CODE_ESC = 27
+export const CODE_HOME: string = 'Home'
+export const CODE_LEFT = 37
+export const CODE_PAGEDOWN: string = 'PageDown'
+export const CODE_PAGEUP: string = 'PageUp'
+export const CODE_RIGHT = 39
+export const CODE_SPACE = 32
+export const CODE_UP: string = 'ArrowUp'
