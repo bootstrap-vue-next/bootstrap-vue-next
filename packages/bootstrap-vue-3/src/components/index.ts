@@ -1,6 +1,6 @@
 import BAccordion from './BAccordion/BAccordion.vue'
 import BAccordionItem from './BAccordion/BAccordionItem.vue'
-import BAlert from './BAlert.vue'
+import BAlert from './BAlert/BAlert.vue'
 import BAvatar from './BAvatar/BAvatar.vue'
 import BAvatarGroup from './BAvatar/BAvatarGroup.vue'
 import BBadge from './BBadge/BBadge.vue'

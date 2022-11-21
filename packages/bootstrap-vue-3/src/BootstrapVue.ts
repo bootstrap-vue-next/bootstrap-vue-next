@@ -9,7 +9,7 @@ import './styles/styles.scss'
 // Keep this list in sync with /components/index.ts please
 import BAccordion from './components/BAccordion/BAccordion.vue'
 import BAccordionItem from './components/BAccordion/BAccordionItem.vue'
-import BAlert from './components/BAlert.vue'
+import BAlert from './components/BAlert/BAlert.vue'
 import BAvatar from './components/BAvatar/BAvatar.vue'
 import BAvatarGroup from './components/BAvatar/BAvatarGroup.vue'
 import BBadge from './components/BBadge/BBadge.vue'

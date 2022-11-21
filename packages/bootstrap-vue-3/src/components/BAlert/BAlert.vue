@@ -17,12 +17,13 @@
 
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
-import type {Booleanish, ColorVariant} from '../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import {computed, onBeforeUnmount, ref, toRef, useSlots, watch} from 'vue'
 import {Alert} from 'bootstrap'
-import {isEmptySlot, toInteger} from '../utils'
-import {useBooleanish} from '../composables'
-import BCloseButton from './BButton/BCloseButton.vue'
+import {isEmptySlot, toInteger} from '../../utils'
+import {useBooleanish} from '../../composables'
+import BCloseButton from '../BButton/BCloseButton.vue'
+import {count} from 'console'
 
 interface BAlertProps {
   dismissLabel?: string
@@ -88,7 +89,7 @@ const parseCountDown = (value: boolean | number): number => {
   return numberValue > 0 ? numberValue : 0
 }
 
-const countDown = ref<number>(parseCountDown(props.modelValue))
+const countDown = ref<number>(0)
 
 const parsedModelValue = computed<boolean>(() => {
   if (props.modelValue === true) {
@@ -126,12 +127,10 @@ const closeClicked = (): void => {
 
 watch(() => props.modelValue, handleShowAndModelChanged)
 watch(() => showBoolean.value, handleShowAndModelChanged)
-
 watch(countDown, (newValue) => {
   clearCountDownInterval()
   if (typeof props.modelValue === 'boolean') return
   emit('close-count-down', newValue)
-
   if (newValue === 0 && props.modelValue > 0) emit('closed')
   if (props.modelValue !== newValue) emit('update:modelValue', newValue)
   if (newValue > 0) {
@@ -140,6 +139,8 @@ watch(countDown, (newValue) => {
     }, 1000)
   }
 })
+
+countDown.value = parseCountDown(props.modelValue)
 
 onBeforeUnmount((): void => {
   clearCountDownInterval()
