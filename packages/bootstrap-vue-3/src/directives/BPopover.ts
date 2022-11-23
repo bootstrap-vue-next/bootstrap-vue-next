@@ -41,6 +41,7 @@ const BPopover: Directive<HTMLElement> = {
       trigger: trigger.length === 0 ? 'click' : (trigger.join(' ') as Popover.Options['trigger']),
       placement,
       content: binding.value,
+      html: binding.modifiers.html,
     })
   },
   unmounted(el) {
