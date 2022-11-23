@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.9...v0.4.10) (2022-11-23)
+
+
+### Features
+
+* **Popover:** Allow html modifier in directive ([9e85b80](https://github.com/cdmoro/bootstrap-vue-3/commit/9e85b80e0ff4b791a1e2e1a05babec487ca97e8e))
+
+
+### Bug Fixes
+
+* remove package icons ([efb7a18](https://github.com/cdmoro/bootstrap-vue-3/commit/efb7a1894107abc60df8aca8615d6a728ec17b17)), closes [#815](https://github.com/cdmoro/bootstrap-vue-3/issues/815)
+
 ## [0.4.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.8...v0.4.9) (2022-11-21)
 
 
