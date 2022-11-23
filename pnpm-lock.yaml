@@ -95,7 +95,6 @@ importers:
       vue-tsc: ^1.0.9
     dependencies:
       '@nuxt/kit': 3.0.0-rc.12
-      bootstrap-vue-3-icons: link:../bootstrap-vue-3-icons
     devDependencies:
       '@popperjs/core': 2.11.6
       '@types/bootstrap': 5.2.5
@@ -105,6 +104,7 @@ importers:
       '@vue/shared': 3.2.41
       '@vue/test-utils': 2.2.0_vue@3.2.41
       bootstrap: 5.2.2_@popperjs+core@2.11.6
+      bootstrap-vue-3-icons: link:../bootstrap-vue-3-icons
       c8: 7.12.0
       happy-dom: 7.6.6
       jsdom: 20.0.1
