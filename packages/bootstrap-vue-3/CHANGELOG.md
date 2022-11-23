@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.8...v0.4.9) (2022-11-21)
+
+
+### Features
+
+* **SpinButton:** Adjust BV3 Package.json Dependencies ([41452a7](https://github.com/cdmoro/bootstrap-vue-3/commit/41452a7e25fa06a684bb7a5fd43031f437d271da))
+* **SpinButton:** Final fixes ([a233d1f](https://github.com/cdmoro/bootstrap-vue-3/commit/a233d1f684d2e714b9fff3d4db5e94a9b8310c4e))
+* **SpinButton:** Remove Utils, Use hasValue for Value Checking ([1dcfc0e](https://github.com/cdmoro/bootstrap-vue-3/commit/1dcfc0edcc98788e8864aaa3585f9dc779edd3ec))
+
+
+### Bug Fixes
+
+* on balert create, start counter ([b35e299](https://github.com/cdmoro/bootstrap-vue-3/commit/b35e299abf98024d4297edfa10006fcb9673c7a0)), closes [#810](https://github.com/cdmoro/bootstrap-vue-3/issues/810)
+
 ## [0.4.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.7...v0.4.8) (2022-11-12)
 
 
