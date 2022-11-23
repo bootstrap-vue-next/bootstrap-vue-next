@@ -7,7 +7,7 @@ import {isLocaleRTL} from '../../utils/locale'
 import {eventOnOff, stopEvent} from '../../utils/event'
 import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
 //TODO alias
-import {BIconDash, BIconPlus} from 'bootstrap-vue-3-icons'
+// import {BIconDash, BIconPlus} from 'bootstrap-vue-3-icons'
 
 import {
   CODE_DOWN,
@@ -436,7 +436,7 @@ export default defineComponent({
       const $increment = makeButton(
         stepUp,
         props.labelIncrement,
-        BIconPlus,
+        '+',
         'inc',
         'ArrowUp',
         false,
@@ -445,7 +445,7 @@ export default defineComponent({
       const $decrement = makeButton(
         stepDown,
         props.labelDecrement,
-        BIconDash,
+        '-',
         'dec',
         'ArrowDown',
         false,
