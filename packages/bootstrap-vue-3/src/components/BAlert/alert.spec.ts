@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BAlert from './BAlert.vue'
-import BCloseButton from './BButton/BCloseButton.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
 
 describe('alert', () => {
   enableAutoUnmount(afterEach)
@@ -256,4 +256,84 @@ describe('alert', () => {
     const [event] = wrapper.emitted('update:modelValue') ?? []
     expect(event).toEqual([0])
   })
+
+  //Timer Based Tests
+
+  it('dismiss countdown emits close-count-down event', async () => {
+    vi.useFakeTimers()
+    const wrapper = mount(BAlert, {
+      props: {
+        modelValue: 3,
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+    expect(wrapper.html()).toBeDefined()
+
+    expect(wrapper.emitted('closed')).toBeUndefined()
+    expect(wrapper.emitted('close-count-down')).toBeTruthy()
+    expect(wrapper.emitted('close-count-down')?.length).toBe(1)
+    expect(wrapper.emitted('close-count-down')?.[0][0]).toBe(3) // 3 - 0
+    await vi.runOnlyPendingTimers()
+    vi.advanceTimersByTime(1000)
+
+    expect(wrapper.emitted('close-count-down')?.length).toBe(2)
+    expect(wrapper.emitted('close-count-down')?.[1][0]).toBe(2) // 3 - 1
+
+    await vi.runOnlyPendingTimers()
+    vi.advanceTimersByTime(1000)
+
+    expect(wrapper.emitted('close-count-down')?.length).toBe(3)
+    expect(wrapper.emitted('close-count-down')?.[2][0]).toBe(1) // 3 - 2
+
+    await vi.runOnlyPendingTimers()
+    vi.advanceTimersByTime(1000)
+
+    expect(wrapper.emitted('close-count-down')?.length).toBe(4)
+    expect(wrapper.emitted('close-count-down')?.[3][0]).toBe(0) // 3 - 3
+
+    expect(wrapper.emitted('closed')).toBeDefined()
+    expect(wrapper.emitted('closed')?.length).toBe(1)
+    // expect(wrapper.element.nodeType).toBe(Node.COMMENT_NODE)
+  })
+
+  // NOT SUPPORTED YET
+  // it('dismiss countdown emits close-count-down event when show is number as string', async () => {
+  //   vi.useFakeTimers()
+  //   const wrapper = mount(BAlert, {
+  //     props: {
+  //       modelValue: '3'
+  //     }
+  //   })
+
+  //   expect(wrapper.vm).toBeDefined()
+  //   expect(wrapper.html()).toBeDefined()
+
+  //   expect(wrapper.emitted('closed')).toBeUndefined()
+  //   expect(wrapper.emitted('close-count-down')).toBeTruthy()
+  //   expect(wrapper.emitted('close-count-down')?.length).toBe(1)
+  //   expect(wrapper.emitted('close-count-down')?.[0][0]).toBe(3) // 3 - 0
+  //   await vi.runOnlyPendingTimers()
+  //   vi.advanceTimersByTime(1000)
+
+  //   expect(wrapper.emitted('close-count-down')?.length).toBe(2)
+  //   expect(wrapper.emitted('close-count-down')?.[1][0]).toBe(2) // 3 - 1
+
+  //   await vi.runOnlyPendingTimers()
+  //   vi.advanceTimersByTime(1000)
+
+  //   expect(wrapper.emitted('close-count-down')?.length).toBe(3)
+  //   expect(wrapper.emitted('close-count-down')?.[2][0]).toBe(1) // 3 - 2
+
+  //   await vi.runOnlyPendingTimers()
+  //   vi.advanceTimersByTime(1000)
+
+  //   expect(wrapper.emitted('close-count-down')?.length).toBe(4)
+  //   expect(wrapper.emitted('close-count-down')?.[3][0]).toBe(0) // 3 - 3
+
+  //   expect(wrapper.emitted('closed')).toBeDefined()
+  //   expect(wrapper.emitted('closed')?.length).toBe(1)
+  //   // expect(wrapper.element.nodeType).toBe(Node.COMMENT_NODE)
+
+  // })
 })

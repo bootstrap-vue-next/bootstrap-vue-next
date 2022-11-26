@@ -4,7 +4,7 @@ sidebar: auto
 
 # Introduction
 
-Get started with BootstrapVue3 and Bootstrap v5, the world’s most popular framework for building responsive, mobile-first sites.
+Get started with BootstrapVue3 and Bootstrap v5, the world’s most popular framework for building responsive, mobile-first sites
 
 ::: danger NOT PRODUCTION READY
 This project is still in **alpha version**. There is a lot of work to do, if you want to contribute you can use it and submit an [issue](https://github.com/cdmoro/bootstrap-vue-3/issues) or even better, a [pull request](https://github.com/cdmoro/bootstrap-vue-3/pulls) 😄.
@@ -12,9 +12,9 @@ This project is still in **alpha version**. There is a lot of work to do, if you
 
 ## Why BootstrapVue3?
 
-BootstrapVue3 is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way.
+BootstrapVue3 is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way
 
-As you may suppose, this library is heavily inspired by [BootstrapVue](https://bootstrap-vue.org/), as well as the component properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with BootstrapVue, so it will be easy to switch between libraries.
+As you may suppose, this library is heavily inspired by [BootstrapVue](https://bootstrap-vue.org/), as well as the component properties, events, slots, directives, etc. We want to make it that way because we want to have compatibility with BootstrapVue, so it will be easy to switch between libraries
 
 ## Contribute and Support 🙌
 
@@ -63,7 +63,7 @@ yarn add unplugin-vue-components -D
   <CodeGroupItem title="NPM">
 
 ```bash
-npm install bootstrap bootstrap-vue-3 @popperjs/core
+npm i bootstrap bootstrap-vue-3 @popperjs/core
 
 npm i unplugin-vue-components -D
 ```
@@ -87,7 +87,7 @@ The following is an example of a basic `vite.config.js/ts`. All you need to do i
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVue3Resolver} from 'unplugin-vue-components/resolvers'
+import { BootstrapVue3Resolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   plugins: [
@@ -116,7 +116,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 #### Legacy Installation
 
-- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method
+- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Full Nuxt 3 compatibility is expected before a v1.0 release
 
 Install the necessary packages for `bootstrap-vue-3`:
 
@@ -132,7 +132,7 @@ yarn add bootstrap bootstrap-vue-3 @popperjs/core
   <CodeGroupItem title="NPM">
 
 ```bash
-npm install bootstrap bootstrap-vue-3 @popperjs/core
+npm i bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -149,7 +149,7 @@ pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 Then, add to your `main.js/ts`:
 
 ```javascript
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import BootstrapVue3 from 'bootstrap-vue-3'
 
 // Optional, since every component imports their Bootstrap functionality
@@ -176,7 +176,7 @@ In your Nuxt3 application, install the necessary packages for `bootstrap-vue-3`
   <CodeGroupItem title="YARN" active>
 
 ```bash
-yarn add bootstrap bootstrap-vue-3 @popperjs/core
+yarn add bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
@@ -184,7 +184,7 @@ yarn add bootstrap bootstrap-vue-3 @popperjs/core
   <CodeGroupItem title="NPM">
 
 ```bash
-npm install bootstrap bootstrap-vue-3 @popperjs/core
+npm i bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
@@ -192,7 +192,7 @@ npm install bootstrap bootstrap-vue-3 @popperjs/core
   <CodeGroupItem title="PNPM">
 
 ```bash
-pnpm add bootstrap bootstrap-vue-3 @popperjs/core
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
@@ -201,7 +201,7 @@ pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-3`. The components will be imported automatically as needed
 
 ```javascript
-import {defineNuxtConfig} from 'nuxt3'
+import { defineNuxtConfig } from 'nuxt3'
 
 export default defineNuxtConfig({
   modules: ['bootstrap-vue-3/nuxt'],
@@ -221,7 +221,7 @@ Enjoy it in your app without import.
 
 ## Comparison with BoostrapVue
 
-As we said, we based this project on [BootstrapVue](https://bootstrap-vue.org/). We consider BootstrapVue as the best implementation of Bootstrap `v4`, so a good approach is to replicate every BootstrapVue component, as well as their props, events, etc., and add the new features of Bootstrap `v5`.
+As we said, we based this project on [BootstrapVue](https://bootstrap-vue.org/). We consider BootstrapVue as the best implementation of Bootstrap `v4`, so a good approach is to replicate every BootstrapVue component, as well as their props, events, etc., and add the new features of Bootstrap `v5`
 
 <!-- To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet. -->
 

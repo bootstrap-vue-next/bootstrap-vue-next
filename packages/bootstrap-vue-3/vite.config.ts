@@ -20,6 +20,7 @@ const config = defineConfig({
       // into your library
       external: [
         'bootstrap',
+        'bootstrap-vue-icons',
         'bootstrap/js/dist/alert',
         'bootstrap/js/dist/collapse',
         'bootstrap/js/dist/modal',

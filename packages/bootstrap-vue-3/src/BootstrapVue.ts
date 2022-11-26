@@ -9,7 +9,7 @@ import './styles/styles.scss'
 // Keep this list in sync with /components/index.ts please
 import BAccordion from './components/BAccordion/BAccordion.vue'
 import BAccordionItem from './components/BAccordion/BAccordionItem.vue'
-import BAlert from './components/BAlert.vue'
+import BAlert from './components/BAlert/BAlert.vue'
 import BAvatar from './components/BAvatar/BAvatar.vue'
 import BAvatarGroup from './components/BAvatar/BAvatarGroup.vue'
 import BBadge from './components/BBadge/BBadge.vue'
@@ -55,6 +55,7 @@ import BFormRadio from './components/BFormRadio/BFormRadio.vue'
 import BFormRadioGroup from './components/BFormRadio/BFormRadioGroup.vue'
 import BFormSelect from './components/BFormSelect/BFormSelect.vue'
 import BFormSelectOption from './components/BFormSelect/BFormSelectOption.vue'
+import BFormSpinButton from './components/BFormSpinButton/BFormSpinButton.vue'
 import BFormSelectOptionGroup from './components/BFormSelect/BFormSelectOptionGroup.vue'
 import BFormTag from './components/BFormTags/BFormTag.vue'
 import BFormTags from './components/BFormTags/BFormTags.vue'
@@ -231,6 +232,7 @@ export {
   BToaster,
   BToastContainer,
   BTransition,
+  BFormSpinButton,
 }
 
 // Export types
@@ -314,6 +316,7 @@ declare module '@vue/runtime-core' {
     BFormTextarea: typeof BFormTextarea
     BFormTag: typeof BFormTag
     BFormTags: typeof BFormTags
+    BFormSpinButton: typeof BFormSpinButton
     BFormValidFeedback: typeof BFormValidFeedback
     BImg: typeof BImg
     BInputGroup: typeof BInputGroup

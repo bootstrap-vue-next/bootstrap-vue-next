@@ -64,6 +64,7 @@ export default defineUserConfig({
             '/components/Form.md',
             '/components/FormCheckbox.md',
             '/components/FormGroup.md',
+            '/components/SpinButton.md',
             '/components/FormInput.md',
             '/components/FormRadio.md',
             '/components/FormSelect.md',
