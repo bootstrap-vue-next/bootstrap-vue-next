@@ -2,7 +2,7 @@
   "name": "bootstrap-vue-3",
   "displayName": "BootstrapVue3",
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
-  "version": "0.4.8",
+  "version": "0.4.10",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-3.umd.js",
   "module": "./dist/bootstrap-vue-3.es.js",
@@ -38,8 +38,7 @@
     "vue": "^3.2.45"
   },
   "dependencies": {
-    "@nuxt/kit": "3.0.0-rc.13",
-    "bootstrap-vue-3-icons": "workspace:*"
+    "@nuxt/kit": "3.0.0-rc.12"
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.6",
