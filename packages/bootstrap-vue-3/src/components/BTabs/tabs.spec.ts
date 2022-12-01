@@ -3,6 +3,8 @@ import {h} from 'vue'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTabs from './BTabs.vue'
 import BTab from './BTab.vue'
+import BFormInput from '../BFormInput/BFormInput.vue'
+import BFormGroup from '../BFormGroup/BFormGroup.vue'
 
 describe('tabs', () => {
   enableAutoUnmount(afterEach)
@@ -449,5 +451,52 @@ describe('tabs', () => {
       slots: {'empty': 'empty', 'tabs-start': 'start'},
     })
     expect(wrapper.text()).toBe('startempty')
+  })
+
+  it('renders content passed via ', async () => {
+    const msg = 'foobar'
+
+    const HelloWorld = {
+      template: ` 
+      <b-form-group label="msg">
+        <b-form-input v-model="msg" />
+        <slot :msg="msg"/>      
+      </b-form-group>`,
+      data() {
+        return {
+          msg,
+        }
+      },
+      components: {
+        BFormInput,
+        BFormGroup,
+      },
+    }
+
+    const ComplexComponent = {
+      template: `
+      <HelloWorld v-slot="{msg}" class="mt-3">
+        out of tabs: {{ msg }}
+        <b-tabs>
+         <b-tab title="First" active><p>{{msg}}</p></b-tab>
+        </b-tabs>
+      </HelloWorld>
+      `,
+      data() {
+        return {}
+      },
+      components: {
+        BTab,
+        BTabs,
+        HelloWorld,
+      },
+    }
+
+    const wrapper = mount(ComplexComponent, {})
+    let HelloWorldComponent = wrapper.findComponent({name: 'HelloWorld'})
+
+    await HelloWorldComponent.setData({msg: 'bar'})
+
+    expect(wrapper.findComponent({name: 'b-tab'}).find('p').text()).toBe('bar')
   })
 })
