@@ -85,6 +85,9 @@ interface BFormRadioGroupEmits {
 
 const emit = defineEmits<BFormRadioGroupEmits>()
 
+/**
+ * The available slots are default and first
+ */
 const slots = useSlots()
 
 const slotsName = 'BFormRadio'
@@ -117,10 +120,10 @@ const localValue = computed({
 
 // TODO this needs to be tested
 const checkboxList = computed(() =>
-  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : [])
-    .concat(props.options.map((e) => optionToElement(e, props)))
-    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : [])
-    .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
+  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : []) // Add slot.first to array
+    .concat(props.options.map((e) => optionToElement(e, props))) // Convert props.options to usable value, then concat to array
+    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : []) // Concat slot.default to array
+    .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId)) // Map it to preferred structure
     .map((e) => ({
       ...e,
     }))
