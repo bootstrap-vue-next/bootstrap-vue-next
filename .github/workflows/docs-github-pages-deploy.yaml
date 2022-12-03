@@ -9,6 +9,8 @@ on:
       - '.github/workflows/docs-github-pages-deploy.yaml'
     branches:
       - main
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
