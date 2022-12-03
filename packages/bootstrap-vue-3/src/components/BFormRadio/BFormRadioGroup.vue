@@ -23,7 +23,7 @@
 <script setup lang="ts">
 // import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, reactive, Ref, toRef, useSlots} from 'vue'
+import {computed, reactive, toRef, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import {
   bindGroupProps,
@@ -78,13 +78,16 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
 })
 
 interface BFormRadioGroupEmits {
-  (e: 'input', value: unknown): void
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'change', value: unknown): void
+  (e: 'input', value: BFormRadioGroupProps['modelValue']): void
+  (e: 'update:modelValue', value: BFormRadioGroupProps['modelValue']): void
+  (e: 'change', value: BFormRadioGroupProps['modelValue']): void
 }
 
 const emit = defineEmits<BFormRadioGroupEmits>()
 
+/**
+ * The available slots are default and first
+ */
 const slots = useSlots()
 
 const slotsName = 'BFormRadio'
@@ -102,23 +105,25 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
+const stateBoolean = useBooleanish(toRef(props, 'state'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
-const localValue = computed<string | boolean | Array<unknown> | Record<string, unknown> | number>({
+// TODO this needs to be tested
+const localValue = computed({
   get: () => props.modelValue,
-  set: (newValue: any) => {
+  set: (newValue) => {
     emit('input', newValue)
     emit('update:modelValue', newValue)
     emit('change', newValue)
   },
 })
 
-const checkboxList = computed<Array<any>>(() =>
-  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : [])
-    .concat(props.options.map((e) => optionToElement(e, props)))
-    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : [])
-    .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
+// TODO this needs to be tested
+const checkboxList = computed(() =>
+  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : []) // Add slot.first to array
+    .concat(props.options.map((e) => optionToElement(e, props))) // Convert props.options to usable value, then concat to array
+    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : []) // Concat slot.default to array
+    .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId)) // Map it to preferred structure
     .map((e) => ({
       ...e,
     }))

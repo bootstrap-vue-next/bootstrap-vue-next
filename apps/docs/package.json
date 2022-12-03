@@ -7,15 +7,15 @@
     "build": "vuepress build docs"
   },
   "devDependencies": {
-    "@popperjs/core": "^2.11.5",
+    "@popperjs/core": "2.11.6",
     "@vuepress/client": "2.0.0-beta.49",
     "@vuepress/plugin-register-components": "2.0.0-beta.49",
     "@vuepress/plugin-search": "2.0.0-beta.49",
     "@vuepress/utils": "2.0.0-beta.49",
-    "bootstrap": "^5.2.0",
+    "bootstrap": "5.2.3",
     "bootstrap-vue-3": "workspace:*",
     "tsconfig": "workspace:*",
-    "vue": "^3.2.37",
+    "vue": "3.2.45",
     "vuepress": "2.0.0-beta.49"
   }
 }
