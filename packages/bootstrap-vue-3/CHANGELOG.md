@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.10...v0.4.11) (2022-12-01)
+
+
+### Bug Fixes
+
+* Tabs Content will update with reactive components ([06c0663](https://github.com/cdmoro/bootstrap-vue-3/commit/06c066357ed2ada8e209258a57d5508bbb07ba98)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
+* update tests ([069511f](https://github.com/cdmoro/bootstrap-vue-3/commit/069511fb948e17166aa2461c81cd86c68e5a6738)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
+
 ## [0.4.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.9...v0.4.10) (2022-11-23)
 
 ### Features
