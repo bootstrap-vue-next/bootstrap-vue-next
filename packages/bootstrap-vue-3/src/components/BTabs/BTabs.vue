@@ -1,9 +1,10 @@
 <template>
   <component :is="tag" :id="id" class="tabs" :class="computedClasses">
+    <!-- Tab Content Above Tabs -->
     <div v-if="endBoolean" class="tab-content" :class="contentClass">
       <component
-        :is="tab"
-        v-for="({tab, contentId, tabClasses, active}, i) in tabs"
+        :is="tabComponent()"
+        v-for="({tabComponent, contentId, tabClasses, active}, i) in tabs"
         :id="contentId"
         :key="i"
         :class="tabClasses"
@@ -21,6 +22,7 @@
     <div
       :class="[navWrapperClass, {'card-header': cardBoolean, 'ms-auto': vertical && endBoolean}]"
     >
+      <!-- Render Tabs -->
       <ul class="nav" :class="[navTabsClasses, navClass]" role="tablist">
         <slot name="tabs-start" />
         <li
@@ -50,10 +52,11 @@
         <slot name="tabs-end" />
       </ul>
     </div>
+    <!-- Tab Content Below Tabs-->
     <div v-if="!endBoolean" class="tab-content" :class="contentClass">
       <component
-        :is="tab"
-        v-for="({tab, contentId, tabClasses, active}, i) in tabs"
+        :is="tabComponent()"
+        v-for="({tabComponent, contentId, tabClasses, active}, i) in tabs"
         :id="contentId"
         :key="i"
         :class="tabClasses"
@@ -191,7 +194,8 @@ const tabs = computed(() => {
         titleItemClass,
         titleLinkAttributes,
         onClick: tab.props.onClick,
-        tab,
+        tab, //TODO remove this in future since the mapped value does not provide a direct reference to the actual slot component.
+        tabComponent: () => getTabs(slots)[idx],
       }
     })
   }
