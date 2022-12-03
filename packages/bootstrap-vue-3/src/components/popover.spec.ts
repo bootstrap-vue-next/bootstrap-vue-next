@@ -15,12 +15,6 @@ describe('popover', () => {
     expect(wrapper.classes()).toContain('b-popover')
   })
 
-  // There doesn't seem to be any way to get ref? It is not an attribute nor prop...
-  it.skip('has attribute ref element', () => {
-    const wrapper = mount(BPopover)
-    expect(wrapper.attributes('ref')).toBe('element')
-  })
-
   it('has role tooltip', () => {
     const wrapper = mount(BPopover)
     expect(wrapper.attributes('role')).toBe('tooltip')

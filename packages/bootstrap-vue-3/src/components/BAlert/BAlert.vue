@@ -23,7 +23,6 @@ import {Alert} from 'bootstrap'
 import {isEmptySlot, toInteger} from '../../utils'
 import {useBooleanish} from '../../composables'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import {count} from 'console'
 
 interface BAlertProps {
   dismissLabel?: string

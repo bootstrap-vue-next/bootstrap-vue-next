@@ -25,8 +25,8 @@
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "husky": "^8.0.2",
-    "lint-staged": "^13.0.3",
-    "release-please": "^14.17.0",
+    "lint-staged": "^13.0.4",
+    "release-please": "^14.17.4",
     "turbo": "latest"
   },
   "engines": {

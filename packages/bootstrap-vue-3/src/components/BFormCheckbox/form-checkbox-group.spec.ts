@@ -8,7 +8,7 @@ import BFormCheckbox from './BFormCheckbox.vue'
 
 const global = {components: {BFormCheckbox}}
 
-describe.skip('form-checkbox-group', () => {
+describe('form-checkbox-group', () => {
   enableAutoUnmount(afterEach)
   // --- Structure, class and attributes tests ---
 

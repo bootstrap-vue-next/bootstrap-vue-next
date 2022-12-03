@@ -12,7 +12,7 @@ describe('iconstack', () => {
     expect($iconbase.exists()).toBe(true)
   })
 
-  it.skip('IconBase renders default slot', () => {
+  it('IconBase renders default slot', () => {
     const wrapper = mount(BIconstack, {
       slots: {default: 'foo'},
     })
