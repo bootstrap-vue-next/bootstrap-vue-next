@@ -42,7 +42,7 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
   - `noCloseButton` (optional) : true/false - by default is false
   - `pos`: 'top-left', 'top-center', 'top-right', 'middle-left', 'middle-center', 'middle-right', 'bottom-left', 'bottom-center', 'bottom-right'
   - `delay`: number
-  - `variant` : string BasicColorVariant
+  - `variant`: BasicColorVariant
 
 ```html
 <b-container
