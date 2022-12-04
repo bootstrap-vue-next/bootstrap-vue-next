@@ -148,7 +148,9 @@ pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 
 Then, add to your `main.js/ts`:
 
-```javascript
+```typescript
+import App from './App.vue' // Can be a different place
+
 import { createApp } from 'vue'
 import BootstrapVue3 from 'bootstrap-vue-3'
 
