@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.11...v0.4.12) (2022-12-04)
+
+
+### Bug Fixes
+
+* **modal:** maybe fix modal... if it was even broken ([fc31444](https://github.com/cdmoro/bootstrap-vue-3/commit/fc3144466c41f7292bb5433fd3c3eccbfac71d35))
+
 ## [0.4.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.10...v0.4.11) (2022-12-01)
 
 
