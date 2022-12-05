@@ -64,7 +64,7 @@ describe('button-group', () => {
 
   it('does not have class btn-group-{type} when prop size is undefined', () => {
     const wrapper = mount(BButtonGroup, {
-      props: {vertical: undefined},
+      props: {size: undefined},
     })
     expect(wrapper.classes()).not.toContain('btn-group-undefined')
   })
