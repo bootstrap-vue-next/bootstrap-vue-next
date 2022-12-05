@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.12...v0.4.13) (2022-12-05)
+
+
+### Bug Fixes
+
+* **#828:** BButtonGroup missing btn-group class when prop size ([0897270](https://github.com/cdmoro/bootstrap-vue-3/commit/0897270bfec9889880f08b1a6ee0d0f315486ac5))
+
 ## [0.4.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.11...v0.4.12) (2022-12-04)
 
 
