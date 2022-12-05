@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<BButtonGroupProps>(), {
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
 const computedClasses = computed(() => ({
-  'btn-group': !verticalBoolean.value && props.size === undefined,
+  'btn-group': !verticalBoolean.value,
   [`btn-group-${props.size}`]: props.size !== undefined,
   'btn-group-vertical': verticalBoolean.value,
 }))

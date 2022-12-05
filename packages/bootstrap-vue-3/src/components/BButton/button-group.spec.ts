@@ -22,12 +22,15 @@ describe('button-group', () => {
     expect(wrapper.attributes('role')).toBe('group')
   })
 
-  it('has attr aria-label as prop ariaLabel', async () => {
+  it('has attr aria-label as prop ariaLabel', () => {
     const wrapper = mount(BButtonGroup, {
       props: {ariaLabel: 'foobar'},
     })
     expect(wrapper.attributes('aria-label')).toBe('foobar')
-    await wrapper.setProps({ariaLabel: undefined})
+  })
+
+  it('has attr aria-label to be Group by default', () => {
+    const wrapper = mount(BButtonGroup)
     expect(wrapper.attributes('aria-label')).toBe('Group')
   })
 
@@ -38,29 +41,45 @@ describe('button-group', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('has class btn-group-vertical prop vertical', () => {
+  it('has class btn-group when not prop vertical', () => {
+    const wrapper = mount(BButtonGroup, {
+      props: {vertical: false},
+    })
+    expect(wrapper.classes()).toContain('btn-group')
+  })
+
+  it('does not have class btn-group when prop vertical', () => {
+    const wrapper = mount(BButtonGroup, {
+      props: {vertical: true},
+    })
+    expect(wrapper.classes()).not.toContain('btn-group')
+  })
+
+  it('has class btn-group-{type} when prop size', () => {
+    const wrapper = mount(BButtonGroup, {
+      props: {size: 'lg'},
+    })
+    expect(wrapper.classes()).toContain('btn-group-lg')
+  })
+
+  it('does not have class btn-group-{type} when prop size is undefined', () => {
+    const wrapper = mount(BButtonGroup, {
+      props: {vertical: undefined},
+    })
+    expect(wrapper.classes()).not.toContain('btn-group-undefined')
+  })
+
+  it('does not have class btn-group-vertical when not prop vertical', () => {
+    const wrapper = mount(BButtonGroup, {
+      props: {vertical: false},
+    })
+    expect(wrapper.classes()).not.toContain('btn-group-vertical')
+  })
+
+  it('has class btn-group-vertical when prop vertical', () => {
     const wrapper = mount(BButtonGroup, {
       props: {vertical: true},
     })
     expect(wrapper.classes()).toContain('btn-group-vertical')
-  })
-
-  it('has class btn-group when not prop vertical', () => {
-    const wrapper = mount(BButtonGroup)
-    expect(wrapper.classes()).toContain('btn-group')
-  })
-
-  it('has class btn-group-{type} prop size', async () => {
-    const wrapper = mount(BButtonGroup, {
-      props: {size: 'sm'},
-    })
-    expect(wrapper.classes()).toContain('btn-group-sm')
-    await wrapper.setProps({size: undefined})
-    expect(wrapper.classes()).not.toContain('btn-group-sm')
-  })
-
-  it('has class btn-group when prop size is undefined', () => {
-    const wrapper = mount(BButtonGroup, {props: {size: undefined}})
-    expect(wrapper.classes()).toContain('btn-group')
   })
 })
