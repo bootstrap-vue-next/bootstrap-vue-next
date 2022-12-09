@@ -65,6 +65,7 @@ module.exports = {
     'yield-star-spacing': 'warn',
     'yoda': 'warn',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'warn',
     'vue/require-default-prop': 'off',
     'vue/html-self-closing': [
       'error',
