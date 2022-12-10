@@ -177,9 +177,9 @@
             "description": "Emitted when a page button was clicked. Cancelable",
             "args": [
               {
-                "arg": "bvEvent",
+                "arg": "BvEvent",
                 "type": "BvEvent",
-                "description": "The `BvEvent` object. Call `bvEvent.preventDefault()` to cancel page selection"
+                "description": "The `BvEvent` object. Call `BvEvent.preventDefault()` to cancel page selection"
               },
               {
                 "type": "number",

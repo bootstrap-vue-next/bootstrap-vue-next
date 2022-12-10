@@ -55,7 +55,7 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
 /**
  * @external
  */
-const BToggle: Directive<HTMLElement> = {
+export default {
   mounted(el: HTMLElement, binding: DirectiveBinding<string>): void {
     const targetIds = getTargets(binding, el)
     const targetAttrs = []
@@ -107,6 +107,4 @@ const BToggle: Directive<HTMLElement> = {
     //     el.setAttribute('data-bs-target', selector)
     // }
   },
-}
-
-export default BToggle
+} as Directive<HTMLElement>

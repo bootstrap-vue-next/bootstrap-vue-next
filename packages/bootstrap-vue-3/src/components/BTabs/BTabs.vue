@@ -120,6 +120,16 @@ const props = withDefaults(defineProps<BTabsProps>(), {
   modelValue: -1,
 })
 
+interface BTabsEmits {
+  (e: 'update:modelValue', value: number): void
+  (e: 'activate-tab', v1: number, v2: number, v3: BvEvent): void
+  (e: 'click'): void // TODO click event is never used
+}
+
+const emit = defineEmits<BTabsEmits>()
+
+const slots = useSlots()
+
 const cardBoolean = useBooleanish(toRef(props, 'card'))
 const endBoolean = useBooleanish(toRef(props, 'end'))
 const fillBoolean = useBooleanish(toRef(props, 'fill'))
@@ -130,16 +140,6 @@ const noNavStyleBoolean = useBooleanish(toRef(props, 'noNavStyle'))
 const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 const smallBoolean = useBooleanish(toRef(props, 'small'))
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
-
-interface BTabsEmits {
-  (e: 'update:modelValue', value: number): void
-  (e: 'activate-tab', v1: number, v2: number, v3: BvEvent): void
-  (e: 'click'): void // TODO click event is never used
-}
-
-const emit = defineEmits<BTabsEmits>()
-
-const slots = useSlots()
 
 const _tabIndex = ref(props.modelValue)
 const _currentTabButton = ref('')
@@ -231,7 +231,7 @@ const activateTab = (index: number): boolean => {
       !tabs.value[index].disabled &&
       (tabIndex.value < 0 || tabs.value[index].buttonId !== _currentTabButton.value)
     ) {
-      const tabEvent = new BvEvent('activate-tab', {cancelable: true, vueTarget: this})
+      const tabEvent = new BvEvent('activate-tab', {cancelable: true})
       emit('activate-tab', index, tabIndex.value, tabEvent)
       if (!tabEvent.defaultPrevented) {
         tabIndex.value = index

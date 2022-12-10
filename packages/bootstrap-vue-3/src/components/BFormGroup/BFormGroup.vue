@@ -209,7 +209,6 @@ export default defineComponent({
 
       // If clicked an interactive element inside legend,
       // we just let the default happen
-      /* istanbul ignore next */
       if (LEGEND_INTERACTIVE_ELEMENTS.indexOf(tagName) !== -1) {
         return
       }

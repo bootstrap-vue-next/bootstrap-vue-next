@@ -6,7 +6,7 @@ import {resolve} from 'path'
 import {visualizer} from 'rollup-plugin-visualizer'
 import dts from 'vite-plugin-dts'
 
-const config = defineConfig({
+export default defineConfig({
   build: {
     sourcemap: true,
     minify: true,
@@ -74,5 +74,3 @@ const config = defineConfig({
     },
   },
 })
-
-export default config

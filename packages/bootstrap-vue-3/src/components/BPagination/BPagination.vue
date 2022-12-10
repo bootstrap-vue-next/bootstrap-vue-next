@@ -207,7 +207,6 @@ export default defineComponent({
       // Emit a user-cancelable `page-click` event
       const clickEvent = new BvEvent('page-click', {
         cancelable: true,
-        vueTarget: this,
         target,
       })
       emit('page-click', clickEvent, pageNumber)

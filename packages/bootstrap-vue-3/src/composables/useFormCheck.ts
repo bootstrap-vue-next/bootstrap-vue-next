@@ -93,7 +93,7 @@ const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean)
           : acc.concat([slot]),
       []
     )
-    .filter((e: any) => (e.type.__name || e.type.name) === nodeType)
+    .filter((e: any) => e.type.__name === nodeType || e.type.name === nodeType)
     .map((e: any) => {
       const txtChild = (e.children.default ? e.children.default() : []).find(
         (e: any) => e.type.toString() === 'Symbol(Text)'

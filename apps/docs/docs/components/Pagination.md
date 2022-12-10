@@ -409,7 +409,7 @@ or `fill` by setting the prop `align` to the appropriate value.
 You can listen for the `page-click` event, which provides an option to prevent the page from being
 selected. The event is emitted with two arguments:
 
-- `bvEvent`: The `BvEvent` object. Call `bvEvent.preventDefault()` to cancel page selection
+- `BvEvent`: The `BvEvent` object. Call `BvEvent.preventDefault()` to cancel page selection
 - `page`: Page number to select (starting with `1`)
 
 For accessibility reasons, when using the `page-click` event to prevent a page from being selected,

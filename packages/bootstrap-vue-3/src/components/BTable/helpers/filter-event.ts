@@ -24,7 +24,6 @@ export const EVENT_FILTER = [
 export const filterEvent = (event: Event) => {
   // Exit early when we don't have a target element
   if (!event || !event.target) {
-    /* istanbul ignore next */
     return false
   }
   const el = event.target as HTMLElement
