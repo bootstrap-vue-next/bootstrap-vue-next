@@ -7,7 +7,4 @@ import type {Alignment} from '../types'
  * @returns
  */
 export default (align: Ref<Alignment.JustifyContent | undefined>): ComputedRef<string> =>
-  computed(() => {
-    if (!align.value) return ''
-    return `justify-content-${align.value}`
-  })
+  computed(() => (!align.value ? '' : `justify-content-${align.value}`))
