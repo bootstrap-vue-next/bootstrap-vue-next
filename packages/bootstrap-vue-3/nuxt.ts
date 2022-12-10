@@ -1,42 +1,72 @@
 import {addComponentsDir, addImports, createResolver, defineNuxtModule} from '@nuxt/kit'
 import {displayName as configKey, name, version} from './package.json'
 
-// Perhaps the best Object structure would be {all?: boolean, [individual]?: boolean}
-// Where you can do {all: false, popover: true} and only get popover on
-// And also do {all: true, popover: false} and get everything but popover on
-// Where all default = true and individaul default = true
-// Inspired by tauri config https://tauri.app/v1/guides/building/app-size#allowlist-config
-
 type Import = Exclude<Parameters<typeof addImports>[0], Array<unknown>>
 
-interface PluginObject {
-  popover: boolean
-  toggle: boolean
-  tooltip: boolean
-  visible: boolean
+interface Base {
+  all?: boolean
 }
 
-interface ComposableObject {
-  useToast: boolean
-  useBreadcrumb: boolean
+type ObjectExtension = Record<string, boolean | undefined>
+
+interface PluginObject extends ObjectExtension {
+  popover?: boolean
+  toggle?: boolean
+  tooltip?: boolean
+  visible?: boolean
+}
+
+const pluginsBase: PluginObject = {
+  popover: undefined,
+  toggle: undefined,
+  tooltip: undefined,
+  visible: undefined,
+}
+
+interface ComposableObject extends ObjectExtension {
+  useToast?: boolean
+  useBreadcrumb?: boolean
+}
+
+const composablesBase: ComposableObject = {
+  useBreadcrumb: undefined,
+  useToast: undefined,
 }
 
 interface ModuleOptions {
-  plugins: boolean | PluginObject
-  composables: boolean | ComposableObject
+  plugins: Base & PluginObject
+  composables: Base & ComposableObject
 }
 
-const activeResolver = <T extends string>(
-  opt: boolean | Record<T, boolean>,
-  obj: Record<T, Import>
-): Array<Import> =>
-  opt === true // If all true, get all values from Array<Import>
-    ? Object.values(obj)
-    : opt === false
-    ? [] // If false []
-    : Object.keys(obj)
-        .filter((el) => opt[el as T] === true) // Filter which opts values are true
-        .map((el) => obj[el as T]) // Go back to the obj and pull out the value based on keys that had opt values of true
+/**
+ * An object gets set with the defaults of true/false.
+ * Then gets those values overwritten by what's in the opts.
+ * The values gets filtered by which of those opts are true.
+ * TODO Types need to be better, you can essentially input anything you want.
+ * @param {Base & T} opt
+ * @param {T} defaults
+ * @param {Record<keyof Omit<T, keyof Base>, Import>} values
+ * @returns {Array<Import>} filtered by which property key values are true from opts
+ */
+const activeResolver = <T extends ObjectExtension>(
+  opt: Base & T,
+  defaults: T,
+  values: Record<keyof Omit<T, keyof Base>, Import>
+): Array<Import> => {
+  const {all, ...plugs} = opt
+  const internalDefaults = {...defaults}
+  Object.keys(internalDefaults).forEach(
+    (el) => ((internalDefaults as unknown as keyof T)[el] = all)
+  )
+  const finalObj = {...internalDefaults, ...plugs}
+  return Object.entries(values)
+    .filter(([key]) =>
+      Object.keys(finalObj)
+        .filter((key) => finalObj[key] === true)
+        .includes(key)
+    )
+    .map(([, value]) => value)
+}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -49,8 +79,8 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    plugins: true,
-    composables: true,
+    plugins: {all: true},
+    composables: {all: true},
   },
   setup(opts) {
     const {resolve} = createResolver(import.meta.url)
@@ -74,8 +104,8 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     addImports([
-      ...activeResolver(opts.plugins, plugins), // Get Plugin imports
-      ...activeResolver(opts.composables, composables), // Get Composable imports
+      ...activeResolver(opts.plugins, pluginsBase, plugins), // Get Plugin imports
+      ...activeResolver(opts.composables, composablesBase, composables), // Get Composable imports
     ])
   },
 })
