@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.4.14](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.13...v0.4.14) (2022-12-10)
+
+
+### Features
+
+* **BModal:** add the ability to prevent closing using Event.PreventDefault ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+* **BvEvent:** improve BvEvent and BvModalEvent event classes ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+* improve nuxt opts ([9a76d1e](https://github.com/cdmoro/bootstrap-vue-3/commit/9a76d1ed9c4ee854e72551023d6040d2ea8cdfb3))
+* improve nuxt.ts file ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+
+
+### Bug Fixes
+
+* **BModal:** backdrop and esc events not caring when hide is prevented ([dcd3bfe](https://github.com/cdmoro/bootstrap-vue-3/commit/dcd3bfe991bd6cdb177ef404f17b9dfdc41e1af8))
+* **BvEvent:** remove vueTarget from event ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+* export BvModalEvent ([f219c44](https://github.com/cdmoro/bootstrap-vue-3/commit/f219c449a813101c549e354856e2ff104b866405))
+* ignore ban-ts-comment inline ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+
 ## [0.4.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.12...v0.4.13) (2022-12-05)
 
 
