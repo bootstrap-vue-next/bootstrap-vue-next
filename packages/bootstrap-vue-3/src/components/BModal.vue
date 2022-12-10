@@ -19,7 +19,7 @@
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
-        @keyup.esc="onEsc"
+        @keyup.esc="hide('esc')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div
@@ -91,7 +91,7 @@
           </div>
         </div>
         <slot v-if="!hideBackdropBoolean" name="backdrop">
-          <div class="modal-backdrop fade show" @click="!noCloseOnBackdropBoolean && hide()" />
+          <div class="modal-backdrop fade show" @click="hide('backdrop')" />
         </slot>
       </div>
     </b-transition>
@@ -303,9 +303,6 @@ const buildModalEvent = (type: string, opts: Partial<BvModalEvent> = {}): BvModa
     componentId: computedId.value,
   })
 
-// Hypothetically noCloseOnEsc could instead be checked in hide, and prevent default
-// That way it could emit 'hide-prevented' along with the other use cases
-// That and noHideOnBackdrop
 const hide = (trigger = '') => {
   const event = buildModalEvent('hide', {cancelable: trigger !== '', trigger})
 
@@ -320,7 +317,11 @@ const hide = (trigger = '') => {
   }
   emit('hide', event)
 
-  if (event.defaultPrevented) {
+  if (
+    event.defaultPrevented ||
+    (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
+    (trigger === 'esc' && noCloseOnEscBoolean.value)
+  ) {
     emit('update:modelValue', true)
     emit('hide-prevented')
     return
@@ -340,12 +341,6 @@ const show = () => {
     return
   }
   emit('update:modelValue', true)
-}
-
-const onEsc = (e: KeyboardEvent) => {
-  if (!noCloseOnEscBoolean.value && modelValueBoolean.value && e.key === 'Escape') {
-    hide('esc')
-  }
 }
 
 const onBeforeEnter = () => show()
