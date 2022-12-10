@@ -51,7 +51,7 @@ const bind = (el: HTMLElement, binding: DirectiveBinding) => {
 /**
  * @external
  */
-const BVisible: Directive<HTMLElement> = {
+export default {
   beforeMount(el, binding) {
     bind(el, binding)
   },
@@ -61,7 +61,7 @@ const BVisible: Directive<HTMLElement> = {
   unmounted(el) {
     destroy(el)
   },
-}
+} as Directive<HTMLElement>
 
 class VisibilityObserver {
   private element: HTMLElement
@@ -131,5 +131,3 @@ class VisibilityObserver {
     this.observer = null
   }
 }
-
-export default BVisible

@@ -198,7 +198,7 @@
           {
             "args": [
               {
-                "arg": "update:modelValue",
+                "arg": "value",
                 "description": "",
                 "type": "boolean"
               }
@@ -209,9 +209,9 @@
           {
             "args": [
               {
-                "arg": "show",
+                "arg": "value",
                 "description": "",
-                "type": "Event"
+                "type": "BvModalEvent"
               }
             ],
             "description": "",
@@ -220,9 +220,9 @@
           {
             "args": [
               {
-                "arg": "shown",
+                "arg": "value",
                 "description": "",
-                "type": "Event"
+                "type": "BvModalEvent"
               }
             ],
             "description": "",
@@ -231,9 +231,9 @@
           {
             "args": [
               {
-                "arg": "hide",
+                "arg": "value",
                 "description": "",
-                "type": "Event"
+                "type": "BvModalEvent"
               }
             ],
             "description": "",
@@ -242,34 +242,56 @@
           {
             "args": [
               {
-                "arg": "hidden",
+                "arg": "value",
                 "description": "",
-                "type": "Event"
+                "type": "BvModalEvent"
               }
             ],
             "description": "",
             "emit": "hidden"
           },
           {
-            "args": [
-              {
-                "arg": "hide-prevented",
-                "description": "",
-                "type": "Event"
-              }
-            ],
+            "args": [],
             "description": "",
             "emit": "hide-prevented"
           },
           {
             "args": [],
             "description": "",
+            "emit": "show-prevented"
+          },
+          {
+            "args": [
+              {
+                "arg": "value",
+                "description": "",
+                "type": "BvModalEvent"
+              }
+            ],
+            "description": "",
             "emit": "ok"
           },
           {
-            "args": [],
+            "args": [
+              {
+                "arg": "value",
+                "description": "",
+                "type": "BvModalEvent"
+              }
+            ],
             "description": "",
             "emit": "cancel"
+          },
+          {
+            "args": [
+              {
+                "arg": "value",
+                "description": "",
+                "type": "BvModalEvent"
+              }
+            ],
+            "description": "",
+            "emit": "close"
           }
         ],
         "slots": [
@@ -285,12 +307,32 @@
           },
           {
             "description": "",
+            "name": "header",
+            "scope": []
+          },
+          {
+            "description": "",
             "name": "default",
             "scope": []
           },
           {
             "description": "",
             "name": "footer",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "cancel",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "ok",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "backdrop",
             "scope": []
           }
         ]

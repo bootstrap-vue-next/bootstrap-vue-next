@@ -5,7 +5,6 @@
       :trans-props="{enterToClass: 'show'}"
       @before-enter="onBeforeEnter"
       @after-enter="onAfterEnter"
-      @before-leave="onBeforeLeave"
       @leave="onLeave"
       @after-leave="onAfterLeave"
     >
@@ -20,7 +19,7 @@
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
-        @keyup.esc="onEsc"
+        @keyup.esc="hide('esc')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div
@@ -45,20 +44,14 @@
                   </slot>
                 </component>
                 <template v-if="!hideHeaderCloseBoolean">
-                  <button
-                    v-if="hasHeaderCloseSlot"
-                    type="button"
-                    data-bs-dismiss="modal"
-                    @click="hide()"
-                  >
+                  <button v-if="hasHeaderCloseSlot" type="button" @click="hide('close')">
                     <slot name="header-close" />
                   </button>
                   <b-close-button
                     v-else
                     :aria-label="headerCloseLabel"
-                    data-bs-dismiss="modal"
                     :white="headerCloseWhite"
-                    @click="hide()"
+                    @click="hide('close')"
                   />
                 </template>
               </slot>
@@ -76,7 +69,7 @@
                     :disabled="disableCancel"
                     :size="buttonSize"
                     :variant="cancelVariant"
-                    @click="hide(), emit('cancel')"
+                    @click="hide('cancel')"
                   >
                     {{ cancelTitle }}
                   </b-button>
@@ -88,7 +81,7 @@
                     :disabled="disableOk"
                     :size="buttonSize"
                     :variant="okVariant"
-                    @click="hide(), emit('ok')"
+                    @click="hide('ok')"
                   >
                     {{ okTitle }}
                   </b-button>
@@ -98,7 +91,7 @@
           </div>
         </div>
         <slot v-if="!hideBackdropBoolean" name="backdrop">
-          <div class="modal-backdrop fade show" @click="!noCloseOnBackdropBoolean && hide()" />
+          <div class="modal-backdrop fade show" @click="hide('backdrop')" />
         </slot>
       </div>
     </b-transition>
@@ -110,12 +103,11 @@
 import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
-import {isEmptySlot} from '../utils'
+import {BvModalEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
 
-// TODO build lazy system
 // aria
 // autofocus
 // close on escape when autofocus
@@ -205,13 +197,15 @@ const props = withDefaults(defineProps<BModalProps>(), {
 
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
-  (e: 'show'): void
-  (e: 'shown'): void
-  (e: 'hide'): void
-  (e: 'hidden'): void
-  (e: 'hide-prevented', value: Event): void
-  (e: 'ok'): void
-  (e: 'cancel'): void
+  (e: 'show', value: BvModalEvent): void
+  (e: 'shown', value: BvModalEvent): void
+  (e: 'hide', value: BvModalEvent): void
+  (e: 'hidden', value: BvModalEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'ok', value: BvModalEvent): void
+  (e: 'cancel', value: BvModalEvent): void
+  (e: 'close', value: BvModalEvent): void
 }
 
 const emit = defineEmits<BModalEmits>()
@@ -299,26 +293,67 @@ const titleClasses = computed(() => [
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
 const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
 
-const hide = () => emit('update:modelValue', false)
+const buildModalEvent = (type: string, opts: Partial<BvModalEvent> = {}): BvModalEvent =>
+  new BvModalEvent(type, {
+    cancelable: false,
+    target: element.value || null,
+    relatedTarget: null,
+    trigger: null,
+    ...opts,
+    componentId: computedId.value,
+  })
 
-const onEsc = (e: KeyboardEvent) => {
-  if (!noCloseOnEscBoolean.value && modelValueBoolean.value && e.key === 'Escape') {
-    hide()
+const hide = (trigger = '') => {
+  const event = buildModalEvent('hide', {cancelable: trigger !== '', trigger})
+
+  if (trigger === 'ok') {
+    emit(trigger, event)
   }
+  if (trigger === 'cancel') {
+    emit(trigger, event)
+  }
+  if (trigger === 'close') {
+    emit(trigger, event)
+  }
+  emit('hide', event)
+
+  if (
+    event.defaultPrevented ||
+    (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
+    (trigger === 'esc' && noCloseOnEscBoolean.value)
+  ) {
+    emit('update:modelValue', true)
+    emit('hide-prevented')
+    return
+  }
+  emit('update:modelValue', false)
 }
 
-const onBeforeEnter = () => emit('show')
+// TODO: If a show is prevented, it will briefly show the animation
+// This is a bug. I'm not sure how to wait for the event to be determined
+// Before showing
+const show = () => {
+  const event = buildModalEvent('show', {cancelable: true})
+  emit('show', event)
+  if (event.defaultPrevented) {
+    emit('update:modelValue', false)
+    emit('show-prevented')
+    return
+  }
+  emit('update:modelValue', true)
+}
+
+const onBeforeEnter = () => show()
 const onAfterEnter = () => {
   isActive.value = true
-  emit('shown')
+  emit('shown', buildModalEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
-const onBeforeLeave = () => emit('hide')
 const onLeave = () => {
   isActive.value = false
 }
 const onAfterLeave = () => {
-  emit('hidden')
+  emit('hidden', buildModalEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 

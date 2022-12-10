@@ -1,4 +1,5 @@
-import BvEvent from './bvEvent'
+import BvEvent from './classes/BvEvent'
+import BvModalEvent from './classes/BvModalEvent'
 import cssEscape from './cssEscape'
 import {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROWSER} from './env'
 // For some reason the order of this matters
@@ -44,6 +45,7 @@ export {
   cloneDeep,
   BvEvent,
   isBooleanish,
+  BvModalEvent,
   cssEscape,
   attemptBlur,
   startCase,
@@ -113,6 +115,7 @@ export default {
   omit,
   readonlyDescriptor,
   mergeDeep,
+  BvModalEvent,
   normalizeSlot,
   getActiveElement,
   isBooleanish,

@@ -1,4 +1,6 @@
+// eslint-disable-next-line no-var
 declare var WebKitMutationObserver: any
+// eslint-disable-next-line no-var
 declare var MozMutationObserver: any
 
 export const HAS_WINDOW_SUPPORT = typeof window !== 'undefined'
@@ -7,7 +9,6 @@ export const HAS_ELEMENT_SUPPORT = typeof Element !== 'undefined'
 export const HAS_NAVIGATOR_SUPPORT = typeof navigator !== 'undefined'
 export const HAS_PROMISE_SUPPORT = typeof Promise !== 'undefined'
 
-/* istanbul ignore next: JSDOM always returns false */
 export const HAS_MUTATION_OBSERVER_SUPPORT =
   typeof MutationObserver !== 'undefined' ||
   typeof WebKitMutationObserver !== 'undefined' ||
@@ -32,7 +33,6 @@ export const HAS_PASSIVE_EVENT_SUPPORT = (() => {
         // This function will be called when the browser
         // attempts to access the passive property
         get passive() {
-          /* istanbul ignore next: will never be called in JSDOM */
           passiveEventSupported = true
           return passiveEventSupported
         },
@@ -40,7 +40,6 @@ export const HAS_PASSIVE_EVENT_SUPPORT = (() => {
       WINDOW.addEventListener('test', options, options)
       WINDOW.removeEventListener('test', options, options)
     } catch {
-      /* istanbul ignore next: will never be called in JSDOM */
       passiveEventSupported = false
     }
   }
@@ -53,7 +52,6 @@ export const HAS_TOUCH_SUPPORT =
 export const HAS_POINTER_EVENT_SUPPORT =
   IS_BROWSER && Boolean(WINDOW.PointerEvent || WINDOW.MSPointerEvent)
 
-/* istanbul ignore next: JSDOM only checks for 'IntersectionObserver' */
 export const HAS_INTERACTION_OBSERVER_SUPPORT =
   IS_BROWSER &&
   'IntersectionObserver' in WINDOW &&

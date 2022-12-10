@@ -4,7 +4,7 @@ import {Popover} from 'bootstrap'
 /**
  * @external
  */
-const BPopover: Directive<HTMLElement> = {
+export default {
   mounted(el, binding) {
     let placement: Popover.Options['placement'] = 'right'
     const trigger: string[] = []
@@ -48,6 +48,4 @@ const BPopover: Directive<HTMLElement> = {
     const instance = Popover.getInstance(el)
     instance?.dispose()
   },
-}
-
-export default BPopover
+} as Directive<HTMLElement>

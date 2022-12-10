@@ -67,16 +67,18 @@ const resolveDelay = (values: DirectiveBinding['value']): Tooltip.Options['delay
 
 const resolveTitle = (values: DirectiveBinding['value']): Tooltip.Options['title'] => {
   if (typeof values === 'undefined') {
-    console.warn('Review tooltip directive usage. Some uses are not defining a title in root component or a value like `v-b-tooltip=\'{title: "my title"}\'` nor `v-b-tooltip="\'my title\'"` to define a title');
-    return '';
+    console.warn(
+      'Review tooltip directive usage. Some uses are not defining a title in root component or a value like `v-b-tooltip=\'{title: "my title"}\'` nor `v-b-tooltip="\'my title\'"` to define a title'
+    )
+    return ''
   }
-  return typeof values === 'object' ? values?.title : values;
+  return typeof values === 'object' ? values?.title : values
 }
 
 /**
  * @external
  */
-const BTooltip: Directive<HTMLElement> = {
+export default {
   beforeMount(el, binding) {
     el.setAttribute('data-bs-toggle', 'tooltip')
     if (!el.getAttribute('title')) {
@@ -120,6 +122,4 @@ const BTooltip: Directive<HTMLElement> = {
     const instance = Tooltip.getInstance(el)
     instance?.dispose()
   },
-}
-
-export default BTooltip
+} as Directive<HTMLElement>

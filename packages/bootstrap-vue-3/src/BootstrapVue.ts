@@ -126,7 +126,7 @@ export {
 export {BToastPlugin}
 
 // Export available utils
-export {BvEvent} from './utils'
+export {BvEvent, BvModalEvent} from './utils'
 
 // Export components
 export {
