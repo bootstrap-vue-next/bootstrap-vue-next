@@ -1,5 +1,5 @@
 import {type MaybeComputedRef, resolveUnref, useTimeoutFn, UseTimeoutFnOptions} from '@vueuse/core'
-import {computed, type ComputedRef, ref, type Ref, toRef, watch} from 'vue'
+import {computed, type ComputedRef, onBeforeUnmount, type Ref, ref, toRef, watch} from 'vue'
 
 type VoidFn = () => void
 
@@ -99,6 +99,14 @@ export default (
    */
   watch(resolvedLength, () => {
     myRestart()
+  })
+
+  /**
+   * Cleanup
+   */
+  onBeforeUnmount(() => {
+    stop()
+    clearInterval(interval)
   })
 
   return {
