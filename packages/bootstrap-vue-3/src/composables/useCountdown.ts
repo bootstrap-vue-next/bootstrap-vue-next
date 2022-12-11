@@ -16,6 +16,8 @@ interface CountdownReturn {
  * In order to make the timeout reactive if input length changes, the timer restarts.
  * Meaning if you change length from 5 seconds to 2 seconds, it will lower to 2 seconds.
  * If you change from 5 seconds to 10 seconds, it will restart the timer to 10 seconds.
+ *
+ * @important ensure that you call `stop()` before unmount in the component
  */
 export default (
   length: MaybeComputedRef<number>,
@@ -99,14 +101,6 @@ export default (
    */
   watch(resolvedLength, () => {
     myRestart()
-  })
-
-  /**
-   * Cleanup
-   */
-  onBeforeUnmount(() => {
-    stop()
-    clearInterval(interval)
   })
 
   return {
