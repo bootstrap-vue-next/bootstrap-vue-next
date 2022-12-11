@@ -38,7 +38,8 @@
     "vue": "^3.2.45"
   },
   "dependencies": {
-    "@nuxt/kit": "3.0.0"
+    "@nuxt/kit": "3.0.0",
+    "@vueuse/core": "^9.6.0"
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.6",
