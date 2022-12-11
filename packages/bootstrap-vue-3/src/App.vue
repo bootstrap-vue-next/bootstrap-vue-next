@@ -14,12 +14,17 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {onBeforeUnmount, ref} from 'vue'
 import useCountdown from './composables/useCountdown'
 
 const a = ref(5400)
 
 const {isPending, stop, value, pause, restart, resume} = useCountdown(a)
+
+/**
+ * Important to do this
+ */
+onBeforeUnmount(stop)
 
 // You can use this file as a development spot to test your changes
 // Please do not commit this file
