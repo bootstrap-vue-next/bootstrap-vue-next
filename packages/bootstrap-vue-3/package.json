@@ -18,6 +18,8 @@
   "files": [
     "dist",
     "src",
+    "!src/**/*.spec.ts",
+    "!src/**/*.spec.js",
     "nuxt.ts"
   ],
   "types": "./dist/BootstrapVue.d.ts",
