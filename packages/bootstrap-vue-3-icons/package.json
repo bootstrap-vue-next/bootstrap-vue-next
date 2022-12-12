@@ -19,7 +19,7 @@
   "files": [
     "dist",
     "src",
-    "nuxt.js"
+    "nuxt.ts"
   ],
   "bin": {
     "generate": "./scripts/generate.js"
