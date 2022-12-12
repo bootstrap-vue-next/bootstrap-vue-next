@@ -4,13 +4,14 @@ import {
   useIntervalFn,
   type UseIntervalFnOptions,
 } from '@vueuse/core'
-import {computed, type ComputedRef, type Ref, ref, watch, watchEffect} from 'vue'
+import {computed, type ComputedRef, type Ref, ref, watchEffect} from 'vue'
 
 type VoidFn = () => void
 
 interface CountdownReturn {
   isActive: Ref<boolean>
-  reset: VoidFn
+  restart: VoidFn
+  stop: VoidFn
   resume: VoidFn
   pause: VoidFn
   value: ComputedRef<number>
@@ -26,7 +27,7 @@ interface CountdownReturn {
 export default (
   length: MaybeComputedRef<number>,
   interval: MaybeComputedRef<number> = 1000,
-  opts: UseIntervalFnOptions = {immediate: true}
+  intervalOpts: UseIntervalFnOptions
 ): CountdownReturn => {
   const intervalsPassed = ref<number>(0)
 
@@ -36,19 +37,29 @@ export default (
 
   const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / intervalLength.value))
 
-  const timeAccumulatedInMs = computed(() => intervalsPassed.value * intervalLength.value)
-
-  const reset = () => {
-    intervalsPassed.value = 0
-  }
+  const computedVal = computed(() =>
+    isActive.value
+      ? Math.round((resolvedLength.value - intervalsPassed.value * intervalLength.value) / 1000)
+      : 0
+  )
 
   const {pause, resume, isActive} = useIntervalFn(
     () => {
       intervalsPassed.value = intervalsPassed.value + 1
     },
     interval,
-    {immediate: opts.immediate}
+    {...intervalOpts}
   )
+
+  const restart = () => {
+    intervalsPassed.value = 0
+    resume()
+  }
+
+  const stop = () => {
+    intervalsPassed.value = amountOfIntervals.value
+    pause() // Unnecessary as it will get paused in watcher
+  }
 
   watchEffect(() => {
     if (intervalsPassed.value > amountOfIntervals.value) {
@@ -76,10 +87,6 @@ export default (
    * We then normalize and create these outputs as stated in the below computed
    */
 
-  const computedVal = computed(() =>
-    isActive.value ? Math.round((resolvedLength.value - timeAccumulatedInMs.value) / 1000) : 0
-  )
-
   /**
    * If arg length is changed, reset timer
    */
@@ -89,7 +96,8 @@ export default (
 
   return {
     isActive,
-    reset,
+    restart,
+    stop,
     pause,
     resume,
     value: computedVal,
