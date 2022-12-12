@@ -18,7 +18,7 @@
   "files": [
     "dist",
     "src",
-    "nuxt.js"
+    "nuxt.ts"
   ],
   "types": "./dist/BootstrapVue.d.ts",
   "private": false,
