@@ -31,15 +31,20 @@ export default (
 ): CountdownReturn => {
   const intervalsPassed = ref<number>(0)
 
-  const resolvedLength = computed(() => resolveUnref(length))
+  let resolvedLength: number = resolveUnref(length)
 
-  const intervalLength = computed(() => resolveUnref(interval))
+  // TODO make sure this is reactive enough
+  watchEffect(() => (resolvedLength = resolveUnref(length)))
 
-  const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / intervalLength.value))
+  let intervalLength: number = resolveUnref(interval)
+
+  watchEffect(() => (intervalLength = resolveUnref(interval)))
+
+  const amountOfIntervals = computed(() => Math.ceil(resolvedLength / intervalLength))
 
   const computedVal = computed(() =>
     isActive.value
-      ? Math.round((resolvedLength.value - intervalsPassed.value * intervalLength.value) / 1000)
+      ? Math.round((resolvedLength - intervalsPassed.value * intervalLength) / 1000)
       : 0
   )
 
@@ -58,7 +63,7 @@ export default (
 
   const stop = () => {
     intervalsPassed.value = amountOfIntervals.value
-    pause() // Unnecessary as it will get paused in watcher
+    // pause() // Only here for the sake of demonstrating the flow. It will be called in the watchEffect
   }
 
   watchEffect(() => {
