@@ -1,4 +1,10 @@
-import {type MaybeComputedRef, resolveUnref, useTimeoutFn, UseTimeoutFnOptions} from '@vueuse/core'
+import {
+  type MaybeComputedRef,
+  resolveUnref,
+  useIntervalFn,
+  useTimeoutFn,
+  UseTimeoutFnOptions,
+} from '@vueuse/core'
 import {computed, type ComputedRef, type Ref, ref, toRef, watch} from 'vue'
 
 type VoidFn = () => void
@@ -21,7 +27,8 @@ interface CountdownReturn {
  */
 export default (
   length: MaybeComputedRef<number>,
-  opts: UseTimeoutFnOptions = {immediate: false}
+  interval = 1000,
+  opts: UseTimeoutFnOptions = {immediate: true}
 ): CountdownReturn => {
   const timePassed = ref(0)
 
@@ -35,80 +42,90 @@ export default (
    */
   const computedLength = computed(() => pausedAtTime.value ?? resolvedLength.value)
 
-  let interval: ReturnType<typeof setInterval> = setInterval(() => {
-    timePassed.value = timePassed.value + 1000
-  }, 1000)
-
-  const resetTimePassed = () => {
-    timePassed.value = 0
-  }
-
-  const resetPauseTimer = () => {
-    pausedAtTime.value = null
-  }
-
-  const resetInterval = () => {
-    clearInterval(interval)
-    interval = setInterval(() => {
-      timePassed.value = timePassed.value + 1000
-    }, 1000)
-  }
-
-  const {isPending, start, stop} = useTimeoutFn(
-    () => clearInterval(interval),
-    toRef(computedLength, 'value'),
+  const {pause: pauseInterval, resume: resumeInterval} = useIntervalFn(
+    () => {
+      timePassed.value = timePassed.value + interval
+    },
+    interval,
     {immediate: opts.immediate}
   )
 
-  const myResume = () => {
-    // If there is no pause set-point OR if there is not a FULL SECOND to pass, do not resume
-    // ie if length is 5400ms, and timePassed is at 5s, remaining is 400, check 400/1000 for if there is a full second to pass
-    if (pausedAtTime.value === null || computedLength.value / 1000 < 1) return
-    resetInterval()
-    start()
-    resetPauseTimer()
+  const {
+    isPending,
+    start: startTimeout,
+    stop: stopTimeout,
+  } = useTimeoutFn(
+    () => {
+      pauseInterval()
+    },
+    toRef(computedLength, 'value'),
+    {
+      immediate: opts.immediate,
+    }
+  )
+
+  const coldStart = () => {
+    resumeInterval()
+    startTimeout()
   }
 
-  const myPause = () => {
+  const coldStop = () => {
+    pauseInterval()
+    stopTimeout()
+  }
+
+  const restartTimeAndPaused = () => {
+    timePassed.value = 0
+    pausedAtTime.value = null
+  }
+
+  const resume = () => {
+    // If there is no pause set-point OR if there is not a FULL INTERVAL to pass, do not resume
+    // ie if there is length 5450 and interval 100, and 54 intervals have passed, (54*100=5400ms have passed)
+    // there would be a remaining 50ms, so check check 50/100 to check if there is a full interval to pass
+    if (pausedAtTime.value === null || computedLength.value / interval < 1) return
+    coldStart()
+    pausedAtTime.value = null
+  }
+
+  const pause = () => {
     // Check if the timePassed is passed the initial length of the timer. Do not create a pause set-point if the timer is done
     // OR if the timer has not started, do not create a pause set-point
     if (timePassed.value >= resolvedLength.value || timePassed.value === 0) return
     pausedAtTime.value = resolvedLength.value - timePassed.value
-    clearInterval(interval)
-    stop()
+    coldStop()
   }
 
-  const myRestart = () => {
-    resetTimePassed()
-    resetPauseTimer()
-    resetInterval()
-    start()
+  const restart = () => {
+    restartTimeAndPaused()
+    pauseInterval()
+    coldStart()
   }
 
-  const myStop = () => {
-    resetTimePassed()
-    resetPauseTimer()
-    clearInterval(interval)
-    stop()
+  const stop = () => {
+    restartTimeAndPaused()
+    coldStop()
   }
 
   const computedVal = computed(() =>
-    isPending.value ? Math.round((computedLength.value - timePassed.value) / 1000) : 0
+    isPending.value || pausedAtTime.value !== null
+      ? Math.round((computedLength.value - timePassed.value) / 1000)
+      : 0
   )
 
   /**
    * If arg length is changed, reset timer
    */
   watch(resolvedLength, () => {
-    myRestart()
+    restart()
   })
 
   return {
     isPending,
-    restart: myRestart,
-    stop: myStop,
-    pause: myPause,
-    resume: myResume,
+    restart,
+    stop,
+    pause,
+    resume,
     value: computedVal,
   }
 }
