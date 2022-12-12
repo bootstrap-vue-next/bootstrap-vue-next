@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.15](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.14...v0.4.15) (2022-12-12)
+
+
+### Bug Fixes
+
+* **nuxt:** include new files when packing ([ae7a998](https://github.com/cdmoro/bootstrap-vue-3/commit/ae7a998640cb573128cd0f63db734d3947e7e7e2))
+
 ## [0.4.14](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.13...v0.4.14) (2022-12-10)
 
 
