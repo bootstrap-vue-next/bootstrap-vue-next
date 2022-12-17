@@ -1,7 +1,7 @@
 import {enableAutoUnmount, flushPromises, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import {ref} from 'vue'
-import {TableField, TableItem} from '../../types'
+import {TableField, TableFieldObject, TableItem} from '../../types'
 import BTable from './BTable.vue'
 import BTableSimple from './BTableSimple.vue'
 
@@ -626,5 +626,30 @@ describe('table', () => {
     const $table = wrapper.get('table')
     expect($table.classes()).toContain('b-table-busy')
     expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
+  })
+
+  it('has accepts a formatter function', async () => {
+    const fields2: Array<TableFieldObject> = fields.map((field) => {
+      if (typeof field === 'object') {
+        return {
+          key: field.key,
+          formatter: (value: any, key: string, item: any) => value.toUpperCase(),
+        }
+      }
+      return field
+    })
+    const wrapper = mount(BTable, {
+      props: {
+        fields: fields2,
+        items,
+      },
+    })
+
+    await flushPromises()
+
+    const $table = wrapper.get('table')
+    const $firstRow = $table.get('tbody tr td')
+
+    expect($firstRow.text()).toBe('HOSSAM')
   })
 })
