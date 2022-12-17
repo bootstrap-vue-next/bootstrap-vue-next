@@ -125,6 +125,14 @@ export default () => {
     }
   }
 
+  const formatItem = (item: TableItem, fields: TableFieldObject) => {
+    const value = item[fields.key]
+    if (typeof value === 'string' && fields.formatter && typeof fields.formatter === 'function') {
+      return fields.formatter(value, fields.key, item)
+    }
+    return item[fields.key]
+  }
+
   return {
     normaliseFields,
     mapItems,
@@ -132,5 +140,6 @@ export default () => {
     updateInternalItems,
     filterEvent,
     notifyFilteredItems,
+    formatItem,
   }
 }
