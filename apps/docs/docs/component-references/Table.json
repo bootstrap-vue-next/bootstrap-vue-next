@@ -331,6 +331,16 @@
           },
           {
             "description": "",
+            "name": "custom-foot",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "table-caption",
+            "scope": []
+          },
+          {
+            "description": "",
             "name": "default",
             "scope": []
           }
