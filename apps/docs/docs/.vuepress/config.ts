@@ -38,6 +38,7 @@ export default defineUserConfig({
         text: 'Reference',
         children: [
           {text: 'Components', link: '/components/'},
+          {text: 'Icons', link: '/icons/'},
           {text: 'Types', link: '/reference/types.md'},
           {text: 'Comparison with BootstrapVue', link: '/reference/parityList.md'},
         ],
