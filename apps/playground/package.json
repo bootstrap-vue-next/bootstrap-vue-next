@@ -12,7 +12,6 @@
     "@popperjs/core": "2.11.6",
     "bootstrap": "5.2.3",
     "bootstrap-vue-3": "workspace:*",
-    "bootstrap-vue-3-icons": "workspace:*",
     "vue": "3.2.45",
     "vue-router": "4.1.6"
   },

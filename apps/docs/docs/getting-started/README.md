@@ -50,7 +50,16 @@ To use this library you have to install these packages:
 Install the necessary packages for `bootstrap-vue-3`:
 
 <CodeGroup>
-  <CodeGroupItem title="YARN" active>
+  <CodeGroupItem title="PNPM" active>
+
+```bash
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core
+
+pnpm add unplugin-vue-components -D
+```
+
+  </CodeGroupItem>
+  <CodeGroupItem title="YARN">
 
 ```bash
 yarn add bootstrap bootstrap-vue-3 @popperjs/core
@@ -59,7 +68,6 @@ yarn add unplugin-vue-components -D
 ```
 
   </CodeGroupItem>
-
   <CodeGroupItem title="NPM">
 
 ```bash
@@ -69,21 +77,12 @@ npm i unplugin-vue-components -D
 ```
 
   </CodeGroupItem>
-
-  <CodeGroupItem title="PNPM">
-
-```bash
-pnpm add bootstrap bootstrap-vue-3 @popperjs/core
-
-pnpm add unplugin-vue-components -D
-```
-
-  </CodeGroupItem>
 </CodeGroup>
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 
 ```ts
+// vite.config.js/ts
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
@@ -102,6 +101,7 @@ export default defineConfig({
 Finally, in your `main.js/ts` import the CSS:
 
 ```ts
+// main.js/ts
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 ```
@@ -111,36 +111,37 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 If using TypeScript you will want to add `components.d.ts` to the `include` array in your tsconfig.json:
 
 ```json
-"include": ["components.d.ts", ...],
+// tsconfig.json
+{
+  "include": ["components.d.ts"],
+}
 ```
 
 #### Legacy Installation
 
-- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Full Nuxt 3 compatibility is expected before a v1.0 release
+- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size
 
 Install the necessary packages for `bootstrap-vue-3`:
 
 <CodeGroup>
-  <CodeGroupItem title="YARN" active>
+  <CodeGroupItem title="PNPM" active>
+
+```bash
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core
+```
+
+  </CodeGroupItem>
+  <CodeGroupItem title="YARN">
 
 ```bash
 yarn add bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
-
   <CodeGroupItem title="NPM">
 
 ```bash
 npm i bootstrap bootstrap-vue-3 @popperjs/core
-```
-
-  </CodeGroupItem>
-
-  <CodeGroupItem title="PNPM">
-
-```bash
-pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 ```
 
   </CodeGroupItem>
@@ -149,6 +150,7 @@ pnpm add bootstrap bootstrap-vue-3 @popperjs/core
 Then, add to your `main.js/ts`:
 
 ```typescript
+// main.js/ts
 import App from './App.vue' // Can be a different place
 
 import { createApp } from 'vue'
@@ -168,21 +170,27 @@ app.mount('#app')
 
 ### Installation - Nuxt.js 3
 
-**Nuxt is not officially supported**. Various Bootstrap JavaScript elements contain references to 'Document' and 'Window', which will cause breaking issues during server-side rendering. Bootstrap-vue-3 is currently working on a fix for this
+**Nuxt is not officially supported**. Various Bootstrap JavaScript elements contain references to 'Document' and 'Window', which will cause breaking issues during server-side rendering. Bootstrap-vue-3 is currently working on a fix for this. Full Nuxt 3 compatibility is expected before a v1.0 release
 
 As with the Vue.js installation
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-3`
 
 <CodeGroup>
-  <CodeGroupItem title="YARN" active>
+  <CodeGroupItem title="PNPM" active>
+
+```bash
+pnpm add bootstrap bootstrap-vue-3 @popperjs/core -D
+```
+
+  </CodeGroupItem>
+  <CodeGroupItem title="YARN">
 
 ```bash
 yarn add bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
-
   <CodeGroupItem title="NPM">
 
 ```bash
@@ -190,19 +198,12 @@ npm i bootstrap bootstrap-vue-3 @popperjs/core -D
 ```
 
   </CodeGroupItem>
-
-  <CodeGroupItem title="PNPM">
-
-```bash
-pnpm add bootstrap bootstrap-vue-3 @popperjs/core -D
-```
-
-  </CodeGroupItem>
 </CodeGroup>
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-3`. The components will be imported automatically as needed
 
-```javascript
+```ts
+// nuxt.config.js/ts
 import { defineNuxtConfig } from 'nuxt3'
 
 export default defineNuxtConfig({
