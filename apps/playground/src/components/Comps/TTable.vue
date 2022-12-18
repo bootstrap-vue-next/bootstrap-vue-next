@@ -106,7 +106,7 @@ import {TableField, TableItem} from 'bootstrap-vue-3'
 
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
 const objectTableDefinitions: Ref<Array<TableField>> = ref([
-  {key: 'last_name', label: 'Family name'},
+  {key: 'last_name', label: 'Family name', formatter: (value: string) => value.toUpperCase()},
   {key: 'first_name', label: 'Given name'},
 ])
 const items: Array<TableItem> = [

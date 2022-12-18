@@ -301,7 +301,7 @@
           },
           {
             "description": "",
-            "name": "selectHead",
+            "name": "select-head",
             "scope": []
           },
           {
@@ -322,6 +322,16 @@
           {
             "description": "",
             "name": "table-busy",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "table-caption",
+            "scope": []
+          },
+          {
+            "description": "",
+            "name": "custom-foot",
             "scope": []
           },
           {
