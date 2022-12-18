@@ -26,12 +26,12 @@
     "eslint-config-custom": "workspace:*",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.4",
-    "release-please": "^14.17.4",
+    "release-please": "^15.0.0",
     "turbo": "latest"
   },
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@7.15.0"
+  "packageManager": "pnpm@7.18.2"
 }
