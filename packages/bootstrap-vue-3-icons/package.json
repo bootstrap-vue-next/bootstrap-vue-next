@@ -37,7 +37,7 @@
     "test:lint": "eslint --ext .js,.vue --ignore-path ../../.gitignore --fix src",
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage",
-    "buildIcons": "pnpm exec generate",
+    "prepublish": "pnpm run generate",
     "generate": "ts-node-esm --experimental-specifier-resolution=node ./scripts/generate.ts"
   },
   "peerDependencies": {
