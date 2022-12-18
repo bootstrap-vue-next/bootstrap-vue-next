@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, ref} from 'vue'
+import {computed, defineComponent, type PropType, ref} from 'vue'
 import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
 import type {InputType} from '../../types'
 

@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import {ComponentPublicInstance, ref} from 'vue'
+import {type ComponentPublicInstance, ref} from 'vue'
 
 const popoverInput = ref('foo')
 const popoverRef = ref<ComponentPublicInstance<HTMLButtonElement>>()

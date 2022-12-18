@@ -1,5 +1,5 @@
 import {getId} from '../utils'
-import {computed, ComputedRef, Ref} from 'vue'
+import {computed, type ComputedRef, type Ref} from 'vue'
 
 /**
  * @param id

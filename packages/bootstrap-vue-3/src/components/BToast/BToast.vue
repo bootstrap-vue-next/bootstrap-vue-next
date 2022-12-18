@@ -6,10 +6,10 @@ import {
   nextTick,
   onMounted,
   onUnmounted,
-  PropType,
+  type PropType,
   ref,
   toRef,
-  VNode,
+  type VNode,
   watch,
 } from 'vue'
 import {isLink, normalizeSlot, requestAF, toInteger} from '../../utils'

@@ -69,7 +69,7 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 
 | Event                | Status                                                                               | Observations                                      |
 | -------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------- |
-| `dismiss-count-down` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100)           | Renamed to `close-count-down` |
+| `dismiss-count-down` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100)           | Renamed to `close-countdown` |
 | `dismissed`          | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Renamed to `closed`      |
 | `input`              | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Renamed to `update:modelValue` |
 
@@ -85,7 +85,7 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 
 | Event    | Status                                                                               | Observations |
 | -------- | ------------------------------------------------------------------------------------ | ------------ |
-| `close-count-down` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Value type `number` |
+| `close-countdown` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Value type `number` |
 | `closed` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `update:modelValue` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Value type `boolean or number` |
 

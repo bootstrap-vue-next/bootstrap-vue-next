@@ -1,4 +1,4 @@
-import {Slots, VNode} from 'vue'
+import type {Slots, VNode} from 'vue'
 import {isFunction} from './inspect'
 
 export default (name: string, scope = {}, $slots: Slots = {}): VNode => {
