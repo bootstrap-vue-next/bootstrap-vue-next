@@ -11,7 +11,7 @@ export interface Props {
 // Emits
 export interface Emits {
   (e: 'dismissed'): void
-  (e: 'dismiss-count-down', value: number): void
+  (e: 'close-countdown', value: number): void
   (e: 'update:modelValue', value: boolean | number): void
 }
 // Other

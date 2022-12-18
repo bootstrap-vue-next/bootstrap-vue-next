@@ -27,7 +27,7 @@
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
 import {isEmptySlot, isNumeric, toFloat} from '../../utils'
 import type {BAvatarGroupParentData} from '../../types/components'
-import {computed, inject, StyleValue, toRef, useSlots} from 'vue'
+import {computed, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
 import {injectionKey} from './BAvatarGroup.vue'
 import {useBooleanish} from '../../composables'

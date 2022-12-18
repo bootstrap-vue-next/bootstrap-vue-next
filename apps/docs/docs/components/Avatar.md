@@ -784,7 +784,7 @@ Avatars are based upon `<b-badge>` and `<b-button>` components, and as such, rel
 </ClientOnly>
 
 <script lang="ts" setup>
-  import {ref, Ref} from 'vue';
+  import {ref, type Ref} from 'vue';
 
   const alertEvent = (event: PointerEvent) => {
     alert(`Clicked`);

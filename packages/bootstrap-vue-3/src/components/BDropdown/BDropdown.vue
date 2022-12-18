@@ -47,7 +47,7 @@
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import type Popper from '@popperjs/core'
 import {Dropdown} from 'bootstrap'
-import {ComponentPublicInstance, computed, onMounted, ref, toRef} from 'vue'
+import {type ComponentPublicInstance, computed, onMounted, ref, toRef} from 'vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {mergeDeep} from '../../utils'

@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'

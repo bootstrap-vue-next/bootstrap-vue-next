@@ -1,4 +1,3 @@
-import eagerComputed from './eagerComputed'
 import useAlignment from './useAlignment'
 import useBooleanish from './useBooleanish'
 import {createBreadcrumb, useBreadcrumb} from './useBreadcrumb'
@@ -18,7 +17,6 @@ import {normalizeOptions} from './useFormSelect'
 import useId from './useId'
 
 export {
-  eagerComputed,
   useAlignment,
   createBreadcrumb,
   useBreadcrumb,
@@ -39,7 +37,6 @@ export {
 }
 
 export default {
-  eagerComputed,
   useAlignment,
   createBreadcrumb,
   useBooleanish,

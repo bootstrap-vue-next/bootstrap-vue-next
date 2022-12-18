@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, Ref} from 'vue'
+import {ref, type Ref} from 'vue'
 import {TableField, TableItem} from 'bootstrap-vue-3'
 
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])

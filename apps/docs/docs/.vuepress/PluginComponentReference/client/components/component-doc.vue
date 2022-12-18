@@ -143,7 +143,7 @@
   </div>
 </template>
 <script lang="ts">
-import {resolveComponent, defineComponent, computed, ConcreteComponent, ref, Ref} from 'vue'
+import {resolveComponent, defineComponent, computed, ConcreteComponent, ref} from 'vue'
 import AnchoredHeading from './anchored-heading'
 import {hyphenate} from '../../../utils'
 // type definitions
