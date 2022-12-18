@@ -10,6 +10,7 @@
     >
       <slot />
       <template v-if="dismissibleBoolean">
+        <!-- TODO this renders incorrectly -->
         <b-button v-if="hasCloseSlot || closeContent" type="button" @click="closeClicked">
           <slot name="close">
             {{ closeContent }}
@@ -24,11 +25,12 @@
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
 import BTransition from '../BTransition/BTransition.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
+import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {computed, onBeforeUnmount, onMounted, type Ref, toRef, useSlots, watchEffect} from 'vue'
+import {computed, onBeforeUnmount, type Ref, toRef, useSlots, watchEffect} from 'vue'
 import {isEmptySlot} from '../../utils'
 import {useBooleanish} from '../../composables'
-import BCloseButton from '../BButton/BCloseButton.vue'
 import useCountdown from '../../composables/useCountdown'
 
 interface BAlertProps {
@@ -36,27 +38,32 @@ interface BAlertProps {
   dismissible?: Booleanish
   fade?: Booleanish
   modelValue?: boolean | number
-  show?: Booleanish
   variant?: ColorVariant
   closeContent?: string
+  immediate?: Booleanish
+  interval?: number
+  showOnPause?: Booleanish
 }
 
 const props = withDefaults(defineProps<BAlertProps>(), {
+  interval: 1000,
   dismissLabel: 'Close',
   dismissible: false,
   fade: false,
   modelValue: false,
-  show: false,
   variant: 'info',
+  immediate: true,
+  showOnPause: true,
 })
 
 const dismissibleBoolean = useBooleanish(toRef(props, 'dismissible'))
 const fadeBoolean = useBooleanish(toRef(props, 'fade'))
-const showBoolean = useBooleanish(toRef(props, 'show'))
+const immediateBoolean = useBooleanish(toRef(props, 'immediate'))
+const showOnPauseBoolean = useBooleanish(toRef(props, 'showOnPause'))
 
 interface BAlertEmits {
   (e: 'closed'): void
-  (e: 'close-count-down', value: number): void
+  (e: 'close-countdown', value: number): void
   (e: 'update:modelValue', value: boolean | number): void
 }
 
@@ -72,43 +79,42 @@ const computedClasses = computed(() => [
     'alert-dismissible': dismissibleBoolean.value,
   },
 ])
-// TODO the interval setting is somehow still a bit broken.
-// It seems like it fires out to intervals at once,
-// It feels like there are multiple intervals being made
-// Possible make the countdown combine with useIntervalFn
-const {isPending, pause, restart, resume, stop, value} = useCountdown(
+
+const {
+  isActive,
+  pause,
+  restart,
+  resume,
+  stop,
+  isPaused,
+  value: remainingMs,
+} = useCountdown(
   typeof props.modelValue === 'boolean' ? 0 : (toRef(props, 'modelValue') as Ref<number>),
-  1000,
+  toRef(props, 'interval'),
   {
-    immediate: typeof props.modelValue === 'number',
+    immediate: typeof props.modelValue === 'number' && immediateBoolean.value,
   }
 )
 
-const isAlertVisible = computed<boolean>(
-  () =>
-    showBoolean.value ||
-    (typeof props.modelValue === 'boolean' ? props.modelValue : isPending.value)
+const isAlertVisible = computed<boolean>(() =>
+  typeof props.modelValue === 'boolean'
+    ? props.modelValue
+    : isActive.value || (showOnPauseBoolean.value && isPaused.value)
 )
 
-watchEffect(() => {
-  emit('close-count-down', value.value)
-})
-
-// onMounted(() => {
-//   if (typeof props.modelValue === 'number') {
-//     restart()
-//   }
-// })
+watchEffect(() => emit('close-countdown', remainingMs.value))
 
 const closeClicked = (): void => {
   if (typeof props.modelValue === 'boolean') {
     emit('update:modelValue', false)
+  } else {
+    emit('update:modelValue', 0)
+    stop()
   }
-  stop()
   emit('closed')
 }
 
 onBeforeUnmount(() => stop())
 
-defineExpose({pause, restart, resume, stop})
+defineExpose({pause, resume, restart, stop})
 </script>

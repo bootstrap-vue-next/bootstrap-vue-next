@@ -1,7 +1,7 @@
 import type {Booleanish} from '../types'
 import type {Ref} from 'vue'
 import {resolveBooleanish} from '../utils'
-import eagerComputed from './eagerComputed'
+import {computedEager} from '@vueuse/core'
 
 // function useBooleanish<T>(el: Ref<Booleanish | T>): ComputedRef<boolean | T>
 // This may possibily be used in Vue 3.3 to include Booleanish and complex types ie Booleanish | string
@@ -25,7 +25,7 @@ function useBooleanish(
   | Readonly<Ref<boolean | undefined>>
   | Readonly<Ref<boolean | null>>
   | Readonly<Ref<boolean | undefined | null>> {
-  return eagerComputed(() =>
+  return computedEager(() =>
     el.value === undefined || el.value === null ? el.value : resolveBooleanish(el.value)
   )
 }

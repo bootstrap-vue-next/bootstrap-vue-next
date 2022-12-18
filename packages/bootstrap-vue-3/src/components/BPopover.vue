@@ -22,13 +22,13 @@
 
 <script lang="ts">
 import {
-  ComponentPublicInstance,
+  type ComponentPublicInstance,
   computed,
   defineComponent,
   nextTick,
   onBeforeUnmount,
   onMounted,
-  PropType,
+  type PropType,
   ref,
   toRef,
   watch,

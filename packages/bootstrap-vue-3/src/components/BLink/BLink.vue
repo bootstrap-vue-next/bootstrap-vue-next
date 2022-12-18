@@ -35,7 +35,7 @@
 <script lang="ts">
 import type {Booleanish, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, getCurrentInstance, PropType, ref, toRef} from 'vue'
+import {computed, defineComponent, getCurrentInstance, type PropType, ref, toRef} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {

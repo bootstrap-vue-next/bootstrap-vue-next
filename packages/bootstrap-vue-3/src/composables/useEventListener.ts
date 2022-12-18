@@ -1,4 +1,4 @@
-import {onBeforeUnmount, onMounted, Ref} from 'vue'
+import {onBeforeUnmount, onMounted, type Ref} from 'vue'
 
 /**
  * @param element

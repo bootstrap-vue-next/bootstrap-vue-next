@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 // import type {BSkeletonProps} from '../../types/components'
-import {computed, StyleValue} from 'vue'
+import {computed, type StyleValue} from 'vue'
 import type {ColorVariant, SkeletonAnimation, SkeletonType} from '../../types'
 
 interface BSkeletonProps {

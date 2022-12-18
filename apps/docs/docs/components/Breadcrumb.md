@@ -15,7 +15,7 @@
 <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
 
 <script lang="ts" setup>
-  import {ref, Ref} from 'vue'
+  import {ref, type Ref} from 'vue'
   import type {BreadcrumbItem} from 'bootstrap-vue-3'
 
   const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
@@ -45,7 +45,7 @@ element is automatically set if it is `undefined`.
 <b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
 
 <script lang="ts" setup>
-  import {ref, Ref} from 'vue'
+  import {ref, type Ref} from 'vue'
 
   const breadcrumbStringArray = ['Admin', 'Manage', 'Library']
 </script>
@@ -127,7 +127,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 </ClientOnly>
 
 <script lang="ts" setup>
-  import {ref, Ref} from 'vue';
+  import {ref, type Ref} from 'vue';
   import type {BreadcrumbItem} from 'bootstrap-vue-3'
 
   const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([

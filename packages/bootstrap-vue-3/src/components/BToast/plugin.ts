@@ -1,16 +1,16 @@
 import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '../../types'
 import {getId} from '../../utils'
 import {
-  App,
-  ComponentPublicInstance,
+  type App,
+  type ComponentPublicInstance,
   computed,
-  ComputedRef,
+  type ComputedRef,
   inject,
   isReactive,
-  Plugin,
+  type Plugin,
   reactive,
-  Ref,
-  VNode,
+  type Ref,
+  type VNode,
 } from 'vue'
 
 export interface ToastContent {

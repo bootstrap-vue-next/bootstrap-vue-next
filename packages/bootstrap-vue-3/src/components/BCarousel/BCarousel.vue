@@ -45,7 +45,7 @@
 <script setup lang="ts">
 // import type {BCarouselProps, BCarouselEmits} from '../types/components'
 import type {BCarouselParentData} from '../../types/components'
-import {InjectionKey, onMounted, provide, ref, toRef, useSlots, VNode} from 'vue'
+import {type InjectionKey, onMounted, provide, ref, toRef, useSlots, type VNode} from 'vue'
 import {Carousel} from 'bootstrap'
 import {useBooleanish, useEventListener, useId} from '../../composables'
 import type {Booleanish} from '../../types'

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, toRef} from 'vue'
 import type {Alignment, Booleanish} from '../types'
 import {getBreakpointProps, getClasses} from '../utils'
 import {useBooleanish} from '../composables'

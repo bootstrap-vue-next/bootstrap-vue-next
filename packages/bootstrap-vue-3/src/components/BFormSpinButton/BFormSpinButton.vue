@@ -1,5 +1,5 @@
 <script lang="ts">
-import {computed, ComputedRef, defineComponent, h, PropType, ref, Ref} from 'vue'
+import {computed, type ComputedRef, defineComponent, h, type PropType, ref, type Ref} from 'vue'
 import type {Booleanish} from '../../types'
 import {toFloat, toInteger} from '../../utils/number'
 import {isNull} from '../../utils/inspect'

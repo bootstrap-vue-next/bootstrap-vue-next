@@ -16,7 +16,7 @@
 <script lang="ts">
 import {omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, toRef} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import type {Booleanish} from '../../types'
 
