@@ -108,6 +108,7 @@ const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
 const objectTableDefinitions: Ref<Array<TableField>> = ref([
   {key: 'last_name', label: 'Family name', formatter: (value: string) => value.toUpperCase()},
   {key: 'first_name', label: 'Given name'},
+  {key: 'age', label: 'Age', formatter: (value: any) => `${value} years`},
 ])
 const items: Array<TableItem> = [
   {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},

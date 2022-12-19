@@ -127,7 +127,7 @@ export default () => {
 
   const formatItem = (item: TableItem, fields: TableFieldObject) => {
     const value = item[fields.key]
-    if (typeof value === 'string' && fields.formatter && typeof fields.formatter === 'function') {
+    if (fields.formatter && typeof fields.formatter === 'function') {
       return fields.formatter(value, fields.key, item)
     }
     return item[fields.key]
