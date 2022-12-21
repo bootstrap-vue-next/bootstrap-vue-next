@@ -34,7 +34,7 @@ import {
   watch,
 } from 'vue'
 import {Popover} from 'bootstrap'
-import {useBooleanish, useEventListener} from '../composables'
+import {useBooleanish} from '../composables'
 import type {BPopoverDelayObject} from '../types/components'
 import type {Booleanish, ColorVariant} from '../types'
 
@@ -105,12 +105,34 @@ export default defineComponent({
       return element
     }
 
+    const bsEventHandlers = [
+      {event: 'show.bs.popover', handler: () => emit('show')},
+      {event: 'shown.bs.popover', handler: () => emit('shown')},
+      {event: 'hide.bs.popover', handler: () => emit('hide')},
+      {event: 'hidden.bs.popover', handler: () => emit('hidden')},
+      {event: 'inserted.bs.popover', handler: () => emit('inserted')},
+    ]
+
+    const attachTargetEventHandlers = (targetElement: HTMLElement) => {
+      for (const pair of bsEventHandlers) {
+        targetElement.addEventListener(pair.event, pair.handler)
+      }
+    }
+
+    const disposeTargetEventHandlers = (targetElement: HTMLElement) => {
+      for (const pair of bsEventHandlers) {
+        targetElement.removeEventListener(pair.event, pair.handler)
+      }
+    }
+
     const generatePopoverInstance = (
       targetValue: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
     ) => {
       target.value = getElement(cleanElementProp(targetValue))
 
       if (!target.value) return
+
+      attachTargetEventHandlers(target.value)
 
       instance.value = new Popover(target.value, {
         customClass: props.customClass,
@@ -130,6 +152,9 @@ export default defineComponent({
       () => props.target,
       (newValue) => {
         instance.value?.dispose()
+        if (target.value instanceof HTMLElement) {
+          disposeTargetEventHandlers(target.value)
+        }
         generatePopoverInstance(newValue)
       }
     )
@@ -146,12 +171,6 @@ export default defineComponent({
       }
     )
 
-    useEventListener(target, 'show.bs.popover', () => emit('show'))
-    useEventListener(target, 'shown.bs.popover', () => emit('shown'))
-    useEventListener(target, 'hide.bs.popover', () => emit('hide'))
-    useEventListener(target, 'hidden.bs.popover', () => emit('hidden'))
-    useEventListener(target, 'inserted.bs.popover', () => emit('inserted'))
-
     onMounted(() => {
       nextTick(() => {
         generatePopoverInstance(props.target)
@@ -166,6 +185,9 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       instance.value?.dispose()
+      if (target.value instanceof HTMLElement) {
+        disposeTargetEventHandlers(target.value)
+      }
     })
 
     return {
