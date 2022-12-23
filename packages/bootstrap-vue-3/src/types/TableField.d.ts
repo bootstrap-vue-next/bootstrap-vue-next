@@ -7,7 +7,7 @@ export interface TableFieldObject<T = Record<string, unknown>> {
   headerTitle?: string
   headerAbbr?: string
   class?: string | string[]
-  formatter?: string | ((value: any, key?: string, item?: T) => string)
+  formatter?: string | ((value: unknown, key?: string, item?: T) => string)
   sortable?: boolean
   sortKey?: string
   sortDirection?: string
