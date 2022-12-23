@@ -1,12 +1,9 @@
-import BvEvent from './classes/BvEvent'
-import BvModalEvent from './classes/BvModalEvent'
-import cssEscape from './cssEscape'
-import {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROWSER} from './env'
-// For some reason the order of this matters
-// Moving ./env lower than ./dom, causes it to have cannot use before init errors
-// I couldn't manage to recreate it for a bug report to Vite/vue-tsc/"Someone"... It may be an issue with our config
-// Perhaps someone in the future could solve the issue better, than my temporary solution of just moving the import up
-import {
+export {BvEvent, BvModalEvent} from './classes'
+export {default as cssEscape} from './cssEscape'
+export {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROWSER} from './env'
+// For some reason the order of this matters. Moving ./env lower than ./dom, causes it to have cannot use before init errors
+// Perhaps someone in the future could solve the issue better, than my solution of just moving the export up
+export {
   attemptBlur,
   attemptFocus,
   contains,
@@ -26,122 +23,16 @@ import {
   selectAll,
   setAttr,
 } from './dom'
-import getBreakpointProps from './getBreakpointProps'
-import getClasses from './getClasses'
-import getId from './getId'
-import resolveAriaInvalid from './resolveAriaInvalid'
-import {isNumeric, isObject, isPlainObject} from './inspect'
-import mergeDeep from './mergeDeep'
-import normalizeSlot from './normalizeSlot'
-import {stringToInteger, toFloat, toInteger, toPercison} from './number'
-import {cloneDeep, omit, readonlyDescriptor} from './object'
-import {pluckProps, suffixPropName} from './props'
-import {isBooleanish, resolveBooleanish} from './booleanish'
-import isLink from './isLink'
-import {startCase, titleCase, toString, upperFirst} from './stringUtils'
-
-export {
-  titleCase,
-  cloneDeep,
-  BvEvent,
-  isBooleanish,
-  BvModalEvent,
-  cssEscape,
-  attemptBlur,
-  startCase,
-  toString,
-  upperFirst,
-  attemptFocus,
-  resolveAriaInvalid,
-  contains,
-  stringToInteger,
-  toFloat,
-  toInteger,
-  pluckProps,
-  isLink,
-  suffixPropName,
-  resolveBooleanish,
-  toPercison,
-  omit,
-  readonlyDescriptor,
-  mergeDeep,
-  normalizeSlot,
-  getActiveElement,
-  getAttr,
-  getBCR,
-  getStyle,
-  isActiveElement,
-  isElement,
-  isEmptySlot,
-  isTag,
-  isVisible,
-  offset,
-  removeAttr,
-  requestAF,
-  select,
-  selectAll,
-  setAttr,
-  HAS_DOCUMENT_SUPPORT,
-  HAS_NAVIGATOR_SUPPORT,
-  HAS_WINDOW_SUPPORT,
-  IS_BROWSER,
-  getBreakpointProps,
-  getClasses,
-  getId,
-  isNumeric,
-  isObject,
-  isPlainObject,
-}
-
-export default {
-  BvEvent,
-  cssEscape,
-  attemptBlur,
-  startCase,
-  titleCase,
-  toString,
-  upperFirst,
-  attemptFocus,
-  contains,
-  stringToInteger,
-  toFloat,
-  toInteger,
-  pluckProps,
-  isLink,
-  suffixPropName,
-  resolveBooleanish,
-  toPercison,
-  cloneDeep,
-  omit,
-  readonlyDescriptor,
-  mergeDeep,
-  BvModalEvent,
-  normalizeSlot,
-  getActiveElement,
-  isBooleanish,
-  resolveAriaInvalid,
-  getAttr,
-  getBCR,
-  getStyle,
-  isActiveElement,
-  isElement,
-  isEmptySlot,
-  isTag,
-  isVisible,
-  offset,
-  removeAttr,
-  requestAF,
-  select,
-  selectAll,
-  setAttr,
-  HAS_DOCUMENT_SUPPORT,
-  HAS_NAVIGATOR_SUPPORT,
-  HAS_WINDOW_SUPPORT,
-  IS_BROWSER,
-  getBreakpointProps,
-  getClasses,
-  getId,
-  isNumeric,
-  isObject,
-  isPlainObject,
-}
+export {default as getBreakpointProps} from './getBreakpointProps'
+export {default as getClasses} from './getClasses'
+export {default as getId} from './getId'
+export {default as resolveAriaInvalid} from './resolveAriaInvalid'
+export {isNumeric, isObject, isPlainObject} from './inspect'
+export {default as mergeDeep} from './mergeDeep'
+export {default as normalizeSlot} from './normalizeSlot'
+export {stringToInteger, toFloat, toInteger, toPercison} from './number'
+export {cloneDeep, omit, readonlyDescriptor} from './object'
+export {pluckProps, suffixPropName} from './props'
+export {isBooleanish, resolveBooleanish} from './booleanish'
+export {default as isLink} from './isLink'
+export {startCase, titleCase, toString, upperFirst} from './stringUtils'

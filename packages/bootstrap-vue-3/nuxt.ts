@@ -1,5 +1,4 @@
 import {addComponentsDir, addImports, createResolver, defineNuxtModule} from '@nuxt/kit'
-import {displayName as configKey, name, version} from './package.json'
 
 type Import = Exclude<Parameters<typeof addImports>[0], Array<unknown>>
 
@@ -70,9 +69,8 @@ const activeResolver = <T extends ObjectExtension>(
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name,
-    version,
-    configKey,
+    name: 'bootstrap-vue-3',
+    configKey: 'bootstrapVue3',
     compatibility: {
       nuxt: '^3.0.0',
       bridge: false,
