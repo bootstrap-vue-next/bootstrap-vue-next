@@ -329,9 +329,8 @@ const hide = (trigger = '') => {
   emit('update:modelValue', false)
 }
 
-// TODO: If a show is prevented, it will briefly show the animation
-// This is a bug. I'm not sure how to wait for the event to be determined
-// Before showing
+// TODO: If a show is prevented, it will briefly show the animation. This is a bug
+// I'm not sure how to wait for the event to be determined. Before showing
 const show = () => {
   const event = buildModalEvent('show', {cancelable: true})
   emit('show', event)
