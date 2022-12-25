@@ -82,7 +82,11 @@ interface BDropdownProps {
   toggleText?: string
   variant?: ButtonVariant
 }
-
+// TODO
+/**
+ * @deprecated props.dark is deprecated
+ * review https://getbootstrap.com/docs/5.3/migration/#color-modes
+ */
 const props = withDefaults(defineProps<BDropdownProps>(), {
   autoClose: true,
   block: false,
