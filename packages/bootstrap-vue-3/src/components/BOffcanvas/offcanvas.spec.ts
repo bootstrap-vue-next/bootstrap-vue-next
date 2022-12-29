@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BOffcanvas from './BOffcanvas.vue'
-import BCloseButton from './BButton/BCloseButton.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
 
 describe('offcanvas', () => {
   enableAutoUnmount(afterEach)

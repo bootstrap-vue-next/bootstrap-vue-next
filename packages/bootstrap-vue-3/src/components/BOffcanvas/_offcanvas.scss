@@ -1,0 +1,50 @@
+// @import "bootstrap/scss/variables";
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 1s ease;
+  visibility: visible;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%) !important;
+  visibility: visible;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  $next: breakpoint-next($breakpoint, $grid-breakpoints);
+  $infix: breakpoint-infix($next, $grid-breakpoints);
+
+  .offcanvas#{$infix} {
+    @include media-breakpoint-down($next) {
+      &.offcanvas-start,
+      .offcanvas-end,
+      .offcanvas-top,
+      .offcanvas-bottom {
+        transform: unset;
+      }
+    }
+  }
+}
+
+// .offcanvas {
+//     position: fixed;
+//     bottom: 0;
+//     z-index: 200;
+//     display: flex;
+//     flex-direction: column;
+//     max-width: 100%;
+//     color: grey;
+//     // visibility: hidden;
+//     background-color: red;
+//     background-clip: padding-box;
+//     outline: 0;
+
+//     &.offcanvas-start {
+//       top: 0;
+//       left: 0;
+//       width: 300px;
+//       // border-right: var(--#{$prefix}offcanvas-border-width) solid var(--#{$prefix}offcanvas-border-color);
+//     }
+//   }
