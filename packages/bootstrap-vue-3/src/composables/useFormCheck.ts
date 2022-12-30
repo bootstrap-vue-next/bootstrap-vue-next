@@ -1,5 +1,5 @@
 import type {AriaInvalid, ButtonVariant, InputSize} from '../types'
-import {computed, ComputedRef} from 'vue'
+import {computed, type ComputedRef} from 'vue'
 import {resolveAriaInvalid} from '../utils'
 
 /**
@@ -14,7 +14,7 @@ const getClasses = (items: {
   size?: InputSize
 }) =>
   computed(() => ({
-    'form-check': !items.plain && !items.button,
+    'form-check': items.plain === false && items.button === false,
     'form-check-inline': items.inline === true,
     'form-switch': items.switch === true,
     [`form-control-${items.size}`]: items.size !== undefined && items.size !== 'md',
@@ -26,7 +26,7 @@ const getClasses = (items: {
  */
 const getInputClasses = (items: {plain?: boolean; button?: boolean; state?: boolean}) =>
   computed(() => ({
-    'form-check-input': !items.plain && !items.button,
+    'form-check-input': items.plain === false && items.button === false,
     'is-valid': items.state === true,
     'is-invalid': items.state === false,
     'btn-check': items.button === true,
@@ -43,7 +43,7 @@ const getLabelClasses = (items: {
   size?: InputSize
 }) =>
   computed(() => ({
-    'form-check-label': !items.plain && !items.button,
+    'form-check-label': items.plain === false && items.button === false,
     'btn': items.button === true,
     [`btn-${items.buttonVariant}`]: items.button === true && items.buttonVariant !== undefined,
     [`btn-${items.size}`]: items.button && items.size && items.size !== 'md',
@@ -71,8 +71,8 @@ const getGroupClasses = (items: {
 }) =>
   computed(() => ({
     'was-validated': items.validated === true,
-    'btn-group': items.buttons === true && !items.stacked,
-    'btn-group-vertical': items.stacked === true,
+    'btn-group': items.buttons === true && items.stacked === false,
+    'btn-group-vertical': items.stacked === true, // Does this need items.buttons?
     [`btn-group-${items.size}`]: items.size !== undefined,
   }))
 
@@ -93,7 +93,7 @@ const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean)
           : acc.concat([slot]),
       []
     )
-    .filter((e: any) => (e.type.__name || e.type.name) === nodeType)
+    .filter((e: any) => e.type.__name === nodeType || e.type.name === nodeType)
     .map((e: any) => {
       const txtChild = (e.children.default ? e.children.default() : []).find(
         (e: any) => e.type.toString() === 'Symbol(Text)'

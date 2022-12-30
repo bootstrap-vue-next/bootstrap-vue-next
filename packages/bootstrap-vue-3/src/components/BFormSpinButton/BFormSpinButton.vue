@@ -1,11 +1,12 @@
 <script lang="ts">
-import {computed, ComputedRef, defineComponent, h, PropType, ref, Ref} from 'vue'
+import {computed, type ComputedRef, defineComponent, h, type PropType, ref, type Ref} from 'vue'
 import type {Booleanish} from '../../types'
 import {toFloat, toInteger} from '../../utils/number'
 import {isNull} from '../../utils/inspect'
 import {isLocaleRTL} from '../../utils/locale'
 import {eventOnOff, stopEvent} from '../../utils/event'
-import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
+import {normalizeSlot} from '../../utils'
+// import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
 //TODO alias
 // import {BIconDash, BIconPlus} from 'bootstrap-vue-3-icons'
 
@@ -77,7 +78,7 @@ export default defineComponent({
     state: {type: [Boolean, String] as PropType<Booleanish | null>, default: null},
   },
   emits: ['update:modelValue', 'change'],
-  setup(props, {emit, slots}) {
+  setup(props, {emit}) {
     const hasFocus = ref(false)
     const spinId = computed(() => 1) //TODO
 
@@ -105,9 +106,9 @@ export default defineComponent({
     let $_autoRepeatTimer: ReturnType<typeof setTimeout> | undefined
     let $_keyIsDown = false
 
-    const computedInline = computed(() => props.inline && !props.vertical)
+    // const computedInline = computed(() => props.inline && !props.vertical)
 
-    const computedReadonly = computed(() => props.readonly && !props.disabled)
+    // const computedReadonly = computed(() => props.readonly && !props.disabled)
 
     const computedStep = computed(() => toFloat(props.step, DEFAULT_STEP))
 
@@ -229,9 +230,9 @@ export default defineComponent({
           value > max ? (wrap ? min : max) : value < min ? (wrap ? max : min) : value
       }
     }
-    const onFocusBlur = (event: FocusEvent) => {
-      hasFocus.value = props.disabled ? false : event.type === 'focus'
-    }
+    // const onFocusBlur = (event: FocusEvent) => {
+    //   hasFocus.value = props.disabled ? false : event.type === 'focus'
+    // }
 
     const stepUp = (multiplier = 1) => {
       if (isNull(localValue.value)) {
@@ -380,11 +381,11 @@ export default defineComponent({
       $_autoRepeatTimer = undefined
     }
 
-    const clearRepeat = () => {
-      resetTimers()
-      setMouseup(false)
-      $_keyIsDown = false
-    }
+    // const clearRepeat = () => {
+    //   resetTimers()
+    //   setMouseup(false)
+    //   $_keyIsDown = false
+    // }
 
     // Render Helping functions
     const makeButton = (

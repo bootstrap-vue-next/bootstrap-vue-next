@@ -101,13 +101,18 @@
 </template>
 
 <script setup lang="ts">
-import {ref, Ref} from 'vue'
+import {ref, type Ref} from 'vue'
 import {TableField, TableItem} from 'bootstrap-vue-3'
 
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
 const objectTableDefinitions: Ref<Array<TableField>> = ref([
-  {key: 'last_name', label: 'Family name'},
+  {
+    key: 'last_name',
+    label: 'Family name',
+    formatter: (value: unknown) => (typeof value === 'string' ? value.toUpperCase() : `${value}`),
+  },
   {key: 'first_name', label: 'Given name'},
+  {key: 'age', label: 'Age', formatter: (value: unknown) => `${value} years`},
 ])
 const items: Array<TableItem> = [
   {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},

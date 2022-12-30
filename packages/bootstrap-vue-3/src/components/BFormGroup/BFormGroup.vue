@@ -17,7 +17,17 @@ import {
   stringToInteger,
   suffixPropName,
 } from '../../utils'
-import {computed, defineComponent, h, nextTick, onMounted, PropType, ref, toRef, watch} from 'vue'
+import {
+  computed,
+  defineComponent,
+  h,
+  nextTick,
+  onMounted,
+  type PropType,
+  ref,
+  toRef,
+  watch,
+} from 'vue'
 import BCol from '../BCol.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
@@ -209,7 +219,6 @@ export default defineComponent({
 
       // If clicked an interactive element inside legend,
       // we just let the default happen
-      /* istanbul ignore next */
       if (LEGEND_INTERACTIVE_ELEMENTS.indexOf(tagName) !== -1) {
         return
       }
@@ -390,6 +399,7 @@ export default defineComponent({
     // to an inner wrapper div when horizontal and using a fieldset
     const rowProps = {
       'class': [
+        // TODO consider removing this static class when refactored to <template> syntax
         'mb-3',
         this.stateClass,
         {

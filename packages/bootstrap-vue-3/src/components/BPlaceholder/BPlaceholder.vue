@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, StyleValue} from 'vue'
+import {computed, type StyleValue} from 'vue'
 import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
 interface Props {

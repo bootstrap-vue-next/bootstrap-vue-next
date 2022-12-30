@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 // import type {BFormCheckboxGroupEmits, BFormCheckboxGroupProps} from '../../types/components'
-import {computed, reactive, Ref, toRef, useSlots} from 'vue'
+import {computed, reactive, toRef, useSlots} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
 import {
@@ -104,7 +104,7 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
+const stateBoolean = useBooleanish(toRef(props, 'state'))
 const switchesBoolean = useBooleanish(toRef(props, 'switches'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 

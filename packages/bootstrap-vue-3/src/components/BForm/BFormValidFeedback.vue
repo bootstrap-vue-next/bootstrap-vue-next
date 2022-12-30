@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 // import type {BFormValidFeedbackProps} from '../../types/components'
-import {computed, Ref, toRef} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
 })
 
 const forceShowBoolean = useBooleanish(toRef(props, 'forceShow'))
-const stateBoolean = useBooleanish(toRef(props, 'state') as Ref<Booleanish | undefined>)
+const stateBoolean = useBooleanish(toRef(props, 'state'))
 const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
 
 const computedShow = computed<boolean>(

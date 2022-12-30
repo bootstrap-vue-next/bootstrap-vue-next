@@ -22,7 +22,9 @@
 
 .input-group
   > .form-floating:not(:first-child)
-  > :not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  > :not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(
+    .invalid-feedback
+  ) {
   margin-left: 0px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -43,12 +45,4 @@
 // No focus outline helper (use sparingly)
 .bv-no-focus-ring:focus {
   outline: none;
-}
-
-.modal {
-  display: block;
-}
-
-.modal-dialog {
-  z-index: 1051;
 }

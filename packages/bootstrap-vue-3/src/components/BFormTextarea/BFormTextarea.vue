@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, defineComponent, PropType, StyleValue, toRef} from 'vue'
+import {computed, defineComponent, type PropType, type StyleValue, toRef} from 'vue'
 import {COMMON_INPUT_PROPS, useBooleanish, useFormInput} from '../../composables'
 
 export default defineComponent({

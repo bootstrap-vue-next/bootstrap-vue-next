@@ -13,17 +13,18 @@ export const HAS_PASSIVE_EVENT_SUPPORT = (() => {
         // This function will be called when the browser
         // attempts to access the passive property
         get passive() {
-          /* istanbul ignore next: will never be called in JSDOM */
           passiveEventSupported = true
+          // eslint-disable-next-line no-useless-return
           return
         },
       }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       WINDOW.addEventListener('test', options, options)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       WINDOW.removeEventListener('test', options, options)
     } catch {
-      /* istanbul ignore next: will never be called in JSDOM */
       passiveEventSupported = false
     }
   }

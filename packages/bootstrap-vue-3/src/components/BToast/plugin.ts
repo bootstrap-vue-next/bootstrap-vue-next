@@ -1,16 +1,16 @@
 import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '../../types'
 import {getId} from '../../utils'
 import {
-  App,
-  ComponentPublicInstance,
+  type App,
+  type ComponentPublicInstance,
   computed,
-  ComputedRef,
+  type ComputedRef,
   inject,
   isReactive,
-  Plugin,
+  type Plugin,
   reactive,
-  Ref,
-  VNode,
+  type Ref,
+  type VNode,
 } from 'vue'
 
 export interface ToastContent {
@@ -52,7 +52,13 @@ interface ToastContainers {
   [key: symbol]: ToastVM
 }
 
-const defaultToastOptions: ToastOptions = {autoHide: true, delay: 5000, noCloseButton: false, pos: 'top-right', value: true}
+const defaultToastOptions: ToastOptions = {
+  autoHide: true,
+  delay: 5000,
+  noCloseButton: false,
+  pos: 'top-right',
+  value: true,
+}
 
 export class ToastInstance {
   vm: ToastVM
@@ -227,11 +233,12 @@ export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | und
 /**
  * @external
  */
-export const BToastPlugin: Plugin = {
+const BToastPlugin: Plugin = {
   install: (app: App, options: BootstrapVueOptions = {}) => {
     app.provide(fetchKey, options?.BToast?.injectkey ?? injectkey)
     app.provide(options?.BToast?.injectkey ?? injectkey, new ToastController())
   },
 }
 
+export {BToastPlugin}
 export default BToastPlugin

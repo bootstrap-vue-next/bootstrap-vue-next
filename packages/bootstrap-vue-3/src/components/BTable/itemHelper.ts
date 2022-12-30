@@ -1,10 +1,10 @@
-import {ref, Ref} from 'vue'
+import {ref, type Ref} from 'vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, startCase} from '../../utils'
 import {BTableSortCompare} from './../../types/components'
 import {cloneDeep, cloneDeepAsync} from './../../utils/object'
 
-const useItemHelper = () => {
+export default () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
     const fields: TableFieldObject[] = []
 
@@ -125,6 +125,14 @@ const useItemHelper = () => {
     }
   }
 
+  const formatItem = (item: TableItem, fields: TableFieldObject) => {
+    const value = item[fields.key]
+    if (fields.formatter && typeof fields.formatter === 'function') {
+      return fields.formatter(value, fields.key, item)
+    }
+    return item[fields.key]
+  }
+
   return {
     normaliseFields,
     mapItems,
@@ -132,7 +140,6 @@ const useItemHelper = () => {
     updateInternalItems,
     filterEvent,
     notifyFilteredItems,
+    formatItem,
   }
 }
-
-export default useItemHelper

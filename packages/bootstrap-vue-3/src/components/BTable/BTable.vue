@@ -112,7 +112,7 @@
               :toggle-details="() => toggleRowDetails(item)"
               :details-showing="item._showDetails"
             />
-            <template v-else>{{ item[field.key] }}</template>
+            <template v-else>{{ itemHelper.formatItem(item, field) }}</template>
           </td>
         </tr>
 

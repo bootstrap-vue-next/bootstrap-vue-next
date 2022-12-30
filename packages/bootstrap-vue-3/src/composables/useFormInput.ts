@@ -1,11 +1,11 @@
 import type {AriaInvalid, Size} from '../types'
 import {
   computed,
-  ExtractPropTypes,
+  type ExtractPropTypes,
   nextTick,
   onActivated,
   onMounted,
-  PropType,
+  type PropType,
   ref,
   toRef,
   watch,

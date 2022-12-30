@@ -1,57 +1,69 @@
 <template>
-  <div v-if="isAlertVisible" ref="element" class="alert" role="alert" :class="computedClasses">
-    <slot />
-    <template v-if="dismissibleBoolean">
-      <button v-if="hasCloseSlot" type="button" data-bs-dismiss="alert" @click="closeClicked">
-        <slot name="close" />
-      </button>
-      <b-close-button
-        v-else
-        :aria-label="dismissLabel"
-        data-bs-dismiss="alert"
-        @click="closeClicked"
-      />
-    </template>
-  </div>
+  <b-transition :no-fade="!fadeBoolean" :trans-props="{enterToClass: 'show'}">
+    <div
+      v-if="isAlertVisible"
+      class="alert"
+      role="alert"
+      aria-live="polite"
+      aria-atomic="true"
+      :class="computedClasses"
+    >
+      <slot />
+      <template v-if="dismissibleBoolean">
+        <!-- TODO this renders incorrectly -->
+        <b-button v-if="hasCloseSlot || closeContent" type="button" @click="closeClicked">
+          <slot name="close">
+            {{ closeContent }}
+          </slot>
+        </b-button>
+        <b-close-button v-else :aria-label="dismissLabel" @click="closeClicked" />
+      </template>
+    </div>
+  </b-transition>
 </template>
 
 <script setup lang="ts">
 // import type {BAlertEmits, BAlertProps} from '../types/components'
-import type {Booleanish, ColorVariant} from '../../types'
-import {computed, onBeforeUnmount, ref, toRef, useSlots, watch} from 'vue'
-import {Alert} from 'bootstrap'
-import {isEmptySlot, toInteger} from '../../utils'
-import {useBooleanish} from '../../composables'
+import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import {count} from 'console'
+import BButton from '../BButton/BButton.vue'
+import type {Booleanish, ColorVariant} from '../../types'
+import {computed, onBeforeUnmount, type Ref, toRef, useSlots, watchEffect} from 'vue'
+import {isEmptySlot} from '../../utils'
+import {useBooleanish} from '../../composables'
+import useCountdown from '../../composables/useCountdown'
 
 interface BAlertProps {
   dismissLabel?: string
   dismissible?: Booleanish
   fade?: Booleanish
   modelValue?: boolean | number
-  show?: Booleanish
   variant?: ColorVariant
+  closeContent?: string
+  immediate?: Booleanish
+  interval?: number
+  showOnPause?: Booleanish
 }
 
 const props = withDefaults(defineProps<BAlertProps>(), {
+  interval: 1000,
   dismissLabel: 'Close',
   dismissible: false,
   fade: false,
   modelValue: false,
-  show: false,
   variant: 'info',
+  immediate: true,
+  showOnPause: true,
 })
 
 const dismissibleBoolean = useBooleanish(toRef(props, 'dismissible'))
-// TODO fade is never used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const fadeBoolean = useBooleanish(toRef(props, 'fade'))
-const showBoolean = useBooleanish(toRef(props, 'show'))
+const immediateBoolean = useBooleanish(toRef(props, 'immediate'))
+const showOnPauseBoolean = useBooleanish(toRef(props, 'showOnPause'))
 
 interface BAlertEmits {
   (e: 'closed'): void
-  (e: 'close-count-down', value: number): void
+  (e: 'close-countdown', value: number): void
   (e: 'update:modelValue', value: boolean | number): void
 }
 
@@ -59,92 +71,50 @@ const emit = defineEmits<BAlertEmits>()
 
 const slots = useSlots()
 
-let _countDownTimeout: undefined | ReturnType<typeof setTimeout>
-
-const element = ref<HTMLElement | null>(null)
-const instance = ref<Alert>()
-
 const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
-
-const isAlertVisible = computed<boolean>(() => !!props.modelValue || showBoolean.value)
 
 const computedClasses = computed(() => [
   [`alert-${props.variant}`],
   {
-    'show': !!props.modelValue,
     'alert-dismissible': dismissibleBoolean.value,
-    // TODO it seems like fade is probably used here
-    // It seems like the issue with trying to set fade is that when using transitions,
-    // The element is null when it's trying to set the transition
-    'fade': !!props.modelValue,
   },
 ])
 
-const parseCountDown = (value: boolean | number): number => {
-  if (typeof value === 'boolean') {
-    return 0
+const {
+  isActive,
+  pause,
+  restart,
+  resume,
+  stop,
+  isPaused,
+  value: remainingMs,
+} = useCountdown(
+  typeof props.modelValue === 'boolean' ? 0 : (toRef(props, 'modelValue') as Ref<number>),
+  toRef(props, 'interval'),
+  {
+    immediate: typeof props.modelValue === 'number' && immediateBoolean.value,
   }
+)
 
-  const numberValue = toInteger(value, 0)
-  return numberValue > 0 ? numberValue : 0
-}
+const isAlertVisible = computed<boolean>(() =>
+  typeof props.modelValue === 'boolean'
+    ? props.modelValue
+    : isActive.value || (showOnPauseBoolean.value && isPaused.value)
+)
 
-const countDown = ref<number>(0)
-
-const parsedModelValue = computed<boolean>(() => {
-  if (props.modelValue === true) {
-    return true
-  }
-  if (props.modelValue === false) return false
-
-  if (toInteger(props.modelValue, 0) < 1) {
-    // Boolean will always return false for the above comparison
-    return false
-  }
-  return !!props.modelValue
-})
-
-const clearCountDownInterval = (): void => {
-  if (_countDownTimeout === undefined) return
-  clearTimeout(_countDownTimeout)
-  _countDownTimeout = undefined
-}
-
-const handleShowAndModelChanged = (): void => {
-  countDown.value = parseCountDown(props.modelValue)
-  if ((parsedModelValue.value || showBoolean.value) && !instance.value)
-    instance.value = new Alert(element.value as HTMLElement)
-}
+watchEffect(() => emit('close-countdown', remainingMs.value))
 
 const closeClicked = (): void => {
   if (typeof props.modelValue === 'boolean') {
     emit('update:modelValue', false)
   } else {
     emit('update:modelValue', 0)
+    stop()
   }
   emit('closed')
 }
 
-watch(() => props.modelValue, handleShowAndModelChanged)
-watch(() => showBoolean.value, handleShowAndModelChanged)
-watch(countDown, (newValue) => {
-  clearCountDownInterval()
-  if (typeof props.modelValue === 'boolean') return
-  emit('close-count-down', newValue)
-  if (newValue === 0 && props.modelValue > 0) emit('closed')
-  if (props.modelValue !== newValue) emit('update:modelValue', newValue)
-  if (newValue > 0) {
-    _countDownTimeout = setTimeout(() => {
-      countDown.value--
-    }, 1000)
-  }
-})
+onBeforeUnmount(() => stop())
 
-countDown.value = parseCountDown(props.modelValue)
-
-onBeforeUnmount((): void => {
-  clearCountDownInterval()
-  instance.value?.dispose()
-  instance.value = undefined
-})
+defineExpose({pause, resume, restart, stop})
 </script>

@@ -1,6 +1,6 @@
 <script lang="ts">
 import {BvEvent, normalizeSlot, toInteger} from '../../utils'
-import {computed, defineComponent, h, PropType, reactive, toRef, watch} from 'vue'
+import {computed, defineComponent, h, type PropType, reactive, toRef, watch} from 'vue'
 import type {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
 // Default # of buttons limit
@@ -207,7 +207,6 @@ export default defineComponent({
       // Emit a user-cancelable `page-click` event
       const clickEvent = new BvEvent('page-click', {
         cancelable: true,
-        vueTarget: this,
         target,
       })
       emit('page-click', clickEvent, pageNumber)

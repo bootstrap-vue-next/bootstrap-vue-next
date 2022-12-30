@@ -1,12 +1,12 @@
 /// <reference types="vitest" />
 
-import {defineConfig} from 'vite'
+import {defineConfig, PluginOption} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import {visualizer} from 'rollup-plugin-visualizer'
 import dts from 'vite-plugin-dts'
 
-const config = defineConfig({
+export default defineConfig({
   build: {
     sourcemap: true,
     minify: true,
@@ -58,8 +58,8 @@ const config = defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
-    visualizer(),
-    dts({skipDiagnostics: false, logDiagnostics: true}),
+    visualizer() as unknown as PluginOption,
+    dts(),
   ],
 
   server: {
@@ -74,5 +74,3 @@ const config = defineConfig({
     },
   },
 })
-
-export default config

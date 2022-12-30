@@ -627,4 +627,34 @@ describe('table', () => {
     expect($table.classes()).toContain('b-table-busy')
     expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
   })
+
+  it('has accepts a formatter function', async () => {
+    const fields2: Array<TableField> = fields.map((field) => {
+      if (typeof field === 'object') {
+        return {
+          key: field.key,
+          formatter: (value: any, key?: string, item?: any): string =>
+            typeof value === 'string' ? value.toUpperCase() : `${value} years`,
+        }
+      }
+      return field
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        fields: fields2,
+        items,
+      },
+    })
+
+    await flushPromises()
+
+    const $table = wrapper.get('table')
+    const $firstRow = $table.get('tbody tr')
+    const $firstCell = $firstRow.get('td')
+    const $secondCell = $firstRow.get('td:nth-child(2)')
+
+    expect($firstCell.text()).toBe('HOSSAM')
+    expect($secondCell.text()).toBe('1 years')
+  })
 })

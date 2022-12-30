@@ -1,353 +1,368 @@
 # Changelog
 
-## [0.4.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.8...v0.4.9) (2022-11-21)
-
-
-### Features
-
-* **SpinButton:** Adjust BV3 Package.json Dependencies ([41452a7](https://github.com/cdmoro/bootstrap-vue-3/commit/41452a7e25fa06a684bb7a5fd43031f437d271da))
-* **SpinButton:** Final fixes ([a233d1f](https://github.com/cdmoro/bootstrap-vue-3/commit/a233d1f684d2e714b9fff3d4db5e94a9b8310c4e))
-* **SpinButton:** Remove Utils, Use hasValue for Value Checking ([1dcfc0e](https://github.com/cdmoro/bootstrap-vue-3/commit/1dcfc0edcc98788e8864aaa3585f9dc779edd3ec))
-
+## [0.4.15](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.14...v0.4.15) (2022-12-12)
 
 ### Bug Fixes
 
-* on balert create, start counter ([b35e299](https://github.com/cdmoro/bootstrap-vue-3/commit/b35e299abf98024d4297edfa10006fcb9673c7a0)), closes [#810](https://github.com/cdmoro/bootstrap-vue-3/issues/810)
+- **nuxt:** include new files when packing ([ae7a998](https://github.com/cdmoro/bootstrap-vue-3/commit/ae7a998640cb573128cd0f63db734d3947e7e7e2))
+
+## [0.4.14](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.13...v0.4.14) (2022-12-10)
+
+### Features
+
+- **BModal:** add the ability to prevent closing using Event.PreventDefault ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+- **BvEvent:** improve BvEvent and BvModalEvent event classes ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+- improve nuxt opts ([9a76d1e](https://github.com/cdmoro/bootstrap-vue-3/commit/9a76d1ed9c4ee854e72551023d6040d2ea8cdfb3))
+- improve nuxt.ts file ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+
+### Bug Fixes
+
+- **BModal:** backdrop and esc events not caring when hide is prevented ([dcd3bfe](https://github.com/cdmoro/bootstrap-vue-3/commit/dcd3bfe991bd6cdb177ef404f17b9dfdc41e1af8))
+- **BvEvent:** remove vueTarget from event ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+- export BvModalEvent ([f219c44](https://github.com/cdmoro/bootstrap-vue-3/commit/f219c449a813101c549e354856e2ff104b866405))
+- ignore ban-ts-comment inline ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+
+## [0.4.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.12...v0.4.13) (2022-12-05)
+
+### Bug Fixes
+
+- **#828:** BButtonGroup missing btn-group class when prop size ([0897270](https://github.com/cdmoro/bootstrap-vue-3/commit/0897270bfec9889880f08b1a6ee0d0f315486ac5))
+
+## [0.4.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.11...v0.4.12) (2022-12-04)
+
+### Bug Fixes
+
+- **modal:** maybe fix modal... if it was even broken ([fc31444](https://github.com/cdmoro/bootstrap-vue-3/commit/fc3144466c41f7292bb5433fd3c3eccbfac71d35))
+
+## [0.4.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.10...v0.4.11) (2022-12-01)
+
+### Bug Fixes
+
+- Tabs Content will update with reactive components ([06c0663](https://github.com/cdmoro/bootstrap-vue-3/commit/06c066357ed2ada8e209258a57d5508bbb07ba98)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
+- update tests ([069511f](https://github.com/cdmoro/bootstrap-vue-3/commit/069511fb948e17166aa2461c81cd86c68e5a6738)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
+
+## [0.4.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.9...v0.4.10) (2022-11-23)
+
+### Features
+
+- **Popover:** Allow html modifier in directive ([9e85b80](https://github.com/cdmoro/bootstrap-vue-3/commit/9e85b80e0ff4b791a1e2e1a05babec487ca97e8e))
+
+### Bug Fixes
+
+- remove package icons ([efb7a18](https://github.com/cdmoro/bootstrap-vue-3/commit/efb7a1894107abc60df8aca8615d6a728ec17b17)), closes [#815](https://github.com/cdmoro/bootstrap-vue-3/issues/815)
+
+## [0.4.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.8...v0.4.9) (2022-11-21)
+
+### Features
+
+- **SpinButton:** Adjust BV3 Package.json Dependencies ([41452a7](https://github.com/cdmoro/bootstrap-vue-3/commit/41452a7e25fa06a684bb7a5fd43031f437d271da))
+- **SpinButton:** Final fixes ([a233d1f](https://github.com/cdmoro/bootstrap-vue-3/commit/a233d1f684d2e714b9fff3d4db5e94a9b8310c4e))
+- **SpinButton:** Remove Utils, Use hasValue for Value Checking ([1dcfc0e](https://github.com/cdmoro/bootstrap-vue-3/commit/1dcfc0edcc98788e8864aaa3585f9dc779edd3ec))
+
+### Bug Fixes
+
+- on balert create, start counter ([b35e299](https://github.com/cdmoro/bootstrap-vue-3/commit/b35e299abf98024d4297edfa10006fcb9673c7a0)), closes [#810](https://github.com/cdmoro/bootstrap-vue-3/issues/810)
 
 ## [0.4.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.7...v0.4.8) (2022-11-12)
 
-
 ### Features
 
-* **BPagination:** Extend justify content types for between, around and evenly ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-* refactor icons ([76baf45](https://github.com/cdmoro/bootstrap-vue-3/commit/76baf45c60e7a6782ddfa97b18c8634dee1f62f7))
-
+- **BPagination:** Extend justify content types for between, around and evenly ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+- refactor icons ([76baf45](https://github.com/cdmoro/bootstrap-vue-3/commit/76baf45c60e7a6782ddfa97b18c8634dee1f62f7))
 
 ### Bug Fixes
 
-* **BCard:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-* **BNavbarNav:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-* **BNav:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-* **BPagination:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-* **BRow:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-* **BTabs:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-* **BTooltip:** Error toString if value is undefined. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
-
+- **BCard:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+- **BNavbarNav:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+- **BNav:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+- **BPagination:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+- **BRow:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+- **BTabs:** Set correct align types. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
+- **BTooltip:** Error toString if value is undefined. ([91cf4a8](https://github.com/cdmoro/bootstrap-vue-3/commit/91cf4a89f91b59ff3dc77b0ae9f0401976b17619))
 
 ### Reverts
 
-* **BContainer:** revert to fix usage with toast ([818865c](https://github.com/cdmoro/bootstrap-vue-3/commit/818865cdf32de1a68342ded7674b96fdd81252db))
+- **BContainer:** revert to fix usage with toast ([818865c](https://github.com/cdmoro/bootstrap-vue-3/commit/818865cdf32de1a68342ded7674b96fdd81252db))
 
 ## [0.4.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.6...v0.4.7) (2022-11-10)
 
-
 ### Features
 
-* add the ability to extend certain built in types ([4bd4bee](https://github.com/cdmoro/bootstrap-vue-3/commit/4bd4beefddfba524be31e77c7078340ea85f08b0))
-
+- add the ability to extend certain built in types ([4bd4bee](https://github.com/cdmoro/bootstrap-vue-3/commit/4bd4beefddfba524be31e77c7078340ea85f08b0))
 
 ### Bug Fixes
 
-* **BModal:** moved the modal's css props to global style file to fix modal not showing up & backdrop not appearing correctly in some cases ([c20da57](https://github.com/cdmoro/bootstrap-vue-3/commit/c20da573595b02bdae74177b2c60a274f5f24427))
+- **BModal:** moved the modal's css props to global style file to fix modal not showing up & backdrop not appearing correctly in some cases ([c20da57](https://github.com/cdmoro/bootstrap-vue-3/commit/c20da573595b02bdae74177b2c60a274f5f24427))
 
 ## [0.4.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.5...v0.4.6) (2022-11-04)
 
-
 ### Miscellaneous Chores
 
-* release 0.4.6 ([7c281ac](https://github.com/cdmoro/bootstrap-vue-3/commit/7c281acfcd73aec2d2d20abd529221759a8c143c))
+- release 0.4.6 ([7c281ac](https://github.com/cdmoro/bootstrap-vue-3/commit/7c281acfcd73aec2d2d20abd529221759a8c143c))
 
 ## [0.4.5](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.4...v0.4.5) (2022-11-04)
 
-
 ### Miscellaneous Chores
 
-* release 0.4.5 ([07e20c0](https://github.com/cdmoro/bootstrap-vue-3/commit/07e20c0a0ea135557ef6673c47faa954aa355490))
+- release 0.4.5 ([07e20c0](https://github.com/cdmoro/bootstrap-vue-3/commit/07e20c0a0ea135557ef6673c47faa954aa355490))
 
 ## [0.4.4](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.3...v0.4.4) (2022-11-03)
 
-
 ### Features
 
-* **BToast:** Add options autoHide, noCloseButton ([338cc1e](https://github.com/cdmoro/bootstrap-vue-3/commit/338cc1e1c4d3903c8bb9e66a0144610f92b9e568))
-* **BToast:** Add options autoHide, noCloseButton. ([24110d0](https://github.com/cdmoro/bootstrap-vue-3/commit/24110d05aaabc2fc1187d93d30187fc771f972cf))
+- **BToast:** Add options autoHide, noCloseButton ([338cc1e](https://github.com/cdmoro/bootstrap-vue-3/commit/338cc1e1c4d3903c8bb9e66a0144610f92b9e568))
+- **BToast:** Add options autoHide, noCloseButton. ([24110d0](https://github.com/cdmoro/bootstrap-vue-3/commit/24110d05aaabc2fc1187d93d30187fc771f972cf))
 
 ## [0.4.3](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.2...v0.4.3) (2022-10-30)
 
-
 ### Features
 
-* **BTable:** added ``label-stacked`` prop to label the stacked rows with the field's label ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
-
+- **BTable:** added `label-stacked` prop to label the stacked rows with the field's label ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
 
 ### Bug Fixes
 
-* **BTable, BTableSimple:** Added the needed CSS to make the ``stacked`` prop take effect from a specific screen-size breakpoint. ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
-* **BTable:** fixed ``filtered`` event being emitted when using pagination (more details: https://github.com/cdmoro/bootstrap-vue-3/issues/768). ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
-* **BTable:** fixed filtering undefined table item values (more details: https://github.com/cdmoro/bootstrap-vue-3/issues/770). ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
-* **BTable:** provided typescript hints for a stacked prop. ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+- **BTable, BTableSimple:** Added the needed CSS to make the `stacked` prop take effect from a specific screen-size breakpoint. ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+- **BTable:** fixed `filtered` event being emitted when using pagination (more details: https://github.com/cdmoro/bootstrap-vue-3/issues/768). ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+- **BTable:** fixed filtering undefined table item values (more details: https://github.com/cdmoro/bootstrap-vue-3/issues/770). ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
+- **BTable:** provided typescript hints for a stacked prop. ([f967d4b](https://github.com/cdmoro/bootstrap-vue-3/commit/f967d4b0301e1c7e246f23058b2e21af9c3b8172))
 
 ## [0.4.2](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.1...v0.4.2) (2022-10-28)
 
-
 ### Miscellaneous Chores
 
-* release 0.4.2 ([01c1172](https://github.com/cdmoro/bootstrap-vue-3/commit/01c1172e05c4fb3359c17faf579f2e4600843646))
+- release 0.4.2 ([01c1172](https://github.com/cdmoro/bootstrap-vue-3/commit/01c1172e05c4fb3359c17faf579f2e4600843646))
 
 ## [0.4.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.0...v0.4.1) (2022-10-28)
 
-
 ### Miscellaneous Chores
 
-* release 0.4.1 ([ea745b8](https://github.com/cdmoro/bootstrap-vue-3/commit/ea745b8a4bfbaf5f5699cde8264d328047579256))
+- release 0.4.1 ([ea745b8](https://github.com/cdmoro/bootstrap-vue-3/commit/ea745b8a4bfbaf5f5699cde8264d328047579256))
 
 ## [0.4.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.12...v0.4.0) (2022-10-24)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BContainer:** remove toast props as they didn't work
+- **BContainer:** remove toast props as they didn't work
 
 ### Features
 
-* add static prop ability ([41d752a](https://github.com/cdmoro/bootstrap-vue-3/commit/41d752ac786510a2022e2160d815487a2961dbcc))
-* begin development of bootstrap-vue-3-icons ([c1dac9c](https://github.com/cdmoro/bootstrap-vue-3/commit/c1dac9cd641236aea9510a4bb931f86fb0ca7080))
-* **BFormInput:** added highlight method to active a simple highlight animation for a few seconds ([2d34305](https://github.com/cdmoro/bootstrap-vue-3/commit/2d343056fdf2bc0d0954abf11df04ffec18a82ef))
-* **BModal:** :bug: warning prop lazy does not currently work due to a constrant with updating to remove bootstrap js ([af2e95b](https://github.com/cdmoro/bootstrap-vue-3/commit/af2e95b8a2fc1bd4204bdc6cc52c45aa629129c2))
-* **BModal:** remove bootstrapjs ([af2e95b](https://github.com/cdmoro/bootstrap-vue-3/commit/af2e95b8a2fc1bd4204bdc6cc52c45aa629129c2))
-* create eagerComputed component ([c038674](https://github.com/cdmoro/bootstrap-vue-3/commit/c038674d712615bb04512a86969580c74aec15a6))
-
+- add static prop ability ([41d752a](https://github.com/cdmoro/bootstrap-vue-3/commit/41d752ac786510a2022e2160d815487a2961dbcc))
+- begin development of bootstrap-vue-3-icons ([c1dac9c](https://github.com/cdmoro/bootstrap-vue-3/commit/c1dac9cd641236aea9510a4bb931f86fb0ca7080))
+- **BFormInput:** added highlight method to active a simple highlight animation for a few seconds ([2d34305](https://github.com/cdmoro/bootstrap-vue-3/commit/2d343056fdf2bc0d0954abf11df04ffec18a82ef))
+- **BModal:** :bug: warning prop lazy does not currently work due to a constrant with updating to remove bootstrap js ([af2e95b](https://github.com/cdmoro/bootstrap-vue-3/commit/af2e95b8a2fc1bd4204bdc6cc52c45aa629129c2))
+- **BModal:** remove bootstrapjs ([af2e95b](https://github.com/cdmoro/bootstrap-vue-3/commit/af2e95b8a2fc1bd4204bdc6cc52c45aa629129c2))
+- create eagerComputed component ([c038674](https://github.com/cdmoro/bootstrap-vue-3/commit/c038674d712615bb04512a86969580c74aec15a6))
 
 ### Bug Fixes
 
-* **BCol:** incorrectly keeps col class when also has col-{n} class ([7619630](https://github.com/cdmoro/bootstrap-vue-3/commit/7619630e14b387549f676405b083f9907041628b))
-* **BContainer:** remove toast props as they didn't work ([c91801d](https://github.com/cdmoro/bootstrap-vue-3/commit/c91801dee1e9264588d88d8998288d13b3a64402))
-* better checking for when a slot is empty ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
-* **BListGroupItem:** stop giving a TS breaking null attr and use undefined instead ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
-* **BModal:** explicit check for empty slot ([760c013](https://github.com/cdmoro/bootstrap-vue-3/commit/760c013d3b0febee8c21bea56561c36d6b0a257e))
-* **BModal:** fixed lazy rendering ([65e14f0](https://github.com/cdmoro/bootstrap-vue-3/commit/65e14f0a8b0c12a1323bcde908eb963470a396e0))
-* **BModal:** fixes the visibility issue where having more than one modal will overlap each other ([f8b83dc](https://github.com/cdmoro/bootstrap-vue-3/commit/f8b83dcc7297b097f33f69890732f1edce4fd86c))
-* **BRow:** rowClasses are computed... Unsure if this was an accident before or my mistake now ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
-* some v-fors in docs missing :key attr ([c91801d](https://github.com/cdmoro/bootstrap-vue-3/commit/c91801dee1e9264588d88d8998288d13b3a64402))
-
+- **BCol:** incorrectly keeps col class when also has col-{n} class ([7619630](https://github.com/cdmoro/bootstrap-vue-3/commit/7619630e14b387549f676405b083f9907041628b))
+- **BContainer:** remove toast props as they didn't work ([c91801d](https://github.com/cdmoro/bootstrap-vue-3/commit/c91801dee1e9264588d88d8998288d13b3a64402))
+- better checking for when a slot is empty ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
+- **BListGroupItem:** stop giving a TS breaking null attr and use undefined instead ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
+- **BModal:** explicit check for empty slot ([760c013](https://github.com/cdmoro/bootstrap-vue-3/commit/760c013d3b0febee8c21bea56561c36d6b0a257e))
+- **BModal:** fixed lazy rendering ([65e14f0](https://github.com/cdmoro/bootstrap-vue-3/commit/65e14f0a8b0c12a1323bcde908eb963470a396e0))
+- **BModal:** fixes the visibility issue where having more than one modal will overlap each other ([f8b83dc](https://github.com/cdmoro/bootstrap-vue-3/commit/f8b83dcc7297b097f33f69890732f1edce4fd86c))
+- **BRow:** rowClasses are computed... Unsure if this was an accident before or my mistake now ([ded0e69](https://github.com/cdmoro/bootstrap-vue-3/commit/ded0e6906b5293f85e0c177924ace52595ef4171))
+- some v-fors in docs missing :key attr ([c91801d](https://github.com/cdmoro/bootstrap-vue-3/commit/c91801dee1e9264588d88d8998288d13b3a64402))
 
 ### Performance Improvements
 
-* remove possible duplicate computeds ([7fb7342](https://github.com/cdmoro/bootstrap-vue-3/commit/7fb7342bd1e9339bc2d35ba2b68da5be74e3d672))
-* **useBooleanish:** use eagerComputed instead since the resolved type usually can benefit from it ([c038674](https://github.com/cdmoro/bootstrap-vue-3/commit/c038674d712615bb04512a86969580c74aec15a6))
-
+- remove possible duplicate computeds ([7fb7342](https://github.com/cdmoro/bootstrap-vue-3/commit/7fb7342bd1e9339bc2d35ba2b68da5be74e3d672))
+- **useBooleanish:** use eagerComputed instead since the resolved type usually can benefit from it ([c038674](https://github.com/cdmoro/bootstrap-vue-3/commit/c038674d712615bb04512a86969580c74aec15a6))
 
 ### Reverts
 
-* **BToast:** revert btoast changes move to other branch ([012d441](https://github.com/cdmoro/bootstrap-vue-3/commit/012d4413f4f2d164e8be49f0153f24ec45220fee))
-* some previous eagerComputed changes ([ab663ec](https://github.com/cdmoro/bootstrap-vue-3/commit/ab663ecc6865567f5aceb6b728776a41b60963ed))
+- **BToast:** revert btoast changes move to other branch ([012d441](https://github.com/cdmoro/bootstrap-vue-3/commit/012d4413f4f2d164e8be49f0153f24ec45220fee))
+- some previous eagerComputed changes ([ab663ec](https://github.com/cdmoro/bootstrap-vue-3/commit/ab663ecc6865567f5aceb6b728776a41b60963ed))
 
 ## [0.3.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.11...v0.3.12) (2022-10-11)
 
-
 ### Features
 
-* **BFormTags:** Add tag scoped slot ([600c129](https://github.com/cdmoro/bootstrap-vue-3/commit/600c129f64aa6e10bbcfc639ef00632fd6209cf7))
-
+- **BFormTags:** Add tag scoped slot ([600c129](https://github.com/cdmoro/bootstrap-vue-3/commit/600c129f64aa6e10bbcfc639ef00632fd6209cf7))
 
 ### Bug Fixes
 
-* BOverlay build issues ([b7106f4](https://github.com/cdmoro/bootstrap-vue-3/commit/b7106f400e37aeaa9c2e8295eaafe5c296625d53))
-* **BOverlay:** strongly type some props ([53e6777](https://github.com/cdmoro/bootstrap-vue-3/commit/53e67776b8b7c632e9b2bd3f0aba5280411e355f))
-* **BTable:** [[#742](https://github.com/cdmoro/bootstrap-vue-3/issues/742)] BTable with provider never hides the busy loader ([affcacf](https://github.com/cdmoro/bootstrap-vue-3/commit/affcacffe47261000deca775e4be8dc6dc22ac8a))
-* **BTransition:** allowTransProps to work ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
-* transProps working in BTransition cascades fixes for components that rely on it, ex: Overlay noFade ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
-
+- BOverlay build issues ([b7106f4](https://github.com/cdmoro/bootstrap-vue-3/commit/b7106f400e37aeaa9c2e8295eaafe5c296625d53))
+- **BOverlay:** strongly type some props ([53e6777](https://github.com/cdmoro/bootstrap-vue-3/commit/53e67776b8b7c632e9b2bd3f0aba5280411e355f))
+- **BTable:** [[#742](https://github.com/cdmoro/bootstrap-vue-3/issues/742)] BTable with provider never hides the busy loader ([affcacf](https://github.com/cdmoro/bootstrap-vue-3/commit/affcacffe47261000deca775e4be8dc6dc22ac8a))
+- **BTransition:** allowTransProps to work ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
+- transProps working in BTransition cascades fixes for components that rely on it, ex: Overlay noFade ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
 
 ### Performance Improvements
 
-* **BTransition:** replace ref with cached computed properties ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
+- **BTransition:** replace ref with cached computed properties ([dd17957](https://github.com/cdmoro/bootstrap-vue-3/commit/dd179573e97b9335cdcf707c84ea0a48d1df304a))
 
 ## [0.3.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.10...v0.3.11) (2022-10-03)
 
-
 ### Features
 
-* **BPlaceholderButton:** create BPlaceholderButton ([51c2532](https://github.com/cdmoro/bootstrap-vue-3/commit/51c25327befe4fd21617007d888442247c2054ee))
-* **BPlaceholderTable:** props columns and rows can now be string or number ([51c2532](https://github.com/cdmoro/bootstrap-vue-3/commit/51c25327befe4fd21617007d888442247c2054ee))
+- **BPlaceholderButton:** create BPlaceholderButton ([51c2532](https://github.com/cdmoro/bootstrap-vue-3/commit/51c25327befe4fd21617007d888442247c2054ee))
+- **BPlaceholderTable:** props columns and rows can now be string or number ([51c2532](https://github.com/cdmoro/bootstrap-vue-3/commit/51c25327befe4fd21617007d888442247c2054ee))
 
 ## [0.3.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.9...v0.3.10) (2022-10-03)
 
-
 ### Features
 
-* **BCard:** add img slot above or below header ([ac71dee](https://github.com/cdmoro/bootstrap-vue-3/commit/ac71dee331da231884411b875f6d4049189ffbc2))
-* **BPlaceholderCard:** add placeholder img ([041156d](https://github.com/cdmoro/bootstrap-vue-3/commit/041156d92177760c20fd13fe1789c8cb8a272e02))
-* **BPlaceholderTable:** bplaceholder tfoot attrs are separated ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
-* **BPlaceholderTable:** bplaceholder thead attrs are separated ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
-* **BPlaceholderTable:** slot tfoot to overwrite default tfoot ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
-* **BPlaceholderTable:** slot thead to overwrite default thead ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
-
+- **BCard:** add img slot above or below header ([ac71dee](https://github.com/cdmoro/bootstrap-vue-3/commit/ac71dee331da231884411b875f6d4049189ffbc2))
+- **BPlaceholderCard:** add placeholder img ([041156d](https://github.com/cdmoro/bootstrap-vue-3/commit/041156d92177760c20fd13fe1789c8cb8a272e02))
+- **BPlaceholderTable:** bplaceholder tfoot attrs are separated ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+- **BPlaceholderTable:** bplaceholder thead attrs are separated ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+- **BPlaceholderTable:** slot tfoot to overwrite default tfoot ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+- **BPlaceholderTable:** slot thead to overwrite default thead ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
 
 ### Bug Fixes
 
-* **BPlaceholderCard:** remove unnecessary inner div on body ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
+- **BPlaceholderCard:** remove unnecessary inner div on body ([4c6dd4d](https://github.com/cdmoro/bootstrap-vue-3/commit/4c6dd4db91fc91b9c528f99df557eba9e07d596b))
 
 ## [0.3.9](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.8...v0.3.9) (2022-10-03)
 
-
 ### Features
 
-* **BModal:** :sparkles: Add modal-header slot and rename footer slot ([8e0da98](https://github.com/cdmoro/bootstrap-vue-3/commit/8e0da985a1039548111792ffb8e6af992c853473))
+- **BModal:** :sparkles: Add modal-header slot and rename footer slot ([8e0da98](https://github.com/cdmoro/bootstrap-vue-3/commit/8e0da985a1039548111792ffb8e6af992c853473))
 
 ## [0.3.8](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.7...v0.3.8) (2022-09-30)
 
-
 ### Bug Fixes
 
-* **#697:** labelCols class not working ([5162eb9](https://github.com/cdmoro/bootstrap-vue-3/commit/5162eb9987e3bd654286dd5a6cf2d40adad54f07))
-* **BLink:** has class activeClass when prop active ([064fef9](https://github.com/cdmoro/bootstrap-vue-3/commit/064fef9624448c5fd711086e519d66bf83eefff7))
-* **BLink:** has class exactActiveClass when prop exact ([064fef9](https://github.com/cdmoro/bootstrap-vue-3/commit/064fef9624448c5fd711086e519d66bf83eefff7))
-* **BModal:** dispose modal before unmount ([1c54484](https://github.com/cdmoro/bootstrap-vue-3/commit/1c54484d2f60a32dedd541966c9c8d360976c295))
-* **BNavItem:** passes activeClass to be active ([5e1348a](https://github.com/cdmoro/bootstrap-vue-3/commit/5e1348a6b2c552197f8d651043d22a310249846c))
+- **#697:** labelCols class not working ([5162eb9](https://github.com/cdmoro/bootstrap-vue-3/commit/5162eb9987e3bd654286dd5a6cf2d40adad54f07))
+- **BLink:** has class activeClass when prop active ([064fef9](https://github.com/cdmoro/bootstrap-vue-3/commit/064fef9624448c5fd711086e519d66bf83eefff7))
+- **BLink:** has class exactActiveClass when prop exact ([064fef9](https://github.com/cdmoro/bootstrap-vue-3/commit/064fef9624448c5fd711086e519d66bf83eefff7))
+- **BModal:** dispose modal before unmount ([1c54484](https://github.com/cdmoro/bootstrap-vue-3/commit/1c54484d2f60a32dedd541966c9c8d360976c295))
+- **BNavItem:** passes activeClass to be active ([5e1348a](https://github.com/cdmoro/bootstrap-vue-3/commit/5e1348a6b2c552197f8d651043d22a310249846c))
 
 ## [0.3.7](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.6...v0.3.7) (2022-09-28)
 
-
 ### Bug Fixes
 
-* dts build error on breadcrumbitem ([8ee6b8e](https://github.com/cdmoro/bootstrap-vue-3/commit/8ee6b8e98c631fca1b82757e9568dcfd376f1973))
+- dts build error on breadcrumbitem ([8ee6b8e](https://github.com/cdmoro/bootstrap-vue-3/commit/8ee6b8e98c631fca1b82757e9568dcfd376f1973))
 
 ## [0.3.6](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.5...v0.3.6) (2022-09-28)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **BAlert:** rename slot dismissible to close
-* rename component card-sub-title to card-subtitle
-* remove last remants of SubTitle to Subtitle
-* **BAlert:** rename dismiss event to close
-* remove last remants of SubTitle to Subtitle
-* **BAlert:** rename slot dismissible to close
-* **BAlert:** rename dismiss event to close
-* **BInputGroupPrepend:** remove useless props
-* **BInputGroupAppend:** remove useless props
+- **BAlert:** rename slot dismissible to close
+- rename component card-sub-title to card-subtitle
+- remove last remants of SubTitle to Subtitle
+- **BAlert:** rename dismiss event to close
+- remove last remants of SubTitle to Subtitle
+- **BAlert:** rename slot dismissible to close
+- **BAlert:** rename dismiss event to close
+- **BInputGroupPrepend:** remove useless props
+- **BInputGroupAppend:** remove useless props
 
 ### Features
 
-* **BAlert:** rename slot dismissible to close ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
-* **BAlert:** rename slot dismissible to close ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
-* **BCardImg:** add blank img options to cardimg ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
-* **BCardImg:** add prop sizes and srcset ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
-* **BCardImg:** emit up load event ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
-* **BImg:** add start and end props ([d6d354b](https://github.com/cdmoro/bootstrap-vue-3/commit/d6d354b7c3894c4e93e4c7db1400c4a6793abdd8))
-* **BInputGroupAppend:** remove useless props ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
-* **BInputGroupPrepend:** remove useless props ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
-* BPlaceholder.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
-* **BPlaceholder:** allow any width ([9153b43](https://github.com/cdmoro/bootstrap-vue-3/commit/9153b437c9592e6144c71644ac4dc9723a4eeedc))
-* **BPlaceholder:** allow any width ([355b774](https://github.com/cdmoro/bootstrap-vue-3/commit/355b7743299a5df969ed3433fe5ddd78e088637f))
-* BPlaceholderCard.vue -- work in progress ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
-* BPlaceholderTable.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
-* BPlaceholderWrapper.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
-* **ButtonToolbar:** make prop role ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
-* **ButtonToolbar:** make prop role ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
-* **CloseButton:** emit click event up ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
-* **CloseButton:** emit click event up ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
-
+- **BAlert:** rename slot dismissible to close ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+- **BAlert:** rename slot dismissible to close ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
+- **BCardImg:** add blank img options to cardimg ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
+- **BCardImg:** add prop sizes and srcset ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
+- **BCardImg:** emit up load event ([f737fc3](https://github.com/cdmoro/bootstrap-vue-3/commit/f737fc3417f991b68ad67a3b62cefe8db93b627c))
+- **BImg:** add start and end props ([d6d354b](https://github.com/cdmoro/bootstrap-vue-3/commit/d6d354b7c3894c4e93e4c7db1400c4a6793abdd8))
+- **BInputGroupAppend:** remove useless props ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
+- **BInputGroupPrepend:** remove useless props ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
+- BPlaceholder.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+- **BPlaceholder:** allow any width ([9153b43](https://github.com/cdmoro/bootstrap-vue-3/commit/9153b437c9592e6144c71644ac4dc9723a4eeedc))
+- **BPlaceholder:** allow any width ([355b774](https://github.com/cdmoro/bootstrap-vue-3/commit/355b7743299a5df969ed3433fe5ddd78e088637f))
+- BPlaceholderCard.vue -- work in progress ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+- BPlaceholderTable.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+- BPlaceholderWrapper.vue ([f826406](https://github.com/cdmoro/bootstrap-vue-3/commit/f8264069a50962f2e11e5ccf317e8523b7b4d299))
+- **ButtonToolbar:** make prop role ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+- **ButtonToolbar:** make prop role ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
+- **CloseButton:** emit click event up ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+- **CloseButton:** emit click event up ([fa63831](https://github.com/cdmoro/bootstrap-vue-3/commit/fa63831a93d706fc8452730fb9e7d93ba43ee55f))
 
 ### Bug Fixes
 
-* **#470:** no rounded corners when using BInputGrooupPrepend or BInputGroupAppend ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
-* **#714:** v-bind={text} causes breaking items to not display text in nested BLink component ([9153b43](https://github.com/cdmoro/bootstrap-vue-3/commit/9153b437c9592e6144c71644ac4dc9723a4eeedc))
-* **#714:** v-bind={text} causes breaking items to not display text in nested BLink component ([9d4060f](https://github.com/cdmoro/bootstrap-vue-3/commit/9d4060fa5d41a52c4aba623d1ed6ac40b420d72c))
-* **BAlert:** rename dismiss event to close ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
-* **BAlert:** rename dismiss event to close ([534bfa5](https://github.com/cdmoro/bootstrap-vue-3/commit/534bfa59ed83f8785b18ef234f25bbd9f337dbe3))
-* **BAvatar:** fix tag to be button and has attr type when prop button and prop buttonType ([0448cfa](https://github.com/cdmoro/bootstrap-vue-3/commit/0448cfa34b5bbeac3376d00b9b02b4ac2e672a71))
-* **BInputGroup:** fixed BInputGroup awareness of its nested children borders radius ([5679c29](https://github.com/cdmoro/bootstrap-vue-3/commit/5679c29df6869773fb89e296ec831b9fa93f9994))
-* **BPlaceholder:** limit when both cols and width ([78b2dba](https://github.com/cdmoro/bootstrap-vue-3/commit/78b2dba4f004edbcd330ccc783b35150ed23ea78))
-* remove last remants of SubTitle to Subtitle ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
-* remove last remants of SubTitle to Subtitle ([ac66fe4](https://github.com/cdmoro/bootstrap-vue-3/commit/ac66fe441e3a9b90bd37a22e0244f7f7294f159c))
-* rename component card-sub-title to card-subtitle ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
-* workaround for git being dumb ([2ac043f](https://github.com/cdmoro/bootstrap-vue-3/commit/2ac043ff59378bf49cced314047344f3f43589f9))
-* workaround for git being dumb ([3ced7ef](https://github.com/cdmoro/bootstrap-vue-3/commit/3ced7ef3c0e9ba7110735916c040a156cfa7082c))
-* workaround for git being dumb ([06f1581](https://github.com/cdmoro/bootstrap-vue-3/commit/06f1581e09f849837a8df5ab6b084cbf0d05156e))
-* workaround for git being dumb ([4dbdc3d](https://github.com/cdmoro/bootstrap-vue-3/commit/4dbdc3dce6505140143ccb1c6ed3febc3c3a8d86))
-
+- **#470:** no rounded corners when using BInputGrooupPrepend or BInputGroupAppend ([b9b3fd3](https://github.com/cdmoro/bootstrap-vue-3/commit/b9b3fd316b62d4c7e0910bf26eaa74232713e883))
+- **#714:** v-bind={text} causes breaking items to not display text in nested BLink component ([9153b43](https://github.com/cdmoro/bootstrap-vue-3/commit/9153b437c9592e6144c71644ac4dc9723a4eeedc))
+- **#714:** v-bind={text} causes breaking items to not display text in nested BLink component ([9d4060f](https://github.com/cdmoro/bootstrap-vue-3/commit/9d4060fa5d41a52c4aba623d1ed6ac40b420d72c))
+- **BAlert:** rename dismiss event to close ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+- **BAlert:** rename dismiss event to close ([534bfa5](https://github.com/cdmoro/bootstrap-vue-3/commit/534bfa59ed83f8785b18ef234f25bbd9f337dbe3))
+- **BAvatar:** fix tag to be button and has attr type when prop button and prop buttonType ([0448cfa](https://github.com/cdmoro/bootstrap-vue-3/commit/0448cfa34b5bbeac3376d00b9b02b4ac2e672a71))
+- **BInputGroup:** fixed BInputGroup awareness of its nested children borders radius ([5679c29](https://github.com/cdmoro/bootstrap-vue-3/commit/5679c29df6869773fb89e296ec831b9fa93f9994))
+- **BPlaceholder:** limit when both cols and width ([78b2dba](https://github.com/cdmoro/bootstrap-vue-3/commit/78b2dba4f004edbcd330ccc783b35150ed23ea78))
+- remove last remants of SubTitle to Subtitle ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+- remove last remants of SubTitle to Subtitle ([ac66fe4](https://github.com/cdmoro/bootstrap-vue-3/commit/ac66fe441e3a9b90bd37a22e0244f7f7294f159c))
+- rename component card-sub-title to card-subtitle ([44657a7](https://github.com/cdmoro/bootstrap-vue-3/commit/44657a70b05937cb4eff1331d39ef52efc846736))
+- workaround for git being dumb ([2ac043f](https://github.com/cdmoro/bootstrap-vue-3/commit/2ac043ff59378bf49cced314047344f3f43589f9))
+- workaround for git being dumb ([3ced7ef](https://github.com/cdmoro/bootstrap-vue-3/commit/3ced7ef3c0e9ba7110735916c040a156cfa7082c))
+- workaround for git being dumb ([06f1581](https://github.com/cdmoro/bootstrap-vue-3/commit/06f1581e09f849837a8df5ab6b084cbf0d05156e))
+- workaround for git being dumb ([4dbdc3d](https://github.com/cdmoro/bootstrap-vue-3/commit/4dbdc3dce6505140143ccb1c6ed3febc3c3a8d86))
 
 ### Miscellaneous Chores
 
-* release 0.3.6 ([17ceb11](https://github.com/cdmoro/bootstrap-vue-3/commit/17ceb11477897bdd44e7545a3710dc169703ff7f))
+- release 0.3.6 ([17ceb11](https://github.com/cdmoro/bootstrap-vue-3/commit/17ceb11477897bdd44e7545a3710dc169703ff7f))
 
 ## [0.3.5](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.4...v0.3.5) (2022-09-23)
 
-
 ### Features
 
-* **BTable:** added a simple version of sort-compare prop ([7373350](https://github.com/cdmoro/bootstrap-vue-3/commit/7373350d72759582c83651f3d1f88da08ab17708))
-* **Carousel:** create a startingSlide prop ([4a34ade](https://github.com/cdmoro/bootstrap-vue-3/commit/4a34adea10d9d732ce53cfa018d045faf7469d87))
-
+- **BTable:** added a simple version of sort-compare prop ([7373350](https://github.com/cdmoro/bootstrap-vue-3/commit/7373350d72759582c83651f3d1f88da08ab17708))
+- **Carousel:** create a startingSlide prop ([4a34ade](https://github.com/cdmoro/bootstrap-vue-3/commit/4a34adea10d9d732ce53cfa018d045faf7469d87))
 
 ### Bug Fixes
 
-* **BFormGroup:** label-align prop not working ([398744a](https://github.com/cdmoro/bootstrap-vue-3/commit/398744aebb65fb8f2c3a814b51a4840f9277c8cd))
-* **BModal:** strongly type props ([8776e40](https://github.com/cdmoro/bootstrap-vue-3/commit/8776e40c9677c1493ed214f8cb68e1934f960a51))
-* **Card:** subTitle prop renamed to subtitle as it is one word ([8776e40](https://github.com/cdmoro/bootstrap-vue-3/commit/8776e40c9677c1493ed214f8cb68e1934f960a51))
-* **Carousel:** get it to work again due to broken useSlot() features ([4a34ade](https://github.com/cdmoro/bootstrap-vue-3/commit/4a34adea10d9d732ce53cfa018d045faf7469d87))
-* non imported items in dts files ([5981902](https://github.com/cdmoro/bootstrap-vue-3/commit/598190280758fd532f75290646a4435cd4741fb2))
+- **BFormGroup:** label-align prop not working ([398744a](https://github.com/cdmoro/bootstrap-vue-3/commit/398744aebb65fb8f2c3a814b51a4840f9277c8cd))
+- **BModal:** strongly type props ([8776e40](https://github.com/cdmoro/bootstrap-vue-3/commit/8776e40c9677c1493ed214f8cb68e1934f960a51))
+- **Card:** subTitle prop renamed to subtitle as it is one word ([8776e40](https://github.com/cdmoro/bootstrap-vue-3/commit/8776e40c9677c1493ed214f8cb68e1934f960a51))
+- **Carousel:** get it to work again due to broken useSlot() features ([4a34ade](https://github.com/cdmoro/bootstrap-vue-3/commit/4a34adea10d9d732ce53cfa018d045faf7469d87))
+- non imported items in dts files ([5981902](https://github.com/cdmoro/bootstrap-vue-3/commit/598190280758fd532f75290646a4435cd4741fb2))
 
 ## [0.3.4](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.3...v0.3.4) (2022-09-20)
 
-
 ### Features
 
-* add props toggleClass to BnavItemDropdown ([d90611a](https://github.com/cdmoro/bootstrap-vue-3/commit/d90611aef4bb2652562bb482deaf2344cf1b59ec))
-* **BAlert:** slot dismissible overwrites close ([804e8b2](https://github.com/cdmoro/bootstrap-vue-3/commit/804e8b2cab3fa4fe8e27a46f53faae572e32e7a7))
-* **BCloseButton:** add in optional prop type to override type=button default ([804e8b2](https://github.com/cdmoro/bootstrap-vue-3/commit/804e8b2cab3fa4fe8e27a46f53faae572e32e7a7))
-* **BTable:** added emptyText and emptyFilteredText props to customize the shown message when the table is empty and show-empty prop is set to true ([1336537](https://github.com/cdmoro/bootstrap-vue-3/commit/1336537aa2fbd572e3a3e84b606d2e14b29ffef8))
-* **BTable:** added no-provider-paging, no-provider-sorting, and no-provider-filtering props for an easier switch from BSV2 (can be used with/without or replace the no-provider prop) ([82b0b36](https://github.com/cdmoro/bootstrap-vue-3/commit/82b0b36ea9c379ba8890f0ff1cf3aa74caf25bc2))
-* **BTable:** added no-providing prop which is an alternative to the no-provider-.. props of BSV2 ([c40ac06](https://github.com/cdmoro/bootstrap-vue-3/commit/c40ac06c146ee7a9bb794e49763f4f9740e29cc5))
-* **BTable:** added show-empty prop along with the #empty slot to customize the empty message ([0918583](https://github.com/cdmoro/bootstrap-vue-3/commit/0918583e2f4ff7f94b91502beae5fd959d7cd9b2))
-* **BTable:** added sortIcon slot, the slot allows you to customize the table's sort icons by providing you some info about the applied sort ([24cd37f](https://github.com/cdmoro/bootstrap-vue-3/commit/24cd37fe1e0f9acb8a795835e0864ea85ccdb899))
-* **Offcanvas:** add noHeader prop ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
-* **Offcanvas:** add noHeaderClose prop ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
-* **Offcanvas:** add slot footer ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
-* **Offcanvas:** add slot for header ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
-
+- add props toggleClass to BnavItemDropdown ([d90611a](https://github.com/cdmoro/bootstrap-vue-3/commit/d90611aef4bb2652562bb482deaf2344cf1b59ec))
+- **BAlert:** slot dismissible overwrites close ([804e8b2](https://github.com/cdmoro/bootstrap-vue-3/commit/804e8b2cab3fa4fe8e27a46f53faae572e32e7a7))
+- **BCloseButton:** add in optional prop type to override type=button default ([804e8b2](https://github.com/cdmoro/bootstrap-vue-3/commit/804e8b2cab3fa4fe8e27a46f53faae572e32e7a7))
+- **BTable:** added emptyText and emptyFilteredText props to customize the shown message when the table is empty and show-empty prop is set to true ([1336537](https://github.com/cdmoro/bootstrap-vue-3/commit/1336537aa2fbd572e3a3e84b606d2e14b29ffef8))
+- **BTable:** added no-provider-paging, no-provider-sorting, and no-provider-filtering props for an easier switch from BSV2 (can be used with/without or replace the no-provider prop) ([82b0b36](https://github.com/cdmoro/bootstrap-vue-3/commit/82b0b36ea9c379ba8890f0ff1cf3aa74caf25bc2))
+- **BTable:** added no-providing prop which is an alternative to the no-provider-.. props of BSV2 ([c40ac06](https://github.com/cdmoro/bootstrap-vue-3/commit/c40ac06c146ee7a9bb794e49763f4f9740e29cc5))
+- **BTable:** added show-empty prop along with the #empty slot to customize the empty message ([0918583](https://github.com/cdmoro/bootstrap-vue-3/commit/0918583e2f4ff7f94b91502beae5fd959d7cd9b2))
+- **BTable:** added sortIcon slot, the slot allows you to customize the table's sort icons by providing you some info about the applied sort ([24cd37f](https://github.com/cdmoro/bootstrap-vue-3/commit/24cd37fe1e0f9acb8a795835e0864ea85ccdb899))
+- **Offcanvas:** add noHeader prop ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
+- **Offcanvas:** add noHeaderClose prop ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
+- **Offcanvas:** add slot footer ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
+- **Offcanvas:** add slot for header ([94fdebd](https://github.com/cdmoro/bootstrap-vue-3/commit/94fdebdcfa5dbddb91b50eefb1a96b2ce8d01be9))
 
 ### Bug Fixes
 
-* **BAvatarGroup:** attempted mutation of readonly ([f2fcd74](https://github.com/cdmoro/bootstrap-vue-3/commit/f2fcd74c9f91f1195da909e90fcf06e93b783f10))
-* **BModal:** Fixed escape key close event not updating v-model prop ([57801a4](https://github.com/cdmoro/bootstrap-vue-3/commit/57801a4643453e2ab0ab1b4561ffe897e73a2226))
-* **BModal:** fixed the modal's close button located in the header where the button click was not updating ``v-model`` value ([35a11da](https://github.com/cdmoro/bootstrap-vue-3/commit/35a11da233e1ddfc9420916342bc96d9aaec6b70))
-* **BModal:** fixed the modal's close button located in the header where the button click was not updating v-model value ([fe00e61](https://github.com/cdmoro/bootstrap-vue-3/commit/fe00e61879655d324cb49e200d6a23faf59797e9))
-* **BModal:** include explicit import of BCloseButton ([fd445e0](https://github.com/cdmoro/bootstrap-vue-3/commit/fd445e09181e73e9e44433f54df76c73e369bb29))
-* **BTableContainer:** fix up new classes prop ([75509ef](https://github.com/cdmoro/bootstrap-vue-3/commit/75509ef112e259f30125c3d5d0935078acfba93e))
-* **BTable:** fixed anchor tags not working inside the table rows ([7d521dd](https://github.com/cdmoro/bootstrap-vue-3/commit/7d521ddfab45177ac3afb5e1f360603a03b480ee))
-* **directives:** export proper naming schemes ([f8adcaa](https://github.com/cdmoro/bootstrap-vue-3/commit/f8adcaa162a7d3b2109847da6e5985fd54621256))
-* **pluckProps:** fix wrong ts ([f2fcd74](https://github.com/cdmoro/bootstrap-vue-3/commit/f2fcd74c9f91f1195da909e90fcf06e93b783f10))
-* prop name ([a72cd1d](https://github.com/cdmoro/bootstrap-vue-3/commit/a72cd1df5eed621a94292c0cbf9881f1f6d9e34b))
-* renamed bootstrap 5 utilities classes ([a68bb52](https://github.com/cdmoro/bootstrap-vue-3/commit/a68bb5250a96bb50de0d337e0244af5e5b568ac8))
+- **BAvatarGroup:** attempted mutation of readonly ([f2fcd74](https://github.com/cdmoro/bootstrap-vue-3/commit/f2fcd74c9f91f1195da909e90fcf06e93b783f10))
+- **BModal:** Fixed escape key close event not updating v-model prop ([57801a4](https://github.com/cdmoro/bootstrap-vue-3/commit/57801a4643453e2ab0ab1b4561ffe897e73a2226))
+- **BModal:** fixed the modal's close button located in the header where the button click was not updating `v-model` value ([35a11da](https://github.com/cdmoro/bootstrap-vue-3/commit/35a11da233e1ddfc9420916342bc96d9aaec6b70))
+- **BModal:** fixed the modal's close button located in the header where the button click was not updating v-model value ([fe00e61](https://github.com/cdmoro/bootstrap-vue-3/commit/fe00e61879655d324cb49e200d6a23faf59797e9))
+- **BModal:** include explicit import of BCloseButton ([fd445e0](https://github.com/cdmoro/bootstrap-vue-3/commit/fd445e09181e73e9e44433f54df76c73e369bb29))
+- **BTableContainer:** fix up new classes prop ([75509ef](https://github.com/cdmoro/bootstrap-vue-3/commit/75509ef112e259f30125c3d5d0935078acfba93e))
+- **BTable:** fixed anchor tags not working inside the table rows ([7d521dd](https://github.com/cdmoro/bootstrap-vue-3/commit/7d521ddfab45177ac3afb5e1f360603a03b480ee))
+- **directives:** export proper naming schemes ([f8adcaa](https://github.com/cdmoro/bootstrap-vue-3/commit/f8adcaa162a7d3b2109847da6e5985fd54621256))
+- **pluckProps:** fix wrong ts ([f2fcd74](https://github.com/cdmoro/bootstrap-vue-3/commit/f2fcd74c9f91f1195da909e90fcf06e93b783f10))
+- prop name ([a72cd1d](https://github.com/cdmoro/bootstrap-vue-3/commit/a72cd1df5eed621a94292c0cbf9881f1f6d9e34b))
+- renamed bootstrap 5 utilities classes ([a68bb52](https://github.com/cdmoro/bootstrap-vue-3/commit/a68bb5250a96bb50de0d337e0244af5e5b568ac8))
 
 ## [0.3.3](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.2...v0.3.3) (2022-09-13)
 
-
 ### Features
 
-* adds slots to component reference docs ([1e9026b](https://github.com/cdmoro/bootstrap-vue-3/commit/1e9026b943acc0b303655801a287aaea209cdd9d))
-* **b-dropdown-item:** :sparkles: Bind class attribute to the root ([f0063ef](https://github.com/cdmoro/bootstrap-vue-3/commit/f0063efa8c0744a0528ce4249ae695f69d6a5e70))
-* **BNavText:** add optional text prop ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
-* **BTab:** added new lazyOnce prop, The prop works similar to the lazy prop but it mounts the child component only once. ([5f4240b](https://github.com/cdmoro/bootstrap-vue-3/commit/5f4240b0eb2bae717440187241dddb95f6853ee3))
-* **BTable:** added filter prop to filter the table content, added filterable prop to specify which fields should be filtered ([2e37dc1](https://github.com/cdmoro/bootstrap-vue-3/commit/2e37dc154ebb4e4b4da89da922cf30b452b641e8))
-* **BTable:** added functionality to current-page prop, The prop shows a specific page of the given items when the per-page prop is passed. ([f177563](https://github.com/cdmoro/bootstrap-vue-3/commit/f177563eca1a015c90ada2be9ad9c52536845dfe))
-* **BTable:** implemented per page prop ([f5d52d3](https://github.com/cdmoro/bootstrap-vue-3/commit/f5d52d3b8be8a95a33b588d76b4d0d7932063b82))
-* **Btable:** sortable tables now have the sort icon added using CSS which makes it globally customizable ([0639fce](https://github.com/cdmoro/bootstrap-vue-3/commit/0639fcea30017b6576feccdc20466344a399e149))
-* **BTable:** sortInternal default to true ([aac2b68](https://github.com/cdmoro/bootstrap-vue-3/commit/aac2b68f7bc8672246107c650e7c928dd336c201))
-
+- adds slots to component reference docs ([1e9026b](https://github.com/cdmoro/bootstrap-vue-3/commit/1e9026b943acc0b303655801a287aaea209cdd9d))
+- **b-dropdown-item:** :sparkles: Bind class attribute to the root ([f0063ef](https://github.com/cdmoro/bootstrap-vue-3/commit/f0063efa8c0744a0528ce4249ae695f69d6a5e70))
+- **BNavText:** add optional text prop ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+- **BTab:** added new lazyOnce prop, The prop works similar to the lazy prop but it mounts the child component only once. ([5f4240b](https://github.com/cdmoro/bootstrap-vue-3/commit/5f4240b0eb2bae717440187241dddb95f6853ee3))
+- **BTable:** added filter prop to filter the table content, added filterable prop to specify which fields should be filtered ([2e37dc1](https://github.com/cdmoro/bootstrap-vue-3/commit/2e37dc154ebb4e4b4da89da922cf30b452b641e8))
+- **BTable:** added functionality to current-page prop, The prop shows a specific page of the given items when the per-page prop is passed. ([f177563](https://github.com/cdmoro/bootstrap-vue-3/commit/f177563eca1a015c90ada2be9ad9c52536845dfe))
+- **BTable:** implemented per page prop ([f5d52d3](https://github.com/cdmoro/bootstrap-vue-3/commit/f5d52d3b8be8a95a33b588d76b4d0d7932063b82))
+- **Btable:** sortable tables now have the sort icon added using CSS which makes it globally customizable ([0639fce](https://github.com/cdmoro/bootstrap-vue-3/commit/0639fcea30017b6576feccdc20466344a399e149))
+- **BTable:** sortInternal default to true ([aac2b68](https://github.com/cdmoro/bootstrap-vue-3/commit/aac2b68f7bc8672246107c650e7c928dd336c201))
 
 ### Bug Fixes
 
-* **BButtonGroup:** strong type prop size ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
-* **BDropdown:** click event emits MouseEvent ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
-* **BNavbarToggle:** click event emits MouseEvent ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
-* **BNavForm:** pass submit event up ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
-* **BTable:** fixed incorrect responsive-class prop name which was disabling the responsive functionality ([eb3ca5c](https://github.com/cdmoro/bootstrap-vue-3/commit/eb3ca5cf110063185a014f6d4a2eb2bcccacc3b6))
-* **BTable:** Fixed sorting when sorting had no effect when trying to sort an object-formed column that includes multiple properties (ex: name: { first: 'Dickerson', last: 'Macdonald' }) ([658d2ec](https://github.com/cdmoro/bootstrap-vue-3/commit/658d2ec776775ff5137b70832128b0a2e403beed))
-* **BTable:** header display changed to be inline to allow few abilties such as centering text using CSS ([caf495e](https://github.com/cdmoro/bootstrap-vue-3/commit/caf495e9e8575cc2279680b94324d86dd7cd1b59))
+- **BButtonGroup:** strong type prop size ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+- **BDropdown:** click event emits MouseEvent ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+- **BNavbarToggle:** click event emits MouseEvent ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+- **BNavForm:** pass submit event up ([d77abc5](https://github.com/cdmoro/bootstrap-vue-3/commit/d77abc517a503bed1656d1f3ab33cce9720ac6ab))
+- **BTable:** fixed incorrect responsive-class prop name which was disabling the responsive functionality ([eb3ca5c](https://github.com/cdmoro/bootstrap-vue-3/commit/eb3ca5cf110063185a014f6d4a2eb2bcccacc3b6))
+- **BTable:** Fixed sorting when sorting had no effect when trying to sort an object-formed column that includes multiple properties (ex: name: { first: 'Dickerson', last: 'Macdonald' }) ([658d2ec](https://github.com/cdmoro/bootstrap-vue-3/commit/658d2ec776775ff5137b70832128b0a2e403beed))
+- **BTable:** header display changed to be inline to allow few abilties such as centering text using CSS ([caf495e](https://github.com/cdmoro/bootstrap-vue-3/commit/caf495e9e8575cc2279680b94324d86dd7cd1b59))
 
 ## [0.3.2](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.3.1...v0.3.2) (2022-09-09)
 

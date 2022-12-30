@@ -1,17 +1,6 @@
-import BModal from './BModal'
-import BPopover from './BPopover'
-import BToggle from './BToggle'
-import BTooltip from './BTooltip'
-import BVisible from './BVisible'
-import focus from './focus'
-
-export {BModal, BPopover, BToggle, BTooltip, BVisible, focus}
-
-export default {
-  BModal,
-  BPopover,
-  BToggle,
-  BTooltip,
-  BVisible,
-  focus,
-}
+export {default as BModal} from './BModal'
+export {default as BPopover} from './BPopover'
+export {default as BToggle} from './BToggle'
+export {default as BTooltip} from './BTooltip'
+export {default as BVisible} from './BVisible'
+export {default as focus} from './focus'

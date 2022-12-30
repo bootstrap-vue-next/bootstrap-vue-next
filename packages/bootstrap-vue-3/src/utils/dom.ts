@@ -1,4 +1,4 @@
-import {Comment, Slot, VNode} from 'vue'
+import {Comment, type Slot, type VNode} from 'vue'
 import {DOCUMENT, HAS_ELEMENT_SUPPORT} from '../constants/env'
 import {AnimationFrame} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from './env'
@@ -7,7 +7,6 @@ import {toString} from './stringUtils'
 const ELEMENT_PROTO = HAS_ELEMENT_SUPPORT ? Element.prototype : undefined
 
 // See: https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
-/* istanbul ignore next */
 export const matchesEl =
   ELEMENT_PROTO?.matches ||
   (ELEMENT_PROTO as any)?.msMatchesSelector ||
@@ -100,7 +99,6 @@ export const isVisible = (el: HTMLElement): boolean => {
   //}
   if (getStyle(el, 'display') === 'none') {
     // We do this check to help with vue-test-utils when using v-show
-    /* istanbul ignore next */
     return false
   }
   // All browsers support getBoundingClientRect(), except JSDOM as it returns all 0's for values :(
@@ -213,7 +211,6 @@ export const matches = (el: Element, selector: string) =>
   isElement(el) ? matchesEl.call(el, selector) : false
 
 // See: https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
-/* istanbul ignore next */
 /* eslint-disable @typescript-eslint/no-this-alias */
 export const closestEl =
   ELEMENT_PROTO?.closest ||

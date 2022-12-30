@@ -121,7 +121,7 @@ describe('carousel', () => {
     expect($button.attributes('type')).toBe('button')
   })
 
-  it.skip('button with class carousel-control-prev has attr as #computedId', () => {
+  it('button with class carousel-control-prev has attr as #computedId', () => {
     const wrapper = mount(BCarousel, {
       props: {controls: true},
     })
@@ -230,7 +230,7 @@ describe('carousel', () => {
     expect($button.attributes('type')).toBe('button')
   })
 
-  it.skip('button with class carousel-control-next has attr as #computedId', () => {
+  it('button with class carousel-control-next has attr as #computedId', () => {
     const wrapper = mount(BCarousel, {
       props: {controls: true},
     })

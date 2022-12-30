@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BModal from './BModal.vue'
-import BTransition from './BTransition/BTransition.vue'
+// import BTransition from './BTransition/BTransition.vue'
 
 describe('modal', () => {
   enableAutoUnmount(afterEach)
