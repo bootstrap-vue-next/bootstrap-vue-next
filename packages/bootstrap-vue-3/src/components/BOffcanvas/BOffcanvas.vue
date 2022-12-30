@@ -1,5 +1,10 @@
 <template>
-  <transition name="slide" :on-after-enter="OnAfterEnter">
+  <transition
+    name="slide"
+    :on-after-enter="OnAfterEnter"
+    :on-after-leave="OnAfterLeave"
+    :on-before-leave="OnBeforeLeave"
+  >
     <div
       v-show="modelValue"
       class="offcanvas"
@@ -88,11 +93,18 @@ const emit = defineEmits<BOffcanvasEmits>()
 
 const slots = useSlots()
 
+const isTransitioning = ref(false)
+const isHiding = ref(false)
+
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
-const computedClasses = computed(() => [`offcanvas-${props.placement}`, {show: props.modelValue}])
+const computedClasses = computed(() => [
+  `offcanvas-${props.placement}`,
+  {show: props.modelValue},
+  {hiding: isHiding.value},
+])
 
 const show = () => {
-  emit('update:modelValue', true)
+  emit('update:modelValue', true) //TODO need to return a BOOLEANISH
   emit('show')
 }
 
@@ -100,6 +112,16 @@ const OnAfterEnter = () => {
   emit('update:modelValue', true)
 }
 
+const OnBeforeLeave = () => {
+  isHiding.value = true
+  isTransitioning.value = true
+}
+
+const OnAfterLeave = () => {
+  isTransitioning.value = false
+  isHiding.value = false
+  emit('update:modelValue', false)
+}
 const hide = () => {
   emit('hide')
   emit('update:modelValue', false)
