@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import BOverlayVue from '../BOverlay/BOverlay.vue'
+import BOverlay from '../BOverlay/BOverlay.vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -52,10 +52,6 @@ interface BOffcanvasProps {
   noHeaderClose?: Booleanish
   noHeader?: Booleanish
 }
-
-const isTransitioning = ref(false)
-const isHiding = ref(false)
-const isShowing = ref(false)
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
   dismissLabel: 'Close',
@@ -93,12 +89,7 @@ const emit = defineEmits<BOffcanvasEmits>()
 const slots = useSlots()
 
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
-const computedClasses = computed(() => [
-  `offcanvas-${props.placement}`,
-  {show: props.modelValue},
-  // {showing: isShowing.value},
-  // {hide: !props.modelValue},
-])
+const computedClasses = computed(() => [`offcanvas-${props.placement}`, {show: props.modelValue}])
 
 const show = () => {
   emit('update:modelValue', true)
@@ -124,10 +115,4 @@ watch(
     }
   }
 )
-
-onMounted((): void => {
-  if (modelValueBoolean.value) {
-    // instance.value?.show(element.value as HTMLElement)
-  }
-})
 </script>

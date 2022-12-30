@@ -2,55 +2,91 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BOffcanvas from './BOffcanvas.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-
+import BTransition from '../BTransition/BTransition.vue'
+import BOverlay from '../BOverlay/BOverlay.vue'
 describe('offcanvas', () => {
   enableAutoUnmount(afterEach)
 
+  let wrapper: any
+
+  const mountComponent = () => {
+    wrapper = mount(BOffcanvas, {
+      props: {
+        modelValue: true,
+      },
+      global: {
+        stubs: ['b-overlay'],
+      },
+    })
+  }
+
   it('has static class offcanvas', () => {
-    const wrapper = mount(BOffcanvas)
-    expect(wrapper.classes()).toContain('offcanvas')
+    mountComponent()
+
+    const $offcanvas = wrapper.find('.offcanvas')
+    expect($offcanvas.classes()).toContain('offcanvas')
   })
 
   it('has tabindex -1', () => {
     const wrapper = mount(BOffcanvas)
-    expect(wrapper.attributes('tabindex')).toBe('-1')
+    const offcanvas = wrapper.find('.offcanvas')
+    expect(offcanvas.attributes('tabindex')).toBe('-1')
   })
 
   it('has aria-labelledby offcanvasLabel', () => {
     const wrapper = mount(BOffcanvas)
-    expect(wrapper.attributes('aria-labelledby')).toBe('offcanvasLabel')
+    const offcanvas = wrapper.find('.offcanvas')
+    expect(offcanvas.attributes('aria-labelledby')).toBe('offcanvasLabel')
   })
 
   it('has offcanvas-{type} when prop placement', () => {
     const wrapper = mount(BOffcanvas)
-    expect(wrapper.classes()).toContain('offcanvas-start')
+    const offcanvas = wrapper.find('.offcanvas')
+    expect(offcanvas.classes()).toContain('offcanvas-start')
   })
 
   it('has offcanvas-{type} when prop placement not default', () => {
     const wrapper = mount(BOffcanvas, {
       props: {placement: 'abc'},
     })
-    expect(wrapper.classes()).toContain('offcanvas-abc')
+    const offcanvas = wrapper.find('.offcanvas')
+    expect(offcanvas.classes()).toContain('offcanvas-abc')
   })
 
-  it('has data-bs-backdrop', async () => {
-    const wrapper = mount(BOffcanvas)
-    expect(wrapper.attributes('data-bs-backdrop')).toBe('true')
-    await wrapper.setProps({backdrop: false})
-    expect(wrapper.attributes('data-bs-backdrop')).toBe('false')
+  it('has backdrop', async () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {
+        modelValue: true,
+        backdrop: false,
+      },
+    })
+    const $overlay = wrapper.findComponent(BOverlay)
+
+    const $transition = $overlay.getComponent(BTransition)
+
+    let $div = $transition.find('div')
+
+    expect($div.exists()).toBe(false)
+
+    await wrapper.setProps({backdrop: true})
+
+    $div = $transition.find('div')
+
+    expect($div.exists()).toBe(true)
   })
 
-  it('has data-bs-scroll', async () => {
-    const wrapper = mount(BOffcanvas)
-    expect(wrapper.attributes('data-bs-scroll')).toBe('false')
-    await wrapper.setProps({bodyScrolling: true})
-    expect(wrapper.attributes('data-bs-scroll')).toBe('true')
-  })
+  // skip('has data-bs-scroll', async () => {
+  // const wrapper = mount(BOffcanvas)
+  // expect(wrapper.attributes('data-bs-scroll')).toBe('false')
+  // await wrapper.setProps({bodyScrolling: true})
+  // expect(wrapper.attributes('data-bs-scroll')).toBe('true')
+  // })
 
   it('first child div has static class offcanvas-header', () => {
     const wrapper = mount(BOffcanvas)
-    const [, $div] = wrapper.findAll('div')
-    expect($div.classes()).toContain('offcanvas-header')
+    const offcanvas = wrapper.find('.offcanvas')
+    const [$header] = offcanvas.findAll('div')
+    expect($header.classes()).toContain('offcanvas-header')
   })
 
   it('first child div has child h5 with static class offcanvas-title', () => {
@@ -124,15 +160,17 @@ describe('offcanvas', () => {
 
   it('second child div has static class offcanvas-body', () => {
     const wrapper = mount(BOffcanvas)
-    const [, , $div] = wrapper.findAll('div')
-    expect($div.classes()).toContain('offcanvas-body')
+    const offcanvas = wrapper.find('.offcanvas')
+    const [, $body] = offcanvas.findAll('div')
+    expect($body.classes()).toContain('offcanvas-body')
   })
 
   it('second child div renders default slot', () => {
     const wrapper = mount(BOffcanvas, {
       slots: {default: 'foobar'},
     })
-    const [, , $div] = wrapper.findAll('div')
-    expect($div.text()).toBe('foobar')
+    const offcanvas = wrapper.find('.offcanvas')
+    const [, $body] = offcanvas.findAll('div')
+    expect($body.text()).toBe('foobar')
   })
 })
