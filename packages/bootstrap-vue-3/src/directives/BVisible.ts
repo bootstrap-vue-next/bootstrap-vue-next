@@ -1,67 +1,6 @@
-import {Directive, DirectiveBinding} from 'vue'
+import type {Directive, DirectiveBinding} from 'vue'
 
 const observerInstances = new Map()
-
-/**
- *
- * @param el
- */
-const destroy = (el: HTMLElement) => {
-  if (observerInstances.has(el)) {
-    const observer = observerInstances.get(el)
-    if (observer && observer.stop) {
-      observer.stop()
-    }
-    observerInstances.delete(el)
-  }
-}
-
-/**
- *
- * @param el
- * @param binding
- */
-const bind = (el: HTMLElement, binding: DirectiveBinding) => {
-  const options = {
-    margin: '0px',
-    once: false,
-    callback: binding.value,
-  }
-  // Parse modifiers
-  Object.keys(binding.modifiers).forEach((mod) => {
-    if (Number.isInteger(mod)) {
-      options.margin = `${mod}px`
-    } else if (mod.toLowerCase() === 'once') {
-      options.once = true
-    }
-  })
-  // Destroy any previous observer
-  destroy(el)
-  // Create new observer
-  const observer = new VisibilityObserver(
-    el,
-    options.margin,
-    options.once,
-    options.callback,
-    binding.instance
-  )
-  observerInstances.set(el, observer)
-}
-
-/**
- * @external
- */
-export default {
-  beforeMount(el, binding) {
-    bind(el, binding)
-  },
-  updated(el, binding) {
-    bind(el, binding)
-  },
-  unmounted(el) {
-    destroy(el)
-  },
-} as Directive<HTMLElement>
 
 class VisibilityObserver {
   private element: HTMLElement
@@ -131,3 +70,64 @@ class VisibilityObserver {
     this.observer = null
   }
 }
+
+/**
+ *
+ * @param el
+ */
+const destroy = (el: HTMLElement) => {
+  if (observerInstances.has(el)) {
+    const observer = observerInstances.get(el)
+    if (observer && observer.stop) {
+      observer.stop()
+    }
+    observerInstances.delete(el)
+  }
+}
+
+/**
+ *
+ * @param el
+ * @param binding
+ */
+const bind = (el: HTMLElement, binding: DirectiveBinding) => {
+  const options = {
+    margin: '0px',
+    once: false,
+    callback: binding.value,
+  }
+  // Parse modifiers
+  Object.keys(binding.modifiers).forEach((mod) => {
+    if (Number.isInteger(mod)) {
+      options.margin = `${mod}px`
+    } else if (mod.toLowerCase() === 'once') {
+      options.once = true
+    }
+  })
+  // Destroy any previous observer
+  destroy(el)
+  // Create new observer
+  const observer = new VisibilityObserver(
+    el,
+    options.margin,
+    options.once,
+    options.callback,
+    binding.instance
+  )
+  observerInstances.set(el, observer)
+}
+
+/**
+ * @external
+ */
+export default {
+  beforeMount(el, binding) {
+    bind(el, binding)
+  },
+  updated(el, binding) {
+    bind(el, binding)
+  },
+  unmounted(el) {
+    destroy(el)
+  },
+} as Directive<HTMLElement>

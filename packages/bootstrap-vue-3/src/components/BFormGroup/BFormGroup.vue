@@ -423,7 +423,7 @@ export default defineComponent({
       isFieldset ? 'fieldset' : 'div',
       rowProps,
       this.isHorizontal && isFieldset
-        ? [h(BFormRow, {}, {default: () => [$label, $content]})]
+        ? [h(BFormRow, null, {default: () => [$label, $content]})]
         : this.isHorizontal || !this.floatingBoolean
         ? [$label, $content]
         : [$content]
