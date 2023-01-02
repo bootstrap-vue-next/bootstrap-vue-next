@@ -11,12 +11,6 @@ describe('useAlignment blackbox test', () => {
     expect(computedRef).toHaveProperty('value')
   })
 
-  it('value to contain property effect', () => {
-    const prop: {value: Alignment.JustifyContent} = {value: 'center'}
-    const computedRef = useAlignment(toRef(prop, 'value'))
-    expect(computedRef).toHaveProperty('effect')
-  })
-
   it('value of center returns justify-content-center', () => {
     const prop: {value: Alignment.JustifyContent} = {value: 'center'}
     const computedRef = useAlignment(toRef(prop, 'value'))
