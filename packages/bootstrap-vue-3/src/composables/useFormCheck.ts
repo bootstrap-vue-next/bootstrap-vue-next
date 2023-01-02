@@ -149,7 +149,7 @@ const bindGroupProps = (
   props: any,
   computedName: ComputedRef<string>,
   computedId: ComputedRef<string>
-): any => ({
+) => ({
   ...el,
   props: {
     'button-variant': props.buttonVariant,
