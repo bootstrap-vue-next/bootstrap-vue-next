@@ -2,7 +2,6 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BOffcanvas from './BOffcanvas.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import BTransition from '../BTransition/BTransition.vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
 describe('offcanvas', () => {
   enableAutoUnmount(afterEach)
@@ -22,26 +21,25 @@ describe('offcanvas', () => {
 
   it('has static class offcanvas', () => {
     mountComponent()
-
-    const $offcanvas = wrapper.find('.offcanvas')
-    expect($offcanvas.classes()).toContain('offcanvas')
+    const offcanvas = wrapper.get('.offcanvas')
+    expect(offcanvas.exists()).toBe(true)
   })
 
   it('has tabindex -1', () => {
     const wrapper = mount(BOffcanvas)
-    const offcanvas = wrapper.find('.offcanvas')
+    const offcanvas = wrapper.get('.offcanvas')
     expect(offcanvas.attributes('tabindex')).toBe('-1')
   })
 
   it('has aria-labelledby offcanvasLabel', () => {
     const wrapper = mount(BOffcanvas)
-    const offcanvas = wrapper.find('.offcanvas')
+    const offcanvas = wrapper.get('.offcanvas')
     expect(offcanvas.attributes('aria-labelledby')).toBe('offcanvasLabel')
   })
 
   it('has offcanvas-{type} when prop placement', () => {
     const wrapper = mount(BOffcanvas)
-    const offcanvas = wrapper.find('.offcanvas')
+    const offcanvas = wrapper.get('.offcanvas')
     expect(offcanvas.classes()).toContain('offcanvas-start')
   })
 
@@ -49,8 +47,20 @@ describe('offcanvas', () => {
     const wrapper = mount(BOffcanvas, {
       props: {placement: 'abc'},
     })
-    const offcanvas = wrapper.find('.offcanvas')
+    const offcanvas = wrapper.get('.offcanvas')
     expect(offcanvas.classes()).toContain('offcanvas-abc')
+  })
+
+  it('backdrop component exists', async () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {
+        modelValue: true,
+        backdrop: false,
+      },
+    })
+
+    const $overlay = wrapper.findComponent(BOverlay)
+    expect($overlay.exists()).toBe(true)
   })
 
   it('has backdrop', async () => {
@@ -60,21 +70,21 @@ describe('offcanvas', () => {
         backdrop: false,
       },
     })
-    const $overlay = wrapper.findComponent(BOverlay)
 
-    const $transition = $overlay.getComponent(BTransition)
+    const $overlay = wrapper.getComponent(BOverlay)
 
-    let $div = $transition.find('div')
+    let $div = $overlay.find('div.b-overlay')
 
     expect($div.exists()).toBe(false)
 
     await wrapper.setProps({backdrop: true})
 
-    $div = $transition.find('div')
+    $div = $overlay.find('div.b-overlay')
 
     expect($div.exists()).toBe(true)
   })
 
+  //TODO when reintroduce bs-scroll feature
   // skip('has data-bs-scroll', async () => {
   // const wrapper = mount(BOffcanvas)
   // expect(wrapper.attributes('data-bs-scroll')).toBe('false')
@@ -82,11 +92,11 @@ describe('offcanvas', () => {
   // expect(wrapper.attributes('data-bs-scroll')).toBe('true')
   // })
 
-  it('first child div has static class offcanvas-header', () => {
+  it(' offcanvas-header exists', () => {
     const wrapper = mount(BOffcanvas)
-    const offcanvas = wrapper.find('.offcanvas')
-    const [$header] = offcanvas.findAll('div')
-    expect($header.classes()).toContain('offcanvas-header')
+    const offcanvas = wrapper.get('.offcanvas')
+    const $header = offcanvas.find('.offcanvas-header')
+    expect($header.exists()).toBe(true)
   })
 
   it('first child div has child h5 with static class offcanvas-title', () => {
