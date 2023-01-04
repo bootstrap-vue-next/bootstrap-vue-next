@@ -1,4 +1,4 @@
-import {Directive, DirectiveBinding} from 'vue'
+import type {Directive, DirectiveBinding} from 'vue'
 import {Tooltip} from 'bootstrap'
 
 const resolveTrigger = (
@@ -13,7 +13,7 @@ const resolveTrigger = (
     return 'manual'
   }
 
-  const trigger: string[] = []
+  const trigger: Array<string> = []
 
   if (modifiers.click) {
     trigger.push('click')
@@ -27,43 +27,25 @@ const resolveTrigger = (
     trigger.push('focus')
   }
 
-  if (trigger.length > 0) {
-    return trigger.join(' ') as Tooltip.Options['trigger']
-  }
-
-  return 'hover focus'
+  return trigger.length > 0 ? (trigger.join(' ') as Tooltip.Options['trigger']) : 'hover focus'
 }
 
 const resolvePlacement = (
   modifiers: DirectiveBinding['modifiers'],
   value: DirectiveBinding['value']
-): Tooltip.Options['placement'] => {
-  if (value?.placement) {
-    return value.placement
-  }
+): Tooltip.Options['placement'] =>
+  value?.placement
+    ? value.placement
+    : modifiers.left
+    ? 'left'
+    : modifiers.right
+    ? 'right'
+    : modifiers.bottom
+    ? 'bottom'
+    : 'top'
 
-  if (modifiers.left) {
-    return 'left'
-  }
-
-  if (modifiers.right) {
-    return 'right'
-  }
-
-  if (modifiers.bottom) {
-    return 'bottom'
-  }
-
-  return 'top'
-}
-
-const resolveDelay = (values: DirectiveBinding['value']): Tooltip.Options['delay'] => {
-  if (values?.delay) {
-    return values.delay
-  }
-
-  return 0
-}
+const resolveDelay = (values: DirectiveBinding['value']): Tooltip.Options['delay'] =>
+  values?.delay ? values.delay : 0
 
 const resolveTitle = (values: DirectiveBinding['value']): Tooltip.Options['title'] => {
   if (typeof values === 'undefined') {
@@ -120,6 +102,8 @@ export default {
   },
   unmounted(el) {
     const instance = Tooltip.getInstance(el)
-    instance?.dispose()
+    if (instance !== null) {
+      instance.dispose()
+    }
   },
 } as Directive<HTMLElement>

@@ -15,3 +15,4 @@ export {
 export {default as useFormInput, COMMON_INPUT_PROPS} from './useFormInput'
 export {normalizeOptions} from './useFormSelect'
 export {default as useId} from './useId'
+export {default as useColorMode} from './useColorMode'

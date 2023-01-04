@@ -1,23 +1,22 @@
-import {Directive} from 'vue'
+import type {Directive, DirectiveBinding} from 'vue'
 import {Popover} from 'bootstrap'
 
 /**
  * @external
  */
 export default {
-  mounted(el, binding) {
-    let placement: Popover.Options['placement'] = 'right'
-    const trigger: string[] = []
+  mounted(el, binding: DirectiveBinding) {
+    const placement: Popover.Options['placement'] = binding.modifiers.left
+      ? 'left'
+      : binding.modifiers.right
+      ? 'right'
+      : binding.modifiers.bottom
+      ? 'bottom'
+      : binding.modifiers.top
+      ? 'top'
+      : 'right'
 
-    if (binding.modifiers.left) {
-      placement = 'left'
-    } else if (binding.modifiers.right) {
-      placement = 'right'
-    } else if (binding.modifiers.bottom) {
-      placement = 'bottom'
-    } else if (binding.modifiers.top) {
-      placement = 'top'
-    }
+    const trigger: Array<string> = []
 
     if (binding.modifiers.manual) {
       trigger.push('manual')
@@ -46,6 +45,8 @@ export default {
   },
   unmounted(el) {
     const instance = Popover.getInstance(el)
-    instance?.dispose()
+    if (instance !== null) {
+      instance.dispose()
+    }
   },
 } as Directive<HTMLElement>

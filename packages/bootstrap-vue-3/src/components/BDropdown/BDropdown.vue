@@ -87,6 +87,11 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   autoClose: true,
   block: false,
   boundary: 'clippingParents',
+  // TODO
+  /**
+   * @deprecated props.dark is deprecated
+   * review https://getbootstrap.com/docs/5.3/migration/#color-modes
+   */
   dark: false,
   disabled: false,
   dropup: false,

@@ -2,224 +2,472 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormGroup from './BFormGroup.vue'
 import BCol from '../BCol.vue'
+import BFormRow from '../BForm/BFormRow.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
 
-  it('tag is fieldset by default', () => {
+  it('tag is default fieldset', () => {
     const wrapper = mount(BFormGroup)
     expect(wrapper.element.tagName).toBe('FIELDSET')
   })
 
-  it('does not have child legend by default', () => {
+  it('tag is default div', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {labelFor: 'foobar'},
+    })
+    expect(wrapper.element.tagName).toBe('DIV')
+  })
+
+  it('has static class mb-3', () => {
     const wrapper = mount(BFormGroup)
-    const $legend = wrapper.find('legend')
-    expect($legend.exists()).toBe(false)
+    expect(wrapper.classes()).toContain('mb-3')
   })
 
-  it('has child legend when prop label', () => {
+  it('has class is-valid when prop state is true', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar'},
+      props: {state: true},
     })
-    const $legend = wrapper.find('legend')
-    expect($legend.exists()).toBe(true)
+    expect(wrapper.classes()).toContain('is-valid')
   })
 
-  it('child legend has attr id to be defined by default', () => {
+  it('has class is-invalid when prop state is false', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar'},
+      props: {state: false},
     })
-    const $legend = wrapper.get('legend')
-    expect($legend.attributes('id')).toBeDefined()
+    expect(wrapper.classes()).toContain('is-invalid')
   })
 
-  it('has child div by default', () => {
+  it('does not contain a valid class when prop state is undefined', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {state: undefined},
+    })
+    expect(wrapper.classes()).not.toContain('is-valid')
+    expect(wrapper.classes()).not.toContain('is-invalid')
+  })
+
+  it('has class was-validated when prop validated true', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {validated: true},
+    })
+    expect(wrapper.classes()).toContain('was-validated')
+  })
+
+  it('does not have class was-validated when prop validated false', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {validated: false},
+    })
+    expect(wrapper.classes()).not.toContain('was-validated')
+  })
+
+  it('attr id is defined by default', () => {
     const wrapper = mount(BFormGroup)
-    const $div = wrapper.find('div')
-    expect($div.exists()).toBe(true)
+    expect(wrapper.attributes('id')).toBeDefined()
   })
 
-  it('child div has child BCol when prop labelCols', () => {
+  it('attr id is prop id', () => {
     const wrapper = mount(BFormGroup, {
-      props: {labelCols: '4'},
+      props: {id: 'foobar'},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.findComponent(BCol)
-    expect($col.exists()).toBe(true)
+    expect(wrapper.attributes('id')).toBe('foobar')
   })
 
-  it('child div has child BCol when prop labelColsSm', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {labelColsSm: '4'},
-    })
-    const $div = wrapper.get('div')
-    const $col = $div.findComponent(BCol)
-    expect($col.exists()).toBe(true)
+  it('attr disabled is false by default', () => {
+    const wrapper = mount(BFormGroup)
+    expect(wrapper.attributes('disabled')).toBe('false')
   })
 
-  it('child div has child BCol when prop labelColsMd', () => {
+  it('attr disabled is true when prop disabled', () => {
     const wrapper = mount(BFormGroup, {
-      props: {labelColsMd: '4'},
+      props: {disabled: true},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.findComponent(BCol)
-    expect($col.exists()).toBe(true)
+    expect(wrapper.attributes('disabled')).toBe('true')
   })
 
-  it('child div has child BCol when prop labelColsLg', () => {
+  it('attr disabled is undefined when disabled true but prop labelFor exists', () => {
     const wrapper = mount(BFormGroup, {
-      props: {labelColsLg: '4'},
+      props: {disabled: true, labelFor: 'foo'},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.findComponent(BCol)
-    expect($col.exists()).toBe(true)
+    expect(wrapper.attributes('disabled')).toBeUndefined()
   })
 
-  it('child div has child BCol when prop labelColsXl', () => {
+  it('attr disabled is undefined when disabled false but prop labelFor exists', () => {
     const wrapper = mount(BFormGroup, {
-      props: {labelColsXl: '4'},
+      props: {disabled: false, labelFor: 'foo'},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.findComponent(BCol)
-    expect($col.exists()).toBe(true)
+    expect(wrapper.attributes('disabled')).toBeUndefined()
   })
 
-  it('child div BCol child is given prop tag to be legend when prop labelCols', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelCols: '4'},
-    })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.props('tag')).toBe('legend')
+  it('attr role is undefined by default', () => {
+    const wrapper = mount(BFormGroup)
+    expect(wrapper.attributes('role')).toBeUndefined()
   })
 
-  it('child div BCol child is given prop labelCols', () => {
+  it('attr role is group when prop labelFor', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelCols: '4'},
+      props: {labelFor: 'foo'},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.props('cols')).toBe(4)
+    expect(wrapper.attributes('role')).toBe('group')
   })
 
-  it('child div BCol child is given prop labelColsSm to be prop sm', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelColsSm: '4'},
-    })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.props('sm')).toBe(4)
+  it('attr aria-invalid is undefined by default', () => {
+    const wrapper = mount(BFormGroup)
+    expect(wrapper.attributes('aria-invalid')).toBeUndefined()
   })
 
-  it('child div BCol child is given prop labelColsMd to be prop md', () => {
+  it('attr aria-invalid is true when prop ariaInvalid is true', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelColsMd: '4'},
+      props: {ariaInvalid: true},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.props('md')).toBe(4)
+    expect(wrapper.attributes('aria-invalid')).toBe('true')
   })
 
-  it('child div BCol child is given prop labelColsLg to be prop lg', () => {
+  it('attr aria-invalid is false when prop ariaInvalid is false', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelColsLg: '4'},
+      props: {ariaInvalid: false},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.props('lg')).toBe(4)
+    expect(wrapper.attributes('aria-invalid')).toBe('false')
   })
 
-  it('child div BCol child is given prop labelColsXl to be prop xl', () => {
+  it('attr aria-invalid is grammar when prop ariaInvalid is grammar', () => {
     const wrapper = mount(BFormGroup, {
-      props: {labelColsXl: '4'},
+      props: {ariaInvalid: 'grammar'},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.props('xl')).toBe(4)
+    expect(wrapper.attributes('aria-invalid')).toBe('grammar')
   })
 
-  it('child div BCol child is given class text-{type} when prop labelAlign', () => {
+  it('attr aria-invalid is spelling when prop ariaInvalid is spelling', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlign: '5', labelCols: '2'},
+      props: {ariaInvalid: 'spelling'},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.classes()).toContain('text-5')
+    expect(wrapper.attributes('aria-invalid')).toBe('spelling')
   })
 
-  it('child div BCol child is given class text-{type} when prop labelAlignSm', () => {
+  it('attr aria-invalid is true when prop state is false', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignSm: '5', labelCols: '2'},
+      props: {state: false},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.classes()).toContain('text-sm-5')
+    expect(wrapper.attributes('aria-invalid')).toBe('true')
   })
 
-  it('child div BCol child is given class text-{type} when prop labelAlignMd', () => {
+  it('attr aria-invalid is true when prop state is false and prop ariaInvalid is false', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignMd: '5', labelCols: '2'},
+      props: {state: false, ariaInvalid: false},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.classes()).toContain('text-md-5')
+    expect(wrapper.attributes('aria-invalid')).toBe('true')
   })
 
-  it('child div BCol child is given class text-{type} when prop labelAlignLg', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignLg: '5', labelCols: '2'},
-    })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.classes()).toContain('text-lg-5')
+  it('attr aria-labelledby is undefined by default', () => {
+    const wrapper = mount(BFormGroup)
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  it('child div BCol child is given class text-{type} when prop labelAlignXl', () => {
+  it('attr aria-labelledby is undefined when prop labelFor', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignXl: '5', labelCols: '2'},
+      props: {labelFor: 'foo'},
     })
-    const $div = wrapper.get('div')
-    const $col = $div.getComponent(BCol)
-    expect($col.classes()).toContain('text-xl-5')
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  it('child legend is given class text-{type} when prop labelAlign', () => {
+  // Start example labelCols props branches
+
+  it('attr aria-labelledby is undefined when has labelCols props but no label', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlign: '5'},
+      props: {
+        labelCols: 3,
+      },
     })
-    const $legend = wrapper.get('legend')
-    expect($legend.classes()).toContain('text-5')
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  it('child legend is given class text-sm-{type} when prop labelAlignSm ', () => {
+  it('attr aria-labelledby is undefined when has labelColsLg props but no label', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignSm: '5'},
+      props: {
+        labelColsLg: 3,
+      },
     })
-    const $legend = wrapper.get('legend')
-    expect($legend.classes()).toContain('text-sm-5')
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  it('child legend is given class text-md-{type} when prop labelAlignMd', () => {
+  it('attr aria-labelledby is undefined when has labelColsMd props but no label', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignMd: '5'},
+      props: {
+        labelColsMd: 3,
+      },
     })
-    const $legend = wrapper.get('legend')
-    expect($legend.classes()).toContain('text-md-5')
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  it('child legend is given class text-lg-{type} when prop labelAlignLg ', () => {
+  it('attr aria-labelledby is undefined when has labelColsSm props but no label', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignLg: '5'},
+      props: {
+        labelColsSm: 3,
+      },
     })
-    const $legend = wrapper.get('legend')
-    expect($legend.classes()).toContain('text-lg-5')
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
 
-  it('child legend is given class text-xl-{type} when prop labelAlignXl ', () => {
+  it('attr aria-labelledby is undefined when has labelColsXl props but no label', () => {
     const wrapper = mount(BFormGroup, {
-      props: {label: 'foobar', labelAlignXl: '5'},
+      props: {
+        labelColsXl: 3,
+      },
     })
-    const $legend = wrapper.get('legend')
-    expect($legend.classes()).toContain('text-xl-5')
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
   })
+
+  // End example
+
+  it('attr aria-labelledby is defined when has labelCols props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelCols: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsLg props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsLg: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsMd props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsMd: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsSm props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsSm: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsXl props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsXl: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelCols props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelCols: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsLg props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsLg: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsMd props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsMd: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsSm props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsSm: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has labelColsXl props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        labelColsXl: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  // Start contentCols branches
+
+  it('attr aria-labelledby is defined when has contentCols props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentCols: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsLg props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsLg: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsMd props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsMd: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsSm props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsSm: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsXl props but also slot label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsXl: 3,
+      },
+      slots: {label: 'foo'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  // End example
+
+  it('attr aria-labelledby is defined when has contentCols props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentCols: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsLg props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsLg: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsMd props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsMd: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsSm props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsSm: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is defined when has contentColsXl props but also prop label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsXl: 3,
+        label: 'foo',
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('attr aria-labelledby is undefined when has contentCols props but no label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentCols: 3,
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
+  })
+
+  it('attr aria-labelledby is undefined when has contentColsLg props but no label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsLg: 3,
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
+  })
+
+  it('attr aria-labelledby is undefined when has contentColsMd props but no label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsMd: 3,
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
+  })
+
+  it('attr aria-labelledby is undefined when has contentColsSm props but no label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsSm: 3,
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
+  })
+
+  it('attr aria-labelledby is undefined when has contentColsXl props but no label', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {
+        contentColsXl: 3,
+      },
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
+  })
+
+  // Finish of rowProps branch
+
+  // TODO Need to test to get the expected structure. Which is difficult
 })

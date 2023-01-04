@@ -1,6 +1,6 @@
 import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
 import {getAttr, isTag} from '../utils'
-import {Directive, DirectiveBinding} from 'vue'
+import type {Directive, DirectiveBinding} from 'vue'
 
 /**
  *
@@ -56,24 +56,22 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
  * @external
  */
 export default {
-  mounted(el: HTMLElement, binding: DirectiveBinding<string>): void {
+  mounted(el, binding: DirectiveBinding<string>): void {
     const targetIds = getTargets(binding, el)
-    const targetAttrs = []
+    const targetAttrs: Array<string> = []
 
-    let targetAttr = 'data-bs-target'
-    if (el.tagName === 'a') {
-      targetAttr = 'href'
-    }
-    for (let index = 0; index < targetIds.length; index++) {
-      const targetId = targetIds[index]
+    const targetAttr = el.tagName === 'a' ? 'href' : 'data-bs-target'
+
+    targetIds.forEach((targetId) => {
       const target = document.getElementById(targetId)
 
-      if (target) {
+      if (target !== null) {
         el.setAttribute('data-bs-toggle', resolveToggleType(target))
 
         targetAttrs.push(`#${targetId}`)
       }
-    }
+    })
+
     if (targetAttrs.length > 0) {
       el.setAttribute(targetAttr, targetAttrs.join(','))
     }

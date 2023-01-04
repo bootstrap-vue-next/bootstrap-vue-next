@@ -13,7 +13,6 @@ export default (
   onMounted(() => {
     element?.value?.addEventListener(event, callback)
   })
-
   onBeforeUnmount(() => {
     element?.value?.removeEventListener(event, callback)
   })
