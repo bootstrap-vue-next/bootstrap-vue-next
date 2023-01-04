@@ -6,35 +6,39 @@
   visibility: visible;
 }
 
-.slide-enter-from,
-.slide-leave-to {
-  visibility: visible;
-
-  &.offcanvas-start {
-    transform: translateX(-100%) !important;
-  }
-  &.offcanvas-end {
-    transform: translateX(100%) !important;
-  }
-  &.offcanvas-top {
-    transform: translateY(-100%) !important;
-  }
-  &.offcanvas-bottom {
-    transform: translateY(100%) !important;
-  }
-}
-
 @each $breakpoint in map-keys($grid-breakpoints) {
   $next: breakpoint-next($breakpoint, $grid-breakpoints);
   $infix: breakpoint-infix($next, $grid-breakpoints);
 
   .offcanvas#{$infix} {
     @include media-breakpoint-down($next) {
-      &.offcanvas-start,
-      .offcanvas-end,
-      .offcanvas-top,
-      .offcanvas-bottom {
-        transform: unset;
+      &.offcanvas-start {
+        &.slide-enter-from,
+        &.slide-leave-to {
+          visibility: visible;
+          transform: translateX(-100%);
+        }
+      }
+      &.offcanvas-end {
+        &.slide-enter-from,
+        &.slide-leave-to {
+          visibility: visible;
+          transform: translateX(100%);
+        }
+      }
+      &.offcanvas-top {
+        &.slide-enter-from,
+        &.slide-leave-to {
+          visibility: visible;
+          transform: translateY(-100%);
+        }
+      }
+      &.offcanvas-bottom {
+        &.slide-enter-from,
+        &.slide-leave-to {
+          visibility: visible;
+          transform: translateY(100%);
+        }
       }
     }
   }

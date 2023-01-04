@@ -4,6 +4,7 @@
     :on-after-enter="OnAfterEnter"
     :on-after-leave="OnAfterLeave"
     :on-before-leave="OnBeforeLeave"
+    :on-before-enter="OnBeforeEnter"
   >
     <div
       v-show="modelValue"
@@ -95,12 +96,14 @@ const slots = useSlots()
 
 const isTransitioning = ref(false)
 const isHiding = ref(false)
+const isShowing = ref(false)
 
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
-  {show: props.modelValue},
+  {show: props.modelValue && !isShowing.value},
   {hiding: isHiding.value},
+  {showing: isShowing.value},
 ])
 
 const show = () => {
@@ -109,11 +112,16 @@ const show = () => {
 }
 
 const OnAfterEnter = () => {
+  isTransitioning.value = false
   emit('update:modelValue', true)
 }
 
 const OnBeforeLeave = () => {
   isHiding.value = true
+  isTransitioning.value = true
+}
+
+const OnBeforeEnter = () => {
   isTransitioning.value = true
 }
 
