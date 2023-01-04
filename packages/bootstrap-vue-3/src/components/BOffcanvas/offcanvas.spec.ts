@@ -75,13 +75,6 @@ describe('offcanvas', () => {
     expect($div.exists()).toBe(true)
   })
 
-  // skip('has data-bs-scroll', async () => {
-  // const wrapper = mount(BOffcanvas)
-  // expect(wrapper.attributes('data-bs-scroll')).toBe('false')
-  // await wrapper.setProps({bodyScrolling: true})
-  // expect(wrapper.attributes('data-bs-scroll')).toBe('true')
-  // })
-
   it('first child div has static class offcanvas-header', () => {
     const wrapper = mount(BOffcanvas)
     const offcanvas = wrapper.find('.offcanvas')
