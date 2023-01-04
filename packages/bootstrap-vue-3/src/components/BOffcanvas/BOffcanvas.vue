@@ -101,9 +101,11 @@ const isShowing = ref(false)
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
-  {show: props.modelValue && !isShowing.value},
-  {hiding: isHiding.value},
-  {showing: isShowing.value},
+  {
+    show: modelValueBoolean.value && !isShowing.value,
+    hiding: isHiding.value,
+    showing: isShowing.value,
+  },
 ])
 
 const show = () => {
