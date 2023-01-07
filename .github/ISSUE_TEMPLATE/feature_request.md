@@ -4,7 +4,6 @@ about: Suggest an idea for this project
 title: ''
 labels: enhancement
 assignees: ''
-
 ---
 
 **Is this feature a Bootstrap-vue feature? Missing Bootstrap-vue features are almost always valid and accepted.** Please include a detailed description of the feature, and a web link to the Bootstrap-vue docs
