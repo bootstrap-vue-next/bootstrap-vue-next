@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.5.0...v0.5.1) (2023-01-04)
+
+
+### Bug Fixes
+
+* persistence in useColorMode ([c0e8e96](https://github.com/cdmoro/bootstrap-vue-3/commit/c0e8e968856acfc0e5249e6096787ccd72da5926))
+* **useColorMode:** disable persistence by default ([43e2460](https://github.com/cdmoro/bootstrap-vue-3/commit/43e246058e03d9a2a10695457d5fe460ffaa9398))
+* **useColorMode:** remove broken modes option ([30e9729](https://github.com/cdmoro/bootstrap-vue-3/commit/30e9729806f9d3579af6e1c2987cfe6e5942ff89))
+
 ## [0.5.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.15...v0.5.0) (2023-01-02)
 
 
