@@ -24,8 +24,8 @@ jobs:
         id: release
         with:
           release-type: node
-          path: packages/bootstrap-vue-3
-          package-name: bootstrap-vue-3
+          path: packages/bootstrap-vue-next
+          package-name: bootstrap-vue-next
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
           default-branch: main
@@ -77,7 +77,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
-        run: pnpm publish --tag latest --filter bootstrap-vue-3 --access=public
+        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created }}

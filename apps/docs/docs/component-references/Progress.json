@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/progress",
+  "name": "@bootstrap-vue-next/progress",
   "version": "1.0.0",
   "meta": {
     "title": "Progress",

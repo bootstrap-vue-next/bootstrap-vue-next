@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import {h, ref} from 'vue'
-import {useToast} from 'bootstrap-vue-3'
+import {useToast} from 'bootstrap-vue-next'
 
 const showToast = ref(true)
 

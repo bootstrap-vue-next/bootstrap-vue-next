@@ -353,7 +353,7 @@ The `auto-close`property has 4 options
 
 If you need some advanced Popper.js configuration to make dropdowns behave to your needs, you can
 use the `popper-opts` prop to pass down a custom configuration object which will be deeply merged
-with the BootstrapVue defaults.
+with the BootstrapVueNext defaults.
 
 Head to the [Popper.js docs](https://popper.js.org/docs/v1/) to see all the configuration options.
 
@@ -884,7 +884,7 @@ constrain/set the menu width.
 </div>
 ```
 
-`<b-dropdown-text>` has the BootstrapVue custom class `.b-dropdown-text` applied to it which sets
+`<b-dropdown-text>` has the BootstrapVueNext custom class `.b-dropdown-text` applied to it which sets
 some basic styles which are suitable in most situations. By default, its width will be the same as
 the widest `<b-dropdown-item>` content. You may need to place additional styles or helper classes on
 the component.

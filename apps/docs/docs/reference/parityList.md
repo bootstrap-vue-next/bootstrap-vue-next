@@ -6,7 +6,7 @@ sidebar: auto
 
 In this section, you'll see a full list of BootstrapVue components (standard and non-standard) and the coverage status for `properties`, `slots`, `events`, etc. Also, we specify the new features of Bootstrap **v5** in each component that requires it. It is not a full migration guide, but documents the changes between the versions. A migration guide will be finalized upon a v1.0 release
 
-For more information, you can visit the Bootstrap v5 [migration guide](https://getbootstrap.com/docs/5.0/migration/).
+For more information, you can visit the Bootstrap v5 [migration guide](https://getbootstrap.com/docs/5.0/migration/)
 
 ## Accordion
 
@@ -976,7 +976,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `validated`          | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 
 Bootstrap 5 removed classes form-group and form-row. More information [here](https://getbootstrap.com/docs/5.0/migration/#forms).
-In the bootstrap-vue-3 implementation, these classes are replaced by mb-1 for form-group and row for form-row.
+In the bootstrap-vue-next implementation, these classes are replaced by mb-1 for form-group and row for form-row.
 
 Bootstrap 5 changed the classes for alignment. Use `start`, `center` and `end` instead of `left`, `center` and `right`
 
@@ -1296,7 +1296,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `scale`      | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
 | `shift-h`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
 | `shift-v`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
-| `size`       | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3                                            |
+| `size`       | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-next                                            |
 | `stacked`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
 | `title`      | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
 | `variant`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                                   |
@@ -1315,7 +1315,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | `scale`      | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
 | `shift-h`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
 | `shift-v`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
-| `size`       | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3 |
+| `size`       | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-next |
 | `title`      | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
 | `variant`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
 
@@ -1457,7 +1457,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 | ------------ | ------------------------------------------------------------------------------------ | ---------------------- |
 | `flush`      | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
 | `horizontal` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
-| `numbered`   | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-3 |
+| `numbered`   | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | new in bootstrap-vue-next |
 | `tag`        | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                        |
 
 ### Slots

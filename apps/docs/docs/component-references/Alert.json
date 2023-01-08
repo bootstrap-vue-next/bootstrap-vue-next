@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/alert",
+  "name": "@bootstrap-vue-next/alert",
   "version": "Alpha",
   "meta": {
     "title": "Alert",

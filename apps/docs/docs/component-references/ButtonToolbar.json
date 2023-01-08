@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/button-toolbar",
+  "name": "@bootstrap-vue-next/button-toolbar",
   "version": "Alpha",
   "meta": {
     "title": "Button Toolbar",

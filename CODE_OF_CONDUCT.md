@@ -58,8 +58,11 @@ representative at an online or offline event.
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders via a GitHub issue. Please create an issue there commenting that there is a complaint, **but do not include details of the event**. Then a community leader will give the reporter details on a preferred private contact method to respect the privacy of the reporter. No matter the chosen forum to privately handle the situation, the community leader agrees to act on behalf of the organization.
-All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting
+the project team at pooya@pi0.ir. The project team will review and investigate all complaints, and
+will respond in a way that it deems appropriate to the circumstances. The project team is obligated
+to maintain confidentiality with regard to the reporter of an incident. Further details of specific
+enforcement policies may be posted separately.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.

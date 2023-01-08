@@ -178,8 +178,7 @@ wrapped in these components for proper styling.
 
 Set the `is-text` prop on `<b-input-group-prepend>` or `<b-input-group-append>` if the content is
 textual in nature to apply proper styling. Alternatively, place the `<b-input-group-text>`
-subcomponent inside the `<b-input-group-prepend>` or `<b-input-group-append>`. This also applies
-when you want to use on of [BootstrapVue's icons](/docs/icons).
+subcomponent inside the `<b-input-group-prepend>` or `<b-input-group-append>`
 
 ## Supported form-controls
 
@@ -197,11 +196,11 @@ The following are the form controls supported as the input-group's _main_ input 
 
 **Notes:**
 
-- ~~BootstrapVue uses custom SCSS/CSS to handling sizing the `<b-form-file>` input when it is placed
+- ~~BootstrapVueNext uses custom SCSS/CSS to handling sizing the `<b-form-file>` input when it is placed
   in a `<b-input-group>` which has a [`size`](#control-sizing) specified.~~
-- ~~BootstrapVue uses custom SCSS/CSS when `<b-form-input type="range">` is placed in a `<b-input-group>`.~~
-- ~~BootstrapVue's custom components (i.e. `<b-form-spinbutton>`, `<b-form-rating>`, `<b-form-tags>`,
-  etc.) require BootstrapVue's custom SCSS/CSS.~~
+- ~~BootstrapVueNext uses custom SCSS/CSS when `<b-form-input type="range">` is placed in a `<b-input-group>`.~~
+- ~~BootstrapVueNext's custom components (i.e. `<b-form-spinbutton>`, `<b-form-rating>`, `<b-form-tags>`,
+  etc.) require BootstrapVueNext's custom SCSS/CSS.~~
 
 ## Checkbox and radio addons
 

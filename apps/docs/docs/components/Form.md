@@ -1,7 +1,7 @@
 # Form
 
-> BootstrapVue3 form component and helper components that optionally support inline form styles and
-> validation states. Pair them up with other BootstrapVue3 form control components for an easy
+> BootstrapVueNext form component and helper components that optionally support inline form styles and
+> validation states. Pair them up with other BootstrapVueNext form control components for an easy
 > customized, and responsive, layout with a consistent look and feel.
 
 ## Introduction to forms and controls
@@ -10,7 +10,7 @@ Be sure to use an appropriate `type` on all inputs (e.g., `email` for email addr
 numerical information) to take advantage of newer input controls like email verification, number
 selection, and more.
 
-Here's a quick example to demonstrate BootstrapVue's form styles. Keep reading for documentation on
+Here's a quick example to demonstrate BootstrapVueNext's form styles. Keep reading for documentation on
 supported components, form layout, and more.
 <ClientOnly>
 <b-card>

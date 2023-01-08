@@ -16,7 +16,7 @@
 
 <script lang="ts" setup>
   import {ref, type Ref} from 'vue'
-  import type {BreadcrumbItem} from 'bootstrap-vue-3'
+  import type {BreadcrumbItem} from 'bootstrap-vue-next'
 
   const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
     {text: 'Admin', href: 'https://google.com'},
@@ -128,7 +128,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 
 <script lang="ts" setup>
   import {ref, type Ref} from 'vue';
-  import type {BreadcrumbItem} from 'bootstrap-vue-3'
+  import type {BreadcrumbItem} from 'bootstrap-vue-next'
 
   const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
     { text: 'Admin', href:'https://google.com'},

@@ -6,9 +6,9 @@ import {defineUserConfig, defaultTheme, viteBundler} from 'vuepress'
 
 export default defineUserConfig({
   lang: 'en-US',
-  base: '/bootstrap-vue-3/',
-  title: 'BootstrapVue 3',
-  head: [['link', {rel: 'icon', href: '/bootstrap-vue-3/favicon.ico'}]],
+  base: '/bootstrap-vue-next/',
+  title: 'BootstrapVueNext',
+  head: [['link', {rel: 'icon', href: '/bootstrap-vue-next/favicon.ico'}]],
   plugins: [
     searchPlugin({
       locales: {
@@ -22,7 +22,7 @@ export default defineUserConfig({
   bundler: viteBundler(),
   theme: defaultTheme({
     logo: '/logo.png',
-    repo: 'https://github.com/cdmoro/bootstrap-vue-3',
+    repo: 'https://github.com/bootstrap-vue/bootstrap-vue-next',
     docsDir: 'apps/docs/docs',
     editLink: true,
     contributors: false,

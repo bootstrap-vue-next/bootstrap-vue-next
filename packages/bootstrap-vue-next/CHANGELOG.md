@@ -2,105 +2,94 @@
 
 ## [0.5.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.5.0...v0.5.1) (2023-01-04)
 
-
 ### Bug Fixes
 
-* persistence in useColorMode ([c0e8e96](https://github.com/cdmoro/bootstrap-vue-3/commit/c0e8e968856acfc0e5249e6096787ccd72da5926))
-* **useColorMode:** disable persistence by default ([43e2460](https://github.com/cdmoro/bootstrap-vue-3/commit/43e246058e03d9a2a10695457d5fe460ffaa9398))
-* **useColorMode:** remove broken modes option ([30e9729](https://github.com/cdmoro/bootstrap-vue-3/commit/30e9729806f9d3579af6e1c2987cfe6e5942ff89))
+- persistence in useColorMode ([c0e8e96](https://github.com/cdmoro/bootstrap-vue-3/commit/c0e8e968856acfc0e5249e6096787ccd72da5926))
+- **useColorMode:** disable persistence by default ([43e2460](https://github.com/cdmoro/bootstrap-vue-3/commit/43e246058e03d9a2a10695457d5fe460ffaa9398))
+- **useColorMode:** remove broken modes option ([30e9729](https://github.com/cdmoro/bootstrap-vue-3/commit/30e9729806f9d3579af6e1c2987cfe6e5942ff89))
 
 ## [0.5.0](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.15...v0.5.0) (2023-01-02)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **Icons:** remove Icons package indefinitely, please review new documentation section on how to include bootstrap-icons into your vue app!
-* **BAlert:** remake timer system to be standard accross all components (not implemented in other components yet) - read section on new docs
-* **BAlert:** fix timer system - read section on new docs
-* **BAlert:** close-count-down event renamed to close-countdown as it is one word
-* **BAlert:** remove show prop - use v-model and read docs
+- **Icons:** remove Icons package indefinitely, please review new documentation section on how to include bootstrap-icons into your vue app!
+- **BAlert:** remake timer system to be standard accross all components (not implemented in other components yet) - read section on new docs
+- **BAlert:** fix timer system - read section on new docs
+- **BAlert:** close-count-down event renamed to close-countdown as it is one word
+- **BAlert:** remove show prop - use v-model and read docs
 
 ### Features
 
-* **BAlert:** add immediate, interval & showOnPause timer props ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **BAlert:** remake timer system to be standard accross all components (not implemented in other components yet) - read section on new docs ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **BAlert:** remove show prop - use v-model and read docs ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **BColorMode:** create a color mode directive ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
-* create useColorMode composable in anticipation of Bootstrap v5.3 ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
-* export useColorMode ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
-* **Icons:** remove Icons package indefinitely, please review new documentation section on how to include bootstrap-icons into your vue app! ([d3c13e0](https://github.com/cdmoro/bootstrap-vue-3/commit/d3c13e03fa53932541a9f3bd99e27bdec4d12a80))
-* **table:** Add formatter support to table component ([41f2f0b](https://github.com/cdmoro/bootstrap-vue-3/commit/41f2f0b312cd621f73b0ccceafb78629f1579a8f))
-* **table:** Add support for non-string fields in formatting ([e2e2597](https://github.com/cdmoro/bootstrap-vue-3/commit/e2e25978aa29f70b503fb3a2c45245de4e5265d2))
-* **useCountdown:** reactivity issues when using composable parameters ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-
+- **BAlert:** add immediate, interval & showOnPause timer props ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **BAlert:** remake timer system to be standard accross all components (not implemented in other components yet) - read section on new docs ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **BAlert:** remove show prop - use v-model and read docs ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **BColorMode:** create a color mode directive ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
+- create useColorMode composable in anticipation of Bootstrap v5.3 ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
+- export useColorMode ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
+- **Icons:** remove Icons package indefinitely, please review new documentation section on how to include bootstrap-icons into your vue app! ([d3c13e0](https://github.com/cdmoro/bootstrap-vue-3/commit/d3c13e03fa53932541a9f3bd99e27bdec4d12a80))
+- **table:** Add formatter support to table component ([41f2f0b](https://github.com/cdmoro/bootstrap-vue-3/commit/41f2f0b312cd621f73b0ccceafb78629f1579a8f))
+- **table:** Add support for non-string fields in formatting ([e2e2597](https://github.com/cdmoro/bootstrap-vue-3/commit/e2e25978aa29f70b503fb3a2c45245de4e5265d2))
+- **useCountdown:** reactivity issues when using composable parameters ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
 
 ### Bug Fixes
 
-* **BAlert:** close-count-down event renamed to close-countdown as it is one word ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **BAlert:** fix timer system - read section on new docs ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* BPopover events is not emitted correctly [#282](https://github.com/cdmoro/bootstrap-vue-3/issues/282) ([3dee9c8](https://github.com/cdmoro/bootstrap-vue-3/commit/3dee9c8185443810a0c23db363d113389ec65827))
-* **useCountdown:** pausing while stopped showing if prop showOnPause is true ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **useCountdown:** remainingMs showing 0 if paused ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **useCountdown:** resuming when stopped rendering ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **useCountdown:** showing on paused ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
-* **useFormCheck:** remove ts any ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
-
+- **BAlert:** close-count-down event renamed to close-countdown as it is one word ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **BAlert:** fix timer system - read section on new docs ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- BPopover events is not emitted correctly [#282](https://github.com/cdmoro/bootstrap-vue-3/issues/282) ([3dee9c8](https://github.com/cdmoro/bootstrap-vue-3/commit/3dee9c8185443810a0c23db363d113389ec65827))
+- **useCountdown:** pausing while stopped showing if prop showOnPause is true ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **useCountdown:** remainingMs showing 0 if paused ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **useCountdown:** resuming when stopped rendering ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **useCountdown:** showing on paused ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **useFormCheck:** remove ts any ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
 
 ### Performance Improvements
 
-* **useAlignment:** use eagerComputed instead ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
-
+- **useAlignment:** use eagerComputed instead ([e30aeaa](https://github.com/cdmoro/bootstrap-vue-3/commit/e30aeaa51f286d9e47c97cd7d41be458e78d4cc0))
 
 ### Reverts
 
-* **App.vue:** put playground app.vue back to default ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
+- **App.vue:** put playground app.vue back to default ([26010f3](https://github.com/cdmoro/bootstrap-vue-3/commit/26010f3a0f04d6e602248ee6fb270e1870eed37c))
 
 ## [0.4.15](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.14...v0.4.15) (2022-12-12)
 
-
 ### Bug Fixes
 
-* **nuxt:** include new files when packing ([ae7a998](https://github.com/cdmoro/bootstrap-vue-3/commit/ae7a998640cb573128cd0f63db734d3947e7e7e2))
+- **nuxt:** include new files when packing ([ae7a998](https://github.com/cdmoro/bootstrap-vue-3/commit/ae7a998640cb573128cd0f63db734d3947e7e7e2))
 
 ## [0.4.14](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.13...v0.4.14) (2022-12-10)
 
-
 ### Features
 
-* **BModal:** add the ability to prevent closing using Event.PreventDefault ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
-* **BvEvent:** improve BvEvent and BvModalEvent event classes ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
-* improve nuxt opts ([9a76d1e](https://github.com/cdmoro/bootstrap-vue-3/commit/9a76d1ed9c4ee854e72551023d6040d2ea8cdfb3))
-* improve nuxt.ts file ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
-
+- **BModal:** add the ability to prevent closing using Event.PreventDefault ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+- **BvEvent:** improve BvEvent and BvModalEvent event classes ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+- improve nuxt opts ([9a76d1e](https://github.com/cdmoro/bootstrap-vue-3/commit/9a76d1ed9c4ee854e72551023d6040d2ea8cdfb3))
+- improve nuxt.ts file ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
 
 ### Bug Fixes
 
-* **BModal:** backdrop and esc events not caring when hide is prevented ([dcd3bfe](https://github.com/cdmoro/bootstrap-vue-3/commit/dcd3bfe991bd6cdb177ef404f17b9dfdc41e1af8))
-* **BvEvent:** remove vueTarget from event ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
-* export BvModalEvent ([f219c44](https://github.com/cdmoro/bootstrap-vue-3/commit/f219c449a813101c549e354856e2ff104b866405))
-* ignore ban-ts-comment inline ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+- **BModal:** backdrop and esc events not caring when hide is prevented ([dcd3bfe](https://github.com/cdmoro/bootstrap-vue-3/commit/dcd3bfe991bd6cdb177ef404f17b9dfdc41e1af8))
+- **BvEvent:** remove vueTarget from event ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
+- export BvModalEvent ([f219c44](https://github.com/cdmoro/bootstrap-vue-3/commit/f219c449a813101c549e354856e2ff104b866405))
+- ignore ban-ts-comment inline ([ed668f8](https://github.com/cdmoro/bootstrap-vue-3/commit/ed668f819dd3c0fcd807704f0f7a600e67aa14c3))
 
 ## [0.4.13](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.12...v0.4.13) (2022-12-05)
 
-
 ### Bug Fixes
 
-* **#828:** BButtonGroup missing btn-group class when prop size ([0897270](https://github.com/cdmoro/bootstrap-vue-3/commit/0897270bfec9889880f08b1a6ee0d0f315486ac5))
+- **#828:** BButtonGroup missing btn-group class when prop size ([0897270](https://github.com/cdmoro/bootstrap-vue-3/commit/0897270bfec9889880f08b1a6ee0d0f315486ac5))
 
 ## [0.4.12](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.11...v0.4.12) (2022-12-04)
 
-
 ### Bug Fixes
 
-* **modal:** maybe fix modal... if it was even broken ([fc31444](https://github.com/cdmoro/bootstrap-vue-3/commit/fc3144466c41f7292bb5433fd3c3eccbfac71d35))
+- **modal:** maybe fix modal... if it was even broken ([fc31444](https://github.com/cdmoro/bootstrap-vue-3/commit/fc3144466c41f7292bb5433fd3c3eccbfac71d35))
 
 ## [0.4.11](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.10...v0.4.11) (2022-12-01)
 
-
 ### Bug Fixes
 
-* Tabs Content will update with reactive components ([06c0663](https://github.com/cdmoro/bootstrap-vue-3/commit/06c066357ed2ada8e209258a57d5508bbb07ba98)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
-* update tests ([069511f](https://github.com/cdmoro/bootstrap-vue-3/commit/069511fb948e17166aa2461c81cd86c68e5a6738)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
+- Tabs Content will update with reactive components ([06c0663](https://github.com/cdmoro/bootstrap-vue-3/commit/06c066357ed2ada8e209258a57d5508bbb07ba98)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
+- update tests ([069511f](https://github.com/cdmoro/bootstrap-vue-3/commit/069511fb948e17166aa2461c81cd86c68e5a6738)), closes [#778](https://github.com/cdmoro/bootstrap-vue-3/issues/778)
 
 ## [0.4.10](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.4.9...v0.4.10) (2022-11-23)
 

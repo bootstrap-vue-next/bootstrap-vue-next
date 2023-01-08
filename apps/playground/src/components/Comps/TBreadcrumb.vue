@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import {onMounted} from 'vue'
-import {useBreadcrumb} from 'bootstrap-vue-3'
+import {useBreadcrumb} from 'bootstrap-vue-next'
 
 const breadcrumb = useBreadcrumb()
 

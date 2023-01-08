@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/badge",
+  "name": "@bootstrap-vue-next/badge",
   "version": "Alpha",
   "meta": {
     "title": "Badge",

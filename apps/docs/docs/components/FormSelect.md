@@ -201,7 +201,7 @@ If an array entry is a string, it will be used for both the generated `value` an
 
 You can mix using strings and [objects](#options-as-an-array-of-objects) in the array.
 
-Internally, BootstrapVue will convert the above array to the following array (the
+Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
 ```js
@@ -260,7 +260,7 @@ const options = {
 }
 ```
 
-Internally, BootstrapVue will convert the above object to the following array (the
+Internally, BootstrapVueNext will convert the above object to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
 ```js

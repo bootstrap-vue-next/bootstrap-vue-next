@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/input-group",
+  "name": "@bootstrap-vue-next/input-group",
   "version": "1.0.0",
   "meta": {
     "title": "Input Group",

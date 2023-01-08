@@ -1,17 +1,17 @@
 {
-  "name": "bootstrap-vue-3",
-  "displayName": "BootstrapVue3",
+  "name": "bootstrap-vue-next",
+  "displayName": "BootstrapVueNext",
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
   "version": "0.5.1",
   "license": "MIT",
-  "main": "./dist/bootstrap-vue-3.umd.js",
-  "module": "./dist/bootstrap-vue-3.es.js",
+  "main": "./dist/bootstrap-vue-next.umd.js",
+  "module": "./dist/bootstrap-vue-next.es.js",
   "exports": {
     ".": {
-      "import": "./dist/bootstrap-vue-3.es.js",
-      "require": "./dist/bootstrap-vue-3.umd.js"
+      "import": "./dist/bootstrap-vue-next.es.js",
+      "require": "./dist/bootstrap-vue-next.umd.js"
     },
-    "./dist/bootstrap-vue-3.css": "./dist/bootstrap-vue-3.css",
+    "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
     "./nuxt": "./nuxt.ts",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
   },
@@ -69,12 +69,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cdmoro/bootstrap-vue-3.git"
+    "url": "https://github.com/bootstrap-vue/bootstrap-vue-next.git"
   },
   "bugs": {
-    "url": "https://github.com/cdmoro/bootstrap-vue-3/issues"
+    "url": "https://github.com/bootstrap-vue/bootstrap-vue-next/issues"
   },
-  "homepage": "https://github.com/cdmoro/bootstrap-vue-3",
+  "homepage": "https://github.com/bootstrap-vue/bootstrap-vue-next",
   "keywords": [
     "vue3",
     "vue",

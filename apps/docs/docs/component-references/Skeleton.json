@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/skeleton",
+  "name": "@bootstrap-vue-next/skeleton",
   "version": "1.0.0",
   "meta": {
     "title": "Skeleton",

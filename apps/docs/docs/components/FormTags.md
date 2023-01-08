@@ -133,7 +133,7 @@ Several props are available to alter the basic styling of the default tagged int
 
 For additional props, see the component reference section at the bottom of this page.
 
-The focus and validation state styling of the component relies upon BootstrapVue's custom CSS.
+The focus and validation state styling of the component relies upon BootstrapVueNext's custom CSS.
 
 ## Using with native browser `<form>` submission
 
@@ -954,7 +954,7 @@ You can easily create a custom wrapper component with your preferred rendering s
 </template>
 
 <script setup lang="ts">
-  import {BFormTags} from 'bootstrap-vue-3'
+  import {BFormTags} from 'bootstrap-vue-next'
 
   defineProps({
     value: {type: Array, default: () => []},
@@ -964,7 +964,7 @@ You can easily create a custom wrapper component with your preferred rendering s
 
 ## `<b-form-tag>` helper component
 
-BootstrapVue provides the helper component `<b-form-tag>`, for use with the default scoped slot of `<b-form-tags>`. The component is based upon [`<b-badge>`](Badge.md) and [`<b-button-close>`](ButtonClose.md).
+BootstrapVueNext provides the helper component `<b-form-tag>`, for use with the default scoped slot of `<b-form-tags>`. The component is based upon [`<b-badge>`](Badge.md) and [`<b-button-close>`](ButtonClose.md).
 
 `<b-form-tag>` supports the same variants as `<b-badge>` and also supports `pill` styling. Sizing is based on the containing element's font-size.
 
@@ -972,7 +972,7 @@ The remove event is emitted when the `<b-form-tag>` remove button is clicked.
 
 Tags that are too wide for their parent container will automatically have their text content truncated with an ellipsis. For this reason, it is always good practice to supply a title via the title prop when using the default slot of `<b-form-tag>` for the tag content.
 
-Note `<b-form-tag>` requires BootstrapVue3's custom CSS/SCSS for proper styling.
+Note `<b-form-tag>` requires BootstrapVueNext's custom CSS/SCSS for proper styling.
 
 <ClientOnly>
   <ComponentReference></ComponentReference>

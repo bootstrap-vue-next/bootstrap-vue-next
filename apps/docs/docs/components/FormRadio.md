@@ -194,7 +194,7 @@ If an array entry is a string, it will be used for both the generated `value` an
 
 You can mix using strings and [objects](#options-as-an-array-of-objects) in the array.
 
-Internally, Bootstrap-Vue-3 will convert the above array to the following array (the
+Internally, bootstrap-vue-next will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
 ```js
@@ -223,7 +223,7 @@ const options = [
 If `value` is missing, then `text` will be used as both the `value` and `text` fields. If you use
 the `html` property, you **must** supply a `value` property.
 
-Internally, BootstrapVue will convert the above array to the following array (the
+Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
 ```js
@@ -384,7 +384,7 @@ Sizes can be set on individual `<b-form-radio>` components, or inherited from th
 `<b-form-radio-group>`.
 
 **Note:** Bootstrap v5.x does not natively support sizes for the custom radio control. However,
-Bootstrap-Vue-3 includes custom SCSS/CSS that adds support for sizing the custom radios.
+bootstrap-vue-next includes custom SCSS/CSS that adds support for sizing the custom radios.
 
 ## Button style radios
 

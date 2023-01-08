@@ -28,7 +28,7 @@ centered beside any adjoining plain text. They also can be used as children of o
       </b-list-group-item>
       <b-list-group-item class="d-flex align-items-center">
         <b-avatar variant="primary" text="BV" class="mx-3"></b-avatar>
-        <span class="me-auto">BootstrapVue</span>
+        <span class="me-auto">BootstrapVueNext</span>
         <b-badge>12</b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex align-items-center">
@@ -63,7 +63,7 @@ centered beside any adjoining plain text. They also can be used as children of o
     </b-list-group-item>
     <b-list-group-item class="d-flex align-items-center">
       <b-avatar variant="primary" text="BV" class="mx-3"></b-avatar>
-      <span class="me-auto">BootstrapVue</span>
+      <span class="me-auto">BootstrapVueNext</span>
       <b-badge>12</b-badge>
     </b-list-group-item>
     <b-list-group-item class="d-flex align-items-center">
@@ -120,31 +120,6 @@ distortion will occur. The image will be scaled up or down to fit within the ava
 - [Variant colors](#variants) when using images not normally visible, unless the image fails load.
   The variant will affect the focus styling when the image avatar is also an
   [actionable avatar](#actionable-avatars).
-
-### Icon content
-
-TODO this should work with any icon font, eg icon="fa fa-cogs"
-
-Easily use one of [BootstrapVue's icons](/docs/icons) as the avatar content via the `icon` prop. The
-prop should be set to a valid icon name. Icons will scale respective to the [`size` prop](#sizing).
-
-<ClientOnly>
-  <b-card>
-    <b-avatar icon="people-fill"></b-avatar>
-    <b-avatar icon="star-fill"></b-avatar>
-    <b-avatar icon="music-note" size="lg"></b-avatar>
-    <b-avatar icon="star-fill" size="4em"></b-avatar>
-  </b-card>
-</ClientOnly>
-
-```html
-<b-card>
-  <b-avatar icon="people-fill"></b-avatar>
-  <b-avatar icon="star-fill"></b-avatar>
-  <b-avatar icon="music-note" size="lg"></b-avatar>
-  <b-avatar icon="star-fill" size="4em"></b-avatar>
-</b-card>
-```
 
 **Notes:**
 

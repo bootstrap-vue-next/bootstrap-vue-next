@@ -145,7 +145,7 @@ export * from './utils/exports'
 export * as Utils from './utils/exports'
 export * from './types/exports'
 export * as Types from './types/exports'
-export {useToast} from './components/BToast/'
+export {useToast} from './components/BToast'
 
-export {plugin as BootstrapVue3}
+export {plugin as BootstrapVueNext}
 export default plugin

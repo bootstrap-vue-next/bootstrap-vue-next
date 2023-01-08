@@ -69,8 +69,8 @@ const activeResolver = <T extends ObjectExtension>(
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'bootstrap-vue-3',
-    configKey: 'bootstrapVue3',
+    name: 'bootstrap-vue-next',
+    configKey: 'bootstrapVueNext',
     compatibility: {
       nuxt: '^3.0.0',
       bridge: false,

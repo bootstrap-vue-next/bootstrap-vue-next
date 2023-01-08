@@ -125,7 +125,7 @@
       <tr
         v-if="internalBusyFlag"
         class="b-table-busy-slot"
-        :class="{'b-table-static-busy': computedItems.length == 0}"
+        :class="{'b-table-static-busy': computedItems.length === 0}"
       >
         <td :colspan="computedFieldsTotal">
           <slot name="table-busy">
@@ -498,6 +498,7 @@ const callItemsProvider = async () => {
         return prop in target ? target[prop] : undefined
       },
       set() {
+        // eslint-disable-next-line no-console
         console.error('BTable provider context is a read-only object.')
         return true
       },

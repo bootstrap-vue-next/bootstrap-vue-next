@@ -24,7 +24,7 @@ importers:
       '@vuepress/plugin-search': 2.0.0-beta.49
       '@vuepress/utils': 2.0.0-beta.49
       bootstrap: 5.2.3
-      bootstrap-vue-3: workspace:*
+      bootstrap-vue-next: workspace:*
       tsconfig: workspace:*
       vue: 3.2.45
       vuepress: 2.0.0-beta.49
@@ -35,7 +35,7 @@ importers:
       '@vuepress/plugin-search': 2.0.0-beta.49
       '@vuepress/utils': 2.0.0-beta.49
       bootstrap: 5.2.3_@popperjs+core@2.11.6
-      bootstrap-vue-3: link:../../packages/bootstrap-vue-3
+      bootstrap-vue-next: link:../../packages/bootstrap-vue-next
       tsconfig: link:../../packages/tsconfig
       vue: 3.2.45
       vuepress: 2.0.0-beta.49_ujtqahpnjajrcutwes3owiqday
@@ -45,7 +45,7 @@ importers:
       '@popperjs/core': 2.11.6
       '@vitejs/plugin-vue': 3.2.0
       bootstrap: 5.2.3
-      bootstrap-vue-3: workspace:*
+      bootstrap-vue-next: workspace:*
       rollup-plugin-visualizer: 5.8.3
       tsconfig: workspace:*
       typescript: 4.9.3
@@ -56,7 +56,7 @@ importers:
     dependencies:
       '@popperjs/core': 2.11.6
       bootstrap: 5.2.3_@popperjs+core@2.11.6
-      bootstrap-vue-3: link:../../packages/bootstrap-vue-3
+      bootstrap-vue-next: link:../../packages/bootstrap-vue-next
       vue: 3.2.45
       vue-router: 4.1.6_vue@3.2.45
     devDependencies:
@@ -67,7 +67,7 @@ importers:
       vite: 3.2.4
       vue-tsc: 1.0.13_typescript@4.9.3
 
-  packages/bootstrap-vue-3:
+  packages/bootstrap-vue-next:
     specifiers:
       '@nuxt/kit': 3.0.0
       '@popperjs/core': ^2.11.6

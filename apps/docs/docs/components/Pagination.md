@@ -347,7 +347,7 @@ Easily switch to pill style buttons by setting the `pills` prop
 </script>
 ```
 
-**Note:** Pill styling requires Bootstrap-Vue-3's custom CSS/SCSS.
+**Note:** Pill styling requires bootstrap-vue-next's custom CSS/SCSS.
 
 ### Alignment
 

@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/modal",
+  "name": "@bootstrap-vue-next/modal",
   "version": "1.0.0",
   "meta": {
     "title": "Modal",

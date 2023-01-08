@@ -1,6 +1,6 @@
 # Overlay
 
-> BootstrapVue3's custom `b-overlay` component is used to _visually obscure_ a particular element or
+> BootstrapVueNext's custom `b-overlay` component is used to _visually obscure_ a particular element or
 > component and its content. It signals to the user of a state change within the element or
 > component and can be used for creating loaders, warnings/alerts, prompts, and more.
 
