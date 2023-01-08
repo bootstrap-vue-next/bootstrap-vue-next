@@ -158,7 +158,7 @@ support.
 You can even collapse multiple `<b-collapse>` components via a single `v-b-toggle` by providing
 multiple target Ids using _modifiers_.
 
-You can also pass multiple target Ids via the directive _value_ in BootstrapVue release v2.14.0+.
+You can also pass multiple target Ids via the directive _value_ in BootstrapVueNext.
 
 <ClientOnly>
   <b-card>
@@ -388,7 +388,7 @@ element.
 
 When using accordion mode, make sure you place the trigger elements and `<b-collapse>` components
 inside an element with `role="tablist"` and set `role="tab"` on each trigger element's container in
-order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVue cannot
+order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVueNext cannot
 apply those roles for you automatically, as it depends on your final document markup.
 
 <ClientOnly>

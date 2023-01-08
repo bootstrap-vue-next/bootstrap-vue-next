@@ -4,7 +4,7 @@ sidebar: auto
 
 # Types
 
-`BootstrapVue3` was born with Typescript in mind. This is a list of types we use in this library and that you can use too:
+`BootstrapVueNext` is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too:
 
 ## Alignment
 
@@ -246,21 +246,21 @@ type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'te
 
 You can extend some types to use your own values (e.g. colors, sizes). This requires the use of interface augmentation. You can augment next interfaces:
 
-- BaseColorVariant
-- BaseButtonVariant (extends BaseColorVariant)
-- BaseTextColorVariant (extends BaseColorVariant)
-- BaseSize
-- BaseInputSize
+* BaseColorVariant
+* BaseButtonVariant (extends BaseColorVariant)
+* BaseTextColorVariant (extends BaseColorVariant)
+* BaseSize
+* BaseInputSize
 
 Suppose we want to add a purple style and extra-large (xl) sizes.
 We need to create a declaration file in the root of vue project.
 
-**shims-bootstrap-vue-3.d.ts**
-
 ```ts
-import 'bootstrap-vue-3'
+// shims-bootstrap-vue-next.d.ts
 
-declare module 'bootstrap-vue-3/dist/types' {
+import 'bootstrap-vue-next'
+
+declare module 'bootstrap-vue-next/dist/types' {
   export interface BaseColorVariant {
     'purple': unknown // we use unknown type because it does not matter here
   }

@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/form-tags",
+  "name": "@bootstrap-vue-next/form-tags",
   "version": "Alpha",
   "meta": {
     "title": "Form Tags",

@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/form-checkbox",
+  "name": "@bootstrap-vue-next/form-checkbox",
   "version": "1.0.0",
   "meta": {
     "title": "Form Checkbox",

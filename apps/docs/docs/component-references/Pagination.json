@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/pagination",
+  "name": "@bootstrap-vue-next/pagination",
   "version": "1.0.0",
   "meta": {
     "title": "Pagination",

@@ -3,7 +3,7 @@ import type {BaseColorVariant} from '.'
 /**
  * @external
  */
- export interface BaseTextColorVariant extends BaseColorVariant {
+export interface BaseTextColorVariant extends BaseColorVariant {
   'white': unknown
   'body': unknown
   'muted': unknown

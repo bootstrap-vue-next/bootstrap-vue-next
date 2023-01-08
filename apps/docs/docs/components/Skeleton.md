@@ -1,6 +1,6 @@
 # Skeleton
 
-`<b-skeleton>` is a BootstrapVue3 custom component, that allows you to display a loading state for several component types while your data is being fetched or computed.
+`<b-skeleton>` is a BootstrapVue custom component, that allows you to display a loading state for several component types while your data is being fetched or computed.
 
 ## Deprecation warning
 

@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/collapse",
+  "name": "@bootstrap-vue-next/collapse",
   "version": "1.0.0",
   "meta": {
     "title": "Collapse",

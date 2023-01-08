@@ -56,6 +56,6 @@ jobs:
         run: pnpm run build
         
       - name: Publish
-        run: pnpm publish --tag latest --filter bootstrap-vue-3 --access=public
+        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

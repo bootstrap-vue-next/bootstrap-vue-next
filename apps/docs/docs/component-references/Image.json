@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/image",
+  "name": "@bootstrap-vue-next/image",
   "version": "1.0.0",
   "meta": {
     "title": "Image",

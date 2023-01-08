@@ -27,7 +27,7 @@ If an array entry is a string, it will be used for both the generated `value` an
 
 You can mix using strings and [objects](#options-as-an-array-of-objects) in the array.
 
-Internally, BootstrapVue will convert the above array to the following array (the
+Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
 ```javascript
@@ -56,7 +56,7 @@ const options = [
 If `value` is missing, then `text` will be used as both the `value` and `text` fields. If you use
 the `html` property, you **must** supply a `value` property.
 
-Internally, BootstrapVue will convert the above array to the following array (the
+Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
 ```js
@@ -547,7 +547,7 @@ Sizes can be set on individual `<b-form-checkbox>` components, or inherited from
 `<b-form-checkbox-group>`.
 
 **Note:** Bootstrap v5.x does not natively support sizes for the custom switch control. However,
-Bootstrap-Vue-3 includes custom SCSS/CSS that adds support for sizing the custom switches.
+bootstrap-vue-next includes custom SCSS/CSS that adds support for sizing the custom switches.
 
 ## Non-custom check inputs (plain)
 
@@ -682,7 +682,7 @@ tell when the input becomes visible.
 
 ## Indeterminate (tri-state) support
 
-Normally a checkbox input can only have two states: checked or unchecked. They can have any value, but they either submit that value (checked) or don't (unchecked) with a form submission (although BootstrapVue allows a value for the unchecked state on a single checkbox)
+Normally a checkbox input can only have two states: checked or unchecked. They can have any value, but they either submit that value (checked) or don't (unchecked) with a form submission (although BootstrapVueNext allows a value for the unchecked state on a single checkbox)
 
 Visually, there are actually three states a checkbox can be in: checked, unchecked, or **indeterminate**.
 

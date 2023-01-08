@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/nav",
+  "name": "@bootstrap-vue-next/nav",
   "version": "1.0.0",
   "meta": {
     "title": "Nav",

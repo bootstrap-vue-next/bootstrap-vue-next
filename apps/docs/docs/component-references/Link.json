@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/link",
+  "name": "@bootstrap-vue-next/link",
   "version": "1.0.0",
   "meta": {
     "title": "Link",

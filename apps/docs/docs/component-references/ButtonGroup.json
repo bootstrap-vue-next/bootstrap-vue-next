@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/button-group",
+  "name": "@bootstrap-vue-next/button-group",
   "version": "Alpha",
   "meta": {
     "title": "Button Group",

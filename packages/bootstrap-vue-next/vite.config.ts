@@ -12,8 +12,8 @@ export default defineConfig({
     minify: true,
     lib: {
       entry: resolve(__dirname, 'src/BootstrapVue.ts'),
-      name: 'bootstrap-vue-3',
-      fileName: (format) => `bootstrap-vue-3.${format}.js`,
+      name: 'bootstrap-vue-next',
+      fileName: (format) => `bootstrap-vue-next.${format}.js`,
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
@@ -33,7 +33,7 @@ export default defineConfig({
       ],
       output: {
         exports: 'named',
-        assetFileNames: `bootstrap-vue-3.[ext]`, //without this, it generates build/styles.css
+        assetFileNames: `bootstrap-vue-next.[ext]`, //without this, it generates build/styles.css
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {

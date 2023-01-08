@@ -729,7 +729,7 @@ the `bg-variant` and `border-variant` props. Darker solid variants may require s
 
 #### Variant to class mapping
 
-Bootstrap-Vue-3 `<b-card>` variants are directly mapped to Bootstrap v5 card classes by pre-pending
+bootstrap-vue-next `<b-card>` variants are directly mapped to Bootstrap v5 card classes by pre-pending
 `bg-` (for solid) or `border-` (for bordered) to the above variant names.
 
 ### Header and footer variants
@@ -876,7 +876,7 @@ For more information on using `<b-nav>` in card headers, refer to the
 
 ## Card groups
 
-In addition to styling the content within cards, BootstrapVue includes a `<b-card-group>` component
+In addition to styling the content within cards, BootstrapVueNext includes a `<b-card-group>` component
 for laying out series of cards. For the time being, these layout options are not yet responsive.
 
 ### Default card group

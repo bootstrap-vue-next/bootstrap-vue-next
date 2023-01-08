@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/carousel",
+  "name": "@bootstrap-vue-next/carousel",
   "version": "1.0.0",
   "meta": {
     "title": "Carousel",

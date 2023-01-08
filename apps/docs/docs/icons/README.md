@@ -1,6 +1,6 @@
 # Icons
 
-The icon components from Bootstrap-vue are deprecated. While migrating to Bootstrap-vue-3 the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading Bootstrap-vue-3's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, Bootstrap-vue has no part in the mentioned libraries
+The icon components from Bootstrap-vue are deprecated. While migrating to bootstrap-vue-next the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading bootstrap-vue-next's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, Bootstrap-vue has no part in the mentioned libraries
 
 ## [Unplugin Icons](https://github.com/antfu/unplugin-icons)
 

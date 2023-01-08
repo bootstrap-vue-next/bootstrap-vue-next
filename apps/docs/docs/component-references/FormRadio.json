@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/form-radio",
+  "name": "@bootstrap-vue-next/form-radio",
   "version": "1.0.0",
   "meta": {
     "title": "Form Radio",

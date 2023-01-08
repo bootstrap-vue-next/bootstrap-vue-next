@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/accordion",
+  "name": "@bootstrap-vue-next/accordion",
   "version": "Alpha",
   "meta": {
     "title": "Accordion",

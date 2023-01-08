@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/breadcrumb",
+  "name": "@bootstrap-vue-next/breadcrumb",
   "version": "Alpha",
   "meta": {
     "title": "Breadcrumb",

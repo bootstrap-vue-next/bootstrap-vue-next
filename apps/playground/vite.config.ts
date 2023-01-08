@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     watch: {
-      ignored: ['!**/node_modules/bootstrap-vue-3/**'],
+      ignored: ['!**/node_modules/bootstrap-vue-next/**'],
     },
   },
   optimizeDeps: {
-    exclude: ['bootstrap-vue-3'],
+    exclude: ['bootstrap-vue-next'],
   },
 })

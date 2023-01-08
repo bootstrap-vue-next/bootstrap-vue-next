@@ -13,7 +13,7 @@ Toast Components can be used standalone or part of the toast plugin.
 To use the plugin make sure to to include it in your app. This will create a global wide handler to fetch your Toast VM instances.
 
 ```js
-import {BToastPlugin} from 'bootstrap-vue-3'
+import {BToastPlugin} from 'bootstrap-vue-next'
 app.use(BToastPlugin)
 ```
 
@@ -27,7 +27,7 @@ We then use the toast composable to grab our root vm to display toasts.
 
 ```js
 //setup function
-import {useToast} from 'bootstrap-vue-3'
+import {useToast} from 'bootstrap-vue-next'
 let toast = useToast()
 ```
 
@@ -55,7 +55,7 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
 <b-button class="ms-2" @click="show2">Show Toast with Body</b-button>
 
 <script lang="ts" setup>
-  import {useToast} from 'BootstrapVue/ToastPlugin'
+  import {useToast} from 'bootstrap-vue-next'
   let toast = useToast()
   let show1 = () => {
     toast.show({title: 'example title'})
@@ -95,7 +95,7 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
 </b-card>
 
 <script>
-  import {useToast} from 'bootstrap-vue-3'
+  import {useToast} from 'bootstrap-vue-next'
   let toast = useToast()
   let variantshow1 = () => {
     toast.show({title: 'Item Deleted'}, {pos: 'bottom-center', variant: 'danger'})
@@ -138,7 +138,7 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
 
 <script lang='ts' setup>
   import {ref, computed, inject} from 'vue';
-  import {useToast} from 'bootstrap-vue-3';
+  import {useToast} from 'bootstrap-vue-next';
   let toast = null
 
   if (!__VUEPRESS_SSR__) {

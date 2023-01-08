@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/table",
+  "name": "@bootstrap-vue-next/table",
   "version": "1.0.0",
   "meta": {
     "title": "Table",

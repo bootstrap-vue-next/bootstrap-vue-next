@@ -1,6 +1,6 @@
 # Table of contents
 
-BootstrapVue 3 components
+BootstrapVueNext components
 
 <ClientOnly>
     <b-list-group>

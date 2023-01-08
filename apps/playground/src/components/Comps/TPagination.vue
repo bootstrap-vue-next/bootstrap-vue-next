@@ -118,7 +118,7 @@
 </template>
 
 <script setup lang="ts">
-import {BvEvent} from 'bootstrap-vue-3'
+import {BvEvent} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const paginationPageNumber = ref(19)

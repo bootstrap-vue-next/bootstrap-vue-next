@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/dropdown",
+  "name": "@bootstrap-vue-next/dropdown",
   "version": "1.0.0",
   "meta": {
     "title": "Dropdown",

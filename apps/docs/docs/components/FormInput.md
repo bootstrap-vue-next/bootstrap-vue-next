@@ -183,7 +183,7 @@ convert the value to a native number by using `Number(value)`, `parseInt(value, 
 `parseFloat(value)`, or use the `number` prop.
 
 ~~**Note:** Bootstrap v5 CSS does not include styling for range inputs inside input groups, nor
-validation styling on range inputs. However, Bootstrap-Vue-3 includes custom styling to handle these
+validation styling on range inputs. However, bootstrap-vue-next includes custom styling to handle these
 situations until styling is included in Bootstrap v5.~~
 
 ## Control sizing

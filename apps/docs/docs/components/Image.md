@@ -4,13 +4,13 @@
 > (so they never become larger than their parent elements), optionally adding lightweight styles to
 > them — all via props.
 
-BootstrapVue's image components support rounded images, thumbnail styling, alignment, and even the
+BootstrapVueNext's image components support rounded images, thumbnail styling, alignment, and even the
 ability to create blank images with an optional solid background color. Support for lazy loaded
-images is available via the `<b-img-lazy>` complimentary component.
+images is available via the `lazy` prop.
 
 ## Image src resolving
 
-The `src` prop (and `blank-src` prop of `<b-img-lazy>`), out of the box, works only with absolute or
+The `src` prop and `blank-src` prop, out of the box, works only with absolute or
 fully-qualified-domain-name URLs. If you are using project assets as image sources, please refer to
 [Component img src resolving](/docs/reference/images) for configuring `vue-loader` to understand
 custom component props that specify image sources.
@@ -22,7 +22,7 @@ the various options.
 
 ### Responsive images
 
-Images in BootstrapVue can be made responsive with the `fluid` prop (which sets
+Images in BootstrapVueNext can be made responsive with the `fluid` prop (which sets
 `max-width: 100%; height: auto;` via CSS classes) so that it scales with the parent element - up to
 the maximum native width of the image.
 

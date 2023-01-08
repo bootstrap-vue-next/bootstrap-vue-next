@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/grid-system",
+  "name": "@bootstrap-vue-next/grid-system",
   "version": "1.0.0",
   "meta": {
     "title": "Grid System",

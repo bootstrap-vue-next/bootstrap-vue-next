@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "name": "@bootstrap-vue-3/overlay",
+  "name": "@bootstrap-vue-next/overlay",
   "version": "1.0.0",
   "meta": {
     "title": "Overlay",
