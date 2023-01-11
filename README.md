@@ -59,6 +59,22 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 
 Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-next/blob/main/CONTRIBUTING.md) on how to start helping
 
+## Browsing documentation locally
+
+```
+npm install -g pnpm
+
+git clone git@github.com:bootstrap-vue/bootstrap-vue-next.git
+
+cd bootstrap-vue-next/
+
+pnpm install
+
+pnpm run dev
+```
+
+The documentation will now be available at http://localhost:8080/bootstrap-vue-next/
+
 <h2 align="center">Sponsors</h2>
 
 Support this project by becoming a sponsor.
