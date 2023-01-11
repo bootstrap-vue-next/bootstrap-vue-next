@@ -62,7 +62,7 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-nex
 ## Browsing documentation locally
 
 ```
-npm install -g pnpm
+corepack prepare pnpm@latest --activate
 
 git clone git@github.com:bootstrap-vue/bootstrap-vue-next.git
 
