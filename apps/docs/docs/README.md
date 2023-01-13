@@ -10,8 +10,6 @@ actions:
 footer: Designed and built with all the love in the world. Maintained by the core team with the help of our contributors. Code licensed MIT
 ---
 
-# TESTING
-
 <h2 align="center">Sponsors</h2>
 
 Support this project by becoming a sponsor.
