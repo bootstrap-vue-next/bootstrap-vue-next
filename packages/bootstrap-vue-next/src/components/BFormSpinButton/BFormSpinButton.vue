@@ -8,7 +8,6 @@ import {eventOnOff, stopEvent} from '../../utils/event'
 import {normalizeSlot} from '../../utils'
 // import {attemptBlur, attemptFocus, normalizeSlot} from '../../utils'
 //TODO alias
-// import {BIconDash, BIconPlus} from 'bootstrap-vue-next-icons'
 
 import {
   CODE_DOWN,

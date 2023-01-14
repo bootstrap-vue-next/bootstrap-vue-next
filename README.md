@@ -1,17 +1,18 @@
 <p align="center">
-  <a href="https://cdmoro.github.io/bootstrap-vue-3/">
-    <img src="https://raw.githubusercontent.com/cdmoro/bootstrap-vue-3/main/apps/docs/docs/.vuepress/public/logo.png" width="300">
+  <a href="https://bootstrap-vue.github.io/bootstrap-vue-next/">
+    <img src="https://bootstrap-vue.github.io/bootstrap-vue-next/logo.png" width="300">
   </a>
 </p>
 
 <h1 align="center">BootstrapVueNext</h1>
+
 <p align="center">Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript</p>
 
 <br>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
-    <img src="https://flat.badgen.net/npm/v/bootstrap-vue-3" alt="Current version">
+  <a href="https://www.npmjs.com/package/bootstrap-vue-next">
+    <img src="https://flat.badgen.net/npm/v/bootstrap-vue-next" alt="Current version">
   </a>
   <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">
     <img src="https://flat.badgen.net/badge/bootstrap/5.0.x/563d7c" alt="Bootstrap version">
@@ -21,16 +22,16 @@
   </a>
 
   <a href="https://github.com/bootstrap-vue/bootstrap-vue-next/actions?workflow=Tests">
-    <img src="https://flat.badgen.net/github/status/cdmoro/bootstrap-vue-3" alt="Build status">
+    <img src="https://flat.badgen.net/github/status/bootstrap-vue/bootstrap-vue-next" alt="Build status">
   </a>
 
   <br>
 
-  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
-    <img src="https://flat.badgen.net/npm/dt/bootstrap-vue-3" alt="npm downloads">
+  <a href="https://www.npmjs.com/package/bootstrap-vue-next">
+    <img src="https://flat.badgen.net/npm/dt/bootstrap-vue-next" alt="npm downloads">
   </a>
-  <a href="https://www.npmjs.com/package/bootstrap-vue-3">
-    <img src="https://flat.badgen.net/npm/dw/bootstrap-vue-3" alt="npm weekly downloads">
+  <a href="https://www.npmjs.com/package/bootstrap-vue-next">
+    <img src="https://flat.badgen.net/npm/dw/bootstrap-vue-next" alt="npm weekly downloads">
   </a>
 
   <br>
@@ -58,20 +59,6 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 - or better, a [pull request](https://github.com/bootstrap-vue/bootstrap-vue-next/pulls)
 
 Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-next/blob/main/CONTRIBUTING.md) on how to start helping
-
-## Browsing documentation locally
-
-```
-corepack prepare pnpm@latest --activate
-
-git clone git@github.com:bootstrap-vue/bootstrap-vue-next.git
-
-cd bootstrap-vue-next/
-
-pnpm install
-
-pnpm run dev
-```
 
 The documentation will now be available at http://localhost:8080/bootstrap-vue-next/
 
