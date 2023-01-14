@@ -1,9 +1,7 @@
 /**
  * Items that are omitted from the BvEventInit constructor arg
  */
-type BvEventConstructorOmittables = 'eventType' | 'defaultPrevented'
-
-export type {BvEventConstructorOmittables}
+export type BvEventConstructorOmittables = 'eventType' | 'defaultPrevented'
 
 /**
  * @external

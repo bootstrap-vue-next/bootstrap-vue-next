@@ -7,10 +7,9 @@ export const parseEventOptions = (options: any): boolean | EventListenerOptions 
   /* istanbul ignore else: can't test in JSDOM, as it supports passive */
   if (HAS_PASSIVE_EVENT_SUPPORT) {
     return isObject(options) ? options : {capture: !!options || false}
-  } else {
-    // Need to translate to actual Boolean value
-    return !!(isObject(options) ? options.capture : options)
   }
+  // Need to translate to actual Boolean value
+  return !!(isObject(options) ? options.capture : options)
 }
 
 // Attach an event listener to an element
@@ -39,7 +38,7 @@ export const eventOff = (
 
 // Utility method to add/remove a event listener based on first argument (boolean)
 // It passes all other arguments to the `eventOn()` or `eventOff` method
-export const eventOnOff = (on: Boolean, eventParams: Parameters<typeof eventOff>) => {
+export const eventOnOff = (on: boolean, eventParams: Parameters<typeof eventOff>) => {
   const method = on ? eventOn : eventOff
   method(...eventParams)
 }

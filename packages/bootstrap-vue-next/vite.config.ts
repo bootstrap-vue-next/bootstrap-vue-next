@@ -20,7 +20,6 @@ export default defineConfig({
       // into your library
       external: [
         'bootstrap',
-        'bootstrap-vue-icons',
         'bootstrap/js/dist/alert',
         'bootstrap/js/dist/collapse',
         'bootstrap/js/dist/modal',
@@ -30,6 +29,7 @@ export default defineConfig({
         'bootstrap/js/dist/dropdown',
         'bootstrap/js/dist/tooltip',
         'vue',
+        '@popperjs/core',
       ],
       output: {
         exports: 'named',

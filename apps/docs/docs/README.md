@@ -2,7 +2,7 @@
 home: true
 heroImage: /logo.png
 heroAlt: Logo image
-heroText: bootstrap-vue-next
+heroText: BootstrapVueNext
 tagline: A bootstrap-vue rewrite for Bootstrap V5, TypeScript, and Vue 3
 actions:
   - text: Get Started

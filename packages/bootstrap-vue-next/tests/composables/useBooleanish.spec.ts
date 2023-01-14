@@ -1,7 +1,7 @@
 import {useBooleanish} from '../../src/composables'
 import {describe, expect, it} from 'vitest'
 import {reactive, toRef} from 'vue'
-import {Booleanish} from '../../src/types'
+import type {Booleanish} from '../../src/types'
 
 describe('useBooleanish blackbox test', () => {
   // To try to ensure it is ComputedRef

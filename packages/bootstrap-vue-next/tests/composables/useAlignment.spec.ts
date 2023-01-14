@@ -1,7 +1,7 @@
 import {useAlignment} from '../../src/composables'
 import {describe, expect, it} from 'vitest'
 import {reactive, toRef} from 'vue'
-import {Alignment} from '../../src/types'
+import type {Alignment} from '../../src/types'
 
 describe('useAlignment blackbox test', () => {
   // To try to ensure it is ComputedRef
