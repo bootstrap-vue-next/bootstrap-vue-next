@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.6.0](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.5.1...v0.6.0) (2023-01-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename package to bootstrap-vue-next
+* change exports to match new name
+
+### Bug Fixes
+
+* **vitre.config:** add @popperjs/core to external deps ([3133871](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/31338714fbea3fe8ffb353a19305327de193f7a3))
+
+
+### Code Refactoring
+
+* change exports to match new name ([089da12](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/089da12e6c88477420adf873639d54837c96a06c))
+* rename package to bootstrap-vue-next ([089da12](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/089da12e6c88477420adf873639d54837c96a06c))
+
 ## [0.5.1](https://github.com/cdmoro/bootstrap-vue-3/compare/v0.5.0...v0.5.1) (2023-01-04)
 
 ### Bug Fixes
