@@ -63,7 +63,7 @@
 import {computed, ref, toRef, useSlots, watch} from 'vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BTransition from '../BTransition/BTransition.vue'
@@ -87,7 +87,8 @@ interface BOffcanvasProps {
   noFocus?: Booleanish
   static?: Booleanish
   backdropVariant?: ColorVariant
-  responsive?: Breakpoint
+  // TODO responsive doesn't work
+  // responsive?: Breakpoint
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
@@ -172,7 +173,8 @@ const slots = useSlots()
 
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
-  props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
+  // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
+  'offcanvas', // Remove when above check is fixed
   `offcanvas-${props.placement}`,
   {
     show: modelValueBoolean.value && isShowing.value === false,
