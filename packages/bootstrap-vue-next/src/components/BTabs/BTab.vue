@@ -68,10 +68,7 @@ const computedClasses = computed(() => ({
   'card-body': parentData?.card && props.noBody === false,
 }))
 
-watch(
-  () => showSlot.value,
-  (shown) => {
-    if (shown && !lazyRenderCompleted.value) lazyRenderCompleted.value = true
-  }
-)
+watch(showSlot, (shown) => {
+  if (shown && !lazyRenderCompleted.value) lazyRenderCompleted.value = true
+})
 </script>

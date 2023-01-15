@@ -3,12 +3,12 @@ import BvEvent, {type BvEventConstructorOmittables} from './BvEvent'
 /**
  * @external
  */
-export default class BvModalEvent extends BvEvent {
+export default class BvTriggerableEvent extends BvEvent {
   readonly trigger: string | null = null
 
   constructor(
     eventType: string,
-    eventInit: Partial<Omit<BvModalEvent, BvEventConstructorOmittables>> = {}
+    eventInit: Partial<Omit<BvTriggerableEvent, BvEventConstructorOmittables>> = {}
   ) {
     super(eventType, eventInit)
 

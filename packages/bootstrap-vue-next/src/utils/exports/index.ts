@@ -1,1 +1,1 @@
-export {BvEvent, BvModalEvent} from '..'
+export {BvEvent, BvTriggerableEvent} from '..'

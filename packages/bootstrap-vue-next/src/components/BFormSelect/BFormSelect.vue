@@ -150,13 +150,19 @@ const blur = () => {
 }
 
 const handleAutofocus = () => {
-  nextTick(() => {
-    if (autofocusBoolean.value) input.value?.focus()
-  })
+  if (autofocusBoolean.value) input.value?.focus()
 }
 
-onMounted(handleAutofocus)
-onActivated(handleAutofocus)
+onMounted(() => {
+  nextTick(() => {
+    handleAutofocus()
+  })
+})
+onActivated(() => {
+  nextTick(() => {
+    handleAutofocus()
+  })
+})
 
 defineExpose({
   blur,

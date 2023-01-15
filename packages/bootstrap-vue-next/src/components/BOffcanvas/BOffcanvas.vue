@@ -1,150 +1,236 @@
 <template>
-  <transition
-    name="slide"
-    :on-after-enter="OnAfterEnter"
-    :on-after-leave="OnAfterLeave"
-    :on-before-leave="OnBeforeLeave"
-    :on-before-enter="OnBeforeEnter"
-  >
-    <div
-      v-show="modelValue"
-      class="offcanvas"
-      :class="computedClasses"
-      tabindex="-1"
-      aria-labelledby="offcanvasLabel"
-      data-bs-backdrop="false"
+  <teleport to="body" :disabled="staticBoolean">
+    <b-transition
+      :no-fade="true"
+      :trans-props="{
+        enterToClass: 'showing',
+        enterFromClass: '',
+        leaveToClass: 'hiding show',
+        leaveFromClass: 'show',
+      }"
+      @after-enter="OnAfterEnter"
+      @after-leave="OnAfterLeave"
+      @before-enter="OnBeforeEnter"
     >
-      <div v-if="!noHeaderBoolean" class="offcanvas-header">
-        <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
-          <h5 id="offcanvasLabel" class="offcanvas-title">
-            <slot name="title">
-              {{ title }}
+      <div
+        v-show="modelValue"
+        ref="element"
+        class="offcanvas"
+        :class="computedClasses"
+        tabindex="-1"
+        aria-labelledby="offcanvasLabel"
+        data-bs-backdrop="false"
+        @keyup.esc="hide('esc')"
+      >
+        <template v-if="lazyShowing">
+          <div v-if="!noHeaderBoolean" class="offcanvas-header">
+            <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
+              <h5 id="offcanvasLabel" class="offcanvas-title">
+                <slot name="title">
+                  {{ title }}
+                </slot>
+              </h5>
+              <b-close-button
+                v-if="!noHeaderCloseBoolean"
+                class="text-reset"
+                :aria-label="dismissLabel"
+                @click="hide('close')"
+              />
             </slot>
-          </h5>
-          <b-close-button
-            v-if="!noHeaderCloseBoolean"
-            class="text-reset"
-            :aria-label="dismissLabel"
-            @click="hide()"
-          />
-        </slot>
+          </div>
+          <div class="offcanvas-body">
+            <slot />
+          </div>
+          <div v-if="hasFooterSlot">
+            <slot name="footer" v-bind="{visible: modelValueBoolean, placement, hide}" />
+          </div>
+        </template>
       </div>
-      <div class="offcanvas-body">
-        <slot />
-      </div>
-      <div v-if="hasFooterSlot">
-        <slot name="footer" v-bind="{visible: modelValueBoolean, placement, hide}" />
-      </div>
-    </div>
-  </transition>
-  <b-overlay variant="dark" :show="showBackDrop" fixed="true" no-wrap />
+    </b-transition>
+    <b-overlay variant="dark" :show="showBackDrop" fixed="true" no-wrap @click="hide('backdrop')" />
+  </teleport>
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
-import {useBooleanish} from '../../composables'
+import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import {isEmptySlot} from '../../utils'
+import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import BTransition from '../BTransition/BTransition.vue'
 
 interface BOffcanvasProps {
   dismissLabel?: string
   modelValue?: Booleanish
   bodyScrolling?: Booleanish
   backdrop?: Booleanish
+  noCloseOnBackdrop?: Booleanish
+  noCloseOnEsc?: Booleanish
   placement?: string
   title?: string
   noHeaderClose?: Booleanish
   noHeader?: Booleanish
+  lazy?: Booleanish
+  id?: string
+  noFocus?: Booleanish
+  static?: Booleanish
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
   dismissLabel: 'Close',
   modelValue: false,
+  static: false,
+  noFocus: false,
   bodyScrolling: false,
+  noCloseOnBackdrop: false,
+  noCloseOnEsc: false,
   backdrop: true,
+  lazy: false,
   placement: 'start',
   noHeaderClose: false,
   noHeader: false,
 })
 
+// TODO list
+/**
+ * Ensure compat with bv
+ * Look for new features in bv5
+ * See if theres a way to pull out some of the shared code with BModal into composables
+ * Put every single item into a folder that is in the components list. Lets just standardize them
+ */
+
+//  Done list
+/**
+ * noClose items
+ * Preventable
+ * lazy
+ * static
+ * Renamed BModalClass
+ */
+
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+// TODO
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
 const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
 const noHeaderCloseBoolean = useBooleanish(toRef(props, 'noHeaderClose'))
 const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
+const noFocusBoolean = useBooleanish(toRef(props, 'noFocus'))
+const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
+const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+const staticBoolean = useBooleanish(toRef(props, 'static'))
+
+const isShowing = ref(false)
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void
-  (e: 'show'): void
-  (e: 'shown'): void
-  (e: 'hide'): void
-  (e: 'hidden'): void
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'esc', value: BvTriggerableEvent): void
+  (e: 'close', value: BvTriggerableEvent): void
 }
 
-const showBackDrop = computed(() => {
-  if (backdropBoolean.value && modelValueBoolean.value) {
-    return true
-  }
-  return false
-})
+const element = ref<null | HTMLElement>(null)
+
+const computedId = useId(toRef(props, 'id'), 'offcanvas')
+
+const lazyLoadCompleted = ref(false)
+
+const showBackDrop = computed(() =>
+  backdropBoolean.value && modelValueBoolean.value ? true : false
+)
+
+const lazyShowing = computed(
+  () =>
+    lazyBoolean.value === false ||
+    (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
+    (lazyBoolean.value === true && modelValueBoolean.value === true)
+)
 
 const emit = defineEmits<BOffcanvasEmits>()
 
 const slots = useSlots()
 
-const isTransitioning = ref(false)
-const isHiding = ref(false)
-const isShowing = ref(false)
-
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
   {
-    show: modelValueBoolean.value && !isShowing.value,
-    hiding: isHiding.value,
-    showing: isShowing.value,
+    show: modelValueBoolean.value && isShowing.value === false,
   },
 ])
 
-const show = () => {
-  emit('update:modelValue', true) //TODO need to return a BOOLEANISH
-  emit('show')
+const buildTriggerableEvent = (
+  type: string,
+  opts: Partial<BvTriggerableEvent> = {}
+): BvTriggerableEvent =>
+  new BvTriggerableEvent(type, {
+    cancelable: false,
+    target: element.value || null,
+    relatedTarget: null,
+    trigger: null,
+    ...opts,
+    componentId: computedId.value,
+  })
+
+const hide = (trigger = '') => {
+  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
+
+  if (trigger === 'close') {
+    emit(trigger, event)
+  }
+  if (trigger === 'esc') {
+    emit(trigger, event)
+  }
+  emit('hide', event)
+
+  if (
+    event.defaultPrevented ||
+    (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
+    (trigger === 'esc' && noCloseOnEscBoolean.value)
+  ) {
+    emit('update:modelValue', true)
+    emit('hide-prevented')
+    return
+  }
+  emit('update:modelValue', false)
 }
 
-const OnAfterEnter = () => {
-  isTransitioning.value = false
+const show = () => {
+  const event = buildTriggerableEvent('show', {cancelable: true})
+  emit('show', event)
+  if (event.defaultPrevented) {
+    emit('update:modelValue', false)
+    emit('show-prevented')
+    return
+  }
   emit('update:modelValue', true)
 }
 
-const OnBeforeLeave = () => {
-  isHiding.value = true
-  isTransitioning.value = true
-}
-
 const OnBeforeEnter = () => {
-  isTransitioning.value = true
+  isShowing.value = true
+  show()
 }
-
+const OnAfterEnter = () => {
+  isShowing.value = false
+  emit('shown', buildTriggerableEvent('shown'))
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = true
+}
 const OnAfterLeave = () => {
-  isTransitioning.value = false
-  isHiding.value = false
-  emit('update:modelValue', false)
-}
-const hide = () => {
-  emit('hide')
-  emit('update:modelValue', false)
+  emit('hidden', buildTriggerableEvent('hidden'))
+  if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 
 watch(
-  () => modelValueBoolean.value,
-  (value) => {
-    if (value) {
-      show()
-    } else {
-      hide()
-    }
-  }
+  modelValueBoolean,
+  (newValue) => {
+    if (newValue === true && !noFocusBoolean.value && element.value !== null) element.value.focus()
+  },
+  {flush: 'post'}
 )
 </script>

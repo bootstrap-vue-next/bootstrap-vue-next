@@ -158,18 +158,15 @@ export default defineComponent({
         generatePopoverInstance(newValue)
       }
     )
-    watch(
-      () => showBoolean.value,
-      (show, oldVal) => {
-        if (show !== oldVal) {
-          if (show) {
-            instance.value?.show()
-          } else {
-            instance.value?.hide()
-          }
+    watch(showBoolean, (show, oldVal) => {
+      if (show !== oldVal) {
+        if (show) {
+          instance.value?.show()
+        } else {
+          instance.value?.hide()
         }
       }
-    )
+    })
 
     onMounted(() => {
       nextTick(() => {

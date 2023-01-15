@@ -65,28 +65,19 @@ const computedClasses = computed(() => ({
 
 const close = () => emit('update:modelValue', false)
 
-watch(
-  () => modelValueBoolean.value,
-  (value) => {
-    if (value) {
-      instance.value?.show()
-    } else {
-      instance.value?.hide()
-    }
+watch(modelValueBoolean, (value) => {
+  value ? instance.value?.show() : instance.value?.hide()
+})
+
+watch(visibleBoolean, (value) => {
+  if (value) {
+    emit('update:modelValue', !!value)
+    instance.value?.show()
+  } else {
+    emit('update:modelValue', !!value)
+    instance.value?.hide()
   }
-)
-watch(
-  () => visibleBoolean.value,
-  (value) => {
-    if (value) {
-      emit('update:modelValue', !!value)
-      instance.value?.show()
-    } else {
-      emit('update:modelValue', !!value)
-      instance.value?.hide()
-    }
-  }
-)
+})
 
 useEventListener(element, 'show.bs.collapse', () => {
   emit('show')

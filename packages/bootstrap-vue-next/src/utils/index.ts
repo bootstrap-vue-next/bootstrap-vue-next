@@ -1,4 +1,4 @@
-export {BvEvent, BvModalEvent} from './classes'
+export {BvEvent, BvTriggerableEvent} from './classes'
 export {default as cssEscape} from './cssEscape'
 export {HAS_DOCUMENT_SUPPORT, HAS_NAVIGATOR_SUPPORT, HAS_WINDOW_SUPPORT, IS_BROWSER} from './env'
 // For some reason the order of this matters. Moving ./env lower than ./dom, causes it to have cannot use before init errors
