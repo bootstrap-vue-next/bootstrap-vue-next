@@ -54,7 +54,9 @@
       fixed="true"
       no-wrap
       @click="hide('backdrop')"
-    />
+    >
+      <template #overlay><span /></template>
+    </b-overlay>
   </teleport>
 </template>
 
