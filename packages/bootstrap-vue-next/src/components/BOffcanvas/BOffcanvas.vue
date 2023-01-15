@@ -75,6 +75,9 @@ interface BOffcanvasProps {
   backdrop?: Booleanish
   noCloseOnBackdrop?: Booleanish
   noCloseOnEsc?: Booleanish
+  // TODO standardize this. Create a dedicated type
+  // Then in components that use individual props (BImg)
+  // Make them just use prop placement
   placement?: 'top' | 'bottom' | 'start' | 'end'
   title?: string
   noHeaderClose?: Booleanish
