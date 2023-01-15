@@ -93,7 +93,7 @@ const emit = defineEmits<Emits>()
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0}
 
 const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
-const noSpinnerBoolean = useBooleanish(props, 'noSpinner')
+const noSpinnerBoolean = useBooleanish(toRef(props, 'noSpinner'))
 const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
 const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
 const showBoolean = useBooleanish(toRef(props, 'show'))
