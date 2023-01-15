@@ -19,7 +19,7 @@
 
         <div class="position-absolute" :style="spinWrapperStyles">
           <slot name="overlay" v-bind="spinnerAttrs">
-            <b-spinner v-if="noSpinnerBoolean" v-bind="spinnerAttrs" />
+            <b-spinner v-if="!noSpinnerBoolean" v-bind="spinnerAttrs" />
           </slot>
         </div>
       </component>
