@@ -75,7 +75,7 @@ interface BOffcanvasProps {
   backdrop?: Booleanish
   noCloseOnBackdrop?: Booleanish
   noCloseOnEsc?: Booleanish
-  placement?: string
+  placement?: 'top' | 'bottom' | 'start' | 'end'
   title?: string
   noHeaderClose?: Booleanish
   noHeader?: Booleanish
