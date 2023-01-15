@@ -9,6 +9,7 @@ interface Base {
 type ObjectExtension = Record<string, boolean | undefined>
 
 interface PluginObject extends ObjectExtension {
+  colorMode?: boolean
   popover?: boolean
   toggle?: boolean
   tooltip?: boolean
@@ -16,6 +17,7 @@ interface PluginObject extends ObjectExtension {
 }
 
 const pluginsBase: PluginObject = {
+  colorMode: undefined,
   popover: undefined,
   toggle: undefined,
   tooltip: undefined,
@@ -23,12 +25,14 @@ const pluginsBase: PluginObject = {
 }
 
 interface ComposableObject extends ObjectExtension {
-  useToast?: boolean
   useBreadcrumb?: boolean
+  useColorMode?: boolean
+  useToast?: boolean
 }
 
 const composablesBase: ComposableObject = {
   useBreadcrumb: undefined,
+  useColorMode: undefined,
   useToast: undefined,
 }
 
@@ -81,18 +85,22 @@ export default defineNuxtModule<ModuleOptions>({
     composables: {all: true},
   },
   setup(opts) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const {resolve} = createResolver(import.meta.url)
 
     const plugins: Record<keyof PluginObject, Import> = {
-      popover: {from: 'f', name: 'b'},
-      toggle: {from: 'f', name: 'b'},
-      tooltip: {from: 'f', name: 'b'},
-      visible: {from: 'f', name: 'b'},
+      colorMode: {from: 'bootstrap-vue-next', name: 'vBColorMode'},
+      popover: {from: 'bootstrap-vue-next', name: 'vBPopover'},
+      toggle: {from: 'bootstrap-vue-next', name: 'vBToggle'},
+      tooltip: {from: 'bootstrap-vue-next', name: 'vBTooltip'},
+      visible: {from: 'bootstrap-vue-next', name: 'vBVisible'},
     }
 
     const composables: Record<keyof ComposableObject, Import> = {
-      useBreadcrumb: {from: 'f', name: 'b'},
-      useToast: {from: 'f', name: 'b'},
+      useBreadcrumb: {from: 'bootstrap-vue-next', name: 'useBreadcrumb'},
+      useColorMode: {from: 'bootstrap-vue-next', name: 'useColorMode'},
+      useToast: {from: 'bootstrap-vue-next', name: 'useToast'},
     }
 
     addComponentsDir({
