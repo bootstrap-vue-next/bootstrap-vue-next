@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.6.1](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.0...v0.6.1) (2023-01-15)
+
+
+### Features
+
+* **_offcanvas.scss:** add custom scss ([96da79f](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/96da79f2d1a03743334624116e1177b3091620cb))
+* **BOffcanvas:** add id prop ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** add lazy prop for lazy loading functionality ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** add noCloseOnBackdrop prop ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** add noCloseOnEsc prop ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** add noFocus prop ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** add prop backdropVariant ([177261c](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/177261c70a95841f14fe4c652c35b061171ef2fd))
+* **BOffcanvas:** add prop responsive ([177261c](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/177261c70a95841f14fe4c652c35b061171ef2fd))
+* **BOffcanvas:** add prop static to prevent teleporting ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** create preventable closing on component ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** expose a preventable Event when emitting show/shown/hide/hidden etc ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** revert responsive prop as it's not functional ([c549633](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/c549633b5ba8e0e747db18c18399541de7998ecf))
+* **BOffcanvas:** teleport to body by default ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOverlay:** add noSpinner prop to remove the default spinner ([a98f9d0](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a98f9d0220c6e2b40b0a25e4318c0c38e518681b))
+
+
+### Bug Fixes
+
+* **BOffcanvas:** add aria-modal="true" ([177261c](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/177261c70a95841f14fe4c652c35b061171ef2fd))
+* **BOffcanvas:** add role="dialog" ([177261c](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/177261c70a95841f14fe4c652c35b061171ef2fd))
+* **BOffcanvas:** fix transition states ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** remove spinner when opened ([e618207](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/e618207d6893751354cf4efcfe4c25891b5bc3e2))
+* **BOffcanvas:** strongly type offcanvas placement ([a25d0c6](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a25d0c63eb6b5b4e4f58062d63a5cc6a1be0ce52))
+* **BOverlay:** accidentally leaving out toRef ([d4ca177](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d4ca177388eedddf97d044f9e27cd26e9cf52229))
+* **BOverlay:** invert no-spinner prop ([964066f](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/964066f241b00604e77df348ab21bda54a558445))
+
+
+### Performance Improvements
+
+* **BModal:** use flush: 'post' instead of nextTick ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+* **BOffcanvas:** replace nextTick with flush: 'post' in watcher ([234ab31](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/234ab31feba213bf99d8589dd5cde4656dd03d1a))
+
 ## [0.6.0](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.5.1...v0.6.0) (2023-01-14)
 
 
