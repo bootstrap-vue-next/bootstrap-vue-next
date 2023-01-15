@@ -51,12 +51,11 @@
     <b-overlay
       :variant="backdropVariant"
       :show="showBackdrop"
-      fixed="true"
+      :fixed="true"
       no-wrap
+      :no-spinner="true"
       @click="hide('backdrop')"
-    >
-      <template #overlay><span /></template>
-    </b-overlay>
+    />
   </teleport>
 </template>
 
