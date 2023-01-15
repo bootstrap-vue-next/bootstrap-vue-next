@@ -106,23 +106,6 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   noHeaderClose: false,
   noHeader: false,
 })
-
-// TODO list
-/**
- * Look for new features in bv5
- * See if theres a way to pull out some of the shared code with BModal into composables
- * Put every single item into a folder that is in the components list. Lets just standardize them
- */
-
-//  Done list
-/**
- * noClose items
- * Preventable
- * lazy
- * static
- * Renamed BModalClass
- */
-
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
