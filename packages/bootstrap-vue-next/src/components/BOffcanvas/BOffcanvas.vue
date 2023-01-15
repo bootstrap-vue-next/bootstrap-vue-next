@@ -15,7 +15,8 @@
       <div
         v-show="modelValue"
         ref="element"
-        class="offcanvas"
+        aria-modal="true"
+        role="dialog"
         :class="computedClasses"
         tabindex="-1"
         aria-labelledby="offcanvasLabel"
@@ -47,7 +48,13 @@
         </template>
       </div>
     </b-transition>
-    <b-overlay variant="dark" :show="showBackDrop" fixed="true" no-wrap @click="hide('backdrop')" />
+    <b-overlay
+      :variant="backdropVariant"
+      :show="showBackdrop"
+      fixed="true"
+      no-wrap
+      @click="hide('backdrop')"
+    />
   </teleport>
 </template>
 
@@ -55,7 +62,7 @@
 import {computed, ref, toRef, useSlots, watch} from 'vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish} from '../../types'
+import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BTransition from '../BTransition/BTransition.vue'
@@ -75,12 +82,15 @@ interface BOffcanvasProps {
   id?: string
   noFocus?: Booleanish
   static?: Booleanish
+  backdropVariant?: ColorVariant
+  responsive?: Breakpoint
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
   dismissLabel: 'Close',
   modelValue: false,
   static: false,
+  backdropVariant: 'dark',
   noFocus: false,
   bodyScrolling: false,
   noCloseOnBackdrop: false,
@@ -94,7 +104,6 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
 
 // TODO list
 /**
- * Ensure compat with bv
  * Look for new features in bv5
  * See if theres a way to pull out some of the shared code with BModal into composables
  * Put every single item into a folder that is in the components list. Lets just standardize them
@@ -142,8 +151,8 @@ const computedId = useId(toRef(props, 'id'), 'offcanvas')
 
 const lazyLoadCompleted = ref(false)
 
-const showBackDrop = computed(() =>
-  backdropBoolean.value && modelValueBoolean.value ? true : false
+const showBackdrop = computed(
+  () => backdropBoolean.value === true && modelValueBoolean.value === true
 )
 
 const lazyShowing = computed(
@@ -159,6 +168,7 @@ const slots = useSlots()
 
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
+  props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   `offcanvas-${props.placement}`,
   {
     show: modelValueBoolean.value && isShowing.value === false,
