@@ -230,7 +230,7 @@ export default defineComponent({
 
     watch(
       () => props.modelValue,
-      (newValue: number) => {
+      (newValue) => {
         const calculatedValue = sanitizeCurrentPage(newValue, numberOfPages.value)
         if (calculatedValue !== props.modelValue) emit('update:modelValue', calculatedValue)
       }

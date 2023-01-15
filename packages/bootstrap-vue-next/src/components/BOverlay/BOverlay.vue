@@ -19,7 +19,7 @@
 
         <div class="position-absolute" :style="spinWrapperStyles">
           <slot name="overlay" v-bind="spinnerAttrs">
-            <b-spinner v-bind="spinnerAttrs" />
+            <b-spinner v-if="!noSpinnerBoolean" v-bind="spinnerAttrs" />
           </slot>
         </div>
       </component>
@@ -48,6 +48,7 @@ interface Props {
   spinnerSmall?: Booleanish
   spinnerType?: SpinnerType
   spinnerVariant?: ColorVariant
+  noSpinner?: Booleanish
   variant?:
     | 'transparent'
     | 'white'
@@ -67,6 +68,7 @@ const props = withDefaults(defineProps<Props>(), {
   blur: '2px',
   fixed: false,
   noCenter: false,
+  noSpinner: false,
   noFade: false,
   noWrap: false,
   opacity: 0.85,
@@ -91,6 +93,7 @@ const emit = defineEmits<Emits>()
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0}
 
 const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
+const noSpinnerBoolean = useBooleanish(toRef(props, 'noSpinner'))
 const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
 const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
 const showBoolean = useBooleanish(toRef(props, 'show'))

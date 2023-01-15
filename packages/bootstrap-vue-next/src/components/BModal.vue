@@ -22,15 +22,7 @@
         @keyup.esc="hide('esc')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
-          <div
-            v-if="
-              !lazyBoolean ||
-              (lazyBoolean && lazyLoadCompleted) ||
-              (lazyBoolean && modelValueBoolean === true)
-            "
-            class="modal-content"
-            :class="contentClass"
-          >
+          <div v-if="lazyShowing" class="modal-content" :class="contentClass">
             <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
               <slot name="header">
                 <component
@@ -100,10 +92,10 @@
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import {computed, nextTick, ref, toRef, useSlots, watch} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
-import {BvModalEvent, isEmptySlot} from '../utils'
+import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
@@ -197,15 +189,15 @@ const props = withDefaults(defineProps<BModalProps>(), {
 
 interface BModalEmits {
   (e: 'update:modelValue', value: boolean): void
-  (e: 'show', value: BvModalEvent): void
-  (e: 'shown', value: BvModalEvent): void
-  (e: 'hide', value: BvModalEvent): void
-  (e: 'hidden', value: BvModalEvent): void
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
   (e: 'hide-prevented'): void
   (e: 'show-prevented'): void
-  (e: 'ok', value: BvModalEvent): void
-  (e: 'cancel', value: BvModalEvent): void
-  (e: 'close', value: BvModalEvent): void
+  (e: 'ok', value: BvTriggerableEvent): void
+  (e: 'cancel', value: BvTriggerableEvent): void
+  (e: 'close', value: BvTriggerableEvent): void
 }
 
 const emit = defineEmits<BModalEmits>()
@@ -244,6 +236,13 @@ const modalClasses = computed(() => [
     show: isActive.value,
   },
 ])
+
+const lazyShowing = computed(
+  () =>
+    lazyBoolean.value === false ||
+    (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
+    (lazyBoolean.value === true && modelValueBoolean.value === true)
+)
 
 const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
 
@@ -293,8 +292,11 @@ const titleClasses = computed(() => [
 const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
 const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
 
-const buildModalEvent = (type: string, opts: Partial<BvModalEvent> = {}): BvModalEvent =>
-  new BvModalEvent(type, {
+const buildTriggerableEvent = (
+  type: string,
+  opts: Partial<BvTriggerableEvent> = {}
+): BvTriggerableEvent =>
+  new BvTriggerableEvent(type, {
     cancelable: false,
     target: element.value || null,
     relatedTarget: null,
@@ -304,7 +306,7 @@ const buildModalEvent = (type: string, opts: Partial<BvModalEvent> = {}): BvModa
   })
 
 const hide = (trigger = '') => {
-  const event = buildModalEvent('hide', {cancelable: trigger !== '', trigger})
+  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
 
   if (trigger === 'ok') {
     emit(trigger, event)
@@ -332,7 +334,7 @@ const hide = (trigger = '') => {
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
 // I'm not sure how to wait for the event to be determined. Before showing
 const show = () => {
-  const event = buildModalEvent('show', {cancelable: true})
+  const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
     emit('update:modelValue', false)
@@ -345,26 +347,23 @@ const show = () => {
 const onBeforeEnter = () => show()
 const onAfterEnter = () => {
   isActive.value = true
-  emit('shown', buildModalEvent('shown'))
+  emit('shown', buildTriggerableEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
 const onLeave = () => {
   isActive.value = false
 }
 const onAfterLeave = () => {
-  emit('hidden', buildModalEvent('hidden'))
+  emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 
 watch(
-  () => modelValueBoolean.value,
+  modelValueBoolean,
   (newValue) => {
-    if (newValue === true && !noFocusBoolean.value) {
-      nextTick(() => {
-        if (element.value !== null) element.value.focus()
-      })
-    }
-  }
+    if (newValue === true && !noFocusBoolean.value && element.value !== null) element.value.focus()
+  },
+  {flush: 'post'}
 )
 </script>
 

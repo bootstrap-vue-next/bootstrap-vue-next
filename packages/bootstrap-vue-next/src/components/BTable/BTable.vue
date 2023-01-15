@@ -637,11 +637,11 @@ watch(
 )
 
 watch(
-  () => internalBusyFlag.value,
+  internalBusyFlag,
   () => internalBusyFlag.value !== busyBoolean.value && emit('update:busy', internalBusyFlag.value)
 )
 watch(
-  () => busyBoolean.value,
+  busyBoolean,
   () => internalBusyFlag.value !== busyBoolean.value && (internalBusyFlag.value = busyBoolean.value)
 )
 watch(

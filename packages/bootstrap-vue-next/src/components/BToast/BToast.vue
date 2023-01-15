@@ -136,12 +136,9 @@ export default defineComponent({
       startDismissTimer()
     }
 
-    watch(
-      () => modelValueBoolean.value,
-      (newValue) => {
-        newValue ? show() : hide()
-      }
-    )
+    watch(modelValueBoolean, (newValue) => {
+      newValue ? show() : hide()
+    })
 
     const startDismissTimer = () => {
       clearDismissTimer()

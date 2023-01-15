@@ -73,19 +73,23 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   }
 
   const handleAutofocus = () => {
-    nextTick(() => {
-      if (props.autofocus) input.value?.focus()
-    })
+    if (props.autofocus) input.value?.focus()
   }
 
-  onMounted(handleAutofocus)
   onMounted(() => {
     if (input.value) {
       input.value.value = props.modelValue as string
     }
+    nextTick(() => {
+      handleAutofocus()
+    })
   })
 
-  onActivated(handleAutofocus)
+  onActivated(() => {
+    nextTick(() => {
+      handleAutofocus
+    })
+  })
 
   const computedAriaInvalid = computed(() =>
     resolveAriaInvalid(props.ariaInvalid, props.state ?? undefined)

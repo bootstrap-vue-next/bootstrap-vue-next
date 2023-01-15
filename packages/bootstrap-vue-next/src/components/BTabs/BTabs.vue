@@ -306,31 +306,28 @@ watch(
   }
 )
 
-watch(
-  () => tabs.value,
-  () => {
-    // find last active tab
-    let activeTabIndex = tabs.value.map((tab: any) => tab.active && !tab.disabled).lastIndexOf(true)
+watch(tabs, () => {
+  // find last active tab
+  let activeTabIndex = tabs.value.map((tab: any) => tab.active && !tab.disabled).lastIndexOf(true)
 
-    if (activeTabIndex < 0) {
-      if (tabIndex.value >= tabs.value.length) {
-        // handle last tab removed, so find the last non-disabled tab
-        activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).lastIndexOf(true)
-      } else {
-        if (tabs.value[tabIndex.value] && !tabs.value[tabIndex.value].disabled)
-          activeTabIndex = tabIndex.value
-      }
+  if (activeTabIndex < 0) {
+    if (tabIndex.value >= tabs.value.length) {
+      // handle last tab removed, so find the last non-disabled tab
+      activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).lastIndexOf(true)
+    } else {
+      if (tabs.value[tabIndex.value] && !tabs.value[tabIndex.value].disabled)
+        activeTabIndex = tabIndex.value
     }
-    // still no active tab found, find first non-disabled tab
-    if (activeTabIndex < 0) {
-      activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).indexOf(true)
-    }
-    // ensure only one tab active at a time
-    tabs.value.forEach((tab: any, idx: number) => (tab.active = idx === activeTabIndex))
-
-    activateTab(activeTabIndex)
   }
-)
+  // still no active tab found, find first non-disabled tab
+  if (activeTabIndex < 0) {
+    activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).indexOf(true)
+  }
+  // ensure only one tab active at a time
+  tabs.value.forEach((tab: any, idx: number) => (tab.active = idx === activeTabIndex))
+
+  activateTab(activeTabIndex)
+})
 
 onMounted(() => {
   // If there are tabs available, make sure a tab is set active
