@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.1...v0.6.2) (2023-01-16)
+
+
+### Bug Fixes
+
+* **nuxt.ts:** psuedo placeholder code causes issues when using nuxt.ts ([#880](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/880)) ([87d326a](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/87d326ad0553319706c2ca0e83557b365258a469))
+
 ## [0.6.1](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.0...v0.6.1) (2023-01-15)
 
 

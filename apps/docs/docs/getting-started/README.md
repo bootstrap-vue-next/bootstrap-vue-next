@@ -207,7 +207,7 @@ Enjoy it in your app without import.
 </template>
 ```
 
-## Comparison with BoostrapVue
+## Comparison with BootstrapVue
 
 BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue.
 
