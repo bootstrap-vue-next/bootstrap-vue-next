@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    :id="id"
+    :id="computedId"
     ref="element"
     class="collapse"
     :class="computedClasses"
@@ -16,8 +16,7 @@
 // import type {BCollapseEmits, BCollapseProps} from '../types/components'
 import {computed, onMounted, ref, toRef, watch} from 'vue'
 import {Collapse} from 'bootstrap'
-import {useBooleanish, useEventListener} from '../composables'
-import {getId} from '../utils'
+import {useBooleanish, useEventListener, useId} from '../composables'
 import type {Booleanish} from '../types'
 
 interface BCollapseProps {
@@ -32,18 +31,12 @@ interface BCollapseProps {
 }
 
 const props = withDefaults(defineProps<BCollapseProps>(), {
-  id: getId(),
   modelValue: false,
   tag: 'div',
   toggle: false,
   visible: false,
   isNav: false,
 })
-
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
-const toggleBoolean = useBooleanish(toRef(props, 'toggle'))
-const visibleBoolean = useBooleanish(toRef(props, 'visible'))
-const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
 
 interface BCollapseEmits {
   (e: 'update:modelValue', value: boolean): void
@@ -54,6 +47,13 @@ interface BCollapseEmits {
 }
 
 const emit = defineEmits<BCollapseEmits>()
+
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const toggleBoolean = useBooleanish(toRef(props, 'toggle'))
+const visibleBoolean = useBooleanish(toRef(props, 'visible'))
+const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
+
+const computedId = useId(toRef(props, 'id'), 'collapse')
 
 const element = ref<HTMLElement>()
 const instance = ref<Collapse>()
