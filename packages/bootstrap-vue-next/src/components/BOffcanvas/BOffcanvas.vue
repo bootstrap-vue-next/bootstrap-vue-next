@@ -8,9 +8,10 @@
         leaveToClass: 'hiding show',
         leaveFromClass: 'show',
       }"
-      @after-enter="OnAfterEnter"
-      @after-leave="OnAfterLeave"
       @before-enter="OnBeforeEnter"
+      @after-enter="OnAfterEnter"
+      @leave="onLeave"
+      @after-leave="OnAfterLeave"
     >
       <div
         v-show="modelValue"
@@ -119,7 +120,7 @@ const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
 const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const staticBoolean = useBooleanish(toRef(props, 'static'))
 
-const isShowing = ref(false)
+const isActive = ref(false)
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void
@@ -160,7 +161,7 @@ const computedClasses = computed(() => [
   'offcanvas', // Remove when above check is fixed
   `offcanvas-${props.placement}`,
   {
-    show: modelValueBoolean.value && isShowing.value === false,
+    show: modelValueBoolean.value && isActive.value === true,
   },
 ])
 
@@ -211,15 +212,13 @@ const show = () => {
   emit('update:modelValue', true)
 }
 
-const OnBeforeEnter = () => {
-  isShowing.value = true
-  show()
-}
+const OnBeforeEnter = () => show()
 const OnAfterEnter = () => {
-  isShowing.value = false
+  isActive.value = true
   emit('shown', buildTriggerableEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
+const onLeave = () => (isActive.value = false)
 const OnAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false

@@ -350,9 +350,7 @@ const onAfterEnter = () => {
   emit('shown', buildTriggerableEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
-const onLeave = () => {
-  isActive.value = false
-}
+const onLeave = () => (isActive.value = false)
 const onAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
