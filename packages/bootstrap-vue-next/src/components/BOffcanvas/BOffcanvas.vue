@@ -62,11 +62,11 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef, useSlots, watch} from 'vue'
-import BOverlay from '../BOverlay/BOverlay.vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
-import BCloseButton from '../BButton/BCloseButton.vue'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import BOverlay from '../BOverlay/BOverlay.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
 
 interface BOffcanvasProps {
@@ -107,20 +107,6 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   noHeaderClose: false,
   noHeader: false,
 })
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
-const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
-const noHeaderCloseBoolean = useBooleanish(toRef(props, 'noHeaderClose'))
-const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
-const noFocusBoolean = useBooleanish(toRef(props, 'noFocus'))
-const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
-const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
-const staticBoolean = useBooleanish(toRef(props, 'static'))
-
-const isActive = ref(false)
 
 interface BOffcanvasEmits {
   (e: 'update:modelValue', value: boolean): void
@@ -134,10 +120,27 @@ interface BOffcanvasEmits {
   (e: 'close', value: BvTriggerableEvent): void
 }
 
-const element = ref<null | HTMLElement>(null)
+const emit = defineEmits<BOffcanvasEmits>()
+
+const slots = useSlots()
+
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+// TODO
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
+const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
+const noHeaderCloseBoolean = useBooleanish(toRef(props, 'noHeaderClose'))
+const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
+const noFocusBoolean = useBooleanish(toRef(props, 'noFocus'))
+const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
+const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+const staticBoolean = useBooleanish(toRef(props, 'static'))
 
 const computedId = useId(toRef(props, 'id'), 'offcanvas')
 
+const isActive = ref(false)
+const element = ref<null | HTMLElement>(null)
 const lazyLoadCompleted = ref(false)
 
 const showBackdrop = computed(
@@ -150,10 +153,6 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
-
-const emit = defineEmits<BOffcanvasEmits>()
-
-const slots = useSlots()
 
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
