@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# Comparison with BoostrapVue
+# Comparison with BootstrapVue
 
 In this section, you'll see a full list of BootstrapVue components (standard and non-standard) and the coverage status for `properties`, `slots`, `events`, etc. Also, we specify the new features of Bootstrap **v5** in each component that requires it. It is not a full migration guide, but documents the changes between the versions. A migration guide will be finalized upon a v1.0 release
 
@@ -1439,7 +1439,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Jumbotron
 
-This component was removed in Boostrap `v5`.
+This component was removed in Bootstrap `v5`.
 
 More information [here](https://getbootstrap.com/docs/5.0/migration/#jumbotron).
 
@@ -1499,7 +1499,7 @@ This is a <Badge type="warning" text="non-standard" /> component.
 
 ## Media
 
-This component was removed in Boostrap `v5`.
+This component was removed in Bootstrap `v5`.
 
 More information [here](https://getbootstrap.com/docs/5.0/utilities/flex/#media-object).
 
