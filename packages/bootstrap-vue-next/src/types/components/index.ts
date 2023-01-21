@@ -35,6 +35,7 @@ export type {Props as BCardTitleProps} from './BCard/BCardTitle'
 export type {
   Emits as BCarouselEmits,
   ParentData as BCarouselParentData,
+  ParentRegistry as BCarouselParentRegistry,
   Props as BCarouselProps,
 } from './BCarousel/BCarousel'
 export type {Props as BCarouselSlideProps} from './BCarousel/BCarouselSlide'

@@ -11,7 +11,8 @@
 import BProgressBar from './BProgressBar.vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, InjectionKey, provide, toRef} from 'vue'
+import {computed, provide, toRef} from 'vue'
+import {progressInjectionKey} from '../../utils'
 
 interface BProgressProps {
   variant?: ColorVariant
@@ -50,16 +51,11 @@ const computedAttrs = computed(() => ({
   variant: props.variant,
 }))
 
-provide(injectionKey, {
+provide(progressInjectionKey, {
   animated: animatedBoolean.value,
   max: props.max,
   showProgress: showProgressBoolean.value,
   showValue: showValueBoolean.value,
   striped: stripedBoolean.value,
 })
-</script>
-
-<script lang="ts">
-import type {BProgressParentData} from '../../types/components'
-export const injectionKey: InjectionKey<BProgressParentData> = Symbol()
 </script>

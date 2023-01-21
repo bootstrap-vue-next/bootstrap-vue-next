@@ -6,7 +6,8 @@
 
 <script setup lang="ts">
 // import type {BListGroupProps} from '../../types/components'
-import {computed, InjectionKey, provide, toRef} from 'vue'
+import {computed, provide, toRef} from 'vue'
+import {listGroupInjectionKey} from '../../utils'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 // import type {Breakpoint} from '../../types'
@@ -40,12 +41,7 @@ const computedClasses = computed(() => {
 
 const computedTag = computed<string>(() => (numberedBoolean.value === true ? 'ol' : props.tag))
 
-provide(injectionKey, {
+provide(listGroupInjectionKey, {
   numbered: numberedBoolean.value,
 })
-</script>
-
-<script lang="ts">
-import type {BListGroupParentData} from '../../types/components'
-export const injectionKey: InjectionKey<BListGroupParentData> = Symbol()
 </script>

@@ -16,7 +16,7 @@
 import {computed, inject, ref, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'
-import {injectionKey} from './BTabs.vue'
+import {tabsInjectionKey} from '../../utils'
 
 interface BTabProps {
   id?: string
@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkAttributes: undefined,
 })
 
-const parentData = inject(injectionKey, null)
+const parentData = inject(tabsInjectionKey)
 
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))

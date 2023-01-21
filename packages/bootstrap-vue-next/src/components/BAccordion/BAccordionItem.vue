@@ -32,8 +32,8 @@
 import {inject, toRef} from 'vue'
 import BCollapse from '../BCollapse.vue'
 import {BToggle as vBToggle} from '../../directives'
+import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
-import {injectionKey} from './BAccordion.vue'
 import type {Booleanish} from '../../types'
 // import type {BAccordionItemProps} from '../types/components'
 
@@ -45,7 +45,7 @@ interface BAccordionItemProps {
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
 
-const parent = inject<string>(injectionKey, '')
+const parent = inject(accordionInjectionKey)
 
 const computedId = useId(toRef(props, 'id'), 'accordion_item')
 

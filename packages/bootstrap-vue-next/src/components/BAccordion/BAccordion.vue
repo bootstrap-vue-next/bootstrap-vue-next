@@ -8,7 +8,8 @@
 // https://vuejs.org/guide/typescript/composition-api.html#syntax-limitations , may be possible in a future release
 // import type {BAccordionProps} from '../types/components'
 import type {Booleanish} from '../../types'
-import {computed, InjectionKey, provide, toRef} from 'vue'
+import {computed, provide, toRef} from 'vue'
+import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
 
 interface BAccordionProps {
@@ -32,10 +33,6 @@ const computedClasses = computed(() => ({
 }))
 
 if (!freeBoolean.value) {
-  provide(injectionKey, computedId.value)
+  provide(accordionInjectionKey, computedId.value)
 }
-</script>
-
-<script lang="ts">
-export const injectionKey: InjectionKey<string> = Symbol()
 </script>

@@ -16,10 +16,9 @@
 
 <script setup lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
-import type {BProgressParentData} from '../../types/components'
 import {useBooleanish} from '../../composables'
 import {computed, inject, toRef} from 'vue'
-import {injectionKey} from './BProgress.vue'
+import {progressInjectionKey} from '../../utils'
 
 interface Props {
   animated?: Booleanish
@@ -43,7 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
   value: 0,
 })
 
-const parent = inject<BProgressParentData>(injectionKey)
+const parent = inject(progressInjectionKey)
 
 const animatedBoolean = useBooleanish(toRef(props, 'animated'))
 const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))

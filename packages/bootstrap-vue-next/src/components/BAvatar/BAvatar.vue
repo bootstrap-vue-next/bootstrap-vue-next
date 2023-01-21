@@ -25,11 +25,9 @@
 
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
-import {isEmptySlot, isNumeric, toFloat} from '../../utils'
-import type {BAvatarGroupParentData} from '../../types/components'
+import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
 import {computed, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
-import {injectionKey} from './BAvatarGroup.vue'
 import {useBooleanish} from '../../composables'
 
 interface BAvatarProps {
@@ -76,7 +74,7 @@ const emit = defineEmits<BAvatarEmits>()
 
 const slots = useSlots()
 
-const parentData = inject<BAvatarGroupParentData | null>(injectionKey, null)
+const parentData = inject(avatarGroupInjectionKey)
 
 const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4

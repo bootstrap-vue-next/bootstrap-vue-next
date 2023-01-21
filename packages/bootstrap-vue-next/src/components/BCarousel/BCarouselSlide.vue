@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="carousel-item"
-    :class="{active: activeBoolean}"
-    :data-bs-interval="interval"
-    :style="computedAttr"
-  >
+  <div :class="computedClasses" :data-bs-interval="interval" :style="computedStyle">
     <slot name="img">
       <b-img
         class="d-block w-100"
@@ -39,20 +34,16 @@
 
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
-import {useBooleanish} from '../../composables'
-import {computed, inject, toRef, useSlots} from 'vue'
+import {computed, inject, onUnmounted, StyleValue, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
-import type {BCarouselParentData} from '../../types/components'
-import {injectionKey} from './BCarousel.vue'
 import BImg from '../BImg.vue'
-import {isEmptySlot} from '../../utils'
+import {carouselInjectionKey, carouselRegistryKey, isEmptySlot} from '../../utils'
 
 interface BCarouselSlideProps {
   imgSrc?: string
   imgHeight?: string | number
   imgWidth?: string | number
   interval?: string | number
-  active?: Booleanish
   background?: string
   caption?: string
   captionHtml?: string
@@ -69,7 +60,6 @@ interface BCarouselSlideProps {
 }
 
 const props = withDefaults(defineProps<BCarouselSlideProps>(), {
-  active: false,
   captionTag: 'h3',
   contentTag: 'div',
   imgBlank: false,
@@ -79,15 +69,27 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
 
 const slots = useSlots()
 
-const parentData = inject<BCarouselParentData>(injectionKey, {})
+const self = Symbol()
 
-// instead of using this property, it would be nice to use `startingSlide`
-// of the parent Carousel in order to set the proper active slide
-const activeBoolean = useBooleanish(toRef(props, 'active'))
+const parentData = inject(carouselInjectionKey, {})
+
+const register = inject(carouselRegistryKey, () => ({
+  isActive: computed(() => false),
+  unregister: () => ({}),
+}))
+
+const {isActive, unregister} = register(self)
+
+const computedClasses = computed(() => [
+  'carousel-item',
+  {
+    active: isActive.value,
+  },
+])
 
 const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 
-const computedAttr = computed(() => ({
+const computedStyle = computed<StyleValue>(() => ({
   background: `${
     props.background || parentData.background || 'rgb(171, 171, 171)'
   } none repeat scroll 0% 0%`,
@@ -100,4 +102,6 @@ const computedContentClasses = computed(() => ({
 
 const parentWidth = computed<string | undefined>(() => parentData.width)
 const parentHeight = computed<string | undefined>(() => parentData.height)
+
+onUnmounted(unregister)
 </script>
