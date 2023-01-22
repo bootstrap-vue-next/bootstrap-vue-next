@@ -34,7 +34,7 @@
 <script setup lang="ts">
 // import type {BCarouselProps, BCarouselEmits} from '../types/components'
 import {carouselInjectionKey, carouselRegistryKey} from '../../utils'
-import {computed, provide, ref, toRef, useSlots} from 'vue'
+import {computed, onMounted, provide, reactive, readonly, ref, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 
@@ -93,9 +93,22 @@ const slides = ref<Array<symbol>>([])
 
 const slotsLength = computed(() => slots.default?.().length ?? 0)
 
-const goToValue = (value: number) => emit('update:modelValue', value)
+const isTransitioning = reactive<{prev?: symbol; next?: symbol; direction?: 'end' | 'start'}>({})
+
+const translateNumberToSymbol = (value: number): symbol => slides.value[value]
+
+const goToValue = (value: number) => {
+  isTransitioning.prev = translateNumberToSymbol(props.modelValue)
+  isTransitioning.next = translateNumberToSymbol(value)
+}
+
+onMounted(() => {
+  activeSlide.value = translateNumberToSymbol(props.modelValue)
+})
 
 const prev = () => {
+  if (isTransitioning.prev !== undefined || isTransitioning.next !== undefined) return
+  isTransitioning.direction = 'end'
   if (props.modelValue === 0) {
     if (noWrapBoolean.value === true) return
     goToValue(slotsLength.value - 1)
@@ -105,6 +118,8 @@ const prev = () => {
 }
 
 const next = () => {
+  if (isTransitioning.prev !== undefined || isTransitioning.next !== undefined) return
+  isTransitioning.direction = 'start'
   if (props.modelValue === slotsLength.value - 1) {
     if (noWrapBoolean.value === true) return
     goToValue(0)
@@ -113,10 +128,23 @@ const next = () => {
   goToValue(props.modelValue + 1)
 }
 
+const onDone = () => {
+  if (isTransitioning.next === undefined) return
+  const nextSlide = isTransitioning.next
+  isTransitioning.prev = undefined
+  isTransitioning.next = undefined
+  activeSlide.value = nextSlide
+  const index = slides.value.indexOf(activeSlide.value)
+  emit('update:modelValue', index)
+}
+
 provide(carouselRegistryKey, (slide: symbol) => {
   slides.value.push(slide)
   return {
     isActive: computed(() => activeSlide.value === slide),
+    isLeaving: computed(() => isTransitioning.prev === slide),
+    direction: readonly(toRef(isTransitioning, 'direction')),
+    isEntering: computed(() => isTransitioning.next === slide),
     unregister() {
       const index = slides.value.indexOf(slide)
       slides.value.splice(index, 1)
@@ -125,6 +153,7 @@ provide(carouselRegistryKey, (slide: symbol) => {
         activeSlide.value = first
       }
     },
+    done: onDone,
   }
 })
 

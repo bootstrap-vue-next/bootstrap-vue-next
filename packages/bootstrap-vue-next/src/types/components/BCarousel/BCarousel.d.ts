@@ -1,4 +1,4 @@
-import type {ComputedRef} from 'vue'
+import type {ComputedRef, Ref} from 'vue'
 
 // Props
 export interface Props {
@@ -27,5 +27,9 @@ export interface ParentData {
 
 export type ParentRegistry = (tab: symbol) => {
   isActive: ComputedRef<boolean>
+  isLeaving: ComputedRef<boolean>
+  isEntering: ComputedRef<boolean>
+  direction: Readonly<Ref<'start' | 'end'>>
+  done: () => void
   unregister: () => void
 }

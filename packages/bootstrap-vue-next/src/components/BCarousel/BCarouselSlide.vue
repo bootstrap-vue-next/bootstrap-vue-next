@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" :data-bs-interval="interval" :style="computedStyle">
+  <div :class="computedClasses" @animationstart="doStuff" @animationend="doStuff">
     <slot name="img">
       <b-img
         class="d-block w-100"
@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
-import {computed, inject, onUnmounted, StyleValue, useSlots} from 'vue'
+import {computed, inject, onUnmounted, readonly, ref, StyleValue, useSlots, watchEffect} from 'vue'
 import type {Booleanish} from '../../types'
 import BImg from '../BImg.vue'
 import {carouselInjectionKey, carouselRegistryKey, isEmptySlot} from '../../utils'
@@ -76,16 +76,35 @@ const parentData = inject(carouselInjectionKey, {})
 const register = inject(carouselRegistryKey, () => ({
   isActive: computed(() => false),
   unregister: () => ({}),
+  done: () => ({}),
+  isEntering: computed(() => false),
+  isLeaving: computed(() => false),
+  direction: readonly(ref('start')),
 }))
 
-const {isActive, unregister} = register(self)
+const {isActive, direction, unregister, isEntering, isLeaving, done} = register(self)
 
 const computedClasses = computed(() => [
   'carousel-item',
   {
     active: isActive.value,
+    [`carousel-item-${direction.value === 'start' ? 'next' : 'prev'}`]: isEntering.value,
+    [`carousel-item-${direction.value}`]: isEntering.value || isLeaving.value,
   },
 ])
+
+watchEffect(() => {
+  if (isEntering.value === true) {
+    setTimeout(() => {
+      console.log('done')
+      done()
+    }, 600)
+  }
+})
+
+const doStuff = () => {
+  console.log('do stuff')
+}
 
 const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 
