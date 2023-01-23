@@ -30,6 +30,7 @@
           :key="idx"
           class="nav-item"
           :class="tab.props['title-item-class']"
+          role="presentation"
         >
           <button
             :id="buttonId"
