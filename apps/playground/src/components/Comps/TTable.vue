@@ -61,6 +61,54 @@
     </b-row>
     <b-row>
       <b-col>
+        <h4 class="my-3">Selectable table</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="showSelectBox"
+          name="checkbox-1"
+          :value="true"
+          :unchecked-value="false"
+          >Show Selectable column</b-form-checkbox
+        >
+      </b-col>
+      <b-col>
+        <p>Selection mode</p>
+        <b-form-radio
+          v-for="(car, index) in ['single', 'multi', 'range']"
+          :key="index"
+          v-model="selectionMode"
+          :value="car"
+          >{{ car }}</b-form-radio
+        >
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-table
+          selectable
+          :select-head="showSelectBox"
+          caption="List of users"
+          :select-mode="selectionMode"
+          :items="items"
+          :fields="objectTableDefinitions"
+          striped
+          hover
+          foot-clone
+          @selection="selectClick"
+        >
+          <template #cell(first_name)="data">
+            <a href="#">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </b-col>
+      <div>Selected rows: {{ selection }}</div>
+    </b-row>
+    <b-row>
+      <b-col>
         <h4 class="my-3">Table: Adding additional rows to the header</h4>
       </b-col>
     </b-row>
@@ -127,4 +175,11 @@ const items: Array<TableItem> = [
   },
   {age: 38, first_name: 'Jami', last_name: 'Carney'},
 ]
+const selection = ref<Array<TableItem>>([])
+const showSelectBox = ref(false)
+const selectionMode = ref('single')
+function selectClick(selected: Array<TableItem>) {
+  console.log(selected)
+  selection.value = selected
+}
 </script>
