@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.3](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.2...v0.6.3) (2023-01-27)
+
+
+### Bug Fixes
+
+* **BTabs:** add role="presentation" ([465eb7a](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/465eb7ad692081d0423dc1520c186b8dd1c02b76))
+
 ## [0.6.2](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.1...v0.6.2) (2023-01-16)
 
 
