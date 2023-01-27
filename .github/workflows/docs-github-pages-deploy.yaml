@@ -56,7 +56,7 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Build library
-        run: pnpm run build
+        run: pnpm run build --filter docs
 
       - name: Deploy Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.3

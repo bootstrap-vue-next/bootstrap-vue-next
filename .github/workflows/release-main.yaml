@@ -73,7 +73,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Build library
-        run: pnpm run build
+        run: pnpm run build --filter bootstrap-vue-next
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish 
