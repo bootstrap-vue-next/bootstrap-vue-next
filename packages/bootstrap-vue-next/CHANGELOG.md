@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.4](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.3...v0.6.4) (2023-01-28)
+
+
+### Features
+
+* **BAlert:** add noHoverPause prop to pause countdown on hover ([a0d3e19](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a0d3e191863cd6e91c288287bf8f91699122e01b))
+* **BCarousel:** add noHoverPause to stop pausing on hovering ([a0d3e19](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a0d3e191863cd6e91c288287bf8f91699122e01b))
+* **BCarousel:** add prop fade, to use crossfade animation instead ([a0d3e19](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a0d3e191863cd6e91c288287bf8f91699122e01b))
+* **BCarousel:** add prop ride to indicate to use "ride", or "carousel" as shown on bootstrap docs ([a0d3e19](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a0d3e191863cd6e91c288287bf8f91699122e01b))
+* **BCarousel:** add prop rideReverse, so when carousel riding, tell it to go in reverse order ([a0d3e19](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a0d3e191863cd6e91c288287bf8f91699122e01b))
+* **BCarousel:** usage should be more straightforward. Active items are directly modified through the vmodel only ([a0d3e19](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a0d3e191863cd6e91c288287bf8f91699122e01b))
+
+
+### Reverts
+
+* App.vue to default ([e51972a](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/e51972a5dfcf8f07a288729ef74de207fc52492f))
+
 ## [0.6.3](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.2...v0.6.3) (2023-01-27)
 
 
