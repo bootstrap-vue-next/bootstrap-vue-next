@@ -98,7 +98,6 @@ importers:
     dependencies:
       '@nuxt/kit': 3.0.0_rollup@3.12.0
       '@vueuse/core': 9.11.1_vue@3.2.45
-      '@vueuse/shared': 9.11.1_vue@3.2.45
     devDependencies:
       '@popperjs/core': 2.11.6
       '@types/bootstrap': 5.2.6
@@ -108,6 +107,7 @@ importers:
       '@vue/runtime-core': 3.2.45
       '@vue/shared': 3.2.45
       '@vue/test-utils': 2.2.8_o3nmwetfthgqihjljurbyiqgn4
+      '@vueuse/shared': 9.11.1_vue@3.2.45
       bootstrap: 5.2.3_@popperjs+core@2.11.6
       c8: 7.12.0
       happy-dom: 7.8.1
@@ -1725,7 +1725,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: false
 
   /@xmldom/xmldom/0.8.6:
     resolution: {integrity: sha512-uRjjusqpoqfmRkTaNuLJ2VohVr67Q5YwDATW3VU7PfzTj6IRaihGrYI7zckGZjxQPBIp63nfvJbM+Yu5ICh0Bg==}
