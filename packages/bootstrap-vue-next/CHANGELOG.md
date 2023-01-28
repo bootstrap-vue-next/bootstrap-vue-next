@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.6](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.5...v0.6.6) (2023-01-28)
+
+
+### Bug Fixes
+
+* move @vueuse/shared to dev dependency ([ee65801](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/ee65801a51184b068071cba1eb068fa12d683b81))
+
 ## [0.6.5](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.4...v0.6.5) (2023-01-28)
 
 
