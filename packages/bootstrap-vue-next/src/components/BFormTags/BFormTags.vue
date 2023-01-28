@@ -405,5 +405,5 @@ onMounted(() => {
   }
 })
 
-onActivated(() => checkAutofocus())
+onActivated(checkAutofocus)
 </script>
