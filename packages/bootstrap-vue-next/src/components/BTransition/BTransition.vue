@@ -1,7 +1,7 @@
 <template>
-  <Transition v-bind="computedAttrs">
+  <transition v-bind="computedAttrs">
     <slot />
-  </Transition>
+  </transition>
 </template>
 
 <script setup lang="ts">
