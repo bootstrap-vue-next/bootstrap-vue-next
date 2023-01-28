@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.5](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.4...v0.6.5) (2023-01-28)
+
+
+### Bug Fixes
+
+* pnpm/dts issues causing missing files that require @vueuse/shared ([648fe41](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/648fe41ccdb866ae7a32babe66c53100186416d8))
+
 ## [0.6.4](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.3...v0.6.4) (2023-01-28)
 
 
