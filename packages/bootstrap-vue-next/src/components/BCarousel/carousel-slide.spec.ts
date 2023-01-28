@@ -2,12 +2,9 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BCarouselSlide from './BCarouselSlide.vue'
-// This exists, ignore
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import {injectionKey} from './BCarousel.vue'
+import {carouselInjectionKey} from '../../utils'
 import BImg from '../BImg.vue'
-
+// TODO test for newest changes
 describe('carousel-slide', () => {
   enableAutoUnmount(afterEach)
 
@@ -21,32 +18,9 @@ describe('carousel-slide', () => {
     expect(wrapper.classes()).toContain('carousel-item')
   })
 
-  it('has class active when prop active', async () => {
-    const wrapper = mount(BCarouselSlide, {
-      props: {active: true},
-    })
-    expect(wrapper.classes()).toContain('active')
-    await wrapper.setProps({active: false})
-    expect(wrapper.classes()).not.toContain('active')
-  })
-
   it('has attr data-bs-interval undefined by default', () => {
     const wrapper = mount(BCarouselSlide)
     expect(wrapper.attributes('data-bs-interval')).toBeUndefined()
-  })
-
-  it('has attr data-bs-interval as prop interval', () => {
-    const wrapper = mount(BCarouselSlide, {
-      props: {interval: 1000},
-    })
-    expect(wrapper.attributes('data-bs-interval')).toBe('1000')
-  })
-
-  it('has attr data-bs-interval as prop interval when string', () => {
-    const wrapper = mount(BCarouselSlide, {
-      props: {interval: '1000'},
-    })
-    expect(wrapper.attributes('data-bs-interval')).toBe('1000')
   })
 
   it('has style background by default', () => {
@@ -57,14 +31,14 @@ describe('carousel-slide', () => {
   it('has style background to include prop background', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {background: 'black'},
-      global: {provide: {[injectionKey as unknown as symbol]: {background: ''}}},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {background: ''}}},
     })
     expect(wrapper.attributes('style')).toContain('background: black')
   })
 
   it('has style background to include parentData background', () => {
     const wrapper = mount(BCarouselSlide, {
-      global: {provide: {[injectionKey as unknown as symbol]: {background: 'black'}}},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {background: 'black'}}},
     })
     expect(wrapper.attributes('style')).toContain('background: black')
   })
@@ -121,7 +95,7 @@ describe('carousel-slide', () => {
 
   it('BImg child prop width to be parentWidth', () => {
     const wrapper = mount(BCarouselSlide, {
-      global: {provide: {[injectionKey as unknown as symbol]: {width: 100}}},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {width: 100}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('width')).toBe(100)
@@ -130,7 +104,7 @@ describe('carousel-slide', () => {
   it('BImg child prop height is given prop width over parentWidth', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgWidth: 500},
-      global: {provide: {[injectionKey as unknown as symbol]: {width: 100}}},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {width: 100}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('width')).toBe(500)
@@ -146,7 +120,7 @@ describe('carousel-slide', () => {
 
   it('BImg child prop height to be parentWidth', () => {
     const wrapper = mount(BCarouselSlide, {
-      global: {provide: {[injectionKey as unknown as symbol]: {height: 100}}},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {height: 100}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('height')).toBe(100)
@@ -155,7 +129,7 @@ describe('carousel-slide', () => {
   it('BImg child prop height is given prop imgHeight over parentWidth', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgHeight: 500},
-      global: {provide: {[injectionKey as unknown as symbol]: {height: 100}}},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {height: 100}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('height')).toBe(500)

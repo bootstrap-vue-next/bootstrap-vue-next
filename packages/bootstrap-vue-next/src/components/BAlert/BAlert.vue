@@ -7,6 +7,8 @@
       aria-live="polite"
       aria-atomic="true"
       :class="computedClasses"
+      @mouseenter.stop="onMouseEnter"
+      @mouseleave.stop="resume"
     >
       <slot />
       <template v-if="dismissibleBoolean">
@@ -34,6 +36,7 @@ import {useBooleanish} from '../../composables'
 import useCountdown from '../../composables/useCountdown'
 
 interface BAlertProps {
+  noHoverPause?: Booleanish
   dismissLabel?: string
   dismissible?: Booleanish
   fade?: Booleanish
@@ -46,6 +49,7 @@ interface BAlertProps {
 }
 
 const props = withDefaults(defineProps<BAlertProps>(), {
+  noHoverPause: false,
   interval: 1000,
   dismissLabel: 'Close',
   dismissible: false,
@@ -60,6 +64,7 @@ const dismissibleBoolean = useBooleanish(toRef(props, 'dismissible'))
 const fadeBoolean = useBooleanish(toRef(props, 'fade'))
 const immediateBoolean = useBooleanish(toRef(props, 'immediate'))
 const showOnPauseBoolean = useBooleanish(toRef(props, 'showOnPause'))
+const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
 
 interface BAlertEmits {
   (e: 'closed'): void
@@ -114,7 +119,12 @@ const closeClicked = (): void => {
   emit('closed')
 }
 
-onBeforeUnmount(() => stop())
+const onMouseEnter = () => {
+  if (noHoverPauseBoolean.value) return
+  pause()
+}
+
+onBeforeUnmount(stop)
 
 defineExpose({pause, resume, restart, stop})
 </script>

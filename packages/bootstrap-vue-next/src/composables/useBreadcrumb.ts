@@ -1,12 +1,11 @@
-import {type App, inject, type InjectionKey, reactive} from 'vue'
+import {type App, inject, reactive} from 'vue'
 import type {BreadcrumbItem} from '../types'
+import {breadcrumbInjectionKey} from '../utils'
 
 export interface UseBreadcrumbOptions {
   items: BreadcrumbItem[]
   readonly reset: () => void
 }
-
-export const BREADCRUMB_SYMBOL: InjectionKey<UseBreadcrumbOptions> = Symbol()
 
 const BREADCRUMB_OBJECT: UseBreadcrumbOptions = {
   items: reactive<BreadcrumbItem[]>([]),
@@ -19,7 +18,7 @@ const BREADCRUMB_OBJECT: UseBreadcrumbOptions = {
  * @param app
  */
 export const createBreadcrumb = (app: App): void => {
-  app.provide(BREADCRUMB_SYMBOL, BREADCRUMB_OBJECT)
+  app.provide(breadcrumbInjectionKey, BREADCRUMB_OBJECT)
 }
 
 /**
@@ -28,4 +27,4 @@ export const createBreadcrumb = (app: App): void => {
  * @returns
  */
 export const useBreadcrumb = (): UseBreadcrumbOptions =>
-  inject(BREADCRUMB_SYMBOL) ?? BREADCRUMB_OBJECT
+  inject(breadcrumbInjectionKey) ?? BREADCRUMB_OBJECT

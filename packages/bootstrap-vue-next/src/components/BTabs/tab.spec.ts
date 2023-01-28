@@ -1,10 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTab from './BTab.vue'
-// This exists, ignore
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import {injectionKey} from './BTabs.vue'
+import {tabsInjectionKey} from '../../utils'
 
 describe('tab', () => {
   enableAutoUnmount(afterEach)
@@ -64,7 +61,7 @@ describe('tab', () => {
   it('has class card-body when parentData card and prop noBody false', () => {
     const wrapper = mount(BTab, {
       props: {noBody: false},
-      global: {provide: {[injectionKey as unknown as symbol]: {card: true}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: true}}},
     })
     expect(wrapper.classes()).toContain('card-body')
   })
@@ -72,7 +69,7 @@ describe('tab', () => {
   it('does not have class card-body when parentData card but prop noBody true', () => {
     const wrapper = mount(BTab, {
       props: {noBody: true},
-      global: {provide: {[injectionKey as unknown as symbol]: {card: true}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: true}}},
     })
     expect(wrapper.classes()).not.toContain('card-body')
   })
@@ -80,7 +77,7 @@ describe('tab', () => {
   it('does not have class card-body when parentData card false and prop noBody false', () => {
     const wrapper = mount(BTab, {
       props: {noBody: false},
-      global: {provide: {[injectionKey as unknown as symbol]: {card: false}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: false}}},
     })
     expect(wrapper.classes()).not.toContain('card-body')
   })
@@ -88,7 +85,7 @@ describe('tab', () => {
   it('does not have class card-body when parentData card false and prop noBody true', () => {
     const wrapper = mount(BTab, {
       props: {noBody: true},
-      global: {provide: {[injectionKey as unknown as symbol]: {card: false}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: false}}},
     })
     expect(wrapper.classes()).not.toContain('card-body')
   })
@@ -110,7 +107,7 @@ describe('tab', () => {
 
   it('does not render default slot if parentData lazy true', () => {
     const wrapper = mount(BTab, {
-      global: {provide: {[injectionKey as unknown as symbol]: {lazy: true}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: true}}},
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('')
@@ -118,7 +115,7 @@ describe('tab', () => {
 
   it('does not render default slot parentData lazy and prop lazy true', () => {
     const wrapper = mount(BTab, {
-      global: {provide: {[injectionKey as unknown as symbol]: {lazy: true}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: true}}},
       props: {lazy: true},
       slots: {default: 'foobar'},
     })
@@ -127,7 +124,7 @@ describe('tab', () => {
 
   it('does not render default slot parentData lazy false and prop lazy true', () => {
     const wrapper = mount(BTab, {
-      global: {provide: {[injectionKey as unknown as symbol]: {lazy: false}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: false}}},
       props: {lazy: true},
       slots: {default: 'foobar'},
     })
@@ -136,7 +133,7 @@ describe('tab', () => {
 
   it('does not render default slot parentData lazy and prop lazy false', () => {
     const wrapper = mount(BTab, {
-      global: {provide: {[injectionKey as unknown as symbol]: {lazy: true}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: true}}},
       props: {lazy: false},
       slots: {default: 'foobar'},
     })
@@ -170,7 +167,7 @@ describe('tab', () => {
   it('does not render slot if prop active but not prop disabled and parentData lazy true', () => {
     const wrapper = mount(BTab, {
       props: {active: false, disabled: true},
-      global: {provide: {[injectionKey as unknown as symbol]: {lazy: true}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: true}}},
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('')

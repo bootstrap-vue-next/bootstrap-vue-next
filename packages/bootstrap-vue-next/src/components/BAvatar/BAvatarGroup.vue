@@ -8,10 +8,9 @@
 
 <script setup lang="ts">
 // import type { BAvatarGroupParentData, BAvatarGroupProps, InputSize } from '../types/components'
-import type {BAvatarGroupParentData} from '../../types/components'
-import {computed, InjectionKey, provide, type StyleValue, toRef} from 'vue'
+import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {isNumeric, toFloat} from '../../utils'
+import {avatarGroupInjectionKey, isNumeric, toFloat} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
 
@@ -47,15 +46,11 @@ const paddingStyle = computed<StyleValue>(() => {
 const computeOverlap = (value: any): number =>
   typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value || 0
 
-provide<BAvatarGroupParentData>(injectionKey, {
+provide(avatarGroupInjectionKey, {
   overlapScale,
   size: props.size,
   square: squareBoolean.value,
   rounded: props.rounded,
   variant: props.variant,
 })
-</script>
-
-<script lang="ts">
-export const injectionKey: InjectionKey<BAvatarGroupParentData> = Symbol()
 </script>

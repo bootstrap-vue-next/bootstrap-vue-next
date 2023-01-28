@@ -1,36 +1,35 @@
 <template>
-  <div
-    class="carousel-item"
-    :class="{active: activeBoolean}"
-    :data-bs-interval="interval"
-    :style="computedAttr"
-  >
+  <div class="carousel-item" :style="computedStyle">
     <slot name="img">
       <b-img
         class="d-block w-100"
         :alt="imgAlt"
         :src="imgSrc"
-        :width="imgWidth || parentWidth"
-        :height="imgHeight || parentHeight"
+        :width="imgWidth || parentData?.width"
+        :height="imgHeight || parentData?.height"
         :blank="imgBlank"
         :blank-color="imgBlankColor"
       />
     </slot>
     <component
       :is="contentTag"
-      v-if="caption || captionHtml || text || textHtml || hasDefaultSlot"
+      v-if="hasContent"
       class="carousel-caption"
       :class="computedContentClasses"
     >
-      <component :is="captionTag" v-if="caption || captionHtml">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="captionHtml" v-html="captionHtml" />
-        <span v-else>{{ caption }}</span>
+      <component :is="captionTag" v-if="hasCaption">
+        <slot name="caption">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-if="captionHtml" v-html="captionHtml" />
+          <span v-else>{{ caption }}</span>
+        </slot>
       </component>
-      <component :is="textTag" v-if="text || textHtml">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-if="textHtml" v-html="textHtml" />
-        <span v-else>{{ text }}</span>
+      <component :is="textTag" v-if="hasText">
+        <slot name="text">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-if="textHtml" v-html="textHtml" />
+          <span v-else>{{ text }}</span>
+        </slot>
       </component>
       <slot />
     </component>
@@ -39,20 +38,17 @@
 
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
-import {useBooleanish} from '../../composables'
-import {computed, inject, toRef, useSlots} from 'vue'
+import {computed, inject, StyleValue, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
 import type {BCarouselParentData} from '../../types/components'
-import {injectionKey} from './BCarousel.vue'
+import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
-import {isEmptySlot} from '../../utils'
 
 interface BCarouselSlideProps {
   imgSrc?: string
   imgHeight?: string | number
   imgWidth?: string | number
   interval?: string | number
-  active?: Booleanish
   background?: string
   caption?: string
   captionHtml?: string
@@ -68,8 +64,11 @@ interface BCarouselSlideProps {
   textTag?: string
 }
 
+// TODO interval is unused
+// Need to add https://getbootstrap.com/docs/5.3/components/carousel/#individual-carousel-item-interval
+// Perhaps a provide/inject with next/prev values where the component can call those would work.
+
 const props = withDefaults(defineProps<BCarouselSlideProps>(), {
-  active: false,
   captionTag: 'h3',
   contentTag: 'div',
   imgBlank: false,
@@ -79,17 +78,15 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
 
 const slots = useSlots()
 
-const parentData = inject<BCarouselParentData>(injectionKey, {})
+const parentData = inject<BCarouselParentData>(carouselInjectionKey)
 
-// instead of using this property, it would be nice to use `startingSlide`
-// of the parent Carousel in order to set the proper active slide
-const activeBoolean = useBooleanish(toRef(props, 'active'))
+const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
+const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
+const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
-const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
-
-const computedAttr = computed(() => ({
+const computedStyle = computed<StyleValue>(() => ({
   background: `${
-    props.background || parentData.background || 'rgb(171, 171, 171)'
+    props.background || parentData?.background || 'rgb(171, 171, 171)'
   } none repeat scroll 0% 0%`,
 }))
 
@@ -97,7 +94,4 @@ const computedContentClasses = computed(() => ({
   'd-none': props.contentVisibleUp !== undefined,
   [`d-${props.contentVisibleUp}-block`]: props.contentVisibleUp !== undefined,
 }))
-
-const parentWidth = computed<string | undefined>(() => parentData.width)
-const parentHeight = computed<string | undefined>(() => parentData.height)
 </script>

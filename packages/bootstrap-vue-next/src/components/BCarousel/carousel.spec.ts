@@ -1,9 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BCarousel from './BCarousel.vue'
-// import BCarouselSlide from './BCarouselSlide.vue'
-// import {h} from 'vue'
-
+// TODO test for newest changes
 describe('carousel', () => {
   enableAutoUnmount(afterEach)
 
@@ -15,11 +13,6 @@ describe('carousel', () => {
   it('has static class slide', () => {
     const wrapper = mount(BCarousel)
     expect(wrapper.classes()).toContain('slide')
-  })
-
-  it('has static attr data-bs-ride to be carousel', () => {
-    const wrapper = mount(BCarousel)
-    expect(wrapper.attributes('data-bs-ride')).toBe('carousel')
   })
 
   it('tag is div', () => {
@@ -121,22 +114,6 @@ describe('carousel', () => {
     expect($button.attributes('type')).toBe('button')
   })
 
-  it('button with class carousel-control-prev has attr as #computedId', () => {
-    const wrapper = mount(BCarousel, {
-      props: {controls: true},
-    })
-    const $button = wrapper.get('.carousel-control-prev')
-    expect($button.attributes('data-bs-target')).toBeDefined()
-  })
-
-  it('button with class carousel-control-prev has static attr data-bs-slide to be prev', () => {
-    const wrapper = mount(BCarousel, {
-      props: {controls: true},
-    })
-    const $button = wrapper.get('.carousel-control-prev')
-    expect($button.attributes('data-bs-slide')).toBe('prev')
-  })
-
   it('button with class carousel-control-prev has child element with class carousel-control-prev-icon', () => {
     const wrapper = mount(BCarousel, {
       props: {controls: true},
@@ -228,22 +205,6 @@ describe('carousel', () => {
     })
     const $button = wrapper.get('.carousel-control-next')
     expect($button.attributes('type')).toBe('button')
-  })
-
-  it('button with class carousel-control-next has attr as #computedId', () => {
-    const wrapper = mount(BCarousel, {
-      props: {controls: true},
-    })
-    const $button = wrapper.get('.carousel-control-next')
-    expect($button.attributes('data-bs-target')).toBeDefined()
-  })
-
-  it('button with class carousel-control-next has static attr data-bs-slide to be prev', () => {
-    const wrapper = mount(BCarousel, {
-      props: {controls: true},
-    })
-    const $button = wrapper.get('.carousel-control-next')
-    expect($button.attributes('data-bs-slide')).toBe('next')
   })
 
   it('button with class carousel-control-next has child element with class carousel-control-next-icon', () => {

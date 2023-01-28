@@ -21,7 +21,7 @@ import type {RouteLocationRaw} from 'vue-router'
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
-import {injectionKey} from './BListGroup.vue'
+import {listGroupInjectionKey} from '../../utils'
 
 interface BListGroupItemProps {
   action?: Booleanish
@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
 
 const attrs = useAttrs()
 
-const parentData = inject(injectionKey, null)
+const parentData = inject(listGroupInjectionKey)
 
 const actionBoolean = useBooleanish(toRef(props, 'action'))
 const activeBoolean = useBooleanish(toRef(props, 'active'))

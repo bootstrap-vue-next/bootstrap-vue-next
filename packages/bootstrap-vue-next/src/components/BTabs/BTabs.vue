@@ -77,9 +77,8 @@
 
 <script setup lang="ts">
 // import type {BTabsProps, BTabsEmits} from '../types/components'
-import type {BTabsParentData} from '../../types/components'
-import {computed, InjectionKey, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
-import {BvEvent, getId} from '../../utils'
+import {computed, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
+import {BvEvent, getId, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
 
@@ -338,12 +337,8 @@ onMounted(() => {
   }
 })
 
-provide(injectionKey, {
+provide(tabsInjectionKey, {
   lazy: lazyBoolean.value,
   card: cardBoolean.value,
 })
-</script>
-
-<script lang="ts">
-export const injectionKey: InjectionKey<BTabsParentData> = Symbol()
 </script>

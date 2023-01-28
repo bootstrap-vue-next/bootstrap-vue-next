@@ -18,9 +18,11 @@
   "files": [
     "dist",
     "src",
+    "nuxt.ts",
     "!src/**/*.spec.ts",
     "!src/**/*.spec.js",
-    "nuxt.ts"
+    "!src/App.vue",
+    "!src/main.ts"
   ],
   "types": "./dist/BootstrapVue.d.ts",
   "private": false,
