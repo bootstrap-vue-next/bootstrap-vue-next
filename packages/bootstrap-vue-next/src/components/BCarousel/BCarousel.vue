@@ -1,9 +1,18 @@
 <template>
-  <div :id="computedId" class="carousel slide">
+  <div
+    :id="computedId"
+    :class="computedClasses"
+    @keydown.left="prev"
+    @keydown.right="next"
+    @mouseenter.stop="onMouseEnter"
+    @mouseleave.stop="onMouseLeave"
+    @touchstart.passive="onTouchStart"
+    @touchend.passive="onTouchEnd"
+  >
     <div v-if="indicatorsBoolean" class="carousel-indicators">
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
-        v-for="(_, i) in slotsLength"
+        v-for="(_, i) in slides.length"
         :key="i"
         type="button"
         data-bs-target=""
@@ -12,6 +21,20 @@
         :aria-label="`${indicatorsButtonLabel} ${i}`"
         @click="goToValue(i)"
       />
+    </div>
+
+    <div class="carousel-inner">
+      <transition
+        v-for="(slide, i) in slides"
+        :key="i"
+        :enter-from-class="`carousel-item-next carousel-item-${direction ? 'end' : 'start'}`"
+        leave-active-class="active"
+        :leave-to-class="`carousel-item-prev carousel-item-${direction ? 'start' : 'end'}`"
+        @before-enter="emit('sliding-start', i)"
+        @after-enter="emit('sliding-end', i)"
+      >
+        <component :is="slide" v-show="i === modelValue" :class="{active: i === modelValue}" />
+      </transition>
     </div>
 
     <div class="carousel-inner">
@@ -33,13 +56,17 @@
 
 <script setup lang="ts">
 // import type {BCarouselProps, BCarouselEmits} from '../types/components'
-import {carouselInjectionKey, carouselRegistryKey} from '../../utils'
-import {computed, onMounted, provide, reactive, readonly, ref, toRef, useSlots} from 'vue'
+import {carouselInjectionKey, isBooleanish, resolveBooleanish} from '../../utils'
+import {computed, provide, ref, toRef, useSlots, type VNode, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
+import {useIntervalFn} from '@vueuse/core'
 
 interface BCarouselProps {
-  startingSlide?: number
+  ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
+  noHoverPause?: Booleanish
+  rideReverse?: Booleanish
+  fade?: Booleanish
   id?: string
   imgHeight?: string
   imgWidth?: string
@@ -56,8 +83,11 @@ interface BCarouselProps {
 }
 
 const props = withDefaults(defineProps<BCarouselProps>(), {
-  startingSlide: 0,
+  ride: false,
+  noHoverPause: false,
+  rideReverse: false,
   modelValue: 0,
+  fade: false,
   controls: false,
   indicators: false,
   interval: 5000,
@@ -69,93 +99,115 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
 })
 
 interface BCarouselEmits {
-  (e: 'sliding-start', value: Event): void
-  (e: 'sliding-end', value: Event): void
+  (e: 'sliding-start', value: number): void
+  (e: 'sliding-end', value: number): void
   (e: 'update:modelValue', value: number): void
 }
-// TODO FUCK all this
-//  Do this instead https://skirtles-code.github.io/vue-examples/components/tabs.html#tabs-example
+
 const emit = defineEmits<BCarouselEmits>()
 
 const slots = useSlots()
 
 const computedId = useId(toRef(props, 'id'), 'carousel')
 
+const rideReverseBoolean = useBooleanish(toRef(props, 'rideReverse'))
+const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
+const fadeBoolean = useBooleanish(toRef(props, 'fade'))
 const controlsBoolean = useBooleanish(toRef(props, 'controls'))
 const indicatorsBoolean = useBooleanish(toRef(props, 'indicators'))
-// TODO no wrap is never used, I'm not sure how to implement that
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const noTouchBoolean = useBooleanish(toRef(props, 'noTouch'))
 const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
 
-const activeSlide = ref<null | symbol>(null)
-const slides = ref<Array<symbol>>([])
+let xDown: number | null = null
+let yDown: number | null = null
 
-const slotsLength = computed(() => slots.default?.().length ?? 0)
+const rideStarted = ref(false)
+const direction = ref(true)
 
-const isTransitioning = reactive<{prev?: symbol; next?: symbol; direction?: 'end' | 'start'}>({})
+const rideResolved = computed<boolean | 'carousel'>(() =>
+  isBooleanish(props.ride) ? resolveBooleanish(props.ride) : props.ride
+)
 
-const translateNumberToSymbol = (value: number): symbol => slides.value[value]
+const {pause, resume} = useIntervalFn(
+  () => {
+    rideReverseBoolean.value ? prev() : next()
+  },
+  toRef(props, 'interval'),
+  {immediate: rideResolved.value === 'carousel'}
+)
 
-const goToValue = (value: number) => {
-  isTransitioning.prev = translateNumberToSymbol(props.modelValue)
-  isTransitioning.next = translateNumberToSymbol(value)
-}
+const isRiding = computed(
+  () =>
+    (rideResolved.value === true && rideStarted.value === true) || rideResolved.value === 'carousel'
+)
+const slides = computed<Array<VNode>>(() => slots.default?.() ?? [])
+const computedClasses = computed(() => [
+  'carousel',
+  'slide',
+  'pointer-event',
+  {'carousel-fade': fadeBoolean.value},
+])
 
-onMounted(() => {
-  activeSlide.value = translateNumberToSymbol(props.modelValue)
-})
-
-const prev = () => {
-  if (isTransitioning.prev !== undefined || isTransitioning.next !== undefined) return
-  isTransitioning.direction = 'end'
-  if (props.modelValue === 0) {
-    if (noWrapBoolean.value === true) return
-    goToValue(slotsLength.value - 1)
+const goToValue = (value: number): void => {
+  if (rideResolved.value === true) {
+    rideStarted.value = true
+  }
+  if (isRiding.value === true) {
+    resume()
+  }
+  direction.value = value < props.modelValue ? false : true
+  if (value >= slides.value.length) {
+    if (noWrapBoolean.value) return
+    emit('update:modelValue', 0)
     return
   }
-  goToValue(props.modelValue - 1)
-}
-
-const next = () => {
-  if (isTransitioning.prev !== undefined || isTransitioning.next !== undefined) return
-  isTransitioning.direction = 'start'
-  if (props.modelValue === slotsLength.value - 1) {
-    if (noWrapBoolean.value === true) return
-    goToValue(0)
+  if (value < 0) {
+    if (noWrapBoolean.value) return
+    emit('update:modelValue', slides.value.length - 1)
     return
   }
-  goToValue(props.modelValue + 1)
+  emit('update:modelValue', value)
 }
 
-const onDone = () => {
-  if (isTransitioning.next === undefined) return
-  const nextSlide = isTransitioning.next
-  isTransitioning.prev = undefined
-  isTransitioning.next = undefined
-  activeSlide.value = nextSlide
-  const index = slides.value.indexOf(activeSlide.value)
-  emit('update:modelValue', index)
+const prev = (): void => goToValue(props.modelValue - 1)
+const next = (): void => goToValue(props.modelValue + 1)
+
+const onMouseEnter = () => {
+  if (noHoverPauseBoolean.value) return
+  pause()
+}
+const onMouseLeave = () => {
+  if (!isRiding.value) return
+  resume()
 }
 
-provide(carouselRegistryKey, (slide: symbol) => {
-  slides.value.push(slide)
-  return {
-    isActive: computed(() => activeSlide.value === slide),
-    isLeaving: computed(() => isTransitioning.prev === slide),
-    direction: readonly(toRef(isTransitioning, 'direction')),
-    isEntering: computed(() => isTransitioning.next === slide),
-    unregister() {
-      const index = slides.value.indexOf(slide)
-      slides.value.splice(index, 1)
-      const [first] = slides.value
-      if (activeSlide.value === slide && first !== undefined) {
-        activeSlide.value = first
-      }
-    },
-    done: onDone,
+const onTouchStart = (e: TouchEvent) => {
+  if (noTouchBoolean.value) return
+  xDown = e.touches[0].clientX
+  yDown = e.touches[0].clientY
+  pause()
+}
+const onTouchEnd = (e: TouchEvent) => {
+  if (!xDown || !yDown) return
+  const xUp = e.touches[0].clientX
+  const yUp = e.touches[0].clientY
+  const xDiff = xDown - xUp
+  const yDiff = yDown - yUp
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    xDiff > 0 ? next() : prev()
   }
-})
+  xDown = null
+  yDown = null
+  if (isRiding.value === false) return
+  resume()
+}
+
+watch(
+  () => props.ride,
+  () => (rideStarted.value = false)
+)
+
+defineExpose({pause, resume})
 
 provide(carouselInjectionKey, {
   background: props.background,

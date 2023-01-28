@@ -24,12 +24,3 @@ export interface ParentData {
   width?: string
   height?: string
 }
-
-export type ParentRegistry = (tab: symbol) => {
-  isActive: ComputedRef<boolean>
-  isLeaving: ComputedRef<boolean>
-  isEntering: ComputedRef<boolean>
-  direction: Readonly<Ref<'start' | 'end'>>
-  done: () => void
-  unregister: () => void
-}

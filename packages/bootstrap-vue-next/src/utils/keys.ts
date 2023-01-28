@@ -2,7 +2,6 @@ import type {InjectionKey} from 'vue'
 import type {
   BAvatarGroupParentData,
   BCarouselParentData,
-  BCarouselParentRegistry,
   BListGroupParentData,
   BProgressParentData,
   BTabsParentData,
@@ -11,7 +10,6 @@ import type {UseBreadcrumbOptions} from '../composables/useBreadcrumb'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<BCarouselParentData> = Symbol()
-export const carouselRegistryKey: InjectionKey<BCarouselParentRegistry> = Symbol()
 
 // BTabs
 export const tabsInjectionKey: InjectionKey<BTabsParentData> = Symbol()
