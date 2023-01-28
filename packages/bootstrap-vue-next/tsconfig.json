@@ -4,7 +4,8 @@
     "types": ["vitest/globals", "vite/client"],
     "baseUrl": ".",
     "paths": {
-      "vue-router": ["node_modules/vue-router"]
+      "vue-router": ["node_modules/vue-router"],
+      "@vueuse/shared": ["node_modules/@vueuse/shared"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],

@@ -36,10 +36,10 @@ export default (
   const intervalsPassed = ref<number>(0)
 
   // Has watchEffect to set
-  const resolvedLength = ref(resolveUnref(length))
+  const resolvedLength = ref<number>(resolveUnref(length))
 
   // Has watchEffect to set
-  const intervalLength = ref(resolveUnref(interval))
+  const intervalLength = ref<number>(resolveUnref(interval))
 
   const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / intervalLength.value))
 
@@ -68,7 +68,7 @@ export default (
   }
 
   watchEffect(() => {
-    const newVal = resolveUnref(length)
+    const newVal = resolveUnref(length) as number
     const oldVal = resolvedLength.value
     if (newVal === oldVal) return
     resolvedLength.value = newVal
@@ -77,7 +77,7 @@ export default (
   })
 
   watchEffect(() => {
-    const newVal = resolveUnref(interval)
+    const newVal = resolveUnref(interval) as number
     const oldVal = intervalLength.value
     if (newVal === oldVal) return
     intervalLength.value = newVal
