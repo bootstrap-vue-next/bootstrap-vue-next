@@ -42,13 +42,15 @@
   },
   "dependencies": {
     "@nuxt/kit": "3.0.0",
-    "@vueuse/core": "^9.6.0"
+    "@vueuse/core": "^9.11.1",
+    "@vueuse/shared": "^9.11.1"
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.6",
     "@types/bootstrap": "^5.2.6",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vitest/coverage-c8": "^0.25.3",
+    "@vue/compiler-dom": "^3.2.45",
     "@vue/runtime-core": "^3.2.45",
     "@vue/shared": "^3.2.45",
     "@vue/test-utils": "^2.2.5",

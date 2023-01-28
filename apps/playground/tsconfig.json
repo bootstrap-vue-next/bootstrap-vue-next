@@ -2,7 +2,7 @@
   "extends": "tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["vite/client"],
+    "types": ["vite/client"]
     // "paths": { 
     //   // This seems to be removable if packages/bootstrap-vue-next 
     //   // Has @vue/runtime-core
