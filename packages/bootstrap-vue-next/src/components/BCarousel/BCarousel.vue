@@ -147,6 +147,14 @@ const computedClasses = computed(() => [
   'pointer-event',
   {'carousel-fade': fadeBoolean.value},
 ])
+// TODO a general idea of showing only slides that are in bounds
+// const localValue = computed(() =>
+//   props.modelValue >= slides.value.length
+//     ? slides.value.length - 1
+//     : props.modelValue < 0
+//     ? 0
+//     : props.modelValue
+// )
 
 const goToValue = (value: number): void => {
   if (rideResolved.value === true) {
