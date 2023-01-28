@@ -209,6 +209,8 @@ const slideInterval = ref(5000)
 </script>
 ```
 
+### Autoplay Reverse
+
 You can use the `rideReverse` prop to reverse the direction that the Carousel will autoplay
 
 <b-carousel v-model="fifthSlide" controls indicators ride="carousel" ride-reverse="true">
