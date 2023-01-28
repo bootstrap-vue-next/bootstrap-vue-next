@@ -1,5 +1,3 @@
-import type {ComputedRef, Ref} from 'vue'
-
 // Props
 export interface Props {
   id?: string
