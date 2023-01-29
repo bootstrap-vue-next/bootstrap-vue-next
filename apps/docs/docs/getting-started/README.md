@@ -30,7 +30,7 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-nex
 #### Preferred Installation
 
 - BootstrapVueNext recommends using [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) for automatic tree-shaking. The following installation method is recommended
-- `unplugin-vue-components` may have the side effect feature of also automatically importing _your_ components for ease of use. If you are uncomfortable with this, you can manually adjust the [dirs option](https://github.com/antfu/unplugin-vue-components#configuration) or you may prefer the [**legacy**](#legacy-installation) installation without automatic tree-shaking entirely. It is preferred that you choose the unplugin-vue-components with an empty dirs option, that way your app can be as performant as possible
+- `unplugin-vue-components` may have the side effect feature of also automatically importing _your_ components for ease of use. If you are uncomfortable with this, you can manually adjust the [dirs option](https://github.com/antfu/unplugin-vue-components#configuration) (set dirs to an empty array) or you may prefer the [**legacy**](#legacy-installation) installation without automatic tree-shaking entirely. It is preferred that you choose the unplugin-vue-components with an empty dirs option, that way your app can be as performant as possible
 
 Install the necessary packages for `BootstrapVueNext`:
 
