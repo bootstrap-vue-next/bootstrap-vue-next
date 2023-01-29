@@ -7,7 +7,7 @@ sidebar: auto
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites
 
 ::: danger NOT PRODUCTION READY
-This project is still in **alpha version**. There is a lot of work to do, if you want to contribute you can use it and submit an [issue](https://github.com/bootstrap-vue/bootstrap-vue-next/issues) or even better, a [pull request](https://github.com/bootstrap-vue/bootstrap-vue-next/pulls) 😄
+This project is still in **alpha version**. There is a lot of work to do and the documentation may be out of date, if you want to contribute you can use it and submit an [issue](https://github.com/bootstrap-vue/bootstrap-vue-next/issues) or even better, a [pull request](https://github.com/bootstrap-vue/bootstrap-vue-next/pulls) 😄
 :::
 
 ## Why BootstrapVueNext?
@@ -30,7 +30,7 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-nex
 #### Preferred Installation
 
 - BootstrapVueNext recommends using [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) for automatic tree-shaking. The following installation method is recommended
-- `unplugin-vue-components` may have the side effect feature of also automatically importing _your_ components for ease of use. If you are uncomfortable with this, you may prefer the [**legacy**](#legacy-installation) installation without automatic tree-shaking
+- `unplugin-vue-components` may have the side effect feature of also automatically importing _your_ components for ease of use. If you are uncomfortable with this, you can manually adjust the [dirs option](https://github.com/antfu/unplugin-vue-components#configuration) (set dirs to an empty array) or you may prefer the [**legacy**](#legacy-installation) installation without automatic tree-shaking entirely. It is preferred that you choose the unplugin-vue-components with an empty dirs option, that way your app can be as performant as possible
 
 Install the necessary packages for `BootstrapVueNext`:
 
