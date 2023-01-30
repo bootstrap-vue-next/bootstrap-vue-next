@@ -36,7 +36,7 @@
                   </slot>
                 </component>
                 <template v-if="!hideHeaderCloseBoolean">
-                  <button v-if="$slots.headerClose" type="button" @click="hide('close')">
+                  <button v-if="hasHeaderCloseSlot" type="button" @click="hide('close')">
                     <slot name="header-close" />
                   </button>
                   <b-close-button
@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import {BvTriggerableEvent} from '../utils'
@@ -202,6 +202,8 @@ interface BModalEmits {
 
 const emit = defineEmits<BModalEmits>()
 
+const slots = useSlots()
+
 const computedId = useId(toRef(props, 'id'), 'modal')
 
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
@@ -241,6 +243,8 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
+
+const hasHeaderCloseSlot = computed(() => !!slots['header-close'])
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,
