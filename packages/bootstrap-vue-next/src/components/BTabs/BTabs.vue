@@ -81,7 +81,7 @@ import {computed, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
 import {BvEvent, getId, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
-
+// TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
 interface BTabsProps {
   activeNavItemClass?: ClassValue
   activeTabClass?: ClassValue
