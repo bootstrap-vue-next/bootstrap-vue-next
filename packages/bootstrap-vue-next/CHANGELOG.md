@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.6.6](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.6...v0.6.6) (2023-01-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BOffcanvas:** remove footer slot -- it is not in Bootstrap V5 (It was Bootstrap _sidebar_ prop, but this is not sidebar)
+
+### Features
+
+* **BOffcanvas:** remove footer slot -- it is not in Bootstrap V5 (It was Bootstrap _sidebar_ prop, but this is not sidebar) ([d9bd678](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d9bd6784630730106ee862de77488bb4bdb92218))
+
+
+### Bug Fixes
+
+* **BOffcanvas:** offcanvas not displaying when mounting with modelValue true ([d9bd678](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d9bd6784630730106ee862de77488bb4bdb92218))
+* issues with using "isEmptySlot" causing improper values in slot scopes ([324ddb9](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/324ddb9b590ca586805bbe55cb5b7ca95f66aecc))
+
+
+### Reverts
+
+* **debde2104983a60a718147ee84593590ad80ec4e:** add back in footer slot on Offcanvas ([6612049](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/661204912ef8d511e9fac9f521436155a13c0a2d))
+
+
+### Miscellaneous Chores
+
+* release 0.6.6 ([857f5b3](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/857f5b329aac31601f380843ea69a6a0df267378))
+
 ## [0.6.6](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.5...v0.6.6) (2023-01-28)
 
 
