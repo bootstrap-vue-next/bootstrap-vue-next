@@ -95,7 +95,7 @@
 import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
-import {BvTriggerableEvent, isEmptySlot} from '../utils'
+import {BvTriggerableEvent} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
@@ -244,7 +244,7 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = computed(() => !!slots['header-close'])
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,

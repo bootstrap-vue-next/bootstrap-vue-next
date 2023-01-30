@@ -43,6 +43,9 @@
           <div class="offcanvas-body">
             <slot />
           </div>
+          <div v-if="hasFooterSlot">
+            <slot name="footer" v-bind="{visible: modelValueBoolean, placement, hide}" />
+          </div>
         </template>
       </div>
     </b-transition>
@@ -58,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, toRef, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BvTriggerableEvent} from '../../utils'
@@ -119,6 +122,8 @@ interface BOffcanvasEmits {
 
 const emit = defineEmits<BOffcanvasEmits>()
 
+const slots = useSlots()
+
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -149,6 +154,7 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
+const hasFooterSlot = computed<boolean>(() => !!slots.footer)
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed

@@ -44,7 +44,6 @@ import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
-import {isEmptySlot} from '../../utils'
 
 interface BCardProps {
   align?: Alignment.TextHorizontal
@@ -120,8 +119,8 @@ const imgRightBoolean = useBooleanish(toRef(props, 'imgRight'))
 const imgStartBoolean = useBooleanish(toRef(props, 'imgStart'))
 const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
 
-const hasHeaderSlot = computed<boolean>(() => !isEmptySlot(slots.header))
-const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const hasHeaderSlot = computed<boolean>(() => !!slots.header)
+const hasFooterSlot = computed<boolean>(() => !!slots.footer)
 
 const computedClasses = computed(() => ({
   [`text-${props.align}`]: props.align !== undefined,

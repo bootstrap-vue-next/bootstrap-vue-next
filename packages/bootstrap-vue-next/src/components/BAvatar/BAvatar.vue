@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
-import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
+import {avatarGroupInjectionKey, isNumeric, toFloat} from '../../utils'
 import {computed, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -86,9 +86,9 @@ const buttonBoolean = useBooleanish(toRef(props, 'button'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const squareBoolean = useBooleanish(toRef(props, 'square'))
 
-const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
+const hasDefaultSlot = computed<boolean>(() => !!slots.default)
 
-const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
+const hasBadgeSlot = computed<boolean>(() => !!slots.badge)
 
 const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 

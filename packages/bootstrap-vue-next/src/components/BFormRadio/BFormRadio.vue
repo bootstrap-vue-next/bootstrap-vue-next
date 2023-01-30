@@ -33,7 +33,6 @@
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
-import {isEmptySlot} from '../../utils'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -114,7 +113,7 @@ const isChecked = computed<unknown>(() => {
   return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
 })
 
-const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
+const hasDefaultSlot = computed<boolean>(() => !!slots.default)
 
 const classesObject = reactive({
   plain: toRef(plainBoolean, 'value'),
