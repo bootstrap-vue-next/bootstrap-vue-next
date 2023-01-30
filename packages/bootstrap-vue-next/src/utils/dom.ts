@@ -109,14 +109,6 @@ export const isVisible = (el: HTMLElement): boolean => {
 }
 
 /**
- * @param slot
- * @param data
- * @returns
- */
-export const isEmptySlot = (slot: Slot | undefined, data?: any) =>
-  !slot || slot(data).filter((vnode: VNode) => vnode.type !== Comment).length < 1
-
-/**
  * @param el
  * @returns
  */

@@ -61,10 +61,10 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
-import {BvTriggerableEvent, isEmptySlot} from '../../utils'
+import {BvTriggerableEvent} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
@@ -154,7 +154,7 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const hasFooterSlot = computed<boolean>(() => !!slots.footer)
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed
@@ -222,6 +222,12 @@ const OnAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
+
+onMounted(() => {
+  if (modelValueBoolean.value === true) {
+    isActive.value = true
+  }
+})
 
 watch(
   modelValueBoolean,
