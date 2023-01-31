@@ -64,7 +64,7 @@
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
-import {BvTriggerableEvent} from '../../utils'
+import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
@@ -154,7 +154,7 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const hasFooterSlot = computed<boolean>(() => !!slots.footer)
+const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed

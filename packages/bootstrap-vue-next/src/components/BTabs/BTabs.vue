@@ -257,6 +257,7 @@ const handleClick = (event: MouseEvent, index: number) => {
   }
 }
 
+// TODO make this better
 const getTabs = (slots: any): any[] => {
   if (!slots || !slots.default) return []
 
