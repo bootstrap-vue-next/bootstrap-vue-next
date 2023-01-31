@@ -16,6 +16,7 @@
 import {computed, toRef, useSlots} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../types'
 import {useBooleanish} from '../composables'
+import {isEmptySlot} from '../utils'
 
 interface BSpinnerProps {
   label?: string
@@ -45,5 +46,5 @@ const computedClasses = computed(() => ({
   [`text-${props.variant}`]: props.variant !== undefined,
 }))
 
-const hasLabelSlot = computed<boolean>(() => !!slots.label)
+const hasLabelSlot = computed<boolean>(() => !isEmptySlot(slots.label))
 </script>

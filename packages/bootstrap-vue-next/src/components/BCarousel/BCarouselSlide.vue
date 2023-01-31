@@ -41,7 +41,7 @@
 import {computed, inject, StyleValue, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
 import type {BCarouselParentData} from '../../types/components'
-import {carouselInjectionKey} from '../../utils'
+import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
 
 interface BCarouselSlideProps {
@@ -80,9 +80,9 @@ const slots = useSlots()
 
 const parentData = inject<BCarouselParentData>(carouselInjectionKey)
 
-const hasText = computed(() => props.text || props.textHtml || !!slots.text)
-const hasCaption = computed(() => props.caption || props.captionHtml || !!slots.caption)
-const hasContent = computed(() => hasText.value || hasCaption.value || !!slots.default)
+const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
+const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
+const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
 const computedStyle = computed<StyleValue>(() => ({
   background: `${

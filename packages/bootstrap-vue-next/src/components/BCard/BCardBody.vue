@@ -26,6 +26,7 @@
 // import type {BCardBodyProps} from '../../types/components'
 import {computed, toRef, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
+import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
 import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -54,8 +55,8 @@ const slots = useSlots()
 
 const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
 
-const hasTitleSlot = computed<boolean>(() => !!slots.title)
-const hasSubtitleSlot = computed<boolean>(() => !!slots.subtitle)
+const hasTitleSlot = computed<boolean>(() => !isEmptySlot(slots.title))
+const hasSubtitleSlot = computed<boolean>(() => !isEmptySlot(slots.subtitle))
 
 const computedClasses = computed(() => ({
   'card-img-overlay': overlayBoolean.value,

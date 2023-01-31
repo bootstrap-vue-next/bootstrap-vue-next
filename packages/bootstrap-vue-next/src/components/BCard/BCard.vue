@@ -38,6 +38,7 @@
 <script setup lang="ts">
 // import type {BCardProps} from '../../types/components'
 import type {Alignment, Booleanish, ClassValue, ColorVariant, TextColorVariant} from '../../types'
+import {isEmptySlot} from '../../utils'
 import {computed, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
@@ -119,8 +120,8 @@ const imgRightBoolean = useBooleanish(toRef(props, 'imgRight'))
 const imgStartBoolean = useBooleanish(toRef(props, 'imgStart'))
 const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
 
-const hasHeaderSlot = computed<boolean>(() => !!slots.header)
-const hasFooterSlot = computed<boolean>(() => !!slots.footer)
+const hasHeaderSlot = computed<boolean>(() => !isEmptySlot(slots.header))
+const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 
 const computedClasses = computed(() => ({
   [`text-${props.align}`]: props.align !== undefined,

@@ -126,6 +126,8 @@ export const offset = (el: HTMLElement) => {
   return _offset
 }
 
+export const isEmptySlot = (el: Slot | undefined) => (el?.() ?? []).length === 0
+
 /**
  * Select a single element, returns `null` if not found
  *

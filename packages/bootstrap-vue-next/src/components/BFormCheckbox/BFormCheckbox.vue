@@ -34,6 +34,7 @@
 import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
+import {isEmptySlot} from '../../utils'
 
 interface BFormCheckboxProps {
   ariaLabel?: string
@@ -105,7 +106,7 @@ const stateBoolean = useBooleanish(toRef(props, 'state'))
 const input = ref<HTMLElement>(null as unknown as HTMLElement)
 const isFocused = ref<boolean>(false)
 
-const hasDefaultSlot = computed<boolean>(() => !!slots.default)
+const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
   get: (): unknown[] | Set<unknown> | boolean | undefined => {

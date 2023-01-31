@@ -33,6 +33,7 @@ import type {Booleanish, ColorVariant} from '../../types'
 import {computed, onBeforeUnmount, type Ref, toRef, useSlots, watchEffect} from 'vue'
 import {useBooleanish} from '../../composables'
 import useCountdown from '../../composables/useCountdown'
+import {isEmptySlot} from '../../utils'
 
 interface BAlertProps {
   noHoverPause?: Booleanish
@@ -75,7 +76,7 @@ const emit = defineEmits<BAlertEmits>()
 
 const slots = useSlots()
 
-const hasCloseSlot = computed<boolean>(() => !!slots.close)
+const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
 
 const computedClasses = computed(() => [
   [`alert-${props.variant}`],
