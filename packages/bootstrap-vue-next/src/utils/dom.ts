@@ -1,4 +1,4 @@
-import {Comment, type Slot, type VNode} from 'vue'
+import type {Slot} from 'vue'
 import {DOCUMENT, HAS_ELEMENT_SUPPORT} from '../constants/env'
 import type {AnimationFrame} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from './env'
