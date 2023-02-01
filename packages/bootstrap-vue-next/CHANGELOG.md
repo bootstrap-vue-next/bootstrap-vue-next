@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.0...v0.7.1) (2023-02-01)
+
+
+### Bug Fixes
+
+* **BTransition:** TransitionProps is interface, import type to stop trying to import unexistent elements ([7c7b1ff](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/7c7b1ff8dba069ac190d9f3911a3b75c79d0b753))
+
 ## [0.7.0](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.7...v0.7.0) (2023-02-01)
 
 
