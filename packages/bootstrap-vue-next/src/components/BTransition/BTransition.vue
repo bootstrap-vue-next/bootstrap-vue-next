@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {Booleanish, TransitionMode} from '../../types'
-import {computed, toRef, TransitionProps} from 'vue'
+import {computed, toRef, type TransitionProps} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface Props {
