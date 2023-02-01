@@ -67,7 +67,7 @@ describe('utils/BvEvent class', () => {
       cancelable: true,
       componentId: 'componentId',
       nativeEvent: 'nativeEvent',
-      relatedTarget: 'relatedTarget',
+      relatedTarget: new EventTarget(),
       target: new EventTarget(),
     })
     expect(event).toBeInstanceOf(BvEvent)
@@ -75,7 +75,7 @@ describe('utils/BvEvent class', () => {
     expect(event.componentId).toBe('componentId')
     expect(event.eventType).toBe('foobar')
     expect(event.nativeEvent).toBe('nativeEvent')
-    expect(event.relatedTarget).toBe('relatedTarget')
+    expect(event.relatedTarget).toBeInstanceOf(EventTarget)
     expect(event.target).toBeInstanceOf(EventTarget)
   })
 
