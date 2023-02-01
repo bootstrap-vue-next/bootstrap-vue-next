@@ -6,9 +6,20 @@
   ],
   "contributors": [
     {
-      "email": "kwiksilver344@gmail.com",
+      "name": "aceofwings",
+      "url": "https://github.com/aceofwings"
+    },
+    {
+      "name": "Carlos Bonadeo",
+      "url": "https://github.com/cdmoro"
+    },
+    {
       "name": "Issayah",
       "url": "https://github.com/VividLemon"
+    },
+    {
+      "name": "Marius A",
+      "url": "https://github.com/mariusa"
     }
   ],
   "scripts": {
