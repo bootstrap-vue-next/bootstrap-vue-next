@@ -13,7 +13,7 @@ export default class BvEvent {
   readonly eventType: string = ''
   readonly nativeEvent: string | null = null
   private _preventDefault: () => void
-  readonly relatedTarget: string | null = null
+  readonly relatedTarget: EventTarget | null = null
   readonly target: EventTarget | null = null
   // Readable by everyone,
   // But only overwritten by inherrited constructors
