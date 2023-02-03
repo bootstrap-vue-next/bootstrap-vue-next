@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.7.1](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.0...v0.7.1) (2023-02-01)
+
+
+### Bug Fixes
+
+* **BTransition:** TransitionProps is interface, import type to stop trying to import unexistent elements ([7c7b1ff](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/7c7b1ff8dba069ac190d9f3911a3b75c79d0b753))
+
+## [0.7.0](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.7...v0.7.0) (2023-02-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BCarousel:** rename sliding-start to slide for Bootstrap compatibiliity
+* **BCarousel:** rename sliding-end to slid for Bootstrap compatibility
+* **BCarousel:** emit events use BvCarouselEvent
+
+### Features
+
+* **BCarousel:** add keyboard prop to prevent key actions -- equals keyboard: false for Bootstrap Carousel options ([2ab7da9](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2ab7da9c76fa503d9a0420eb565839b4b38a990b))
+* **BCarousel:** create BvCarouselEvent that mimics Bootstrap ({from: number; to: number; direction: left | right}) ([2ab7da9](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2ab7da9c76fa503d9a0420eb565839b4b38a990b))
+* **BCarousel:** emit events use BvCarouselEvent ([2ab7da9](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2ab7da9c76fa503d9a0420eb565839b4b38a990b))
+* **BCarousel:** rename sliding-end to slid for Bootstrap compatibility ([2ab7da9](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2ab7da9c76fa503d9a0420eb565839b4b38a990b))
+* **BCarousel:** rename sliding-start to slide for Bootstrap compatibiliity ([2ab7da9](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2ab7da9c76fa503d9a0420eb565839b4b38a990b))
+
 ## [0.6.7](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.6.6...v0.6.7) (2023-01-31)
 
 
