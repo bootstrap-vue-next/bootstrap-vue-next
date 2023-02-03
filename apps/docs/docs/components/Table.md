@@ -2,10 +2,6 @@
 
 For displaying tabular data, `<b-table>` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components `<b-table-lite>` and `<b-table-simple>`.
 
-## Volatility warning
-
-This component has gone through a number of changes recently. There may frequently be breaking changes between updates. In addition, the documentation could be out of date.
-
 ## Simple tables
 
 The `<b-table-simple>` component gives the user complete control over the rendering of the table content, while providing basic Bootstrap v4 table styling. `<b-table-simple>` is a wrapper component around the `<table>` element. Inside the component, via the default slot, you can use any or all of the BootstrapVue table helper components: `<b-thead>`, `<b-tfoot>`, `<b-tbody>`, `<b-tr>`, `<b-th>`, `<b-td>`, and the HTML5 elements `<caption>`, `<colgroup>` and `<col>`. Contrary to the component's name, one can create simple or complex table layouts with `<b-table-simple>`.
