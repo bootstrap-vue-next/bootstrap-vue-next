@@ -31,8 +31,8 @@
         :enter-from-class="`carousel-item-next carousel-item-${direction ? 'end' : 'start'}`"
         leave-active-class="active"
         :leave-to-class="`carousel-item-prev carousel-item-${direction ? 'start' : 'end'}`"
-        @before-leave="emit('slide', buildBvCarouselEvent('slide', i))"
-        @after-leave="emit('slid', buildBvCarouselEvent('slid', i))"
+        @before-leave="onBeforeLeave"
+        @after-leave="onAfterLeave"
       >
         <component :is="slide" v-show="i === modelValue" :class="{active: i === modelValue}" />
       </transition>
@@ -125,6 +125,7 @@ const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
 let xDown: number | null = null
 let yDown: number | null = null
 
+const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
 const relatedTarget = ref<null | HTMLElement>(null)
@@ -174,6 +175,8 @@ const buildBvCarouselEvent = (event: 'slid' | 'slide', from: number) =>
   })
 
 const goToValue = (value: number): void => {
+  if (isTransitioning.value === true) return
+
   if (rideResolved.value === true) {
     rideStarted.value = true
   }
@@ -232,12 +235,21 @@ const onTouchEnd = (e: TouchEvent) => {
   resume()
 }
 
+const onBeforeLeave = (i: number) => {
+  emit('slide', buildBvCarouselEvent('slide', i))
+  isTransitioning.value = true
+}
+const onAfterLeave = (i: number) => {
+  emit('slid', buildBvCarouselEvent('slid', i))
+  isTransitioning.value = false
+}
+
 watch(
   () => props.ride,
   () => (rideStarted.value = false)
 )
 
-defineExpose({pause, resume})
+defineExpose({pause, resume, prev, next})
 
 provide(carouselInjectionKey, {
   background: props.background,

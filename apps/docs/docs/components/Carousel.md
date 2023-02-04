@@ -7,16 +7,16 @@
 Simply use v-model with the value corresponding to the index of the list of children
 
 <b-carousel v-model="firstSlide" controls>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=1" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=2" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=3" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" controls>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=1" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=2" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=3" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -30,17 +30,17 @@ const slide = ref(0)
 
 With the `indicators` prop, can add indicators to the Carousel, along side the previous/next controls. The indicators let users jump to a particular slide
 
-<b-carousel v-model="eightSlide" indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+<b-carousel v-model="eighthSlide" indicators>
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=4" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=5" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=6" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=4" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=5" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=6" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -55,9 +55,9 @@ const slide = ref(0)
 You can add captions to a particular slide using the following methods: using the `caption` prop, that will render its text, by using `captionHtml` prop, which will render html, or by using the `caption` _slot_
 
 <b-carousel v-model="ninthSlide" controls indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" caption="First Caption" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" caption-html="<h1>Second Caption</h1>" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=7" caption="First Caption" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=8" caption-html="<h1>Second Caption</h1>" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=9">
     <template #caption>
       Third Caption
     </template>
@@ -66,9 +66,9 @@ You can add captions to a particular slide using the following methods: using th
 
 ```html
 <b-carousel v-model="slide" controls indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" caption="First Caption" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" caption-html="<h1>Second Caption</h1>" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=7" caption="First Caption" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=8" caption-html="<h1>Second Caption</h1>" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=9">
     <template #caption>
       Third Caption
     </template>
@@ -121,16 +121,16 @@ Related: [Autoplay Manipulation](#autoplay-manipulation)
 ### Ride
 
 <b-carousel v-model="secondSlide" controls indicators ride="carousel">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=13" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=14" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=15" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" controls indicators ride="carousel">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=13" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=14" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=15" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -143,16 +143,16 @@ const slide = ref(0)
 When the `ride` prop is set to `true`, rather than `carousel`, the Carousel won't automatically start to cycle on page load. Instead, it will only start after the first user interaction
 
 <b-carousel v-model="thirdSlide" controls indicators ride="true">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=16" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=17" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=18" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" controls indicators ride="true">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=16" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=17" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=18" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -167,9 +167,9 @@ const slide = ref(0)
 You can adjust the speed at which the Carousel is moving by adjusting the interval in real time. The default is `5000ms`
 
 <b-carousel v-model="fourthSlide" :interval="fourthSlideInterval" controls indicators ride="carousel">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=19" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
 </b-carousel>
 
 <b-button-group>
@@ -185,9 +185,9 @@ Current Interval Speed: {{ fourthSlideInterval }} ms
 
 ```html
 <b-carousel v-model="slide" :interval="slideInterval" controls indicators ride="carousel">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=19" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
 </b-carousel>
 
 <b-button-group>
@@ -214,16 +214,16 @@ const slideInterval = ref(5000)
 You can use the `rideReverse` prop to reverse the direction that the Carousel will autoplay
 
 <b-carousel v-model="fifthSlide" controls indicators ride="carousel" ride-reverse="true">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=23" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=24" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" controls indicators ride="carousel" ride-reverse="true">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=23" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=24" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -238,9 +238,9 @@ const slide = ref(0)
 There can come situations where you need to manually pause/resume the state of an autoplay. BCarousel exposes two functions for this: `pause(), resume()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
 
 <b-carousel v-model="sixthSlide" ref="myCarousel" :interval="2500" controls indicators ride="carousel">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=25" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=26" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=27" />
 </b-carousel>
 
 <b-button-group>
@@ -250,9 +250,9 @@ There can come situations where you need to manually pause/resume the state of a
 
 ```html
 <b-carousel v-model="slide" ref="myCarousel" :interval="2500" controls indicators ride="carousel">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=25" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=26" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=27" />
 </b-carousel>
 
 <b-button-group>
@@ -279,16 +279,16 @@ BCarousel comes with automatic support for touch swiping devices. You can disabl
 </b-alert>
 
 <b-carousel v-model="tenthSlide" no-touch>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=28" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=29" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=30" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" no-touch>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=28" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=29" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=30" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -305,16 +305,16 @@ The default starting slide can be set by simply picking the appropriate index fo
 * Starts at the last index (2)
 
 <b-carousel v-model="twelthSlide" indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=32" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=33" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=32" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=33" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -324,24 +324,66 @@ const slide = ref(2)
 </script>
 ```
 
+## Exposed Methods
+
+You are also able to use the built in methods for going to the next, or previous slide using the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs). In total there are four methods exposed, but this section only covers `prev()` and `next()`. Pause and Resume are mentioned [here](#autoplay-manipulation)
+
+1. `prev`: goes to the previous slide, ie, moving to the _left_
+2. `next`: goes to the next slide, ie, moving to the _right_
+3. `pause`: pauses the autoplay timer
+4. `resume`: resumes the autoplay timer
+
+<b-carousel v-model="thirteethSlide" ref="mySecondCarousel">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=35" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=36" />
+</b-carousel>
+
+<b-button-group>
+  <b-button variant="danger" @click="prev">Previous Slide</b-button>
+  <b-button variant="success" @click="next">Next Slide</b-button>
+</b-button-group>
+
+```html
+<b-carousel v-model="slide" ref="myCarousel">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=35" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=36" />
+</b-carousel>
+
+<b-button-group>
+  <b-button variant="danger" @click="prev">Previous Slide</b-button>
+  <b-button variant="success" @click="next">Next Slide</b-button>
+</b-button-group>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const slide = ref(0)
+const myCarousel = ref<null | HTMLElement>(null)
+const prev = () => myCarousel.value?.prev()
+const next = () => myCarousel.value?.next()
+</script>
+```
+
 ## Full Example
 
 <b-carousel v-model="eleventhSlide" controls indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=30">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37">
     <h1>First slide</h1>
     <p>Some more detailed description or whatever content.</p>
   </b-carousel-slide>
   <b-carousel-slide
     caption="Second slide"
     text="Does the same, just a bit differently."
-    img-src="https://picsum.photos/1024/480/?image=31"
+    img-src="https://picsum.photos/1024/480/?image=38"
   />
   <b-carousel-slide>
     <template #img>
       <img
         width="1024"
         height="480"
-        src="https://picsum.photos/1024/480/?image=32"
+        src="https://picsum.photos/1024/480/?image=39"
         alt="image slot"
       />
     </template>
@@ -356,21 +398,21 @@ const slide = ref(2)
 
 ```html
 <b-carousel v-model="slide" controls indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=30">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37">
     <h1>First slide</h1>
     <p>Some more detailed description or whatever content.</p>
   </b-carousel-slide>
   <b-carousel-slide
     caption="Second slide"
     text="Does the same, just a bit differently."
-    img-src="https://picsum.photos/1024/480/?image=31"
+    img-src="https://picsum.photos/1024/480/?image=38"
   />
   <b-carousel-slide>
     <template #img>
       <img
         width="1024"
         height="480"
-        src="https://picsum.photos/1024/480/?image=32"
+        src="https://picsum.photos/1024/480/?image=39"
         alt="image slot"
       />
     </template>
@@ -426,4 +468,9 @@ const tenthSlide = ref(0)
 const eleventhSlide = ref(0)
 
 const twelthSlide = ref(2)
+
+const thirteethSlide = ref(0)
+const mySecondCarousel = ref<null | HTMLElement>(null)
+const prev = () => mySecondCarousel.value?.prev()
+const next = () => mySecondCarousel.value?.next()
 </script>
