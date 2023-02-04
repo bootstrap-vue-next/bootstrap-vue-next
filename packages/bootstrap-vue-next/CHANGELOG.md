@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.2](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.1...v0.7.2) (2023-02-04)
+
+
+### Features
+
+* **BCarousel:** expose prev and next methods ([6ef55cf](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/6ef55cf0e8d731aa22c6f372ae6fafeebaf71bd3))
+
+
+### Bug Fixes
+
+* **BCarousel:** odd behavior when moving modelValue too fast. The Carousel should not allow for more events while transitioning. ([6ef55cf](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/6ef55cf0e8d731aa22c6f372ae6fafeebaf71bd3))
+
 ## [0.7.1](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.0...v0.7.1) (2023-02-01)
 
 
