@@ -493,7 +493,7 @@ describe('tabs', () => {
     }
 
     const wrapper = mount(ComplexComponent, {})
-    let HelloWorldComponent = wrapper.findComponent({name: 'HelloWorld'})
+    const HelloWorldComponent = wrapper.findComponent({name: 'HelloWorld'})
 
     await HelloWorldComponent.setData({msg: 'bar'})
 

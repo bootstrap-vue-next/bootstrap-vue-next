@@ -29,7 +29,7 @@
           v-for="({tab, buttonId, contentId, navItemClasses, active, target}, idx) in tabs"
           :key="idx"
           class="nav-item"
-          :class="tab.props['title-item-class']"
+          :class="tab?.props?.['title-item-class']"
           role="presentation"
         >
           <button
@@ -41,12 +41,15 @@
             role="tab"
             :aria-controls="contentId"
             :aria-selected="active"
-            v-bind="tab.props['title-link-attributes']"
+            v-bind="tab?.props?.['title-link-attributes']"
             @click.stop.prevent="(e) => handleClick(e, idx)"
           >
-            <component :is="tab.children.title" v-if="tab.children && tab.children.title" />
+            <component
+              :is="(tab.children as any).title"
+              v-if="tab.children && (tab.children as any).title"
+            />
             <template v-else>
-              {{ tab.props.title }}
+              {{ tab?.props?.title }}
             </template>
           </button>
         </li>
@@ -78,7 +81,7 @@
 <script setup lang="ts">
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import {computed, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
-import {BvEvent, getId, tabsInjectionKey} from '../../utils'
+import {BvEvent, getId, getSlotElements, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
 // TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
@@ -157,50 +160,47 @@ const tabIndex = computed({
   },
 })
 
-const tabs = computed(() => {
-  let tabs: any[] = []
+const tabs = computed(() =>
+  slots.default === undefined
+    ? []
+    : getSlotElements(slots.default, 'BTab').map((tab, idx) => {
+        if (!tab.props) tab.props = {}
 
-  if (slots.default) {
-    tabs = getTabs(slots).map((tab: any, idx) => {
-      if (!tab.props) tab.props = {}
+        const buttonId = tab.props['button-id'] || getId('tab')
+        const contentId = tab.props.id || getId()
+        const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
+        const titleItemClass = tab.props['title-item-class']
+        const titleLinkAttributes = tab.props['title-link-attributes']
 
-      const buttonId = tab.props['button-id'] || getId('tab')
-      const contentId = tab.props.id || getId()
-      const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
-      const titleItemClass = tab.props['title-item-class']
-      const titleLinkAttributes = tab.props['title-link-attributes']
-
-      return {
-        buttonId,
-        contentId,
-        active,
-        disabled: tab.props.disabled === '' || tab.props.disabled === true,
-        navItemClasses: [
-          {
-            active,
-            disabled: tab.props.disabled === '' || tab.props.disabled === true,
-          },
-          active && props.activeNavItemClass ? props.activeNavItemClass : null,
-          tab.props['title-link-class'],
-        ],
-        tabClasses: [
-          {
-            fade: !noFadeBoolean.value,
-          },
-          active && props.activeTabClass ? props.activeTabClass : null,
-        ],
-        target: `#${contentId}`,
-        title: tab.props.title,
-        titleItemClass,
-        titleLinkAttributes,
-        onClick: tab.props.onClick,
-        tab, //TODO remove this in future since the mapped value does not provide a direct reference to the actual slot component.
-        tabComponent: () => getTabs(slots)[idx],
-      }
-    })
-  }
-  return tabs
-})
+        return {
+          buttonId,
+          contentId,
+          active,
+          disabled: tab.props.disabled === '' || tab.props.disabled === true,
+          navItemClasses: [
+            {
+              active,
+              disabled: tab.props.disabled === '' || tab.props.disabled === true,
+            },
+            active && props.activeNavItemClass ? props.activeNavItemClass : null,
+            tab.props['title-link-class'],
+          ],
+          tabClasses: [
+            {
+              fade: !noFadeBoolean.value,
+            },
+            active && props.activeTabClass ? props.activeTabClass : null,
+          ],
+          target: `#${contentId}`,
+          title: tab.props.title,
+          titleItemClass,
+          titleLinkAttributes,
+          onClick: tab.props.onClick,
+          tab, //TODO remove this in future since the mapped value does not provide a direct reference to the actual slot component.
+          tabComponent: () => getSlotElements(slots.default, 'BTab')[idx],
+        }
+      })
+)
 
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 
@@ -255,23 +255,6 @@ const handleClick = (event: MouseEvent, index: number) => {
   ) {
     tabs.value[index].onClick(event)
   }
-}
-
-// TODO make this better
-const getTabs = (slots: any): any[] => {
-  if (!slots || !slots.default) return []
-
-  return slots
-    .default()
-    .reduce((arr: number[], slot: any) => {
-      if (typeof slot.type === 'symbol') {
-        arr = arr.concat(slot.children)
-      } else {
-        arr.push(slot)
-      }
-      return arr
-    }, [])
-    .filter((child: any) => child.type?.__name === 'BTab')
 }
 
 activateTab(_tabIndex.value)
