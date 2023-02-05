@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.3](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.2...v0.7.3) (2023-02-05)
+
+
+### Bug Fixes
+
+* fixes [#916](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/916) Carousel issues when using v-if and v-for ([#921](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/921)) ([5590bb4](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/5590bb4de1236b4ef127dfd7de5c80f3b067665f))
+
 ## [0.7.2](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.1...v0.7.2) (2023-02-04)
 
 
