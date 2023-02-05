@@ -29,7 +29,7 @@
           v-for="({tab, buttonId, contentId, navItemClasses, active, target}, idx) in tabs"
           :key="idx"
           class="nav-item"
-          :class="tab.props['title-item-class']"
+          :class="tab?.props?.['title-item-class']"
           role="presentation"
         >
           <button
@@ -41,12 +41,15 @@
             role="tab"
             :aria-controls="contentId"
             :aria-selected="active"
-            v-bind="tab.props['title-link-attributes']"
+            v-bind="tab?.props?.['title-link-attributes']"
             @click.stop.prevent="(e) => handleClick(e, idx)"
           >
-            <component :is="tab.children.title" v-if="tab.children && tab.children.title" />
+            <component
+              :is="(tab.children as any).title"
+              v-if="tab.children && (tab.children as any).title"
+            />
             <template v-else>
-              {{ tab.props.title }}
+              {{ tab?.props?.title }}
             </template>
           </button>
         </li>
@@ -157,52 +160,47 @@ const tabIndex = computed({
   },
 })
 
-const slotItems = computed(() => getSlotElements(slots.default, 'BTab'))
+const tabs = computed(() =>
+  slots.default === undefined
+    ? []
+    : getSlotElements(slots.default, 'BTab').map((tab, idx) => {
+        if (!tab.props) tab.props = {}
 
-const tabs = computed(() => {
-  let tabs: any[] = []
+        const buttonId = tab.props['button-id'] || getId('tab')
+        const contentId = tab.props.id || getId()
+        const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
+        const titleItemClass = tab.props['title-item-class']
+        const titleLinkAttributes = tab.props['title-link-attributes']
 
-  if (slots.default) {
-    tabs = slotItems.value.map((tab, idx) => {
-      if (!tab.props) tab.props = {}
-
-      const buttonId = tab.props['button-id'] || getId('tab')
-      const contentId = tab.props.id || getId()
-      const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
-      const titleItemClass = tab.props['title-item-class']
-      const titleLinkAttributes = tab.props['title-link-attributes']
-
-      return {
-        buttonId,
-        contentId,
-        active,
-        disabled: tab.props.disabled === '' || tab.props.disabled === true,
-        navItemClasses: [
-          {
-            active,
-            disabled: tab.props.disabled === '' || tab.props.disabled === true,
-          },
-          active && props.activeNavItemClass ? props.activeNavItemClass : null,
-          tab.props['title-link-class'],
-        ],
-        tabClasses: [
-          {
-            fade: !noFadeBoolean.value,
-          },
-          active && props.activeTabClass ? props.activeTabClass : null,
-        ],
-        target: `#${contentId}`,
-        title: tab.props.title,
-        titleItemClass,
-        titleLinkAttributes,
-        onClick: tab.props.onClick,
-        tab, //TODO remove this in future since the mapped value does not provide a direct reference to the actual slot component.
-        tabComponent: () => slotItems.value[idx],
-      }
-    })
-  }
-  return tabs
-})
+        return {
+          buttonId,
+          contentId,
+          active,
+          disabled: tab.props.disabled === '' || tab.props.disabled === true,
+          navItemClasses: [
+            {
+              active,
+              disabled: tab.props.disabled === '' || tab.props.disabled === true,
+            },
+            active && props.activeNavItemClass ? props.activeNavItemClass : null,
+            tab.props['title-link-class'],
+          ],
+          tabClasses: [
+            {
+              fade: !noFadeBoolean.value,
+            },
+            active && props.activeTabClass ? props.activeTabClass : null,
+          ],
+          target: `#${contentId}`,
+          title: tab.props.title,
+          titleItemClass,
+          titleLinkAttributes,
+          onClick: tab.props.onClick,
+          tab, //TODO remove this in future since the mapped value does not provide a direct reference to the actual slot component.
+          tabComponent: () => getSlotElements(slots.default, 'BTab')[idx],
+        }
+      })
+)
 
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
 

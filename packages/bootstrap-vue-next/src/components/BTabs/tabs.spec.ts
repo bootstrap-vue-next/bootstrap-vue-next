@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {h} from 'vue'
+import {h, nextTick} from 'vue'
 import {afterEach, describe, expect, it} from 'vitest'
 import BTabs from './BTabs.vue'
 import BTab from './BTab.vue'
@@ -493,9 +493,10 @@ describe('tabs', () => {
     }
 
     const wrapper = mount(ComplexComponent, {})
-    let HelloWorldComponent = wrapper.findComponent({name: 'HelloWorld'})
+    const HelloWorldComponent = wrapper.findComponent({name: 'HelloWorld'})
 
     await HelloWorldComponent.setData({msg: 'bar'})
+    await nextTick()
 
     expect(wrapper.findComponent({name: 'b-tab'}).find('p').text()).toBe('bar')
   })
