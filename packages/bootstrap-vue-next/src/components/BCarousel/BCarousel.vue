@@ -25,10 +25,6 @@
     </div>
 
     <div ref="relatedTarget" class="carousel-inner">
-      <!-- TODO please try to find a better solution than this. VNode stuff is not ideal -->
-      <!-- Provide/inject could solve the issue of giving active -->
-      <!-- But we need a way to trigger the animations when doing that -->
-      <!-- All the animation logic is here, we just need to trigger it when using provide/inject -->
       <transition
         v-for="(slide, i) in slides"
         :key="i"
