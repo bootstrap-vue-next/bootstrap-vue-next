@@ -78,7 +78,7 @@
 <script setup lang="ts">
 // import type {BTabsProps, BTabsEmits} from '../types/components'
 import {computed, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
-import {BvEvent, getId, tabsInjectionKey} from '../../utils'
+import {BvEvent, getId, getSlotElements, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {Alignment, Booleanish, ClassValue} from '../../types'
 // TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
@@ -157,11 +157,13 @@ const tabIndex = computed({
   },
 })
 
+const slotItems = computed(() => getSlotElements(slots.default, 'BTab'))
+
 const tabs = computed(() => {
   let tabs: any[] = []
 
   if (slots.default) {
-    tabs = getTabs(slots).map((tab: any, idx) => {
+    tabs = slotItems.value.map((tab, idx) => {
       if (!tab.props) tab.props = {}
 
       const buttonId = tab.props['button-id'] || getId('tab')
@@ -195,7 +197,7 @@ const tabs = computed(() => {
         titleLinkAttributes,
         onClick: tab.props.onClick,
         tab, //TODO remove this in future since the mapped value does not provide a direct reference to the actual slot component.
-        tabComponent: () => getTabs(slots)[idx],
+        tabComponent: () => slotItems.value[idx],
       }
     })
   }
@@ -255,23 +257,6 @@ const handleClick = (event: MouseEvent, index: number) => {
   ) {
     tabs.value[index].onClick(event)
   }
-}
-
-// TODO make this better
-const getTabs = (slots: any): any[] => {
-  if (!slots || !slots.default) return []
-
-  return slots
-    .default()
-    .reduce((arr: number[], slot: any) => {
-      if (typeof slot.type === 'symbol') {
-        arr = arr.concat(slot.children)
-      } else {
-        arr.push(slot)
-      }
-      return arr
-    }, [])
-    .filter((child: any) => child.type?.__name === 'BTab')
 }
 
 activateTab(_tabIndex.value)

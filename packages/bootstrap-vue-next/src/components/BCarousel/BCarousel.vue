@@ -57,8 +57,14 @@
 
 <script setup lang="ts">
 // import type {BCarouselProps, BCarouselEmits} from '../types/components'
-import {BvCarouselEvent, carouselInjectionKey, isBooleanish, resolveBooleanish} from '../../utils'
-import {computed, provide, ref, toRef, useSlots, type VNode, watch} from 'vue'
+import {
+  BvCarouselEvent,
+  carouselInjectionKey,
+  getSlotElements,
+  isBooleanish,
+  resolveBooleanish,
+} from '../../utils'
+import {computed, provide, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 import {useIntervalFn} from '@vueuse/core'
@@ -147,7 +153,7 @@ const isRiding = computed(
   () =>
     (rideResolved.value === true && rideStarted.value === true) || rideResolved.value === 'carousel'
 )
-const slides = computed<Array<VNode>>(() => slots.default?.() ?? [])
+const slides = computed(() => getSlotElements(slots.default, 'BCarouselSlide'))
 const computedClasses = computed(() => [
   'carousel',
   'slide',

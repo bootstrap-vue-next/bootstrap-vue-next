@@ -78,6 +78,7 @@ const getGroupClasses = (items: {
 
 // TODO this function is similarly used in BTabs and may be capable of being a util function
 // Investigate if it can be done to reduce complexity
+// TODO use getSlotElements util on this
 /**
  * @param slots
  * @param nodeType
