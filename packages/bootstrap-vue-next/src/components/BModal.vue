@@ -363,6 +363,8 @@ watch(
   },
   {flush: 'post'}
 )
+
+// TODO contemplate defineExpose({show, hide})
 </script>
 
 <script lang="ts">
