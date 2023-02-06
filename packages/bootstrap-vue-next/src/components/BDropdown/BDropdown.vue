@@ -8,7 +8,7 @@
       :disabled="disabled"
       :type="splitButtonType"
       v-bind="buttonAttr"
-      @click="onSplitClick"
+      @click="onSplitClick, emit('update:modelValue', updateBooleanish(modelValueBoolean))"
     >
       <slot name="button-content">
         {{ text }}
@@ -19,10 +19,8 @@
       :variant="variant"
       :size="size"
       :disabled="disabled"
-      v-bind="splitAttr"
       :class="toggleClass"
       class="dropdown-toggle-split dropdown-toggle"
-      data-bs-toggle="dropdown"
       aria-expanded="false"
       @click="emit('toggle')"
     >
@@ -33,7 +31,15 @@
       </span>
     </b-button>
     <ul
-      class="dropdown-menu"
+      v-if="modelValueBoolean"
+      ref="floating"
+      :style="{
+        position: strategy,
+        top: `${y ?? 0}px`,
+        left: `${x ?? 0}px`,
+        width: 'max-content',
+      }"
+      class="dropdown-menu dropup show"
       :class="dropdownMenuClasses"
       :aria-labelledby="computedId"
       :role="role"
@@ -50,8 +56,9 @@ import {Dropdown} from 'bootstrap'
 import {type ComponentPublicInstance, computed, onMounted, ref, toRef} from 'vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
-import {mergeDeep} from '../../utils'
+import {mergeDeep, updateBooleanish} from '../../utils'
 import {useBooleanish, useEventListener, useId} from '../../composables'
+import {useFloating} from '@floating-ui/vue'
 
 interface BDropdownProps {
   id?: string
@@ -81,6 +88,7 @@ interface BDropdownProps {
   noCaret?: Booleanish
   toggleText?: string
   variant?: ButtonVariant
+  modelValue?: Booleanish
 }
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
@@ -109,6 +117,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   noCaret: false,
   toggleText: 'Toggle dropdown',
   variant: 'secondary',
+  modelValue: false,
 })
 
 interface BDropdownEmits {
@@ -118,12 +127,14 @@ interface BDropdownEmits {
   (e: 'hidden'): void
   (e: 'click', event: MouseEvent): void
   (e: 'toggle'): void
+  (e: 'update:modelValue', value: Booleanish): void
 }
 
 const emit = defineEmits<BDropdownEmits>()
 
 const computedId = useId(toRef(props, 'id'), 'dropdown')
 
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 const blockBoolean = useBooleanish(toRef(props, 'block'))
 const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
@@ -134,9 +145,12 @@ const rightBoolean = useBooleanish(toRef(props, 'right'))
 const splitBoolean = useBooleanish(toRef(props, 'split'))
 const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
 
-const parent = ref<HTMLElement>()
-const dropdown = ref<ComponentPublicInstance<HTMLElement>>()
-const instance = ref<Dropdown>()
+const parent = ref<HTMLElement | null>(null)
+const floating = ref<HTMLElement | null>(null)
+
+const {x, y, strategy} = useFloating(parent, floating, {
+  placement: 'top-start',
+})
 
 const computedClasses = computed(() => ({
   'd-grid': blockBoolean.value,
@@ -162,67 +176,13 @@ const dropdownMenuClasses = computed(() => [
 ])
 
 const buttonAttr = computed(() => ({
-  'data-bs-toggle': splitBoolean.value ? undefined : 'dropdown',
   'aria-expanded': splitBoolean.value ? undefined : false,
-  'ref': splitBoolean.value ? undefined : dropdown,
   'href': splitBoolean.value ? props.splitHref : undefined,
 }))
-
-const splitAttr = computed(() => ({
-  ref: splitBoolean.value ? dropdown : undefined,
-}))
-
-const hide = (): void => {
-  instance.value?.hide()
-}
 
 const onSplitClick = (event: MouseEvent) => {
   if (splitBoolean.value) {
     emit('click', event)
   }
 }
-
-useEventListener(parent, 'show.bs.dropdown', () => emit('show'))
-useEventListener(parent, 'shown.bs.dropdown', () => emit('shown'))
-useEventListener(parent, 'hide.bs.dropdown', () => emit('hide'))
-useEventListener(parent, 'hidden.bs.dropdown', () => emit('hidden'))
-
-onMounted((): void => {
-  instance.value = new Dropdown(dropdown.value?.$el, {
-    autoClose: props.autoClose,
-    boundary: props.boundary,
-    offset: props.offset ? props.offset.toString() : '',
-    reference: props.offset || splitBoolean.value ? 'parent' : 'toggle',
-    popperConfig: (defaultConfig?: Partial<Popper.Options>) => {
-      const dropDownConfig = {
-        placement: 'bottom-start',
-        modifiers: !props.noFlip
-          ? []
-          : [
-              {
-                name: 'flip',
-                options: {
-                  fallbackPlacements: [],
-                },
-              },
-            ],
-      }
-
-      if (dropupBoolean.value) {
-        dropDownConfig.placement = rightBoolean.value ? 'top-end' : 'top-start'
-      } else if (droprightBoolean.value) {
-        dropDownConfig.placement = 'right-start'
-      } else if (dropleftBoolean.value) {
-        dropDownConfig.placement = 'left-start'
-      } else if (rightBoolean.value) {
-        dropDownConfig.placement = 'bottom-end'
-      }
-      return mergeDeep(defaultConfig, mergeDeep(dropDownConfig, props.popperOpts))
-    },
-  })
-})
-
-defineExpose({
-  hide,
-})
 </script>

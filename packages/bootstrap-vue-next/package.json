@@ -41,6 +41,7 @@
     "vue": "^3.2.45"
   },
   "dependencies": {
+    "@floating-ui/vue": "^0.2.0",
     "@nuxt/kit": "3.0.0",
     "@vueuse/core": "^9.11.1"
   },
