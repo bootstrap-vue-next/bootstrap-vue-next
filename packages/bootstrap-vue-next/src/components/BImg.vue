@@ -91,6 +91,7 @@ const computedSizes = computed<string | undefined>(() =>
     : undefined
 )
 
+// TODO go through an makes number props type string | number
 const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
   const parser = (str: string | number | undefined): number | undefined =>
     str === undefined
