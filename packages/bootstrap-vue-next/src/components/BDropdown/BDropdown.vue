@@ -1,5 +1,6 @@
 <template>
   <div :class="computedClasses" class="btn-group">
+    <!-- TODO standardize keydown vs keyup events -->
     <b-button
       :id="computedId"
       ref="splitButton"
@@ -10,6 +11,7 @@
       :type="splitButtonType"
       v-bind="buttonAttr"
       @click="onSplitClick"
+      @keydown.esc="emit('update:modelValue', !modelValueBoolean)"
     >
       <slot name="button-content">
         {{ text }}
