@@ -42,7 +42,7 @@
         left: `${x ?? 0}px`,
         width: 'max-content',
       }"
-      class="dropdown-menu dropup show"
+      class="dropdown-menu show"
       :class="dropdownMenuClasses"
       :aria-labelledby="computedId"
       :role="role"
