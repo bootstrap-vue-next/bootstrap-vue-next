@@ -33,16 +33,6 @@ describe('card-img', () => {
     expect($img.classes()).not.toContain('card-img-top')
   })
 
-  it('has class card-img-right when prop right', async () => {
-    const wrapper = mount(BCardImg, {
-      props: {right: true},
-    })
-    const $img = wrapper.getComponent(BImg)
-    expect($img.classes()).toContain('card-img-right')
-    await wrapper.setProps({right: false})
-    expect($img.classes()).not.toContain('card-img-right')
-  })
-
   it('has class card-img-right when prop end', async () => {
     const wrapper = mount(BCardImg, {
       props: {end: true},
@@ -61,16 +51,6 @@ describe('card-img', () => {
     expect($img.classes()).toContain('card-img-bottom')
     await wrapper.setProps({bottom: false})
     expect($img.classes()).not.toContain('card-img-bottom')
-  })
-
-  it('has class card-img-left when prop left', async () => {
-    const wrapper = mount(BCardImg, {
-      props: {left: true},
-    })
-    const $img = wrapper.getComponent(BImg)
-    expect($img.classes()).toContain('card-img-left')
-    await wrapper.setProps({left: false})
-    expect($img.classes()).not.toContain('card-img-left')
   })
 
   it('has class card-img-left when prop start', async () => {
@@ -99,15 +79,6 @@ describe('card-img', () => {
     const $img = wrapper.getComponent(BImg)
     expect($img.classes()).toContain('card-img-top')
     expect($img.classes()).not.toContain('card-img-right')
-  })
-
-  it('class card-img-right takes priority over prop bottom', () => {
-    const wrapper = mount(BCardImg, {
-      props: {bottom: true, right: true},
-    })
-    const $img = wrapper.getComponent(BImg)
-    expect($img.classes()).toContain('card-img-right')
-    expect($img.classes()).not.toContain('card-img-bottom')
   })
 
   it('class card-img-right when prop end takes priority over prop bottom', () => {
@@ -225,22 +196,6 @@ describe('card-img', () => {
     expect($img.props('srcset')).toBe('abc')
     await wrapper.setProps({srcset: 'def'})
     expect($img.props('srcset')).toBe('def')
-  })
-
-  it('BImg is not given prop right', () => {
-    const wrapper = mount(BCardImg, {
-      props: {right: true},
-    })
-    const $img = wrapper.getComponent(BImg)
-    expect($img.props('right')).toBe(false)
-  })
-
-  it('BImg is not given prop left', () => {
-    const wrapper = mount(BCardImg, {
-      props: {left: true},
-    })
-    const $img = wrapper.getComponent(BImg)
-    expect($img.props('left')).toBe(false)
   })
 
   it('BImg is not given prop end', () => {

@@ -92,24 +92,6 @@ describe('img', () => {
     expect(wrapper.classes()).not.toContain('d-block')
   })
 
-  it('has class float-start if prop left', async () => {
-    const wrapper = mount(BImg, {
-      props: {left: true},
-    })
-    expect(wrapper.classes()).toContain('float-start')
-    await wrapper.setProps({left: false})
-    expect(wrapper.classes()).not.toContain('float-start')
-  })
-
-  it('has class float-end if prop right', async () => {
-    const wrapper = mount(BImg, {
-      props: {right: true},
-    })
-    expect(wrapper.classes()).toContain('float-end')
-    await wrapper.setProps({right: false})
-    expect(wrapper.classes()).not.toContain('float-end')
-  })
-
   it('has class mx-auto if prop center', async () => {
     const wrapper = mount(BImg, {
       props: {center: true},
@@ -117,24 +99,6 @@ describe('img', () => {
     expect(wrapper.classes()).toContain('mx-auto')
     await wrapper.setProps({center: false})
     expect(wrapper.classes()).not.toContain('mx-auto')
-  })
-
-  it('has class float-start takes priority over prop right/center', async () => {
-    const wrapper = mount(BImg, {
-      props: {left: true, right: true, center: true},
-    })
-    expect(wrapper.classes()).toContain('float-start')
-    await wrapper.setProps({left: false})
-    expect(wrapper.classes()).toContain('float-end')
-  })
-
-  it('has class float-end takes priority over prop center', async () => {
-    const wrapper = mount(BImg, {
-      props: {right: true, center: true},
-    })
-    expect(wrapper.classes()).toContain('float-end')
-    await wrapper.setProps({right: false})
-    expect(wrapper.classes()).toContain('mx-auto')
   })
 
   it('does not have any alignment classes when all props are false', () => {
