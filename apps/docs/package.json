@@ -16,6 +16,7 @@
     "bootstrap-vue-next": "workspace:*",
     "tsconfig": "workspace:*",
     "vue": "3.2.45",
-    "vuepress": "2.0.0-beta.49"
+    "vuepress": "2.0.0-beta.49",
+    "@vuepress/shared": "2.0.0-beta.49"
   }
 }

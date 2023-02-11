@@ -62,15 +62,6 @@ describe('card', () => {
     expect(wrapper.classes()).not.toContain('border-primary')
   })
 
-  it('has class flex-row when prop imgLeft', async () => {
-    const wrapper = mount(BCard, {
-      props: {imgLeft: true},
-    })
-    expect(wrapper.classes()).toContain('flex-row')
-    await wrapper.setProps({imgLeft: undefined})
-    expect(wrapper.classes()).not.toContain('flex-row')
-  })
-
   it('has class flex-row when prop imgStart', async () => {
     const wrapper = mount(BCard, {
       props: {imgStart: true},
@@ -86,15 +77,6 @@ describe('card', () => {
     })
     expect(wrapper.classes()).toContain('flex-row-reverse')
     await wrapper.setProps({imgEnd: undefined})
-    expect(wrapper.classes()).not.toContain('flex-row-reverse')
-  })
-
-  it('has class flex-row-reverse when prop imgRight', async () => {
-    const wrapper = mount(BCard, {
-      props: {imgRight: true},
-    })
-    expect(wrapper.classes()).toContain('flex-row-reverse')
-    await wrapper.setProps({imgRight: undefined})
     expect(wrapper.classes()).not.toContain('flex-row-reverse')
   })
 

@@ -266,9 +266,12 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
 <b-button @click="stop">stop</b-button>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+import type {BAlert} from 'bootstrap-vue-next'
+
 const secondAutoDismissingAlert = ref(10000);
 const secondAutoDismissingAlertCountdown = ref(0);
-const myAlert = ref(null)
+const myAlert = ref<null | InstanceType<typeof BAlert>>(null)
 
 // Where 'myAlert' is the **ref** of the BAlert
 const pause = () => myAlert.value?.pause()

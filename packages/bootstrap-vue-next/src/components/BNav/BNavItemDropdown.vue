@@ -22,12 +22,11 @@ interface BNavItemDropdownProps {
   offset?: string
   autoClose?: boolean | 'inside' | 'outside'
   dark?: boolean
-  dropleft?: boolean
-  dropright?: boolean
+  dropstart?: boolean
+  dropend?: boolean
   dropup?: boolean
-  right?: boolean
-  left?: boolean | string
-  // offsetParent?: boolean // Breaks tests, does not exist on BDropdown
+  alignEnd?: boolean
+  alignStart?: boolean
   split?: boolean
   splitVariant?: ButtonVariant
   noCaret?: boolean
@@ -37,11 +36,11 @@ interface BNavItemDropdownProps {
 const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
   autoClose: true,
   dark: false,
-  dropleft: false,
-  dropright: false,
+  dropstart: false,
+  dropend: false,
   dropup: false,
-  right: false,
-  left: false,
+  alignEnd: false,
+  alignStart: false,
   // offsetParent: false,
   split: false,
   noCaret: false,

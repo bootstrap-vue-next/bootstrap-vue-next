@@ -14,7 +14,7 @@ importers:
       husky: 8.0.3
       lint-staged: 13.1.0
       release-please: 15.5.0
-      turbo: 1.7.0
+      turbo: 1.7.4
 
   apps/docs:
     specifiers:
@@ -22,6 +22,7 @@ importers:
       '@vuepress/client': 2.0.0-beta.49
       '@vuepress/plugin-register-components': 2.0.0-beta.49
       '@vuepress/plugin-search': 2.0.0-beta.49
+      '@vuepress/shared': 2.0.0-beta.49
       '@vuepress/utils': 2.0.0-beta.49
       bootstrap: 5.2.3
       bootstrap-vue-next: workspace:*
@@ -33,6 +34,7 @@ importers:
       '@vuepress/client': 2.0.0-beta.49
       '@vuepress/plugin-register-components': 2.0.0-beta.49
       '@vuepress/plugin-search': 2.0.0-beta.49
+      '@vuepress/shared': 2.0.0-beta.49
       '@vuepress/utils': 2.0.0-beta.49
       bootstrap: 5.2.3_@popperjs+core@2.11.6
       bootstrap-vue-next: link:../../packages/bootstrap-vue-next
@@ -69,6 +71,7 @@ importers:
 
   packages/bootstrap-vue-next:
     specifiers:
+      '@floating-ui/vue': ^0.2.0
       '@nuxt/kit': 3.0.0
       '@popperjs/core': ^2.11.6
       '@types/bootstrap': ^5.2.6
@@ -96,6 +99,7 @@ importers:
       vue-router: ^4.1.6
       vue-tsc: ^1.0.13
     dependencies:
+      '@floating-ui/vue': 0.2.0_vue@3.2.45
       '@nuxt/kit': 3.0.0_rollup@3.12.0
       '@vueuse/core': 9.11.1_vue@3.2.45
     devDependencies:
@@ -409,6 +413,30 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@floating-ui/core/1.2.0:
+    resolution: {integrity: sha512-GHUXPEhMEmTpnpIfesFA2KAoMJPb1SPQw964tToQwt+BbGXdhqTCWT1rOb0VURGylsxsYxiGMnseJ3IlclVpVA==}
+    dev: false
+
+  /@floating-ui/dom/1.2.0:
+    resolution: {integrity: sha512-QXzg57o1cjLz3cGETzKXjI3kx1xyS49DW9l7kV2jw2c8Yftd434t2hllX0sVGn2Q8MtcW/4pNm8bfE1/4n6mng==}
+    dependencies:
+      '@floating-ui/core': 1.2.0
+    dev: false
+
+  /@floating-ui/vue/0.2.0_vue@3.2.45:
+    resolution: {integrity: sha512-2FjxjcXIbt5aT3KncAAlnPV1CanjA5thmTH+JZtvD6g/6sneexGKI5mJA8ru8c6+1CQX8dUBzh7Te/afoALZYA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      '@floating-ui/dom': 1.2.0
+      vue: 3.2.45
+      vue-demi: 0.13.11_vue@3.2.45
+    dev: false
 
   /@google-automations/git-file-utils/1.2.6:
     resolution: {integrity: sha512-wNWeNLBtQH39kTayGuJMF1IRVPxfcywH//thQHD+xzRlanTNDI/5WACUvBkIz9bhnEC7ADm5ibA+DX9meU+JwQ==}
@@ -5518,65 +5546,65 @@ packages:
       typescript: 4.9.4
     dev: true
 
-  /turbo-darwin-64/1.7.0:
-    resolution: {integrity: sha512-hSGAueSf5Ko8J67mpqjpt9FsP6ePn1nMcl7IVPoJq5dHsgX3anCP/BPlexJ502bNK+87DDyhQhJ/LPSJXKrSYQ==}
+  /turbo-darwin-64/1.7.4:
+    resolution: {integrity: sha512-ZyYrQlUl8K/mYN1e6R7bEhPPYjMakz0DYMaexkyD7TAijQtWmTSd4a+I7VknOYNEssnUZ/v41GU3gPV1JAzxxQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.7.0:
-    resolution: {integrity: sha512-BLLOW5W6VZxk5+0ZOj5AO1qjM0P5isIgjbEuyAl8lHZ4s9antUbY4CtFrspT32XxPTYoDl4UjviPMcSsbcl3WQ==}
+  /turbo-darwin-arm64/1.7.4:
+    resolution: {integrity: sha512-CKIXg9uqp1a+Yeq/c4U0alPOqvwLUq5SBZf1PGYhGqJsfG0fRBtJfkUjHuBsuJIOGXg8rCmcGSWGIsIF6fqYuw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.7.0:
-    resolution: {integrity: sha512-aw2qxmfZa+kT87SB3GNUoFimqEPzTlzlRqhPgHuAAT6Uf0JHnmebPt4K+ZPtDNl5yfVmtB05bhHPqw+5QV97Yg==}
+  /turbo-linux-64/1.7.4:
+    resolution: {integrity: sha512-RIUl4RUFFyzD2T024vL7509Ygwcw+SEa8NOwPfaN6TtJHK7RZV/SBP3fLNVOptG9WRLnOWX3OvsLMbiOqDLLyA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.7.0:
-    resolution: {integrity: sha512-AJEx2jX+zO5fQtJpO3r6uhTabj4oSA5ZhB7zTs/rwu/XqoydsvStA4X8NDW4poTbOjF7DcSHizqwi04tSMzpJw==}
+  /turbo-linux-arm64/1.7.4:
+    resolution: {integrity: sha512-Bg65F0AjYYYxqE6RPf2H5TIGuA/EyWMeGOATHVSZOWAbYcnG3Ly03GZii8AHnUi7ntWBdjwvXf/QbOS1ayNB6A==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.7.0:
-    resolution: {integrity: sha512-ewj7PPv2uxqv0r31hgnBa3E5qwUu7eyVRP5M1gB/TJXfSHduU79gbxpKCyxIZv2fL/N2/3U7EPOQPSZxBAoljA==}
+  /turbo-windows-64/1.7.4:
+    resolution: {integrity: sha512-rTaV50XZ2BRxRHOHqt1UsWfeDmYLbn8UKE6g2D2ED+uW+kmnTvR9s01nmlGWd2sAuWcRYQyQ2V+O09VfKPKcQw==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.7.0:
-    resolution: {integrity: sha512-LzjOUzveWkvTD0jP8DBMYiAnYemmydsvqxdSmsUapHHJkl6wKZIOQNSO7pxsy+9XM/1/+0f9Y9F9ZNl5lePTEA==}
+  /turbo-windows-arm64/1.7.4:
+    resolution: {integrity: sha512-h8sxdKPvHTnWUPtwnYszFMmSO0P/iUUwmYY9n7iYThA71zSao28UeZ0H0Gw75cY3MPjvkjn2C4EBAUGPjuZJLw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.7.0:
-    resolution: {integrity: sha512-cwympNwQNnQZ/TffBd8yT0i0O10Cf/hlxccCYgUcwhcGEb9rDjE5thDbHoHw1hlJQUF/5ua7ERJe7Zr0lNE/ww==}
+  /turbo/1.7.4:
+    resolution: {integrity: sha512-8RLedDoUL0kkVKWEZ/RMM70BvKLyDFen06QuKKhYC2XNOfNKqFDqzIdcY/vGick869bNIWalChoy4O07k0HLsA==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.7.0
-      turbo-darwin-arm64: 1.7.0
-      turbo-linux-64: 1.7.0
-      turbo-linux-arm64: 1.7.0
-      turbo-windows-64: 1.7.0
-      turbo-windows-arm64: 1.7.0
+      turbo-darwin-64: 1.7.4
+      turbo-darwin-arm64: 1.7.4
+      turbo-linux-64: 1.7.4
+      turbo-linux-arm64: 1.7.4
+      turbo-windows-64: 1.7.4
+      turbo-windows-arm64: 1.7.4
     dev: true
 
   /type-check/0.3.2:
