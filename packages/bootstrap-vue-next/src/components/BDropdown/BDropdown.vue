@@ -84,7 +84,6 @@ interface BDropdownProps {
   noFlip?: Booleanish
   noShift?: Booleanish
   offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
-  right?: Booleanish
   role?: string
   split?: Booleanish
   splitButtonType?: ButtonType

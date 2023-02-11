@@ -18,9 +18,7 @@ interface BImgProps {
   lazy?: Booleanish
   fluidGrow?: Booleanish
   height?: number | string
-  left?: Booleanish
   start?: Booleanish
-  right?: Booleanish
   end?: Booleanish
   rounded?: boolean | string
   sizes?: string | Array<string>
@@ -38,8 +36,6 @@ const props = withDefaults(defineProps<BImgProps>(), {
   center: false,
   fluid: false,
   fluidGrow: false,
-  left: false,
-  right: false,
   end: false,
   start: false,
   rounded: false,
@@ -63,9 +59,7 @@ const blockBoolean = useBooleanish(toRef(props, 'block'))
 const centerBoolean = useBooleanish(toRef(props, 'center'))
 const fluidBoolean = useBooleanish(toRef(props, 'fluid'))
 const fluidGrowBoolean = useBooleanish(toRef(props, 'fluidGrow'))
-const leftBoolean = useBooleanish(toRef(props, 'left'))
 const startBoolean = useBooleanish(toRef(props, 'start'))
-const rightBoolean = useBooleanish(toRef(props, 'right'))
 const endBoolean = useBooleanish(toRef(props, 'end'))
 const thumbnailBoolean = useBooleanish(toRef(props, 'thumbnail'))
 
@@ -133,9 +127,9 @@ const computedAttrs = computed(() => ({
 }))
 
 const alignment = computed<'float-start' | 'float-end' | 'mx-auto' | undefined>(() =>
-  leftBoolean.value || startBoolean.value
+  startBoolean.value
     ? 'float-start'
-    : rightBoolean.value || endBoolean.value
+    : endBoolean.value
     ? 'float-end'
     : centerBoolean.value
     ? 'mx-auto'

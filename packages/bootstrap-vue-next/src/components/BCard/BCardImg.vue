@@ -16,9 +16,7 @@ interface BCardImgProps {
   bottom?: Booleanish
   lazy?: Booleanish
   height?: number | string
-  left?: Booleanish
   start?: Booleanish
-  right?: Booleanish
   end?: Booleanish
   sizes?: string | Array<string>
   src?: string
@@ -30,8 +28,6 @@ interface BCardImgProps {
 const props = withDefaults(defineProps<BCardImgProps>(), {
   bottom: false,
   end: false,
-  left: false,
-  right: false,
   lazy: false,
   start: false,
   top: false,
@@ -46,19 +42,17 @@ const emit = defineEmits<Emits>()
 
 const bottomBoolean = useBooleanish(toRef(props, 'bottom'))
 const endBoolean = useBooleanish(toRef(props, 'end'))
-const leftBoolean = useBooleanish(toRef(props, 'left'))
-const rightBoolean = useBooleanish(toRef(props, 'right'))
 const startBoolean = useBooleanish(toRef(props, 'start'))
 const topBoolean = useBooleanish(toRef(props, 'top'))
 
 const baseClass = computed(() =>
   topBoolean.value
     ? 'card-img-top'
-    : rightBoolean.value || endBoolean.value
+    : endBoolean.value
     ? 'card-img-right'
     : bottomBoolean.value
     ? 'card-img-bottom'
-    : leftBoolean.value || startBoolean.value
+    : startBoolean.value
     ? 'card-img-left'
     : 'card-img'
 )

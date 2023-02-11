@@ -72,8 +72,6 @@ interface BCardProps {
   imgBottom?: Booleanish
   imgEnd?: Booleanish
   imgHeight?: string | number
-  imgLeft?: Booleanish
-  imgRight?: Booleanish
   imgSrc?: string
   imgStart?: Booleanish
   imgTop?: Booleanish
@@ -98,8 +96,6 @@ const props = withDefaults(defineProps<BCardProps>(), {
   headerTag: 'div',
   imgBottom: false,
   imgEnd: false,
-  imgLeft: false,
-  imgRight: false,
   imgStart: false,
   bodyText: '',
   imgTop: false,
@@ -115,8 +111,6 @@ const slots = useSlots()
 
 const imgBottomBoolean = useBooleanish(toRef(props, 'imgBottom'))
 const imgEndBoolean = useBooleanish(toRef(props, 'imgEnd'))
-const imgLeftBoolean = useBooleanish(toRef(props, 'imgLeft'))
-const imgRightBoolean = useBooleanish(toRef(props, 'imgRight'))
 const imgStartBoolean = useBooleanish(toRef(props, 'imgStart'))
 const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
 
@@ -128,8 +122,8 @@ const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== undefined,
   [`bg-${props.bgVariant}`]: props.bgVariant !== undefined,
   [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
-  'flex-row': imgLeftBoolean.value || imgStartBoolean.value,
-  'flex-row-reverse': imgEndBoolean.value || imgRightBoolean.value,
+  'flex-row': imgStartBoolean.value,
+  'flex-row-reverse': imgEndBoolean.value,
 }))
 
 const headerAttrs = computed(() => ({
@@ -167,8 +161,6 @@ const imgAttr = computed(() => ({
   width: props.imgWidth,
   bottom: props.imgBottom,
   end: props.imgEnd,
-  left: props.imgLeft,
-  right: props.imgRight,
   start: props.imgStart,
   top: props.imgTop,
 }))
