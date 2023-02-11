@@ -243,6 +243,8 @@ onClickOutside(
 )
 const onClickInside = () => {
   if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'inside')) {
+    // TODO consider using computed({get, set}) syntax (or vueuse/useVModel) for modifying update events in all components
+    // For simplicity
     emit('update:modelValue', !modelValueBoolean.value)
   }
 }
