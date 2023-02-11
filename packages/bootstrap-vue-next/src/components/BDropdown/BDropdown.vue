@@ -1,14 +1,15 @@
 <template>
-  <div ref="parent" :class="computedClasses" class="btn-group">
+  <div :class="computedClasses" class="btn-group">
     <b-button
       :id="computedId"
+      ref="splitButton"
       :variant="splitVariant || variant"
       :size="size"
       :class="buttonClasses"
-      :disabled="disabled"
+      :disabled="splitDisabledBoolean || disabled"
       :type="splitButtonType"
       v-bind="buttonAttr"
-      @click="onSplitClick, emit('update:modelValue', updateBooleanish(modelValueBoolean))"
+      @click="onSplitClick"
     >
       <slot name="button-content">
         {{ text }}
@@ -16,13 +17,14 @@
     </b-button>
     <b-button
       v-if="splitBoolean"
+      ref="button"
       :variant="variant"
       :size="size"
       :disabled="disabled"
       :class="toggleClass"
       class="dropdown-toggle-split dropdown-toggle"
       aria-expanded="false"
-      @click="emit('toggle')"
+      @click="onButtonClick"
     >
       <span class="visually-hidden">
         <slot name="toggle-text">
@@ -31,7 +33,8 @@
       </span>
     </b-button>
     <ul
-      v-if="modelValueBoolean"
+      v-if="!lazyBoolean || modelValueBoolean"
+      v-show="lazyBoolean || modelValueBoolean"
       ref="floating"
       :style="{
         position: strategy,
@@ -43,6 +46,7 @@
       :class="dropdownMenuClasses"
       :aria-labelledby="computedId"
       :role="role"
+      @click="onClickInside"
     >
       <slot />
     </ul>
@@ -51,14 +55,13 @@
 
 <script setup lang="ts">
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
-import type Popper from '@popperjs/core'
-import {Dropdown} from 'bootstrap'
-import {type ComponentPublicInstance, computed, onMounted, ref, toRef} from 'vue'
-import BButton from '../BButton/BButton.vue'
+import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
+import {onClickOutside} from '@vueuse/core'
+import {computed, ref, toRef, watch} from 'vue'
+import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
-import {mergeDeep, updateBooleanish} from '../../utils'
-import {useBooleanish, useEventListener, useId} from '../../composables'
-import {useFloating} from '@floating-ui/vue'
+import {BvEvent, resolveFloatingPlacement, stringToInteger} from '../../utils'
+import BButton from '../BButton/BButton.vue'
 
 interface BDropdownProps {
   id?: string
@@ -70,60 +73,62 @@ interface BDropdownProps {
   toggleClass?: ClassValue
   autoClose?: boolean | 'inside' | 'outside'
   block?: Booleanish
-  boundary?: Popper.Boundary
   dark?: Booleanish
   disabled?: Booleanish
   isNav?: Booleanish
   dropup?: Booleanish
-  dropright?: Booleanish
-  dropleft?: Booleanish
+  dropend?: Booleanish
+  dropstart?: Booleanish
+  alignStart?: Booleanish
+  alignEnd?: Booleanish
   noFlip?: Booleanish
-  offset?: number | string
-  popperOpts?: Partial<Popper.Options>
+  noShift?: Booleanish
+  offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
   right?: Booleanish
   role?: string
   split?: Booleanish
   splitButtonType?: ButtonType
   splitHref?: string
+  splitDisabled?: Booleanish
   noCaret?: Booleanish
   toggleText?: string
   variant?: ButtonVariant
   modelValue?: Booleanish
+  lazy?: Booleanish
+  strategy?: Strategy
+  floatingMiddleware?: Middleware[]
 }
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
   autoClose: true,
   block: false,
-  boundary: 'clippingParents',
-  // TODO
-  /**
-   * @deprecated props.dark is deprecated
-   * review https://getbootstrap.com/docs/5.3/migration/#color-modes
-   */
   dark: false,
   disabled: false,
   dropup: false,
   isNav: false,
-  dropright: false,
-  dropleft: false,
+  dropend: false,
+  dropstart: false,
+  alignEnd: false,
+  alignStart: false,
+  lazy: false,
   noFlip: false,
-  splitHref: undefined,
+  noShift: false,
   offset: 0,
-  popperOpts: () => ({}),
-  right: false,
   role: 'menu',
   split: false,
   splitButtonType: 'button',
+  splitHref: undefined,
   noCaret: false,
   toggleText: 'Toggle dropdown',
   variant: 'secondary',
   modelValue: false,
+  strategy: 'absolute',
 })
 
 interface BDropdownEmits {
-  (e: 'show'): void
+  (e: 'show', value: BvEvent): void
   (e: 'shown'): void
-  (e: 'hide'): void
+  (e: 'hide', value: BvEvent): void
   (e: 'hidden'): void
   (e: 'click', event: MouseEvent): void
   (e: 'toggle'): void
@@ -138,18 +143,51 @@ const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 const blockBoolean = useBooleanish(toRef(props, 'block'))
 const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
-const droprightBoolean = useBooleanish(toRef(props, 'dropright'))
+const dropendBoolean = useBooleanish(toRef(props, 'dropend'))
 const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
-const dropleftBoolean = useBooleanish(toRef(props, 'dropleft'))
-const rightBoolean = useBooleanish(toRef(props, 'right'))
+const dropstartBoolean = useBooleanish(toRef(props, 'dropstart'))
+const alignStartBoolean = useBooleanish(toRef(props, 'alignStart'))
+const alignEndBoolean = useBooleanish(toRef(props, 'alignEnd'))
 const splitBoolean = useBooleanish(toRef(props, 'split'))
 const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
+const noFlipBoolean = useBooleanish(toRef(props, 'noFlip'))
+const noShiftBoolean = useBooleanish(toRef(props, 'noShift'))
+const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
+const splitDisabledBoolean = useBooleanish(toRef(props, 'splitDisabled'))
 
-const parent = ref<HTMLElement | null>(null)
 const floating = ref<HTMLElement | null>(null)
+const button = ref<HTMLElement | null>(null)
+const splitButton = ref<HTMLElement | null>(null)
 
-const {x, y, strategy} = useFloating(parent, floating, {
-  placement: 'top-start',
+const referencePlacement = computed(() => (!splitBoolean.value ? splitButton.value : button.value))
+const floatingPlacement = computed(() =>
+  resolveFloatingPlacement({
+    top: dropupBoolean.value,
+    bottom: !dropupBoolean.value,
+    start: dropstartBoolean.value,
+    end: dropendBoolean.value,
+    dropstart: alignStartBoolean.value,
+    dropend: alignEndBoolean.value,
+  })
+)
+const floatingMiddleware = computed<Middleware[]>(() => {
+  if (props.floatingMiddleware !== undefined) {
+    return props.floatingMiddleware
+  }
+  const off = typeof props.offset === 'string' ? stringToInteger(props.offset, 0) : props.offset
+  const arr: Middleware[] = [offset(off)]
+  if (noFlipBoolean.value === false) {
+    arr.push(flip())
+  }
+  if (noShiftBoolean.value === false) {
+    arr.push(shift())
+  }
+  return arr
+})
+const {x, y, strategy, update} = useFloating(referencePlacement, floating, {
+  placement: floatingPlacement,
+  middleware: floatingMiddleware,
+  strategy: props.strategy,
 })
 
 const computedClasses = computed(() => ({
@@ -171,7 +209,6 @@ const dropdownMenuClasses = computed(() => [
   props.menuClass,
   {
     'dropdown-menu-dark': darkBoolean.value,
-    'dropdown-menu-end': rightBoolean.value,
   },
 ])
 
@@ -180,9 +217,34 @@ const buttonAttr = computed(() => ({
   'href': splitBoolean.value ? props.splitHref : undefined,
 }))
 
+const onButtonClick = () => {
+  emit('toggle')
+  const currentModelValue = modelValueBoolean.value
+  const e = new BvEvent(currentModelValue ? 'hide' : 'show')
+  currentModelValue ? emit('hide', e) : emit('show', e)
+  if (e.defaultPrevented) return
+  emit('update:modelValue', !currentModelValue)
+  currentModelValue ? emit('hidden') : emit('shown')
+}
+
 const onSplitClick = (event: MouseEvent) => {
-  if (splitBoolean.value) {
-    emit('click', event)
+  splitBoolean.value ? emit('click', event) : onButtonClick()
+}
+
+onClickOutside(
+  floating,
+  () => {
+    if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'outside')) {
+      emit('update:modelValue', !modelValueBoolean.value)
+    }
+  },
+  {ignore: [button, splitButton]}
+)
+const onClickInside = () => {
+  if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'inside')) {
+    emit('update:modelValue', !modelValueBoolean.value)
   }
 }
+
+watch(modelValueBoolean, update)
 </script>

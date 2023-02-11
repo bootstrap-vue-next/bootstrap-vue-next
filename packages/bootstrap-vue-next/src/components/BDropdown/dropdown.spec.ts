@@ -94,7 +94,8 @@ describe('dropdown', () => {
     expect($ul.classes()).not.toContain('dropdown-menu-dark')
   })
 
-  it('child ul has class dropdown-menu-end when prop right', async () => {
+  // TODO replace this with style pos items
+  it.skip('child ul has class dropdown-menu-end when prop right', async () => {
     const wrapper = mount(BDropdown, {
       props: {right: true},
     })
@@ -250,20 +251,6 @@ describe('dropdown', () => {
     })
     const $bbutton = wrapper.getComponent(BButton)
     expect($bbutton.classes()).toContain('foo')
-  })
-
-  it('first child BButton attr data-bs-toggle is dropdown by default', () => {
-    const wrapper = mount(BDropdown)
-    const $bbutton = wrapper.getComponent(BButton)
-    expect($bbutton.attributes('data-bs-toggle')).toBe('dropdown')
-  })
-
-  it('first child BButton attr data-bs-toggle is undefined when prop split', () => {
-    const wrapper = mount(BDropdown, {
-      props: {split: true},
-    })
-    const $bbutton = wrapper.getComponent(BButton)
-    expect($bbutton.attributes('data-bs-toggle')).toBeUndefined()
   })
 
   it('first child BButton attr aria-expanded is false by default', () => {
@@ -424,14 +411,6 @@ describe('dropdown', () => {
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
     expect($bbutton.classes()).toContain('foo')
-  })
-
-  it('second child BButton has static attr data-bs-toggle to be dropdown', () => {
-    const wrapper = mount(BDropdown, {
-      props: {split: true},
-    })
-    const [, $bbutton] = wrapper.findAllComponents(BButton)
-    expect($bbutton.attributes('data-bs-toggle')).toBe('dropdown')
   })
 
   it('second child BButton has static attr aria-expanded to be false', () => {
