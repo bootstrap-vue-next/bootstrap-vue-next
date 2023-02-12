@@ -163,6 +163,7 @@ const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
 
 // TODO: make tests compatible with the v-focus directive
+// TODO rebuild these (autofocus) with useFocus from vueuse
 onMounted((): void => {
   if (autofocusBoolean.value) {
     input.value.focus()

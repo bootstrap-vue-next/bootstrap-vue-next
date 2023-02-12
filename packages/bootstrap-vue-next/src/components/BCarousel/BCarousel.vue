@@ -221,6 +221,7 @@ const onMouseLeave = () => {
 }
 
 // TODO I don't think this works properly. Vueuse may have a utility for this
+// vueuse useSwipe util
 const onTouchStart = (e: TouchEvent) => {
   if (noTouchBoolean.value) return
   xDown = e.touches[0].clientX

@@ -119,6 +119,7 @@ const closeClicked = (): void => {
   emit('closed')
 }
 
+// TODO mouseleave/mouseenter could be replaced with useElementHover with a watcher
 const onMouseEnter = () => {
   if (noHoverPauseBoolean.value) return
   pause()
