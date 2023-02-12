@@ -69,9 +69,6 @@ import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../.
 import {BvEvent, resolveFloatingPlacement, stringToInteger} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 
-// TODO get a visibility observer that emits the value to false when out of viewport
-// Make behavior optional with prop, default true
-
 interface BDropdownProps {
   id?: string
   menuClass?: ClassValue
@@ -197,6 +194,15 @@ const {x, y, strategy, update} = useFloating(referencePlacement, floating, {
   middleware: floatingMiddleware,
   strategy: props.strategy,
 })
+
+// useIntersectionObserver(floating, ([{isIntersecting}]) => {
+//   if (modelValueBoolean.value === false && isIntersecting === false) {
+//     emit('update:modelValue', !modelValueBoolean.value)
+//   }
+// })
+// TODO get a visibility observer that emits the value to false when out of viewport
+// Make behavior optional with prop, default true
+// vueuse/useIntersectionObserver
 
 const computedClasses = computed(() => ({
   'd-grid': blockBoolean.value,
