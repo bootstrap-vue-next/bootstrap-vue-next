@@ -256,6 +256,34 @@ const show2 = ref(false)
 </script>
 ```
 
+### Floating Strategy
+
+By default the floating element will render using _absolute_. You can change this using the `strategy` prop. The only other option is `fixed`
+
+<b-card>
+  <b-dropdown v-model="show13" text="Strategy fixed" strategy="fixed" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</b-card>
+
+```html
+<b-card>
+  <b-dropdown v-model="show" text="Strategy fixed" strategy="fixed" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</b-card>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const show = ref(false)
+</script>
+```
+
 <!-- TODO build this system -->
 <!-- ### Boundary constraint
 
@@ -277,22 +305,22 @@ The `auto-close`property has 4 options
 - `outside` : the dropdown will be closed (only) by clicking outside the dropdown menu.
 
 <b-card>
-  <b-dropdown v-model="show13" text="Default Dropdown" class="m-2">
+  <b-dropdown v-model="show14" text="Default Dropdown" class="m-2">
     <b-dropdown-item-button>Action</b-dropdown-item-button>
     <b-dropdown-item-button>Another action</b-dropdown-item-button>
     <b-dropdown-item-button>Something else here</b-dropdown-item-button>
   </b-dropdown>
-  <b-dropdown v-model="show14" text="Clickable outside (auto-close=inside)" auto-close="inside" class="m-2">
+  <b-dropdown v-model="show15" text="Clickable outside (auto-close=inside)" auto-close="inside" class="m-2">
     <b-dropdown-item-button>Action</b-dropdown-item-button>
     <b-dropdown-item-button>Another action</b-dropdown-item-button>
     <b-dropdown-item-button>Something else here</b-dropdown-item-button>
   </b-dropdown>
-  <b-dropdown v-model="show15" text="Clickable inside (auto-close=outside)" auto-close="outside" class="m-2">
+  <b-dropdown v-model="show16" text="Clickable inside (auto-close=outside)" auto-close="outside" class="m-2">
     <b-dropdown-item-button>Action</b-dropdown-item-button>
     <b-dropdown-item-button>Another action</b-dropdown-item-button>
     <b-dropdown-item-button>Something else here</b-dropdown-item-button>
   </b-dropdown>
-  <b-dropdown v-model="show16" text="Manual close (auto-close=false)" :auto-close="false" class="m-2">
+  <b-dropdown v-model="show17" text="Manual close (auto-close=false)" :auto-close="false" class="m-2">
     <b-dropdown-item-button>Action</b-dropdown-item-button>
     <b-dropdown-item-button>Another action</b-dropdown-item-button>
     <b-dropdown-item-button>Something else here</b-dropdown-item-button>
@@ -363,7 +391,7 @@ You can view the [Floating-ui docs](https://floating-ui.com/docs/middleware) to 
 Create a split dropdown button, where the left button provides standard `click` event and link support, while the right-hand side is the dropdown menu toggle button
 
 <b-card>
-  <b-dropdown v-model="show17" split text="Split Dropdown" class="m-2">
+  <b-dropdown v-model="show18" split text="Split Dropdown" class="m-2">
     <b-dropdown-item href="#">Action</b-dropdown-item>
     <b-dropdown-item href="#">Another action</b-dropdown-item>
     <b-dropdown-item href="#">Something else here...</b-dropdown-item>
@@ -389,7 +417,7 @@ const show = ref(false)
 The left split button defaults to an element of type `<button>` (a `<b-button>` to be exact). To convert this button into a link or `<router-link>`, specify the href via the `split-href` prop or a router link `to` value via the `split-to` prop, while maintaining the look of a button
 
 <b-card>
-  <b-dropdown v-model="show18" split split-href="#foo/bar" text="Split Link" class="m-2">
+  <b-dropdown v-model="show19" split split-href="#foo/bar" text="Split Link" class="m-2">
     <b-dropdown-item href="#">Action</b-dropdown-item>
     <b-dropdown-item href="#">Another action</b-dropdown-item>
     <b-dropdown-item href="#">Something else here...</b-dropdown-item>
