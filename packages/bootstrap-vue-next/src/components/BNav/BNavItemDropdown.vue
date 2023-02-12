@@ -23,7 +23,7 @@ import type {Booleanish, ButtonVariant, ClassValue, Size} from '../../types'
 import {omit} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
 
-// Unsure of how to include booleanish here
+// TODO see how this works in a b-collapse navbar ie https://bootstrap-vue.org/docs/components/navbar first example
 interface BNavItemDropdownProps {
   id?: string
   text?: string
