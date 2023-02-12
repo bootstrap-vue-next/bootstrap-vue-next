@@ -56,6 +56,10 @@
 </template>
 
 <script setup lang="ts">
+// TODO review bootstrap ARIA stuffs
+
+// TODO see Keyboard navigation on docs
+
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
 import {onClickOutside} from '@vueuse/core'
@@ -64,6 +68,9 @@ import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {BvEvent, resolveFloatingPlacement, stringToInteger} from '../../utils'
 import BButton from '../BButton/BButton.vue'
+
+// TODO get a visibility observer that emits the value to false when out of viewport
+// Make behavior optional with prop, default true
 
 interface BDropdownProps {
   id?: string
