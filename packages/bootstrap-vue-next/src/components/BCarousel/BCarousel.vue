@@ -220,6 +220,7 @@ const onMouseLeave = () => {
   resume()
 }
 
+// TODO I don't think this works properly. Vueuse may have a utility for this
 const onTouchStart = (e: TouchEvent) => {
   if (noTouchBoolean.value) return
   xDown = e.touches[0].clientX
