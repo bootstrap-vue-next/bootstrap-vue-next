@@ -1,8 +1,14 @@
 <template>
   <li class="nav-item dropdown">
-    <b-dropdown v-bind="props" is-nav>
-      <template v-for="(_, slot, index) in $slots" :key="index" #[slot]="scope">
-        <slot :name="slot" v-bind="scope || {}" />
+    <b-dropdown v-model="dropdownValue" v-bind="usableProps" is-nav>
+      <template #button-content>
+        <slot name="button-content" />
+      </template>
+      <template #toggle-text>
+        <slot name="toggle-text" />
+      </template>
+      <template #default>
+        <slot />
       </template>
     </b-dropdown>
   </li>
@@ -10,10 +16,14 @@
 
 <script setup lang="ts">
 // import type {BNavItemDropdownProps} from '../types/components'
-import type {ButtonVariant, ClassValue, Size} from '../../types'
+import type {Middleware, Strategy} from '@floating-ui/vue'
+import {computed, toRef} from 'vue'
+import {useBooleanish} from '../../composables'
+import type {Booleanish, ButtonVariant, ClassValue, Size} from '../../types'
+import {omit} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
 
-// Unsure of how to include booleanish here
+// TODO see how this works in a b-collapse navbar ie https://bootstrap-vue.org/docs/components/navbar first example
 interface BNavItemDropdownProps {
   id?: string
   text?: string
@@ -21,29 +31,44 @@ interface BNavItemDropdownProps {
   size?: Size
   offset?: string
   autoClose?: boolean | 'inside' | 'outside'
-  dark?: boolean
-  dropstart?: boolean
-  dropend?: boolean
-  dropup?: boolean
-  alignEnd?: boolean
-  alignStart?: boolean
-  split?: boolean
+  dark?: Booleanish
   splitVariant?: ButtonVariant
-  noCaret?: boolean
+  noCaret?: Booleanish
   variant?: ButtonVariant
+  modelValue?: Booleanish
+  lazy?: Booleanish
+  strategy?: Strategy
+  floatingMiddleware?: Middleware[]
+  noFlip?: Booleanish
+  noShift?: Booleanish
+  dropup?: Booleanish
+  dropend?: Booleanish
+  dropstart?: Booleanish
+  alignStart?: Booleanish
+  alignEnd?: Booleanish
+  menuClass?: ClassValue
 }
 
 const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
-  autoClose: true,
-  dark: false,
-  dropstart: false,
-  dropend: false,
-  dropup: false,
-  alignEnd: false,
-  alignStart: false,
-  // offsetParent: false,
-  split: false,
-  noCaret: false,
   variant: 'link',
+  modelValue: false,
 })
+
+interface Emits {
+  (e: 'update:modelValue', value: boolean): void
+}
+
+const emit = defineEmits<Emits>()
+
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+
+const dropdownValue = computed({
+  get() {
+    return modelValueBoolean.value
+  },
+  set(value: boolean) {
+    emit('update:modelValue', value)
+  },
+})
+const usableProps = computed(() => omit(props, ['modelValue'] as const))
 </script>
