@@ -133,7 +133,7 @@ interface BDropdownEmits {
   (e: 'hidden'): void
   (e: 'click', event: MouseEvent): void
   (e: 'toggle'): void
-  (e: 'update:modelValue', value: Booleanish): void
+  (e: 'update:modelValue', value: boolean): void
 }
 
 const emit = defineEmits<BDropdownEmits>()
