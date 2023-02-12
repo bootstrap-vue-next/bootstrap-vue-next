@@ -258,7 +258,7 @@ const show2 = ref(false)
 
 ### Floating Strategy
 
-By default the floating element will render using _absolute_. You can change this using the `strategy` prop. The only other option is `fixed`
+By default, the floating element will render using _absolute_. You can change this using the `strategy` prop. The only other option is `fixed`
 
 <b-card>
   <b-dropdown v-model="show13" text="Strategy fixed" strategy="fixed" class="m-2">
