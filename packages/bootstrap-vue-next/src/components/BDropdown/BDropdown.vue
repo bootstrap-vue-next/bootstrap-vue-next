@@ -1,6 +1,5 @@
 <template>
   <div :class="computedClasses" class="btn-group">
-    <!-- TODO standardize keydown vs keyup events -->
     <b-button
       :id="computedId"
       ref="splitButton"
@@ -56,10 +55,6 @@
 </template>
 
 <script setup lang="ts">
-// TODO review bootstrap ARIA stuffs
-
-// TODO see Keyboard navigation on docs
-
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
 import {onClickOutside} from '@vueuse/core'
@@ -69,8 +64,8 @@ import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../.
 import {BvEvent, resolveFloatingPlacement, stringToInteger} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 
-// TODO get a visibility observer that emits the value to false when out of viewport
-// Make behavior optional with prop, default true
+// TODO add navigation through keyboard events
+// TODO standardize keydown vs keyup events globally
 
 interface BDropdownProps {
   id?: string

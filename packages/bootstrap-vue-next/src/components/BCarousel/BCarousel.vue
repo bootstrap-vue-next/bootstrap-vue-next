@@ -7,8 +7,6 @@
     @keydown.right="onKeydown(next)"
     @mouseenter.stop="onMouseEnter"
     @mouseleave.stop="onMouseLeave"
-    @touchstart.passive="onTouchStart"
-    @touchend.passive="onTouchEnd"
   >
     <div v-if="indicatorsBoolean" class="carousel-indicators">
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
@@ -67,7 +65,7 @@ import {
 import {computed, provide, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
-import {useIntervalFn} from '@vueuse/core'
+import {useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
 
 interface BCarouselProps {
   ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
@@ -88,6 +86,7 @@ interface BCarouselProps {
   controlsNextText?: string
   indicatorsButtonLabel?: string
   keyboard?: Booleanish
+  touchThreshold?: number | string
 }
 
 const props = withDefaults(defineProps<BCarouselProps>(), {
@@ -105,6 +104,7 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   controlsNextText: 'Next',
   controlsPrevText: 'Previous',
   indicatorsButtonLabel: 'Slide',
+  touchThreshold: 50,
 })
 
 interface BCarouselEmits {
@@ -127,9 +127,10 @@ const controlsBoolean = useBooleanish(toRef(props, 'controls'))
 const indicatorsBoolean = useBooleanish(toRef(props, 'indicators'))
 const noTouchBoolean = useBooleanish(toRef(props, 'noTouch'))
 const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
-
-let xDown: number | null = null
-let yDown: number | null = null
+const touchThresholdNumber = useToNumber(toRef(props, 'touchThreshold'), {
+  nanToZero: true,
+  method: 'parseInt',
+})
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
@@ -220,26 +221,29 @@ const onMouseLeave = () => {
   resume()
 }
 
-const onTouchStart = (e: TouchEvent) => {
-  if (noTouchBoolean.value) return
-  xDown = e.touches[0].clientX
-  yDown = e.touches[0].clientY
-  pause()
-}
-const onTouchEnd = (e: TouchEvent) => {
-  if (!xDown || !yDown) return
-  const xUp = e.touches[0].clientX
-  const yUp = e.touches[0].clientY
-  const xDiff = xDown - xUp
-  const yDiff = yDown - yUp
-  if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    xDiff > 0 ? next() : prev()
-  }
-  xDown = null
-  yDown = null
-  if (isRiding.value === false) return
-  resume()
-}
+const {lengthX} = useSwipe(target, {
+  passive: true,
+  onSwipeStart() {
+    if (noTouchBoolean.value === true) return
+    pause()
+  },
+  onSwipeEnd() {
+    if (noTouchBoolean.value === true) return
+    const resumeRiding = () => {
+      if (isRiding.value === false) return
+      resume()
+    }
+    if (lengthX.value >= touchThresholdNumber.value) {
+      next()
+      resumeRiding()
+      return
+    }
+    if (lengthX.value <= -touchThresholdNumber.value) {
+      prev()
+      resumeRiding()
+    }
+  },
+})
 
 const onBeforeLeave = (i: number) => {
   emit('slide', buildBvCarouselEvent('slide', i))

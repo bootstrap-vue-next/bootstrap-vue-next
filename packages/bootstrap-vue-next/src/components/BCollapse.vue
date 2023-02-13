@@ -16,7 +16,8 @@
 // import type {BCollapseEmits, BCollapseProps} from '../types/components'
 import {computed, onMounted, ref, toRef, watch} from 'vue'
 import {Collapse} from 'bootstrap'
-import {useBooleanish, useEventListener, useId} from '../composables'
+import {useBooleanish, useId} from '../composables'
+import {useEventListener} from '@vueuse/core'
 import type {Booleanish} from '../types'
 
 interface BCollapseProps {
