@@ -127,7 +127,10 @@ const controlsBoolean = useBooleanish(toRef(props, 'controls'))
 const indicatorsBoolean = useBooleanish(toRef(props, 'indicators'))
 const noTouchBoolean = useBooleanish(toRef(props, 'noTouch'))
 const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
-const touchThresholdNumber = useToNumber(toRef(props, 'touchThreshold'), {nanToZero: true})
+const touchThresholdNumber = useToNumber(toRef(props, 'touchThreshold'), {
+  nanToZero: true,
+  method: 'parseInt',
+})
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
