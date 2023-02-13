@@ -86,7 +86,7 @@ interface BCarouselProps {
   controlsNextText?: string
   indicatorsButtonLabel?: string
   keyboard?: Booleanish
-  threshold?: number | string
+  touchThreshold?: number | string
 }
 
 const props = withDefaults(defineProps<BCarouselProps>(), {
