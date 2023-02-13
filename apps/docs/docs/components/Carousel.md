@@ -298,6 +298,41 @@ const slide = ref(0)
 </script>
 ```
 
+### Touch Threshold
+
+You can adjust the distance in pixels it takes to cause a transition to occur by using the `touchThreshold` prop. A higher value will mean the user needs to swipe a longer distance in order to trigger a transition
+
+<b-carousel v-model="fourteenthSlide" :touch-threshold="fourteenthThreshold">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=32" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=33" />
+</b-carousel>
+<b-button-group>
+  <b-button variant="danger" @click="fourteenthThreshold = fourteenthThreshold - 10">Decrease</b-button>
+  <b-button variant="success" @click="fourteenthThreshold = fourteenthThreshold + 10">Increase</b-button>
+</b-button-group>
+Threshold: {{ fourteenthThreshold }}
+
+```html
+<b-carousel v-model="slide" :touch-threshold="threshold">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=32" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=33" />
+</b-carousel>
+<b-button-group>
+  <b-button variant="danger" @click="threshold = threshold - 10">Decrease</b-button>
+  <b-button variant="success" @click="threshold = threshold + 10">Increase</b-button>
+</b-button-group>
+Threshold: {{ threshold }}
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const slide = ref(0)
+const threshold = ref(50)
+</script>
+```
+
 ## Changing the Default Starting Slide
 
 The default starting slide can be set by simply picking the appropriate index for your `v-model`
@@ -305,16 +340,16 @@ The default starting slide can be set by simply picking the appropriate index fo
 * Starts at the last index (2)
 
 <b-carousel v-model="twelthSlide" indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=32" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=33" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=35" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=36" />
 </b-carousel>
 
 ```html
 <b-carousel v-model="slide" indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=32" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=33" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=35" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=36" />
 </b-carousel>
 
 <script setup lang="ts">
@@ -334,9 +369,9 @@ You are also able to use the built in methods for going to the next, or previous
 4. `resume`: resumes the autoplay timer
 
 <b-carousel v-model="thirteethSlide" ref="mySecondCarousel">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=35" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=36" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=38" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=39" />
 </b-carousel>
 
 <b-button-group>
@@ -346,9 +381,9 @@ You are also able to use the built in methods for going to the next, or previous
 
 ```html
 <b-carousel v-model="slide" ref="myCarousel">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=35" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=36" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=38" />
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=39" />
 </b-carousel>
 
 <b-button-group>
@@ -369,21 +404,21 @@ const next = () => myCarousel.value?.next()
 ## Full Example
 
 <b-carousel v-model="eleventhSlide" controls indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=40">
     <h1>First slide</h1>
     <p>Some more detailed description or whatever content.</p>
   </b-carousel-slide>
   <b-carousel-slide
     caption="Second slide"
     text="Does the same, just a bit differently."
-    img-src="https://picsum.photos/1024/480/?image=38"
+    img-src="https://picsum.photos/1024/480/?image=41"
   />
   <b-carousel-slide>
     <template #img>
       <img
         width="1024"
         height="480"
-        src="https://picsum.photos/1024/480/?image=39"
+        src="https://picsum.photos/1024/480/?image=42"
         alt="image slot"
       />
     </template>
@@ -398,21 +433,21 @@ const next = () => myCarousel.value?.next()
 
 ```html
 <b-carousel v-model="slide" controls indicators>
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37">
+  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=40">
     <h1>First slide</h1>
     <p>Some more detailed description or whatever content.</p>
   </b-carousel-slide>
   <b-carousel-slide
     caption="Second slide"
     text="Does the same, just a bit differently."
-    img-src="https://picsum.photos/1024/480/?image=38"
+    img-src="https://picsum.photos/1024/480/?image=41"
   />
   <b-carousel-slide>
     <template #img>
       <img
         width="1024"
         height="480"
-        src="https://picsum.photos/1024/480/?image=39"
+        src="https://picsum.photos/1024/480/?image=42"
         alt="image slot"
       />
     </template>
@@ -473,4 +508,7 @@ const thirteethSlide = ref(0)
 const mySecondCarousel = ref<null | HTMLElement>(null)
 const prev = () => mySecondCarousel.value?.prev()
 const next = () => mySecondCarousel.value?.next()
+
+const fourteenthSlide = ref(0)
+const fourteenthThreshold = ref(50)
 </script>
