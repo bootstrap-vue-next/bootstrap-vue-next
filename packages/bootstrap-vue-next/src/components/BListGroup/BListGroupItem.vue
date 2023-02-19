@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
 
 const attrs = useAttrs()
 
-const parentData = inject(listGroupInjectionKey)
+const parentData = inject(listGroupInjectionKey, null)
 
 const actionBoolean = useBooleanish(toRef(props, 'action'))
 const activeBoolean = useBooleanish(toRef(props, 'active'))

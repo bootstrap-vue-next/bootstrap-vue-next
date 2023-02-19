@@ -27,4 +27,4 @@ export const createBreadcrumb = (app: App): void => {
  * @returns
  */
 export const useBreadcrumb = (): UseBreadcrumbOptions =>
-  inject(breadcrumbInjectionKey) ?? BREADCRUMB_OBJECT
+  inject(breadcrumbInjectionKey, null) ?? BREADCRUMB_OBJECT
