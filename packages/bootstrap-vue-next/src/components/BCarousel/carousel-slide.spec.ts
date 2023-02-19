@@ -4,6 +4,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BCarouselSlide from './BCarouselSlide.vue'
 import {carouselInjectionKey} from '../../utils'
 import BImg from '../BImg.vue'
+
 // TODO test for newest changes
 describe('carousel-slide', () => {
   enableAutoUnmount(afterEach)

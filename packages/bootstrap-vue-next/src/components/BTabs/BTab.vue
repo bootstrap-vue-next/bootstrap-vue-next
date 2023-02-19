@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkAttributes: undefined,
 })
 
-const parentData = inject(tabsInjectionKey)
+const parentData = inject(tabsInjectionKey, null)
 
 const activeBoolean = useBooleanish(toRef(props, 'active'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))

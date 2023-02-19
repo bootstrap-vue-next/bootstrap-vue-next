@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
   value: 0,
 })
 
-const parent = inject(progressInjectionKey)
+const parentData = inject(progressInjectionKey, null)
 
 const animatedBoolean = useBooleanish(toRef(props, 'animated'))
 const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
@@ -50,9 +50,9 @@ const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
 const computedClasses = computed(() => ({
-  'progress-bar-animated': animatedBoolean.value || parent?.animated,
+  'progress-bar-animated': animatedBoolean.value || parentData?.animated,
   'progress-bar-striped':
-    stripedBoolean.value || parent?.striped || animatedBoolean.value || parent?.animated,
+    stripedBoolean.value || parentData?.striped || animatedBoolean.value || parentData?.animated,
   [`bg-${props.variant}`]: props.variant !== undefined,
 }))
 
@@ -75,9 +75,9 @@ const numberMax = computed<number | undefined>(() =>
 const computedLabel = computed<string>(() =>
   props.labelHtml !== undefined
     ? props.labelHtml
-    : showValueBoolean.value || parent?.showValue
+    : showValueBoolean.value || parentData?.showValue
     ? numberValue.value.toFixed(numberPrecision.value)
-    : showProgressBoolean.value || parent?.showProgress
+    : showProgressBoolean.value || parentData?.showProgress
     ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
     : props.label !== undefined
     ? props.label
@@ -85,10 +85,10 @@ const computedLabel = computed<string>(() =>
 )
 
 const computedWidth = computed<string>(() =>
-  parent?.max
+  parentData?.max
     ? `${
         (numberValue.value * 100) /
-        (typeof parent.max === 'number' ? parent.max : Number.parseInt(parent.max))
+        (typeof parentData.max === 'number' ? parentData.max : Number.parseInt(parentData.max))
       }%`
     : props.max
     ? `${

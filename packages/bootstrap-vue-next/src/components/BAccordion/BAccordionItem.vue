@@ -18,7 +18,7 @@
       :id="computedId"
       class="accordion-collapse"
       :visible="visible"
-      :accordion="parent"
+      :accordion="parentData ?? undefined"
       :aria-labelledby="`heading${computedId}`"
     >
       <div class="accordion-body">
@@ -45,7 +45,7 @@ interface BAccordionItemProps {
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
 
-const parent = inject(accordionInjectionKey)
+const parentData = inject(accordionInjectionKey, null)
 
 const computedId = useId(toRef(props, 'id'), 'accordion_item')
 

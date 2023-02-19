@@ -9,22 +9,22 @@ import type {
 import type {UseBreadcrumbOptions} from '../composables/useBreadcrumb'
 
 // BCarousel
-export const carouselInjectionKey: InjectionKey<BCarouselParentData> = Symbol()
+export const carouselInjectionKey: InjectionKey<BCarouselParentData> = Symbol('carousel')
 
 // BTabs
-export const tabsInjectionKey: InjectionKey<BTabsParentData> = Symbol()
+export const tabsInjectionKey: InjectionKey<BTabsParentData> = Symbol('tabs')
 
 // useBreadcrumb
-export const breadcrumbInjectionKey: InjectionKey<UseBreadcrumbOptions> = Symbol()
+export const breadcrumbInjectionKey: InjectionKey<UseBreadcrumbOptions> = Symbol('breadcrumb')
 
 // BProgress
-export const progressInjectionKey: InjectionKey<BProgressParentData> = Symbol()
+export const progressInjectionKey: InjectionKey<BProgressParentData> = Symbol('progress')
 
 // BListGroup
-export const listGroupInjectionKey: InjectionKey<BListGroupParentData> = Symbol()
+export const listGroupInjectionKey: InjectionKey<BListGroupParentData> = Symbol('listGroup')
 
 // BAvatarGroup
-export const avatarGroupInjectionKey: InjectionKey<BAvatarGroupParentData> = Symbol()
+export const avatarGroupInjectionKey: InjectionKey<BAvatarGroupParentData> = Symbol('avatarGroup')
 
 // BAccordion
-export const accordionInjectionKey: InjectionKey<string> = Symbol()
+export const accordionInjectionKey: InjectionKey<string> = Symbol('accordion')

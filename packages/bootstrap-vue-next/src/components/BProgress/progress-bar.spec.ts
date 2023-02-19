@@ -8,37 +8,28 @@ describe('progress-bar', () => {
   enableAutoUnmount(afterEach)
 
   it('element is div', () => {
-    const wrapper = mount(BProgressBar, {
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
-    })
+    const wrapper = mount(BProgressBar)
     expect(wrapper.element.tagName).toBe('DIV')
   })
 
   it('has static class progress-bar', () => {
-    const wrapper = mount(BProgressBar, {
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
-    })
+    const wrapper = mount(BProgressBar)
     expect(wrapper.classes()).toContain('progress-bar')
   })
 
   it('has static attr role to be progressbar', () => {
-    const wrapper = mount(BProgressBar, {
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
-    })
+    const wrapper = mount(BProgressBar)
     expect(wrapper.attributes('role')).toBe('progressbar')
   })
 
   it('has static attr aria-valuemin to be 0', () => {
-    const wrapper = mount(BProgressBar, {
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
-    })
+    const wrapper = mount(BProgressBar)
     expect(wrapper.attributes('aria-valuemin')).toBe('0')
   })
 
   it('has static attr aria-valuenow to be prop value', async () => {
     const wrapper = mount(BProgressBar, {
       props: {value: 5},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('aria-valuenow')).toBe('5')
     await wrapper.setProps({value: 55})
@@ -48,7 +39,6 @@ describe('progress-bar', () => {
   it('has static attr aria-valuemax to be prop max', async () => {
     const wrapper = mount(BProgressBar, {
       props: {max: 5},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('aria-valuemax')).toBe('5')
     await wrapper.setProps({max: 55})
@@ -58,7 +48,6 @@ describe('progress-bar', () => {
   it('has class progress-bar-animated if prop animated', async () => {
     const wrapper = mount(BProgressBar, {
       props: {animated: true},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.classes()).toContain('progress-bar-animated')
     await wrapper.setProps({animated: false})
@@ -75,7 +64,6 @@ describe('progress-bar', () => {
   it('has class progress-bar-striped if prop striped', async () => {
     const wrapper = mount(BProgressBar, {
       props: {striped: true},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.classes()).toContain('progress-bar-striped')
     await wrapper.setProps({striped: false})
@@ -92,7 +80,6 @@ describe('progress-bar', () => {
   it('has class progress-bar-striped if prop animated', async () => {
     const wrapper = mount(BProgressBar, {
       props: {animated: true},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.classes()).toContain('progress-bar-striped')
     await wrapper.setProps({animated: false})
@@ -109,7 +96,6 @@ describe('progress-bar', () => {
   it('has class progress-bar-striped if prop variant', async () => {
     const wrapper = mount(BProgressBar, {
       props: {variant: 'info'},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.classes()).toContain('bg-info')
     await wrapper.setProps({variant: undefined})
@@ -119,7 +105,6 @@ describe('progress-bar', () => {
   it('renders default slot', () => {
     const wrapper = mount(BProgressBar, {
       slots: {default: 'foobar'},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
   })
@@ -127,7 +112,6 @@ describe('progress-bar', () => {
   it('renders computed label when prop showValue and value', () => {
     const wrapper = mount(BProgressBar, {
       props: {showValue: true, value: 55},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('55')
   })
@@ -135,7 +119,6 @@ describe('progress-bar', () => {
   it('does not render computed label when prop value and not prop showValue', () => {
     const wrapper = mount(BProgressBar, {
       props: {showValue: false, value: 55},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('')
   })
@@ -151,7 +134,6 @@ describe('progress-bar', () => {
   it('renders progress when prop showProgress', () => {
     const wrapper = mount(BProgressBar, {
       props: {value: 55, showProgress: true, max: 95},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('58')
   })
@@ -167,7 +149,6 @@ describe('progress-bar', () => {
   it('renders prop label', () => {
     const wrapper = mount(BProgressBar, {
       props: {label: 'foobar'},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
   })
@@ -175,7 +156,6 @@ describe('progress-bar', () => {
   it('renders labelHtml over showValue', () => {
     const wrapper = mount(BProgressBar, {
       props: {labelHtml: 'foobar', showValue: true, value: 55},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
   })
@@ -183,7 +163,6 @@ describe('progress-bar', () => {
   it('renders value over progress', () => {
     const wrapper = mount(BProgressBar, {
       props: {value: 55, showValue: true, showProgress: true},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('55')
   })
@@ -191,7 +170,6 @@ describe('progress-bar', () => {
   it('renders progress over label', () => {
     const wrapper = mount(BProgressBar, {
       props: {value: 55, showProgress: true, label: 'foobar'},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('55')
   })
@@ -199,7 +177,6 @@ describe('progress-bar', () => {
   it('attr style has correct width when prop max', () => {
     const wrapper = mount(BProgressBar, {
       props: {max: 100, value: 15},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('style')).toBe('width: 15%;')
   })
@@ -207,7 +184,6 @@ describe('progress-bar', () => {
   it('attr style has correct width when prop max is string', () => {
     const wrapper = mount(BProgressBar, {
       props: {max: '100', value: 15},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('style')).toBe('width: 15%;')
   })
@@ -215,7 +191,6 @@ describe('progress-bar', () => {
   it('attr style has correct width when prop value when is string', () => {
     const wrapper = mount(BProgressBar, {
       props: {value: '155%'},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('style')).toBe('width: 155%;')
   })
@@ -223,7 +198,6 @@ describe('progress-bar', () => {
   it('attr style has correct width of undefined when prop value string is wrong', () => {
     const wrapper = mount(BProgressBar, {
       props: {value: '155'},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('style')).toBeUndefined()
   })
@@ -231,7 +205,6 @@ describe('progress-bar', () => {
   it('attr style has correct width when prop value when is number', () => {
     const wrapper = mount(BProgressBar, {
       props: {value: 155},
-      global: {provide: {[progressInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('style')).toBe('width: 155%;')
   })
