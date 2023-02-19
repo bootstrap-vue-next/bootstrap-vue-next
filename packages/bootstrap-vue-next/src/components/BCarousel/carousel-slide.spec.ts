@@ -4,27 +4,36 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BCarouselSlide from './BCarouselSlide.vue'
 import {carouselInjectionKey} from '../../utils'
 import BImg from '../BImg.vue'
+
 // TODO test for newest changes
 describe('carousel-slide', () => {
   enableAutoUnmount(afterEach)
 
   it('tag is div', () => {
-    const wrapper = mount(BCarouselSlide)
+    const wrapper = mount(BCarouselSlide, {
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.element.tagName).toBe('DIV')
   })
 
   it('has static class carousel-item', () => {
-    const wrapper = mount(BCarouselSlide)
+    const wrapper = mount(BCarouselSlide, {
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.classes()).toContain('carousel-item')
   })
 
   it('has attr data-bs-interval undefined by default', () => {
-    const wrapper = mount(BCarouselSlide)
+    const wrapper = mount(BCarouselSlide, {
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.attributes('data-bs-interval')).toBeUndefined()
   })
 
   it('has style background by default', () => {
-    const wrapper = mount(BCarouselSlide)
+    const wrapper = mount(BCarouselSlide, {
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.attributes('style')).toContain('background: ')
   })
 
@@ -44,7 +53,9 @@ describe('carousel-slide', () => {
   })
 
   it('contains a BImg in slot img', () => {
-    const wrapper = mount(BCarouselSlide)
+    const wrapper = mount(BCarouselSlide, {
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
+    })
     const $img = wrapper.findComponent(BImg)
     expect($img.exists()).toBe(true)
   })
@@ -52,19 +63,24 @@ describe('carousel-slide', () => {
   it('does not contain BImg when slot img', () => {
     const wrapper = mount(BCarouselSlide, {
       slots: {img: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $img = wrapper.findComponent(BImg)
     expect($img.exists()).toBe(false)
   })
 
   it('BImg child has static class d-block', () => {
-    const wrapper = mount(BCarouselSlide)
+    const wrapper = mount(BCarouselSlide, {
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
+    })
     const $img = wrapper.getComponent(BImg)
     expect($img.classes()).toContain('d-block')
   })
 
   it('BImg child has static class w-100', () => {
-    const wrapper = mount(BCarouselSlide)
+    const wrapper = mount(BCarouselSlide, {
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
+    })
     const $img = wrapper.getComponent(BImg)
     expect($img.classes()).toContain('w-100')
   })
@@ -72,6 +88,7 @@ describe('carousel-slide', () => {
   it('BImg child is given prop alt to be prop imgAlt', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgAlt: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('alt')).toBe('foobar')
@@ -80,6 +97,7 @@ describe('carousel-slide', () => {
   it('BImg child is given prop src to be prop imgSrc', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgSrc: '/abc'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('src')).toBe('/abc')
@@ -88,6 +106,7 @@ describe('carousel-slide', () => {
   it('BImg child prop width to be prop imgWidth', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgWidth: 100},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('width')).toBe(100)
@@ -113,6 +132,7 @@ describe('carousel-slide', () => {
   it('BImg child prop height to be prop imgHeight', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgHeight: 100},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('height')).toBe(100)
@@ -138,6 +158,7 @@ describe('carousel-slide', () => {
   it('BImg child prop blank is given imgBlank prop', async () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgBlank: true},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('blank')).toBe(true)
@@ -148,6 +169,7 @@ describe('carousel-slide', () => {
   it('BImg child prop blankColor is given imgBlankColor prop', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {imgBlankColor: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $img = wrapper.getComponent(BImg)
     expect($img.props('blankColor')).toBe('foobar')
@@ -156,6 +178,7 @@ describe('carousel-slide', () => {
   it('does not have dynamic component by default', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.find('h1')
     expect($h1.exists()).toBe(false)
@@ -164,6 +187,7 @@ describe('carousel-slide', () => {
   it('has dynamic component when prop caption', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', caption: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.find('h1')
     expect($h1.exists()).toBe(true)
@@ -172,6 +196,7 @@ describe('carousel-slide', () => {
   it('has dynamic component when prop captionHtml', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', captionHtml: '<span>foobar</span>'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.find('h1')
     expect($h1.exists()).toBe(true)
@@ -180,6 +205,7 @@ describe('carousel-slide', () => {
   it('has dynamic component when prop textHtml', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', textHtml: '<span>foobar</span>'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.find('h1')
     expect($h1.exists()).toBe(true)
@@ -189,6 +215,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.find('h1')
     expect($h1.exists()).toBe(true)
@@ -198,6 +225,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     expect($h1.classes()).toContain('carousel-caption')
@@ -207,6 +235,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', contentVisibleUp: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     expect($h1.classes()).toContain('d-none')
@@ -216,6 +245,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', contentVisibleUp: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     expect($h1.classes()).toContain('d-foo-block')
@@ -225,6 +255,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h3 = $h1.find('h3')
@@ -235,6 +266,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', caption: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h3 = $h1.find('h3')
@@ -245,6 +277,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', captionHtml: '<span>foo</span>'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h3 = $h1.find('h3')
@@ -255,6 +288,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', captionTag: 'h5', caption: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.find('h5')
@@ -265,6 +299,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', captionTag: 'h5', captionHtml: '<h2>foo</h2>'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -276,6 +311,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', captionTag: 'h5', captionHtml: '<h2>foo</h2>'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -289,6 +325,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', captionTag: 'h5', caption: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -300,6 +337,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', captionTag: 'h5', caption: 'foo', captionHtml: '<h2>bar</h2>'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -311,6 +349,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', textTag: 'h5', text: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.find('h5')
@@ -321,6 +360,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', textTag: 'h5', text: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -332,6 +372,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', textTag: 'h5', text: 'foo'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -343,6 +384,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', textTag: 'h5', textHtml: '<h2>foo</h2>'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -356,6 +398,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', textTag: 'h5', textHtml: 'foo', text: 'bar'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     const $h5 = $h1.get('h5')
@@ -367,6 +410,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1'},
       slots: {default: 'foobar'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     const $h1 = wrapper.get('h1')
     expect($h1.text()).toBe('foobar')
@@ -376,6 +420,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {contentTag: 'h1', text: 'text', caption: 'caption'},
       slots: {default: 'slot', img: 'img'},
+      global: {provide: {[carouselInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('imgcaptiontextslot')
   })

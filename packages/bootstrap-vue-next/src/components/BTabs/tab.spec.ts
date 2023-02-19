@@ -7,13 +7,16 @@ describe('tab', () => {
   enableAutoUnmount(afterEach)
 
   it('tag is default div', () => {
-    const wrapper = mount(BTab)
+    const wrapper = mount(BTab, {
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.element.tagName).toBe('DIV')
   })
 
   it('tag is prop tag', () => {
     const wrapper = mount(BTab, {
       props: {tag: 'span'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.element.tagName).toBe('SPAN')
   })
@@ -21,28 +24,36 @@ describe('tab', () => {
   it('id is prop id', () => {
     const wrapper = mount(BTab, {
       props: {id: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.attributes('id')).toBe('foobar')
   })
 
   it('has static class tab-pane', () => {
-    const wrapper = mount(BTab)
+    const wrapper = mount(BTab, {
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.classes()).toContain('tab-pane')
   })
 
   it('has static role tabpanel', () => {
-    const wrapper = mount(BTab)
+    const wrapper = mount(BTab, {
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.attributes('role')).toBe('tabpanel')
   })
 
   it('has static aria-abelledby profile-tab', () => {
-    const wrapper = mount(BTab)
+    const wrapper = mount(BTab, {
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
+    })
     expect(wrapper.attributes('aria-labelledby')).toBe('profile-tab')
   })
 
   it('has class active when prop active', async () => {
     const wrapper = mount(BTab, {
       props: {active: true},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.classes()).toContain('active')
     await wrapper.setProps({active: false})
@@ -52,6 +63,7 @@ describe('tab', () => {
   it('has class show when prop active', async () => {
     const wrapper = mount(BTab, {
       props: {active: true},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.classes()).toContain('show')
     await wrapper.setProps({active: false})
@@ -93,6 +105,7 @@ describe('tab', () => {
   it('renders default slot', () => {
     const wrapper = mount(BTab, {
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
   })
@@ -101,6 +114,7 @@ describe('tab', () => {
     const wrapper = mount(BTab, {
       props: {lazy: true},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('')
   })
@@ -144,6 +158,7 @@ describe('tab', () => {
     const wrapper = mount(BTab, {
       props: {active: true},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
   })
@@ -152,6 +167,7 @@ describe('tab', () => {
     const wrapper = mount(BTab, {
       props: {active: false, lazy: true},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('')
   })
@@ -160,6 +176,7 @@ describe('tab', () => {
     const wrapper = mount(BTab, {
       props: {active: false, disabled: true, lazy: true},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('')
   })
@@ -177,6 +194,7 @@ describe('tab', () => {
     const wrapper = mount(BTab, {
       props: {active: true, disabled: false, lazyOnce: true, lazy: true},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: {}}},
     })
     expect(wrapper.text()).toBe('foobar')
   })
