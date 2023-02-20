@@ -1,198 +1,447 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
-  <div
-    :id="id"
-    ref="element"
-    class="popover b-popover"
-    :class="computedClasses"
-    role="tooltip"
-    tabindex="-1"
-  >
-    <div ref="titleRef">
-      <slot name="title">
-        {{ title }}
-      </slot>
+  <span ref="placeholder" />
+  <slot v-bind="{show, hide, toggle, showState}" />
+  <teleport :to="container" :disabled="container === null">
+    <div
+      :id="id"
+      v-bind="$attrs"
+      ref="element"
+      :class="computedClasses"
+      role="tooltip"
+      tabindex="-1"
+      :style="{
+        position: strategy,
+        top: `${y ?? 0}px`,
+        left: `${x ?? 0}px`,
+        width: 'max-content',
+      }"
+    >
+      <div
+        ref="arrow"
+        :class="`${tooltipBoolean ? 'tooltip' : 'popover'}-arrow`"
+        :style="arrowStyle"
+        data-popper-arrow
+      />
+      <template v-if="title || $slots.title">
+        <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'">
+          <slot name="title">
+            {{ title }}
+          </slot>
+        </div>
+        <div
+          v-else
+          :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+          v-html="sanitizedTitle"
+        />
+      </template>
+      <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
+        <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
+          <slot name="content">
+            {{ content }}
+          </slot>
+        </div>
+        <div
+          v-else
+          :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
+          v-html="sanitizedContent"
+        />
+      </template>
     </div>
-    <div ref="contentRef">
-      <slot>
-        {{ content }}
-      </slot>
-    </div>
-  </div>
+  </teleport>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import {
+  arrow as arrowMiddleware,
+  autoUpdate,
+  flip,
+  hide as hideMiddleware,
+  inline,
+  type Middleware,
+  offset,
+  Placement,
+  shift,
+  type Strategy,
+  useFloating,
+} from '@floating-ui/vue'
+import {BvTriggerableEvent, resolveBootstrapPlacement} from '../utils'
+import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
+import {onClickOutside, useMouseInElement} from '@vueuse/core'
+
 import {
   type ComponentPublicInstance,
   computed,
-  defineComponent,
+  type CSSProperties,
   nextTick,
   onBeforeUnmount,
   onMounted,
-  type PropType,
   ref,
   toRef,
+  type VNode,
   watch,
 } from 'vue'
-import {Popover} from 'bootstrap'
-import {useBooleanish} from '../composables'
-import type {BPopoverDelayObject} from '../types/components'
+import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ColorVariant} from '../types'
 
-export default defineComponent({
-  props: {
-    container: {
-      type: [String, Object] as PropType<
-        string | ComponentPublicInstance<HTMLElement> | HTMLElement
-      >,
-      default: 'body',
-    },
-    content: {type: String},
-    id: {type: String},
-    customClass: {type: String, default: ''},
-    noninteractive: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    placement: {type: String as PropType<Popover.Options['placement']>, default: 'right'},
-    target: {
-      type: [String, Object] as PropType<
-        string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-      >,
-      default: undefined,
-    },
-    title: {type: String},
-    delay: {type: [Number, Object] as PropType<number | BPopoverDelayObject>, default: 0},
-    triggers: {type: String as PropType<Popover.Options['trigger']>, default: 'click'},
-    show: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    variant: {type: String as PropType<ColorVariant>, default: undefined},
-    html: {type: [Boolean, String] as PropType<Booleanish>, default: true},
-    sanitize: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    offset: {type: String as PropType<Popover.Options['offset']>, default: '0'},
-  },
-  emits: ['show', 'shown', 'hide', 'hidden', 'inserted'],
-  setup(props, {emit, slots}) {
-    // TODO noninteractive is never used
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const noninteractiveBoolean = useBooleanish(toRef(props, 'noninteractive'))
-    const showBoolean = useBooleanish(toRef(props, 'show'))
-    const htmlBoolean = useBooleanish(toRef(props, 'html'))
-    const sanitizeBoolean = useBooleanish(toRef(props, 'sanitize'))
+interface BPopoverProps {
+  modelValue?: Booleanish
+  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | null
+  target?:
+    | (() => HTMLElement | VNode)
+    | string
+    | ComponentPublicInstance<HTMLElement>
+    | HTMLSpanElement
+    | HTMLElement
+    | null
+  reference?:
+    | (() => HTMLElement | VNode)
+    | string
+    | ComponentPublicInstance<HTMLElement>
+    | HTMLSpanElement
+    | HTMLElement
+    | null
+  content?: string
+  id?: string
+  title?: string
+  delay?: number | {show: number; hide: number}
+  click?: Booleanish
+  manual?: Booleanish
+  variant?: ColorVariant
+  offset?: number | null
+  customClass?: string
+  placement?: Placement
+  strategy?: Strategy
+  floatingMiddleware?: Middleware[]
+  noFlip?: Booleanish
+  noShift?: Booleanish
+  noFade?: Booleanish
+  noAutoClose?: Booleanish
+  hide?: Booleanish
+  realtime?: Booleanish
+  inline?: Booleanish
+  tooltip?: Booleanish
+  html?: Booleanish
+}
 
-    const element = ref<HTMLElement>()
-    const target = ref<HTMLElement | undefined>()
-    const instance = ref<Popover>()
-    const titleRef = ref<HTMLElement>()
-    const contentRef = ref<HTMLElement>()
+const props = withDefaults(defineProps<BPopoverProps>(), {
+  modelValue: false,
+  container: null,
+  customClass: '',
+  placement: 'top',
+  strategy: 'absolute',
+  delay: () => ({show: 100, hide: 300}),
+  click: false,
+  manual: false,
+  variant: undefined,
+  offset: null,
+  noFlip: false,
+  noShift: false,
+  noFade: false,
+  noAutoClose: false,
+  hide: true,
+  realtime: false,
+  inline: false,
+  tooltip: false,
+  html: false,
+  reference: null,
+  target: null,
+})
 
-    const computedClasses = computed(() => ({
-      [`b-popover-${props.variant}`]: props.variant !== undefined,
-    }))
+interface BPopoverEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'update:modelValue', value: boolean): void
+}
 
-    const cleanElementProp = (
-      target: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-    ): HTMLElement | string | undefined => {
-      if (typeof target === 'string') {
-        return target
-      } else if (target instanceof HTMLElement) return target
-      else if (typeof target !== 'undefined')
-        return (target as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
-      return undefined
-    }
+const emit = defineEmits<BPopoverEmits>()
 
-    const getElement = (element: HTMLElement | string | undefined): HTMLElement | undefined => {
-      if (!element) return undefined
-      if (typeof element === 'string') {
-        const idElement = document.getElementById(element)
-        return idElement ? idElement : undefined
-      }
-      return element
-    }
+const showState = ref(props.modelValue)
+watch(showState, (value) => {
+  emit('update:modelValue', !!value)
+})
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (value === showState.value) return
+    value ? show() : hide(new Event('update:modelValue'))
+  }
+)
 
-    const bsEventHandlers = [
-      {event: 'show.bs.popover', handler: () => emit('show')},
-      {event: 'shown.bs.popover', handler: () => emit('shown')},
-      {event: 'hide.bs.popover', handler: () => emit('hide')},
-      {event: 'hidden.bs.popover', handler: () => emit('hidden')},
-      {event: 'inserted.bs.popover', handler: () => emit('inserted')},
-    ]
+const computedId = useId(toRef(props, 'id'), 'popover')
 
-    const attachTargetEventHandlers = (targetElement: HTMLElement) => {
-      for (const pair of bsEventHandlers) {
-        targetElement.addEventListener(pair.event, pair.handler)
-      }
-    }
+const clickBoolean = useBooleanish(toRef(props, 'click'))
+const manualBoolean = useBooleanish(toRef(props, 'manual'))
+const noShiftBoolean = useBooleanish(toRef(props, 'noShift'))
+const noFlipBoolean = useBooleanish(toRef(props, 'noFlip'))
+const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
+const noAutoCloseBoolean = useBooleanish(toRef(props, 'noAutoClose'))
+const hideBoolean = useBooleanish(toRef(props, 'hide'))
+const realtimeBoolean = useBooleanish(toRef(props, 'realtime'))
+const inlineBoolean = useBooleanish(toRef(props, 'inline'))
+const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
+const isHtml = useBooleanish(toRef(props, 'html'))
+const hidden = ref(false)
 
-    const disposeTargetEventHandlers = (targetElement: HTMLElement) => {
-      for (const pair of bsEventHandlers) {
-        targetElement.removeEventListener(pair.event, pair.handler)
-      }
-    }
+const element = ref<HTMLElement | null>(null)
+const target = ref<HTMLElement | null>(null)
+const arrow = ref<HTMLElement | null>(null)
+const trigger = ref<HTMLElement | null>(null)
+const placeholder = ref<HTMLElement | null>(null)
 
-    const generatePopoverInstance = (
-      targetValue: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-    ) => {
-      target.value = getElement(cleanElementProp(targetValue))
+const cleanElementProp = (
+  target:
+    | (() => HTMLElement | VNode)
+    | string
+    | ComponentPublicInstance<HTMLElement>
+    | HTMLElement
+    | undefined
+): HTMLElement | string | undefined => {
+  if (typeof target === 'string') {
+    return target
+  }
+  if (target instanceof HTMLElement) {
+    return target
+    // eslint-disable-next-line
+  }
+  if (typeof target === 'function')
+    return (target() as ComponentPublicInstance<HTMLElement>).$el
+      ? (target() as ComponentPublicInstance<HTMLElement>).$el
+      : target()
+  if (typeof target !== 'undefined')
+    return (target as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
+  return undefined
+}
 
-      if (!target.value) return
+const getElement = (element: HTMLElement | string | undefined): HTMLElement | undefined => {
+  if (!element) return undefined
+  if (typeof element === 'string') {
+    const idElement = document.getElementById(element)
+    return idElement ? idElement : undefined
+  }
+  return element
+}
 
-      attachTargetEventHandlers(target.value)
+const sanitizedTitle = computed(() =>
+  props.title ? sanitizeHtml(props.title, DefaultAllowlist) : ''
+)
 
-      instance.value = new Popover(target.value, {
-        customClass: props.customClass,
-        container: cleanElementProp(props.container),
-        trigger: props.triggers,
-        placement: props.placement,
-        title: props.title || slots.title ? titleRef.value : '',
-        content: contentRef.value,
-        html: htmlBoolean.value,
-        delay: props.delay,
-        sanitize: sanitizeBoolean.value,
-        offset: props.offset,
-      })
-    }
+const sanitizedContent = computed(() =>
+  props.content ? sanitizeHtml(props.content, DefaultAllowlist) : ''
+)
 
-    watch(
-      () => props.target,
-      (newValue) => {
-        instance.value?.dispose()
-        if (target.value instanceof HTMLElement) {
-          disposeTargetEventHandlers(target.value)
-        }
-        generatePopoverInstance(newValue)
-      }
-    )
-    watch(showBoolean, (show, oldVal) => {
-      if (show !== oldVal) {
-        if (show) {
-          instance.value?.show()
-        } else {
-          instance.value?.hide()
-        }
-      }
-    })
+const floatingMiddleware = computed<Middleware[]>(() => {
+  if (props.floatingMiddleware !== undefined) {
+    return props.floatingMiddleware
+  }
+  const off = props.offset ? props.offset : tooltipBoolean.value ? 0 : 10
+  const arr: Middleware[] = [offset(off)]
+  if (noFlipBoolean.value === false) {
+    arr.push(flip())
+  }
+  if (noShiftBoolean.value === false) {
+    arr.push(shift())
+  }
+  if (hideBoolean.value === true) {
+    arr.push(hideMiddleware({padding: 10}))
+  }
+  if (inlineBoolean.value === true) {
+    arr.push(inline())
+  }
+  arr.push(arrowMiddleware({element: arrow, padding: 10}))
+  return arr
+})
 
-    onMounted(() => {
-      nextTick(() => {
-        generatePopoverInstance(props.target)
-      })
+const placementRef = computed(() => props.placement)
 
-      element.value?.parentNode?.removeChild(element.value)
-
-      if (showBoolean.value) {
-        instance.value?.show()
-      }
-    })
-
-    onBeforeUnmount(() => {
-      instance.value?.dispose()
-      if (target.value instanceof HTMLElement) {
-        disposeTargetEventHandlers(target.value)
-      }
-    })
-
-    return {
-      element,
-      titleRef,
-      contentRef,
-      computedClasses,
-    }
+const {x, y, strategy, middlewareData, placement, update} = useFloating(target, element, {
+  placement: placementRef,
+  middleware: floatingMiddleware,
+  strategy: props.strategy,
+  whileElementsMounted: (...args) => {
+    const cleanup = autoUpdate(...args, {animationFrame: realtimeBoolean.value})
+    // Important! Always return the cleanup function.
+    return cleanup
   },
 })
+
+const arrowStyle = ref<CSSProperties>({position: 'absolute'})
+
+watch(middlewareData, () => {
+  if (hideBoolean.value === true) {
+    if (middlewareData.value.hide?.referenceHidden) {
+      hidden.value = true
+    } else {
+      hidden.value = false
+    }
+  }
+  if (middlewareData.value.arrow) {
+    const {x, y} = middlewareData.value.arrow
+    arrowStyle.value = {
+      position: 'absolute',
+      top: y ? `${y}px` : '',
+      left: x ? `${x}px` : '',
+    }
+  }
+})
+
+const computedClasses = computed(() => {
+  const type = tooltipBoolean.value ? 'tooltip' : 'popover'
+  return [
+    type,
+    `b-${type}`,
+    {
+      [`b-${type}-${props.variant}`]: props.variant !== undefined,
+      show: showState.value && !hidden.value,
+      ['pe-none']: !showState.value,
+      fade: !noFadeBoolean.value,
+      ['d-none']: !showState.value && noFadeBoolean.value,
+      [`${props.customClass}`]: props.customClass !== undefined,
+      [`bs-${type}-${resolveBootstrapPlacement(placement.value)}`]: placement.value !== undefined,
+    },
+  ]
+})
+
+const {isOutside} = useMouseInElement(element)
+const {isOutside: triggerIsOutside} = useMouseInElement(trigger)
+
+const toggle = (e: Event) => {
+  const event = e ?? new Event('click')
+  showState.value ? hide(event) : show()
+}
+
+const buildTriggerableEvent = (
+  type: string,
+  opts: Partial<BvTriggerableEvent> = {}
+): BvTriggerableEvent =>
+  new BvTriggerableEvent(type, {
+    cancelable: false,
+    target: element.value || null,
+    relatedTarget: null,
+    trigger: null,
+    ...opts,
+    componentId: computedId.value,
+  })
+
+const show = () => {
+  const event = buildTriggerableEvent('show', {cancelable: true})
+  emit('show', event)
+  if (event.defaultPrevented) {
+    emit('show-prevented')
+    return
+  }
+  setTimeout(
+    () => {
+      update()
+      showState.value = true
+      nextTick(() => {
+        emit('shown', buildTriggerableEvent('shown'))
+      })
+    },
+    typeof props.delay === 'number' ? props.delay : props.delay?.show || 0
+  )
+}
+
+const hide = (e: Event) => {
+  const event = buildTriggerableEvent('hide', {cancelable: true})
+  emit('hide', event)
+  if (event.defaultPrevented) {
+    emit('hide-prevented')
+    return
+  }
+  const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 100
+  setTimeout(() => {
+    if (
+      e?.type === 'click' ||
+      (isOutside.value &&
+        triggerIsOutside.value &&
+        !element.value?.contains(document?.activeElement))
+    ) {
+      showState.value = false
+      nextTick(() => {
+        emit('hidden', buildTriggerableEvent('hidden'))
+      })
+    } else {
+      setTimeout(() => {
+        hide(e)
+      }, delay)
+    }
+  }, delay)
+}
+
+const bind = () => {
+  // TODO: is this the best way to bind the events?
+  // we place a span and get the next element sibling fo rthe listeners
+  if (props.target) {
+    const elem = getElement(cleanElementProp(props.target))
+    if (elem) {
+      trigger.value = elem
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn('Target element not found', props.target)
+    }
+  } else {
+    trigger.value = placeholder.value?.nextElementSibling as HTMLElement
+  }
+  if (props.reference) {
+    const elem = getElement(cleanElementProp(props.reference))
+    if (elem) {
+      target.value = elem
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn('Reference element not found', props.reference)
+    }
+  } else {
+    target.value = trigger.value
+  }
+  if (!trigger.value || manualBoolean.value) {
+    return
+  }
+  clickBoolean.value && trigger.value.addEventListener('click', toggle)
+  !clickBoolean.value && trigger.value.addEventListener('pointerenter', show)
+  !clickBoolean.value && trigger.value.addEventListener('pointerleave', hide)
+  !clickBoolean.value && trigger.value.addEventListener('focus', show)
+  !clickBoolean.value && trigger.value.addEventListener('blur', hide)
+}
+
+const unbind = () => {
+  if (trigger.value) {
+    trigger.value.removeEventListener('click', toggle)
+    trigger.value.removeEventListener('pointerenter', show)
+    trigger.value.removeEventListener('pointerleave', hide)
+    trigger.value.removeEventListener('focus', show)
+    trigger.value.removeEventListener('blur', hide)
+  }
+}
+
+onClickOutside(
+  element,
+  () => {
+    if (showState.value && clickBoolean.value && !noAutoCloseBoolean.value && !manualBoolean.value)
+      hide(new Event('clickOutside'))
+  },
+  {ignore: [trigger]}
+)
+
+watch(
+  () => [props.click, props.target, props.reference],
+  () => {
+    unbind()
+    bind()
+  }
+)
+
+onMounted(bind)
+
+onBeforeUnmount(unbind)
+</script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>

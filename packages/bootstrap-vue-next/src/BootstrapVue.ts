@@ -3,7 +3,7 @@ import {App, Plugin} from 'vue'
 import './styles/styles.scss'
 
 import * as Components from './components'
-import * as Directives from './directives/exports'
+import * as Directives from './directives'
 import {createBreadcrumb} from './composables'
 import {BootstrapVueOptions} from './types'
 
@@ -112,6 +112,7 @@ declare module '@vue/runtime-core' {
     BToast: typeof Components.BToast
     BToaster: typeof Components.BToaster
     BToastContainer: typeof Components.BToastContainer
+    BTooltip: typeof Components.BTooltip
     BTabs: typeof Components.BTabs
     BTransition: typeof Components.BTransition
     BToastPlugin: typeof Components.BToastPlugin

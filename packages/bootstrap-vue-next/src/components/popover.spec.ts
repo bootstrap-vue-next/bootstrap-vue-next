@@ -5,24 +5,37 @@ import BPopover from './BPopover.vue'
 describe('popover', () => {
   enableAutoUnmount(afterEach)
 
+  it('has div.popover', () => {
+    const wrapper = mount(BPopover)
+    const $div = wrapper.find('div.popover')
+    expect($div.exists()).toBe(true)
+  })
+
   it('has static class popover', () => {
     const wrapper = mount(BPopover)
-    expect(wrapper.classes()).toContain('popover')
+    const $div = wrapper.get('div.popover')
+
+    expect($div.classes()).toContain('popover')
   })
 
   it('has static class b-popover', () => {
     const wrapper = mount(BPopover)
-    expect(wrapper.classes()).toContain('b-popover')
+    const $div = wrapper.get('div.popover')
+
+    expect($div.classes()).toContain('b-popover')
   })
 
   it('has role tooltip', () => {
     const wrapper = mount(BPopover)
-    expect(wrapper.attributes('role')).toBe('tooltip')
+    const $div = wrapper.get('div.popover')
+    expect($div.attributes('role')).toBe('tooltip')
   })
 
   it('has tabindex -1', () => {
     const wrapper = mount(BPopover)
-    expect(wrapper.attributes('tabindex')).toBe('-1')
+    const $div = wrapper.get('div.popover')
+
+    expect($div.attributes('tabindex')).toBe('-1')
   })
 
   it('is tag div', () => {
@@ -34,16 +47,18 @@ describe('popover', () => {
     const wrapper = mount(BPopover, {
       props: {id: 'abc'},
     })
-    expect(wrapper.attributes('id')).toBe('abc')
+    const $div = wrapper.get('div.popover')
+
+    expect($div.attributes('id')).toBe('abc')
     await wrapper.setProps({id: undefined})
-    expect(wrapper.attributes('id')).toBeUndefined()
+    expect($div.attributes('id')).toBeUndefined()
   })
 
   it('first child contains slot title', () => {
     const wrapper = mount(BPopover, {
       slots: {title: 'foobar'},
     })
-    const [, $div] = wrapper.findAll('div')
+    const $div = wrapper.get('div.popover-header')
     expect($div.text()).toBe('foobar')
   })
 
@@ -51,7 +66,7 @@ describe('popover', () => {
     const wrapper = mount(BPopover, {
       props: {title: 'foobar'},
     })
-    const [, $div] = wrapper.findAll('div')
+    const $div = wrapper.get('div.popover-header')
     expect($div.text()).toBe('foobar')
   })
 
@@ -60,32 +75,31 @@ describe('popover', () => {
       props: {title: 'propbar'},
       slots: {title: 'slotbar'},
     })
-    const [, $div] = wrapper.findAll('div')
+    const $div = wrapper.get('div.popover-header')
     expect($div.text()).toBe('slotbar')
   })
 
-  it('second child contains slot default', () => {
+  it('contains slot default', () => {
     const wrapper = mount(BPopover, {
       slots: {default: 'foobar'},
     })
-    const [, , $div] = wrapper.findAll('div')
-    expect($div.text()).toBe('foobar')
+    expect(wrapper.text()).toContain('foobar')
   })
 
   it('second child contains prop content', () => {
     const wrapper = mount(BPopover, {
       props: {content: 'foobar'},
     })
-    const [, , $div] = wrapper.findAll('div')
+    const $div = wrapper.get('div.popover-body')
     expect($div.text()).toBe('foobar')
   })
 
-  it('second child contains slot default if both slot and prop exists', () => {
+  it('contains slot default if both slot and prop exists', () => {
     const wrapper = mount(BPopover, {
       props: {content: 'propbar'},
-      slots: {default: 'slotbar'},
+      slots: {default: '<div class="trigger">slotbar</div>'},
     })
-    const [, , $div] = wrapper.findAll('div')
+    const $div = wrapper.get('div.trigger')
     expect($div.text()).toBe('slotbar')
   })
 
@@ -93,9 +107,11 @@ describe('popover', () => {
     const wrapper = mount(BPopover, {
       props: {variant: 'primary'},
     })
-    expect(wrapper.classes()).toContain('b-popover-primary')
+    const $div = wrapper.get('div.popover')
+    // console.log($div.classes())
+    expect($div.classes()).toContain('b-popover-primary')
     await wrapper.setProps({variant: undefined})
-    expect(wrapper.classes()).not.toContain('b-popover-primary')
+    expect($div.classes()).not.toContain('b-popover-primary')
   })
 
   // Functionally, this component does more, but this only tests the component
