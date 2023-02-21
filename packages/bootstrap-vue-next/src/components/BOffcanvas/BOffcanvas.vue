@@ -22,6 +22,7 @@
         tabindex="-1"
         aria-labelledby="offcanvasLabel"
         data-bs-backdrop="false"
+        v-bind="$attrs"
         @keyup.esc="hide('esc')"
       >
         <template v-if="lazyShowing">
@@ -236,4 +237,10 @@ watch(
   },
   {flush: 'post'}
 )
+</script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>
