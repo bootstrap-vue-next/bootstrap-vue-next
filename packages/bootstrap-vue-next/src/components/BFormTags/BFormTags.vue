@@ -39,6 +39,7 @@
             v-bind="{tag, tagClass, tagVariant, tagPills: tagPillsBoolean, removeTag}"
           >
             <b-form-tag
+              :key="tag"
               :class="tagClass"
               tag="li"
               :variant="tagVariant"
