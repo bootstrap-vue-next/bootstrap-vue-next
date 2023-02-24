@@ -57,7 +57,7 @@
 <script setup lang="ts">
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
-import {onClickOutside} from '@vueuse/core'
+import {onClickOutside, useVModel} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
@@ -83,7 +83,7 @@ interface BDropdownProps {
   dropup?: Booleanish
   dropend?: Booleanish
   dropstart?: Booleanish
-  alignStart?: Booleanish
+  alignCenter?: Booleanish
   alignEnd?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
@@ -112,7 +112,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   dropend: false,
   dropstart: false,
   alignEnd: false,
-  alignStart: false,
+  alignCenter: false,
   lazy: false,
   noFlip: false,
   noShift: false,
@@ -142,14 +142,16 @@ const emit = defineEmits<BDropdownEmits>()
 
 const computedId = useId(toRef(props, 'id'), 'dropdown')
 
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+
+const modelValueBoolean = useBooleanish(modelValue)
 const blockBoolean = useBooleanish(toRef(props, 'block'))
 const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
 const dropendBoolean = useBooleanish(toRef(props, 'dropend'))
 const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
 const dropstartBoolean = useBooleanish(toRef(props, 'dropstart'))
-const alignStartBoolean = useBooleanish(toRef(props, 'alignStart'))
+const alignCenterBoolean = useBooleanish(toRef(props, 'alignCenter'))
 const alignEndBoolean = useBooleanish(toRef(props, 'alignEnd'))
 const splitBoolean = useBooleanish(toRef(props, 'split'))
 const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
@@ -169,7 +171,7 @@ const floatingPlacement = computed(() =>
     bottom: !dropupBoolean.value,
     start: dropstartBoolean.value,
     end: dropendBoolean.value,
-    dropstart: alignStartBoolean.value,
+    dropstart: !alignCenterBoolean.value,
     dropend: alignEndBoolean.value,
   })
 )
@@ -226,7 +228,7 @@ const onButtonClick = () => {
   const e = new BvEvent(currentModelValue ? 'hide' : 'show')
   currentModelValue ? emit('hide', e) : emit('show', e)
   if (e.defaultPrevented) return
-  emit('update:modelValue', !currentModelValue)
+  modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
 }
 
@@ -238,16 +240,14 @@ onClickOutside(
   floating,
   () => {
     if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'outside')) {
-      emit('update:modelValue', !modelValueBoolean.value)
+      modelValue.value = !modelValueBoolean.value
     }
   },
   {ignore: [button, splitButton]}
 )
 const onClickInside = () => {
   if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'inside')) {
-    // TODO consider using computed({get, set}) syntax (or vueuse/useVModel) for modifying update events in all components
-    // For simplicity
-    emit('update:modelValue', !modelValueBoolean.value)
+    modelValue.value = !modelValueBoolean.value
   }
 }
 
