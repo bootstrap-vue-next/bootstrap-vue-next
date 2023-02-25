@@ -57,12 +57,13 @@
 <script setup lang="ts">
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
-import {onClickOutside} from '@vueuse/core'
+import {onClickOutside, useVModel} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {BvEvent, resolveFloatingPlacement, stringToInteger} from '../../utils'
 import BButton from '../BButton/BButton.vue'
+import type {RouteLocationRaw} from 'vue-router'
 
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
@@ -83,8 +84,8 @@ interface BDropdownProps {
   dropup?: Booleanish
   dropend?: Booleanish
   dropstart?: Booleanish
-  alignStart?: Booleanish
-  alignEnd?: Booleanish
+  center?: Booleanish
+  end?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
   offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
@@ -100,6 +101,7 @@ interface BDropdownProps {
   lazy?: Booleanish
   strategy?: Strategy
   floatingMiddleware?: Middleware[]
+  splitTo?: RouteLocationRaw
 }
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
@@ -111,8 +113,8 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   isNav: false,
   dropend: false,
   dropstart: false,
-  alignEnd: false,
-  alignStart: false,
+  end: false,
+  center: false,
   lazy: false,
   noFlip: false,
   noShift: false,
@@ -142,15 +144,17 @@ const emit = defineEmits<BDropdownEmits>()
 
 const computedId = useId(toRef(props, 'id'), 'dropdown')
 
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+
+const modelValueBoolean = useBooleanish(modelValue)
 const blockBoolean = useBooleanish(toRef(props, 'block'))
 const darkBoolean = useBooleanish(toRef(props, 'dark'))
 const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
 const dropendBoolean = useBooleanish(toRef(props, 'dropend'))
 const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
 const dropstartBoolean = useBooleanish(toRef(props, 'dropstart'))
-const alignStartBoolean = useBooleanish(toRef(props, 'alignStart'))
-const alignEndBoolean = useBooleanish(toRef(props, 'alignEnd'))
+const centerBoolean = useBooleanish(toRef(props, 'center'))
+const endBoolean = useBooleanish(toRef(props, 'end'))
 const splitBoolean = useBooleanish(toRef(props, 'split'))
 const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
 const noFlipBoolean = useBooleanish(toRef(props, 'noFlip'))
@@ -166,11 +170,10 @@ const referencePlacement = computed(() => (!splitBoolean.value ? splitButton.val
 const floatingPlacement = computed(() =>
   resolveFloatingPlacement({
     top: dropupBoolean.value,
-    bottom: !dropupBoolean.value,
     start: dropstartBoolean.value,
     end: dropendBoolean.value,
-    dropstart: alignStartBoolean.value,
-    dropend: alignEndBoolean.value,
+    alignCenter: centerBoolean.value,
+    alignEnd: endBoolean.value,
   })
 )
 const floatingMiddleware = computed<Middleware[]>(() => {
@@ -195,6 +198,9 @@ const {x, y, strategy, update} = useFloating(referencePlacement, floating, {
 
 const computedClasses = computed(() => ({
   'd-grid': blockBoolean.value,
+  'dropup': dropupBoolean.value,
+  'dropend': dropendBoolean.value,
+  'dropstart': dropstartBoolean.value,
   'd-flex': blockBoolean.value && splitBoolean.value,
 }))
 
@@ -218,6 +224,7 @@ const dropdownMenuClasses = computed(() => [
 const buttonAttr = computed(() => ({
   'aria-expanded': splitBoolean.value ? undefined : false,
   'href': splitBoolean.value ? props.splitHref : undefined,
+  'to': splitBoolean.value && props.splitTo ? props.splitTo : undefined,
 }))
 
 const onButtonClick = () => {
@@ -226,7 +233,7 @@ const onButtonClick = () => {
   const e = new BvEvent(currentModelValue ? 'hide' : 'show')
   currentModelValue ? emit('hide', e) : emit('show', e)
   if (e.defaultPrevented) return
-  emit('update:modelValue', !currentModelValue)
+  modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
 }
 
@@ -238,16 +245,14 @@ onClickOutside(
   floating,
   () => {
     if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'outside')) {
-      emit('update:modelValue', !modelValueBoolean.value)
+      modelValue.value = !modelValueBoolean.value
     }
   },
   {ignore: [button, splitButton]}
 )
 const onClickInside = () => {
   if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'inside')) {
-    // TODO consider using computed({get, set}) syntax (or vueuse/useVModel) for modifying update events in all components
-    // For simplicity
-    emit('update:modelValue', !modelValueBoolean.value)
+    modelValue.value = !modelValueBoolean.value
   }
 }
 
