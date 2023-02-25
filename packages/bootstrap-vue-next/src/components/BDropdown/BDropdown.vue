@@ -63,6 +63,7 @@ import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {BvEvent, resolveFloatingPlacement, stringToInteger} from '../../utils'
 import BButton from '../BButton/BButton.vue'
+import type {RouteLocationRaw} from 'vue-router'
 
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
@@ -100,6 +101,7 @@ interface BDropdownProps {
   lazy?: Booleanish
   strategy?: Strategy
   floatingMiddleware?: Middleware[]
+  splitTo?: RouteLocationRaw
 }
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
@@ -222,6 +224,7 @@ const dropdownMenuClasses = computed(() => [
 const buttonAttr = computed(() => ({
   'aria-expanded': splitBoolean.value ? undefined : false,
   'href': splitBoolean.value ? props.splitHref : undefined,
+  'to': splitBoolean.value && props.splitTo ? props.splitTo : undefined,
 }))
 
 const onButtonClick = () => {
