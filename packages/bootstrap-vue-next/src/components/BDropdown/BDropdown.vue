@@ -168,7 +168,6 @@ const referencePlacement = computed(() => (!splitBoolean.value ? splitButton.val
 const floatingPlacement = computed(() =>
   resolveFloatingPlacement({
     top: dropupBoolean.value,
-    bottom: !dropupBoolean.value,
     start: dropstartBoolean.value,
     end: dropendBoolean.value,
     alignCenter: centerBoolean.value,
