@@ -65,7 +65,7 @@ import {
 import {computed, provide, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
-import {useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
+import {useIntervalFn, useSwipe, useToNumber, useVModel} from '@vueuse/core'
 
 interface BCarouselProps {
   ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
@@ -118,6 +118,8 @@ const emit = defineEmits<BCarouselEmits>()
 const slots = useSlots()
 
 const computedId = useId(toRef(props, 'id'), 'carousel')
+
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const keyboardBoolean = useBooleanish(toRef(props, 'keyboard'))
 const rideReverseBoolean = useBooleanish(toRef(props, 'rideReverse'))
@@ -177,8 +179,8 @@ const buildBvCarouselEvent = (event: 'slid' | 'slide', from: number) =>
     target: target.value,
     direction: direction.value ? 'right' : 'left',
     from,
-    to: props.modelValue,
-    relatedTarget: relatedTarget.value?.children[props.modelValue] ?? null,
+    to: modelValue.value,
+    relatedTarget: relatedTarget.value?.children[modelValue.value] ?? null,
   })
 
 const goToValue = (value: number): void => {
@@ -190,22 +192,22 @@ const goToValue = (value: number): void => {
   if (isRiding.value === true) {
     resume()
   }
-  direction.value = value < props.modelValue ? false : true
+  direction.value = value < modelValue.value ? false : true
   if (value >= slides.value.length) {
     if (noWrapBoolean.value) return
-    emit('update:modelValue', 0)
+    modelValue.value = 0
     return
   }
   if (value < 0) {
     if (noWrapBoolean.value) return
-    emit('update:modelValue', slides.value.length - 1)
+    modelValue.value = slides.value.length - 1
     return
   }
-  emit('update:modelValue', value)
+  modelValue.value = value
 }
 
-const prev = (): void => goToValue(props.modelValue - 1)
-const next = (): void => goToValue(props.modelValue + 1)
+const prev = (): void => goToValue(modelValue.value - 1)
+const next = (): void => goToValue(modelValue.value + 1)
 
 const onKeydown = (fn: () => void) => {
   if (keyboardBoolean.value === false) return
