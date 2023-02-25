@@ -83,8 +83,8 @@ interface BDropdownProps {
   dropup?: Booleanish
   dropend?: Booleanish
   dropstart?: Booleanish
-  alignCenter?: Booleanish
-  alignEnd?: Booleanish
+  center?: Booleanish
+  end?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
   offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
@@ -111,8 +111,8 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   isNav: false,
   dropend: false,
   dropstart: false,
-  alignEnd: false,
-  alignCenter: false,
+  end: false,
+  center: false,
   lazy: false,
   noFlip: false,
   noShift: false,
@@ -151,8 +151,8 @@ const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
 const dropendBoolean = useBooleanish(toRef(props, 'dropend'))
 const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
 const dropstartBoolean = useBooleanish(toRef(props, 'dropstart'))
-const alignCenterBoolean = useBooleanish(toRef(props, 'alignCenter'))
-const alignEndBoolean = useBooleanish(toRef(props, 'alignEnd'))
+const centerBoolean = useBooleanish(toRef(props, 'center'))
+const endBoolean = useBooleanish(toRef(props, 'end'))
 const splitBoolean = useBooleanish(toRef(props, 'split'))
 const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
 const noFlipBoolean = useBooleanish(toRef(props, 'noFlip'))
@@ -171,8 +171,8 @@ const floatingPlacement = computed(() =>
     bottom: !dropupBoolean.value,
     start: dropstartBoolean.value,
     end: dropendBoolean.value,
-    dropstart: !alignCenterBoolean.value,
-    dropend: alignEndBoolean.value,
+    alignCenter: centerBoolean.value,
+    alignEnd: endBoolean.value,
   })
 )
 const floatingMiddleware = computed<Middleware[]>(() => {

@@ -47,27 +47,45 @@
     </b-row>
     <b-row>
       <b-col>
-        <b-dropdown dropup right text="Up Left" variant="dark" class="m-2">
+        <b-dropdown dropup text="Up" variant="success" class="m-2">
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-dropdown>
 
-        <b-dropdown dropup text="Up Right" variant="success" class="m-2">
+        <b-dropdown dropup end text="Up End" variant="dark" class="m-2">
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-dropdown>
 
-        <b-dropdown dropright text="Right" variant="info" class="m-2">
+        <b-dropdown dropend text="drop end" variant="info" class="m-2">
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-dropdown>
 
-        <b-dropdown text="Bottom Right" variant="warning" class="m-2">
+        <b-dropdown dropstart text="dropstart" variant="outline-primary" class="m-2">
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+          <b-dropdown-item href="#">Action</b-dropdown-item>
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-dropdown>
 
-        <b-dropdown right text="Bottom Left" variant="light" class="m-2">
+        <b-dropdown dropstart center text="dropstart center" variant="outline-primary" class="m-2">
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+          <b-dropdown-item href="#">Action</b-dropdown-item>
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-dropdown>
 
-        <b-dropdown dropleft text="Left" variant="outline-primary" class="m-2">
+        <b-dropdown dropstart end text="dropstart end" variant="outline-primary" class="m-2">
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+        </b-dropdown>
+
+        <b-dropdown text="Bottom" variant="warning" class="m-2">
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+        </b-dropdown>
+
+        <b-dropdown end text="Bottom end" variant="light" class="m-2">
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+        </b-dropdown>
+
+        <b-dropdown center text="center" class="m-2">
           <b-dropdown-item href="#">Action</b-dropdown-item>
         </b-dropdown>
       </b-col>
