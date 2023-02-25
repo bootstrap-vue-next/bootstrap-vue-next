@@ -196,6 +196,9 @@ const {x, y, strategy, update} = useFloating(referencePlacement, floating, {
 
 const computedClasses = computed(() => ({
   'd-grid': blockBoolean.value,
+  'dropup': dropupBoolean.value,
+  'dropend': dropendBoolean.value,
+  'dropstart': dropstartBoolean.value,
   'd-flex': blockBoolean.value && splitBoolean.value,
 }))
 
