@@ -12,11 +12,11 @@
       </slot>
     </template>
     <slot>
-      <b-placeholder cols="7" />
-      <b-placeholder cols="4" />
-      <b-placeholder cols="4" />
-      <b-placeholder cols="6" />
-      <b-placeholder cols="8" />
+      <b-placeholder cols="7" v-bind="defaultAttrs" />
+      <b-placeholder cols="4" v-bind="defaultAttrs" />
+      <b-placeholder cols="4" v-bind="defaultAttrs" />
+      <b-placeholder cols="6" v-bind="defaultAttrs" />
+      <b-placeholder cols="8" v-bind="defaultAttrs" />
     </slot>
     <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
@@ -87,6 +87,12 @@ const footerAttrs = computed(() => ({
   animation: props.footerAnimation,
   size: noButtonBoolean.value ? props.footerSize : undefined,
   variant: props.footerVariant,
+}))
+
+const defaultAttrs = computed(() => ({
+  animation: props.animation,
+  size: props.size,
+  variant: props.variant,
 }))
 
 const imgAttrs = computed(() => ({

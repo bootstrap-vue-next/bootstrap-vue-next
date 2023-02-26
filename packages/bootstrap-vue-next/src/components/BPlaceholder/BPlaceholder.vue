@@ -1,5 +1,13 @@
 <template>
-  <component :is="tag" class="placeholder" :class="computedClasses" :style="computedStyle" />
+  <component :is="wrapperTag" :class="wrapperClasses">
+    <component
+      v-bind="$attrs"
+      :is="tag"
+      class="placeholder"
+      :class="computedClasses"
+      :style="computedStyle"
+    />
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -8,6 +16,7 @@ import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../ty
 
 interface Props {
   tag?: string
+  wrapperTag?: string
   width?: string | number
   cols?: string | number
   variant?: ColorVariant
@@ -17,6 +26,8 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   tag: 'span',
+  wrapperTag: 'span',
+  cols: 12,
 })
 
 const widthString = computed<string | undefined>(() =>
@@ -41,10 +52,19 @@ const computedClasses = computed(() => ({
   [`col-${colsString.value}`]: colsString.value !== undefined && widthString.value === undefined,
   [`bg-${props.variant}`]: props.variant !== undefined,
   [`placeholder-${props.size}`]: props.size !== undefined,
+}))
+
+const wrapperClasses = computed(() => ({
   [`placeholder-${props.animation}`]: props.animation !== undefined,
 }))
 
 const computedStyle = computed<StyleValue | undefined>(() =>
   widthString.value === undefined ? undefined : `width: ${widthString.value}%;`
 )
+</script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>

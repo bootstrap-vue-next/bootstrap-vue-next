@@ -37,7 +37,7 @@ import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} fr
 import {useBooleanish} from '../../composables'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
-import {stringToInteger} from '../../utils'
+import {useToNumber} from '@vueuse/core'
 
 interface BSkeletonTableProps {
   rows?: string | number
@@ -70,27 +70,25 @@ const props = withDefaults(defineProps<BSkeletonTableProps>(), {
   headerCellWidth: 100,
 })
 
-const columnsNumber = computed<number>(() =>
-  // Keep '5' default in line with columns default above
-  typeof props.columns === 'string' ? stringToInteger(props.columns, 5) : props.columns
-)
-const rowsNumber = computed<number>(() =>
-  // Keep '3' default in line with rows default above
-  typeof props.rows === 'string' ? stringToInteger(props.rows, 3) : props.rows
-)
+const columnsToNumber = useToNumber(toRef(props, 'columns'), {nanToZero: true, method: 'parseInt'})
+const rowsToNumber = useToNumber(toRef(props, 'rows'), {nanToZero: true, method: 'parseInt'})
+const headerColumns = useToNumber(toRef(props, 'headerColumns'), {
+  nanToZero: true,
+  method: 'parseInt',
+})
+const footerColumns = useToNumber(toRef(props, 'footerColumns'), {
+  nanToZero: true,
+  method: 'parseInt',
+})
+
+const columnsNumber = computed<number>(() => columnsToNumber.value || 5)
+const rowsNumber = computed<number>(() => rowsToNumber.value || 3)
+
 const computedHeaderColumnsLength = computed<number>(() =>
-  props.headerColumns === undefined
-    ? columnsNumber.value
-    : typeof props.headerColumns === 'string'
-    ? stringToInteger(props.headerColumns, columnsNumber.value)
-    : props.headerColumns
+  props.headerColumns === undefined ? columnsNumber.value : headerColumns.value
 )
 const computedFooterColumnsLength = computed<number>(() =>
-  props.footerColumns === undefined
-    ? columnsNumber.value
-    : typeof props.footerColumns === 'string'
-    ? stringToInteger(props.footerColumns, columnsNumber.value)
-    : props.footerColumns
+  props.footerColumns === undefined ? columnsNumber.value : footerColumns.value
 )
 
 const placeholderAttrs = computed(() => ({
