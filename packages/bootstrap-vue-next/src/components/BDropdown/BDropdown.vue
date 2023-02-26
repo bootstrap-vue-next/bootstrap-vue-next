@@ -57,11 +57,11 @@
 <script setup lang="ts">
 // import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
-import {onClickOutside} from '@vueuse/core'
+import {onClickOutside, useToNumber} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
-import {BvEvent, resolveFloatingPlacement, stringToInteger} from '../../utils'
+import {BvEvent, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 
 // TODO add navigation through keyboard events
@@ -158,6 +158,8 @@ const noShiftBoolean = useBooleanish(toRef(props, 'noShift'))
 const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const splitDisabledBoolean = useBooleanish(toRef(props, 'splitDisabled'))
 
+const offsetToNumber = useToNumber(toRef(props, 'offset'), {method: 'parseInt', nanToZero: true})
+
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
 const splitButton = ref<HTMLElement | null>(null)
@@ -177,8 +179,11 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
-  const off = typeof props.offset === 'string' ? stringToInteger(props.offset, 0) : props.offset
-  const arr: Middleware[] = [offset(off)]
+  const localOffset =
+    typeof props.offset === 'string' || typeof props.offset === 'number'
+      ? offsetToNumber.value
+      : props.offset
+  const arr: Middleware[] = [offset(localOffset)]
   if (noFlipBoolean.value === false) {
     arr.push(flip())
   }
