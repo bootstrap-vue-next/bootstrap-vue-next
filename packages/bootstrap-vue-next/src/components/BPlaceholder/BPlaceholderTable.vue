@@ -31,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BSkeletonTableProps} from '../../types/components'
 import {computed, toRef} from 'vue'
 import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -39,7 +38,7 @@ import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
 
-interface BSkeletonTableProps {
+interface BPlaceholderTableProps {
   rows?: string | number
   columns?: string | number
   cellWidth?: string | number
@@ -60,7 +59,7 @@ interface BSkeletonTableProps {
   footerVariant?: ColorVariant
 }
 
-const props = withDefaults(defineProps<BSkeletonTableProps>(), {
+const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   columns: 5,
   rows: 3,
   cellWidth: 100,

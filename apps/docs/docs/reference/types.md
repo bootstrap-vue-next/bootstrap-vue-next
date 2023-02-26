@@ -155,18 +155,6 @@ type Position =
 type Size = 'sm' | 'lg' | undefined
 ```
 
-## SkeletonAnimation
-
-```ts
-type SkeletonAnimation = boolean | 'wave' | 'fade' | 'throb'
-```
-
-## SkeletonType
-
-```ts
-type SkeletonType = 'text' | 'avatar' | 'input' | 'button'
-```
-
 ## SpinnerType
 
 ```ts

@@ -127,11 +127,7 @@ export type {
 export type {ParentData as BProgressParentData, Props as BProgressProps} from './BProgress'
 export type {Props as BProgressBarProps} from './BProgressBar'
 export type {Props as BRowProps} from './BRow'
-// BSkeleton
-export type {Props as BSkeletonProps} from './BSkeleton/BSkeleton'
-export type {Props as BSkeletonIconProps} from './BSkeleton/BSkeletonIcon'
-export type {Props as BSkeletonTableProps} from './BSkeleton/BSkeletonTable'
-export type {Props as BSkeletonWrapperProps} from './BSkeleton/BSkeletonWrapper'
+// BSpinner
 export type {Props as BSpinnerProps} from './BSpinner'
 // BTable
 export type {
