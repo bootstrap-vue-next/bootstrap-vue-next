@@ -15,10 +15,10 @@ export interface Props {
   borderless?: boolean
   bordered?: boolean
   dark?: boolean
-  fields?: Array<TableField>
+  fields?: TableField[]
   footClone?: boolean
   hover?: boolean
-  items?: Array<TableItem>
+  items?: TableItem[]
   responsive?: boolean | Breakpoint
   small?: boolean
   striped?: boolean
@@ -39,8 +39,8 @@ export type BTableProviderContext = {
 }
 export type BTableProvider = (
   context: BTableProviderContext,
-  provide: (items: Array<TableItem>) => Promise<TableItem[] | undefined>
-) => Promise<Array<TableItem> | undefined> | Array<TableItem> | undefined
+  provide: (items: TableItem[]) => Promise<TableItem[] | undefined>
+) => Promise<TableItem[] | undefined> | TableItem[] | undefined
 
 export type BTableSortCompare = (
   aRow: TableItem,

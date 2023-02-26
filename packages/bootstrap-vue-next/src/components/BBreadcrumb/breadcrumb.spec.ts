@@ -63,7 +63,7 @@ describe('breadcrumb', () => {
 
   it('has breadcrumbitem', () => {
     const wrapper = mount(BBreadcrumb, {
-      props: {items: [{text: 'foo'}] as Array<BreadcrumbItem>},
+      props: {items: [{text: 'foo'}] as BreadcrumbItem[]},
     })
     const $bbreadcrumbitem = wrapper.findComponent(BBreadcrumbItem)
     expect($bbreadcrumbitem.exists()).toBe(true)
@@ -71,7 +71,7 @@ describe('breadcrumb', () => {
 
   it('renders bbreadcrumbitem before default slot and after prepend slot', () => {
     const wrapper = mount(BBreadcrumb, {
-      props: {items: [{text: 'foo'}] as Array<BreadcrumbItem>},
+      props: {items: [{text: 'foo'}] as BreadcrumbItem[]},
       slots: {default: 'default', prepend: 'prepend'},
     })
     expect(wrapper.text()).toBe('prependfoodefault')
@@ -82,7 +82,7 @@ describe('breadcrumb', () => {
       props: {
         items: [
           {text: 'foo', active: true, disabled: true, href: 'href', to: 'to'},
-        ] as Array<BreadcrumbItem>,
+        ] as BreadcrumbItem[],
       },
       slots: {default: 'default', prepend: 'prepend'},
     })
@@ -95,7 +95,7 @@ describe('breadcrumb', () => {
       props: {
         items: [
           {text: 'foo', active: true, disabled: true, href: 'href', to: 'to'},
-        ] as Array<BreadcrumbItem>,
+        ] as BreadcrumbItem[],
       },
       slots: {default: 'default', prepend: 'prepend'},
     })

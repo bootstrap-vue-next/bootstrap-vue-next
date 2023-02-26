@@ -17,9 +17,9 @@ export interface Props {
   required?: boolean
   size?: InputSize
   state?: boolean
-  uncheckedValue?: Array<unknown> | Set<unknown> | boolean
-  value?: Array<unknown> | Set<unknown> | boolean
-  modelValue?: Array<unknown> | Set<unknown> | boolean
+  uncheckedValue?: unknown[] | Set<unknown> | boolean
+  value?: unknown[] | Set<unknown> | boolean
+  modelValue?: unknown[] | Set<unknown> | boolean
 }
 // Emits
 export interface Emits {

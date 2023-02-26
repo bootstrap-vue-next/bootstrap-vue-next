@@ -58,7 +58,7 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
 export default {
   mounted(el, binding: DirectiveBinding<string>): void {
     const targetIds = getTargets(binding, el)
-    const targetAttrs: Array<string> = []
+    const targetAttrs: string[] = []
 
     const targetAttr = el.tagName === 'a' ? 'href' : 'data-bs-target'
 

@@ -8,9 +8,9 @@ export interface Props {
   lazy?: boolean
   noBody?: boolean | string
   tag?: string
-  titleItemClass?: Array<unknown> | Record<string, unknown> | string
+  titleItemClass?: unknown[] | Record<string, unknown> | string
   titleLinkAttributes?: Record<string, unknown>
-  titleLinkClass?: Array<unknown> | Record<string, unknown> | string
+  titleLinkClass?: unknown[] | Record<string, unknown> | string
 }
 // Emits
 

@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'primary',
 })
 
-const computedClasses = computed<Array<string>>(() => ['btn', `btn-${props.variant}`, 'disabled'])
+const computedClasses = computed<string[]>(() => ['btn', `btn-${props.variant}`, 'disabled'])
 
 const computedAttrs = computed(() => ({
   animation: props.animation,

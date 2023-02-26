@@ -18,9 +18,9 @@ interface BCardImgProps {
   height?: number | string
   start?: Booleanish
   end?: Booleanish
-  sizes?: string | Array<string>
+  sizes?: string | string[]
   src?: string
-  srcset?: string | Array<string>
+  srcset?: string | string[]
   top?: Booleanish
   width?: number | string
 }

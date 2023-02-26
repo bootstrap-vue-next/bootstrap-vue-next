@@ -4,7 +4,7 @@ export interface Props {
   id?: string
   ariaDescribedby?: string
   header?: string
-  headerClasses?: string | Array<unknown> | Record<string, unknown>
+  headerClasses?: string | unknown[] | Record<string, unknown>
   headerTag?: string
   headerVariant?: ColorVariant
 }

@@ -13,7 +13,7 @@ const resolveTrigger = (
     return 'manual'
   }
 
-  const trigger: Array<string> = []
+  const trigger: string[] = []
 
   if (modifiers.click) {
     trigger.push('click')

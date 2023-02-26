@@ -79,10 +79,6 @@ import TNav from '../components/Comps/TNav.vue'
 import TOverlay from '../components/Comps/TOverlay.vue'
 import TPagination from '../components/Comps/TPagination.vue'
 import TPopover from '../components/Comps/TPopover.vue'
-import TSkeleton from '../components/Comps/TSkeleton.vue'
-import TSkeletonIcon from '../components/Comps/TSkeletonIcon.vue'
-import TSkeletonTable from '../components/Comps/TSkeletonTable.vue'
-import TSkeletonWrapper from '../components/Comps/TSkeletonWrapper.vue'
 import TTable from '../components/Comps/TTable.vue'
 import TTableSimple from '../components/Comps/TTableSimple.vue'
 import TTabs from '../components/Comps/TTabs.vue'
@@ -90,7 +86,7 @@ import TToast from '../components/Comps/TToast.vue'
 import TTooltip from '../components/Comps/TTooltip.vue'
 import TVisible from '../components/Directives/TVisible.vue'
 
-const comps: Array<{name: string; is: unknown; disabled?: true}> = [
+const comps: {name: string; is: unknown; disabled?: true}[] = [
   {name: 'Visible', is: TVisible, disabled: true},
   {name: 'Accordion', is: TAccordion},
   {name: 'Alert', is: TAlert},
@@ -121,10 +117,6 @@ const comps: Array<{name: string; is: unknown; disabled?: true}> = [
   {name: 'Overlay', is: TOverlay},
   {name: 'Pagination', is: TPagination},
   {name: 'Popover', is: TPopover},
-  {name: 'Skeleton', is: TSkeleton},
-  {name: 'SkeletonIcon', is: TSkeletonIcon},
-  {name: 'SkeletonTable', is: TSkeletonTable},
-  {name: 'SkeletonWrapper', is: TSkeletonWrapper},
   {name: 'Table', is: TTable},
   {name: 'TableSimple', is: TTableSimple},
   {name: 'Tabs', is: TTabs},
@@ -134,7 +126,7 @@ const comps: Array<{name: string; is: unknown; disabled?: true}> = [
 
 const searchQuery = ref('')
 
-const active = ref<Array<string>>([])
+const active = ref<string[]>([])
 
 const filteredSearch = computed(() =>
   searchQuery.value.trim() !== ''

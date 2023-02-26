@@ -21,9 +21,9 @@ interface BImgProps {
   start?: Booleanish
   end?: Booleanish
   rounded?: boolean | string
-  sizes?: string | Array<string>
+  sizes?: string | string[]
   src?: string
-  srcset?: string | Array<string>
+  srcset?: string | string[]
   thumbnail?: Booleanish
   width?: number | string
 }

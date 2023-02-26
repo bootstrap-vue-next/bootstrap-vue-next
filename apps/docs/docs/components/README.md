@@ -153,10 +153,6 @@ const componentList = {
         name: 'Progress',
         description: 'A custom progress component for displaying simple or complex progress bars, featuring support for horizontally stacked bars, animated backgrounds, and text labels'
     },
-    Skeleton: {
-        name: 'Skeleton',
-        description: 'The skeleton component can be used to scaffold a loading state, while your data is loading'
-    },
     Spinner: {
         name: 'Spinner',
         description: `The spinner component can be used to show the loading state in your projects. They're rendered only with basic HTML and CSS as a lightweight Vue functional component.`

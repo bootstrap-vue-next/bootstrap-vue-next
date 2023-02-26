@@ -1618,27 +1618,7 @@ This component is implemented in Bootstrap v5 as [Offcanvas](https://getbootstra
 
 ## Skeleton
 
-This is a <Badge type="warning" text="non-standard" /> component.
-
-### `<b-skeleton>`
-
-![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) **COMPLETED**
-
-### `<b-skeleton-wrapper>`
-
-![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) **COMPLETED**
-
-### `<b-skeleton-table>`
-
-![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) **COMPLETED**
-
-### `<b-skeleton-img>`
-
-Not implemented yet.
-
-### `<b-skeleton-icon>`
-
-Since we do not implement Bootstrap icons or any related icon package. This component is slighly different from the BootstrapVue component, it was refactoring as a SVG wrapper.
+Skeleton is a Bootstrap-vue custom component, and has been replaced with the official Bootstrap v5 recommendation: BPlaceholder [Read more](https://getbootstrap.com/docs/5.3/components/placeholders/)
 
 #### Properties
 

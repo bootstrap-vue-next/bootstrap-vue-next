@@ -11,9 +11,9 @@ export interface Props {
   left?: boolean
   right?: boolean
   rounded?: boolean | string
-  sizes?: string | Array<string>
+  sizes?: string | string[]
   src?: string
-  srcset?: string | Array<string>
+  srcset?: string | string[]
   thumbnail?: boolean
   width?: number | string
 }

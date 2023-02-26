@@ -41,7 +41,7 @@ export type BodyProp = ToastContent['body']
 // Toast ViewModel, Each toast instance controls one view model
 export interface ToastVM {
   container: VMContainer | undefined
-  toasts: Array<Toast>
+  toasts: Toast[]
   root: boolean
   id: symbol
 }
@@ -82,9 +82,9 @@ export class ToastInstance {
     })
   }
 
-  toasts(position?: ContainerPosition): ComputedRef<Array<Toast>> {
+  toasts(position?: ContainerPosition): ComputedRef<Toast[]> {
     if (position) {
-      return computed<Array<Toast>>(() =>
+      return computed<Toast[]>(() =>
         this.vm.toasts.filter((toast) => {
           if (toast.options.pos === position && toast.options.value) {
             return toast

@@ -85,7 +85,6 @@ export default defineUserConfig({
             '/components/Placeholder.md',
             '/components/Popover.md',
             '/components/Progress.md',
-            '/components/Skeleton.md',
             '/components/Spinner.md',
             '/components/Table.md',
             '/components/Tabs.md',

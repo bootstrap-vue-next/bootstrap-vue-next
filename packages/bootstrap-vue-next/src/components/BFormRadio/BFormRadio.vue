@@ -43,7 +43,7 @@ interface BFormRadioProps {
   name?: string
   size?: InputSize
   autofocus?: Booleanish
-  modelValue?: boolean | string | Array<unknown> | Record<string, unknown> | number
+  modelValue?: boolean | string | unknown[] | Record<string, unknown> | number
   plain?: Booleanish
   button?: Booleanish
   switch?: Booleanish
@@ -70,11 +70,11 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
 })
 
 interface BFormRadioEmits {
-  (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
-  (e: 'change', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
+  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number): void
+  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number): void
   (
     e: 'update:modelValue',
-    value: boolean | string | Array<unknown> | Record<string, unknown> | number
+    value: boolean | string | unknown[] | Record<string, unknown> | number
   ): void
 }
 

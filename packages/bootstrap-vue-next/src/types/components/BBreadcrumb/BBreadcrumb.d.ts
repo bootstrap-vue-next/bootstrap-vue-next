@@ -1,7 +1,7 @@
 import type {BreadcrumbItem} from '../..'
 // Props
 export interface Props {
-  items?: Array<BreadcrumbItem>
+  items?: BreadcrumbItem[]
 }
 // Emits
 

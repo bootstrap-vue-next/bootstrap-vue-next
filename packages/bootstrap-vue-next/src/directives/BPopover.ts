@@ -16,7 +16,7 @@ export default {
       ? 'top'
       : 'right'
 
-    const trigger: Array<string> = []
+    const trigger: string[] = []
 
     if (binding.modifiers.manual) {
       trigger.push('manual')

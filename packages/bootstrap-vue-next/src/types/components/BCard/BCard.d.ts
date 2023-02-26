@@ -4,21 +4,21 @@ export interface Props {
   align?: Alignment.TextHorizontal
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
-  bodyClass?: Array<unknown> | Record<string, unknown> | string
+  bodyClass?: unknown[] | Record<string, unknown> | string
   bodyTag?: string // Above todo, also Array can be explicit
   bodyTextVariant?: ColorVariant
   borderVariant?: ColorVariant
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: Array<unknown> | Record<string, unknown> | string
+  footerClass?: unknown[] | Record<string, unknown> | string
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: ColorVariant
   header?: string
   headerBgVariant?: ColorVariant
   headerBorderVariant?: ColorVariant
-  headerClass?: Array<unknown> | Record<string, unknown> | string
+  headerClass?: unknown[] | Record<string, unknown> | string
   headerHtml?: string
   headerTag?: string
   headerTextVariant?: ColorVariant

@@ -212,13 +212,13 @@ interface BTableProps {
   bordered?: Booleanish
   borderVariant?: ColorVariant
   dark?: Booleanish
-  fields?: Array<TableField>
+  fields?: TableField[]
   footClone?: Booleanish
   hover?: Booleanish
-  items?: Array<TableItem>
+  items?: TableItem[]
   provider?: BTableProvider
   sortCompare?: BTableSortCompare
-  noProvider?: Array<NoProviderTypes>
+  noProvider?: NoProviderTypes[]
   noProviderPaging?: Booleanish
   noProviderSorting?: Booleanish
   noProviderFiltering?: Booleanish
