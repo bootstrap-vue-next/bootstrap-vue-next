@@ -153,7 +153,7 @@ import {ref, type Ref} from 'vue'
 import {TableField, TableItem} from 'bootstrap-vue-next'
 
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
-const objectTableDefinitions: Ref<Array<TableField>> = ref([
+const objectTableDefinitions: Ref<TableField[]> = ref([
   {
     key: 'last_name',
     label: 'Family name',
@@ -162,7 +162,7 @@ const objectTableDefinitions: Ref<Array<TableField>> = ref([
   {key: 'first_name', label: 'Given name'},
   {key: 'age', label: 'Age', formatter: (value: unknown) => `${value} years`},
 ])
-const items: Array<TableItem> = [
+const items: TableItem[] = [
   {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
   {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
   {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
@@ -175,10 +175,10 @@ const items: Array<TableItem> = [
   },
   {age: 38, first_name: 'Jami', last_name: 'Carney'},
 ]
-const selection = ref<Array<TableItem>>([])
+const selection = ref<TableItem[]>([])
 const showSelectBox = ref(false)
 const selectionMode = ref('single')
-function selectClick(selected: Array<TableItem>) {
+function selectClick(selected: TableItem[]) {
   console.log(selected)
   selection.value = selected
 }

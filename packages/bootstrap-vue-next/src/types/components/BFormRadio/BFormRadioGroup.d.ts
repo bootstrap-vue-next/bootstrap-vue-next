@@ -5,7 +5,7 @@ export interface Props {
   form?: string
   id?: string
   name?: string
-  modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
+  modelValue?: string | boolean | unknown[] | Record<string, unknown> | number
   ariaInvalid?: boolean | string
   autofocus?: boolean
   buttonVariant?: ButtonVariant
@@ -13,7 +13,7 @@ export interface Props {
   disabled?: boolean
   disabledField?: string
   htmlField?: string
-  options?: Array<unknown> // Objects are not supported yet
+  options?: unknown[] // Objects are not supported yet
   plain?: boolean
   required?: boolean
   stacked?: boolean

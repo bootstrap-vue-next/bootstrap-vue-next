@@ -21,7 +21,7 @@ export interface Props extends BLinkProps {
   // Render the toast in place, rather than in a portal-target
   static?: boolean
   modelValue?: boolean
-  toastClass?: Array<unknown>
+  toastClass?: unknown[]
   variant?: ColorVariant
 }
 // Emits

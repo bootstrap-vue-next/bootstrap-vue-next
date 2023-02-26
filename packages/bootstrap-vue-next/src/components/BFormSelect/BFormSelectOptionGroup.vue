@@ -27,7 +27,7 @@ interface BFormSelectOptionGroupProps {
   label?: string
   disabledField?: string
   htmlField?: string
-  options?: Array<unknown> | Record<string, unknown>
+  options?: unknown[] | Record<string, unknown>
   textField?: string
   valueField?: string
 }
@@ -41,6 +41,6 @@ const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
 })
 
 const formOptions = computed(() =>
-  normalizeOptions(props.options as Array<any>, 'BFormSelectOptionGroup', props)
+  normalizeOptions(props.options as any[], 'BFormSelectOptionGroup', props)
 )
 </script>

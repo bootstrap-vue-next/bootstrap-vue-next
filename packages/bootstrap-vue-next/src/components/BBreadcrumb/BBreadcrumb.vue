@@ -19,14 +19,14 @@ import BBreadcrumbItem from './BBreadcrumbItem.vue'
 // import type {BBreadcrumbProps} from '../types/components'
 
 interface BBreadcrumbProps {
-  items?: Array<BreadcrumbItem>
+  items?: BreadcrumbItem[]
 }
 
 const props = defineProps<BBreadcrumbProps>()
 
 const breadcrumb = useBreadcrumb()
 
-const breadcrumbItemObjects = computed<Array<BreadcrumbItemObject>>(() => {
+const breadcrumbItemObjects = computed<BreadcrumbItemObject[]>(() => {
   const localItems = props.items || breadcrumb?.items || []
   let activeDefined = false
   const items = localItems.map((item, idx) => {

@@ -53,15 +53,9 @@ interface BFormCheckboxProps {
   required?: Booleanish
   size?: InputSize
   state?: Booleanish
-  uncheckedValue?:
-    | Array<unknown>
-    | Set<unknown>
-    | boolean
-    | string
-    | Record<string, unknown>
-    | number
-  value?: Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number
-  modelValue?: Array<unknown> | Set<unknown> | boolean | string | Record<string, unknown> | number
+  uncheckedValue?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  value?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  modelValue?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
 }
 
 const props = withDefaults(defineProps<BFormCheckboxProps>(), {

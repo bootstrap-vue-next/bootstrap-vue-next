@@ -86,7 +86,7 @@ import TToast from '../components/Comps/TToast.vue'
 import TTooltip from '../components/Comps/TTooltip.vue'
 import TVisible from '../components/Directives/TVisible.vue'
 
-const comps: Array<{name: string; is: unknown; disabled?: true}> = [
+const comps: {name: string; is: unknown; disabled?: true}[] = [
   {name: 'Visible', is: TVisible, disabled: true},
   {name: 'Accordion', is: TAccordion},
   {name: 'Alert', is: TAlert},
@@ -126,7 +126,7 @@ const comps: Array<{name: string; is: unknown; disabled?: true}> = [
 
 const searchQuery = ref('')
 
-const active = ref<Array<string>>([])
+const active = ref<string[]>([])
 
 const filteredSearch = computed(() =>
   searchQuery.value.trim() !== ''

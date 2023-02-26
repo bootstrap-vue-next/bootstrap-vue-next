@@ -22,7 +22,7 @@ import {useBooleanish} from '../../composables'
 interface Props {
   disabled?: Booleanish
   label?: string
-  target?: string | Array<string>
+  target?: string | string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -5,8 +5,8 @@ import {TableField, TableItem} from '../../types'
 import BTable from './BTable.vue'
 import BTableSimple from './BTableSimple.vue'
 
-const fields: Array<TableField> = [{key: 'name'}, {key: 'age'}]
-const items: Array<TableItem> = [
+const fields: TableField[] = [{key: 'name'}, {key: 'age'}]
+const items: TableItem[] = [
   {name: 'hossam', age: 1},
   {name: 'devhus', age: 2},
 ]
@@ -323,7 +323,7 @@ describe('table', () => {
   })
 
   it('th has attr title to be headerTitle from TableField headerTitle', () => {
-    const fields: Array<TableField> = [{key: 'abc', headerTitle: 'abcdef'}]
+    const fields: TableField[] = [{key: 'abc', headerTitle: 'abcdef'}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -332,7 +332,7 @@ describe('table', () => {
   })
 
   it('th has attr abbr to be headerAbbr from TableField in props fields', () => {
-    const fields: Array<TableField> = [{key: 'abc', headerAbbr: 'abcdef'}]
+    const fields: TableField[] = [{key: 'abc', headerAbbr: 'abcdef'}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -341,7 +341,7 @@ describe('table', () => {
   })
 
   it('th has attr style to be thStyle from TableField in props fields', () => {
-    const fields: Array<TableField> = [{key: 'abc', thStyle: 'background-color:powderblue;'}]
+    const fields: TableField[] = [{key: 'abc', thStyle: 'background-color:powderblue;'}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -350,7 +350,7 @@ describe('table', () => {
   })
 
   it('th classes from class field in TableField from prop fields', () => {
-    const fields: Array<TableField> = [{key: 'abc', class: ['foo']}]
+    const fields: TableField[] = [{key: 'abc', class: ['foo']}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -359,7 +359,7 @@ describe('table', () => {
   })
 
   it('th classes from thClass field in TableField from prop fields', () => {
-    const fields: Array<TableField> = [{key: 'abc', thClass: ['foo']}]
+    const fields: TableField[] = [{key: 'abc', thClass: ['foo']}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -368,7 +368,7 @@ describe('table', () => {
   })
 
   it('th has class table-{type} variant field in TableField from prop fields', () => {
-    const fields: Array<TableField> = [{key: 'abc', variant: 'info'}]
+    const fields: TableField[] = [{key: 'abc', variant: 'info'}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -377,7 +377,7 @@ describe('table', () => {
   })
 
   it('th has class b-table-sticky-column from field stickyColumn in TableField from prop fields', () => {
-    const fields: Array<TableField> = [{key: 'abc', stickyColumn: true}]
+    const fields: TableField[] = [{key: 'abc', stickyColumn: true}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -386,7 +386,7 @@ describe('table', () => {
   })
 
   it('th has class b-table-sortable-column from field sortable in TableField from prop fields', () => {
-    const fields: Array<TableField> = [{key: 'abc', sortable: true}]
+    const fields: TableField[] = [{key: 'abc', sortable: true}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -396,7 +396,7 @@ describe('table', () => {
 
   it.skip('th does not have class b-table-sortable-column from field sortable in TableField from prop fields but field is not sortable', () => {
     // TODO I'm unsure how to make the isSortable value eval to false
-    const fields: Array<TableField> = [{key: 'abc', sortable: true}]
+    const fields: TableField[] = [{key: 'abc', sortable: true}]
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
@@ -529,7 +529,7 @@ describe('table', () => {
 
   it('has items when using a provider promise', async () => {
     const myProvider = async (ctx: any, callback: (items: any) => any) =>
-      new Promise<Array<TableItem> | undefined>((resolve) => {
+      new Promise<TableItem[] | undefined>((resolve) => {
         resolve(items)
       })
     const busyRef = ref(false)
@@ -629,7 +629,7 @@ describe('table', () => {
   })
 
   it('has accepts a formatter function', async () => {
-    const fields2: Array<TableField> = fields.map((field) => {
+    const fields2: TableField[] = fields.map((field) => {
       if (typeof field === 'object') {
         return {
           key: field.key,

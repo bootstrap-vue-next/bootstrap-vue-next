@@ -2,7 +2,7 @@ import type {ColorVariant} from '../..'
 
 // Props
 export interface Props {
-  buttonClass?: string | Array<unknown> | Record<string, unknown>
+  buttonClass?: string | unknown[] | Record<string, unknown>
   active?: boolean
   activeClass?: string
   disabled?: boolean

@@ -5,9 +5,9 @@ export interface Props {
   ariaControls?: string
   ariaLabel?: string
   disabled?: boolean
-  ellipsisClass?: Array<unknown> | string
+  ellipsisClass?: unknown[] | string
   ellipsisText?: string
-  firstClass?: Array<unknown> | string
+  firstClass?: unknown[] | string
   firstNumber?: boolean
   firstText?: string
   hideEllipsis?: boolean
@@ -17,17 +17,17 @@ export interface Props {
   labelNextPage?: string
   labelPage?: string
   labelPrevPage?: string
-  lastClass?: Array<unknown> | string
+  lastClass?: unknown[] | string
   lastNumber?: boolean
   lastText?: string
   limit?: number
   modelValue?: number // V-model prop
-  nextClass?: Array<unknown> | string
+  nextClass?: unknown[] | string
   nextText?: string
-  pageClass?: Array<unknown> | string
+  pageClass?: unknown[] | string
   perPage?: number
   pills?: boolean
-  prevClass?: Array<unknown> | string
+  prevClass?: unknown[] | string
   prevText?: string
   size?: InputSize
   totalRows?: number
@@ -35,6 +35,6 @@ export interface Props {
 // Emits
 export interface Emits {
   (e: 'update:modelValue', value: number): void
-  (e: 'page-click', ...args: Array<unknown>): void
+  (e: 'page-click', ...args: unknown[]): void
 }
 // Other

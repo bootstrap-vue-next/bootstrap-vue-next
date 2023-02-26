@@ -1,6 +1,6 @@
 import {addComponentsDir, addImports, createResolver, defineNuxtModule} from '@nuxt/kit'
 
-type Import = Exclude<Parameters<typeof addImports>[0], Array<unknown>>
+type Import = Exclude<Parameters<typeof addImports>[0], unknown[]>
 
 interface Base {
   all?: boolean
@@ -49,13 +49,13 @@ interface ModuleOptions {
  * @param {Base & T} opt
  * @param {T} defaults
  * @param {Record<keyof Omit<T, keyof Base>, Import>} values
- * @returns {Array<Import>} filtered by which property key values are true from opts
+ * @returns {Import[]} filtered by which property key values are true from opts
  */
 const activeResolver = <T extends ObjectExtension>(
   opt: Base & T,
   defaults: T,
   values: Record<keyof Omit<T, keyof Base>, Import>
-): Array<Import> => {
+): Import[] => {
   const {all, ...plugs} = opt
   const internalDefaults = {...defaults}
   Object.keys(internalDefaults).forEach(

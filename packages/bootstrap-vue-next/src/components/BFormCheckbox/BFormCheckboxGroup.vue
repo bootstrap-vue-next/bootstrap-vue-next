@@ -38,7 +38,7 @@ import {
 interface BFormCheckboxGroupProps {
   id?: string
   form?: string
-  modelValue?: Array<string | number | Record<string, unknown>>
+  modelValue?: (string | number | Record<string, unknown>)[]
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
@@ -47,7 +47,7 @@ interface BFormCheckboxGroupProps {
   disabledField?: string
   htmlField?: string
   name?: string
-  options?: Array<string | Record<string, unknown>> // I don't believe it possible to make a strongly typed object if object fields come from a prop
+  options?: (string | Record<string, unknown>)[] // I don't believe it possible to make a strongly typed object if object fields come from a prop
   plain?: Booleanish
   required?: Booleanish
   size?: Size
@@ -118,15 +118,17 @@ const localValue = computed({
      * Ie: props.options = ['a', 'b', 'c'], no matter what order the options are selected,
      * User clicks 'c', then clicks 'b' => ['b', 'c'], not ['c', 'b']
      */
-    const sortByOptions: Array<string | number | Record<string, unknown>> = props.options
+    const sortByOptions: (string | number | Record<string, unknown>)[] = props.options
       .filter((el) =>
         newValue
           .map((it) => JSON.stringify(it))
           .includes(JSON.stringify(typeof el === 'string' ? el : el[props.valueField]))
       )
-      .map((el) => (typeof el === 'string' ? el : el[props.valueField])) as Array<
-      string | number | Record<string, unknown>
-    >
+      .map((el) => (typeof el === 'string' ? el : el[props.valueField])) as (
+      | string
+      | number
+      | Record<string, unknown>
+    )[]
 
     emit('input', sortByOptions)
     emit('update:modelValue', sortByOptions)

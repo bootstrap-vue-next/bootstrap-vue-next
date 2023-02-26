@@ -40,7 +40,7 @@ interface BFormRadioGroupProps {
   form?: string
   id?: string
   name?: string
-  modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
+  modelValue?: string | boolean | unknown[] | Record<string, unknown> | number
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
@@ -48,7 +48,7 @@ interface BFormRadioGroupProps {
   disabled?: Booleanish
   disabledField?: string
   htmlField?: string
-  options?: Array<unknown> // Objects are not supported yet
+  options?: unknown[] // Objects are not supported yet
   plain?: Booleanish
   required?: Booleanish
   stacked?: Booleanish

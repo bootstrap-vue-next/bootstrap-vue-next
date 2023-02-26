@@ -8,7 +8,7 @@ export interface Props {
   name?: string
   size?: string
   autofocus?: boolean
-  modelValue?: boolean | string | Array<unknown> | Record<string, unknown> | number
+  modelValue?: boolean | string | unknown[] | Record<string, unknown> | number
   plain?: boolean
   button?: boolean
   switch?: boolean
@@ -21,11 +21,11 @@ export interface Props {
 }
 // Emits
 export interface Emits {
-  (e: 'input', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
-  (e: 'change', value: boolean | string | Array<unknown> | Record<string, unknown> | number): void
+  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number): void
+  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number): void
   (
     e: 'update:modelValue',
-    value: boolean | string | Array<unknown> | Record<string, unknown> | number
+    value: boolean | string | unknown[] | Record<string, unknown> | number
   ): void
 }
 // Other

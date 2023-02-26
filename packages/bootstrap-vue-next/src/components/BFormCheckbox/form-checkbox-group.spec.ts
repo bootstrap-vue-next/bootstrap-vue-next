@@ -311,7 +311,7 @@ describe('form-checkbox-group', () => {
         modelValue: [],
       },
       attrs: {
-        'onUpdate:modelValue': (modelValue: Array<unknown>) => wrapper.setProps({modelValue}),
+        'onUpdate:modelValue': (modelValue: unknown[]) => wrapper.setProps({modelValue}),
       },
     })
 
@@ -363,7 +363,7 @@ describe('form-checkbox-group', () => {
         modelValue: [],
       },
       attrs: {
-        'onUpdate:modelValue': (modelValue: Array<unknown>) => wrapper.setProps({modelValue}),
+        'onUpdate:modelValue': (modelValue: unknown[]) => wrapper.setProps({modelValue}),
       },
     })
 

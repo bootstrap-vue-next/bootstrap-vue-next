@@ -4,7 +4,7 @@ export interface Props {
   footer?: string
   footerBgVariant?: ColorVariant
   footerBorderVariant?: ColorVariant
-  footerClass?: Array<unknown> | Record<string, unknown> | string
+  footerClass?: unknown[] | Record<string, unknown> | string
   footerHtml?: string
   footerTag?: string
   footerTextVariant?: TextColorVariant
