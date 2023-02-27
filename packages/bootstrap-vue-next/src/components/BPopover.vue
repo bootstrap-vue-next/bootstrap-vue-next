@@ -60,7 +60,7 @@ import {
   inline,
   type Middleware,
   offset,
-  Placement,
+  type Placement,
   shift,
   type Strategy,
   useFloating,
