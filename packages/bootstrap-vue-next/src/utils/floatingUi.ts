@@ -15,42 +15,21 @@ import BPopover from '../components/BPopover.vue'
  */
 export const resolveFloatingPlacement = ({
   top,
-  bottom,
   end,
   start,
-  dropend,
-  dropstart,
+  alignCenter,
+  alignEnd,
 }: {
   top: boolean
-  bottom: boolean
   start: boolean
   end: boolean
-  dropstart: boolean
-  dropend: boolean
-}): Placement =>
-  top && dropstart
-    ? 'top-start'
-    : top && dropend
-    ? 'top-end'
-    : start && dropstart
-    ? 'left-start'
-    : start && dropend
-    ? 'left-end'
-    : end && dropstart
-    ? 'right-start'
-    : end && dropend
-    ? 'right-end'
-    : top
-    ? 'top'
-    : start
-    ? 'left'
-    : end
-    ? 'right'
-    : bottom && dropstart
-    ? 'bottom-start'
-    : bottom && dropend
-    ? 'bottom-end'
-    : 'bottom'
+  alignCenter: boolean
+  alignEnd: boolean
+}): Placement => {
+  const direction = top ? 'top' : start ? 'left' : end ? 'right' : 'bottom'
+  const align = alignEnd ? 'end' : alignCenter ? null : 'start'
+  return `${direction}${align ? `-${align}` : ''}` as Placement
+}
 
 export const resolveBootstrapPlacement = (placement: Placement): string => {
   const [_placement] = placement.split('-')
