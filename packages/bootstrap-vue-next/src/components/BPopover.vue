@@ -84,6 +84,11 @@ import {
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ColorVariant} from '../types'
 
+interface DelayObject {
+  show: number
+  hide: number
+}
+
 interface BPopoverProps {
   modelValue?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | null
@@ -104,7 +109,7 @@ interface BPopoverProps {
   content?: string
   id?: string
   title?: string
-  delay?: number | {show: number; hide: number}
+  delay?: number | DelayObject
   click?: Booleanish
   manual?: Booleanish
   variant?: ColorVariant

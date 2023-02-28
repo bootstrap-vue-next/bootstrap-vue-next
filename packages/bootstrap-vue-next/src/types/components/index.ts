@@ -124,6 +124,11 @@ export type {
   Emits as BPopoverEmits,
   Props as BPopoverProps,
 } from './BPopover'
+export type {
+  DelayObject as BTooltipDelayObject,
+  Emits as BTooltipEmits,
+  Props as BTooltipProps,
+} from './BPopover'
 export type {ParentData as BProgressParentData, Props as BProgressProps} from './BProgress'
 export type {Props as BProgressBarProps} from './BProgressBar'
 export type {Props as BRowProps} from './BRow'

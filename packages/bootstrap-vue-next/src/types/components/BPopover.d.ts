@@ -21,7 +21,7 @@ export interface Props {
   content?: string
   id?: string
   title?: string
-  delay?: number | {show: number; hide: number}
+  delay?: number | DelayObject
   click?: Booleanish
   manual?: Booleanish
   variant?: ColorVariant
@@ -38,7 +38,7 @@ export interface Props {
   realtime?: Booleanish
   inline?: Booleanish
   tooltip?: Booleanish
-  html?: string
+  html?: Booleanish
 }
 // Emits
 export interface Emits {
