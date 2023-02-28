@@ -92,8 +92,9 @@
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
+import {useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
@@ -206,6 +207,8 @@ const slots = useSlots()
 
 const computedId = useId(toRef(props, 'id'), 'modal')
 
+const modelValue = useVModel(props, 'modelValue', emit)
+
 const busyBoolean = useBooleanish(toRef(props, 'busy'))
 const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
@@ -214,7 +217,7 @@ const hideBackdropBoolean = useBooleanish(toRef(props, 'hideBackdrop'))
 const hideFooterBoolean = useBooleanish(toRef(props, 'hideFooter'))
 const hideHeaderBoolean = useBooleanish(toRef(props, 'hideHeader'))
 const hideHeaderCloseBoolean = useBooleanish(toRef(props, 'hideHeaderClose'))
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const modelValueBoolean = useBooleanish(modelValue)
 const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
 const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
 const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
@@ -324,11 +327,10 @@ const hide = (trigger = '') => {
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
     (trigger === 'esc' && noCloseOnEscBoolean.value)
   ) {
-    emit('update:modelValue', true)
     emit('hide-prevented')
     return
   }
-  emit('update:modelValue', false)
+  modelValue.value = false
 }
 
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
@@ -337,11 +339,11 @@ const show = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    emit('update:modelValue', false)
+    modelValue.value = false
     emit('show-prevented')
     return
   }
-  emit('update:modelValue', true)
+  modelValue.value = true
 }
 
 const onBeforeEnter = () => show()
@@ -363,6 +365,12 @@ watch(
   },
   {flush: 'post'}
 )
+
+onMounted(() => {
+  if (modelValueBoolean.value === true) {
+    isActive.value = true
+  }
+})
 
 // TODO contemplate defineExpose({show, hide})
 </script>

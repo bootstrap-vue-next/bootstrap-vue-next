@@ -118,6 +118,7 @@ const localValue = computed({
   },
 })
 
+// TODO see if this can be remade to provide/inject
 // TODO this needs to be tested
 const checkboxList = computed(() =>
   (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : []) // Add slot.first to array

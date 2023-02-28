@@ -63,6 +63,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
+import {useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
@@ -125,7 +126,9 @@ const emit = defineEmits<BOffcanvasEmits>()
 
 const slots = useSlots()
 
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const modelValue = useVModel(props, 'modelValue', emit)
+
+const modelValueBoolean = useBooleanish(modelValue)
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
@@ -194,22 +197,21 @@ const hide = (trigger = '') => {
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
     (trigger === 'esc' && noCloseOnEscBoolean.value)
   ) {
-    emit('update:modelValue', true)
     emit('hide-prevented')
     return
   }
-  emit('update:modelValue', false)
+  modelValue.value = false
 }
 
 const show = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    emit('update:modelValue', false)
+    modelValue.value = false
     emit('show-prevented')
     return
   }
-  emit('update:modelValue', true)
+  modelValue.value = true
 }
 
 const OnBeforeEnter = () => show()
