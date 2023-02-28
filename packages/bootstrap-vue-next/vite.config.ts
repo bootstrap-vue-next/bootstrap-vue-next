@@ -18,19 +18,7 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: [
-        'bootstrap',
-        'bootstrap/js/dist/alert',
-        'bootstrap/js/dist/collapse',
-        'bootstrap/js/dist/modal',
-        'bootstrap/js/dist/offcanvas',
-        'bootstrap/js/dist/popover',
-        'bootstrap/js/dist/carousel',
-        'bootstrap/js/dist/dropdown',
-        'bootstrap/js/dist/tooltip',
-        'vue',
-        '@popperjs/core',
-      ],
+      external: ['bootstrap', 'bootstrap/js/dist/collapse', 'vue'],
       output: {
         exports: 'named',
         assetFileNames: `bootstrap-vue-next.[ext]`, //without this, it generates build/styles.css
@@ -40,13 +28,6 @@ export default defineConfig({
           'vue': 'Vue',
           'bootstrap': 'Bootstrap',
           'bootstrap/js/dist/collapse': 'Collapse',
-          'bootstrap/js/dist/alert': 'Alert',
-          'bootstrap/js/dist/carousel': 'Carousel',
-          'bootstrap/js/dist/dropdown': 'Dropdown',
-          'bootstrap/js/dist/modal': 'Modal',
-          'bootstrap/js/dist/offcanvas': 'Offcanvas',
-          'bootstrap/js/dist/popover': 'Popover',
-          'bootstrap/js/dist/tooltip': 'Tooltip',
         },
       },
     },

@@ -38,17 +38,16 @@
     "test:coverage": "vitest --coverage"
   },
   "peerDependencies": {
-    "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "vue": "^3.2.45"
   },
   "dependencies": {
-    "@floating-ui/vue": "^0.2.0",
+    "@floating-ui/vue": "^0.2.1",
     "@nuxt/kit": "3.0.0",
     "@vueuse/core": "^9.11.1"
   },
   "devDependencies": {
-    "@popperjs/core": "^2.11.6",
+    "@popperjs/core": "2.11.6",
     "@types/bootstrap": "^5.2.6",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vitest/coverage-c8": "^0.25.3",

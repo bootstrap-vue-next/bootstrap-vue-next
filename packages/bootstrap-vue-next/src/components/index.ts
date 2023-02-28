@@ -94,6 +94,7 @@ export {default as BTr} from './BTable/BTr.vue'
 export {default as BTab} from './BTabs/BTab.vue'
 export {default as BTabs} from './BTabs/BTabs.vue'
 export {default as BToastContainer} from './BToast/BToaster.vue'
+export {default as BTooltip} from './BTooltip.vue'
 export {default as BTransition} from './BTransition/BTransition.vue'
 
 export {BToast, BToaster, BToastPlugin} from './BToast'
