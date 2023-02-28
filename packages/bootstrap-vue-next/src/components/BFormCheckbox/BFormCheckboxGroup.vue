@@ -136,6 +136,7 @@ const localValue = computed({
   },
 })
 
+// TODO see if this can be converted to provide/inject
 const checkboxList = computed(() =>
   (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : [])
     .concat(props.options.map((e) => optionToElement(e, props)))
