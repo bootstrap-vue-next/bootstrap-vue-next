@@ -40,7 +40,7 @@ interface BFormRadioGroupProps {
   form?: string
   id?: string
   name?: string
-  modelValue?: string | boolean | Array<unknown> | Record<string, unknown> | number
+  modelValue?: string | boolean | unknown[] | Record<string, unknown> | number
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
@@ -48,7 +48,7 @@ interface BFormRadioGroupProps {
   disabled?: Booleanish
   disabledField?: string
   htmlField?: string
-  options?: Array<unknown> // Objects are not supported yet
+  options?: unknown[] // Objects are not supported yet
   plain?: Booleanish
   required?: Booleanish
   stacked?: Booleanish
@@ -118,6 +118,7 @@ const localValue = computed({
   },
 })
 
+// TODO see if this can be remade to provide/inject
 // TODO this needs to be tested
 const checkboxList = computed(() =>
   (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : []) // Add slot.first to array

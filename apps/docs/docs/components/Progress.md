@@ -202,7 +202,7 @@ The striped gradient can also be animated by setting the `animated` prop.
   <ComponentReference></ComponentReference>
 </ClientOnly>
 
-<script>
+<script lang="ts">
 import { ref } from 'vue';
 
 export default {

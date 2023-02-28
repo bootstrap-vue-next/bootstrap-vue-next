@@ -128,7 +128,7 @@ export default defineComponent({
           // Extra care is required for xs since it does not have a BCol breakpoint prop
           // Xs breakpoint is simply 'cols'
           if (breakpoint === 'xs') {
-            result.cols = propValue
+            result[typeof propValue === 'boolean' ? 'col' : 'cols'] = propValue
           } else {
             result[breakpoint || (typeof propValue === 'boolean' ? 'col' : 'cols')] = propValue
           }

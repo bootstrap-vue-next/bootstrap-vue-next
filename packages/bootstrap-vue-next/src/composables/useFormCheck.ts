@@ -85,10 +85,10 @@ const getGroupClasses = (items: {
  * @param disabled
  * @returns
  */
-const slotsToElements = (slots: Array<any>, nodeType: string, disabled: boolean) =>
+const slotsToElements = (slots: any[], nodeType: string, disabled: boolean) =>
   slots
     .reduce(
-      (acc: Array<any>, slot: any) =>
+      (acc: any[], slot: any) =>
         slot.type.toString() === 'Symbol(Fragment)'
           ? acc.concat(slot.children)
           : acc.concat([slot]),

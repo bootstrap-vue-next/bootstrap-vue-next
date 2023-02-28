@@ -3,12 +3,12 @@ import type {ButtonType, ButtonVariant, Size} from '../..'
 // Props
 export interface Props {
   id?: string
-  menuClass?: Array<unknown> | Record<string, unknown> | string
+  menuClass?: unknown[] | Record<string, unknown> | string
   size?: Size
-  splitClass?: Array<unknown> | Record<string, unknown> | string
+  splitClass?: unknown[] | Record<string, unknown> | string
   splitVariant?: ButtonVariant
   text?: string
-  toggleClass?: Array<unknown> | Record<string, unknown> | string
+  toggleClass?: unknown[] | Record<string, unknown> | string
   autoClose?: boolean | 'inside' | 'outside'
   block?: boolean
   boundary?: Popper.Boundary

@@ -45,7 +45,7 @@ export default defineComponent({
     static: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     title: {type: String},
     modelValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    toastClass: {type: Array as PropType<Array<string>>},
+    toastClass: {type: Array as PropType<string[]>},
     variant: {type: String as PropType<ColorVariant>},
   },
   emits: ['destroyed', 'update:modelValue'],
@@ -199,7 +199,7 @@ export default defineComponent({
 
     return () => {
       const makeToast = () => {
-        const $headerContent: Array<VNode> = []
+        const $headerContent: VNode[] = []
 
         const $title = normalizeSlot(SLOT_NAME_TOAST_TITLE, {hide}, slots)
 

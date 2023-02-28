@@ -11,7 +11,7 @@ export interface Props {
   labelField?: string
   multiple?: boolean
   name?: string
-  options?: Array<unknown> | Record<string, unknown>
+  options?: unknown[] | Record<string, unknown>
   optionsField?: string
   plain?: boolean
   required?: boolean
@@ -20,7 +20,7 @@ export interface Props {
   state?: boolean
   textField?: string
   valueField?: string
-  modelValue?: string | Array<unknown> | Record<string, unknown> | number
+  modelValue?: string | unknown[] | Record<string, unknown> | number
 }
 // Emits
 export interface Emits {

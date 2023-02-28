@@ -38,7 +38,7 @@ export default defineComponent({
     }
 
     return () => {
-      const subContainers: Array<VNode> = []
+      const subContainers: VNode[] = []
 
       toastInstance?.containerPositions.value.forEach((position) => {
         subContainers.push(h(BToaster, {key: position, instance: toastInstance, position}))
@@ -115,7 +115,7 @@ const toasts = computed(() => toastInstance?.containerPositions.value)
     }
 
     return () => {
-      const subContainers: Array<VNode> = []
+      const subContainers: VNode[] = []
 
       toastInstance?.containerPositions.value.forEach((position) => {
         subContainers.push(h(BToaster, {key: position, instance: toastInstance, position}))

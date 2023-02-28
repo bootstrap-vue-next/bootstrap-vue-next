@@ -55,7 +55,7 @@ interface BFormSelectProps {
   labelField?: string
   multiple?: Booleanish
   name?: string
-  options?: Array<unknown> | Record<string, unknown>
+  options?: unknown[] | Record<string, unknown>
   optionsField?: string
   plain?: Booleanish
   required?: Booleanish
@@ -64,7 +64,7 @@ interface BFormSelectProps {
   state?: Booleanish
   textField?: string
   valueField?: string
-  modelValue?: string | Array<unknown> | Record<string, unknown> | number
+  modelValue?: string | unknown[] | Record<string, unknown> | number
 }
 
 const props = withDefaults(defineProps<BFormSelectProps>(), {
@@ -125,9 +125,7 @@ const computedAriaInvalid = computed(() =>
   resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
 )
 
-const formOptions = computed(() =>
-  normalizeOptions(props.options as Array<any>, 'BFormSelect', props)
-)
+const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
 const localValue = computed({
   get() {
     return props.modelValue

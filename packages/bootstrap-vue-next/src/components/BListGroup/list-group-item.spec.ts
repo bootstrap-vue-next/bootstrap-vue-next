@@ -1,7 +1,7 @@
+import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BListGroup from './BListGroup.vue'
 import BListGroupItem from './BListGroupItem.vue'
-import {afterEach, describe, expect, it} from 'vitest'
 
 describe('list-group > list-group-item', () => {
   enableAutoUnmount(afterEach)
@@ -205,7 +205,10 @@ describe('list-group > list-group-item', () => {
   })
 
   it('should have tag li when used within b-list-group with mounted=true', () => {
-    const wrapper = mount(BListGroup, {props: {numbered: true}, slots: {default: BListGroupItem}})
+    const wrapper = mount(BListGroup, {
+      props: {numbered: true},
+      slots: {default: BListGroupItem},
+    })
 
     const $listItem = wrapper.findComponent(BListGroupItem)
     expect($listItem).toBeDefined()

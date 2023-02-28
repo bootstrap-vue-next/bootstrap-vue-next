@@ -74,7 +74,7 @@ const emit = defineEmits<BAvatarEmits>()
 
 const slots = useSlots()
 
-const parentData = inject(avatarGroupInjectionKey)
+const parentData = inject(avatarGroupInjectionKey, null)
 
 const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4

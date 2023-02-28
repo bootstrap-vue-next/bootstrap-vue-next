@@ -94,7 +94,7 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
   <b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
 </b-card>
 
-<script>
+<script lang="ts">
   import {useToast} from 'bootstrap-vue-next'
   let toast = useToast()
   let variantshow1 = () => {

@@ -28,7 +28,9 @@
   "private": false,
   "scripts": {
     "dev": "vite --port 5174",
-    "build": "vue-tsc --noEmit && vite build",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --noEmit --composite false",
+    "build": "pnpm run type-check && pnpm run build-only",
     "serve": "vite preview",
     "test": "pnpm run test:lint && pnpm run test:unit",
     "test:lint": "eslint --ext .js,.vue --ignore-path ../../.gitignore --fix src",

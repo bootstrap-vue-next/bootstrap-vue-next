@@ -39,6 +39,7 @@
             v-bind="{tag, tagClass, tagVariant, tagPills: tagPillsBoolean, removeTag}"
           >
             <b-form-tag
+              :key="tag"
               :class="tagClass"
               tag="li"
               :variant="tagVariant"
@@ -138,7 +139,7 @@ interface BFormTagsProps {
   form?: string
   limit?: number
   limitTagsText?: string
-  modelValue?: Array<string>
+  modelValue?: string[]
   name?: string
   noAddOnEnter?: Booleanish
   noOuterFocus?: Booleanish
@@ -146,7 +147,7 @@ interface BFormTagsProps {
   placeholder?: string
   removeOnDelete?: Booleanish
   required?: Booleanish
-  separator?: string | Array<unknown>
+  separator?: string | unknown[]
   state?: Booleanish
   size?: InputSize
   tagClass?: ClassValue
@@ -182,9 +183,9 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
 })
 
 interface BFormTagsEmits {
-  (e: 'update:modelValue', value: Array<string>): void
-  (e: 'input', value: Array<string>): void
-  (e: 'tag-state', ...args: Array<Array<string>>): void
+  (e: 'update:modelValue', value: string[]): void
+  (e: 'input', value: string[]): void
+  (e: 'tag-state', ...args: string[][]): void
   (e: 'focus', value: FocusEvent): void
   (e: 'focusin', value: FocusEvent): void
   (e: 'focusout', value: FocusEvent): void
@@ -208,14 +209,14 @@ const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
 
 const input = ref<HTMLInputElement | null>(null)
 const _inputId = computed<string>(() => props.inputId || `${computedId.value}input__`)
-const tags = ref<Array<string>>(props.modelValue)
+const tags = ref<string[]>(props.modelValue)
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(false)
 const focus = ref<boolean>(false)
 const lastRemovedTag = ref<string>('')
-const validTags = ref<Array<string>>([])
-const invalidTags = ref<Array<string>>([])
-const duplicateTags = ref<Array<string>>([])
+const validTags = ref<string[]>([])
+const invalidTags = ref<string[]>([])
+const duplicateTags = ref<string[]>([])
 
 const computedClasses = computed(() => ({
   [`form-control-${props.size}`]: props.size !== undefined,

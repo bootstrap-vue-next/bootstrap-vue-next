@@ -6,7 +6,7 @@ export interface Props {
   activeClass?: string
   append?: boolean
   disabled?: boolean
-  event?: string | Array<unknown>
+  event?: string | unknown[]
   exact?: boolean
   exactActiveClass?: string
   href?: string

@@ -10,8 +10,6 @@ export type {
   ButtonType,
   InputType,
   Breakpoint,
-  SkeletonAnimation,
-  SkeletonType,
   VerticalAlign,
   TableField,
   TableItem,

@@ -40,7 +40,6 @@
 // import type {BCarouselSlideProps} from '../../types/components'
 import {computed, inject, StyleValue, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
-import type {BCarouselParentData} from '../../types/components'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
 
@@ -78,7 +77,7 @@ const props = withDefaults(defineProps<BCarouselSlideProps>(), {
 
 const slots = useSlots()
 
-const parentData = inject<BCarouselParentData>(carouselInjectionKey)
+const parentData = inject(carouselInjectionKey, null)
 
 const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
 const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))

@@ -8,14 +8,14 @@ export interface Props {
   disabled?: boolean
   duplicateTagText?: string
   inputAttrs?: Record<string, unknown>
-  inputClass?: Array<unknown> | Record<string, unknown> | string
+  inputClass?: unknown[] | Record<string, unknown> | string
   inputId?: string
   inputType?: InputType
   invalidTagText?: string
   form?: string
   limit?: number
   limitTagsText?: string
-  modelValue?: Array<string>
+  modelValue?: string[]
   name?: string
   noAddOnEnter?: boolean
   noOuterFocus?: boolean
@@ -23,10 +23,10 @@ export interface Props {
   placeholder?: string
   removeOnDelete?: boolean
   required?: boolean
-  separator?: string | Array<unknown>
+  separator?: string | unknown[]
   state?: boolean
   size?: InputSize
-  tagClass?: string | Array<unknown> | Record<string, unknown>
+  tagClass?: string | unknown[] | Record<string, unknown>
   tagPills?: boolean
   tagRemoveLabel?: string
   tagRemovedLabel?: string
@@ -35,9 +35,9 @@ export interface Props {
 }
 // Emits
 export interface Emits {
-  (e: 'update:modelValue', value: Array<unknown>): void
-  (e: 'input', value: Array<unknown>): void
-  (e: 'tag-state', ...args: Array<unknown>): void
+  (e: 'update:modelValue', value: unknown[]): void
+  (e: 'input', value: unknown[]): void
+  (e: 'tag-state', ...args: unknown[]): void
   (e: 'focus', value: FocusEvent): void
   (e: 'focusin', value: FocusEvent): void
   (e: 'focusout', value: FocusEvent): void

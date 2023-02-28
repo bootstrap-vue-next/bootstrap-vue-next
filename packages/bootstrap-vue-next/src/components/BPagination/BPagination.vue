@@ -273,7 +273,7 @@ export default defineComponent({
         ariaLabel: string,
         btnSlot: string,
         btnText: string,
-        btnClass: string | Array<unknown>,
+        btnClass: string | unknown[],
         pageTest: number
       ) => {
         const isDisabled: boolean =
