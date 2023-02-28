@@ -135,6 +135,8 @@ interface BDropdownEmits {
   (e: 'shown'): void
   (e: 'hide', value: BvEvent): void
   (e: 'hidden'): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
   (e: 'click', event: MouseEvent): void
   (e: 'toggle'): void
   (e: 'update:modelValue', value: boolean): void
@@ -237,7 +239,10 @@ const onButtonClick = () => {
   const currentModelValue = modelValueBoolean.value
   const e = new BvEvent(currentModelValue ? 'hide' : 'show')
   currentModelValue ? emit('hide', e) : emit('show', e)
-  if (e.defaultPrevented) return
+  if (e.defaultPrevented) {
+    currentModelValue ? emit('hide-prevented') : emit('show-prevented')
+    return
+  }
   modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
 }
