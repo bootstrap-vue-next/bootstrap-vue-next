@@ -1,0 +1,15 @@
+{
+  "name": "@bootstrap-vue-next/nuxt",
+  "description": "",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Issayah",
+    "url": "https://github.com/VividLemon"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": []
+}
