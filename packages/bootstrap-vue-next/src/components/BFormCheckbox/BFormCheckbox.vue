@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 // import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
+import {useVModel} from '@vueuse/core'
 import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
@@ -85,6 +86,8 @@ const emit = defineEmits<BFormCheckboxEmits>()
 
 const slots = useSlots()
 
+const modelValue = useVModel(props, 'modelValue', emit)
+
 const computedId = useId(toRef(props, 'id'), 'form-check')
 
 const indeterminateBoolean = useBooleanish(toRef(props, 'indeterminate'))
@@ -105,20 +108,20 @@ const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 const localValue = computed({
   get: (): unknown[] | Set<unknown> | boolean | undefined => {
     if (props.uncheckedValue) {
-      if (!Array.isArray(props.modelValue)) {
-        return props.modelValue === props.value
+      if (!Array.isArray(modelValue.value)) {
+        return modelValue.value === props.value
       }
-      return props.modelValue.indexOf(props.value) > -1
+      return modelValue.value.indexOf(props.value) > -1
     }
-    return props.modelValue as unknown[] | Set<unknown> | boolean | undefined
+    return modelValue.value as unknown[] | Set<unknown> | boolean | undefined
   },
   set: (newValue: any) => {
     let emitValue = newValue
-    if (!Array.isArray(props.modelValue)) {
+    if (!Array.isArray(modelValue.value)) {
       emitValue = newValue ? props.value : props.uncheckedValue
     } else {
       if (props.uncheckedValue) {
-        emitValue = props.modelValue
+        emitValue = modelValue.value
         if (newValue) {
           if (emitValue.indexOf(props.uncheckedValue) > -1)
             emitValue.splice(emitValue.indexOf(props.uncheckedValue), 1)
@@ -131,16 +134,16 @@ const localValue = computed({
       }
     }
     emit('input', emitValue)
-    emit('update:modelValue', emitValue)
+    modelValue.value = emitValue
     emit('change', emitValue)
   },
 })
 
 const isChecked = computed<boolean>(() => {
-  if (Array.isArray(props.modelValue)) {
-    return props.modelValue.indexOf(props.value) > -1
+  if (Array.isArray(modelValue.value)) {
+    return modelValue.value.indexOf(props.value) > -1
   }
-  return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
+  return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
 })
 
 const classesObject = reactive({

@@ -10,7 +10,7 @@
       :type="splitButtonType"
       v-bind="buttonAttr"
       @click="onSplitClick"
-      @keydown.esc="emit('update:modelValue', !modelValueBoolean)"
+      @keydown.esc="modelValue = !modelValueBoolean"
     >
       <slot name="button-content">
         {{ text }}

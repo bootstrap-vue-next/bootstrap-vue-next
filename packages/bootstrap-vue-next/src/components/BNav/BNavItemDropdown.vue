@@ -17,7 +17,8 @@
 <script setup lang="ts">
 // import type {BNavItemDropdownProps} from '../types/components'
 import type {Middleware, Strategy} from '@floating-ui/vue'
-import {computed, toRef} from 'vue'
+import {useVModel} from '@vueuse/core'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonVariant, ClassValue, Size} from '../../types'
 import {omit} from '../../utils'
@@ -60,14 +61,16 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const modelValue = useVModel(props, 'modelValue', emit)
+
+const modelValueBoolean = useBooleanish(modelValue)
 
 const dropdownValue = computed({
   get() {
     return modelValueBoolean.value
   },
   set(value: boolean) {
-    emit('update:modelValue', value)
+    modelValue.value = value
   },
 })
 const usableProps = computed(() => omit(props, ['modelValue'] as const))

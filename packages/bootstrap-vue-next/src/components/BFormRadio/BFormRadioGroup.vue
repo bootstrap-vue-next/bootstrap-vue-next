@@ -34,6 +34,7 @@ import {
   useBooleanish,
   useId,
 } from '../../composables'
+import {useVModel} from '@vueuse/core'
 
 interface BFormRadioGroupProps {
   size?: Size
@@ -92,6 +93,8 @@ const slots = useSlots()
 
 const slotsName = 'BFormRadio'
 
+const modelValue = useVModel(props, 'modelValue', emit)
+
 const computedId = useId(toRef(props, 'id'), 'radio')
 const computedName = useId(toRef(props, 'name'), 'checkbox')
 
@@ -110,10 +113,10 @@ const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
 // TODO this needs to be tested
 const localValue = computed({
-  get: () => props.modelValue,
+  get: () => modelValue.value,
   set: (newValue) => {
     emit('input', newValue)
-    emit('update:modelValue', newValue)
+    modelValue.value = newValue
     emit('change', newValue)
   },
 })

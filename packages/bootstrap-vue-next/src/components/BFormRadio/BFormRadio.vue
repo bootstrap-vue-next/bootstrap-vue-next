@@ -34,6 +34,7 @@ import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
 import {isEmptySlot} from '../../utils'
+import {useVModel} from '@vueuse/core'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -82,6 +83,8 @@ const emit = defineEmits<BFormRadioEmits>()
 
 const slots = useSlots()
 
+const modelValue = useVModel(props, 'modelValue', emit)
+
 const computedId = useId(toRef(props, 'id'), 'form-check')
 
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
@@ -97,21 +100,21 @@ const input = ref<HTMLElement | null>(null)
 const isFocused = ref<boolean>(false)
 
 const localValue = computed<unknown>({
-  get: () => (Array.isArray(props.modelValue) ? props.modelValue[0] : props.modelValue),
+  get: () => (Array.isArray(modelValue.value) ? modelValue.value[0] : modelValue.value),
   set: (newValue) => {
     const value = newValue ? props.value : false
-    const emitValue = Array.isArray(props.modelValue) ? [value] : value
+    const emitValue = Array.isArray(modelValue.value) ? [value] : value
     emit('input', emitValue)
     emit('change', emitValue)
-    emit('update:modelValue', emitValue)
+    modelValue.value = emitValue
   },
 })
 
 const isChecked = computed<unknown>(() => {
-  if (Array.isArray(props.modelValue)) {
-    return (props.modelValue || []).find((e) => e === props.value)
+  if (Array.isArray(modelValue.value)) {
+    return (modelValue.value || []).find((e) => e === props.value)
   }
-  return JSON.stringify(props.modelValue) === JSON.stringify(props.value)
+  return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
 })
 
 const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))

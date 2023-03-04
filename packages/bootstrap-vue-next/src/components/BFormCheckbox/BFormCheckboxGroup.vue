@@ -34,6 +34,7 @@ import {
   useBooleanish,
   useId,
 } from '../../composables'
+import {useVModel} from '@vueuse/core'
 
 interface BFormCheckboxGroupProps {
   id?: string
@@ -91,6 +92,8 @@ const slots = useSlots()
 
 const slotsName = 'BFormCheckbox'
 
+const modelValue = useVModel(props, 'modelValue', emit)
+
 const computedId = useId(toRef(props, 'id'), 'checkbox')
 const computedName = useId(toRef(props, 'name'), 'checkbox')
 
@@ -109,9 +112,9 @@ const switchesBoolean = useBooleanish(toRef(props, 'switches'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
 const localValue = computed({
-  get: () => props.modelValue,
+  get: () => modelValue.value,
   set: (newValue) => {
-    if (JSON.stringify(newValue) === JSON.stringify(props.modelValue)) return
+    if (JSON.stringify(newValue) === JSON.stringify(modelValue.value)) return
 
     /**
      * Sorts the value and makes it the same order as options
@@ -131,7 +134,7 @@ const localValue = computed({
     )[]
 
     emit('input', sortByOptions)
-    emit('update:modelValue', sortByOptions)
+    modelValue.value = sortByOptions
     emit('change', sortByOptions)
   },
 })

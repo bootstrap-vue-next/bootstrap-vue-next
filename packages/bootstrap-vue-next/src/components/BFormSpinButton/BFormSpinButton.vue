@@ -1,5 +1,5 @@
 <script lang="ts">
-import {computed, type ComputedRef, defineComponent, h, type PropType, ref, type Ref} from 'vue'
+import {computed, defineComponent, h, type PropType, ref, type Ref} from 'vue'
 import type {Booleanish} from '../../types'
 import {toFloat, toInteger} from '../../utils/number'
 import {isNull} from '../../utils/inspect'
@@ -17,6 +17,7 @@ import {
   CODE_PAGEUP,
   CODE_UP,
 } from '../../constants/codes'
+import {useVModel} from '@vueuse/core'
 
 // Default for spin button range and step
 const DEFAULT_MIN = 1
@@ -40,7 +41,7 @@ export default defineComponent({
     ariaLabel: {type: String, required: false},
     labelIncrement: {type: String, default: 'Increment'},
     labelDecrement: {type: String, default: 'Decrement'},
-    modelValue: {type: Number, default: null}, // V-model prop
+    modelValue: {type: Number as PropType<number | null>, default: null}, // V-model prop
     name: {type: String, default: 'BFormSpinbutton'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     placeholder: {type: String, required: false},
@@ -78,6 +79,8 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
+    const modelValue = useVModel(props, 'modelValue', emit)
+
     const hasFocus = ref(false)
     const spinId = computed(() => 1) //TODO
 
@@ -90,13 +93,13 @@ export default defineComponent({
 
     const localValue = computed({
       get() {
-        return isNull(props.modelValue) ? lvalue.value : props.modelValue
+        return isNull(modelValue.value) ? lvalue.value : modelValue.value
       },
       set(newValue) {
-        if (isNull(props.modelValue)) {
+        if (isNull(modelValue.value)) {
           lvalue.value = newValue
         } else {
-          emit('update:modelValue', newValue)
+          modelValue.value = newValue
         }
       },
     })
@@ -188,7 +191,7 @@ export default defineComponent({
       tabindex: props.disabled ? null : '-1',
       title: props.ariaLabel,
     }))
-    const hasValue: ComputedRef = computed(() => !isNull(props.modelValue) || !isNull(lvalue.value))
+    const hasValue = computed(() => !isNull(modelValue.value) || !isNull(lvalue.value))
 
     const computedSpinAttrs = computed(() => ({
       'dir': computedRTL.value,

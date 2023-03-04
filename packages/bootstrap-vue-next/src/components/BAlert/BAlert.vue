@@ -30,10 +30,11 @@ import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ColorVariant} from '../../types'
-import {computed, onBeforeUnmount, type Ref, toRef, useSlots, watchEffect} from 'vue'
+import {computed, onBeforeUnmount, toRef, useSlots, watchEffect} from 'vue'
 import {useBooleanish} from '../../composables'
 import useCountdown from '../../composables/useCountdown'
 import {isEmptySlot} from '../../utils'
+import {useVModel} from '@vueuse/core'
 
 interface BAlertProps {
   noHoverPause?: Booleanish
@@ -60,12 +61,6 @@ const props = withDefaults(defineProps<BAlertProps>(), {
   showOnPause: true,
 })
 
-const dismissibleBoolean = useBooleanish(toRef(props, 'dismissible'))
-const fadeBoolean = useBooleanish(toRef(props, 'fade'))
-const immediateBoolean = useBooleanish(toRef(props, 'immediate'))
-const showOnPauseBoolean = useBooleanish(toRef(props, 'showOnPause'))
-const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
-
 interface BAlertEmits {
   (e: 'closed'): void
   (e: 'close-countdown', value: number): void
@@ -75,6 +70,14 @@ interface BAlertEmits {
 const emit = defineEmits<BAlertEmits>()
 
 const slots = useSlots()
+
+const modelValue = useVModel(props, 'modelValue', emit)
+
+const dismissibleBoolean = useBooleanish(toRef(props, 'dismissible'))
+const fadeBoolean = useBooleanish(toRef(props, 'fade'))
+const immediateBoolean = useBooleanish(toRef(props, 'immediate'))
+const showOnPauseBoolean = useBooleanish(toRef(props, 'showOnPause'))
+const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
 
 const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
 
@@ -93,27 +96,23 @@ const {
   stop,
   isPaused,
   value: remainingMs,
-} = useCountdown(
-  typeof props.modelValue === 'boolean' ? 0 : (toRef(props, 'modelValue') as Ref<number>),
-  toRef(props, 'interval'),
-  {
-    immediate: typeof props.modelValue === 'number' && immediateBoolean.value,
-  }
-)
+} = useCountdown(typeof modelValue.value === 'boolean' ? 0 : modelValue, toRef(props, 'interval'), {
+  immediate: typeof modelValue.value === 'number' && immediateBoolean.value,
+})
 
 const isAlertVisible = computed<boolean>(() =>
-  typeof props.modelValue === 'boolean'
-    ? props.modelValue
+  typeof modelValue.value === 'boolean'
+    ? modelValue.value
     : isActive.value || (showOnPauseBoolean.value && isPaused.value)
 )
 
 watchEffect(() => emit('close-countdown', remainingMs.value))
 
 const closeClicked = (): void => {
-  if (typeof props.modelValue === 'boolean') {
-    emit('update:modelValue', false)
+  if (typeof modelValue.value === 'boolean') {
+    modelValue.value = false
   } else {
-    emit('update:modelValue', 0)
+    modelValue.value = 0
     stop()
   }
   emit('closed')

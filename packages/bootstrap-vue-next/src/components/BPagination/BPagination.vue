@@ -3,6 +3,7 @@ import {BvEvent, normalizeSlot, toInteger} from '../../utils'
 import {computed, defineComponent, h, type PropType, reactive, toRef, watch} from 'vue'
 import type {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
+import {useVModel} from '@vueuse/core'
 // Default # of buttons limit
 const DEFAULT_LIMIT = 5
 
@@ -64,6 +65,8 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'page-click'],
   setup(props, {emit, slots}) {
+    const modelValue = useVModel(props, 'modelValue', emit)
+
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     const firstNumberBoolean = useBooleanish(toRef(props, 'firstNumber'))
     const hideEllipsisBoolean = useBooleanish(toRef(props, 'hideEllipsis'))
@@ -83,13 +86,13 @@ export default defineComponent({
 
     const startNumber = computed(() => {
       let lStartNumber: number
-      const pagesLeft: number = numberOfPages.value - props.modelValue
+      const pagesLeft: number = numberOfPages.value - modelValue.value
 
       if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
         lStartNumber = numberOfPages.value - numberOfLinks.value + 1
       } else {
         // Middle and beginning calculation.
-        lStartNumber = props.modelValue - Math.floor(numberOfLinks.value / 2)
+        lStartNumber = modelValue.value - Math.floor(numberOfLinks.value / 2)
       }
       // Negative due at times
       if (lStartNumber < 1) {
@@ -115,7 +118,7 @@ export default defineComponent({
     })
 
     const showFirstDots = computed(() => {
-      const pagesLeft = numberOfPages.value - props.modelValue
+      const pagesLeft = numberOfPages.value - modelValue.value
       let rShowDots = false
 
       if (pagesLeft + 2 < props.limit && props.limit > ELLIPSIS_THRESHOLD) {
@@ -144,13 +147,13 @@ export default defineComponent({
 
       if (numberOfPages.value <= props.limit) {
         n = numberOfPages.value
-      } else if (props.modelValue < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
+      } else if (modelValue.value < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
         if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
           n = props.limit - (firstNumberBoolean.value ? 0 : 1)
         }
         n = Math.min(n, props.limit)
       } else if (
-        numberOfPages.value - props.modelValue + 2 < props.limit &&
+        numberOfPages.value - modelValue.value + 2 < props.limit &&
         props.limit > ELLIPSIS_THRESHOLD
       ) {
         if (!hideEllipsisBoolean.value || firstNumberBoolean.value) {
@@ -171,7 +174,7 @@ export default defineComponent({
 
       let rShowDots = false
 
-      if (props.modelValue < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
+      if (modelValue.value < props.limit - 1 && props.limit > ELLIPSIS_THRESHOLD) {
         if (!hideEllipsisBoolean.value || lastNumberBoolean.value) {
           rShowDots = true
         }
@@ -199,7 +202,7 @@ export default defineComponent({
     })
 
     const pageClick = (event: MouseEvent, pageNumber: number) => {
-      if (pageNumber === props.modelValue) {
+      if (pageNumber === modelValue.value) {
         return
       }
 
@@ -214,7 +217,7 @@ export default defineComponent({
         return
       }
 
-      emit('update:modelValue', pageNumber)
+      modelValue.value = pageNumber
 
       //    nextTick(() => {
       //  if (isVisible(target) && un_element.contains(target)) {
@@ -228,26 +231,25 @@ export default defineComponent({
     const btnSize = computed(() => (props.size ? `pagination-${props.size}` : ''))
     const styleClass = computed(() => (pillsBoolean.value ? 'b-pagination-pills' : ''))
 
-    watch(
-      () => props.modelValue,
-      (newValue) => {
-        const calculatedValue = sanitizeCurrentPage(newValue, numberOfPages.value)
-        if (calculatedValue !== props.modelValue) emit('update:modelValue', calculatedValue)
+    watch(modelValue, (newValue) => {
+      const calculatedValue = sanitizeCurrentPage(newValue, numberOfPages.value)
+      if (calculatedValue !== modelValue.value) {
+        modelValue.value = calculatedValue
       }
-    )
+    })
 
     watch(pagination, (oldValue, newValue) => {
       if (!(oldValue === undefined || oldValue === null)) {
         if (newValue.pageSize !== oldValue.pageSize && newValue.totalRows === oldValue.totalRows) {
           // If the page size changes, reset to page 1
-          emit('update:modelValue', 1)
+          modelValue.value = 1
         } else if (
           newValue.numberOfPages !== oldValue.numberOfPages &&
-          props.modelValue > newValue.numberOfPages
+          modelValue.value > newValue.numberOfPages
         ) {
           // If `numberOfPages` changes and is less than
           // the `currentPage` number, reset to page 1
-          emit('update:modelValue', 1)
+          modelValue.value = 1
         }
       }
     })
@@ -264,8 +266,8 @@ export default defineComponent({
     return () => {
       const buttons = []
       const pageNumbers = pages.value.map((p) => p.number) // array of numbers... Used in first and last number comparisons
-      const isActivePage = (pageNumber: number) => pageNumber === props.modelValue
-      const noCurrentPage: boolean = props.modelValue < 1
+      const isActivePage = (pageNumber: number) => pageNumber === modelValue.value
+      const noCurrentPage: boolean = modelValue.value < 1
       const fill = props.align === 'fill'
 
       const makeEndBtn = (
@@ -415,7 +417,7 @@ export default defineComponent({
 
       //Previous Button
       const previousButton = makeEndBtn(
-        props.modelValue - 1,
+        modelValue.value - 1,
         props.labelFirstPage,
         SLOT_NAME_PREV_TEXT,
         props.prevText,
@@ -451,7 +453,7 @@ export default defineComponent({
 
       //Next Button
       const nextButton = makeEndBtn(
-        props.modelValue + 1,
+        modelValue.value + 1,
         props.labelNextPage,
         SLOT_NAME_NEXT_TEXT,
         props.nextText,
