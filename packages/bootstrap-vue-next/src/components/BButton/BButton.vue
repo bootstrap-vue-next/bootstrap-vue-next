@@ -31,6 +31,7 @@ import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
 import {isLink} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
+import {useVModel} from '@vueuse/core'
 
 export default defineComponent({
   components: {BLink, BSpinner},
@@ -53,6 +54,8 @@ export default defineComponent({
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
+    const pressedValue = useVModel(props, 'pressed', emit)
+
     const activeBoolean = useBooleanish(toRef(props, 'active'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     const pillBoolean = useBooleanish(toRef(props, 'pill'))
@@ -114,7 +117,7 @@ export default defineComponent({
       }
       emit('click', e)
       if (isToggle.value) {
-        emit('update:pressed', !pressedBoolean.value)
+        pressedValue.value = !pressedBoolean.value
       }
     }
 

@@ -17,7 +17,7 @@
 import {computed, onMounted, ref, toRef, watch} from 'vue'
 import {Collapse} from 'bootstrap'
 import {useBooleanish, useId} from '../composables'
-import {useEventListener} from '@vueuse/core'
+import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
 
 interface BCollapseProps {
@@ -49,14 +49,16 @@ interface BCollapseEmits {
 
 const emit = defineEmits<BCollapseEmits>()
 
-const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const modelValue = useVModel(props, 'modelValue', emit)
+
+const modelValueBoolean = useBooleanish(modelValue)
 const toggleBoolean = useBooleanish(toRef(props, 'toggle'))
 const visibleBoolean = useBooleanish(toRef(props, 'visible'))
 const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
 
 const computedId = useId(toRef(props, 'id'), 'collapse')
 
-const element = ref<HTMLElement>()
+const element = ref<HTMLElement | null>(null)
 const instance = ref<Collapse>()
 
 const computedClasses = computed(() => ({
@@ -64,41 +66,37 @@ const computedClasses = computed(() => ({
   'navbar-collapse': isNavBoolean.value,
 }))
 
-const close = () => emit('update:modelValue', false)
+const close = () => (modelValue.value = false)
 
 watch(modelValueBoolean, (value) => {
   value ? instance.value?.show() : instance.value?.hide()
 })
 
 watch(visibleBoolean, (value) => {
-  if (value) {
-    emit('update:modelValue', !!value)
-    instance.value?.show()
-  } else {
-    emit('update:modelValue', !!value)
-    instance.value?.hide()
-  }
+  modelValue.value = !!value
+  value ? instance.value?.show() : instance.value?.hide()
 })
 
 useEventListener(element, 'show.bs.collapse', () => {
   emit('show')
-  emit('update:modelValue', true)
+  modelValue.value = true
 })
 
 useEventListener(element, 'hide.bs.collapse', () => {
   emit('hide')
-  emit('update:modelValue', false)
+  modelValue.value = false
 })
 useEventListener(element, 'shown.bs.collapse', () => emit('shown'))
 useEventListener(element, 'hidden.bs.collapse', () => emit('hidden'))
 
 onMounted(() => {
-  instance.value = new Collapse(element.value as HTMLElement, {
+  if (element.value === null) return
+  instance.value = new Collapse(element.value, {
     parent: props.accordion ? `#${props.accordion}` : undefined,
     toggle: toggleBoolean.value,
   })
   if (visibleBoolean.value || modelValueBoolean.value) {
-    emit('update:modelValue', true)
+    modelValue.value = true
     instance.value?.show()
   }
 })

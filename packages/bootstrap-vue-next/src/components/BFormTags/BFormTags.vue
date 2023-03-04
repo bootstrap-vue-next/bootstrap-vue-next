@@ -123,6 +123,7 @@ import type {
   InputSize,
   InputType,
 } from '../../types'
+import {useVModel} from '@vueuse/core'
 
 interface BFormTagsProps {
   addButtonText?: string
@@ -194,6 +195,8 @@ interface BFormTagsEmits {
 
 const emit = defineEmits<BFormTagsEmits>()
 
+const modelValue = useVModel(props, 'modelValue', emit)
+
 const computedId = useId()
 
 const addOnChangeBoolean = useBooleanish(toRef(props, 'addOnChange'))
@@ -209,7 +212,7 @@ const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
 
 const input = ref<HTMLInputElement | null>(null)
 const _inputId = computed<string>(() => props.inputId || `${computedId.value}input__`)
-const tags = ref<string[]>(props.modelValue)
+const tags = ref<string[]>(modelValue.value)
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(false)
 const focus = ref<boolean>(false)
@@ -280,7 +283,7 @@ const slotAttrs = computed(() => ({
 }))
 
 watch(
-  () => props.modelValue,
+  () => modelValue.value,
   (newVal) => {
     tags.value = newVal
   }
@@ -383,10 +386,10 @@ const addTag = (tag?: string): void => {
     return
   }
 
-  const newValue = [...props.modelValue, tag]
+  const newValue = [...modelValue.value, tag]
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
-  emit('update:modelValue', newValue)
+  modelValue.value = newValue
   emit('input', newValue)
   input.value?.focus()
 }
@@ -394,14 +397,13 @@ const addTag = (tag?: string): void => {
 const removeTag = (tag?: VNodeNormalizedChildren): void => {
   const tagIndex = tags.value.indexOf(tag?.toString() ?? '')
   lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
-
-  emit('update:modelValue', tags.value)
+  modelValue.value = tags.value
 }
 
 onMounted(() => {
   checkAutofocus()
 
-  if (props.modelValue.length > 0) {
+  if (modelValue.value.length > 0) {
     shouldRemoveOnDelete.value = true
   }
 })

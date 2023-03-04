@@ -43,6 +43,7 @@ import {computed, nextTick, onActivated, onMounted, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId} from '../../composables'
+import {useVModel} from '@vueuse/core'
 
 interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -94,6 +95,8 @@ interface BFormSelectEmits {
 
 const emit = defineEmits<BFormSelectEmits>()
 
+const modelValue = useVModel(props, 'modelValue', emit)
+
 const computedId = useId(toRef(props, 'id'), 'input')
 
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
@@ -128,11 +131,11 @@ const computedAriaInvalid = computed(() =>
 const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
 const localValue = computed({
   get() {
-    return props.modelValue
+    return modelValue.value
   },
   set(newValue: any) {
     emit('change', newValue)
-    emit('update:modelValue', newValue)
+    modelValue.value = newValue
     emit('input', newValue)
   },
 })
