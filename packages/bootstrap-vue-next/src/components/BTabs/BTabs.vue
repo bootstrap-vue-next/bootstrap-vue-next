@@ -262,36 +262,33 @@ const handleClick = (event: MouseEvent, index: number) => {
 
 activateTab(_tabIndex.value)
 
-watch(
-  () => modelValue.value,
-  (newValue, oldValue) => {
-    if (newValue === oldValue) return
-    newValue = Math.max(newValue, -1)
-    oldValue = Math.max(oldValue, -1)
+watch(modelValue, (newValue, oldValue) => {
+  if (newValue === oldValue) return
+  newValue = Math.max(newValue, -1)
+  oldValue = Math.max(oldValue, -1)
 
-    if (tabs.value.length <= 0) {
-      tabIndex.value = -1
-      return
-    }
-
-    const goForward = newValue > oldValue
-    let index = newValue
-    const maxIdx = tabs.value.length - 1
-    while (index >= 0 && index <= maxIdx && tabs.value[index].disabled) {
-      index += goForward ? 1 : -1
-    }
-
-    if (index < 0) {
-      activateTab(0)
-      return
-    }
-    if (index >= tabs.value.length) {
-      activateTab(tabs.value.length - 1)
-      return
-    }
-    activateTab(index)
+  if (tabs.value.length <= 0) {
+    tabIndex.value = -1
+    return
   }
-)
+
+  const goForward = newValue > oldValue
+  let index = newValue
+  const maxIdx = tabs.value.length - 1
+  while (index >= 0 && index <= maxIdx && tabs.value[index].disabled) {
+    index += goForward ? 1 : -1
+  }
+
+  if (index < 0) {
+    activateTab(0)
+    return
+  }
+  if (index >= tabs.value.length) {
+    activateTab(tabs.value.length - 1)
+    return
+  }
+  activateTab(index)
+})
 
 watch(tabs, () => {
   // find last active tab

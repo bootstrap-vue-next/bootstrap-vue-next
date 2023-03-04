@@ -282,12 +282,9 @@ const slotAttrs = computed(() => ({
   tags: tags.value,
 }))
 
-watch(
-  () => modelValue.value,
-  (newVal) => {
-    tags.value = newVal
-  }
-)
+watch(modelValue, (newVal) => {
+  tags.value = newVal
+})
 
 const checkAutofocus = () => {
   if (autofocusBoolean.value) {
