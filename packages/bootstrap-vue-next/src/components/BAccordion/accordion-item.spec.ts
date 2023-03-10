@@ -83,6 +83,20 @@ describe('accordion-item', () => {
     expect($bcollapse.attributes('aria-labelledby')).toBe('headingfoobar')
   })
 
+  it('headerTag is h2 by default', () => {
+    const wrapper = mount(BAccordionItem)
+    const $h2 = wrapper.find('h2')
+    expect($h2.exists()).toBe(true)
+  })
+
+  it('header tag is prop headerTag', () => {
+    const wrapper = mount(BAccordionItem, {
+      props: {headerTag: 'h3'},
+    })
+    const $h3 = wrapper.find('h3')
+    expect($h3.exists()).toBe(true)
+  })
+
   it('h2 child has static class accordion-header', () => {
     const wrapper = mount(BAccordionItem)
     const $h2 = wrapper.get('h2')
