@@ -239,8 +239,8 @@ const closeButton = ref<HTMLElement | null>(null)
 const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
 
-const {focused: modelFocused} = useFocus(element)
-const {focused: okButtonFocused} = useFocus(okButton)
+const {focused: modalFocus} = useFocus(element)
+const {focused: okButtonFocus} = useFocus(okButton)
 const {focused: cancelButtonFocus} = useFocus(cancelButton)
 const {focused: closeButtonFocus} = useFocus(closeButton)
 
@@ -361,12 +361,12 @@ const show = () => {
 const pickFocusItem = () => {
   if (autoFocusBoolean.value === false) return
   props.autoFocusButton === 'ok'
-    ? (okButtonFocused.value = true)
+    ? (okButtonFocus.value = true)
     : props.autoFocusButton === 'close'
     ? (closeButtonFocus.value = true)
     : props.autoFocusButton === 'cancel'
     ? (cancelButtonFocus.value = true)
-    : (modelFocused.value = true)
+    : (modalFocus.value = true)
 }
 
 const onBeforeEnter = () => show()
