@@ -1,6 +1,6 @@
 <template>
   <div class="accordion-item">
-    <h2 :id="`${computedId}heading`" class="accordion-header">
+    <component :is="headerTag" :id="`${computedId}heading`" class="accordion-header">
       <button
         v-b-toggle:[computedId]
         class="accordion-button"
@@ -13,7 +13,7 @@
           {{ title }}
         </slot>
       </button>
-    </h2>
+    </component>
     <b-collapse
       :id="computedId"
       class="accordion-collapse"
@@ -41,9 +41,13 @@ interface BAccordionItemProps {
   id?: string
   title?: string
   visible?: Booleanish
+  headerTag?: string
 }
 
-const props = withDefaults(defineProps<BAccordionItemProps>(), {visible: false})
+const props = withDefaults(defineProps<BAccordionItemProps>(), {
+  visible: false,
+  headerTag: 'h2',
+})
 
 const parentData = inject(accordionInjectionKey, null)
 
