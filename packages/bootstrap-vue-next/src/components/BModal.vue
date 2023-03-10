@@ -41,6 +41,7 @@
                   </button>
                   <b-close-button
                     v-else
+                    ref="closeButton"
                     :aria-label="headerCloseLabel"
                     :white="headerCloseWhite"
                     @click="hide('close')"
@@ -56,6 +57,7 @@
                 <slot name="cancel">
                   <b-button
                     v-if="!okOnlyBoolean"
+                    ref="cancelButton"
                     type="button"
                     class="btn"
                     :disabled="disableCancel"
@@ -68,6 +70,7 @@
                 </slot>
                 <slot name="ok">
                   <b-button
+                    ref="okButton"
                     type="button"
                     class="btn"
                     :disabled="disableOk"
@@ -92,9 +95,9 @@
 
 <script setup lang="ts">
 // import type {BModalEmits, BModalProps} from '../types/components'
-import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../composables'
-import {useVModel} from '@vueuse/core'
+import {useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
@@ -142,7 +145,7 @@ interface BModalProps {
   noCloseOnBackdrop?: Booleanish
   noCloseOnEsc?: Booleanish
   noFade?: Booleanish
-  noFocus?: Booleanish
+  autoFocus?: Booleanish
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
@@ -155,6 +158,7 @@ interface BModalProps {
   titleSrOnly?: Booleanish
   titleTag?: string
   static?: Booleanish
+  autoFocusButton?: 'ok' | 'cancel' | 'close'
 }
 
 const props = withDefaults(defineProps<BModalProps>(), {
@@ -176,7 +180,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   noCloseOnBackdrop: false,
   noCloseOnEsc: false,
   noFade: false,
-  noFocus: false,
+  autoFocus: true,
   okDisabled: false,
   okOnly: false,
   okTitle: 'Ok',
@@ -221,16 +225,24 @@ const modelValueBoolean = useBooleanish(modelValue)
 const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
 const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
 const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
-const noFocusBoolean = useBooleanish(toRef(props, 'noFocus'))
+const autoFocusBoolean = useBooleanish(toRef(props, 'autoFocus'))
 const okDisabledBoolean = useBooleanish(toRef(props, 'okDisabled'))
 const okOnlyBoolean = useBooleanish(toRef(props, 'okOnly'))
 const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
 const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 const staticBoolean = useBooleanish(toRef(props, 'static'))
 
-const isActive = ref(false)
 const element = ref<HTMLElement | null>(null)
+const okButton = ref<HTMLElement | null>(null)
+const cancelButton = ref<HTMLElement | null>(null)
+const closeButton = ref<HTMLElement | null>(null)
+const isActive = ref(false)
 const lazyLoadCompleted = ref(false)
+
+const {focused: modalFocus} = useFocus(element)
+const {focused: okButtonFocus} = useFocus(okButton)
+const {focused: cancelButtonFocus} = useFocus(cancelButton)
+const {focused: closeButtonFocus} = useFocus(closeButton)
 
 const modalClasses = computed(() => [
   props.modalClass,
@@ -346,9 +358,21 @@ const show = () => {
   modelValue.value = true
 }
 
+const pickFocusItem = () => {
+  if (autoFocusBoolean.value === false) return
+  props.autoFocusButton === 'ok'
+    ? (okButtonFocus.value = true)
+    : props.autoFocusButton === 'close'
+    ? (closeButtonFocus.value = true)
+    : props.autoFocusButton === 'cancel'
+    ? (cancelButtonFocus.value = true)
+    : (modalFocus.value = true)
+}
+
 const onBeforeEnter = () => show()
 const onAfterEnter = () => {
   isActive.value = true
+  pickFocusItem()
   emit('shown', buildTriggerableEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
@@ -358,21 +382,11 @@ const onAfterLeave = () => {
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 
-watch(
-  modelValueBoolean,
-  (newValue) => {
-    if (newValue === true && !noFocusBoolean.value && element.value !== null) element.value.focus()
-  },
-  {flush: 'post'}
-)
-
 onMounted(() => {
   if (modelValueBoolean.value === true) {
     isActive.value = true
   }
 })
-
-// TODO contemplate defineExpose({show, hide})
 </script>
 
 <script lang="ts">
