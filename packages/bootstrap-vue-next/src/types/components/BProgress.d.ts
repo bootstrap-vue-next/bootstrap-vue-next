@@ -1,3 +1,4 @@
+import type {Ref} from 'vue'
 import type {ColorVariant} from '..'
 // Props
 export interface Props {
@@ -15,9 +16,9 @@ export interface Props {
 
 // Other
 export interface ParentData {
-  animated: boolean
-  max: number | string
-  showProgress: boolean
-  showValue: boolean
-  striped: boolean
+  animated: Ref<boolean>
+  max: Ref<number | string>
+  showProgress: Ref<boolean>
+  showValue: Ref<boolean>
+  striped: Ref<boolean>
 }

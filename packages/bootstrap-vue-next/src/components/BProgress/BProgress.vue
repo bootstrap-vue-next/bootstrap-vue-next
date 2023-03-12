@@ -52,10 +52,10 @@ const computedAttrs = computed(() => ({
 }))
 
 provide(progressInjectionKey, {
-  animated: animatedBoolean.value,
-  max: props.max,
-  showProgress: showProgressBoolean.value,
-  showValue: showValueBoolean.value,
-  striped: stripedBoolean.value,
+  animated: animatedBoolean,
+  max: toRef(props, 'max'),
+  showProgress: showProgressBoolean,
+  showValue: showValueBoolean,
+  striped: stripedBoolean,
 })
 </script>

@@ -1,3 +1,4 @@
+import type {Ref} from 'vue'
 import type {Alignment} from '../..'
 // Props
 export interface Props {
@@ -30,6 +31,6 @@ export interface Emits {
 }
 // Other
 export interface ParentData {
-  lazy: boolean
-  card: boolean
+  lazy: Ref<boolean>
+  card: Ref<boolean>
 }

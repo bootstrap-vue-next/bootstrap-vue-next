@@ -68,6 +68,7 @@ export type {
 export type {
   Emits as BFormCheckboxGroupEmits,
   Props as BFormCheckboxGroupProps,
+  ParentData as BFormCheckboxGroupParentData,
 } from './BFormCheckbox/BFormCheckboxGroup'
 // BFormGroup
 export type {Props as BFormGroupProps} from './BFormGroup/BFormGroup'

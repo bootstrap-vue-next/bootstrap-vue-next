@@ -1,7 +1,8 @@
-import type {InjectionKey} from 'vue'
+import type {InjectionKey, Ref} from 'vue'
 import type {
   BAvatarGroupParentData,
   BCarouselParentData,
+  BFormCheckboxGroupParentData,
   BListGroupParentData,
   BProgressParentData,
   BTabsParentData,
@@ -27,4 +28,7 @@ export const listGroupInjectionKey: InjectionKey<BListGroupParentData> = Symbol(
 export const avatarGroupInjectionKey: InjectionKey<BAvatarGroupParentData> = Symbol('avatarGroup')
 
 // BAccordion
-export const accordionInjectionKey: InjectionKey<string> = Symbol('accordion')
+export const accordionInjectionKey: InjectionKey<Ref<string>> = Symbol('accordion')
+
+// BFormCheckboxGroup
+export const checkboxGroupKey: InjectionKey<BFormCheckboxGroupParentData> = Symbol('checkboxGroup')

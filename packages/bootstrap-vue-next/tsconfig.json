@@ -5,7 +5,8 @@
     "baseUrl": ".",
     "paths": {
       "vue-router": ["node_modules/vue-router"],
-      "@vueuse/shared": ["node_modules/@vueuse/shared"]
+      "@vueuse/shared": ["node_modules/@vueuse/shared"],
+      "@floating-ui/core": ["node_modules/@floating-ui/core"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],

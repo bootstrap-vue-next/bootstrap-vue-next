@@ -15,14 +15,8 @@
       :aria-labelledby="ariaLabelledby"
       :value="value"
       :aria-required="!!name && requiredBoolean ? true : undefined"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
     />
-    <label
-      v-if="hasDefaultSlot || plainBoolean === false"
-      :for="computedId"
-      :class="[labelClasses, {active: isChecked, focus: isFocused}]"
-    >
+    <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </div>
@@ -32,9 +26,9 @@
 // import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
+import {computed, ref, toRef, useSlots} from 'vue'
 import {isEmptySlot} from '../../utils'
-import {useVModel} from '@vueuse/core'
+import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -97,7 +91,10 @@ const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stateBoolean = useBooleanish(toRef(props, 'state'))
 
 const input = ref<HTMLElement | null>(null)
-const isFocused = ref<boolean>(false)
+
+useFocus(input, {
+  initialValue: autofocusBoolean.value,
+})
 
 const localValue = computed<unknown>({
   get: () => (Array.isArray(modelValue.value) ? modelValue.value[0] : modelValue.value),
@@ -110,32 +107,18 @@ const localValue = computed<unknown>({
   },
 })
 
-const isChecked = computed<unknown>(() => {
-  if (Array.isArray(modelValue.value)) {
-    return (modelValue.value || []).find((e) => e === props.value)
-  }
-  return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
-})
-
 const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 
-const classesObject = reactive({
-  plain: toRef(plainBoolean, 'value'),
-  button: toRef(buttonBoolean, 'value'),
-  inline: toRef(inlineBoolean, 'value'),
-  switch: toRef(switchBoolean, 'value'),
-  size: toRef(props, 'size'),
-  state: toRef(stateBoolean, 'value'),
-  buttonVariant: toRef(props, 'buttonVariant'),
-})
+const classesObject = computed(() => ({
+  plain: plainBoolean.value,
+  button: buttonBoolean.value,
+  inline: inlineBoolean.value,
+  switch: switchBoolean.value,
+  size: props.size,
+  state: stateBoolean.value,
+  buttonVariant: props.buttonVariant,
+}))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
-
-// TODO: make tests compatible with the v-focus directive
-onMounted(() => {
-  if (autofocusBoolean.value && input.value !== null) {
-    input.value.focus()
-  }
-})
 </script>

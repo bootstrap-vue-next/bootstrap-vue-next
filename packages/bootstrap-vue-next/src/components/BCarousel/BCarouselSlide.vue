@@ -5,8 +5,8 @@
         class="d-block w-100"
         :alt="imgAlt"
         :src="imgSrc"
-        :width="imgWidth || parentData?.width"
-        :height="imgHeight || parentData?.height"
+        :width="imgWidth || parentData?.width.value"
+        :height="imgHeight || parentData?.height.value"
         :blank="imgBlank"
         :blank-color="imgBlankColor"
       />
@@ -85,7 +85,7 @@ const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptyS
 
 const computedStyle = computed<StyleValue>(() => ({
   background: `${
-    props.background || parentData?.background || 'rgb(171, 171, 171)'
+    props.background || parentData?.background.value || 'rgb(171, 171, 171)'
   } none repeat scroll 0% 0%`,
 }))
 

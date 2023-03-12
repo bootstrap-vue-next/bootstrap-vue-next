@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <span ref="placeholder" />
   <slot v-bind="{show, hide, toggle, showState}" />
@@ -29,11 +28,13 @@
             {{ title }}
           </slot>
         </div>
+        <!-- eslint-disable vue/no-v-html -->
         <div
           v-else
           :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
           v-html="sanitizedTitle"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
       <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
         <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
@@ -41,11 +42,13 @@
             {{ content }}
           </slot>
         </div>
+        <!-- eslint-disable vue/no-v-html -->
         <div
           v-else
           :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
           v-html="sanitizedContent"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
     </div>
   </teleport>

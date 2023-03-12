@@ -1,3 +1,4 @@
+import type {Ref} from 'vue'
 // Props
 export interface Props {
   id?: string
@@ -18,7 +19,7 @@ export interface Emits {
 }
 // Other
 export interface ParentData {
-  background?: string
-  width?: string
-  height?: string
+  background: Ref<string | undefined>
+  width: Ref<string | undefined>
+  height: Ref<string | undefined>
 }

@@ -1,21 +1,16 @@
-export * as Alignment from './Alignment'
+export type * as Alignment from './Alignment'
 export type {default as Animation} from './Animation'
 export type {default as AriaInvalid} from './AriaInvalid'
 export type {default as Booleanish} from './Booleanish'
 export type {default as BootstrapVueOptions} from './BootstrapVueOptions'
 export type {BreadcrumbItemObject, default as BreadcrumbItem} from './BreadcrumbItem'
 export type {default as Breakpoint} from './Breakpoint'
-export type {
-  ColBreakpointProps,
-  OffsetBreakpointProps,
-  OrderBreakpointProps,
-  RowColsBreakpointProps,
-} from './BreakpointProps'
+export type * from './BreakpointProps'
 export type {default as ButtonType} from './ButtonType'
 export type {default as ButtonVariant, BaseButtonVariant} from './ButtonVariant'
 export type {default as ClassValue} from './ClassValue'
 export type {default as ColorVariant, BaseColorVariant} from './ColorVariant'
-export type {ContainerHorizontalAlign, ContainerPosition, ContainerVerticalAlign} from './Container'
+export type * from './Container'
 export type {default as InputSize} from './InputSize'
 export type {default as InputType} from './InputType'
 export type {default as LinkTarget} from './LinkTarget'

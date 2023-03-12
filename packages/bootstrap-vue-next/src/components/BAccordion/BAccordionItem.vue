@@ -18,7 +18,7 @@
       :id="computedId"
       class="accordion-collapse"
       :visible="visible"
-      :accordion="parentData ?? undefined"
+      :accordion="parentData?.value ?? undefined"
       :aria-labelledby="`heading${computedId}`"
     >
       <div class="accordion-body">

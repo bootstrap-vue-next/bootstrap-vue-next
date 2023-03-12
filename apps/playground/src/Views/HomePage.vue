@@ -84,10 +84,8 @@ import TTableSimple from '../components/Comps/TTableSimple.vue'
 import TTabs from '../components/Comps/TTabs.vue'
 import TToast from '../components/Comps/TToast.vue'
 import TTooltip from '../components/Comps/TTooltip.vue'
-import TVisible from '../components/Directives/TVisible.vue'
 
 const comps: {name: string; is: unknown; disabled?: true}[] = [
-  {name: 'Visible', is: TVisible, disabled: true},
   {name: 'Accordion', is: TAccordion},
   {name: 'Alert', is: TAlert},
   {name: 'Avatar', is: TAvatar},

@@ -47,6 +47,7 @@
     "@vueuse/core": "^9.11.1"
   },
   "devDependencies": {
+    "@floating-ui/core": "^1.2.2",
     "@popperjs/core": "2.11.6",
     "@types/bootstrap": "^5.2.6",
     "@vitejs/plugin-vue": "^3.2.0",

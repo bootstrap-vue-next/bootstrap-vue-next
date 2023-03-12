@@ -1,3 +1,4 @@
+import type {Ref} from 'vue'
 import type {Breakpoint} from '../..'
 // Props
 export interface Props {
@@ -10,5 +11,5 @@ export interface Props {
 
 // Other
 export interface ParentData {
-  numbered: boolean
+  numbered: Ref<boolean>
 }

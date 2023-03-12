@@ -322,7 +322,7 @@ onMounted(() => {
 })
 
 provide(tabsInjectionKey, {
-  lazy: lazyBoolean.value,
-  card: cardBoolean.value,
+  lazy: lazyBoolean,
+  card: cardBoolean,
 })
 </script>

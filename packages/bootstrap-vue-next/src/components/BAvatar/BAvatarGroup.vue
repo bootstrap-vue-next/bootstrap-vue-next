@@ -48,9 +48,9 @@ const computeOverlap = (value: any): number =>
 
 provide(avatarGroupInjectionKey, {
   overlapScale,
-  size: props.size,
-  square: squareBoolean.value,
-  rounded: props.rounded,
-  variant: props.variant,
+  size: toRef(props, 'size'),
+  square: squareBoolean,
+  rounded: toRef(props, 'rounded'),
+  variant: toRef(props, 'variant'),
 })
 </script>

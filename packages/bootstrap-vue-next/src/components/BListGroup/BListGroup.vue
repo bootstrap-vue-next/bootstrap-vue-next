@@ -42,6 +42,6 @@ const computedClasses = computed(() => {
 const computedTag = computed<string>(() => (numberedBoolean.value === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
-  numbered: numberedBoolean.value,
+  numbered: numberedBoolean,
 })
 </script>

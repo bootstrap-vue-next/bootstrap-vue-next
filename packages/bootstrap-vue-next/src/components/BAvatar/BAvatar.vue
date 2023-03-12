@@ -91,17 +91,13 @@ const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
 
 const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 
-const computedSize = computed<string | null>(() =>
-  parentData?.size ? parentData.size : computeSize(props.size)
+const computedSize = computed<string | null>(
+  () => parentData?.size.value ?? computeSize(props.size)
 )
 
-const computedVariant = computed<ColorVariant>(() =>
-  parentData?.variant ? parentData.variant : props.variant
-)
+const computedVariant = computed<ColorVariant>(() => parentData?.variant.value ?? props.variant)
 
-const computedRounded = computed<string | boolean>(() =>
-  parentData?.rounded ? parentData.rounded : props.rounded
-)
+const computedRounded = computed<string | boolean>(() => parentData?.rounded.value ?? props.rounded)
 
 const computedAttrs = computed(() => ({
   'type': buttonBoolean.value ? props.buttonType : undefined,

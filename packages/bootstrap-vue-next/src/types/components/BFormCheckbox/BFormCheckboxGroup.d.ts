@@ -1,3 +1,4 @@
+import type {Ref} from 'vue'
 import type {ButtonVariant, Size} from '../..'
 // Props
 export interface Props {
@@ -30,3 +31,26 @@ export interface Emits {
   (e: 'change', value: unknown): void
 }
 // Other
+
+export interface ParentData {
+  set: (
+    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ) => void
+  remove: (
+    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ) => void
+  modelValue: Ref<
+    (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+  >
+  switch: Ref<boolean>
+  buttonVariant: Ref<ButtonVariant>
+  form: Ref<string | undefined>
+  name: Ref<string>
+  state: Ref<boolean | undefined>
+  plain: Ref<boolean>
+  size: Ref<Size>
+  inline: Ref<boolean>
+  required: Ref<boolean>
+  buttons: Ref<boolean>
+  disabled: Ref<boolean>
+}

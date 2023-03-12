@@ -65,7 +65,13 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const link = computed<boolean>(() => !buttonBoolean.value && (!!props.href || !!props.to))
 
 const tagComputed = computed<string | typeof BLink>(() =>
-  parentData?.numbered ? 'li' : buttonBoolean.value ? 'button' : !link.value ? props.tag : BLink
+  parentData?.numbered.value
+    ? 'li'
+    : buttonBoolean.value
+    ? 'button'
+    : !link.value
+    ? props.tag
+    : BLink
 )
 
 const isAction = computed(

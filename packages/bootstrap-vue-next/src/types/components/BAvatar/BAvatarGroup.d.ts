@@ -1,4 +1,4 @@
-import type {ComputedRef} from 'vue'
+import type {Ref} from 'vue'
 import type {ColorVariant, InputSize} from '../..'
 // Props
 export interface Props {
@@ -13,9 +13,9 @@ export interface Props {
 
 // Other
 export interface ParentData {
-  overlapScale: ComputedRef<number>
-  size?: InputSize | string
-  square: boolean
-  rounded: boolean | string
-  variant?: ColorVariant
+  overlapScale: Ref<number>
+  size: Ref<InputSize | string | undefined>
+  square: Ref<boolean>
+  rounded: Ref<boolean | string>
+  variant: Ref<ColorVariant | undefined>
 }

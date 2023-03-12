@@ -264,8 +264,8 @@ watch(
 defineExpose({pause, resume, prev, next})
 
 provide(carouselInjectionKey, {
-  background: props.background,
-  width: props.imgWidth,
-  height: props.imgHeight,
+  background: toRef(props, 'background'),
+  width: toRef(props, 'imgWidth'),
+  height: toRef(props, 'imgHeight'),
 })
 </script>
