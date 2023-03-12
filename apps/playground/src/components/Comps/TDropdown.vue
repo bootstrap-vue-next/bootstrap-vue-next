@@ -22,6 +22,20 @@
     </b-row>
     <b-row>
       <b-col>
+        <h4 class="m-2">v-model</h4>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-checkbox v-model="state"> state</b-form-checkbox>
+
+        <b-dropdown v-model="state" text="using v-model" class="m-2">
+          <b-dropdown-item href="#">Action</b-dropdown-item>
+        </b-dropdown>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <h4 class="m-2">Split & variant</h4>
       </b-col>
     </b-row>
@@ -198,7 +212,7 @@
           <b-dropdown-item to="/">Home</b-dropdown-item>
           <b-dropdown-item
             :to="{
-              name: 'About',
+              name: 'about',
               params: {id: '456'},
               query: {param: 'someVal'},
             }"
@@ -217,5 +231,8 @@
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const consoleLog = (...args: unknown[]) => console.log(...args)
+const state = ref(true)
 </script>

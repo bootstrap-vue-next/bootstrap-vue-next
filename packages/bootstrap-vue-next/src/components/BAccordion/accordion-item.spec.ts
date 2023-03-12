@@ -24,7 +24,7 @@ describe('accordion-item', () => {
 
   it('b-collapse contains static class accordion-collapse', () => {
     const wrapper = mount(BAccordionItem)
-    const $bcollapse = wrapper.findComponent(BCollapse)
+    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.classes()).toContain('accordion-collapse')
   })
 
@@ -53,7 +53,7 @@ describe('accordion-item', () => {
 
   it('b-collapse has id attr has default id', () => {
     const wrapper = mount(BAccordionItem)
-    const $bcollapse = wrapper.findComponent(BCollapse)
+    const [$bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.attributes('id')).toBeDefined()
   })
 
@@ -61,7 +61,7 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'spam&eggs'},
     })
-    const $bcollapse = wrapper.findComponent(BCollapse)
+    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.attributes('id')).toBe('spam&eggs')
   })
 
@@ -79,7 +79,7 @@ describe('accordion-item', () => {
     const wrapper = mount(BAccordionItem, {
       props: {id: 'foobar'},
     })
-    const $bcollapse = wrapper.findComponent(BCollapse)
+    const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
     expect($bcollapse.attributes('aria-labelledby')).toBe('headingfoobar')
   })
 
@@ -114,7 +114,7 @@ describe('accordion-item', () => {
       props: {id: 'foobar'},
     })
     const $h2 = wrapper.get('h2')
-    expect($h2.attributes('id')).toBe('foobarheading')
+    expect($h2.attributes('id')).toBe('headingfoobar')
   })
 
   it('h2 child has button child', () => {

@@ -9,7 +9,7 @@ import {
 
 export default {
   mounted(el, binding) {
-    const text = resolveContent(binding.value)
+    const text = resolveContent(binding.value, el)
 
     el.$__state = ref({
       ...resolveDirectiveProps(binding, el),
@@ -19,7 +19,7 @@ export default {
     bind(el, binding)
   },
   updated(el, binding) {
-    const text = resolveContent(binding.value)
+    const text = resolveContent(binding.value, el)
     if (!el.$__state) return
     el.$__state.value = {
       ...resolveDirectiveProps(binding, el),

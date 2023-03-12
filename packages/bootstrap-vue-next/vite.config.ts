@@ -18,16 +18,14 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['bootstrap', 'bootstrap/js/dist/collapse', 'vue'],
+      external: ['vue'],
       output: {
         exports: 'named',
         assetFileNames: `bootstrap-vue-next.[ext]`, //without this, it generates build/styles.css
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
-          'vue': 'Vue',
-          'bootstrap': 'Bootstrap',
-          'bootstrap/js/dist/collapse': 'Collapse',
+          vue: 'Vue',
         },
       },
     },

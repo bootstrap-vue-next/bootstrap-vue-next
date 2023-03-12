@@ -97,7 +97,7 @@
 // import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, onMounted, ref, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../composables'
-import {useFocus, useVModel} from '@vueuse/core'
+import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
@@ -386,6 +386,10 @@ onMounted(() => {
   if (modelValueBoolean.value === true) {
     isActive.value = true
   }
+})
+
+useEventListener(element, 'bv-toggle', () => {
+  modelValue.value ? hide() : show()
 })
 </script>
 
