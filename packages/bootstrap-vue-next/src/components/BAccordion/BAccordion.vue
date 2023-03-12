@@ -33,6 +33,8 @@ const computedClasses = computed(() => ({
 }))
 
 if (!freeBoolean.value) {
-  provide(accordionInjectionKey, computedId)
+  provide(accordionInjectionKey, {
+    id: computedId,
+  })
 }
 </script>

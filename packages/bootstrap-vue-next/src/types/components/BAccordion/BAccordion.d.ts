@@ -1,3 +1,4 @@
+import type {Ref} from 'vue'
 // Props
 export interface Props {
   flush?: boolean
@@ -7,3 +8,7 @@ export interface Props {
 // Emits
 
 // Other
+
+export interface ParentData {
+  id: Ref<string>
+}

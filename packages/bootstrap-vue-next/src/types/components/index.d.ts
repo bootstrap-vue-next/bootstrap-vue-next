@@ -1,5 +1,8 @@
 // BAccordion
-export type {Props as BAccordionProps} from './BAccordion/BAccordion'
+export type {
+  Props as BAccordionProps,
+  ParentData as BAccordionParentData,
+} from './BAccordion/BAccordion'
 export type {Props as BAccordionItemProps} from './BAccordion/BAccordionItem'
 //
 export type {Emits as BAlertEmits, Props as BAlertProps} from './BAlert'
