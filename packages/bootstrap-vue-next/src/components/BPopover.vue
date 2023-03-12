@@ -165,17 +165,16 @@ interface BPopoverEmits {
 
 const emit = defineEmits<BPopoverEmits>()
 
-const showState = ref(props.modelValue)
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const showState = ref(modelValueBoolean.value)
 watch(showState, (value) => {
-  emit('update:modelValue', !!value)
+  emit('update:modelValue', value)
 })
-watch(
-  () => props.modelValue,
-  (value) => {
-    if (value === showState.value) return
-    value ? show() : hide(new Event('update:modelValue'))
-  }
-)
+
+watch(modelValueBoolean, () => {
+  if (modelValueBoolean.value === showState.value) return
+  modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
+})
 
 const computedId = useId(toRef(props, 'id'), 'popover')
 
