@@ -80,6 +80,7 @@ import {
   toRef,
   type VNode,
   watch,
+  watchEffect,
 } from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ColorVariant} from '../types'
@@ -167,11 +168,11 @@ const emit = defineEmits<BPopoverEmits>()
 
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 const showState = ref(modelValueBoolean.value)
-watch(showState, (value) => {
-  emit('update:modelValue', value)
+watchEffect(() => {
+  emit('update:modelValue', showState.value)
 })
 
-watch(modelValueBoolean, () => {
+watchEffect(() => {
   if (modelValueBoolean.value === showState.value) return
   modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
 })
