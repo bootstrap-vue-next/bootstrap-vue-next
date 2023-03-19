@@ -1,6 +1,3 @@
-type ClassValue =
-  | (string | Record<string, boolean | undefined | null>)[]
-  | Record<string, boolean | undefined | null>
-  | string
+type ClassValue = any
 
 export default ClassValue
