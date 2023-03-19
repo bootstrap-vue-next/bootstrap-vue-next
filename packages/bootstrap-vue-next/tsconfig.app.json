@@ -8,8 +8,7 @@
     "paths": {
       "vue-router": ["node_modules/vue-router"],
       "@vueuse/shared": ["node_modules/@vueuse/shared"],
-      "@floating-ui/core": ["node_modules/@floating-ui/core"],
-      "csstype": ["node_modules/csstype"]
+      "@floating-ui/core": ["node_modules/@floating-ui/core"]
     }
   }
 }

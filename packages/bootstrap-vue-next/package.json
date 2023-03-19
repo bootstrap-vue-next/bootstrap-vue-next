@@ -24,7 +24,7 @@
     "!src/App.vue",
     "!src/main.ts"
   ],
-  "types": "./dist/BootstrapVue.d.ts",
+  "types": "./dist/src/BootstrapVue.d.ts",
   "private": false,
   "scripts": {
     "dev": "vite --port 5174",
