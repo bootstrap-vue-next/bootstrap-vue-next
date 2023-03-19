@@ -1,9 +1,4 @@
-export interface SelectOptionObject<T = unknown> {
-  value: T
-  text?: string
-  html?: string
-  disabled?: boolean
-}
+import type SelectOptionObject from './SelectOptionObject'
 
 type SelectOption<T = unknown> = string | SelectOptionObject<T>
 

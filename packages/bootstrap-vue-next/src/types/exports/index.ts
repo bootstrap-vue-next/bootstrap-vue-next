@@ -1,5 +1,10 @@
 export type {
-  Alignment,
+  AlignmentCommon,
+  AlignmentContent,
+  AlignmentHorizontal,
+  AlignmentJustifyContent,
+  AlignmentTextHorizontal,
+  AlignmentVertical,
   BPopoverDelayObject,
   BreadcrumbItem,
   Breakpoint,
