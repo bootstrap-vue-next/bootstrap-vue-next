@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type StyleValue} from 'vue'
+import {computed, type CSSProperties} from 'vue'
 import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
 interface Props {
@@ -56,9 +56,9 @@ const wrapperClasses = computed(() => ({
   [`placeholder-${props.animation}`]: props.animation !== undefined,
 }))
 
-const computedStyle = computed<StyleValue | undefined>(() =>
-  widthString.value === undefined ? undefined : `width: ${widthString.value}%;`
-)
+const computedStyle = computed<CSSProperties>(() => ({
+  width: widthString.value === undefined ? undefined : `${widthString.value}%`,
+}))
 </script>
 
 <script lang="ts">

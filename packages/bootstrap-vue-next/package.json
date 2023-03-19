@@ -65,6 +65,7 @@
     "@vueuse/shared": "^9.11.1",
     "bootstrap": "^5.2.3",
     "c8": "^7.7.0",
+    "csstype": "^3.1.1",
     "eslint": "^8.29.0",
     "eslint-define-config": "^1.17.0",
     "eslint-plugin-vue": "^9.8.0",

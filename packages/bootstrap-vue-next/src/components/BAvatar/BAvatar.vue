@@ -26,7 +26,7 @@
 <script setup lang="ts">
 // import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
-import {computed, inject, type StyleValue, toRef, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -165,10 +165,10 @@ const marginStyle = computed(() => {
 
 const computedTag = computed<'button' | 'span'>(() => (buttonBoolean.value ? 'button' : 'span'))
 
-const computedStyle = computed(() => ({
+const computedStyle = computed<CSSProperties>(() => ({
   ...marginStyle.value,
-  width: computedSize.value,
-  height: computedSize.value,
+  width: computedSize.value ?? undefined,
+  height: computedSize.value ?? undefined,
 }))
 
 const computeContrastVariant = (colorVariant: ColorVariant): 'dark' | 'light' =>

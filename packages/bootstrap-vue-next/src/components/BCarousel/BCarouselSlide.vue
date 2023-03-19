@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
-import {computed, inject, type StyleValue, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
@@ -83,7 +83,7 @@ const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slot
 const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
 const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
-const computedStyle = computed<StyleValue>(() => ({
+const computedStyle = computed<CSSProperties>(() => ({
   background: `${
     props.background || parentData?.background.value || 'rgb(171, 171, 171)'
   } none repeat scroll 0% 0%`,
