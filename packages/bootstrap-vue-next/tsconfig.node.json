@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": ["vite.config.*", "vitest.config.*", ".eslintrc.*"],
+  "include": ["vite.config.*", ".eslintrc.*"],
   "compilerOptions": {
     "composite": true,
     "types": ["node"]
