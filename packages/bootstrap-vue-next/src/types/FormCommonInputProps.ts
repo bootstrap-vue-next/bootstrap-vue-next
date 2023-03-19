@@ -1,4 +1,5 @@
-import type {AriaInvalid, Size} from '..'
+import type AriaInvalid from './AriaInvalid'
+import type Size from './Size'
 
 interface FormCommonInputProps {
   ariaInvalid?: AriaInvalid

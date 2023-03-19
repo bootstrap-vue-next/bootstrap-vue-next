@@ -3,6 +3,7 @@ export type {default as Animation} from './Animation'
 export type {default as AriaInvalid} from './AriaInvalid'
 export type {default as Booleanish} from './Booleanish'
 export type {default as BootstrapVueOptions} from './BootstrapVueOptions'
+export type {default as BPopoverDelayObject} from './BPopoverDelayObject'
 export type {BreadcrumbItemObject, default as BreadcrumbItem} from './BreadcrumbItem'
 export type {default as Breakpoint} from './Breakpoint'
 export type {
@@ -11,11 +12,15 @@ export type {
   OrderBreakpointProps,
   RowColsBreakpointProps,
 } from './BreakpointProps'
+export type {default as BTableProvider} from './BTableProvider'
+export type {default as BTableProviderContext} from './BTableProviderContext'
+export type {default as BTableSortCompare} from './BTableSortCompare'
 export type {default as ButtonType} from './ButtonType'
 export type {BaseButtonVariant, default as ButtonVariant} from './ButtonVariant'
 export type {default as ClassValue} from './ClassValue'
 export type {BaseColorVariant, default as ColorVariant} from './ColorVariant'
 export type {ContainerHorizontalAlign, ContainerPosition, ContainerVerticalAlign} from './Container'
+export type {default as FormCommonInputProps} from './FormCommonInputProps'
 export type {default as InputSize} from './InputSize'
 export type {default as InputType} from './InputType'
 export type {

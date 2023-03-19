@@ -188,16 +188,16 @@ import {useBooleanish} from '../../composables'
 import {cloneDeepAsync} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
-
 import type {
   Booleanish,
+  BTableProvider,
+  BTableSortCompare,
   ColorVariant,
   TableField,
   TableFieldObject,
   TableItem,
   VerticalAlign,
 } from '../../types'
-import type {BTableProvider, BTableSortCompare} from '../../types/components'
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import useItemHelper from './itemHelper'
