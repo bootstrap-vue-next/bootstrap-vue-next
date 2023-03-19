@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCollapseEmits, BCollapseProps} from '../types/components'
 import {computed, onMounted, ref, toRef, watch} from 'vue'
 import {Collapse} from 'bootstrap'
 import {useBooleanish, useId} from '../composables'

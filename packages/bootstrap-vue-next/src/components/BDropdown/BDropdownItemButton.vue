@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownItemButtonEmits, BDropdownItemButtonProps} from '../../types/components'
 import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'

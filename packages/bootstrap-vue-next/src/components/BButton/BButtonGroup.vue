@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BButtonGroupProps} from '../../types/components'
 import type {Booleanish} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'

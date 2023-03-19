@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BListGroupItemProps} from '../../types/components'
 import {computed, inject, toRef, useAttrs} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'

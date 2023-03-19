@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTabProps} from '../../types/components'
 import {computed, inject, ref, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'

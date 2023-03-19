@@ -16,7 +16,6 @@ import {computed} from 'vue'
 import {useBreadcrumb} from '../../composables'
 import type {BreadcrumbItem, BreadcrumbItemObject} from '../../types'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
-// import type {BBreadcrumbProps} from '../types/components'
 
 interface BBreadcrumbProps {
   items?: BreadcrumbItem[]

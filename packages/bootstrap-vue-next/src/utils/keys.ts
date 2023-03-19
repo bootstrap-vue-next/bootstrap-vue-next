@@ -7,7 +7,7 @@ import type {
   BListGroupParentData,
   BProgressParentData,
   BTabsParentData,
-} from '../types/components'
+} from '../types'
 import type {UseBreadcrumbOptions} from '../composables/useBreadcrumb'
 
 // BCarousel

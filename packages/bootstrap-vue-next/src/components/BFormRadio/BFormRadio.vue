@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormRadioEmits, BFormRadioProps} from '../../types/components'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import {computed, ref, toRef, useSlots} from 'vue'

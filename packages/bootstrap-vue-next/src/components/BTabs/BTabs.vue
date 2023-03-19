@@ -79,7 +79,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTabsProps, BTabsEmits} from '../types/components'
 import {computed, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
 import {BvEvent, getId, getSlotElements, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'

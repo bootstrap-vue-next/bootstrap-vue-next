@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownDividerProps} from '../../types/components'
-
 interface BDropdownDividerProps {
   tag?: string
 }

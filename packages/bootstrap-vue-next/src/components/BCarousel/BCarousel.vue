@@ -54,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCarouselProps, BCarouselEmits} from '../types/components'
 import {
   BvCarouselEvent,
   carouselInjectionKey,

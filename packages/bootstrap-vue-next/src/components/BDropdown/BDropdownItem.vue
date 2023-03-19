@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
 import BLink from '../BLink/BLink.vue'
 import {computed, toRef, useAttrs} from 'vue'
 import type {Booleanish, ClassValue, ColorVariant, LinkTarget} from '../../types'

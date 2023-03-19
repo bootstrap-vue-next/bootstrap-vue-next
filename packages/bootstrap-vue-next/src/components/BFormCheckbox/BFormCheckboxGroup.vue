@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormCheckboxGroupEmits, BFormCheckboxGroupProps} from '../../types/components'
 import {computed, provide, ref, toRef, watchEffect} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'

@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-// import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'

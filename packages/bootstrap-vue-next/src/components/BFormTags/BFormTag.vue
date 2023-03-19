@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormTagEmits, BFormTagProps} from '../../types/components'
 import {computed, toRef, useSlots, type VNodeNormalizedChildren} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'

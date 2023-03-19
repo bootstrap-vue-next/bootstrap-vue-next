@@ -94,7 +94,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, onMounted, ref, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useFocus, useVModel} from '@vueuse/core'

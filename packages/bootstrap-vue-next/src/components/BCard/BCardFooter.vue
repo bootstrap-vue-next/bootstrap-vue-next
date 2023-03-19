@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardHeaderProps} from '../../types/components'
 import type {ColorVariant, TextColorVariant} from '../../types'
 import BCardHeadFoot from './BCardHeadFoot.vue'
 

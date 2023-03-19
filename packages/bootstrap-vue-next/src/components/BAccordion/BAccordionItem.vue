@@ -35,7 +35,6 @@ import {BToggle as vBToggle} from '../../directives'
 import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
-// import type {BAccordionItemProps} from '../types/components'
 
 interface BAccordionItemProps {
   id?: string

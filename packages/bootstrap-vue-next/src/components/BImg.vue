@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BImgProps} from '../types/components'
 import type {Booleanish} from '../types'
 import {useBooleanish} from '../composables'
 import {computed, toRef} from 'vue'

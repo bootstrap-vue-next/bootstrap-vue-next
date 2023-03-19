@@ -12,8 +12,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormFloatingLabelProps} from '../../types/components'
-
 interface BFormFloatingLabelProps {
   labelFor?: string
   label?: string

@@ -110,7 +110,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormTagsEmits, BFormTagsProps} from '../types/components'
 import {
   computed,
   onActivated,

@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormInvalidFeedbackProps} from '../../types/components'
 import {computed, toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'

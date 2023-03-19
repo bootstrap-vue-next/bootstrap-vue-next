@@ -3,9 +3,6 @@
  */
 export type BvEventConstructorOmittables = 'eventType' | 'defaultPrevented'
 
-/**
- * @external
- */
 export default class BvEvent {
   readonly cancelable: boolean = true
   readonly componentId: string | null = null

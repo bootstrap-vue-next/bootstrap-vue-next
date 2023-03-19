@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
 import {useFocus, useVModel} from '@vueuse/core'
 import {computed, inject, onUnmounted, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'

@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BAlertEmits, BAlertProps} from '../types/components'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'

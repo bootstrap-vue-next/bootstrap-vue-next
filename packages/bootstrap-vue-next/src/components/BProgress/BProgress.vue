@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BProgressProps} from '../types/components'
 import BProgressBar from './BProgressBar.vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'

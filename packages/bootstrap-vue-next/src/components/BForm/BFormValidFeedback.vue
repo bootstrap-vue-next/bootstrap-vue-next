@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormValidFeedbackProps} from '../../types/components'
 import {computed, toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'

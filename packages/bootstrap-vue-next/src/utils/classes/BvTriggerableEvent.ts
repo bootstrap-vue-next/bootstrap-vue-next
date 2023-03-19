@@ -1,8 +1,5 @@
 import BvEvent, {type BvEventConstructorOmittables} from './BvEvent'
 
-/**
- * @external
- */
 export default class BvTriggerableEvent extends BvEvent {
   readonly trigger: string | null = null
 

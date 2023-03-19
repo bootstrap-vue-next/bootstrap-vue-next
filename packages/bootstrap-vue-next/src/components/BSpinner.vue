@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BSpinnerProps} from '../types/components'
 import {computed, toRef, useSlots} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../types'
 import {useBooleanish} from '../composables'

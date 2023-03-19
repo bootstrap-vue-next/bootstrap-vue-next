@@ -37,7 +37,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCarouselSlideProps} from '../../types/components'
 import {computed, type CSSProperties, inject, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'

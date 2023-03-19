@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTheadProps} from '../../types/components'
 import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 

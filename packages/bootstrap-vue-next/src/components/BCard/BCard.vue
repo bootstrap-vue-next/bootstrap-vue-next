@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardProps} from '../../types/components'
 import type {Alignment, Booleanish, ClassValue, ColorVariant, TextColorVariant} from '../../types'
 import {isEmptySlot} from '../../utils'
 import {computed, toRef, useSlots} from 'vue'

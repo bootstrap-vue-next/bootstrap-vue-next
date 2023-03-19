@@ -52,9 +52,6 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 
-/**
- * @external
- */
 export default {
   mounted(el, binding: DirectiveBinding<string>): void {
     const targetIds = getTargets(binding, el)

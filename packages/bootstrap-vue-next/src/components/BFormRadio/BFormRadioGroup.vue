@@ -21,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormRadioGroupEmits, BFormRadioGroupProps} from '../../types/components'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
 import {computed, reactive, toRef, useSlots} from 'vue'
 import BFormRadio from './BFormRadio.vue'

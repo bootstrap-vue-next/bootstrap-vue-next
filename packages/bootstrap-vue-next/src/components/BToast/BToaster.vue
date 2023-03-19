@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BToasterProps} from '../../types/components'
 import {computed} from 'vue'
 import type {ContainerPosition} from '../../types'
 import type {ToastInstance} from '../BToast/plugin'

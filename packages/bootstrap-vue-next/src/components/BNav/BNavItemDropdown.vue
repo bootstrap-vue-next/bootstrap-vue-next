@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BNavItemDropdownProps} from '../types/components'
 import type {Middleware, Strategy} from '@floating-ui/vue'
 import {useVModel} from '@vueuse/core'
 import {computed} from 'vue'

@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-// import type { BAvatarGroupParentData, BAvatarGroupProps, InputSize } from '../types/components'
 import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {avatarGroupInjectionKey, isNumeric, toFloat} from '../../utils'

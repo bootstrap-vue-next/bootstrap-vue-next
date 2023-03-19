@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
 import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
 import {computed, ref, toRef} from 'vue'
