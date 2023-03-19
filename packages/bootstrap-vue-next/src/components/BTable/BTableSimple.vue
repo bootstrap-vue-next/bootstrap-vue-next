@@ -1,9 +1,9 @@
 <template>
-  <table v-if="!responsive" role="table" :class="computedClasses">
+  <table v-if="!responsive" :class="computedClasses">
     <slot />
   </table>
   <div v-else :class="responsiveClasses">
-    <table role="table" :class="computedClasses">
+    <table :class="computedClasses">
       <slot />
     </table>
   </div>

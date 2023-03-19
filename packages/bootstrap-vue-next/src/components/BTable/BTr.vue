@@ -1,5 +1,5 @@
 <template>
-  <tr role="row" :class="computedClasses">
+  <tr :class="computedClasses">
     <slot />
   </tr>
 </template>

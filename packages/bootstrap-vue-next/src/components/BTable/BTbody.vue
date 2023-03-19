@@ -1,5 +1,5 @@
 <template>
-  <tbody role="rowgroup" :class="computedClasses">
+  <tbody :class="computedClasses">
     <slot />
   </tbody>
 </template>

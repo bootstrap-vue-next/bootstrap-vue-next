@@ -11,7 +11,6 @@
     <output
       :id="`${computedId}selected_tags__`"
       class="visually-hidden"
-      role="status"
       :for="_inputId"
       :aria-live="focus ? 'polite' : 'off'"
       aria-atomic="true"

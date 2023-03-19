@@ -1,6 +1,5 @@
 <template>
   <th
-    role="columnheader"
     :scope="scope"
     :class="computedClasses"
     :colspan="colspan"
