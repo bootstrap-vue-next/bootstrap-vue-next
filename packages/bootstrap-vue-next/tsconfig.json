@@ -1,14 +1,14 @@
 {
-  "extends": "tsconfig/base.json",
-  "compilerOptions": {
-    "types": ["vitest/globals", "vite/client"],
-    "baseUrl": ".",
-    "paths": {
-      "vue-router": ["node_modules/vue-router"],
-      "@vueuse/shared": ["node_modules/@vueuse/shared"],
-      "@floating-ui/core": ["node_modules/@floating-ui/core"]
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
     }
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
-  "references": [{"path": "./tsconfig.node.json"}]
+  ]
 }

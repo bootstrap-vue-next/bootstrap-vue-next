@@ -1,7 +1,7 @@
 import {enableAutoUnmount, flushPromises, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import {ref} from 'vue'
-import {TableField, TableItem} from '../../types'
+import type {TableField, TableItem} from '../../types'
 import BTable from './BTable.vue'
 import BTableSimple from './BTableSimple.vue'
 

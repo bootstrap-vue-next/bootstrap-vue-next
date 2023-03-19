@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 // import type {BCarouselSlideProps} from '../../types/components'
-import {computed, inject, StyleValue, useSlots} from 'vue'
+import {computed, inject, type StyleValue, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'

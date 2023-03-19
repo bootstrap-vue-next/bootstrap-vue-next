@@ -1,7 +1,7 @@
 import {type Directive, ref} from 'vue'
 import {
   bind,
-  ElementWithPopper,
+  type ElementWithPopper,
   resolveContent,
   resolveDirectiveProps,
   unbind,

@@ -35,9 +35,7 @@ const widthString = computed<string | undefined>(() =>
     ? undefined
     : typeof props.width === 'number'
     ? props.width.toString()
-    : props.width.includes('%')
-    ? props.width.replaceAll('%', '')
-    : props.width
+    : props.width.replace('%', '')
 )
 
 const colsString = computed<string | undefined>(() =>

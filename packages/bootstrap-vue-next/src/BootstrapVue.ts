@@ -1,11 +1,11 @@
-import {App, Plugin} from 'vue'
+import type {App, Plugin} from 'vue'
+import type {BootstrapVueOptions} from './types'
 
 import './styles/styles.scss'
 
 import * as Components from './components'
 import * as Directives from './directives'
 import {createBreadcrumb} from './composables'
-import {BootstrapVueOptions} from './types'
 
 // Inject all components into the global @vue/runtime-core
 // This allows intellisense in templates w/out direct importing

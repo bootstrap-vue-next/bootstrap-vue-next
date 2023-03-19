@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
-import {defineConfig, PluginOption} from 'vite'
+import {defineConfig, type PluginOption} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import {visualizer} from 'rollup-plugin-visualizer'
@@ -40,7 +40,9 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     visualizer() as unknown as PluginOption,
-    dts(),
+    dts({
+      tsConfigFilePath: './tsconfig.app.json',
+    }),
   ],
 
   server: {
