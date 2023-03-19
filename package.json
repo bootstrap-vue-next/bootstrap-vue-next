@@ -23,17 +23,16 @@
     }
   ],
   "scripts": {
-    "build": "turbo run build",
+    "prepare": "husky install && turbo run build",
     "dev": "turbo run dev --parallel",
-    "test": "turbo run test",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
     "test:lint": "turbo run test:lint",
     "test:unit": "turbo run test:unit",
     "test:coverage": "turbo run test:coverage",
-    "lint": "turbo run lint",
-    "prepare": "husky install && turbo run build"
+    "test": "turbo run test"
   },
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.4",
     "release-please": "^15.0.0",
