@@ -41,7 +41,7 @@ export default defineComponent({
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     href: {type: String, required: false},
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    pressed: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    pressed: {type: [Boolean, String] as PropType<Booleanish>, default: null},
     rel: {type: String, default: undefined},
     size: {type: String as PropType<InputSize>, default: 'md'},
     squared: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -63,7 +63,7 @@ export default defineComponent({
     const squaredBoolean = useBooleanish(toRef(props, 'squared'))
     const loadingBoolean = useBooleanish(toRef(props, 'loading'))
 
-    const isToggle = computed<boolean>(() => pressedBoolean.value === true)
+    const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
     const isButton = computed<boolean>(
       () => props.tag === 'button' && props.href === undefined && props.to === null
     )
