@@ -160,6 +160,8 @@ describe('button', () => {
     })
     expect(wrapper.attributes('aria-pressed')).toBe('true')
     await wrapper.setProps({pressed: false})
+    expect(wrapper.attributes('aria-pressed')).toBe('false')
+    await wrapper.setProps({pressed: null})
     expect(wrapper.attributes('aria-pressed')).toBeUndefined()
   })
 
@@ -169,6 +171,8 @@ describe('button', () => {
     })
     expect(wrapper.attributes('autocomplete')).toBe('off')
     await wrapper.setProps({pressed: false})
+    expect(wrapper.attributes('autocomplete')).toBe('off')
+    await wrapper.setProps({pressed: null})
     expect(wrapper.attributes('autocomplete')).toBeUndefined()
   })
 
