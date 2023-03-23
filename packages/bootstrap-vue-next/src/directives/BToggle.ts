@@ -63,13 +63,23 @@ const checkVisibility = (binding: DirectiveBinding<string>, el: HTMLElement) => 
   el.setAttribute('aria-expanded', visible ? 'true' : 'false')
 }
 
+interface WithToggle extends HTMLElement {
+  __toggle: () => void
+}
+
 /**
  * @external
  */
 export default {
-  mounted(el, binding: DirectiveBinding<string>): void {
-    el.addEventListener('click', () => toggle(binding, el))
+  mounted(el: WithToggle, binding: DirectiveBinding<string>): void {
+    el.__toggle = () => toggle(binding, el)
+    el.addEventListener('click', el.__toggle)
     checkVisibility(binding, el)
     el.setAttribute('aria-controls', getTargets(binding, el).join(' '))
   },
-} as Directive<HTMLElement>
+  unmounted(el: WithToggle): void {
+    el.removeEventListener('click', el.__toggle)
+    el.removeAttribute('aria-controls')
+    el.removeAttribute('aria-expanded')
+  },
+} as Directive<WithToggle>
