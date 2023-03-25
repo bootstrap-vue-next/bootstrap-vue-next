@@ -4,7 +4,7 @@ import type {BootstrapVueOptions} from './types'
 import './styles/styles.scss'
 
 import * as Components from './components'
-import * as Directives from './directives'
+import * as Directives from './directives/exports'
 import {createBreadcrumb} from './composables'
 
 // Inject all components into the global @vue/runtime-core
@@ -125,7 +125,11 @@ const plugin: Plugin = {
     })
 
     Object.entries(Directives).forEach(([name, component]) => {
-      app.directive(name, component)
+      if (name.toLowerCase().startsWith('v')) {
+        app.directive(name.slice(1), component)
+      } else {
+        app.directive(name, component)
+      }
     })
 
     createBreadcrumb(app)

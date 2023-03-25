@@ -2,11 +2,6 @@ import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
 import {getAttr, isTag} from '../utils'
 import type {Directive, DirectiveBinding} from 'vue'
 
-/**
- *
- * @param el
- * @returns
- */
 const resolveToggleType = (el: HTMLElement): string => {
   if (el.classList.contains('offcanvas')) {
     return 'offcanvas'
@@ -19,12 +14,6 @@ const resolveToggleType = (el: HTMLElement): string => {
   throw Error("Couldn't resolve toggle type")
 }
 
-/**
- *
- * @param binding
- * @param el
- * @returns
- */
 const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   const {modifiers, arg, value} = binding
   // Any modifiers are considered target Ids

@@ -1,11 +1,5 @@
 import type {Slots, VNode} from 'vue'
 
-/**
- * @param name
- * @param scope
- * @param $slots
- * @returns
- */
 export default (name: string, scope = {}, $slots: Slots = {}): VNode => {
   // Ensure names is an array
   const names = [name]

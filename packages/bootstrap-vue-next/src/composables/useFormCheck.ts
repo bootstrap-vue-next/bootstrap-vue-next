@@ -148,15 +148,6 @@ const getGroupClasses = (items: Ref<GroupClassesItemsInput> | GroupClassesItemsI
   }))
 }
 
-// TODO this function is similarly used in BTabs and may be capable of being a util function
-// Investigate if it can be done to reduce complexity
-// TODO use getSlotElements util on this
-/**
- * @param slots
- * @param nodeType
- * @param disabled
- * @returns
- */
 const slotsToElements = (slots: any[], nodeType: string, disabled: boolean) =>
   slots
     .reduce(
@@ -181,11 +172,6 @@ const slotsToElements = (slots: any[], nodeType: string, disabled: boolean) =>
       }
     })
 
-/**
- * @param option
- * @param props
- * @returns
- */
 const optionToElement = (option: any, props: any): any => {
   if (typeof option === 'string') {
     return {
@@ -208,14 +194,6 @@ const optionToElement = (option: any, props: any): any => {
   }
 }
 
-/**
- * @param el
- * @param idx
- * @param props
- * @param computedName
- * @param computedId
- * @returns
- */
 const bindGroupProps = (
   el: any,
   idx: number,

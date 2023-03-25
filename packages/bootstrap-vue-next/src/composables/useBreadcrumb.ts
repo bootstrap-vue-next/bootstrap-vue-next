@@ -14,9 +14,6 @@ const BREADCRUMB_OBJECT: UseBreadcrumbOptions = {
   },
 }
 
-/**
- * @param app
- */
 export const createBreadcrumb = (app: App): void => {
   app.provide(breadcrumbInjectionKey, BREADCRUMB_OBJECT)
 }
