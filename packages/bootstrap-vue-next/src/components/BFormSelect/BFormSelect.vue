@@ -133,10 +133,8 @@ const computedAriaInvalid = computed(() =>
 
 const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
 const localValue = computed({
-  get() {
-    return modelValue.value
-  },
-  set(newValue: any) {
+  get: () => modelValue.value,
+  set: (newValue: any) => {
     emit('change', newValue)
     modelValue.value = newValue
     emit('input', newValue)

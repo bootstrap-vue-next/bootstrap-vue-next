@@ -260,7 +260,7 @@ export default defineComponent({
           'id': props.id,
           'role': isHiding.value ? null : isStatusBoolean.value ? 'status' : 'alert',
           'aria-live': isHiding.value ? null : isStatusBoolean.value ? 'polite' : 'assertive',
-          'aria-atomic': isHiding.value ? null : 'true',
+          'aria-atomic': isHiding.value ? null : true,
           'onmouseenter': onPause,
           'onmouseleave': onUnPause,
         },

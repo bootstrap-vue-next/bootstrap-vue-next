@@ -10,7 +10,7 @@
     :required="required"
     :autocomplete="autocomplete || undefined"
     :readonly="readonly || plaintext"
-    :aria-required="required ? 'true' : undefined"
+    :aria-required="required ? true : undefined"
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
     :style="computedStyles"

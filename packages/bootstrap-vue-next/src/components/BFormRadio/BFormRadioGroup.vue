@@ -2,38 +2,29 @@
   <div
     v-bind="computedAttrs"
     :id="computedId"
+    ref="element"
     role="radiogroup"
     :class="computedClasses"
     class="bv-no-focus-ring"
     tabindex="-1"
   >
-    <b-form-radio
-      v-for="(item, key) in checkboxList"
-      :key="key"
-      v-model="localValue"
-      v-bind="item.props"
-    >
+    <slot name="first" />
+    <b-form-radio v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <span v-if="item.html" v-html="item.html" />
       <span v-else v-text="item.text" />
     </b-form-radio>
+    <slot />
   </div>
 </template>
 
 <script setup lang="ts">
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, reactive, toRef, useSlots} from 'vue'
+import {computed, provide, ref, toRef, watchEffect} from 'vue'
+import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
-import {
-  bindGroupProps,
-  getGroupAttr,
-  getGroupClasses,
-  optionToElement,
-  slotsToElements,
-  useBooleanish,
-  useId,
-} from '../../composables'
-import {useVModel} from '@vueuse/core'
+import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
+import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormRadioGroupProps {
   size?: Size
@@ -48,7 +39,7 @@ interface BFormRadioGroupProps {
   disabled?: Booleanish
   disabledField?: string
   htmlField?: string
-  options?: unknown[] // Objects are not supported yet
+  options?: (string | Record<string, unknown>)[]
   plain?: Booleanish
   required?: Booleanish
   stacked?: Booleanish
@@ -85,64 +76,94 @@ interface BFormRadioGroupEmits {
 
 const emit = defineEmits<BFormRadioGroupEmits>()
 
-/**
- * The available slots are default and first
- */
-const slots = useSlots()
-
-const slotsName = 'BFormRadio'
-
 const modelValue = useVModel(props, 'modelValue', emit)
 
 const computedId = useId(toRef(props, 'id'), 'radio')
 const computedName = useId(toRef(props, 'name'), 'checkbox')
 
-// TODO autofocus is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const buttonsBoolean = useBooleanish(toRef(props, 'buttons'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-// TODO plain is unused
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
 const stateBoolean = useBooleanish(toRef(props, 'state'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
-// TODO this needs to be tested
-const localValue = computed({
-  get: () => modelValue.value,
-  set: (newValue) => {
-    emit('input', newValue)
-    modelValue.value = newValue
-    emit('change', newValue)
-  },
+const element = ref<HTMLElement | null>(null)
+
+useFocus(element, {
+  initialValue: autofocusBoolean.value,
 })
 
-// TODO see if this can be remade to provide/inject
-// TODO this needs to be tested
-const checkboxList = computed(() =>
-  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : []) // Add slot.first to array
-    .concat(props.options.map((e) => optionToElement(e, props))) // Convert props.options to usable value, then concat to array
-    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : []) // Concat slot.default to array
-    .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId)) // Map it to preferred structure
-    .map((e) => ({
-      ...e,
-    }))
+const activeValue = ref<string | boolean | unknown[] | Record<string, unknown> | number>(
+  modelValue.value
 )
 
-const classesObject = reactive({
-  required: toRef(requiredBoolean, 'value'),
-  ariaInvalid: toRef(props, 'ariaInvalid'),
-  state: toRef(stateBoolean, 'value'),
-  validated: toRef(validatedBoolean, 'value'),
-  buttons: toRef(buttonsBoolean, 'value'),
-  stacked: toRef(stackedBoolean, 'value'),
+provide(radioGroupKey, {
+  set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => {
+    activeValue.value = value
+  },
+  modelValue,
+  buttonVariant: toRef(props, 'buttonVariant'),
+  form: toRef(props, 'form'),
+  name: computedName,
+  // 'id': `${computedId.value}_option_${idx}`,
+  button: buttonsBoolean,
+  state: stateBoolean,
+  plain: plainBoolean,
   size: toRef(props, 'size'),
+  inline: computed(() => !stackedBoolean.value),
+  required: requiredBoolean,
+  disabled: disabledBoolean,
 })
+
+watchEffect(() => (modelValue.value = activeValue.value))
+
+const normalizeOptions = computed<
+  {
+    props: {
+      value: string | undefined
+      disabled: boolean | undefined
+    }
+    text: string | undefined
+    html: string | undefined
+    self: symbol
+  }[]
+>(() =>
+  props.options.map((el, ind) =>
+    typeof el === 'string'
+      ? {
+          props: {
+            value: el,
+            disabled: disabledBoolean.value,
+          },
+          text: el,
+          html: undefined,
+          self: Symbol(`radioGroupOptionItem${ind}`),
+        }
+      : {
+          props: {
+            value: el[props.valueField] as string | undefined,
+            disabled: el[props.disabledField] as boolean | undefined,
+            ...(el.props ? el.props : {}),
+          },
+          text: el[props.textField] as string | undefined,
+          html: el[props.htmlField] as string | undefined,
+          self: Symbol(`radioGroupOptionItem${ind}`),
+        }
+  )
+)
+
+const classesObject = computed(() => ({
+  required: requiredBoolean.value,
+  ariaInvalid: props.ariaInvalid,
+  state: stateBoolean.value,
+  validated: validatedBoolean.value,
+  buttons: buttonsBoolean.value,
+  stacked: stackedBoolean.value,
+  size: props.size,
+}))
 const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)
-
-// TODO: make tests compatible with the v-focus directive
 </script>

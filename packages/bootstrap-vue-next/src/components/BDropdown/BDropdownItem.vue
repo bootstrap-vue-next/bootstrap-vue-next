@@ -61,7 +61,7 @@ const tag = computed<'button' | 'a' | typeof BLink>(() =>
 
 const componentAttrs = computed(() => ({
   'disabled': disabledBoolean.value,
-  'aria-current': activeBoolean.value ? 'true' : null,
+  'aria-current': activeBoolean.value ? true : null,
   'href': tag.value === 'a' ? props.href : null,
   'rel': props.rel,
   'type': tag.value === 'button' ? 'button' : null,

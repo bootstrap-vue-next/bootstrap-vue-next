@@ -111,7 +111,7 @@ const computedVariant = computed(() =>
   props.variant && !props.bgColor ? `bg-${props.variant}` : ''
 )
 
-const computedAriaBusy = computed(() => (showBoolean.value ? 'true' : null))
+const computedAriaBusy = computed(() => (showBoolean.value ? true : null))
 
 const spinnerAttrs = computed(() => ({
   type: props.spinnerType || undefined,

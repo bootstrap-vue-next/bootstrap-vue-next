@@ -65,12 +65,8 @@ const modelValue = useVModel(props, 'modelValue', emit)
 const modelValueBoolean = useBooleanish(modelValue)
 
 const dropdownValue = computed({
-  get() {
-    return modelValueBoolean.value
-  },
-  set(value: boolean) {
-    modelValue.value = value
-  },
+  get: () => modelValueBoolean.value,
+  set: (value: boolean) => (modelValue.value = value),
 })
 const usableProps = computed(() => omit(props, ['modelValue'] as const))
 </script>

@@ -6,7 +6,7 @@
         class="accordion-button"
         :class="{collapsed: !visibleBoolean}"
         type="button"
-        :aria-expanded="visibleBoolean ? 'true' : 'false'"
+        :aria-expanded="visibleBoolean"
         :aria-controls="computedId"
       >
         <slot name="title">

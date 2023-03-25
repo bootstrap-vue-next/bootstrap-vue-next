@@ -315,7 +315,7 @@ export default defineComponent({
               'class': ['page-link', {'flex-grow-1': !isDisabled && fill}],
               'aria-label': ariaLabel,
               'aria-controls': props.ariaControls || null,
-              'aria-disabled': isDisabled ? 'true' : null,
+              'aria-disabled': isDisabled ? true : null,
               'role': 'menuitem',
               'type': isDisabled ? null : 'button',
               'tabindex': isDisabled ? null : '-1',
@@ -374,7 +374,7 @@ export default defineComponent({
           {
             'class': ['page-link', {'flex-grow-1': !disabledBoolean.value && fill}],
             'aria-controls': props.ariaControls || null,
-            'aria-disabled': disabledBoolean.value ? 'true' : null,
+            'aria-disabled': disabledBoolean.value ? true : null,
             'aria-label': props.labelPage ? `${props.labelPage} ${page.number}` : null,
             'role': 'menuitemradio',
             'type': disabledBoolean.value ? null : 'button',

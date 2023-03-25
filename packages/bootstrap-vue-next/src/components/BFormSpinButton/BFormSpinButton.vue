@@ -2,7 +2,6 @@
 import {computed, defineComponent, h, type PropType, ref, type Ref} from 'vue'
 import type {Booleanish} from '../../types'
 import {toFloat, toInteger} from '../../utils/number'
-import {isNull} from '../../utils/inspect'
 import {isLocaleRTL} from '../../utils/locale'
 import {eventOnOff, stopEvent} from '../../utils/event'
 import {normalizeSlot} from '../../utils'
@@ -92,11 +91,9 @@ export default defineComponent({
     const lvalue: Ref<null | number> = ref(null)
 
     const localValue = computed({
-      get() {
-        return isNull(modelValue.value) ? lvalue.value : modelValue.value
-      },
-      set(newValue) {
-        if (isNull(modelValue.value)) {
+      get: () => (modelValue.value === null ? lvalue.value : modelValue.value),
+      set: (newValue) => {
+        if (modelValue.value === null) {
           lvalue.value = newValue
         } else {
           modelValue.value = newValue
@@ -191,7 +188,7 @@ export default defineComponent({
       tabindex: props.disabled ? null : '-1',
       title: props.ariaLabel,
     }))
-    const hasValue = computed(() => !isNull(modelValue.value) || !isNull(lvalue.value))
+    const hasValue = computed(() => modelValue.value !== null || lvalue.value !== null)
 
     const computedSpinAttrs = computed(() => ({
       'dir': computedRTL.value,
@@ -201,14 +198,13 @@ export default defineComponent({
       'aria-live': 'off',
       'aria-label': props.ariaLabel || null,
       'aria-controls': props.ariaControls || null,
-      'aria-invalid': props.state === false || (!hasValue.value && props.required) ? 'true' : null,
-      'aria-required': props.required ? 'true' : null,
+      'aria-invalid': props.state === false || (!hasValue.value && props.required) ? true : null,
+      'aria-required': props.required ? true : null,
       'aria-valuemin': computedMin.value,
       'aria-valuemax': computedMax.value,
-      'aria-valuenow': !isNull(localValue.value) ? localValue.value : null,
-      'aria-valuetext': !isNull(localValue.value)
-        ? computedFormatter.value(localValue.value)
-        : null,
+      'aria-valuenow': localValue.value !== null ? localValue.value : null,
+      'aria-valuetext':
+        localValue.value !== null ? computedFormatter.value(localValue.value) : null,
     }))
 
     // methods
@@ -217,7 +213,7 @@ export default defineComponent({
       // Sets a new incremented or decremented value, supporting optional wrapping
       // Direction is either +1 or -1 (or a multiple thereof)
       let {value} = localValue
-      if (!props.disabled && !isNull(value)) {
+      if (!props.disabled && value !== null) {
         const step = computedStep.value * direction
         const min = computedMin.value
         const max = computedMax.value
@@ -237,14 +233,14 @@ export default defineComponent({
     // }
 
     const stepUp = (multiplier = 1) => {
-      if (isNull(localValue.value)) {
+      if (localValue.value === null) {
         localValue.value = computedMin.value
       } else {
         stepValue(+1 * multiplier)
       }
     }
     const stepDown = (multiplier = 1) => {
-      if (isNull(localValue.value)) {
+      if (localValue.value === null) {
         localValue.value = props.wrap ? computedMax.value : computedMin.value
       } else {
         stepValue(-1 * multiplier)
@@ -401,7 +397,7 @@ export default defineComponent({
     ) => {
       const $icon = h(IconCmp, {
         props: {scale: hasFocus.value ? 1.5 : 1.25},
-        attrs: {'aria-hidden': 'true'},
+        attrs: {'aria-hidden': true},
       })
 
       const scope = {hasFocus: hasFocus.value}
@@ -423,7 +419,7 @@ export default defineComponent({
           'tabindex': '-1',
           'type': 'button',
           'disabled': props.disabled || props.readonly || btnDisabled,
-          'aria-disabled': props.disabled || props.readonly || btnDisabled ? 'true' : null,
+          'aria-disabled': props.disabled || props.readonly || btnDisabled ? true : null,
           'aria-controls': spinId.value,
           'aria-label': label || null,
           'aria-keyshortcuts': shortcut || null,

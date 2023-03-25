@@ -50,5 +50,5 @@ const computedClasses = computed(() => ({
   'valid-tooltip': tooltipBoolean.value,
 }))
 
-const computedAriaAtomic = computed(() => (props.ariaLive ? 'true' : undefined))
+const computedAriaAtomic = computed(() => (props.ariaLive ? true : undefined))
 </script>

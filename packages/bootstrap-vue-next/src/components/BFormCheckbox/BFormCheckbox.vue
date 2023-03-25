@@ -7,17 +7,17 @@
       v-model="localValue"
       :class="inputClasses"
       type="checkbox"
-      :disabled="disabledBoolean"
-      :required="!!name && !!requiredBoolean"
-      :name="name"
-      :form="form"
+      :disabled="disabledBoolean || parentData?.disabled.value"
+      :required="computedRequired ? true : undefined"
+      :name="name || parentData?.name.value"
+      :form="form || parentData?.form.value"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
-      :aria-required="name && requiredBoolean ? 'true' : undefined"
+      :aria-required="computedRequired ? true : undefined"
       :value="value"
       :indeterminate="indeterminateBoolean"
     />
-    <label v-if="hasDefaultSlot || !plainBoolean" :for="computedId" :class="labelClasses">
+    <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </div>
@@ -70,9 +70,18 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
 })
 
 interface BFormCheckboxEmits {
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'input', value: unknown): void
-  (e: 'change', value: unknown): void
+  (
+    e: 'update:modelValue',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ): void
+  (
+    e: 'input',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ): void
+  (
+    e: 'change',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ): void
 }
 
 const emit = defineEmits<BFormCheckboxEmits>()
@@ -101,10 +110,10 @@ useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
-const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
+const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get() {
+  get: () => {
     if (parentData !== null) {
       const jsonified = parentData.modelValue.value.map((el) => JSON.stringify(el))
       const jsonifiedValue = JSON.stringify(props.value)
@@ -112,7 +121,7 @@ const localValue = computed({
     }
     return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
   },
-  set(newValue) {
+  set: (newValue) => {
     const updateValue = !newValue ? props.uncheckedValue : props.value
 
     emit('input', updateValue)
@@ -128,6 +137,12 @@ const localValue = computed({
   },
 })
 
+const computedRequired = computed(
+  () =>
+    !!(props.name ?? parentData?.name.value) &&
+    (requiredBoolean.value || parentData?.required.value)
+)
+
 const classesObject = computed(() => ({
   plain: plainBoolean.value || (parentData?.plain.value ?? false),
   button: buttonBoolean.value || (parentData?.buttons.value ?? false),
@@ -135,7 +150,7 @@ const classesObject = computed(() => ({
   switch: switchBoolean.value || (parentData?.switch.value ?? false),
   size: props.size || parentData?.size.value, // TODO some of these values will be weirdly incorrect since they arent falsy
   state: stateBoolean.value || parentData?.state.value,
-  buttonVariant: props.buttonVariant || parentData?.buttonVariant.value,
+  buttonVariant: props.buttonVariant || parentData?.buttonVariant.value, // Above
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)

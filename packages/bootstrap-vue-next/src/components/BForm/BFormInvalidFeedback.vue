@@ -47,6 +47,6 @@ const computedAttrs = computed(() => ({
   'id': props.id,
   'role': props.role,
   'aria-live': props.ariaLive,
-  'aria-atomic': props.ariaLive ? 'true' : undefined,
+  'aria-atomic': props.ariaLive ? true : undefined,
 }))
 </script>

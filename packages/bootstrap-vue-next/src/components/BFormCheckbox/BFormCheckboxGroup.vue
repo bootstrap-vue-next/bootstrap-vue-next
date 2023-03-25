@@ -2,6 +2,7 @@
   <div
     v-bind="computedAttrs"
     :id="computedId"
+    ref="element"
     role="group"
     :class="computedClasses"
     class="bv-no-focus-ring"
@@ -23,7 +24,7 @@ import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
 import {checkboxGroupKey} from '../../utils'
-import {useVModel} from '@vueuse/core'
+import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormCheckboxGroupProps {
   id?: string
@@ -81,8 +82,6 @@ const modelValue = useVModel(props, 'modelValue', emit)
 
 const computedId = useId(toRef(props, 'id'), 'checkbox')
 const computedName = useId(toRef(props, 'name'), 'checkbox')
-// TODO somehow we need to be able to get it to the first item in the list that it is autofocusable
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const buttonsBoolean = useBooleanish(toRef(props, 'buttons'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
@@ -93,18 +92,24 @@ const stateBoolean = useBooleanish(toRef(props, 'state'))
 const switchesBoolean = useBooleanish(toRef(props, 'switches'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
-const actives = ref<
+const element = ref<HTMLElement | null>(null)
+
+useFocus(element, {
+  initialValue: autofocusBoolean.value,
+})
+
+const activeValues = ref<
   (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
->([])
+>(modelValue.value)
 
 provide(checkboxGroupKey, {
   set: (value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number) => {
-    actives.value.push(value)
+    activeValues.value.push(value)
   },
   remove: (
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
   ) => {
-    actives.value.splice(actives.value.indexOf(value), 1)
+    activeValues.value.splice(activeValues.value.indexOf(value), 1)
   },
   modelValue,
   switch: switchesBoolean,
@@ -120,7 +125,7 @@ provide(checkboxGroupKey, {
   disabled: disabledBoolean,
 })
 
-watchEffect(() => (modelValue.value = actives.value))
+watchEffect(() => (modelValue.value = activeValues.value))
 
 const normalizeOptions = computed<
   {
@@ -133,7 +138,7 @@ const normalizeOptions = computed<
     self: symbol
   }[]
 >(() =>
-  props.options.map((el) =>
+  props.options.map((el, ind) =>
     typeof el === 'string'
       ? {
           props: {
@@ -142,7 +147,7 @@ const normalizeOptions = computed<
           },
           text: el,
           html: undefined,
-          self: Symbol(),
+          self: Symbol(`checkboxGroupOptionItem${ind}`),
         }
       : {
           props: {
@@ -152,7 +157,7 @@ const normalizeOptions = computed<
           },
           text: el[props.textField] as string | undefined,
           html: el[props.htmlField] as string | undefined,
-          self: Symbol(),
+          self: Symbol(`checkboxGroupOptionItem${ind}`),
         }
   )
 )

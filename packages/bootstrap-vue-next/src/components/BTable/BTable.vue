@@ -494,10 +494,8 @@ const callItemsProvider = async () => {
       perPage: props.perPage,
     },
     {
-      get(target: any, prop) {
-        return prop in target ? target[prop] : undefined
-      },
-      set() {
+      get: (target: any, prop) => (prop in target ? target[prop] : undefined),
+      set: () => {
         // eslint-disable-next-line no-console
         console.error('BTable provider context is a read-only object.')
         return true
