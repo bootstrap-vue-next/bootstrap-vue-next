@@ -2,18 +2,6 @@ import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
 import {getAttr, isTag} from '../utils'
 import type {Directive, DirectiveBinding} from 'vue'
 
-const resolveToggleType = (el: HTMLElement): string => {
-  if (el.classList.contains('offcanvas')) {
-    return 'offcanvas'
-  }
-
-  if (el.classList.contains('collapse')) {
-    return 'collapse'
-  }
-
-  throw Error("Couldn't resolve toggle type")
-}
-
 const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   const {modifiers, arg, value} = binding
   // Any modifiers are considered target Ids
@@ -41,54 +29,48 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 
-export default {
-  mounted(el, binding: DirectiveBinding<string>): void {
-    const targetIds = getTargets(binding, el)
-    const targetAttrs: string[] = []
+const toggle = (binding: DirectiveBinding<string>, el: HTMLElement) => {
+  const targetIds = getTargets(binding, el)
+  targetIds.forEach((targetId) => {
+    const target = document.getElementById(targetId)
 
-    const targetAttr = el.tagName === 'a' ? 'href' : 'data-bs-target'
-
-    targetIds.forEach((targetId) => {
-      const target = document.getElementById(targetId)
-
-      if (target !== null) {
-        el.setAttribute('data-bs-toggle', resolveToggleType(target))
-
-        targetAttrs.push(`#${targetId}`)
-      }
-    })
-
-    if (targetAttrs.length > 0) {
-      el.setAttribute(targetAttr, targetAttrs.join(','))
+    if (target !== null) {
+      target.dispatchEvent(new Event('bv-toggle'))
     }
+  })
+  setTimeout(() => checkVisibility(binding, el), 50)
+}
 
-    // if (typeof binding.arg === 'string') {
-    //   const target = document.getElementById(binding.arg)
-    //   let targetAttr = 'data-bs-target'
+const checkVisibility = (binding: DirectiveBinding<string>, el: HTMLElement) => {
+  const targetIds = getTargets(binding, el)
+  let visible = false
+  targetIds.forEach((targetId) => {
+    const target = document.getElementById(targetId)
 
-    //   if (target) {
-    //     el.setAttribute('data-bs-toggle', resolveToggleType(target))
+    if (target?.classList.contains('show')) {
+      visible = true
+    }
+    if (target?.classList.contains('closing')) {
+      visible = false
+    }
+  })
+  el.setAttribute('aria-expanded', visible ? 'true' : 'false')
+}
 
-    //     if (el.tagName === 'a') {
-    //       targetAttr = 'href'
-    //     }
+interface WithToggle extends HTMLElement {
+  __toggle: () => void
+}
 
-    //     el.setAttribute(targetAttr, `#${binding.arg}`)
-    //   }
-    // }
-
-    // TODO support class selector
-
-    // if (binding.arg) {
-    //     let toggle = 'collapse';
-    //     let selector = `#${binding.arg}`
-    //     const elements = document.querySelectorAll(`.${binding.arg}`);
-
-    //     if (elements.length > 1) {
-    //         selector = selector.replace('#', '.');
-    //     }
-
-    //     el.setAttribute('data-bs-target', selector)
-    // }
+export default {
+  mounted(el: WithToggle, binding: DirectiveBinding<string>): void {
+    el.__toggle = () => toggle(binding, el)
+    el.addEventListener('click', el.__toggle)
+    checkVisibility(binding, el)
+    el.setAttribute('aria-controls', getTargets(binding, el).join(' '))
   },
-} as Directive<HTMLElement>
+  unmounted(el: WithToggle): void {
+    el.removeEventListener('click', el.__toggle)
+    el.removeAttribute('aria-controls')
+    el.removeAttribute('aria-expanded')
+  },
+} as Directive<WithToggle>

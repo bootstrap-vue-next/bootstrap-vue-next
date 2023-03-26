@@ -9,14 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@popperjs/core": "2.11.6",
-    "bootstrap": "5.2.3",
     "bootstrap-vue-next": "workspace:*",
     "vue": "3.2.45",
     "vue-router": "4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "3.2.0",
+    "bootstrap-styles": "5.2.3",
     "rollup-plugin-visualizer": "5.8.3",
     "@vue/tsconfig": "^0.1.3",
     "typescript": "4.9.3",

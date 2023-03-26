@@ -44,17 +44,33 @@ export const resolveBootstrapPlacement = (placement: Placement): string => {
 }
 
 export const resolveContent = (
-  values: DirectiveBinding['value']
+  values: DirectiveBinding['value'],
+  el: HTMLElement
 ): {title?: string; content?: string} => {
   if (
-    typeof values === 'undefined' ||
-    (typeof values === 'object' && !values?.title && !values?.content)
+    (typeof values === 'undefined' ||
+      (typeof values === 'object' && !values?.title && !values?.content)) &&
+    !el.getAttribute('title')
   ) {
     // eslint-disable-next-line no-console
     console.warn(
       'Review tooltip directive usage. Some uses are not defining a title in root component or a value like `v-b-tooltip=\'{title: "my title"}\'` nor `v-b-tooltip="\'my title\'"` to define a title'
     )
     return {}
+  }
+  if (
+    (typeof values === 'undefined' ||
+      (typeof values === 'object' && !values?.title && !values?.content)) &&
+    (el.getAttribute('title') || el.getAttribute('data-original-title'))
+  ) {
+    const title = el.getAttribute('title') ?? el.getAttribute('data-original-title')
+    if (title && title !== '') {
+      el.removeAttribute('title')
+      el.setAttribute('data-original-title', title)
+      return {
+        content: sanitizeHtml(title, DefaultAllowlist),
+      }
+    }
   }
   if (typeof values === 'string') {
     return {
@@ -73,6 +89,15 @@ export const resolveDirectiveProps = (binding: DirectiveBinding, el: HTMLElement
   inline: binding.modifiers.inline,
   click: binding.modifiers.click,
   realtime: binding.modifiers.realtime,
+  placement: binding.modifiers.left
+    ? 'left'
+    : binding.modifiers.right
+    ? 'right'
+    : binding.modifiers.bottom
+    ? 'bottom'
+    : binding.modifiers.top
+    ? 'top'
+    : undefined,
   html: true,
   ...(typeof binding.value === 'object' ? binding.value : {}),
   title: null,

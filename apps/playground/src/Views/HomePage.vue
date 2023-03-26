@@ -59,6 +59,7 @@ import TBreadcrumb from '../components/Comps/TBreadcrumb.vue'
 import TButton from '../components/Comps/TButton.vue'
 import TCard from '../components/Comps/TCard.vue'
 import TCarousel from '../components/Comps/TCarousel.vue'
+import TCollapse from '../components/Comps/TCollapse.vue'
 import TDropdown from '../components/Comps/TDropdown.vue'
 import TForm from '../components/Comps/TForm.vue'
 import TFormCheckbox from '../components/Comps/TFormCheckbox.vue'
@@ -95,6 +96,7 @@ const comps: {name: string; is: unknown; disabled?: true}[] = [
   {name: 'Button', is: TButton},
   {name: 'Card', is: TCard},
   {name: 'Carousel', is: TCarousel},
+  {name: 'Collapse', is: TCollapse},
   {name: 'Dropdown', is: TDropdown},
   {name: 'Form', is: TForm},
   {name: 'FormCheckbox', is: TFormCheckbox},

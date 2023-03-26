@@ -39,19 +39,17 @@
     "test": "pnpm run test:lint && pnpm run test:unit"
   },
   "peerDependencies": {
-    "bootstrap": "^5.2.3",
     "vue": "^3.2.47"
   },
   "dependencies": {
     "@floating-ui/vue": "^0.2.1",
-    "@nuxt/kit": "3.0.0",
+    "@nuxt/kit": "3.3.1",
     "@vueuse/core": "^9.13.0"
   },
   "devDependencies": {
     "@floating-ui/core": "^1.2.4",
     "@popperjs/core": "^2.11.6",
     "@rushstack/eslint-patch": "^1.2.0",
-    "@types/bootstrap": "^5.2.6",
     "@types/node": "^18.15.3",
     "@vitejs/plugin-vue": "^4.1.0",
     "@vitest/coverage-c8": "^0.29.3",

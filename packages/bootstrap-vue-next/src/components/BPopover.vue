@@ -1,7 +1,8 @@
 <template>
   <span ref="placeholder" />
-  <slot v-bind="{show, hide, toggle, showState}" />
-  <teleport :to="container" :disabled="container === null">
+  <slot name="target" v-bind="{show, hide, toggle, showState}" />
+  <!-- TODO: fix this clunky solution when https://github.com/vuejs/core/issues/6152 is fixed -->
+  <teleport v-if="container" :to="container">
     <div
       :id="id"
       v-bind="$attrs"
@@ -38,7 +39,7 @@
       </template>
       <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
         <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
-          <slot name="content">
+          <slot>
             {{ content }}
           </slot>
         </div>
@@ -52,6 +53,52 @@
       </template>
     </div>
   </teleport>
+  <div
+    v-else
+    :id="id"
+    v-bind="$attrs"
+    ref="element"
+    :class="computedClasses"
+    role="tooltip"
+    tabindex="-1"
+    :style="{
+      position: strategy,
+      top: `${y ?? 0}px`,
+      left: `${x ?? 0}px`,
+      width: 'max-content',
+    }"
+  >
+    <div
+      ref="arrow"
+      :class="`${tooltipBoolean ? 'tooltip' : 'popover'}-arrow`"
+      :style="arrowStyle"
+      data-popper-arrow
+    />
+    <template v-if="title || $slots.title">
+      <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'">
+        <slot name="title">
+          {{ title }}
+        </slot>
+      </div>
+      <div
+        v-else
+        :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+        v-html="sanitizedTitle"
+      />
+    </template>
+    <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
+      <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
+        <slot>
+          {{ content }}
+        </slot>
+      </div>
+      <div
+        v-else
+        :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
+        v-html="sanitizedContent"
+      />
+    </template>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -68,7 +115,7 @@ import {
   type Strategy,
   useFloating,
 } from '@floating-ui/vue'
-import {BvTriggerableEvent, resolveBootstrapPlacement} from '../utils'
+import {BvTriggerableEvent, IS_BROWSER, resolveBootstrapPlacement} from '../utils'
 import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
 import {onClickOutside, useMouseInElement} from '@vueuse/core'
 
@@ -83,6 +130,7 @@ import {
   toRef,
   type VNode,
   watch,
+  watchEffect,
 } from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, ColorVariant} from '../types'
@@ -168,17 +216,16 @@ interface BPopoverEmits {
 
 const emit = defineEmits<BPopoverEmits>()
 
-const showState = ref(props.modelValue)
-watch(showState, (value) => {
-  emit('update:modelValue', !!value)
+const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+const showState = ref(modelValueBoolean.value)
+watchEffect(() => {
+  emit('update:modelValue', showState.value)
 })
-watch(
-  () => props.modelValue,
-  (value) => {
-    if (value === showState.value) return
-    value ? show() : hide(new Event('update:modelValue'))
-  }
-)
+
+watchEffect(() => {
+  if (modelValueBoolean.value === showState.value) return
+  modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
+})
 
 const computedId = useId(toRef(props, 'id'), 'popover')
 
@@ -409,6 +456,7 @@ const bind = () => {
   if (!trigger.value || manualBoolean.value) {
     return
   }
+  if (!IS_BROWSER) return
   clickBoolean.value && trigger.value.addEventListener('click', toggle)
   !clickBoolean.value && trigger.value.addEventListener('pointerenter', show)
   !clickBoolean.value && trigger.value.addEventListener('pointerleave', hide)

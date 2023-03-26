@@ -5,7 +5,7 @@
         <b-button id="popover">hover me</b-button>
         <b-popover target="popover" :delay="{show: 400, hide: 5000}" placement="right">
           <template #title>What?</template>
-          <template #content> Hello Word </template>
+          Hello Word
         </b-popover>
         <span ref="popoverContainerRef" class="m-4"> targetRef for popover defined lower. </span>
       </b-col>
@@ -44,35 +44,37 @@
       <b-col>
         <b-popover click :model-value="true" placement="right">
           <template #title> Click </template>
-          <template #content> this should close on click outside </template>
-          <b-button>click</b-button>
+          <template #target>
+            <b-button>click</b-button>
+          </template>
+          this should close on click outside
         </b-popover>
       </b-col>
       <b-col>
         <b-tooltip click>
-          <template #default="{showState}">
+          <template #target="{showState}">
             <b-button :variant="showState ? 'primary' : 'secondary'">
               click tooltip component
             </b-button>
           </template>
-          <template #content> <b>Tooltip</b> content </template>
+          <template #default> <b>Tooltip</b> content </template>
         </b-tooltip>
       </b-col>
     </b-row>
     <b-row class="my-5">
       <b-col>
         <b-popover placement="top">
-          <b-button id="popover-target-1">Hover Me</b-button>
           <template #title>
             Popover
             <em>Title</em>
             - {{ popoverInput }}
           </template>
-          <template #content>
-            <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
-            <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
-            <strong>{{ popoverInput }}</strong>
+          <template #target>
+            <b-button id="popover-target-1">Hover Me</b-button>
           </template>
+          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
+          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
+          <strong>{{ popoverInput }}</strong>
         </b-popover>
       </b-col>
       <b-col>
@@ -103,17 +105,17 @@
           :reference="() => popoverContainerRef"
           placement="right"
         >
-          <span>Not the real trigger or reference</span>
           <template #title>
             Popover
             <em>Title</em>
             - {{ popoverInput }}
           </template>
-          <template #content>
-            <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
-            <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
-            <strong>{{ popoverInput }}</strong>
+          <template #target>
+            <span>Not the real trigger or reference</span>
           </template>
+          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
+          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
+          <strong>{{ popoverInput }}</strong>
         </b-popover>
       </b-col>
     </b-row>
@@ -130,12 +132,10 @@
           <template #title>
             <h3>Popover title</h3>
           </template>
-          <template #content>
-            <p>
-              Position is calculated to parent relative element. (Try changing the textarea size)
-            </p>
-          </template>
-          <template #default="{toggle, showState}">
+
+          <p>Position is calculated to parent relative element. (Try changing the textarea size)</p>
+
+          <template #target="{toggle, showState}">
             <b-button @click="toggle">Click to toggle popover</b-button>
             <div>
               {{ showState ? 'Visible' : 'hidden' }}
@@ -157,21 +157,32 @@
             Popover
             <em>Title</em>
           </template>
-          <template #content>
-            <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
-            <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
-            <strong>{{ popoverInput }}</strong>
+          <template #target>
+            <b-button>hover / focus</b-button>
           </template>
-          <b-button>hover / focus</b-button>
+          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
+          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
+          <strong>{{ popoverInput }}</strong>
         </b-popover>
       </b-col>
       <b-col>
         <b-popover realtime :model-value="true" click placement="bottom">
           <template #title> Title </template>
-          <template #content>
-            Burn cpu cycles to be more accurate. Try changing the size of the textarea above.
+          <template #target>
+            <span class="border rounded m-3 p-2">sync position with RequestAnimationFrame</span>
           </template>
-          <span class="border rounded m-3 p-2">sync position with RequestAnimationFrame</span>
+          Burn cpu cycles to be more accurate. Try changing the size of the textarea above.
+        </b-popover>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-popover click placement="bottom" container="body">
+          <template #title> Title </template>
+          <template #target>
+            <span class="border rounded m-3 p-2">move to body.</span>
+          </template>
+          in body. {{ textValue }}
         </b-popover>
       </b-col>
     </b-row>
