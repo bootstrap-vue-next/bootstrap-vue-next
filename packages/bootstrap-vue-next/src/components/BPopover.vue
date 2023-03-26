@@ -173,7 +173,7 @@ watchEffect(() => {
 })
 
 watch(
-  () => modelValueBoolean.value,
+  modelValueBoolean,
   () => {
     if (modelValueBoolean.value === showState.value) return
     modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
