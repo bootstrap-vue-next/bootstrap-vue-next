@@ -226,10 +226,13 @@ watchEffect(() => {
   emit('update:modelValue', showState.value)
 })
 
-watchEffect(() => {
-  if (modelValueBoolean.value === showState.value) return
-  modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
-})
+watch(
+  modelValueBoolean,
+  () => {
+    if (modelValueBoolean.value === showState.value) return
+    modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
+  }
+)
 
 const computedId = useId(toRef(props, 'id'), 'popover')
 
