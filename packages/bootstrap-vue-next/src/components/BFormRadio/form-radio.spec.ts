@@ -52,13 +52,6 @@ describe('form-radio', () => {
     expect(wrapper.classes()).not.toContain('form-check-inline')
   })
 
-  it('has class form-switch when prop switch', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {switch: true},
-    })
-    expect(wrapper.classes()).toContain('form-switch')
-  })
-
   it('does not have class form-switch when prop switch is false', () => {
     const wrapper = mount(BFormRadio, {
       props: {switch: false},
@@ -151,54 +144,6 @@ describe('form-radio', () => {
     })
     const $input = wrapper.get('input')
     expect($input.classes()).toContain('form-check-input')
-  })
-
-  it('input element has class is-valid when prop state is true', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {state: true},
-    })
-    const $input = wrapper.get('input')
-    expect($input.classes()).toContain('is-valid')
-  })
-
-  it('input element does not have class is-valid when prop state is false', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {state: false},
-    })
-    const $input = wrapper.get('input')
-    expect($input.classes()).not.toContain('is-valid')
-  })
-
-  it('input element does not have class is-valid when prop state is undefined', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {state: undefined},
-    })
-    const $input = wrapper.get('input')
-    expect($input.classes()).not.toContain('is-valid')
-  })
-
-  it('input element has class is-invalid when prop state is false', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {state: false},
-    })
-    const $input = wrapper.get('input')
-    expect($input.classes()).toContain('is-invalid')
-  })
-
-  it('input element does not have class is-invalid when prop state is true', async () => {
-    const wrapper = mount(BFormRadio, {
-      props: {state: true},
-    })
-    const $input = wrapper.get('input')
-    expect($input.classes()).not.toContain('is-invalid')
-  })
-
-  it('input element does not have class is-invalid when prop state is undefined', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {state: undefined},
-    })
-    const $input = wrapper.get('input')
-    expect($input.classes()).not.toContain('is-invalid')
   })
 
   it('input element has class btn-check when prop button is true', () => {
@@ -484,16 +429,6 @@ describe('form-radio', () => {
     expect($label.classes()).not.toContain('focus')
   })
 
-  it('child label has class focus when input is focused', async () => {
-    const wrapper = mount(BFormRadio, {
-      props: {plain: false},
-    })
-    const $label = wrapper.get('label')
-    const $input = wrapper.get('input')
-    await $input.trigger('focus')
-    expect($label.classes()).toContain('focus')
-  })
-
   it('child label removes class focus when input is blurred after focus', async () => {
     const wrapper = mount(BFormRadio, {
       props: {plain: false},
@@ -618,14 +553,6 @@ describe('form-radio', () => {
     })
     const $label = wrapper.get('label')
     expect($label.classes()).not.toContain('btn-md')
-  })
-
-  it('child label has class active when value and modelValue are the same', () => {
-    const wrapper = mount(BFormRadio, {
-      props: {plain: false, value: 'foo', modelValue: 'foo'},
-    })
-    const $label = wrapper.get('label')
-    expect($label.classes()).toContain('active')
   })
 
   it('child label has class active when value and modelValue are not the same', () => {

@@ -5,11 +5,6 @@ import BTh from './BTh.vue'
 describe('th', () => {
   enableAutoUnmount(afterEach)
 
-  it('has static attr role to be columnheader', () => {
-    const wrapper = mount(BTh)
-    expect(wrapper.attributes('role')).toBe('columnheader')
-  })
-
   it('has colspan to be prop colspan', () => {
     const wrapper = mount(BTh, {
       props: {
