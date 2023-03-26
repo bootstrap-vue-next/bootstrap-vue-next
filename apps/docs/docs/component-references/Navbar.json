@@ -68,7 +68,7 @@
         "props": [
           {
             "prop": "align",
-            "type": "Alignment.JustifyContent"
+            "type": "AlignmentJustifyContent"
           },
           {
             "prop": "fill",

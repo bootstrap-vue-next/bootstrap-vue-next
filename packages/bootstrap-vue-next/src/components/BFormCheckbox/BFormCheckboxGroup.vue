@@ -2,44 +2,34 @@
   <div
     v-bind="computedAttrs"
     :id="computedId"
+    ref="element"
     role="group"
     :class="computedClasses"
     class="bv-no-focus-ring"
     tabindex="-1"
   >
-    <b-form-checkbox
-      v-for="(item, key) in checkboxList"
-      :key="key"
-      v-model="localValue"
-      v-bind="item.props"
-    >
+    <slot name="first" />
+    <b-form-checkbox v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <span v-if="item.html" v-html="item.html" />
       <span v-else v-text="item.text" />
     </b-form-checkbox>
+    <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-// import type {BFormCheckboxGroupEmits, BFormCheckboxGroupProps} from '../../types/components'
-import {computed, reactive, toRef, useSlots} from 'vue'
+import {computed, provide, ref, toRef, watchEffect} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {
-  bindGroupProps,
-  getGroupAttr,
-  getGroupClasses,
-  optionToElement,
-  slotsToElements,
-  useBooleanish,
-  useId,
-} from '../../composables'
-import {useVModel} from '@vueuse/core'
+import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
+import {checkboxGroupKey} from '../../utils'
+import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormCheckboxGroupProps {
   id?: string
   form?: string
-  modelValue?: (string | number | Record<string, unknown>)[]
+  modelValue?: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
@@ -88,22 +78,13 @@ interface BFormCheckboxGroupEmits {
 
 const emit = defineEmits<BFormCheckboxGroupEmits>()
 
-const slots = useSlots()
-
-const slotsName = 'BFormCheckbox'
-
 const modelValue = useVModel(props, 'modelValue', emit)
 
 const computedId = useId(toRef(props, 'id'), 'checkbox')
 const computedName = useId(toRef(props, 'name'), 'checkbox')
-
-// TODO autofocus is not used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const buttonsBoolean = useBooleanish(toRef(props, 'buttons'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-// TODO plain is not used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
@@ -111,60 +92,85 @@ const stateBoolean = useBooleanish(toRef(props, 'state'))
 const switchesBoolean = useBooleanish(toRef(props, 'switches'))
 const validatedBoolean = useBooleanish(toRef(props, 'validated'))
 
-const localValue = computed({
-  get: () => modelValue.value,
-  set: (newValue) => {
-    if (JSON.stringify(newValue) === JSON.stringify(modelValue.value)) return
+const element = ref<HTMLElement | null>(null)
 
-    /**
-     * Sorts the value and makes it the same order as options
-     * Ie: props.options = ['a', 'b', 'c'], no matter what order the options are selected,
-     * User clicks 'c', then clicks 'b' => ['b', 'c'], not ['c', 'b']
-     */
-    const sortByOptions: (string | number | Record<string, unknown>)[] = props.options
-      .filter((el) =>
-        newValue
-          .map((it) => JSON.stringify(it))
-          .includes(JSON.stringify(typeof el === 'string' ? el : el[props.valueField]))
-      )
-      .map((el) => (typeof el === 'string' ? el : el[props.valueField])) as (
-      | string
-      | number
-      | Record<string, unknown>
-    )[]
-
-    emit('input', sortByOptions)
-    modelValue.value = sortByOptions
-    emit('change', sortByOptions)
-  },
+useFocus(element, {
+  initialValue: autofocusBoolean.value,
 })
 
-// TODO see if this can be converted to provide/inject
-const checkboxList = computed(() =>
-  (slots.first ? slotsToElements(slots.first(), slotsName, disabledBoolean.value) : [])
-    .concat(props.options.map((e) => optionToElement(e, props)))
-    .concat(slots.default ? slotsToElements(slots.default(), slotsName, disabledBoolean.value) : [])
-    .map((e, idx) => bindGroupProps(e, idx, props, computedName, computedId))
-    .map((e) => ({
-      ...e,
-      props: {
-        switch: switchesBoolean.value,
-        ...e.props,
-      },
-    }))
+const activeValues = ref<
+  (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+>(modelValue.value)
+
+provide(checkboxGroupKey, {
+  set: (value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number) => {
+    activeValues.value.push(value)
+  },
+  remove: (
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ) => {
+    activeValues.value.splice(activeValues.value.indexOf(value), 1)
+  },
+  modelValue,
+  switch: switchesBoolean,
+  buttonVariant: toRef(props, 'buttonVariant'),
+  form: toRef(props, 'form'),
+  name: computedName,
+  state: stateBoolean,
+  plain: plainBoolean,
+  size: toRef(props, 'size'),
+  inline: computed(() => !stackedBoolean.value),
+  required: requiredBoolean,
+  buttons: buttonsBoolean,
+  disabled: disabledBoolean,
+})
+
+watchEffect(() => (modelValue.value = activeValues.value))
+
+const normalizeOptions = computed<
+  {
+    props: {
+      value: string | undefined
+      disabled: boolean | undefined
+    }
+    text: string | undefined
+    html: string | undefined
+    self: symbol
+  }[]
+>(() =>
+  props.options.map((el, ind) =>
+    typeof el === 'string'
+      ? {
+          props: {
+            value: el,
+            disabled: disabledBoolean.value,
+          },
+          text: el,
+          html: undefined,
+          self: Symbol(`checkboxGroupOptionItem${ind}`),
+        }
+      : {
+          props: {
+            value: el[props.valueField] as string | undefined,
+            disabled: el[props.disabledField] as boolean | undefined,
+            ...(el.props ? el.props : {}),
+          },
+          text: el[props.textField] as string | undefined,
+          html: el[props.htmlField] as string | undefined,
+          self: Symbol(`checkboxGroupOptionItem${ind}`),
+        }
+  )
 )
 
-const classesObject = reactive({
-  required: toRef(requiredBoolean, 'value'),
-  ariaInvalid: toRef(props, 'ariaInvalid'),
-  state: toRef(stateBoolean, 'value'),
-  validated: toRef(validatedBoolean, 'value'),
-  buttons: toRef(buttonsBoolean, 'value'),
-  stacked: toRef(stackedBoolean, 'value'),
-  size: toRef(props, 'size'),
-})
+const classesObject = computed(() => ({
+  required: requiredBoolean.value,
+  ariaInvalid: props.ariaInvalid,
+  state: stateBoolean.value,
+  validated: validatedBoolean.value,
+  buttons: buttonsBoolean.value,
+  stacked: stackedBoolean.value,
+  size: props.size,
+}))
 const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)
-
-// TODO: make tests compatible with the v-focus directive
 </script>

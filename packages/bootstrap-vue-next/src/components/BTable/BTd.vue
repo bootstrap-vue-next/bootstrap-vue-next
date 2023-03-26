@@ -1,6 +1,5 @@
 <template>
   <td
-    role="cell"
     :scope="scope"
     :class="computedClasses"
     :colspan="colspan"

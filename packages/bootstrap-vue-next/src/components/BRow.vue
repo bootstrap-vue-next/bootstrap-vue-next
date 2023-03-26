@@ -7,7 +7,12 @@
 <script lang="ts">
 import {computed, defineComponent, type PropType, toRef} from 'vue'
 import {getBreakpointProps, getClasses} from '../utils'
-import type {Alignment, Booleanish} from '../types'
+import type {
+  AlignmentContent,
+  AlignmentJustifyContent,
+  AlignmentVertical,
+  Booleanish,
+} from '../types'
 import {useAlignment, useBooleanish} from '../composables'
 
 const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], default: null})
@@ -19,9 +24,9 @@ export default defineComponent({
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},
     noGutters: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    alignV: {type: String as PropType<Alignment.Vertical>, default: null},
-    alignH: {type: String as PropType<Alignment.JustifyContent>, default: null},
-    alignContent: {type: String as PropType<Alignment.Content>, default: null},
+    alignV: {type: String as PropType<AlignmentVertical>, default: null},
+    alignH: {type: String as PropType<AlignmentJustifyContent>, default: null},
+    alignContent: {type: String as PropType<AlignmentContent>, default: null},
     ...rowColsProps,
   },
   setup(props) {

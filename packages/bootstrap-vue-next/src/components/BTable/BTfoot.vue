@@ -1,11 +1,10 @@
 <template>
-  <tfoot role="rowgroup" :class="computedClasses">
+  <tfoot :class="computedClasses">
     <slot />
   </tfoot>
 </template>
 
 <script setup lang="ts">
-// import type {BTfootProps} from '../../types/components'
 import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 

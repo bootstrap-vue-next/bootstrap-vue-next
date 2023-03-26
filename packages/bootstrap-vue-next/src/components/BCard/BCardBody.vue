@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardBodyProps} from '../../types/components'
 import {computed, toRef, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'

@@ -5,13 +5,12 @@
 </template>
 
 <script setup lang="ts">
-// import type {BNavProps} from '../types/components'
-import type {Alignment, Booleanish} from '../../types'
+import type {AlignmentJustifyContent, Booleanish} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
 
 interface BNavProps {
-  align?: Alignment.JustifyContent
+  align?: AlignmentJustifyContent
   cardHeader?: Booleanish
   fill?: Booleanish
   justified?: Booleanish

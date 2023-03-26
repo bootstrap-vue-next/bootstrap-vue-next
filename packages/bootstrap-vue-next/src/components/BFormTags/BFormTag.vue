@@ -24,8 +24,7 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormTagEmits, BFormTagProps} from '../../types/components'
-import {computed, toRef, useSlots, VNodeNormalizedChildren} from 'vue'
+import {computed, toRef, useSlots, type VNodeNormalizedChildren} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'

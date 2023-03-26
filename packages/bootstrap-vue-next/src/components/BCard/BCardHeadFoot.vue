@@ -9,10 +9,6 @@
 </template>
 
 <script setup lang="ts">
-// Internal component that decomposes the internals of BCardHeader & BCardFooter
-// (they do the same thing, with the only difference of one static class)
-
-// import type {BCardHeaderProps} from '../../types/components'
 import {computed} from 'vue'
 import type {ColorVariant, TextColorVariant} from '../../types'
 

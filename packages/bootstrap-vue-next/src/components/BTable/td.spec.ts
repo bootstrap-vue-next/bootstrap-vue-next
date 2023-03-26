@@ -5,11 +5,6 @@ import BTd from './BTd.vue'
 describe('td', () => {
   enableAutoUnmount(afterEach)
 
-  it('has static attr role to be cell', () => {
-    const wrapper = mount(BTd)
-    expect(wrapper.attributes('role')).toBe('cell')
-  })
-
   it('has colspan to be prop colspan', () => {
     const wrapper = mount(BTd, {
       props: {

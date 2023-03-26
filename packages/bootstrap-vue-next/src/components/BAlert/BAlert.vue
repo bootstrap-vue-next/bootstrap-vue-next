@@ -25,14 +25,12 @@
 </template>
 
 <script setup lang="ts">
-// import type {BAlertEmits, BAlertProps} from '../types/components'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {computed, onBeforeUnmount, toRef, useSlots, watchEffect} from 'vue'
-import {useBooleanish} from '../../composables'
-import useCountdown from '../../composables/useCountdown'
+import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useVModel} from '@vueuse/core'
 

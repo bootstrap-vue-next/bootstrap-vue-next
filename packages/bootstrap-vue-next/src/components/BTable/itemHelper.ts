@@ -1,7 +1,6 @@
 import {ref, type Ref} from 'vue'
-import type {TableField, TableFieldObject, TableItem} from '../../types'
+import type {BTableSortCompare, TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, startCase} from '../../utils'
-import {BTableSortCompare} from '../../types/components'
 import {cloneDeep, cloneDeepAsync} from '../../utils/object'
 
 export default () => {

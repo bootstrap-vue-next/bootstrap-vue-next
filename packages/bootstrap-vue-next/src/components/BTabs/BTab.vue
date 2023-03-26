@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BTabProps} from '../../types/components'
 import {computed, inject, ref, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'
@@ -52,7 +51,7 @@ const lazyBoolean = useBooleanish(toRef(props, props.lazyOnce !== undefined ? 'l
 
 const lazyRenderCompleted = ref(false)
 
-const computedLazy = computed<boolean>(() => !!(parentData?.lazy || lazyBoolean.value))
+const computedLazy = computed<boolean>(() => !!(parentData?.lazy.value || lazyBoolean.value))
 const computedLazyOnce = computed<boolean>(() => props.lazyOnce !== undefined)
 
 const computedActive = computed<boolean>(() => activeBoolean.value && !disabledBoolean.value)
@@ -65,7 +64,7 @@ const showSlot = computed<boolean>(() => {
 const computedClasses = computed(() => ({
   'active': activeBoolean.value,
   'show': activeBoolean.value,
-  'card-body': parentData?.card && props.noBody === false,
+  'card-body': parentData?.card.value && props.noBody === false,
 }))
 
 watch(showSlot, (shown) => {

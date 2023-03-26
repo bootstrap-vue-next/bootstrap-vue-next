@@ -41,12 +41,6 @@ const _normalizeOption = (
   }
 }
 
-/**
- * @param options
- * @param componentName
- * @param props
- * @returns
- */
 const normalizeOptions = (
   options: any[],
   componentName: string,

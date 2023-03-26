@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, type PropType, toRef} from 'vue'
-import type {Alignment, Booleanish} from '../types'
+import type {AlignmentVertical, Booleanish} from '../types'
 import {getBreakpointProps, getClasses} from '../utils'
 import {useBooleanish} from '../composables'
 
@@ -24,7 +24,7 @@ export default defineComponent({
     ...breakpointOffset,
     order: {type: [String, Number], default: null},
     ...breakpointOrder,
-    alignSelf: {type: String as PropType<Alignment.Vertical | 'auto'>, default: null},
+    alignSelf: {type: String as PropType<AlignmentVertical | 'auto'>, default: null},
     tag: {type: String, default: 'div'},
   },
   setup(props) {

@@ -1,12 +1,6 @@
 const _isObject = (item: unknown): boolean =>
   !!item && typeof item === 'object' && item.constructor === Object
 
-/**
- * @param target
- * @param source
- * @param extendArray
- * @returns
- */
 const mergeDeep = (target: any, source: any, extendArray = true) => {
   const output =
     target instanceof Date && typeof target.getMonth === 'function'

@@ -33,9 +33,6 @@ export interface Toast {
   content: ToastContent
 }
 
-/**
- * @external
- */
 export type BodyProp = ToastContent['body']
 
 // Toast ViewModel, Each toast instance controls one view model
@@ -202,9 +199,6 @@ export function getKey(): any {
   return inject(fetchKey)
 }
 
-/**
- * @external
- */
 export function useToast(): ToastInstance | undefined
 export function useToast(vm: {id: symbol}, key?: symbol): ToastInstance | undefined
 export function useToast(
@@ -228,9 +222,6 @@ export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | und
   return new ToastInstance(vm_instance)
 }
 
-/**
- * @external
- */
 const BToastPlugin: Plugin = {
   install: (app: App, options: BootstrapVueOptions = {}) => {
     app.provide(fetchKey, options?.BToast?.injectkey ?? injectkey)

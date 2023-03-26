@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// https://vuejs.org/guide/typescript/composition-api.html#syntax-limitations , may be possible in a future release
-// import type {BAccordionProps} from '../types/components'
 import type {Booleanish} from '../../types'
 import {computed, provide, toRef} from 'vue'
 import {accordionInjectionKey} from '../../utils'
@@ -33,6 +31,8 @@ const computedClasses = computed(() => ({
 }))
 
 if (!freeBoolean.value) {
-  provide(accordionInjectionKey, computedId.value)
+  provide(accordionInjectionKey, {
+    id: computedId,
+  })
 }
 </script>

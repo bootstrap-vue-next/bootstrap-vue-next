@@ -2,10 +2,10 @@
   <div class="accordion-item">
     <b-collapse
       :id="computedId"
-      v-model="open"
+      v-model="modelValue"
       class="accordion-collapse"
       :visible="visible"
-      :accordion="parentData ?? undefined"
+      :accordion="parentData?.id.value ?? undefined"
       :aria-labelledby="`heading${computedId}`"
     >
       <template #header="{visible: toggleVisible, toggle}">
@@ -36,12 +36,11 @@ import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
-// import type {BAccordionItemProps} from '../types/components'
 
 interface BAccordionItemProps {
   id?: string
   title?: string
-  modelValue?: boolean
+  modelValue?: Booleanish
   visible?: Booleanish
   headerTag?: string
 }
@@ -51,17 +50,18 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {
 })
 
 const emit = defineEmits<(e: 'update:modelValue', value: boolean) => void>()
-const open = useVModel(props, 'modelValue', emit, {passive: true})
+
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const visibleBoolean = useBooleanish(toRef(props, 'visible'))
 
 onMounted(() => {
   if (visibleBoolean.value) {
-    open.value = true
+    modelValue.value = true
   }
 })
 
-watchEffect(() => (open.value = visibleBoolean.value))
+watchEffect(() => (modelValue.value = visibleBoolean.value))
 
 const parentData = inject(accordionInjectionKey, null)
 

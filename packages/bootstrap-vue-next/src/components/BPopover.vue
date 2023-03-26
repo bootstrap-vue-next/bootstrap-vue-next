@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <span ref="placeholder" />
   <slot name="target" v-bind="{show, hide, toggle, showState}" />
@@ -30,11 +29,13 @@
             {{ title }}
           </slot>
         </div>
+        <!-- eslint-disable vue/no-v-html -->
         <div
           v-else
           :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
           v-html="sanitizedTitle"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
       <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
         <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
@@ -42,11 +43,13 @@
             {{ content }}
           </slot>
         </div>
+        <!-- eslint-disable vue/no-v-html -->
         <div
           v-else
           :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
           v-html="sanitizedContent"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
     </div>
   </teleport>
@@ -77,11 +80,13 @@
           {{ title }}
         </slot>
       </div>
+      <!-- eslint-disable vue/no-v-html -->
       <div
         v-else
         :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
         v-html="sanitizedTitle"
       />
+      <!-- eslint-enable vue/no-v-html -->
     </template>
     <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
       <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
@@ -89,11 +94,13 @@
           {{ content }}
         </slot>
       </div>
+      <!-- eslint-disable vue/no-v-html -->
       <div
         v-else
         :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
         v-html="sanitizedContent"
       />
+      <!-- eslint-enable vue/no-v-html -->
     </template>
   </div>
 </template>
@@ -219,13 +226,10 @@ watchEffect(() => {
   emit('update:modelValue', showState.value)
 })
 
-watch(
-  modelValueBoolean,
-  () => {
-    if (modelValueBoolean.value === showState.value) return
-    modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
-  }
-)
+watch(modelValueBoolean, () => {
+  if (modelValueBoolean.value === showState.value) return
+  modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
+})
 
 const computedId = useId(toRef(props, 'id'), 'popover')
 

@@ -55,7 +55,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownEmits, BDropdownProps} from '../types/components'
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
 import {onClickOutside, useToNumber, useVModel} from '@vueuse/core'
 import {computed, ref, toRef, watch} from 'vue'

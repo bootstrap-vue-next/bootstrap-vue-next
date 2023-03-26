@@ -5,11 +5,6 @@ import BThead from './BThead.vue'
 describe('thead', () => {
   enableAutoUnmount(afterEach)
 
-  it('has static attr role to be rowgroup', () => {
-    const wrapper = mount(BThead)
-    expect(wrapper.attributes('role')).toBe('rowgroup')
-  })
-
   it('renders default slot', () => {
     const wrapper = mount(BThead, {
       slots: {default: 'foobar'},

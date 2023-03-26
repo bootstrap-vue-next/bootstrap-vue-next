@@ -5,12 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import type {Alignment, Booleanish} from '../../types'
+import type {AlignmentJustifyContent, Booleanish} from '../../types'
 import {computed, toRef} from 'vue'
 import {useAlignment, useBooleanish} from '../../composables'
 
 interface Props {
-  align?: Alignment.JustifyContent
+  align?: AlignmentJustifyContent
   fill?: Booleanish
   justified?: Booleanish
   small?: Booleanish

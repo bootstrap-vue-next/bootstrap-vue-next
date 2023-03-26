@@ -24,12 +24,6 @@ describe('table-simple', () => {
     expect($table.text()).toBe('foobar')
   })
 
-  it('table has static attr role to be table', () => {
-    const wrapper = mount(BTableSimple)
-    const $table = wrapper.get('table')
-    expect($table.attributes('role')).toBe('table')
-  })
-
   // classes
 
   it('table has static class table', () => {
@@ -222,15 +216,6 @@ describe('table-simple', () => {
     const $div = wrapper.get('div')
     const $table = $div.get('table')
     expect($table.text()).toBe('foobar')
-  })
-
-  it('table has static attr role to be table when prop responsive', () => {
-    const wrapper = mount(BTableSimple, {
-      props: {responsive: true},
-    })
-    const $div = wrapper.get('div')
-    const $table = $div.get('table')
-    expect($table.attributes('role')).toBe('table')
   })
 
   it('when prop responsive table has static class table', () => {

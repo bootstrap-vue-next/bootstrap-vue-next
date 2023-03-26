@@ -68,7 +68,7 @@ export default (
   }
 
   watchEffect(() => {
-    const newVal = resolveUnref(length) as number
+    const newVal = resolveUnref<number>(length)
     const oldVal = resolvedLength.value
     if (newVal === oldVal) return
     resolvedLength.value = newVal
@@ -77,7 +77,7 @@ export default (
   })
 
   watchEffect(() => {
-    const newVal = resolveUnref(interval) as number
+    const newVal = resolveUnref<number>(interval)
     const oldVal = intervalLength.value
     if (newVal === oldVal) return
     intervalLength.value = newVal

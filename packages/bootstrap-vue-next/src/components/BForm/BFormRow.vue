@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormRowProps} from '../../types/components'
-
 interface BFormRowProps {
   tag?: string
 }

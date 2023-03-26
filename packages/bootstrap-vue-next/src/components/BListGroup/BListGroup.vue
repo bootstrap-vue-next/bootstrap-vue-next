@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BListGroupProps} from '../../types/components'
 import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
 import type {Booleanish} from '../../types'
@@ -42,6 +41,6 @@ const computedClasses = computed(() => {
 const computedTag = computed<string>(() => (numberedBoolean.value === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
-  numbered: numberedBoolean.value,
+  numbered: numberedBoolean,
 })
 </script>

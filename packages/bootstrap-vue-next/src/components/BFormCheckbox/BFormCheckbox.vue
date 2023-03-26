@@ -7,35 +7,28 @@
       v-model="localValue"
       :class="inputClasses"
       type="checkbox"
-      :disabled="disabledBoolean"
-      :required="!!name && !!requiredBoolean"
-      :name="name"
-      :form="form"
+      :disabled="disabledBoolean || parentData?.disabled.value"
+      :required="computedRequired ? true : undefined"
+      :name="name || parentData?.name.value"
+      :form="form || parentData?.form.value"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
-      :aria-required="name && requiredBoolean ? 'true' : undefined"
+      :aria-required="computedRequired ? true : undefined"
       :value="value"
       :indeterminate="indeterminateBoolean"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
     />
-    <label
-      v-if="hasDefaultSlot || !plainBoolean"
-      :for="computedId"
-      :class="[labelClasses, {active: isChecked, focus: isFocused}]"
-    >
+    <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
-// import type {BFormCheckboxEmits, BFormCheckboxProps} from '../../types/components'
-import {useVModel} from '@vueuse/core'
-import {computed, onMounted, reactive, ref, toRef, useSlots} from 'vue'
+import {useFocus, useVModel} from '@vueuse/core'
+import {computed, inject, onUnmounted, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
-import {isEmptySlot} from '../../utils'
+import {checkboxGroupKey, isEmptySlot} from '../../utils'
 
 interface BFormCheckboxProps {
   ariaLabel?: string
@@ -72,21 +65,30 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   buttonVariant: 'secondary',
   inline: false,
   size: 'md',
-  uncheckedValue: false,
   value: true,
+  uncheckedValue: false,
 })
 
 interface BFormCheckboxEmits {
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'input', value: unknown): void
-  (e: 'change', value: unknown): void
+  (
+    e: 'update:modelValue',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ): void
+  (
+    e: 'input',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ): void
+  (
+    e: 'change',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  ): void
 }
 
 const emit = defineEmits<BFormCheckboxEmits>()
 
 const slots = useSlots()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(toRef(props, 'id'), 'form-check')
 
@@ -100,70 +102,63 @@ const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
 const stateBoolean = useBooleanish(toRef(props, 'state'))
 
-const input = ref<HTMLElement>(null as unknown as HTMLElement)
-const isFocused = ref<boolean>(false)
+const parentData = inject(checkboxGroupKey, null)
 
-const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
+const input = ref<HTMLElement | null>(null)
+
+useFocus(input, {
+  initialValue: autofocusBoolean.value,
+})
+
+const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: (): unknown[] | Set<unknown> | boolean | undefined => {
-    if (props.uncheckedValue) {
-      if (!Array.isArray(modelValue.value)) {
-        return modelValue.value === props.value
-      }
-      return modelValue.value.indexOf(props.value) > -1
+  get: () => {
+    if (parentData !== null) {
+      const jsonified = parentData.modelValue.value.map((el) => JSON.stringify(el))
+      const jsonifiedValue = JSON.stringify(props.value)
+      return jsonified.includes(jsonifiedValue)
     }
-    return modelValue.value as unknown[] | Set<unknown> | boolean | undefined
+    return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
   },
-  set: (newValue: any) => {
-    let emitValue = newValue
-    if (!Array.isArray(modelValue.value)) {
-      emitValue = newValue ? props.value : props.uncheckedValue
-    } else {
-      if (props.uncheckedValue) {
-        emitValue = modelValue.value
-        if (newValue) {
-          if (emitValue.indexOf(props.uncheckedValue) > -1)
-            emitValue.splice(emitValue.indexOf(props.uncheckedValue), 1)
-          emitValue.push(props.value)
-        } else {
-          if (emitValue.indexOf(props.value) > -1)
-            emitValue.splice(emitValue.indexOf(props.value), 1)
-          emitValue.push(props.uncheckedValue)
-        }
-      }
+  set: (newValue) => {
+    const updateValue = !newValue ? props.uncheckedValue : props.value
+
+    emit('input', updateValue)
+    modelValue.value = updateValue
+    emit('change', updateValue)
+
+    if (parentData === null) return
+    if (!newValue) {
+      parentData.remove(props.value)
+      return
     }
-    emit('input', emitValue)
-    modelValue.value = emitValue
-    emit('change', emitValue)
+    parentData.set(props.value)
   },
 })
 
-const isChecked = computed<boolean>(() => {
-  if (Array.isArray(modelValue.value)) {
-    return modelValue.value.indexOf(props.value) > -1
-  }
-  return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
-})
+const computedRequired = computed(
+  () =>
+    !!(props.name ?? parentData?.name.value) &&
+    (requiredBoolean.value || parentData?.required.value)
+)
 
-const classesObject = reactive({
-  plain: toRef(plainBoolean, 'value'),
-  button: toRef(buttonBoolean, 'value'),
-  inline: toRef(inlineBoolean, 'value'),
-  switch: toRef(switchBoolean, 'value'),
-  size: toRef(props, 'size'),
-  state: toRef(stateBoolean, 'value'),
-  buttonVariant: toRef(props, 'buttonVariant'),
-})
+const classesObject = computed(() => ({
+  plain: plainBoolean.value || (parentData?.plain.value ?? false),
+  button: buttonBoolean.value || (parentData?.buttons.value ?? false),
+  inline: inlineBoolean.value || (parentData?.inline.value ?? false),
+  switch: switchBoolean.value || (parentData?.switch.value ?? false),
+  size: props.size || parentData?.size.value, // TODO some of these values will be weirdly incorrect since they arent falsy
+  state: stateBoolean.value || parentData?.state.value,
+  buttonVariant: props.buttonVariant || parentData?.buttonVariant.value, // Above
+}))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
 
-// TODO: make tests compatible with the v-focus directive
-// TODO rebuild these (autofocus) with useFocus from vueuse
-onMounted((): void => {
-  if (autofocusBoolean.value) {
-    input.value.focus()
+onUnmounted(() => {
+  if (parentData !== null && localValue.value === true) {
+    parentData.remove(props.value)
   }
 })
 </script>

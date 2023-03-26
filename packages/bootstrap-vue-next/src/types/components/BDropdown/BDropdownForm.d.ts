@@ -1,5 +1,0 @@
-// Props
-
-// Emits
-
-// Other

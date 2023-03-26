@@ -36,8 +36,13 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardProps} from '../../types/components'
-import type {Alignment, Booleanish, ClassValue, ColorVariant, TextColorVariant} from '../../types'
+import type {
+  AlignmentTextHorizontal,
+  Booleanish,
+  ClassValue,
+  ColorVariant,
+  TextColorVariant,
+} from '../../types'
 import {isEmptySlot} from '../../utils'
 import {computed, toRef, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
@@ -47,7 +52,7 @@ import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 
 interface BCardProps {
-  align?: Alignment.TextHorizontal
+  align?: AlignmentTextHorizontal
   bgVariant?: ColorVariant
   bodyBgVariant?: ColorVariant
   bodyClass?: ClassValue

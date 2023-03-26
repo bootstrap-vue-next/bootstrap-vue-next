@@ -24,9 +24,8 @@
 </template>
 
 <script setup lang="ts">
-// import type { BAvatarProps, BAvatarEmits, InputSize } from '../types/components'
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
-import {computed, inject, type StyleValue, toRef, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -91,17 +90,13 @@ const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
 
 const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 
-const computedSize = computed<string | null>(() =>
-  parentData?.size ? parentData.size : computeSize(props.size)
+const computedSize = computed<string | null>(
+  () => parentData?.size.value ?? computeSize(props.size)
 )
 
-const computedVariant = computed<ColorVariant>(() =>
-  parentData?.variant ? parentData.variant : props.variant
-)
+const computedVariant = computed<ColorVariant>(() => parentData?.variant.value ?? props.variant)
 
-const computedRounded = computed<string | boolean>(() =>
-  parentData?.rounded ? parentData.rounded : props.rounded
-)
+const computedRounded = computed<string | boolean>(() => parentData?.rounded.value ?? props.rounded)
 
 const computedAttrs = computed(() => ({
   'type': buttonBoolean.value ? props.buttonType : undefined,
@@ -169,10 +164,10 @@ const marginStyle = computed(() => {
 
 const computedTag = computed<'button' | 'span'>(() => (buttonBoolean.value ? 'button' : 'span'))
 
-const computedStyle = computed(() => ({
+const computedStyle = computed<CSSProperties>(() => ({
   ...marginStyle.value,
-  width: computedSize.value,
-  height: computedSize.value,
+  width: computedSize.value ?? undefined,
+  height: computedSize.value ?? undefined,
 }))
 
 const computeContrastVariant = (colorVariant: ColorVariant): 'dark' | 'light' =>

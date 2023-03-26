@@ -36,14 +36,13 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormSelectEmits, BFormSelectProps} from '../types/components'
 import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
-import {computed, nextTick, onActivated, onMounted, ref, toRef} from 'vue'
+import {computed, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId} from '../../composables'
-import {useVModel} from '@vueuse/core'
+import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -108,6 +107,10 @@ const stateBoolean = useBooleanish(toRef(props, 'state'))
 
 const input = ref<HTMLElement>()
 
+useFocus(input, {
+  initialValue: autofocusBoolean.value,
+})
+
 const computedClasses = computed(() => ({
   'form-control': plainBoolean.value,
   [`form-control-${props.size}`]: props.size && plainBoolean.value,
@@ -130,43 +133,11 @@ const computedAriaInvalid = computed(() =>
 
 const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
 const localValue = computed({
-  get() {
-    return modelValue.value
-  },
-  set(newValue: any) {
+  get: () => modelValue.value,
+  set: (newValue: any) => {
     emit('change', newValue)
     modelValue.value = newValue
     emit('input', newValue)
   },
-})
-
-const focus = () => {
-  if (!disabledBoolean.value) input.value?.focus()
-}
-
-const blur = () => {
-  if (!disabledBoolean.value) {
-    input.value?.blur()
-  }
-}
-
-const handleAutofocus = () => {
-  if (autofocusBoolean.value) input.value?.focus()
-}
-
-onMounted(() => {
-  nextTick(() => {
-    handleAutofocus()
-  })
-})
-onActivated(() => {
-  nextTick(() => {
-    handleAutofocus()
-  })
-})
-
-defineExpose({
-  blur,
-  focus,
 })
 </script>

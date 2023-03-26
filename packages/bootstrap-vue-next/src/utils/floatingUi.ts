@@ -1,4 +1,4 @@
-import {type Placement} from '@floating-ui/vue'
+import type {Placement} from '@floating-ui/vue'
 export {autoUpdate} from '@floating-ui/vue'
 
 import {type App, createApp, type DirectiveBinding, h, type Ref} from 'vue'

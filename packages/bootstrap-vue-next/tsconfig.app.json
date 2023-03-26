@@ -1,0 +1,14 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["**/*.spec.*", "**/*.test.*"],
+  "compilerOptions": {
+    "types": ["vitest/globals", "vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "vue-router": ["node_modules/vue-router"],
+      "@vueuse/shared": ["node_modules/@vueuse/shared"],
+      "@floating-ui/core": ["node_modules/@floating-ui/core"]
+    }
+  }
+}

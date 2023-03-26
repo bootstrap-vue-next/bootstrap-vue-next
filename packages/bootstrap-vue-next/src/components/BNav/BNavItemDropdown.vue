@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BNavItemDropdownProps} from '../types/components'
 import type {Middleware, Strategy} from '@floating-ui/vue'
 import {useVModel} from '@vueuse/core'
 import {computed} from 'vue'
@@ -66,12 +65,8 @@ const modelValue = useVModel(props, 'modelValue', emit)
 const modelValueBoolean = useBooleanish(modelValue)
 
 const dropdownValue = computed({
-  get() {
-    return modelValueBoolean.value
-  },
-  set(value: boolean) {
-    modelValue.value = value
-  },
+  get: () => modelValueBoolean.value,
+  set: (value: boolean) => (modelValue.value = value),
 })
 const usableProps = computed(() => omit(props, ['modelValue'] as const))
 </script>

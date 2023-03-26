@@ -1,1 +1,1 @@
-export {useBreadcrumb, useColorMode} from '..'
+export {useBreadcrumb, createBreadcrumb, useColorMode} from '..'

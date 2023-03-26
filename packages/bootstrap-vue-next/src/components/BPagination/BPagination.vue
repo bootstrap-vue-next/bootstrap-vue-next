@@ -1,7 +1,13 @@
 <script lang="ts">
 import {BvEvent, normalizeSlot, toInteger} from '../../utils'
 import {computed, defineComponent, h, type PropType, reactive, toRef, watch} from 'vue'
-import type {Alignment, Booleanish, InputSize, Pagination, PaginationPage} from '../../types'
+import type {
+  AlignmentJustifyContent,
+  Booleanish,
+  InputSize,
+  Pagination,
+  PaginationPage,
+} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
 import {useVModel} from '@vueuse/core'
 // Default # of buttons limit
@@ -32,7 +38,7 @@ const sanitizeCurrentPage = (value: number, numberOfPages: number) => {
 export default defineComponent({
   name: 'BPagination',
   props: {
-    align: {type: String as PropType<Alignment.JustifyContent | 'fill'>, default: 'start'},
+    align: {type: String as PropType<AlignmentJustifyContent | 'fill'>, default: 'start'},
     ariaControls: {type: String, required: false},
     ariaLabel: {type: String, default: 'Pagination'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -74,7 +80,7 @@ export default defineComponent({
     const lastNumberBoolean = useBooleanish(toRef(props, 'lastNumber'))
     const pillsBoolean = useBooleanish(toRef(props, 'pills'))
 
-    const justifyAlign = computed<Alignment.JustifyContent>(() =>
+    const justifyAlign = computed<AlignmentJustifyContent>(() =>
       props.align === 'fill' ? 'start' : props.align
     )
     const alignment = useAlignment(toRef(justifyAlign, 'value'))
@@ -309,7 +315,7 @@ export default defineComponent({
               'class': ['page-link', {'flex-grow-1': !isDisabled && fill}],
               'aria-label': ariaLabel,
               'aria-controls': props.ariaControls || null,
-              'aria-disabled': isDisabled ? 'true' : null,
+              'aria-disabled': isDisabled ? true : null,
               'role': 'menuitem',
               'type': isDisabled ? null : 'button',
               'tabindex': isDisabled ? null : '-1',
@@ -368,7 +374,7 @@ export default defineComponent({
           {
             'class': ['page-link', {'flex-grow-1': !disabledBoolean.value && fill}],
             'aria-controls': props.ariaControls || null,
-            'aria-disabled': disabledBoolean.value ? 'true' : null,
+            'aria-disabled': disabledBoolean.value ? true : null,
             'aria-label': props.labelPage ? `${props.labelPage} ${page.number}` : null,
             'role': 'menuitemradio',
             'type': disabledBoolean.value ? null : 'button',

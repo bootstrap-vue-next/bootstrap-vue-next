@@ -144,7 +144,7 @@ const staticBoolean = useBooleanish(toRef(props, 'static'))
 const computedId = useId(toRef(props, 'id'), 'offcanvas')
 
 const isActive = ref(false)
-const element = ref<null | HTMLElement>(null)
+const element = ref<HTMLElement | null>(null)
 const lazyLoadCompleted = ref(false)
 
 const showBackdrop = computed(
@@ -240,7 +240,7 @@ watch(
   {flush: 'post'}
 )
 useEventListener(element, 'bv-toggle', () => {
-  modelValue.value ? hide() : show()
+  modelValueBoolean.value ? hide() : show()
 })
 </script>
 

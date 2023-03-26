@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BInputGroupAddonProps} from '../../types/components'
 import {toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish} from '../../types'

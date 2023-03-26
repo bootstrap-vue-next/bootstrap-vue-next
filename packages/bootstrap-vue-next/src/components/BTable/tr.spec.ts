@@ -5,11 +5,6 @@ import BTr from './BTr.vue'
 describe('tr', () => {
   enableAutoUnmount(afterEach)
 
-  it('has static attr role to be row', () => {
-    const wrapper = mount(BTr)
-    expect(wrapper.attributes('role')).toBe('row')
-  })
-
   it('renders default slot', () => {
     const wrapper = mount(BTr, {
       slots: {default: 'foobar'},

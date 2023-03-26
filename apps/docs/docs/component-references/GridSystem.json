@@ -64,15 +64,15 @@
           },
           {
             "prop": "alignV",
-            "type": "Alignment.Vertical"
+            "type": "AlignmentVertical"
           },
           {
             "prop": "alignH",
-            "type": "Alignment.Horizontal"
+            "type": "AlignmentHorizontal"
           },
           {
             "prop": "alignContent",
-            "type": "Alignment.Content"
+            "type": "AlignmentContent"
           }
         ],
         "emits": [],
@@ -110,7 +110,7 @@
           {
             "description": "",
             "prop": "alignSelf",
-            "type": "Alignment.Vertical | 'auto'"
+            "type": "AlignmentVertical | 'auto'"
           },
           {
             "description": "",

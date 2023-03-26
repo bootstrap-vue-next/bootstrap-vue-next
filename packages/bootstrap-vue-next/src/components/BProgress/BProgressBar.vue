@@ -50,9 +50,12 @@ const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
 const stripedBoolean = useBooleanish(toRef(props, 'striped'))
 
 const computedClasses = computed(() => ({
-  'progress-bar-animated': animatedBoolean.value || parentData?.animated,
+  'progress-bar-animated': animatedBoolean.value || parentData?.animated.value,
   'progress-bar-striped':
-    stripedBoolean.value || parentData?.striped || animatedBoolean.value || parentData?.animated,
+    stripedBoolean.value ||
+    parentData?.striped.value ||
+    animatedBoolean.value ||
+    parentData?.animated.value,
   [`bg-${props.variant}`]: props.variant !== undefined,
 }))
 
@@ -75,9 +78,9 @@ const numberMax = computed<number | undefined>(() =>
 const computedLabel = computed<string>(() =>
   props.labelHtml !== undefined
     ? props.labelHtml
-    : showValueBoolean.value || parentData?.showValue
+    : showValueBoolean.value || parentData?.showValue.value
     ? numberValue.value.toFixed(numberPrecision.value)
-    : showProgressBoolean.value || parentData?.showProgress
+    : showProgressBoolean.value || parentData?.showProgress.value
     ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
     : props.label !== undefined
     ? props.label
@@ -85,10 +88,12 @@ const computedLabel = computed<string>(() =>
 )
 
 const computedWidth = computed<string>(() =>
-  parentData?.max
+  parentData?.max.value
     ? `${
         (numberValue.value * 100) /
-        (typeof parentData.max === 'number' ? parentData.max : Number.parseInt(parentData.max))
+        (typeof parentData.max.value === 'number'
+          ? parentData.max.value
+          : Number.parseInt(parentData.max.value))
       }%`
     : props.max
     ? `${

@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BFormSelectOptionGroupProps} from '../../types/components'
 import {computed} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import {normalizeOptions} from '../../composables'

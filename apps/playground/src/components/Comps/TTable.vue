@@ -150,7 +150,7 @@
 
 <script setup lang="ts">
 import {ref, type Ref} from 'vue'
-import {TableField, TableItem} from 'bootstrap-vue-next'
+import type {TableField, TableItem} from 'bootstrap-vue-next'
 
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
 const objectTableDefinitions: Ref<TableField[]> = ref([

@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCloseButtonProps} from '../../types/components'
 import {computed, toRef} from 'vue'
 import type {Booleanish, ButtonType} from '../../types'
 import {useBooleanish} from '../../composables'

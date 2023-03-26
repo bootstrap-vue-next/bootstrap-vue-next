@@ -16,7 +16,7 @@
         type="button"
         data-bs-target=""
         :class="i === modelValue ? 'active' : ''"
-        :aria-current="i === modelValue ? 'true' : undefined"
+        :aria-current="i === modelValue ? true : undefined"
         :aria-label="`${indicatorsButtonLabel} ${i}`"
         @click="goToValue(i)"
       />
@@ -54,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCarouselProps, BCarouselEmits} from '../types/components'
 import {
   BvCarouselEvent,
   carouselInjectionKey,
@@ -137,8 +136,8 @@ const touchThresholdNumber = useToNumber(toRef(props, 'touchThreshold'), {
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
-const relatedTarget = ref<null | HTMLElement>(null)
-const target = ref<null | HTMLElement>(null)
+const relatedTarget = ref<HTMLElement | null>(null)
+const target = ref<HTMLElement | null>(null)
 
 const rideResolved = computed<boolean | 'carousel'>(() =>
   isBooleanish(props.ride) ? resolveBooleanish(props.ride) : props.ride
@@ -264,8 +263,8 @@ watch(
 defineExpose({pause, resume, prev, next})
 
 provide(carouselInjectionKey, {
-  background: props.background,
-  width: props.imgWidth,
-  height: props.imgHeight,
+  background: toRef(props, 'background'),
+  width: toRef(props, 'imgWidth'),
+  height: toRef(props, 'imgHeight'),
 })
 </script>

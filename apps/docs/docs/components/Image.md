@@ -10,10 +10,7 @@ images is available via the `lazy` prop.
 
 ## Image src resolving
 
-The `src` prop and `blank-src` prop, out of the box, works only with absolute or
-fully-qualified-domain-name URLs. If you are using project assets as image sources, please refer to
-[Component img src resolving](/docs/reference/images) for configuring `vue-loader` to understand
-custom component props that specify image sources.
+The `src` prop and `blank-src` prop, out of the box, works only with absolute or fully-qualified-domain-name URLs. If you are using project assets as image sources, please refer to [Asset URL handling](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#asset-url-handling) to configure Vite to transform asset urls. If using a different build tool, you will need to find the relevant documentation to transform assets
 
 ## Styling images
 

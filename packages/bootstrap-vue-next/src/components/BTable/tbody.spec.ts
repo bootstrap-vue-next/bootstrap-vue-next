@@ -5,11 +5,6 @@ import BTbody from './BTbody.vue'
 describe('tbody', () => {
   enableAutoUnmount(afterEach)
 
-  it('has static attr role as rowgroup', () => {
-    const wrapper = mount(BTbody)
-    expect(wrapper.attributes('role')).toBe('rowgroup')
-  })
-
   it('renders default slot', () => {
     const wrapper = mount(BTbody, {
       slots: {default: 'foobar'},

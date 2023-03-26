@@ -2,12 +2,6 @@ import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
 import {getAttr, isTag} from '../utils'
 import type {Directive, DirectiveBinding} from 'vue'
 
-/**
- *
- * @param binding
- * @param el
- * @returns
- */
 const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   const {modifiers, arg, value} = binding
   // Any modifiers are considered target Ids
@@ -67,9 +61,6 @@ interface WithToggle extends HTMLElement {
   __toggle: () => void
 }
 
-/**
- * @external
- */
 export default {
   mounted(el: WithToggle, binding: DirectiveBinding<string>): void {
     el.__toggle = () => toggle(binding, el)

@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BDropdownItemButtonEmits, BDropdownItemProps} from '../../types/components'
 import BLink from '../BLink/BLink.vue'
 import {computed, toRef, useAttrs} from 'vue'
 import type {Booleanish, ClassValue, ColorVariant, LinkTarget} from '../../types'
@@ -62,7 +61,7 @@ const tag = computed<'button' | 'a' | typeof BLink>(() =>
 
 const componentAttrs = computed(() => ({
   'disabled': disabledBoolean.value,
-  'aria-current': activeBoolean.value ? 'true' : null,
+  'aria-current': activeBoolean.value ? true : null,
   'href': tag.value === 'a' ? props.href : null,
   'rel': props.rel,
   'type': tag.value === 'button' ? 'button' : null,

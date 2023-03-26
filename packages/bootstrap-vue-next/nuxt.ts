@@ -94,7 +94,6 @@ export default defineNuxtModule<ModuleOptions>({
       popover: {from: 'bootstrap-vue-next', name: 'vBPopover'},
       toggle: {from: 'bootstrap-vue-next', name: 'vBToggle'},
       tooltip: {from: 'bootstrap-vue-next', name: 'vBTooltip'},
-      visible: {from: 'bootstrap-vue-next', name: 'vBVisible'},
     }
 
     const composables: Record<keyof ComposableObject, Import> = {

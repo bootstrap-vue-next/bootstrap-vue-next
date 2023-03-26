@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardImgProps} from '../../types/components'
 import BImg from '../BImg.vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'

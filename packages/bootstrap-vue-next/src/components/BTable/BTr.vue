@@ -1,11 +1,10 @@
 <template>
-  <tr role="row" :class="computedClasses">
+  <tr :class="computedClasses">
     <slot />
   </tr>
 </template>
 
 <script setup lang="ts">
-// import type {BTrProps} from '../../types/components'
 import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 

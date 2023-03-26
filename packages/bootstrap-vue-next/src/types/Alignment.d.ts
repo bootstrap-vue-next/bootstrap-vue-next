@@ -1,6 +1,0 @@
-declare type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
-export type Vertical = CommonAlignment | 'baseline' | 'stretch'
-export type Horizontal = CommonAlignment | 'between' | 'around'
-export type Content = CommonAlignment | 'between' | 'around' | 'stretch'
-export type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
-export type TextHorizontal = 'start' | 'end' | 'center'

@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BListGroupItemProps} from '../../types/components'
 import {computed, inject, toRef, useAttrs} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
@@ -65,7 +64,13 @@ const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const link = computed<boolean>(() => !buttonBoolean.value && (!!props.href || !!props.to))
 
 const tagComputed = computed<string | typeof BLink>(() =>
-  parentData?.numbered ? 'li' : buttonBoolean.value ? 'button' : !link.value ? props.tag : BLink
+  parentData?.numbered.value
+    ? 'li'
+    : buttonBoolean.value
+    ? 'button'
+    : !link.value
+    ? props.tag
+    : BLink
 )
 
 const isAction = computed(

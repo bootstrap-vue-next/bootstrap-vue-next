@@ -10,7 +10,7 @@
     :required="required"
     :autocomplete="autocomplete || undefined"
     :readonly="readonly || plaintext"
-    :aria-required="required ? 'true' : undefined"
+    :aria-required="required ? true : undefined"
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
     :style="computedStyles"
@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, defineComponent, type PropType, type StyleValue, toRef} from 'vue'
+import {computed, type CSSProperties, defineComponent, type PropType, toRef} from 'vue'
 import {COMMON_INPUT_PROPS, useBooleanish, useFormInput} from '../../composables'
 
 export default defineComponent({
@@ -49,9 +49,9 @@ export default defineComponent({
       'is-invalid': props.state === false,
     }))
 
-    const computedStyles = computed<StyleValue | undefined>(() =>
-      noResizeBoolean.value ? {resize: 'none'} : undefined
-    )
+    const computedStyles = computed<CSSProperties>(() => ({
+      resize: noResizeBoolean.value ? 'none' : undefined,
+    }))
 
     return {
       input,

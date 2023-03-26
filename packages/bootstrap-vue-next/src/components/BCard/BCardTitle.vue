@@ -7,8 +7,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BCardTitleProps} from '../../types/components'
-
 interface BCardTitleProps {
   text?: string
   tag?: string

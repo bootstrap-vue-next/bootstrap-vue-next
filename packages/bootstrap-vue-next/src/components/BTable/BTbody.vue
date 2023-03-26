@@ -1,11 +1,10 @@
 <template>
-  <tbody role="rowgroup" :class="computedClasses">
+  <tbody :class="computedClasses">
     <slot />
   </tbody>
 </template>
 
 <script setup lang="ts">
-// import type {BTBodyProps} from '../../types/components'
 import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 

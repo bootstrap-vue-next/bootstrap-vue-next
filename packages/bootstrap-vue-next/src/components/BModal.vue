@@ -94,7 +94,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {BModalEmits, BModalProps} from '../types/components'
 import {computed, onMounted, ref, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
@@ -389,7 +388,7 @@ onMounted(() => {
 })
 
 useEventListener(element, 'bv-toggle', () => {
-  modelValue.value ? hide() : show()
+  modelValueBoolean.value ? hide() : show()
 })
 </script>
 

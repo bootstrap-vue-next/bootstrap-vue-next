@@ -117,7 +117,7 @@ export default defineComponent({
         : typeof attrs.tabindex === 'undefined'
         ? null
         : attrs.tabindex,
-      'aria-disabled': disabledBoolean.value ? 'true' : null,
+      'aria-disabled': disabledBoolean.value ? true : null,
     }))
 
     const computedLinkClasses = computed(() => ({

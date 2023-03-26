@@ -6,29 +6,19 @@ import {toString} from './stringUtils'
 
 const ELEMENT_PROTO = HAS_ELEMENT_SUPPORT ? Element.prototype : undefined
 
-// See: https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+/**
+ * @link https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+ */
 export const matchesEl =
   ELEMENT_PROTO?.matches ||
   (ELEMENT_PROTO as any)?.msMatchesSelector ||
   ELEMENT_PROTO?.webkitMatchesSelector
 
-/**
- * @param el
- * @returns
- */
 export const isElement = (el: HTMLElement | Element): boolean =>
   !!(el && el.nodeType === Node.ELEMENT_NODE)
 
-/**
- * @param el
- * @returns
- */
 export const getBCR = (el: HTMLElement) => (isElement(el) ? el.getBoundingClientRect() : null)
 
-/**
- * @param excludes
- * @returns
- */
 export const getActiveElement = (excludes = []): Element | null => {
   const {activeElement} = document
   return activeElement && !excludes.some((el: HTMLElement) => el === activeElement)
@@ -36,22 +26,14 @@ export const getActiveElement = (excludes = []): Element | null => {
     : null
 }
 
-/**
- * @param el
- * @returns
- */
 export const isActiveElement = (el: HTMLElement): boolean =>
   isElement(el) && el === getActiveElement()
 
-/**
- * @param el
- * @param options
- * @returns
- */
 export const attemptFocus = (el: HTMLElement, options = {}): boolean => {
   try {
     el.focus(options)
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e)
   }
   return isActiveElement(el)
@@ -67,30 +49,17 @@ export const attemptBlur = (el: HTMLElement): boolean => {
   try {
     el.blur()
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e)
   }
   return !isActiveElement(el)
 }
 
-/**
- * @param el
- * @param prop
- * @returns
- */
 export const getStyle = (el: HTMLElement, prop: string) =>
   prop && isElement(el) ? el.getAttribute(prop) || null : null
 
-/**
- * @param parent
- * @param child
- * @returns
- */
 export const contains = (parent: Node, child: Node): boolean => parent.contains(child)
 
-/**
- * @param el
- * @returns
- */
 export const isVisible = (el: HTMLElement): boolean => {
   //if (!isElement(el) || !el.parentNode || !contains(DOCUMENT.body, el)) {
   // Note this can fail for shadow dom elements since they
@@ -108,10 +77,6 @@ export const isVisible = (el: HTMLElement): boolean => {
   return !!(bcr && bcr.height > 0 && bcr.width > 0)
 }
 
-/**
- * @param el
- * @returns
- */
 export const offset = (el: HTMLElement) => {
   const _offset = {top: 0, left: 0}
   if (!isElement(el) || el.getClientRects().length === 0) {
@@ -138,31 +103,18 @@ export const isEmptySlot = (el: Slot | undefined): boolean => (el?.() ?? []).len
 export const select = (selector: any, root: any) =>
   (isElement(root) ? root : DOCUMENT).querySelector(selector) || null
 
-/**
- * @param selector
- * @param root
- * @returns
- */
 export const selectAll = (selector: any, root: any) =>
   Array.from([(isElement(root) ? root : DOCUMENT).querySelectorAll(selector)])
 
-/**
- * @param el
- * @param attr
- * @returns
- */
 export const getAttr = (el: HTMLElement | Element, attr: string): string | null =>
   attr && isElement(el) ? el.getAttribute(attr) : null
 
-// Get an element given an ID
+/**
+ * Get an element given an ID
+ */
 export const getById = (id: string) =>
   DOCUMENT.getElementById(/^#/.test(id) ? id.slice(1) : id) || null
 
-/**
- * @param el
- * @param attr
- * @param value
- */
 export const setAttr = (el: HTMLElement, attr: string, value: string): void => {
   if (attr && isElement(el)) {
     el.setAttribute(attr, value)
@@ -181,11 +133,6 @@ export const removeAttr = (el: HTMLElement, attr: string): void => {
   }
 }
 
-/**
- * @param tag
- * @param name
- * @returns
- */
 export const isTag = (tag: any, name: any): boolean =>
   toString(tag).toLowerCase() === toString(name).toLowerCase()
 
@@ -200,11 +147,12 @@ export const requestAF: AnimationFrame = HAS_WINDOW_SUPPORT
     ((cb) => setTimeout(cb, 16))
   : (cb) => setTimeout(cb, 0)
 
-// Determine if an element matches a selector
 export const matches = (el: Element, selector: string) =>
   isElement(el) ? matchesEl.call(el, selector) : false
 
-// See: https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+/**
+ * @link https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+ */
 /* eslint-disable @typescript-eslint/no-this-alias */
 export const closestEl =
   ELEMENT_PROTO?.closest ||
@@ -221,13 +169,18 @@ export const closestEl =
     return null
   }
 
-// Finds closest element matching selector. Returns `null` if not found
+/**
+ * Finds closest element matching selector. Returns `null` if not found
+ *
+ * @param selector
+ * @param root
+ * @param includeRoot
+ */
 export const closest = (selector: string, root: Element, includeRoot = false) => {
   if (!isElement(root)) {
     return null
   }
   const el = closestEl.call(root, selector)
-
   // Native closest behaviour when `includeRoot` is truthy,
   // else emulate jQuery closest and return `null` if match is
   // the passed in root element when `includeRoot` is falsey
