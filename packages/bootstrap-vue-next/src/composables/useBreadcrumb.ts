@@ -1,22 +1,16 @@
 import {type App, inject, reactive} from 'vue'
 import type {BreadcrumbItem} from '../types'
-import {breadcrumbInjectionKey} from '../utils'
+import {breadcrumbInjectionKey} from '../utils/keys'
 
-export interface UseBreadcrumbOptions {
-  items: BreadcrumbItem[]
-  readonly reset: () => void
-}
-
-const BREADCRUMB_OBJECT: UseBreadcrumbOptions = {
+const BREADCRUMB_OBJECT = {
   items: reactive<BreadcrumbItem[]>([]),
   reset(): void {
     this.items = reactive<BreadcrumbItem[]>([])
   },
 }
 
-export const createBreadcrumb = (app: App): void => {
+export const createBreadcrumb = (app: App) => {
   app.provide(breadcrumbInjectionKey, BREADCRUMB_OBJECT)
 }
 
-export const useBreadcrumb = (): UseBreadcrumbOptions =>
-  inject(breadcrumbInjectionKey, null) ?? BREADCRUMB_OBJECT
+export const useBreadcrumb = () => inject(breadcrumbInjectionKey, null) ?? BREADCRUMB_OBJECT

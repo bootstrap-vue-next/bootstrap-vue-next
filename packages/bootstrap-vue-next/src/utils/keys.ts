@@ -1,6 +1,5 @@
 import type {InjectionKey, Ref} from 'vue'
-import type {ButtonVariant, ColorVariant, InputSize, Size} from '../types'
-import type {UseBreadcrumbOptions} from '../composables/useBreadcrumb'
+import type {BreadcrumbItem, ButtonVariant, ColorVariant, InputSize, Size} from '../types'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -16,7 +15,10 @@ export const tabsInjectionKey: InjectionKey<{
 }> = Symbol('tabs')
 
 // useBreadcrumb
-export const breadcrumbInjectionKey: InjectionKey<UseBreadcrumbOptions> = Symbol('breadcrumb')
+export const breadcrumbInjectionKey: InjectionKey<{
+  items: BreadcrumbItem[]
+  readonly reset: () => void
+}> = Symbol('breadcrumb')
 
 // BProgress
 export const progressInjectionKey: InjectionKey<{
