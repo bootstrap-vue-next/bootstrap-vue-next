@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-row>
       <b-col>
-        <b-link :to="{name: 'Home', path: '/' /* path is used when vue-router is not present */}"
+        <b-link :to="{name: 'index', path: '/' /* path is used when vue-router is not present */}"
           >Home</b-link
         >
       </b-col>
@@ -11,7 +11,7 @@
       <b-col>
         <b-link
           :to="{
-            name: 'About',
+            name: 'about',
             params: {id: '456'},
             query: {param: 'someVal'},
             path: '/about' /* path is used when vue-router is not present */,

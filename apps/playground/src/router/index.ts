@@ -5,10 +5,10 @@ import HomePage from '../Views/HomePage.vue'
 export default createRouter({
   history: createWebHistory(),
   routes: [
-    {path: '/', name: 'Home', component: HomePage},
+    {path: '/', name: 'index', component: HomePage},
     {
       path: '/about',
-      name: 'About',
+      name: 'about',
       component: {
         name: 'About',
         render() {

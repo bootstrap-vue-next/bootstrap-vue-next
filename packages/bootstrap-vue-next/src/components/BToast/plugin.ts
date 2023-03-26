@@ -189,10 +189,8 @@ export class ToastController {
 }
 
 // default global inject key to fetch the controller
-const injectkey = Symbol()
-const fetchKey = Symbol()
-
-const rootkey = 'root' // TODO: I guess this variable is not used in any place...
+const injectkey = Symbol('toast')
+const fetchKey = Symbol('toastFetch')
 
 const defaults = {
   container: undefined,

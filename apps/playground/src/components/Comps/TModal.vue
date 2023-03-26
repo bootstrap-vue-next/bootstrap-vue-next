@@ -3,6 +3,8 @@
     <b-row>
       <b-col>
         <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
+        <b-button v-b-toggle.exampleModal>Toggle with v-b-toggle directive</b-button>
+        <b-button v-b-modal.exampleModal>Toggle with v-b-modal directive</b-button>
         {{ showModal }}
         <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
         <b-modal

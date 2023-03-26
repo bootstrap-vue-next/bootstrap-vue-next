@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {useVModel} from '@vueuse/core'
+import {useEventListener, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
@@ -239,6 +239,9 @@ watch(
   },
   {flush: 'post'}
 )
+useEventListener(element, 'bv-toggle', () => {
+  modelValue.value ? hide() : show()
+})
 </script>
 
 <script lang="ts">

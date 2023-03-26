@@ -1,24 +1,25 @@
 <template>
+  <slot name="header" v-bind="{visible: modelValueBoolean, toggle, open, close, id: computedId}" />
   <component
     :is="tag"
     :id="computedId"
     ref="element"
     class="collapse"
     :class="computedClasses"
-    :data-bs-parent="accordion || null"
     :is-nav="isNavBoolean"
+    v-bind="$attrs"
   >
-    <slot :visible="modelValueBoolean" :close="close" />
+    <slot v-bind="{visible: modelValueBoolean, toggle, open, close}" />
   </component>
+  <slot name="footer" v-bind="{visible: modelValueBoolean, toggle, open, close, id: computedId}" />
 </template>
 
 <script setup lang="ts">
-// import type {BCollapseEmits, BCollapseProps} from '../types/components'
-import {computed, onMounted, ref, toRef, watch} from 'vue'
-import {Collapse} from 'bootstrap'
+import {computed, nextTick, onMounted, ref, toRef, watch, watchEffect} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
+import {BvTriggerableEvent} from '../utils'
 
 interface BCollapseProps {
   accordion?: string
@@ -27,6 +28,7 @@ interface BCollapseProps {
   modelValue?: Booleanish
   tag?: string
   toggle?: Booleanish
+  horizontal?: Booleanish
   visible?: Booleanish
   isNav?: Booleanish
 }
@@ -35,69 +37,166 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
   modelValue: false,
   tag: 'div',
   toggle: false,
+  horizontal: false,
   visible: false,
   isNav: false,
 })
 
 interface BCollapseEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
   (e: 'update:modelValue', value: boolean): void
-  (e: 'show'): void
-  (e: 'shown'): void
-  (e: 'hide'): void
-  (e: 'hidden'): void
 }
+
+const buildTriggerableEvent = (
+  type: string,
+  opts: Partial<BvTriggerableEvent> = {}
+): BvTriggerableEvent =>
+  new BvTriggerableEvent(type, {
+    cancelable: false,
+    target: element.value || null,
+    relatedTarget: null,
+    trigger: null,
+    ...opts,
+    componentId: computedId.value,
+  })
 
 const emit = defineEmits<BCollapseEmits>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
 const toggleBoolean = useBooleanish(toRef(props, 'toggle'))
-const visibleBoolean = useBooleanish(toRef(props, 'visible'))
+const horizontalBoolean = useBooleanish(toRef(props, 'horizontal'))
 const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
+const visibleBoolean = useBooleanish(toRef(props, 'visible'))
 
 const computedId = useId(toRef(props, 'id'), 'collapse')
 
-const element = ref<HTMLElement | null>(null)
-const instance = ref<Collapse>()
+const element = ref<HTMLElement>(null as unknown as HTMLElement)
+const isCollapsing = ref(false)
+const show = ref(modelValueBoolean.value)
 
 const computedClasses = computed(() => ({
-  'show': modelValueBoolean.value,
+  'show': show.value,
   'navbar-collapse': isNavBoolean.value,
+  'collapsing': isCollapsing.value,
+  'closing': show.value && !modelValue.value,
+  'collapse-horizontal': horizontalBoolean.value,
 }))
 
 const close = () => (modelValue.value = false)
+const open = () => (modelValue.value = true)
+const toggle = () => (modelValue.value = !modelValue.value)
 
-watch(modelValueBoolean, (value) => {
-  value ? instance.value?.show() : instance.value?.hide()
+const reveal = () => {
+  show.value = true
+  isCollapsing.value = true
+  const event = buildTriggerableEvent('show', {cancelable: true})
+  emit('show', event)
+  if (event.defaultPrevented) {
+    emit('show-prevented')
+    return
+  }
+  nextTick(() => {
+    if (horizontalBoolean.value) {
+      element.value.style.width = `${element.value.scrollWidth}px`
+    } else {
+      element.value.style.height = `${element.value.scrollHeight}px`
+    }
+    setTimeout(() => {
+      isCollapsing.value = false
+      emit('shown', buildTriggerableEvent('shown'))
+      if (element.value === null) return
+      element.value.style.height = ''
+      element.value.style.width = ''
+    }, getTransitionDelay(element.value))
+  })
+}
+
+const hide = () => {
+  const event = buildTriggerableEvent('hide', {cancelable: true})
+  emit('hide', event)
+  if (event.defaultPrevented) {
+    emit('hide-prevented')
+    return
+  }
+  if (horizontalBoolean.value) {
+    element.value.style.width = `${element.value.scrollWidth}px`
+  } else {
+    element.value.style.height = `${element.value.scrollHeight}px`
+  }
+  // element.value.style.height = `${element.value.scrollHeight}px`
+  element.value.offsetHeight // force reflow
+  isCollapsing.value = true
+  nextTick(() => {
+    element.value.style.height = ``
+    element.value.style.width = ``
+    setTimeout(() => {
+      show.value = false
+      isCollapsing.value = false
+      emit('hidden', buildTriggerableEvent('hidden'))
+    }, getTransitionDelay(element.value))
+  })
+}
+
+watch(modelValue, (newValue, oldValue) => {
+  if (newValue === oldValue) return
+  if (element.value === null) return
+  if (newValue) {
+    if (show.value) return
+    reveal()
+  } else {
+    hide()
+  }
 })
 
-watch(visibleBoolean, (value) => {
-  modelValue.value = !!value
-  value ? instance.value?.show() : instance.value?.hide()
-})
-
-useEventListener(element, 'show.bs.collapse', () => {
-  emit('show')
-  modelValue.value = true
-})
-
-useEventListener(element, 'hide.bs.collapse', () => {
-  emit('hide')
-  modelValue.value = false
-})
-useEventListener(element, 'shown.bs.collapse', () => emit('shown'))
-useEventListener(element, 'hidden.bs.collapse', () => emit('hidden'))
+function getTransitionDelay(element: HTMLElement) {
+  const style = window.getComputedStyle(element)
+  // if multiple durations are defined, we take the first
+  const transitionDelay = style.transitionDelay.split(',')[0] || ''
+  const transitionDuration = style.transitionDuration.split(',')[0] || ''
+  const transitionDelayMs = Number(transitionDelay.slice(0, -1)) * 1000
+  const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
+  return transitionDelayMs + transitionDurationMs
+}
 
 onMounted(() => {
   if (element.value === null) return
-  instance.value = new Collapse(element.value, {
-    parent: props.accordion ? `#${props.accordion}` : undefined,
-    toggle: toggleBoolean.value,
-  })
-  if (visibleBoolean.value || modelValueBoolean.value) {
-    modelValue.value = true
-    instance.value?.show()
+  if (!modelValue.value && toggleBoolean.value) {
+    nextTick(() => {
+      modelValue.value = true
+    })
   }
 })
+
+if (visibleBoolean.value) {
+  modelValue.value = true
+  show.value = true
+}
+
+watchEffect(() => {
+  visibleBoolean.value ? open() : close()
+})
+
+useEventListener(element, 'bv-toggle', () => {
+  modelValue.value = !modelValue.value
+})
+
+defineExpose({
+  close,
+  open,
+  toggle,
+  visible: show.value,
+})
+</script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>
