@@ -71,11 +71,13 @@ const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
 
 const columnsToNumber = useToNumber(toRef(props, 'columns'), {nanToZero: true, method: 'parseInt'})
 const rowsToNumber = useToNumber(toRef(props, 'rows'), {nanToZero: true, method: 'parseInt'})
-const headerColumns = useToNumber(toRef(props, 'headerColumns'), {
+const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
+const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
+const headerColumns = useToNumber(computedHeaderColumns, {
   nanToZero: true,
   method: 'parseInt',
 })
-const footerColumns = useToNumber(toRef(props, 'footerColumns'), {
+const footerColumns = useToNumber(computedFooterColumns, {
   nanToZero: true,
   method: 'parseInt',
 })

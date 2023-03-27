@@ -79,6 +79,10 @@ const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
 
 const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
 
+const countdownLength = computed(() =>
+  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
+)
+
 const computedClasses = computed(() => [
   [`alert-${props.variant}`],
   {
@@ -94,7 +98,7 @@ const {
   stop,
   isPaused,
   value: remainingMs,
-} = useCountdown(typeof modelValue.value === 'boolean' ? 0 : modelValue, toRef(props, 'interval'), {
+} = useCountdown(countdownLength, toRef(props, 'interval'), {
   immediate: typeof modelValue.value === 'number' && immediateBoolean.value,
 })
 
