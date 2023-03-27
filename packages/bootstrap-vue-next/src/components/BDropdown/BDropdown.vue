@@ -163,7 +163,10 @@ const noShiftBoolean = useBooleanish(toRef(props, 'noShift'))
 const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
 const splitDisabledBoolean = useBooleanish(toRef(props, 'splitDisabled'))
 
-const offsetToNumber = useToNumber(toRef(props, 'offset'), {method: 'parseInt', nanToZero: true})
+const computedOffset = computed(() =>
+  typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
+)
+const offsetToNumber = useToNumber(computedOffset, {method: 'parseInt', nanToZero: true})
 
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
