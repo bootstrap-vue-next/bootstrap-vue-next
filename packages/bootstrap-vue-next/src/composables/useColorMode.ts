@@ -1,6 +1,6 @@
 import {useColorMode, type UseColorModeOptions} from '@vueuse/core'
 
-interface ColorModeOptions extends UseColorModeOptions {
+export interface ColorModeOptions extends UseColorModeOptions {
   /**
    * When set to true, useColorMode will automatically store itself and persist (default localstorage).
    */

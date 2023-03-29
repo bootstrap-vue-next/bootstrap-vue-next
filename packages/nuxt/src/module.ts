@@ -1,14 +1,8 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import {addImports, addPlugin, createResolver, defineNuxtModule} from '@nuxt/kit'
+import type {Import} from 'unimport'
 import useComponents from './composables/useComponents'
-import useComposables from './composables/useComposables'
-import useDirectives from './composables/useDirectives'
-import type { Composables, Directives } from 'bootstrap-vue-next'
-
-// Module options TypeScript interface definition
-export interface ModuleOptions {
-  directives: Partial<Record<keyof typeof Directives, boolean>> & {all: boolean}
-  composables: Partial<Record<keyof typeof Composables, boolean>> & {all: boolean}
-}
+import type ModuleOptions from './types/ModuleOptions'
+import parseActiveImports from './utils/parseActiveImports'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -23,20 +17,56 @@ export default defineNuxtModule<ModuleOptions>({
     directives: {all: true},
     composables: {all: true},
   },
-  setup (options, nuxt) {
-    const resolver = createResolver(import.meta.url)
-
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve('./runtime/plugin'))
-
+  setup(options, nuxt) {
     nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
     useComponents()
-    if(Object.values(options.composables).some(el => el === true)) {
-      useComposables(options.composables)
+
+    // @ts-ignore
+    const resolver = createResolver(import.meta.url)
+
+    if (options.composables.createBreadcrumb || options.composables.useBreadcrumb) {
+      addPlugin(resolver.resolve('./runtime/breadcrumb'))
     }
-    if(Object.values(options.directives).some(el => el === true)){
-      useDirectives(options.directives)
+
+    const arr: Import[] = []
+    if (Object.values(options.composables).some((el) => el === true)) {
+      const imports = parseActiveImports(
+        {
+          createBreadcrumb: false,
+          useBreadcrumb: false,
+        },
+        options.composables
+      ).map(
+        (el) =>
+          ({
+            from: resolver.resolve('./runtime/composables'),
+            name: el,
+          } as Import)
+      )
+      arr.push(...imports)
     }
-  }
+    if (Object.values(options.directives).some((el) => el === true)) {
+      const imports = parseActiveImports(
+        {
+          vBColorMode: false,
+          vBPopover: false,
+          vBToggle: false,
+          vBTooltip: false,
+        },
+        options.directives
+      ).map(
+        (el) =>
+          ({
+            from: resolver.resolve('./runtime/directives'),
+            name: el,
+            as: el.toLowerCase().startsWith('v') ? el.slice(1) : el,
+          } as Import)
+      )
+      arr.push(...imports)
+    }
+    if (arr.length) {
+      addImports(arr)
+    }
+  },
 })
