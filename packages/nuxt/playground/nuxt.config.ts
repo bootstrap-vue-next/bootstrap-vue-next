@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
-  myModule: {}
+  myModule: {},
+  css: ['bootstrap/dist/css/bootstrap.css'],
 })

@@ -1,19 +1,72 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
-
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
+import {addImports, addPlugin, createResolver, defineNuxtModule} from '@nuxt/kit'
+import type {Import} from 'unimport'
+import useComponents from './composables/useComponents'
+import type ModuleOptions from './types/ModuleOptions'
+import parseActiveImports from './utils/parseActiveImports'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'my-module',
-    configKey: 'myModule'
+    name: 'bootstrap-vue-next',
+    configKey: 'bootstrapVueNext',
+    compatibility: {
+      nuxt: '^3.0.0',
+      bridge: false,
+    },
   },
-  // Default configuration options of the Nuxt module
-  defaults: {},
-  setup (options, nuxt) {
+  defaults: {
+    directives: {all: true},
+    composables: {all: true},
+  },
+  setup(options, nuxt) {
+    nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
+
+    useComponents()
+
+    // @ts-ignore
     const resolver = createResolver(import.meta.url)
 
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve('./runtime/plugin'))
-  }
+    if (options.composables.createBreadcrumb || options.composables.useBreadcrumb) {
+      addPlugin(resolver.resolve('./runtime/breadcrumb'))
+    }
+
+    const arr: Import[] = []
+    if (Object.values(options.composables).some((el) => el === true)) {
+      const imports = parseActiveImports(
+        {
+          createBreadcrumb: false,
+          useBreadcrumb: false,
+        },
+        options.composables
+      ).map(
+        (el) =>
+          ({
+            from: resolver.resolve('./runtime/composables'),
+            name: el,
+          } as Import)
+      )
+      arr.push(...imports)
+    }
+    if (Object.values(options.directives).some((el) => el === true)) {
+      const imports = parseActiveImports(
+        {
+          vBColorMode: false,
+          vBPopover: false,
+          vBToggle: false,
+          vBTooltip: false,
+        },
+        options.directives
+      ).map(
+        (el) =>
+          ({
+            from: resolver.resolve('./runtime/directives'),
+            name: el,
+            as: el.toLowerCase().startsWith('v') ? el.slice(1) : el,
+          } as Import)
+      )
+      arr.push(...imports)
+    }
+    if (arr.length) {
+      addImports(arr)
+    }
+  },
 })

@@ -25,17 +25,24 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "pnpm run dev:build && pnpm run prepack"
   },
   "dependencies": {
-    "bootstrap-vue-next": "workspace:*",
-    "@nuxt/kit": "^3.3.2"
+    "@nuxt/kit": "^3.3.2",
+    "bootstrap-vue-next": "workspace:*"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.1.1",
     "@nuxt/module-builder": "^0.2.1",
     "@nuxt/schema": "^3.3.2",
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@vue/eslint-config-prettier": "^7.1.0",
     "eslint": "^8.36.0",
-    "nuxt": "^3.3.2"
+    "eslint-define-config": "^1.17.0",
+    "nuxt": "^3.3.2",
+    "prettier": "^2.8.4",
+    "unimport": "^3.0.4",
+    "vue": "^3.2.47"
   }
 }

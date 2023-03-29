@@ -57,7 +57,7 @@ const checkVisibility = (binding: DirectiveBinding<string>, el: HTMLElement) => 
   el.setAttribute('aria-expanded', visible ? 'true' : 'false')
 }
 
-interface WithToggle extends HTMLElement {
+export interface WithToggle extends HTMLElement {
   __toggle: () => void
 }
 

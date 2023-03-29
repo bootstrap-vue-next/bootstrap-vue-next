@@ -13,7 +13,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/BootstrapVue.ts'),
       name: 'bootstrap-vue-next',
-      fileName: (format) => `bootstrap-vue-next.${format}.js`,
+      fileName: 'bootstrap-vue-next',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
