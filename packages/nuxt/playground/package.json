@@ -1,4 +1,8 @@
 {
   "private": true,
-  "name": "my-module-playground"
+  "name": "my-module-playground",
+  "devDependencies": {
+    "@popperjs/core": "^2.11.7",
+    "bootstrap": "^5.2.3"
+  }
 }

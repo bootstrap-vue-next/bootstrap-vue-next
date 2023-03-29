@@ -163,6 +163,14 @@ importers:
       eslint: 8.36.0
       nuxt: 3.3.2_eslint@8.36.0
 
+  packages/nuxt/playground:
+    specifiers:
+      '@popperjs/core': ^2.11.7
+      bootstrap: ^5.2.3
+    devDependencies:
+      '@popperjs/core': 2.11.7
+      bootstrap: 5.2.3_@popperjs+core@2.11.7
+
 packages:
 
   /@ampproject/remapping/2.2.0:
