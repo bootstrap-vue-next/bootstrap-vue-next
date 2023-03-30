@@ -5,20 +5,18 @@
   "version": "0.7.3",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-next.umd.js",
-  "module": "./dist/bootstrap-vue-next.es.js",
+  "module": "./dist/bootstrap-vue-next.mjs",
   "exports": {
     ".": {
-      "import": "./dist/bootstrap-vue-next.es.js",
+      "import": "./dist/bootstrap-vue-next.mjs",
       "require": "./dist/bootstrap-vue-next.umd.js"
     },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
-    "./nuxt": "./nuxt.ts",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
   },
   "files": [
     "dist",
     "src",
-    "nuxt.ts",
     "!src/**/*.spec.ts",
     "!src/**/*.spec.js",
     "!src/App.vue",
@@ -43,7 +41,6 @@
   },
   "dependencies": {
     "@floating-ui/vue": "^0.2.1",
-    "@nuxt/kit": "3.3.1",
     "@vueuse/core": "^9.13.0"
   },
   "devDependencies": {

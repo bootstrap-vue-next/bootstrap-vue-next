@@ -11,8 +11,8 @@
       ref="link"
       :href="href"
       :class="[
-        (isActive || activeBoolean) && activeClass,
-        (isExactActive || exactBoolean) && exactActiveClass,
+        (!isActivePassed ? isActive : activeBoolean) && activeClass,
+        (!isExactPassed ? isExactActive : exactBoolean) && exactActiveClass,
       ]"
       v-bind="$attrs"
       @click="navigate"
@@ -39,12 +39,12 @@ import {computed, defineComponent, getCurrentInstance, type PropType, ref, toRef
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {
-  active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+  active: {type: [Boolean, String, undefined] as PropType<Booleanish>, default: undefined},
   activeClass: {type: String, default: 'router-link-active'},
   append: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   event: {type: [String, Array], default: 'click'},
-  exact: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+  exact: {type: [Boolean, String, undefined] as PropType<Booleanish>, default: undefined},
   exactActiveClass: {type: String, default: 'router-link-exact-active'},
   href: {type: String},
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -69,6 +69,24 @@ export default defineComponent({
 
     const instance = getCurrentInstance()
     const link = ref<HTMLElement>(null as unknown as HTMLElement)
+
+    const isActivePassed = computed(() => {
+      if (props.active === undefined) {
+        return false
+      }
+      return [true, false, 'true', 'false'].includes(
+        typeof props.active === 'string' ? props.active.toLowerCase().trim() : props.active
+      )
+    })
+
+    const isExactPassed = computed(() => {
+      if (props.exact === undefined) {
+        return false
+      }
+      return [true, false, 'true', 'false'].includes(
+        typeof props.exact === 'string' ? props.exact.toLowerCase().trim() : props.exact
+      )
+    })
 
     const tag = computed<string>(() => {
       const routerName = props.routerComponentName
@@ -145,6 +163,8 @@ export default defineComponent({
       disabledBoolean,
       replaceBoolean,
       exactBoolean,
+      isActivePassed,
+      isExactPassed,
     }
   },
 })
