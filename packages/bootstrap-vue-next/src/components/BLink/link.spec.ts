@@ -1,6 +1,9 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BLink from './BLink.vue'
 import {afterEach, describe, expect, it, vitest} from 'vitest'
+import {defineComponent, h} from 'vue'
+import {createRouter, createWebHistory, RouterLink} from 'vue-router'
+import {createContainer} from 'tests/utils'
 
 describe('link', () => {
   enableAutoUnmount(afterEach)
@@ -138,6 +141,189 @@ describe('link', () => {
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.classes()).toContain('active')
     expect(wrapper.classes().length).toBe(1)
+  })
+
+  describe('when vue router is used', () => {
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: [
+        {
+          path: '/',
+          component: {
+            name: 'Root',
+            template: '<router-view></router-view>',
+          },
+          children: [
+            {
+              path: '',
+              name: 'Subview',
+              component: {
+                name: 'Subview',
+                template: '<div data-test="subview">SUBVIEW</div>',
+              },
+            },
+            {
+              path: 'another',
+              name: 'AnotherSubview',
+              component: {
+                name: 'AnotherSubview',
+                template: '<div data-test="another-subview">ANOTHER SUBVIEW</div>',
+              },
+            },
+          ],
+        },
+      ],
+    })
+
+    const createApp = (template: string) =>
+      defineComponent({
+        name: 'App',
+        template,
+      })
+
+    it('should add active class when vue router is used, prop active on BLink is not set and isActive slot prop is true', async () => {
+      router.push({name: 'Subview'})
+      await router.isReady()
+
+      const wrapper = mount(
+        createApp(`
+          <main>
+            <b-link :active-class="'active'" :to="{name: 'Subview'}">Subview</b-link>
+            <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
+            <router-view></router-view>
+          </main>
+        `),
+        {
+          attachTo: createContainer(),
+          global: {
+            components: {BLink},
+            plugins: [router],
+          },
+        }
+      )
+
+      expect(wrapper.vm).toBeDefined()
+      expect(wrapper.element.tagName).toBe('MAIN')
+
+      const links = wrapper.findAllComponents(BLink)
+      expect(links.length).toBe(2)
+
+      expect(links[0].exists()).toBe(true)
+      expect(links[0].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[0].findAll('a.active').length).toBe(1)
+
+      expect(links[1].exists()).toBe(true)
+      expect(links[1].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[1].findAll('a.active').length).toBe(0)
+    })
+
+    it('should not add active class when vue router is used, prop active on BLink is set to false and isActive slot prop is true', async () => {
+      router.push({name: 'Subview'})
+      await router.isReady()
+
+      const wrapper = mount(
+        createApp(`
+            <main>
+              <b-link :active-class="'active'" :active="false" :to="{name: 'Subview'}">Subview</b-link>
+              <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
+              <router-view></router-view>
+            </main>
+        `),
+        {
+          attachTo: createContainer(),
+          global: {
+            components: {BLink},
+            plugins: [router],
+          },
+        }
+      )
+
+      expect(wrapper.vm).toBeDefined()
+      expect(wrapper.element.tagName).toBe('MAIN')
+
+      const links = wrapper.findAllComponents(BLink)
+      expect(links.length).toBe(2)
+
+      expect(links[0].exists()).toBe(true)
+      expect(links[0].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[0].findAll('a.active').length).toBe(0)
+
+      expect(links[1].exists()).toBe(true)
+      expect(links[1].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[1].findAll('a.active').length).toBe(0)
+    })
+
+    it('nested views should have both active class when rendering another subview and no active props is set on BLinks', async () => {
+      router.push({name: 'AnotherSubview'})
+      await router.isReady()
+
+      const wrapper = mount(
+        createApp(`
+            <main>
+              <b-link :active-class="'active'" :to="{name: 'Subview'}">Subview</b-link>
+              <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
+              <router-view></router-view>
+            </main>
+        `),
+        {
+          attachTo: createContainer(),
+          global: {
+            components: {BLink},
+            plugins: [router],
+          },
+        }
+      )
+
+      expect(wrapper.vm).toBeDefined()
+      expect(wrapper.element.tagName).toBe('MAIN')
+
+      const links = wrapper.findAllComponents(BLink)
+      expect(links.length).toBe(2)
+
+      expect(links[0].exists()).toBe(true)
+      expect(links[0].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[0].findAll('a.active').length).toBe(1)
+
+      expect(links[1].exists()).toBe(true)
+      expect(links[1].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[1].findAll('a.active').length).toBe(1)
+    })
+
+    it('BLink should prefer passed active prop over isActive slot prop from RouterLink', async () => {
+      router.push({name: 'AnotherSubview'})
+      await router.isReady()
+
+      const wrapper = mount(
+        createApp(`
+            <main>
+              <b-link :active-class="'active'" :active="false" :to="{name: 'Subview'}">Subview</b-link>
+              <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
+              <router-view></router-view>
+            </main>
+        `),
+        {
+          attachTo: createContainer(),
+          global: {
+            components: {BLink},
+            plugins: [router],
+          },
+        }
+      )
+
+      expect(wrapper.vm).toBeDefined()
+      expect(wrapper.element.tagName).toBe('MAIN')
+
+      const links = wrapper.findAllComponents(BLink)
+      expect(links.length).toBe(2)
+
+      expect(links[0].exists()).toBe(true)
+      expect(links[0].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[0].findAll('a.active').length).toBe(0)
+
+      expect(links[1].exists()).toBe(true)
+      expect(links[1].findComponent(RouterLink).exists()).toBe(true)
+      expect(links[1].findAll('a.active').length).toBe(1)
+    })
   })
 
   it('should add aria-disabled="true" when disabled', () => {
