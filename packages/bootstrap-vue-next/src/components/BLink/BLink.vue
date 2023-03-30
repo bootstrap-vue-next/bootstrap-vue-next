@@ -10,10 +10,7 @@
       :is="routerTag"
       ref="link"
       :href="href"
-      :class="[
-        (isActive || activeBoolean) && activeClass,
-        (isExactActive || exactBoolean) && exactActiveClass,
-      ]"
+      :class="[(activeBoolean ?? isActive) && activeClass, isExactActive && exactActiveClass]"
       v-bind="$attrs"
       @click="navigate"
     >
@@ -39,12 +36,11 @@ import {computed, defineComponent, getCurrentInstance, type PropType, ref, toRef
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {
-  active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+  active: {type: [Boolean, String, undefined] as PropType<Booleanish>, default: undefined},
   activeClass: {type: String, default: 'router-link-active'},
   append: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   event: {type: [String, Array], default: 'click'},
-  exact: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   exactActiveClass: {type: String, default: 'router-link-exact-active'},
   href: {type: String},
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -64,7 +60,6 @@ export default defineComponent({
     const activeBoolean = useBooleanish(toRef(props, 'active'))
     const appendBoolean = useBooleanish(toRef(props, 'append'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-    const exactBoolean = useBooleanish(toRef(props, 'exact'))
     const replaceBoolean = useBooleanish(toRef(props, 'replace'))
 
     const instance = getCurrentInstance()
@@ -144,7 +139,6 @@ export default defineComponent({
       appendBoolean,
       disabledBoolean,
       replaceBoolean,
-      exactBoolean,
     }
   },
 })
