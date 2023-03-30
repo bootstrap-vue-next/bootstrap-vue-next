@@ -98,7 +98,6 @@ export default defineComponent({
       'append': computedLink.value ? props.append : null,
       'activeClass': isBLink.value ? props.activeClass : null,
       'event': isBLink.value ? props.event : null,
-      'exactActiveClass': isBLink.value ? props.exactActiveClass : null,
       'replace': isBLink.value ? props.replace : null,
       'routerComponentName': isBLink.value ? props.routerComponentName : null,
       'routerTag': isBLink.value ? props.routerTag : null,

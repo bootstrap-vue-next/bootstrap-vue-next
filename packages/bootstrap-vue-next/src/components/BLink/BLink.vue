@@ -2,7 +2,7 @@
   <component
     :is="tag"
     v-if="tag === 'router-link'"
-    v-slot="{href, navigate, isActive, isExactActive}"
+    v-slot="{href, navigate, isActive}"
     v-bind="routerAttr"
     custom
   >
@@ -10,7 +10,7 @@
       :is="routerTag"
       ref="link"
       :href="href"
-      :class="[(activeBoolean ?? isActive) && activeClass, isExactActive && exactActiveClass]"
+      :class="[(activeBoolean ?? isActive) && activeClass]"
       v-bind="$attrs"
       @click="navigate"
     >
@@ -41,7 +41,6 @@ export const BLINK_PROPS = {
   append: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   event: {type: [String, Array], default: 'click'},
-  exactActiveClass: {type: String, default: 'router-link-exact-active'},
   href: {type: String},
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},

@@ -381,14 +381,6 @@ describe('button', () => {
     expect($blink.props('event')).toBe('foobar')
   })
 
-  it('has nested prop exactActiveClass when prop exactActiveClass and prop to', () => {
-    const wrapper = mount(BButton, {
-      props: {to: '/abc', exactActiveClass: 'foobar'},
-    })
-    const $blink = wrapper.getComponent(BLink)
-    expect($blink.props('exactActiveClass')).toBe('foobar')
-  })
-
   it('has nested prop routerComponentName when prop routerComponentName and prop to', () => {
     const wrapper = mount(BButton, {
       props: {to: '/abc', routerComponentName: 'foobar'},
