@@ -10,5 +10,9 @@ type InputType =
   | 'time'
   | 'range'
   | 'color'
+  | 'datetime'
+  | 'datetime-local'
+  | 'month'
+  | 'week'
 
 export default InputType
