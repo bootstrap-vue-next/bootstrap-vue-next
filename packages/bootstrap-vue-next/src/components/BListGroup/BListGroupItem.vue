@@ -29,8 +29,6 @@ interface BListGroupItemProps {
   // append?: Booleanish
   button?: Booleanish
   disabled?: Booleanish
-  // exact?: Booleanish
-  // exactActiveClass?: string
   href?: string
   // noPrefetch?: Booleanish
   // prefetch?: Booleanish
