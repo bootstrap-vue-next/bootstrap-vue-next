@@ -73,6 +73,10 @@ native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`,
     'time',
     'range',
     'color',
+    'datetime',
+    'datetime-local',
+    'month',
+    'week',
   ]
 </script>
 ```
@@ -653,6 +657,10 @@ these methods and properties. Support will vary based on input type.
           'time',
           'range',
           'color',
+          'datetime',
+          'datetime-local',
+          'month',
+          'week',
   ]
   const rangeValue = ref('2')
   const rangeValueStep = ref('2')

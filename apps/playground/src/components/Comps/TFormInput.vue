@@ -24,6 +24,14 @@
         <b-form-input type="date" />
         <div>type time</div>
         <b-form-input type="time" />
+        <div>type datetime</div>
+        <b-form-input type="datetime" />
+        <div>type datetime-local</div>
+        <b-form-input type="datetime-local" />
+        <div>type month</div>
+        <b-form-input type="month" />
+        <div>type week</div>
+        <b-form-input type="week" />
         <div>type range</div>
         <b-form-input v-model="formInputRangeValue" type="range" min="0" max="5" step="0.5" />
         <div>value : {{ formInputRangeValue }}</div>
