@@ -2,6 +2,7 @@ export default <Base extends Record<string, boolean> & {all: boolean}>(
   values: Omit<Base, 'all'>,
   options: Base
 ): string[] => {
+// remove options param, use ...others. They are hte same
   const {all, ...others} = options
   const valuesCopy: Record<string, boolean> = {...values}
   Object.keys(valuesCopy).forEach((el) => (valuesCopy[el] = all))
