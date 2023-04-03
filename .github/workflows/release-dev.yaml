@@ -87,3 +87,4 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}
         if: ${{ steps.release.outputs.releases_created }}
+        
