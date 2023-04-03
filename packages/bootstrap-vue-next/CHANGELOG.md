@@ -1,5 +1,146 @@
 # Changelog
 
+## [0.8.0](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.3...v0.8.0) (2023-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **nuxt:** remove nuxt.ts from main package & @nuxt/kit from dependencies -- use package @bootstrap-vue-next/nuxt (readme coming soon)
+* **nuxt:** create explicit nuxt module
+* **BFormRadioGroup:** remove prop switch, this must have been an accidental inclusion
+* remove Alignment namespace
+* **BVisible:** remove BVisible directive. Use @vueuse/core 'useElementVisibility' instead https://vueuse.org/core/useElementVisibility/#useelementvisibility
+* **BFocus:** remove the BFocus directive. Use @vueuse/core 'useFocus' instead https://vueuse.org/core/useFocus/#usefocus
+* **BModal:** rename prop noFocus to prop autoFocus
+* remove deprecated BSkeleton components -- replaced with BPlaceholder, review docs
+* **BDropdown:** do not use internal state to modify dropdown instead expose vmodel
+* **BCard:** remove prop imgRight -- use imgEnd
+* **BImg:** remove prop left -- use prop start
+* **BImg:** remove prop right -- use prop end
+* **BCardImg:** remove prop left -- use prop start
+* **BCardImg:** remove prop right -- use prop end
+* **BNavItemDropdown:** remove prop dropleft -- use dropstart
+* **BNavItemDropdown:** remove prop dropright -- use dropend
+* **BNavItemDropdown:** remove prop right -- use alignEnd
+* **BNavItemDropdown:** remove prop left -- use alignStart
+* **BDropdown:** remove prop right -- use alignEnd
+* **BCard:** remove prop imgLeft -- use imgStart
+* **BDropdown:** remove boundary prop
+* **BDropdown:** remoe popperOpts prop
+* **BDropdown:** remove 'right' prop -- use prop 'end'
+* **BDropdown:** remove 'dropright' prop -- use prop 'dropend'
+* **Dropdown:** remove 'left' prop -- use 'start'
+* **BDropdown:** remove 'dropleft' prop -- use 'dropstart'
+* **BDropdown:** replaace popper usage with floating-ui/vue
+
+### Features
+
+* add description onto self: symbol() ([457e8da](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/457e8da0fdd9e559703fd2de34b2c3d74c603e5a))
+* **BAccordion:** add header-tag prop on BAccordionItem ([afb5eec](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/afb5eecda09f4e0ebef6d2ffed2cbf79ee509242))
+* **BCardImg:** remove prop left -- use prop start ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BCardImg:** remove prop right -- use prop end ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BCard:** remove prop imgLeft -- use imgStart ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BCard:** remove prop imgRight -- use imgEnd ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BCarousel:** don't require v-model to function ([3c2ce06](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/3c2ce0602b613ff26283b239acc3a2a33775053e))
+* **BDropdown:** add alignEnd prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add alignStart prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add floatingMiddleware prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add lazy prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add offset prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **Bdropdown:** add prop noShift ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add splitDisabled proop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add strategy prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** close on esc ([d94959e](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d94959e95201cb56e69f14227651260b922314d9))
+* **BDropdown:** do not use internal state to modify dropdown instead expose vmodel ([ebdd1ee](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/ebdd1ee5c201d709463c2fbaf9d31a47b5a02fc1))
+* **BDropdown:** emit BvEvent on hide (event is preventable) ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** emit BvEvent on show (event is preventable) ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** emit hide-prevented and show-prevented ([565e428](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/565e428ae8ed425d556710f4ae9579eb4f2d97d5))
+* **BDropdown:** remoe popperOpts prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** remove 'dropleft' prop -- use 'dropstart' ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** remove 'dropright' prop -- use prop 'dropend' ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** remove 'right' prop -- use prop 'end' ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** remove boundary prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** remove prop right -- use alignEnd ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BDropdown:** replaace popper usage with floating-ui/vue ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* begin using @flating-ui/vue for positioning instead of popper ([2c3da40](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2c3da4035ae24eceb6941b58cc1c43bb0b59297a))
+* **BFocus:** remove the BFocus directive. Use @vueuse/core 'useFocus' instead https://vueuse.org/core/useFocus/#usefocus ([4f01fbc](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4f01fbc314428a41b1376f3c6981301713e4ce15))
+* **BFormCheckboxGroup:** autofocus (This implementation focuses the div... I'm not sure this is right) ([457e8da](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/457e8da0fdd9e559703fd2de34b2c3d74c603e5a))
+* **BFormRadioGroup:** refactor to use provide/inject instead of slot manipulation... Allowing for nested children ([457e8da](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/457e8da0fdd9e559703fd2de34b2c3d74c603e5a))
+* **BImg:** remove prop left -- use prop start ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BImg:** remove prop right -- use prop end ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BModal:** add prop autoFocusButton ([1a65391](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/1a65391b1756aa03d14a07ca1c9635ca4a4c460a))
+* **BModal:** rename prop noFocus to prop autoFocus ([1a65391](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/1a65391b1756aa03d14a07ca1c9635ca4a4c460a))
+* **BNavItemDropdown:** aadad prop floatingMiddleware ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BNavItemDropdown:** add prop lazy ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BNavItemDropdown:** add prop menuClass ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BNavItemDropdown:** add prop noFlip ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BNavItemDropdown:** add prop noShift ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BNavItemDropdown:** add prop strategy ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BNavItemDropdown:** boolean props are now Booleanish for convenience ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BNavItemDropdown:** remove prop dropleft -- use dropstart ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BNavItemDropdown:** remove prop dropright -- use dropend ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BNavItemDropdown:** remove prop left -- use alignStart ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BNavItemDropdown:** remove prop right -- use alignEnd ([4d4b087](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d4b087570a9a44f1f2f39ec0d1162ca987e3642))
+* **BVisible:** remove BVisible directive. Use @vueuse/core 'useElementVisibility' instead https://vueuse.org/core/useElementVisibility/#useelementvisibility ([4f01fbc](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4f01fbc314428a41b1376f3c6981301713e4ce15))
+* **ClassValue:** ClassValue is ts 'any' ([321eafa](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/321eafa689994dd6e54b5683d7684b7f8da5d1c0))
+* **Dropdown:** remove 'left' prop -- use 'start' ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **nuxt:** create explicit nuxt module ([00af3e4](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/00af3e4713eea2d8098eeb2083915a9868d2231d))
+* **nuxt:** remove nuxt.ts from main package & @nuxt/kit from dependencies -- use package @bootstrap-vue-next/nuxt (readme coming soon) ([00af3e4](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/00af3e4713eea2d8098eeb2083915a9868d2231d))
+* remove deprecated BSkeleton components -- replaced with BPlaceholder, review docs ([682bb84](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/682bb84f4aca9d6a0a26d2fc448060bb8c4acbc6))
+* start nuxt package ([a04563e](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a04563ee704a017184f1de6c792f789a7c725677))
+
+
+### Bug Fixes
+
+* **#971:** directive imports being strange ([4d6e200](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4d6e20025933723576d1a10b39373385c1d6bf8e))
+* **BAccordionItem:** use a reactive value from parent on provide() ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BAccordion:** provide a reactive value ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BAvatarGroup:** provide a reactive value ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BAvatar:** use a reactive value from parent on provide() ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BButton:** fix failing checks from updated pressed prop ([1270b26](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/1270b2663b58e203edfa7b0e0b16575ca2449c06))
+* **BButton:** isToggle computed property use type of pressedBoolean ([9754a47](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/9754a474da2e627f8fc37630b0ffdd350df36a8e)), closes [#973](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/973)
+* **BButton:** removed deprecated exact prop ([42ba27a](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/42ba27a89635953e366b87eca77d5b09ac987dac))
+* **BButton:** removed exactActiveClass prop ([ae261b8](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/ae261b88397a925d13287c796447eddfb66f28c9))
+* **BCarousel:** number parser is parseInt ([9ec9c46](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/9ec9c466e1b089f43cf2f23bef31c2454a70d793))
+* **BCarousel:** provide a reactive value ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BCarouselSlide:** use a reactive value from parent on provide() ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BCarousel:** threshold -&gt; touchThreshold prop ([7de1bdd](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/7de1bdd05d574d51dc9bd9b529b36cec5b495beb))
+* **BCarousel:** touch swiping system for mobile ([89f04fd](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/89f04fd37eb501840957b35a32cf7d208b839703))
+* **BDropdown:** emits boolean ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BDropdown:** remove unused class ([2fd5d4f](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2fd5d4f8d8527211e9315f1310b6a1998379fb1c))
+* **BFormCheckbox:** aria-required & required take parentData into account ([457e8da](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/457e8da0fdd9e559703fd2de34b2c3d74c603e5a))
+* **BFormcheckbox:** inherit name,   form, & disabled attrs from parent as well ([457e8da](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/457e8da0fdd9e559703fd2de34b2c3d74c603e5a))
+* **BFormCheckbox:** strongly type emit values ([457e8da](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/457e8da0fdd9e559703fd2de34b2c3d74c603e5a))
+* **BFormCheckbox:** use provide/inject logic instead of slot manipulation. Allows for nested BFormCheckbox children in Groups ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BFormRadioGroup:** remove prop switch, this must have been an accidental inclusion ([457e8da](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/457e8da0fdd9e559703fd2de34b2c3d74c603e5a))
+* **BFormTags:** wrong tags being removed due to remove button not re-rendering ([ec54ffb](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/ec54ffb88a7a0dd4913feb30d4abdfc63aa8db33))
+* **BLink:** prefer passed active and exact prop over isActive slot props from RouterLink ([1c4e958](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/1c4e958310c3717fd6d4bcd9e601d76eca835c43))
+* **BLink:** removed exactActiveClass prop ([ae261b8](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/ae261b88397a925d13287c796447eddfb66f28c9))
+* **BListGroupItem:** use a reactive value from parent on provide() ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BListGroup:** provide a reactive value ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BModal:** correctly assign focus to element after transition has stopped fixes [#964](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/964) ([1a65391](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/1a65391b1756aa03d14a07ca1c9635ca4a4c460a))
+* **BModal:** hide.prevent not functioning correctly ([4f80470](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4f804704700f37091994bd76de84e5d718ac4292))
+* **BModal:** Modal not appearing when default value is true on mounted ([4f80470](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4f804704700f37091994bd76de84e5d718ac4292))
+* **BNavItemDropdown:** usage after breaking dropdown changes ([057fb00](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/057fb0090f397350f3cf82b2d14c2d0998318fb3))
+* **BOffcanvas:** hide.prevent not functioning correctly ([565e428](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/565e428ae8ed425d556710f4ae9579eb4f2d97d5))
+* **BOffcanvas:** inheritted attributes not being placed on root element ([21c5fec](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/21c5fec5b0b435a30879bf38cedb920a13919e85))
+* **BPlaceholder:** animations not being applied correctly ([4ff5501](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4ff550114a7ed433d8157f91e636bbae39ad39a5))
+* **BPlaceholderCard:** attributes from props not being applied on the default slot BPlaceholder elements ([4ff5501](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4ff550114a7ed433d8157f91e636bbae39ad39a5))
+* **BPlaceholder:** plaaceholder width is cols default 12 ([4ff5501](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/4ff550114a7ed433d8157f91e636bbae39ad39a5))
+* **BProgressBar:** use a reactive value from parent on provide() ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BProgress:** provide a reactive value ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BTabs:** provide a reactive value ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **BTab:** use a reactive value from parent on provide() ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* build issues ([a04563e](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a04563ee704a017184f1de6c792f789a7c725677))
+* **dts:** issue with floating-ui/core not being recognized, add it as a top level dev dependency with tsconfig path ([d625755](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d6257550f7907800e06e5b42b2605a3e567ee31d))
+* **provide/inject:** set default values for inject when no parentData is found in the tree fixes: [#936](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/936) fixes: [#932](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/932) ([da0bf96](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/da0bf962537a50bd00b6715c0a3224f2f9d71aeb))
+* remove explicit roles on items that don't need them (BTh, BTr, etc) ([ed62031](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/ed6203128581477c96ad834a91947206de4f8641))
+
+
+### Code Refactoring
+
+* remove Alignment namespace ([bab9145](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bab914528540c27dd57e66cb313a6fe540849660))
+
 ## [0.7.3](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.7.2...v0.7.3) (2023-02-05)
 
 
