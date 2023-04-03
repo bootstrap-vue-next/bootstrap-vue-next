@@ -7,8 +7,4 @@
 
 <script setup>
 const show = ref(false)
-
-useColorMode()
-
-useBreadcrumb()
 </script>

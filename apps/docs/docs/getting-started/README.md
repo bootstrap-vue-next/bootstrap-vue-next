@@ -38,7 +38,7 @@ Install the necessary packages for `BootstrapVueNext`:
   <CodeGroupItem title="PNPM" active>
 
 ```bash
-pnpm add bootstrap bootstrap-vue-next @popperjs/core
+pnpm add bootstrap bootstrap-vue-next
 
 pnpm add unplugin-vue-components -D
 ```
@@ -47,7 +47,7 @@ pnpm add unplugin-vue-components -D
   <CodeGroupItem title="YARN">
 
 ```bash
-yarn add bootstrap bootstrap-vue-next @popperjs/core
+yarn add bootstrap bootstrap-vue-next
 
 yarn add unplugin-vue-components -D
 ```
@@ -56,7 +56,7 @@ yarn add unplugin-vue-components -D
   <CodeGroupItem title="NPM">
 
 ```bash
-npm i bootstrap bootstrap-vue-next @popperjs/core
+npm i bootstrap bootstrap-vue-next
 
 npm i unplugin-vue-components -D
 ```
@@ -104,7 +104,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 #### Legacy Installation
 
-- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size
+- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Note, the preferred installation automatically tree-shakes all components, both installation methods should have the same final dist size
 
 Install the necessary packages for `bootstrap-vue-next`:
 
@@ -112,21 +112,21 @@ Install the necessary packages for `bootstrap-vue-next`:
   <CodeGroupItem title="PNPM" active>
 
 ```bash
-pnpm add bootstrap bootstrap-vue-next @popperjs/core
+pnpm add bootstrap bootstrap-vue-next
 ```
 
   </CodeGroupItem>
   <CodeGroupItem title="YARN">
 
 ```bash
-yarn add bootstrap bootstrap-vue-next @popperjs/core
+yarn add bootstrap bootstrap-vue-next
 ```
 
   </CodeGroupItem>
   <CodeGroupItem title="NPM">
 
 ```bash
-npm i bootstrap bootstrap-vue-next @popperjs/core
+npm i bootstrap bootstrap-vue-next
 ```
 
   </CodeGroupItem>
@@ -155,31 +155,27 @@ app.mount('#app')
 
 ### Installation - Nuxt.js 3
 
-**Nuxt is not officially supported**. Various Bootstrap JavaScript elements contain references to 'Document' and 'Window', which will cause breaking issues during server-side rendering. bootstrap-vue-next is currently working on a fix for this. Full Nuxt 3 compatibility is expected before a v1.0 release
-
-As with the Vue.js installation
-
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`
 
 <CodeGroup>
   <CodeGroupItem title="PNPM" active>
 
 ```bash
-pnpm add bootstrap bootstrap-vue-next @popperjs/core -D
+pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
   </CodeGroupItem>
   <CodeGroupItem title="YARN">
 
 ```bash
-yarn add bootstrap bootstrap-vue-next @popperjs/core -D
+yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
   </CodeGroupItem>
   <CodeGroupItem title="NPM">
 
 ```bash
-npm i bootstrap bootstrap-vue-next @popperjs/core -D
+npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
   </CodeGroupItem>
@@ -189,23 +185,45 @@ Open your `nuxt.config.js/ts` file and configure your application to use `bootst
 
 ```ts
 // nuxt.config.js/ts
-import { defineNuxtConfig } from 'nuxt3'
 
 export default defineNuxtConfig({
-  modules: ['bootstrap-vue-next/nuxt'],
-  css: ['bootstrap/dist/css/bootstrap.css'],
+  modules: ['@bootstrap-vue-next/nuxt'],
+  css: ['bootstrap/dist/css/bootstrap.min.css'],
 })
 ```
 
-Enjoy it in your app without import.
+Enjoy it in your app without manual imports, and automatic tree-shaking
 
 ```vue
 <template>
   <div>
-    <BButton variant="primary">Test</BButton>
+    <BButton variant="primary" @click="show = !show">Click me</BButton>
+    <BModal v-model="show">Test</BModal>
   </div>
 </template>
+
+<script setup lang="ts">
+const show = ref(false)
+</script>
 ```
+
+You can customize the options with the bootstrapVueNext key in your nuxt.config. You are able to manually toggle to include composables & directives
+
+```ts
+// nuxt.config.js/ts
+
+export default defineNuxtConfig({
+  modules: ['@bootstrap-vue-next/nuxt'],
+  bootstrapVueNext: {
+    composables: true, // Will include all composables
+    directives: {vBColorMode: true, vBTooltip: true, all: false}, // Will include only vBColorMode & vBTooltip
+    // directives: {vBColorMode: false, vBTooltip: false, all: true} // Will include everything except vBColorMode & vBTooltip
+  },
+  css: ['bootstrap/dist/css/bootstrap.min.css'],
+})
+```
+
+The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build
 
 ## Comparison with BootstrapVue
 

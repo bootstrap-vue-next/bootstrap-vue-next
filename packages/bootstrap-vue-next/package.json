@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@floating-ui/core": "^1.2.4",
-    "@popperjs/core": "^2.11.6",
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/node": "^18.15.3",
     "@vitejs/plugin-vue": "^4.1.0",
