@@ -32,7 +32,7 @@ jobs:
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
         with:
-          version: 7
+          version: 8
           run_install: false
 
       - name: Get pnpm store directory
@@ -55,7 +55,12 @@ jobs:
       - name: Build library
         run: pnpm run build --filter bootstrap-vue-next
         
-      - name: Publish
+      - name: Publish main
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish nuxt
+        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public --force
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}
