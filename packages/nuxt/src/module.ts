@@ -1,8 +1,8 @@
-import {addImports, addPlugin, createResolver, defineNuxtModule} from '@nuxt/kit'
-import type {Import} from 'unimport'
+import {defineNuxtModule, addPlugin, createResolver} from '@nuxt/kit'
+// import type {Import} from 'unimport'
 import useComponents from './composables/useComponents'
 import type ModuleOptions from './types/ModuleOptions'
-import parseActiveImports from './utils/parseActiveImports'
+// import parseActiveImports from './utils/parseActiveImports'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -14,59 +14,66 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    directives: {all: true},
-    composables: {all: true},
+    directives: true,
+    composables: true,
   },
   setup(options, nuxt) {
+    // @ts-ignore
+    const resolver = createResolver(import.meta.url)
+
+    // const normalizedDirectives =
+    //   typeof options.directives === 'boolean' ? {all: options.directives} : options.directives
+    const normalizedcomposables =
+      typeof options.composables === 'boolean' ? {all: options.composables} : options.composables
+
+    nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
+
     nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
 
     useComponents()
 
-    // @ts-ignore
-    const resolver = createResolver(import.meta.url)
-
-    if (options.composables.createBreadcrumb || options.composables.useBreadcrumb) {
+    if (normalizedcomposables.createBreadcrumb || normalizedcomposables.useBreadcrumb) {
       addPlugin(resolver.resolve('./runtime/breadcrumb'))
     }
 
-    const arr: Import[] = []
-    if (Object.values(options.composables).some((el) => el === true)) {
-      const imports = parseActiveImports(
-        {
-          createBreadcrumb: false,
-          useBreadcrumb: false,
-        },
-        options.composables
-      ).map(
-        (el) =>
-          ({
-            from: resolver.resolve('./runtime/composables'),
-            name: el,
-          } as Import)
-      )
-      arr.push(...imports)
-    }
-    if (Object.values(options.directives).some((el) => el === true)) {
-      const imports = parseActiveImports(
-        {
-          vBColorMode: false,
-          vBPopover: false,
-          vBToggle: false,
-          vBTooltip: false,
-        },
-        options.directives
-      ).map(
-        (el) =>
-          ({
-            from: resolver.resolve('./runtime/directives'),
-            name: el,
-            as: el.toLowerCase().startsWith('v') ? el.slice(1) : el,
-          } as Import)
-      )
-      arr.push(...imports)
-    }
-    if (arr.length) {
-      addImports(arr)
-    }
+    // const arr: Import[] = []
+    // if (Object.values(normalizedcomposables).some((el) => el === true)) {
+    //   const imports = parseActiveImports(
+    //     {
+    //       createBreadcrumb: false,
+    //       useBreadcrumb: false,
+    //     },
+    //     normalizedcomposables
+    //   ).map(
+    //     (el) =>
+    //       ({
+    //         from: resolver.resolve('./runtime/composables'),
+    //         name: el,
+    //       } as Import)
+    //   )
+    //   arr.push(...imports)
+    // }
+    // if (Object.values(normalizedDirectives).some((el) => el === true)) {
+    //   const imports = parseActiveImports(
+    //     {
+    //       vBColorMode: false,
+    //       vBPopover: false,
+    //       vBToggle: false,
+    //       vBTooltip: false,
+    //     },
+    //     normalizedDirectives
+    //   ).map(
+    //     (el) =>
+    //       ({
+    //         from: resolver.resolve('./runtime/directives'),
+    //         name: el,
+    //         as: el.toLowerCase().startsWith('v') ? el.slice(1) : el,
+    //       } as Import)
+    //   )
+    //   arr.push(...imports)
+    // }
+    // if (arr.length) {
+    //   addImports(arr)
+    // }
   },
 })
