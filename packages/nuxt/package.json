@@ -29,7 +29,7 @@
     "build": "pnpm run dev:build && pnpm run prepack"
   },
   "peerDependencies": {
-    "bootstrap-vue-next": "workspace:*"
+    "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
     "@nuxt/kit": "^3.3.2"
