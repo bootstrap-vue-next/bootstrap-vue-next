@@ -6,6 +6,12 @@
       class="accordion-collapse"
       v-bind="$attrs"
       :aria-labelledby="`heading${computedId}`"
+      :tag="tag"
+      :toggle="toggle"
+      :horizontal="horizontal"
+      :visible="visible"
+      :is-nav="isNav"
+      v-on="events"
     >
       <template #header="{visible: toggleVisible, toggle}">
         <component :is="headerTag" :id="`heading${computedId}`" class="accordion-header">
@@ -36,17 +42,23 @@ export default {
 <script setup lang="ts">
 import {inject, onMounted, ref, toRef, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
-import {default as BCollapse, type BCollapseEmits, type BCollapseProps} from '../BCollapse.vue'
+import BCollapse from '../BCollapse.vue'
 // import  from '../BCollapse.vue'
-import {accordionInjectionKey} from '../../utils'
+import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
+
 import {useId} from '../../composables'
 import type {Booleanish} from '../../types'
 
-interface BAccordionItemProps extends BCollapseProps {
+interface BAccordionItemProps {
   id?: string
   title?: string
   modelValue?: Booleanish
   headerTag?: string
+  tag?: string
+  toggle?: Booleanish
+  horizontal?: Booleanish
+  visible?: Booleanish
+  isNav?: Booleanish
 }
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {
@@ -57,11 +69,25 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {
   visible: false,
 })
 
-interface BAccordionItemEmits extends BCollapseEmits {
+interface BAccordionItemEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
   (e: 'update:modelValue', value: boolean): void
 }
 
 const emit = defineEmits<BAccordionItemEmits>()
+const events = {
+  'show': (e: BvTriggerableEvent) => emit('show', e),
+  'shown': (e: BvTriggerableEvent) => emit('shown', e),
+  'hide': (e: BvTriggerableEvent) => emit('hide', e),
+  'hidden': (e: BvTriggerableEvent) => emit('hidden', e),
+  'hide-prevented': () => emit('hide-prevented'),
+  'show-prevented': () => emit('show-prevented'),
+}
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 

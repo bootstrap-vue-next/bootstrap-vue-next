@@ -21,7 +21,7 @@ import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
 import {BvTriggerableEvent} from '../utils'
 
-export interface BCollapseProps {
+interface BCollapseProps {
   // appear?: Booleanish
   id?: string
   modelValue?: Booleanish
@@ -31,7 +31,7 @@ export interface BCollapseProps {
   visible?: Booleanish
   isNav?: Booleanish
 }
-export interface BCollapseEmits {
+interface BCollapseEmits {
   (e: 'show', value: BvTriggerableEvent): void
   (e: 'shown', value: BvTriggerableEvent): void
   (e: 'hide', value: BvTriggerableEvent): void
