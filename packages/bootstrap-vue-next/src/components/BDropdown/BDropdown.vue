@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" class="btn-group">
+  <div :class="computedClasses" class="btn-group" v-bind="$attrs">
     <b-button
       :id="computedId"
       ref="splitButton"
@@ -33,25 +33,25 @@
         </slot>
       </span>
     </b-button>
-    <ul
-      v-if="!lazyBoolean || modelValueBoolean"
-      v-show="lazyBoolean || modelValueBoolean"
-      ref="floating"
-      :style="{
-        position: strategy,
-        top: `${y ?? 0}px`,
-        left: `${x ?? 0}px`,
-        width: 'max-content',
-      }"
-      class="dropdown-menu show"
-      :class="dropdownMenuClasses"
-      :aria-labelledby="computedId"
-      :role="role"
-      @click="onClickInside"
-    >
-      <slot />
-    </ul>
   </div>
+  <ul
+    v-if="!lazyBoolean || modelValueBoolean"
+    v-show="lazyBoolean || modelValueBoolean"
+    ref="floating"
+    :style="{
+      position: strategy === 'absolute' ? undefined : 'fixed',
+      top: `${y ?? 0}px`,
+      left: `${x ?? 0}px`,
+      width: 'max-content',
+    }"
+    class="dropdown-menu show"
+    :class="dropdownMenuClasses"
+    :aria-labelledby="computedId"
+    :role="role"
+    @click="onClickInside"
+  >
+    <slot />
+  </ul>
 </template>
 
 <script setup lang="ts">
@@ -279,4 +279,9 @@ const onClickInside = () => {
 }
 
 watch(modelValueBoolean, update)
+</script>
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>

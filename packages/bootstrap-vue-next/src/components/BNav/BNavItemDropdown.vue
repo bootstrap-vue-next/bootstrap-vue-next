@@ -44,8 +44,8 @@ interface BNavItemDropdownProps {
   dropup?: Booleanish
   dropend?: Booleanish
   dropstart?: Booleanish
-  alignStart?: Booleanish
-  alignEnd?: Booleanish
+  center?: Booleanish
+  end?: Booleanish
   menuClass?: ClassValue
 }
 
