@@ -30,8 +30,8 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "serve": "vite preview",
     "build": "pnpm run type-check && pnpm run build-only",
-    "lint": "eslint --ext .js,.vue --ignore-path ../../.gitignore --fix src",
-    "test:lint": "eslint --ext .js,.vue --ignore-path ../../.gitignore src",
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix src",
+    "test:lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore src",
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage",
     "test": "pnpm run test:lint && pnpm run test:unit"
