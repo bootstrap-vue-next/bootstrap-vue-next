@@ -6,14 +6,16 @@
 
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, provide, ref, toRef} from 'vue'
+import {computed, provide, toRef} from 'vue'
 import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
+import {useVModel} from '@vueuse/core'
 
 interface BAccordionProps {
   flush?: Booleanish
   free?: Booleanish
   id?: string
+  modelValue?: string
 }
 
 const props = withDefaults(defineProps<BAccordionProps>(), {
@@ -22,7 +24,8 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
   id: undefined,
 })
 
-const openItem = ref('')
+const emit = defineEmits<(e: 'update:modelValue', value: string) => void>()
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(toRef(props, 'id'), 'accordion')
 
@@ -35,8 +38,7 @@ const computedClasses = computed(() => ({
 
 if (!freeBoolean.value) {
   provide(accordionInjectionKey, {
-    id: computedId,
-    openItem,
+    openItem: modelValue,
     free: freeBoolean,
   })
 }

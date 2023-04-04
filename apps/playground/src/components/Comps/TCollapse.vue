@@ -67,7 +67,7 @@
         </div>
       </b-col>
       <b-col>
-        <b-accordion flush>
+        <b-accordion flush free>
           <b-accordion-item id="iddddd" title="Accordion Item #1" visible>
             Accordion is also using collapse. Openned by visible prop
           </b-accordion-item>

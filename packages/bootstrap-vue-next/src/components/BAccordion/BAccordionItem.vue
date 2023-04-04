@@ -4,7 +4,7 @@
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
-      :visible="visible"
+      v-bind="$attrs"
       :aria-labelledby="`heading${computedId}`"
     >
       <template #header="{visible: toggleVisible, toggle}">
@@ -28,19 +28,24 @@
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
 <script setup lang="ts">
-import {inject, onMounted, ref, toRef, watch, watchEffect} from 'vue'
+import {inject, onMounted, ref, toRef, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
-import BCollapse from '../BCollapse.vue'
+import {default as BCollapse, type BCollapseEmits, type BCollapseProps} from '../BCollapse.vue'
+// import  from '../BCollapse.vue'
 import {accordionInjectionKey} from '../../utils'
-import {useBooleanish, useId} from '../../composables'
+import {useId} from '../../composables'
 import type {Booleanish} from '../../types'
 
-interface BAccordionItemProps {
+interface BAccordionItemProps extends BCollapseProps {
   id?: string
   title?: string
   modelValue?: Booleanish
-  visible?: Booleanish
   headerTag?: string
 }
 
@@ -52,18 +57,15 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {
   visible: false,
 })
 
-const emit = defineEmits<(e: 'update:modelValue', value: boolean) => void>()
+interface BAccordionItemEmits extends BCollapseEmits {
+  (e: 'update:modelValue', value: boolean): void
+}
+
+const emit = defineEmits<BAccordionItemEmits>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const visibleBoolean = useBooleanish(toRef(props, 'visible'))
-
-const {
-  id: parentId,
-  openItem,
-  free,
-} = inject(accordionInjectionKey, {
-  id: ref(''),
+const {openItem, free} = inject(accordionInjectionKey, {
   openItem: ref(''),
   free: ref(false),
 })
@@ -71,15 +73,14 @@ const {
 const computedId = useId(toRef(props, 'id'), 'accordion_item')
 
 onMounted(() => {
-  if (visibleBoolean.value) {
-    modelValue.value = true
-  }
   if (modelValue.value && !free.value) {
     openItem.value = computedId.value
   }
+  if (!modelValue.value && openItem.value === computedId.value) {
+    modelValue.value = true
+  }
 })
 
-watchEffect(() => (modelValue.value = visibleBoolean.value))
 watch(openItem, () => (modelValue.value = openItem.value === computedId.value && !free.value))
 watch(modelValue, () => {
   if (modelValue.value && !free.value) openItem.value = computedId.value

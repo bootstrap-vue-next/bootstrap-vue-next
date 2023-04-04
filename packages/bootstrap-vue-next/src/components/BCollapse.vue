@@ -15,13 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, ref, toRef, watchEffect} from 'vue'
+import {computed, nextTick, onMounted, ref, toRef, watch, watchEffect} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
 import {BvTriggerableEvent} from '../utils'
 
-interface BCollapseProps {
+export interface BCollapseProps {
   // appear?: Booleanish
   id?: string
   modelValue?: Booleanish
@@ -30,6 +30,15 @@ interface BCollapseProps {
   horizontal?: Booleanish
   visible?: Booleanish
   isNav?: Booleanish
+}
+export interface BCollapseEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'update:modelValue', value: boolean): void
 }
 
 const props = withDefaults(defineProps<BCollapseProps>(), {
@@ -42,16 +51,6 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
   visible: false,
   isNav: false,
 })
-
-interface BCollapseEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
 
 const buildTriggerableEvent = (
   type: string,
@@ -181,7 +180,7 @@ if (visibleBoolean.value) {
   show.value = true
 }
 
-watchEffect(() => {
+watch(visibleBoolean, () => {
   visibleBoolean.value ? open() : close()
 })
 
