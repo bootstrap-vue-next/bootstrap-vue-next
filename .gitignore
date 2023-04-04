@@ -56,8 +56,9 @@ stats.html
 .output
 .vercel_build_output
 .build-*
-.env
 .netlify
+.nitro
+.output
 
 # Env
 .env
@@ -70,7 +71,6 @@ coverage
 
 # VSCode
 .vscode/*
-!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
