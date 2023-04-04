@@ -1,0 +1,48 @@
+{
+  "$schema": "./schema.json",
+  "name": "@bootstrap-vue-next/spinner",
+  "version": "1.0.0",
+  "meta": {
+    "title": "Spinner",
+    "description": "",
+    "components": [
+      {
+        "component": "BSpinner",
+        "props": [
+          {
+            "prop": "label",
+            "type": "string"
+          },
+          {
+            "prop": "role",
+            "type": "string"
+          },
+          {
+            "prop": "small",
+            "type": "Booleanish"
+          },
+          {
+            "prop": "tag",
+            "type": "string"
+          },
+          {
+            "prop": "type",
+            "type": "SpinnerType"
+          },
+          {
+            "prop": "variant",
+            "type": "ColorVariant"
+          }
+        ],
+        "emits": [],
+        "slots": [
+          {
+            "description": "",
+            "name": "label",
+            "scope": []
+          }
+        ]
+      }
+    ]
+  }
+}

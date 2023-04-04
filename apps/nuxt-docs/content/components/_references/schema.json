@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product.schema.json",
+  "title": "Component Schema",
+  "description": "A schema for component-references",
+  "type": "object",
+  "required": ["name", "version", "meta"],
+  "properties": {
+    "name": {
+      "description": "The name of the component",
+      "type": "string"
+    },
+    "version": {
+      "description": "The version",
+      "type": "string"
+    },
+    "meta": {
+      "required": ["title", "description", "components"],
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["component", "props", "emits", "slots"],
+            "properties": {
+              "component": {
+                "type": "string"
+              },
+              "props": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["prop", "type"],
+                  "properties": {
+                    "prop": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": ["string", "array"],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "emits": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["emit", "args"],
+                  "properties": {
+                    "emit": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "args": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["arg", "type"],
+                        "properties": {
+                          "arg": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "slots": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "scope"],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "scope": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "prop": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": ["array", "string"],
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
