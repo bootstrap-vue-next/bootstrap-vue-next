@@ -31,6 +31,19 @@
           </b-accordion-item>
         </b-accordion>
       </b-col>
+      <b-col>
+        <b-accordion free>
+          <b-accordion-item id="iddddd" title="Free accordion Item #1">
+            Don't close other items when this one is opened.
+          </b-accordion-item>
+          <b-accordion-item title="Free accordion Item #2">
+            Don't close other items when this one is opened.
+          </b-accordion-item>
+          <b-accordion-item title="Free accordion Item #3">
+            Don't close other items when this one is opened.
+          </b-accordion-item>
+        </b-accordion>
+      </b-col>
     </b-row>
   </b-container>
 </template>

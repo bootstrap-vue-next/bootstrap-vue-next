@@ -22,7 +22,6 @@ import type {Booleanish} from '../types'
 import {BvTriggerableEvent} from '../utils'
 
 interface BCollapseProps {
-  accordion?: string
   // appear?: Booleanish
   id?: string
   modelValue?: Booleanish

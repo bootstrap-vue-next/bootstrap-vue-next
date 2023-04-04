@@ -5,7 +5,6 @@
       v-model="modelValue"
       class="accordion-collapse"
       :visible="visible"
-      :accordion="parentData?.id.value ?? undefined"
       :aria-labelledby="`heading${computedId}`"
     >
       <template #header="{visible: toggleVisible, toggle}">
@@ -30,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, toRef, watchEffect} from 'vue'
+import {inject, onMounted, ref, toRef, watch, watchEffect} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey} from '../../utils'
@@ -59,15 +58,30 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const visibleBoolean = useBooleanish(toRef(props, 'visible'))
 
+const {
+  id: parentId,
+  openItem,
+  free,
+} = inject(accordionInjectionKey, {
+  id: ref(''),
+  openItem: ref(''),
+  free: ref(false),
+})
+
+const computedId = useId(toRef(props, 'id'), 'accordion_item')
+
 onMounted(() => {
   if (visibleBoolean.value) {
     modelValue.value = true
   }
+  if (modelValue.value && !free.value) {
+    openItem.value = computedId.value
+  }
 })
 
 watchEffect(() => (modelValue.value = visibleBoolean.value))
-
-const parentData = inject(accordionInjectionKey, null)
-
-const computedId = useId(toRef(props, 'id'), 'accordion_item')
+watch(openItem, () => (modelValue.value = openItem.value === computedId.value && !free.value))
+watch(modelValue, () => {
+  if (modelValue.value && !free.value) openItem.value = computedId.value
+})
 </script>

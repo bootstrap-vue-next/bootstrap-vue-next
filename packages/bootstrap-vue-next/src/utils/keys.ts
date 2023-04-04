@@ -46,6 +46,8 @@ export const avatarGroupInjectionKey: InjectionKey<{
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
   id: Readonly<Ref<string>>
+  openItem: Readonly<Ref<string>>
+  free: Readonly<Ref<boolean>>
 }> = Symbol('accordion')
 
 // BFormCheckboxGroup

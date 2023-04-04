@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, provide, toRef} from 'vue'
+import {computed, provide, ref, toRef} from 'vue'
 import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
 
@@ -22,6 +22,8 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
   id: undefined,
 })
 
+const openItem = ref('')
+
 const computedId = useId(toRef(props, 'id'), 'accordion')
 
 const flushBoolean = useBooleanish(toRef(props, 'flush'))
@@ -34,6 +36,8 @@ const computedClasses = computed(() => ({
 if (!freeBoolean.value) {
   provide(accordionInjectionKey, {
     id: computedId,
+    openItem,
+    free: freeBoolean,
   })
 }
 </script>
