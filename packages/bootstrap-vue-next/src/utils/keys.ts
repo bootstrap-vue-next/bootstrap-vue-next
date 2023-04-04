@@ -86,3 +86,13 @@ export const radioGroupKey: InjectionKey<{
   required: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
 }> = Symbol('radioGroup')
+
+// Collapse
+export const collapseInjectionKey: InjectionKey<{
+  id?: Ref<string>
+  readonly close?: () => void
+  readonly open?: () => void
+  readonly toggle?: () => void
+  visible?: Ref<boolean>
+  isNav?: Ref<boolean>
+}> = Symbol('collapse')
