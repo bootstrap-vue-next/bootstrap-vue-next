@@ -95,7 +95,7 @@
     "bootstrapvue"
   ],
   "lint-staged": {
-    "*.{js,vue}": "eslint --cache --fix",
+    "*.{js,ts,vue}": "eslint --cache --fix",
     "*": "prettier --write --ignore-unknown"
   }
 }
