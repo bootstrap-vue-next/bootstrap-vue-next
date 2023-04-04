@@ -36,10 +36,8 @@ const computedClasses = computed(() => ({
   'accordion-flush': flushBoolean.value,
 }))
 
-if (!freeBoolean.value) {
-  provide(accordionInjectionKey, {
-    openItem: modelValue,
-    free: freeBoolean,
-  })
-}
+provide(accordionInjectionKey, {
+  openItem: modelValue,
+  free: freeBoolean,
+})
 </script>

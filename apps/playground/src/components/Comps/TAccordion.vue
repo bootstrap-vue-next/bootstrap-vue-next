@@ -42,7 +42,8 @@
         </b-accordion>
       </b-col>
       <b-col>
-        <b-accordion free>
+        <b-form-checkbox v-model="isFree">is accordion free</b-form-checkbox>
+        <b-accordion :free="isFree">
           <b-accordion-item id="free1" title="Free accordion Item #1">
             Don't close other items when this one is opened.
           </b-accordion-item>
@@ -62,5 +63,6 @@ import { ref } from 'vue'
 const open = ref(0)
 const openX = ref(true)
 const openId = ref('id1')
+const isFree = ref(true)
 
 </script>
