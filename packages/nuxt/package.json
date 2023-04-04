@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "author": {
     "name": "Issayah",
@@ -28,9 +28,11 @@
     "lint": "eslint .",
     "build": "pnpm run dev:build && pnpm run prepack"
   },
-  "dependencies": {
-    "@nuxt/kit": "^3.3.2",
+  "peerDependencies": {
     "bootstrap-vue-next": "workspace:*"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.3.2"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.1.1",
@@ -38,6 +40,7 @@
     "@nuxt/schema": "^3.3.2",
     "@rushstack/eslint-patch": "^1.2.0",
     "@vue/eslint-config-prettier": "^7.1.0",
+    "bootstrap-vue-next": "workspace:^",
     "eslint": "^8.36.0",
     "eslint-define-config": "^1.17.0",
     "nuxt": "^3.3.2",

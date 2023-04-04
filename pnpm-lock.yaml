@@ -243,9 +243,6 @@ importers:
       '@nuxt/kit':
         specifier: ^3.3.2
         version: 3.3.2(rollup@3.20.2)
-      bootstrap-vue-next:
-        specifier: workspace:*
-        version: link:../bootstrap-vue-next
     devDependencies:
       '@nuxt/eslint-config':
         specifier: ^0.1.1
@@ -262,6 +259,9 @@ importers:
       '@vue/eslint-config-prettier':
         specifier: ^7.1.0
         version: 7.1.0(eslint@8.36.0)(prettier@2.8.4)
+      bootstrap-vue-next:
+        specifier: workspace:^
+        version: link:../bootstrap-vue-next
       eslint:
         specifier: ^8.36.0
         version: 8.36.0
@@ -2071,7 +2071,7 @@ packages:
         optional: true
     dependencies:
       '@eslint-community/regexpp': 4.5.0
-      '@typescript-eslint/parser': 5.57.0(eslint@8.36.0)(typescript@4.9.3)
+      '@typescript-eslint/parser': 5.57.0(eslint@8.36.0)(typescript@5.0.3)
       '@typescript-eslint/scope-manager': 5.57.0
       '@typescript-eslint/type-utils': 5.57.0(eslint@8.36.0)(typescript@4.9.3)
       '@typescript-eslint/utils': 5.57.0(eslint@8.36.0)(typescript@4.9.3)
@@ -2099,7 +2099,7 @@ packages:
     dependencies:
       '@typescript-eslint/scope-manager': 5.57.0
       '@typescript-eslint/types': 5.57.0
-      '@typescript-eslint/typescript-estree': 5.57.0(typescript@4.9.3)
+      '@typescript-eslint/typescript-estree': 5.57.0(typescript@5.0.3)
       debug: 4.3.4
       eslint: 8.36.0
       typescript: 4.9.3
