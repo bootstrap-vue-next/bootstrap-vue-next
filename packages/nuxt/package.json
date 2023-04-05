@@ -1,6 +1,6 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
-  "description": "",
+  "description": "Nuxt Module for BootstrapVueNext",
   "version": "0.0.5",
   "license": "MIT",
   "author": {
@@ -47,5 +47,25 @@
     "prettier": "^2.8.4",
     "unimport": "^3.0.4",
     "vue": "^3.2.47"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/bootstrap-vue/bootstrap-vue-next/tree/main/packages/nuxt"
+  },
+  "bugs": {
+    "url": "https://github.com/bootstrap-vue/bootstrap-vue-next/issues"
+  },
+  "homepage": "https://github.com/bootstrap-vue/bootstrap-vue-next",
+  "keywords": [
+    "nuxt",
+    "vue3",
+    "vue",
+    "bootstrap",
+    "typescript",
+    "bootstrap-vue-next"
+  ],
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint --cache --fix",
+    "*": "prettier --write --ignore-unknown"
   }
 }

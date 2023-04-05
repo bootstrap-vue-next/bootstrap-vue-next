@@ -15,6 +15,7 @@
     "@bootstrap-vue-next/nuxt": "workspace:^",
     "@iconify-json/bi": "^1.1.16",
     "@nuxt/content": "^2.5.2",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@rushstack/eslint-patch": "^1.2.0",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.2",

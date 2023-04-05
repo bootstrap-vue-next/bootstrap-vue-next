@@ -6,8 +6,8 @@ const {defineConfig} = require('eslint-define-config')
 module.exports = defineConfig({
   root: true,
   extends: [
-    'plugin:vue/vue3-recommended',
     'eslint:recommended',
+    'plugin:vue/vue3-recommended',
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
   ],

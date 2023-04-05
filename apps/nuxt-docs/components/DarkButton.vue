@@ -13,13 +13,10 @@
 import SunIcon from '~icons/bi/sun'
 import MoonIcon from '~icons/bi/moon'
 
-// TODO fix this issue
-// eslint-disable-next-line no-undef
 const color = useColorMode({
   persist: true,
 })
 
-// eslint-disable-next-line no-undef
 const foo = computed<{icon: any; value: typeof color.value}[]>(() => [
   {
     icon: SunIcon,
@@ -32,12 +29,10 @@ const foo = computed<{icon: any; value: typeof color.value}[]>(() => [
   {icon: MoonIcon, value: 'auto'},
 ])
 
-// eslint-disable-next-line no-undef
 const currentIcon = computed(
   () => foo.value.find((el) => el.value === color.value)?.icon ?? MoonIcon
 )
 
-// eslint-disable-next-line no-undef
 const ariaText = computed(() => (color.value === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode'))
 
 const toggle = (value: typeof color.value) => {

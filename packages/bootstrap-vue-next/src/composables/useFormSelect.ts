@@ -49,6 +49,7 @@ const normalizeOptions = (
   if (Array.isArray(options)) {
     return options.map((option) => _normalizeOption(option, null, componentName, props))
   } else if (Object.prototype.toString.call(options) === '[object Object]') {
+    // eslint-disable-next-line no-console
     console.warn(
       `[BootstrapVue warn]: ${componentName} - Setting prop "options" to an object is deprecated. Use the array format instead.`
     )
