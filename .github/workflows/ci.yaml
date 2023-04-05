@@ -31,9 +31,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
-        with:
-          version: 8
-          run_install: false
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -75,9 +72,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
-        with:
-          version: 8
-          run_install: false
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -121,9 +115,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
-        with:
-          version: 8
-          run_install: false
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -168,9 +159,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
-        with:
-          version: 8
-          run_install: false
 
       - name: Get pnpm store directory
         id: pnpm-cache

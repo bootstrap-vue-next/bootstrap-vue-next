@@ -47,9 +47,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
-        with:
-          version: 8
-          run_install: false
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Get pnpm store directory
