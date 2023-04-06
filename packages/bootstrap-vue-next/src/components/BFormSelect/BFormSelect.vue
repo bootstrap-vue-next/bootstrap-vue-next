@@ -3,7 +3,7 @@
     :id="computedId"
     ref="input"
     v-bind="$attrs"
-    v-model="localValue"
+    v-model="modelValue"
     :class="computedClasses"
     :name="name"
     :form="form || undefined"
@@ -87,9 +87,7 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
 })
 
 interface BFormSelectEmits {
-  (e: 'input', value: unknown): void
   (e: 'update:modelValue', value: unknown): void
-  (e: 'change', value: unknown): void
 }
 
 const emit = defineEmits<BFormSelectEmits>()
@@ -132,12 +130,4 @@ const computedAriaInvalid = computed(() =>
 )
 
 const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
-const localValue = computed({
-  get: () => modelValue.value,
-  set: (newValue: any) => {
-    emit('change', newValue)
-    modelValue.value = newValue
-    emit('input', newValue)
-  },
-})
 </script>

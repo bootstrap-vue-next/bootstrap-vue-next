@@ -74,14 +74,6 @@ interface BFormCheckboxEmits {
     e: 'update:modelValue',
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
   ): void
-  (
-    e: 'input',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
-  ): void
-  (
-    e: 'change',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
-  ): void
 }
 
 const emit = defineEmits<BFormCheckboxEmits>()
@@ -113,21 +105,15 @@ useFocus(input, {
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: () => {
-    if (parentData !== null) {
-      const jsonified = parentData.modelValue.value.map((el) => JSON.stringify(el))
-      const jsonifiedValue = JSON.stringify(props.value)
-      return jsonified.includes(jsonifiedValue)
-    }
-    return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
-  },
+  get: () =>
+    parentData !== null
+      ? parentData.modelValue.value
+          .map((el) => JSON.stringify(el))
+          .includes(JSON.stringify(props.value))
+      : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue) => {
     const updateValue = !newValue ? props.uncheckedValue : props.value
-
-    emit('input', updateValue)
     modelValue.value = updateValue
-    emit('change', updateValue)
-
     if (parentData === null) return
     if (!newValue) {
       parentData.remove(props.value)

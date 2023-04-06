@@ -63,8 +63,6 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
 })
 
 interface BFormRadioEmits {
-  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number): void
-  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number): void
   (
     e: 'update:modelValue',
     value: boolean | string | unknown[] | Record<string, unknown> | number
@@ -104,11 +102,7 @@ const localValue = computed({
       : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue) => {
     const updateValue = !newValue ? false : props.value
-
-    emit('input', updateValue)
     modelValue.value = updateValue
-    emit('change', updateValue)
-
     if (parentData === null || updateValue === false) return
     parentData.modelValue.value = props.value
   },
@@ -131,4 +125,9 @@ const classesObject = computed(() => ({
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
+</script>
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>

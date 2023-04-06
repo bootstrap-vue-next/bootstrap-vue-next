@@ -34,12 +34,18 @@
         <b-button class="me-2" @click="checkboxes.selected = ['orange']">Orange only</b-button>
         <b-button class="me-2" @click="checkboxes.selected = ['grape']">Grape only</b-button>
       </b-col>
+      <b-col>
+        <b-form-checkbox-group id="checkbox-group-1" v-model="foo" :options="[1, 2, 3]" />
+        {{ foo }}
+      </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script setup lang="ts">
-import {reactive} from 'vue'
+import {reactive, ref} from 'vue'
+
+const foo = ref()
 
 const checkboxes = reactive({
   status: true,

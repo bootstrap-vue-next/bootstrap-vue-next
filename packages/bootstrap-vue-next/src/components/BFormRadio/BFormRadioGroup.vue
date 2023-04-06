@@ -39,7 +39,7 @@ interface BFormRadioGroupProps {
   disabled?: Booleanish
   disabledField?: string
   htmlField?: string
-  options?: (string | Record<string, unknown>)[]
+  options?: (string | number | Record<string, unknown>)[]
   plain?: Booleanish
   required?: Booleanish
   stacked?: Booleanish
@@ -109,19 +109,9 @@ provide(radioGroupKey, {
   disabled: disabledBoolean,
 })
 
-const normalizeOptions = computed<
-  {
-    props: {
-      value: string | undefined
-      disabled: boolean | undefined
-    }
-    text: string | undefined
-    html: string | undefined
-    self: symbol
-  }[]
->(() =>
+const normalizeOptions = computed(() =>
   props.options.map((el, ind) =>
-    typeof el === 'string'
+    typeof el === 'string' || typeof el === 'number'
       ? {
           props: {
             value: el,
