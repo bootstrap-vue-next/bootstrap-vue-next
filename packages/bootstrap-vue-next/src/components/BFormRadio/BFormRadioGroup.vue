@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, provide, ref, toRef, watchEffect} from 'vue'
+import {computed, provide, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -50,7 +50,7 @@ interface BFormRadioGroupProps {
 }
 
 const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
-  modelValue: '',
+  modelValue: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
   buttons: false,
@@ -69,14 +69,12 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
 })
 
 interface BFormRadioGroupEmits {
-  (e: 'input', value: BFormRadioGroupProps['modelValue']): void
   (e: 'update:modelValue', value: BFormRadioGroupProps['modelValue']): void
-  (e: 'change', value: BFormRadioGroupProps['modelValue']): void
 }
 
 const emit = defineEmits<BFormRadioGroupEmits>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(toRef(props, 'id'), 'radio')
 const computedName = useId(toRef(props, 'name'), 'checkbox')
@@ -96,14 +94,7 @@ useFocus(element, {
   initialValue: autofocusBoolean.value,
 })
 
-const activeValue = ref<string | boolean | unknown[] | Record<string, unknown> | number>(
-  modelValue.value
-)
-
 provide(radioGroupKey, {
-  set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => {
-    activeValue.value = value
-  },
   modelValue,
   buttonVariant: toRef(props, 'buttonVariant'),
   form: toRef(props, 'form'),
@@ -117,8 +108,6 @@ provide(radioGroupKey, {
   required: requiredBoolean,
   disabled: disabledBoolean,
 })
-
-watchEffect(() => (modelValue.value = activeValue.value))
 
 const normalizeOptions = computed<
   {

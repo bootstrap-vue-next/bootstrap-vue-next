@@ -97,12 +97,19 @@
         />
       </b-col>
     </b-row>
+    <b-row>
+      <b-col>
+        <h4>Options inline</h4>
+        <b-form-radio-group v-model="radioValue" autofocus :options="['A', 'B', 'C']" class="" />
+        {{ radioValue }}
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script setup lang="ts">
-import {reactive} from 'vue'
-
+import {reactive, ref} from 'vue'
+const radioValue = ref()
 const radios = reactive({
   ex1: {
     selected: {fifth: 5},

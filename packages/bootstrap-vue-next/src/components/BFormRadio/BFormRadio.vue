@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, onUnmounted, ref, toRef, useSlots} from 'vue'
+import {computed, inject, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
@@ -110,7 +110,7 @@ const localValue = computed({
     emit('change', updateValue)
 
     if (parentData === null || updateValue === false) return
-    parentData.set(props.value)
+    parentData.modelValue.value = props.value
   },
 })
 
@@ -131,10 +131,4 @@ const classesObject = computed(() => ({
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
-
-onUnmounted(() => {
-  if (parentData !== null && localValue.value === true) {
-    parentData.set('')
-  }
-})
 </script>

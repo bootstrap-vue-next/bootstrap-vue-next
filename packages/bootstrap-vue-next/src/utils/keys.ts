@@ -73,8 +73,9 @@ export const checkboxGroupKey: InjectionKey<{
 }> = Symbol('checkboxGroup')
 
 export const radioGroupKey: InjectionKey<{
-  set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => void
-  modelValue: Ref<string | boolean | unknown[] | Record<string, unknown> | number>
+  modelValue: Ref<
+    string | boolean | unknown[] | Record<string, unknown> | number | undefined | null
+  >
   buttonVariant: Ref<ButtonVariant>
   form: Ref<string | undefined>
   name: Ref<string>

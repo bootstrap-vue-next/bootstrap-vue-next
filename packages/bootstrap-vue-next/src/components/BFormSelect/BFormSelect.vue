@@ -83,7 +83,7 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   selectSize: 0,
   textField: 'text',
   valueField: 'value',
-  modelValue: '',
+  modelValue: undefined,
 })
 
 interface BFormSelectEmits {
@@ -94,7 +94,7 @@ interface BFormSelectEmits {
 
 const emit = defineEmits<BFormSelectEmits>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(toRef(props, 'id'), 'input')
 
