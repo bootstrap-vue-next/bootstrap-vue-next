@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, onUnmounted, ref, toRef, useSlots} from 'vue'
+import {computed, inject, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -113,14 +113,12 @@ useFocus(input, {
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: () => {
-    if (parentData !== null) {
-      const jsonified = parentData.modelValue.value.map((el) => JSON.stringify(el))
-      const jsonifiedValue = JSON.stringify(props.value)
-      return jsonified.includes(jsonifiedValue)
-    }
-    return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
-  },
+  get: () =>
+    parentData !== null
+      ? parentData.modelValue.value
+          .map((el) => JSON.stringify(el))
+          .includes(JSON.stringify(props.value))
+      : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue) => {
     const updateValue = !newValue ? props.uncheckedValue : props.value
 
@@ -129,7 +127,7 @@ const localValue = computed({
     emit('change', updateValue)
 
     if (parentData === null) return
-    if (!newValue) {
+    if (newValue === false) {
       parentData.remove(props.value)
       return
     }
@@ -155,12 +153,6 @@ const classesObject = computed(() => ({
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
-
-onUnmounted(() => {
-  if (parentData !== null && localValue.value === true) {
-    parentData.remove(props.value)
-  }
-})
 </script>
 
 <script lang="ts">
