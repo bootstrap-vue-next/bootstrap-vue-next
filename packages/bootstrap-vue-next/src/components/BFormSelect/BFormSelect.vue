@@ -2,7 +2,6 @@
   <select
     :id="computedId"
     ref="input"
-    v-bind="$attrs"
     v-model="localValue"
     :class="computedClasses"
     :name="name"

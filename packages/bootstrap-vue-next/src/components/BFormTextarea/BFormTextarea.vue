@@ -15,7 +15,6 @@
     :rows="rows"
     :style="computedStyles"
     :wrap="wrap || undefined"
-    v-bind="$attrs"
     @input="onInput($event)"
     @change="onChange($event)"
     @blur="onBlur($event)"

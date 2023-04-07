@@ -17,7 +17,6 @@
     :list="type !== 'password' ? list : undefined"
     :aria-required="required ? true : undefined"
     :aria-invalid="computedAriaInvalid"
-    v-bind="$attrs"
     @input="onInput($event)"
     @change="onChange($event)"
     @blur="onBlur($event)"
