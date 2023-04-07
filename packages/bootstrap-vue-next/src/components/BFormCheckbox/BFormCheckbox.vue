@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, ref, toRef, useSlots} from 'vue'
+import {computed, inject, nextTick, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -62,9 +62,9 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   modelValue: undefined,
   switch: false,
   disabled: false,
-  buttonVariant: 'secondary',
+  buttonVariant: undefined,
   inline: false,
-  size: 'md',
+  size: undefined,
   value: true,
   uncheckedValue: false,
 })
@@ -124,7 +124,9 @@ const localValue = computed({
 
     emit('input', updateValue)
     modelValue.value = updateValue
-    emit('change', updateValue)
+    nextTick(() => {
+      emit('change', updateValue)
+    })
 
     if (parentData === null) return
     if (newValue === false) {
@@ -146,9 +148,12 @@ const classesObject = computed(() => ({
   button: buttonBoolean.value || (parentData?.buttons.value ?? false),
   inline: inlineBoolean.value || (parentData?.inline.value ?? false),
   switch: switchBoolean.value || (parentData?.switch.value ?? false),
-  size: props.size || parentData?.size.value, // TODO some of these values will be weirdly incorrect since they arent falsy
   state: stateBoolean.value || parentData?.state.value,
-  buttonVariant: props.buttonVariant || parentData?.buttonVariant.value, // Above
+  size: props.size !== undefined ? props.size : parentData?.size.value ?? 'md', // This is where the true default is made
+  buttonVariant:
+    props.buttonVariant !== undefined
+      ? props.buttonVariant
+      : parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)

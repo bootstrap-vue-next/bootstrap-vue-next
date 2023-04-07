@@ -15,9 +15,9 @@
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
-    <template v-for="(option, index) in formOptions" :key="index">
+    <template v-for="option in normalizeOptions" :key="option">
       <b-form-select-option-group
-        v-if="Array.isArray(option.options)"
+        v-if="Array.isArray(option)"
         :label="option.label"
         :options="option.options"
       />
@@ -38,11 +38,11 @@
 <script setup lang="ts">
 import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
-import {computed, ref, toRef} from 'vue'
+import {computed, nextTick, ref, toRef} from 'vue'
+import {useBooleanish, useId} from '../../composables'
+import {useFocus, useVModel} from '@vueuse/core'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {normalizeOptions, useBooleanish, useId} from '../../composables'
-import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -55,7 +55,12 @@ interface BFormSelectProps {
   labelField?: string
   multiple?: Booleanish
   name?: string
-  options?: unknown[] | Record<string, unknown>
+  options?: (
+    | string
+    | number
+    | Record<string, unknown>
+    | (string | number | Record<string, unknown>)[]
+  )[]
   optionsField?: string
   plain?: Booleanish
   required?: Booleanish
@@ -131,13 +136,14 @@ const computedAriaInvalid = computed(() =>
   resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
 )
 
-const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
 const localValue = computed({
   get: () => modelValue.value,
   set: (newValue: any) => {
-    emit('change', newValue)
-    modelValue.value = newValue
     emit('input', newValue)
+    modelValue.value = newValue
+    nextTick(() => {
+      emit('change', newValue)
+    })
   },
 })
 </script>

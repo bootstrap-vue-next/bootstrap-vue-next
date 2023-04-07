@@ -110,15 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  onActivated,
-  onMounted,
-  ref,
-  toRef,
-  type VNodeNormalizedChildren,
-  watch,
-} from 'vue'
+import {computed, ref, toRef, type VNodeNormalizedChildren, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId} from '../../composables'
 import type {
@@ -129,7 +121,7 @@ import type {
   InputSize,
   InputType,
 } from '../../types'
-import {useVModel} from '@vueuse/core'
+import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormTagsProps {
   addButtonText?: string
@@ -217,10 +209,15 @@ const stateBoolean = useBooleanish(toRef(props, 'state'))
 const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
 
 const input = ref<HTMLInputElement | null>(null)
+
+const {focused} = useFocus(input, {
+  initialValue: autofocusBoolean.value,
+})
+
 const _inputId = computed<string>(() => props.inputId || `${computedId.value}input__`)
 const tags = ref<string[]>(modelValue.value)
 const inputValue = ref<string>('')
-const shouldRemoveOnDelete = ref<boolean>(false)
+const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
 const focus = ref<boolean>(false)
 const lastRemovedTag = ref<string>('')
 const validTags = ref<string[]>([])
@@ -291,12 +288,6 @@ const slotAttrs = computed(() => ({
 watch(modelValue, (newVal) => {
   tags.value = newVal
 })
-
-const checkAutofocus = () => {
-  if (autofocusBoolean.value) {
-    input.value?.focus()
-  }
-}
 
 const onFocusin = (e: FocusEvent): void => {
   if (disabledBoolean.value) {
@@ -394,7 +385,7 @@ const addTag = (tag?: string): void => {
   shouldRemoveOnDelete.value = true
   modelValue.value = newValue
   emit('input', newValue)
-  input.value?.focus()
+  focused.value = true
 }
 
 const removeTag = (tag?: VNodeNormalizedChildren): void => {
@@ -402,14 +393,4 @@ const removeTag = (tag?: VNodeNormalizedChildren): void => {
   lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
   modelValue.value = tags.value
 }
-
-onMounted(() => {
-  checkAutofocus()
-
-  if (modelValue.value.length > 0) {
-    shouldRemoveOnDelete.value = true
-  }
-})
-
-onActivated(checkAutofocus)
 </script>

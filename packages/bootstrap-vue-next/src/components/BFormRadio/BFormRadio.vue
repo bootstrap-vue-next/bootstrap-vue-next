@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, ref, toRef, useSlots} from 'vue'
+import {computed, inject, nextTick, ref, toRef, useSlots} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
@@ -56,7 +56,8 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   disabled: false,
   modelValue: undefined,
   state: undefined,
-  buttonVariant: 'secondary',
+  size: undefined,
+  buttonVariant: undefined,
   inline: false,
   required: false,
   value: true,
@@ -107,7 +108,9 @@ const localValue = computed({
 
     emit('input', updateValue)
     modelValue.value = updateValue
-    emit('change', updateValue)
+    nextTick(() => {
+      emit('change', updateValue)
+    })
 
     if (parentData === null || updateValue === false) return
     parentData.set(props.value)
@@ -124,9 +127,12 @@ const classesObject = computed(() => ({
   plain: plainBoolean.value || (parentData?.plain.value ?? false),
   button: buttonBoolean.value || (parentData?.button.value ?? false),
   inline: inlineBoolean.value || (parentData?.inline.value ?? false),
-  size: props.size || parentData?.size.value, // TODO some of these values will be weirdly incorrect since they arent falsy
   state: stateBoolean.value || parentData?.state.value,
-  buttonVariant: props.buttonVariant || parentData?.buttonVariant.value, // Above
+  size: props.size !== undefined ? props.size : parentData?.size.value ?? 'md', // This is where the true default is made
+  buttonVariant:
+    props.buttonVariant !== undefined
+      ? props.buttonVariant
+      : parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)

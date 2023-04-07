@@ -94,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, toRef, useSlots} from 'vue'
+import {computed, ref, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
@@ -235,13 +235,21 @@ const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
 const cancelButton = ref<HTMLElement | null>(null)
 const closeButton = ref<HTMLElement | null>(null)
-const isActive = ref(false)
+const isActive = ref(modelValueBoolean.value)
 const lazyLoadCompleted = ref(false)
 
-const {focused: modalFocus} = useFocus(element)
-const {focused: okButtonFocus} = useFocus(okButton)
-const {focused: cancelButtonFocus} = useFocus(cancelButton)
-const {focused: closeButtonFocus} = useFocus(closeButton)
+const {focused: modalFocus} = useFocus(element, {
+  initialValue: modelValueBoolean.value && props.autoFocusButton === undefined,
+})
+const {focused: okButtonFocus} = useFocus(okButton, {
+  initialValue: modelValueBoolean.value && props.autoFocusButton === 'ok',
+})
+const {focused: cancelButtonFocus} = useFocus(cancelButton, {
+  initialValue: modelValueBoolean.value && props.autoFocusButton === 'cancel',
+})
+const {focused: closeButtonFocus} = useFocus(closeButton, {
+  initialValue: modelValueBoolean.value && props.autoFocusButton === 'close',
+})
 
 const modalClasses = computed(() => [
   props.modalClass,
@@ -380,12 +388,6 @@ const onAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
-
-onMounted(() => {
-  if (modelValueBoolean.value === true) {
-    isActive.value = true
-  }
-})
 
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : show()
