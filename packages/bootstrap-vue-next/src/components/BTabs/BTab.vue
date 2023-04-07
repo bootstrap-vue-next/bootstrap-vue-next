@@ -34,6 +34,7 @@ interface BTabProps {
 
 const props = withDefaults(defineProps<BTabProps>(), {
   active: false,
+  // TODO this is unused - Compat issue
   buttonId: undefined,
   disabled: false,
   lazy: undefined,

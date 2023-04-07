@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, type StyleValue, toRef} from 'vue'
+import {computed, provide, readonly, type StyleValue, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {avatarGroupInjectionKey, isNumeric, toFloat} from '../../utils'
 import {useBooleanish} from '../../composables'
@@ -47,9 +47,9 @@ const computeOverlap = (value: any): number =>
 
 provide(avatarGroupInjectionKey, {
   overlapScale,
-  size: toRef(props, 'size'),
+  size: readonly(toRef(props, 'size')),
   square: squareBoolean,
-  rounded: toRef(props, 'rounded'),
-  variant: toRef(props, 'variant'),
+  rounded: readonly(toRef(props, 'rounded')),
+  variant: readonly(toRef(props, 'variant')),
 })
 </script>

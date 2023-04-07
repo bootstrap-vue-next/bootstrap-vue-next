@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, provide, ref, toRef} from 'vue'
+import {computed, provide, readonly, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -103,15 +103,15 @@ provide(radioGroupKey, {
   set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => {
     modelValue.value = value
   },
-  modelValue,
-  buttonVariant: toRef(props, 'buttonVariant'),
-  form: toRef(props, 'form'),
+  modelValue: computed(() => modelValue.value),
+  buttonVariant: readonly(toRef(props, 'buttonVariant')),
+  form: readonly(toRef(props, 'form')),
   name: computedName,
   // 'id': `${computedId.value}_option_${idx}`,
   button: buttonsBoolean,
   state: stateBoolean,
   plain: plainBoolean,
-  size: toRef(props, 'size'),
+  size: readonly(toRef(props, 'size')),
   inline: computed(() => !stackedBoolean.value),
   required: requiredBoolean,
   disabled: disabledBoolean,

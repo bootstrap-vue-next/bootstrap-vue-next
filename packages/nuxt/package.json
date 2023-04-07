@@ -23,10 +23,11 @@
   "scripts": {
     "prepack": "nuxt-module-build",
     "dev": "nuxi dev playground",
+    "build": "pnpm run dev:build && pnpm run prepack",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-    "lint": "eslint .",
-    "build": "pnpm run dev:build && pnpm run prepack"
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix",
+    "test:lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore"
   },
   "peerDependencies": {
     "bootstrap-vue-next": "workspace:^"

@@ -10,7 +10,7 @@
 import BProgressBar from './BProgressBar.vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, provide, toRef} from 'vue'
+import {computed, provide, readonly, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
 interface BProgressProps {
@@ -52,7 +52,7 @@ const computedAttrs = computed(() => ({
 
 provide(progressInjectionKey, {
   animated: animatedBoolean,
-  max: toRef(props, 'max'),
+  max: readonly(toRef(props, 'max')),
   showProgress: showProgressBoolean,
   showValue: showValueBoolean,
   striped: stripedBoolean,
