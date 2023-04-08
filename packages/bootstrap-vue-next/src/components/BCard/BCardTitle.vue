@@ -14,5 +14,6 @@ interface BCardTitleProps {
 
 withDefaults(defineProps<BCardTitleProps>(), {
   tag: 'h4',
+  text: undefined,
 })
 </script>

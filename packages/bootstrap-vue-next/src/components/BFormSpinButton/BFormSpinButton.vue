@@ -36,20 +36,21 @@ const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PA
 
 export default defineComponent({
   props: {
-    ariaControls: {type: String, required: false},
-    ariaLabel: {type: String, required: false},
+    ariaControls: {type: String, default: undefined},
+    ariaLabel: {type: String, default: undefined},
     labelIncrement: {type: String, default: 'Increment'},
     labelDecrement: {type: String, default: 'Decrement'},
     modelValue: {type: Number as PropType<number | null>, default: null}, // V-model prop
     name: {type: String, default: 'BFormSpinbutton'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    placeholder: {type: String, required: false},
+    placeholder: {type: String, default: undefined},
     locale: {type: String, default: 'locale'},
-    form: {type: String, required: false},
+    form: {type: String, default: undefined},
     inline: {type: Boolean, default: false},
-    size: {type: String, required: false},
+    size: {type: String, default: undefined},
     formatterFn: {
       type: Function as PropType<(value: number) => any>,
+      default: undefined,
     },
     readonly: {type: Boolean, default: false},
     vertical: {type: Boolean, default: false},
@@ -178,9 +179,7 @@ export default defineComponent({
       return nf.format
     }
     //TODO allow for prop formatter function
-    const computedFormatter = computed(() =>
-      props.formatterFn ? props.formatterFn : defaultFormatter()
-    )
+    const computedFormatter = computed(() => props.formatterFn ?? defaultFormatter())
 
     const computedAttrs = computed(() => ({
       role: 'group',

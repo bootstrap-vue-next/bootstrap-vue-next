@@ -72,6 +72,10 @@ interface BFormSelectProps {
 }
 
 const props = withDefaults(defineProps<BFormSelectProps>(), {
+  size: undefined,
+  name: undefined,
+  id: undefined,
+  form: undefined,
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,

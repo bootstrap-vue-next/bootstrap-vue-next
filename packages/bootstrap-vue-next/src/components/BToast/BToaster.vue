@@ -31,6 +31,7 @@ interface BToasterProps {
 
 const props = withDefaults(defineProps<BToasterProps>(), {
   position: 'top-right',
+  instance: undefined,
 })
 
 const toastPositions = {

@@ -19,6 +19,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   fill: false,
+  align: undefined,
   justified: false,
   small: false,
   tag: 'ul',

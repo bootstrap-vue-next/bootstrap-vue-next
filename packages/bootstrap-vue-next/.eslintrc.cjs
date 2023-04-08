@@ -67,8 +67,6 @@ module.exports = defineConfig({
     'template-curly-spacing': 'warn',
     'yield-star-spacing': 'warn',
     'yoda': 'warn',
-    '@typescript-eslint/no-explicit-any': 'off',
-    'vue/require-default-prop': 'off',
     'vue/html-self-closing': [
       'error',
       {

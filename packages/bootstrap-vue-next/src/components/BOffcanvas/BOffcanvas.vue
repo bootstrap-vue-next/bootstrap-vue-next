@@ -96,6 +96,8 @@ interface BOffcanvasProps {
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
   dismissLabel: 'Close',
+  id: undefined,
+  title: undefined,
   modelValue: false,
   static: false,
   backdropVariant: 'dark',

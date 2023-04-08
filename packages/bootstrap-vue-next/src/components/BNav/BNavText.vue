@@ -11,5 +11,5 @@ interface BNavTextProps {
   text?: string
 }
 
-defineProps<BNavTextProps>()
+withDefaults(defineProps<BNavTextProps>(), {text: undefined})
 </script>

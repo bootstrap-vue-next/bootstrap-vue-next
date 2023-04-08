@@ -30,6 +30,10 @@ interface BFormValidFeedbackProps {
 }
 
 const props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
+  id: undefined,
+  role: undefined,
+  text: undefined,
+  ariaLive: undefined,
   forceShow: false,
   tag: 'div',
   tooltip: false,

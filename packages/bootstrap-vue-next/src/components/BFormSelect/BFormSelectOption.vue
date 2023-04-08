@@ -15,6 +15,7 @@ interface BFormSelectOptionProps {
 }
 
 const props = withDefaults(defineProps<BFormSelectOptionProps>(), {
+  value: undefined,
   disabled: false,
 })
 

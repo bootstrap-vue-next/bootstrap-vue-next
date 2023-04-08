@@ -27,6 +27,10 @@ interface BTdProps {
 }
 
 const props = withDefaults(defineProps<BTdProps>(), {
+  colspan: undefined,
+  variant: undefined,
+  rowspan: undefined,
+  stackedHeading: undefined,
   stickyColumn: false,
 })
 

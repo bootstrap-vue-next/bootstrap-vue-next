@@ -27,6 +27,7 @@ interface BFormSelectOptionGroupProps {
 }
 
 const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
+  label: undefined,
   disabledField: 'disabled',
   htmlField: 'html',
   options: () => [],

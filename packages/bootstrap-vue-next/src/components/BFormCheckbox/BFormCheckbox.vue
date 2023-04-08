@@ -53,6 +53,11 @@ interface BFormCheckboxProps {
 }
 
 const props = withDefaults(defineProps<BFormCheckboxProps>(), {
+  ariaLabel: undefined,
+  ariaLabelledBy: undefined,
+  form: undefined,
+  indeterminate: undefined,
+  name: undefined,
   autofocus: false,
   plain: false,
   button: false,

@@ -41,6 +41,8 @@ interface BFormTagProps {
 }
 
 const props = withDefaults(defineProps<BFormTagProps>(), {
+  id: undefined,
+  title: undefined,
   disabled: false,
   noRemove: false,
   pill: false,

@@ -50,6 +50,11 @@ interface BFormRadioProps {
 }
 
 const props = withDefaults(defineProps<BFormRadioProps>(), {
+  ariaLabel: undefined,
+  ariaLabelledby: undefined,
+  form: undefined,
+  id: undefined,
+  name: undefined,
   autofocus: false,
   plain: false,
   button: false,

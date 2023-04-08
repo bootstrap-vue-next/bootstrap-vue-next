@@ -42,6 +42,9 @@ interface BListGroupItemProps {
 }
 
 const props = withDefaults(defineProps<BListGroupItemProps>(), {
+  to: undefined,
+  variant: undefined,
+  href: undefined,
   action: false,
   active: false,
   button: false,

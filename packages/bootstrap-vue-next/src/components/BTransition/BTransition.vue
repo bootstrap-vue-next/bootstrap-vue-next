@@ -19,6 +19,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   appear: false,
   noFade: false,
+  transProps: undefined,
+  mode: undefined,
 })
 
 const appearBoolean = useBooleanish(toRef(props, 'appear'))

@@ -60,6 +60,17 @@ interface BPlaceholderTableProps {
 }
 
 const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
+  headerSize: undefined,
+  headerAnimation: undefined,
+  headerVariant: undefined,
+  footerColumns: undefined,
+  footerSize: undefined,
+  footerAnimation: undefined,
+  footerVariant: undefined,
+  size: undefined,
+  animation: undefined,
+  variant: undefined,
+  headerColumns: undefined,
   columns: 5,
   rows: 3,
   cellWidth: 100,

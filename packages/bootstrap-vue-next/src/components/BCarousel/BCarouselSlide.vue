@@ -67,6 +67,18 @@ interface BCarouselSlideProps {
 // Perhaps a provide/inject with next/prev values where the component can call those would work.
 
 const props = withDefaults(defineProps<BCarouselSlideProps>(), {
+  imgSrc: undefined,
+  imgHeight: undefined,
+  imgWidth: undefined,
+  interval: undefined,
+  text: undefined,
+  textHtml: undefined,
+  id: undefined,
+  imgAlt: undefined,
+  contentVisibleUp: undefined,
+  background: undefined,
+  caption: undefined,
+  captionHtml: undefined,
   captionTag: 'h3',
   contentTag: 'div',
   imgBlank: false,

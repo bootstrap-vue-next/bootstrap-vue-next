@@ -29,6 +29,8 @@ interface BSpinnerProps {
 const props = withDefaults(defineProps<BSpinnerProps>(), {
   role: 'status',
   small: false,
+  variant: undefined,
+  label: undefined,
   tag: 'span',
   type: 'border',
 })

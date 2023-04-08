@@ -89,6 +89,10 @@ interface BCarouselProps {
 }
 
 const props = withDefaults(defineProps<BCarouselProps>(), {
+  id: undefined,
+  imgHeight: undefined,
+  imgWidth: undefined,
+  background: undefined,
   ride: false,
   noHoverPause: false,
   rideReverse: false,

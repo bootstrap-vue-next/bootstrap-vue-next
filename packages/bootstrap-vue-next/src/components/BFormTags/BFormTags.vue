@@ -158,6 +158,16 @@ interface BFormTagsProps {
 }
 
 const props = withDefaults(defineProps<BFormTagsProps>(), {
+  inputAttrs: undefined,
+  tagRemoveLabel: undefined,
+  tagClass: undefined,
+  separator: undefined,
+  size: undefined,
+  name: undefined,
+  limit: undefined,
+  form: undefined,
+  inputClass: undefined,
+  inputId: undefined,
   addButtonText: 'Add',
   addButtonVariant: 'outline-secondary',
   addOnChange: false,

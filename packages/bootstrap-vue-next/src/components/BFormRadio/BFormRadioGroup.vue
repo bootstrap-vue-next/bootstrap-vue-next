@@ -50,6 +50,10 @@ interface BFormRadioGroupProps {
 }
 
 const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
+  size: undefined,
+  form: undefined,
+  id: undefined,
+  name: undefined,
   modelValue: null,
   autofocus: false,
   buttonVariant: 'secondary',

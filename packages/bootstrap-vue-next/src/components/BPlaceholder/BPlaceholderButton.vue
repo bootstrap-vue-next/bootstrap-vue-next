@@ -17,6 +17,9 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   tag: 'div',
+  width: undefined,
+  cols: undefined,
+  animation: undefined,
   variant: 'primary',
 })
 

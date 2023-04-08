@@ -19,5 +19,10 @@ interface BCardHeaderProps {
 
 const props = withDefaults(defineProps<BCardHeaderProps>(), {
   tag: 'div',
+  text: undefined,
+  bgVariant: undefined,
+  borderVariant: undefined,
+  html: undefined,
+  textVariant: undefined,
 })
 </script>

@@ -18,5 +18,9 @@ interface BFormFloatingLabelProps {
   text?: string
 }
 
-defineProps<BFormFloatingLabelProps>()
+withDefaults(defineProps<BFormFloatingLabelProps>(), {
+  label: undefined,
+  text: undefined,
+  labelFor: undefined,
+})
 </script>

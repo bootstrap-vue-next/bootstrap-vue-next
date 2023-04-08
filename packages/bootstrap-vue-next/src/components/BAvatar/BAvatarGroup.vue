@@ -27,6 +27,8 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   rounded: false,
   square: false,
   tag: 'div',
+  size: undefined,
+  variant: undefined,
 })
 
 const squareBoolean = useBooleanish(toRef(props, 'square'))

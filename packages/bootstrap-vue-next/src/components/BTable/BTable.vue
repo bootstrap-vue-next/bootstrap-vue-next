@@ -248,6 +248,20 @@ interface BTableProps {
 }
 
 const props = withDefaults(defineProps<BTableProps>(), {
+  perPage: undefined,
+  sortBy: undefined,
+  variant: undefined,
+  borderVariant: undefined,
+  caption: undefined,
+  align: undefined,
+  filter: undefined,
+  filterable: undefined,
+  provider: undefined,
+  sortCompare: undefined,
+  noProvider: undefined,
+  noProviderPaging: undefined,
+  noProviderSorting: undefined,
+  noProviderFiltering: undefined,
   captionTop: false,
   borderless: false,
   bordered: false,

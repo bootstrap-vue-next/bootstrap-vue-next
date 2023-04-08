@@ -47,6 +47,10 @@ interface BAccordionItemProps {
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {
   headerTag: 'h2',
+  id: undefined,
+  title: undefined,
+  modelValue: false,
+  visible: false,
 })
 
 const emit = defineEmits<(e: 'update:modelValue', value: boolean) => void>()

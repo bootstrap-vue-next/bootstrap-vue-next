@@ -89,8 +89,8 @@ interface BTabsProps {
   activeNavItemClass?: ClassValue
   activeTabClass?: ClassValue
   align?: AlignmentJustifyContent
-  card?: Booleanish
   contentClass?: ClassValue
+  card?: Booleanish
   end?: Booleanish
   fill?: Booleanish
   id?: string
@@ -109,6 +109,13 @@ interface BTabsProps {
 }
 
 const props = withDefaults(defineProps<BTabsProps>(), {
+  navClass: undefined,
+  navWrapperClass: undefined,
+  id: undefined,
+  activeNavItemClass: undefined,
+  activeTabClass: undefined,
+  align: undefined,
+  contentClass: undefined,
   card: false,
   end: false,
   fill: false,

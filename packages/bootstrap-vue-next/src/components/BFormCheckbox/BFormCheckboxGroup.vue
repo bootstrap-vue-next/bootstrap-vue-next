@@ -51,6 +51,10 @@ interface BFormCheckboxGroupProps {
 }
 
 const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
+  id: undefined,
+  size: undefined,
+  name: undefined,
+  form: undefined,
   modelValue: () => [],
   autofocus: false,
   buttonVariant: 'secondary',

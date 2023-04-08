@@ -48,6 +48,12 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   overlay: false,
   titleTag: 'h4',
   subtitleTag: 'h4',
+  bodyBgVariant: undefined,
+  bodyTextVariant: undefined,
+  subtitleTextVariant: undefined,
+  subtitle: undefined,
+  title: undefined,
+  text: undefined,
 })
 
 const slots = useSlots()

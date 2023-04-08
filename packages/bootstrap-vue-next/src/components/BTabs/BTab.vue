@@ -33,6 +33,10 @@ interface BTabProps {
 }
 
 const props = withDefaults(defineProps<BTabProps>(), {
+  titleItemClass: undefined,
+  titleLinkClass: undefined,
+  id: undefined,
+  title: undefined,
   active: false,
   // TODO this is unused - Compat issue
   buttonId: undefined,

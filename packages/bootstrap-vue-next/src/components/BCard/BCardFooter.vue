@@ -21,5 +21,10 @@ interface BCardFooterProps {
 
 const props = withDefaults(defineProps<BCardFooterProps>(), {
   tag: 'div',
+  text: undefined,
+  bgVariant: undefined,
+  borderVariant: undefined,
+  html: undefined,
+  textVariant: undefined,
 })
 </script>

@@ -185,6 +185,10 @@ interface BPopoverProps {
 }
 
 const props = withDefaults(defineProps<BPopoverProps>(), {
+  floatingMiddleware: undefined,
+  title: undefined,
+  id: undefined,
+  content: undefined,
   modelValue: false,
   container: null,
   customClass: '',

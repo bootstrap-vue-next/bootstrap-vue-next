@@ -32,6 +32,9 @@ interface BTableSimpleProps {
 }
 
 const props = withDefaults(defineProps<BTableSimpleProps>(), {
+  borderVariant: undefined,
+  tableClass: undefined,
+  tableVariant: undefined,
   bordered: false,
   borderless: false,
   captionTop: false,

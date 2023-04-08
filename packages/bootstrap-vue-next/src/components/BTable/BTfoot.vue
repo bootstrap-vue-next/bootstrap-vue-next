@@ -12,7 +12,7 @@ interface BTfootProps {
   variant?: ColorVariant
 }
 
-const props = defineProps<BTfootProps>()
+const props = withDefaults(defineProps<BTfootProps>(), {variant: undefined})
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== undefined,

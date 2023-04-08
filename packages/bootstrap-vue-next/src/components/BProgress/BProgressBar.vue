@@ -34,6 +34,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  label: undefined,
+  labelHtml: undefined,
+  max: undefined,
+  variant: undefined,
   animated: false,
   precision: 0,
   showProgress: false,

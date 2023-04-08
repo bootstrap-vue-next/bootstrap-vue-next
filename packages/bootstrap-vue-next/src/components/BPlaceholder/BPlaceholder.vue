@@ -25,6 +25,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  variant: undefined,
+  size: undefined,
+  animation: undefined,
+  width: undefined,
   tag: 'span',
   wrapperTag: 'span',
   cols: 12,

@@ -1,8 +1,6 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormGroup from './BFormGroup.vue'
-import BCol from '../BCol.vue'
-import BFormRow from '../BForm/BFormRow.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)

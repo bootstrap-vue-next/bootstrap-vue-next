@@ -23,6 +23,10 @@ interface BFormInvalidFeedbackProps {
 }
 
 const props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
+  id: undefined,
+  text: undefined,
+  role: undefined,
+  ariaLive: undefined,
   forceShow: false,
   tag: 'div',
   state: undefined,

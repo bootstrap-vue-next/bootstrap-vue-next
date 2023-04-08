@@ -22,6 +22,7 @@ interface BNavProps {
 }
 
 const props = withDefaults(defineProps<BNavProps>(), {
+  align: undefined,
   cardHeader: false,
   fill: false,
   justified: false,
