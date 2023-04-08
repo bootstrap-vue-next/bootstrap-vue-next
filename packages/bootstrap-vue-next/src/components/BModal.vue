@@ -97,7 +97,7 @@
 import {computed, ref, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
-import type {Booleanish, ClassValue, ColorVariant, InputSize} from '../types'
+import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, InputSize} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
@@ -119,7 +119,7 @@ interface BModalProps {
   buttonSize?: InputSize
   cancelDisabled?: Booleanish
   cancelTitle?: string
-  cancelVariant?: ColorVariant
+  cancelVariant?: ButtonVariant
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
@@ -148,7 +148,7 @@ interface BModalProps {
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
-  okVariant?: ColorVariant
+  okVariant?: ButtonVariant
   scrollable?: Booleanish
   show?: Booleanish
   size?: 'sm' | 'lg' | 'xl'
