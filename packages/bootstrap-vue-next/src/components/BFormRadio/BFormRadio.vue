@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, nextTick, ref, toRef, useSlots} from 'vue'
+import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
@@ -116,10 +116,12 @@ const localValue = computed({
     nextTick(() => {
       emit('change', updateValue)
     })
-
-    if (parentData === null || updateValue === false) return
-    parentData.set(props.value)
   },
+})
+
+watch(modelValue, (newValue) => {
+  if (parentData === null || newValue === false) return
+  parentData.set(props.value)
 })
 
 const computedRequired = computed(

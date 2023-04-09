@@ -1,9 +1,11 @@
+import type {RouteLocationRaw} from 'vue-router'
+
 interface BreadcrumbItemObject {
   active?: boolean
   disabled?: boolean
   href?: string
   text: string
-  to?: string | Record<string, any>
+  to?: RouteLocationRaw
 }
 
 export default BreadcrumbItemObject
