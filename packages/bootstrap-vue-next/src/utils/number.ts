@@ -37,5 +37,5 @@ export const toFloat = (value: number | string, defaultValue = NaN): number => {
  * @param precision
  * @returns
  */
-export const toPercison = (val: number, precision: number): string =>
+export const toPrecision = (val: number, precision: number): string =>
   toFloat(val).toPrecision(precision)
