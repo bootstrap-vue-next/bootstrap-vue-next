@@ -30,7 +30,9 @@ const getClasses = (items: Ref<ClassesItemsInput> | ClassesItemsInput) => {
     'form-check-inline': resolvedItems.value.inline === true,
     'form-switch': resolvedItems.value.switch === true,
     [`form-control-${resolvedItems.value.size}`]:
-      resolvedItems.value.size !== undefined && resolvedItems.value.size !== 'md',
+      resolvedItems.value.size !== undefined &&
+      resolvedItems.value.size !== 'md' &&
+      resolvedItems.value.button === false,
   }))
 }
 
