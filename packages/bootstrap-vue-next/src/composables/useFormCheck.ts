@@ -120,7 +120,8 @@ const getGroupClasses = (items: Ref<GroupClassesItemsInput> | GroupClassesItemsI
   return computed(() => ({
     'was-validated': resolvedItems.value.validated === true,
     'btn-group': resolvedItems.value.buttons === true && resolvedItems.value.stacked === false,
-    'btn-group-vertical': resolvedItems.value.stacked === true, // Does this need items.buttons?
+    'btn-group-vertical':
+      resolvedItems.value.stacked === true && resolvedItems.value.buttons === true,
     [`btn-group-${resolvedItems.value.size}`]: resolvedItems.value.size !== undefined,
   }))
 }
