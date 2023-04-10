@@ -43,10 +43,6 @@ export const eventOnOff = (on: boolean, eventParams: Parameters<typeof eventOff>
   method(...eventParams)
 }
 
-//checks to see if keyboard event
-export const isKeyBoardEvent = (event: Event): event is KeyboardEvent =>
-  ['keydown', 'keypress', 'keyup'].includes(event.type)
-
 // Utility method to prevent the default event handling and propagation
 export const stopEvent = (
   event: Event,
