@@ -18,6 +18,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  role: undefined,
+  id: undefined,
   floating: false,
   novalidate: false,
   validated: false,

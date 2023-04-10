@@ -12,7 +12,7 @@ interface BTBodyProps {
   variant?: ColorVariant
 }
 
-const props = defineProps<BTBodyProps>()
+const props = withDefaults(defineProps<BTBodyProps>(), {variant: undefined})
 
 const computedClasses = computed(() => ({
   [`thead-${props.variant}`]: props.variant !== undefined,

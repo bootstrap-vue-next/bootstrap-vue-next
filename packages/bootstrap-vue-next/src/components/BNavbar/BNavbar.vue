@@ -24,6 +24,9 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  variant: undefined,
+  sticky: undefined,
+  fixed: undefined,
   print: false,
   tag: 'nav',
   dark: false,

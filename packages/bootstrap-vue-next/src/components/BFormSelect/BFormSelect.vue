@@ -68,6 +68,10 @@ interface BFormSelectProps {
 }
 
 const props = withDefaults(defineProps<BFormSelectProps>(), {
+  form: undefined,
+  id: undefined,
+  name: undefined,
+  size: undefined,
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
@@ -131,9 +135,14 @@ const computedAriaInvalid = computed(() =>
   resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
 )
 
+// TODO this needs to be redone to fit the structure of BFormCheckboxGroup
+// It also doesn't work for array syntaxes. Review second example from https://bootstrap-vue.org/docs/components/form-select
+// For more info on how it should behave
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
 const localValue = computed({
   get: () => modelValue.value,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set: (newValue: any) => {
     emit('change', newValue)
     modelValue.value = newValue

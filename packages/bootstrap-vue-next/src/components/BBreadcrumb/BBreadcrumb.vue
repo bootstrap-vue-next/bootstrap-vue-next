@@ -21,7 +21,7 @@ interface BBreadcrumbProps {
   items?: BreadcrumbItem[]
 }
 
-const props = defineProps<BBreadcrumbProps>()
+const props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
 
 const breadcrumb = useBreadcrumb()
 

@@ -4,4 +4,5 @@ export {
   BPopover as vBPopover,
   BToggle as vBToggle,
   BTooltip as vBTooltip,
+  BModal as vBModal,
 } from '..'

@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, onUnmounted, ref, toRef, useSlots} from 'vue'
+import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -53,6 +53,11 @@ interface BFormCheckboxProps {
 }
 
 const props = withDefaults(defineProps<BFormCheckboxProps>(), {
+  ariaLabel: undefined,
+  ariaLabelledBy: undefined,
+  form: undefined,
+  indeterminate: undefined,
+  name: undefined,
   autofocus: false,
   plain: false,
   button: false,
@@ -62,9 +67,9 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   modelValue: undefined,
   switch: false,
   disabled: false,
-  buttonVariant: 'secondary',
+  buttonVariant: undefined,
   inline: false,
-  size: 'md',
+  size: undefined,
   value: true,
   uncheckedValue: false,
 })
@@ -113,28 +118,30 @@ useFocus(input, {
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: () => {
-    if (parentData !== null) {
-      const jsonified = parentData.modelValue.value.map((el) => JSON.stringify(el))
-      const jsonifiedValue = JSON.stringify(props.value)
-      return jsonified.includes(jsonifiedValue)
-    }
-    return JSON.stringify(modelValue.value) === JSON.stringify(props.value)
-  },
+  get: () =>
+    parentData !== null
+      ? parentData.modelValue.value
+          .map((el) => JSON.stringify(el))
+          .includes(JSON.stringify(props.value))
+      : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue) => {
     const updateValue = !newValue ? props.uncheckedValue : props.value
 
     emit('input', updateValue)
     modelValue.value = updateValue
-    emit('change', updateValue)
-
-    if (parentData === null) return
-    if (!newValue) {
-      parentData.remove(props.value)
-      return
-    }
-    parentData.set(props.value)
+    nextTick(() => {
+      emit('change', updateValue)
+    })
   },
+})
+
+watch(modelValue, (newValue) => {
+  if (parentData === null) return
+  if (newValue === false) {
+    parentData.remove(props.value)
+    return
+  }
+  parentData.set(props.value)
 })
 
 const computedRequired = computed(
@@ -148,19 +155,16 @@ const classesObject = computed(() => ({
   button: buttonBoolean.value || (parentData?.buttons.value ?? false),
   inline: inlineBoolean.value || (parentData?.inline.value ?? false),
   switch: switchBoolean.value || (parentData?.switch.value ?? false),
-  size: props.size || parentData?.size.value, // TODO some of these values will be weirdly incorrect since they arent falsy
   state: stateBoolean.value || parentData?.state.value,
-  buttonVariant: props.buttonVariant || parentData?.buttonVariant.value, // Above
+  size: props.size !== undefined ? props.size : parentData?.size.value ?? 'md', // This is where the true default is made
+  buttonVariant:
+    props.buttonVariant !== undefined
+      ? props.buttonVariant
+      : parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
-
-onUnmounted(() => {
-  if (parentData !== null && localValue.value === true) {
-    parentData.remove(props.value)
-  }
-})
 </script>
 
 <script lang="ts">

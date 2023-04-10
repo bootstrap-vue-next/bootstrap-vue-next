@@ -67,4 +67,4 @@ const normalizeOptions = (
   return []
 }
 
-export {normalizeOptions}
+export default normalizeOptions

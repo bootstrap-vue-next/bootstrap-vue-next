@@ -8,8 +8,8 @@ export default defineComponent({
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},
     fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
-    toast: {type: Object},
-    position: {type: String as PropType<Position>, required: false},
+    toast: {type: Object, default: undefined},
+    position: {type: String as PropType<Position>, default: undefined},
   },
   setup(props, {slots, expose}) {
     const container = ref()

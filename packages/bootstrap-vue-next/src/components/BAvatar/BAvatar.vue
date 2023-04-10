@@ -51,6 +51,13 @@ interface BAvatarProps {
 }
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
+  ariaLabel: undefined,
+  badgeOffset: undefined,
+  icon: undefined,
+  size: undefined,
+  src: undefined,
+  text: undefined,
+  textVariant: undefined,
   alt: 'avatar',
   badge: false,
   badgeLeft: false,

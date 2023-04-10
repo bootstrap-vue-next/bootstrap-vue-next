@@ -21,6 +21,8 @@ interface BFormTextProps {
 
 const props = withDefaults(defineProps<BFormTextProps>(), {
   inline: false,
+  id: undefined,
+  text: undefined,
   tag: 'small',
   textVariant: 'muted',
 })

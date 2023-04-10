@@ -33,12 +33,14 @@ interface BFormSelectOptionGroupProps {
 
 const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   disabledField: 'disabled',
+  label: undefined,
   htmlField: 'html',
   options: () => [],
   textField: 'text',
   valueField: 'value',
 })
 
+// TODO this needs to be redone to fit the structure of BFormCheckboxGroup
 const formOptions = computed(() =>
   normalizeOptions(props.options as any[], 'BFormSelectOptionGroup', props)
 )

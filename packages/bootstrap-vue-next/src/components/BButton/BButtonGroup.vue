@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<BButtonGroupProps>(), {
   ariaLabel: 'Group',
   tag: 'div',
   vertical: false,
+  size: undefined,
 })
 
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))

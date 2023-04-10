@@ -28,6 +28,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   label: 'Toggle navigation',
   disabled: false,
+  target: undefined,
 })
 
 interface Emits {

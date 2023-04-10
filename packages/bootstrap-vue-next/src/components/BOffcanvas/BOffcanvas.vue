@@ -62,8 +62,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {useEventListener, useVModel} from '@vueuse/core'
+import {computed, nextTick, ref, toRef, useSlots} from 'vue'
+import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
@@ -96,6 +96,8 @@ interface BOffcanvasProps {
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
   dismissLabel: 'Close',
+  id: undefined,
+  title: undefined,
   modelValue: false,
   static: false,
   backdropVariant: 'dark',
@@ -143,8 +145,13 @@ const staticBoolean = useBooleanish(toRef(props, 'static'))
 
 const computedId = useId(toRef(props, 'id'), 'offcanvas')
 
-const isActive = ref(false)
 const element = ref<HTMLElement | null>(null)
+
+const {focused} = useFocus(element, {
+  initialValue: modelValueBoolean.value && noFocusBoolean.value === false,
+})
+
+const isActive = ref(modelValueBoolean.value)
 const lazyLoadCompleted = ref(false)
 
 const showBackdrop = computed(
@@ -214,9 +221,18 @@ const show = () => {
   modelValue.value = true
 }
 
+const focus = () => {
+  nextTick(() => {
+    if (noFocusBoolean.value === false) {
+      focused.value = true
+    }
+  })
+}
+
 const OnBeforeEnter = () => show()
 const OnAfterEnter = () => {
   isActive.value = true
+  focus()
   emit('shown', buildTriggerableEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
@@ -225,20 +241,6 @@ const OnAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
-
-onMounted(() => {
-  if (modelValueBoolean.value === true) {
-    isActive.value = true
-  }
-})
-
-watch(
-  modelValueBoolean,
-  (newValue) => {
-    if (newValue === true && !noFocusBoolean.value && element.value !== null) element.value.focus()
-  },
-  {flush: 'post'}
-)
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : show()
 })

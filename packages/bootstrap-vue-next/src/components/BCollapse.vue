@@ -34,6 +34,8 @@ interface BCollapseProps {
 }
 
 const props = withDefaults(defineProps<BCollapseProps>(), {
+  accordion: undefined,
+  id: undefined,
   modelValue: false,
   tag: 'div',
   toggle: false,

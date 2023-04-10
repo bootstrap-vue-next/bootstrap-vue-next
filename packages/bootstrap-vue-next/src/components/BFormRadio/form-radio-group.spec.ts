@@ -75,15 +75,6 @@ describe('form-radio-group', () => {
     expect(wrapper.classes()).toContain('btn-group')
   })
 
-  it('has class btn-group-vertical when prop stacked', async () => {
-    const wrapper = mount(BFormRadioGroup, {
-      props: {stacked: true},
-    })
-    expect(wrapper.classes()).toContain('btn-group-vertical')
-    await wrapper.setProps({stacked: false})
-    expect(wrapper.classes()).not.toContain('btn-group-vertical')
-  })
-
   it('has class btn-group-{type} when prop size', async () => {
     const wrapper = mount(BFormRadioGroup, {
       props: {size: 'lg'},

@@ -17,7 +17,6 @@
     :list="type !== 'password' ? list : undefined"
     :aria-required="required ? true : undefined"
     :aria-invalid="computedAriaInvalid"
-    v-bind="$attrs"
     @input="onInput($event)"
     @change="onChange($event)"
     @blur="onBlur($event)"
@@ -51,10 +50,10 @@ export default defineComponent({
   props: {
     ...COMMON_INPUT_PROPS,
     // debounce: {type: [String, Number], default: 0}, TODO: not implemented yet
-    max: {type: [String, Number], required: false},
-    min: {type: [String, Number], required: false},
+    max: {type: [String, Number], default: undefined},
+    min: {type: [String, Number], default: undefined},
     // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
-    step: {type: [String, Number], required: false},
+    step: {type: [String, Number], default: undefined},
     type: {
       type: String as PropType<InputType>,
       default: 'text',

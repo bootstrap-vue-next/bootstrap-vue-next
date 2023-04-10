@@ -23,6 +23,7 @@ interface BFormProps {
 
 const props = withDefaults(defineProps<BFormProps>(), {
   floating: false,
+  id: undefined,
   novalidate: false,
   validated: false,
 })

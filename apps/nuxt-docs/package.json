@@ -1,0 +1,20 @@
+{
+  "name": "nuxt-docs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@bootstrap-vue-next/nuxt": "workspace:^",
+    "@iconify-json/bi": "^1.1.16",
+    "@nuxt/content": "^2.5.2",
+    "bootstrap": "5.3.0-alpha3",
+    "bootstrap-vue-next": "workspace:^",
+    "nuxt": "^3.3.3",
+    "unplugin-icons": "^0.16.1"
+  }
+}

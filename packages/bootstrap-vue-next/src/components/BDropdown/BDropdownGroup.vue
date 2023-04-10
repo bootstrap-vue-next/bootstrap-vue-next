@@ -38,6 +38,11 @@ interface BDropdownGroupProps {
 
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   headerTag: 'header',
+  id: undefined,
+  ariaDescribedby: undefined,
+  header: undefined,
+  headerClass: undefined,
+  headerVariant: undefined,
 })
 
 const headerId = computed<string | undefined>(() =>

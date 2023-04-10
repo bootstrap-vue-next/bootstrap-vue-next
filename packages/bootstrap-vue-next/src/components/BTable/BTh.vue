@@ -27,6 +27,10 @@ interface BThProps {
 }
 
 const props = withDefaults(defineProps<BThProps>(), {
+  colspan: undefined,
+  rowspan: undefined,
+  variant: undefined,
+  stackedHeading: undefined,
   stickyColumn: false,
 })
 

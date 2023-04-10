@@ -75,7 +75,6 @@ interface ValueObject {
 }
 ```
 
-
 #### Delay
 
 We can define a delay to display the tooltip, in that case we need to use the object value format, if not by default it's used 0.
@@ -89,6 +88,7 @@ When we are using a directive, we have two ways to define the title to use in th
 ````vue
 <b-card v-b-tooltip.hover.top title="my title" />
 ````
+
 * First example it's using the property from BCard "title", this property is going to render something like:
 
 ```html
@@ -108,7 +108,7 @@ So, it's not going to work, and we are going to see a warning in the developer's
 <b-card v-b-tooltip.hover.top="my title" />
 ````
 
-Here we are not using a string, because is reading ts or js code. So, we need to set a literal string, a variable, function or so on. 
+Here we are not using a string, because is reading ts or js code. So, we need to set a literal string, a variable, function or so on
 
 ##### Correct use
 
@@ -132,5 +132,4 @@ In that case, the directive is detecting the title value, and it's going to be u
 <b-card v-b-tooltip.hover.top="'my title'" />
 ````
 
-We should use the value type when the component is not setting to the root component a title. 
-Notice that we should use ts/js code, a variable and so on.
+We should use the value type when the component is not setting to the root component a title. Notice that we should use ts/js code, a variable and so on

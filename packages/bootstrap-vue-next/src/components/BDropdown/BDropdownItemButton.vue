@@ -31,6 +31,8 @@ const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
   disabled: false,
+  variant: undefined,
+  buttonClass: undefined,
 })
 
 const activeBoolean = useBooleanish(toRef(props, 'active'))

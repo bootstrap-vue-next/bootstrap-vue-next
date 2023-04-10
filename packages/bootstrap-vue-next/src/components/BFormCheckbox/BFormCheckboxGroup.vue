@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, ref, toRef, watchEffect} from 'vue'
+import {computed, provide, readonly, ref, toRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -38,7 +38,7 @@ interface BFormCheckboxGroupProps {
   disabledField?: string
   htmlField?: string
   name?: string
-  options?: (string | Record<string, unknown>)[] // I don't believe it possible to make a strongly typed object if object fields come from a prop
+  options?: (string | number | Record<string, unknown>)[]
   plain?: Booleanish
   required?: Booleanish
   size?: Size
@@ -51,6 +51,10 @@ interface BFormCheckboxGroupProps {
 }
 
 const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
+  id: undefined,
+  size: undefined,
+  name: undefined,
+  form: undefined,
   modelValue: () => [],
   autofocus: false,
   buttonVariant: 'secondary',
@@ -71,9 +75,18 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
 })
 
 interface BFormCheckboxGroupEmits {
-  (e: 'input', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
-  (e: 'update:modelValue', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
-  (e: 'change', value: Exclude<BFormCheckboxGroupProps['modelValue'], undefined>): void
+  (
+    e: 'input',
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+  ): void
+  (
+    e: 'update:modelValue',
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+  ): void
+  (
+    e: 'change',
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+  ): void
 }
 
 const emit = defineEmits<BFormCheckboxGroupEmits>()
@@ -98,60 +111,45 @@ useFocus(element, {
   initialValue: autofocusBoolean.value,
 })
 
-const activeValues = ref<
-  (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
->(modelValue.value)
-
 provide(checkboxGroupKey, {
   set: (value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number) => {
-    activeValues.value.push(value)
+    modelValue.value.push(value)
   },
   remove: (
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
   ) => {
-    activeValues.value.splice(activeValues.value.indexOf(value), 1)
+    // TODO if the value is an array, set, or object, indexOf may not work correctly
+    modelValue.value.splice(modelValue.value.indexOf(value), 1)
   },
-  modelValue,
+  modelValue: computed(() => modelValue.value),
   switch: switchesBoolean,
-  buttonVariant: toRef(props, 'buttonVariant'),
-  form: toRef(props, 'form'),
+  buttonVariant: readonly(toRef(props, 'buttonVariant')),
+  form: readonly(toRef(props, 'form')),
   name: computedName,
   state: stateBoolean,
   plain: plainBoolean,
-  size: toRef(props, 'size'),
+  size: readonly(toRef(props, 'size')),
   inline: computed(() => !stackedBoolean.value),
   required: requiredBoolean,
   buttons: buttonsBoolean,
   disabled: disabledBoolean,
 })
 
-watchEffect(() => (modelValue.value = activeValues.value))
-
-const normalizeOptions = computed<
-  {
-    props: {
-      value: string | undefined
-      disabled: boolean | undefined
-    }
-    text: string | undefined
-    html: string | undefined
-    self: symbol
-  }[]
->(() =>
+const normalizeOptions = computed(() =>
   props.options.map((el, ind) =>
-    typeof el === 'string'
+    typeof el === 'string' || typeof el === 'number'
       ? {
           props: {
             value: el,
             disabled: disabledBoolean.value,
           },
-          text: el,
+          text: el.toString(),
           html: undefined,
           self: Symbol(`checkboxGroupOptionItem${ind}`),
         }
       : {
           props: {
-            value: el[props.valueField] as string | undefined,
+            value: el[props.valueField] as string | number | undefined,
             disabled: el[props.disabledField] as boolean | undefined,
             ...(el.props ? el.props : {}),
           },

@@ -33,6 +33,12 @@ interface BInputGroupProps {
 }
 
 const props = withDefaults(defineProps<BInputGroupProps>(), {
+  append: undefined,
+  appendHtml: undefined,
+  id: undefined,
+  prepend: undefined,
+  prependHtml: undefined,
+  size: undefined,
   tag: 'div',
 })
 

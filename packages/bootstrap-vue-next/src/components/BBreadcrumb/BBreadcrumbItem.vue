@@ -29,7 +29,7 @@ export default defineComponent({
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     ariaCurrent: {type: String, default: 'location'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    text: {type: String, required: false},
+    text: {type: String, default: undefined},
   },
   emits: ['click'],
   setup(props, {emit}) {

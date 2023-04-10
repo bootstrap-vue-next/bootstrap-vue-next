@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap-vue-next": "workspace:*",
+    "bootstrap-vue-next": "workspace:^",
     "vue": "3.2.45",
     "vue-router": "4.1.6"
   },

@@ -12,7 +12,7 @@ interface BTrProps {
   variant?: ColorVariant
 }
 
-const props = defineProps<BTrProps>()
+const props = withDefaults(defineProps<BTrProps>(), {variant: undefined})
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== undefined,

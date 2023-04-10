@@ -19,6 +19,7 @@ interface BCardSubtitleProps {
 const props = withDefaults(defineProps<BCardSubtitleProps>(), {
   tag: 'h6',
   textVariant: 'muted',
+  text: undefined,
 })
 
 const coomputedClasses = computed(() => [`text-${props.textVariant}`])

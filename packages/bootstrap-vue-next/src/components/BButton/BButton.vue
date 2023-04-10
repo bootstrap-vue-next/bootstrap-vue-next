@@ -39,7 +39,7 @@ export default defineComponent({
     ...BLINK_PROPS,
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    href: {type: String, required: false},
+    href: {type: String, default: undefined},
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     pressed: {type: [Boolean, String] as PropType<Booleanish>, default: null},
     rel: {type: String, default: undefined},

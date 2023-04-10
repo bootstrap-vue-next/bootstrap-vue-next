@@ -14,5 +14,6 @@ interface BInputGroupTextProps {
 
 withDefaults(defineProps<BInputGroupTextProps>(), {
   tag: 'div',
+  text: undefined,
 })
 </script>

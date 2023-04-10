@@ -5,6 +5,7 @@
     </template>
   </BPopover>
 </template>
+
 <script setup lang="ts">
 import BPopover from './BPopover.vue'
 </script>

@@ -53,6 +53,7 @@ export const BLINK_PROPS = {
 }
 
 export default defineComponent({
+  // TODO this component will likely have an issue with inheritAttrs
   props: BLINK_PROPS,
   emits: ['click'],
   setup(props, {emit, attrs}) {

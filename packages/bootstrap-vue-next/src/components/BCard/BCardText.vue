@@ -14,5 +14,6 @@ interface BCardTextProps {
 
 withDefaults(defineProps<BCardTextProps>(), {
   tag: 'p',
+  text: undefined,
 })
 </script>

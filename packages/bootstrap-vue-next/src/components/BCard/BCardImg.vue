@@ -25,6 +25,13 @@ interface BCardImgProps {
 }
 
 const props = withDefaults(defineProps<BCardImgProps>(), {
+  sizes: undefined,
+  src: undefined,
+  height: undefined,
+  alt: undefined,
+  blankColor: undefined,
+  width: undefined,
+  srcset: undefined,
   bottom: false,
   end: false,
   lazy: false,

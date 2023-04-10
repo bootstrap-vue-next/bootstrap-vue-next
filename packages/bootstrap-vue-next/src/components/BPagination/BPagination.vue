@@ -39,7 +39,7 @@ export default defineComponent({
   name: 'BPagination',
   props: {
     align: {type: String as PropType<AlignmentJustifyContent | 'fill'>, default: 'start'},
-    ariaControls: {type: String, required: false},
+    ariaControls: {type: String, default: undefined},
     ariaLabel: {type: String, default: 'Pagination'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     ellipsisClass: {type: [Array, String], default: () => []},
@@ -66,7 +66,7 @@ export default defineComponent({
     pills: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     prevClass: {type: [Array, String], default: () => []},
     prevText: {type: String, default: '\u2039'},
-    size: {type: String as PropType<InputSize>, required: false},
+    size: {type: String as PropType<InputSize>, default: undefined},
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
   },
   emits: ['update:modelValue', 'page-click'],

@@ -28,12 +28,12 @@ export default defineComponent({
   props: {
     ...BLINK_PROPS,
     delay: {type: Number, default: 5000},
-    bodyClass: {type: String},
-    body: {type: [Object, String] as PropType<BodyProp>},
-    headerClass: {type: String},
+    bodyClass: {type: String, default: undefined},
+    body: {type: [Object, String] as PropType<BodyProp>, default: undefined},
+    headerClass: {type: String, default: undefined},
     headerTag: {type: String, default: 'div'},
     animation: {type: [Boolean, String] as PropType<Booleanish>, default: true},
-    id: {type: String},
+    id: {type: String, default: undefined},
     // Switches role to 'status' and aria-live to 'polite'
     isStatus: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     autoHide: {type: [Boolean, String] as PropType<Booleanish>, default: true},
@@ -43,10 +43,10 @@ export default defineComponent({
     solid: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     // Render the toast in place, rather than in a portal-target
     static: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    title: {type: String},
+    title: {type: String, default: undefined},
     modelValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    toastClass: {type: Array as PropType<string[]>},
-    variant: {type: String as PropType<ColorVariant>},
+    toastClass: {type: Array as PropType<string[]>, default: undefined},
+    variant: {type: String as PropType<ColorVariant>, default: undefined},
   },
   emits: ['destroyed', 'update:modelValue'],
   setup(props, {emit, slots}) {

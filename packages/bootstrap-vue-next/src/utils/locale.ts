@@ -24,6 +24,6 @@ export const isLocaleRTL = (locale: string) => {
   // Determines if the locale is RTL (only single locale supported)
   const parts = toString(locale).toLowerCase().replace(RX_STRIP_LOCALE_MODS, '').split('-')
   const locale1 = parts.slice(0, 2).join('-')
-  const locale2 = parts[0]
+  const [locale2] = parts
   return RTL_LANGS.includes(locale1) || RTL_LANGS.includes(locale2)
 }

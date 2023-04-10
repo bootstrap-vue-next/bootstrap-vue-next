@@ -6,8 +6,8 @@ const {defineConfig} = require('eslint-define-config')
 module.exports = defineConfig({
   root: true,
   extends: [
-    'plugin:vue/vue3-recommended',
     'eslint:recommended',
+    'plugin:vue/vue3-recommended',
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
   ],
@@ -67,8 +67,6 @@ module.exports = defineConfig({
     'template-curly-spacing': 'warn',
     'yield-star-spacing': 'warn',
     'yoda': 'warn',
-    '@typescript-eslint/no-explicit-any': 'off',
-    'vue/require-default-prop': 'off',
     'vue/html-self-closing': [
       'error',
       {

@@ -28,6 +28,12 @@ interface BImgProps {
 }
 
 const props = withDefaults(defineProps<BImgProps>(), {
+  sizes: undefined,
+  src: undefined,
+  srcset: undefined,
+  width: undefined,
+  height: undefined,
+  alt: undefined,
   blank: false,
   lazy: false,
   blankColor: 'transparent',

@@ -50,6 +50,26 @@ interface BNavItemDropdownProps {
 }
 
 const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
+  lazy: undefined,
+  strategy: undefined,
+  floatingMiddleware: undefined,
+  noFlip: undefined,
+  noShift: undefined,
+  dropup: undefined,
+  dropend: undefined,
+  dropstart: undefined,
+  alignStart: undefined,
+  alignEnd: undefined,
+  menuClass: undefined,
+  id: undefined,
+  text: undefined,
+  toggleClass: undefined,
+  size: undefined,
+  offset: undefined,
+  autoClose: undefined,
+  dark: undefined,
+  splitVariant: undefined,
+  noCaret: undefined,
   variant: 'link',
   modelValue: false,
 })

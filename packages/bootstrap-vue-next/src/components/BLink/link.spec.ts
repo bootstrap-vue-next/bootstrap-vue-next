@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BLink from './BLink.vue'
 import {afterEach, describe, expect, it, vitest} from 'vitest'
-import {defineComponent, h} from 'vue'
+import {defineComponent} from 'vue'
 import {createRouter, createWebHistory, RouterLink} from 'vue-router'
 import {createContainer} from 'tests/utils'
 

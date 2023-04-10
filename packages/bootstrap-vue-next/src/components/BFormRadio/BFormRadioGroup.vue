@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, provide, ref, toRef, watchEffect} from 'vue'
+import {computed, provide, readonly, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -31,7 +31,7 @@ interface BFormRadioGroupProps {
   form?: string
   id?: string
   name?: string
-  modelValue?: string | boolean | unknown[] | Record<string, unknown> | number
+  modelValue?: string | boolean | unknown[] | Record<string, unknown> | number | null
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
@@ -39,7 +39,7 @@ interface BFormRadioGroupProps {
   disabled?: Booleanish
   disabledField?: string
   htmlField?: string
-  options?: (string | Record<string, unknown>)[]
+  options?: (string | number | Record<string, unknown>)[]
   plain?: Booleanish
   required?: Booleanish
   stacked?: Booleanish
@@ -50,7 +50,11 @@ interface BFormRadioGroupProps {
 }
 
 const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
-  modelValue: '',
+  size: undefined,
+  form: undefined,
+  id: undefined,
+  name: undefined,
+  modelValue: null,
   autofocus: false,
   buttonVariant: 'secondary',
   buttons: false,
@@ -69,9 +73,12 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
 })
 
 interface BFormRadioGroupEmits {
-  (e: 'input', value: BFormRadioGroupProps['modelValue']): void
-  (e: 'update:modelValue', value: BFormRadioGroupProps['modelValue']): void
-  (e: 'change', value: BFormRadioGroupProps['modelValue']): void
+  (e: 'input', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
+  (
+    e: 'update:modelValue',
+    value: string | boolean | unknown[] | Record<string, unknown> | number | null
+  ): void
+  (e: 'change', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
 }
 
 const emit = defineEmits<BFormRadioGroupEmits>()
@@ -96,49 +103,33 @@ useFocus(element, {
   initialValue: autofocusBoolean.value,
 })
 
-const activeValue = ref<string | boolean | unknown[] | Record<string, unknown> | number>(
-  modelValue.value
-)
-
 provide(radioGroupKey, {
   set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => {
-    activeValue.value = value
+    modelValue.value = value
   },
-  modelValue,
-  buttonVariant: toRef(props, 'buttonVariant'),
-  form: toRef(props, 'form'),
+  modelValue: computed(() => modelValue.value),
+  buttonVariant: readonly(toRef(props, 'buttonVariant')),
+  form: readonly(toRef(props, 'form')),
   name: computedName,
   // 'id': `${computedId.value}_option_${idx}`,
   button: buttonsBoolean,
   state: stateBoolean,
   plain: plainBoolean,
-  size: toRef(props, 'size'),
+  size: readonly(toRef(props, 'size')),
   inline: computed(() => !stackedBoolean.value),
   required: requiredBoolean,
   disabled: disabledBoolean,
 })
 
-watchEffect(() => (modelValue.value = activeValue.value))
-
-const normalizeOptions = computed<
-  {
-    props: {
-      value: string | undefined
-      disabled: boolean | undefined
-    }
-    text: string | undefined
-    html: string | undefined
-    self: symbol
-  }[]
->(() =>
+const normalizeOptions = computed(() =>
   props.options.map((el, ind) =>
-    typeof el === 'string'
+    typeof el === 'string' || typeof el === 'number'
       ? {
           props: {
             value: el,
             disabled: disabledBoolean.value,
           },
-          text: el,
+          text: el.toString(),
           html: undefined,
           self: Symbol(`radioGroupOptionItem${ind}`),
         }
