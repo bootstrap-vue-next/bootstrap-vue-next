@@ -145,12 +145,28 @@
         </b-table>
       </b-col>
     </b-row>
+    <b-row>
+      <b-col>
+        <h4 class="my-3">Refreshable table (displays current time)</h4>
+        <b-button @click="currentTimeTable?.refresh()">Refresh</b-button>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-table
+          ref="currentTimeTable"
+          responsive
+          :fields="currentTimeTableDefinitions"
+          :provider="currentTimeProvider"
+        />
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import type {TableField, TableItem} from 'bootstrap-vue-next'
+import type {TableField, TableItem, BTable} from 'bootstrap-vue-next'
 
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
 const objectTableDefinitions = ref<TableField[]>([
@@ -177,9 +193,29 @@ const items: TableItem[] = [
 ]
 const selection = ref<TableItem[]>([])
 const showSelectBox = ref(false)
-const selectionMode = ref('single')
+const selectionMode = ref<'single' | 'range' | 'multi'>('single')
 function selectClick(selected: TableItem[]) {
   console.log(selected)
   selection.value = selected
+}
+
+const currentTimeTable = ref<typeof BTable | null>(null);
+const currentTimeTableDefinitions: TableField[] = [
+  {key: 'hours', label: 'Hours'},
+  {key: 'minutes', label: 'Minutes'},
+  {key: 'seconds', label: 'Seconds'},
+  {key: 'milliseconds', label: 'Milliseconds'}
+];
+const currentTimeProvider = (): TableItem[] => {
+  const now = new Date()
+
+  return [
+    {
+      hours: now.getHours(),
+      minutes: now.getMinutes(),
+      seconds: now.getSeconds(),
+      milliseconds: now.getMilliseconds(),
+    },
+  ]
 }
 </script>

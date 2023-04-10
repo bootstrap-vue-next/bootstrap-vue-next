@@ -688,5 +688,6 @@ defineExpose({
   clearSelected,
   selectRow,
   unselectRow,
+  refresh: callItemsProvider,
 })
 </script>
