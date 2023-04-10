@@ -60,7 +60,7 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 
 Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-next/blob/main/CONTRIBUTING.md) on how to start helping
 
-[Documentation](https://bootstrap-vue.github.io/bootstrap-vue-next)
+[Documentation](https://github.com/bootstrap-vue/bootstrap-vue-next/tree/main/apps/docs/docs/getting-started)
 
 <h2 align="center">Sponsors</h2>
 
