@@ -38,7 +38,7 @@ interface BFormCheckboxGroupProps {
   disabledField?: string
   htmlField?: string
   name?: string
-  options?: (string | number | Record<string, unknown>)[] // I don't believe it possible to make a strongly typed object if object fields come from a prop
+  options?: (string | number | Record<string, unknown>)[]
   plain?: Booleanish
   required?: Booleanish
   size?: Size
@@ -149,7 +149,7 @@ const normalizeOptions = computed(() =>
         }
       : {
           props: {
-            value: el[props.valueField] as string | undefined,
+            value: el[props.valueField] as string | number | undefined,
             disabled: el[props.disabledField] as boolean | undefined,
             ...(el.props ? el.props : {}),
           },
