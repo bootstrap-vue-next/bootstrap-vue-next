@@ -29,13 +29,3 @@ export const toFloat = (value: number | string, defaultValue = NaN): number => {
   const float = Number.parseFloat(value.toString())
   return Number.isNaN(float) ? defaultValue : float
 }
-
-/**
- * Float given to a certain decimal place
- *
- * @param val
- * @param precision
- * @returns
- */
-export const toPrecision = (val: number, precision: number): string =>
-  toFloat(val).toPrecision(precision)

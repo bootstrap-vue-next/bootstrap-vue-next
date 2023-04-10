@@ -77,20 +77,6 @@ export const isVisible = (el: HTMLElement): boolean => {
   return !!(bcr && bcr.height > 0 && bcr.width > 0)
 }
 
-export const offset = (el: HTMLElement) => {
-  const _offset = {top: 0, left: 0}
-  if (!isElement(el) || el.getClientRects().length === 0) {
-    return _offset
-  }
-  const bcr = getBCR(el)
-  if (bcr) {
-    const win = el.ownerDocument.defaultView
-    _offset.top = bcr.top + (win?.pageYOffset || 0)
-    _offset.left = bcr.left + (win?.pageXOffset || 0)
-  }
-  return _offset
-}
-
 export const isEmptySlot = (el: Slot | undefined): boolean => (el?.() ?? []).length === 0
 
 /**

@@ -15,13 +15,6 @@ export const omit = <A extends Record<PropertyKey, unknown>, B extends ReadonlyA
     .reduce((result, key) => ({...result, [key]: objToPluck[key]}), {} as Omit<A, B[number]>)
 
 /**
- * Convenience method to create a read-only descriptor
- *
- * @returns
- */
-export const readonlyDescriptor = () => ({enumerable: true, configurable: false, writable: false})
-
-/**
  * Deeply clones an item
  *
  * @param {T} source
