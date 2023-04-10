@@ -11,4 +11,5 @@ export {
   getLabelClasses,
 } from './useFormCheck'
 export {COMMON_INPUT_PROPS, default as useFormInput} from './useFormInput'
+export {default as normalizeOptions} from './useFormSelect'
 export {default as useId} from './useId'

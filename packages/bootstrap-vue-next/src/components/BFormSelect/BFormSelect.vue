@@ -2,6 +2,7 @@
   <select
     :id="computedId"
     ref="input"
+    v-bind="$attrs"
     v-model="localValue"
     :class="computedClasses"
     :name="name"
@@ -14,9 +15,9 @@
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
-    <template v-for="option in normalizeOptions" :key="option">
+    <template v-for="(option, index) in formOptions" :key="index">
       <b-form-select-option-group
-        v-if="Array.isArray(option)"
+        v-if="Array.isArray(option.options)"
         :label="option.label"
         :options="option.options"
       />
@@ -37,11 +38,11 @@
 <script setup lang="ts">
 import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
-import {computed, nextTick, ref, toRef} from 'vue'
-import {useBooleanish, useId} from '../../composables'
-import {useFocus, useVModel} from '@vueuse/core'
+import {computed, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
+import {normalizeOptions, useBooleanish, useId} from '../../composables'
+import {useFocus, useVModel} from '@vueuse/core'
 
 interface BFormSelectProps {
   ariaInvalid?: AriaInvalid
@@ -54,12 +55,7 @@ interface BFormSelectProps {
   labelField?: string
   multiple?: Booleanish
   name?: string
-  options?: (
-    | string
-    | number
-    | Record<string, unknown>
-    | (string | number | Record<string, unknown>)[]
-  )[]
+  options?: unknown[] | Record<string, unknown>
   optionsField?: string
   plain?: Booleanish
   required?: Booleanish
@@ -72,10 +68,10 @@ interface BFormSelectProps {
 }
 
 const props = withDefaults(defineProps<BFormSelectProps>(), {
-  size: undefined,
-  name: undefined,
-  id: undefined,
   form: undefined,
+  id: undefined,
+  name: undefined,
+  size: undefined,
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
@@ -139,14 +135,18 @@ const computedAriaInvalid = computed(() =>
   resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
 )
 
+// TODO this needs to be redone to fit the structure of BFormCheckboxGroup
+// It also doesn't work for array syntaxes. Review second example from https://bootstrap-vue.org/docs/components/form-select
+// For more info on how it should behave
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formOptions = computed(() => normalizeOptions(props.options as any[], 'BFormSelect', props))
 const localValue = computed({
   get: () => modelValue.value,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set: (newValue: any) => {
-    emit('input', newValue)
+    emit('change', newValue)
     modelValue.value = newValue
-    nextTick(() => {
-      emit('change', newValue)
-    })
+    emit('input', newValue)
   },
 })
 </script>
