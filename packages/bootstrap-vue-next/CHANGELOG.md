@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.2](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.1...v0.8.2) (2023-04-11)
+
+
+### Bug Fixes
+
+* **BFormCheckboxGroup & BFormRadioGroup:** groups not emitting their change & input events fixes [#1022](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/1022) ([33b75e2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/33b75e2bb2838868d73e6b67c78f3ffbe4f65be9))
+* **BFormCheckboxGroup:** emitting update:modelValue correctly as it didn't show a reactive change ([33b75e2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/33b75e2bb2838868d73e6b67c78f3ffbe4f65be9))
+* **BFormRadio:** modelValue never being set back to false when radio group changes ([33b75e2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/33b75e2bb2838868d73e6b67c78f3ffbe4f65be9))
+* **BFormRadio:** value not being assigned correctly when value === 0 ([33b75e2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/33b75e2bb2838868d73e6b67c78f3ffbe4f65be9))
+
 ## [0.8.1](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.0...v0.8.1) (2023-04-10)
 
 
