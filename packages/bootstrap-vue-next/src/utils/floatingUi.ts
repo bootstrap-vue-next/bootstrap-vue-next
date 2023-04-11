@@ -121,9 +121,12 @@ export const bind = (el: ElementWithPopper, binding: DirectiveBinding) => {
 }
 
 export const unbind = (el: ElementWithPopper) => {
+  const div = el.$__element
   el.$__app?.unmount()
   delete el.$__app
   delete el.$__state
-  el.$__element?.remove()
+  setTimeout(() => {
+    div?.remove()
+  }, 0)
   delete el.$__element
 }
