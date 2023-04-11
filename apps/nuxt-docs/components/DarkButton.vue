@@ -1,5 +1,0 @@
-<template>
-  <BDropdown>
-    
-  </BDropdown>
-</template>

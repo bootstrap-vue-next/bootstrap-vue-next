@@ -1,65 +1,12 @@
 <template>
-  <div class="main">
-    <b-form-radio-group
-      v-model="selected"
-      :options="options"
-      value-field="id"
-      text-field="name"
-      stacked
-      @change="onChange"
-      @input="onInput"
-      @update:modelValue="onModelValueChange"
-    />
-
-    <br />
-    <br />
-    {{ selected }}
-  </div>
+  <b-container>
+    <b-row>
+      <b-col> Hello world </b-col>
+    </b-row>
+  </b-container>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'App',
-  components: {},
-  data() {
-    return {
-      selected: 1,
-      options: [
-        {
-          id: 0,
-          name: 'User 0 (impossible to select)',
-        },
-        {
-          id: 1,
-          name: 'User 1',
-        },
-        {
-          id: 2,
-          name: 'User 2',
-        },
-        {
-          id: 3,
-          name: 'User 3',
-        },
-      ],
-    }
-  },
-  methods: {
-    onChange() {
-      console.log('change')
-    },
-    onInput() {
-      console.log('input')
-    },
-    onModelValueChange() {
-      console.log('model')
-    },
-  },
-}
+<script setup lang="ts">
+// You can use this file as a development spot to test your changes
+// Please do not commit this file
 </script>
-
-<style>
-.main {
-  padding: 16px;
-}
-</style>
