@@ -180,8 +180,8 @@ if (visibleBoolean.value) {
   show.value = true
 }
 
-watch(visibleBoolean, () => {
-  visibleBoolean.value ? open() : close()
+watch(visibleBoolean, (newval) => {
+  newval ? open() : close()
 })
 
 useEventListener(element, 'bv-toggle', () => {

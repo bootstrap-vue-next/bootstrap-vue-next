@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
 })
 
 const emit = defineEmits<(e: 'update:modelValue', value: string) => void>()
+
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const computedId = useId(toRef(props, 'id'), 'accordion')
