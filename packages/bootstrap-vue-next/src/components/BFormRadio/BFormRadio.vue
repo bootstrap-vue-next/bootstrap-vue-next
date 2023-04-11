@@ -123,7 +123,7 @@ watch(
   () => parentData?.modelValue.value,
   (newValue) => {
     const isEqual = JSON.stringify(newValue) === JSON.stringify(props.value)
-    if (isEqual !== false) return
+    if (isEqual === true) return
     localValue.value = false
   }
 )
