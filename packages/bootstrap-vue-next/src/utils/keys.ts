@@ -78,7 +78,7 @@ export const radioGroupKey: InjectionKey<{
   buttonVariant: Readonly<Ref<ButtonVariant>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
-  button: Readonly<Ref<boolean>>
+  buttons: Readonly<Ref<boolean>>
   state: Readonly<Ref<boolean | undefined>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
