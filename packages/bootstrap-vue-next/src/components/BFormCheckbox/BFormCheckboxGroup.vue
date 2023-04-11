@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, readonly, ref, toRef} from 'vue'
+import {computed, nextTick, provide, readonly, ref, toRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -113,13 +113,27 @@ useFocus(element, {
 
 provide(checkboxGroupKey, {
   set: (value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number) => {
-    modelValue.value.push(value)
+    const localValue = [...modelValue.value]
+    localValue.push(value)
+
+    emit('input', localValue)
+    modelValue.value = localValue
+    nextTick(() => {
+      emit('change', localValue)
+    })
   },
   remove: (
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
   ) => {
+    const localValue = [...modelValue.value]
     // TODO if the value is an array, set, or object, indexOf may not work correctly
-    modelValue.value.splice(modelValue.value.indexOf(value), 1)
+    localValue.splice(modelValue.value.indexOf(value), 1)
+
+    emit('input', localValue)
+    modelValue.value = localValue
+    nextTick(() => {
+      emit('change', localValue)
+    })
   },
   modelValue: computed(() => modelValue.value),
   switch: switchesBoolean,
