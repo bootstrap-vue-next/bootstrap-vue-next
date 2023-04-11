@@ -17,6 +17,16 @@
         />
         <br />
         <span>
+          <b>Buttons</b>
+        </span>
+        <b-form-checkbox-group
+          id="checkbox-group-1"
+          v-model="checkboxes.selected"
+          :options="checkboxes.options"
+          buttons
+        />
+        <br />
+        <span>
           <b>With slots</b>
         </span>
         <b-form-checkbox-group id="checkbox-group-2" v-model="checkboxes.selected">

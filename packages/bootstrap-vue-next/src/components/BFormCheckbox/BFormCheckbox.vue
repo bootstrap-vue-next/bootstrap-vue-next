@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses">
+  <RenderComponentOrSkip :skip="isButtonGroup" :class="computedClasses">
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -20,7 +20,7 @@
     <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
-  </div>
+  </RenderComponentOrSkip>
 </template>
 
 <script setup lang="ts">
@@ -29,6 +29,7 @@ import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
+import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
 interface BFormCheckboxProps {
   ariaLabel?: string
@@ -40,6 +41,7 @@ interface BFormCheckboxProps {
   autofocus?: Booleanish
   plain?: Booleanish
   button?: Booleanish
+  buttonGroup?: Booleanish
   switch?: Booleanish
   disabled?: Booleanish
   buttonVariant?: ButtonVariant
@@ -61,6 +63,7 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   autofocus: false,
   plain: false,
   button: false,
+  buttonGroup: false,
   id: undefined,
   required: undefined,
   state: undefined,
@@ -101,6 +104,7 @@ const indeterminateBoolean = useBooleanish(toRef(props, 'indeterminate'))
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
+const buttonGroupBoolean = useBooleanish(toRef(props, 'buttonGroup'))
 const switchBoolean = useBooleanish(toRef(props, 'switch'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
@@ -148,6 +152,10 @@ const computedRequired = computed(
   () =>
     !!(props.name ?? parentData?.name.value) &&
     (requiredBoolean.value || parentData?.required.value)
+)
+
+const isButtonGroup = computed(
+  () => buttonGroupBoolean.value || (parentData?.buttons.value ?? false)
 )
 
 const classesObject = computed(() => ({
