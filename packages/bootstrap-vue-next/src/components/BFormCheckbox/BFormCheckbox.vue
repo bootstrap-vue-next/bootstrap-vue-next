@@ -125,7 +125,7 @@ const localValue = computed({
           .includes(JSON.stringify(props.value))
       : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue) => {
-    const updateValue = !newValue ? props.uncheckedValue : props.value
+    const updateValue = newValue ? props.value : props.uncheckedValue
 
     emit('input', updateValue)
     modelValue.value = updateValue
