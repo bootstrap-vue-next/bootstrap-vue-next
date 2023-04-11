@@ -12,10 +12,7 @@
       :href="href"
       :class="[(activeBoolean ?? isActive) && activeClass]"
       v-bind="$attrs"
-      @click="($event: Event) => {
-        navigate($event)
-        closeCollapse()
-      }"
+      @click=";[navigate($event), closeCollapse()]"
     >
       <slot />
     </component>
