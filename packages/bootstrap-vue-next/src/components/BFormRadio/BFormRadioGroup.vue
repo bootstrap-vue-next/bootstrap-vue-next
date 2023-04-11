@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, provide, readonly, ref, toRef} from 'vue'
+import {computed, nextTick, provide, readonly, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -105,13 +105,16 @@ useFocus(element, {
 
 provide(radioGroupKey, {
   set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => {
+    emit('input', value)
     modelValue.value = value
+    nextTick(() => {
+      emit('change', value)
+    })
   },
   modelValue: computed(() => modelValue.value),
   buttonVariant: readonly(toRef(props, 'buttonVariant')),
   form: readonly(toRef(props, 'form')),
   name: computedName,
-  // 'id': `${computedId.value}_option_${idx}`,
   button: buttonsBoolean,
   state: stateBoolean,
   plain: plainBoolean,

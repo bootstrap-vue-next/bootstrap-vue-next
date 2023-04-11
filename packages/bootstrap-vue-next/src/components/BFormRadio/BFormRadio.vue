@@ -108,8 +108,8 @@ const localValue = computed({
     parentData !== null
       ? JSON.stringify(parentData.modelValue.value) === JSON.stringify(props.value)
       : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
-  set: (newValue) => {
-    const updateValue = !newValue ? false : props.value
+  set: (newValue: unknown) => {
+    const updateValue = newValue || newValue === 0 ? props.value : false
 
     emit('input', updateValue)
     modelValue.value = updateValue
@@ -118,6 +118,15 @@ const localValue = computed({
     })
   },
 })
+
+watch(
+  () => parentData?.modelValue.value,
+  (newValue) => {
+    const isEqual = JSON.stringify(newValue) === JSON.stringify(props.value)
+    if (isEqual === true) return
+    localValue.value = false
+  }
+)
 
 watch(modelValue, (newValue) => {
   if (parentData === null || newValue === false) return
