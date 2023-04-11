@@ -65,17 +65,11 @@ export default defineComponent({
     const appendBoolean = useBooleanish(toRef(props, 'append'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     const replaceBoolean = useBooleanish(toRef(props, 'replace'))
-    const {close: _closeCollapse, isNav: inNavCollapse} = inject(collapseInjectionKey, {
-      close: () => {
-        // do nothing
-      },
-      isNav: ref(false),
-    })
+    const collapseData = inject(collapseInjectionKey, null)
     const closeCollapse = () => {
-      if (inNavCollapse?.value) {
-        _closeCollapse?.()
-      }
+      collapseData?.close?.()
     }
+
     const instance = getCurrentInstance()
     const link = ref<HTMLElement>(null as unknown as HTMLElement)
 
@@ -140,7 +134,8 @@ export default defineComponent({
         e.stopImmediatePropagation()
         return
       }
-      closeCollapse()
+      collapseData?.close?.()
+
       emit('click', e)
     }
 

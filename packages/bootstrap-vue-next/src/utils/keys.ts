@@ -96,3 +96,12 @@ export const collapseInjectionKey: InjectionKey<{
   visible?: Ref<boolean>
   isNav?: Ref<boolean>
 }> = Symbol('collapse')
+
+export const dropdownInjectionKey: InjectionKey<{
+  id?: Ref<string>
+  readonly close?: () => void
+  readonly open?: () => void
+  readonly toggle?: () => void
+  visible?: Ref<boolean>
+  isNav?: Ref<boolean>
+}> = Symbol('collapse')

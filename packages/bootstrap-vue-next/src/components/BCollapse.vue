@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, provide, ref, toRef, watchEffect} from 'vue'
+import {computed, nextTick, onMounted, provide, ref, toRef, watch, watchEffect} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
@@ -149,7 +149,7 @@ const hide = () => {
   })
 }
 
-watchEffect(() => {
+watch([modelValue, show], () => {
   if (modelValueBoolean.value === true) {
     if (show.value) return
     reveal()
