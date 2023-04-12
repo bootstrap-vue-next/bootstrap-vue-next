@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" class="btn-group">
+  <div :class="computedClasses" class="btn-group" v-bind="$attrs">
     <b-button
       :id="computedId"
       ref="splitButton"
@@ -33,34 +33,34 @@
         </slot>
       </span>
     </b-button>
-    <ul
-      v-if="!lazyBoolean || modelValueBoolean"
-      v-show="lazyBoolean || modelValueBoolean"
-      ref="floating"
-      :style="{
-        position: strategy,
-        top: `${y ?? 0}px`,
-        left: `${x ?? 0}px`,
-        width: 'max-content',
-      }"
-      class="dropdown-menu show"
-      :class="dropdownMenuClasses"
-      :aria-labelledby="computedId"
-      :role="role"
-      @click="onClickInside"
-    >
-      <slot />
-    </ul>
   </div>
+  <ul
+    v-if="!lazyBoolean || modelValueBoolean"
+    v-show="lazyBoolean || modelValueBoolean"
+    ref="floating"
+    :style="{
+      position: strategy === 'absolute' ? undefined : 'fixed',
+      top: `${y ?? 0}px`,
+      left: `${x ?? 0}px`,
+      width: 'max-content',
+    }"
+    class="dropdown-menu show"
+    :class="dropdownMenuClasses"
+    :aria-labelledby="computedId"
+    :role="role"
+    @click="onClickInside"
+  >
+    <slot />
+  </ul>
 </template>
 
 <script setup lang="ts">
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
 import {onClickOutside, useToNumber, useVModel} from '@vueuse/core'
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
-import {BvEvent, resolveFloatingPlacement} from '../../utils'
+import {BvEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import type {RouteLocationRaw} from 'vue-router'
 
@@ -279,4 +279,25 @@ const onClickInside = () => {
 }
 
 watch(modelValueBoolean, update)
+
+provide(dropdownInjectionKey, {
+  id: computedId,
+  open: () => {
+    modelValue.value = true
+  },
+  close: () => {
+    modelValue.value = false
+  },
+  toggle: () => {
+    modelValue.value = !modelValueBoolean.value
+  },
+  visible: modelValueBoolean,
+  isNav: isNavBoolean,
+})
+</script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>
