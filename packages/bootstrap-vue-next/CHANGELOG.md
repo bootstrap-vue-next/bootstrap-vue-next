@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.4](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.3...v0.8.4) (2023-04-12)
+
+
+### Features
+
+* **BFormGroup:** remove mb-3 class being set on row fixes [#370](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/370) ([f091df5](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/f091df5c09108aefe4027ad40bc410be63219a6f))
+
 ## [0.8.3](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.2...v0.8.3) (2023-04-12)
 
 
