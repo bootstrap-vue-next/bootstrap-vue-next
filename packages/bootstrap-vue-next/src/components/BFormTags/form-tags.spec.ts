@@ -67,4 +67,24 @@ describe('form-tags', () => {
     expect($emitted).toBeDefined()
     expect($emitted[0][0]).toEqual(['foo'])
   })
+
+  it('splits on the separator before adding new tag', async () => {
+    const wrapper = mount(BFormTags, {props: {separator: ','}})
+
+    const $input = wrapper.get('input')
+    $input.element.value = 'test1,test2'
+    await $input.trigger('input')
+
+    const $tagStateEmitted = wrapper.emitted('tag-state') as unknown[][]
+
+    expect($tagStateEmitted).toBeDefined()
+    expect($tagStateEmitted[0][0]).toEqual(['test1,test2'])
+
+    await $input.trigger('keydown', {key: 'Enter'})
+
+    const $tagsStateEmitted = wrapper.emitted('update:modelValue') as unknown[][]
+
+    expect($tagsStateEmitted).toBeDefined()
+    expect($tagsStateEmitted[0][0]).toEqual(['test1', 'test2'])
+  })
 })
