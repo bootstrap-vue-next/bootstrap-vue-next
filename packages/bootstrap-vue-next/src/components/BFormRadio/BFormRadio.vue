@@ -39,7 +39,7 @@ interface BFormRadioProps {
   name?: string
   size?: InputSize
   autofocus?: Booleanish
-  modelValue?: boolean | string | unknown[] | Record<string, unknown> | number
+  modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
   plain?: Booleanish
   button?: Booleanish
   buttonGroup?: Booleanish
@@ -47,7 +47,7 @@ interface BFormRadioProps {
   buttonVariant?: ButtonVariant
   inline?: Booleanish
   required?: Booleanish
-  state?: Booleanish
+  state?: Booleanish | null
   value?: string | boolean | Record<string, unknown> | number
 }
 
@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   buttonGroup: false,
   disabled: false,
   modelValue: undefined,
-  state: undefined,
+  state: null,
   size: undefined,
   buttonVariant: undefined,
   inline: false,
@@ -72,11 +72,11 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
 })
 
 interface BFormRadioEmits {
-  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number): void
-  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number): void
+  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
+  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
   (
     e: 'update:modelValue',
-    value: boolean | string | unknown[] | Record<string, unknown> | number
+    value: boolean | string | unknown[] | Record<string, unknown> | number | null
   ): void
 }
 
@@ -112,7 +112,7 @@ const localValue = computed({
     parentData !== null
       ? JSON.stringify(parentData.modelValue.value) === JSON.stringify(props.value)
       : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
-  set: (newValue: unknown) => {
+  set: (newValue: string | boolean | unknown[] | Record<string, unknown> | number | null) => {
     const updateValue = newValue || newValue === 0 ? props.value : false
 
     emit('input', updateValue)

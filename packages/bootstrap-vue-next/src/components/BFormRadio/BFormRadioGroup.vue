@@ -43,7 +43,7 @@ interface BFormRadioGroupProps {
   plain?: Booleanish
   required?: Booleanish
   stacked?: Booleanish
-  state?: Booleanish
+  state?: Booleanish | null
   textField?: string
   validated?: Booleanish
   valueField?: string
@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   buttonVariant: 'secondary',
   buttons: false,
   ariaInvalid: undefined,
-  state: undefined,
+  state: null,
   disabled: false,
   disabledField: 'disabled',
   htmlField: 'html',
@@ -104,7 +104,7 @@ useFocus(element, {
 })
 
 provide(radioGroupKey, {
-  set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => {
+  set: (value: string | boolean | unknown[] | Record<string, unknown> | number | null) => {
     emit('input', value)
     modelValue.value = value
     nextTick(() => {

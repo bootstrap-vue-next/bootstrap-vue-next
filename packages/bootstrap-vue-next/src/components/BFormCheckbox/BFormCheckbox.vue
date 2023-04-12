@@ -48,10 +48,17 @@ interface BFormCheckboxProps {
   inline?: Booleanish
   required?: Booleanish
   size?: InputSize
-  state?: Booleanish
-  uncheckedValue?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
-  value?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
-  modelValue?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+  state?: Booleanish | null
+  uncheckedValue?:
+    | unknown[]
+    | Set<unknown>
+    | boolean
+    | string
+    | Record<string, unknown>
+    | number
+    | null
+  value?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+  modelValue?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
 }
 
 const props = withDefaults(defineProps<BFormCheckboxProps>(), {
@@ -66,7 +73,7 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   buttonGroup: false,
   id: undefined,
   required: undefined,
-  state: undefined,
+  state: null,
   modelValue: undefined,
   switch: false,
   disabled: false,
@@ -80,15 +87,15 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
 interface BFormCheckboxEmits {
   (
     e: 'update:modelValue',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ): void
   (
     e: 'input',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ): void
   (
     e: 'change',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ): void
 }
 

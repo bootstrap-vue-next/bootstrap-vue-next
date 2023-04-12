@@ -1,4 +1,4 @@
-import type {AriaInvalid, Size} from '../types'
+import type {AriaInvalid, Booleanish, Size} from '../types'
 import {
   computed,
   type ExtractPropTypes,
@@ -10,7 +10,7 @@ import {
   toRef,
   watch,
 } from 'vue'
-import useId from './useId'
+import {useBooleanish, useId} from '.'
 import {resolveAriaInvalid} from '../utils'
 
 export const COMMON_INPUT_PROPS = {
@@ -35,7 +35,7 @@ export const COMMON_INPUT_PROPS = {
   readonly: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
   size: {type: String as PropType<Size>, required: false},
-  state: {type: Boolean as PropType<boolean | null | undefined>, default: null},
+  state: {type: Boolean as PropType<Booleanish | null | undefined>, default: null},
   trim: {type: Boolean, default: false},
 }
 
@@ -50,8 +50,9 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   let inputValue: string | null = null
   let neverFormatted = true
   const computedId = useId(toRef(props, 'id'), 'input')
+  const stateBoolean = useBooleanish(toRef(props, 'state'))
 
-  const _formatValue = (value: unknown, evt: any, force = false) => {
+  const _formatValue = (value: unknown, evt: Event, force = false) => {
     value = String(value)
     if (typeof props.formatter === 'function' && (!props.lazyFormatter || force)) {
       neverFormatted = false
@@ -87,7 +88,7 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   })
 
   const computedAriaInvalid = computed(() =>
-    resolveAriaInvalid(props.ariaInvalid, props.state ?? undefined)
+    resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
   )
 
   const onInput = (evt: Event) => {

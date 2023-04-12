@@ -53,19 +53,19 @@ export const accordionInjectionKey: InjectionKey<{
 // BFormCheckboxGroup
 export const checkboxGroupKey: InjectionKey<{
   set: (
-    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ) => void
   remove: (
-    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ) => void
   modelValue: Readonly<
-    Ref<(unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]>
+    Ref<(unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]>
   >
   switch: Readonly<Ref<boolean>>
   buttonVariant: Readonly<Ref<ButtonVariant>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
-  state: Readonly<Ref<boolean | undefined>>
+  state: Readonly<Ref<boolean | undefined | null>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>
@@ -75,13 +75,13 @@ export const checkboxGroupKey: InjectionKey<{
 }> = Symbol('checkboxGroup')
 
 export const radioGroupKey: InjectionKey<{
-  set: (value: string | boolean | unknown[] | Record<string, unknown> | number) => void
+  set: (value: string | boolean | unknown[] | Record<string, unknown> | number | null) => void
   modelValue: Readonly<Ref<string | boolean | unknown[] | Record<string, unknown> | number | null>>
   buttonVariant: Readonly<Ref<ButtonVariant>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
   buttons: Readonly<Ref<boolean>>
-  state: Readonly<Ref<boolean | undefined>>
+  state: Readonly<Ref<boolean | undefined | null>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
   inline: Readonly<Ref<boolean>>

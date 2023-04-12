@@ -34,7 +34,7 @@ const getClasses = (items: Ref<ClassesItemsInput> | ClassesItemsInput) => {
 interface InputClassesItemsInput {
   plain?: boolean
   button?: boolean
-  state?: boolean
+  state?: boolean | null
 }
 
 /**
@@ -83,7 +83,7 @@ const getLabelClasses = (items: Ref<LabelClasesItemsInput> | LabelClasesItemsInp
 interface GroupAttrItemsInput {
   required?: boolean
   ariaInvalid?: AriaInvalid
-  state?: boolean
+  state?: boolean | null
 }
 
 /**
