@@ -22,7 +22,6 @@ import type {Booleanish} from '../types'
 import {BvTriggerableEvent, collapseInjectionKey} from '../utils'
 
 interface BCollapseProps {
-  accordion?: string
   // appear?: Booleanish
   id?: string
   modelValue?: Booleanish
@@ -31,6 +30,15 @@ interface BCollapseProps {
   horizontal?: Booleanish
   visible?: Booleanish
   isNav?: Booleanish
+}
+interface BCollapseEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'update:modelValue', value: boolean): void
 }
 
 const props = withDefaults(defineProps<BCollapseProps>(), {
@@ -43,16 +51,6 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
   visible: false,
   isNav: false,
 })
-
-interface BCollapseEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
 
 const buildTriggerableEvent = (
   type: string,
@@ -182,8 +180,8 @@ if (visibleBoolean.value) {
   show.value = true
 }
 
-watchEffect(() => {
-  visibleBoolean.value ? open() : close()
+watch(visibleBoolean, (newval) => {
+  newval ? open() : close()
 })
 
 useEventListener(element, 'bv-toggle', () => {
