@@ -40,5 +40,8 @@ const computedClasses = computed(() => ({
 provide(accordionInjectionKey, {
   openItem: modelValue,
   free: freeBoolean,
+  setOpenItem: (id: string) => {
+    modelValue.value = id
+  },
 })
 </script>

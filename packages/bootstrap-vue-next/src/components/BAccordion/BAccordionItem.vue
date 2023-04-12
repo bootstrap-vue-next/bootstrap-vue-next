@@ -34,18 +34,12 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
-</script>
 <script setup lang="ts">
 import {inject, onMounted, ref, toRef, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 // import  from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
-
 import {useId} from '../../composables'
 import type {Booleanish} from '../../types'
 
@@ -80,6 +74,7 @@ interface BAccordionItemEmits {
 }
 
 const emit = defineEmits<BAccordionItemEmits>()
+
 const events = {
   'show': (e: BvTriggerableEvent) => emit('show', e),
   'shown': (e: BvTriggerableEvent) => emit('shown', e),
@@ -91,24 +86,31 @@ const events = {
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const {openItem, free} = inject(accordionInjectionKey, {
-  openItem: ref(''),
-  free: ref(false),
-})
+const parentData = inject(accordionInjectionKey, null)
 
 const computedId = useId(toRef(props, 'id'), 'accordion_item')
 
 onMounted(() => {
-  if (modelValue.value && !free.value) {
-    openItem.value = computedId.value
+  if (modelValue.value && !parentData?.free.value) {
+    parentData?.setOpenItem(computedId.value)
   }
-  if (!modelValue.value && openItem.value === computedId.value) {
+  if (!modelValue.value && parentData?.openItem.value === computedId.value) {
     modelValue.value = true
   }
 })
 
-watch(openItem, () => (modelValue.value = openItem.value === computedId.value && !free.value))
+watch(
+  () => parentData?.openItem.value,
+  () =>
+    (modelValue.value = parentData?.openItem.value === computedId.value && !parentData?.free.value)
+)
 watch(modelValue, () => {
-  if (modelValue.value && !free.value) openItem.value = computedId.value
+  if (modelValue.value && !parentData?.free.value) parentData?.setOpenItem(computedId.value)
 })
+</script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>
