@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, provide, toRef} from 'vue'
+import {computed, provide, readonly, toRef} from 'vue'
 import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
 import {useVModel} from '@vueuse/core'
@@ -38,7 +38,7 @@ const computedClasses = computed(() => ({
 }))
 
 provide(accordionInjectionKey, {
-  openItem: modelValue,
+  openItem: readonly(modelValue),
   free: freeBoolean,
   setOpenItem: (id: string) => {
     modelValue.value = id
