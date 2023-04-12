@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.3](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.2...v0.8.3) (2023-04-12)
+
+
+### Features
+
+* **BModal:** add class modal-open to body when modal is open fixes [#976](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/976) ([a3aa36f](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a3aa36fc0d5028bae404ca5575e74606a9e9e17a))
+* **Common_input_props:** add null as an option fixes [#1015](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/1015) ([a3aa36f](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a3aa36fc0d5028bae404ca5575e74606a9e9e17a))
+* **Group Items, [select, checkbox etc]:** add null option to value/unchecked value/modelValue fixes # [#962](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/962) ([a3aa36f](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a3aa36fc0d5028bae404ca5575e74606a9e9e17a))
+* **state:** add null as an option to "state" props, make their default null fixes [#807](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/807) ([a3aa36f](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/a3aa36fc0d5028bae404ca5575e74606a9e9e17a))
+
 ## [0.8.2](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.1...v0.8.2) (2023-04-11)
 
 
