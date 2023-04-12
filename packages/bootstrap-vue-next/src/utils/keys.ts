@@ -89,19 +89,19 @@ export const radioGroupKey: InjectionKey<{
 
 // Collapse
 export const collapseInjectionKey: InjectionKey<{
-  id?: Ref<string>
+  id?: Readonly<Ref<string>>
   readonly close?: () => void
   readonly open?: () => void
   readonly toggle?: () => void
-  visible?: Ref<boolean>
-  isNav?: Ref<boolean>
+  visible?: Readonly<Ref<boolean>>
+  isNav?: Readonly<Ref<boolean>>
 }> = Symbol('collapse')
 
 export const dropdownInjectionKey: InjectionKey<{
-  id?: Ref<string>
+  id?: Readonly<Ref<string>>
   readonly close?: () => void
   readonly open?: () => void
   readonly toggle?: () => void
-  visible?: Ref<boolean>
-  isNav?: Ref<boolean>
+  visible?: Readonly<Ref<boolean>>
+  isNav?: Readonly<Ref<boolean>>
 }> = Symbol('collapse')

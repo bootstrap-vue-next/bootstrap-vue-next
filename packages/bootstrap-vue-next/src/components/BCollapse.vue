@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, provide, ref, toRef, watch, watchEffect} from 'vue'
+import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch, watchEffect} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
@@ -194,7 +194,8 @@ defineExpose({
   close,
   open,
   toggle,
-  visible: show.value,
+  visible: readonly(show),
+  isNav: isNavBoolean,
 })
 
 provide(collapseInjectionKey, {
@@ -202,7 +203,7 @@ provide(collapseInjectionKey, {
   close,
   open,
   toggle,
-  visible: show,
+  visible: readonly(show),
   isNav: isNavBoolean,
 })
 </script>

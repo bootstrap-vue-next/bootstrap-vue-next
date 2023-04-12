@@ -282,7 +282,6 @@ watch(modelValueBoolean, update)
 
 provide(dropdownInjectionKey, {
   id: computedId,
-
   open: () => {
     modelValue.value = true
   },
