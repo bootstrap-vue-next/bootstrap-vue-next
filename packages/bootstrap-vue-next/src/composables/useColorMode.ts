@@ -14,7 +14,9 @@ export default (opts: ColorModeOptions = {}) => {
     attribute,
     selector,
     storageKey:
-      opts.persist === true ? `${opts.attribute ?? attribute}-${opts.selector ?? selector}` : null,
+      opts.persist === true
+        ? `bv-color-${opts.attribute ?? attribute}-${opts.selector ?? selector}`
+        : null,
     ...opts,
   })
 }
