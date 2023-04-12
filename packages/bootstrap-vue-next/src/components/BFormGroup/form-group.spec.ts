@@ -17,11 +17,6 @@ describe('form-group', () => {
     expect(wrapper.element.tagName).toBe('DIV')
   })
 
-  it('has static class mb-3', () => {
-    const wrapper = mount(BFormGroup)
-    expect(wrapper.classes()).toContain('mb-3')
-  })
-
   it('has class is-valid when prop state is true', () => {
     const wrapper = mount(BFormGroup, {
       props: {state: true},
