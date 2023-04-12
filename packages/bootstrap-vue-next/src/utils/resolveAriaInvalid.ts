@@ -7,7 +7,10 @@ import type {AriaInvalid} from '../types'
  * @param {boolean} state If the prop state is `false`, it will render the aria-invalid attribute to be `'true'`, as the value would be considered invalid
  * @returns Truthy > Grammar | Spelling > State > Falsy
  */
-export default (ariaInvalid?: AriaInvalid, state?: boolean): Exclude<AriaInvalid, ''> | undefined =>
+export default (
+  ariaInvalid?: AriaInvalid,
+  state?: boolean | null
+): Exclude<AriaInvalid, ''> | undefined =>
   ariaInvalid === true || ariaInvalid === 'true' || ariaInvalid === ''
     ? 'true'
     : ariaInvalid === 'grammar' || ariaInvalid === 'spelling'

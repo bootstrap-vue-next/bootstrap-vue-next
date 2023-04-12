@@ -94,9 +94,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, useSlots} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
-import {useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {useEventListener, useFocus, useDark as useSetAttr, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, InputSize} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
@@ -249,6 +249,13 @@ const okOnlyBoolean = useBooleanish(toRef(props, 'okOnly'))
 const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
 const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
 const staticBoolean = useBooleanish(toRef(props, 'static'))
+
+const modalOpen = useSetAttr({
+  attribute: 'class',
+  selector: 'body',
+  valueDark: 'modal-open',
+  valueLight: '',
+})
 
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
@@ -407,6 +414,14 @@ const onAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
+
+watch(
+  isActive,
+  (newVal) => {
+    modalOpen.value = newVal
+  },
+  {immediate: true}
+)
 
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : show()

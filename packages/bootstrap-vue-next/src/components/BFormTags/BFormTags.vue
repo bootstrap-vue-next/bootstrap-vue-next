@@ -147,7 +147,7 @@ interface BFormTagsProps {
   removeOnDelete?: Booleanish
   required?: Booleanish
   separator?: string | unknown[]
-  state?: Booleanish
+  state?: Booleanish | null
   size?: InputSize
   tagClass?: ClassValue
   tagPills?: Booleanish
@@ -184,7 +184,7 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   placeholder: 'Add tag...',
   removeOnDelete: false,
   required: false,
-  state: undefined,
+  state: null,
   tagPills: false,
   tagRemovedLabel: 'Tag removed',
   tagValidator: () => true,

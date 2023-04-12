@@ -29,7 +29,15 @@ import {useFocus, useVModel} from '@vueuse/core'
 interface BFormCheckboxGroupProps {
   id?: string
   form?: string
-  modelValue?: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+  modelValue?: (
+    | unknown[]
+    | Set<unknown>
+    | boolean
+    | string
+    | Record<string, unknown>
+    | number
+    | null
+  )[]
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
   buttonVariant?: ButtonVariant
@@ -43,7 +51,7 @@ interface BFormCheckboxGroupProps {
   required?: Booleanish
   size?: Size
   stacked?: Booleanish
-  state?: Booleanish
+  state?: Booleanish | null
   switches?: Booleanish
   textField?: string
   validated?: Booleanish
@@ -60,7 +68,7 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   buttonVariant: 'secondary',
   buttons: false,
   ariaInvalid: undefined,
-  state: undefined,
+  state: null,
   disabled: false,
   disabledField: 'disabled',
   htmlField: 'html',
@@ -77,15 +85,15 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
 interface BFormCheckboxGroupEmits {
   (
     e: 'input',
-    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
   ): void
   (
     e: 'update:modelValue',
-    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
   ): void
   (
     e: 'change',
-    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number)[]
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
   ): void
 }
 
@@ -112,7 +120,9 @@ useFocus(element, {
 })
 
 provide(checkboxGroupKey, {
-  set: (value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number) => {
+  set: (
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+  ) => {
     const localValue = [...modelValue.value]
     localValue.push(value)
 
@@ -123,7 +133,7 @@ provide(checkboxGroupKey, {
     })
   },
   remove: (
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ) => {
     const localValue = [...modelValue.value]
     // TODO if the value is an array, set, or object, indexOf may not work correctly

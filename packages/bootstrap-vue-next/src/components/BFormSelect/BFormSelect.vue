@@ -61,10 +61,10 @@ interface BFormSelectProps {
   required?: Booleanish
   selectSize?: number
   size?: Size
-  state?: Booleanish
+  state?: Booleanish | null
   textField?: string
   valueField?: string
-  modelValue?: string | unknown[] | Record<string, unknown> | number
+  modelValue?: string | unknown[] | Record<string, unknown> | number | null
 }
 
 const props = withDefaults(defineProps<BFormSelectProps>(), {
@@ -77,7 +77,7 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   disabled: false,
   disabledField: 'disabled',
   htmlField: 'html',
-  state: undefined,
+  state: null,
   labelField: 'label',
   multiple: false,
   options: () => [],
