@@ -65,10 +65,15 @@ const showSlot = computed<boolean>(() => {
     computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value
   return computedActive.value || !computedLazy.value || hasLazyRenderedOnce
 })
-
+const show = ref(activeBoolean.value)
+watch(activeBoolean, (active) => {
+  setTimeout(() => {
+    show.value = active
+  }, 0)
+})
 const computedClasses = computed(() => ({
   'active': activeBoolean.value,
-  'show': activeBoolean.value,
+  'show': show.value,
   'card-body': parentData?.card.value && props.noBody === false,
 }))
 
