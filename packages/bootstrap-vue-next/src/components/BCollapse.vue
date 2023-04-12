@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, ref, toRef, watchEffect} from 'vue'
+import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch, watchEffect} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
-import {BvTriggerableEvent} from '../utils'
+import {BvTriggerableEvent, collapseInjectionKey} from '../utils'
 
 interface BCollapseProps {
   accordion?: string
@@ -149,7 +149,7 @@ const hide = () => {
   })
 }
 
-watchEffect(() => {
+watch([modelValue, show], () => {
   if (modelValueBoolean.value === true) {
     if (show.value) return
     reveal()
@@ -194,7 +194,17 @@ defineExpose({
   close,
   open,
   toggle,
-  visible: show.value,
+  visible: readonly(show),
+  isNav: isNavBoolean,
+})
+
+provide(collapseInjectionKey, {
+  id: computedId,
+  close,
+  open,
+  toggle,
+  visible: readonly(show),
+  isNav: isNavBoolean,
 })
 </script>
 

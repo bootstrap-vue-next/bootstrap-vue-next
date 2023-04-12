@@ -77,6 +77,7 @@ import TLayout from '../components/Comps/TLayout.vue'
 import TListGroup from '../components/Comps/TListGroup.vue'
 import TModal from '../components/Comps/TModal.vue'
 import TNav from '../components/Comps/TNav.vue'
+import TNavbar from '../components/Comps/TNavbar.vue'
 import TOverlay from '../components/Comps/TOverlay.vue'
 import TPagination from '../components/Comps/TPagination.vue'
 import TPopover from '../components/Comps/TPopover.vue'
@@ -114,6 +115,7 @@ const comps: {name: string; is: unknown; disabled?: true}[] = [
   {name: 'Layout', is: TLayout},
   {name: 'Modal', is: TModal},
   {name: 'Nav', is: TNav},
+  {name: 'Navbar', is: TNavbar},
   {name: 'Overlay', is: TOverlay},
   {name: 'Pagination', is: TPagination},
   {name: 'Popover', is: TPopover},

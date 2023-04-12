@@ -13,27 +13,27 @@ describe('dropdown', () => {
 
   it('has static class btn-group', () => {
     const wrapper = mount(BDropdown)
-    expect(wrapper.classes()).toContain('btn-group')
+    expect(wrapper.find('div').classes()).toContain('btn-group')
   })
 
   it('has class d-grid when prop block', async () => {
     const wrapper = mount(BDropdown, {
       props: {block: true},
     })
-    expect(wrapper.classes()).toContain('d-grid')
+    expect(wrapper.find('div').classes()).toContain('d-grid')
     await wrapper.setProps({block: false})
-    expect(wrapper.classes()).not.toContain('d-grid')
+    expect(wrapper.find('div').classes()).not.toContain('d-grid')
   })
 
   it('has class d-flex when prop block aand prop split', async () => {
     const wrapper = mount(BDropdown, {
       props: {block: true, split: true},
     })
-    expect(wrapper.classes()).toContain('d-flex')
+    expect(wrapper.find('div').classes()).toContain('d-flex')
     await wrapper.setProps({block: false})
-    expect(wrapper.classes()).not.toContain('d-flex')
+    expect(wrapper.find('div').classes()).not.toContain('d-flex')
     await wrapper.setProps({block: true, split: false})
-    expect(wrapper.classes()).not.toContain('d-flex')
+    expect(wrapper.find('div').classes()).not.toContain('d-flex')
   })
 
   it('has child ul', () => {

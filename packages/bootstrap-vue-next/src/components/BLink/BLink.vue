@@ -12,7 +12,7 @@
       :href="href"
       :class="[(activeBoolean ?? isActive) && activeClass]"
       v-bind="$attrs"
-      @click="navigate"
+      @click=";[navigate($event), closeCollapse()]"
     >
       <slot />
     </component>
@@ -32,7 +32,8 @@
 <script lang="ts">
 import type {Booleanish, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, getCurrentInstance, type PropType, ref, toRef} from 'vue'
+import {collapseInjectionKey} from '../../utils'
+import {computed, defineComponent, getCurrentInstance, inject, type PropType, ref, toRef} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {
@@ -61,6 +62,10 @@ export default defineComponent({
     const appendBoolean = useBooleanish(toRef(props, 'append'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     const replaceBoolean = useBooleanish(toRef(props, 'replace'))
+    const collapseData = inject(collapseInjectionKey, null)
+    const closeCollapse = () => {
+      collapseData?.close?.()
+    }
 
     const instance = getCurrentInstance()
     const link = ref<HTMLElement>(null as unknown as HTMLElement)
@@ -126,6 +131,8 @@ export default defineComponent({
         e.stopImmediatePropagation()
         return
       }
+      collapseData?.close?.()
+
       emit('click', e)
     }
 
@@ -139,6 +146,7 @@ export default defineComponent({
       appendBoolean,
       disabledBoolean,
       replaceBoolean,
+      closeCollapse,
     }
   },
 })
