@@ -115,7 +115,7 @@ provide(radioGroupKey, {
   buttonVariant: readonly(toRef(props, 'buttonVariant')),
   form: readonly(toRef(props, 'form')),
   name: computedName,
-  button: buttonsBoolean,
+  buttons: buttonsBoolean,
   state: stateBoolean,
   plain: plainBoolean,
   size: readonly(toRef(props, 'size')),

@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses">
+  <RenderComponentOrSkip :skip="isButtonGroup" :class="computedClasses">
     <input
       :id="computedId"
       v-bind="$attrs"
@@ -20,7 +20,7 @@
     <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
     </label>
-  </div>
+  </RenderComponentOrSkip>
 </template>
 
 <script setup lang="ts">
@@ -29,6 +29,7 @@ import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, InputSize} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
+import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
 interface BFormRadioProps {
   ariaLabel?: string
@@ -41,6 +42,7 @@ interface BFormRadioProps {
   modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
   plain?: Booleanish
   button?: Booleanish
+  buttonGroup?: Booleanish
   disabled?: Booleanish
   buttonVariant?: ButtonVariant
   inline?: Booleanish
@@ -58,6 +60,7 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   autofocus: false,
   plain: false,
   button: false,
+  buttonGroup: false,
   disabled: false,
   modelValue: undefined,
   state: null,
@@ -88,6 +91,7 @@ const computedId = useId(toRef(props, 'id'), 'form-check')
 const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
 const plainBoolean = useBooleanish(toRef(props, 'plain'))
 const buttonBoolean = useBooleanish(toRef(props, 'button'))
+const buttonGroupBoolean = useBooleanish(toRef(props, 'buttonGroup'))
 const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 const requiredBoolean = useBooleanish(toRef(props, 'required'))
@@ -139,9 +143,13 @@ const computedRequired = computed(
     (requiredBoolean.value || parentData?.required.value)
 )
 
+const isButtonGroup = computed(
+  () => buttonGroupBoolean.value || (parentData?.buttons.value ?? false)
+)
+
 const classesObject = computed(() => ({
   plain: plainBoolean.value || (parentData?.plain.value ?? false),
-  button: buttonBoolean.value || (parentData?.button.value ?? false),
+  button: buttonBoolean.value || (parentData?.buttons.value ?? false),
   inline: inlineBoolean.value || (parentData?.inline.value ?? false),
   state: stateBoolean.value || parentData?.state.value,
   size: props.size !== undefined ? props.size : parentData?.size.value ?? 'md', // This is where the true default is made

@@ -4,9 +4,14 @@
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
-      :visible="visible"
-      :accordion="parentData?.id.value ?? undefined"
+      v-bind="$attrs"
       :aria-labelledby="`heading${computedId}`"
+      :tag="tag"
+      :toggle="toggle"
+      :horizontal="horizontal"
+      :visible="visible"
+      :is-nav="isNav"
+      v-on="events"
     >
       <template #header="{visible: toggleVisible, toggle}">
         <component :is="headerTag" :id="`heading${computedId}`" class="accordion-header">
@@ -30,19 +35,24 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, toRef, watchEffect} from 'vue'
+import {inject, onMounted, ref, toRef, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
-import {accordionInjectionKey} from '../../utils'
-import {useBooleanish, useId} from '../../composables'
+// import  from '../BCollapse.vue'
+import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
+import {useId} from '../../composables'
 import type {Booleanish} from '../../types'
 
 interface BAccordionItemProps {
   id?: string
   title?: string
   modelValue?: Booleanish
-  visible?: Booleanish
   headerTag?: string
+  tag?: string
+  toggle?: Booleanish
+  horizontal?: Booleanish
+  visible?: Booleanish
+  isNav?: Booleanish
 }
 
 const props = withDefaults(defineProps<BAccordionItemProps>(), {
@@ -53,21 +63,54 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {
   visible: false,
 })
 
-const emit = defineEmits<(e: 'update:modelValue', value: boolean) => void>()
+interface BAccordionItemEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'update:modelValue', value: boolean): void
+}
+
+const emit = defineEmits<BAccordionItemEmits>()
+
+const events = {
+  'show': (e: BvTriggerableEvent) => emit('show', e),
+  'shown': (e: BvTriggerableEvent) => emit('shown', e),
+  'hide': (e: BvTriggerableEvent) => emit('hide', e),
+  'hidden': (e: BvTriggerableEvent) => emit('hidden', e),
+  'hide-prevented': () => emit('hide-prevented'),
+  'show-prevented': () => emit('show-prevented'),
+}
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
-
-const visibleBoolean = useBooleanish(toRef(props, 'visible'))
-
-onMounted(() => {
-  if (visibleBoolean.value) {
-    modelValue.value = true
-  }
-})
-
-watchEffect(() => (modelValue.value = visibleBoolean.value))
 
 const parentData = inject(accordionInjectionKey, null)
 
 const computedId = useId(toRef(props, 'id'), 'accordion_item')
+
+onMounted(() => {
+  if (modelValue.value && !parentData?.free.value) {
+    parentData?.setOpenItem(computedId.value)
+  }
+  if (!modelValue.value && parentData?.openItem.value === computedId.value) {
+    modelValue.value = true
+  }
+})
+
+watch(
+  () => parentData?.openItem.value,
+  () =>
+    (modelValue.value = parentData?.openItem.value === computedId.value && !parentData?.free.value)
+)
+watch(modelValue, () => {
+  if (modelValue.value && !parentData?.free.value) parentData?.setOpenItem(computedId.value)
+})
+</script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
 </script>

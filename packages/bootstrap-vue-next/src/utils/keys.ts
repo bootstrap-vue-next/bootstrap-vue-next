@@ -45,7 +45,9 @@ export const avatarGroupInjectionKey: InjectionKey<{
 
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
-  id: Readonly<Ref<string>>
+  openItem: Readonly<Ref<string>>
+  free: Readonly<Ref<boolean>>
+  setOpenItem: (id: string) => void
 }> = Symbol('accordion')
 
 // BFormCheckboxGroup
@@ -78,7 +80,7 @@ export const radioGroupKey: InjectionKey<{
   buttonVariant: Readonly<Ref<ButtonVariant>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
-  button: Readonly<Ref<boolean>>
+  buttons: Readonly<Ref<boolean>>
   state: Readonly<Ref<boolean | undefined | null>>
   plain: Readonly<Ref<boolean>>
   size: Readonly<Ref<Size>>
@@ -86,3 +88,22 @@ export const radioGroupKey: InjectionKey<{
   required: Readonly<Ref<boolean>>
   disabled: Readonly<Ref<boolean>>
 }> = Symbol('radioGroup')
+
+// Collapse
+export const collapseInjectionKey: InjectionKey<{
+  id?: Readonly<Ref<string>>
+  readonly close?: () => void
+  readonly open?: () => void
+  readonly toggle?: () => void
+  visible?: Readonly<Ref<boolean>>
+  isNav?: Readonly<Ref<boolean>>
+}> = Symbol('collapse')
+
+export const dropdownInjectionKey: InjectionKey<{
+  id?: Readonly<Ref<string>>
+  readonly close?: () => void
+  readonly open?: () => void
+  readonly toggle?: () => void
+  visible?: Readonly<Ref<boolean>>
+  isNav?: Readonly<Ref<boolean>>
+}> = Symbol('collapse')
