@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, provide, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, provide, ref, toRef, useSlots, type VNode, watch} from 'vue'
 import {BvEvent, getId, getSlotElements, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {AlignmentJustifyContent, Booleanish, ClassValue} from '../../types'
@@ -168,47 +168,75 @@ const tabIndex = computed({
     modelValue.value = value
   },
 })
+const tabsInternal = ref<
+  {
+    buttonId: string
+    contentId: string
+    disabled: boolean
+    target: string
+    title: string
+    titleItemClass: ClassValue
+    titleLinkAttributes: Record<string, unknown>
+    onClick: (e: Event) => void
+    tab: VNode
+    tabComponent: () => VNode
+  }[]
+>([])
+watch(
+  () => slots.default?.(),
+  () => {
+    tabsInternal.value =
+      slots.default === undefined
+        ? []
+        : getSlotElements(slots.default, 'BTab').map((tab, idx) => {
+            if (!tab.props) tab.props = {}
+            const buttonId = tab.props['button-id'] || getId('tab')
+            const contentId = tab.props.id || getId()
+            const titleItemClass = tab.props['title-item-class']
+            const titleLinkAttributes = tab.props['title-link-attributes']
+
+            return {
+              buttonId,
+              contentId,
+              disabled: tab.props.disabled === '' || tab.props.disabled === true,
+              target: `#${contentId}`,
+              title: tab.props.title,
+              titleItemClass,
+              titleLinkAttributes,
+              onClick: tab.props.onClick,
+              tab,
+              tabComponent: () => getSlotElements(slots.default, 'BTab')[idx],
+            }
+          })
+  },
+  {immediate: true}
+)
 
 const tabs = computed(() =>
-  slots.default === undefined
-    ? []
-    : getSlotElements(slots.default, 'BTab').map((tab, idx) => {
-        if (!tab.props) tab.props = {}
+  tabsInternal.value.map((item, idx) => {
+    const {tab} = item
+    if (!tab.props) tab.props = {}
+    const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
 
-        const buttonId = tab.props['button-id'] || getId('tab')
-        const contentId = tab.props.id || getId()
-        const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
-        const titleItemClass = tab.props['title-item-class']
-        const titleLinkAttributes = tab.props['title-link-attributes']
-
-        return {
-          buttonId,
-          contentId,
+    return {
+      ...item,
+      active,
+      navItemClasses: [
+        {
           active,
           disabled: tab.props.disabled === '' || tab.props.disabled === true,
-          navItemClasses: [
-            {
-              active,
-              disabled: tab.props.disabled === '' || tab.props.disabled === true,
-            },
-            active && props.activeNavItemClass ? props.activeNavItemClass : null,
-            tab.props['title-link-class'],
-          ],
-          tabClasses: [
-            {
-              fade: !noFadeBoolean.value,
-            },
-            active && props.activeTabClass ? props.activeTabClass : null,
-          ],
-          target: `#${contentId}`,
-          title: tab.props.title,
-          titleItemClass,
-          titleLinkAttributes,
-          onClick: tab.props.onClick,
-          tab, //TODO remove this in future since the mapped value does not provide a direct reference to the actual slot component.
-          tabComponent: () => getSlotElements(slots.default, 'BTab')[idx],
-        }
-      })
+        },
+        active && props.activeNavItemClass ? props.activeNavItemClass : null,
+        tab.props['title-link-class'],
+      ],
+      tabClasses: [
+        {
+          fade: !noFadeBoolean.value,
+        },
+        active && props.activeTabClass ? props.activeTabClass : null,
+      ],
+    }
+  })
 )
 
 const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
