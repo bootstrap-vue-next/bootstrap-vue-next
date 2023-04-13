@@ -91,9 +91,7 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Test lint
-        run: pnpm run test:lint
-
-
+        run: pnpm run test:lint:ci
 
   test-unit:
     runs-on: ${{ matrix.os }}
@@ -132,12 +130,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
-      
-      - name: Build library
-        run: pnpm run build
 
       - name: Test unit
-        run: pnpm run test:unit
+        run: pnpm run test:unit:ci
 
   test-coverage:
     runs-on: ${{ matrix.os }}
@@ -176,9 +171,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
-      
-      - name: Build library
-        run: pnpm run build
 
       - name: Test coverage
-        run: pnpm run test:coverage
+        run: pnpm run test:coverage:ci
