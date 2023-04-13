@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, type VNodeNormalizedChildren, watch} from 'vue'
+import {computed, ref, toRef, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId} from '../../composables'
 import type {
@@ -122,6 +122,7 @@ import type {
   InputType,
 } from '../../types'
 import {useFocus, useVModel} from '@vueuse/core'
+import {escapeRegExpChars} from '../../utils'
 
 interface BFormTagsProps {
   addButtonText?: string
@@ -146,7 +147,7 @@ interface BFormTagsProps {
   placeholder?: string
   removeOnDelete?: Booleanish
   required?: Booleanish
-  separator?: string | unknown[]
+  separator?: string | string[]
   state?: Booleanish | null
   size?: InputSize
   tagClass?: ClassValue
@@ -378,19 +379,43 @@ const onKeydown = (e: KeyboardEvent): void => {
   }
 }
 
-const addTag = (tag?: string): void => {
-  tag = (tag || inputValue.value).trim()
-
-  if (
-    tag === '' ||
-    isDuplicate.value ||
-    !props.tagValidator(tag) ||
-    (props.limit && isLimitReached.value)
-  ) {
+const separator = computed(() => {
+  if (!props.separator) {
     return
   }
 
-  const newValue = [...modelValue.value, tag]
+  return typeof props.separator === 'string' ? props.separator : props.separator.join('')
+})
+
+const separatorRegExp = computed(() => {
+  if (!separator.value) {
+    return
+  }
+
+  return new RegExp(`[${escapeRegExpChars(separator.value)}]+`)
+})
+
+const addTag = (tag?: string): void => {
+  tag = (tag ?? inputValue.value).trim()
+
+  const newTags = separatorRegExp.value
+    ? tag.split(separatorRegExp.value).map((t) => t.trim())
+    : [tag]
+  const validTags: string[] = []
+
+  for (const newTag of newTags) {
+    if (newTag === '' || isDuplicate.value || !props.tagValidator(newTag)) {
+      continue
+    }
+
+    if (props.limit && isLimitReached.value) {
+      break
+    }
+
+    validTags.push(newTag)
+  }
+
+  const newValue = [...modelValue.value, ...validTags]
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
   modelValue.value = newValue
@@ -398,7 +423,7 @@ const addTag = (tag?: string): void => {
   focused.value = true
 }
 
-const removeTag = (tag?: VNodeNormalizedChildren): void => {
+const removeTag = (tag?: string): void => {
   const tagIndex = tags.value.indexOf(tag?.toString() ?? '')
   lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
   modelValue.value = tags.value

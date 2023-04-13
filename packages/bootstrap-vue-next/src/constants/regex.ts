@@ -7,3 +7,5 @@ export const RX_HASH = /^#/
 export const RX_HASH_ID = /^#[A-Za-z]+[\w\-:.]*$/
 
 export const RX_STRIP_LOCALE_MODS = /-u-.+/
+export const RX_REGEXP_REPLACE = /[-/\\^$*+?.()|[\]{}]/g
+export const RX_SPACES = /[\s\uFEFF\xA0]+/g
