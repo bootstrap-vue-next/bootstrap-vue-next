@@ -19,6 +19,17 @@
       "outputs": [],
       "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
     },
+    "test:lint:ci": {
+      "outputs": []
+    },
+    "test:unit:ci": {
+      "outputs": [],
+      "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
+    },
+    "test:coverage:ci": {
+      "outputs": [],
+      "inputs": ["**/tests/*.ts", "**/tests/*.js", "**/*.spec.ts", "**/*.spec.js", "**/*.test.ts", "**/*.test.js"]
+    },
     "lint": {
       "outputs": []
     },
