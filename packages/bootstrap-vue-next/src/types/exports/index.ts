@@ -12,7 +12,6 @@ export type {
   ButtonVariant,
   ColorVariant,
   ContainerPosition,
-  InputSize,
   InputType,
   LinkTarget,
   Position,

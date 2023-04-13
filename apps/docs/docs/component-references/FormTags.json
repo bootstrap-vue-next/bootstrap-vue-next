@@ -445,7 +445,7 @@
               },
               {
                 "prop": "size",
-                "type": "InputSize",
+                "type": "Size",
                 "description": "The value of the 'size' prop"
               },
               {

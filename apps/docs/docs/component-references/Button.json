@@ -42,7 +42,7 @@
           {
             "prop": "size",
             "description": "",
-            "type": "InputSize"
+            "type": "Size"
           },
           {
             "prop": "squared",

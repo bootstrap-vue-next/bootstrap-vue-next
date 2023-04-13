@@ -1,5 +1,5 @@
 import type {InjectionKey, Ref} from 'vue'
-import type {BreadcrumbItem, ButtonVariant, ColorVariant, InputSize, Size} from '../types'
+import type {BreadcrumbItem, ButtonVariant, ColorVariant, Size} from '../types'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -37,7 +37,7 @@ export const listGroupInjectionKey: InjectionKey<{
 // BAvatarGroup
 export const avatarGroupInjectionKey: InjectionKey<{
   overlapScale: Readonly<Ref<number>>
-  size: Readonly<Ref<InputSize | string | undefined>>
+  size: Readonly<Ref<Size | string | undefined>>
   square: Readonly<Ref<boolean>>
   rounded: Readonly<Ref<boolean | string>>
   variant: Readonly<Ref<ColorVariant | undefined>>

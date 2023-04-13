@@ -28,7 +28,7 @@
 import {computed, defineComponent, type PropType, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBooleanish} from '../../composables'
-import type {Booleanish, ButtonType, ButtonVariant, InputSize, LinkTarget} from '../../types'
+import type {Booleanish, ButtonType, ButtonVariant, LinkTarget, Size} from '../../types'
 import {isLink} from '../../utils'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import {useVModel} from '@vueuse/core'
@@ -43,7 +43,7 @@ export default defineComponent({
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     pressed: {type: [Boolean, String] as PropType<Booleanish>, default: null},
     rel: {type: String, default: undefined},
-    size: {type: String as PropType<InputSize>, default: 'md'},
+    size: {type: String as PropType<Size>, default: 'md'},
     squared: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'button'},
     target: {type: String as PropType<LinkTarget>, default: '_self'},

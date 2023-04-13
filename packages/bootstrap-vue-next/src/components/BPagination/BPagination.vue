@@ -4,9 +4,9 @@ import {computed, defineComponent, h, type PropType, reactive, toRef, watch} fro
 import type {
   AlignmentJustifyContent,
   Booleanish,
-  InputSize,
   Pagination,
   PaginationPage,
+  Size,
 } from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
 import {useVModel} from '@vueuse/core'
@@ -66,7 +66,7 @@ export default defineComponent({
     pills: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     prevClass: {type: [Array, String], default: () => []},
     prevText: {type: String, default: '\u2039'},
-    size: {type: String as PropType<InputSize>, default: undefined},
+    size: {type: String as PropType<Size>, default: 'md'},
     totalRows: {type: Number, default: DEFAULT_TOTAL_ROWS},
   },
   emits: ['update:modelValue', 'page-click'],

@@ -27,7 +27,7 @@
 import {useFocus, useVModel} from '@vueuse/core'
 import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import type {Booleanish, ButtonVariant, InputSize} from '../../types'
+import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -47,7 +47,7 @@ interface BFormCheckboxProps {
   buttonVariant?: ButtonVariant
   inline?: Booleanish
   required?: Booleanish
-  size?: InputSize
+  size?: Size
   state?: Booleanish | null
   uncheckedValue?:
     | unknown[]

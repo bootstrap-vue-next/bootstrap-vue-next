@@ -97,7 +97,7 @@
 import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useFocus, useDark as useSetAttr, useVModel} from '@vueuse/core'
-import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, InputSize} from '../types'
+import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
@@ -116,7 +116,7 @@ interface BModalProps {
   bodyTextVariant?: ColorVariant
   busy?: Booleanish
   lazy?: Booleanish
-  buttonSize?: InputSize
+  buttonSize?: Size
   cancelDisabled?: Booleanish
   cancelTitle?: string
   cancelVariant?: ButtonVariant
@@ -151,7 +151,7 @@ interface BModalProps {
   okVariant?: ButtonVariant
   scrollable?: Booleanish
   show?: Booleanish
-  size?: 'sm' | 'lg' | 'xl'
+  size?: Size | 'xl'
   title?: string
   titleClass?: string
   titleSrOnly?: Booleanish
@@ -177,7 +177,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   autoFocusButton: undefined,
   titleClass: undefined,
   title: undefined,
-  size: undefined,
+  size: 'md',
   modalClass: undefined,
   id: undefined,
   busy: false,
@@ -299,7 +299,7 @@ const modalDialogClasses = computed(() => [
   {
     'modal-fullscreen': props.fullscreen === true,
     [`modal-fullscreen-${props.fullscreen}-down`]: typeof props.fullscreen === 'string',
-    [`modal-${props.size}`]: props.size !== undefined,
+    [`modal-${props.size}`]: props.size !== 'md',
     'modal-dialog-centered': centeredBoolean.value,
     'modal-dialog-scrollable': scrollableBoolean.value,
   },

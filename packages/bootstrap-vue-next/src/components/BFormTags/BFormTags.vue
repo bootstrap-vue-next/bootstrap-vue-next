@@ -118,8 +118,8 @@ import type {
   ButtonVariant,
   ClassValue,
   ColorVariant,
-  InputSize,
   InputType,
+  Size,
 } from '../../types'
 import {useFocus, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
@@ -149,7 +149,7 @@ interface BFormTagsProps {
   required?: Booleanish
   separator?: string | string[]
   state?: Booleanish | null
-  size?: InputSize
+  size?: Size
   tagClass?: ClassValue
   tagPills?: Booleanish
   tagRemoveLabel?: string
@@ -163,7 +163,7 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   tagRemoveLabel: undefined,
   tagClass: undefined,
   separator: undefined,
-  size: undefined,
+  size: 'md',
   name: undefined,
   limit: undefined,
   form: undefined,
@@ -236,7 +236,7 @@ const invalidTags = ref<string[]>([])
 const duplicateTags = ref<string[]>([])
 
 const computedClasses = computed(() => ({
-  [`form-control-${props.size}`]: props.size !== undefined,
+  [`form-control-${props.size}`]: props.size !== 'md',
   'disabled': disabledBoolean.value,
   'focus': focus.value,
   'is-invalid': stateBoolean.value === false,

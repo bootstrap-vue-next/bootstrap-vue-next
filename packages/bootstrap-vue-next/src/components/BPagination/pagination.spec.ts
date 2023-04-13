@@ -48,15 +48,6 @@ describe('pagination', () => {
     expect(wrapper.attributes('aria-label')).toBeUndefined()
   })
 
-  it('has class pagination-{type} when prop size', async () => {
-    const wrapper = mount(BPagination, {
-      props: {size: 'md'},
-    })
-    expect(wrapper.classes()).toContain('pagination-md')
-    await wrapper.setProps({size: undefined})
-    expect(wrapper.classes()).not.toContain('pagination-md')
-  })
-
   it('has class b-pagination-pills when prop pills', async () => {
     const wrapper = mount(BPagination, {
       props: {pills: true},

@@ -117,7 +117,7 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | `replace`              | ![0% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
 | `rounded`              | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `route-component-name` | ![0% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
-| `size`                 | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Type `InputSize or string`
+| `size`                 | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Type `Size or string`
 | `square`               | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Type `Booleanish`
 | `src`                  | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |
 | `target`               | ![0% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |
@@ -161,7 +161,7 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | --------- | ------------------------------------------------------------------------------------ | ------------ |
 | `overlap` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `rounded` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
-| `size`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Type `InputSize or string` |
+| `size`    | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Type `Size or string` |
 | `square`  | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed | Type `Booleanish` |
 | `tag`     | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |              |
 | `variant` | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |Type `ColorVariant`|
@@ -273,7 +273,7 @@ For more information, you can visit the Bootstrap v5 [migration guide](https://g
 | rel                   | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
 | replace               | ![0% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
 | router-component-name | ![0% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/0) Completed   |                                                    |
-| size                  | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |Type `InputSize`|
+| size                  | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |Type `Size`|
 | squared               | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |Type `Booleanish`|
 | tag                   | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |                                                    |
 | target                | ![100% support](https://us-central1-progress-markdown.cloudfunctions.net/progress/100) Completed |Type `LinkTarget`|

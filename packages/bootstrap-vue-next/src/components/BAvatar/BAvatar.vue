@@ -42,7 +42,7 @@ interface BAvatarProps {
   disabled?: Booleanish
   icon?: string
   rounded?: boolean | string
-  size?: 'sm' | 'md' | 'lg' | string // InputSize | string
+  size?: 'sm' | 'md' | 'lg' | string // Size | string | number (// TODO number -- compat)
   square?: Booleanish
   src?: string
   text?: string
