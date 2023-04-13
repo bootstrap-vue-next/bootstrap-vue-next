@@ -106,7 +106,7 @@ interface BDropdownProps {
 const props = withDefaults(defineProps<BDropdownProps>(), {
   id: undefined,
   menuClass: undefined,
-  size: undefined,
+  size: 'md',
   splitClass: undefined,
   splitVariant: undefined,
   text: undefined,

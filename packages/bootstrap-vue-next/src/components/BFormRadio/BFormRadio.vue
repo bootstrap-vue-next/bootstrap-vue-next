@@ -27,7 +27,7 @@
 import {useFocus, useVModel} from '@vueuse/core'
 import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import type {Booleanish, ButtonVariant, InputSize} from '../../types'
+import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -37,7 +37,7 @@ interface BFormRadioProps {
   form?: string
   id?: string
   name?: string
-  size?: InputSize
+  size?: Size
   autofocus?: Booleanish
   modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
   plain?: Booleanish

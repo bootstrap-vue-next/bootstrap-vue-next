@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   form: undefined,
   id: undefined,
   name: undefined,
-  size: undefined,
+  size: 'md',
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,

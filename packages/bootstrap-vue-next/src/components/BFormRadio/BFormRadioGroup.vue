@@ -50,7 +50,7 @@ interface BFormRadioGroupProps {
 }
 
 const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
-  size: undefined,
+  size: 'md',
   form: undefined,
   id: undefined,
   name: undefined,

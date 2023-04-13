@@ -5,13 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../../types'
+import type {Booleanish, Size} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BButtonGroupProps {
   ariaLabel?: string
-  size?: 'sm' | 'lg' // Exclude<InputSize, 'md'>
+  size?: Size
   tag?: string
   vertical?: Booleanish
 }
@@ -20,14 +20,14 @@ const props = withDefaults(defineProps<BButtonGroupProps>(), {
   ariaLabel: 'Group',
   tag: 'div',
   vertical: false,
-  size: undefined,
+  size: 'md',
 })
 
 const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
 
 const computedClasses = computed(() => ({
   'btn-group': !verticalBoolean.value,
-  [`btn-group-${props.size}`]: props.size !== undefined,
+  [`btn-group-${props.size}`]: props.size !== 'md',
   'btn-group-vertical': verticalBoolean.value,
 }))
 </script>
