@@ -146,7 +146,7 @@
           },
           {
             "prop": "size",
-            "type": "InputSize",
+            "type": "Size",
             "description": "Size of the rendered buttons: 'sm', 'md' (default), or 'lg'"
           },
           {

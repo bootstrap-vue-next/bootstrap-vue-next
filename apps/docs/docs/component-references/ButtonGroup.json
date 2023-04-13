@@ -17,7 +17,7 @@
           {
             "description": "Applies class btn-group-{size}",
             "prop": "size",
-            "type": "Exclude<InputSize, 'md'>"
+            "type": "Size"
           },
           {
             "description": "",

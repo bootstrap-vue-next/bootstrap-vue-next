@@ -117,9 +117,9 @@ useFocus(input, {
 
 const computedClasses = computed(() => ({
   'form-control': plainBoolean.value,
-  [`form-control-${props.size}`]: props.size && plainBoolean.value,
+  [`form-control-${props.size}`]: props.size !== 'md' && plainBoolean.value,
   'form-select': !plainBoolean.value,
-  [`form-select-${props.size}`]: props.size && !plainBoolean.value,
+  [`form-select-${props.size}`]: props.size !== 'md' && !plainBoolean.value,
   'is-valid': stateBoolean.value === true,
   'is-invalid': stateBoolean.value === false,
 }))

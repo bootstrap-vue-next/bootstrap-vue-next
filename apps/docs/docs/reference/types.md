@@ -109,12 +109,6 @@ type ContainerHorizontalAlign = 'left' | 'center' | 'right'
 type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
 ```
 
-## InputSize
-
-```ts
-type InputSize = 'sm' | 'md' | 'lg'
-```
-
 ## InputType
 
 ```ts
@@ -156,7 +150,7 @@ type Position =
 ## Size
 
 ```ts
-type Size = 'sm' | 'lg' | undefined
+type Size = 'sm' | 'md' | 'lg'
 ```
 
 ## SpinnerType
@@ -242,7 +236,6 @@ You can extend some types to use your own values (e.g. colors, sizes). This requ
 * BaseButtonVariant (extends BaseColorVariant)
 * BaseTextColorVariant (extends BaseColorVariant)
 * BaseSize
-* BaseInputSize
 
 Suppose we want to add a purple style and extra-large (xl) sizes.
 We need to create a declaration file in the root of vue project.
@@ -265,9 +258,6 @@ declare module 'bootstrap-vue-next/dist/types' {
   }
   export interface BaseSize {
     'xl': unknown // extra large
-  }
-  export interface BaseInputSize {
-    'xl': unknown // extra large (not inherits from BaseSize)
   }
 }
 ```

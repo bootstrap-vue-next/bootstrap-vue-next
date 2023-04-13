@@ -231,11 +231,11 @@ describe('placeholder-card', () => {
     expect($placeholder.props('size')).toBe('xs')
   })
 
-  it('placeholder has prop size to be default undefined', () => {
+  it('placeholder has prop size to be default md', () => {
     const wrapper = mount(BPlaceholderCard)
     const $card = wrapper.getComponent(BCard)
     const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBeUndefined()
+    expect($placeholder.props('size')).toBe('md')
   })
 
   it('slot header does not render when prop noHeader true', () => {
@@ -393,14 +393,14 @@ describe('placeholder-card', () => {
     expect($placeholder.props('animation')).toBe('glow')
   })
 
-  it('BPlaceholder is given prop size to be undefined by default', () => {
+  it('BPlaceholder is given prop size to be md by default', () => {
     const wrapper = mount(BPlaceholderCard, {
       props: {noHeader: true, noButton: true},
       slots: {default: 'foo'},
     })
     const $card = wrapper.getComponent(BCard)
     const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBeUndefined()
+    expect($placeholder.props('size')).toBe('md')
   })
 
   it('BPlaceholder is given prop size to be prop footerSize', () => {

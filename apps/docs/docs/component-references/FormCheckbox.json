@@ -67,7 +67,7 @@
           },
           {
             "prop": "size",
-            "type": "InputSize"
+            "type": "Size"
           },
           {
             "prop": "state",

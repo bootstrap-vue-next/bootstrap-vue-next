@@ -31,7 +31,7 @@
           },
           {
             "prop": "buttonSize",
-            "type": "InputSize"
+            "type": "Size"
           },
           {
             "prop": "cancelDisabled",

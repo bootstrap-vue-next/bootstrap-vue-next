@@ -31,7 +31,7 @@
           },
           {
             "prop": "size",
-            "type": "InputSize"
+            "type": "Size"
           },
           {
             "prop": "tag",

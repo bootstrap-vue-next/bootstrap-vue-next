@@ -4,6 +4,6 @@ export interface BaseSize {
   lg: unknown
 }
 
-type Size = keyof BaseSize | undefined
+type Size = keyof BaseSize
 
 export default Size

@@ -1,4 +1,4 @@
-import type {AriaInvalid, ButtonVariant, InputSize} from '../types'
+import type {AriaInvalid, ButtonVariant, Size} from '../types'
 import {computed, type Ref, ref, watchEffect} from 'vue'
 import {resolveUnref} from '@vueuse/core'
 import {resolveAriaInvalid} from '../utils'
@@ -8,7 +8,7 @@ interface ClassesItemsInput {
   button?: boolean
   inline?: boolean
   switch?: boolean
-  size?: InputSize
+  size?: Size
 }
 
 /**
@@ -58,7 +58,7 @@ interface LabelClasesItemsInput {
   plain?: boolean
   button?: boolean
   buttonVariant?: ButtonVariant
-  size?: InputSize
+  size?: Size
 }
 
 /**
@@ -105,7 +105,7 @@ interface GroupClassesItemsInput {
   validated?: boolean
   buttons?: boolean
   stacked?: boolean
-  size?: InputSize
+  size?: Size
 }
 
 /**
