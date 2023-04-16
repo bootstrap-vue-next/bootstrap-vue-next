@@ -118,6 +118,17 @@
           <strong>{{ popoverInput }}</strong>
         </b-popover>
       </b-col>
+      <b-col>
+        <b-popover placement="auto">
+          <template #title>
+            Auto placement
+          </template>
+          <template #target>
+            <b-button id="popover-target-1">Hover Me</b-button>
+          </template>
+          Pop over content
+        </b-popover>
+      </b-col>
     </b-row>
     <b-row class="my-5 position-relative">
       <b-col>
@@ -191,6 +202,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
+import type { BPopoverPlacement } from 'bootstrap-vue-next/src/types';
 
 const popoverInput = ref('foo')
 const popoverRef = ref(null)
@@ -198,7 +210,7 @@ const popoverContainerRef = ref(null)
 const value = ref(true)
 
 const textValue = ref('test <b onmouseover="alert(\'XSS testing!\')">with html</b>')
-const popoverPlacemet = ref('left')
+const popoverPlacemet = ref<BPopoverPlacement>('left')
 
 // eslint-disable-next-line no-console
 const consoleLog = (...args: unknown[]) => console.log(...args)
