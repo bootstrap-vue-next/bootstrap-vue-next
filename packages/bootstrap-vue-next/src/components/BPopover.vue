@@ -107,14 +107,16 @@
 
 <script lang="ts" setup>
 import {
+  type Alignment,
   arrow as arrowMiddleware,
+  autoPlacement,
   autoUpdate,
   flip,
   hide as hideMiddleware,
   inline,
   type Middleware,
   offset,
-  type Placement,
+  type Placement as OriginalPlacement,
   shift,
   type Strategy,
   useFloating,
@@ -296,6 +298,7 @@ const sanitizedTitle = computed(() =>
 const sanitizedContent = computed(() =>
   props.content ? sanitizeHtml(props.content, DefaultAllowlist) : ''
 )
+const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
 
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
@@ -303,8 +306,15 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   }
   const off = props.offset ? props.offset : tooltipBoolean.value ? 0 : 10
   const arr: Middleware[] = [offset(off)]
-  if (noFlipBoolean.value === false) {
+  if (noFlipBoolean.value === false && !isAutoPlacement.value) {
     arr.push(flip())
+  }
+  if (isAutoPlacement.value) {
+    arr.push(
+      autoPlacement({
+        alignment: (props.placement.split('-')[1] as Alignment) || undefined,
+      })
+    )
   }
   if (noShiftBoolean.value === false) {
     arr.push(shift())
@@ -319,7 +329,9 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   return arr
 })
 
-const placementRef = computed(() => props.placement)
+const placementRef = computed(() =>
+  isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
+)
 
 const {x, y, strategy, middlewareData, placement, update} = useFloating(target, element, {
   placement: placementRef,
@@ -505,6 +517,8 @@ onBeforeUnmount(unbind)
 </script>
 
 <script lang="ts">
+export type Placement = OriginalPlacement | 'auto' | 'auto-start' | 'auto-end'
+
 export default {
   inheritAttrs: false,
 }
