@@ -172,3 +172,13 @@ export const closest = (selector: string, root: Element, includeRoot = false) =>
   // the passed in root element when `includeRoot` is falsey
   return includeRoot ? el : el === root ? null : el
 }
+
+export const getTransitionDelay = (element: HTMLElement) => {
+  const style = window.getComputedStyle(element)
+  // if multiple durations are defined, we take the first
+  const transitionDelay = style.transitionDelay.split(',')[0] || ''
+  const transitionDuration = style.transitionDuration.split(',')[0] || ''
+  const transitionDelayMs = Number(transitionDelay.slice(0, -1)) * 1000
+  const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
+  return transitionDelayMs + transitionDurationMs
+}

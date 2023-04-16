@@ -2,8 +2,9 @@
   <span ref="placeholder" />
   <slot name="target" v-bind="{show, hide, toggle, showState}" />
   <!-- TODO: fix this clunky solution when https://github.com/vuejs/core/issues/6152 is fixed -->
-  <teleport v-if="container" :to="container">
+  <RenderComponentOrSkip :tag="'Teleport'" :to="container" :skip="!container">
     <div
+      v-if="showStateInternal"
       :id="id"
       v-bind="$attrs"
       ref="element"
@@ -52,57 +53,7 @@
         <!-- eslint-enable vue/no-v-html -->
       </template>
     </div>
-  </teleport>
-  <div
-    v-else
-    :id="id"
-    v-bind="$attrs"
-    ref="element"
-    :class="computedClasses"
-    role="tooltip"
-    tabindex="-1"
-    :style="{
-      position: strategy,
-      top: `${y ?? 0}px`,
-      left: `${x ?? 0}px`,
-      width: 'max-content',
-    }"
-  >
-    <div
-      ref="arrow"
-      :class="`${tooltipBoolean ? 'tooltip' : 'popover'}-arrow`"
-      :style="arrowStyle"
-      data-popper-arrow
-    />
-    <template v-if="title || $slots.title">
-      <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'">
-        <slot name="title">
-          {{ title }}
-        </slot>
-      </div>
-      <!-- eslint-disable vue/no-v-html -->
-      <div
-        v-else
-        :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
-        v-html="sanitizedTitle"
-      />
-      <!-- eslint-enable vue/no-v-html -->
-    </template>
-    <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
-      <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
-        <slot>
-          {{ content }}
-        </slot>
-      </div>
-      <!-- eslint-disable vue/no-v-html -->
-      <div
-        v-else
-        :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
-        v-html="sanitizedContent"
-      />
-      <!-- eslint-enable vue/no-v-html -->
-    </template>
-  </div>
+  </RenderComponentOrSkip>
 </template>
 
 <script lang="ts" setup>
@@ -119,10 +70,15 @@ import {
   type Strategy,
   useFloating,
 } from '@floating-ui/vue'
-import {BvTriggerableEvent, IS_BROWSER, resolveBootstrapPlacement} from '../utils'
+import {
+  BvTriggerableEvent,
+  getTransitionDelay,
+  IS_BROWSER,
+  resolveBootstrapPlacement,
+} from '../utils'
 import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
 import {onClickOutside, useMouseInElement} from '@vueuse/core'
-
+import RenderComponentOrSkip from './RenderComponentOrSkip.vue'
 import {
   type ComponentPublicInstance,
   computed,
@@ -146,7 +102,7 @@ interface DelayObject {
 
 interface BPopoverProps {
   modelValue?: Booleanish
-  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | null
+  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
   target?:
     | (() => HTMLElement | VNode)
     | string
@@ -190,7 +146,7 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   id: undefined,
   content: undefined,
   modelValue: false,
-  container: null,
+  container: undefined,
   customClass: '',
   placement: 'top',
   strategy: 'absolute',
@@ -226,6 +182,7 @@ const emit = defineEmits<BPopoverEmits>()
 
 const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
 const showState = ref(modelValueBoolean.value)
+const showStateInternal = ref(modelValueBoolean.value)
 watchEffect(() => {
   emit('update:modelValue', showState.value)
 })
@@ -397,16 +354,20 @@ const show = () => {
     emit('show-prevented')
     return
   }
-  setTimeout(
-    () => {
-      update()
-      showState.value = true
-      nextTick(() => {
-        emit('shown', buildTriggerableEvent('shown'))
-      })
-    },
-    typeof props.delay === 'number' ? props.delay : props.delay?.show || 0
-  )
+  showStateInternal.value = true
+  nextTick(() => {
+    update()
+    setTimeout(
+      () => {
+        update()
+        showState.value = true
+        nextTick(() => {
+          emit('shown', buildTriggerableEvent('shown'))
+        })
+      },
+      typeof props.delay === 'number' ? props.delay : props.delay?.show || 0
+    )
+  })
 }
 
 const hide = (e: Event) => {
@@ -426,6 +387,12 @@ const hide = (e: Event) => {
     ) {
       showState.value = false
       nextTick(() => {
+        setTimeout(
+          () => {
+            showStateInternal.value = false
+          },
+          element.value ? getTransitionDelay(element.value) : 150
+        )
         emit('hidden', buildTriggerableEvent('hidden'))
       })
     } else {
