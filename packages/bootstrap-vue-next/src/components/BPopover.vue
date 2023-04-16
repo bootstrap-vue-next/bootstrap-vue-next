@@ -139,7 +139,7 @@ import {
   watchEffect,
 } from 'vue'
 import {useBooleanish, useId} from '../composables'
-import type {Booleanish, ColorVariant} from '../types'
+import type {Booleanish, BPopoverPlacement, ColorVariant} from '../types'
 
 interface DelayObject {
   show: number
@@ -172,7 +172,7 @@ interface BPopoverProps {
   variant?: ColorVariant
   offset?: number | null
   customClass?: string
-  placement?: Placement
+  placement?: BPopoverPlacement
   strategy?: Strategy
   floatingMiddleware?: Middleware[]
   noFlip?: Booleanish
@@ -517,8 +517,6 @@ onBeforeUnmount(unbind)
 </script>
 
 <script lang="ts">
-export type Placement = OriginalPlacement | 'auto' | 'auto-start' | 'auto-end'
-
 export default {
   inheritAttrs: false,
 }

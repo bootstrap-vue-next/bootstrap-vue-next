@@ -202,7 +202,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import type { Placement } from 'bootstrap-vue-next/dist/src/components/BPopover.vue';
+import type { BPopoverPlacement } from 'bootstrap-vue-next/src/types';
 
 const popoverInput = ref('foo')
 const popoverRef = ref(null)
@@ -210,7 +210,7 @@ const popoverContainerRef = ref(null)
 const value = ref(true)
 
 const textValue = ref('test <b onmouseover="alert(\'XSS testing!\')">with html</b>')
-const popoverPlacemet = ref<Placement>('left')
+const popoverPlacemet = ref<BPopoverPlacement>('left')
 
 // eslint-disable-next-line no-console
 const consoleLog = (...args: unknown[]) => console.log(...args)
