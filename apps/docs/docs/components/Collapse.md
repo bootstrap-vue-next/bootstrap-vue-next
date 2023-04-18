@@ -314,11 +314,11 @@ at a time.
 
 <span class="badge bg-info small">New in v0.8.0</span>
 
-The `header` slot can be used to create custom toggles for your collapsible content.
+The `header` slot can be used to create custom toggles for your collapsible content. The `footer` slot is also available and can be used in the same manner.
 
 Using the `v-b-toggle` directive to toggle the `<b-collapse>` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
 
-The following properties are available for the `header` slot:
+The following properties are available for the `header` and `footer` slots:
 
 | Property  | Type     | Description                           |
 | --------- | -------- | ------------------------------------- |
