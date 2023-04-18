@@ -1,7 +1,6 @@
 <template>
   <BContainer class="mt-2">
     <BRow>
-      {{ components }}
       <BCol>
         This migration guide is unfinished. At the moment, it serves as a spot to leave notes about
         any current broken changes
@@ -13,39 +12,9 @@
           :difficulty="item.difficulty"
           :component="item.component"
           :title="item.title"
-        >
-          <template #rationale>
-            {{ item.rationale }}
-          </template>
-          {{ item.text }}
-        </MigrateWrapper>
-      </BCol>
-      <BCol>
-        <MigrateWrapper
-          difficulty="easy"
-          component="BCard"
-          title="SubTitleTag prop renamed to subtitleTag"
-        >
-          <template #rationale>
-            The word 'Subtitle' is a single word. Splitting the word into 'SubTitle' indicates that
-            it is multi word, sub & title. This is incorrect.
-          </template>
-          Any instances of using prop 'SubTitleTag' on BCard should be replaced with 'subtitleTag'
-        </MigrateWrapper>
-      </BCol>
-      <BCol>
-        <MigrateWrapper
-          difficulty="easy"
-          component="BCard"
-          title="SubTitleTextVariant prop renamed to subtitleTextVariant"
-        >
-          <template #rationale>
-            The word 'Subtitle' is a single word. Splitting the word into 'SubTitle' indicates that
-            it is multi word, sub & title. This is incorrect.
-          </template>
-          Any instances of using prop 'SubTitleTextVariant' on BCard should be replaced with
-          'subtitleTextVariant'
-        </MigrateWrapper>
+          :rationale="item.rationale"
+          :text="item.text"
+        />
       </BCol>
     </BRow>
   </BContainer>
@@ -62,15 +31,31 @@ const items = computed<
   }[]
 >(() => [
   {
-    text: "Any instances of using prop 'SubTitle' on BCard should be replaced with 'subtitle'",
-    title: 'SubTitle prop renamed to Subtitle',
+    title: 'subTitle prop renamed to subtitle',
+    text: "Any instances of using prop 'subTitle' on BCard should be replaced with 'subtitle'",
     component: 'BCard',
     difficulty: 'easy',
     rationale:
-      "The word 'Subtitle' is a single word. Splitting the word into 'SubTitle' indicates that it is multi word, sub & title. This is incorrect.",
+      "The word 'subtitle' is a single word. CamelCase of the word 'subTitle' indicates that it would be multi word, sub & title. This is incorrect",
+  },
+  {
+    title: 'subTitleTag prop renamed to subtitleTag',
+    text: "Any instances of using prop 'subTitleTag' on BCard should be replaced with 'subtitleTag'",
+    component: 'BCard',
+    difficulty: 'easy',
+    rationale:
+      "The word 'subtitle' is a single word. CamelCase of the word 'subTitle' indicates that it would be multi word, sub & title. This is incorrect",
+  },
+  {
+    title: 'subTitleTextVariant prop renamed to subtitleTextVariant',
+    text: "Any instances of using prop 'subTitleTextVariant' on BCard should be replaced with 'subtitleTextVariant'",
+    component: 'BCard',
+    difficulty: 'easy',
+    rationale:
+      "The word 'subtitle' is a single word. CamelCase of the word 'subTitle' indicates that it would be multi word, sub & title. This is incorrect",
   },
 ])
 
-// TODO filtering
+// TODO implement filtering & automatic grouping
 // const allComponents = computed(() => [...new Set(items.value.map((el) => el.component))])
 </script>

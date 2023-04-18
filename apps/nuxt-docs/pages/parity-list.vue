@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <div>
     <ContentDoc />
-  </main>
+  </div>
 </template>

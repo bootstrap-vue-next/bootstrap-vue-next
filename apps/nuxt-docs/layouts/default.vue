@@ -34,7 +34,9 @@
         <DarkButton />
       </BNav>
     </BNavbar>
-    <slot />
+    <main>
+      <slot />
+    </main>
   </div>
 </template>
 

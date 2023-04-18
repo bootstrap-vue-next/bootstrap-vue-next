@@ -5,15 +5,11 @@
     </template>
     <BCardSubtitle>
       Rationale:
-      <slot name="rationale">
-        {{ rationale }}
-      </slot>
+      {{ rationale }}
     </BCardSubtitle>
     <h4>Resolution</h4>
     <BCardText>
-      <slot>
-        {{ text }}
-      </slot>
+      {{ text }}
     </BCardText>
     <template #footer>
       Difficulty:
@@ -26,10 +22,10 @@
 const props = withDefaults(
   defineProps<{
     difficulty: 'easy' | 'medium' | 'hard'
-    rationale?: string
+    rationale: string
     component: string
     title: string
-    text?: string
+    text: string
   }>(),
   {text: '', rationale: ''}
 )
