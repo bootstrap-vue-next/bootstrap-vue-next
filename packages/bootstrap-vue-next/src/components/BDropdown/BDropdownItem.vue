@@ -70,7 +70,7 @@ const componentAttrs = computed(() => ({
   'rel': props.rel,
   'type': tag.value === 'button' ? 'button' : null,
   'target': props.target,
-  ...(attrs.to ? {activeClass: 'active', ...attrs} : {}),
+  ...(attrs.to ? {activeClass: 'active', ...attrs} : attrs),
 }))
 
 const collapseData = inject(collapseInjectionKey, null)
