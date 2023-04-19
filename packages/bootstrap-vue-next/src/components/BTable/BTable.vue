@@ -411,7 +411,8 @@ const computedItems = computed(() => {
 
   if (props.perPage !== undefined) {
     const startIndex = (props.currentPage - 1) * props.perPage
-    return items.splice(startIndex, props.perPage)
+    const endIndex = startIndex + props.perPage > items.length ? items.length : startIndex + props.perPage
+    return items.slice(startIndex, endIndex)
   }
   return items
 })
