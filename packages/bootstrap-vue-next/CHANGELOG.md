@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.5](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.4...v0.8.5) (2023-04-18)
+
+
+### Bug Fixes
+
+* **BDropdownItem:** add attrs when no to props is present ([fe12588](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/fe12588a1879328c4ab960449fbfc9668cc7321d))
+* **BFormTags:** split on separator before adding tag ([2b90c58](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2b90c5822a172dcc66dd734a361989f60cf02b70))
+* remove last of InputSize ([7a04e47](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/7a04e4706192cb34f67e24c96a73a56ff05f52bb))
+* standardize Size & remove InputSize. Let sizing defaults match bootstrap-vue fixes [#1041](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/1041) ([8c81416](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/8c81416dfd422e8a1a6d323f7aa72627df60976d))
+
 ## [0.8.4](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.3...v0.8.4) (2023-04-12)
 
 
