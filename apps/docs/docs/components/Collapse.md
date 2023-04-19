@@ -312,21 +312,33 @@ at a time.
 
 ## Hiding and showing content in the toggle button based on collapse state
 
-When using the `v-b-toggle` directive, the class `collapsed` will automatically be placed on the
-trigger element when the collapse is closed, and removed when open. You can use this class to
-display or hide content within the toggle via custom CSS.
+<span class="badge bg-info small">New in v0.8.0</span>
+
+The `header` slot can be used to create custom toggles for your collapsible content. The `footer` slot is also available and can be used in the same manner.
+
+Using the `v-b-toggle` directive to toggle the `<b-collapse>` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
+
+The following properties are available for the `header` and `footer` slots:
+
+| Property  | Type     | Description                           |
+| --------- | -------- | ------------------------------------- |
+| `visible` | Boolean  | Visible state of the collapse         |
+| `toggle`  | Function | When called, will toggle the collapse |
+| `open`    | Function | When called, will open the collapse   |
+| `close`   | Function | When called, will close the collapse  |
+| `id`      | String   | The ID of the collapsible element     |
 
 <ClientOnly>
   <b-card>
     <div>
-      <b-button v-b-toggle:my-collapse>
-        <span class="when-open">Close</span><span class="when-closed">Open</span> My Collapse
-      </b-button>
       <b-collapse id="my-collapse">
+        <template #header="{visible, toggle, id}">
+          <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
+              <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
+          </b-button>
+        </template>
         <!-- Content here -->
-        <div class="mt-2">
-            This is data that's being collapsed
-        </div>
+        <div class="mt-2">This is data that's being collapsed</div>
       </b-collapse>
     </div>
   </b-card>
@@ -335,26 +347,17 @@ display or hide content within the toggle via custom CSS.
 ```html
 <b-card>
   <div>
-    <b-button v-b-toggle:my-collapse>
-      <span class="when-open">Close</span><span class="when-closed">Open</span> My Collapse
-    </b-button>
     <b-collapse id="my-collapse">
+      <template #header="{visible, toggle, id}">
+        <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
+            <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
+        </b-button>
+      </template>
       <!-- Content here -->
       <div class="mt-2">This is data that's being collapsed</div>
     </b-collapse>
   </div>
 </b-card>
-```
-
-**Example Custom CSS:**
-
-```css
-.collapsed > .when-open {
-  display: none;
-}
-button:not(.collapsed) > .when-closed {
-  display: none;
-}
 ```
 
 ## Optionally scoped default slot

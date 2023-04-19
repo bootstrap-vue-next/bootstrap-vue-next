@@ -75,7 +75,90 @@
           {
             "description": "",
             "name": "default",
-            "scope": []
+            "scope": [
+              {
+                "prop": "visible",
+                "type": "Boolean",
+                "description": "Will be `true` if the content is visible. ie: not collapsed"
+              },
+              {
+                "prop": "toggle",
+                "type": "Function",
+                "description": "When called, will toggle the collapse"
+              },
+              {
+                "prop": "open",
+                "type": "Function",
+                "description": "When called, will open the collapse"
+              },
+              {
+                "prop": "close",
+                "type": "Function",
+                "description": "When called, will close the collapse"
+              }
+            ]
+          },
+          {
+            "description": "",
+            "name": "header",
+            "scope": [
+              {
+                "prop": "visible",
+                "type": "Boolean",
+                "description": "Will be `true` if the content is visible. ie: not collapsed"
+              },
+              {
+                "prop": "toggle",
+                "type": "Function",
+                "description": "When called, will toggle the collapse"
+              },
+              {
+                "prop": "open",
+                "type": "Function",
+                "description": "When called, will open the collapse"
+              },
+              {
+                "prop": "close",
+                "type": "Function",
+                "description": "When called, will close the collapse"
+              },
+              {
+                "prop": "id",
+                "type": "String",
+                "description": "The ID of the collapsible element"
+              }
+            ]
+          },
+          {
+            "description": "",
+            "name": "footer",
+            "scope": [
+              {
+                "prop": "visible",
+                "type": "Boolean",
+                "description": "Will be `true` if the content is visible. ie: not collapsed"
+              },
+              {
+                "prop": "toggle",
+                "type": "Function",
+                "description": "When called, will toggle the collapse"
+              },
+              {
+                "prop": "open",
+                "type": "Function",
+                "description": "When called, will open the collapse"
+              },
+              {
+                "prop": "close",
+                "type": "Function",
+                "description": "When called, will close the collapse"
+              },
+              {
+                "prop": "id",
+                "type": "String",
+                "description": "The ID of the collapsible element"
+              }
+            ]
           }
         ]
       }
