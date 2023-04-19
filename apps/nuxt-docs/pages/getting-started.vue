@@ -106,23 +106,23 @@
     </BRow>
     <BRow>
       <BCol>
-        <b-tabs>
-          <b-tab title="PNPM" active>
+        <BTabs>
+          <BTab title="PNPM" active>
             <CodeBlock>
               pnpm add bootstrap bootstrap-vue-next pnpm add unplugin-vue-components -D
             </CodeBlock>
-          </b-tab>
-          <b-tab title="YARN">
+          </BTab>
+          <BTab title="YARN">
             <CodeBlock>
               yarn add bootstrap bootstrap-vue-next yarn add unplugin-vue-components -D
             </CodeBlock>
-          </b-tab>
-          <b-tab title="NPM">
+          </BTab>
+          <BTab title="NPM">
             <CodeBlock>
               npm i bootstrap bootstrap-vue-next npm i unplugin-vue-components -D
             </CodeBlock>
-          </b-tab>
-        </b-tabs>
+          </BTab>
+        </BTabs>
       </BCol>
     </BRow>
     <BRow>
@@ -195,17 +195,17 @@
     </BRow>
     <BRow>
       <BCol>
-        <b-tabs>
-          <b-tab title="PNPM" active>
+        <BTabs>
+          <BTab title="PNPM" active>
             <CodeBlock> pnpm add bootstrap bootstrap-vue-next </CodeBlock>
-          </b-tab>
-          <b-tab title="YARN">
+          </BTab>
+          <BTab title="YARN">
             <CodeBlock> yarn add bootstrap bootstrap-vue-next </CodeBlock>
-          </b-tab>
-          <b-tab title="NPM">
+          </BTab>
+          <BTab title="NPM">
             <CodeBlock> npm i bootstrap bootstrap-vue-next </CodeBlock>
-          </b-tab>
-        </b-tabs>
+          </BTab>
+        </BTabs>
       </BCol>
     </BRow>
     <BRow>
@@ -234,21 +234,21 @@
     </BRow>
     <BRow>
       <BCol>
-        <b-tabs>
-          <b-tab title="PNPM" active>
+        <BTabs>
+          <BTab title="PNPM" active>
             <CodeBlock>
               pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
             </CodeBlock>
-          </b-tab>
-          <b-tab title="YARN">
+          </BTab>
+          <BTab title="YARN">
             <CodeBlock>
               yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
             </CodeBlock>
-          </b-tab>
-          <b-tab title="NPM">
+          </BTab>
+          <BTab title="NPM">
             <CodeBlock> npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D </CodeBlock>
-          </b-tab>
-        </b-tabs>
+          </BTab>
+        </BTabs>
       </BCol>
     </BRow>
     <BRow>
