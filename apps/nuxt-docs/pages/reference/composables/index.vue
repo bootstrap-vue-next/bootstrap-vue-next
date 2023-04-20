@@ -19,7 +19,7 @@
     <BRow>
       <BCol>
         <HighlightedText>useColorMode</HighlightedText> makes creating application color modes easy.
-        Bootstrap already exposes <HighlightedText>Light</HighlightedText> &
+        Bootstrap includes defaults for <HighlightedText>Light</HighlightedText> and
         <HighlightedText>Dark</HighlightedText> modes. To create more modes, you will need to
         manually add <HighlightedText>SCSS</HighlightedText>. Read more
         <ExternalLink
@@ -58,7 +58,7 @@
     </BRow>
     <BRow>
       <BCol>
-        BootstrapVueNext exposes <HighlightedText>useBreadcrumb</HighlightedText> &
+        BootstrapVueNext exposes <HighlightedText>useBreadcrumb</HighlightedText> and
         <HighlightedText>createBreadcrumb</HighlightedText>. This utility makes a global location
         that you can use to store the current breadcrumb location. You can then use this utility to
         use in the <HighlightedText>BBreadcrumb</HighlightedText> items prop. The main use of this

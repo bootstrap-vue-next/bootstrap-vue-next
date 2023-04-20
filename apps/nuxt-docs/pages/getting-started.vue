@@ -13,17 +13,21 @@
     </BRow>
     <BRow>
       <BCol>
-        ::: danger NOT PRODUCTION READY This project is still in **alpha version**. There is a lot
-        of work to do and the documentation may be out of date, if you want to contribute you can
-        use it and submit an [issue](https://github.com/bootstrap-vue/bootstrap-vue-next/issues) or
-        even better, a [pull request](https://github.com/bootstrap-vue/bootstrap-vue-next/pulls) 😄
-        :::
+        <BAlert :model-value="true" variant="danger">
+          Danger! <b>Not production ready</b>. This project is still in <b>alpha version</b>. There
+          is a lot of work to do and the documentation may be out of date, if you want to contribute
+          you can use it and submit an <ExternalLink :href="links.issues">issue</ExternalLink> or
+          even better, a
+          <ExternalLink :href="links.pulls">pull request</ExternalLink>
+          😄
+        </BAlert>
       </BCol>
     </BRow>
     <BRow>
       <BCol>
         <h2>
-          BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/)
+          BootstrapVueNext is an attempt to have the
+          <ExternalLink href="https://bootstrap-vue.org/">BootstrapVue</ExternalLink>
           components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components
           written in a simple and readable way for a better developer experience
         </h2>

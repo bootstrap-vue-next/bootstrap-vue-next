@@ -9,7 +9,7 @@
           <BNavItem to="/reference/directives">Directives</BNavItem>
           <BNavItem to="/reference/icons">Icons</BNavItem>
           <BNavItem to="/reference/types">Types</BNavItem>
-          <BNavItem to="migration-guide">Migrate</BNavItem>
+          <BNavItem to="/migration-guide">Migrate</BNavItem>
         </BNav>
       </BNavbarNav>
       <BNav>

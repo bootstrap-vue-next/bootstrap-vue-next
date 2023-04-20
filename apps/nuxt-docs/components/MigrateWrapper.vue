@@ -1,7 +1,10 @@
 <template>
   <BCard>
     <template #header>
-      <h3>{{ component }}: {{ title }}</h3>
+      <h3>
+        <span class="text-primary">{{ component }}</span
+        >: {{ title }}
+      </h3>
     </template>
     <BCardSubtitle>
       Rationale:

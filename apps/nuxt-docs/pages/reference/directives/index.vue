@@ -29,8 +29,9 @@
 /*
 1. Name
 2. Description
-3. Basic usage
-4. Advanced usage/additional notes
+3. Demo
+3.5. Code for demo
+4. Advanced usage/additional notes (if needed)
 5. Type Declarations (if applicable)
 6. Source links
 */
