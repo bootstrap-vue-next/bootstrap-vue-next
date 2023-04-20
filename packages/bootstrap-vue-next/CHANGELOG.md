@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.6](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.5...v0.8.6) (2023-04-19)
+
+
+### Bug Fixes
+
+* remove b-table item prop mutation by pagination ([89cffb8](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/89cffb895de011314a35480cd1bd673fa32ebab4))
+
 ## [0.8.5](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.4...v0.8.5) (2023-04-18)
 
 
