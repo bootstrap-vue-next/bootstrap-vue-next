@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.7](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.6...v0.8.7) (2023-04-25)
+
+
+### Features
+
+* **BButton:** add prop block ([f5f1cca](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/f5f1ccaf16dc2492a2f41840c5d30efb0d44523e))
+* update vueuse ([2745f9b](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/2745f9bef558a5c510d644874226907a4dd9286d))
+
 ## [0.8.6](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.5...v0.8.6) (2023-04-19)
 
 
