@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row>
-      <b-col> Hello world </b-col>
+      <b-col> <BDropdown>Foo</BDropdown> </b-col>
     </b-row>
   </b-container>
 </template>

@@ -1,7 +1,3 @@
----
-sidebar: auto
----
-
 # Comparison with BootstrapVue
 
 In this section, you'll see a full list of BootstrapVue components (standard and non-standard) and the coverage status for `properties`, `slots`, `events`, etc. Also, we specify the new features of Bootstrap **v5** in each component that requires it. It is not a full migration guide, but documents the changes between the versions. A migration guide will be finalized upon a v1.0 release

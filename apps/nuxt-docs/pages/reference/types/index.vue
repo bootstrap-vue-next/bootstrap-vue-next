@@ -5,7 +5,6 @@
         <h1>Types</h1>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <HighlightedText>BootstrapVueNext</HighlightedText> is a complete rewrite that strives for
@@ -13,13 +12,11 @@
         can use too:
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>Alignment</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>
@@ -31,25 +28,21 @@
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>Booleanish</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock> type Booleanish = 'true' | 'false' | '' | boolean </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>BodyProp</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <ul>
@@ -57,7 +50,6 @@
         </ul>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <!-- <CodeBlock> type BodyProp = string | VNode<RendererNode,
@@ -66,13 +58,11 @@ RendererElement, {
 }> | undefined </CodeBlock> -->
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>BPopoverDelayObject</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <ul>
@@ -80,19 +70,16 @@ RendererElement, {
         </ul>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock> interface BPopoverDelayObject { show: number hide: number } </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>BreadcrumbItem</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <ul>
@@ -100,7 +87,6 @@ RendererElement, {
         </ul>
       </BCol>
     </BRow>
-
     <BRow>
       <!-- <BCol> <CodeBlock> interface BreadcrumbItemObject {
   active?: boolean
@@ -111,37 +97,31 @@ RendererElement, {
 }
 type BreadcrumbItem = BreadcrumbItemObject | string </CodeBlock></BCol> -->
     </BRow>
-
     <BRow>
       <BCol>
         <h2>Breakpoint</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock> type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xxl' </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>ButtonType</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock> type ButtonType = 'button' | 'submit' | 'reset' </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>ButtonVariant</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>
@@ -151,13 +131,11 @@ type BreadcrumbItem = BreadcrumbItemObject | string </CodeBlock></BCol> -->
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>ColorVariant</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>
@@ -166,13 +144,11 @@ type BreadcrumbItem = BreadcrumbItemObject | string </CodeBlock></BCol> -->
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>ContainerPosition</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <!-- <BCol>
         <CodeBlock>
@@ -182,13 +158,11 @@ type BreadcrumbItem = BreadcrumbItemObject | string </CodeBlock></BCol> -->
         </CodeBlock>
       </BCol> -->
     </BRow>
-
     <BRow>
       <BCol>
         <h2>InputType</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>
@@ -197,25 +171,21 @@ type BreadcrumbItem = BreadcrumbItemObject | string </CodeBlock></BCol> -->
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>LinkTarget</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock> type LinkTarget = '_self' | '_blank' | '_parent' | '_top' </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>Position</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol
         ><CodeBlock>
@@ -224,33 +194,27 @@ type BreadcrumbItem = BreadcrumbItemObject | string </CodeBlock></BCol> -->
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>Size</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol> <CodeBlock> type Size = 'sm' | 'md' | 'lg' </CodeBlock></BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>SpinnerType</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol> <CodeBlock> type SpinnerType = 'border' | 'grow' </CodeBlock> </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>TableField</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <!-- <BCol> <CodeBlock> interface TableFieldObject<T = Record<string, unknown>> {
   key: LiteralUnion<keyof t>
@@ -275,13 +239,11 @@ type BreadcrumbItem = BreadcrumbItemObject | string </CodeBlock></BCol> -->
 }
 type TableField<T = Record<string, unknown>> = string | TableFieldObject<T/> </CodeBlock> </BCol> -->
     </BRow>
-
     <BRow>
       <BCol>
         <h2>TableItem</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <!-- <BCol> <CodeBlock> type TableItem<T = Record<string, unknown>> = T & {
   _rowVariant?: ColorVariant
@@ -289,13 +251,11 @@ type TableField<T = Record<string, unknown>> = string | TableFieldObject<T/> </C
   _showDetails?: boolean
 } </CodeBlock> </BCol> -->
     </BRow>
-
     <BRow>
       <BCol>
         <h2>TextColorVariant</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>
@@ -304,23 +264,19 @@ type TableField<T = Record<string, unknown>> = string | TableFieldObject<T/> </C
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>TransitionMode</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol> <CodeBlock>type TransitionMode = 'in-out' | 'out-in'</CodeBlock> </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>VerticalAlign</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>
@@ -328,20 +284,17 @@ type TableField<T = Record<string, unknown>> = string | TableFieldObject<T/> </C
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <h2>Extending Types</h2>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         You can extend some types to use your own values (e.g. colors, sizes). This requires the use
         of interface augmentation. You can augment next interfaces:
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <ul>
@@ -352,14 +305,12 @@ type TableField<T = Record<string, unknown>> = string | TableFieldObject<T/> </C
         </ul>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         Suppose we want to add a purple style and extra-large (xl) sizes. We need to create a
         declaration file in the root of vue project.
       </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>
@@ -373,11 +324,9 @@ type TableField<T = Record<string, unknown>> = string | TableFieldObject<T/> </C
         </CodeBlock>
       </BCol>
     </BRow>
-
     <BRow>
       <BCol> New values can be used now and the type check will be successful: </BCol>
     </BRow>
-
     <BRow>
       <BCol>
         <CodeBlock>

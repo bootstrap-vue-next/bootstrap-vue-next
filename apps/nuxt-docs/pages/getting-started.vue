@@ -329,13 +329,6 @@
         we request that you submit a <ExternalLink :href="links.issues">GitHub Issue</ExternalLink>
       </BCol>
     </BRow>
-    <BRow>
-      <BCol>
-        You can view the planned compatibility list in the following
-        <BLink to="/reference/parity-list"> section </BLink>. It is <i>not</i> a migration guide,
-        which will be finalized upon v1.0.0
-      </BCol>
-    </BRow>
   </BContainer>
 </template>
 

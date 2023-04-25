@@ -28,10 +28,38 @@
         <h2>Demo</h2>
       </BCol>
     </BRow>
-    <BRow id="card">
+    <BRow ref="el">
       <BCol>
         <BCard>
           <BButton @click="toggleMode">Toggle {{ computedMode }}</BButton>
+        </BCard>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BCard>
+          <code>
+            <pre>
+&lt;template&gt;
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+import { ref, computed } from 'vue'
+import { useColorMode } from 'bootstrap-vue-next'
+
+const el = ref&lt;HTMLElement | null&gt;(null)
+
+const mode = useColorMode({
+  selector: el as unknown as HTMLElement,
+  persist: false,
+})
+
+const toggleMode = () => (mode.value !== 'dark' ? (mode.value = 'dark') : (mode.value = 'light'))
+
+const computedMode = computed(() => (mode.value === 'dark' ? 'light' : 'dark'))
+&lt;/script&gt;
+            </pre>
+          </code>
         </BCard>
       </BCol>
     </BRow>
@@ -52,8 +80,10 @@
 </template>
 
 <script setup lang="ts">
+const el = ref<HTMLElement | null>(null)
+
 const mode = useColorMode({
-  selector: '#card',
+  selector: el as unknown as HTMLElement,
   persist: false,
 })
 
