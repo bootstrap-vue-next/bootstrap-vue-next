@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent, h, Teleport} from 'vue'
+import {defineComponent, h, type PropType, type RendererElement, Teleport} from 'vue'
 
 export default defineComponent({
   name: 'ComponentOrEmpty',
@@ -9,7 +9,7 @@ export default defineComponent({
       default: 'div',
     },
     to: {
-      type: [String, HTMLElement],
+      type: [String, Object] as PropType<string | RendererElement | null | undefined>,
       required: false,
       default: null,
     },
