@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row>
-      <b-col> Hello world </b-col>
+      <b-col> Hello World! </b-col>
     </b-row>
   </b-container>
 </template>

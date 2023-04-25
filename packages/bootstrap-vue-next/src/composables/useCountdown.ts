@@ -1,5 +1,5 @@
 import {
-  type MaybeComputedRef,
+  type MaybeRefOrGetter,
   resolveUnref,
   useIntervalFn,
   type UseIntervalFnOptions,
@@ -21,14 +21,14 @@ interface CountdownReturn {
 /**
  * A simple interval timer that counts down the remaining seconds
  *
- * @param {MaybeComputedRef<number>} length the total amount of time to loop through in ms
- * @param {MaybeComputedRef<number>} interval how often the interval should refresh. Default 1000
+ * @param {MaybeRefOrGetter<number>} length the total amount of time to loop through in ms
+ * @param {MaybeRefOrGetter<number>} interval how often the interval should refresh. Default 1000
  * @param {UseIntervalFnOptions} intervalOpts opts to pass to the interval fn. Default {}
  * @important ensure that you call `stop()` before unmount in the component
  */
 export default (
-  length: MaybeComputedRef<number>,
-  interval: MaybeComputedRef<number> = ref(1000),
+  length: MaybeRefOrGetter<number>,
+  interval: MaybeRefOrGetter<number> = ref(1000),
   intervalOpts: UseIntervalFnOptions = {}
 ): CountdownReturn => {
   const isPaused = ref(false)

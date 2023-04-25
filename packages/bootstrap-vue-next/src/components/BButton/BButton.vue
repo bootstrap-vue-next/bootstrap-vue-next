@@ -51,12 +51,14 @@ export default defineComponent({
     variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
     loading: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     loadingMode: {type: String as PropType<'fill' | 'inline'>, default: 'inline'},
+    block: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   },
   emits: ['click', 'update:pressed'],
   setup(props, {emit}) {
     const pressedValue = useVModel(props, 'pressed', emit)
 
     const activeBoolean = useBooleanish(toRef(props, 'active'))
+    const blockBoolean = useBooleanish(toRef(props, 'block'))
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     const pillBoolean = useBooleanish(toRef(props, 'pill'))
     const pressedBoolean = useBooleanish(toRef(props, 'pressed'))
@@ -77,6 +79,7 @@ export default defineComponent({
       [`btn-${props.variant}`],
       [`btn-${props.size}`],
       {
+        'btn-block': blockBoolean.value,
         'active': activeBoolean.value || pressedBoolean.value,
         'rounded-pill': pillBoolean.value,
         'rounded-0': squaredBoolean.value,

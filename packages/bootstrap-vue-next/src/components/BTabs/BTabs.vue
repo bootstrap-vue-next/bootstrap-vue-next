@@ -182,6 +182,8 @@ const tabsInternal = ref<
     tabComponent: () => VNode
   }[]
 >([])
+
+// TODO simplify this! YOu cannot do things like nest BTab in a wrapper component!
 watch(
   () => slots.default?.(),
   () => {

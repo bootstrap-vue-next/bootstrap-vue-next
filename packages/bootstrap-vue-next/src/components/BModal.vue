@@ -58,8 +58,6 @@
                   <b-button
                     v-if="!okOnlyBoolean"
                     ref="cancelButton"
-                    type="button"
-                    class="btn"
                     :disabled="disableCancel"
                     :size="buttonSize"
                     :variant="cancelVariant"
@@ -71,8 +69,6 @@
                 <slot name="ok">
                   <b-button
                     ref="okButton"
-                    type="button"
-                    class="btn"
                     :disabled="disableOk"
                     :size="buttonSize"
                     :variant="okVariant"
