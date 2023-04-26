@@ -10,7 +10,6 @@ export default defineComponent({
     },
     to: {
       type: [String, Object] as PropType<string | RendererElement | null | undefined>,
-      required: false,
       default: null,
     },
     skip: {
