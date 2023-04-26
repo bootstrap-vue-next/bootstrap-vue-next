@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch, watchEffect} from 'vue'
+import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
-import {BvTriggerableEvent, collapseInjectionKey} from '../utils'
+import {BvTriggerableEvent, collapseInjectionKey, getTransitionDelay} from '../utils'
 
 interface BCollapseProps {
   // appear?: Booleanish
@@ -155,16 +155,6 @@ watch([modelValue, show], () => {
   }
   hide()
 })
-
-const getTransitionDelay = (element: HTMLElement) => {
-  const style = window.getComputedStyle(element)
-  // if multiple durations are defined, we take the first
-  const transitionDelay = style.transitionDelay.split(',')[0] || ''
-  const transitionDuration = style.transitionDuration.split(',')[0] || ''
-  const transitionDelayMs = Number(transitionDelay.slice(0, -1)) * 1000
-  const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
-  return transitionDelayMs + transitionDurationMs
-}
 
 onMounted(() => {
   if (element.value === null) return
