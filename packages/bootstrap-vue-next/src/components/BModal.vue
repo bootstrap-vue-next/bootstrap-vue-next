@@ -251,6 +251,7 @@ const modalOpen = useSetAttr({
   selector: 'body',
   valueDark: 'modal-open',
   valueLight: '',
+  disableTransition: false,
 })
 
 const element = ref<HTMLElement | null>(null)
