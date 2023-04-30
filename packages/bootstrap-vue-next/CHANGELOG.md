@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.8](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.7...v0.8.8) (2023-04-30)
+
+
+### Bug Fixes
+
+* **BModal:** multiple open modals and performance issues ([02b9ac8](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/02b9ac8c3659889efe6b8a6aa70197d25ad3d3d6))
+
 ## [0.8.7](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.6...v0.8.7) (2023-04-25)
 
 
