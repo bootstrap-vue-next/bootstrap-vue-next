@@ -34,6 +34,15 @@
     </b-row>
     <b-row>
       <b-col>
+        <b-modal v-model="showModal2">
+          <b-button @click="showModal3 = true">Click me</b-button>
+          <b-modal v-model="showModal3" />
+        </b-modal>
+        <b-button @click="showModal2 = true">Show Modal</b-button>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <div>noClose is {{ noClose }}</div>
         <BButton @click="noClose = true">Set noClose = true</BButton>
         <BButton @click="noClose = false">Set noClose = false</BButton>
@@ -46,6 +55,8 @@
 import {ref} from 'vue'
 
 const showModal = ref(false)
+const showModal2 = ref(false)
+const showModal3 = ref(false)
 
 const noClose = ref(true)
 const isModalVisible = ref(false)
