@@ -41,8 +41,8 @@
     ref="floating"
     :style="{
       position: strategy === 'absolute' ? undefined : 'fixed',
-      top: `${y ?? 0}px`,
-      left: `${x ?? 0}px`,
+      top: `${y}px`,
+      left: `${x}px`,
       width: 'max-content',
     }"
     class="dropdown-menu show"
@@ -244,7 +244,7 @@ const dropdownMenuClasses = computed(() => [
 
 const buttonAttr = computed(() => ({
   'aria-expanded': splitBoolean.value ? undefined : modelValueBoolean.value,
-  'aria-haspopup': splitBoolean.value ? undefined :'menu',
+  'aria-haspopup': splitBoolean.value ? undefined : 'menu',
   'href': splitBoolean.value ? props.splitHref : undefined,
   'to': splitBoolean.value && props.splitTo ? props.splitTo : undefined,
 }))

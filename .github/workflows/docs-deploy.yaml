@@ -6,10 +6,10 @@ on:
   push:
     paths:
       - 'apps/docs/**'
-      - '.github/workflows/docs-github-pages-deploy.yaml'
+      - '.github/workflows/docs-deploy.yaml'
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   build-and-deploy:
@@ -17,14 +17,24 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    permissions:
+      pages: write
+      id-token: write
+
     strategy:
       matrix:
         os: [ubuntu-latest]
         node-version: [18.x]
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -55,8 +65,14 @@ jobs:
       - name: Build library
         run: pnpm run build --filter docs
 
-      - name: Deploy Pages
-        uses: JamesIves/github-pages-deploy-action@v4.3.3
+      - name: Configure Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: ./apps/docs/docs/.vuepress/dist # The folder the action should deploy.
+          path: ./apps/docs/.vitepress/dist
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

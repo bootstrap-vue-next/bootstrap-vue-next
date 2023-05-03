@@ -13,8 +13,8 @@
       tabindex="-1"
       :style="{
         position: strategy,
-        top: `${y ?? 0}px`,
-        left: `${x ?? 0}px`,
+        top: `${y}px`,
+        left: `${x}px`,
         width: 'max-content',
       }"
     >

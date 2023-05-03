@@ -33,20 +33,20 @@
     "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.3.2"
+    "@nuxt/kit": "^3.4.3"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.1.1",
-    "@nuxt/module-builder": "^0.2.1",
-    "@nuxt/schema": "^3.3.2",
+    "@nuxt/module-builder": "^0.3.1",
+    "@nuxt/schema": "^3.4.3",
     "@rushstack/eslint-patch": "^1.2.0",
     "@vue/eslint-config-prettier": "^7.1.0",
     "bootstrap-vue-next": "workspace:^",
-    "eslint": "^8.36.0",
-    "eslint-define-config": "^1.17.0",
-    "nuxt": "^3.3.2",
-    "prettier": "^2.8.4",
-    "unimport": "^3.0.4",
+    "eslint": "^8.39.0",
+    "eslint-define-config": "^1.20.0",
+    "nuxt": "^3.4.3",
+    "prettier": "^2.8.8",
+    "unimport": "^3.0.6",
     "vue": "^3.2.47"
   },
   "repository": {
