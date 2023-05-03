@@ -4,7 +4,7 @@ interface BToastPluginOptions {
   injectkey: symbol
 }
 
-interface BootstrapVueOptions {
+export interface BootstrapVueOptions {
   BAccordion?: Record<string, any>
   BAlert?: Record<string, any>
   BBadge?: Record<string, any>
@@ -22,5 +22,3 @@ interface BootstrapVueOptions {
   BTab?: Record<string, any>
   BToast?: BToastPluginOptions
 }
-
-export default BootstrapVueOptions

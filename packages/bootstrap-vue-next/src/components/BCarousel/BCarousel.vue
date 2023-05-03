@@ -23,21 +23,24 @@
     </div>
 
     <div ref="relatedTarget" class="carousel-inner">
-      <transition
-        v-for="(slide, i) in slides"
-        :key="i"
-        :enter-from-class="`carousel-item-next carousel-item-${direction ? 'end' : 'start'}`"
-        leave-active-class="active"
-        :leave-to-class="`carousel-item-prev carousel-item-${direction ? 'start' : 'end'}`"
+      <transition-group
+        :enter-from-class="enterClasses"
+        :enter-active-class="enterClasses"
+        :enter-to-class="enterClasses"
+        :leave-from-class="leaveClasses"
+        :leave-active-class="leaveClasses"
+        :leave-to-class="leaveClasses"
         @before-leave="onBeforeLeave"
         @after-leave="onAfterLeave"
       >
-        <component :is="slide" v-show="i === modelValue" :class="{active: i === modelValue}" />
-      </transition>
-    </div>
-
-    <div class="carousel-inner">
-      <slot />
+        <component
+          :is="slide"
+          v-for="(slide, i) in slides"
+          v-show="i === modelValue"
+          :key="i"
+          :class="{active: i === modelValue && isTransitioning === false}"
+        />
+      </transition-group>
     </div>
 
     <template v-if="controlsBoolean">
@@ -142,9 +145,25 @@ const rideStarted = ref(false)
 const direction = ref(true)
 const relatedTarget = ref<HTMLElement | null>(null)
 const target = ref<HTMLElement | null>(null)
+const previousModelValue = ref(modelValue.value)
 
 const rideResolved = computed<boolean | 'carousel'>(() =>
   isBooleanish(props.ride) ? resolveBooleanish(props.ride) : props.ride
+)
+
+// Class carousel-item is a static property
+// If you make it static, the direction can be reversed -- properly (atm it does the carousel-item-${} logic backwards for entering, a weird hack)
+// So all that would be great. However, when you do this, it will break the transition flow. Something about it breaks and I'm not sure why!
+// Try it by removing carousel-item from below and making `!direction.value` => `direction.value` for enter
+// Then reviewing the behavior
+const enterClasses = computed(
+  () =>
+    `carousel-item carousel-item-${!direction.value ? 'next' : 'prev'} carousel-item-${
+      !direction.value ? 'start' : 'end'
+    }`
+)
+const leaveClasses = computed(
+  () => `carousel-item active carousel-item-${direction.value ? 'start' : 'end'}`
 )
 
 const {pause, resume} = useIntervalFn(
@@ -175,13 +194,13 @@ const computedClasses = computed(() => [
 //     : props.modelValue
 // )
 
-const buildBvCarouselEvent = (event: 'slid' | 'slide', from: number) =>
+const buildBvCarouselEvent = (event: 'slid' | 'slide') =>
   new BvCarouselEvent(event, {
     componentId: computedId.value,
     cancelable: false,
     target: target.value,
     direction: direction.value ? 'right' : 'left',
-    from,
+    from: previousModelValue.value,
     to: modelValue.value,
     relatedTarget: relatedTarget.value?.children[modelValue.value] ?? null,
   })
@@ -206,11 +225,16 @@ const goToValue = (value: number): void => {
     modelValue.value = slides.value.length - 1
     return
   }
+  previousModelValue.value = modelValue.value
   modelValue.value = value
 }
 
-const prev = (): void => goToValue(modelValue.value - 1)
-const next = (): void => goToValue(modelValue.value + 1)
+const prev = (): void => {
+  goToValue(modelValue.value - 1)
+}
+const next = (): void => {
+  goToValue(modelValue.value + 1)
+}
 
 const onKeydown = (fn: () => void) => {
   if (keyboardBoolean.value === false) return
@@ -250,12 +274,12 @@ const {lengthX} = useSwipe(target, {
   },
 })
 
-const onBeforeLeave = (i: number) => {
-  emit('slide', buildBvCarouselEvent('slide', i))
+const onBeforeLeave = () => {
+  emit('slide', buildBvCarouselEvent('slide'))
   isTransitioning.value = true
 }
-const onAfterLeave = (i: number) => {
-  emit('slid', buildBvCarouselEvent('slid', i))
+const onAfterLeave = () => {
+  emit('slid', buildBvCarouselEvent('slid'))
   isTransitioning.value = false
 }
 

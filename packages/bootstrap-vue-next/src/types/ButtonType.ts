@@ -1,3 +1,1 @@
-type ButtonType = 'button' | 'submit' | 'reset'
-
-export default ButtonType
+export type ButtonType = 'button' | 'submit' | 'reset'

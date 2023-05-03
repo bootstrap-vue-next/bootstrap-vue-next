@@ -1,2 +1,2 @@
-[*.{js,jsx,ts,tsx,vue}]
+[*.{js,jsx,ts,tsx,vue,json}]
 indent_size = 2

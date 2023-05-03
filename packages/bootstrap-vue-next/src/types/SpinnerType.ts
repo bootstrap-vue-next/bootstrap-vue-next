@@ -1,3 +1,1 @@
-type SpinnerType = 'border' | 'grow'
-
-export default SpinnerType
+export type SpinnerType = 'border' | 'grow'

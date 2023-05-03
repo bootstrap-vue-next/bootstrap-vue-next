@@ -1,5 +1,3 @@
-interface PaginationPage {
+export interface PaginationPage {
   number: number
 }
-
-export default PaginationPage

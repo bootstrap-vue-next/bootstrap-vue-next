@@ -4,6 +4,4 @@ export interface BaseSize {
   lg: unknown
 }
 
-type Size = keyof BaseSize
-
-export default Size
+export type Size = keyof BaseSize

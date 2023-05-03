@@ -1,9 +1,9 @@
 import type {StyleValue, TdHTMLAttributes, ThHTMLAttributes} from 'vue'
-import type ClassValue from './ClassValue'
-import type LiteralUnion from './LiteralUnion'
-import type ColorVariant from './ColorVariant'
+import type {ClassValue} from './ClassValue'
+import type {LiteralUnion} from './LiteralUnion'
+import type {ColorVariant} from './ColorVariant'
 
-interface TableFieldObject<T = Record<string, unknown>> {
+export interface TableFieldObject<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
   headerTitle?: string
@@ -24,5 +24,3 @@ interface TableFieldObject<T = Record<string, unknown>> {
   isRowHeader?: boolean
   stickyColumn?: boolean
 }
-
-export default TableFieldObject

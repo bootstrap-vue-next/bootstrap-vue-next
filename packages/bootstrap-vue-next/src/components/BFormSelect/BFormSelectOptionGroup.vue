@@ -7,10 +7,10 @@
     <b-form-select-option
       v-for="(option, index) in formOptions"
       :key="index"
-      :value="option.value"
-      :disabled="option.disabled"
+      :value="(option as any).value"
+      :disabled="(option as any).disabled"
       v-bind="$attrs"
-      v-html="option.html || option.text"
+      v-html="(option as any).html || (option as any).text"
     />
     <!--eslint-enable-->
     <slot />

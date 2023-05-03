@@ -1,3 +1,1 @@
-type PlaceholderAnimation = 'wave' | 'glow'
-
-export default PlaceholderAnimation
+export type PlaceholderAnimation = 'wave' | 'glow'

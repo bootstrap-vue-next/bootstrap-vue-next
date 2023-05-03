@@ -1,4 +1,3 @@
-import type {Placement as OriginalPlacement} from '@floating-ui/vue'
-type Placement = OriginalPlacement | 'auto' | 'auto-start' | 'auto-end'
+import type {Placement} from '@floating-ui/vue'
 
-export default Placement
+export type BPopoverPlacement = Placement | 'auto' | 'auto-start' | 'auto-end'
