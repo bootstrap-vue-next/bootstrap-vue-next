@@ -1,5 +1,3 @@
-import type TableFieldObject from './TableFieldObject'
+import type {TableFieldObject} from './TableFieldObject'
 
-type TableField<T = Record<string, unknown>> = string | TableFieldObject<T>
-
-export default TableField
+export type TableField<T = Record<string, unknown>> = string | TableFieldObject<T>

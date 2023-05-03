@@ -1,5 +1,3 @@
-import type Size from './Size'
+import type {Size} from './Size'
 
-type PlaceholderSize = Size | 'xs'
-
-export default PlaceholderSize
+export type PlaceholderSize = Size | 'xs'

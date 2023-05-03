@@ -1,5 +1,3 @@
-import type SelectOptionObject from './SelectOptionObject'
+import type {SelectOptionObject} from './SelectOptionObject'
 
-type SelectOption<T = unknown> = string | SelectOptionObject<T>
-
-export default SelectOption
+export type SelectOption<T = unknown> = string | SelectOptionObject<T>

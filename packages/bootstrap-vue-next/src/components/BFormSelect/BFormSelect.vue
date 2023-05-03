@@ -17,17 +17,17 @@
     <slot name="first" />
     <template v-for="(option, index) in formOptions" :key="index">
       <b-form-select-option-group
-        v-if="Array.isArray(option.options)"
-        :label="option.label"
-        :options="option.options"
+        v-if="Array.isArray((option as any).options)"
+        :label="(option as any).label"
+        :options="(option as any).options"
       />
       <!-- eslint-disable vue/no-v-text-v-html-on-component -->
       <!-- eslint-disable vue/no-v-html -->
       <b-form-select-option
         v-else
-        :value="option.value"
-        :disabled="option.disabled"
-        v-html="option.html || option.text"
+        :value="(option as any).value"
+        :disabled="(option as any).disabled"
+        v-html="(option as any).html || (option as any).text"
       />
       <!--eslint-enable-->
     </template>

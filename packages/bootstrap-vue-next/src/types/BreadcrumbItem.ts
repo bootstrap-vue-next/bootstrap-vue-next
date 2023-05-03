@@ -1,5 +1,3 @@
-import type BreadcrumbItemObject from './BreadcrumbItemObject'
+import type {BreadcrumbItemObject} from './BreadcrumbItemObject'
 
-type BreadcrumbItem = BreadcrumbItemObject | string
-
-export default BreadcrumbItem
+export type BreadcrumbItem = BreadcrumbItemObject | string

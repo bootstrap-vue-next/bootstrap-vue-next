@@ -1,3 +1,1 @@
-type ContainerHorizontalAlign = 'left' | 'center' | 'right'
-
-export default ContainerHorizontalAlign
+export type ContainerHorizontalAlign = 'left' | 'center' | 'right'

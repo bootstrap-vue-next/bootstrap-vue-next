@@ -1,5 +1,3 @@
-import type AlignmentCommon from './AlignmentCommon'
+import type {AlignmentCommon} from './AlignmentCommon'
 
-type AlignmentVertical = AlignmentCommon | 'baseline' | 'stretch'
-
-export default AlignmentVertical
+export type AlignmentVertical = AlignmentCommon | 'baseline' | 'stretch'

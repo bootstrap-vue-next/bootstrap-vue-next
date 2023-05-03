@@ -1,7 +1,7 @@
-import type AriaInvalid from './AriaInvalid'
-import type Size from './Size'
+import type {AriaInvalid} from './AriaInvalid'
+import type {Size} from './Size'
 
-interface FormCommonInputProps {
+export interface FormCommonInputProps {
   ariaInvalid?: AriaInvalid
   autocomplete?: string
   autofocus?: boolean
@@ -23,5 +23,3 @@ interface FormCommonInputProps {
   state?: boolean | null
   trim?: boolean
 }
-
-export default FormCommonInputProps

@@ -1,3 +1,1 @@
-type TransitionMode = 'in-out' | 'out-in'
-
-export default TransitionMode
+export type TransitionMode = 'in-out' | 'out-in'

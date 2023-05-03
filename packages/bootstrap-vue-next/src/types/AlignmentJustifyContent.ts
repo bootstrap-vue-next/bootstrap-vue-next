@@ -1,3 +1,1 @@
-type AlignmentJustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
-
-export default AlignmentJustifyContent
+export type AlignmentJustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'

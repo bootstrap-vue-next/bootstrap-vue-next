@@ -9,6 +9,4 @@ export interface BaseTextColorVariant extends BaseColorVariant {
   'reset': unknown
 }
 
-type TextColorVariant = keyof BaseTextColorVariant
-
-export default TextColorVariant
+export type TextColorVariant = keyof BaseTextColorVariant

@@ -1,8 +1,10 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "docs/**/*", "docs/**/*.vue", "docs/.vuepress/**/*.vue", "docs/.vuepress/**/*"],
-  "compilerOptions": {
-    "types": ["@vuepress/client/types"],
-    "baseUrl": "."
-  }
+    "extends": "@vue/tsconfig/tsconfig.dom.json",
+    "include": [".vitepress/**/*"],
+    "compilerOptions": {
+        "types": [
+            "components.d.ts",
+            "unplugin-icons/types/vue"
+        ]
+    }
 }

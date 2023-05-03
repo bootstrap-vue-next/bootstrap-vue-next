@@ -1,3 +1,1 @@
-type AlignmentTextHorizontal = 'start' | 'end' | 'center'
-
-export default AlignmentTextHorizontal
+export type AlignmentTextHorizontal = 'start' | 'end' | 'center'

@@ -1,4 +1,4 @@
-type InputType =
+export type InputType =
   | 'text'
   | 'number'
   | 'email'
@@ -14,5 +14,3 @@ type InputType =
   | 'datetime-local'
   | 'month'
   | 'week'
-
-export default InputType

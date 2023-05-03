@@ -1,4 +1,4 @@
-type Animation =
+export type Animation =
   | 'cylon'
   | 'cylon-vertical'
   | 'fade'
@@ -7,5 +7,3 @@ type Animation =
   | 'spin-pulse'
   | 'spin-reverse-pulse'
   | 'throb'
-
-export default Animation

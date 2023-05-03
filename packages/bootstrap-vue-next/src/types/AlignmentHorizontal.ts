@@ -1,5 +1,3 @@
-import type AlignmentCommon from './AlignmentCommon'
+import type {AlignmentCommon} from './AlignmentCommon'
 
-type AlignmentHorizontal = AlignmentCommon | 'between' | 'around'
-
-export default AlignmentHorizontal
+export type AlignmentHorizontal = AlignmentCommon | 'between' | 'around'

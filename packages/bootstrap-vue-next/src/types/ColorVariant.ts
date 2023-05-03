@@ -9,6 +9,4 @@ export interface BaseColorVariant {
   dark: unknown
 }
 
-type ColorVariant = keyof BaseColorVariant
-
-export default ColorVariant
+export type ColorVariant = keyof BaseColorVariant

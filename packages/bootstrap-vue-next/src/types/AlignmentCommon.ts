@@ -1,3 +1,1 @@
-type AlignmentCommon = 'start' | 'end' | 'center' | 'fill'
-
-export default AlignmentCommon
+export type AlignmentCommon = 'start' | 'end' | 'center' | 'fill'
