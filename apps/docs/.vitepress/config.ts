@@ -8,6 +8,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 export default defineConfig({
   title: "BootstrapVueNext",
   description: "BootstrapVueNext Documentation",
+  base: '/bootstrap-vue-next/',
   srcDir: 'src',
   // TODO fix & remove this
   ignoreDeadLinks: true,
