@@ -246,12 +246,10 @@ of related form controls:
             label-cols-sm="3"
             label-align-sm="end"
             class="mb-0"
-            v-slot="{ ariaDescribedby }"
           >
           <b-form-radio-group
             class="pt-2"
             :options="['Air', 'Courier', 'Mail']"
-            :aria-describedby="ariaDescribedby"
             ></b-form-radio-group>
           </b-form-group>
         </b-form-group>
@@ -297,12 +295,10 @@ of related form controls:
         label-cols-sm="3"
         label-align-sm="end"
         class="mb-0"
-        v-slot="{ ariaDescribedby }"
       >
         <b-form-radio-group
           class="pt-2"
           :options="['Air', 'Courier', 'Mail']"
-          :aria-describedby="ariaDescribedby"
         ></b-form-radio-group>
       </b-form-group>
     </b-form-group>

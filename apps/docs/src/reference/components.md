@@ -2,17 +2,6 @@
 
 BootstrapVueNext components
 
-
-    <b-list-group>
-        <b-list-group-item v-for="(component, key)  in componentList" :key="key">
-            <RouterLink :to="`./${key}.html`">{{component.name}}</RouterLink>
-            <b-badge v-if="component.status=='todo'" variant="warning" pill>TODO</b-badge>
-            <b-badge v-else-if="component.status=='wip'" variant="warning" pill>WIP</b-badge>
-            — <span class="text-muted">{{component.description}}</span>
-        </b-list-group-item>
-    </b-list-group>
-
-
 <script setup lang="ts">
 import { ref } from "vue"
 
