@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.8.9](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.8...v0.8.9) (2023-05-03)
+
+
+### Bug Fixes
+
+* **carousel:** duplicate div with slots ([68e3b61](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/68e3b61334e99a592002f31f75ab8f5c20066846))
+* **carousel:** v-for on transition ([68e3b61](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/68e3b61334e99a592002f31f75ab8f5c20066846))
+* **package.json:** missing types from exports ([68e3b61](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/68e3b61334e99a592002f31f75ab8f5c20066846))
+
 ## [0.8.8](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.7...v0.8.8) (2023-04-30)
 
 
