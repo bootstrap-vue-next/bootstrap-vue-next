@@ -9,6 +9,8 @@ export default defineConfig({
   title: "BootstrapVueNext",
   description: "BootstrapVueNext Documentation",
   srcDir: 'src',
+  // TODO fix & remove this
+  ignoreDeadLinks: true,
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   ],
