@@ -434,7 +434,7 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   emit('rowClicked', row, index, e)
 
-  handleRowSelection(row, index, e.shiftKey)
+  handleRowSelection(row, index, e.shiftKey, e.ctrlKey)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowDblClicked', row, index, e)
@@ -465,7 +465,7 @@ const notifySelectionEvent = () => {
   emit('selection', Array.from(selectedItems.value))
 }
 
-const handleRowSelection = (row: TableItem, index: number, shiftClicked = false) => {
+const handleRowSelection = (row: TableItem, index: number, shiftClicked = false, ctrlClicked = false) => {
   if (!selectableBoolean.value) return
 
   if (selectedItems.value.has(row)) {
@@ -488,8 +488,11 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false)
           emit('rowSelected', item)
         }
       })
-    } else {
+    } else if(props.selectMode === 'range' && ctrlClicked) {
       selectedItems.value.add(row)
+      emit('rowSelected', row)
+    }else{
+      selectedItems.value.clear()
       emit('rowSelected', row)
     }
   }
