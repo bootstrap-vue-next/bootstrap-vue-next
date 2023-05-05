@@ -411,7 +411,8 @@ const computedItems = computed(() => {
 
   if (props.perPage !== undefined) {
     const startIndex = (props.currentPage - 1) * props.perPage
-    const endIndex = startIndex + props.perPage > items.length ? items.length : startIndex + props.perPage
+    const endIndex =
+      startIndex + props.perPage > items.length ? items.length : startIndex + props.perPage
     return items.slice(startIndex, endIndex)
   }
   return items
@@ -465,18 +466,18 @@ const notifySelectionEvent = () => {
   emit('selection', Array.from(selectedItems.value))
 }
 
-const handleRowSelection = (row: TableItem, index: number, shiftClicked = false, ctrlClicked = false) => {
+const handleRowSelection = (
+  row: TableItem,
+  index: number,
+  shiftClicked = false,
+  ctrlClicked = false
+) => {
   if (!selectableBoolean.value) return
 
   if (selectedItems.value.has(row)) {
     selectedItems.value.delete(row)
     emit('rowUnselected', row)
   } else {
-    if (props.selectMode === 'single' && selectedItems.value.size > 0) {
-      selectedItems.value.forEach((item) => emit('rowUnselected', item))
-      selectedItems.value.clear()
-    }
-
     if (props.selectMode === 'range' && selectedItems.value.size > 0 && shiftClicked) {
       const lastSelectedItem = Array.from(selectedItems.value).pop()
       const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
@@ -488,11 +489,14 @@ const handleRowSelection = (row: TableItem, index: number, shiftClicked = false,
           emit('rowSelected', item)
         }
       })
-    } else if(props.selectMode === 'range' && ctrlClicked) {
+    } else if ((props.selectMode === 'range' || props.selectMode === 'multi') && ctrlClicked) {
       selectedItems.value.add(row)
       emit('rowSelected', row)
-    }else{
+    } else {
+      //behavior for 'single'
+      selectedItems.value.forEach((item) => emit('rowUnselected', item))
       selectedItems.value.clear()
+      selectedItems.value.add(row)
       emit('rowSelected', row)
     }
   }
