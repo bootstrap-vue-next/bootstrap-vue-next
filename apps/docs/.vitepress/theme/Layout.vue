@@ -4,15 +4,15 @@
       <BCol>
     <BNavbar variant="primary">
       <BNavbarNav>
-        <BNavbarBrand to="/">Home</BNavbarBrand>
+        <BNavbarBrand :to="withBase('/')">Home</BNavbarBrand>
         <BNav>
-          <BNavItem to="/getting-started">Getting Started</BNavItem>
-          <BNavItem to="/reference/components">Components</BNavItem>
-          <BNavItem to="/reference/composables">Composables</BNavItem>
-          <BNavItem to="/reference/directives">Directives</BNavItem>
-          <BNavItem to="/reference/icons">Icons</BNavItem>
-          <BNavItem to="/reference/types">Types</BNavItem>
-          <BNavItem to="/migration-guide">Migrate</BNavItem>
+          <BNavItem :to="withBase('/getting-started')">Getting Started</BNavItem>
+          <BNavItem :to="withBase('/reference/components')">Components</BNavItem>
+          <BNavItem :to="withBase('/reference/composables')">Composables</BNavItem>
+          <BNavItem :to="withBase('/reference/directives')">Directives</BNavItem>
+          <BNavItem :to="withBase('/reference/icons')">Icons</BNavItem>
+          <BNavItem :to="withBase('/reference/types')">Types</BNavItem>
+          <BNavItem :to="withBase('/migration-guide')">Migrate</BNavItem>
         </BNav>
       </BNavbarNav>
       <BNav>
@@ -85,7 +85,7 @@ import DiscordIcon from '~icons/bi/discord'
 import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
 import CircleHalf from '~icons/bi/circle-half'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import {appInfoKey} from './keys'
 
 // https://vitepress.dev/reference/runtime-api#usedata
