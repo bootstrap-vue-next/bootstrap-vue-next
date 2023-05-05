@@ -474,31 +474,25 @@ const handleRowSelection = (
 ) => {
   if (!selectableBoolean.value) return
 
-  if (selectedItems.value.has(row)) {
-    selectedItems.value.delete(row)
-    emit('rowUnselected', row)
+  if (ctrlClicked && (props.selectMode === 'range' || props.selectMode === 'multi')) {
+    selectedItems.value.add(row)
+    emit('rowSelected', row)
+  } else if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
+    const lastSelectedItem = Array.from(selectedItems.value).pop()
+    const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
+    const selectStartIndex = Math.min(lastSelectedIndex, index)
+    const selectEndIndex = Math.max(lastSelectedIndex, index)
+    computedItems.value.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
+      if (!selectedItems.value.has(item)) {
+        selectedItems.value.add(item)
+        emit('rowSelected', item)
+      }
+    })
   } else {
-    if (props.selectMode === 'range' && selectedItems.value.size > 0 && shiftClicked) {
-      const lastSelectedItem = Array.from(selectedItems.value).pop()
-      const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
-      const selectStartIndex = Math.min(lastSelectedIndex, index)
-      const selectEndIndex = Math.max(lastSelectedIndex, index)
-      computedItems.value.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-        if (!selectedItems.value.has(item)) {
-          selectedItems.value.add(item)
-          emit('rowSelected', item)
-        }
-      })
-    } else if ((props.selectMode === 'range' || props.selectMode === 'multi') && ctrlClicked) {
-      selectedItems.value.add(row)
-      emit('rowSelected', row)
-    } else {
-      //behavior for 'single'
-      selectedItems.value.forEach((item) => emit('rowUnselected', item))
-      selectedItems.value.clear()
-      selectedItems.value.add(row)
-      emit('rowSelected', row)
-    }
+    selectedItems.value.forEach((item) => emit('rowUnselected', item))
+    selectedItems.value.clear()
+    selectedItems.value.add(row)
+    emit('rowSelected', row)
   }
 
   notifySelectionEvent()
