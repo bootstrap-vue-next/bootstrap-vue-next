@@ -474,10 +474,7 @@ const handleRowSelection = (
 ) => {
   if (!selectableBoolean.value) return
 
-  if (ctrlClicked && (props.selectMode === 'range' || props.selectMode === 'multi')) {
-    selectedItems.value.add(row)
-    emit('rowSelected', row)
-  } else if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
+  if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
     const lastSelectedItem = Array.from(selectedItems.value).pop()
     const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
     const selectStartIndex = Math.min(lastSelectedIndex, index)
@@ -488,6 +485,14 @@ const handleRowSelection = (
         emit('rowSelected', item)
       }
     })
+  } else if (ctrlClicked && (props.selectMode === 'range' || props.selectMode === 'multi')) {
+    if (selectedItems.value.has(row)) {
+      selectedItems.value.delete(row)
+      emit('rowUnselected', row)
+    } else {
+      selectedItems.value.add(row)
+      emit('rowSelected', row)
+    }
   } else {
     selectedItems.value.forEach((item) => emit('rowUnselected', item))
     selectedItems.value.clear()
