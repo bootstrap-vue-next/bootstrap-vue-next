@@ -286,11 +286,11 @@ const stop = () => myAlert.value?.stop()
 - `Immediate`: Will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`
 - `showOnPause`: Overwrites the behavior of showing an Alert when the timer is paused
 
-
-  <ComponentReference></ComponentReference>
-
+<ComponentReference></ComponentReference>
 
 <script lang="ts" setup>
+import {BAlert, BProgress, BButton, BCard} from 'bootstrap-vue-next'
+import ComponentReference from '../../components/ComponentReference.vue'
 import {ref, computed} from 'vue'
 
 const showDismissibleAlert = ref(false);

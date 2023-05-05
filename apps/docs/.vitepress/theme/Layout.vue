@@ -78,8 +78,21 @@
 </template>
 
 <script setup lang="ts">
+import { 
+  BContainer, 
+  BRow, 
+  BCol, 
+  BDropdownItem, 
+  BDropdown,
+  BButton,
+  BNavItem,
+  BNav,
+  BNavbarBrand,
+  BNavbar, 
+  BNavbarNav,
+  useColorMode
+} from 'bootstrap-vue-next'
 import {ref, onMounted, toRef, computed, provide} from 'vue'
-import {useColorMode} from 'bootstrap-vue-next'
 import GithubIcon from '~icons/bi/github'
 import DiscordIcon from '~icons/bi/discord'
 import MoonStarsFill from '~icons/bi/moon-stars-fill'

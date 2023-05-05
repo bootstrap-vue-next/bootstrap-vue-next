@@ -3,7 +3,6 @@
     "include": [".vitepress/**/*"],
     "compilerOptions": {
         "types": [
-            "components.d.ts",
             "unplugin-icons/types/vue"
         ]
     }
