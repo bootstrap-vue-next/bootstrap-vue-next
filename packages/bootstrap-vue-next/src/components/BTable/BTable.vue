@@ -485,11 +485,16 @@ const handleRowSelection = (
         emit('rowSelected', item)
       }
     })
-  } else if (ctrlClicked && (props.selectMode === 'range' || props.selectMode === 'multi')) {
+  } else if (ctrlClicked) {
     if (selectedItems.value.has(row)) {
       selectedItems.value.delete(row)
       emit('rowUnselected', row)
+    } else if (props.selectMode === 'range' || props.selectMode === 'multi') {
+      selectedItems.value.add(row)
+      emit('rowSelected', row)
     } else {
+      selectedItems.value.forEach((item) => emit('rowUnselected', item))
+      selectedItems.value.clear()
       selectedItems.value.add(row)
       emit('rowSelected', row)
     }
