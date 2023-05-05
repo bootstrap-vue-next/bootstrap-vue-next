@@ -411,7 +411,8 @@ const computedItems = computed(() => {
 
   if (props.perPage !== undefined) {
     const startIndex = (props.currentPage - 1) * props.perPage
-    const endIndex = startIndex + props.perPage > items.length ? items.length : startIndex + props.perPage
+    const endIndex =
+      startIndex + props.perPage > items.length ? items.length : startIndex + props.perPage
     return items.slice(startIndex, endIndex)
   }
   return items
@@ -434,7 +435,7 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   emit('rowClicked', row, index, e)
 
-  handleRowSelection(row, index, e.shiftKey)
+  handleRowSelection(row, index, e.shiftKey, e.ctrlKey)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowDblClicked', row, index, e)
@@ -465,33 +466,43 @@ const notifySelectionEvent = () => {
   emit('selection', Array.from(selectedItems.value))
 }
 
-const handleRowSelection = (row: TableItem, index: number, shiftClicked = false) => {
+const handleRowSelection = (
+  row: TableItem,
+  index: number,
+  shiftClicked = false,
+  ctrlClicked = false
+) => {
   if (!selectableBoolean.value) return
 
-  if (selectedItems.value.has(row)) {
-    selectedItems.value.delete(row)
-    emit('rowUnselected', row)
-  } else {
-    if (props.selectMode === 'single' && selectedItems.value.size > 0) {
+  if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
+    const lastSelectedItem = Array.from(selectedItems.value).pop()
+    const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
+    const selectStartIndex = Math.min(lastSelectedIndex, index)
+    const selectEndIndex = Math.max(lastSelectedIndex, index)
+    computedItems.value.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
+      if (!selectedItems.value.has(item)) {
+        selectedItems.value.add(item)
+        emit('rowSelected', item)
+      }
+    })
+  } else if (ctrlClicked) {
+    if (selectedItems.value.has(row)) {
+      selectedItems.value.delete(row)
+      emit('rowUnselected', row)
+    } else if (props.selectMode === 'range' || props.selectMode === 'multi') {
+      selectedItems.value.add(row)
+      emit('rowSelected', row)
+    } else {
       selectedItems.value.forEach((item) => emit('rowUnselected', item))
       selectedItems.value.clear()
-    }
-
-    if (props.selectMode === 'range' && selectedItems.value.size > 0 && shiftClicked) {
-      const lastSelectedItem = Array.from(selectedItems.value).pop()
-      const lastSelectedIndex = computedItems.value.findIndex((i) => i === lastSelectedItem)
-      const selectStartIndex = Math.min(lastSelectedIndex, index)
-      const selectEndIndex = Math.max(lastSelectedIndex, index)
-      computedItems.value.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-        if (!selectedItems.value.has(item)) {
-          selectedItems.value.add(item)
-          emit('rowSelected', item)
-        }
-      })
-    } else {
       selectedItems.value.add(row)
       emit('rowSelected', row)
     }
+  } else {
+    selectedItems.value.forEach((item) => emit('rowUnselected', item))
+    selectedItems.value.clear()
+    selectedItems.value.add(row)
+    emit('rowSelected', row)
   }
 
   notifySelectionEvent()
