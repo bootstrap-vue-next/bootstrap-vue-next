@@ -1,8 +1,5 @@
 import { defineConfig } from 'vitepress'
-import Components from 'unplugin-vue-components/vite'
-import { BootstrapVueNextResolver } from 'unplugin-vue-components/resolvers'
 import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -13,16 +10,10 @@ export default defineConfig({
   // TODO fix & remove this
   ignoreDeadLinks: true,
   head: [
-    ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/bootstrap-vue-next/favicon.ico' }],
   ],
   vite: {
     plugins: [
-      Components({
-        resolvers: [
-          IconsResolver(),
-          BootstrapVueNextResolver(),
-        ]
-      }) as any,
       Icons()
     ]
   },

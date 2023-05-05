@@ -30,35 +30,27 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-nex
 
 Install the necessary packages for `BootstrapVueNext`:
 
-<CodeGroup>
-  <CodeGroupItem title="PNPM" active>
+::: code-group
 
-```bash
+```bash [PNPM]
 pnpm add bootstrap bootstrap-vue-next
 
 pnpm add unplugin-vue-components -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="YARN">
-
-```bash
+```bash [YARN]
 yarn add bootstrap bootstrap-vue-next
 
 yarn add unplugin-vue-components -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="NPM">
-
-```bash
+```bash [NPM]
 npm i bootstrap bootstrap-vue-next
 
 npm i unplugin-vue-components -D
 ```
 
-  </CodeGroupItem>
-</CodeGroup>
+:::
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 

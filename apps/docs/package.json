@@ -14,7 +14,6 @@
     "bootstrap-vue-next": "workspace:^",
     "typescript": "^5.0.4",
     "unplugin-icons": "^0.16.1",
-    "unplugin-vue-components": "^0.24.1",
     "vitepress": "1.0.0-alpha.75",
     "vue": "^3.2.47"
   }

@@ -1,9 +1,28 @@
-# Table of contents
+# Table of Contents
 
-BootstrapVueNext components
+<BCard
+    v-for="component in componentList"
+    :key="component.name"
+    :body-text="component.description"
+    class="my-3"
+>
+    <template #header>
+        <BLink 
+            :to="routeLocation(component.name)"
+        >
+            <h3 class="m-0">
+                {{component.name}}
+            </h3>
+        </BLink>
+    </template>
+</BCard>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import {BCard, BLink} from 'bootstrap-vue-next'
+import {ref} from "vue"
+import {withBase} from 'vitepress'
+
+const routeLocation = (name: str): string => withBase(`/reference/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
 
 const componentList = {
     Accordion : {
