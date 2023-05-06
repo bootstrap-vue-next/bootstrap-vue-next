@@ -7,8 +7,8 @@
 Alerts are available for any length of text, as well as an optional dismiss button (and optional auto-dismissing)
 
 <b-card>
-  <b-alert :modelValue="true">Default Alert</b-alert>
-  <b-alert variant="success" :modelValue="true">Success Alert</b-alert>
+  <b-alert :model-value="true">Default Alert</b-alert>
+  <b-alert variant="success" :model-value="true">Success Alert</b-alert>
   <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
     Dismissible Alert!
   </b-alert>
@@ -35,8 +35,8 @@ Alerts are available for any length of text, as well as an optional dismiss butt
 </b-card>
 
 ```html
-<b-alert :modelValue="true">Default Alert</b-alert>
-<b-alert variant="success" :modelValue="true">Success Alert</b-alert>
+<b-alert :model-value="true">Default Alert</b-alert>
+<b-alert variant="success" :model-value="true">Success Alert</b-alert>
 <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
   Dismissible Alert!
 </b-alert>
@@ -80,25 +80,25 @@ You can use the `v-model` directive to create two-way data bindings as in `v-mod
 For proper styling of `<b-alert>`, use one of the four required contextual variants by setting the `variant` prop to one of the following: `info`, `success`, `warning`, or `danger`. The default is `info`
 
 <b-card>
-  <b-alert :modelValue="true" variant="primary">Primary Alert</b-alert>
-  <b-alert :modelValue="true" variant="secondary">Secondary Alert</b-alert>
-  <b-alert :modelValue="true" variant="success">Success Alert</b-alert>
-  <b-alert :modelValue="true" variant="danger">Danger Alert</b-alert>
-  <b-alert :modelValue="true" variant="warning">Warning Alert</b-alert>
-  <b-alert :modelValue="true" variant="info">Info Alert</b-alert>
-  <b-alert :modelValue="true" variant="light">Light Alert</b-alert>
-  <b-alert :modelValue="true" variant="dark">Dark Alert</b-alert>
+  <b-alert :model-value="true" variant="primary">Primary Alert</b-alert>
+  <b-alert :model-value="true" variant="secondary">Secondary Alert</b-alert>
+  <b-alert :model-value="true" variant="success">Success Alert</b-alert>
+  <b-alert :model-value="true" variant="danger">Danger Alert</b-alert>
+  <b-alert :model-value="true" variant="warning">Warning Alert</b-alert>
+  <b-alert :model-value="true" variant="info">Info Alert</b-alert>
+  <b-alert :model-value="true" variant="light">Light Alert</b-alert>
+  <b-alert :model-value="true" variant="dark">Dark Alert</b-alert>
 </b-card>
 
 ```html
-<b-alert :modelValue="true" variant="primary">Primary Alert</b-alert>
-<b-alert :modelValue="true" variant="secondary">Secondary Alert</b-alert>
-<b-alert :modelValue="true" variant="success">Success Alert</b-alert>
-<b-alert :modelValue="true" variant="danger">Danger Alert</b-alert>
-<b-alert :modelValue="true" variant="warning">Warning Alert</b-alert>
-<b-alert :modelValue="true" variant="info">Info Alert</b-alert>
-<b-alert :modelValue="true" variant="light">Light Alert</b-alert>
-<b-alert :modelValue="true" variant="dark">Dark Alert</b-alert>
+<b-alert :model-value="true" variant="primary">Primary Alert</b-alert>
+<b-alert :model-value="true" variant="secondary">Secondary Alert</b-alert>
+<b-alert :model-value="true" variant="success">Success Alert</b-alert>
+<b-alert :model-value="true" variant="danger">Danger Alert</b-alert>
+<b-alert :model-value="true" variant="warning">Warning Alert</b-alert>
+<b-alert :model-value="true" variant="info">Info Alert</b-alert>
+<b-alert :model-value="true" variant="light">Light Alert</b-alert>
+<b-alert :model-value="true" variant="dark">Dark Alert</b-alert>
 ```
 
 ### Conveying Meaning to Assistive Technologies
@@ -110,7 +110,7 @@ Using color variants to add meaning only provides a visual indication, which wil
 `<b-alerts>` can also contain additional HTML elements like headings and paragraphs, which will be styled with the appropriate color matching the variant
 
 <b-card>
-  <b-alert :modelValue="true" variant="success">
+  <b-alert :model-value="true" variant="success">
     <h4 class="alert-heading">Well done!</h4>
     <p>
       Aww yeah, you successfully read this important alert message. This example text is going to
@@ -125,7 +125,7 @@ Using color variants to add meaning only provides a visual indication, which wil
 </b-card>
 
 ```html
-<b-alert :modelValue="true" variant="success">
+<b-alert :model-value="true" variant="success">
   <h4 class="alert-heading">Well done!</h4>
   <p>
     Aww yeah, you successfully read this important alert message. This example text is going to
@@ -144,25 +144,25 @@ Using color variants to add meaning only provides a visual indication, which wil
 Use the `.alert-link` utility CSS class to quickly provide matching colored links within any alert. Use on `<a>` or `<b-link>`
 
 <b-card>
-  <b-alert :modelValue="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></b-alert>
-  <b-alert :modelValue="true" variant="secondary"><a href="#" class="alert-link">Secondary Alert</a></b-alert>
-  <b-alert :modelValue="true" variant="success"><a href="#" class="alert-link">Success Alert</a></b-alert>
-  <b-alert :modelValue="true" variant="danger"><a href="#" class="alert-link">Danger Alert</a></b-alert>
-  <b-alert :modelValue="true" variant="warning"><a href="#" class="alert-link">Warning Alert</a></b-alert>
-  <b-alert :modelValue="true" variant="info"><a href="#" class="alert-link">Info Alert</a></b-alert>
-  <b-alert :modelValue="true" variant="light"><a href="#" class="alert-link">Light Alert</a></b-alert>
-  <b-alert :modelValue="true" variant="dark"><a href="#" class="alert-link">Dark Alert</a></b-alert>
+  <b-alert :model-value="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></b-alert>
+  <b-alert :model-value="true" variant="secondary"><a href="#" class="alert-link">Secondary Alert</a></b-alert>
+  <b-alert :model-value="true" variant="success"><a href="#" class="alert-link">Success Alert</a></b-alert>
+  <b-alert :model-value="true" variant="danger"><a href="#" class="alert-link">Danger Alert</a></b-alert>
+  <b-alert :model-value="true" variant="warning"><a href="#" class="alert-link">Warning Alert</a></b-alert>
+  <b-alert :model-value="true" variant="info"><a href="#" class="alert-link">Info Alert</a></b-alert>
+  <b-alert :model-value="true" variant="light"><a href="#" class="alert-link">Light Alert</a></b-alert>
+  <b-alert :model-value="true" variant="dark"><a href="#" class="alert-link">Dark Alert</a></b-alert>
 </b-card>
 
 ```html
-<b-alert :modelValue="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></b-alert>
-<b-alert :modelValue="true" variant="secondary"><a href="#" class="alert-link">Secondary Alert</a></b-alert>
-<b-alert :modelValue="true" variant="success"><a href="#" class="alert-link">Success Alert</a></b-alert>
-<b-alert :modelValue="true" variant="danger"><a href="#" class="alert-link">Danger Alert</a></b-alert>
-<b-alert :modelValue="true" variant="warning"><a href="#" class="alert-link">Warning Alert</a></b-alert>
-<b-alert :modelValue="true" variant="info"><a href="#" class="alert-link">Info Alert</a></b-alert>
-<b-alert :modelValue="true" variant="light"><a href="#" class="alert-link">Light Alert</a></b-alert>
-<b-alert :modelValue="true" variant="dark"><a href="#" class="alert-link">Dark Alert</a></b-alert>
+<b-alert :model-value="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></b-alert>
+<b-alert :model-value="true" variant="secondary"><a href="#" class="alert-link">Secondary Alert</a></b-alert>
+<b-alert :model-value="true" variant="success"><a href="#" class="alert-link">Success Alert</a></b-alert>
+<b-alert :model-value="true" variant="danger"><a href="#" class="alert-link">Danger Alert</a></b-alert>
+<b-alert :model-value="true" variant="warning"><a href="#" class="alert-link">Warning Alert</a></b-alert>
+<b-alert :model-value="true" variant="info"><a href="#" class="alert-link">Info Alert</a></b-alert>
+<b-alert :model-value="true" variant="light"><a href="#" class="alert-link">Light Alert</a></b-alert>
+<b-alert :model-value="true" variant="dark"><a href="#" class="alert-link">Dark Alert</a></b-alert>
 ```
 
 ## Dismissible Alerts
