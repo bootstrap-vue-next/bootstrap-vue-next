@@ -17,7 +17,7 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - name: Clone repository
+      - name: Clone Repository
         uses: actions/checkout@v3
         with: 
           ref: 'main'
@@ -28,17 +28,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install pnpm
+      - name: Install PNPM
         uses: pnpm/action-setup@v2.2.4
         id: pnpm-install
 
-      - name: Get pnpm store directory
+      - name: Get PNPM Store Directory
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - name: Setup pnpm cache
+      - name: Setup PNPM Cache
         uses: actions/cache@v3
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -46,18 +46,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
-      - name: Build library
+      - name: Build Library
         run: pnpm run build --filter bootstrap-vue-next
         
-      - name: Publish main
+      - name: Publish Main
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish nuxt
+      - name: Publish Nuxt
         run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public --force
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}

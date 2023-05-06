@@ -333,7 +333,7 @@ If you want to have `<b-form-textarea readonly>` elements in your form styled as
 form field styling and preserve the correct text size, margin, padding and height.
 
 <b-card>
-  <b-form-textarea id="textarea-plaintext" plaintext :modelValue="textReadOnly"></b-form-textarea>
+  <b-form-textarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></b-form-textarea>
 </b-card>
 
 ```html
@@ -341,7 +341,7 @@ form field styling and preserve the correct text size, margin, padding and heigh
   <b-form-textarea
     id="textarea-plaintext"
     plaintext
-    :modelValue="textReadOnly"
+    :model-value="textReadOnly"
   ></b-form-textarea>
 </template>
 
