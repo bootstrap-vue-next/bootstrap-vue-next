@@ -4,7 +4,7 @@ The documentation requires a specific style guide for consistency purposes. You 
 
 1. It is recommended to have <https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint> rules should be followed strictly -- besides HTML in markdown. Which you can disable in `.vscode/settings.json`
 2. Lines should never contain ending periods
-3. All components should have a description directly after the first top- level h1. You should always use `>` for these top level descriptions
+3. All components should have a description directly after the first top-level h1. You should always use `>` for these top level descriptions
 4. Code _examples_ -- ie those that use code highlighting, should never contain a wrapper div, card, or other element. The _only_ exception is #5
 5. Code examples should always contain a `<template>` if they require a `<script>` tag.
 6. `<script>` tags should always be `<script setup lang="ts">` in that exact format
