@@ -1,14 +1,11 @@
 # Form Input
 
-> Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`,
-> `range`, `date` and more.
+> Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more
 
-
-  <b-card>
-    <b-form-input v-model="selectedText" placeholder="Enter your name"></b-form-input>
-    <div class="mt-2">Value: {{ selectedText }}</div>
-  </b-card>
-
+<b-card>
+  <b-form-input v-model="selectedText" placeholder="Enter your name"></b-form-input>
+  <div class="mt-2">Value: {{ selectedText }}</div>
+</b-card>
 
 ```html
 <template>
@@ -18,31 +15,27 @@
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
+<script setup lang="ts">
+import {ref, computed} from 'vue'
 
-  const selectedText = ref('')
+const selectedText = ref('')
 </script>
 ```
 
 ## Input type
 
-`<b-form-input>` defaults to a `text` input, but you can set the `type` prop to one of the supported
-native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`,
-`datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`.
+`<b-form-input>` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`
 
-
-  <b-card>
-    <b-row class="my-1" v-for="type in inputTypes" :key="type">
-      <b-col sm="3">
-        <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
-      </b-col>
-      <b-col sm="9">
-        <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
-      </b-col>
-    </b-row>
-  </b-card>
-
+<b-card>
+  <b-row class="my-1" v-for="type in inputTypes" :key="type">
+    <b-col sm="3">
+      <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
+    </b-col>
+    <b-col sm="9">
+      <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+    </b-col>
+  </b-row>
+</b-card>
 
 ```html
 <template>
@@ -58,31 +51,30 @@ native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`,
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref} from 'vue'
+<script setup lang="ts">
+import {ref} from 'vue'
 
-  const inputTypes = [
-    'text',
-    'number',
-    'email',
-    'password',
-    'search',
-    'url',
-    'tel',
-    'date',
-    'time',
-    'range',
-    'color',
-    'datetime',
-    'datetime-local',
-    'month',
-    'week',
-  ]
+const inputTypes = [
+  'text',
+  'number',
+  'email',
+  'password',
+  'search',
+  'url',
+  'tel',
+  'date',
+  'time',
+  'range',
+  'color',
+  'datetime',
+  'datetime-local',
+  'month',
+  'week',
+]
 </script>
 ```
 
-If the `type` prop is set to an input type that is not supported (see above), a `text` input will be
-rendered and a console warning will be issued.
+If the `type` prop is set to an input type that is not supported (see above), a `text` input will be rendered and a console warning will be issued.
 
 **Caveats with input types:**
 
@@ -124,13 +116,11 @@ background) and thumb (the value) are both styled to appear the same across brow
 Range inputs have implicit values for `min` and `max` of `0` and `100` respectively. You may specify
 new values for those using the `min` and `max` props.
 
-
-  <b-card>
-    <label for="range-1">Example range with min and max</label>
-    <b-form-input id="range-1" v-model="rangeValue" type="range" min="0" max="5"></b-form-input>
-    <div class="mt-2">Value: {{ rangeValue }}</div>
-  </b-card>
-
+<b-card>
+  <label for="range-1">Example range with min and max</label>
+  <b-form-input id="range-1" v-model="rangeValue" type="range" min="0" max="5"></b-form-input>
+  <div class="mt-2">Value: {{ rangeValue }}</div>
+</b-card>
 
 ```html
 <template>
@@ -141,7 +131,7 @@ new values for those using the `min` and `max` props.
   </b-card>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
   import {ref} from 'vue'
 
   const rangeValue = ref('2')
@@ -151,13 +141,11 @@ new values for those using the `min` and `max` props.
 By default, range inputs "snap" to integer values. To change this, you can specify a `step` value.
 In the example below, we double the number of steps by using step="0.5".
 
-
-  <b-card>
-    <label for="range-1">Example range with min and max</label>
-    <b-form-input id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5"></b-form-input>
-    <div class="mt-2">Value: {{ rangeValueStep }}</div>
-  </b-card>
-
+<b-card>
+  <label for="range-1">Example range with min and max</label>
+  <b-form-input id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5"></b-form-input>
+  <div class="mt-2">Value: {{ rangeValueStep }}</div>
+</b-card>
 
 ```html
 <template>
@@ -175,7 +163,7 @@ In the example below, we double the number of steps by using step="0.5".
   </b-card>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
   import {ref} from 'vue'
 
   const rangeValueStep = ref('2')
@@ -196,34 +184,32 @@ Set heights using the `size` prop to `sm` or `lg` for small or large respectivel
 
 To control width, place the input inside standard Bootstrap grid column.
 
-
-  <b-card>
-    <b-row class="my-1">
-      <b-col sm="2">
-        <label for="input-small">Small:</label>
-      </b-col>
-      <b-col sm="10">
-        <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input>
-      </b-col>
-    </b-row>
-    <b-row class="my-1">
-      <b-col sm="2">
-        <label for="input-default">Default:</label>
-      </b-col>
-      <b-col sm="10">
-        <b-form-input id="input-default" placeholder="Enter your name"></b-form-input>
-      </b-col>
-    </b-row>
-    <b-row class="my-1">
-      <b-col sm="2">
-        <label for="input-large">Large:</label>
-      </b-col>
-      <b-col sm="10">
-        <b-form-input id="input-large" size="lg" placeholder="Enter your name"></b-form-input>
-      </b-col>
-    </b-row>
-  </b-card>
-
+<b-card>
+  <b-row class="my-1">
+    <b-col sm="2">
+      <label for="input-small">Small:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input>
+    </b-col>
+  </b-row>
+  <b-row class="my-1">
+    <b-col sm="2">
+      <label for="input-default">Default:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-input id="input-default" placeholder="Enter your name"></b-form-input>
+    </b-col>
+  </b-row>
+  <b-row class="my-1">
+    <b-col sm="2">
+      <label for="input-large">Large:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-input id="input-large" size="lg" placeholder="Enter your name"></b-form-input>
+    </b-col>
+  </b-row>
+</b-card>
 
 ```html
 <b-card>
@@ -276,34 +262,32 @@ Generally speaking, you'll want to use a particular state for specific types of 
 To apply one of the contextual state icons on `<b-form-input>`, set the `state` prop to `false` (for
 invalid), `true` (for valid), or `null` (no validation state).
 
-
-  <b-card>
-    <b-row class="my-1">
-      <b-col sm="3">
-        <label for="input-none">No State:</label>
-      </b-col>
-      <b-col sm="9">
-        <b-form-input id="input-none" :state="null" placeholder="No validation"></b-form-input>
-      </b-col>
-    </b-row>
-    <b-row class="my-1">
-      <b-col sm="3">
-        <label for="input-valid">Valid State:</label>
-      </b-col>
-      <b-col sm="9">
-        <b-form-input id="input-valid" :state="true" placeholder="Valid input"></b-form-input>
-      </b-col>
-    </b-row>
-    <b-row class="my-1">
-      <b-col sm="3">
-        <label for="input-invalid">Invalid State:</label>
-      </b-col>
-      <b-col sm="9">
-        <b-form-input id="input-invalid" :state="false" placeholder="Invalid input"></b-form-input>
-      </b-col>
-    </b-row>
-  </b-card>
-
+<b-card>
+  <b-row class="my-1">
+    <b-col sm="3">
+      <label for="input-none">No State:</label>
+    </b-col>
+    <b-col sm="9">
+      <b-form-input id="input-none" :state="null" placeholder="No validation"></b-form-input>
+    </b-col>
+  </b-row>
+  <b-row class="my-1">
+    <b-col sm="3">
+      <label for="input-valid">Valid State:</label>
+    </b-col>
+    <b-col sm="9">
+      <b-form-input id="input-valid" :state="true" placeholder="Valid input"></b-form-input>
+    </b-col>
+  </b-row>
+  <b-row class="my-1">
+    <b-col sm="3">
+      <label for="input-invalid">Invalid State:</label>
+    </b-col>
+    <b-col sm="9">
+      <b-form-input id="input-invalid" :state="false" placeholder="Invalid input"></b-form-input>
+    </b-col>
+  </b-row>
+</b-card>
 
 ```html
 <b-card>
@@ -334,29 +318,27 @@ invalid), `true` (for valid), or `null` (no validation state).
 </b-card>
 ```
 
-**Live Example**
+## Live Example
 
-
-  <b-card>
-    <div role="group">
-      <label for="input-live">Name:</label>
-      <b-form-input
-        id="input-live"
-        v-model="lifeName"
-        :state="lifeNameState"
-        aria-describedby="input-live-help input-live-feedback"
-        placeholder="Enter your name"
-        trim
-      ></b-form-input>
-      <!-- This will only be shown if the preceding input has an invalid state -->
-      <b-form-invalid-feedback id="input-live-feedback">
-        Enter at least 3 letters
-      </b-form-invalid-feedback>
-      <!-- This is a form text block (formerly known as help block) -->
-      <b-form-text id="input-live-help">Your full name.</b-form-text>
-    </div>
-  </b-card>
-
+<b-card>
+  <div role="group">
+    <label for="input-live">Name:</label>
+    <b-form-input
+      id="input-live"
+      v-model="lifeName"
+      :state="lifeNameState"
+      aria-describedby="input-live-help input-live-feedback"
+      placeholder="Enter your name"
+      trim
+    ></b-form-input>
+    <!-- This will only be shown if the preceding input has an invalid state -->
+    <b-form-invalid-feedback id="input-live-feedback">
+      Enter at least 3 letters
+    </b-form-invalid-feedback>
+    <!-- This is a form text block (formerly known as help block) -->
+    <b-form-text id="input-live-help">Your full name.</b-form-text>
+  </div>
+</b-card>
 
 ```html
 <template>
@@ -381,11 +363,11 @@ invalid), `true` (for valid), or `null` (no validation state).
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
+<script setup lang="ts">
+import {ref, computed} from 'vue'
 
-  const lifeName = ref('')
-  const lifeNameState = computed(() => (lifeName.value?.length > 2 ? true : false))
+const lifeName = ref('')
+const lifeNameState = computed(() => (lifeName.value?.length > 2 ? true : false))
 </script>
 ```
 
@@ -433,31 +415,29 @@ The `formatter` function should return the formatted value as a _string_.
 
 Formatting does not occur if a `formatter` is not provided.
 
-
-  <b-card>
-    <div role="group">
-      <label for="input-formatter">"Text input with formatter (on input)"</label>
-      <b-form-input
-        id="input-formatter"
-        v-model="formatInputText"
-        placeholder="Enter your name"
-        :formatter="toLowerCaseFormatter"
-      ></b-form-input>
-      <p><b>Value:</b> {{ formatInputText }}</p>
-    </div>
-    <div role="group">
-      <label for="input-formatter">"Text input with lazy formatter (on blur)"</label>
-      <b-form-input
-        id="input-lazy"
-        v-model="formatLazyInputText"
-        placeholder="Enter your name"
-        lazy-formatter
-        :formatter="toLowerCaseFormatter"
-      ></b-form-input>
-      <p><b>Value:</b> {{ formatLazyInputText }}</p>
-    </div>
-  </b-card>
-
+<b-card>
+  <div role="group">
+    <label for="input-formatter">"Text input with formatter (on input)"</label>
+    <b-form-input
+      id="input-formatter"
+      v-model="formatInputText"
+      placeholder="Enter your name"
+      :formatter="toLowerCaseFormatter"
+    ></b-form-input>
+    <p><b>Value:</b> {{ formatInputText }}</p>
+  </div>
+  <div role="group">
+    <label for="input-formatter">"Text input with lazy formatter (on blur)"</label>
+    <b-form-input
+      id="input-lazy"
+      v-model="formatLazyInputText"
+      placeholder="Enter your name"
+      lazy-formatter
+      :formatter="toLowerCaseFormatter"
+    ></b-form-input>
+    <p><b>Value:</b> {{ formatLazyInputText }}</p>
+  </div>
+</b-card>
 
 ```html
 <template>
@@ -486,7 +466,7 @@ Formatting does not occur if a `formatter` is not provided.
   </b-card>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
   import {ref, computed} from 'vue'
 
   const formatInputText = ref('')
@@ -592,20 +572,18 @@ You can use that reference to access the native properties and methods.
 Refer to [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) for more information on
 these methods and properties. Support will vary based on input type.
 
-
-  <b-card>
-    <div role="group">
-      <b-form-input
-        ref="inputRef"
-        v-model="sampleInputText"
-        placeholder="Enter your name"
-      ></b-form-input>
-    </div>
-    <div class="mt-2">
-        <b-button primary @click="selectAllText">Select all text</b-button>
-    </div>
-  </b-card>
-
+<b-card>
+  <div role="group">
+    <b-form-input
+      ref="inputRef"
+      v-model="sampleInputText"
+      placeholder="Enter your name"
+    ></b-form-input>
+  </div>
+  <div class="mt-2">
+      <b-button primary @click="selectAllText">Select all text</b-button>
+  </div>
+</b-card>
 
 ```html
 <template>
@@ -623,57 +601,57 @@ these methods and properties. Support will vary based on input type.
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
+<script setup lang="ts">
+import {ref, computed} from 'vue'
 
-  // refs are unified in vue3. We need a ref variable with the same as used in the template.
-  // The variable will be filled up during mount with the reference to custom component.
-  // inputRef will become the reference to the b-form-input component.
-  const inputRef = ref(null)
-  const sampleInputText = ref('sample text')
+// refs are unified in vue3. We need a ref variable with the same as used in the template.
+// The variable will be filled up during mount with the reference to custom component.
+// inputRef will become the reference to the b-form-input component.
+const inputRef = ref(null)
+const sampleInputText = ref('sample text')
 
-  // The inner native input is exposed as ref with name "input"
-  const selectAllText = () => inputRef.value.input.select()
+// The inner native input is exposed as ref with name "input"
+const selectAllText = () => inputRef.value.input.select()
 </script>
 ```
 
+<ComponentReference></ComponentReference>
 
-  <ComponentReference></ComponentReference>
+<script setup lang="ts">
+import ComponentReference from '../../components/ComponentReference.vue'
+import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BFormInput} from 'bootstrap-vue-next'
+import {ref, computed} from 'vue'
 
+const selectedText = ref('')
+const inputTypes = [
+  'text',
+  'number',
+  'email',
+  'password',
+  'search',
+  'url',
+  'tel',
+  'date',
+  'time',
+  'range',
+  'color',
+  'datetime',
+  'datetime-local',
+  'month',
+  'week',
+]
+const rangeValue = ref('2')
+const rangeValueStep = ref('2')
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
+const lifeName = ref('')
+const lifeNameState = computed(() => lifeName.value?.length > 2 ? true: false)
 
-  const selectedText = ref('')
-  const inputTypes = [
-          'text',
-          'number',
-          'email',
-          'password',
-          'search',
-          'url',
-          'tel',
-          'date',
-          'time',
-          'range',
-          'color',
-          'datetime',
-          'datetime-local',
-          'month',
-          'week',
-  ]
-  const rangeValue = ref('2')
-  const rangeValueStep = ref('2')
+const formatInputText = ref('')
+const formatLazyInputText = ref('')
+const toLowerCaseFormatter = (value: string) => value.toLowerCase()
 
-  const lifeName = ref('')
-  const lifeNameState = computed(() => lifeName.value?.length > 2 ? true: false)
+const inputRef = ref(null)
+const sampleInputText = ref('sample text')
 
-  const formatInputText = ref('')
-  const formatLazyInputText = ref('')
-  const toLowerCaseFormatter = (value: string) => value.toLowerCase()
-
-  const inputRef = ref(null)
-  const sampleInputText = ref('sample text')
-
-  const selectAllText = () => inputRef.value.input.select()
+const selectAllText = () => inputRef.value.input.select()
 </script>

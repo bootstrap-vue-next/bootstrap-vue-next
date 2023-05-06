@@ -1103,11 +1103,20 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 - [`<b-nav-item-dropdown>`](/bootstrap-vue-next/components/nav#dropdown-support) for dropdown support inside `<b-nav>` and `<n-navbar>`
 - [Router Link Support](/bootstrap-vue-next/reference/router-links) reference for information about router-link specific props available on `<b-dropdown-item>`
 
-
-  <ComponentReference></ComponentReference>
-
+<ComponentReference></ComponentReference>
 
 <script setup lang="ts">
+import ComponentReference from '../../components/ComponentReference.vue'
+import {
+  BDropdownGroup,
+  BDropdownText,
+  BDropdownItemButton,
+  BDropdownHeader,
+  BCard,
+  BDropdown,
+  BDropdownDivider,
+  BDropdownItem
+} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const show = ref(false)

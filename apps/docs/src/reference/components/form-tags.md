@@ -1,4 +1,6 @@
-# Docs to be written
+# Form Tags
+
+## Docs to be written
 
 ## Example
 
@@ -10,8 +12,10 @@
 </template>
 
 <script setup lang="ts">
-  import {ref} from 'vue'
+import ComponentReference from '../../components/ComponentReference.vue'
+import {} from 'bootstrap-vue-next'
+import {ref} from 'vue'
 
-  const value = ref<string[]>(['apple', 'orange'])
+const value = ref<string[]>(['apple', 'orange'])
 </script>
 ```

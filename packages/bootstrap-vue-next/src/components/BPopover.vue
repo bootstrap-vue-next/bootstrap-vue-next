@@ -56,7 +56,7 @@
   </RenderComponentOrSkip>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import {
   type Alignment,
   arrow as arrowMiddleware,

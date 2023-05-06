@@ -227,7 +227,7 @@ const resume = () => myCarousel.value?.resume()
 
 ## Touch Swiping
 
-BCarousel comes with automatic support for touch swiping devices. You can disable touch swiping by using the `noTouch` prop. 
+BCarousel comes with automatic support for touch swiping devices. You can disable touch swiping by using the `noTouch` prop
 
 <b-alert :model-value="true" variant="info">
   Due to touch swiping not being available to everyone, such as a user that is using a mouse, you will likely want to include multiple ways to transition the slides. Otherwise, transitioning can be impossible to those users.
@@ -435,13 +435,12 @@ const next = () => myCarousel.value?.next()
 
 ## Reference
 
-
-  <ComponentReference></ComponentReference>
-
+<ComponentReference></ComponentReference>
 
 <script setup lang="ts">
+import ComponentReference from '../../components/ComponentReference.vue'
+import {BButton, BButtonGroup, BAlert, BCarouselSlide, BCarousel} from 'bootstrap-vue-next'
 import {ref} from 'vue'
-import type {BCarousel} from 'bootstrap-vue-next'
 
 const firstSlide = ref(0)
 

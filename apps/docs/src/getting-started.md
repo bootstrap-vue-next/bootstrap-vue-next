@@ -96,29 +96,21 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 Install the necessary packages for `bootstrap-vue-next`:
 
-<CodeGroup>
-  <CodeGroupItem title="PNPM" active>
+::: code-group
 
-```bash
+```bash [PNPM]
 pnpm add bootstrap bootstrap-vue-next
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="YARN">
-
-```bash
+```bash [YARN]
 yarn add bootstrap bootstrap-vue-next
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="NPM">
-
-```bash
+```bash [NPM]
 npm i bootstrap bootstrap-vue-next
 ```
 
-  </CodeGroupItem>
-</CodeGroup>
+:::
 
 Then, add to your `main.js/ts`:
 
@@ -145,29 +137,21 @@ app.mount('#app')
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`
 
-<CodeGroup>
-  <CodeGroupItem title="PNPM" active>
+::: code-group
 
-```bash
+```bash [PNPM]
 pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="YARN">
-
-```bash
+```bash [PNPM]
 yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="NPM">
-
-```bash
+```bash [NPM]
 npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-  </CodeGroupItem>
-</CodeGroup>
+:::
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed
 

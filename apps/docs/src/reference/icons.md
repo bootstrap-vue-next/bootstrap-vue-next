@@ -16,29 +16,21 @@ The preferred installation makes use of [unplugin-vue-components](https://github
 
 To start, install the necessary packages:
 
-<CodeGroup>
-  <CodeGroupItem title="PNPM" active>
+::: code-group
 
-```bash
+```bash [PNPM]
 pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="YARN">
-
-```bash
+```bash [YARN]
 yarn add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="NPM">
-
-```bash
+```bash [NPM]
 npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-  </CodeGroupItem>
-</CodeGroup>
+:::
 
 ```ts
 // vite.config.js/ts
@@ -99,29 +91,21 @@ View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-compone
 
 Of course, there is always the ability to slim down. To slim down the installation, you can manually import only the bootstrap-icons icon set, disable auto importing, and not use unplugin-vue-components read below. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size
 
-<CodeGroup>
-  <CodeGroupItem title="PNPM" active>
+::: code-group
 
-```bash
+```bash [PNPM]
 pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="YARN">
-
-```bash
+```bash [YARN]
 yarn add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-  </CodeGroupItem>
-  <CodeGroupItem title="NPM">
-
-```bash
+```bash [NPM]
 npm i unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-  </CodeGroupItem>
-</CodeGroup>
+:::
 
 ```ts
 // vite.config.ts

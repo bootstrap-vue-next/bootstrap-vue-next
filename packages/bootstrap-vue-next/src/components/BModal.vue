@@ -409,6 +409,11 @@ useModalManager(isActive)
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : show()
 })
+
+defineExpose({
+  hide,
+  show,
+})
 </script>
 
 <script lang="ts">

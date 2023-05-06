@@ -35,108 +35,100 @@ _prev_, _next_, and _last_ buttons.
 
 For a full list of all available slots see the [Slots](#comp-ref-b-pagination-slots) section below.
 
-
-  <b-card>
-    <div class="overflow-auto py-2">
-      <!-- Use text in props -->
-      <b-pagination
-        v-model="ex1CurrentPage"
-        :total-rows="ex1Rows"
-        :per-page="ex1PerPage"
-        first-text="First"
-        prev-text="Prev"
-        next-text="Next"
-        last-text="Last"
-      ></b-pagination>
-      <!-- Use emojis in props -->
-      <b-pagination
-        v-model="ex1CurrentPage"
-        :total-rows="ex1Rows"
-        :per-page="ex1PerPage"
-        first-text="⏮"
-        prev-text="⏪"
-        next-text="⏩"
-        last-text="⏭"
-        class="mt-4"
-      ></b-pagination>
-      <!-- Use HTML and sub-components in slots -->
-      <b-pagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
-        <template #first-text><span class="text-success">First</span></template>
-        <template #prev-text><span class="text-danger">Prev</span></template>
-        <template #next-text><span class="text-warning">Next</span></template>
-        <template #last-text><span class="text-info">Last</span></template>
-        <template #ellipsis-text>
-          <b-spinner small type="grow"></b-spinner>
-          <b-spinner small type="grow"></b-spinner>
-          <b-spinner small type="grow"></b-spinner>
-        </template>
-        <template #page="{ page, active }">
-          <b v-if="active">{{ page }}</b>
-          <i v-else>{{ page }}</i>
-        </template>
-      </b-pagination>
-      Current page : {{ ex1CurrentPage }}
-    </div>
-  </b-card>
-
+<b-card>
+  <!-- Use text in props -->
+  <b-pagination
+    v-model="ex1CurrentPage"
+    :total-rows="ex1Rows"
+    :per-page="ex1PerPage"
+    first-text="First"
+    prev-text="Prev"
+    next-text="Next"
+    last-text="Last"
+  ></b-pagination>
+  <!-- Use emojis in props -->
+  <b-pagination
+    v-model="ex1CurrentPage"
+    :total-rows="ex1Rows"
+    :per-page="ex1PerPage"
+    first-text="⏮"
+    prev-text="⏪"
+    next-text="⏩"
+    last-text="⏭"
+    class="mt-4"
+  ></b-pagination>
+  <!-- Use HTML and sub-components in slots -->
+  <b-pagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
+    <template #first-text><span class="text-success">First</span></template>
+    <template #prev-text><span class="text-danger">Prev</span></template>
+    <template #next-text><span class="text-warning">Next</span></template>
+    <template #last-text><span class="text-info">Last</span></template>
+    <template #ellipsis-text>
+      <b-spinner small type="grow"></b-spinner>
+      <b-spinner small type="grow"></b-spinner>
+      <b-spinner small type="grow"></b-spinner>
+    </template>
+    <template #page="{ page, active }">
+      <b v-if="active">{{ page }}</b>
+      <i v-else>{{ page }}</i>
+    </template>
+  </b-pagination>
+  Current page : {{ ex1CurrentPage }}
+</b-card>
 
 ```html
 <template>
-  <b-card>
-    <div class="overflow-auto py-2">
-      <!-- Use text in props -->
-      <b-pagination
-        v-model="ex1CurrentPage"
-        :total-rows="ex1Rows"
-        :per-page="ex1PerPage"
-        first-text="First"
-        prev-text="Prev"
-        next-text="Next"
-        last-text="Last"
-      ></b-pagination>
-      <!-- Use emojis in props -->
-      <b-pagination
-        v-model="ex1CurrentPage"
-        :total-rows="ex1Rows"
-        :per-page="ex1PerPage"
-        first-text="⏮"
-        prev-text="⏪"
-        next-text="⏩"
-        last-text="⏭"
-        class="mt-4"
-      ></b-pagination>
-      <!-- Use HTML and sub-components in slots -->
-      <b-pagination
-        v-model="ex1CurrentPage"
-        :total-rows="ex1Rows"
-        :per-page="ex1PerPage"
-        class="mt-4"
-      >
-        <template #first-text><span class="text-success">First</span></template>
-        <template #prev-text><span class="text-danger">Prev</span></template>
-        <template #next-text><span class="text-warning">Next</span></template>
-        <template #last-text><span class="text-info">Last</span></template>
-        <template #ellipsis-text>
-          <b-spinner small type="grow"></b-spinner>
-          <b-spinner small type="grow"></b-spinner>
-          <b-spinner small type="grow"></b-spinner>
-        </template>
-        <template #page="{ page, active }">
-          <b v-if="active">{{ page }}</b>
-          <i v-else>{{ page }}</i>
-        </template>
-      </b-pagination>
-      Current page : {{ ex1CurrentPage }}
-    </div>
-  </b-card>
+  <!-- Use text in props -->
+  <b-pagination
+    v-model="ex1CurrentPage"
+    :total-rows="ex1Rows"
+    :per-page="ex1PerPage"
+    first-text="First"
+    prev-text="Prev"
+    next-text="Next"
+    last-text="Last"
+  ></b-pagination>
+  <!-- Use emojis in props -->
+  <b-pagination
+    v-model="ex1CurrentPage"
+    :total-rows="ex1Rows"
+    :per-page="ex1PerPage"
+    first-text="⏮"
+    prev-text="⏪"
+    next-text="⏩"
+    last-text="⏭"
+    class="mt-4"
+  ></b-pagination>
+  <!-- Use HTML and sub-components in slots -->
+  <b-pagination
+    v-model="ex1CurrentPage"
+    :total-rows="ex1Rows"
+    :per-page="ex1PerPage"
+    class="mt-4"
+  >
+    <template #first-text><span class="text-success">First</span></template>
+    <template #prev-text><span class="text-danger">Prev</span></template>
+    <template #next-text><span class="text-warning">Next</span></template>
+    <template #last-text><span class="text-info">Last</span></template>
+    <template #ellipsis-text>
+      <b-spinner small type="grow"></b-spinner>
+      <b-spinner small type="grow"></b-spinner>
+      <b-spinner small type="grow"></b-spinner>
+    </template>
+    <template #page="{ page, active }">
+      <b v-if="active">{{ page }}</b>
+      <i v-else>{{ page }}</i>
+    </template>
+  </b-pagination>
+  Current page : {{ ex1CurrentPage }}
 </template>
 
-<script lang="ts" setup>
-  import {ref} from 'vue'
+<script setup lang="ts">
+import {ref} from 'vue'
 
-  const ex1CurrentPage = ref(1)
-  const ex1PerPage = ref(10)
-  const ex1Rows = ref(100)
+const ex1CurrentPage = ref(1)
+const ex1PerPage = ref(10)
+const ex1Rows = ref(100)
 </script>
 ```
 
@@ -167,77 +159,70 @@ The slot `page` is always scoped, while the slots `first-text`, `prev-text`, `ne
 If you prefer to have buttons with the first and last page number to go to the corresponding page,
 use the `first-number` and `last-number` props.
 
-
-  <b-card>
-    <div class="overflow-auto px-2">
-      <div>
-        <h6>Goto first button number</h6>
-        <b-pagination
-          v-model="ex2CurrentPage"
-          :total-rows="ex2Rows"
-          :per-page="ex2PerPage"
-          first-number
-        ></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Goto last button number</h6>
-        <b-pagination
-          v-model="ex2CurrentPage"
-          :total-rows="ex2Rows"
-          :per-page="ex2PerPage"
-          last-number
-        ></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Goto first and last button number</h6>
-        <b-pagination
-          v-model="ex2CurrentPage"
-          :total-rows="ex2Rows"
-          :per-page="ex2PerPage"
-          first-number
-          last-number
-        ></b-pagination>
-      </div>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <h6>Goto first button number</h6>
+    <b-pagination
+      v-model="ex2CurrentPage"
+      :total-rows="ex2Rows"
+      :per-page="ex2PerPage"
+      first-number
+    ></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Goto last button number</h6>
+    <b-pagination
+      v-model="ex2CurrentPage"
+      :total-rows="ex2Rows"
+      :per-page="ex2PerPage"
+      last-number
+    ></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Goto first and last button number</h6>
+    <b-pagination
+      v-model="ex2CurrentPage"
+      :total-rows="ex2Rows"
+      :per-page="ex2PerPage"
+      first-number
+      last-number
+    ></b-pagination>
+  </div>
+</b-card>
 
 ```html
 <template>
-  <b-card>
-    <div class="overflow-auto px-2">
-      <div>
-        <h6>Goto first button number</h6>
-        <b-pagination
-          v-model="ex2CurrentPage"
-          :total-rows="ex2Rows"
-          :per-page="ex2PerPage"
-          first-number
-        ></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Goto last button number</h6>
-        <b-pagination
-          v-model="ex2CurrentPage"
-          :total-rows="ex2Rows"
-          :per-page="ex2PerPage"
-          last-number
-        ></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Goto first and last button number</h6>
-        <b-pagination
-          v-model="ex2CurrentPage"
-          :total-rows="ex2Rows"
-          :per-page="ex2PerPage"
-          first-number
-          last-number
-        ></b-pagination>
-      </div>
-    </div>
-  </b-card>
+  <div>
+    <h6>Goto first button number</h6>
+    <b-pagination
+      v-model="ex2CurrentPage"
+      :total-rows="ex2Rows"
+      :per-page="ex2PerPage"
+      first-number
+    ></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Goto last button number</h6>
+    <b-pagination
+      v-model="ex2CurrentPage"
+      :total-rows="ex2Rows"
+      :per-page="ex2PerPage"
+      last-number
+    ></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Goto first and last button number</h6>
+    <b-pagination
+      v-model="ex2CurrentPage"
+      :total-rows="ex2Rows"
+      :per-page="ex2PerPage"
+      first-number
+      last-number
+    ></b-pagination>
+  </div>
 </template>
-<script lang="ts" setup>
+
+<script setup lang="ts">
   import {ref} from 'vue'
 
   const ex2CurrentPage = ref(5)
@@ -251,49 +236,42 @@ use the `first-number` and `last-number` props.
 Optionally change from the default button size by setting the `size` prop to either `'sm'` for
 smaller buttons or `'lg'` for larger buttons.
 
-
-  <b-card>
-    <div class="overflow-auto">
-      <div>
-        <h6>Small</h6>
-        <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Default</h6>
-        <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Large</h6>
-        <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></b-pagination>
-      </div>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <h6>Small</h6>
+    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Default</h6>
+    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Large</h6>
+    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></b-pagination>
+  </div>
+</b-card>
 
 ```html
 <template>
-  <b-card>
-    <div class="overflow-auto">
-      <div>
-        <h6>Small</h6>
-        <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Default</h6>
-        <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Large</h6>
-        <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></b-pagination>
-      </div>
-    </div>
-  </b-card>
+  <div>
+    <h6>Small</h6>
+    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Default</h6>
+    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Large</h6>
+    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></b-pagination>
+  </div>
 </template>
-<script lang="ts" setup>
-  import {ref} from 'vue'
 
-  const ex3CurrentPage = ref(1)
-  const ex3Rows = ref(100)
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const ex3CurrentPage = ref(1)
+const ex3Rows = ref(100)
 </script>
 ```
 
@@ -301,49 +279,42 @@ smaller buttons or `'lg'` for larger buttons.
 
 Easily switch to pill style buttons by setting the `pills` prop
 
-
-  <b-card>
-    <div class="overflow-auto">
-      <div>
-        <h6>Small Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Default Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Large Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
-      </div>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <h6>Small Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Default Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Large Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
+  </div>
+</b-card>
 
 ```html
 <template>
-  <b-card>
-    <div class="overflow-auto">
-      <div>
-        <h6>Small Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Default Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Large Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
-      </div>
-    </div>
-  </b-card>
+  <div>
+    <h6>Small Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Default Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Large Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
+  </div>
 </template>
-<script lang="ts" setup>
-  import {ref} from 'vue'
 
-  const ex4CurrentPage = ref(1)
-  const ex4Rows = ref(100)
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const ex4CurrentPage = ref(1)
+const ex4Rows = ref(100)
 </script>
 ```
 
@@ -354,53 +325,46 @@ Easily switch to pill style buttons by setting the `pills` prop
 By default, the pagination component is left aligned. Change the alignment to `center`, `end`
 or `fill` by setting the prop `align` to the appropriate value.
 
-
-  <b-card>
-    <div class="overflow-auto">
-      <div>
-        <h6>Left alignment (default)</h6>
-        <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6 class="text-center">Center alignment</h6>
-        <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="center"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6 class="text-end">Right (end) alignment</h6>
-        <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="end"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6 class="text-center">Fill alignment</h6>
-        <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="fill"></b-pagination>
-      </div>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <h6>Left alignment (default)</h6>
+    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6 class="text-center">Center alignment</h6>
+    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="center"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6 class="text-end">Right (end) alignment</h6>
+    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="end"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6 class="text-center">Fill alignment</h6>
+    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="fill"></b-pagination>
+  </div>
+</b-card>
 
 ```html
 <template>
-  <b-card>
-    <div class="overflow-auto">
-      <div>
-        <h6>Small Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Default Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
-      </div>
-      <div class="mt-3">
-        <h6>Large Pills</h6>
-        <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
-      </div>
-    </div>
-  </b-card>
+  <div>
+    <h6>Small Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Default Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
+  </div>
+  <div class="mt-3">
+    <h6>Large Pills</h6>
+    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
+  </div>
 </template>
-<script lang="ts" setup>
-  import {ref} from 'vue'
 
-  const ex5CurrentPage = ref(1)
-  const ex5Rows = ref(100)
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const ex5CurrentPage = ref(1)
+const ex5Rows = ref(100)
 </script>
 ```
 
@@ -451,27 +415,27 @@ recommended unless the content of the button textually conveys its purpose.
 
 ### Keyboard navigation support
 
+<ComponentReference></ComponentReference>
 
-  <ComponentReference></ComponentReference>
+<script setup lang="ts">
+import ComponentReference from '../../components/ComponentReference.vue'
+import {BProgress, BSpinner, BCard, BPagination} from 'bootstrap-vue-next'
+import {ref, computed} from 'vue'
 
+const ex1CurrentPage = ref(1);
+const ex1PerPage = ref(10);
+const ex1Rows = ref(100);
 
-<script lang='ts' setup>
-  import {ref, computed} from 'vue'
+const ex2CurrentPage = ref(5);
+const ex2PerPage = ref(1);
+const ex2Rows = ref(100);
 
-  const ex1CurrentPage = ref(1);
-  const ex1PerPage = ref(10);
-  const ex1Rows = ref(100);
+const ex3CurrentPage = ref(1);
+const ex3Rows = ref(100);
 
-  const ex2CurrentPage = ref(5);
-  const ex2PerPage = ref(1);
-  const ex2Rows = ref(100);
+const ex4CurrentPage = ref(1);
+const ex4Rows = ref(100);
 
-  const ex3CurrentPage = ref(1);
-  const ex3Rows = ref(100);
-
-  const ex4CurrentPage = ref(1);
-  const ex4Rows = ref(100);
-
-  const ex5CurrentPage = ref(3);
-  const ex5Rows = ref(100);
+const ex5CurrentPage = ref(3);
+const ex5Rows = ref(100);
 </script>

@@ -4,22 +4,20 @@
 > Includes support for making accordions. Visibility can be easily toggled with our
 > [`v-b-toggle` directive](/docs/directives/toggle), or via `v-model`.
 
-
-  <b-card>
-    <div>
-      <b-button v-b-toggle.collapse-1 variant="primary">Toggle Collapse</b-button>
-      <b-collapse id="collapse-1" class="mt-2">
-        <b-card>
-          <p class="card-text">Collapse contents Here</p>
-          <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button>
-          <b-collapse id="collapse-1-inner" class="mt-2">
-            <b-card>Hello!</b-card>
-          </b-collapse>
-        </b-card>
-      </b-collapse>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <b-button v-b-toggle.collapse-1 variant="primary">Toggle Collapse</b-button>
+    <b-collapse id="collapse-1" class="mt-2">
+      <b-card>
+        <p class="card-text">Collapse contents Here</p>
+        <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button>
+        <b-collapse id="collapse-1-inner" class="mt-2">
+          <b-card>Hello!</b-card>
+        </b-collapse>
+      </b-card>
+    </b-collapse>
+  </div>
+</b-card>
 
 ```html
 <div>
@@ -41,20 +39,18 @@
 Other elements can easily toggle `<b-collapse>` components using the
 [`v-b-toggle` directive](/docs/directives/toggle).
 
-
-  <b-card>
-    <div>
-      <!-- Using modifiers -->
-      <b-button v-b-toggle.collapse-2 class="m-1">Toggle Collapse</b-button>
-      <!-- Using value -->
-      <b-button v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</b-button>
-      <!-- Element to collapse -->
-      <b-collapse id="collapse-2">
-        <b-card>I am collapsible content!</b-card>
-      </b-collapse>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <!-- Using modifiers -->
+    <b-button v-b-toggle.collapse-2 class="m-1">Toggle Collapse</b-button>
+    <!-- Using value -->
+    <b-button v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</b-button>
+    <!-- Element to collapse -->
+    <b-collapse id="collapse-2">
+      <b-card>I am collapsible content!</b-card>
+    </b-collapse>
+  </div>
+</b-card>
 
 ```html
 <div>
@@ -75,16 +71,14 @@ Other elements can easily toggle `<b-collapse>` components using the
 
 To make the `<b-collapse>` show initially, set the `v-model` prop:
 
-
-  <b-card>
-    <div>
-      <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
-      <b-collapse visible id="collapse-3">
-        <b-card>I should start open!</b-card>
-      </b-collapse>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
+    <b-collapse visible id="collapse-3">
+      <b-card>I should start open!</b-card>
+    </b-collapse>
+  </div>
+</b-card>
 
 ```html
 <div>
@@ -109,23 +103,21 @@ are not automatically placed on the trigger button (as is the case when using th
 directive). In this example we **must control the attributes ourselves** for proper accessibility
 support.
 
-
-  <b-card>
-    <div>
-      <b-button
-        :class="visible ? null : 'collapsed'"
-        :aria-expanded="visible ? 'true' : 'false'"
-        aria-controls="collapse-4"
-        @click="visible = !visible"
-      >
-        Toggle Collapse
-      </b-button>
-      <b-collapse id="collapse-4" v-model="visible" class="mt-2">
-        <b-card>I should start open!</b-card>
-      </b-collapse>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <b-button
+      :class="visible ? null : 'collapsed'"
+      :aria-expanded="visible ? 'true' : 'false'"
+      aria-controls="collapse-4"
+      @click="visible = !visible"
+    >
+      Toggle Collapse
+    </b-button>
+    <b-collapse id="collapse-4" v-model="visible" class="mt-2">
+      <b-card>I should start open!</b-card>
+    </b-collapse>
+  </div>
+</b-card>
 
 ```html
 <template>
@@ -146,7 +138,7 @@ support.
   </b-card>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
   import {ref} from 'vue'
 
   const visible = ref(true)
@@ -160,25 +152,23 @@ multiple target Ids using _modifiers_.
 
 You can also pass multiple target Ids via the directive _value_ in BootstrapVueNext.
 
-
-  <b-card>
-    <div>
-      <!-- Via multiple directive modifiers -->
-      <b-button v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</b-button>
-      <!-- Via space separated string of Ids passed to directive value -->
-      <b-button v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</b-button>
-      <!-- Via array of string Ids passed to directive value -->
-      <b-button v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</b-button>
-      <!-- Elements to collapse -->
-      <b-collapse id="collapse-a" class="mt-2">
-         <b-card>I am collapsible content A!</b-card>
-      </b-collapse>
-      <b-collapse id="collapse-b" class="mt-2">
-         <b-card>I am collapsible content B!</b-card>
-      </b-collapse>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <!-- Via multiple directive modifiers -->
+    <b-button v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</b-button>
+    <!-- Via space separated string of Ids passed to directive value -->
+    <b-button v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</b-button>
+    <!-- Via array of string Ids passed to directive value -->
+    <b-button v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</b-button>
+    <!-- Elements to collapse -->
+    <b-collapse id="collapse-a" class="mt-2">
+        <b-card>I am collapsible content A!</b-card>
+    </b-collapse>
+    <b-collapse id="collapse-b" class="mt-2">
+        <b-card>I am collapsible content B!</b-card>
+    </b-collapse>
+  </div>
+</b-card>
 
 ```html
 <div>
@@ -204,43 +194,41 @@ Turn a group of `<b-collapse>` components into an accordion by supplying an acco
 identifier via the `accordion` prop. Note that only one collapse in an accordion group can be open
 at a time.
 
-
-  <b-card>
-    <div id="my-accordion" class="accordion" role="tablist">
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
-          <b-button v-b-toggle.accordion-1 variant="info">Accordion 1</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-          <b-card-body>
-            <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
-            <b-card-text>{{ text }}</b-card-text>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1  d-grid gap-2" role="tab">
-          <b-button v-b-toggle.accordion-2 variant="info">Accordion 2</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-          <b-card-body>
-            <b-card-text>{{ text }}</b-card-text>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
-          <b-button v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-          <b-card-body>
-            <b-card-text>{{ text }}</b-card-text>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
-    </div>
-  </b-card>
-
+<b-card>
+  <div id="my-accordion" class="accordion" role="tablist">
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
+        <b-button v-b-toggle.accordion-1 variant="info">Accordion 1</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1  d-grid gap-2" role="tab">
+        <b-button v-b-toggle.accordion-2 variant="info">Accordion 2</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
+        <b-button v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+  </div>
+</b-card>
 
 ```html
 <template>
@@ -283,19 +271,19 @@ at a time.
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref} from 'vue'
+<script setup lang="ts">
+import {ref} from 'vue'
 
-  const text = `
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-          richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-          brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-          tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-          assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
-          wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-          vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-          synth nesciunt you probably haven't heard of them accusamus labore VHS.
-        `
+const text = `
+  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+  richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+  brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+  tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+  wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+  vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+  synth nesciunt you probably haven't heard of them accusamus labore VHS.
+`
 </script>
 ```
 
@@ -328,21 +316,19 @@ The following properties are available for the `header` and `footer` slots:
 | `close`   | Function | When called, will close the collapse  |
 | `id`      | String   | The ID of the collapsible element     |
 
-
-  <b-card>
-    <div>
-      <b-collapse id="my-collapse">
-        <template #header="{visible, toggle, id}">
-          <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
-              <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
-          </b-button>
-        </template>
-        <!-- Content here -->
-        <div class="mt-2">This is data that's being collapsed</div>
-      </b-collapse>
-    </div>
-  </b-card>
-
+<b-card>
+  <div>
+    <b-collapse id="my-collapse">
+      <template #header="{visible, toggle, id}">
+        <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
+            <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
+        </b-button>
+      </template>
+      <!-- Content here -->
+      <div class="mt-2">This is data that's being collapsed</div>
+    </b-collapse>
+  </div>
+</b-card>
 
 ```html
 <b-card>
@@ -394,25 +380,25 @@ inside an element with `role="tablist"` and set `role="tab"` on each trigger ele
 order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVueNext cannot
 apply those roles for you automatically, as it depends on your final document markup.
 
+<ComponentReference></ComponentReference>
 
-  <ComponentReference></ComponentReference>
+<script setup lang="ts">
+import ComponentReference from '../../components/ComponentReference.vue'
+import {
+  BCard,
+  BCardText,
+  BCardBody,
+  BCardHeader,
+  BCollapseBButton,
+  BButton,
+  BCollapse,
+  vBToggle,
+} from 'bootstrap-vue-next'
+import {ref, computed} from 'vue'
 
+const visible = ref(true);
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
-
-  const visible = ref(true);
-
-  const text = `
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-          richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-          brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-          tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-          assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
-          wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-          vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-          synth nesciunt you probably haven't heard of them accusamus labore VHS.
-        `
+const text = "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore VHS."
 </script>
 
 <style>

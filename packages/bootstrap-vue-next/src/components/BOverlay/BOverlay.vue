@@ -140,7 +140,7 @@ const blurStyles = computed(() => ({
   ...positionStyles,
   opacity: props.opacity,
   backgroundColor: props.bgColor || undefined,
-  backdropFilter: blur ? `blur(${blur})` : undefined,
+  backdropFilter: props.blur ? `blur(${props.blur})` : undefined,
 }))
 
 const spinWrapperStyles = computed(() =>
