@@ -8,16 +8,14 @@ Badges scale to match the size of the immediate parent element by using relative
 
 ### Headings
 
-
-    <b-card class="mt-2">
-        <h1>Example heading <b-badge>New</b-badge></h1>
-        <h2 class="border-0 pb-0">Example heading <b-badge>New</b-badge></h2>
-        <h3>Example heading <b-badge>New</b-badge></h3>
-        <h4>Example heading <b-badge>New</b-badge></h4>
-        <h5>Example heading <b-badge>New</b-badge></h5>
-        <h6>Example heading <b-badge>New</b-badge></h6>
-    </b-card>
-
+<b-card class="mt-2">
+    <h1>Example heading <b-badge>New</b-badge></h1>
+    <h2 class="border-0 pb-0">Example heading <b-badge>New</b-badge></h2>
+    <h3>Example heading <b-badge>New</b-badge></h3>
+    <h4>Example heading <b-badge>New</b-badge></h4>
+    <h5>Example heading <b-badge>New</b-badge></h5>
+    <h6>Example heading <b-badge>New</b-badge></h6>
+</b-card>
 
 ```html
 <h1>Example heading <b-badge>New</b-badge></h1>
@@ -32,13 +30,11 @@ Badges scale to match the size of the immediate parent element by using relative
 
 Badges can be used as part of links or buttons to provide a counter.
 
-
-    <b-card>
-        <b-button variant="primary">
-            Notifications <b-badge variant="light">4</b-badge>
-        </b-button>
-    </b-card>
-
+<b-card>
+    <b-button variant="primary">
+        Notifications <b-badge variant="light">4</b-badge>
+    </b-button>
+</b-card>
 
 ```html
 <b-button variant="primary">Notifications <b-badge variant="light">4</b-badge></b-button>
@@ -52,17 +48,15 @@ Unless the context is clear (as with the “Notifications” example, where it i
 
 Use utilities to modify a `.badge` and position it in the corner of a link or button.
 
-
-    <b-card>
-        <b-button variant="primary" class="position-relative">
-            Inbox
-            <b-badge variant="danger" text-indicator>
-                99+
-                <span class="visually-hidden">unread messages</span>
-            </b-badge>
-        </b-button>
-    </b-card>
-
+<b-card>
+    <b-button variant="primary" class="position-relative">
+        Inbox
+        <b-badge variant="danger" text-indicator>
+            99+
+            <span class="visually-hidden">unread messages</span>
+        </b-badge>
+    </b-button>
+</b-card>
 
 ```html
 <b-button variant="primary" class="position-relative">
@@ -76,16 +70,14 @@ Use utilities to modify a `.badge` and position it in the corner of a link or bu
 
 You can also replace the `.badge` class with a few more utilities without a count for a more generic indicator.
 
-
-    <b-card>
-        <b-button variant="primary" class="position-relative">
-            Inbox
-            <b-badge variant="danger" dot-indicator>
-                <span class="visually-hidden">New alerts</span>
-            </b-badge>
-        </b-button>
-    </b-card>
-
+<b-card>
+    <b-button variant="primary" class="position-relative">
+        Inbox
+        <b-badge variant="danger" dot-indicator>
+            <span class="visually-hidden">New alerts</span>
+        </b-badge>
+    </b-button>
+</b-card>
 
 ```html
 <b-button variant="primary" class="position-relative">
@@ -100,18 +92,16 @@ You can also replace the `.badge` class with a few more utilities without a coun
 
 Add any of the following variants via the `variant` prop to change the appearance of a `<b-badge>`: `default`, `primary`, `success`, `warning`, `info`, and `danger`. If no variant is specified `default` will be used.
 
-
-    <b-card>
-        <b-badge variant="primary">Primary</b-badge>
-        <b-badge variant="secondary">Secondary</b-badge>
-        <b-badge variant="success">Success</b-badge>
-        <b-badge variant="danger">Danger</b-badge>
-        <b-badge variant="warning">Warning</b-badge>
-        <b-badge variant="info">Info</b-badge>
-        <b-badge variant="light">Light</b-badge>
-        <b-badge variant="dark">Dark</b-badge>
-    </b-card>
-
+<b-card>
+    <b-badge variant="primary">Primary</b-badge>
+    <b-badge variant="secondary">Secondary</b-badge>
+    <b-badge variant="success">Success</b-badge>
+    <b-badge variant="danger">Danger</b-badge>
+    <b-badge variant="warning">Warning</b-badge>
+    <b-badge variant="info">Info</b-badge>
+    <b-badge variant="light">Light</b-badge>
+    <b-badge variant="dark">Dark</b-badge>
+</b-card>
 
 ```html
 <b-badge variant="primary">Primary</b-badge>
@@ -132,18 +122,16 @@ Using color to add meaning only provides a visual indication, which will not be 
 
 Use the `pill` prop to make badges more rounded with a larger border-radius.
 
-
-    <b-card>
-        <b-badge variant="primary" pill>Primary</b-badge>
-        <b-badge variant="secondary" pill>Secondary</b-badge>
-        <b-badge variant="success" pill>Success</b-badge>
-        <b-badge variant="danger" pill>Danger</b-badge>
-        <b-badge variant="warning" pill>Warning</b-badge>
-        <b-badge variant="info" pill>Info</b-badge>
-        <b-badge variant="light" pill>Light</b-badge>
-        <b-badge variant="dark" pill>Dark</b-badge>
-    </b-card>
-
+<b-card>
+    <b-badge variant="primary" pill>Primary</b-badge>
+    <b-badge variant="secondary" pill>Secondary</b-badge>
+    <b-badge variant="success" pill>Success</b-badge>
+    <b-badge variant="danger" pill>Danger</b-badge>
+    <b-badge variant="warning" pill>Warning</b-badge>
+    <b-badge variant="info" pill>Info</b-badge>
+    <b-badge variant="light" pill>Light</b-badge>
+    <b-badge variant="dark" pill>Dark</b-badge>
+</b-card>
 
 ```html
 <b-badge variant="primary" pill>Primary</b-badge>
@@ -160,8 +148,7 @@ Use the `pill` prop to make badges more rounded with a larger border-radius.
 
 Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specifying either the `href` prop (links) or `to` prop (router-links):
 
-
-  <b-card>
+<b-card>
     <b-badge href="#" variant="primary">Primary</b-badge>
     <b-badge href="#" variant="secondary">Secondary</b-badge>
     <b-badge href="#" variant="success">Success</b-badge>
@@ -170,8 +157,7 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
     <b-badge href="#" variant="info">Info</b-badge>
     <b-badge href="#" variant="light">Light</b-badge>
     <b-badge href="#" variant="dark">Dark</b-badge>
-  </b-card>
-
+</b-card>
 
 ```html
 <b-badge href="#" variant="primary">Primary</b-badge>
@@ -184,6 +170,9 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
 <b-badge href="#" variant="dark">Dark</b-badge>
 ```
 
+<ComponentReference></ComponentReference>
 
-    <ComponentReference></ComponentReference>
-
+<script setup lang="ts">
+import {BButton, BBadge, BCard} from 'bootstrap-vue-next'
+import ComponentReference from '../../components/ComponentReference.vue'
+</script>

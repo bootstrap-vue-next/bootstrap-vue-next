@@ -61,7 +61,7 @@ Alerts are available for any length of text, as well as an optional dismiss butt
   {{ !showDismissibleAlert ? 'show' : 'hide' }} dismissible alert
 </b-button>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
 const showDismissibleAlert = ref(false);
@@ -220,7 +220,7 @@ To create a `<b-alert>` that dismisses automatically after some time set the `v-
 <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100">Adjust Alert interval +100</b-button>
 <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100">Adjust Alert interval -100</b-button>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import {ref} from 'vue'
 
 const autoDismissingAlert = ref(10000);
@@ -288,7 +288,7 @@ const stop = () => myAlert.value?.stop()
 
 <ComponentReference></ComponentReference>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import {BAlert, BProgress, BButton, BCard} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {ref, computed} from 'vue'

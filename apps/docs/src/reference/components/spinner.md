@@ -12,11 +12,9 @@ For accessibility purposes, each loader here includes `role="status"` and a nest
 
 Use the border spinners for a lightweight loading indicator.
 
-
-    <b-card>
-        <b-spinner variant="dark" />
-    </b-card>
-
+<b-card>
+  <b-spinner variant="dark" />
+</b-card>
 
 ```html
 <b-spinner></b-spinner>
@@ -26,18 +24,16 @@ Use the border spinners for a lightweight loading indicator.
 
 The border spinner uses currentColor for its border-color, meaning you can customize the color with text color utilities. You can use any of our text color utilities on the standard spinner.
 
-
-    <b-card>
-        <b-spinner variant="primary"></b-spinner>&nbsp;
-        <b-spinner variant="secondary"></b-spinner>&nbsp;
-        <b-spinner variant="success"></b-spinner>&nbsp;
-        <b-spinner variant="danger"></b-spinner>&nbsp;
-        <b-spinner variant="warning"></b-spinner>&nbsp;
-        <b-spinner variant="info"></b-spinner>&nbsp;
-        <b-spinner variant="light"></b-spinner>&nbsp;
-        <b-spinner variant="dark"></b-spinner>
-    </b-card>
-
+<b-card>
+  <b-spinner variant="primary"></b-spinner>&nbsp;
+  <b-spinner variant="secondary"></b-spinner>&nbsp;
+  <b-spinner variant="success"></b-spinner>&nbsp;
+  <b-spinner variant="danger"></b-spinner>&nbsp;
+  <b-spinner variant="warning"></b-spinner>&nbsp;
+  <b-spinner variant="info"></b-spinner>&nbsp;
+  <b-spinner variant="light"></b-spinner>&nbsp;
+  <b-spinner variant="dark"></b-spinner>
+</b-card>
 
 ```html
 <b-spinner variant="primary"></b-spinner>
@@ -54,28 +50,24 @@ The border spinner uses currentColor for its border-color, meaning you can custo
 
 If you don’t fancy a border spinner, switch to the grow spinner. While it doesn’t technically spin, it does repeatedly grow!
 
-
-    <b-card>
-        <b-spinner type="grow" variant="dark" />
-    </b-card>
-
+<b-card>
+  <b-spinner type="grow" variant="dark" />
+</b-card>
 
 ```html
 <b-spinner type="grow"></b-spinner>
 ```
 
-
-    <b-card>
-        <b-spinner type="grow" variant="primary"></b-spinner>&nbsp;
-        <b-spinner type="grow" variant="secondary"></b-spinner>&nbsp;
-        <b-spinner type="grow" variant="success"></b-spinner>&nbsp;
-        <b-spinner type="grow" variant="danger"></b-spinner>&nbsp;
-        <b-spinner type="grow" variant="warning"></b-spinner>&nbsp;
-        <b-spinner type="grow" variant="info"></b-spinner>&nbsp;
-        <b-spinner type="grow" variant="light"></b-spinner>&nbsp;
-        <b-spinner type="grow" variant="dark"></b-spinner>
-    </b-card>
-
+<b-card>
+  <b-spinner type="grow" variant="primary"></b-spinner>&nbsp;
+  <b-spinner type="grow" variant="secondary"></b-spinner>&nbsp;
+  <b-spinner type="grow" variant="success"></b-spinner>&nbsp;
+  <b-spinner type="grow" variant="danger"></b-spinner>&nbsp;
+  <b-spinner type="grow" variant="warning"></b-spinner>&nbsp;
+  <b-spinner type="grow" variant="info"></b-spinner>&nbsp;
+  <b-spinner type="grow" variant="light"></b-spinner>&nbsp;
+  <b-spinner type="grow" variant="dark"></b-spinner>
+</b-card>
 
 ```html
 <b-spinner type="grow" variant="primary"></b-spinner>
@@ -96,11 +88,9 @@ Spinners in Bootstrap are built with `rem`s, currentColor, and `display: inline-
 
 Use [margin utilities](https://getbootstrap.com/docs/5.0/utilities/spacing/) like `.m-5` for easy spacing.
 
-
-    <b-card>
-        <b-spinner class="m-5" variant="dark" />
-    </b-card>
-
+<b-card>
+  <b-spinner class="m-5" variant="dark" />
+</b-card>
 
 ```html
 <b-spinner class="m-5"></b-spinner>
@@ -112,13 +102,11 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
 
 #### Flex
 
-
-    <b-card class="mt-2">
-        <div class="d-flex justify-content-center">
-            <b-spinner variant="dark" />
-        </div>
-    </b-card>
-
+<b-card class="mt-2">
+  <div class="d-flex justify-content-center">
+    <b-spinner variant="dark" />
+  </div>
+</b-card>
 
 ```html
 <div class="d-flex justify-content-center">
@@ -126,14 +114,12 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
 </div>
 ```
 
-
-    <b-card>
-        <div class="d-flex align-items-center text-dark">
-            <strong>Loading...</strong>
-            <b-spinner class="ms-auto" variant="dark" />
-        </div>
-    </b-card>
-
+<b-card>
+  <div class="d-flex align-items-center text-dark">
+    <strong>Loading...</strong>
+    <b-spinner class="ms-auto" variant="dark" />
+  </div>
+</b-card>
 
 ```html
 <div class="d-flex align-items-center">
@@ -144,13 +130,11 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
 
 #### Floats
 
-
-    <b-card class="mt-2">
-        <div class="clearfix">
-            <b-spinner class="float-end" variant="dark" />
-        </div>
-    </b-card>
-
+<b-card class="mt-2">
+  <div class="clearfix">
+    <b-spinner class="float-end" variant="dark" />
+  </div>
+</b-card>
 
 ```html
 <div class="clearfix">
@@ -160,13 +144,11 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
 
 #### Text align
 
-
-    <b-card class="mt-2">
-        <div class="text-center">
-            <b-spinner variant="dark" />
-        </div>
-    </b-card>
-
+<b-card class="mt-2">
+  <div class="text-center">
+    <b-spinner variant="dark" />
+  </div>
+</b-card>
 
 ```html
 <div class="text-center">
@@ -178,13 +160,11 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
 
 Set the prop `small` to `true` to make a smaller spinner that can quickly be used within other components.
 
-
-    <b-card class="text-dark">
-        <b-spinner small></b-spinner>
-        &nbsp;
-        <b-spinner small type="grow"></b-spinner>
-    </b-card>
-
+<b-card class="text-dark">
+  <b-spinner small></b-spinner>
+  &nbsp;
+  <b-spinner small type="grow"></b-spinner>
+</b-card>
 
 ```html
 <b-spinner small label="Small spinner"></b-spinner>
@@ -193,13 +173,11 @@ Set the prop `small` to `true` to make a smaller spinner that can quickly be use
 
 Or, use custom CSS or inline styles to change the dimensions as needed.
 
-
-    <b-card class="text-dark">
-        <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
-        &nbsp;
-        <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow"></b-spinner>
-    </b-card>
-
+<b-card class="text-dark">
+  <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
+  &nbsp;
+  <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow"></b-spinner>
+</b-card>
 
 ```html
 <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
@@ -210,19 +188,17 @@ Or, use custom CSS or inline styles to change the dimensions as needed.
 
 Use spinners within buttons to indicate an action is currently processing or taking place. You may also swap the text out of the spinner element and utilize button text as needed.
 
-
-    <b-card>
-      <b-button variant="primary" disabled>
-        <b-spinner small></b-spinner>
-        <span class="visually-hidden">Loading...</span>
-      </b-button>
-      &nbsp;
-      <b-button variant="primary" disabled>
-        <b-spinner small></b-spinner>
-        Loading...
-      </b-button>
-    </b-card>
-
+<b-card>
+  <b-button variant="primary" disabled>
+    <b-spinner small></b-spinner>
+    <span class="visually-hidden">Loading...</span>
+  </b-button>
+  &nbsp;
+  <b-button variant="primary" disabled>
+    <b-spinner small></b-spinner>
+    Loading...
+  </b-button>
+</b-card>
 
 ```html
 <b-button variant="primary" disabled>
@@ -236,19 +212,17 @@ Use spinners within buttons to indicate an action is currently processing or tak
 </b-button>
 ```
 
-
-    <b-card>
-      <b-button variant="primary" disabled>
-        <b-spinner small type="grow"></b-spinner>
-        <span class="visually-hidden">Loading...</span>
-      </b-button>
-      &nbsp;
-      <b-button variant="primary" disabled>
-        <b-spinner small type="grow"></b-spinner>
-        Loading...
-      </b-button>
-    </b-card>
-
+<b-card>
+  <b-button variant="primary" disabled>
+    <b-spinner small type="grow"></b-spinner>
+    <span class="visually-hidden">Loading...</span>
+  </b-button>
+  &nbsp;
+  <b-button variant="primary" disabled>
+    <b-spinner small type="grow"></b-spinner>
+    Loading...
+  </b-button>
+</b-card>
 
 ```html
 <b-button variant="primary" disabled>
@@ -270,6 +244,9 @@ For accessibility purposes, each spinner will automatically have a `role="status
 
 As well, when no label is provided, the spinner will automatically have the attribute `aria-hidden="true"` to hide the spinner from screen reader users.
 
+<ComponentReference></ComponentReference>
 
-  <ComponentReference></ComponentReference>
-
+<script setup lang="ts">
+import ComponentReference from '../../components/ComponentReference.vue'
+import {BCard, BButton, BSpinner} from 'bootstrap-vue-next'
+</script>

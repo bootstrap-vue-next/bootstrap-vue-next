@@ -58,6 +58,7 @@
     </b-row>
   </b-container>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 const open = ref(0)

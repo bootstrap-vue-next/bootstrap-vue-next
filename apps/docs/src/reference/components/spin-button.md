@@ -1,4 +1,5 @@
 # Form Spinbutton
+
 The Form SpinButton allows the user to adjusting a numeric range with finite control.
 
 ## Overview
@@ -19,7 +20,7 @@ The component `<b-form-spinbutton>` is
 ```html
 <b-form-spin-button  min="1" max="100" step="1" />
 
-<script lang='ts' setup>
+<script setup lang="ts">
   import {ref, computed} from 'vue'
   const ex1Value = ref(50);
 </script>
@@ -59,7 +60,7 @@ value.
     <label for="sb-inline">Inline spin button</label>
     <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
     
-    <script lang='ts' setup>
+    <script setup lang="ts">
     import {ref, computed} from 'vue'
     const ex1Value = ref(50);
     </script>
@@ -79,7 +80,7 @@ value.
     <label for="sb-vertical">Vertical spin button</label>
     <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical>
     </b-form-spin-button>
-    <script lang='ts' setup>
+    <script setup lang="ts">
     import {ref, computed} from 'vue'
     const ex1Value = ref(50);
     </script>
@@ -89,22 +90,21 @@ value.
 
 ### Custom Formatter
 
-  <b-card>
-<b-form-spin-button
-      id="sb-days"
-      v-model="exDaysValue"
-      :formatter-fn="dayFormatter"
-      min="0"
-      max="6"
-      wrap
-    ></b-form-spin-button>
-    <p>Value: {{ exDaysValue }}</p>
-  </b-card>
-
+<b-card>
+  <b-form-spin-button
+    id="sb-days"
+    v-model="exDaysValue"
+    :formatter-fn="dayFormatter"
+    min="0"
+    max="6"
+    wrap
+  />
+  <p>Value: {{ exDaysValue }}</p>
+</b-card>
 
 ## Disabled and readonly states
 
-  <b-card>
+<b-card>
   <b-row>
     <b-col md="6" class="mb-2">
       <label for="sb-disabled">Disabled spin button</label>
@@ -115,22 +115,20 @@ value.
       <b-form-spin-button id="sb-readonly" v-model="ex1Value" readonly></b-form-spin-button>
     </b-col>
   </b-row>
-  </b-card>
+</b-card>
 
+<ComponentReference></ComponentReference>
 
+<script setup lang="ts">
+import ComponentReference from '../../components/ComponentReference.vue'
+import {} from 'bootstrap-vue-next'
+import {ref, computed} from 'vue'
 
-  <ComponentReference></ComponentReference>
+const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
+const exDaysValue = ref(0);
 
-
-<script lang='ts' setup>
-  import {ref, computed} from 'vue'
-
-  const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
-  const exDaysValue = ref(0);
-
-  const ex1Value = ref(50);
-  let dayFormatter = (value) => {
-        return days.value[value]
-  }
- 
+const ex1Value = ref(50);
+let dayFormatter = (value) => {
+      return days.value[value]
+}
 </script>

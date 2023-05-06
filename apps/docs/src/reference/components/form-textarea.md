@@ -1,13 +1,21 @@
-### Form textarea
-
 # Form Textarea
 
-> Create multi-line text inputs with support for auto height sizing, minimum and maximum number of
-> rows, and contextual states.
+> Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.
 
+<b-card>
+  <b-form-textarea
+    id="textarea"
+    v-model="textEx1"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+  ></b-form-textarea>
+  <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
+</b-card>
 
+```html
+<template>
   <b-card>
-  <div>
     <b-form-textarea
       id="textarea"
       v-model="textEx1"
@@ -16,30 +24,13 @@
       max-rows="6"
     ></b-form-textarea>
     <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
-  </div>
-  </b-card>
-
-
-```html
-<template>
-  <b-card>
-    <div>
-      <b-form-textarea
-        id="textarea"
-        v-model="textEx1"
-        placeholder="Enter something..."
-        rows="3"
-        max-rows="6"
-      ></b-form-textarea>
-      <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
-    </div>
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
+<script setup lang="ts">
+import {ref, computed} from 'vue'
 
-  const textEx1 = ref()
+const textEx1 = ref()
 </script>
 ```
 
@@ -48,7 +39,6 @@
 Set text height using the `size` prop to `sm` or `lg` for small or large respectively.
 
 To control width, place the input inside standard Bootstrap grid column.
-
 
 <b-card>
   <b-row>
@@ -78,7 +68,6 @@ To control width, place the input inside standard Bootstrap grid column.
     </b-col>
   </b-row>
 </b-card>
-
 
 ```html
 <b-card>
@@ -117,13 +106,11 @@ To set the height of `<b-form-textarea>`, set the `rows` prop to the desired num
 value is provided to `rows`, then it will default to `2` (the browser default and minimum acceptable
 value). Setting it to null or a value below 2 will result in the default of `2` being used.
 
-
 <b-card>
   <div>
     <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
   </div>
 </b-card>
-
 
 ```html
 <b-card>
@@ -138,7 +125,6 @@ value). Setting it to null or a value below 2 will result in the default of `2` 
 Some web browsers will allow the user to re-size the height of the textarea. To disable this
 feature, set the `no-resize` prop to `true`.
 
-
 <b-card>
   <div>
     <b-form-textarea
@@ -149,7 +135,6 @@ feature, set the `no-resize` prop to `true`.
     ></b-form-textarea>
   </div>
 </b-card>
-
 
 ```html
 <b-card>
@@ -183,19 +168,15 @@ Generally speaking, you'll want to use a particular state for specific types of 
 To apply one of the contextual state icons on `<b-form-textarea>`, set the `state` prop to `false`
 (for invalid), `true` (for valid), or `null` (no validation state).
 
-
-  <b-card>
-    <div>
-      <b-form-textarea
-        id="textarea-state"
-        v-model="textStates"
-        :state="textStates.length >= 10"
-        placeholder="Enter at least 10 characters"
-        rows="3"
-      ></b-form-textarea>
-    </div>
-  </b-card>
-
+<b-card>
+  <b-form-textarea
+    id="textarea-state"
+    v-model="textStates"
+    :state="textStates.length >= 10"
+    placeholder="Enter at least 10 characters"
+    rows="3"
+  ></b-form-textarea>
+</b-card>
 
 ```html
 <template>
@@ -212,7 +193,7 @@ To apply one of the contextual state icons on `<b-form-textarea>`, set the `stat
   </b-card>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
   import {ref} from 'vue'
 
   const textStates = ref('')
@@ -261,41 +242,37 @@ The `formatter` function should return the formatted value as a _string_.
 
 Formatting does not occur if a `formatter` is not provided.
 
-
-  <b-card>
-    <div>
-      <b-form-group
-        label="Textarea with formatter (on input)"
-        label-for="textarea-formatter"
-        description="We will convert your text to lowercase instantly"
-        class="mb-0"
-      >
-        <b-form-textarea
-          id="textarea-formatter"
-          v-model="textFormatter"
-          placeholder="Enter your text"
-          :formatter="formatter"
-        ></b-form-textarea>
-      </b-form-group>
-      <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
-      <b-form-group
-        label="Textarea with lazy formatter (on blur)"
-        label-for="textarea-lazy"
-        description="This one is a little lazy!"
-        class="mb-0"
-      >
-        <b-form-textarea
-          id="textarea-lazy"
-          v-model="textFormatter2"
-          placeholder="Enter your text"
-          lazy-formatter
-          :formatter="formatter"
-        ></b-form-textarea>
-      </b-form-group>
-      <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
-    </div>
-  </b-card>
-
+<b-card>
+  <b-form-group
+    label="Textarea with formatter (on input)"
+    label-for="textarea-formatter"
+    description="We will convert your text to lowercase instantly"
+    class="mb-0"
+  >
+    <b-form-textarea
+      id="textarea-formatter"
+      v-model="textFormatter"
+      placeholder="Enter your text"
+      :formatter="formatter"
+    ></b-form-textarea>
+  </b-form-group>
+  <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
+  <b-form-group
+    label="Textarea with lazy formatter (on blur)"
+    label-for="textarea-lazy"
+    description="This one is a little lazy!"
+    class="mb-0"
+  >
+    <b-form-textarea
+      id="textarea-lazy"
+      v-model="textFormatter2"
+      placeholder="Enter your text"
+      lazy-formatter
+      :formatter="formatter"
+    ></b-form-textarea>
+  </b-form-group>
+  <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
+</b-card>
 
 ```html
 <template>
@@ -334,13 +311,13 @@ Formatting does not occur if a `formatter` is not provided.
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
+<script setup lang="ts">
+import {ref, computed} from 'vue'
 
-  const textFormatter = ref('')
-  const textFormatter2 = ref('')
+const textFormatter = ref('')
+const textFormatter2 = ref('')
 
-  const formatter = (value) => value.toLowerCase()
+const formatter = (value) => value.toLowerCase()
 </script>
 ```
 
@@ -355,32 +332,23 @@ If you want to have `<b-form-textarea readonly>` elements in your form styled as
 `plaintext` prop (no need to set `readonly` as it will be set automatically) to remove the default
 form field styling and preserve the correct text size, margin, padding and height.
 
-
-  <b-card>
-  <div>
-    <b-form-textarea id="textarea-plaintext" plaintext :modelValue="textReadOnly"></b-form-textarea>
-  </div>
-
-  </b-card>
-
+<b-card>
+  <b-form-textarea id="textarea-plaintext" plaintext :modelValue="textReadOnly"></b-form-textarea>
+</b-card>
 
 ```html
 <template>
-  <b-card>
-    <div>
-      <b-form-textarea
-        id="textarea-plaintext"
-        plaintext
-        :modelValue="textReadOnly"
-      ></b-form-textarea>
-    </div>
-  </b-card>
+  <b-form-textarea
+    id="textarea-plaintext"
+    plaintext
+    :modelValue="textReadOnly"
+  ></b-form-textarea>
 </template>
 
-<script lang="ts" setup>
-  import {ref} from 'vue'
+<script setup lang="ts">
+import {ref} from 'vue'
 
-  const textReadOnly = "This is some text.\nIt is read only and doesn't look like an input."
+const textReadOnly = "This is some text.\nIt is read only and doesn't look like an input."
 </script>
 ```
 
@@ -433,21 +401,17 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
 
 ### example
 
-
-  <b-card>
-    <div>
-      <b-form-textarea
-        id="textarea"
-        ref="textArea"
-        v-model="textSelectEx"
-        placeholder="Enter something..."
-        rows="3"
-        max-rows="6"
-      ></b-form-textarea>
-    </div>
-    <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
-  </b-card>
-
+<b-card>
+  <b-form-textarea
+    id="textarea"
+    ref="textArea"
+    v-model="textSelectEx"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+  ></b-form-textarea>
+  <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
+</b-card>
 
 ```html
 <template>
@@ -466,15 +430,15 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
   </b-card>
 </template>
 
-<script lang="ts" setup>
-  import {ref} from 'vue'
+<script setup lang="ts">
+import {ref} from 'vue'
 
-  const textSelectEx = ref('')
-  const textArea = ref<HTMLElement>(null)
+const textSelectEx = ref('')
+const textArea = ref<HTMLElement>(null)
 
-  const selectText = () => {
-    textArea.value.input.select()
-  }
+const selectText = () => {
+  textArea.value.input.select()
+}
 </script>
 ```
 
@@ -505,26 +469,26 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
 Refer to https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement for more information on
 these methods and properties. Support will vary based on input type.
 
+<ComponentReference></ComponentReference>
 
-  <ComponentReference></ComponentReference>
+<script setup lang="ts">
+import {ref, computed} from 'vue'
+import ComponentReference from '../../components/ComponentReference.vue'
+import {BFormGroup, BRow, BCol, BFormTextarea, BCard} from 'bootstrap-vue-next'
 
+const textEx1 = ref()
+const textStates = ref('')
 
-<script lang="ts" setup>
-  import {ref, computed} from 'vue'
+const textFormatter = ref('')
+const textFormatter2 = ref('')
 
-  const textEx1 = ref()
-  const textStates = ref('')
+const formatter = (value) => value.toLowerCase()
 
-  const textFormatter = ref('')
-  const textFormatter2 = ref('')
+const textReadOnly = "This is some text.\nIt is read only and doesn't look like an input."
 
-  const formatter = (value) => value.toLowerCase()
-
-  const textReadOnly = "This is some text.\nIt is read only and doesn't look like an input."
-
-  const textSelectEx = ref('')
-  const textArea = ref<HTMLElement>(null)
-  const selectText = () => {
-    textArea.value.input.select()
-  }
+const textSelectEx = ref('')
+const textArea = ref<HTMLElement>(null)
+const selectText = () => {
+  textArea.value.input.select()
+}
 </script>
