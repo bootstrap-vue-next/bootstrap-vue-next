@@ -392,7 +392,7 @@ import {
   BCollapseBButton,
   BButton,
   BCollapse,
-  VBToggle
+  vBToggle,
 } from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
