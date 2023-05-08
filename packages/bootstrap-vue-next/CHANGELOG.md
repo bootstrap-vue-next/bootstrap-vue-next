@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.11](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.10...v0.8.11) (2023-05-08)
+
+
+### Bug Fixes
+
+* **BCollapse:** auto close only if inside a navbar ([31fd586](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/31fd5860ba91dce96918de65bf60ba331125c949))
+
 ## [0.8.10](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.9...v0.8.10) (2023-05-06)
 
 
