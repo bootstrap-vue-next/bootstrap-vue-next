@@ -65,7 +65,6 @@ export default defineComponent({
     const collapseData = inject(collapseInjectionKey, null)
     const navbarData = inject(navbarInjectionKey, null)
     const closeCollapse = () => {
-      //only close, if this component is inside a navbar
       if (navbarData !== null) {
         collapseData?.close?.()
       }
