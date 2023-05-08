@@ -8,9 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed, provide, readonly, toRef} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
+import {navbarInjectionKey} from '../../utils'
 
 interface Props {
   fixed?: 'top' | 'bottom'
@@ -61,4 +62,8 @@ const computedClasses = computed(() => ({
   [`fixed-${props.fixed}`]: props.fixed !== undefined,
   [`${computedNavbarExpand.value}`]: computedNavbarExpand.value !== undefined,
 }))
+
+provide(navbarInjectionKey, {
+  tag: readonly(toRef(props, 'tag')),
+})
 </script>

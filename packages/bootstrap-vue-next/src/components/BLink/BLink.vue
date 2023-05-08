@@ -32,7 +32,7 @@
 <script lang="ts">
 import type {Booleanish, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
-import {collapseInjectionKey} from '../../utils'
+import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, defineComponent, getCurrentInstance, inject, type PropType, ref, toRef} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
@@ -63,8 +63,11 @@ export default defineComponent({
     const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
     const replaceBoolean = useBooleanish(toRef(props, 'replace'))
     const collapseData = inject(collapseInjectionKey, null)
+    const navbarData = inject(navbarInjectionKey, null)
     const closeCollapse = () => {
-      collapseData?.close?.()
+      if (navbarData !== null) {
+        collapseData?.close?.()
+      }
     }
 
     const instance = getCurrentInstance()

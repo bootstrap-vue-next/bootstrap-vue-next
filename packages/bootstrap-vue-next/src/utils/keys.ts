@@ -107,3 +107,7 @@ export const dropdownInjectionKey: InjectionKey<{
   visible?: Readonly<Ref<boolean>>
   isNav?: Readonly<Ref<boolean>>
 }> = Symbol('collapse')
+
+export const navbarInjectionKey: InjectionKey<{
+  tag?: Readonly<Ref<string>>
+}> = Symbol('navbar')
