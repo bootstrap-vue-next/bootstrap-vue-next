@@ -80,7 +80,6 @@ const navbarData = inject(navbarInjectionKey, null)
 // Pretty sure this emits if tag is not button and is disabled
 const clicked = (e: MouseEvent): void => {
   emit('click', e)
-  //only close, if this component is inside a navbar
   if (navbarData !== null) {
     collapseData?.close?.()
   }
