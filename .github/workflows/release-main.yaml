@@ -31,9 +31,13 @@ jobs:
           monorepo-tags: true
           
       # The logic below handles the npm publication:
-
+          
       - name: echo
-        run: echo ${{ toJSON(steps.release.outputs) }}
+        env: 
+          JSON_DOC: ${{ toJSON(steps.release.outputs) }}
+        run: |
+          printf '%s\n' "$JSON_DOC" > foo.json
+          cat foo.json
 
       - name: Clone Repository
         uses: actions/checkout@v3
