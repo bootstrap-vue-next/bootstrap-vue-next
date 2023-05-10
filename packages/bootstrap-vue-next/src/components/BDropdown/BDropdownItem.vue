@@ -17,7 +17,7 @@ import BLink from '../BLink/BLink.vue'
 import {computed, inject, ref, toRef, useAttrs} from 'vue'
 import type {Booleanish, ClassValue, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
-import {collapseInjectionKey, dropdownInjectionKey} from '../../utils'
+import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
 
 interface BDropdownItemProps {
   href?: string
@@ -75,11 +75,14 @@ const componentAttrs = computed(() => ({
 
 const collapseData = inject(collapseInjectionKey, null)
 const dropdownData = inject(dropdownInjectionKey, null)
+const navbarData = inject(navbarInjectionKey, null)
 
 // Pretty sure this emits if tag is not button and is disabled
 const clicked = (e: MouseEvent): void => {
   emit('click', e)
-  collapseData?.close?.()
+  if (navbarData !== null) {
+    collapseData?.close?.()
+  }
   dropdownData?.close?.()
 }
 </script>

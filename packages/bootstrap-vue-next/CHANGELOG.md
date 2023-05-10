@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.8.11](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.10...v0.8.11) (2023-05-08)
+
+
+### Bug Fixes
+
+* **BCollapse:** auto close only if inside a navbar ([31fd586](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/31fd5860ba91dce96918de65bf60ba331125c949))
+
+## [0.8.10](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.9...v0.8.10) (2023-05-06)
+
+
+### Bug Fixes
+
+* **BModal:** defineExpose({show, hide}) fixes [#1068](https://github.com/bootstrap-vue/bootstrap-vue-next/issues/1068) ([8cd8abf](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/8cd8abf11d5c512763739b8b5e14ab36d68880b2))
+* **BOverlay:** 'blur' being confused with window.blur, when it should be using props.blur ([713d692](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/713d692ae1279d0f6e5be7c0feb058f4e685eb90))
+* update btable selection behavior to match original component ([d5e8394](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d5e83945b530a7414b49dc8418f694df7ba93a4b))
+
 ## [0.8.9](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.8...v0.8.9) (2023-05-03)
 
 
