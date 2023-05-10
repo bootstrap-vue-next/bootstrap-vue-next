@@ -21,7 +21,6 @@ export default defineNuxtModule<ModuleOptions>({
     // @ts-ignore
     const resolver = createResolver(import.meta.url)
 
-    // FOO!
     // const normalizedDirectives =
     //   typeof options.directives === 'boolean' ? {all: options.directives} : options.directives
     const normalizedComposables =
