@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/bootstrap-vue/bootstrap-vue-next-1/compare/nuxt-v2.0.0...nuxt-v2.0.1) (2023-05-10)
+
+
+### Bug Fixes
+
+* foo ([55385b4](https://github.com/bootstrap-vue/bootstrap-vue-next-1/commit/55385b47dc3296406711faa09d08daceece2abd8))
+
 ## [2.0.0](https://github.com/bootstrap-vue/bootstrap-vue-next-1/compare/nuxt-v0.6.7...nuxt-v2.0.0) (2023-05-10)
 
 
