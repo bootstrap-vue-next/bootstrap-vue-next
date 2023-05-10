@@ -29,7 +29,7 @@ jobs:
       # The logic below handles the npm publication:
 
       - name: echo
-        uses: echo ${{ steps.release.outputs }}
+        run: echo ${{ steps.release.outputs }}
 
       - name: Clone Repository
         uses: actions/checkout@v3
