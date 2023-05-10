@@ -1,12 +1,15 @@
 {
+  "release-label": "autorelease: published",
   "packages": {
-    ".": {
-      "changelog-path": "CHANGELOG.md",
+    "packages/bootstrap-vue-next": {
       "release-type": "node",
-      "bump-minor-pre-major": false,
-      "bump-patch-for-minor-pre-major": false,
-      "draft": false,
-      "prerelease": false
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true
+    },
+    "packages/nuxt": {
+      "release-type": "node",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"

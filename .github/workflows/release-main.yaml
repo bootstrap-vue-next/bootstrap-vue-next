@@ -23,15 +23,13 @@ jobs:
         uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          release-type: node
-          path: packages/bootstrap-vue-next
-          package-name: bootstrap-vue-next
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
-          default-branch: main
-          release-labels: 'autorelease: published'
+          command: manifest
+          monorepo-tags: true
           
       # The logic below handles the npm publication:
+
+      - name: echo
+        uses: echo ${{ steps.release.outputs }}
 
       - name: Clone Repository
         uses: actions/checkout@v3
