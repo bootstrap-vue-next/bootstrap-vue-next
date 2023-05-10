@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+env:
+  ACTIONS_RUNNER_DEBUG: true
+
 jobs:
   release-please:
     runs-on: ${{ matrix.os }}
