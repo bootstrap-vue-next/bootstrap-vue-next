@@ -83,7 +83,7 @@ jobs:
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.release.outputs.releases_created && contains(fromJSON('["packages/bootstrap-vue-next--release_created, steps.release.outputs.paths_released) }}
+        if: ${{ steps.release.outputs.releases_created && contains(fromJSON('["packages/bootstrap-vue-next--release_created"]'), steps.release.outputs.paths_released) }}
 
       - name: Publish Nuxt
         run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public --force
