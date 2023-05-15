@@ -181,7 +181,7 @@ describe('table-simple', () => {
     expect($div.classes()).toContain('table-responsive')
   })
 
-  it('div has class table-responsive-{type} when prop responsive is string', () => {
+  it('div has class table-responsive-xxl when prop responsive is string xxl', () => {
     const wrapper = mount(BTableSimple, {
       props: {responsive: ''},
     })
