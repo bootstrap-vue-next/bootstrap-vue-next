@@ -20,16 +20,16 @@
     </b-row>
     <b-row>
       <b-col>
-        <BModal
+        <b-modal
           v-model="isModalVisible"
           :no-close-on-esc="noClose"
           :no-close-on-backdrop="noClose"
           title="My Modal"
         >
           abc
-        </BModal>
+        </b-modal>
 
-        <BButton @click="isModalVisible = true">Show Modal</BButton>
+        <b-button @click="isModalVisible = true">Show Modal</b-button>
       </b-col>
     </b-row>
     <b-row>
@@ -44,8 +44,8 @@
     <b-row>
       <b-col>
         <div>noClose is {{ noClose }}</div>
-        <BButton @click="noClose = true">Set noClose = true</BButton>
-        <BButton @click="noClose = false">Set noClose = false</BButton>
+        <b-button @click="noClose = true">Set noClose = true</b-button>
+        <b-button @click="noClose = false">Set noClose = false</b-button>
       </b-col>
     </b-row>
   </b-container>

@@ -71,6 +71,10 @@ import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 interface BOffcanvasProps {
   dismissLabel?: string
   modelValue?: Booleanish
@@ -244,10 +248,4 @@ const OnAfterLeave = () => {
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : show()
 })
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

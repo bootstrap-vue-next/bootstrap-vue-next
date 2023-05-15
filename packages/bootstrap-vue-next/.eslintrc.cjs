@@ -6,13 +6,13 @@ const {defineConfig} = require('eslint-define-config')
 module.exports = defineConfig({
   root: true,
   extends: [
-    'eslint:recommended',
     'plugin:vue/vue3-recommended',
+    'eslint:recommended',
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 2020,
   },
   rules: {
     'prettier/prettier': [

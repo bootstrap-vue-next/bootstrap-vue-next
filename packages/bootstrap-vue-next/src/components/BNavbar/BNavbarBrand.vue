@@ -16,8 +16,8 @@ export default defineComponent({
     BLink,
   },
   props: {
-    tag: {type: String, default: 'div'},
     ...linkProps,
+    tag: {type: String, default: 'div'},
   },
   setup(props) {
     const computedLink = computed<boolean>(() => isLink(props))

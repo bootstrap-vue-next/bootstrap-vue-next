@@ -45,7 +45,7 @@ export const avatarGroupInjectionKey: InjectionKey<{
 
 // BAccordion
 export const accordionInjectionKey: InjectionKey<{
-  openItem: Readonly<Ref<string>>
+  openItem: Readonly<Ref<string | undefined>>
   free: Readonly<Ref<boolean>>
   setOpenItem: (id: string) => void
 }> = Symbol('accordion')

@@ -10,7 +10,7 @@
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=3" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel controls>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=1" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=2" />
@@ -28,7 +28,7 @@ With the `indicators` prop, can add indicators to the Carousel, along side the p
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=6" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel indicators>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=4" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=5" />
@@ -50,7 +50,7 @@ You can add captions to a particular slide using the following methods: using th
   </b-carousel-slide>
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel controls indicators>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=7" caption="First Caption" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=8" caption-html="<h1>Second Caption</h1>" />
@@ -72,7 +72,7 @@ You can use the `fade` prop to animate slides with a fade transition instead of 
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel fade controls indicators>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=11" />
@@ -100,7 +100,7 @@ Related: [Autoplay Manipulation](#autoplay-manipulation)
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=15" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel controls indicators ride="carousel">
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=13" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=14" />
@@ -116,7 +116,7 @@ When the `ride` prop is set to `true`, rather than `carousel`, the Carousel won'
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=18" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel controls indicators ride="true">
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=16" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=17" />
@@ -145,7 +145,7 @@ You can adjust the speed at which the Carousel is moving by adjusting the interv
 
 Current Interval Speed: {{ slideInterval }} ms
 
-```html
+```vue-html
 <b-carousel :interval="slideInterval" controls indicators ride="carousel">
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=19" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
@@ -180,7 +180,7 @@ You can use the `rideReverse` prop to reverse the direction that the Carousel wi
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=24" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel controls indicators ride="carousel" ride-reverse="true">
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=22" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=23" />
@@ -203,7 +203,7 @@ There can come situations where you need to manually pause/resume the state of a
   <b-button variant="success" @click="resume">Resume</b-button>
 </b-button-group>
 
-```html
+```vue-html
 <b-carousel ref="myCarousel" :interval="2500" controls indicators ride="carousel">
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=25" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=26" />
@@ -239,7 +239,7 @@ BCarousel comes with automatic support for touch swiping devices. You can disabl
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=30" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel no-touch>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=28" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=29" />
@@ -262,7 +262,7 @@ You can adjust the distance in pixels it takes to cause a transition to occur by
 </b-button-group>
 Threshold: {{ slideThreshold }}
 
-```html
+```vue-html
 <b-carousel :touch-threshold="threshold">
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=32" />
@@ -291,7 +291,7 @@ You are not required to, but you can bind the v-model. This allows for finer con
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=3" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel v-model="slide" controls>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=1" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=2" />
@@ -317,7 +317,7 @@ You can change the default starting slide by binding the v-model to the index of
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=36" />
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel v-model="slide" indicators>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=35" />
@@ -351,7 +351,7 @@ You are also able to use the built in methods for going to the next, or previous
   <b-button variant="success" @click="next">Next Slide</b-button>
 </b-button-group>
 
-```html
+```vue-html
 <b-carousel ref="myCarousel">
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37" />
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=38" />
@@ -403,7 +403,7 @@ const next = () => myCarousel.value?.next()
   </b-carousel-slide>
 </b-carousel>
 
-```html
+```vue-html
 <b-carousel controls indicators>
   <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=40">
     <h1>First slide</h1>
@@ -435,9 +435,10 @@ const next = () => myCarousel.value?.next()
 
 ## Reference
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/carousel.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BButton, BButtonGroup, BAlert, BCarouselSlide, BCarousel} from 'bootstrap-vue-next'
 import {ref} from 'vue'

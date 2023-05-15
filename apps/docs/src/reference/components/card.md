@@ -30,7 +30,7 @@ Change the default `div` root tag to any other HTML element by specifying via th
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-card
     title="Card Title"
@@ -72,7 +72,7 @@ By default, the `<b-card>` content is automatically placed in a `<b-card-body>` 
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card class="text-center">
     <div class="bg-secondary text-light">
@@ -96,7 +96,7 @@ on the `<b-card>`.
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card no-body class="text-center">
     <div class="bg-secondary text-light">
@@ -138,7 +138,7 @@ Links can be added and placed next to each other by adding the `.card-link` clas
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card title="Card title" subtitle="Card subtitle">
     <b-card-text>
@@ -192,7 +192,7 @@ Alternatively you can manually place images inside `<b-card>` using the sub-comp
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <h4>Top and Bottom</h4>
@@ -250,7 +250,7 @@ Place the image in the background of the card by setting the boolean prop `overl
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card
     overlay
@@ -302,7 +302,7 @@ You can control the wrapper element tags used by setting the `header-tag` and `f
   </b-card-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card-group deck>
     <b-card
@@ -368,7 +368,7 @@ card.
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card
     no-body
@@ -432,7 +432,7 @@ may be needed depending on your card content.
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card no-body class="overflow-hidden" style="max-width: 540px;">
     <b-row class="g-0">
@@ -471,7 +471,7 @@ Then, specify a dark background variant.
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card bg-variant="dark" text-variant="white" title="Card Title">
     <b-card-text>
@@ -532,7 +532,7 @@ the `bg-variant` and `border-variant` props. Darker solid variants may require s
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-card-group deck>
@@ -639,7 +639,7 @@ the `bg-variant` and `border-variant` props. Darker solid variants may require s
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-card-group deck>
@@ -730,7 +730,7 @@ You can also apply the solid and border variants individually to card headers an
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card
     header="Card Header"
@@ -778,7 +778,7 @@ Integrate [`<b-nav>`](/docs/components/nav) into card headers easily.
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card title="Card Title" body-class="text-center" header-tag="nav">
     <template #header>
@@ -819,7 +819,7 @@ Integrate [`<b-nav>`](/docs/components/nav) into card headers easily.
   </b-card>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card no-body>
     <b-card-header header-tag="nav">
@@ -886,7 +886,7 @@ When using card groups with footers, their content will automatically line up.
   </b-card-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card-group>
     <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
@@ -956,7 +956,7 @@ automatically line up.
   </b-card-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card-group deck>
     <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
@@ -1053,7 +1053,7 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
   </b-card-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-card-group columns>
     <b-card
@@ -1110,9 +1110,10 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
 </b-card>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/card.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {
   BCard,

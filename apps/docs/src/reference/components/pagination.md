@@ -76,7 +76,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
   Current page : {{ ex1CurrentPage }}
 </b-card>
 
-```html
+```vue-html
 <template>
   <!-- Use text in props -->
   <b-pagination
@@ -190,7 +190,7 @@ use the `first-number` and `last-number` props.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div>
     <h6>Goto first button number</h6>
@@ -251,7 +251,7 @@ smaller buttons or `'lg'` for larger buttons.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div>
     <h6>Small</h6>
@@ -294,7 +294,7 @@ Easily switch to pill style buttons by setting the `pills` prop
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div>
     <h6>Small Pills</h6>
@@ -344,7 +344,7 @@ or `fill` by setting the prop `align` to the appropriate value.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div>
     <h6>Small Pills</h6>
@@ -415,9 +415,10 @@ recommended unless the content of the button textually conveys its purpose.
 
 ### Keyboard navigation support
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/pagination.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BProgress, BSpinner, BCard, BPagination} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

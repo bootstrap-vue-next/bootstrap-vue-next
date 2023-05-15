@@ -12,7 +12,7 @@
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item>Cras justo odio</b-list-group-item>
   <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
@@ -36,7 +36,7 @@ Set the `active` prop on a `<b-list-group-item>` to indicate the current active 
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item>Cras justo odio</b-list-group-item>
   <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item>
@@ -61,7 +61,7 @@ actionable items. see below).
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item disabled>Cras justo odio</b-list-group-item>
   <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
@@ -85,7 +85,7 @@ Turn a `<b-list-group-item>` into an actionable _link_ (`<a href="...">`) by spe
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item href="#some-link">Awesome link</b-list-group-item>
   <b-list-group-item href="#" active>Link with active state</b-list-group-item>
@@ -105,7 +105,7 @@ Or if you prefer `<button>` elements over links, set the `button` prop to `true`
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item button>Button item</b-list-group-item>
   <b-list-group-item button>I am a button</b-list-group-item>
@@ -142,7 +142,7 @@ prop.
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item>Default list group item</b-list-group-item>
   <b-list-group-item variant="primary">Primary list group item</b-list-group-item>
@@ -174,7 +174,7 @@ selection on a contextual list group item.
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item href="#">Default list group item</b-list-group-item>
   <b-list-group-item href="#" variant="primary">Primary list group item</b-list-group-item>
@@ -217,7 +217,7 @@ more with the help of some [flex utility classes](/docs/reference/utility-classe
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item class="d-flex justify-content-between align-items-center">
     Cras justo odio
@@ -250,7 +250,7 @@ Add the `numbered` property to opt into numbered list group items. Numbers are g
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-list-group numbered>
     <b-list-group-item>Cras justo odioo</b-list-group-item>
@@ -290,7 +290,7 @@ These work great with custom content as well.
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-list-group numbered>
     <b-list-group-item class="d-flex justify-content-between align-items-start">
@@ -353,7 +353,7 @@ prop when using cards with `no-body` to make the sides of the list group flush w
   </b-card>
 </b-card-group>
 
-```html
+```vue-html
 <b-card-group deck>
   <b-card header="Card with list group">
     <b-list-group>
@@ -405,7 +405,7 @@ list group item.
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-list-group horizontal>
   <b-list-group-item>Cras justo odio</b-list-group-item>
   <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
@@ -423,7 +423,7 @@ list group item.
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-list-group horizontal="md">
     <b-list-group-item>Cras justo odio</b-list-group-item>
@@ -473,7 +473,7 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
   </b-list-group>  
 </b-card>
 
-```html
+```vue-html
 <b-list-group>
   <b-list-group-item href="#" active class="flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
@@ -516,15 +516,16 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
 </b-list-group>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/listGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BListGroup, BBadge, BCardBody, BCardGroup, BListGroupItem} from 'bootstrap-vue-next'
 </script>
 
 <style lang="scss" scoped>
-    .bd-example > .card-body > .list-group {
-        max-width: 400px;
-    }
+.bd-example > .card-body > .list-group {
+    max-width: 400px;
+}
 </style>

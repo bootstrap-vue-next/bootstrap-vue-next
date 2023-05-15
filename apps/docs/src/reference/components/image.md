@@ -25,7 +25,7 @@ the maximum native width of the image.
   <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></b-img>
 </b-card>
 
-```html
+```vue-html
 <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></b-img>
 ```
 
@@ -39,7 +39,7 @@ Note this may cause blurring on small bitmap images.
   <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
 </b-card>
 
-```html
+```vue-html
 <h5>Small image with <code>fluid</code>:</h5>
 <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
 <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
@@ -67,7 +67,7 @@ You can use prop `thumbnail` to give an image a rounded light border appearance.
   </b-row>
 </b-card>
 
-```html
+```vue-html
 <b-row>
   <b-col>
     <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
@@ -107,7 +107,7 @@ values:
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div class="d-flex" style="column-gap: 1%;">
     <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
@@ -140,7 +140,7 @@ left+right margins). You can also center images by placing them in a container t
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div class="clearfix">
     <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
@@ -154,7 +154,7 @@ left+right margins). You can also center images by placing them in a container t
   <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
 </b-card>
 
-```html
+```vue-html
 <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
 ```
 
@@ -189,7 +189,7 @@ The default `blank-color` is `transparent`.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div class="d-flex" style="column-gap: 1%;">
     <b-img v-bind="propsTr" alt="Transparent image"></b-img>
@@ -245,9 +245,10 @@ guide.
 
 Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/image.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BRow, BCol, BCard, BImg} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

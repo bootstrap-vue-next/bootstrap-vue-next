@@ -260,7 +260,7 @@ declare module 'bootstrap-vue-next/dist/src/types' {
 
 New values can be used now and the type check will be successful:
 
-```html
+```vue-html
 <b-button variant="purple" size="xl">Extra large purple button</b-button>
 <b-button variant="outline-purple">Outline purple button</b-button>
 ```

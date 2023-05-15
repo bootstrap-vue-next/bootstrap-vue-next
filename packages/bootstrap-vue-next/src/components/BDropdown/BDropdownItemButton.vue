@@ -19,6 +19,10 @@ import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 interface BDropdownItemButtonProps {
   buttonClass?: ClassValue
   active?: Booleanish
@@ -54,10 +58,4 @@ const computedClasses = computed(() => [
 ])
 
 const clicked = (e: MouseEvent): void => emit('click', e)
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

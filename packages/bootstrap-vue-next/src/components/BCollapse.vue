@@ -21,6 +21,10 @@ import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
 import {BvTriggerableEvent, collapseInjectionKey, getTransitionDelay} from '../utils'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 interface BCollapseProps {
   // appear?: Booleanish
   id?: string
@@ -31,6 +35,7 @@ interface BCollapseProps {
   visible?: Booleanish
   isNav?: Booleanish
 }
+
 interface BCollapseEmits {
   (e: 'show', value: BvTriggerableEvent): void
   (e: 'shown', value: BvTriggerableEvent): void
@@ -52,6 +57,8 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
   isNav: false,
 })
 
+const emit = defineEmits<BCollapseEmits>()
+
 const buildTriggerableEvent = (
   type: string,
   opts: Partial<BvTriggerableEvent> = {}
@@ -64,8 +71,6 @@ const buildTriggerableEvent = (
     ...opts,
     componentId: computedId.value,
   })
-
-const emit = defineEmits<BCollapseEmits>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
@@ -194,10 +199,4 @@ provide(collapseInjectionKey, {
   visible: readonly(show),
   isNav: isNavBoolean,
 })
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

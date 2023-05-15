@@ -19,7 +19,7 @@
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-form-group
     id="fieldset-1"
@@ -117,7 +117,7 @@ See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for 
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-form-group
     id="fieldset-horizontal"
@@ -156,7 +156,7 @@ for both horizontal and non-horizontal form groups.
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
     <b-form-input id="input-sm" size="sm"></b-form-input>
@@ -248,7 +248,7 @@ of related form controls:
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-card bg-variant="light">
     <b-form-group
@@ -389,7 +389,7 @@ You can make a floating label by setting the property `floating` to true and spe
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-form-group
@@ -459,9 +459,10 @@ auto-assigned to the input. When the form group has multiple form controls, make
 attribute to each control yourself by using the `ariaDescribedby` prop value from the optionally
 scoped `default` slot.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/formGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BFormRadioGroup, BFormGroup, BFormInput} from 'bootstrap-vue-next'
 import {computed, ref} from 'vue'

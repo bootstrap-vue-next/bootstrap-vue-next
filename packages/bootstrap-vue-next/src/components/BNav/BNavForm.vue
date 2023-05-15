@@ -1,7 +1,7 @@
 <template>
-  <BForm v-bind="computedAttrs" class="d-flex" @submit.prevent="submitted">
+  <b-form v-bind="computedAttrs" class="d-flex" @submit.prevent="submitted">
     <slot />
-  </BForm>
+  </b-form>
 </template>
 
 <script setup lang="ts">

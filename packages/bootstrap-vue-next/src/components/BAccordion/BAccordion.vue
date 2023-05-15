@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
   flush: false,
   free: false,
   id: undefined,
+  modelValue: undefined,
 })
 
 const emit = defineEmits<(e: 'update:modelValue', value: string) => void>()

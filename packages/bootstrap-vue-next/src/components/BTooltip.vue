@@ -1,9 +1,9 @@
 <template>
-  <BPopover tooltip>
+  <b-popover tooltip>
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
-  </BPopover>
+  </b-popover>
 </template>
 
 <script setup lang="ts">

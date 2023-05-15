@@ -19,7 +19,7 @@
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button v-b-toggle.collapse-1 variant="primary">Toggle Collapse</b-button>
   <b-collapse id="collapse-1" class="mt-2">
@@ -52,7 +52,7 @@ Other elements can easily toggle `<b-collapse>` components using the
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <!-- Using modifiers -->
   <b-button v-b-toggle.collapse-2 class="m-1">Toggle Collapse</b-button>
@@ -80,7 +80,7 @@ To make the `<b-collapse>` show initially, set the `v-model` prop:
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
   <b-collapse visible id="collapse-3">
@@ -119,7 +119,7 @@ support.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div>
@@ -170,7 +170,7 @@ You can also pass multiple target Ids via the directive _value_ in BootstrapVueN
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <!-- Via multiple directive modifiers -->
   <b-button v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</b-button>
@@ -230,7 +230,7 @@ at a time.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div id="my-accordion" class="accordion" role="tablist">
@@ -330,7 +330,7 @@ The following properties are available for the `header` and `footer` slots:
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-collapse id="my-collapse">
@@ -380,9 +380,10 @@ inside an element with `role="tablist"` and set `role="tab"` on each trigger ele
 order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVueNext cannot
 apply those roles for you automatically, as it depends on your final document markup.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/collapse.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {
   BCard,

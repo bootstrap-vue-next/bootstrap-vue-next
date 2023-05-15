@@ -23,7 +23,7 @@ Button Groups are an easy way to group a series of buttons together.
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-button-group>
@@ -76,7 +76,7 @@ need to specify the size on the individual buttons.
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-button-group>
@@ -117,7 +117,7 @@ prop. Split button dropdowns are not supported here.
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-button-group vertical>
@@ -154,7 +154,7 @@ that split dropdown menus are not supported when prop `vertical` is set.
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-button-group>
@@ -181,9 +181,10 @@ that split dropdown menus are not supported when prop `vertical` is set.
 Also check out the [`<b-button-toolbar>`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/buttonGroup.data'
 import {BDropdownItem, BDropdownDivider, BButton, BCard, BButtonGroup, BDropdown} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 </script>

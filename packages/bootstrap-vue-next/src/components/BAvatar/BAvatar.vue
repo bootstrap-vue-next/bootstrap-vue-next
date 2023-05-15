@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
-import type {Booleanish, ButtonType, ColorVariant, TextColorVariant} from '../../types'
+import type {Booleanish, ButtonType, ColorVariant, Size, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface BAvatarProps {
@@ -42,7 +42,7 @@ interface BAvatarProps {
   disabled?: Booleanish
   icon?: string
   rounded?: boolean | string
-  size?: 'sm' | 'md' | 'lg' | string // Size | string | number (// TODO number -- compat)
+  size?: Size | string // TODO number --> compat
   square?: Booleanish
   src?: string
   text?: string

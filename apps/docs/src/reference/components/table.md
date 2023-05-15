@@ -86,7 +86,7 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
   </b-table-simple>
 </b-card>
 
-```html
+```vue-html
 <b-table-simple hover small caption-top responsive>
   <caption>
     Items sold in August, grouped by Country and City:
@@ -258,7 +258,7 @@ Here is the same table as above, set to be always stacked, which has the extra m
   </b-table-simple>
 </b-card>
 
-```html
+```vue-html
 <b-table-simple hover small caption-top stacked>
   <caption>
     Items sold in August, grouped by Country and City:
@@ -391,7 +391,7 @@ Sticky columns are supported with `<b-table-simple>`, but you will need to set t
   </b-table-simple>
 </b-card>
 
-```html
+```vue-html
 <b-table-simple responsive>
   <b-thead>
     <b-tr>
@@ -432,9 +432,10 @@ Sticky columns are supported with `<b-table-simple>`, but you will need to set t
 
 As with `<b-table>` and `<b-table-lite>`, sticky columns are not supported when the stacked prop is set on `<b-table-simple>`.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/table.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BTableSimple, BTd, BTbody, BTfoot, BThead, BTh, BTr} from 'bootstrap-vue-next'
 </script>

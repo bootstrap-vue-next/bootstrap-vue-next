@@ -17,7 +17,7 @@ Badges scale to match the size of the immediate parent element by using relative
     <h6>Example heading <b-badge>New</b-badge></h6>
 </b-card>
 
-```html
+```vue-html
 <h1>Example heading <b-badge>New</b-badge></h1>
 <h2>Example heading <b-badge>New</b-badge></h2>
 <h3>Example heading <b-badge>New</b-badge></h3>
@@ -36,7 +36,7 @@ Badges can be used as part of links or buttons to provide a counter.
     </b-button>
 </b-card>
 
-```html
+```vue-html
 <b-button variant="primary">Notifications <b-badge variant="light">4</b-badge></b-button>
 ```
 
@@ -58,7 +58,7 @@ Use utilities to modify a `.badge` and position it in the corner of a link or bu
     </b-button>
 </b-card>
 
-```html
+```vue-html
 <b-button variant="primary" class="position-relative">
   Inbox
   <b-badge variant="danger" text-indicator>
@@ -79,7 +79,7 @@ You can also replace the `.badge` class with a few more utilities without a coun
     </b-button>
 </b-card>
 
-```html
+```vue-html
 <b-button variant="primary" class="position-relative">
   Inbox
   <b-badge variant="danger" dot-indicator>
@@ -103,7 +103,7 @@ Add any of the following variants via the `variant` prop to change the appearanc
     <b-badge variant="dark">Dark</b-badge>
 </b-card>
 
-```html
+```vue-html
 <b-badge variant="primary">Primary</b-badge>
 <b-badge variant="secondary">Secondary</b-badge>
 <b-badge variant="success">Success</b-badge>
@@ -133,7 +133,7 @@ Use the `pill` prop to make badges more rounded with a larger border-radius.
     <b-badge variant="dark" pill>Dark</b-badge>
 </b-card>
 
-```html
+```vue-html
 <b-badge variant="primary" pill>Primary</b-badge>
 <b-badge variant="secondary" pill>Secondary</b-badge>
 <b-badge variant="success" pill>Success</b-badge>
@@ -159,7 +159,7 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
     <b-badge href="#" variant="dark">Dark</b-badge>
 </b-card>
 
-```html
+```vue-html
 <b-badge href="#" variant="primary">Primary</b-badge>
 <b-badge href="#" variant="secondary">Secondary</b-badge>
 <b-badge href="#" variant="success">Success</b-badge>
@@ -170,9 +170,10 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
 <b-badge href="#" variant="dark">Dark</b-badge>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/badge.data'
 import {BButton, BBadge, BCard} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 </script>

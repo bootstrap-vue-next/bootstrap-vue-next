@@ -15,7 +15,7 @@ BootstrapVueNext's `<b-button>` component generates either a `<button>` element,
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-button>Button</b-button>
   <b-button variant="danger">Button</b-button>
@@ -37,7 +37,7 @@ when providing a value for the `to` prop (`vue-router` is required).
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button>I am a Button</b-button>
   <b-button href="#">I am a Link</b-button>
@@ -61,7 +61,7 @@ Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
   <b-button size="lg" class="mx-1">Large Button</b-button>
 </b-card>
 
-```html
+```vue-html
 <b-button size="sm">Small Button</b-button>
 <b-button>Default Button</b-button>
 <b-button size="lg">Large Button</b-button>
@@ -90,7 +90,7 @@ The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendere
   <b-button class="mx-1" variant="dark">Dark</b-button>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-button class="mx-1" variant="primary">Primary</b-button>
   <b-button class="mx-1" variant="secondary">Secondary</b-button>
@@ -122,7 +122,7 @@ remove all background images and colors on any `<b-button>`:
   <b-button class="mx-1" variant="outline-dark">Dark</b-button>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-button class="mx-1" variant="outline-primary">Primary</b-button>
   <b-button class="mx-1" variant="outline-secondary">Secondary</b-button>
@@ -144,7 +144,7 @@ padding and size of a button.
   <b-button variant="link">Link</b-button>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button variant="link">Link</b-button>
 </div>
@@ -164,7 +164,7 @@ Create responsive stacks of full-width, “block buttons” like those in Bootst
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div class="d-grid gap-2">
     <b-button block variant="primary">Block Level Button</b-button>
@@ -188,7 +188,7 @@ Prefer buttons with a more rounded-pill style? Just set the prop `pill` to true.
   <b-button pill variant="info">Button</b-button>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button pill>Button</b-button>
   <b-button pill variant="primary">Button</b-button>
@@ -216,7 +216,7 @@ Prefer buttons with a more square corner style? Just set the prop `squared` to t
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button squared>Button</b-button>
   <b-button squared variant="primary">Button</b-button>
@@ -242,7 +242,7 @@ rendered as `<a>` elements and `<router-link>` (i.e. with the `href` or `to` pro
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button disabled size="lg" variant="primary">Disabled</b-button>
   <b-button disabled size="lg">Also Disabled</b-button>
@@ -285,7 +285,7 @@ To create a button that can be toggled between active and non-active states, use
   <p>Pressed States: <strong>{{ btnStates }}</strong></p>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <h5>Pressed and un-pressed state</h5>
@@ -345,9 +345,10 @@ disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.
 When the `href` is set to any other value (~~or the `to` prop is used~~), `role="button"` will not be
 added, nor will the keyboard event listeners be enabled.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/button.data'
 import {ref, computed} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BButtonGroup, BButton, BCard} from 'bootstrap-vue-next'

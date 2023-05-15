@@ -13,7 +13,7 @@
       :is-nav="isNav"
       v-on="events"
     >
-      <template #header="{visible: toggleVisible, toggle}">
+      <template #header="{visible: toggleVisible, toggle: slotToggle}">
         <component :is="headerTag" :id="`heading${computedId}`" class="accordion-header">
           <button
             class="accordion-button"
@@ -21,7 +21,7 @@
             type="button"
             :aria-expanded="toggleVisible ? 'true' : 'false'"
             :aria-controls="computedId"
-            @click="toggle"
+            @click="slotToggle"
           >
             <slot name="title"> {{ title }} </slot>
           </button>
@@ -35,13 +35,16 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, ref, toRef, watch} from 'vue'
+import {inject, onMounted, toRef, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
-// import  from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
 import {useId} from '../../composables'
 import type {Booleanish} from '../../types'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 interface BAccordionItemProps {
   id?: string
@@ -107,10 +110,4 @@ watch(
 watch(modelValue, () => {
   if (modelValue.value && !parentData?.free.value) parentData?.setOpenItem(computedId.value)
 })
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

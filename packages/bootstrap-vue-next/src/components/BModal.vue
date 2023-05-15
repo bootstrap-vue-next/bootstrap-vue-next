@@ -99,6 +99,10 @@ import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 // aria
 // autofocus
 // close on escape when autofocus
@@ -414,12 +418,6 @@ defineExpose({
   hide,
   show,
 })
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>
 
 <style lang="scss" scoped>

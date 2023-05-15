@@ -7,7 +7,7 @@
   <div class="mt-2">Value: {{ selectedText }}</div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-input v-model="selectedText" placeholder="Enter your name"></b-form-input>
@@ -37,7 +37,7 @@ const selectedText = ref('')
   </b-row>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-row class="my-1" v-for="type in inputTypes" :key="type">
@@ -122,7 +122,7 @@ new values for those using the `min` and `max` props.
   <div class="mt-2">Value: {{ rangeValue }}</div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <label for="range-1">Example range with min and max</label>
@@ -147,7 +147,7 @@ In the example below, we double the number of steps by using step="0.5".
   <div class="mt-2">Value: {{ rangeValueStep }}</div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <label for="range-1">Example range with min and max</label>
@@ -211,7 +211,7 @@ To control width, place the input inside standard Bootstrap grid column.
   </b-row>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-row class="my-1">
     <b-col sm="2">
@@ -289,7 +289,7 @@ invalid), `true` (for valid), or `null` (no validation state).
   </b-row>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-row class="my-1">
     <b-col sm="3">
@@ -340,7 +340,7 @@ invalid), `true` (for valid), or `null` (no validation state).
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div role="group">
@@ -439,7 +439,7 @@ Formatting does not occur if a `formatter` is not provided.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div role="group">
@@ -585,7 +585,7 @@ these methods and properties. Support will vary based on input type.
   </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div role="group">
@@ -615,9 +615,10 @@ const selectAllText = () => inputRef.value.input.select()
 </script>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/formInput.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BFormInput} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

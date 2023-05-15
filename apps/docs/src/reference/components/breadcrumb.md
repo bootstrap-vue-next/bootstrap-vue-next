@@ -8,7 +8,7 @@
   <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
 </b-card>
 
-```html
+```vue-html
 <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
 
 <script setup lang="ts">
@@ -35,7 +35,7 @@ element is automatically set if it is `undefined`.
   <b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
 </b-card>
 
-```html
+```vue-html
 <b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
 
 <script setup lang="ts">
@@ -62,7 +62,7 @@ over the content of each item:
   </b-breadcrumb>
 </b-card>
 
-```html
+```vue-html
 <b-breadcrumb>
   <b-breadcrumb-item href="#home"> Home </b-breadcrumb-item>
   <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
@@ -99,7 +99,7 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
   </b-breadcrumb>
 </b-card>
 
-```html
+```vue-html
 <b-breadcrumb>
   <b-breadcrumb-item href="#home"> Home </b-breadcrumb-item>
   <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
@@ -110,9 +110,10 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 </b-breadcrumb>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/breadcrumb.data'
 import {ref, type Ref} from 'vue';
 import {BBreadcrumbItem, BBreadcrumb, BCard} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'

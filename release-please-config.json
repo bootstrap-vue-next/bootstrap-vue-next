@@ -1,5 +1,4 @@
 {
-  "release-label": "autorelease: published",
   "packages": {
     "packages/bootstrap-vue-next": {
       "release-type": "node",

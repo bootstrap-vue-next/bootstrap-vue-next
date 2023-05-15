@@ -67,7 +67,7 @@ supported components, form layout, and more.
 </b-card>
 
 
-```html
+```vue-html
 <template>
   <b-card>
     <div>
@@ -194,7 +194,7 @@ visitors with class `.visually-hidden`.
 </b-card>
 
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-form>
@@ -257,7 +257,7 @@ Custom form controls and selects are also supported.
 </b-card>
 
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-form>
@@ -353,7 +353,7 @@ will announce this help text when the user focuses or enters the control.
 </b-card>
 
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-form @submit.stop.prevent>
@@ -412,7 +412,7 @@ or the `force-show` prop to display the feedback.
 </b-card>
 
 
-```html
+```vue-html
 <template>
   <b-card>
     <div>
@@ -456,9 +456,10 @@ Refer to the
 [Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.0/forms/validation/)
 for details on the Bootstrap v5 validation states.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/form.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {
   BFormValidFeedback,

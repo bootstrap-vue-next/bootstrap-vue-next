@@ -97,6 +97,10 @@ import {
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, BPopoverPlacement, ColorVariant} from '../types'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 interface DelayObject {
   show: number
   hide: number
@@ -481,10 +485,4 @@ watch(
 onMounted(bind)
 
 onBeforeUnmount(unbind)
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

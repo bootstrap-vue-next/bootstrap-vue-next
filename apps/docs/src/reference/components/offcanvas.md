@@ -7,7 +7,7 @@
   <b-offcanvas v-model="show" />
 </b-card>
 
-```html
+```vue-html
 <b-button @click="click">Show OffCanvas</b-button>
 <b-offcanvas v-model="show"></b-offcanvas>
 
@@ -38,7 +38,7 @@ Customize location with four standard options `top, bottom, start, end`
   <b-offcanvas v-model="show2" :placement="placement" />
 </b-card>
 
-```html
+```vue-html
 <b-button @click="click" class="m-2">Show start</b-button>
 <b-button @click="click" class="m-2">Show end</b-button>
 <b-button @click="click" class="m-2">Show bottom</b-button>
@@ -59,9 +59,10 @@ const click = (place ="start") => {
 
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/offcanvas.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BOffcanvas, BButton} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

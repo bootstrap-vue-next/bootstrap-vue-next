@@ -50,14 +50,14 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Build Library
-        run: pnpm run build --filter bootstrap-vue-next
-        
+        run: pnpm run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
+
       - name: Publish Main
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Publish Nuxt
-        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public --force
+        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}

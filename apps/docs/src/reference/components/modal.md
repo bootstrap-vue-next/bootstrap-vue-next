@@ -11,7 +11,7 @@
   </b-modal>
 </b-card>
 
-```html
+```vue-html
 <b-button @click="modal = !modal">
   Toggle modal
 </b-button>
@@ -44,7 +44,7 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
   </b-modal>
 </b-card>
 
-```html
+```vue-html
 <b-button @click="preventableModal = !preventableModal">
   Toggle modal
 </b-button>
@@ -77,7 +77,7 @@ const preventableModal = ref(false)
   </b-modal>
 </b-card>
 
-```html
+```vue-html
 <b-button @click="nestedModal1 = !nestedModal1">Open First Modal</b-button>
 <b-modal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
   <p class="my-2">First Modal</p>
@@ -100,9 +100,10 @@ const nestedModal3 = ref(false)
 </script>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/modal.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BModal, BButton} from 'bootstrap-vue-next'
 import {ref} from 'vue'
