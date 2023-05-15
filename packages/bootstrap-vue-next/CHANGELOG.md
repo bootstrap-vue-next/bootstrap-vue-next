@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## [0.8.11](https://github.com/bootstrap-vue/bootstrap-vue-next/compare/v0.8.10...v0.8.11) (2023-05-08)
 
 

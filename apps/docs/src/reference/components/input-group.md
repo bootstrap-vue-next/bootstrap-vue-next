@@ -24,7 +24,7 @@
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <!-- Using props -->
 <b-input-group size="lg" prepend="$" append=".00">
   <b-form-input></b-form-input>
@@ -65,7 +65,7 @@ Values will be internally wrapped by a `<b-input-group-text>` to display correct
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-input-group prepend="$" append=".00">
     <b-form-input></b-form-input>
@@ -98,7 +98,7 @@ The slot content will automatically be wrapped by
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-input-group>
     <template #prepend>
@@ -136,7 +136,7 @@ wrapped in these components for proper styling.
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-input-group>
   <b-input-group-prepend>
     <b-button variant="outline-info">Button</b-button>
@@ -200,7 +200,7 @@ classes applied.
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <b-input-group class="mb-2">
   <b-input-group-prepend is-text>
     <input type="checkbox" aria-label="Checkbox for following text input" />
@@ -248,7 +248,7 @@ the addon:
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <b-input-group class="mb-2">
   <b-input-group-prepend is-text>
     <b-form-checkbox class="me-n2">
@@ -289,7 +289,7 @@ the control and the hidden label.
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <b-input-group prepend="First and last name" class="mb-2">
   <b-form-input aria-label="First name"></b-form-input>
   <b-form-input aria-label="Last name"></b-form-input>
@@ -310,7 +310,7 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-input-group prepend="Item">
     <b-input-group-prepend is-text>
@@ -342,7 +342,7 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <b-input-group>
   <template #prepend>
     <b-dropdown text="Dropdown" variant="info">
@@ -381,7 +381,7 @@ the size on dropdowns.
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <b-input-group
   v-for="size in ['sm','','lg']"
   :key="size"
@@ -422,7 +422,7 @@ required to make everything fit correctly, depending on the size chosen:
   </b-input-group>
 </b-card>
 
-```html
+```vue-html
 <b-input-group size="sm" prepend="Small" class="mb-2">
   <b-form-input aria-label="Small text input with custom switch"></b-form-input>
   <b-input-group-append is-text>
@@ -449,9 +449,10 @@ margin, via the use of the `.mb-n1` [utility class](/docs/reference/utility-clas
 Bootstrap v5 currently **does not** support contextual state styling (i.e. valid or invalid) of
 input groups. However, the inputs inside the input group do support contextual state.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/inputGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {
   BFormRadio,

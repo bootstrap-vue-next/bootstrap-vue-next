@@ -27,6 +27,10 @@
 import type {ClassValue, ColorVariant} from '../../types'
 import {computed} from 'vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 interface BDropdownGroupProps {
   id?: string
   ariaDescribedby?: string
@@ -59,10 +63,4 @@ const computedClasses = computed(() => [
     [`text-${props.headerVariant}`]: props.headerVariant !== undefined,
   },
 ])
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

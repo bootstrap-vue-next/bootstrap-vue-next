@@ -14,10 +14,14 @@
 
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
-import {computed, inject, ref, toRef, useAttrs} from 'vue'
+import {computed, inject, toRef, useAttrs} from 'vue'
 import type {Booleanish, ClassValue, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 interface BDropdownItemProps {
   href?: string
@@ -84,11 +88,5 @@ const clicked = (e: MouseEvent): void => {
     collapseData?.close?.()
   }
   dropdownData?.close?.()
-}
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
 }
 </script>

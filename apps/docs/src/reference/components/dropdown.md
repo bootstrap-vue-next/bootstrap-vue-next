@@ -15,7 +15,7 @@
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown Button" class="m-md-2">
   <b-dropdown-item>First Action</b-dropdown-item>
   <b-dropdown-item>Second Action</b-dropdown-item>
@@ -52,7 +52,7 @@ If both the prop `text` and slot `button-content` are present, the slot `button-
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show1" text="Button text via Prop" class="m-1">
   <b-dropdown-item href="#">An item</b-dropdown-item>
   <b-dropdown-item href="#">Another item</b-dropdown-item>
@@ -100,7 +100,7 @@ The dropdown menu can either be _start_ aligned (default) or _end_ aligned to th
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show1" text="Default Alignment" variant="primary" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -138,7 +138,7 @@ Turn your dropdown menu into a drop-up menu by setting the `dropup` prop.
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" dropup text="Drop-up" variant="primary" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -171,7 +171,7 @@ The order of precedence is top -> start -> end -> bottom
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show1" dropend text="Drop-end" variant="primary" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -204,7 +204,7 @@ By default, dropdowns may flip to the top, or the bottom, based on their current
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="No flipping" no-flip>
   <b-dropdown-item href="#">An item</b-dropdown-item>
   <b-dropdown-item href="#">Another item</b-dropdown-item>
@@ -235,7 +235,7 @@ Like to move your menu away from the toggle buttons a bit? Then use the `offset`
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show1" offset="25" text="Offset Dropdown" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -268,7 +268,7 @@ By default, the floating element will render using _absolute_. You can change th
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-dropdown v-model="show" text="Strategy fixed" strategy="fixed" class="m-2">
     <b-dropdown-item href="#">Action</b-dropdown-item>
@@ -327,7 +327,7 @@ The `auto-close`property has 4 options
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown
   v-model="show1"
   text="Default Dropdown" 
@@ -398,7 +398,7 @@ Create a split dropdown button, where the left button provides standard `click` 
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" split text="Split Dropdown" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -424,7 +424,7 @@ The left split button defaults to an element of type `<button>` (a `<b-button>` 
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" split split-href="#foo/bar" text="Split Link" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -477,7 +477,7 @@ Set the `size` prop to either `sm` for a small button, or `lg` for a large butto
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show1" size="lg" text="Large" class="m-2">
   <b-dropdown-item-button>Action</b-dropdown-item-button>
   <b-dropdown-item-button>Another action</b-dropdown-item-button>
@@ -537,7 +537,7 @@ See the [Variant Reference](/docs/reference/color-variants) for a full list of b
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show1" text="Primary" variant="primary" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -587,7 +587,7 @@ split button its variant via the `split-variant` prop
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown
   v-model="show"
   split
@@ -625,7 +625,7 @@ You can render the dropdown menu in dark mode by setting the `dark` property
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown Button" dark class="m-md-2">
   <b-dropdown-item>First Action</b-dropdown-item>
   <b-dropdown-item>Second Action</b-dropdown-item>
@@ -667,7 +667,7 @@ By default, dropdowns act like buttons and are displayed inline. To create block
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show1" text="Block Level Dropdown" block variant="primary" class="m-2">
   <b-dropdown-item href="#">Action</b-dropdown-item>
   <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -714,7 +714,7 @@ utility class to the `menu-class` prop
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown
   v-model="show"
   text="Block Level Dropdown Menu"
@@ -753,7 +753,7 @@ The dropdown can be created with the toggle's caret visually hidden by setting t
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
   <template #button-content> &#x1f50d;<span class="visually-hidden">Search</span> </template>
   <b-dropdown-item href="#">Action</b-dropdown-item>
@@ -801,7 +801,7 @@ Disabled the dropdown item by setting the `disabled` prop
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown Button" class="m-md-2">
   <b-dropdown-item>First Action</b-dropdown-item>
   <b-dropdown-item variant="primary">Second Action</b-dropdown-item>
@@ -835,7 +835,7 @@ Disabled the dropdown item button by setting the `disabled` prop
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown using buttons as menu items" class="m-2">
   <b-dropdown-item-button>I'm a button</b-dropdown-item-button>
   <b-dropdown-item-button active>I'm an active button</b-dropdown-item-button>
@@ -866,7 +866,7 @@ Separate groups of related menu items with `<b-dropdown-divider>`
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown with divider" class="m-2">
   <b-dropdown-item-button>First item</b-dropdown-item-button>
   <b-dropdown-item-button>Second item</b-dropdown-item-button>
@@ -899,7 +899,7 @@ constrain/set the menu width.
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown with text" class="m-2">
   <b-dropdown-text style="width: 240px;">
     Some example text that's free-flowing within the dropdown menu.
@@ -942,7 +942,7 @@ Group a set of dropdown sub-components with an optional associated header. Place
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown with group" class="m-2">
   <b-dropdown-item-button> Non-grouped Item </b-dropdown-item-button>
   <b-dropdown-divider></b-dropdown-divider>
@@ -981,7 +981,7 @@ Add a header to label sections of actions in any dropdown menu
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown with header" class="m-2">
   <b-dropdown-header> Dropdown header </b-dropdown-header>
   <b-dropdown-item-button aria-describedby="dropdown-header-label">
@@ -1030,7 +1030,7 @@ When using `<b-dropdown-header>` components in the dropdown menu, it is recommen
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" text="Dropdown ARIA" variant="primary" class="m-2">
   <b-dropdown-header id="dropdown-header-1">Groups</b-dropdown-header>
   <b-dropdown-item-button aria-describedby="dropdown-header-1">Add</b-dropdown-item-button>
@@ -1077,7 +1077,7 @@ Dropdown menus can have their inner content rendered lazily through the `lazy` p
   </b-dropdown>
 </b-card>
 
-```html
+```vue-html
 <b-dropdown v-model="show" lazy text="Dropdown">
   <b-dropdown-item>First Action</b-dropdown-item>
   <b-dropdown-item>Second Action</b-dropdown-item>
@@ -1103,9 +1103,10 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 - [`<b-nav-item-dropdown>`](/bootstrap-vue-next/components/nav#dropdown-support) for dropdown support inside `<b-nav>` and `<n-navbar>`
 - [Router Link Support](/bootstrap-vue-next/reference/router-links) reference for information about router-link specific props available on `<b-dropdown-item>`
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/dropdown.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {
   BDropdownGroup,

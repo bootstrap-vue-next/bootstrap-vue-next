@@ -1,27 +1,23 @@
-import { defineConfig } from 'vitepress'
+import {defineConfig} from 'vitepress'
 import Icons from 'unplugin-icons/vite'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "BootstrapVueNext",
-  description: "BootstrapVueNext Documentation",
+  title: 'BootstrapVueNext',
+  description: 'BootstrapVueNext Documentation',
   base: '/bootstrap-vue-next/',
   srcDir: 'src',
   // TODO fix & remove this
   ignoreDeadLinks: true,
-  head: [
-    ['link', { rel: 'icon', type: 'image/x-icon', href: '/bootstrap-vue-next/favicon.ico' }],
-  ],
+  head: [['link', {rel: 'icon', type: 'image/x-icon', href: '/bootstrap-vue-next/favicon.ico'}]],
   vite: {
-    plugins: [
-      Icons()
-    ]
+    plugins: [Icons()],
   },
   locales: {
     root: {
       label: 'English',
-      lang: 'en'
-    }
+      lang: 'en',
+    },
   },
-  appearance: false
+  appearance: false,
 })

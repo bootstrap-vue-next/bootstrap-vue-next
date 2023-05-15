@@ -8,16 +8,13 @@ The component `<b-form-spinbutton>` is
 [WAI-ARIA compliant](https://www.w3.org/TR/wai-aria-practices-1.2/#spinbutton), allowing for
 [keyboard control](#accessibility), and supports both horizontal (default) and vertical layout.
 
+<b-card>
+    <label for="demo-sb">Spin Button</label>
+    <b-form-spin-button v-model="ex1Value" min="1" max="100" step="1" />
+    <p>Value: {{ ex1Value }}</p>
+</b-card>
 
-
-  <b-card>
-      <label for="demo-sb">Spin Button</label>
-      <b-form-spin-button v-model="ex1Value" min="1" max="100" step="1" />
-      <p>Value: {{ ex1Value }}</p>
-  </b-card>
-
-
-```html
+```vue-html
 <b-form-spin-button  min="1" max="100" step="1" />
 
 <script setup lang="ts">
@@ -34,56 +31,48 @@ value.
 
 ### Sizing
 
-
-
-  <b-card>
+<b-card>
  <label for="sb-small">Spin button - Small size</label>
-    <b-form-spin-button id="sb-small" size="sm" placeholder="--" class="mb-2"></b-form-spin-button>
-    <label for="sb-default">Spin button - Default size</label>
-    <b-form-spin-button id="sb-default" placeholder="--" class="mb-2"></b-form-spin-button>
-    <label for="sb-large">Spin button - Large size</label>
-    <b-form-spin-button id="sb-large" size="lg" placeholder="--" class="mb-2"></b-form-spin-button>
-  </b-card>
-
+  <b-form-spin-button id="sb-small" size="sm" placeholder="--" class="mb-2"></b-form-spin-button>
+  <label for="sb-default">Spin button - Default size</label>
+  <b-form-spin-button id="sb-default" placeholder="--" class="mb-2"></b-form-spin-button>
+  <label for="sb-large">Spin button - Large size</label>
+  <b-form-spin-button id="sb-large" size="lg" placeholder="--" class="mb-2"></b-form-spin-button>
+</b-card>
 
 ### Inline
 
+<b-card>
+  <label for="demo-sb">Spin Button</label>
+  <label for="sb-inline">Inline spin button</label>
+  <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
+</b-card>
 
-  <b-card>
-      <label for="demo-sb">Spin Button</label>
-    <label for="sb-inline">Inline spin button</label>
-    <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
-  </b-card>
+```vue-html
+<label for="sb-inline">Inline spin button</label>
+<b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
 
-
-```html
-    <label for="sb-inline">Inline spin button</label>
-    <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
-    
-    <script setup lang="ts">
-    import {ref, computed} from 'vue'
-    const ex1Value = ref(50);
-    </script>
+<script setup lang="ts">
+import {ref, computed} from 'vue'
+const ex1Value = ref(50);
+</script>
 ```
-
 
 ### Vertical
 
+<b-card>
+  <label for="sb-vertical">Vertical spin button</label>
+  <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical></b-form-spin-button>
+</b-card>
 
-  <b-card>
-    <label for="sb-vertical">Vertical spin button</label>
-    <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical></b-form-spin-button>
-  </b-card>
-
-
-```html
-    <label for="sb-vertical">Vertical spin button</label>
-    <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical>
-    </b-form-spin-button>
-    <script setup lang="ts">
-    import {ref, computed} from 'vue'
-    const ex1Value = ref(50);
-    </script>
+```vue-html
+<label for="sb-vertical">Vertical spin button</label>
+<b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical>
+</b-form-spin-button>
+<script setup lang="ts">
+import {ref, computed} from 'vue'
+const ex1Value = ref(50);
+</script>
 ```
 
 ## Number Formating
@@ -117,11 +106,11 @@ value.
   </b-row>
 </b-card>
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/spinButton.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
 const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])

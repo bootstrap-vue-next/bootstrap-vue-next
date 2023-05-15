@@ -16,12 +16,12 @@ const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 export default defineComponent({
   components: {BLink},
   props: {
+    ...linkProps,
     pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     tag: {type: String, default: 'span'},
-    variant: {type: String as PropType<ColorVariant>, default: 'secondary'},
     textIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     dotIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    ...linkProps,
+    variant: {type: String as PropType<ColorVariant>, default: 'secondary'},
   },
   setup(props) {
     const pillBoolean = useBooleanish(toRef(props, 'pill'))

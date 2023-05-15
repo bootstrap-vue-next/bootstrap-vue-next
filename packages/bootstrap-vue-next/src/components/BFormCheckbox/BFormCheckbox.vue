@@ -31,6 +31,10 @@ import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 interface BFormCheckboxProps {
   ariaLabel?: string
   ariaLabelledBy?: string
@@ -180,10 +184,4 @@ const classesObject = computed(() => ({
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

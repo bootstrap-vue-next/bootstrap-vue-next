@@ -34,7 +34,7 @@ Alerts are available for any length of text, as well as an optional dismiss butt
   </b-button>
 </b-card>
 
-```html
+```vue-html
 <b-alert :model-value="true">Default Alert</b-alert>
 <b-alert variant="success" :model-value="true">Success Alert</b-alert>
 <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
@@ -90,7 +90,7 @@ For proper styling of `<b-alert>`, use one of the four required contextual varia
   <b-alert :model-value="true" variant="dark">Dark Alert</b-alert>
 </b-card>
 
-```html
+```vue-html
 <b-alert :model-value="true" variant="primary">Primary Alert</b-alert>
 <b-alert :model-value="true" variant="secondary">Secondary Alert</b-alert>
 <b-alert :model-value="true" variant="success">Success Alert</b-alert>
@@ -124,7 +124,7 @@ Using color variants to add meaning only provides a visual indication, which wil
   </b-alert>
 </b-card>
 
-```html
+```vue-html
 <b-alert :model-value="true" variant="success">
   <h4 class="alert-heading">Well done!</h4>
   <p>
@@ -154,7 +154,7 @@ Use the `.alert-link` utility CSS class to quickly provide matching colored link
   <b-alert :model-value="true" variant="dark"><a href="#" class="alert-link">Dark Alert</a></b-alert>
 </b-card>
 
-```html
+```vue-html
 <b-alert :model-value="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></b-alert>
 <b-alert :model-value="true" variant="secondary"><a href="#" class="alert-link">Secondary Alert</a></b-alert>
 <b-alert :model-value="true" variant="success"><a href="#" class="alert-link">Success Alert</a></b-alert>
@@ -175,7 +175,7 @@ Using the `dismissible` prop it's possible to dismiss any `<b-alert>` inline. Th
   </b-alert>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-alert v-model="dismissibleAlert" dismissible>
     Dismissible Alert! Click the close button over there <b>&rArr;</b>
@@ -207,7 +207,7 @@ To create a `<b-alert>` that dismisses automatically after some time set the `v-
   <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100">Adjust Alert interval -100</b-button>
 </b-card>
 
-```html
+```vue-html
 <b-alert
   v-model="autoDismissingAlert"
   :interval="autoDismissingAlertInterval"
@@ -252,7 +252,7 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
   <b-button @click="stop">stop</b-button>
 </b-card>
 
-```html
+```vue-html
 <b-alert
   v-model="secondAutoDismissingAlert"
   ref="myAlert"
@@ -286,9 +286,10 @@ const stop = () => myAlert.value?.stop()
 - `Immediate`: Will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`
 - `showOnPause`: Overwrites the behavior of showing an Alert when the timer is paused
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/alert.data'
 import {BAlert, BProgress, BButton, BCard} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {ref, computed} from 'vue'

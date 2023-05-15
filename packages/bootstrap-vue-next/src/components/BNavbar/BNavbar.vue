@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import {computed, provide, readonly, toRef} from 'vue'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
@@ -18,7 +18,7 @@ interface Props {
   print?: Booleanish
   sticky?: 'top' | 'bottom'
   tag?: string
-  toggleable?: boolean | 'sm' | 'md' | 'lg' | 'xl' // Type Omit<Breakpoint, 'xxl'>
+  toggleable?: boolean | Omit<Breakpoint, 'xxl'>
   dark?: Booleanish
   variant?: ColorVariant
   container?: 'fluid' | boolean

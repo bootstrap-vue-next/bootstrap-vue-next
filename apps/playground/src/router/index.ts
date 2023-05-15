@@ -7,7 +7,7 @@ export default createRouter({
   routes: [
     {path: '/', name: 'index', component: HomePage},
     {
-      path: '/about',
+      path: '/about/:id?',
       name: 'about',
       component: {
         name: 'About',

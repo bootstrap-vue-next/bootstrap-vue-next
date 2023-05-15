@@ -14,6 +14,10 @@
 import {computed, type CSSProperties} from 'vue'
 import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 interface Props {
   tag?: string
   wrapperTag?: string
@@ -63,10 +67,4 @@ const wrapperClasses = computed(() => ({
 const computedStyle = computed<CSSProperties>(() => ({
   width: widthString.value === undefined ? undefined : `${widthString.value}%`,
 }))
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

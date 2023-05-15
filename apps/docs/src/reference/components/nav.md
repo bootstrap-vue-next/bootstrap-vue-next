@@ -11,7 +11,7 @@
   </b-nav>
 </b-card>
 
-```html
+```vue-html
 <b-nav>
   <b-nav-item>Home</b-nav-item>
   <b-nav-item>About</b-nav-item>
@@ -43,7 +43,7 @@ Dropdowns can be added like so
   </b-nav>
 </b-card>
 
-```html
+```vue-html
 <b-nav pills>
   <b-nav-item active>Active</b-nav-item>
   <b-nav-item>Link</b-nav-item>
@@ -85,7 +85,7 @@ You can make nav item styles in various ways
   </b-nav>
 </b-card>
 
-```html
+```vue-html
  <b-nav tabs>
   <b-nav-item active>Active</b-nav-item>
   <b-nav-item>Link</b-nav-item>
@@ -105,7 +105,7 @@ You can make nav item styles in various ways
   </b-nav>
 </b-card>
 
-```html
+```vue-html
 <b-nav pills>
   <b-nav-item active>Active</b-nav-item>
   <b-nav-item>Link</b-nav-item>
@@ -125,7 +125,7 @@ By default `<b-nav>` appear on a horizontal line. Stack your navigation by setti
   <b-nav-item disabled>Disabled</b-nav-item>
 </b-nav>
 
-```html
+```vue-html
 <b-nav vertical class="w-25">
   <b-nav-item active>Active</b-nav-item>
   <b-nav-item>Link</b-nav-item>
@@ -146,7 +146,7 @@ Use the `<b-nav-text>` child component to place plain text content into the nav:
   </b-nav>
 </b-card>
 
-```html
+```vue-html
 <b-nav >
   <b-nav-item href="#1">Link 1</b-nav-item>
   <b-nav-item href="#2">Link 2</b-nav-item>
@@ -154,9 +154,10 @@ Use the `<b-nav-text>` child component to place plain text content into the nav:
 </b-nav>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/nav.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {
   BNav,

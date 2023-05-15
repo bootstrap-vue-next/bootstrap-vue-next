@@ -12,7 +12,7 @@ At the placeholder core, you have the `b-placeholder` component:
   <b-placeholder cols="6" variant="info" />
 </b-card>
 
-```html
+```vue-html
 <b-placeholder cols="7" />
 <b-placeholder width="65" />
 <b-placeholder cols="6" />
@@ -30,7 +30,7 @@ You can adjust the width using props `width` and `cols`. Cols is a number value 
   <b-placeholder cols="8" variant="info" />
 </b-card>
 
-```html
+```vue-html
 <b-placeholder width="30" cols="12" />
 <b-placeholder width="75%" variant="danger" />
 <b-placeholder width="12" variant="warning" />
@@ -50,7 +50,7 @@ Bootstrap supports two types of animations, `wave` and `glow`
   <b-placeholder animation="glow" />
 </b-card>
 
-```html
+```vue-html
 <b-placeholder-card style="max-width: 20rem; " animation="glow" />
 <b-placeholder-card style="max-width: 20rem; " animation="wave" />
 <b-placeholder animation="glow" />
@@ -66,7 +66,7 @@ You can adjust the sizing of a placeholder by using the `size` prop. Acceptable 
   <b-placeholder size="xs" />
 </b-card>
 
-```html
+```vue-html
 <b-placeholder size="lg" />
 <b-placeholder size="sm" />
 <b-placeholder size="xs" />
@@ -103,7 +103,7 @@ The `b-placeholder-wrapper` is a renderless component that picks between a 'load
   <b-button @click="startLoading">Restart</b-button>
 </b-card>
 
-```html
+```vue-html
 <b-placeholder-wrapper :loading="loading"> 
   <template #loading>
     <b-placeholder-card style="max-width: 20rem;" no-footer />
@@ -155,7 +155,7 @@ You can easily render a placeholder that has the button styling by using `b-plac
   <b-placeholder-button cols="3" />
 </b-card>
 
-```html
+```vue-html
 <b-placeholder-button cols="3" />
 ```
 
@@ -167,7 +167,7 @@ Placeholders have built-in support for rendering a placeholder card with `b-plac
   <b-placeholder-card style="max-width: 20rem" />
 </b-card>
 
-```html
+```vue-html
 <b-placeholder-card style="max-width: 20rem" />
 ```
 
@@ -179,7 +179,7 @@ You can also render a full placeholder table with `b-placeholder-table`
   <b-placeholder-table />
 </b-card>
 
-```html
+```vue-html
 <b-placeholder-table />
 ```
 
@@ -208,7 +208,7 @@ The footer also exposes some props that you can use to adjust the behavior of a 
   </b-placeholder-card>
 </b-card>
 
-```html
+```vue-html
 <b-placeholder-card img-src="https://picsum.photos/1024/480/?image=1" img-bottom no-header>
   <template #footer>
     Footer
@@ -261,7 +261,7 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
   </b-placeholder-table>
 </b-card>
 
-```html
+```vue-html
 <b-placeholder-table 
   columns="3" 
   rows="2" 
@@ -293,9 +293,10 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 </b-placeholder-table>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/placeholder.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {
   BPlaceholderButton,

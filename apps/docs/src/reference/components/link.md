@@ -24,7 +24,7 @@ External Links can be specified with the `href` prop.
   </b-link>
 </b-card>
 
-```html
+```vue-html
 <b-link href="https://getbootstrap.com/docs/5.0">
   External Link to Bootstrap
 </b-link>
@@ -49,7 +49,7 @@ External Links can be specified with the `href` prop
   </b-link>
 </b-card>
 
-```html
+```vue-html
 <b-link class="btn btn-primary m-2" href="https://getbootstrap.com/docs/5.0">
     External Link to Bootstrap
 </b-link>
@@ -58,9 +58,50 @@ External Links can be specified with the `href` prop
 </b-link>
 ```
 
-<ComponentReference></ComponentReference>
+## Colored Links
+
+You can use the `variant` prop to colorize links. Some of the link styles use a relatively light foreground color, and should only be used on a dark background in order to have sufficient contrast
+
+<b-card>
+  <p
+    v-for="color in [
+      'primary',
+      'secondary',
+      'success',
+      'danger',
+      'warning',
+      'info',
+      'light',
+      'dark',
+    ]"
+    :key="color"
+  >
+    <b-link :variant="color"> {{ color }} link </b-link>
+  </p>
+</b-card>
+
+```vue-html
+<p
+  v-for="color in [
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'light',
+    'dark',
+  ]"
+  :key="color"
+>
+  <b-link :variant="color"> {{ color }} link </b-link>
+</p>
+```
+
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/link.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BLink, BCard} from 'bootstrap-vue-next'
 </script>

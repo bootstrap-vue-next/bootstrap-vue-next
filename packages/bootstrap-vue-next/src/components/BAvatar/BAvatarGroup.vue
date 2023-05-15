@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import {computed, provide, readonly, type StyleValue, toRef} from 'vue'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant, Size} from '../../types'
 import {avatarGroupInjectionKey, isNumeric, toFloat} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
@@ -16,7 +16,7 @@ import {computeSize} from './BAvatar.vue'
 interface BAvatarGroupProps {
   overlap?: number | string
   rounded?: boolean | string
-  size?: 'sm' | 'md' | 'lg' | string // size?: Size | string
+  size?: Size | string
   square?: Booleanish
   tag?: string
   variant?: ColorVariant

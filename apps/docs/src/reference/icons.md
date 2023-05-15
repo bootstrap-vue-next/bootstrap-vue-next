@@ -1,6 +1,6 @@
 # Icons
 
-The icon components from Bootstrap-vue are deprecated. While migrating to bootstrap-vue-next the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading bootstrap-vue-next's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, Bootstrap-vue has no part in the mentioned libraries
+The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, BootstrapVueNext has no part in the mentioned libraries and some content may be out of date
 
 ## [Unplugin Icons](https://github.com/antfu/unplugin-icons)
 
@@ -16,21 +16,29 @@ The preferred installation makes use of [unplugin-vue-components](https://github
 
 To start, install the necessary packages:
 
-::: code-group
+<b-tabs v-model="codePreference">
+  <b-tab title="PNPM">
 
-```bash [PNPM]
+```bash
 pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-```bash [YARN]
+  </b-tab>
+  <b-tab title="YARN">
+
+```bash
 yarn add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-```bash [NPM]
+  </b-tab>
+  <b-tab title="NPM">
+
+```bash
 npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-:::
+  </b-tab>
+</b-tabs>
 
 ```ts
 // vite.config.js/ts
@@ -74,7 +82,7 @@ If you are using TypeScript you will want to add the `unplugin-icons/types/vue` 
 
 Then to include an icon, follow the format `i-{collection}-{icon-name}` in your template, where the collection is the id on <https://icon-sets.iconify.design/>. For example, to include `0-circle` in your app, simply use the component `<i-bi-0-circle>`, no import is needed. As stated, you can use any icon from any icon set
 
-```html
+```vue-html
 <template>
   <i-bi-0-circle />
   <i-bi-activity color="red" />
@@ -91,21 +99,29 @@ View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-compone
 
 Of course, there is always the ability to slim down. To slim down the installation, you can manually import only the bootstrap-icons icon set, disable auto importing, and not use unplugin-vue-components read below. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size
 
-::: code-group
+<b-tabs v-model="codePreference">
+  <b-tab title="PNPM">
 
-```bash [PNPM]
+```bash
 pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-```bash [YARN]
+  </b-tab>
+  <b-tab title="YARN">
+
+```bash
 yarn add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-```bash [NPM]
+  </b-tab>
+  <b-tab title="NPM">
+
+```bash
 npm i unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-:::
+  </b-tab>
+</b-tabs>
 
 ```ts
 // vite.config.ts
@@ -126,7 +142,7 @@ export default defineConfig({
 
 Using this method, you will need to manually import each icon:
 
-```html
+```vue-html
 <template>
   <i-bi-0-circle />
   <i-bi-activity color="red" />
@@ -143,3 +159,10 @@ import IBiActivity from '~icons/bi/activity'
 // import IFaAngellist from '~icons/mdi/angellist'
 </script>
 ```
+
+<script setup lang="ts">
+import {BTab, BTabs} from 'bootstrap-vue-next'
+import {useLocalStorage} from '@vueuse/core'
+
+const codePreference = useLocalStorage('code-group-preference', 0)
+</script>

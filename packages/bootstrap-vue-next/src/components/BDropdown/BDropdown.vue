@@ -65,6 +65,10 @@ import {BvEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../uti
 import BButton from '../BButton/BButton.vue'
 import type {RouteLocationRaw} from 'vue-router'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
 
@@ -297,10 +301,4 @@ provide(dropdownInjectionKey, {
   visible: modelValueBoolean,
   isNav: isNavBoolean,
 })
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
 </script>

@@ -38,7 +38,7 @@ The overlay visibility is controlled via the `show` prop. By default, the overla
   <b-button class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</b-button>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-overlay :show="showOverlayEx1" rounded="sm">
     <b-card title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
@@ -118,7 +118,7 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
    </div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div class="row">
     <div class="col-lg-6" aria-controls="overlay-background">
@@ -230,7 +230,7 @@ can control the appearance of the spinner via the following props:
   </b-overlay>
 </b-card>
 
-```html
+```vue-html
 <b-overlay
   show
   spinner-variant="primary"
@@ -287,7 +287,7 @@ Possible values are:
     </b-row>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
@@ -357,7 +357,7 @@ Place custom content in the overlay (replacing the default spinner) via the opti
   </b-overlay>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-overlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
     <b-card title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
@@ -433,7 +433,7 @@ overlay slot content at the top right.
   </b-overlay>
 </b-card>
 
-```html
+```vue-html
 <b-overlay no-center show rounded="sm">
   <template #overlay>
     foo
@@ -485,7 +485,7 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
   <b-button class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</b-button>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div class="position-relative p-4 bg-info">
     <p class="text-light fw-bold">
@@ -536,7 +536,7 @@ descendant of `<b-card>`:
 </b-card>
 <b-button @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</b-button>
 
-```html
+```vue-html
 <template>
   <b-card header="Card header" footer="Card footer">
     <b-img
@@ -648,7 +648,7 @@ Easily create a loading button:
   </b-overlay>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-overlay
     :show="loadingBuzy"
@@ -754,7 +754,7 @@ This example also demonstrates additional accessibility markup.
   </b-form>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-form class="position-relative p-3" @submit.prevent="onFormSubmit">
     <div class="row">
@@ -864,9 +864,10 @@ body only the modal body will be obscured. If you wish to obscure the entire mod
 header and footer), you will need to set the `<b-modal>` prop `body-class` to `position-static`, and
 also set the `rounded` prop on `<b-overlay>`.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/overlay.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BForm, BProgress, BRow, BImg, BFormInput, BFormSelect, BOverlay, BCol, BButton, BCard, BCardText} from 'bootstrap-vue-next'
 import {ref, nextTick} from 'vue';

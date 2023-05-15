@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<BToasterProps>(), {
   instance: undefined,
 })
 
-const toastPositions = {
+const toastPositions: Record<ContainerPosition, string> = {
   'top-left': 'top-0 start-0',
   'top-center': 'top-0 start-50 translate-middle-x',
   'top-right': 'top-0 end-0',
@@ -46,7 +46,7 @@ const toastPositions = {
   'bottom-right': 'bottom-0 end-0',
 }
 
-const positionClass = computed(() => toastPositions[props.position])
+const positionClass = computed(() => toastPositions[props.position as ContainerPosition])
 
 const handleDestroy = (id: string) => {
   //we made want to disable reactivity for deletes. Future Note

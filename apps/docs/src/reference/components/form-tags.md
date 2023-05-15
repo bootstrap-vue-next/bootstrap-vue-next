@@ -4,7 +4,7 @@
 
 ## Example
 
-```html
+```vue-html
 <template>
   <label for="tags-basic">Type a new tag and press enter</label>
   <b-form-tags input-id="tags-basic" v-model="value"></b-form-tags>
@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
+import {data} from '../../data/components/formTags.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const value = ref<string[]>(['apple', 'orange'])

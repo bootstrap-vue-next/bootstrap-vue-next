@@ -13,7 +13,7 @@
   <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-textarea
@@ -69,7 +69,7 @@ To control width, place the input inside standard Bootstrap grid column.
   </b-row>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-row>
     <b-col sm="2">
@@ -112,7 +112,7 @@ value). Setting it to null or a value below 2 will result in the default of `2` 
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
@@ -136,7 +136,7 @@ feature, set the `no-resize` prop to `true`.
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-form-textarea
@@ -178,7 +178,7 @@ To apply one of the contextual state icons on `<b-form-textarea>`, set the `stat
   ></b-form-textarea>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div>
@@ -274,7 +274,7 @@ Formatting does not occur if a `formatter` is not provided.
   <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div>
@@ -336,7 +336,7 @@ form field styling and preserve the correct text size, margin, padding and heigh
   <b-form-textarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></b-form-textarea>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-form-textarea
     id="textarea-plaintext"
@@ -413,7 +413,7 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
   <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <div>
@@ -469,9 +469,10 @@ const selectText = () => {
 Refer to https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement for more information on
 these methods and properties. Support will vary based on input type.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/formTextarea.data'
 import {ref, computed} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BFormGroup, BRow, BCol, BFormTextarea, BCard} from 'bootstrap-vue-next'

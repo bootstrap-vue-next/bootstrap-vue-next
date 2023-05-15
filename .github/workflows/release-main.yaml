@@ -9,6 +9,10 @@ on:
     branches:
       - main
 
+env:
+  ACTIONS_RUNNER_DEBUG: true
+  ACTIONS_STEP_DEBUG: true
+
 jobs:
   release-please:
     runs-on: ${{ matrix.os }}
@@ -23,13 +27,8 @@ jobs:
         uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          release-type: node
-          path: packages/bootstrap-vue-next
-          package-name: bootstrap-vue-next
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
-          default-branch: main
-          release-labels: 'autorelease: published'
+          command: manifest
+          monorepo-tags: true
           
       # The logic below handles the npm publication:
 
@@ -77,11 +76,11 @@ jobs:
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/bootstrap-vue-next--release_created'] }}
 
       - name: Publish Nuxt
-        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public --force
+        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/nuxt--release_created'] }}
         

@@ -24,7 +24,7 @@
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button-toolbar key-nav aria-label="Toolbar with button groups">
     <b-button-group class="mx-1">
@@ -60,7 +60,7 @@
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button-toolbar aria-label="Toolbar with button groups and input groups">
     <b-button-group size="sm" class="me-1">
@@ -97,7 +97,7 @@
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
     <b-button-group class="mx-1">
@@ -167,7 +167,7 @@ Note, if you want smaller or larger buttons or controls, set the `size` prop dir
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div>
     <b-button-toolbar aria-label="Toolbar with size sm">
@@ -234,7 +234,7 @@ input groups and dropdowns, by setting the prop `justify`.
   </div>
 </b-card>
 
-```html
+```vue-html
 <div>
   <b-button-toolbar justify aria-label="Toolbar with justify">
     <b-button-group class="mx-1">
@@ -255,9 +255,10 @@ input groups and dropdowns, by setting the prop `justify`.
 </div>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/buttonToolbar.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BButtonGroup, BDropdown, BInputGroup, BDropdownItem, BButton, BButtonToolbar, BFormInput} from 'bootstrap-vue-next'
 </script>

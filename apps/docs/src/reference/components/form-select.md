@@ -10,7 +10,7 @@ Generate your select options by passing an array or object to the `options` prop
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
@@ -45,7 +45,7 @@ You can even define option groups with the `options` prop:
   <div class="mt-3">Selected: <strong>{{ exGroupSelected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-select v-model="exGroupSelected" :options="ex1GroupOptions"></b-form-select>
@@ -87,7 +87,7 @@ Or manually provide your options and option groups:
   <div class="mt-3">Selected: <strong>{{ exManualSelected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-select v-model="exManualSelected">
@@ -130,7 +130,7 @@ options specified by the `options` prop, use the named slot `first`.
   <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-select v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
@@ -237,7 +237,7 @@ const options = [
 
 ### Options as an object
 
-<span class="badge bg-warning text-dark">Deprecated</span>
+<span class="badge bg-warning">Deprecated</span>
 
 Keys are mapped to `value` and values are mapped to option `text`.
 
@@ -285,7 +285,7 @@ If you want to customize the field property names (for example using `name` fiel
   <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <div>
     <b-form-select
@@ -322,7 +322,7 @@ _unselected_ state. On iOS this will cause the user not being able to select the
 iOS does not fire a change event in this case. It is therefore recommended providing a disabled
 option with an empty value as your first option.
 
-```html
+```vue-html
 <b-card>
   <b-form-select v-model="selected" :options="options">
     <template #first>
@@ -348,7 +348,7 @@ option.
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
@@ -386,7 +386,7 @@ Note that not all mobile browsers will show the select as a list-box.
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-select v-model="ex1Selected" :options="ex1Options" :select-size="4"></b-form-select>
@@ -429,7 +429,7 @@ an array reference as your `v-model` when in `multiple` mode.
   <div class="mt-3">Selected: <strong>{{ exMultiSelected }}</strong></div>
 </b-card>
 
-```html
+```vue-html
 <template>
   <b-card>
     <b-form-select
@@ -511,9 +511,10 @@ Supported `invalid` values are:
 
 When `state` is set to `false`, aria-invalid will also be set to true.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/formSelect.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BFormSelectOptionGroup, BFormSelectOption, BCard, BFormSelect} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

@@ -14,7 +14,7 @@ The animation effect of this component is dependent on the prefers-reduced-motio
 
 Click the accordions below to expand/collapse the accordion content.
 
-<b-card class="text-dark">
+<b-card>
     <b-accordion>
         <b-accordion-item title="Accordion Item #1" visible>
             <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
@@ -28,7 +28,7 @@ Click the accordions below to expand/collapse the accordion content.
     </b-accordion>
 </b-card>
 
-```html
+```vue-html
 <b-accordion>
   <b-accordion-item title="Accordion Item #1" visible>
     <strong>This is the first item's accordion body.</strong> It is shown by default, until the
@@ -61,7 +61,7 @@ Click the accordions below to expand/collapse the accordion content.
 
 Add `flush` property to remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container.
 
-<b-card class="text-dark bg-light">
+<b-card>
     <b-accordion flush>
         <b-accordion-item title="Accordion Item #1">
             Placeholder content for this accordion, which is intended to demonstrate the <code>flush</code> property. This is the first item's accordion body.
@@ -75,7 +75,7 @@ Add `flush` property to remove the default background-color, some borders, and s
     </b-accordion>
 </b-card>
 
-```html
+```vue-html
 <b-accordion flush>
   <b-accordion-item title="Accordion Item #1">
     Placeholder content for this accordion, which is intended to demonstrate the
@@ -99,7 +99,7 @@ Add `flush` property to remove the default background-color, some borders, and s
 
 Add `free` property to make accordion items stay open when another item is opened.
 
-<b-card class="text-dark">
+<b-card>
     <b-accordion free>
         <b-accordion-item title="Accordion Item #1">
             <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>default</code> slot, though the transition does limit overflow.
@@ -113,7 +113,7 @@ Add `free` property to make accordion items stay open when another item is opene
     </b-accordion>
 </b-card>
 
-```html
+```vue-html
 <b-accordion free>
   <b-accordion-item title="Accordion Item #1">
     <strong>This is the first item's accordion body.</strong> It is shown by default, until the
@@ -142,9 +142,11 @@ Add `free` property to make accordion items stay open when another item is opene
 </b-accordion>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/accordion.data'
 import {BAccordion, BAccordionItem, BCard} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
+
 </script>

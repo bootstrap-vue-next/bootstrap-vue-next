@@ -190,6 +190,7 @@ import {titleCase} from '../../utils/stringUtils'
 import BSpinner from '../BSpinner.vue'
 import type {
   Booleanish,
+  Breakpoint,
   BTableProvider,
   BTableSortCompare,
   ColorVariant,
@@ -222,10 +223,10 @@ interface BTableProps {
   noProviderPaging?: Booleanish
   noProviderSorting?: Booleanish
   noProviderFiltering?: Booleanish
-  responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+  responsive?: boolean | Breakpoint
   small?: Booleanish
   striped?: Booleanish
-  stacked?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
+  stacked?: boolean | Breakpoint
   labelStacked?: boolean
   variant?: ColorVariant
   sortBy?: string

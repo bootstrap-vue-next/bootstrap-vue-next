@@ -9,6 +9,7 @@ const BREADCRUMB_OBJECT = {
   },
 }
 
+// TODO v1.0 this could be simplified and removed outright. Using some vueuse utility, we could just have useBreadcrumb be a global state
 export const createBreadcrumb = (app: App) => {
   app.provide(breadcrumbInjectionKey, BREADCRUMB_OBJECT)
 }

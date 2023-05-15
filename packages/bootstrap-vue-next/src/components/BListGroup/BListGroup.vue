@@ -7,13 +7,12 @@
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
-import type {Booleanish} from '../../types'
+import type {Booleanish, Breakpoint} from '../../types'
 import {useBooleanish} from '../../composables'
-// import type {Breakpoint} from '../../types'
 
 interface BListGroupProps {
   flush?: Booleanish
-  horizontal?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+  horizontal?: boolean | Breakpoint
   numbered?: Booleanish
   tag?: string
 }

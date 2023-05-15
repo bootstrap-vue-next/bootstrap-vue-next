@@ -16,7 +16,7 @@ Use the border spinners for a lightweight loading indicator.
   <b-spinner variant="dark" />
 </b-card>
 
-```html
+```vue-html
 <b-spinner></b-spinner>
 ```
 
@@ -35,7 +35,7 @@ The border spinner uses currentColor for its border-color, meaning you can custo
   <b-spinner variant="dark"></b-spinner>
 </b-card>
 
-```html
+```vue-html
 <b-spinner variant="primary"></b-spinner>
 <b-spinner variant="secondary"></b-spinner>
 <b-spinner variant="success"></b-spinner>
@@ -54,7 +54,7 @@ If you don’t fancy a border spinner, switch to the grow spinner. While it does
   <b-spinner type="grow" variant="dark" />
 </b-card>
 
-```html
+```vue-html
 <b-spinner type="grow"></b-spinner>
 ```
 
@@ -69,7 +69,7 @@ If you don’t fancy a border spinner, switch to the grow spinner. While it does
   <b-spinner type="grow" variant="dark"></b-spinner>
 </b-card>
 
-```html
+```vue-html
 <b-spinner type="grow" variant="primary"></b-spinner>
 <b-spinner type="grow" variant="secondary"></b-spinner>
 <b-spinner type="grow" variant="success"></b-spinner>
@@ -92,7 +92,7 @@ Use [margin utilities](https://getbootstrap.com/docs/5.0/utilities/spacing/) lik
   <b-spinner class="m-5" variant="dark" />
 </b-card>
 
-```html
+```vue-html
 <b-spinner class="m-5"></b-spinner>
 ```
 
@@ -108,20 +108,20 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
   </div>
 </b-card>
 
-```html
+```vue-html
 <div class="d-flex justify-content-center">
   <b-spinner></b-spinner>
 </div>
 ```
 
 <b-card>
-  <div class="d-flex align-items-center text-dark">
+  <div class="d-flex align-items-center">
     <strong>Loading...</strong>
     <b-spinner class="ms-auto" variant="dark" />
   </div>
 </b-card>
 
-```html
+```vue-html
 <div class="d-flex align-items-center">
   <strong>Loading...</strong>
   <b-spinner class="ms-auto"></b-spinner>
@@ -136,7 +136,7 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
   </div>
 </b-card>
 
-```html
+```vue-html
 <div class="clearfix">
   <b-spinner class="float-end"></b-spinner>
 </div>
@@ -150,7 +150,7 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
   </div>
 </b-card>
 
-```html
+```vue-html
 <div class="text-center">
   <b-spinner></b-spinner>
 </div>
@@ -160,26 +160,26 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [flo
 
 Set the prop `small` to `true` to make a smaller spinner that can quickly be used within other components.
 
-<b-card class="text-dark">
+<b-card>
   <b-spinner small></b-spinner>
   &nbsp;
   <b-spinner small type="grow"></b-spinner>
 </b-card>
 
-```html
+```vue-html
 <b-spinner small label="Small spinner"></b-spinner>
 <b-spinner small label="Small spinner" type="grow"></b-spinner>
 ```
 
 Or, use custom CSS or inline styles to change the dimensions as needed.
 
-<b-card class="text-dark">
+<b-card>
   <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
   &nbsp;
   <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow"></b-spinner>
 </b-card>
 
-```html
+```vue-html
 <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
 <b-spinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow"></b-spinner>
 ```
@@ -200,7 +200,7 @@ Use spinners within buttons to indicate an action is currently processing or tak
   </b-button>
 </b-card>
 
-```html
+```vue-html
 <b-button variant="primary" disabled>
   <b-spinner small></b-spinner>
   <span class="visually-hidden">Loading...</span>
@@ -224,7 +224,7 @@ Use spinners within buttons to indicate an action is currently processing or tak
   </b-button>
 </b-card>
 
-```html
+```vue-html
 <b-button variant="primary" disabled>
   <b-spinner small type="grow"></b-spinner>
   <span class="visually-hidden">Loading...</span>
@@ -244,9 +244,10 @@ For accessibility purposes, each spinner will automatically have a `role="status
 
 As well, when no label is provided, the spinner will automatically have the attribute `aria-hidden="true"` to hide the spinner from screen reader users.
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/spinner.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BButton, BSpinner} from 'bootstrap-vue-next'
 </script>

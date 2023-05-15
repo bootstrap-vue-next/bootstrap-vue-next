@@ -1,6 +1,5 @@
 <template>
-  <component
-    :is="tag"
+  <router-link
     v-if="tag === 'router-link'"
     v-slot="{href, navigate, isActive}"
     v-bind="routerAttr"
@@ -16,7 +15,7 @@
     >
       <slot />
     </component>
-  </component>
+  </router-link>
   <component
     :is="tag"
     v-else
@@ -30,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import type {Booleanish, LinkTarget} from '../../types'
+import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, defineComponent, getCurrentInstance, inject, type PropType, ref, toRef} from 'vue'
@@ -51,6 +50,7 @@ export const BLINK_PROPS = {
   routerTag: {type: String, default: 'a'},
   target: {type: String as PropType<LinkTarget>, default: '_self'},
   to: {type: [String, Object] as PropType<RouteLocationRaw>, default: null},
+  variant: {type: String as PropType<ColorVariant | null>, default: null},
 }
 
 export default defineComponent({
@@ -111,6 +111,7 @@ export default defineComponent({
     })
 
     const routerAttr = computed(() => ({
+      'class': props.variant !== null && `link-${props.variant}`,
       'to': props.to,
       'href': computedHref.value,
       'target': props.target,

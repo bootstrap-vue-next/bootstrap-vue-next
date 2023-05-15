@@ -27,7 +27,7 @@ interface BProgressProps {
 
 const props = withDefaults(defineProps<BProgressProps>(), {
   variant: undefined,
-  max: undefined,
+  max: 100,
   height: undefined,
   animated: false,
   precision: 0,

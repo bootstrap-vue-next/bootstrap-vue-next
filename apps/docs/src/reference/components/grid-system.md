@@ -20,7 +20,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-container>
 </b-card>
 
-```html
+```vue-html
 <b-container>
   <b-row>
     <b-col>
@@ -60,7 +60,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-container>
 </b-card>
 
-```html
+```vue-html
 <b-container>
   <b-row > 
     <b-col lg="6">
@@ -98,7 +98,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-container>
 </b-card>
 
-```html
+```vue-html
 <b-container>
   <b-row class="bd-example-row">
     <b-col order="2" order-lg="3">
@@ -132,7 +132,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </b-container>
 </b-card>
 
-```html
+```vue-html
 <b-container>
   <b-row class="">
     <b-col alignSelf="center">
@@ -148,9 +148,10 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
 </b-container>
 ```
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/gridSystem.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {BCard, BContainer, BRow, BCol, BImg} from 'bootstrap-vue-next'
 </script>

@@ -30,27 +30,35 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-nex
 
 Install the necessary packages for `BootstrapVueNext`:
 
-::: code-group
+<b-tabs v-model="codePreference">
+  <b-tab title="PNPM">
 
-```bash [PNPM]
+```bash
 pnpm add bootstrap bootstrap-vue-next
 
 pnpm add unplugin-vue-components -D
 ```
 
-```bash [YARN]
+  </b-tab>
+  <b-tab title="YARN">
+
+```bash
 yarn add bootstrap bootstrap-vue-next
 
 yarn add unplugin-vue-components -D
 ```
 
-```bash [NPM]
+  </b-tab>
+  <b-tab title="NPM">
+
+```bash
 npm i bootstrap bootstrap-vue-next
 
 npm i unplugin-vue-components -D
 ```
 
-:::
+  </b-tab>
+</b-tabs>
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 
@@ -96,21 +104,29 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 Install the necessary packages for `bootstrap-vue-next`:
 
-::: code-group
+<b-tabs v-model="codePreference">
+  <b-tab title="PNPM">
 
-```bash [PNPM]
+```bash
 pnpm add bootstrap bootstrap-vue-next
 ```
 
-```bash [YARN]
+  </b-tab>
+  <b-tab title="YARN">
+
+```bash
 yarn add bootstrap bootstrap-vue-next
 ```
 
-```bash [NPM]
+  </b-tab>
+  <b-tab title="NPM">
+
+```bash
 npm i bootstrap bootstrap-vue-next
 ```
 
-:::
+  </b-tab>
+</b-tabs>
 
 Then, add to your `main.js/ts`:
 
@@ -137,21 +153,29 @@ app.mount('#app')
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`
 
-::: code-group
+<b-tabs v-model="codePreference">
+  <b-tab title="PNPM">
 
-```bash [PNPM]
+```bash
 pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-```bash [PNPM]
+  </b-tab>
+  <b-tab title="YARN">
+
+```bash
 yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-```bash [NPM]
+  </b-tab>
+  <b-tab title="NPM">
+
+```bash
 npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
-:::
+  </b-tab>
+</b-tabs>
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed
 
@@ -169,8 +193,8 @@ Enjoy it in your app without manual imports, and automatic tree-shaking
 ```vue
 <template>
   <div>
-    <BButton variant="primary" @click="show = !show">Click me</BButton>
-    <BModal v-model="show">Test</BModal>
+    <b-button variant="primary" @click="show = !show">Click me</b-button>
+    <b-modal v-model="show">Test</b-modal>
   </div>
 </template>
 
@@ -204,3 +228,10 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 <!-- To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet. -->
 
 You can view the planned compatibility list in the following [section](./reference/parityList.md). It is _not_ a migration guide, which will be finalized upon v1.0.0
+
+<script setup lang="ts">
+import {BTab, BTabs} from 'bootstrap-vue-next'
+import {useLocalStorage} from '@vueuse/core'
+
+const codePreference = useLocalStorage('code-group-preference', 0)
+</script>

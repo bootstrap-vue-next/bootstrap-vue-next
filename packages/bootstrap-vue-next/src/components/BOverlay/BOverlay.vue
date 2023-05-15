@@ -49,17 +49,7 @@ interface Props {
   spinnerType?: SpinnerType
   spinnerVariant?: ColorVariant
   noSpinner?: Booleanish
-  variant?:
-    | 'transparent'
-    | 'white'
-    | 'light'
-    | 'dark'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info' // ColorVariant | 'white' | 'transparent'
+  variant?: ColorVariant | 'white' | 'transparent'
   wrapTag?: string
   zIndex?: number | string
 }

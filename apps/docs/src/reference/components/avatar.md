@@ -43,7 +43,7 @@ centered beside any adjoining plain text. They also can be used as children of o
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <p>Using stand-alone:</p>
   <div class="mb-4">
@@ -97,7 +97,7 @@ distortion will occur. The image will be scaled up or down to fit within the ava
   <b-avatar src="https://placekitten.com/300/300" size="6rem"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar src="https://placekitten.com/300/300"></b-avatar>
   <b-avatar src="https://placekitten.com/300/300" size="6rem"></b-avatar>
@@ -136,7 +136,7 @@ be scaled relative to the [`size` prop setting](#sizing).
   <b-avatar text="BV" size="4rem"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar text="BV"></b-avatar>
   <b-avatar text="a"></b-avatar>
@@ -155,7 +155,7 @@ appearance, or if using custom icons or SVGs e.g.:
   <b-avatar size="4em">你好<br>世界</b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar size="4em">Hello<br />World</b-avatar>
   <b-avatar size="4em">你好<br />世界</b-avatar>
@@ -187,7 +187,7 @@ Use the `variant` prop to specify one of Bootstrap theme variant colors. The def
   <b-avatar variant="info"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar variant="secondary"></b-avatar>
   <b-avatar variant="primary"></b-avatar>
@@ -213,7 +213,7 @@ When displaying an icon as avatar, icon colors are calculated based on the `vari
   <b-avatar variant="info" icon-variant="secondary"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar variant="secondary" icon-variant="info"></b-avatar>
   <b-avatar variant="primary" icon-variant="dark"></b-avatar>
@@ -237,7 +237,7 @@ When displaying text inside the avatar, text colors are calculated based on the 
   <b-avatar variant="warning" text-variant="primary" text="A"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar variant="primary" text="P"></b-avatar>
   <b-avatar variant="primary" text-variant="dark" text="P"></b-avatar>
@@ -264,7 +264,7 @@ converted to pixel values. Any other value _must_ include the units (such as `px
   <b-avatar size="72px"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar></b-avatar>
   <b-avatar size="sm"></b-avatar>
@@ -285,7 +285,7 @@ Prefer a square avatar? simply set the `square` prop to `true`.
   <b-avatar square></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar square></b-avatar>
 </b-card>
@@ -312,7 +312,7 @@ When set to `circle`, it uses a border radius of 50%, resulting in a circle.
   </div>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <div class="d-flex" style="column-gap: 1%;">
     <b-avatar rounded="sm"></b-avatar>
@@ -373,7 +373,7 @@ the `click` event whenever clicked.
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-list-group>
     <b-list-group-item>
@@ -424,7 +424,7 @@ Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`
   </b-list-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-list-group>
     <b-list-group-item>
@@ -463,7 +463,7 @@ be set via the `badge-variant` prop. The badge will scale with the size of the a
   <b-avatar square badge badge-variant="dark" text="BV"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar badge></b-avatar>
   <b-avatar badge badge-variant="danger" src="https://placekitten.com/300/300"></b-avatar>
@@ -484,7 +484,7 @@ Add textual content to the badge by supplying a string to the `badge` prop, or u
   <b-avatar badge="7" variant="primary" badge-variant="dark"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar badge="BV"></b-avatar>
   <b-avatar badge="7" variant="primary" badge-variant="dark"></b-avatar>
@@ -504,7 +504,7 @@ right of the avatar.
   <b-avatar badge badge-left badge-top></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar badge></b-avatar>
   <b-avatar badge badge-left></b-avatar>
@@ -528,7 +528,7 @@ inward, while negative values will move the badge outward.
   <b-avatar badge badge-top badge-offset="2px"></b-avatar>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar badge></b-avatar>
   <b-avatar badge badge-offset="-0.5em"></b-avatar>
@@ -557,7 +557,7 @@ Group multiple avatars together by wrapping them in a `<b-avatar-group>` compone
   </b-avatar-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar-group size="60px">
     <b-avatar></b-avatar>
@@ -592,7 +592,7 @@ individual avatars when they are placed inside a `<b-avatar-group>`.
   </b-avatar-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar-group size="5rem">
     <b-avatar></b-avatar>
@@ -619,7 +619,7 @@ prop, when set, will override the the `variant` specified on individual avatars.
   </b-avatar-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar-group variant="success">
     <b-avatar></b-avatar>
@@ -646,7 +646,7 @@ over the respective props on individual child avatars.
   </b-avatar-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar-group rounded="lg">
     <b-avatar></b-avatar>
@@ -674,7 +674,7 @@ between `0` and `1`, where `0` means no overlap and `1` means 100% overlap.
   </b-avatar-group>
 </b-card>
 
-```html
+```vue-html
 <b-card>
   <b-avatar-group size="3rem" overlap="0.65">
     <b-avatar></b-avatar>
@@ -706,9 +706,10 @@ Avatars are based upon `<b-badge>` and `<b-button>` components, and as such, rel
 `badge-*` and `btn-*` variant classes, as well as the `rounded-*`
 [utility classes](/docs/reference/utility-classes).
 
-<ComponentReference></ComponentReference>
+<ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
+import {data} from '../../data/components/avatar.data'
 import {BAvatar, BAvatarGroup, BCard, BListGroup, BBadge, BListGroupItem} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import {ref, type Ref} from 'vue';
