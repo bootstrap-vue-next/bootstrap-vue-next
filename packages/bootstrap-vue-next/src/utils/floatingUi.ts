@@ -43,10 +43,18 @@ export const resolveBootstrapPlacement = (placement: Placement): string => {
   }
 }
 
+export const resolveActiveStatus = (values: DirectiveBinding['value']): boolean => {
+  return typeof values !== 'object' || values.active !== false
+}
+
 export const resolveContent = (
   values: DirectiveBinding['value'],
   el: HTMLElement
 ): {title?: string; content?: string} => {
+  const isActive = resolveActiveStatus(values)
+  if (!isActive)
+    return {}
+
   if (
     (typeof values === 'undefined' ||
       (typeof values === 'object' && !values?.title && !values?.content)) &&
