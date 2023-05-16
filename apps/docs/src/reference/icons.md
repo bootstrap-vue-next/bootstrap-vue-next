@@ -16,6 +16,7 @@ The preferred installation makes use of [unplugin-vue-components](https://github
 
 To start, install the necessary packages:
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -39,10 +40,11 @@ npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 ```ts
 // vite.config.js/ts
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -54,12 +56,12 @@ export default defineConfig({
     vue(),
     Components({
       resolvers: [IconsResolve()],
-      dts: true
+      dts: true,
     }),
     Icons({
       compiler: 'vue3',
-      autoInstall: true
-    })
+      autoInstall: true,
+    }),
   ],
 })
 ```
@@ -73,9 +75,7 @@ If you are using TypeScript you will want to add the `unplugin-icons/types/vue` 
 {
   "include": ["components.d.ts"],
   "compilerOptions": {
-    "types": [
-      "unplugin-icons/types/vue",
-    ]
+    "types": ["unplugin-icons/types/vue"]
   }
 }
 ```
@@ -99,6 +99,7 @@ View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-compone
 
 Of course, there is always the ability to slim down. To slim down the installation, you can manually import only the bootstrap-icons icon set, disable auto importing, and not use unplugin-vue-components read below. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -122,10 +123,11 @@ npm i unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Icons from 'unplugin-icons/vite'
 
@@ -134,8 +136,8 @@ export default defineConfig({
   plugins: [
     vue(),
     Icons({
-      compiler: 'vue3'
-    })
+      compiler: 'vue3',
+    }),
   ],
 })
 ```

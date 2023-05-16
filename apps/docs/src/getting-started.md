@@ -30,6 +30,7 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue/bootstrap-vue-nex
 
 Install the necessary packages for `BootstrapVueNext`:
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -59,23 +60,24 @@ npm i unplugin-vue-components -D
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 
 ```ts
 // vite.config.js/ts
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import { BootstrapVueNextResolver } from 'unplugin-vue-components/resolvers'
+import {BootstrapVueNextResolver} from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   plugins: [
     vue(),
     Components({
-      resolvers: [BootstrapVueNextResolver()]
-    })
-  ]
+      resolvers: [BootstrapVueNextResolver()],
+    }),
+  ],
 })
 ```
 
@@ -94,7 +96,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 ```json
 // tsconfig.json
 {
-  "include": ["components.d.ts"],
+  "include": ["components.d.ts"]
 }
 ```
 
@@ -104,6 +106,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 Install the necessary packages for `bootstrap-vue-next`:
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -127,6 +130,7 @@ npm i bootstrap bootstrap-vue-next
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 Then, add to your `main.js/ts`:
 
@@ -134,7 +138,7 @@ Then, add to your `main.js/ts`:
 // main.js/ts
 import App from './App.vue' // Can be a different place
 
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import BootstrapVueNext from 'bootstrap-vue-next'
 
 // Optional, since every component imports their Bootstrap functionality
@@ -153,6 +157,7 @@ app.mount('#app')
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -176,6 +181,7 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed
 
@@ -220,6 +226,10 @@ export default defineNuxtConfig({
 ```
 
 The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build
+
+## Tree-shake CSS
+
+If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application
 
 ## Comparison with BootstrapVue
 
