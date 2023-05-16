@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://bootstrap-vue.github.io/bootstrap-vue-next/">
-    <img src="https://bootstrap-vue.github.io/bootstrap-vue-next/logo.png" width="300">
+  <a href="https://bootstrap-vue-next.github.io/bootstrap-vue-next/">
+    <img src="https://bootstrap-vue-next.github.io/bootstrap-vue-next/logo.png" width="300">
   </a>
 </p>
 
