@@ -2,6 +2,7 @@ import {type Directive, ref} from 'vue'
 import {
   bind,
   type ElementWithPopper,
+  resolveActiveStatus,
   resolveContent,
   resolveDirectiveProps,
   unbind,
@@ -9,22 +10,24 @@ import {
 
 export default {
   mounted(el, binding) {
+    const isActive = resolveActiveStatus(binding.value)
     const text = resolveContent(binding.value, el)
 
     el.$__state = ref({
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
-      tooltip: true,
+      tooltip: isActive,
     })
     bind(el, binding)
   },
   updated(el, binding) {
+    const isActive = resolveActiveStatus(binding.value)
     const text = resolveContent(binding.value, el)
     if (!el.$__state) return
     el.$__state.value = {
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
-      tooltip: true,
+      tooltip: isActive,
     }
   },
   beforeUnmount(el) {

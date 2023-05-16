@@ -43,33 +43,34 @@ export const resolveBootstrapPlacement = (placement: Placement): string => {
   }
 }
 
+export const resolveActiveStatus = (values: DirectiveBinding['value']): boolean => {
+  return typeof values !== 'object' || values.active !== false
+}
+
 export const resolveContent = (
   values: DirectiveBinding['value'],
   el: HTMLElement
 ): {title?: string; content?: string} => {
-  if (
-    (typeof values === 'undefined' ||
-      (typeof values === 'object' && !values?.title && !values?.content)) &&
-    !el.getAttribute('title')
-  ) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      'Review tooltip directive usage. Some uses are not defining a title in root component or a value like `v-b-tooltip=\'{title: "my title"}\'` nor `v-b-tooltip="\'my title\'"` to define a title'
-    )
+  const isActive = resolveActiveStatus(values)
+  if (!isActive)
     return {}
-  }
-  if (
-    (typeof values === 'undefined' ||
-      (typeof values === 'object' && !values?.title && !values?.content)) &&
-    (el.getAttribute('title') || el.getAttribute('data-original-title'))
-  ) {
-    const title = el.getAttribute('title') ?? el.getAttribute('data-original-title')
-    if (title && title !== '') {
+
+  const missingBindingValue = (typeof values === 'undefined' || (typeof values === 'object' && !values.title && !values.content))
+  const title = el.getAttribute('title') || el.getAttribute('data-original-title')
+  if (missingBindingValue) {
+    if (title) {
       el.removeAttribute('title')
       el.setAttribute('data-original-title', title)
+
       return {
         content: sanitizeHtml(title, DefaultAllowlist),
       }
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'Review tooltip directive usage. Some uses are not defining a title in root component or a value like `v-b-tooltip=\'{title: "my title"}\'` nor `v-b-tooltip="\'my title\'"` to define a title'
+      )
+      return {}
     }
   }
   if (typeof values === 'string') {
