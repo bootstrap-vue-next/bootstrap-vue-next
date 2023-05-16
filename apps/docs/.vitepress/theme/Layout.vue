@@ -43,20 +43,22 @@
             >
               <discord-icon aria-hidden />
             </b-button>
-            <b-dropdown v-if="show" :variant="variant">
-              <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
-              <template #button-content>
-                <component :is="currentIcon" :aria-label="`Toggle theme (${proxy})`" />
-              </template>
-              <b-dropdown-item
-                v-for="el in options"
-                :key="el"
-                :active="proxy === el"
-                @click="set(el)"
-              >
-                <component :is="map[el]" /> {{ el }}
-              </b-dropdown-item>
-            </b-dropdown>
+            <client-only>
+              <b-dropdown :variant="variant">
+                <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
+                <template #button-content>
+                  <component :is="currentIcon" :aria-label="`Toggle theme (${proxy})`" />
+                </template>
+                <b-dropdown-item
+                  v-for="el in options"
+                  :key="el"
+                  :active="proxy === el"
+                  @click="set(el)"
+                >
+                  <component :is="map[el]" /> {{ el }}
+                </b-dropdown-item>
+              </b-dropdown>
+            </client-only>
           </b-nav>
         </b-navbar>
       </b-col>
@@ -106,7 +108,7 @@ import {
   BRow,
   useColorMode,
 } from 'bootstrap-vue-next'
-import {computed, inject, toRef, onMounted, ref, readonly} from 'vue'
+import {computed, inject, toRef, readonly} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -118,12 +120,6 @@ import {appInfoKey} from './keys'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
-
-const show = ref(false)
-
-onMounted(() => {
-  show.value = true
-})
 
 const variant = null as any
 
