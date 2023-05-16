@@ -10,7 +10,7 @@ export default {
   Layout,
   enhanceApp(ctx) {
     ctx.app.provide(appInfoKey, {
-      githubUrl: 'https://github.com/bootstrap-vue/bootstrap-vue-next',
+      githubUrl: 'https://github.com/bootstrap-vue-next/bootstrap-vue-next',
       discordUrl: 'https://discord.gg/j2Mtcny',
       opencollectiveUrl: 'https://opencollective.com/bootstrap-vue-next',
     })

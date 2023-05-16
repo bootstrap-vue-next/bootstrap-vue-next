@@ -51,16 +51,16 @@
   },
   "repository": {
     "type": "github",
-    "url": "https://github.com/bootstrap-vue/bootstrap-vue-next/tree/main/packages/nuxt"
+    "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/tree/main/packages/nuxt"
   },
   "bugs": {
-    "url": "https://github.com/bootstrap-vue/bootstrap-vue-next/issues"
+    "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues"
   },
-  "homepage": "https://github.com/bootstrap-vue/bootstrap-vue-next",
+  "homepage": "https://github.com/bootstrap-vue-next/bootstrap-vue-next",
   "keywords": [
-    "nuxt",
     "vue3",
     "vue",
+    "nuxt",
     "bootstrap",
     "typescript",
     "bootstrap-vue-next"

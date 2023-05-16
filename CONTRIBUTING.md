@@ -27,7 +27,7 @@ Setting up your workspace follows traditional open-source flows, if you are alre
 
 **Only pnpm is allowed**, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
 
-1. Go to the <https://github.com/bootstrap-vue/bootstrap-vue-next>
+1. Go to the <https://github.com/bootstrap-vue-next/bootstrap-vue-next>
 2. Click **Fork** at the top
 3. On your IDE of choice, clone your own, new, forked repository
 
@@ -104,4 +104,4 @@ It will then auto-publish as stated before
 Collaborators can also manually release by:
 
 increase version in package.json, commit
-<https://github.com/bootstrap-vue/bootstrap-vue-next/releases/new> (create new tag)
+<https://github.com/bootstrap-vue-next/bootstrap-vue-next/releases/new> (create new tag)
