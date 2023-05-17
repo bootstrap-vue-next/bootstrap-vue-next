@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.8.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.8.12...bootstrap-vue-next-v0.8.13) (2023-05-17)
+
+
+### Features
+
+* **BDropdown:** expose methods to close, open and toggle programmatically ([82c0011](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/82c0011765b08e4efaabec8e6015d907cd4d3bd3))
+
 ## [0.8.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.8.11...bootstrap-vue-next-v0.8.12) (2023-05-17)
 
 
