@@ -285,19 +285,23 @@ const onClickInside = () => {
   }
 }
 
+const close = () => (modelValue.value = false)
+const open = () => (modelValue.value = true)
+const toggle = () => (modelValue.value = !modelValueBoolean.value)
+
 watch(modelValueBoolean, update)
+
+defineExpose({
+  close,
+  open,
+  toggle
+})
 
 provide(dropdownInjectionKey, {
   id: computedId,
-  open: () => {
-    modelValue.value = true
-  },
-  close: () => {
-    modelValue.value = false
-  },
-  toggle: () => {
-    modelValue.value = !modelValueBoolean.value
-  },
+  open,
+  close,
+  toggle,
   visible: modelValueBoolean,
   isNav: isNavBoolean,
 })
