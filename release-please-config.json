@@ -3,14 +3,12 @@
     "packages/bootstrap-vue-next": {
       "release-type": "node",
       "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "release-as": "0.8.12"
+      "bump-patch-for-minor-pre-major": true
     },
     "packages/nuxt": {
       "release-type": "node",
       "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "release-as": "0.0.7"
+      "bump-patch-for-minor-pre-major": true
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
