@@ -4,6 +4,10 @@
 
 name: release-main
 
+permissions: 
+  pull-requests: write
+  contents: write
+
 on:
   push:
     branches:
