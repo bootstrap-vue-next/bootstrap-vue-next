@@ -18,7 +18,7 @@ interface Props {
   print?: Booleanish
   sticky?: 'top' | 'bottom'
   tag?: string
-  toggleable?: boolean | Omit<Breakpoint, 'xxl'>
+  toggleable?: boolean | Breakpoint
   dark?: Booleanish
   variant?: ColorVariant | null
   container?: 'fluid' | boolean
