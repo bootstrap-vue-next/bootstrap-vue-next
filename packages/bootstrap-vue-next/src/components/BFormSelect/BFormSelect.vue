@@ -141,10 +141,10 @@ const localValue = computed({
   get: () => modelValue.value,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set: (newValue: any) => {
-    emit('change', newValue)
+    emit('input', newValue)
     modelValue.value = newValue
     nextTick(() => {
-      emit('input', newValue)
+      emit('change', newValue)
     })
   },
 })
