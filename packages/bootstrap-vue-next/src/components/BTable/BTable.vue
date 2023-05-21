@@ -251,8 +251,8 @@ interface BTableProps {
 const props = withDefaults(defineProps<BTableProps>(), {
   perPage: undefined,
   sortBy: undefined,
-  variant: null,
-  borderVariant: null,
+  variant: undefined,
+  borderVariant: undefined,
   caption: undefined,
   align: undefined,
   filter: undefined,

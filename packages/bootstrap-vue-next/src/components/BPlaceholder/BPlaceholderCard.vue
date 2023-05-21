@@ -59,16 +59,16 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  footerVariant: null,
+  footerVariant: undefined,
   footerAnimation: undefined,
   footerSize: 'md',
   animation: undefined,
   size: 'md',
-  variant: null,
+  variant: undefined,
   imgSrc: undefined,
   headerAnimation: undefined,
   headerSize: 'md',
-  headerVariant: null,
+  headerVariant: undefined,
   noButton: false,
   headerWidth: 100,
   footerWidth: 100,

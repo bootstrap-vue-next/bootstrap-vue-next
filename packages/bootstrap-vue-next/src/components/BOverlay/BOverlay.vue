@@ -57,7 +57,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   blur: '2px',
   bgColor: undefined,
-  spinnerVariant: null,
+  spinnerVariant: undefined,
   fixed: false,
   noCenter: false,
   noSpinner: false,

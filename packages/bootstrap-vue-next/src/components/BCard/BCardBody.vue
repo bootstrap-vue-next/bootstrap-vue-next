@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   subtitleTag: 'h4',
   bodyBgVariant: null,
   bodyTextVariant: null,
-  subtitleTextVariant: null,
+  subtitleTextVariant: undefined,
   subtitle: undefined,
   title: undefined,
   text: undefined,

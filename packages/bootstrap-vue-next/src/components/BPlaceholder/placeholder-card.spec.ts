@@ -203,7 +203,7 @@ describe('placeholder-card', () => {
     const wrapper = mount(BPlaceholderCard)
     const $card = wrapper.getComponent(BCard)
     const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.props('variant')).toBeUndefined()
+    expect($placeholder.props('variant')).toBeNull()
   })
 
   it('placeholder has prop animation to be prop headerWidth', () => {
@@ -420,7 +420,7 @@ describe('placeholder-card', () => {
     })
     const $card = wrapper.getComponent(BCard)
     const $placeholder = $card.getComponent(BPlaceholder)
-    expect($placeholder.props('variant')).toBeUndefined()
+    expect($placeholder.props('variant')).toBeNull()
   })
 
   it('BPlaceholder is given prop variant to be prop footerVariant', () => {

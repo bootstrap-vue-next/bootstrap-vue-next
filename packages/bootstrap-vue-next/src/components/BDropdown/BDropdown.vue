@@ -113,7 +113,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   menuClass: undefined,
   size: 'md',
   splitClass: undefined,
-  splitVariant: null,
+  splitVariant: undefined,
   text: undefined,
   toggleClass: undefined,
   splitTo: undefined,

@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
   offset: undefined,
   autoClose: undefined,
   dark: undefined,
-  splitVariant: null,
+  splitVariant: undefined,
   noCaret: undefined,
   variant: 'link',
   modelValue: false,

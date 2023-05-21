@@ -47,7 +47,7 @@ describe('table', () => {
     const $tablesimple = wrapper.getComponent(BTableSimple)
     expect($tablesimple.props('borderVariant')).toBe('info')
     await wrapper.setProps({borderVariant: undefined})
-    expect($tablesimple.props('borderVariant')).toBeUndefined()
+    expect($tablesimple.props('borderVariant')).toBeNull()
   })
 
   it('tablesimple is given prop captionTop', async () => {
@@ -117,7 +117,7 @@ describe('table', () => {
     const $tablesimple = wrapper.getComponent(BTableSimple)
     expect($tablesimple.props('tableVariant')).toBe('info')
     await wrapper.setProps({variant: undefined})
-    expect($tablesimple.props('tableVariant')).toBeUndefined()
+    expect($tablesimple.props('tableVariant')).toBeNull()
   })
 
   it('tablesimple is given prop stickyHeader', async () => {
