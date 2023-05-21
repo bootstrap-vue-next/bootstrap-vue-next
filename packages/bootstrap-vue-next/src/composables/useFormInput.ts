@@ -12,6 +12,7 @@ import {
 } from 'vue'
 import {useBooleanish, useId} from '.'
 import {resolveAriaInvalid} from '../utils'
+import {useFocus} from '@vueuse/core'
 
 export const COMMON_INPUT_PROPS = {
   ariaInvalid: {
@@ -46,11 +47,15 @@ type InputEmitType = (
 ) => void
 
 export default (props: Readonly<InputProps>, emit: InputEmitType) => {
-  const input = ref<HTMLInputElement>()
+  const input = ref<HTMLInputElement | null>(null)
   let inputValue: string | null = null
   let neverFormatted = true
   const computedId = useId(toRef(props, 'id'), 'input')
   const stateBoolean = useBooleanish(toRef(props, 'state'))
+
+  const {focused} = useFocus(input, {
+    initialValue: props.autofocus,
+  })
 
   const _formatValue = (value: unknown, evt: Event, force = false) => {
     value = String(value)
@@ -69,21 +74,20 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   }
 
   const handleAutofocus = () => {
-    if (props.autofocus) input.value?.focus()
+    if (props.autofocus) {
+      focused.value = true
+    }
   }
 
   onMounted(() => {
     if (input.value) {
       input.value.value = props.modelValue as string
     }
-    nextTick(() => {
-      handleAutofocus()
-    })
   })
 
   onActivated(() => {
     nextTick(() => {
-      handleAutofocus
+      handleAutofocus()
     })
   })
 
@@ -141,7 +145,9 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   }
 
   const focus = () => {
-    if (!props.disabled) input.value?.focus()
+    if (!props.disabled) {
+      focused.value = true
+    }
   }
 
   const blur = () => {

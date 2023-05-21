@@ -48,7 +48,7 @@ export default defineComponent({
     tag: {type: String, default: 'button'},
     target: {type: String as PropType<LinkTarget>, default: '_self'},
     type: {type: String as PropType<ButtonType>, default: 'button'},
-    variant: {type: String as PropType<ButtonVariant>, default: 'secondary'},
+    variant: {type: String as PropType<ButtonVariant | null>, default: 'secondary'},
     loading: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     loadingMode: {type: String as PropType<'fill' | 'inline'>, default: 'inline'},
     block: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -76,9 +76,9 @@ export default defineComponent({
     )
 
     const computedClasses = computed(() => [
-      [`btn-${props.variant}`],
       [`btn-${props.size}`],
       {
+        [`btn-${props.variant}`]: props.variant !== null,
         'btn-block': blockBoolean.value,
         'active': activeBoolean.value || pressedBoolean.value,
         'rounded-pill': pillBoolean.value,

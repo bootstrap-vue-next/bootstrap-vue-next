@@ -44,9 +44,9 @@ interface BAlertProps {
   dismissLabel?: string
   dismissible?: Booleanish
   fade?: Booleanish
-  closeVariant?: ButtonVariant
+  closeVariant?: ButtonVariant | null
   modelValue?: boolean | number
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   closeContent?: string
   immediate?: Booleanish
   interval?: number
@@ -91,12 +91,10 @@ const countdownLength = computed(() =>
   typeof modelValue.value === 'boolean' ? 0 : modelValue.value
 )
 
-const computedClasses = computed(() => [
-  [`alert-${props.variant}`],
-  {
-    'alert-dismissible': dismissibleBoolean.value,
-  },
-])
+const computedClasses = computed(() => ({
+  [`alert-${props.variant}`]: props.variant !== null,
+  'alert-dismissible': dismissibleBoolean.value,
+}))
 
 const {
   isActive,

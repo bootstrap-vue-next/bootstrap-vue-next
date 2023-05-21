@@ -18,14 +18,14 @@ interface Props {
   print?: Booleanish
   sticky?: 'top' | 'bottom'
   tag?: string
-  toggleable?: boolean | Omit<Breakpoint, 'xxl'>
+  toggleable?: boolean | Breakpoint
   dark?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   container?: 'fluid' | boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: undefined,
+  variant: null,
   sticky: undefined,
   fixed: undefined,
   print: false,
@@ -58,7 +58,7 @@ const computedClasses = computed(() => ({
   'd-print': printBoolean.value,
   [`sticky-${props.sticky}`]: props.sticky !== undefined,
   'navbar-dark': darkBoolean.value,
-  [`bg-${props.variant}`]: props.variant !== undefined,
+  [`bg-${props.variant}`]: props.variant !== null,
   [`fixed-${props.fixed}`]: props.fixed !== undefined,
   [`${computedNavbarExpand.value}`]: computedNavbarExpand.value !== undefined,
 }))

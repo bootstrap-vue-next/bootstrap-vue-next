@@ -30,7 +30,7 @@ interface BDropdownItemProps {
   disabled?: Booleanish
   rel?: string
   target?: LinkTarget
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BDropdownItemProps>(), {
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<BDropdownItemProps>(), {
   disabled: false,
   rel: undefined,
   target: '_self',
-  variant: undefined,
+  variant: null,
   linkClass: undefined,
   href: undefined,
 })
@@ -59,7 +59,7 @@ const computedClasses = computed(() => [
   {
     active: activeBoolean.value,
     disabled: disabledBoolean.value,
-    [`text-${props.variant}`]: props.variant !== undefined,
+    [`text-${props.variant}`]: props.variant !== null,
   },
 ])
 

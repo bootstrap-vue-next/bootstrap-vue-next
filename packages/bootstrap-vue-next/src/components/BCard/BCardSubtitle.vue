@@ -13,7 +13,7 @@ import {computed} from 'vue'
 interface BCardSubtitleProps {
   text?: string
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: TextColorVariant | null
 }
 
 const props = withDefaults(defineProps<BCardSubtitleProps>(), {
@@ -22,5 +22,7 @@ const props = withDefaults(defineProps<BCardSubtitleProps>(), {
   text: undefined,
 })
 
-const coomputedClasses = computed(() => [`text-${props.textVariant}`])
+const coomputedClasses = computed(() => ({
+  [`text-${props.textVariant}`]: props.textVariant !== null,
+}))
 </script>

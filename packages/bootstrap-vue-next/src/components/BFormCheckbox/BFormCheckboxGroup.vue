@@ -40,7 +40,7 @@ interface BFormCheckboxGroupProps {
   )[]
   ariaInvalid?: AriaInvalid
   autofocus?: Booleanish
-  buttonVariant?: ButtonVariant
+  buttonVariant?: ButtonVariant | null
   buttons?: Booleanish
   disabled?: Booleanish
   disabledField?: string

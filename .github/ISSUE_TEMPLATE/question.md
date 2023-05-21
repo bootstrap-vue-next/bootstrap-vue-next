@@ -14,6 +14,6 @@ assignees: ''
 
 **Environment (please complete the following information):**
 
-- OS: [e.g. Windows 11, Linux Mint]
-- Package Version: [e.g. 0.2.6]
-- Npm/Yarn/Pnpm Version: [e.g. pnpm@7.18.2]
+- OS: [e.g. Windows 11, Pop!_OS]
+- Package Version: [e.g. 0.8.12]
+- Npm/Yarn/Pnpm Version: [e.g. npm@9.6.6, pnpm@8.5.1]

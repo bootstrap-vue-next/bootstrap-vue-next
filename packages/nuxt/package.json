@@ -47,7 +47,7 @@
     "nuxt": "^3.4.3",
     "prettier": "^2.8.8",
     "unimport": "^3.0.6",
-    "vue": "^3.3.2"
+    "vue": "^3.3.4"
   },
   "repository": {
     "type": "github",

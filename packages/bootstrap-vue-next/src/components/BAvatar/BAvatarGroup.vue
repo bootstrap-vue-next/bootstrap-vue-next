@@ -19,7 +19,7 @@ interface BAvatarGroupProps {
   size?: Size | string
   square?: Booleanish
   tag?: string
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BAvatarGroupProps>(), {
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   square: false,
   tag: 'div',
   size: undefined,
-  variant: undefined,
+  variant: null,
 })
 
 const squareBoolean = useBooleanish(toRef(props, 'square'))

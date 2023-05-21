@@ -15,7 +15,7 @@
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
-      :white="!['warning', 'info', 'light'].includes(variant)"
+      :white="variant !== null && !['warning', 'info', 'light'].includes(variant)"
       :aria-describedby="taglabelId"
       :aria-controls="id"
       @click="emit('remove', tagText)"
@@ -37,7 +37,7 @@ interface BFormTagProps {
   pill?: Booleanish
   removeLabel?: string
   tag?: string
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BFormTagProps>(), {
@@ -71,12 +71,10 @@ const tagText = computed<string>(
 
 const taglabelId = computed<string>(() => `${computedId.value}taglabel__`)
 
-const computedClasses = computed(() => [
-  `bg-${props.variant}`,
-  {
-    'text-dark': ['warning', 'info', 'light'].includes(props.variant),
-    'rounded-pill': pillBoolean.value,
-    'disabled': disabledBoolean.value,
-  },
-])
+const computedClasses = computed(() => ({
+  [`bg-${props.variant}`]: props.variant !== null,
+  'text-dark': props.variant !== null && ['warning', 'info', 'light'].includes(props.variant),
+  'rounded-pill': pillBoolean.value,
+  'disabled': disabledBoolean.value,
+}))
 </script>

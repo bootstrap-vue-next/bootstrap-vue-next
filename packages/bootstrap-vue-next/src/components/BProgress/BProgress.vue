@@ -14,7 +14,7 @@ import {computed, provide, readonly, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
 interface BProgressProps {
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   max?: number | string
   height?: string
   animated?: Booleanish

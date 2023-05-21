@@ -23,13 +23,13 @@ interface BThProps {
   rowspan?: string | number
   stackedHeading?: string
   stickyColumn?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BThProps>(), {
   colspan: undefined,
   rowspan: undefined,
-  variant: undefined,
+  variant: null,
   stackedHeading: undefined,
   stickyColumn: false,
 })
@@ -37,9 +37,9 @@ const props = withDefaults(defineProps<BThProps>(), {
 const stickyColumnBoolean = useBooleanish(toRef(props, 'stickyColumn'))
 
 const computedClasses = computed(() => ({
-  [`table-${props.variant}`]: props.variant !== undefined,
+  [`table-${props.variant}`]: props.variant !== null,
   'b-table-sticky-column': stickyColumnBoolean.value,
-  'table-b-table-default': stickyColumnBoolean.value && props.variant === undefined,
+  'table-b-table-default': stickyColumnBoolean.value && props.variant === null,
 }))
 
 const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))

@@ -57,7 +57,7 @@ const getInputClasses = (items: Ref<InputClassesItemsInput> | InputClassesItemsI
 interface LabelClasesItemsInput {
   plain?: boolean
   button?: boolean
-  buttonVariant?: ButtonVariant
+  buttonVariant?: ButtonVariant | null
   size?: Size
 }
 
@@ -74,7 +74,9 @@ const getLabelClasses = (items: Ref<LabelClasesItemsInput> | LabelClasesItemsInp
     'form-check-label': resolvedItems.value.plain === false && resolvedItems.value.button === false,
     'btn': resolvedItems.value.button === true,
     [`btn-${resolvedItems.value.buttonVariant}`]:
-      resolvedItems.value.button === true && resolvedItems.value.buttonVariant !== undefined,
+      resolvedItems.value.button === true &&
+      resolvedItems.value.buttonVariant !== undefined &&
+      resolvedItems.value.buttonVariant !== null,
     [`btn-${resolvedItems.value.size}`]:
       resolvedItems.value.button && resolvedItems.value.size && resolvedItems.value.size !== 'md',
   }))

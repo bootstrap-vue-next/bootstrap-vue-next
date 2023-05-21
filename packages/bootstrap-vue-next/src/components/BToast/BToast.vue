@@ -46,7 +46,7 @@ export default defineComponent({
     title: {type: String, default: undefined},
     modelValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     toastClass: {type: Array as PropType<string[]>, default: undefined},
-    variant: {type: String as PropType<ColorVariant>, default: undefined},
+    variant: {type: String as PropType<ColorVariant | null>, default: null},
   },
   emits: ['destroyed', 'update:modelValue'],
   setup(props, {emit, slots}) {
@@ -70,7 +70,7 @@ export default defineComponent({
     const isHiding = ref(false)
     const localShow = ref(false)
     const classes = computed(() => ({
-      [`b-toast-${props.variant}`]: props.variant !== undefined,
+      [`b-toast-${props.variant}`]: props.variant !== null,
       show: localShow.value || isTransitioning.value,
     }))
 

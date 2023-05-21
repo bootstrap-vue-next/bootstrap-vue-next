@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
-import {computed, ref, toRef} from 'vue'
+import {computed, nextTick, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId} from '../../composables'
@@ -124,12 +124,9 @@ const computedClasses = computed(() => ({
   'is-invalid': stateBoolean.value === false,
 }))
 
-const computedSelectSize = computed<number | undefined>(() => {
-  if (props.selectSize || plainBoolean.value) {
-    return props.selectSize
-  }
-  return undefined
-})
+const computedSelectSize = computed<number | undefined>(() =>
+  props.selectSize || plainBoolean.value ? props.selectSize : undefined
+)
 
 const computedAriaInvalid = computed(() =>
   resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
@@ -144,9 +141,11 @@ const localValue = computed({
   get: () => modelValue.value,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set: (newValue: any) => {
-    emit('change', newValue)
-    modelValue.value = newValue
     emit('input', newValue)
+    modelValue.value = newValue
+    nextTick(() => {
+      emit('change', newValue)
+    })
   },
 })
 </script>

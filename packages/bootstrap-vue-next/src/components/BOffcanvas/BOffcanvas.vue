@@ -93,7 +93,7 @@ interface BOffcanvasProps {
   id?: string
   noFocus?: Booleanish
   static?: Booleanish
-  backdropVariant?: ColorVariant
+  backdropVariant?: ColorVariant | null
   // TODO responsive doesn't work
   // responsive?: Breakpoint
 }

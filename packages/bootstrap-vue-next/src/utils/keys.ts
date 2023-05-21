@@ -40,7 +40,7 @@ export const avatarGroupInjectionKey: InjectionKey<{
   size: Readonly<Ref<Size | string | undefined>>
   square: Readonly<Ref<boolean>>
   rounded: Readonly<Ref<boolean | string>>
-  variant: Readonly<Ref<ColorVariant | undefined>>
+  variant: Readonly<Ref<ColorVariant | null>>
 }> = Symbol('avatarGroup')
 
 // BAccordion
@@ -62,7 +62,7 @@ export const checkboxGroupKey: InjectionKey<{
     Ref<(unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]>
   >
   switch: Readonly<Ref<boolean>>
-  buttonVariant: Readonly<Ref<ButtonVariant>>
+  buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
   state: Readonly<Ref<boolean | undefined | null>>
@@ -77,7 +77,7 @@ export const checkboxGroupKey: InjectionKey<{
 export const radioGroupKey: InjectionKey<{
   set: (value: string | boolean | unknown[] | Record<string, unknown> | number | null) => void
   modelValue: Readonly<Ref<string | boolean | unknown[] | Record<string, unknown> | number | null>>
-  buttonVariant: Readonly<Ref<ButtonVariant>>
+  buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>
   buttons: Readonly<Ref<boolean>>

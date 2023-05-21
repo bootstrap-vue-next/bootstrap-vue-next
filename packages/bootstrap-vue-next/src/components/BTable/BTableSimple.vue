@@ -18,7 +18,7 @@ import type {Booleanish, Breakpoint, ClassValue, ColorVariant} from '../../types
 interface BTableSimpleProps {
   bordered?: Booleanish
   borderless?: Booleanish
-  borderVariant?: ColorVariant
+  borderVariant?: ColorVariant | null
   captionTop?: Booleanish
   dark?: Booleanish
   hover?: Booleanish
@@ -27,14 +27,14 @@ interface BTableSimpleProps {
   striped?: Booleanish
   small?: Booleanish
   tableClass?: ClassValue
-  tableVariant?: ColorVariant
+  tableVariant?: ColorVariant | null
   stickyHeader?: Booleanish
 }
 
 const props = withDefaults(defineProps<BTableSimpleProps>(), {
-  borderVariant: undefined,
+  borderVariant: null,
   tableClass: undefined,
-  tableVariant: undefined,
+  tableVariant: null,
   bordered: false,
   borderless: false,
   captionTop: false,
@@ -62,7 +62,7 @@ const computedClasses = computed(() => [
   {
     'table-bordered': borderedBoolean.value,
     'table-borderless': borderlessBoolean.value,
-    [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
+    [`border-${props.borderVariant}`]: props.borderVariant !== null,
     'caption-top': captionTopBoolean.value,
     'table-dark': darkBoolean.value,
     'table-hover': hoverBoolean.value,
@@ -70,7 +70,7 @@ const computedClasses = computed(() => [
     [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
     'table-striped': stripedBoolean.value,
     'table-sm': smallBoolean.value,
-    [`table-${props.tableVariant}`]: props.tableVariant !== undefined,
+    [`table-${props.tableVariant}`]: props.tableVariant !== null,
   },
   props.tableClass,
 ])

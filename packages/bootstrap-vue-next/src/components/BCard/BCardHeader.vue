@@ -10,11 +10,11 @@ import BCardHeadFoot from './BCardHeadFoot.vue'
 
 interface BCardHeaderProps {
   text?: string
-  bgVariant?: ColorVariant
-  borderVariant?: ColorVariant
+  bgVariant?: ColorVariant | null
+  borderVariant?: ColorVariant | null
   html?: string
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: TextColorVariant | null
 }
 
 const props = withDefaults(defineProps<BCardHeaderProps>(), {

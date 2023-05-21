@@ -129,7 +129,7 @@ interface BPopoverProps {
   delay?: number | DelayObject
   click?: Booleanish
   manual?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   offset?: number | null
   customClass?: string
   placement?: BPopoverPlacement
@@ -159,7 +159,7 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   delay: () => ({show: 100, hide: 300}),
   click: false,
   manual: false,
-  variant: undefined,
+  variant: null,
   offset: null,
   noFlip: false,
   noShift: false,
@@ -331,7 +331,7 @@ const computedClasses = computed(() => {
     type,
     `b-${type}`,
     {
-      [`b-${type}-${props.variant}`]: props.variant !== undefined,
+      [`b-${type}-${props.variant}`]: props.variant !== null,
       show: showState.value && !hidden.value,
       ['pe-none']: !showState.value,
       fade: !noFadeBoolean.value,

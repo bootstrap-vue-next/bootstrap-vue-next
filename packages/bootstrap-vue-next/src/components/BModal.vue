@@ -111,29 +111,29 @@ defineOptions({
 // Implement auto focus props like autoFocusButton
 
 interface BModalProps {
-  bodyBgVariant?: ColorVariant
+  bodyBgVariant?: ColorVariant | null
   bodyClass?: ClassValue
-  bodyTextVariant?: ColorVariant
+  bodyTextVariant?: ColorVariant | null
   busy?: Booleanish
   lazy?: Booleanish
   buttonSize?: Size
   cancelDisabled?: Booleanish
   cancelTitle?: string
-  cancelVariant?: ButtonVariant
+  cancelVariant?: ButtonVariant | null
   centered?: Booleanish
   contentClass?: ClassValue
   dialogClass?: ClassValue
-  footerBgVariant?: ColorVariant
-  footerBorderVariant?: ColorVariant
+  footerBgVariant?: ColorVariant | null
+  footerBorderVariant?: ColorVariant | null
   footerClass?: ClassValue
-  footerTextVariant?: ColorVariant
+  footerTextVariant?: ColorVariant | null
   fullscreen?: boolean | string
-  headerBgVariant?: ColorVariant
-  headerBorderVariant?: ColorVariant
+  headerBgVariant?: ColorVariant | null
+  headerBorderVariant?: ColorVariant | null
   headerClass?: ClassValue
   headerCloseLabel?: string
   headerCloseWhite?: Booleanish
-  headerTextVariant?: ColorVariant
+  headerTextVariant?: ColorVariant | null
   hideBackdrop?: Booleanish
   hideFooter?: Booleanish
   hideHeader?: Booleanish
@@ -148,7 +148,7 @@ interface BModalProps {
   okDisabled?: Booleanish
   okOnly?: Booleanish
   okTitle?: string
-  okVariant?: ButtonVariant
+  okVariant?: ButtonVariant | null
   scrollable?: Booleanish
   show?: Booleanish
   size?: Size | 'xl'
@@ -161,19 +161,19 @@ interface BModalProps {
 }
 
 const props = withDefaults(defineProps<BModalProps>(), {
-  bodyBgVariant: undefined,
+  bodyBgVariant: null,
   bodyClass: undefined,
-  bodyTextVariant: undefined,
+  bodyTextVariant: null,
   contentClass: undefined,
-  headerTextVariant: undefined,
+  headerTextVariant: null,
   dialogClass: undefined,
-  headerBgVariant: undefined,
-  headerBorderVariant: undefined,
+  headerBgVariant: null,
+  headerBorderVariant: null,
   headerClass: undefined,
-  footerBgVariant: undefined,
-  footerBorderVariant: undefined,
+  footerBgVariant: null,
+  footerBorderVariant: null,
   footerClass: undefined,
-  footerTextVariant: undefined,
+  footerTextVariant: null,
   autoFocusButton: undefined,
   titleClass: undefined,
   title: undefined,
@@ -301,26 +301,26 @@ const modalDialogClasses = computed(() => [
 const bodyClasses = computed(() => [
   props.bodyClass,
   {
-    [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
-    [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
+    [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== null,
+    [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== null,
   },
 ])
 
 const headerClasses = computed(() => [
   props.headerClass,
   {
-    [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== undefined,
-    [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== undefined,
-    [`text-${props.headerTextVariant}`]: props.headerTextVariant !== undefined,
+    [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== null,
+    [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== null,
+    [`text-${props.headerTextVariant}`]: props.headerTextVariant !== null,
   },
 ])
 
 const footerClasses = computed(() => [
   props.footerClass,
   {
-    [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== undefined,
-    [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== undefined,
-    [`text-${props.footerTextVariant}`]: props.footerTextVariant !== undefined,
+    [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== null,
+    [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== null,
+    [`text-${props.footerTextVariant}`]: props.footerTextVariant !== null,
   },
 ])
 

@@ -9,12 +9,14 @@ import type {ColorVariant} from '../../types'
 import {computed} from 'vue'
 
 interface BTBodyProps {
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
-const props = withDefaults(defineProps<BTBodyProps>(), {variant: undefined})
+const props = withDefaults(defineProps<BTBodyProps>(), {
+  variant: null,
+})
 
 const computedClasses = computed(() => ({
-  [`thead-${props.variant}`]: props.variant !== undefined,
+  [`thead-${props.variant}`]: props.variant !== null,
 }))
 </script>

@@ -77,7 +77,7 @@ interface BDropdownProps {
   menuClass?: ClassValue
   size?: Size
   splitClass?: ClassValue
-  splitVariant?: ButtonVariant
+  splitVariant?: ButtonVariant | null
   text?: string
   toggleClass?: ClassValue
   autoClose?: boolean | 'inside' | 'outside'
@@ -100,7 +100,7 @@ interface BDropdownProps {
   splitDisabled?: Booleanish
   noCaret?: Booleanish
   toggleText?: string
-  variant?: ButtonVariant
+  variant?: ButtonVariant | null
   modelValue?: Booleanish
   lazy?: Booleanish
   strategy?: Strategy

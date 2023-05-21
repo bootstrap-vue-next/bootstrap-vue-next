@@ -30,14 +30,14 @@ interface Props {
   showValue?: Booleanish
   striped?: Booleanish
   value?: string | number
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<Props>(), {
   label: undefined,
   labelHtml: undefined,
   max: undefined,
-  variant: undefined,
+  variant: null,
   animated: false,
   precision: 0,
   showProgress: false,
@@ -60,7 +60,7 @@ const computedClasses = computed(() => ({
     parentData?.striped.value ||
     animatedBoolean.value ||
     parentData?.animated.value,
-  [`bg-${props.variant}`]: props.variant !== undefined,
+  [`bg-${props.variant}`]: props.variant !== null,
 }))
 
 const numberPrecision = computed<number>(() =>

@@ -23,13 +23,13 @@ interface Props {
   wrapperTag?: string
   width?: string | number
   cols?: string | number
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   size?: PlaceholderSize
   animation?: PlaceholderAnimation
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: undefined,
+  variant: null,
   size: 'md',
   animation: undefined,
   width: undefined,
@@ -56,7 +56,7 @@ const colsString = computed<string | undefined>(() =>
 
 const computedClasses = computed(() => ({
   [`col-${colsString.value}`]: colsString.value !== undefined && widthString.value === undefined,
-  [`bg-${props.variant}`]: props.variant !== undefined,
+  [`bg-${props.variant}`]: props.variant !== null,
   [`placeholder-${props.size}`]: props.size !== 'md',
 }))
 
