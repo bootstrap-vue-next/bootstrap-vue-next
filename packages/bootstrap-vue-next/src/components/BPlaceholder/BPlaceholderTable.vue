@@ -44,32 +44,32 @@ interface BPlaceholderTableProps {
   cellWidth?: string | number
   size?: PlaceholderSize
   animation?: PlaceholderAnimation
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   headerColumns?: string | number
   hideHeader?: Booleanish
   headerCellWidth?: string | number
   headerSize?: PlaceholderSize
   headerAnimation?: PlaceholderAnimation
-  headerVariant?: ColorVariant
+  headerVariant?: ColorVariant | null
   footerColumns?: string | number
   showFooter?: Booleanish
   footerCellWidth?: string | number
   footerSize?: PlaceholderSize
   footerAnimation?: PlaceholderAnimation
-  footerVariant?: ColorVariant
+  footerVariant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   headerSize: 'md',
   headerAnimation: undefined,
-  headerVariant: undefined,
+  headerVariant: null,
   footerColumns: undefined,
   footerSize: 'md',
   footerAnimation: undefined,
-  footerVariant: undefined,
+  footerVariant: null,
   size: 'md',
   animation: undefined,
-  variant: undefined,
+  variant: null,
   headerColumns: undefined,
   columns: 5,
   rows: 3,

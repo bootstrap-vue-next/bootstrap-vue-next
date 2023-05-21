@@ -17,7 +17,7 @@
           </b-navbar-nav>
           <b-nav>
             <b-button
-              :variant="variant"
+              :variant="null"
               :href="globalData.githubUrl"
               aria-label="Open Github"
               target="_blank"
@@ -26,7 +26,7 @@
               <github-icon aria-hidden />
             </b-button>
             <b-button
-              :variant="variant"
+              :variant="null"
               :href="globalData.opencollectiveUrl"
               aria-label="Open Github"
               target="_blank"
@@ -35,7 +35,7 @@
               <opencollective-icon />
             </b-button>
             <b-button
-              :variant="variant"
+              :variant="null"
               :href="globalData.discordUrl"
               aria-label="Open Discord Server"
               target="_blank"
@@ -44,15 +44,15 @@
               <discord-icon aria-hidden />
             </b-button>
             <client-only>
-              <b-dropdown :variant="variant">
+              <b-dropdown :variant="null">
                 <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
                 <template #button-content>
-                  <component :is="currentIcon" :aria-label="`Toggle theme (${proxy})`" />
+                  <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
                 </template>
                 <b-dropdown-item
                   v-for="el in options"
                   :key="el"
-                  :active="proxy === el"
+                  :active="dark === el"
                   @click="set(el)"
                 >
                   <component :is="map[el]" /> {{ el }}
@@ -121,13 +121,9 @@ import {appInfoKey} from './keys'
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
 
-const variant = null as any
-
 const dark = useColorMode({
   persist: true,
 })
-
-const proxy = readonly(toRef(dark, 'value'))
 
 const map = {
   dark: MoonStarsFill,

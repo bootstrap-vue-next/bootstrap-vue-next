@@ -211,7 +211,7 @@ interface BTableProps {
   captionTop?: Booleanish
   borderless?: Booleanish
   bordered?: Booleanish
-  borderVariant?: ColorVariant
+  borderVariant?: ColorVariant | null
   dark?: Booleanish
   fields?: TableField[]
   footClone?: Booleanish
@@ -228,7 +228,7 @@ interface BTableProps {
   striped?: Booleanish
   stacked?: boolean | Breakpoint
   labelStacked?: boolean
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   sortBy?: string
   sortDesc?: Booleanish
   sortInternal?: Booleanish
@@ -236,7 +236,7 @@ interface BTableProps {
   stickySelect?: Booleanish
   selectHead?: boolean | string
   selectMode?: 'multi' | 'single' | 'range'
-  selectionVariant?: ColorVariant
+  selectionVariant?: ColorVariant | null
   stickyHeader?: Booleanish
   busy?: Booleanish
   showEmpty?: Booleanish
@@ -251,8 +251,8 @@ interface BTableProps {
 const props = withDefaults(defineProps<BTableProps>(), {
   perPage: undefined,
   sortBy: undefined,
-  variant: undefined,
-  borderVariant: undefined,
+  variant: null,
+  borderVariant: null,
   caption: undefined,
   align: undefined,
   filter: undefined,
@@ -561,8 +561,8 @@ const toggleRowDetails = (tr: TableItem) => {
 const getFieldColumnClasses = (field: TableFieldObject) => [
   field.class,
   field.thClass,
-  field.variant ? `table-${field.variant}` : undefined,
   {
+    [`table-${field.variant}`]: field.variant !== null,
     'b-table-sortable-column': isSortable.value && field.sortable,
     'b-table-sticky-column': field.stickyColumn,
   },
@@ -571,11 +571,11 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
 const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
   field.class,
   field.tdClass,
-  field.variant ? `table-${field.variant}` : undefined,
   tr?._cellVariants && tr?._cellVariants[field.key]
     ? `table-${tr?._cellVariants[field.key]}`
     : undefined,
   {
+    [`table-${field.variant}`]: field.variant !== null,
     'b-table-sticky-column': field.stickyColumn,
   },
 ]

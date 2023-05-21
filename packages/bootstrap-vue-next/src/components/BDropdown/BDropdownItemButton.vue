@@ -28,14 +28,14 @@ interface BDropdownItemButtonProps {
   active?: Booleanish
   activeClass?: string
   disabled?: Booleanish
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   active: false,
   activeClass: 'active',
   disabled: false,
-  variant: undefined,
+  variant: null,
   buttonClass: undefined,
 })
 
@@ -53,7 +53,7 @@ const computedClasses = computed(() => [
   {
     [props.activeClass]: activeBoolean.value,
     disabled: disabledBoolean.value,
-    [`text-${props.variant}`]: props.variant !== undefined,
+    [`text-${props.variant}`]: props.variant !== null,
   },
 ])
 

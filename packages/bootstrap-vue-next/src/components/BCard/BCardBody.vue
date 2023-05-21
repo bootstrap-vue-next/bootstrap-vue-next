@@ -31,13 +31,13 @@ import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
 interface BCardBodyProps {
-  bodyBgVariant?: ColorVariant
+  bodyBgVariant?: ColorVariant | null
   bodyTag?: string
-  bodyTextVariant?: TextColorVariant
+  bodyTextVariant?: TextColorVariant | null
   overlay?: Booleanish
   subtitle?: string
   subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant
+  subtitleTextVariant?: TextColorVariant | null
   title?: string
   titleTag?: string
   text?: string
@@ -48,9 +48,9 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   overlay: false,
   titleTag: 'h4',
   subtitleTag: 'h4',
-  bodyBgVariant: undefined,
-  bodyTextVariant: undefined,
-  subtitleTextVariant: undefined,
+  bodyBgVariant: null,
+  bodyTextVariant: null,
+  subtitleTextVariant: null,
   subtitle: undefined,
   title: undefined,
   text: undefined,
@@ -65,7 +65,7 @@ const hasSubtitleSlot = computed<boolean>(() => !isEmptySlot(slots.subtitle))
 
 const computedClasses = computed(() => ({
   'card-img-overlay': overlayBoolean.value,
-  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== undefined,
-  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== undefined,
+  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== null,
+  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== null,
 }))
 </script>

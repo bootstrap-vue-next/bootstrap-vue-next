@@ -16,7 +16,7 @@ interface BFormTextProps {
   inline?: Booleanish
   tag?: string
   text?: string
-  textVariant?: TextColorVariant
+  textVariant?: TextColorVariant | null
 }
 
 const props = withDefaults(defineProps<BFormTextProps>(), {
@@ -29,10 +29,8 @@ const props = withDefaults(defineProps<BFormTextProps>(), {
 
 const inlineBoolean = useBooleanish(toRef(props, 'inline'))
 
-const computedClasses = computed(() => [
-  [`text-${props.textVariant}`],
-  {
-    'form-text': !inlineBoolean.value,
-  },
-])
+const computedClasses = computed(() => ({
+  [`text-${props.textVariant}`]: props.textVariant !== null,
+  'form-text': !inlineBoolean.value,
+}))
 </script>

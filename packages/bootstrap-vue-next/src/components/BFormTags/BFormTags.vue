@@ -78,11 +78,11 @@
               type="button"
               class="btn b-form-tags-button py-0"
               :class="[
-                `btn-${addButtonVariant}`,
+                inputClass,
                 {
+                  [`btn-${addButtonVariant}`]: addButtonVariant !== null,
                   'disabled invisible': inputValue.length === 0,
                 },
-                inputClass,
               ]"
               style="font-size: 90%"
               :disabled="disabledBoolean || inputValue.length === 0 || isLimitReached"
@@ -126,7 +126,7 @@ import {escapeRegExpChars} from '../../utils'
 
 interface BFormTagsProps {
   addButtonText?: string
-  addButtonVariant?: ButtonVariant
+  addButtonVariant?: ButtonVariant | null
   addOnChange?: Booleanish
   autofocus?: Booleanish
   disabled?: Booleanish
@@ -155,7 +155,7 @@ interface BFormTagsProps {
   tagRemoveLabel?: string
   tagRemovedLabel?: string
   tagValidator?: (t: string) => boolean
-  tagVariant?: ColorVariant
+  tagVariant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BFormTagsProps>(), {

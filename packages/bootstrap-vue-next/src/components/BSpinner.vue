@@ -23,13 +23,13 @@ interface BSpinnerProps {
   small?: Booleanish
   tag?: string
   type?: SpinnerType
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BSpinnerProps>(), {
   role: 'status',
   small: false,
-  variant: undefined,
+  variant: null,
   label: undefined,
   tag: 'span',
   type: 'border',
@@ -44,7 +44,7 @@ const computedClasses = computed(() => ({
   'spinner-border-sm': props.type === 'border' && smallBoolean.value,
   'spinner-grow': props.type === 'grow',
   'spinner-grow-sm': props.type === 'grow' && smallBoolean.value,
-  [`text-${props.variant}`]: props.variant !== undefined,
+  [`text-${props.variant}`]: props.variant !== null,
 }))
 
 const hasLabelSlot = computed<boolean>(() => !isEmptySlot(slots.label))

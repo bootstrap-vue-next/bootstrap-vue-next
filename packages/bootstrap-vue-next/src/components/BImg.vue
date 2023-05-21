@@ -1,5 +1,5 @@
 <template>
-  <img :class="computedClasses" v-bind="computedAttrs" @load="emit('load', $event)" />
+  <img :class="computedClasses" v-bind="computedAttrs" />
 </template>
 
 <script setup lang="ts">
@@ -46,12 +46,6 @@ const props = withDefaults(defineProps<BImgProps>(), {
   rounded: false,
   thumbnail: false,
 })
-
-interface Emits {
-  (e: 'load', value: Event): void
-}
-
-const emit = defineEmits<Emits>()
 
 const BLANK_TEMPLATE =
   '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +

@@ -15,6 +15,7 @@ module.exports = defineConfig({
     ecmaVersion: 2020,
   },
   rules: {
+    '@typescript-eslint/no-explicit-any': 'warn',
     'prettier/prettier': [
       'warn',
       {

@@ -21,7 +21,7 @@ export default defineComponent({
     tag: {type: String, default: 'span'},
     textIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     dotIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    variant: {type: String as PropType<ColorVariant>, default: 'secondary'},
+    variant: {type: String as PropType<ColorVariant | null>, default: 'secondary'},
   },
   setup(props) {
     const pillBoolean = useBooleanish(toRef(props, 'pill'))
@@ -36,19 +36,17 @@ export default defineComponent({
       computedLink.value ? BLink : props.tag
     )
 
-    const computedClasses = computed(() => [
-      [`bg-${props.variant}`],
-      {
-        'active': activeBoolean.value,
-        'disabled': disabledBoolean.value,
-        'text-dark': ['warning', 'info', 'light'].includes(props.variant),
-        'rounded-pill': pillBoolean.value,
-        'position-absolute top-0 start-100 translate-middle':
-          textIndicatorBoolean.value || dotIndicatorBoolean.value,
-        'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
-        'text-decoration-none': computedLink.value,
-      },
-    ])
+    const computedClasses = computed(() => ({
+      [`bg-${props.variant}`]: props.variant !== null,
+      'active': activeBoolean.value,
+      'disabled': disabledBoolean.value,
+      'text-dark': props.variant !== null && ['warning', 'info', 'light'].includes(props.variant),
+      'rounded-pill': pillBoolean.value,
+      'position-absolute top-0 start-100 translate-middle':
+        textIndicatorBoolean.value || dotIndicatorBoolean.value,
+      'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
+      'text-decoration-none': computedLink.value,
+    }))
 
     const computedLinkProps = computed(() =>
       computedLink.value ? pluckProps(props, linkProps) : {}

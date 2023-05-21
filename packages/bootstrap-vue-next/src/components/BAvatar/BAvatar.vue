@@ -36,7 +36,7 @@ interface BAvatarProps {
   badgeLeft?: Booleanish
   badgeOffset?: string
   badgeTop?: Booleanish
-  badgeVariant?: ColorVariant
+  badgeVariant?: ColorVariant | null
   button?: Booleanish
   buttonType?: ButtonType
   disabled?: Booleanish
@@ -46,8 +46,8 @@ interface BAvatarProps {
   square?: Booleanish
   src?: string
   text?: string
-  textVariant?: TextColorVariant
-  variant?: ColorVariant
+  textVariant?: TextColorVariant | null
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BAvatarProps>(), {
@@ -57,7 +57,7 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   size: undefined,
   src: undefined,
   text: undefined,
-  textVariant: undefined,
+  textVariant: null,
   alt: 'avatar',
   badge: false,
   badgeLeft: false,
@@ -101,7 +101,9 @@ const computedSize = computed<string | null>(
   () => parentData?.size.value ?? computeSize(props.size)
 )
 
-const computedVariant = computed<ColorVariant>(() => parentData?.variant.value ?? props.variant)
+const computedVariant = computed<ColorVariant | null>(
+  () => parentData?.variant.value ?? props.variant
+)
 
 const computedRounded = computed<string | boolean>(() => parentData?.rounded.value ?? props.rounded)
 
@@ -111,16 +113,21 @@ const computedAttrs = computed(() => ({
   'disabled': disabledBoolean.value || null,
 }))
 
-const badgeClasses = computed(() => [`bg-${props.badgeVariant}`])
+const badgeClasses = computed(() => ({
+  [`bg-${props.badgeVariant}`]: props.badgeVariant !== null,
+}))
 
 const badgeText = computed<string | false>(() => (props.badge === true ? '' : props.badge))
 
-const badgeTextClasses = computed(() => [[`text-${computeContrastVariant(props.badgeVariant)}`]])
+const badgeTextClasses = computed(() => ({
+  [`text-${props.badgeVariant !== null && computeContrastVariant(props.badgeVariant)}`]:
+    props.badgeVariant !== null,
+}))
 
 const computedClasses = computed(() => ({
   [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
-  [`bg-${computedVariant.value}`]: !!computedVariant.value,
-  [`badge`]: !buttonBoolean.value && computedVariant.value && hasDefaultSlot.value,
+  [`bg-${computedVariant.value}`]: computedVariant.value !== null,
+  [`badge`]: !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
   rounded: computedRounded.value === '' || computedRounded.value === true,
   [`rounded-circle`]: !squareBoolean.value && computedRounded.value === 'circle',
   [`rounded-0`]: squareBoolean.value || computedRounded.value === '0',
@@ -131,12 +138,15 @@ const computedClasses = computed(() => ({
   [`rounded-start`]: !squareBoolean.value && computedRounded.value === 'left',
   [`rounded-end`]: !squareBoolean.value && computedRounded.value === 'right',
   btn: buttonBoolean.value,
-  [`btn-${computedVariant.value}`]: buttonBoolean.value ? !!computedVariant.value : false,
+  [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value !== null : false,
 }))
 
-const textClasses = computed(() => [
-  [`text-${props.textVariant || computeContrastVariant(computedVariant.value)}`],
-])
+const textClasses = computed(() => ({
+  [`text-${
+    props.textVariant ||
+    (computedVariant.value !== null && computeContrastVariant(computedVariant.value))
+  }`]: props.textVariant || computedVariant.value !== null,
+}))
 
 const badgeStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset || '0px'

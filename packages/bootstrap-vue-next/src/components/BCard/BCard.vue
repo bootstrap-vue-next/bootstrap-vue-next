@@ -53,26 +53,26 @@ import BCardFooter from './BCardFooter.vue'
 
 interface BCardProps {
   align?: AlignmentTextHorizontal
-  bgVariant?: ColorVariant
-  bodyBgVariant?: ColorVariant
+  bgVariant?: ColorVariant | null
+  bodyBgVariant?: ColorVariant | null
   bodyClass?: ClassValue
   bodyTag?: string
-  bodyTextVariant?: TextColorVariant
-  borderVariant?: ColorVariant
+  bodyTextVariant?: TextColorVariant | null
+  borderVariant?: ColorVariant | null
   footer?: string
-  footerBgVariant?: ColorVariant
-  footerBorderVariant?: ColorVariant
+  footerBgVariant?: ColorVariant | null
+  footerBorderVariant?: ColorVariant | null
   footerClass?: ClassValue
   footerHtml?: string
   footerTag?: string
-  footerTextVariant?: TextColorVariant
+  footerTextVariant?: TextColorVariant | null
   header?: string
-  headerBgVariant?: ColorVariant
-  headerBorderVariant?: ColorVariant
+  headerBgVariant?: ColorVariant | null
+  headerBorderVariant?: ColorVariant | null
   headerClass?: ClassValue
   headerHtml?: string
   headerTag?: string
-  headerTextVariant?: TextColorVariant
+  headerTextVariant?: TextColorVariant | null
   imgAlt?: string
   imgBottom?: Booleanish
   imgEnd?: Booleanish
@@ -85,9 +85,9 @@ interface BCardProps {
   overlay?: Booleanish
   subtitle?: string
   subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant
+  subtitleTextVariant?: TextColorVariant | null
   tag?: string
-  textVariant?: TextColorVariant
+  textVariant?: TextColorVariant | null
   title?: string
   titleTag?: string
   bodyText?: string
@@ -95,22 +95,22 @@ interface BCardProps {
 
 const props = withDefaults(defineProps<BCardProps>(), {
   align: undefined,
-  bgVariant: undefined,
-  bodyBgVariant: undefined,
+  bgVariant: null,
+  bodyBgVariant: null,
   bodyClass: undefined,
-  bodyTextVariant: undefined,
-  borderVariant: undefined,
+  bodyTextVariant: null,
+  borderVariant: null,
   footer: undefined,
-  footerBgVariant: undefined,
-  footerBorderVariant: undefined,
+  footerBgVariant: null,
+  footerBorderVariant: null,
   footerClass: undefined,
-  footerTextVariant: undefined,
+  footerTextVariant: null,
   header: undefined,
-  headerBgVariant: undefined,
-  headerBorderVariant: undefined,
+  headerBgVariant: null,
+  headerBorderVariant: null,
   headerClass: undefined,
-  textVariant: undefined,
-  headerTextVariant: undefined,
+  textVariant: null,
+  headerTextVariant: null,
   imgAlt: undefined,
   title: undefined,
   subtitle: undefined,
@@ -147,9 +147,9 @@ const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 
 const computedClasses = computed(() => ({
   [`text-${props.align}`]: props.align !== undefined,
-  [`text-${props.textVariant}`]: props.textVariant !== undefined,
-  [`bg-${props.bgVariant}`]: props.bgVariant !== undefined,
-  [`border-${props.borderVariant}`]: props.borderVariant !== undefined,
+  [`text-${props.textVariant}`]: props.textVariant !== null,
+  [`bg-${props.bgVariant}`]: props.bgVariant !== null,
+  [`border-${props.borderVariant}`]: props.borderVariant !== null,
   'flex-row': imgStartBoolean.value,
   'flex-row-reverse': imgEndBoolean.value,
 }))

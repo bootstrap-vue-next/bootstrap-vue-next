@@ -38,12 +38,12 @@ interface BListGroupItemProps {
   tag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-  variant?: ColorVariant
+  variant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BListGroupItemProps>(), {
   to: undefined,
-  variant: undefined,
+  variant: null,
   href: undefined,
   action: false,
   active: false,
@@ -83,7 +83,7 @@ const isAction = computed(
 )
 
 const computedClasses = computed(() => ({
-  [`list-group-item-${props.variant}`]: props.variant !== undefined,
+  [`list-group-item-${props.variant}`]: props.variant !== null,
   'list-group-item-action': isAction.value,
   'active': activeBoolean.value,
   'disabled': disabledBoolean.value,

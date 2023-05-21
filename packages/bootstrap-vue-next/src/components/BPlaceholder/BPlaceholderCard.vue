@@ -39,17 +39,17 @@ import {useBooleanish} from '../../composables'
 interface Props {
   noHeader?: Booleanish
   headerWidth?: string | number
-  headerVariant?: ColorVariant
+  headerVariant?: ColorVariant | null
   headerAnimation?: PlaceholderAnimation
   headerSize?: PlaceholderSize
   noFooter?: Booleanish
   footerWidth?: string | number
-  footerVariant?: ColorVariant
+  footerVariant?: ColorVariant | null
   footerAnimation?: PlaceholderAnimation
   footerSize?: PlaceholderSize
   animation?: PlaceholderAnimation
   size?: PlaceholderSize
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   noButton?: Booleanish
   imgBottom?: Booleanish
   imgSrc?: string
@@ -59,16 +59,16 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  footerVariant: undefined,
+  footerVariant: null,
   footerAnimation: undefined,
   footerSize: 'md',
   animation: undefined,
   size: 'md',
-  variant: undefined,
+  variant: null,
   imgSrc: undefined,
   headerAnimation: undefined,
   headerSize: 'md',
-  headerVariant: undefined,
+  headerVariant: null,
   noButton: false,
   headerWidth: 100,
   footerWidth: 100,

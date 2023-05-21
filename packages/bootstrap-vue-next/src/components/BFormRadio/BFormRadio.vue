@@ -48,7 +48,7 @@ interface BFormRadioProps {
   button?: Booleanish
   buttonGroup?: Booleanish
   disabled?: Booleanish
-  buttonVariant?: ButtonVariant
+  buttonVariant?: ButtonVariant | null
   inline?: Booleanish
   required?: Booleanish
   state?: Booleanish | null
@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   modelValue: undefined,
   state: null,
   size: undefined,
-  buttonVariant: undefined,
+  buttonVariant: null,
   inline: false,
   required: false,
   value: true,
@@ -158,7 +158,7 @@ const classesObject = computed(() => ({
   state: stateBoolean.value || parentData?.state.value,
   size: props.size !== undefined ? props.size : parentData?.size.value ?? 'md', // This is where the true default is made
   buttonVariant:
-    props.buttonVariant !== undefined
+    props.buttonVariant !== null
       ? props.buttonVariant
       : parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
 }))

@@ -47,9 +47,9 @@ interface Props {
   show?: Booleanish
   spinnerSmall?: Booleanish
   spinnerType?: SpinnerType
-  spinnerVariant?: ColorVariant
+  spinnerVariant?: ColorVariant | null
   noSpinner?: Booleanish
-  variant?: ColorVariant | 'white' | 'transparent'
+  variant?: ColorVariant | 'white' | 'transparent' | null
   wrapTag?: string
   zIndex?: number | string
 }
@@ -57,7 +57,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   blur: '2px',
   bgColor: undefined,
-  spinnerVariant: undefined,
+  spinnerVariant: null,
   fixed: false,
   noCenter: false,
   noSpinner: false,
@@ -100,14 +100,14 @@ const computedRounded = computed(() =>
 )
 
 const computedVariant = computed(() =>
-  props.variant && !props.bgColor ? `bg-${props.variant}` : ''
+  props.variant !== null && !props.bgColor ? `bg-${props.variant}` : ''
 )
 
 const computedAriaBusy = computed(() => (showBoolean.value ? true : null))
 
 const spinnerAttrs = computed(() => ({
-  type: props.spinnerType || undefined,
-  variant: props.spinnerVariant || undefined,
+  type: props.spinnerType,
+  variant: props.spinnerVariant,
   small: spinnerSmallBoolean.value,
 }))
 

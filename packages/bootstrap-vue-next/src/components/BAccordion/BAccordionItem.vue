@@ -62,6 +62,10 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {
   headerTag: 'h2',
   id: undefined,
   title: undefined,
+  tag: undefined,
+  horizontal: undefined,
+  toggle: undefined,
+  isNav: undefined,
   modelValue: false,
   visible: false,
 })

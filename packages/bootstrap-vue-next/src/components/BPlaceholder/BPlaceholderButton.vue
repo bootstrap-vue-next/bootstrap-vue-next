@@ -11,7 +11,7 @@ interface Props {
   tag?: string
   width?: string | number
   cols?: string | number
-  variant?: ColorVariant
+  variant?: ColorVariant | null
   animation?: PlaceholderAnimation
 }
 
@@ -23,7 +23,13 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'primary',
 })
 
-const computedClasses = computed<string[]>(() => ['btn', `btn-${props.variant}`, 'disabled'])
+const computedClasses = computed(() => [
+  'btn',
+  'disabled',
+  {
+    [`btn-${props.variant}`]: props.variant !== null,
+  },
+])
 
 const computedAttrs = computed(() => ({
   animation: props.animation,

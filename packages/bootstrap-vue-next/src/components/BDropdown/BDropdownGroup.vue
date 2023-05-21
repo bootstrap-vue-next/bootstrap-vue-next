@@ -37,7 +37,7 @@ interface BDropdownGroupProps {
   header?: string
   headerClass?: ClassValue
   headerTag?: string
-  headerVariant?: ColorVariant
+  headerVariant?: ColorVariant | null
 }
 
 const props = withDefaults(defineProps<BDropdownGroupProps>(), {
@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   ariaDescribedby: undefined,
   header: undefined,
   headerClass: undefined,
-  headerVariant: undefined,
+  headerVariant: null,
 })
 
 const headerId = computed<string | undefined>(() =>
@@ -60,7 +60,7 @@ const headerRole = computed<'heading' | undefined>(() =>
 const computedClasses = computed(() => [
   props.headerClass,
   {
-    [`text-${props.headerVariant}`]: props.headerVariant !== undefined,
+    [`text-${props.headerVariant}`]: props.headerVariant !== null,
   },
 ])
 </script>

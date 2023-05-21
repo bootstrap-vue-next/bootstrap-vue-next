@@ -32,9 +32,9 @@ interface BNavItemDropdownProps {
   offset?: string
   autoClose?: boolean | 'inside' | 'outside'
   dark?: Booleanish
-  splitVariant?: ButtonVariant
+  splitVariant?: ButtonVariant | null
   noCaret?: Booleanish
-  variant?: ButtonVariant
+  variant?: ButtonVariant | null
   modelValue?: Booleanish
   lazy?: Booleanish
   strategy?: Strategy
@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
   offset: undefined,
   autoClose: undefined,
   dark: undefined,
-  splitVariant: undefined,
+  splitVariant: null,
   noCaret: undefined,
   variant: 'link',
   modelValue: false,
