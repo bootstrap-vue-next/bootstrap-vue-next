@@ -42,7 +42,7 @@
     "test:ci": "pnpm run test:lint:ci && pnpm run test:unit:ci"
   },
   "peerDependencies": {
-    "vue": "^3.3.2"
+    "vue": "^3.3.4"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.0.0",
@@ -78,7 +78,7 @@
     "vite": "^4.3.5",
     "vite-plugin-dts": "^2.3.0",
     "vitest": "^0.31.0",
-    "vue": "^3.3.2",
+    "vue": "^3.3.4",
     "vue-router": "^4.2.0",
     "vue-tsc": "^1.6.5"
   },

@@ -27,7 +27,7 @@
     "typescript": "^5.0.4",
     "unplugin-icons": "^0.16.1",
     "vitepress": "1.0.0-alpha.75",
-    "vue": "^3.3.2"
+    "vue": "^3.3.4"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",
