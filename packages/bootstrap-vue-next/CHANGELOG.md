@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [0.8.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.8.13...bootstrap-vue-next-v0.8.14) (2023-05-21)
+
+
+### Bug Fixes
+
+* add null as an option for color variant options -- allowing you to express a colorless value ([eb52aee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/eb52aee198fb80fc1299f2eeee69e792685e6bc7))
+* **BNavbar:** xxl not being a valid value for toggleable fixes [#1114](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1114) ([585dd3c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/585dd3c0d71d3c6436078a1532c8191470d1963e))
+* change not being fired on nexttick ([faf6190](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/faf6190a1ecfb55ae4128502f03322af2c2f0506))
+* null being passed instead of undefined for when components send the prop to a downstream prop ([f1e151f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f1e151fac14c1a10f2efb6431d6770b12c8bbbb2))
+
 ## [0.8.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.8.12...bootstrap-vue-next-v0.8.13) (2023-05-17)
 
 
