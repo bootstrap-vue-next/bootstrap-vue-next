@@ -209,7 +209,7 @@ const show = ref(false)
 </script>
 ```
 
-You can customize the options with the bootstrapVueNext key in your nuxt.config. You are able to manually toggle to include composables & directives
+You can customize the options with the bootstrapVueNext key in your nuxt.config
 
 ```ts
 // nuxt.config.js/ts
@@ -218,14 +218,22 @@ export default defineNuxtConfig({
   modules: ['@bootstrap-vue-next/nuxt'],
   bootstrapVueNext: {
     composables: true, // Will include all composables
-    directives: {vBColorMode: true, vBTooltip: true, all: false}, // Will include only vBColorMode & vBTooltip
-    // directives: {vBColorMode: false, vBTooltip: false, all: true} // Will include everything except vBColorMode & vBTooltip
+    // composables: {useBreadcrumb: true, useColorMode: true, all: false}, // Will include only useBreadcrumb & useColorMode
+    // composables: {useBreadcrumb: false, useColorMode: false, all: true} // Will include everything except useBreadcrumb & useColorMode
   },
   css: ['bootstrap/dist/css/bootstrap.min.css'],
 })
 ```
 
 The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build
+
+#### Nuxt and Directives
+
+Directives should be imported directly from the `bootstrap-vue-next` package
+
+```ts
+import {vBColorMode} from 'bootstrap-vue-next'
+```
 
 ## Tree-shake CSS
 
