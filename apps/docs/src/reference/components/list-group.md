@@ -251,15 +251,13 @@ Add the `numbered` property to opt into numbered list group items. Numbers are g
 </b-card>
 
 ```vue-html
-<b-card>
-  <b-list-group numbered>
-    <b-list-group-item>Cras justo odioo</b-list-group-item>
-    <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-    <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-    <b-list-group-item>Vestibulum at eros</b-list-group-item>
-  </b-list-group>
-</b-card>
+<b-list-group numbered>
+  <b-list-group-item>Cras justo odioo</b-list-group-item>
+  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
+  <b-list-group-item>Morbi leo risus</b-list-group-item>
+  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
+  <b-list-group-item>Vestibulum at eros</b-list-group-item>
+</b-list-group>
 ```
 
 These work great with custom content as well.
@@ -291,31 +289,29 @@ These work great with custom content as well.
 </b-card>
 
 ```vue-html
-<b-card>
-  <b-list-group numbered>
-    <b-list-group-item class="d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">Subheading</div>
-        Cras justo odio
-      </div>
-      <b-badge variant="primary" pill>14</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">Subheading</div>
-        Dapibus ac facilisis in
-      </div>
-      <b-badge variant="primary" pill>2</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">Subheading</div>
-        Morbi leo risus
-      </div>
-      <b-badge variant="primary" pill>1</b-badge>
-    </b-list-group-item>
-  </b-list-group>
-</b-card>
+<b-list-group numbered>
+  <b-list-group-item class="d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Subheading</div>
+      Cras justo odio
+    </div>
+    <b-badge variant="primary" pill>14</b-badge>
+  </b-list-group-item>
+  <b-list-group-item class="d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Subheading</div>
+      Dapibus ac facilisis in
+    </div>
+    <b-badge variant="primary" pill>2</b-badge>
+  </b-list-group-item>
+  <b-list-group-item class="d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Subheading</div>
+      Morbi leo risus
+    </div>
+    <b-badge variant="primary" pill>1</b-badge>
+  </b-list-group-item>
+</b-list-group>
 ```
 
 **Note:** When using the numbered property, it supersedes the tag property on `b-list-group` and `b-list-group-item`.
@@ -424,13 +420,11 @@ list group item.
 </b-card>
 
 ```vue-html
-<div>
-  <b-list-group horizontal="md">
-    <b-list-group-item>Cras justo odio</b-list-group-item>
-    <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-  </b-list-group>
-</div>
+<b-list-group horizontal="md">
+  <b-list-group-item>Cras justo odio</b-list-group-item>
+  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
+  <b-list-group-item>Morbi leo risus</b-list-group-item>
+</b-list-group>
 ```
 
 ## Custom content
@@ -470,7 +464,7 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
       </p>
       <small class="text-muted">Donec id elit non mi porta.</small>
     </b-list-group-item>
-  </b-list-group>  
+  </b-list-group>
 </b-card>
 
 ```vue-html
@@ -526,6 +520,6 @@ import {BCard, BListGroup, BBadge, BCardBody, BCardGroup, BListGroupItem} from '
 
 <style lang="scss" scoped>
 .bd-example > .card-body > .list-group {
-    max-width: 400px;
+  max-width: 400px;
 }
 </style>

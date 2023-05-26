@@ -12,12 +12,14 @@
 </b-card>
 
 ```vue-html
-<b-button @click="modal = !modal">
-  Toggle modal
-</b-button>
-<b-modal v-model="modal">
-  Foo bar
-</b-modal>
+<template>
+  <b-button @click="modal = !modal">
+    Toggle modal
+  </b-button>
+  <b-modal v-model="modal">
+    Foo bar
+  </b-modal>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -45,13 +47,15 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
 </b-card>
 
 ```vue-html
-<b-button @click="preventableModal = !preventableModal">
-  Toggle modal
-</b-button>
-<b-modal v-model="preventableModal" title="Hello, World!" @hide.prevent>
-  Foobar?
-  <b-button @click="preventableModal = false">Force leave</b-button>
-</b-modal>
+<template>
+  <b-button @click="preventableModal = !preventableModal">
+    Toggle modal
+  </b-button>
+  <b-modal v-model="preventableModal" title="Hello, World!" @hide.prevent>
+    Foobar?
+    <b-button @click="preventableModal = false">Force leave</b-button>
+  </b-modal>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -78,18 +82,20 @@ const preventableModal = ref(false)
 </b-card>
 
 ```vue-html
-<b-button @click="nestedModal1 = !nestedModal1">Open First Modal</b-button>
-<b-modal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
-  <p class="my-2">First Modal</p>
-  <b-button @click="nestedModal2 = !nestedModal2">Open Second Modal</b-button>
-</b-modal>
-<b-modal v-model="nestedModal2" title="Second Modal" ok-only>
-  <p class="my-2">Second Modal</p>
-  <b-button @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</b-button>
-</b-modal>
-<b-modal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
-  <p class="my-1">Third Modal</p>
-</b-modal>
+<template>
+  <b-button @click="nestedModal1 = !nestedModal1">Open First Modal</b-button>
+  <b-modal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
+    <p class="my-2">First Modal</p>
+    <b-button @click="nestedModal2 = !nestedModal2">Open Second Modal</b-button>
+  </b-modal>
+  <b-modal v-model="nestedModal2" title="Second Modal" ok-only>
+    <p class="my-2">Second Modal</p>
+    <b-button @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</b-button>
+  </b-modal>
+  <b-modal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
+    <p class="my-1">Third Modal</p>
+  </b-modal>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'

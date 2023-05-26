@@ -16,12 +16,10 @@ BootstrapVueNext's `<b-button>` component generates either a `<button>` element,
 </b-card>
 
 ```vue-html
-<b-card>
-  <b-button>Button</b-button>
-  <b-button variant="danger">Button</b-button>
-  <b-button variant="success">Button</b-button>
-  <b-button variant="outline-primary">Button</b-button>
-</b-card>
+<b-button>Button</b-button>
+<b-button variant="danger">Button</b-button>
+<b-button variant="success">Button</b-button>
+<b-button variant="outline-primary">Button</b-button>
 ```
 
 ## Element type
@@ -91,16 +89,14 @@ The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendere
 </b-card>
 
 ```vue-html
-<b-card>
-  <b-button class="mx-1" variant="primary">Primary</b-button>
-  <b-button class="mx-1" variant="secondary">Secondary</b-button>
-  <b-button class="mx-1" variant="success">Success</b-button>
-  <b-button class="mx-1" variant="danger">Danger</b-button>
-  <b-button class="mx-1" variant="warning">Warning</b-button>
-  <b-button class="mx-1" variant="info">Info</b-button>
-  <b-button class="mx-1" variant="light">Light</b-button>
-  <b-button class="mx-1" variant="dark">Dark</b-button>
-</b-card>
+<b-button class="mx-1" variant="primary">Primary</b-button>
+<b-button class="mx-1" variant="secondary">Secondary</b-button>
+<b-button class="mx-1" variant="success">Success</b-button>
+<b-button class="mx-1" variant="danger">Danger</b-button>
+<b-button class="mx-1" variant="warning">Warning</b-button>
+<b-button class="mx-1" variant="info">Info</b-button>
+<b-button class="mx-1" variant="light">Light</b-button>
+<b-button class="mx-1" variant="dark">Dark</b-button>
 ```
 
 ### Outline color variants
@@ -123,16 +119,14 @@ remove all background images and colors on any `<b-button>`:
 </b-card>
 
 ```vue-html
-<b-card>
-  <b-button class="mx-1" variant="outline-primary">Primary</b-button>
-  <b-button class="mx-1" variant="outline-secondary">Secondary</b-button>
-  <b-button class="mx-1" variant="outline-success">Success</b-button>
-  <b-button class="mx-1" variant="outline-danger">Danger</b-button>
-  <b-button class="mx-1" variant="outline-warning">Warning</b-button>
-  <b-button class="mx-1" variant="outline-info">Info</b-button>
-  <b-button class="mx-1" variant="outline-light">Light</b-button>
-  <b-button class="mx-1" variant="outline-dark">Dark</b-button>
-</b-card>
+<b-button class="mx-1" variant="outline-primary">Primary</b-button>
+<b-button class="mx-1" variant="outline-secondary">Secondary</b-button>
+<b-button class="mx-1" variant="outline-success">Success</b-button>
+<b-button class="mx-1" variant="outline-danger">Danger</b-button>
+<b-button class="mx-1" variant="outline-warning">Warning</b-button>
+<b-button class="mx-1" variant="outline-info">Info</b-button>
+<b-button class="mx-1" variant="outline-light">Light</b-button>
+<b-button class="mx-1" variant="outline-dark">Dark</b-button>
 ```
 
 ### Link variant
@@ -145,9 +139,7 @@ padding and size of a button.
 </b-card>
 
 ```vue-html
-<div>
-  <b-button variant="link">Link</b-button>
-</div>
+<b-button variant="link">Link</b-button>
 ```
 
 **Tip:** remove the hover underline from a link variant button by adding the Bootstrap v4.3 utility
@@ -165,12 +157,10 @@ Create responsive stacks of full-width, “block buttons” like those in Bootst
 </b-card>
 
 ```vue-html
-<b-card>
-  <div class="d-grid gap-2">
-    <b-button block variant="primary">Block Level Button</b-button>
-    <b-button block variant="primary">Block Level Button</b-button>
-  </div>
-</b-card>
+<div class="d-grid gap-2">
+  <b-button block variant="primary">Block Level Button</b-button>
+  <b-button block variant="primary">Block Level Button</b-button>
+</div>
 ```
 
 **Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.0/components/buttons/#block-buttons)
@@ -189,14 +179,12 @@ Prefer buttons with a more rounded-pill style? Just set the prop `pill` to true.
 </b-card>
 
 ```vue-html
-<div>
-  <b-button pill>Button</b-button>
-  <b-button pill variant="primary">Button</b-button>
-  <b-button pill variant="outline-secondary">Button</b-button>
-  <b-button pill variant="success">Button</b-button>
-  <b-button pill variant="outline-danger">Button</b-button>
-  <b-button pill variant="info">Button</b-button>
-</div>
+<b-button pill>Button</b-button>
+<b-button pill variant="primary">Button</b-button>
+<b-button pill variant="outline-secondary">Button</b-button>
+<b-button pill variant="success">Button</b-button>
+<b-button pill variant="outline-danger">Button</b-button>
+<b-button pill variant="info">Button</b-button>
 ```
 
 This prop adds the Bootstrap v5 utility class `.rounded-pill` on the rendered button.
@@ -217,14 +205,12 @@ Prefer buttons with a more square corner style? Just set the prop `squared` to t
 </b-card>
 
 ```vue-html
-<div>
-  <b-button squared>Button</b-button>
-  <b-button squared variant="primary">Button</b-button>
-  <b-button squared variant="outline-secondary">Button</b-button>
-  <b-button squared variant="success">Button</b-button>
-  <b-button squared variant="outline-danger">Button</b-button>
-  <b-button squared variant="info">Button</b-button>
-</div>
+<b-button squared>Button</b-button>
+<b-button squared variant="primary">Button</b-button>
+<b-button squared variant="outline-secondary">Button</b-button>
+<b-button squared variant="success">Button</b-button>
+<b-button squared variant="outline-danger">Button</b-button>
+<b-button squared variant="info">Button</b-button>
 ```
 
 The `squared` prop adds the Bootstrap v5 utility class `.rounded-0` on the rendered button. The
@@ -243,10 +229,8 @@ rendered as `<a>` elements and `<router-link>` (i.e. with the `href` or `to` pro
 </b-card>
 
 ```vue-html
-<div>
-  <b-button disabled size="lg" variant="primary">Disabled</b-button>
-  <b-button disabled size="lg">Also Disabled</b-button>
-</div>
+<b-button disabled size="lg" variant="primary">Disabled</b-button>
+<b-button disabled size="lg">Also Disabled</b-button>
 ```
 
 ## Pressed state and toggling

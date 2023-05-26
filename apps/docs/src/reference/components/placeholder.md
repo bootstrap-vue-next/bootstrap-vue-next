@@ -42,7 +42,7 @@ You can adjust the width using props `width` and `cols`. Cols is a number value 
 
 Bootstrap supports two types of animations, `wave` and `glow`
 
-* Note: when using `<b-placeholder-card>`, the image does not inherit an animation
+- Note: when using `<b-placeholder-card>`, the image does not inherit an animation
 
 <b-card>
   <b-placeholder-card style="max-width: 20rem; " animation="glow" />
@@ -104,26 +104,28 @@ The `b-placeholder-wrapper` is a renderless component that picks between a 'load
 </b-card>
 
 ```vue-html
-<b-placeholder-wrapper :loading="loading"> 
-  <template #loading>
-    <b-placeholder-card style="max-width: 20rem;" no-footer />
-  </template>
-  <b-card
-    title="Card Title"
-    img-src="https://picsum.photos/600/300/?image=25"
-    img-alt="Image"
-    img-top
-    tag="article"
-    style="max-width: 20rem;"
-    class="mb-2"
-  >
-    <b-card-text>
-      Some quick example text to build on the card title and make up the bulk of the card's content.
-    </b-card-text>
-    <b-button href="#placeholder-wrapper" variant="primary">Go somewhere</b-button>
-  </b-card>
-</b-placeholder-wrapper>
-<b-button @click="startLoading">Restart</b-button>
+<template>
+  <b-placeholder-wrapper :loading="loading">
+    <template #loading>
+      <b-placeholder-card style="max-width: 20rem;" no-footer />
+    </template>
+    <b-card
+      title="Card Title"
+      img-src="https://picsum.photos/600/300/?image=25"
+      img-alt="Image"
+      img-top
+      tag="article"
+      style="max-width: 20rem;"
+      class="mb-2"
+    >
+      <b-card-text>
+        Some quick example text to build on the card title and make up the bulk of the card's content.
+      </b-card-text>
+      <b-button href="#placeholder-wrapper" variant="primary">Go somewhere</b-button>
+    </b-card>
+  </b-placeholder-wrapper>
+  <b-button @click="startLoading">Restart</b-button>
+</template>
 
 <script setup lang="ts">
 import {ref, onMounted, watchEffect} from 'vue'
@@ -262,32 +264,32 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 </b-card>
 
 ```vue-html
-<b-placeholder-table 
-  columns="3" 
-  rows="2" 
-  show-footer 
-  footer-variant="info" 
-  header-size="lg" 
-  footer-size="xs" 
-  footer-columns="1" 
+<b-placeholder-table
+  columns="3"
+  rows="2"
+  show-footer
+  footer-variant="info"
+  header-size="lg"
+  footer-size="xs"
+  footer-columns="1"
   header-columns="4"
 >
   <template #default>
     <tbody>
-        <tr>
-          <td>
-            <b-placeholder size="lg" variant="secondary" />
-            <b-placeholder size="sm" variant="secondary" />
-            <b-placeholder size="xs" variant="secondary" />
-          </td>
-          <td>
-            <b-placeholder variant="warning" />
-            <b-placeholder animation="wave" variant="warning" />
-          </td>
-          <td>
-            <b-placeholder animation="glow" variant="danger" />
-          </td>
-        </tr>
+      <tr>
+        <td>
+          <b-placeholder size="lg" variant="secondary" />
+          <b-placeholder size="sm" variant="secondary" />
+          <b-placeholder size="xs" variant="secondary" />
+        </td>
+        <td>
+          <b-placeholder variant="warning" />
+          <b-placeholder animation="wave" variant="warning" />
+        </td>
+        <td>
+          <b-placeholder animation="glow" variant="danger" />
+        </td>
+      </tr>
     </tbody>
   </template>
 </b-placeholder-table>
