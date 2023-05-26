@@ -223,11 +223,11 @@ use the `first-number` and `last-number` props.
 </template>
 
 <script setup lang="ts">
-  import {ref} from 'vue'
+import {ref} from 'vue'
 
-  const ex2CurrentPage = ref(5)
-  const ex2PerPage = ref(1)
-  const ex2Rows = ref(100)
+const ex2CurrentPage = ref(5)
+const ex2PerPage = ref(1)
+const ex2Rows = ref(100)
 </script>
 ```
 

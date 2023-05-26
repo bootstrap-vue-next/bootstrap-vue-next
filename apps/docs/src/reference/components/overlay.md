@@ -80,14 +80,14 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
       <label for="bg-opacity">Opacity</label>
       <div class="d-inline">
         <b-form-input
-            id="bg-opacity"
-            v-model="opacity"
-            type="range"
-            number
-            min="0"
-            max="1"
-            step="0.01"
-            class="d-inline"
+          id="bg-opacity"
+          v-model="opacity"
+          type="range"
+          number
+          min="0"
+          max="1"
+          step="0.01"
+          class="d-inline"
         ></b-form-input>
       </div>
       {{ opacity.toFixed(2) }}
@@ -98,18 +98,18 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
     </div>
     <b-col lg="6">
       <b-overlay
-          id="overlay-background"
-          show
-          :variant="variant"
-          :opacity="opacity"
-          :blur="blur"
-          rounded="sm"
+        id="overlay-background"
+        show
+        :variant="variant"
+        :opacity="opacity"
+        :blur="blur"
+        rounded="sm"
         >
         <b-card title="Card with overlay" aria-hidden="true">
           <b-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </b-card-text>
           <b-button disabled variant="primary">Button</b-button>
         </b-card>
@@ -270,54 +270,52 @@ Possible values are:
 - `'right'` for rounding only the two right corners
 
 <b-card>
-    <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
-    <b-row class="text-center mt-3">
-      <b-col md="6">
-        <p>With rounding</p>
-        <b-overlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
-          <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
-        </b-overlay>
-      </b-col>
-      <b-col md="6">
-        <p>Without rounding</p>
-        <b-overlay :show="showRoundedEx" class="d-inline-block">
-          <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
-        </b-overlay>
-      </b-col>
-    </b-row>
+  <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
+  <b-row class="text-center mt-3">
+    <b-col md="6">
+      <p>With rounding</p>
+      <b-overlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
+        <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
+      </b-overlay>
+    </b-col>
+    <b-col md="6">
+      <p>Without rounding</p>
+      <b-overlay :show="showRoundedEx" class="d-inline-block">
+        <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
+      </b-overlay>
+    </b-col>
+  </b-row>
 </b-card>
 
 ```vue-html
 <template>
-  <b-card>
-    <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
-    <b-row class="text-center mt-3">
-      <b-col md="6">
-        <p>With rounding</p>
-        <b-overlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
-          <b-img
-            thumbnail
-            rounded="circle"
-            fluid
-            src="https://picsum.photos/200/200/?image=54"
-            alt="Image 1"
-          ></b-img>
-        </b-overlay>
-      </b-col>
-      <b-col md="6">
-        <p>Without rounding</p>
-        <b-overlay :show="showRoundedEx" class="d-inline-block">
-          <b-img
-            thumbnail
-            rounded="circle"
-            fluid
-            src="https://picsum.photos/200/200/?image=54"
-            alt="Image 1"
-          ></b-img>
-        </b-overlay>
-      </b-col>
-    </b-row>
-  </b-card>
+  <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
+  <b-row class="text-center mt-3">
+    <b-col md="6">
+      <p>With rounding</p>
+      <b-overlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
+        <b-img
+          thumbnail
+          rounded="circle"
+          fluid
+          src="https://picsum.photos/200/200/?image=54"
+          alt="Image 1"
+        ></b-img>
+      </b-overlay>
+    </b-col>
+    <b-col md="6">
+      <p>Without rounding</p>
+      <b-overlay :show="showRoundedEx" class="d-inline-block">
+        <b-img
+          thumbnail
+          rounded="circle"
+          fluid
+          src="https://picsum.photos/200/200/?image=54"
+          alt="Image 1"
+        ></b-img>
+      </b-overlay>
+    </b-col>
+  </b-row>
 </template>
 
 <script setup lang="ts">

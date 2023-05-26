@@ -44,6 +44,7 @@ Dropdowns can be added like so
 </b-card>
 
 ```vue-html
+<template>
 <b-nav pills>
   <b-nav-item active>Active</b-nav-item>
   <b-nav-item>Link</b-nav-item>
@@ -60,6 +61,7 @@ Dropdowns can be added like so
     <b-dropdown-item>Three</b-dropdown-item>
   </b-nav-item-dropdown>
 </b-nav>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'

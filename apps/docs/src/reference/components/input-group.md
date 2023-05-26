@@ -66,14 +66,12 @@ Values will be internally wrapped by a `<b-input-group-text>` to display correct
 </b-card>
 
 ```vue-html
-<div>
-  <b-input-group prepend="$" append=".00">
-    <b-form-input></b-form-input>
-  </b-input-group>
-  <b-input-group prepend="0" append="100" class="mt-3">
-    <b-form-input type="range" min="0" max="100"></b-form-input>
-  </b-input-group>
-</div>
+<b-input-group prepend="$" append=".00">
+  <b-form-input></b-form-input>
+</b-input-group>
+<b-input-group prepend="0" append="100" class="mt-3">
+  <b-form-input type="range" min="0" max="100"></b-form-input>
+</b-input-group>
 ```
 
 ### Using named slots
@@ -99,20 +97,18 @@ The slot content will automatically be wrapped by
 </b-card>
 
 ```vue-html
-<b-card>
-  <b-input-group>
-    <template #prepend>
-      <b-input-group-text>Username</b-input-group-text>
-    </template>
-    <b-form-input></b-form-input>
-    <template #append>
-      <b-dropdown text="Dropdown" variant="success">
-        <b-dropdown-item>Action A</b-dropdown-item>
-        <b-dropdown-item>Action B</b-dropdown-item>
-      </b-dropdown>
-    </template>
-  </b-input-group>
-</b-card>
+<b-input-group>
+  <template #prepend>
+    <b-input-group-text>Username</b-input-group-text>
+  </template>
+  <b-form-input></b-form-input>
+  <template #append>
+    <b-dropdown text="Dropdown" variant="success">
+      <b-dropdown-item>Action A</b-dropdown-item>
+      <b-dropdown-item>Action B</b-dropdown-item>
+    </b-dropdown>
+  </template>
+</b-input-group>
 ```
 
 ### Using sub-components
@@ -122,18 +118,16 @@ like, and use these components to group buttons in your input group. Single butt
 wrapped in these components for proper styling.
 
 <b-card>
-  <div>
-    <b-input-group>
-      <b-input-group-prepend>
-        <b-button variant="outline-info">Button</b-button>
-      </b-input-group-prepend>
-      <b-form-input type="number" min="0.00"></b-form-input>
-      <b-input-group-append>
-        <b-button variant="outline-secondary">Button</b-button>
-        <b-button variant="outline-primary">Button</b-button>
-      </b-input-group-append>
-    </b-input-group>
-  </div>
+  <b-input-group>
+    <b-input-group-prepend>
+      <b-button variant="outline-info">Button</b-button>
+    </b-input-group-prepend>
+    <b-form-input type="number" min="0.00"></b-form-input>
+    <b-input-group-append>
+      <b-button variant="outline-secondary">Button</b-button>
+      <b-button variant="outline-primary">Button</b-button>
+    </b-input-group-append>
+  </b-input-group>
 </b-card>
 
 ```vue-html
@@ -311,15 +305,13 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
 </b-card>
 
 ```vue-html
-<div>
-  <b-input-group prepend="Item">
-    <b-input-group-prepend is-text>
-      <input type="checkbox" aria-label="Checkbox for following text input" />
-    </b-input-group-prepend>
-    <b-input-group-prepend is-text><b>$</b></b-input-group-prepend>
-    <b-form-input type="number" aria-label="Text input with checkbox"></b-form-input>
-  </b-input-group>
-</div>
+<b-input-group prepend="Item">
+  <b-input-group-prepend is-text>
+    <input type="checkbox" aria-label="Checkbox for following text input" />
+  </b-input-group-prepend>
+  <b-input-group-prepend is-text><b>$</b></b-input-group-prepend>
+  <b-form-input type="number" aria-label="Text input with checkbox"></b-form-input>
+</b-input-group>
 ```
 
 ## Dropdown addons

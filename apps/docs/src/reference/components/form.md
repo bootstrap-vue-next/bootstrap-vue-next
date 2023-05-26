@@ -14,7 +14,6 @@ Here's a quick example to demonstrate BootstrapVueNext's form styles. Keep readi
 supported components, form layout, and more.
 
 <b-card>
-
   <div>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
@@ -62,91 +61,87 @@ supported components, form layout, and more.
     <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
     </b-card>
-
   </div>
 </b-card>
 
-
 ```vue-html
 <template>
-  <b-card>
-    <div>
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group
-          id="input-group-1"
-          label="Email address:"
-          label-for="input-1"
-          description="We'll never share your email with anyone else."
+  <div>
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form-group
+        id="input-group-1"
+        label="Email address:"
+        label-for="input-1"
+        description="We'll never share your email with anyone else."
+      >
+        <b-form-input
+          id="input-1"
+          v-model="form.email"
+          type="email"
+          placeholder="Enter email"
+          required
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.name"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group id="input-group-3" label="Food:" label-for="input-3">
+        <b-form-select id="input-3" v-model="form.food" :options="foods" required></b-form-select>
+      </b-form-group>
+      <b-form-group id="input-group-4">
+        <b-form-checkbox-group
+          v-model="form.checked"
+          id="checkboxes-4"
         >
-          <b-form-input
-            id="input-1"
-            v-model="form.email"
-            type="email"
-            placeholder="Enter email"
-            required
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-          <b-form-input
-            id="input-2"
-            v-model="form.name"
-            placeholder="Enter name"
-            required
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-          <b-form-select id="input-3" v-model="form.food" :options="foods" required></b-form-select>
-        </b-form-group>
-        <b-form-group id="input-group-4">
-          <b-form-checkbox-group
-            v-model="form.checked"
-            id="checkboxes-4"
-          >
-            <b-form-checkbox value="me">Check me out</b-form-checkbox>
-            <b-form-checkbox value="that">Check that out</b-form-checkbox>
-          </b-form-checkbox-group>
-        </b-form-group>
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
-      </b-form>
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
-    </div>
-  </b-card>
+          <b-form-checkbox value="me">Check me out</b-form-checkbox>
+          <b-form-checkbox value="that">Check that out</b-form-checkbox>
+        </b-form-checkbox-group>
+      </b-form-group>
+      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
+    </b-form>
+    <b-card class="mt-3" header="Form Data Result">
+      <pre class="m-0">{{ form }}</pre>
+    </b-card>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import {ref, computed, reactive, nextTick} from 'vue'
+import {ref, computed, reactive, nextTick} from 'vue'
 
-  const form = reactive({
-    email: '',
-    name: '',
-    food: null,
-    checked: [],
+const form = reactive({
+  email: '',
+  name: '',
+  food: null,
+  checked: [],
+})
+
+const foods = [{text: 'Select One', value: null}, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
+const show = ref(true)
+
+const onSubmit = (event) => {
+  event.preventDefault()
+  alert(JSON.stringify(form))
+}
+
+const onReset = (event) => {
+  event.preventDefault()
+  // Reset our form values
+  form.email = ''
+  form.name = ''
+  form.food = null
+  form.checked = []
+  // Trick to reset/clear native browser form validation state
+  show.value = false
+  nextTick(() => {
+    show.value = true
   })
-
-  const foods = [{text: 'Select One', value: null}, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
-  const show = ref(true)
-
-  const onSubmit = (event) => {
-    event.preventDefault()
-    alert(JSON.stringify(form))
-  }
-
-  const onReset = (event) => {
-    event.preventDefault()
-    // Reset our form values
-    form.email = ''
-    form.name = ''
-    form.food = null
-    form.checked = []
-    // Trick to reset/clear native browser form validation state
-    show.value = false
-    nextTick(() => {
-      show.value = true
-    })
-  }
+}
 </script>
 ```
 
@@ -161,7 +156,6 @@ You may need to manually address the width and alignment of individual form cont
 include a `<label>` with each form control, even if you need to hide it from non-screenreader
 visitors with class `.visually-hidden`.
 
-
 <b-card>
   <div>
     <b-form>
@@ -192,44 +186,40 @@ visitors with class `.visually-hidden`.
     </b-form>
   </div>
 </b-card>
-
 
 ```vue-html
-<b-card>
-  <div>
-    <b-form>
-      <div class="row">
-        <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
-        <div class="col-lg-3">
-          <b-form-input
-            id="inline-form-input-name"
-            class="mb-2 me-sm-2 mb-sm-0"
-            placeholder="Jane Doe"
-          ></b-form-input>
-        </div>
-        <label class="col-form-label visually-hidden" for="inline-form-input-username"
-          >Username</label
-        >
-        <div class="col-lg-3">
-          <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
-            <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
-          </b-input-group>
-        </div>
-        <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
-          >Remember me</b-form-checkbox
-        >
-        <div class="col-lg-1">
-          <b-button variant="primary">Save</b-button>
-        </div>
+<div>
+  <b-form>
+    <div class="row">
+      <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
+      <div class="col-lg-3">
+        <b-form-input
+          id="inline-form-input-name"
+          class="mb-2 me-sm-2 mb-sm-0"
+          placeholder="Jane Doe"
+        ></b-form-input>
       </div>
-    </b-form>
-  </div>
-</b-card>
+      <label class="col-form-label visually-hidden" for="inline-form-input-username"
+        >Username</label
+      >
+      <div class="col-lg-3">
+        <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
+          <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
+        </b-input-group>
+      </div>
+      <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
+        >Remember me</b-form-checkbox
+      >
+      <div class="col-lg-1">
+        <b-button variant="primary">Save</b-button>
+      </div>
+    </div>
+  </b-form>
+</div>
 ```
 
 Custom form controls and selects are also supported.
 
-
 <b-card>
   <div>
     <b-form>
@@ -255,34 +245,31 @@ Custom form controls and selects are also supported.
     </b-form>
   </div>
 </b-card>
-
 
 ```vue-html
-<b-card>
-  <div>
-    <b-form>
-      <div class="row">
-        <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
-          >Preference</label
-        >
-        <div class="col-lg-2">
-          <b-form-select
-            id="inline-form-custom-select-pref"
-            class="mb-2 me-sm-2 mb-sm-0"
-            :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
-            :value="null"
-          ></b-form-select>
-        </div>
-        <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
-          >Remember my preference</b-form-checkbox
-        >
-        <div class="col-lg-2 col-form-label">
-          <b-button variant="primary">Save</b-button>
-        </div>
+<div>
+  <b-form>
+    <div class="row">
+      <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
+        >Preference</label
+      >
+      <div class="col-lg-2">
+        <b-form-select
+          id="inline-form-custom-select-pref"
+          class="mb-2 me-sm-2 mb-sm-0"
+          :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
+          :value="null"
+        ></b-form-select>
       </div>
-    </b-form>
-  </div>
-</b-card>
+      <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
+        >Remember my preference</b-form-checkbox
+      >
+      <div class="col-lg-2 col-form-label">
+        <b-button variant="primary">Save</b-button>
+      </div>
+    </div>
+  </b-form>
+</div>
 ```
 
 ### Alternatives to hidden labels
@@ -334,7 +321,6 @@ displayed with a muted color and slightly smaller font-size.
 `aria-describedby` attribute. This will ensure that assistive technologies, such as screen readers,
 will announce this help text when the user focuses or enters the control.
 
-
 <b-card>
   <div>
     <b-form @submit.stop.prevent>
@@ -351,25 +337,22 @@ will announce this help text when the user focuses or enters the control.
     </b-form>
   </div>
 </b-card>
-
 
 ```vue-html
-<b-card>
-  <div>
-    <b-form @submit.stop.prevent>
-      <label for="text-password">Password</label>
-      <b-form-input
-        type="password"
-        id="text-password"
-        aria-describedby="password-help-block"
-      ></b-form-input>
-      <b-form-text id="password-help-block">
-        Your password must be 8-20 characters long, contain letters and numbers, and must not
-        contain spaces, special characters, or emoji.
-      </b-form-text>
-    </b-form>
-  </div>
-</b-card>
+<div>
+  <b-form @submit.stop.prevent>
+    <label for="text-password">Password</label>
+    <b-form-input
+      type="password"
+      id="text-password"
+      aria-describedby="password-help-block"
+    ></b-form-input>
+    <b-form-text id="password-help-block">
+      Your password must be 8-20 characters long, contain letters and numbers, and must not
+      contain spaces, special characters, or emoji.
+    </b-form-text>
+  </b-form>
+</div>
 ```
 
 ### Feedback helpers
@@ -395,7 +378,6 @@ text from automatically showing (as the feedback component is not a direct sibli
 control's input). Use the feedback component's `state` prop (bound to the state of the form control)
 or the `force-show` prop to display the feedback.
 
-
 <b-card>
   <div>
     <b-form  @submit.stop.prevent>
@@ -411,28 +393,25 @@ or the `force-show` prop to display the feedback.
   </div>
 </b-card>
 
-
 ```vue-html
 <template>
-  <b-card>
-    <div>
-      <b-form @submit.stop.prevent>
-        <label for="feedback-user">User Id</label>
-        <b-form-input v-model="userId" :state="validation" id="feedback-user"></b-form-input>
-        <b-form-invalid-feedback :state="validation">
-          Your user Id must be 5-12 characters long.
-        </b-form-invalid-feedback>
-        <b-form-valid-feedback :state="validation"> Looks Good. </b-form-valid-feedback>
-      </b-form>
-    </div>
-  </b-card>
+  <div>
+    <b-form @submit.stop.prevent>
+      <label for="feedback-user">User Id</label>
+      <b-form-input v-model="userId" :state="validation" id="feedback-user"></b-form-input>
+      <b-form-invalid-feedback :state="validation">
+        Your user Id must be 5-12 characters long.
+      </b-form-invalid-feedback>
+      <b-form-valid-feedback :state="validation"> Looks Good. </b-form-valid-feedback>
+    </b-form>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import {ref, computed} from 'vue'
+import {ref, computed} from 'vue'
 
-  const userId = ref('')
-  const validation = computed(() => userId.value.length > 4 && userId.value.length < 13)
+const userId = ref('')
+const validation = computed(() => userId.value.length > 4 && userId.value.length < 13)
 </script>
 ```
 

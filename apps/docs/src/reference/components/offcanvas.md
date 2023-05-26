@@ -8,8 +8,10 @@
 </b-card>
 
 ```vue-html
-<b-button @click="click">Show OffCanvas</b-button>
-<b-offcanvas v-model="show"></b-offcanvas>
+<template>
+  <b-button @click="click">Show OffCanvas</b-button>
+  <b-offcanvas v-model="show"></b-offcanvas>
+</template>
 
 <script lang = 'ts'setup>
 import {ref} from 'vue'
@@ -39,11 +41,13 @@ Customize location with four standard options `top, bottom, start, end`
 </b-card>
 
 ```vue-html
-<b-button @click="click" class="m-2">Show start</b-button>
-<b-button @click="click" class="m-2">Show end</b-button>
-<b-button @click="click" class="m-2">Show bottom</b-button>
-<b-button @click="click" class="m-2">Show top</b-button>
-<b-offcanvas v-model="show" :placement="placement" />
+<template>
+  <b-button @click="click" class="m-2">Show start</b-button>
+  <b-button @click="click" class="m-2">Show end</b-button>
+  <b-button @click="click" class="m-2">Show bottom</b-button>
+  <b-button @click="click" class="m-2">Show top</b-button>
+  <b-offcanvas v-model="show" :placement="placement" />
+</template>
 
 <script setup lang="ts">
 import {ref, computed} from 'vue'
@@ -75,7 +79,7 @@ const click = () => {
   show.value = !show.value
 }
 
-  const clickTwo = (place ="start") => {
+const clickTwo = (place ="start") => {
   console.log('c')
   placement.value = place
   show2.value = !show2.value
