@@ -8,6 +8,7 @@
     <b-breadcrumb />
     <b-form-input v-model="inputValue" />
     <b-button @click="addItem">Add</b-button>
+    <b-button variant="danger" @click="breadcrumb.reset">Clear</b-button>
 </b-card>
 
 ```vue
@@ -15,6 +16,7 @@
   <b-breadcrumb />
   <b-form-input v-model="inputValue" />
   <b-button @click="addItem">Add</b-button>
+  <b-button variant="danger" @click="breadcrumb.reset">Clear</b-button>
 </template>
 
 <script setup lang="ts">
