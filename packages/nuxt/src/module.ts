@@ -29,17 +29,9 @@ export default defineNuxtModule<ModuleOptions>({
 
     useComponents()
 
-    if (
-      (normalizedComposables.all === true && normalizedComposables.createBreadcrumb !== false) ||
-      normalizedComposables.createBreadcrumb === true
-    ) {
-      addPlugin(resolver.resolve('./runtime/breadcrumb'))
-    }
-
     const arr: Import[] = []
     if (Object.values(normalizedComposables).some((el) => el === true)) {
       const imports = parseActiveImports(normalizedComposables, {
-        createBreadcrumb: false,
         useBreadcrumb: false,
         useColorMode: false,
       }).map(

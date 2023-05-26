@@ -5,7 +5,6 @@ import './styles/styles.scss'
 
 import * as Components from './components'
 import * as Directives from './directives/exports'
-import {createBreadcrumb} from './composables'
 
 // Inject all components into the global @vue/runtime-core
 // This allows intellisense in templates w/out direct importing
@@ -131,8 +130,6 @@ const plugin: Plugin = {
         app.directive(name, component)
       }
     })
-
-    createBreadcrumb(app)
   },
 }
 
