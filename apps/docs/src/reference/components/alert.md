@@ -35,31 +35,33 @@ Alerts are available for any length of text, as well as an optional dismiss butt
 </b-card>
 
 ```vue-html
-<b-alert :model-value="true">Default Alert</b-alert>
-<b-alert variant="success" :model-value="true">Success Alert</b-alert>
-<b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
-  Dismissible Alert!
-</b-alert>
-<b-alert
-  v-model="dismissCountDown"
-  dismissible
-  variant="warning"
-  @close-countdown="countdown = $event"
->
-  <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
-  <b-progress
+<template>
+  <b-alert :model-value="true">Default Alert</b-alert>
+  <b-alert variant="success" :model-value="true">Success Alert</b-alert>
+  <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
+    Dismissible Alert!
+  </b-alert>
+  <b-alert
+    v-model="dismissCountDown"
+    dismissible
     variant="warning"
-    :max="dismissCountDown"
-    :value="countdown"
-    height="4px"
-  />
-</b-alert>
-<b-button @click="dismissCountDown = dismissCountDown + 1000" variant="info" class="m-1">
-  Add a second to the alert with countdown timer
-</b-button>
-<b-button @click="showDismissibleAlert = !showDismissibleAlert" variant="info" class="m-1">
-  {{ !showDismissibleAlert ? 'show' : 'hide' }} dismissible alert
-</b-button>
+    @close-countdown="countdown = $event"
+  >
+    <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
+    <b-progress
+      variant="warning"
+      :max="dismissCountDown"
+      :value="countdown"
+      height="4px"
+    />
+  </b-alert>
+  <b-button @click="dismissCountDown = dismissCountDown + 1000" variant="info" class="m-1">
+    Add a second to the alert with countdown timer
+  </b-button>
+  <b-button @click="showDismissibleAlert = !showDismissibleAlert" variant="info" class="m-1">
+    {{ !showDismissibleAlert ? 'show' : 'hide' }} dismissible alert
+  </b-button>
+</template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -176,11 +178,11 @@ Using the `dismissible` prop it's possible to dismiss any `<b-alert>` inline. Th
 </b-card>
 
 ```vue-html
-<b-card>
+<template>
   <b-alert v-model="dismissibleAlert" dismissible>
     Dismissible Alert! Click the close button over there <b>&rArr;</b>
   </b-alert>
-</b-card>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -208,17 +210,19 @@ To create a `<b-alert>` that dismisses automatically after some time set the `v-
 </b-card>
 
 ```vue-html
-<b-alert
-  v-model="autoDismissingAlert"
-  :interval="autoDismissingAlertInterval"
-  @close-countdown="autoDismissingAlertCountdown = $event"
->
-  Alert countdown: {{ autoDismissingAlertCountdown }} interval: {{ autoDismissingAlertInterval }}
-</b-alert>
-<b-button @click="autoDismissingAlert = autoDismissingAlert + 1000">Adjust Alert Time +1000</b-button>
-<b-button @click="autoDismissingAlert = autoDismissingAlert - 1000">Adjust Alert Time -1000</b-button>
-<b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100">Adjust Alert interval +100</b-button>
-<b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100">Adjust Alert interval -100</b-button>
+<template>
+  <b-alert
+    v-model="autoDismissingAlert"
+    :interval="autoDismissingAlertInterval"
+    @close-countdown="autoDismissingAlertCountdown = $event"
+  >
+    Alert countdown: {{ autoDismissingAlertCountdown }} interval: {{ autoDismissingAlertInterval }}
+  </b-alert>
+  <b-button @click="autoDismissingAlert = autoDismissingAlert + 1000">Adjust Alert Time +1000</b-button>
+  <b-button @click="autoDismissingAlert = autoDismissingAlert - 1000">Adjust Alert Time -1000</b-button>
+  <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100">Adjust Alert interval +100</b-button>
+  <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100">Adjust Alert interval -100</b-button>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -253,17 +257,19 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
 </b-card>
 
 ```vue-html
-<b-alert
-  v-model="secondAutoDismissingAlert"
-  ref="myAlert"
-  @close-countdown="secondAutoDismissingAlertCountdown = $event"
->
-  Alert countdown: {{ secondAutoDismissingAlertCountdown }}
-</b-alert>
-<b-button @click="pause">pause</b-button>
-<b-button @click="resume">resume</b-button>
-<b-button @click="restart">restart</b-button>
-<b-button @click="stop">stop</b-button>
+<template>
+  <b-alert
+    v-model="secondAutoDismissingAlert"
+    ref="myAlert"
+    @close-countdown="secondAutoDismissingAlertCountdown = $event"
+  >
+    Alert countdown: {{ secondAutoDismissingAlertCountdown }}
+  </b-alert>
+  <b-button @click="pause">pause</b-button>
+  <b-button @click="resume">resume</b-button>
+  <b-button @click="restart">restart</b-button>
+  <b-button @click="stop">stop</b-button>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
