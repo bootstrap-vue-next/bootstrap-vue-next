@@ -20,6 +20,7 @@ We can define when we want to trigger a tooltip with the following modifiers.
 - hover
 - focus
 - manual
+- click
 
 If we don't define any modifier by default is enabled "hover" and "focus".
 
