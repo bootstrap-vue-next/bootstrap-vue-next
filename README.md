@@ -15,10 +15,10 @@
     <img src="https://flat.badgen.net/npm/v/bootstrap-vue-next" alt="Current version">
   </a>
   <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">
-    <img src="https://flat.badgen.net/badge/bootstrap/5.0.x/563d7c" alt="Bootstrap version">
+    <img src="https://flat.badgen.net/badge/bootstrap/5.3.x/563d7c" alt="Bootstrap version">
   </a>
   <a href="https://v3.vuejs.org/">
-    <img src="https://flat.badgen.net/badge/vue.js/3.0.x/4fc08d" alt="Vue.js version">
+    <img src="https://flat.badgen.net/badge/vue.js/3.3.x/4fc08d" alt="Vue.js version">
   </a>
 
   <a href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/actions?workflow=Tests">
