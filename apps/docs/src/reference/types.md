@@ -21,17 +21,24 @@ type Booleanish = 'true' | 'false' | '' | boolean
 
 ## BodyProp
 
-* This type is only used for the Toast component
+- This type is only used for the Toast component
 
 ```ts
-type BodyProp = string | VNode<RendererNode, RendererElement, {
-    [key: string]: any;
-}> | undefined
+type BodyProp =
+  | string
+  | VNode<
+      RendererNode,
+      RendererElement,
+      {
+        [key: string]: any
+      }
+    >
+  | undefined
 ```
 
 ## BPopoverDelayObject
 
-* This type is only used for the Popover component
+- This type is only used for the Popover component
 
 ```ts
 interface BPopoverDelayObject {
@@ -42,7 +49,7 @@ interface BPopoverDelayObject {
 
 ## BreadcrumbItem
 
-* This type is only used for the Breadcrumb component
+- This type is only used for the Breadcrumb component
 
 ```ts
 interface BreadcrumbItemObject {
@@ -228,10 +235,10 @@ type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'te
 
 You can extend some types to use your own values (e.g. colors, sizes). This requires the use of interface augmentation. You can augment next interfaces:
 
-* BaseColorVariant
-* BaseButtonVariant (extends BaseColorVariant)
-* BaseTextColorVariant (extends BaseColorVariant)
-* BaseSize
+- BaseColorVariant
+- BaseButtonVariant (extends BaseColorVariant)
+- BaseTextColorVariant (extends BaseColorVariant)
+- BaseSize
 
 Suppose we want to add a purple style and extra-large (xl) sizes.
 We need to create a declaration file in the root of vue project.
@@ -243,7 +250,7 @@ import 'bootstrap-vue-next'
 
 declare module 'bootstrap-vue-next/dist/src/types' {
   export interface BaseColorVariant {
-    'purple': unknown // we use unknown type because it does not matter here
+    purple: unknown // we use unknown type because it does not matter here
   }
   export interface BaseButtonVariant {
     // there is no need to add "purple" (it inherits from BaseColorVariant)
@@ -253,7 +260,7 @@ declare module 'bootstrap-vue-next/dist/src/types' {
     // there is no need to add "purple" (it inherits from BaseColorVariant)
   }
   export interface BaseSize {
-    'xl': unknown // extra large
+    xl: unknown // extra large
   }
 }
 ```

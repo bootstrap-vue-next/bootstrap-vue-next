@@ -5,18 +5,18 @@
 ## Demo
 
 <b-card ref="target">
-    <b-button @click="changeColor">
-        Current color: {{ mode }}
-    </b-button>
+  <b-button @click="changeColor">
+    Current color: {{ mode }}
+  </b-button>
 </b-card>
 
-```vue
+```vue-html
 <template>
-    <b-card ref="target">
-        <b-button @click="changeColor">
-            Current color: {{ mode }}
-        </b-button>
-    </b-card>
+  <b-card ref="target">
+    <b-button @click="changeColor">
+      Current color: {{ mode }}
+    </b-button>
+  </b-card>
 </template>
 
 <script setup lang="ts">
@@ -26,11 +26,11 @@ import {useColorMode} from 'bootstrap-vue-next'
 const target = ref<HTMLElement | null>(null)
 
 const mode = useColorMode({
-    selector: target,
+  selector: target,
 })
 
 const changeColor = () => {
-    mode.value = mode.value === 'dark' ? 'light' : 'dark'
+  mode.value = mode.value === 'dark' ? 'light' : 'dark'
 }
 </script>
 ```
@@ -42,10 +42,10 @@ import {useColorMode, BCard, BButton} from 'bootstrap-vue-next'
 const target = ref<HTMLElement | null>(null)
 
 const mode = useColorMode({
-    selector: target,
+  selector: target,
 })
 
 const changeColor = () => {
-    mode.value = mode.value === 'dark' ? 'light' : 'dark'
+  mode.value = mode.value === 'dark' ? 'light' : 'dark'
 }
 </script>

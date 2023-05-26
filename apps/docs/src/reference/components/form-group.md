@@ -393,28 +393,26 @@ You can make a floating label by setting the property `floating` to true and spe
 
 ```vue-html
 <template>
-  <b-card>
-    <div>
-      <b-form-group
-        id="fieldset-1"
-        description="Let us know your name."
-        label="Name"
-        label-for="input-floating-1"
-        valid-feedback="Thank you!"
-        :invalid-feedback="floatingInvalidFeedback"
+  <div>
+    <b-form-group
+      id="fieldset-1"
+      description="Let us know your name."
+      label="Name"
+      label-for="input-floating-1"
+      valid-feedback="Thank you!"
+      :invalid-feedback="floatingInvalidFeedback"
+      :state="floatingState"
+      floating
+    >
+      <b-form-input
+        id="input-floating-1"
+        v-model="floatingName"
         :state="floatingState"
-        floating
-      >
-        <b-form-input
-          id="input-floating-1"
-          v-model="floatingName"
-          :state="floatingState"
-          trim
-          placeholder="Enter your name please"
-        ></b-form-input>
-      </b-form-group>
-    </div>
-  </b-card>
+        trim
+        placeholder="Enter your name please"
+      ></b-form-input>
+    </b-form-group>
+  </div>
 </template>
 
 <script setup lang="ts">

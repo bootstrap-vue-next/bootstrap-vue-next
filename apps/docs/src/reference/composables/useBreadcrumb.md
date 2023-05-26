@@ -10,7 +10,7 @@
   <b-button @click="addItem">Add</b-button>
 </b-card>
 
-```vue
+```vue-html
 <template>
   <b-breadcrumb />
   <b-form-input v-model="inputValue" />
@@ -40,7 +40,7 @@ const addItem = () => {
 
 Calling `createBreadcrumb` _once_ is required for useBreadcrumb to function properly. `useBreadcrumb` will work without an instance of `createBreadcrumb`, but the context will not be global. It will be limited to a local state. Depending on the installation method, this will be generally called for you. However, if it is not called, you will want to initialize it _once_ preferrably at the app root. `createBreadcrumb` requires an `App` instance
 
-```vue
+```vue-html
 <script setup lang="ts">
 import {getCurrentInstance} from 'vue'
 
@@ -63,7 +63,7 @@ const breadcrumb = useBreadcrumb()
 const inputValue = ref('')
 
 const addItem = () => {
-    breadcrumb.items.push(inputValue.value)
-    inputValue.value = ''
+  breadcrumb.items.push(inputValue.value)
+  inputValue.value = ''
 }
 </script>
