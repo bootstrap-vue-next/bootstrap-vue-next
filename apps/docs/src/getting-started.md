@@ -1,18 +1,10 @@
 # Introduction
 
-<div class="lead">
-
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites
-
-</div>
-
-<b-alert variant="danger" :model-value="true">
 
 ::: danger NOT PRODUCTION READY
 This project is still in **alpha version**. There is a lot of work to do and the documentation may be out of date, if you want to contribute you can use it and submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or even better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls) 😄
 :::
-
-</b-alert>
 
 ## Why BootstrapVueNext?
 
