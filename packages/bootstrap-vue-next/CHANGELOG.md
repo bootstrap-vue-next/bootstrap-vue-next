@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [0.8.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.8.14...bootstrap-vue-next-v0.8.15) (2023-05-26)
+
+
+### Bug Fixes
+
+* **BDropdown:** using manual control to display/hide the popover it should allow the event update:modelValue when manualBoolean is true ([ba490c9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba490c952a1f2fc16cd1a2beca2bc1b663d6ebc5))
+* **BPopover:** using manual control to display/hide the popover it should allow the event update:modelValue when manualBoolean is true ([d169360](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d16936008c40fc22a7a2a5ccc268d27011171d2b))
+
 ## [0.8.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.8.13...bootstrap-vue-next-v0.8.14) (2023-05-21)
 
 
