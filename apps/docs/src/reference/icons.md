@@ -16,7 +16,6 @@ The preferred installation makes use of [unplugin-vue-components](https://github
 
 To start, install the necessary packages:
 
-<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -40,7 +39,6 @@ npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 
   </b-tab>
 </b-tabs>
-</client-only>
 
 ```ts
 // vite.config.js/ts
@@ -99,7 +97,6 @@ View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-compone
 
 Of course, there is always the ability to slim down. To slim down the installation, you can manually import only the bootstrap-icons icon set, disable auto importing, and not use unplugin-vue-components read below. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size
 
-<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -123,7 +120,6 @@ npm i unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 
   </b-tab>
 </b-tabs>
-</client-only>
 
 ```ts
 // vite.config.ts
@@ -164,7 +160,7 @@ import IBiActivity from '~icons/bi/activity'
 
 <script setup lang="ts">
 import {BTab, BTabs} from 'bootstrap-vue-next'
-import {useLocalStorage} from '@vueuse/core'
+import {useSessionStorage} from '@vueuse/core'
 
-const codePreference = useLocalStorage('code-group-preference', 0)
+const codePreference = useSessionStorage('code-group-preference', 0)
 </script>
