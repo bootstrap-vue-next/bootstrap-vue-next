@@ -16,14 +16,16 @@
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown Button" class="m-md-2">
-  <b-dropdown-item>First Action</b-dropdown-item>
-  <b-dropdown-item>Second Action</b-dropdown-item>
-  <b-dropdown-item>Third Action</b-dropdown-item>
-  <b-dropdown-divider></b-dropdown-divider>
-  <b-dropdown-item active>Active action</b-dropdown-item>
-  <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown Button" class="m-md-2">
+    <b-dropdown-item>First Action</b-dropdown-item>
+    <b-dropdown-item>Second Action</b-dropdown-item>
+    <b-dropdown-item>Third Action</b-dropdown-item>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item active>Active action</b-dropdown-item>
+    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -53,18 +55,20 @@ If both the prop `text` and slot `button-content` are present, the slot `button-
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show1" text="Button text via Prop" class="m-1">
-  <b-dropdown-item href="#">An item</b-dropdown-item>
-  <b-dropdown-item href="#">Another item</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show1" text="Button text via Prop" class="m-1">
+    <b-dropdown-item href="#">An item</b-dropdown-item>
+    <b-dropdown-item href="#">Another item</b-dropdown-item>
+  </b-dropdown>
 
-<b-dropdown v-model="show2" class="m-1">
-  <template #button-content>
-    Custom <strong>Content</strong> with <em>HTML</em> via Slot
-  </template>
-  <b-dropdown-item href="#">An item</b-dropdown-item>
-  <b-dropdown-item href="#">Another item</b-dropdown-item>
-</b-dropdown>
+  <b-dropdown v-model="show2" class="m-1">
+    <template #button-content>
+      Custom <strong>Content</strong> with <em>HTML</em> via Slot
+    </template>
+    <b-dropdown-item href="#">An item</b-dropdown-item>
+    <b-dropdown-item href="#">Another item</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -101,21 +105,23 @@ The dropdown menu can either be _start_ aligned (default) or _end_ aligned to th
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show1" text="Default Alignment" variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
-<b-dropdown v-model="show2" alignStart text="Start Alignment" variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
-<b-dropdown v-model="show3" alignEnd text="End Align" variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show1" text="Default Alignment" variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+  <b-dropdown v-model="show2" alignStart text="Start Alignment" variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+  <b-dropdown v-model="show3" alignEnd text="End Align" variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -139,11 +145,13 @@ Turn your dropdown menu into a drop-up menu by setting the `dropup` prop.
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" dropup text="Drop-up" variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" dropup text="Drop-up" variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -172,17 +180,19 @@ The order of precedence is top -> start -> end -> bottom
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show1" dropend text="Drop-end" variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show1" dropend text="Drop-end" variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
 
-<b-dropdown v-model="show2" dropstart text="Drop-start" variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+  <b-dropdown v-model="show2" dropstart text="Drop-start" variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -205,11 +215,13 @@ By default, dropdowns may flip to the top, or the bottom, based on their current
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="No flipping" no-flip>
-  <b-dropdown-item href="#">An item</b-dropdown-item>
-  <b-dropdown-item href="#">Another item</b-dropdown-item>
-  <b-dropdown-item href="#">Yet Another item</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="No flipping" no-flip>
+    <b-dropdown-item href="#">An item</b-dropdown-item>
+    <b-dropdown-item href="#">Another item</b-dropdown-item>
+    <b-dropdown-item href="#">Yet Another item</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -236,17 +248,19 @@ Like to move your menu away from the toggle buttons a bit? Then use the `offset`
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show1" offset="25" text="Offset Dropdown" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show1" offset="25" text="Offset Dropdown" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
 
-<b-dropdown v-model="show2" :offset="{alignmentAxis: 50, crossAxis: 60, mainAxis: 70}" text="Offset Dropdown 2 dimensions" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+  <b-dropdown v-model="show2" :offset="{alignmentAxis: 50, crossAxis: 60, mainAxis: 70}" text="Offset Dropdown 2 dimensions" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -269,13 +283,13 @@ By default, the floating element will render using _absolute_. You can change th
 </b-card>
 
 ```vue-html
-<b-card>
+<template>
   <b-dropdown v-model="show" text="Strategy fixed" strategy="fixed" class="m-2">
     <b-dropdown-item href="#">Action</b-dropdown-item>
     <b-dropdown-item href="#">Another action</b-dropdown-item>
     <b-dropdown-item href="#">Something else here</b-dropdown-item>
   </b-dropdown>
-</b-card>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -328,45 +342,47 @@ The `auto-close`property has 4 options
 </b-card>
 
 ```vue-html
-<b-dropdown
-  v-model="show1"
-  text="Default Dropdown" 
-  class="m-2"
->
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-</b-dropdown>
-<b-dropdown
-  v-model="show2"
-  text="Clickable outside (auto-close=inside)"
-  auto-close="inside"
-  class="m-2"
->
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-</b-dropdown>
-<b-dropdown
-  v-model="show3"
-  text="Clickable inside (auto-close=outside)"
-  auto-close="outside"
-  class="m-2"
->
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-</b-dropdown>
-<b-dropdown
-  v-model="show4"
-  text="Manual close (auto-close=false)"
-  :auto-close="false"
-  class="m-2"
->
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-</b-dropdown>
+<template>
+  <b-dropdown
+    v-model="show1"
+    text="Default Dropdown"
+    class="m-2"
+  >
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+  <b-dropdown
+    v-model="show2"
+    text="Clickable outside (auto-close=inside)"
+    auto-close="inside"
+    class="m-2"
+  >
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+  <b-dropdown
+    v-model="show3"
+    text="Clickable inside (auto-close=outside)"
+    auto-close="outside"
+    class="m-2"
+  >
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+  <b-dropdown
+    v-model="show4"
+    text="Manual close (auto-close=false)"
+    :auto-close="false"
+    class="m-2"
+  >
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -399,11 +415,13 @@ Create a split dropdown button, where the left button provides standard `click` 
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" split text="Split Dropdown" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" split text="Split Dropdown" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -425,11 +443,13 @@ The left split button defaults to an element of type `<button>` (a `<b-button>` 
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" split split-href="#foo/bar" text="Split Link" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" split split-href="#foo/bar" text="Split Link" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -478,28 +498,30 @@ Set the `size` prop to either `sm` for a small button, or `lg` for a large butto
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show1" size="lg" text="Large" class="m-2">
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show1" size="lg" text="Large" class="m-2">
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
+  </b-dropdown>
 
-<b-dropdown v-model="show2" size="lg" split text="Large Split" class="m-2">
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-</b-dropdown>
-<b-dropdown v-model="show3" size="sm" text="Small" class="m-2">
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-</b-dropdown>
+  <b-dropdown v-model="show2" size="lg" split text="Large Split" class="m-2">
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
+  </b-dropdown>
+  <b-dropdown v-model="show3" size="sm" text="Small" class="m-2">
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
+  </b-dropdown>
 
-<b-dropdown v-model="show4" size="sm" split text="Small Split" class="m-2">
-  <b-dropdown-item-button>Action</b-dropdown-item-button>
-  <b-dropdown-item-button>Another action</b-dropdown-item-button>
-  <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-</b-dropdown>
+  <b-dropdown v-model="show4" size="sm" split text="Small Split" class="m-2">
+    <b-dropdown-item-button>Action</b-dropdown-item-button>
+    <b-dropdown-item-button>Another action</b-dropdown-item-button>
+    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -538,23 +560,25 @@ See the [Variant Reference](/docs/reference/color-variants) for a full list of b
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show1" text="Primary" variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show1" text="Primary" variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
 
-<b-dropdown v-model="show2" text="Success" variant="success" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+  <b-dropdown v-model="show2" text="Success" variant="success" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
 
-<b-dropdown v-model="show3" text="Outline Danger" variant="outline-danger" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+  <b-dropdown v-model="show3" text="Outline Danger" variant="outline-danger" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -588,18 +612,20 @@ split button its variant via the `split-variant` prop
 </b-card>
 
 ```vue-html
-<b-dropdown
-  v-model="show"
-  split
-  split-variant="outline-primary"
-  variant="primary"
-  text="Split Variant Dropdown"
-  class="m-2"
->
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown
+    v-model="show"
+    split
+    split-variant="outline-primary"
+    variant="primary"
+    text="Split Variant Dropdown"
+    class="m-2"
+  >
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -626,14 +652,16 @@ You can render the dropdown menu in dark mode by setting the `dark` property
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown Button" dark class="m-md-2">
-  <b-dropdown-item>First Action</b-dropdown-item>
-  <b-dropdown-item>Second Action</b-dropdown-item>
-  <b-dropdown-item>Third Action</b-dropdown-item>
-  <b-dropdown-divider></b-dropdown-divider>
-  <b-dropdown-item active>Active action</b-dropdown-item>
-  <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown Button" dark class="m-md-2">
+    <b-dropdown-item>First Action</b-dropdown-item>
+    <b-dropdown-item>Second Action</b-dropdown-item>
+    <b-dropdown-item>Third Action</b-dropdown-item>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item active>Active action</b-dropdown-item>
+    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -668,25 +696,27 @@ By default, dropdowns act like buttons and are displayed inline. To create block
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show1" text="Block Level Dropdown" block variant="primary" class="m-2">
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show1" text="Block Level Dropdown" block variant="primary" class="m-2">
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
 
-<b-dropdown
-  v-model="show2"
-  text="Block Level Split Dropdown"
-  block
-  split
-  split-variant="outline-primary"
-  variant="primary"
-  class="m-2"
->
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-</b-dropdown>
+  <b-dropdown
+    v-model="show2"
+    text="Block Level Split Dropdown"
+    block
+    split
+    split-variant="outline-primary"
+    variant="primary"
+    class="m-2"
+  >
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -715,18 +745,20 @@ utility class to the `menu-class` prop
 </b-card>
 
 ```vue-html
-<b-dropdown
-  v-model="show"
-  text="Block Level Dropdown Menu"
-  block
-  variant="primary"
-  class="m-2"
-  menu-class="w-100"
->
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown
+    v-model="show"
+    text="Block Level Dropdown Menu"
+    block
+    variant="primary"
+    class="m-2"
+    menu-class="w-100"
+  >
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -754,12 +786,14 @@ The dropdown can be created with the toggle's caret visually hidden by setting t
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
-  <template #button-content> &#x1f50d;<span class="visually-hidden">Search</span> </template>
-  <b-dropdown-item href="#">Action</b-dropdown-item>
-  <b-dropdown-item href="#">Another action</b-dropdown-item>
-  <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
+    <template #button-content> &#x1f50d;<span class="visually-hidden">Search</span> </template>
+    <b-dropdown-item href="#">Action</b-dropdown-item>
+    <b-dropdown-item href="#">Another action</b-dropdown-item>
+    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -802,13 +836,15 @@ Disabled the dropdown item by setting the `disabled` prop
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown Button" class="m-md-2">
-  <b-dropdown-item>First Action</b-dropdown-item>
-  <b-dropdown-item variant="primary">Second Action</b-dropdown-item>
-  <b-dropdown-item active>Active action</b-dropdown-item>
-  <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  <b-dropdown-item href="Badge">Badge</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown Button" class="m-md-2">
+    <b-dropdown-item>First Action</b-dropdown-item>
+    <b-dropdown-item variant="primary">Second Action</b-dropdown-item>
+    <b-dropdown-item active>Active action</b-dropdown-item>
+    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+    <b-dropdown-item href="Badge">Badge</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -836,12 +872,14 @@ Disabled the dropdown item button by setting the `disabled` prop
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown using buttons as menu items" class="m-2">
-  <b-dropdown-item-button>I'm a button</b-dropdown-item-button>
-  <b-dropdown-item-button active>I'm an active button</b-dropdown-item-button>
-  <b-dropdown-item-button disabled>I'm a button, but disabled!</b-dropdown-item-button>
-  <b-dropdown-item-button>I don't look like a button, but I am!</b-dropdown-item-button>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown using buttons as menu items" class="m-2">
+    <b-dropdown-item-button>I'm a button</b-dropdown-item-button>
+    <b-dropdown-item-button active>I'm an active button</b-dropdown-item-button>
+    <b-dropdown-item-button disabled>I'm a button, but disabled!</b-dropdown-item-button>
+    <b-dropdown-item-button>I don't look like a button, but I am!</b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -867,12 +905,14 @@ Separate groups of related menu items with `<b-dropdown-divider>`
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown with divider" class="m-2">
-  <b-dropdown-item-button>First item</b-dropdown-item-button>
-  <b-dropdown-item-button>Second item</b-dropdown-item-button>
-  <b-dropdown-divider></b-dropdown-divider>
-  <b-dropdown-item-button>Separated Item</b-dropdown-item-button>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown with divider" class="m-2">
+    <b-dropdown-item-button>First item</b-dropdown-item-button>
+    <b-dropdown-item-button>Second item</b-dropdown-item-button>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item-button>Separated Item</b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -900,15 +940,17 @@ constrain/set the menu width.
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown with text" class="m-2">
-  <b-dropdown-text style="width: 240px;">
-    Some example text that's free-flowing within the dropdown menu.
-  </b-dropdown-text>
-  <b-dropdown-text>And this is more example text.</b-dropdown-text>
-  <b-dropdown-divider></b-dropdown-divider>
-  <b-dropdown-item-button>First item</b-dropdown-item-button>
-  <b-dropdown-item-button>Second Item</b-dropdown-item-button>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown with text" class="m-2">
+    <b-dropdown-text style="width: 240px;">
+      Some example text that's free-flowing within the dropdown menu.
+    </b-dropdown-text>
+    <b-dropdown-text>And this is more example text.</b-dropdown-text>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item-button>First item</b-dropdown-item-button>
+    <b-dropdown-item-button>Second Item</b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -943,20 +985,22 @@ Group a set of dropdown sub-components with an optional associated header. Place
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown with group" class="m-2">
-  <b-dropdown-item-button> Non-grouped Item </b-dropdown-item-button>
-  <b-dropdown-divider></b-dropdown-divider>
-  <b-dropdown-group header="Group 1">
-    <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
-    <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
-  </b-dropdown-group>
-  <b-dropdown-group header="Group 2" header-variant="primary">
-    <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
-    <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
-  </b-dropdown-group>
-  <b-dropdown-divider></b-dropdown-divider>
-  <b-dropdown-item-button> Another Non-grouped Item </b-dropdown-item-button>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown with group" class="m-2">
+    <b-dropdown-item-button> Non-grouped Item </b-dropdown-item-button>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-group header="Group 1">
+      <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
+      <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
+    </b-dropdown-group>
+    <b-dropdown-group header="Group 2" header-variant="primary">
+      <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
+      <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
+    </b-dropdown-group>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item-button> Another Non-grouped Item </b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -982,15 +1026,17 @@ Add a header to label sections of actions in any dropdown menu
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown with header" class="m-2">
-  <b-dropdown-header> Dropdown header </b-dropdown-header>
-  <b-dropdown-item-button aria-describedby="dropdown-header-label">
-    First item
-  </b-dropdown-item-button>
-  <b-dropdown-item-button aria-describedby="dropdown-header-label">
-    Second Item
-  </b-dropdown-item-button>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" text="Dropdown with header" class="m-2">
+    <b-dropdown-header> Dropdown header </b-dropdown-header>
+    <b-dropdown-item-button aria-describedby="dropdown-header-label">
+      First item
+    </b-dropdown-item-button>
+    <b-dropdown-item-button aria-describedby="dropdown-header-label">
+      Second Item
+    </b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -1031,21 +1077,23 @@ When using `<b-dropdown-header>` components in the dropdown menu, it is recommen
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" text="Dropdown ARIA" variant="primary" class="m-2">
-  <b-dropdown-header id="dropdown-header-1">Groups</b-dropdown-header>
-  <b-dropdown-item-button aria-describedby="dropdown-header-1">Add</b-dropdown-item-button>
-  <b-dropdown-item-button aria-describedby="dropdown-header-1">Delete</b-dropdown-item-button>
+<template>
+  <b-dropdown v-model="show" text="Dropdown ARIA" variant="primary" class="m-2">
+    <b-dropdown-header id="dropdown-header-1">Groups</b-dropdown-header>
+    <b-dropdown-item-button aria-describedby="dropdown-header-1">Add</b-dropdown-item-button>
+    <b-dropdown-item-button aria-describedby="dropdown-header-1">Delete</b-dropdown-item-button>
 
-  <b-dropdown-header id="dropdown-header-2">Users</b-dropdown-header>
-  <b-dropdown-item-button aria-describedby="dropdown-header-2">Add</b-dropdown-item-button>
-  <b-dropdown-item-button aria-describedby="dropdown-header-2">Delete</b-dropdown-item-button>
+    <b-dropdown-header id="dropdown-header-2">Users</b-dropdown-header>
+    <b-dropdown-item-button aria-describedby="dropdown-header-2">Add</b-dropdown-item-button>
+    <b-dropdown-item-button aria-describedby="dropdown-header-2">Delete</b-dropdown-item-button>
 
-  <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-divider></b-dropdown-divider>
 
-  <b-dropdown-item-button>
-    Something <strong>not</strong> associated with Users
-  </b-dropdown-item-button>
-</b-dropdown>
+    <b-dropdown-item-button>
+      Something <strong>not</strong> associated with Users
+    </b-dropdown-item-button>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -1078,14 +1126,16 @@ Dropdown menus can have their inner content rendered lazily through the `lazy` p
 </b-card>
 
 ```vue-html
-<b-dropdown v-model="show" lazy text="Dropdown">
-  <b-dropdown-item>First Action</b-dropdown-item>
-  <b-dropdown-item>Second Action</b-dropdown-item>
-  <b-dropdown-item>Third Action</b-dropdown-item>
-  <b-dropdown-divider />
-  <b-dropdown-item active>Active action</b-dropdown-item>
-  <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-</b-dropdown>
+<template>
+  <b-dropdown v-model="show" lazy text="Dropdown">
+    <b-dropdown-item>First Action</b-dropdown-item>
+    <b-dropdown-item>Second Action</b-dropdown-item>
+    <b-dropdown-item>Third Action</b-dropdown-item>
+    <b-dropdown-divider />
+    <b-dropdown-item active>Active action</b-dropdown-item>
+    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+  </b-dropdown>
+</template>
 
 <script setup lang="ts">
 import {ref} from 'vue'

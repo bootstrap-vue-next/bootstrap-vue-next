@@ -141,11 +141,10 @@ left+right margins). You can also center images by placing them in a container t
 </b-card>
 
 ```vue-html
-<b-card>
-  <div class="clearfix">
-    <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
-    <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
-</b-card>
+<div class="clearfix">
+  <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
+  <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
+</div>
 ```
 
 **Center aligned (block):**

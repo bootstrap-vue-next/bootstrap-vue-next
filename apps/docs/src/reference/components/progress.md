@@ -178,6 +178,19 @@ The striped gradient can also be animated by setting the `animated` prop.
   <b-button class="mt-3" @click="animate = !animate">Toggle animation</b-button>
 </b-card>
 
+```vue-html
+<template>
+<b-progress :value="75" striped :animated="animate"></b-progress>
+<b-button class="mt-3" @click="animate = !animate">Toggle animation</b-button>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue'
+
+const animate = ref(false)
+</script>
+```
+
 <ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">

@@ -168,44 +168,42 @@ Note, if you want smaller or larger buttons or controls, set the `size` prop dir
 </b-card>
 
 ```vue-html
-<b-card>
-  <div>
-    <b-button-toolbar aria-label="Toolbar with size sm">
-      <b-button-group size="sm" class="mx-1">
-        <b-button>New</b-button>
-        <b-button>Edit</b-button>
-        <b-button>Undo</b-button>
-      </b-button-group>
-    </b-button-toolbar>
-  </div>
-  <div class="mt-2">
-    <b-button-toolbar aria-label="Toolbar with dropdown size sm">
-      <b-dropdown size="sm" class="mx-1" right text="menu">
-        <b-dropdown-item>Item 1</b-dropdown-item>
-        <b-dropdown-item>Item 2</b-dropdown-item>
-        <b-dropdown-item>Item 3</b-dropdown-item>
-      </b-dropdown>
-    </b-button-toolbar>
-  </div>
-  <div class="mt-2">
-    <b-button-toolbar aria-label="Toolbar with size lg">
-      <b-button-group size="lg" class="mx-1">
-        <b-button>New</b-button>
-        <b-button>Edit</b-button>
-        <b-button>Undo</b-button>
-      </b-button-group>
-    </b-button-toolbar>
-  </div>
-  <div class="mt-2">
-    <b-button-toolbar aria-label="Toolbar with dropdown size lg">
-      <b-dropdown size="lg" class="mx-1" right text="menu">
-        <b-dropdown-item>Item 1</b-dropdown-item>
-        <b-dropdown-item>Item 2</b-dropdown-item>
-        <b-dropdown-item>Item 3</b-dropdown-item>
-      </b-dropdown>
-    </b-button-toolbar>
-  </div>
-</b-card>
+<div>
+  <b-button-toolbar aria-label="Toolbar with size sm">
+    <b-button-group size="sm" class="mx-1">
+      <b-button>New</b-button>
+      <b-button>Edit</b-button>
+      <b-button>Undo</b-button>
+    </b-button-group>
+  </b-button-toolbar>
+</div>
+<div class="mt-2">
+  <b-button-toolbar aria-label="Toolbar with dropdown size sm">
+    <b-dropdown size="sm" class="mx-1" right text="menu">
+      <b-dropdown-item>Item 1</b-dropdown-item>
+      <b-dropdown-item>Item 2</b-dropdown-item>
+      <b-dropdown-item>Item 3</b-dropdown-item>
+    </b-dropdown>
+  </b-button-toolbar>
+</div>
+<div class="mt-2">
+  <b-button-toolbar aria-label="Toolbar with size lg">
+    <b-button-group size="lg" class="mx-1">
+      <b-button>New</b-button>
+      <b-button>Edit</b-button>
+      <b-button>Undo</b-button>
+    </b-button-group>
+  </b-button-toolbar>
+</div>
+<div class="mt-2">
+  <b-button-toolbar aria-label="Toolbar with dropdown size lg">
+    <b-dropdown size="lg" class="mx-1" right text="menu">
+      <b-dropdown-item>Item 1</b-dropdown-item>
+      <b-dropdown-item>Item 2</b-dropdown-item>
+      <b-dropdown-item>Item 3</b-dropdown-item>
+    </b-dropdown>
+  </b-button-toolbar>
+</div>
 ```
 
 ## Justify
