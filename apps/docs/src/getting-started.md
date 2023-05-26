@@ -30,6 +30,7 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vu
 
 Install the necessary packages for `BootstrapVueNext`:
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -59,6 +60,7 @@ npm i unplugin-vue-components -D
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 
@@ -104,6 +106,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 Install the necessary packages for `bootstrap-vue-next`:
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -127,6 +130,7 @@ npm i bootstrap bootstrap-vue-next
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 Then, add to your `main.js/ts`:
 
@@ -153,6 +157,7 @@ app.mount('#app')
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`
 
+<client-only>
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
@@ -176,6 +181,7 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 
   </b-tab>
 </b-tabs>
+</client-only>
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed
 
@@ -243,7 +249,7 @@ You can view the planned compatibility list in the following [section](./referen
 
 <script setup lang="ts">
 import {BTab, BTabs} from 'bootstrap-vue-next'
-import {useSessionStorage} from '@vueuse/core'
+import {useLocalStorage} from '@vueuse/core'
 
-const codePreference = useSessionStorage('code-group-preference', 0)
+const codePreference = useLocalStorage('code-group-preference', 0)
 </script>
