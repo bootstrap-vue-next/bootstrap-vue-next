@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.0.7...nuxt-v0.1.0) (2023-05-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **useBreadcrumb:** no longer require createBreadcrumb to be called for global state to work... It will now work out of the box. No extra calls needed. Simply use useBreadcrumb throughout the app and enjoy global state. A remedy is to global search for createBreadcrumb and remove it, it is not needed and not exported.
+
+### Features
+
+* **useBreadcrumb:** no longer require createBreadcrumb to be called for global state to work... It will now work out of the box. No extra calls needed. Simply use useBreadcrumb throughout the app and enjoy global state. A remedy is to global search for createBreadcrumb and remove it, it is not needed and not exported. ([4c6275d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4c6275df98907f50e3b348d9cdd50070f2d80e52))
+
 ## [0.0.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.0.6...nuxt-v0.0.7) (2023-05-17)
 
 
