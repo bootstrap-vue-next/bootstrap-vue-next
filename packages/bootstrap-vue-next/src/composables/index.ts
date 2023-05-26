@@ -1,6 +1,6 @@
 export {default as useAlignment} from './useAlignment'
 export {default as useBooleanish} from './useBooleanish'
-export {createBreadcrumb, useBreadcrumb} from './useBreadcrumb'
+export {default as useBreadcrumb} from './useBreadcrumb'
 export {default as useColorMode} from './useColorMode'
 export {default as useCountdown} from './useCountdown'
 export {

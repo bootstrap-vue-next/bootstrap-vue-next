@@ -1,5 +1,5 @@
 import type {InjectionKey, Ref} from 'vue'
-import type {BreadcrumbItem, ButtonVariant, ColorVariant, Size} from '../types'
+import type {ButtonVariant, ColorVariant, Size} from '../types'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -13,12 +13,6 @@ export const tabsInjectionKey: InjectionKey<{
   lazy: Readonly<Ref<boolean>>
   card: Readonly<Ref<boolean>>
 }> = Symbol('tabs')
-
-// useBreadcrumb
-export const breadcrumbInjectionKey: InjectionKey<{
-  items: BreadcrumbItem[]
-  readonly reset: () => void
-}> = Symbol('breadcrumb')
 
 // BProgress
 export const progressInjectionKey: InjectionKey<{
