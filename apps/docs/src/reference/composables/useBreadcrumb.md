@@ -5,16 +5,16 @@
 ## Demo
 
 <b-card>
-    <b-breadcrumb />
-    <b-form-input v-model="inputValue" />
-    <b-button @click="addItem">Add</b-button>
+  <b-breadcrumb />
+  <b-form-input v-model="inputValue" />
+  <b-button @click="addItem">Add</b-button>
 </b-card>
 
 ```vue
 <template>
-    <b-breadcrumb />
-    <b-form-input v-model="inputValue" />
-    <b-button @click="addItem">Add</b-button>
+  <b-breadcrumb />
+  <b-form-input v-model="inputValue" />
+  <b-button @click="addItem">Add</b-button>
 </template>
 
 <script setup lang="ts">
@@ -30,8 +30,8 @@ const breadcrumb = useBreadcrumb()
 const inputValue = ref('')
 
 const addItem = () => {
-    breadcrumb.items.push(inputValue.value)
-    inputValue.value = ''
+  breadcrumb.items.push(inputValue.value)
+  inputValue.value = ''
 }
 </script>
 ```

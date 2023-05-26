@@ -9,18 +9,17 @@ import {withBase} from 'vitepress'
 import {computed} from 'vue'
 import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 
-const routeLocation = (name: string): string =>
-    withBase(`/reference/composables/${name}`).trim()
+const routeLocation = (name: string): string => withBase(`/reference/composables/${name}`).trim()
 
 const composablesList: {name: string; description: string}[] = [
-    {
-        name: 'useBreadcrumb',
-        description: 'A global breadcrumb system to pair with the b-breadcrumb component'
-    },
-    {
-        name: 'useColorMode',
-        description: 'Implement a color scheme to reactively use light/dark or other color modes. Light and dark themes are included by default, but you can create more by reviewing the usage on the Bootstrap v5 documentation (Color Modes)'
-    }
+  {
+    name: 'useBreadcrumb',
+    description: 'A global breadcrumb system to pair with the b-breadcrumb component'
+  },
+  {
+    name: 'useColorMode',
+    description: 'Implement a color scheme to reactively use light/dark or other color modes. Light and dark themes are included by default, but you can create more by reviewing the usage on the Bootstrap v5 documentation (Color Modes)'
+  }
 ]
 
 const computedComposablesList = computed(() =>

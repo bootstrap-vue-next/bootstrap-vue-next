@@ -11,30 +11,29 @@ import {withBase} from 'vitepress'
 import {computed} from 'vue'
 import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 
-const routeLocation = (name: string): string =>
-    withBase(`/reference/directives/${name}`).trim()
+const routeLocation = (name: string): string => withBase(`/reference/directives/${name}`).trim()
 
 const composablesList: {name: string; description: string}[] = [
-    {
-        name: 'BColorMode',
-        description: 'The BColorMode directive has a similar result to the useColorMode utility, but provides more low level access than the composable',
-    },
-    {
-        name: 'BModal',
-        description: 'Similar to the BToggle directive, the BModal directive is used to trigger the state of a modal through directive',
-    },
-    {
-        name: 'BPopover',
-        description: 'Add popovers to any element on your site, using Bootstrap v4 CSS for styling and animations',
-    },
-    {
-        name: 'BToggle',
-        description: 'A light-weight directive for toggling visibility state for collapses and sidebars by ID. It automatically handles the accessibility attributes on the trigger element',
-    },
-    {
-        name: 'BTooltip',
-        description: 'Add custom tooltips to any element. Tooltips can be triggered by hovering, focusing, or clicking an element',
-    }
+  {
+    name: 'BColorMode',
+    description: 'The BColorMode directive has a similar result to the useColorMode utility, but provides more low level access than the composable',
+  },
+  {
+    name: 'BModal',
+    description: 'Similar to the BToggle directive, the BModal directive is used to trigger the state of a modal through directive',
+  },
+  {
+    name: 'BPopover',
+    description: 'Add popovers to any element on your site, using Bootstrap v4 CSS for styling and animations',
+  },
+  {
+    name: 'BToggle',
+    description: 'A light-weight directive for toggling visibility state for collapses and sidebars by ID. It automatically handles the accessibility attributes on the trigger element',
+  },
+  {
+    name: 'BTooltip',
+    description: 'Add custom tooltips to any element. Tooltips can be triggered by hovering, focusing, or clicking an element',
+  }
 ]
 
 const computedComposablesList = computed(() =>
