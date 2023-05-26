@@ -119,6 +119,17 @@
         </b-popover>
       </b-col>
       <b-col>
+        <b-button ref="popoverManualButtonRef" @click="manualClickPopoverExample = !manualClickPopoverExample" >Manual popover showing</b-button>
+        <b-popover
+          :target="() => popoverManualButtonRef"
+          manual
+          :model-value="manualClickPopoverExample"
+          placement="right"
+        >
+          simple content
+        </b-popover>
+      </b-col>
+      <b-col>
         <b-popover placement="auto">
           <template #title>
             Auto placement
@@ -220,6 +231,8 @@ const popoverInput = ref('foo')
 const popoverRef = ref(null)
 const popoverContainerRef = ref(null)
 const value = ref(true)
+const manualClickPopoverExample = ref(false)
+const popoverManualButtonRef = ref(null)
 
 const textValue = ref('test <b onmouseover="alert(\'XSS testing!\')">with html</b>')
 const popoverPlacemet = ref<BPopoverPlacement>('left')

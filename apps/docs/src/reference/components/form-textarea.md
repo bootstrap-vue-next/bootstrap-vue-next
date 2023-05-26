@@ -15,16 +15,14 @@
 
 ```vue-html
 <template>
-  <b-card>
-    <b-form-textarea
-      id="textarea"
-      v-model="textEx1"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
-    <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
-  </b-card>
+  <b-form-textarea
+    id="textarea"
+    v-model="textEx1"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+  ></b-form-textarea>
+  <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
 </template>
 
 <script setup lang="ts">
@@ -70,34 +68,32 @@ To control width, place the input inside standard Bootstrap grid column.
 </b-card>
 
 ```vue-html
-<b-card>
-  <b-row>
-    <b-col sm="2">
-      <label for="textarea-small">Small:</label>
-    </b-col>
-    <b-col sm="10">
-      <b-form-textarea id="textarea-small" size="sm" placeholder="Small textarea"></b-form-textarea>
-    </b-col>
-  </b-row>
+<b-row>
+  <b-col sm="2">
+    <label for="textarea-small">Small:</label>
+  </b-col>
+  <b-col sm="10">
+    <b-form-textarea id="textarea-small" size="sm" placeholder="Small textarea"></b-form-textarea>
+  </b-col>
+</b-row>
 
-  <b-row class="mt-2">
-    <b-col sm="2">
-      <label for="textarea-default">Default:</label>
-    </b-col>
-    <b-col sm="10">
-      <b-form-textarea id="textarea-default" placeholder="Default textarea"></b-form-textarea>
-    </b-col>
-  </b-row>
+<b-row class="mt-2">
+  <b-col sm="2">
+    <label for="textarea-default">Default:</label>
+  </b-col>
+  <b-col sm="10">
+    <b-form-textarea id="textarea-default" placeholder="Default textarea"></b-form-textarea>
+  </b-col>
+</b-row>
 
-  <b-row class="mt-2">
-    <b-col sm="2">
-      <label for="textarea-large">Large:</label>
-    </b-col>
-    <b-col sm="10">
-      <b-form-textarea id="textarea-large" size="lg" placeholder="Large textarea"></b-form-textarea>
-    </b-col>
-  </b-row>
-</b-card>
+<b-row class="mt-2">
+  <b-col sm="2">
+    <label for="textarea-large">Large:</label>
+  </b-col>
+  <b-col sm="10">
+    <b-form-textarea id="textarea-large" size="lg" placeholder="Large textarea"></b-form-textarea>
+  </b-col>
+</b-row>
 ```
 
 ## Displayed rows
@@ -113,11 +109,9 @@ value). Setting it to null or a value below 2 will result in the default of `2` 
 </b-card>
 
 ```vue-html
-<b-card>
-  <div>
-    <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
-  </div>
-</b-card>
+<div>
+  <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
+</div>
 ```
 
 ### Disable resize handle
@@ -137,16 +131,14 @@ feature, set the `no-resize` prop to `true`.
 </b-card>
 
 ```vue-html
-<b-card>
-  <div>
-    <b-form-textarea
-      id="textarea-no-resize"
-      placeholder="Fixed height textarea"
-      rows="3"
-      no-resize
-    ></b-form-textarea>
-  </div>
-</b-card>
+<div>
+  <b-form-textarea
+    id="textarea-no-resize"
+    placeholder="Fixed height textarea"
+    rows="3"
+    no-resize
+  ></b-form-textarea>
+</div>
 ```
 
 ### Auto height
@@ -180,23 +172,21 @@ To apply one of the contextual state icons on `<b-form-textarea>`, set the `stat
 
 ```vue-html
 <template>
-  <b-card>
-    <div>
-      <b-form-textarea
-        id="textarea-state"
-        v-model="textStates"
-        :state="textStates.length >= 10"
-        placeholder="Enter at least 10 characters"
-        rows="3"
-      ></b-form-textarea>
-    </div>
-  </b-card>
+  <div>
+    <b-form-textarea
+      id="textarea-state"
+      v-model="textStates"
+      :state="textStates.length >= 10"
+      placeholder="Enter at least 10 characters"
+      rows="3"
+    ></b-form-textarea>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import {ref} from 'vue'
+import {ref} from 'vue'
 
-  const textStates = ref('')
+const textStates = ref('')
 </script>
 ```
 
@@ -276,39 +266,37 @@ Formatting does not occur if a `formatter` is not provided.
 
 ```vue-html
 <template>
-  <b-card>
-    <div>
-      <b-form-group
-        label="Textarea with formatter (on input)"
-        label-for="textarea-formatter"
-        description="We will convert your text to lowercase instantly"
-        class="mb-0"
-      >
-        <b-form-textarea
-          id="textarea-formatter"
-          v-model="textFormatter"
-          placeholder="Enter your text"
-          :formatter="formatter"
-        ></b-form-textarea>
-      </b-form-group>
-      <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
-      <b-form-group
-        label="Textarea with lazy formatter (on blur)"
-        label-for="textarea-lazy"
-        description="This one is a little lazy!"
-        class="mb-0"
-      >
-        <b-form-textarea
-          id="textarea-lazy"
-          v-model="textFormatter2"
-          placeholder="Enter your text"
-          lazy-formatter
-          :formatter="formatter"
-        ></b-form-textarea>
-      </b-form-group>
-      <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
-    </div>
-  </b-card>
+  <div>
+    <b-form-group
+      label="Textarea with formatter (on input)"
+      label-for="textarea-formatter"
+      description="We will convert your text to lowercase instantly"
+      class="mb-0"
+    >
+      <b-form-textarea
+        id="textarea-formatter"
+        v-model="textFormatter"
+        placeholder="Enter your text"
+        :formatter="formatter"
+      ></b-form-textarea>
+    </b-form-group>
+    <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
+    <b-form-group
+      label="Textarea with lazy formatter (on blur)"
+      label-for="textarea-lazy"
+      description="This one is a little lazy!"
+      class="mb-0"
+    >
+      <b-form-textarea
+        id="textarea-lazy"
+        v-model="textFormatter2"
+        placeholder="Enter your text"
+        lazy-formatter
+        :formatter="formatter"
+      ></b-form-textarea>
+    </b-form-group>
+    <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -415,19 +403,17 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
 
 ```vue-html
 <template>
-  <b-card>
-    <div>
-      <b-form-textarea
-        id="textarea"
-        ref="textArea"
-        v-model="textSelectEx"
-        placeholder="Enter something..."
-        rows="3"
-        max-rows="6"
-      ></b-form-textarea>
-    </div>
-    <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
-  </b-card>
+  <div>
+    <b-form-textarea
+      id="textarea"
+      ref="textArea"
+      v-model="textSelectEx"
+      placeholder="Enter something..."
+      rows="3"
+      max-rows="6"
+    ></b-form-textarea>
+  </div>
+  <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
 </template>
 
 <script setup lang="ts">

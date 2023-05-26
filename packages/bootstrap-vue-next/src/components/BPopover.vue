@@ -397,6 +397,7 @@ const hide = (e: Event) => {
   setTimeout(() => {
     if (
       e?.type === 'click' ||
+      (e?.type === 'update:modelValue' && manualBoolean.value) ||
       (isOutside.value &&
         triggerIsOutside.value &&
         !element.value?.contains(document?.activeElement))

@@ -331,19 +331,17 @@ The following properties are available for the `header` and `footer` slots:
 </b-card>
 
 ```vue-html
-<b-card>
-  <div>
-    <b-collapse id="my-collapse">
-      <template #header="{visible, toggle, id}">
-        <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
-            <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
-        </b-button>
-      </template>
-      <!-- Content here -->
-      <div class="mt-2">This is data that's being collapsed</div>
-    </b-collapse>
-  </div>
-</b-card>
+<div>
+  <b-collapse id="my-collapse">
+    <template #header="{visible, toggle, id}">
+      <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
+          <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
+      </b-button>
+    </template>
+    <!-- Content here -->
+    <div class="mt-2">This is data that's being collapsed</div>
+  </b-collapse>
+</div>
 ```
 
 ## Optionally scoped default slot

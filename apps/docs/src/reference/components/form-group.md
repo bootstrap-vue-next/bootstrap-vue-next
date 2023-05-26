@@ -20,20 +20,22 @@
 </b-card>
 
 ```vue-html
-<div>
-  <b-form-group
-    id="fieldset-1"
-    description="Let us know your name."
-    label="Enter your name"
-    label-for="input-1"
-    valid-feedback="Thank you!"
-    :invalid-feedback="invalidFeedback"
-    :state="state"
-    label-class="mb-1"
-  >
-    <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
-  </b-form-group>
-</div>
+<template>
+  <div>
+    <b-form-group
+      id="fieldset-1"
+      description="Let us know your name."
+      label="Enter your name"
+      label-for="input-1"
+      valid-feedback="Thank you!"
+      :invalid-feedback="invalidFeedback"
+      :state="state"
+      label-class="mb-1"
+    >
+      <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
+    </b-form-group>
+  </div>
+</template>
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
@@ -390,28 +392,30 @@ You can make a floating label by setting the property `floating` to true and spe
 </b-card>
 
 ```vue-html
-<b-card>
-  <div>
-    <b-form-group
-      id="fieldset-1"
-      description="Let us know your name."
-      label="Name"
-      label-for="input-floating-1"
-      valid-feedback="Thank you!"
-      :invalid-feedback="floatingInvalidFeedback"
-      :state="floatingState"
-      floating
-    >
-      <b-form-input
-        id="input-floating-1"
-        v-model="floatingName"
+<template>
+  <b-card>
+    <div>
+      <b-form-group
+        id="fieldset-1"
+        description="Let us know your name."
+        label="Name"
+        label-for="input-floating-1"
+        valid-feedback="Thank you!"
+        :invalid-feedback="floatingInvalidFeedback"
         :state="floatingState"
-        trim
-        placeholder="Enter your name please"
-      ></b-form-input>
-    </b-form-group>
-  </div>
-</b-card>
+        floating
+      >
+        <b-form-input
+          id="input-floating-1"
+          v-model="floatingName"
+          :state="floatingState"
+          trim
+          placeholder="Enter your name please"
+        ></b-form-input>
+      </b-form-group>
+    </div>
+  </b-card>
+</template>
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
