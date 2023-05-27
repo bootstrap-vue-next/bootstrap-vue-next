@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, Breakpoint, ClassValue, ColorVariant} from '../../types'
 
@@ -47,14 +47,19 @@ const props = withDefaults(defineProps<BTableSimpleProps>(), {
   stickyHeader: false,
 })
 
-const captionTopBoolean = useBooleanish(toRef(props, 'captionTop'))
-const borderlessBoolean = useBooleanish(toRef(props, 'borderless'))
-const borderedBoolean = useBooleanish(toRef(props, 'bordered'))
-const darkBoolean = useBooleanish(toRef(props, 'dark'))
-const hoverBoolean = useBooleanish(toRef(props, 'hover'))
-const smallBoolean = useBooleanish(toRef(props, 'small'))
-const stripedBoolean = useBooleanish(toRef(props, 'striped'))
-const stickyHeaderBoolean = useBooleanish(toRef(props, 'stickyHeader'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const captionTopBoolean = useBooleanish(() => props.captionTop)
+const borderlessBoolean = useBooleanish(() => props.borderless)
+const borderedBoolean = useBooleanish(() => props.bordered)
+const darkBoolean = useBooleanish(() => props.dark)
+const hoverBoolean = useBooleanish(() => props.hover)
+const smallBoolean = useBooleanish(() => props.small)
+const stripedBoolean = useBooleanish(() => props.striped)
+const stickyHeaderBoolean = useBooleanish(() => props.stickyHeader)
 
 const computedClasses = computed(() => [
   'table',

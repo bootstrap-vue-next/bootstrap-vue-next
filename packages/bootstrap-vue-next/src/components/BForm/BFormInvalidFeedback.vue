@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -33,9 +33,14 @@ const props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
   tooltip: false,
 })
 
-const forceShowBoolean = useBooleanish(toRef(props, 'forceShow'))
-const stateBoolean = useBooleanish(toRef(props, 'state'))
-const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const forceShowBoolean = useBooleanish(() => props.forceShow)
+const stateBoolean = useBooleanish(() => props.state)
+const tooltipBoolean = useBooleanish(() => props.tooltip)
 
 const computedShow = computed<boolean>(
   () => forceShowBoolean.value === true || stateBoolean.value === false

@@ -40,6 +40,13 @@ const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
   valueField: 'value',
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  first?: (props: Record<string, never>) => any
+}>()
+
 // TODO this needs to be redone to fit the structure of BFormCheckboxGroup
 const formOptions = computed(() =>
   normalizeOptions(props.options as any[], 'BFormSelectOptionGroup', props)

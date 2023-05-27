@@ -30,6 +30,11 @@ const props = withDefaults(defineProps<BCardHeaderProps>(), {
   textVariant: null,
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== null,
   [`bg-${props.bgVariant}`]: props.bgVariant !== null,

@@ -8,7 +8,6 @@ import {
   onUnmounted,
   type PropType,
   ref,
-  toRef,
   type VNode,
   watch,
 } from 'vue'
@@ -52,19 +51,19 @@ export default defineComponent({
   setup(props, {emit, slots}) {
     // TODO animation is never used
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const animationBoolean = useBooleanish(toRef(props, 'animation'))
-    const isStatusBoolean = useBooleanish(toRef(props, 'isStatus'))
-    const autoHideBoolean = useBooleanish(toRef(props, 'autoHide'))
-    const noCloseButtonBoolean = useBooleanish(toRef(props, 'noCloseButton'))
-    const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
-    const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
+    const animationBoolean = useBooleanish(() => props.animation)
+    const isStatusBoolean = useBooleanish(() => props.isStatus)
+    const autoHideBoolean = useBooleanish(() => props.autoHide)
+    const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
+    const noFadeBoolean = useBooleanish(() => props.noFade)
+    const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
     // TODO solid is never used
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const solidBoolean = useBooleanish(toRef(props, 'solid'))
+    const solidBoolean = useBooleanish(() => props.solid)
     // TODO static is never used
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const staticBoolean = useBooleanish(toRef(props, 'static'))
-    const modelValueBoolean = useBooleanish(toRef(props, 'modelValue'))
+    const staticBoolean = useBooleanish(() => props.static)
+    const modelValueBoolean = useBooleanish(() => props.modelValue)
 
     const isTransitioning = ref(false)
     const isHiding = ref(false)

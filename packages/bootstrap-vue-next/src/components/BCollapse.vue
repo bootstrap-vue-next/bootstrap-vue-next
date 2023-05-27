@@ -1,5 +1,8 @@
 <template>
-  <slot name="header" v-bind="{visible: modelValueBoolean, toggle, open, close, id: computedId}" />
+  <slot
+    name="header"
+    v-bind="{visible: modelValueBoolean, toggle: toggleFn, open, close, id: computedId}"
+  />
   <component
     :is="tag"
     :id="computedId"
@@ -11,11 +14,14 @@
   >
     <slot v-bind="{visible: modelValueBoolean, toggle, open, close}" />
   </component>
-  <slot name="footer" v-bind="{visible: modelValueBoolean, toggle, open, close, id: computedId}" />
+  <slot
+    name="footer"
+    v-bind="{visible: modelValueBoolean, toggle: toggleFn, open, close, id: computedId}"
+  />
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, provide, readonly, ref, toRef, watch} from 'vue'
+import {computed, nextTick, onMounted, provide, readonly, ref, watch} from 'vue'
 import {useBooleanish, useId} from '../composables'
 import {useEventListener, useVModel} from '@vueuse/core'
 import type {Booleanish} from '../types'
@@ -59,6 +65,32 @@ const props = withDefaults(defineProps<BCollapseProps>(), {
 
 const emit = defineEmits<BCollapseEmits>()
 
+defineSlots<{
+  header?: (props: {
+    visible: boolean
+    toggle: () => void
+    open: () => void
+    close: () => void
+    id: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  default?: (props: {
+    visible: boolean
+    toggle: () => void
+    open: () => void
+    close: () => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  footer?: (props: {
+    visible: boolean
+    toggle: () => void
+    open: () => void
+    close: () => void
+    id: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+}>()
+
 const buildTriggerableEvent = (
   type: string,
   opts: Partial<BvTriggerableEvent> = {}
@@ -75,12 +107,12 @@ const buildTriggerableEvent = (
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
-const toggleBoolean = useBooleanish(toRef(props, 'toggle'))
-const horizontalBoolean = useBooleanish(toRef(props, 'horizontal'))
-const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
-const visibleBoolean = useBooleanish(toRef(props, 'visible'))
+const toggleBoolean = useBooleanish(() => props.toggle)
+const horizontalBoolean = useBooleanish(() => props.horizontal)
+const isNavBoolean = useBooleanish(() => props.isNav)
+const visibleBoolean = useBooleanish(() => props.visible)
 
-const computedId = useId(toRef(props, 'id'), 'collapse')
+const computedId = useId(() => props.id, 'collapse')
 
 const element = ref<HTMLElement | null>(null)
 const isCollapsing = ref(false)
@@ -94,9 +126,15 @@ const computedClasses = computed(() => ({
   'collapse-horizontal': horizontalBoolean.value,
 }))
 
-const close = () => (modelValue.value = false)
-const open = () => (modelValue.value = true)
-const toggle = () => (modelValue.value = !modelValueBoolean.value)
+const close = () => {
+  modelValue.value = false
+}
+const open = () => {
+  modelValue.value = true
+}
+const toggleFn = () => {
+  modelValue.value = !modelValueBoolean.value
+}
 
 const reveal = () => {
   show.value = true
@@ -186,7 +224,7 @@ useEventListener(element, 'bv-toggle', () => {
 defineExpose({
   close,
   open,
-  toggle,
+  toggle: toggleFn,
   visible: readonly(show),
   isNav: isNavBoolean,
 })
@@ -195,7 +233,7 @@ provide(collapseInjectionKey, {
   id: computedId,
   close,
   open,
-  toggle,
+  toggle: toggleFn,
   visible: readonly(show),
   isNav: isNavBoolean,
 })

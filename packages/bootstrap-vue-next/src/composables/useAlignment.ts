@@ -1,6 +1,11 @@
 import {computedEager} from '@vueuse/core'
-import type {Ref} from 'vue'
+import {type MaybeRefOrGetter, type Ref, toValue} from 'vue'
 import type {AlignmentJustifyContent} from '../types'
 
-export default (align: Ref<AlignmentJustifyContent | undefined>): Readonly<Ref<string>> =>
-  computedEager(() => (!align.value ? '' : `justify-content-${align.value}`))
+export default (
+  align: MaybeRefOrGetter<AlignmentJustifyContent | undefined>
+): Readonly<Ref<string>> =>
+  computedEager(() => {
+    const value = toValue(align)
+    return !value ? '' : `justify-content-${value}`
+  })

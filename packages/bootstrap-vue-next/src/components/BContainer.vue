@@ -1,9 +1,22 @@
 <script lang="ts">
 import type {Breakpoint, Position} from '../types'
-import {computed, defineComponent, h, onMounted, type PropType, ref, type VNode} from 'vue'
+import {
+  computed,
+  defineComponent,
+  h,
+  onMounted,
+  type PropType,
+  ref,
+  type SlotsType,
+  type VNode,
+} from 'vue'
 import {ToastInstance, useToast} from './BToast/plugin'
 import BToaster from './BToast/BToaster.vue'
+
 export default defineComponent({
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   props: {
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},

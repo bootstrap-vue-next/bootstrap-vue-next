@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import {toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish} from '../../types'
 
@@ -20,5 +19,10 @@ const props = withDefaults(defineProps<BFormSelectOptionProps>(), {
   value: undefined,
 })
 
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const disabledBoolean = useBooleanish(() => props.disabled)
 </script>

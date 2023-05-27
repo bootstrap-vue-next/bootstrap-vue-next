@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {useBooleanish} from '../../composables'
 import BTableSimple from '../BTable/BTableSimple.vue'
@@ -80,8 +80,17 @@ const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   headerCellWidth: 100,
 })
 
-const columnsToNumber = useToNumber(toRef(props, 'columns'), {nanToZero: true, method: 'parseInt'})
-const rowsToNumber = useToNumber(toRef(props, 'rows'), {nanToZero: true, method: 'parseInt'})
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  thead?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tfoot?: (props: Record<string, never>) => any
+}>()
+
+const columnsToNumber = useToNumber(() => props.columns, {nanToZero: true, method: 'parseInt'})
+const rowsToNumber = useToNumber(() => props.rows, {nanToZero: true, method: 'parseInt'})
 const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
 const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
 const headerColumns = useToNumber(computedHeaderColumns, {
@@ -124,6 +133,6 @@ const footerAttrs = computed(() => ({
   width: props.footerCellWidth,
 }))
 
-const hideHeaderBoolean = useBooleanish(toRef(props, 'hideHeader'))
-const showFooterBoolean = useBooleanish(toRef(props, 'showFooter'))
+const hideHeaderBoolean = useBooleanish(() => props.hideHeader)
+const showFooterBoolean = useBooleanish(() => props.showFooter)
 </script>

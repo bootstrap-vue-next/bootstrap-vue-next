@@ -7,13 +7,16 @@
 <script lang="ts">
 import {isLink, omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, type PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
 export default defineComponent({
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   components: {BLink},
   props: {
     ...linkProps,
@@ -24,11 +27,11 @@ export default defineComponent({
     variant: {type: String as PropType<ColorVariant | null>, default: 'secondary'},
   },
   setup(props) {
-    const pillBoolean = useBooleanish(toRef(props, 'pill'))
-    const textIndicatorBoolean = useBooleanish(toRef(props, 'textIndicator'))
-    const dotIndicatorBoolean = useBooleanish(toRef(props, 'dotIndicator'))
-    const activeBoolean = useBooleanish(toRef(props, 'active'))
-    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+    const pillBoolean = useBooleanish(() => props.pill)
+    const textIndicatorBoolean = useBooleanish(() => props.textIndicator)
+    const dotIndicatorBoolean = useBooleanish(() => props.dotIndicator)
+    const activeBoolean = useBooleanish(() => props.active)
+    const disabledBoolean = useBooleanish(() => props.disabled)
 
     const computedLink = computed<boolean>(() => isLink(props))
 

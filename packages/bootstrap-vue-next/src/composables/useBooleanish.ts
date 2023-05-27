@@ -1,5 +1,5 @@
 import type {Booleanish} from '../types'
-import type {Ref} from 'vue'
+import {type MaybeRefOrGetter, type Ref, toValue} from 'vue'
 import {resolveBooleanish} from '../utils'
 import {computedEager} from '@vueuse/core'
 
@@ -8,26 +8,29 @@ import {computedEager} from '@vueuse/core'
 /**
  * Resolves a Booleanish type reactively to type boolean
  */
-function useBooleanish(el: Ref<Booleanish>): Readonly<Ref<boolean>>
-function useBooleanish(el: Ref<Booleanish | null>): Readonly<Ref<boolean | null>>
-function useBooleanish(el: Ref<Booleanish | undefined>): Readonly<Ref<boolean | undefined>>
+function useBooleanish(el: MaybeRefOrGetter<Booleanish>): Readonly<Ref<boolean>>
+function useBooleanish(el: MaybeRefOrGetter<Booleanish | null>): Readonly<Ref<boolean | null>>
 function useBooleanish(
-  el: Ref<Booleanish | undefined | null>
+  el: MaybeRefOrGetter<Booleanish | undefined>
+): Readonly<Ref<boolean | undefined>>
+function useBooleanish(
+  el: MaybeRefOrGetter<Booleanish | undefined | null>
 ): Readonly<Ref<boolean | undefined | null>>
 function useBooleanish(
   el:
-    | Ref<Booleanish>
-    | Ref<Booleanish | undefined>
-    | Ref<Booleanish | null>
-    | Ref<Booleanish | undefined | null>
+    | MaybeRefOrGetter<Booleanish>
+    | MaybeRefOrGetter<Booleanish | undefined>
+    | MaybeRefOrGetter<Booleanish | null>
+    | MaybeRefOrGetter<Booleanish | undefined | null>
 ):
   | Readonly<Ref<boolean>>
   | Readonly<Ref<boolean | undefined>>
   | Readonly<Ref<boolean | null>>
   | Readonly<Ref<boolean | undefined | null>> {
-  return computedEager(() =>
-    el.value === undefined || el.value === null ? el.value : resolveBooleanish(el.value)
-  )
+  return computedEager(() => {
+    const value = toValue(el)
+    return value === undefined || value === null ? value : resolveBooleanish(value)
+  })
 }
 
 export default useBooleanish

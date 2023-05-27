@@ -1,6 +1,5 @@
 import type {AriaInvalid, ButtonVariant, Size} from '../types'
-import {computed, type Ref, ref, watchEffect} from 'vue'
-import {resolveUnref} from '@vueuse/core'
+import {computed, type MaybeRefOrGetter, type Ref, ref, toValue, watchEffect} from 'vue'
 import {resolveAriaInvalid} from '../utils'
 
 interface ClassesItemsInput {
@@ -11,14 +10,12 @@ interface ClassesItemsInput {
   size?: Size
 }
 
-/**
- * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
- * @returns
- */
-const getClasses = (items: Ref<ClassesItemsInput> | ClassesItemsInput) => {
-  const resolvedItems = ref<ClassesItemsInput>(resolveUnref(items))
+const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) => {
+  const resolvedItems = ref(toValue(items))
 
-  watchEffect(() => (resolvedItems.value = resolveUnref<ClassesItemsInput>(items)))
+  watchEffect(() => {
+    resolvedItems.value = toValue(items)
+  })
 
   return computed(() => ({
     'form-check': resolvedItems.value.plain === false && resolvedItems.value.button === false,
@@ -37,14 +34,12 @@ interface InputClassesItemsInput {
   state?: boolean | null
 }
 
-/**
- * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
- * @returns
- */
-const getInputClasses = (items: Ref<InputClassesItemsInput> | InputClassesItemsInput) => {
-  const resolvedItems = ref<InputClassesItemsInput>(resolveUnref(items))
+const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
+  const resolvedItems = ref(toValue(items))
 
-  watchEffect(() => (resolvedItems.value = resolveUnref<InputClassesItemsInput>(items)))
+  watchEffect(() => {
+    resolvedItems.value = toValue(items)
+  })
 
   return computed(() => ({
     'form-check-input': resolvedItems.value.plain === false && resolvedItems.value.button === false,
@@ -61,14 +56,12 @@ interface LabelClasesItemsInput {
   size?: Size
 }
 
-/**
- * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
- * @returns
- */
-const getLabelClasses = (items: Ref<LabelClasesItemsInput> | LabelClasesItemsInput) => {
-  const resolvedItems = ref<LabelClasesItemsInput>(resolveUnref(items))
+const getLabelClasses = (items: MaybeRefOrGetter<LabelClasesItemsInput>) => {
+  const resolvedItems = ref(toValue(items))
 
-  watchEffect(() => (resolvedItems.value = resolveUnref<LabelClasesItemsInput>(items)))
+  watchEffect(() => {
+    resolvedItems.value = toValue(items)
+  })
 
   return computed(() => ({
     'form-check-label': resolvedItems.value.plain === false && resolvedItems.value.button === false,
@@ -88,14 +81,12 @@ interface GroupAttrItemsInput {
   state?: boolean | null
 }
 
-/**
- * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
- * @returns
- */
-const getGroupAttr = (items: Ref<GroupAttrItemsInput> | GroupAttrItemsInput) => {
-  const resolvedItems = ref<GroupAttrItemsInput>(resolveUnref(items))
+const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {
+  const resolvedItems = ref(toValue(items))
 
-  watchEffect(() => (resolvedItems.value = resolveUnref<GroupAttrItemsInput>(items)))
+  watchEffect(() => {
+    resolvedItems.value = toValue(items)
+  })
 
   return computed(() => ({
     'aria-invalid': resolveAriaInvalid(resolvedItems.value.ariaInvalid, resolvedItems.value.state),
@@ -110,14 +101,12 @@ interface GroupClassesItemsInput {
   size?: Size
 }
 
-/**
- * @param items must be a reactive object ex: reactive({ plain: toRef(plainBoolean, 'value')})
- * @returns
- */
-const getGroupClasses = (items: Ref<GroupClassesItemsInput> | GroupClassesItemsInput) => {
-  const resolvedItems = ref<GroupClassesItemsInput>(resolveUnref(items))
+const getGroupClasses = (items: MaybeRefOrGetter<GroupClassesItemsInput>) => {
+  const resolvedItems = ref(toValue(items))
 
-  watchEffect(() => (resolvedItems.value = resolveUnref<GroupClassesItemsInput>(items)))
+  watchEffect(() => {
+    resolvedItems.value = toValue(items)
+  })
 
   return computed(() => ({
     'was-validated': resolvedItems.value.validated === true,

@@ -31,6 +31,11 @@ interface BNavFormEmits {
 
 const emit = defineEmits<BNavFormEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const computedAttrs = computed(() => ({
   floating: props.floating,
   role: props.role,

@@ -1,5 +1,8 @@
 import {getId} from '../utils'
-import {computed, type ComputedRef, type Ref} from 'vue'
+import {computed, type ComputedRef, type MaybeRefOrGetter, toValue} from 'vue'
 
-export default (id?: Ref<string | undefined>, suffix?: string): ComputedRef<string> =>
-  computed(() => id?.value || getId(suffix))
+export default (id?: MaybeRefOrGetter<string | undefined>, suffix?: string): ComputedRef<string> =>
+  computed(() => {
+    const value = toValue(id)
+    return value || getId(suffix)
+  })

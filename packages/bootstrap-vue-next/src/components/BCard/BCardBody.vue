@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef, useSlots} from 'vue'
+import {computed, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
@@ -56,9 +56,18 @@ const props = withDefaults(defineProps<BCardBodyProps>(), {
   text: undefined,
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  subtitle?: (props: Record<string, never>) => any
+}>()
+
 const slots = useSlots()
 
-const overlayBoolean = useBooleanish(toRef(props, 'overlay'))
+const overlayBoolean = useBooleanish(() => props.overlay)
 
 const hasTitleSlot = computed<boolean>(() => !isEmptySlot(slots.title))
 const hasSubtitleSlot = computed<boolean>(() => !isEmptySlot(slots.subtitle))

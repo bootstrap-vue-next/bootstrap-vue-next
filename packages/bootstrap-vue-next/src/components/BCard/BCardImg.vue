@@ -6,7 +6,7 @@
 import BImg from '../BImg.vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 
 interface BCardImgProps {
   alt?: string
@@ -46,10 +46,10 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const bottomBoolean = useBooleanish(toRef(props, 'bottom'))
-const endBoolean = useBooleanish(toRef(props, 'end'))
-const startBoolean = useBooleanish(toRef(props, 'start'))
-const topBoolean = useBooleanish(toRef(props, 'top'))
+const bottomBoolean = useBooleanish(() => props.bottom)
+const endBoolean = useBooleanish(() => props.end)
+const startBoolean = useBooleanish(() => props.start)
+const topBoolean = useBooleanish(() => props.top)
 
 const baseClass = computed(() =>
   topBoolean.value

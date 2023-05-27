@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -21,8 +21,13 @@ const props = withDefaults(defineProps<BCardGroupProps>(), {
   tag: 'div',
 })
 
-const columnsBoolean = useBooleanish(toRef(props, 'columns'))
-const deckBoolean = useBooleanish(toRef(props, 'deck'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const columnsBoolean = useBooleanish(() => props.columns)
+const deckBoolean = useBooleanish(() => props.deck)
 
 const cardTypeClass = computed(() =>
   deckBoolean.value ? 'card-deck' : columnsBoolean.value ? 'card-columns' : 'card-group'

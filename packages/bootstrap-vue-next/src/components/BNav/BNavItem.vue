@@ -16,15 +16,18 @@
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import {omit} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {defineComponent, toRef} from 'vue'
+import {defineComponent, type SlotsType} from 'vue'
 
 export default defineComponent({
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   components: {BLink},
   props: {
     ...omit(BLINK_PROPS, ['event', 'routerTag'] as const),
   },
   setup(props) {
-    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+    const disabledBoolean = useBooleanish(() => props.disabled)
 
     return {disabledBoolean}
   },

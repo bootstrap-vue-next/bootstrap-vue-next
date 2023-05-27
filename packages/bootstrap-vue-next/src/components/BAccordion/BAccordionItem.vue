@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, toRef, watch} from 'vue'
+import {inject, onMounted, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
@@ -82,6 +82,13 @@ interface BAccordionItemEmits {
 
 const emit = defineEmits<BAccordionItemEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
+}>()
+
 const events = {
   'show': (e: BvTriggerableEvent) => emit('show', e),
   'shown': (e: BvTriggerableEvent) => emit('shown', e),
@@ -95,7 +102,7 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const parentData = inject(accordionInjectionKey, null)
 
-const computedId = useId(toRef(props, 'id'), 'accordion_item')
+const computedId = useId(() => props.id, 'accordion_item')
 
 onMounted(() => {
   if (modelValue.value && !parentData?.free.value) {

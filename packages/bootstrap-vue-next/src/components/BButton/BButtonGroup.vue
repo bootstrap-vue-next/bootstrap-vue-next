@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {Booleanish, Size} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BButtonGroupProps {
@@ -23,7 +23,12 @@ const props = withDefaults(defineProps<BButtonGroupProps>(), {
   size: 'md',
 })
 
-const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const verticalBoolean = useBooleanish(() => props.vertical)
 
 const computedClasses = computed(() => ({
   'btn-group': !verticalBoolean.value,

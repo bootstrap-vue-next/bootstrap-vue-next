@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import {BToggle as vBToggle} from '../../directives'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -37,7 +37,12 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const disabledBoolean = useBooleanish(() => props.disabled)
 
 const computedAttrs = computed(() => ({
   'disabled': disabledBoolean.value,

@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 
 interface BTdProps {
   colspan?: string | number
@@ -34,7 +34,12 @@ const props = withDefaults(defineProps<BTdProps>(), {
   stickyColumn: false,
 })
 
-const stickyColumnBoolean = useBooleanish(toRef(props, 'stickyColumn'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const stickyColumnBoolean = useBooleanish(() => props.stickyColumn)
 
 const computedClasses = computed(() => ({
   [`table-${props.variant}`]: props.variant !== null,

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, provide, readonly, toRef} from 'vue'
+import {computed, provide, readonly} from 'vue'
 import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
 import {useVModel} from '@vueuse/core'
@@ -27,12 +27,17 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
 
 const emit = defineEmits<(e: 'update:modelValue', value: string) => void>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const computedId = useId(toRef(props, 'id'), 'accordion')
+const computedId = useId(() => props.id, 'accordion')
 
-const flushBoolean = useBooleanish(toRef(props, 'flush'))
-const freeBoolean = useBooleanish(toRef(props, 'free'))
+const flushBoolean = useBooleanish(() => props.flush)
+const freeBoolean = useBooleanish(() => props.free)
 
 const computedClasses = computed(() => ({
   'accordion-flush': flushBoolean.value,

@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, ref, toRef, useSlots} from 'vue'
+import {computed, nextTick, ref, useSlots} from 'vue'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
@@ -130,6 +130,25 @@ interface BOffcanvasEmits {
 
 const emit = defineEmits<BOffcanvasEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
+  header?: (props: {
+    visible: boolean
+    placement: 'top' | 'bottom' | 'start' | 'end'
+    hide: (trigger?: string) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  footer?: (props: {
+    visible: boolean
+    placement: 'top' | 'bottom' | 'start' | 'end'
+    hide: (trigger?: string) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+}>()
+
 const slots = useSlots()
 
 const modelValue = useVModel(props, 'modelValue', emit)
@@ -137,17 +156,17 @@ const modelValue = useVModel(props, 'modelValue', emit)
 const modelValueBoolean = useBooleanish(modelValue)
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const bodyScrollingBoolean = useBooleanish(toRef(props, 'bodyScrolling'))
-const backdropBoolean = useBooleanish(toRef(props, 'backdrop'))
-const noHeaderCloseBoolean = useBooleanish(toRef(props, 'noHeaderClose'))
-const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
-const noFocusBoolean = useBooleanish(toRef(props, 'noFocus'))
-const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
-const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
-const staticBoolean = useBooleanish(toRef(props, 'static'))
+const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
+const backdropBoolean = useBooleanish(() => props.backdrop)
+const noHeaderCloseBoolean = useBooleanish(() => props.noHeaderClose)
+const noHeaderBoolean = useBooleanish(() => props.noHeader)
+const noFocusBoolean = useBooleanish(() => props.noFocus)
+const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
+const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
+const lazyBoolean = useBooleanish(() => props.lazy)
+const staticBoolean = useBooleanish(() => props.static)
 
-const computedId = useId(toRef(props, 'id'), 'offcanvas')
+const computedId = useId(() => props.id, 'offcanvas')
 
 const element = ref<HTMLElement | null>(null)
 
@@ -240,7 +259,9 @@ const OnAfterEnter = () => {
   emit('shown', buildTriggerableEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
-const onLeave = () => (isActive.value = false)
+const onLeave = () => {
+  isActive.value = false
+}
 const OnAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false

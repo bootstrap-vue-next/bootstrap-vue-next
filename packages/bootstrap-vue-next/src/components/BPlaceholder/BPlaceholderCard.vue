@@ -33,7 +33,7 @@ import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
 import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface Props {
@@ -80,10 +80,21 @@ const props = withDefaults(defineProps<Props>(), {
   noImg: false,
 })
 
-const noButtonBoolean = useBooleanish(toRef(props, 'noButton'))
-const noHeaderBoolean = useBooleanish(toRef(props, 'noHeader'))
-const noFooterBoolean = useBooleanish(toRef(props, 'noFooter'))
-const noImgBoolean = useBooleanish(toRef(props, 'noImg'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  img?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  footer?: (props: Record<string, never>) => any
+}>()
+
+const noButtonBoolean = useBooleanish(() => props.noButton)
+const noHeaderBoolean = useBooleanish(() => props.noHeader)
+const noFooterBoolean = useBooleanish(() => props.noFooter)
+const noImgBoolean = useBooleanish(() => props.noImg)
 
 const headerAttrs = computed(() => ({
   width: props.headerWidth,

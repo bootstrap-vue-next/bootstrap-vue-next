@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, type PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
 import {getBreakpointProps, getClasses} from '../utils'
 import type {
   AlignmentContent,
@@ -19,6 +19,9 @@ const rowColsProps = getBreakpointProps('cols', [''], {type: [String, Number], d
 
 export default defineComponent({
   name: 'BRow',
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   props: {
     tag: {type: String, default: 'div'},
     gutterX: {type: String, default: null},
@@ -30,8 +33,8 @@ export default defineComponent({
     ...rowColsProps,
   },
   setup(props) {
-    const noGuttersBoolean = useBooleanish(toRef(props, 'noGutters'))
-    const alignment = useAlignment(toRef(props, 'alignH'))
+    const noGuttersBoolean = useBooleanish(() => props.noGutters)
+    const alignment = useAlignment(() => props.alignH)
 
     const rowColsClasses = computed(() => getClasses(props, rowColsProps, 'cols', 'row-cols'))
 

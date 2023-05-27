@@ -7,7 +7,6 @@ import {
   onMounted,
   type PropType,
   ref,
-  toRef,
   watch,
 } from 'vue'
 import {useBooleanish, useId} from '.'
@@ -50,8 +49,8 @@ export default (props: Readonly<InputProps>, emit: InputEmitType) => {
   const input = ref<HTMLInputElement | null>(null)
   let inputValue: string | null = null
   let neverFormatted = true
-  const computedId = useId(toRef(props, 'id'), 'input')
-  const stateBoolean = useBooleanish(toRef(props, 'state'))
+  const computedId = useId(() => props.id, 'input')
+  const stateBoolean = useBooleanish(() => props.state)
 
   const {focused} = useFocus(input, {
     initialValue: props.autofocus,

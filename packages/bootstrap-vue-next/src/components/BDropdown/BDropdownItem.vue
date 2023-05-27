@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
-import {computed, inject, toRef, useAttrs} from 'vue'
+import {computed, inject, useAttrs} from 'vue'
 import type {Booleanish, ClassValue, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
@@ -43,14 +43,19 @@ const props = withDefaults(defineProps<BDropdownItemProps>(), {
   href: undefined,
 })
 
-const activeBoolean = useBooleanish(toRef(props, 'active'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
 
 interface BDropdownItemEmits {
   (e: 'click', value: MouseEvent): void
 }
 
 const emit = defineEmits<BDropdownItemEmits>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const attrs = useAttrs()
 

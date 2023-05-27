@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {Booleanish, TransitionMode} from '../../types'
-import {computed, toRef, type TransitionProps} from 'vue'
+import {computed, type TransitionProps} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface Props {
@@ -23,8 +23,13 @@ const props = withDefaults(defineProps<Props>(), {
   mode: undefined,
 })
 
-const appearBoolean = useBooleanish(toRef(props, 'appear'))
-const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const appearBoolean = useBooleanish(() => props.appear)
+const noFadeBoolean = useBooleanish(() => props.noFade)
 
 const fadeProperties = computed(() => {
   const NO_FADE_PROPS = {

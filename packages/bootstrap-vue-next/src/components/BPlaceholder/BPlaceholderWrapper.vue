@@ -6,7 +6,6 @@
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
-import {toRef} from 'vue'
 
 interface BPlaceholderWrapperProps {
   loading?: Booleanish
@@ -16,5 +15,12 @@ const props = withDefaults(defineProps<BPlaceholderWrapperProps>(), {
   loading: false,
 })
 
-const loadingBoolean = useBooleanish(toRef(props, 'loading'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  loading?: (props: Record<string, never>) => any
+}>()
+
+const loadingBoolean = useBooleanish(() => props.loading)
 </script>

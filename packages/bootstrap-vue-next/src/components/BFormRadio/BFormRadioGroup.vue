@@ -83,19 +83,26 @@ interface BFormRadioGroupEmits {
 
 const emit = defineEmits<BFormRadioGroupEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  first?: (props: Record<string, never>) => any
+}>()
+
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const computedId = useId(toRef(props, 'id'), 'radio')
-const computedName = useId(toRef(props, 'name'), 'checkbox')
+const computedId = useId(() => props.id, 'radio')
+const computedName = useId(() => props.name, 'checkbox')
 
-const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-const buttonsBoolean = useBooleanish(toRef(props, 'buttons'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const plainBoolean = useBooleanish(toRef(props, 'plain'))
-const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
-const stateBoolean = useBooleanish(toRef(props, 'state'))
-const validatedBoolean = useBooleanish(toRef(props, 'validated'))
+const autofocusBoolean = useBooleanish(() => props.autofocus)
+const buttonsBoolean = useBooleanish(() => props.buttons)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const plainBoolean = useBooleanish(() => props.plain)
+const requiredBoolean = useBooleanish(() => props.required)
+const stackedBoolean = useBooleanish(() => props.stacked)
+const stateBoolean = useBooleanish(() => props.state)
+const validatedBoolean = useBooleanish(() => props.validated)
 
 const element = ref<HTMLElement | null>(null)
 

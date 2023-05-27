@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import type {Booleanish, ClassValue, ColorVariant} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
 defineOptions({
@@ -39,14 +39,19 @@ const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
   buttonClass: undefined,
 })
 
-const activeBoolean = useBooleanish(toRef(props, 'active'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
 
 interface BDropdownItemButtonEmits {
   (e: 'click', value: MouseEvent): void
 }
 
 const emit = defineEmits<BDropdownItemButtonEmits>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedClasses = computed(() => [
   props.buttonClass,
