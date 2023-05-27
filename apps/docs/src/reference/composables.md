@@ -1,6 +1,10 @@
 # Composables - Table of Contents
 
-> BootstrapVueNext exposes some custom composables that integrate with various components
+<div class="lead mb-5">
+
+BootstrapVueNext exposes some custom composables that integrate with various components
+
+</div>
 
 <table-of-contents-card v-for="composable in computedComposablesList" :key="composable.name" class="my-3" :name="composable.name" :description="composable.description" :route="composable.route" />
 
