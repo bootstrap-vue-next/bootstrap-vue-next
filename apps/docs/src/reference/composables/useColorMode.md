@@ -16,7 +16,9 @@
       </b-button>
     </b-card>
   </b-card-body>
+
   <div class="html">HTML</div>
+
   <b-card-body class="bg-body-tertiary">
 
 ```vue-html
@@ -45,6 +47,7 @@ const changeColor = () => {
 ```
 
   </b-card-body>
+
 </b-card>
 
 <script setup lang="ts">
