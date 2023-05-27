@@ -1,10 +1,6 @@
 # Image
 
-<div class="lead mb-5">
-
-Documentation and examples for opting images (via `<b-img>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props
-
-</div>
+> Documentation and examples for opting images (via `<b-img>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props
 
 BootstrapVueNext's image components support rounded images, thumbnail styling, alignment, and even the
 ability to create blank images with an optional solid background color. Support for lazy loaded
@@ -25,37 +21,23 @@ Images in BootstrapVueNext can be made responsive with the `fluid` prop (which s
 `max-width: 100%; height: auto;` via CSS classes) so that it scales with the parent element - up to
 the maximum native width of the image.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></b-img>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<b-card>
+  <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></b-img>
+</b-card>
 
 ```vue-html
 <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></b-img>
 ```
 
-  </b-card-body>
-
-</b-card>
-
 To make a fluid image that will grow to fill the width of its container, use the `fluid-grow` prop.
 Note this may cause blurring on small bitmap images.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <h5>Small image with <code>fluid</code>:</h5>
-    <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
-    <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
-    <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<b-card>
+  <h5>Small image with <code>fluid</code>:</h5>
+  <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
+  <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
+  <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
+</b-card>
 
 ```vue-html
 <h5>Small image with <code>fluid</code>:</h5>
@@ -64,10 +46,6 @@ Note this may cause blurring on small bitmap images.
 <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
 ```
 
-  </b-card-body>
-
-</b-card>
-
 Use the `block` prop to force the image to display as a block element rather than the browser
 default of inline-block element.
 
@@ -75,24 +53,19 @@ default of inline-block element.
 
 You can use prop `thumbnail` to give an image a rounded light border appearance.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-row>
-      <b-col>
-        <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
-      </b-col>
-      <b-col>
-        <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></b-img>
-      </b-col>
-      <b-col>
-        <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></b-img>
-      </b-col>
-    </b-row>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<b-card class="bg-dark">
+  <b-row>
+    <b-col>
+      <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
+    </b-col>
+    <b-col>
+      <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></b-img>
+    </b-col>
+    <b-col>
+      <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></b-img>
+    </b-col>
+  </b-row>
+</b-card>
 
 ```vue-html
 <b-row>
@@ -108,10 +81,6 @@ You can use prop `thumbnail` to give an image a rounded light border appearance.
 </b-row>
 ```
 
-  </b-card-body>
-
-</b-card>
-
 ### Rounded corners
 
 You can control which corners are rounded by setting the rounded prop to one of the following
@@ -126,48 +95,35 @@ values:
 - `'circle'`: make a circle (if square image) or oval (if not square) border
 - `'0'`: explicitly turn off rounding of corners
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <div class="d-flex gap-2">
-      <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
-      <b-img v-bind="mainProps" rounded="top" alt="Top-rounded image"></b-img>
-      <b-img v-bind="mainProps" rounded="end" alt="Right-rounded image"></b-img>
-      <b-img v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></b-img>
-      <b-img v-bind="mainProps" rounded="start" alt="Left-rounded image"></b-img>
-      <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
-      <b-img v-bind="mainProps" rounded="0" alt="Not rounded image"></b-img>
-    </div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<b-card>
+  <div class="d-flex" style="column-gap: 1%;">
+    <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="top" alt="Top-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="end" alt="Right-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="start" alt="Left-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
+    <b-img v-bind="mainProps" rounded="0" alt="Not rounded image"></b-img>
+  </div>
+</b-card>
 
 ```vue-html
 <template>
-  <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="top" alt="Top-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="end" alt="Right-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="start" alt="Left-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
-  <b-img v-bind="mainProps" rounded="0" alt="Not rounded image"></b-img>
+  <div class="d-flex" style="column-gap: 1%;">
+    <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="top" alt="Top-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="end" alt="Right-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="start" alt="Left-rounded image"></b-img>
+    <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
+    <b-img v-bind="mainProps" rounded="0" alt="Not rounded image"></b-img>
+  </div>
 </template>
 
 <script setup lang="ts">
-const mainProps = {
-  blank: true,
-  blankColor: '#777',
-  width: 75,
-  height: 75,
-  class: 'm1'
-}
+const mainProps = {blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1'}
 </script>
 ```
-
-  </b-card-body>
-
-</b-card>
 
 ### Aligning images
 
@@ -177,45 +133,29 @@ left+right margins). You can also center images by placing them in a container t
 
 **Left and right aligned (float):**
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <div class="clearfix">
-      <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
-      <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
-    </div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<b-card>
+  <div class="clearfix">
+    <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
+    <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
+  </div>
+</b-card>
 
 ```vue-html
-<b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
-<b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
+<div class="clearfix">
+  <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
+  <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
+</div>
 ```
-
-  </b-card-body>
-
-</b-card>
 
 **Center aligned (block):**
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<b-card>
+  <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
+</b-card>
 
 ```vue-html
 <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
 ```
-
-  </b-card-body>
-
-</b-card>
 
 Note: `left` takes precedence over `right` which takes precedence over `center`.
 
@@ -236,47 +176,35 @@ color value:
 
 The default `blank-color` is `transparent`.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <div class="d-flex gap-2">
-      <b-img v-bind="propsTr" alt="Transparent image"></b-img>
-      <b-img v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
-      <b-img v-bind="propsTr" blank-color="red" alt="Named color image (red)"></b-img>
-      <b-img v-bind="propsTr" blank-color="black" alt="Named color image (black)"></b-img>
-      <b-img v-bind="propsTr" blank-color="#338833" alt="HEX color image"></b-img>
-      <b-img v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
-      <b-img v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
-    </div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<b-card>
+  <div class="d-flex" style="column-gap: 1%;">
+    <b-img v-bind="propsTr" alt="Transparent image"></b-img>
+    <b-img v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
+    <b-img v-bind="propsTr" blank-color="red" alt="Named color image (red)"></b-img>
+    <b-img v-bind="propsTr" blank-color="black" alt="Named color image (black)"></b-img>
+    <b-img v-bind="propsTr" blank-color="#338833" alt="HEX color image"></b-img>
+    <b-img v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
+    <b-img v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
+  </div>
+</b-card>
 
 ```vue-html
 <template>
-  <b-img v-bind="propsTr" alt="Transparent image"></b-img>
-  <b-img v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
-  <b-img v-bind="propsTr" blank-color="red" alt="Named color image (red)"></b-img>
-  <b-img v-bind="propsTr" blank-color="black" alt="Named color image (black)"></b-img>
-  <b-img v-bind="propsTr" blank-color="#338833" alt="HEX color image"></b-img>
-  <b-img v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
-  <b-img v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
+  <div class="d-flex" style="column-gap: 1%;">
+    <b-img v-bind="propsTr" alt="Transparent image"></b-img>
+    <b-img v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
+    <b-img v-bind="propsTr" blank-color="red" alt="Named color image (red)"></b-img>
+    <b-img v-bind="propsTr" blank-color="black" alt="Named color image (black)"></b-img>
+    <b-img v-bind="propsTr" blank-color="#338833" alt="HEX color image"></b-img>
+    <b-img v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
+    <b-img v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
+  </div>
 </template>
 
 <script setup lang="ts">
-const propsTr = {
-  blank: true,
-  width: 75,
-  height: 75,
-  class: 'm1'
-}
+const propsTr = {blank: true, width: 75, height: 75, class: 'm1'}
 </script>
 ```
-
-  </b-card-body>
-
-</b-card>
 
 **Notes:**
 
@@ -321,7 +249,7 @@ Lazy loaded images are actived through the `lazy` prop. Eventually, the componen
 <script setup lang="ts">
 import {data} from '../../data/components/image.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {BRow, BCol, BCard, BCardBody, BImg} from 'bootstrap-vue-next'
+import {BRow, BCol, BCard, BImg} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
 const mainProps = {blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1'}

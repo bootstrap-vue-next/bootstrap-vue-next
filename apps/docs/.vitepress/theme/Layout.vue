@@ -218,9 +218,6 @@ const globalData = inject(appInfoKey, {
       .card {
         margin-bottom: 0;
       }
-      .list-group {
-        max-width: 400px;
-      }
     }
   }
   // Short term fix for navbar modes.
