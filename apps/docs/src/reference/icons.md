@@ -54,6 +54,8 @@ npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 </b-tabs>
 </client-only>
 
+<b-card class="bg-body-tertiary">
+
 ```ts
 // vite.config.js/ts
 import {defineConfig} from 'vite'
@@ -77,6 +79,8 @@ export default defineConfig({
   ],
 })
 ```
+
+</b-card>
 
 With `autoInstall: true` using any icon set in your app will automatically import and include that icon set in your dependencies! No manual imports are required!
 
