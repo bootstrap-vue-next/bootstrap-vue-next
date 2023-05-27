@@ -84,7 +84,7 @@
         <b-container>
           <b-row>
             <b-col>
-              <Content class="bd-content" />
+              <Content class="bd-content mt-5" />
             </b-col>
           </b-row>
         </b-container>
