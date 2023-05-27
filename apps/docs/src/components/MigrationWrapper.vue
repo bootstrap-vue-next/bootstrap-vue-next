@@ -1,15 +1,11 @@
 <template>
   <b-card>
     <template #header>
-      <div class="mb-2">
-        <h3>{{ component }} - {{ change }}</h3>
-      </div>
+      <h3>{{ component }} - {{ change }}</h3>
       <b-badge :variant="difficultyVariant">{{ difficulty }}</b-badge>
     </template>
-    <div class="mb-2">
-      <h4>Rationale:</h4>
-      {{ rationale }}
-    </div>
+    <h4>Rationale:</h4>
+    {{ rationale }}
     <h4>Fix:</h4>
     {{ fix }}
   </b-card>

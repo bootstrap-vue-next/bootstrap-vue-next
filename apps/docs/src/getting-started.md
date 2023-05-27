@@ -1,10 +1,18 @@
 # Introduction
 
+<div class="lead">
+
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites
 
-::: danger NOT PRODUCTION READY
+</div>
+
+<b-alert variant="danger" :model-value="true" class="my-5">
+
+NOT PRODUCTION READY
+
 This project is still in **alpha version**. There is a lot of work to do and the documentation may be out of date, if you want to contribute you can use it and submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or even better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls) 😄
-:::
+
+</b-alert>
 
 ## Why BootstrapVueNext?
 
@@ -19,8 +27,6 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 
 Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md) on how to start helping
 
----
-
 ## Install
 
 ### Installation - Vue.js
@@ -33,10 +39,10 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vu
 Install the necessary packages for `BootstrapVueNext`:
 
 <client-only>
-<b-tabs v-model="codePreference" class="mb-3">
+<b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next
@@ -49,7 +55,7 @@ pnpm add unplugin-vue-components -D
   </b-tab>
   <b-tab title="YARN">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 yarn add bootstrap bootstrap-vue-next
@@ -62,7 +68,7 @@ yarn add unplugin-vue-components -D
   </b-tab>
   <b-tab title="NPM">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 npm i bootstrap bootstrap-vue-next
@@ -77,6 +83,8 @@ npm i unplugin-vue-components -D
 </client-only>
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
+
+<b-card>
 
 ```ts
 // vite.config.js/ts
@@ -95,7 +103,11 @@ export default defineConfig({
 })
 ```
 
+</b-card>
+
 Finally, in your `main.js/ts` import the CSS:
+
+<b-card>
 
 ```ts
 // main.js/ts
@@ -103,9 +115,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 ```
 
+</b-card>
+
 ##### Typescript Features
 
 If using TypeScript you will want to add `components.d.ts` to the `include` array in your tsconfig.json:
+
+<b-card>
 
 ```json
 // tsconfig.json
@@ -114,7 +130,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 }
 ```
 
----
+</b-card>
 
 #### Legacy Installation
 
@@ -123,10 +139,10 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 Install the necessary packages for `bootstrap-vue-next`:
 
 <client-only>
-<b-tabs v-model="codePreference" class="mb-3">
+<b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next
@@ -137,7 +153,7 @@ pnpm add bootstrap bootstrap-vue-next
   </b-tab>
   <b-tab title="YARN">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 yarn add bootstrap bootstrap-vue-next
@@ -162,6 +178,8 @@ npm i bootstrap bootstrap-vue-next
 
 Then, add to your `main.js/ts`:
 
+<b-card>
+
 ```typescript
 // main.js/ts
 import App from './App.vue' // Can be a different place
@@ -181,17 +199,17 @@ app.use(BootstrapVueNext)
 app.mount('#app')
 ```
 
----
+</b-card>
 
 ### Installation - Nuxt.js 3
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`
 
 <client-only>
-<b-tabs v-model="codePreference" class="mb-3">
+<b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
@@ -202,7 +220,7 @@ pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
   </b-tab>
   <b-tab title="YARN">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
@@ -213,7 +231,7 @@ yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
   </b-tab>
   <b-tab title="NPM">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card>
 
 ```bash
 npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
@@ -227,16 +245,21 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed
 
+<b-card>
+
 ```ts
 // nuxt.config.js/ts
-
 export default defineNuxtConfig({
   modules: ['@bootstrap-vue-next/nuxt'],
   css: ['bootstrap/dist/css/bootstrap.min.css'],
 })
 ```
 
+</b-card>
+
 Enjoy it in your app without manual imports, and automatic tree-shaking
+
+<b-card>
 
 ```vue
 <template>
@@ -251,11 +274,14 @@ const show = ref(false)
 </script>
 ```
 
+</b-card>
+
 You can customize the options with the bootstrapVueNext key in your nuxt.config
+
+<b-card class="mb-1">
 
 ```ts
 // nuxt.config.js/ts
-
 export default defineNuxtConfig({
   modules: ['@bootstrap-vue-next/nuxt'],
   bootstrapVueNext: {
@@ -267,15 +293,21 @@ export default defineNuxtConfig({
 })
 ```
 
+</b-card>
+
 The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build
 
 #### Nuxt and Directives
 
 Directives should be imported directly from the `bootstrap-vue-next` package
 
+<b-card>
+
 ```ts
 import {vBColorMode} from 'bootstrap-vue-next'
 ```
+
+</b-card>
 
 ## Tree-shake CSS
 
@@ -290,7 +322,7 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 You can view the planned compatibility list in the following [section](./reference/parityList.md). It is _not_ a migration guide, which will be finalized upon v1.0.0
 
 <script setup lang="ts">
-import {BCard, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 
 const codePreference = useLocalStorage('code-group-preference', 0)

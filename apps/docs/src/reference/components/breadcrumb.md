@@ -1,12 +1,21 @@
 # Breadcrumb
 
-> Indicate the current page's location within a navigational hierarchy. Separators are automatically added in CSS through `::before` and `content`
+<div class="lead mb-5">
+
+Indicate the current page's location within a navigational hierarchy. Separators are automatically added in CSS through `::before` and `content`
+
+</div>
 
 ## Overview
 
-<b-card>
-  <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
@@ -23,6 +32,10 @@
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ## Breadcrumb items
 
 Items are rendered using `:items` prop. It can be an array of objects to provide link and active
@@ -31,9 +44,14 @@ element is automatically set if it is `undefined`.
 
 ### Breadcrumb items as array of strings
 
-<b-card>
-  <b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
@@ -45,22 +63,31 @@ element is automatically set if it is `undefined`.
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ## Manually placed items
 
 You may also manually place individual `<b-breadcrumb-item>` child components in the default slot of
 the `<b-breadcrumb>` component, as an alternative to using the `items` prop, for greater control
 over the content of each item:
 
-<b-card>
-  <b-breadcrumb>
-    <b-breadcrumb-item href="#home">
-      Home
-    </b-breadcrumb-item>
-    <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
-    <b-breadcrumb-item href="#bar" @click="alertEvent">Bar</b-breadcrumb-item>
-    <b-breadcrumb-item active>Baz</b-breadcrumb-item>
-  </b-breadcrumb>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-breadcrumb>
+      <b-breadcrumb-item href="#home">
+        Home
+      </b-breadcrumb-item>
+      <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
+      <b-breadcrumb-item href="#bar" @click="alertEvent">Bar</b-breadcrumb-item>
+      <b-breadcrumb-item active>Baz</b-breadcrumb-item>
+    </b-breadcrumb>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <b-breadcrumb>
@@ -77,6 +104,10 @@ over the content of each item:
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 Remember to set the `active` prop on the last item.
 
 `<b-breadcrumb-item>` also supports the various `<router-link>` props such as `to`, etc.
@@ -86,18 +117,23 @@ Remember to set the `active` prop on the last item.
 Two slots are provided to put additional content before and after the breadcrumb.
 Use slot `prepend` to put content before the breadcrumb. Use slot `append` to put content after the breadcrumb.
 
-<b-card>
-  <b-breadcrumb>
-    <b-breadcrumb-item href="#home">
-      Home
-    </b-breadcrumb-item>
-    <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
-    <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>
-    <b-breadcrumb-item active>Baz</b-breadcrumb-item>
-    <template v-slot:prepend><span class="mx-2">prepend text</span></template>
-    <template v-slot:append><span class="mx-2">append text</span></template>
-  </b-breadcrumb>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-breadcrumb>
+      <b-breadcrumb-item href="#home">
+        Home
+      </b-breadcrumb-item>
+      <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
+      <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>
+      <b-breadcrumb-item active>Baz</b-breadcrumb-item>
+      <template v-slot:prepend><span class="mx-2">prepend text</span></template>
+      <template v-slot:append><span class="mx-2">append text</span></template>
+    </b-breadcrumb>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <b-breadcrumb>
@@ -110,12 +146,16 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
 </b-breadcrumb>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 <ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
 import {data} from '../../data/components/breadcrumb.data'
 import {ref, type Ref} from 'vue';
-import {BBreadcrumbItem, BBreadcrumb, BCard} from 'bootstrap-vue-next'
+import {BBreadcrumbItem, BBreadcrumb, BCard, BCardBody} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import type {BreadcrumbItem} from 'bootstrap-vue-next'
 

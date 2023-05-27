@@ -35,11 +35,7 @@ Click the accordions below to expand/collapse the accordion content.
     </b-accordion>
   </b-card-body>
 
-  <hr />
-
-  <div class="px-3">HTML</div>
-
-  <hr class="mb-0" />
+  <div class="html">HTML</div>
 
   <b-card-body class="bg-body-tertiary">
 
@@ -81,26 +77,19 @@ Click the accordions below to expand/collapse the accordion content.
 Add `flush` property to remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container.
 
 <b-card no-body class="mb-5">
-  <b-card-body>
-    <b-accordion flush>
-      <b-accordion-item title="Accordion Item #1">
-        Placeholder content for this accordion, which is intended to demonstrate the <code>flush</code> property. This is the first item's accordion body.
-      </b-accordion-item>
-      <b-accordion-item title="Accordion Item #2">
-        Placeholder content for this accordion, which is intended to demonstrate the <code>flush</code> property. This is the second item's accordion body. Let's imagine this being filled with some actual content.
-      </b-accordion-item>
-      <b-accordion-item title="Accordion Item #3">
-        Placeholder content for this accordion, which is intended to demonstrate the <code>flush</code> property. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.
-      </b-accordion-item>
-    </b-accordion>
+  <b-accordion flush>
+    <b-accordion-item title="Accordion Item #1">
+      Placeholder content for this accordion, which is intended to demonstrate the <code>flush</code> property. This is the first item's accordion body.
+    </b-accordion-item>
+    <b-accordion-item title="Accordion Item #2">
+      Placeholder content for this accordion, which is intended to demonstrate the <code>flush</code> property. This is the second item's accordion body. Let's imagine this being filled with some actual content.
+    </b-accordion-item>
+    <b-accordion-item title="Accordion Item #3">
+      Placeholder content for this accordion, which is intended to demonstrate the <code>flush</code> property. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.
+    </b-accordion-item>
+  </b-accordion>
 
-  </b-card-body>
-
-  <hr />
-
-  <div class="px-3">HTML</div>
-
-  <hr class="mb-0" />
+  <div class="html">HTML</div>
 
   <b-card-body class="bg-body-tertiary">
 
@@ -133,26 +122,19 @@ Add `flush` property to remove the default background-color, some borders, and s
 Add `free` property to make accordion items stay open when another item is opened.
 
 <b-card no-body class="mb-5">
-  <b-card-body>
-    <b-accordion free>
-      <b-accordion-item title="Accordion Item #1">
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>default</code> slot, though the transition does limit overflow.
-      </b-accordion-item>
-      <b-accordion-item title="Accordion Item #2">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>default</code> slot, though the transition does limit overflow.
-      </b-accordion-item>
-      <b-accordion-item title="Accordion Item #3">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>default</code> slot, though the transition does limit overflow.
-      </b-accordion-item>
-    </b-accordion>
+  <b-accordion free>
+    <b-accordion-item title="Accordion Item #1">
+      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>default</code> slot, though the transition does limit overflow.
+    </b-accordion-item>
+    <b-accordion-item title="Accordion Item #2">
+      <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>default</code> slot, though the transition does limit overflow.
+    </b-accordion-item>
+    <b-accordion-item title="Accordion Item #3">
+      <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>default</code> slot, though the transition does limit overflow.
+    </b-accordion-item>
+  </b-accordion>
 
-  </b-card-body>
-
-  <hr />
-
-  <div class="px-3">HTML</div>
-
-  <hr class="mb-0" />
+  <div class="html">HTML</div>
 
   <b-card-body class="bg-body-tertiary">
 
