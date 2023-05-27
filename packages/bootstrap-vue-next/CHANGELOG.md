@@ -1,6 +1,25 @@
 # Changelog
 
 
+## [0.9.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.0...bootstrap-vue-next-v0.9.1) (2023-05-27)
+
+
+### Features
+
+* defineSlots() everywhere ([a5dbfa1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a5dbfa11ff9a4b032a59ac23e70c76e22fb1e579))
+
+
+### Bug Fixes
+
+* **BLink:** explicit use of router-link replaced with &lt;component&gt; -- as it was before, fix original issue with [@ts-ignore](https://github.com/ts-ignore) ([a5dbfa1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a5dbfa11ff9a4b032a59ac23e70c76e22fb1e579))
+* syntax  replaced with  to properly return void ([a5dbfa1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a5dbfa11ff9a4b032a59ac23e70c76e22fb1e579))
+* when a function name conflicts with a prop value ie, BPopover hide -- in template, this will be confused with props.hide or the internal hide()... Rename to hideFn or equivalent in other places. ([a5dbfa1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a5dbfa11ff9a4b032a59ac23e70c76e22fb1e579))
+
+
+### Performance Improvements
+
+* use toValue &gt; unref & replace toRef instances in composables with simple getters -- eliminating unecessary intermediate refs ([a5dbfa1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a5dbfa11ff9a4b032a59ac23e70c76e22fb1e579))
+
 ## [0.9.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.8.15...bootstrap-vue-next-v0.9.0) (2023-05-26)
 
 
