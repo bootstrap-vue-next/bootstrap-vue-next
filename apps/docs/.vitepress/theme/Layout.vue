@@ -217,6 +217,15 @@ const globalData = inject(appInfoKey, {
       }
     }
   }
+  // Short term fix for navbar modes.
+  .navbar {
+    color: #fff;
+    .nav-link,
+    .navbar-brand,
+    .btn {
+      color: #fff;
+    }
+  }
   [class^='language-'] {
     .copy {
       float: right;
