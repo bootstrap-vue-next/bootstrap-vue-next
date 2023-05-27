@@ -1,6 +1,10 @@
 # Components - Table of Contents
 
-> BootstrapVueNext components list
+<div class="lead mb-5">
+
+BootstrapVueNext components list
+
+</div>
 
 <table-of-contents-card v-for="component in computedComponentsList" :key="component.name" class="my-3" :name="component.name" :description="component.description" :route="component.route" />
 
@@ -9,8 +13,7 @@ import {withBase} from 'vitepress'
 import {computed} from 'vue'
 import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 
-const routeLocation = (name: string): string =>
-  withBase(`/reference/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
+const routeLocation = (name: string): string => withBase(`/reference/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
 
 const componentList: {name: string; description: string}[] = [
   {
