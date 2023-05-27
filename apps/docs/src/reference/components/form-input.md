@@ -1,11 +1,20 @@
 # Form Input
 
-> Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more
+<div class="lead mb-5">
 
-<b-card>
-  <b-form-input v-model="selectedText" placeholder="Enter your name"></b-form-input>
-  <div class="mt-2">Value: {{ selectedText }}</div>
-</b-card>
+Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more
+
+</div>
+
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-form-input v-model="selectedText" placeholder="Enter your name"></b-form-input>
+    <div class="mt-2">Value: {{ selectedText }}</div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -22,20 +31,29 @@ const selectedText = ref('')
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ## Input type
 
 `<b-form-input>` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`
 
-<b-card>
-  <b-row class="my-1" v-for="type in inputTypes" :key="type">
-    <b-col sm="3">
-      <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
-    </b-col>
-    <b-col sm="9">
-      <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
-    </b-col>
-  </b-row>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-row class="my-1" v-for="type in inputTypes" :key="type">
+      <b-col sm="3">
+        <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
+      </b-col>
+      <b-col sm="9">
+        <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+      </b-col>
+    </b-row>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -71,6 +89,10 @@ const inputTypes = [
 ]
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 If the `type` prop is set to an input type that is not supported (see above), a `text` input will be rendered and a console warning will be issued.
 
@@ -114,11 +136,16 @@ background) and thumb (the value) are both styled to appear the same across brow
 Range inputs have implicit values for `min` and `max` of `0` and `100` respectively. You may specify
 new values for those using the `min` and `max` props.
 
-<b-card>
-  <label for="range-1">Example range with min and max</label>
-  <b-form-input id="range-1" v-model="rangeValue" type="range" min="0" max="5"></b-form-input>
-  <div class="mt-2">Value: {{ rangeValue }}</div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <label for="range-1">Example range with min and max</label>
+    <b-form-input id="range-1" v-model="rangeValue" type="range" min="0" max="5"></b-form-input>
+    <div class="mt-2">Value: {{ rangeValue }}</div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -134,14 +161,23 @@ const rangeValue = ref('2')
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 By default, range inputs "snap" to integer values. To change this, you can specify a `step` value.
 In the example below, we double the number of steps by using step="0.5".
 
-<b-card>
-  <label for="range-1">Example range with min and max</label>
-  <b-form-input id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5"></b-form-input>
-  <div class="mt-2">Value: {{ rangeValueStep }}</div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <label for="range-1">Example range with min and max</label>
+    <b-form-input id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5"></b-form-input>
+    <div class="mt-2">Value: {{ rangeValueStep }}</div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -164,6 +200,10 @@ const rangeValueStep = ref('2')
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 **Note:** Range inputs (as do all input types) return their value as a string. You may need to
 convert the value to a native number by using `Number(value)`, `parseInt(value, 10)`,
 `parseFloat(value)`, or use the `number` prop.
@@ -178,59 +218,73 @@ Set heights using the `size` prop to `sm` or `lg` for small or large respectivel
 
 To control width, place the input inside standard Bootstrap grid column.
 
-<b-card>
-  <b-row class="my-1">
-    <b-col sm="2">
-      <label for="input-small">Small:</label>
-    </b-col>
-    <b-col sm="10">
-      <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input>
-    </b-col>
-  </b-row>
-  <b-row class="my-1">
-    <b-col sm="2">
-      <label for="input-default">Default:</label>
-    </b-col>
-    <b-col sm="10">
-      <b-form-input id="input-default" placeholder="Enter your name"></b-form-input>
-    </b-col>
-  </b-row>
-  <b-row class="my-1">
-    <b-col sm="2">
-      <label for="input-large">Large:</label>
-    </b-col>
-    <b-col sm="10">
-      <b-form-input id="input-large" size="lg" placeholder="Enter your name"></b-form-input>
-    </b-col>
-  </b-row>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-row class="my-1">
+      <b-col sm="2">
+        <label for="input-small">Small:</label>
+      </b-col>
+      <b-col sm="10">
+        <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input>
+      </b-col>
+    </b-row>
+    <b-row class="my-1">
+      <b-col sm="2">
+        <label for="input-default">Default:</label>
+      </b-col>
+      <b-col sm="10">
+        <b-form-input id="input-default" placeholder="Enter your name"></b-form-input>
+      </b-col>
+    </b-row>
+    <b-row class="my-1">
+      <b-col sm="2">
+        <label for="input-large">Large:</label>
+      </b-col>
+      <b-col sm="10">
+        <b-form-input id="input-large" size="lg" placeholder="Enter your name"></b-form-input>
+      </b-col>
+    </b-row>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <b-row class="my-1">
   <b-col sm="2">
     <label for="input-small">Small:</label>
   </b-col>
+
   <b-col sm="10">
     <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input>
   </b-col>
 </b-row>
+
 <b-row class="my-1">
   <b-col sm="2">
     <label for="input-default">Default:</label>
   </b-col>
+
   <b-col sm="10">
     <b-form-input id="input-default" placeholder="Enter your name"></b-form-input>
   </b-col>
 </b-row>
+
 <b-row class="my-1">
   <b-col sm="2">
     <label for="input-large">Large:</label>
   </b-col>
+
   <b-col sm="10">
     <b-form-input id="input-large" size="lg" placeholder="Enter your name"></b-form-input>
   </b-col>
 </b-row>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ~~**Note:** Input type `range` currently does not support control sizing unless it is placed inside a
 `<b-input-group>` which has its `size` prop set.~~
@@ -254,81 +308,100 @@ Generally speaking, you'll want to use a particular state for specific types of 
 To apply one of the contextual state icons on `<b-form-input>`, set the `state` prop to `false` (for
 invalid), `true` (for valid), or `null` (no validation state).
 
-<b-card>
-  <b-row class="my-1">
-    <b-col sm="3">
-      <label for="input-none">No State:</label>
-    </b-col>
-    <b-col sm="9">
-      <b-form-input id="input-none" :state="null" placeholder="No validation"></b-form-input>
-    </b-col>
-  </b-row>
-  <b-row class="my-1">
-    <b-col sm="3">
-      <label for="input-valid">Valid State:</label>
-    </b-col>
-    <b-col sm="9">
-      <b-form-input id="input-valid" :state="true" placeholder="Valid input"></b-form-input>
-    </b-col>
-  </b-row>
-  <b-row class="my-1">
-    <b-col sm="3">
-      <label for="input-invalid">Invalid State:</label>
-    </b-col>
-    <b-col sm="9">
-      <b-form-input id="input-invalid" :state="false" placeholder="Invalid input"></b-form-input>
-    </b-col>
-  </b-row>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-row class="my-1">
+      <b-col sm="3">
+        <label for="input-none">No State:</label>
+      </b-col>
+      <b-col sm="9">
+        <b-form-input id="input-none" :state="null" placeholder="No validation"></b-form-input>
+      </b-col>
+    </b-row>
+    <b-row class="my-1">
+      <b-col sm="3">
+        <label for="input-valid">Valid State:</label>
+      </b-col>
+      <b-col sm="9">
+        <b-form-input id="input-valid" :state="true" placeholder="Valid input"></b-form-input>
+      </b-col>
+    </b-row>
+    <b-row class="my-1">
+      <b-col sm="3">
+        <label for="input-invalid">Invalid State:</label>
+      </b-col>
+      <b-col sm="9">
+        <b-form-input id="input-invalid" :state="false" placeholder="Invalid input"></b-form-input>
+      </b-col>
+    </b-row>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <b-row class="my-1">
   <b-col sm="3">
     <label for="input-none">No State:</label>
   </b-col>
+
   <b-col sm="9">
     <b-form-input id="input-none" :state="null" placeholder="No validation"></b-form-input>
   </b-col>
 </b-row>
+
 <b-row class="my-1">
   <b-col sm="3">
     <label for="input-valid">Valid State:</label>
   </b-col>
+
   <b-col sm="9">
     <b-form-input id="input-valid" :state="true" placeholder="Valid input"></b-form-input>
   </b-col>
 </b-row>
+
 <b-row class="my-1">
   <b-col sm="3">
     <label for="input-invalid">Invalid State:</label>
   </b-col>
+
   <b-col sm="9">
     <b-form-input id="input-invalid" :state="false" placeholder="Invalid input"></b-form-input>
   </b-col>
 </b-row>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ## Live Example
 
-<b-card>
-  <div role="group">
-    <label for="input-live">Name:</label>
-    <b-form-input
-      id="input-live"
-      v-model="lifeName"
-      :state="lifeNameState"
-      aria-describedby="input-live-help input-live-feedback"
-      placeholder="Enter your name"
-      trim
-    ></b-form-input>
-    <!-- This will only be shown if the preceding input has an invalid state -->
-    <b-form-invalid-feedback id="input-live-feedback">
-      Enter at least 3 letters
-    </b-form-invalid-feedback>
-    <!-- This is a form text block (formerly known as help block) -->
-    <b-form-text id="input-live-help">Your full name.</b-form-text>
-  </div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div role="group">
+      <label for="input-live">Name:</label>
+      <b-form-input
+        id="input-live"
+        v-model="lifeName"
+        :state="lifeNameState"
+        aria-describedby="input-live-help input-live-feedback"
+        placeholder="Enter your name"
+        trim
+      ></b-form-input>
+      <!-- This will only be shown if the preceding input has an invalid state -->
+      <b-form-invalid-feedback id="input-live-feedback">
+        Enter at least 3 letters
+      </b-form-invalid-feedback>
+      <!-- This is a form text block (formerly known as help block) -->
+      <b-form-text id="input-live-help">Your full name.</b-form-text>
+    </div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -358,6 +431,10 @@ const lifeName = ref('')
 const lifeNameState = computed(() => (lifeName.value?.length > 2 ? true : false))
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 > **Tip:** Use the [`<b-form-group>`](/docs/components/form-group) component to automatically generate markup similar to above.
 
@@ -403,29 +480,34 @@ The `formatter` function should return the formatted value as a _string_.
 
 Formatting does not occur if a `formatter` is not provided.
 
-<b-card>
-  <div role="group">
-    <label for="input-formatter">"Text input with formatter (on input)"</label>
-    <b-form-input
-      id="input-formatter"
-      v-model="formatInputText"
-      placeholder="Enter your name"
-      :formatter="toLowerCaseFormatter"
-    ></b-form-input>
-    <p><b>Value:</b> {{ formatInputText }}</p>
-  </div>
-  <div role="group">
-    <label for="input-formatter">"Text input with lazy formatter (on blur)"</label>
-    <b-form-input
-      id="input-lazy"
-      v-model="formatLazyInputText"
-      placeholder="Enter your name"
-      lazy-formatter
-      :formatter="toLowerCaseFormatter"
-    ></b-form-input>
-    <p><b>Value:</b> {{ formatLazyInputText }}</p>
-  </div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div role="group">
+      <label for="input-formatter">"Text input with formatter (on input)"</label>
+      <b-form-input
+        id="input-formatter"
+        v-model="formatInputText"
+        placeholder="Enter your name"
+        :formatter="toLowerCaseFormatter"
+      ></b-form-input>
+      <p><b>Value:</b> {{ formatInputText }}</p>
+    </div>
+    <div role="group">
+      <label for="input-formatter">"Text input with lazy formatter (on blur)"</label>
+      <b-form-input
+        id="input-lazy"
+        v-model="formatLazyInputText"
+        placeholder="Enter your name"
+        lazy-formatter
+        :formatter="toLowerCaseFormatter"
+      ></b-form-input>
+      <p><b>Value:</b> {{ formatLazyInputText }}</p>
+    </div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -439,6 +521,7 @@ Formatting does not occur if a `formatter` is not provided.
     ></b-form-input>
     <p><b>Value:</b> {{ formatInputText }}</p>
   </div>
+
   <div role="group">
     <label for="input-formatter">"Text input with lazy formatter (on blur)"</label>
     <b-form-input
@@ -460,6 +543,10 @@ const formatLazyInputText = ref('')
 const toLowerCaseFormatter = (value: string) => value.toLowerCase()
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 **Note:** When using a non-text-like input (i.e. `color`, `range`, `date`, `number`, `email` etc.),
 ensure that your formatter function returns the value in the expected format (`date` ->
@@ -558,18 +645,23 @@ You can use that reference to access the native properties and methods.
 Refer to [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) for more information on
 these methods and properties. Support will vary based on input type.
 
-<b-card>
-  <div role="group">
-    <b-form-input
-      ref="inputRef"
-      v-model="sampleInputText"
-      placeholder="Enter your name"
-    ></b-form-input>
-  </div>
-  <div class="mt-2">
-      <b-button primary @click="selectAllText">Select all text</b-button>
-  </div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div role="group">
+      <b-form-input
+        ref="inputRef"
+        v-model="sampleInputText"
+        placeholder="Enter your name"
+      ></b-form-input>
+    </div>
+    <div class="mt-2">
+        <b-button primary @click="selectAllText">Select all text</b-button>
+    </div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -599,12 +691,16 @@ const selectAllText = () => inputRef.value.input.select()
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 <ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
 import {data} from '../../data/components/formInput.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BFormInput} from 'bootstrap-vue-next'
+import {BButton, BFormText, BFormInvalidFeedback, BRow, BCol, BContainer, BCard, BCardBody, BFormInput} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
 const selectedText = ref('')

@@ -1,9 +1,13 @@
 # Form Group
 
-> The `<b-form-group>` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
+<div class="lead mb-5">
 
-<b-card>
-  <div>
+The `<b-form-group>` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
+
+</div>
+
+<b-card no-body class="mb-5">
+  <b-card-body>
     <b-form-group
       id="fieldset-1"
       description="Let us know your name."
@@ -16,25 +20,26 @@
     >
       <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
     </b-form-group>
-  </div>
-</b-card>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
-  <div>
-    <b-form-group
-      id="fieldset-1"
-      description="Let us know your name."
-      label="Enter your name"
-      label-for="input-1"
-      valid-feedback="Thank you!"
-      :invalid-feedback="invalidFeedback"
-      :state="state"
-      label-class="mb-1"
-    >
-      <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
-    </b-form-group>
-  </div>
+  <b-form-group
+    id="fieldset-1"
+    description="Let us know your name."
+    label="Enter your name"
+    label-for="input-1"
+    valid-feedback="Thank you!"
+    :invalid-feedback="invalidFeedback"
+    :state="state"
+    label-class="mb-1"
+  >
+    <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
+  </b-form-group>
 </template>
 
 <script setup lang="ts">
@@ -47,6 +52,10 @@ const invalidFeedback = computed(() =>
 )
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ## Label
 
@@ -102,8 +111,8 @@ See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for 
 | `content-cols-lg` | Applies to breakpoint `lg` and up |
 | `content-cols-xl` | Applies to breakpoint `xl` and up |
 
-<b-card>
-  <div>
+<b-card no-body class="mb-5">
+  <b-card-body>
     <b-form-group
       id="fieldset-horizontal"
       label-cols-sm="4"
@@ -116,25 +125,30 @@ See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for 
       >
       <b-form-input id="input-horizontal"></b-form-input>
     </b-form-group>
-  </div>
-</b-card>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
-<div>
-  <b-form-group
-    id="fieldset-horizontal"
-    label-cols-sm="4"
-    label-cols-lg="3"
-    content-cols-sm
-    content-cols-lg="7"
-    description="Let us know your name."
-    label="Enter your name"
-    label-for="input-horizontal"
-  >
-    <b-form-input id="input-horizontal"></b-form-input>
-  </b-form-group>
-</div>
+<b-form-group
+  id="fieldset-horizontal"
+  label-cols-sm="4"
+  label-cols-lg="3"
+  content-cols-sm
+  content-cols-lg="7"
+  description="Let us know your name."
+  label="Enter your name"
+  label-for="input-horizontal"
+>
+  <b-form-input id="input-horizontal"></b-form-input>
+</b-form-group>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 You can also set the label cols to `'auto'`.
 
@@ -144,8 +158,8 @@ You can control the label text size match the size of your form input(s) via the
 `label-size` prop. Values can be `'sm'` or `'lg'` for small or large label, respectively. Sizes work
 for both horizontal and non-horizontal form groups.
 
-<b-card>
-  <div>
+<b-card no-body class="mb-5">
+  <b-card-body>
     <b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
       <b-form-input id="input-sm" size="sm"></b-form-input>
     </b-form-group>
@@ -155,22 +169,29 @@ for both horizontal and non-horizontal form groups.
     <b-form-group label-cols="4" label-cols-lg="2" label-size="lg" label="Large" label-for="input-lg">
       <b-form-input id="input-lg" size="lg"></b-form-input>
     </b-form-group>
-  </div>
-</b-card>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
-<div>
-  <b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
-    <b-form-input id="input-sm" size="sm"></b-form-input>
-  </b-form-group>
-  <b-form-group label-cols="4" label-cols-lg="2" label="Default" label-for="input-default">
-    <b-form-input id="input-default"></b-form-input>
-  </b-form-group>
-  <b-form-group label-cols="4" label-cols-lg="2" label-size="lg" label="Large" label-for="input-lg">
-    <b-form-input id="input-lg" size="lg"></b-form-input>
-  </b-form-group>
-</div>
+<b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
+  <b-form-input id="input-sm" size="sm"></b-form-input>
+</b-form-group>
+
+<b-form-group label-cols="4" label-cols-lg="2" label="Default" label-for="input-default">
+  <b-form-input id="input-default"></b-form-input>
+</b-form-group>
+
+<b-form-group label-cols="4" label-cols-lg="2" label-size="lg" label="Large" label-for="input-lg">
+  <b-form-input id="input-lg" size="lg"></b-form-input>
+</b-form-group>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ### Label text alignment
 
@@ -192,8 +213,8 @@ Alignment has no effect if the `label-sr-only` prop is set.
 Feel free to nest `<b-form-group>` components to produce advanced form layouts and semantic grouping
 of related form controls:
 
-<b-card>
-  <div>
+<b-card no-body class="mb-5">
+  <b-card-body>
     <b-card bg-variant="light">
       <b-form-group
         label-cols-lg="3"
@@ -247,56 +268,65 @@ of related form controls:
         </b-form-group>
       </b-form-group>
     </b-card>
-  </div>
-</b-card>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
-<div>
-  <b-card bg-variant="light">
+<b-card bg-variant="light">
+  <b-form-group
+    label-cols-lg="3"
+    label="Shipping Address"
+    label-size="lg"
+    label-class="fw-bold pt-0"
+    class="mb-0"
+  >
     <b-form-group
-      label-cols-lg="3"
-      label="Shipping Address"
-      label-size="lg"
-      label-class="fw-bold pt-0"
+      label="Street:"
+      label-for="nested-street"
+      label-cols-sm="3"
+      label-align-sm="end"
+    >
+      <b-form-input id="nested-street"></b-form-input>
+    </b-form-group>
+
+    <b-form-group label="City:" label-for="nested-city" label-cols-sm="3" label-align-sm="end">
+      <b-form-input id="nested-city"></b-form-input>
+    </b-form-group>
+
+    <b-form-group label="State:" label-for="nested-state" label-cols-sm="3" label-align-sm="end">
+      <b-form-input id="nested-state"></b-form-input>
+    </b-form-group>
+
+    <b-form-group
+      label="Country:"
+      label-for="nested-country"
+      label-cols-sm="3"
+      label-align-sm="end"
+    >
+      <b-form-input id="nested-country"></b-form-input>
+    </b-form-group>
+
+    <b-form-group
+      label="Ship via:"
+      label-cols-sm="3"
+      label-align-sm="end"
       class="mb-0"
     >
-      <b-form-group
-        label="Street:"
-        label-for="nested-street"
-        label-cols-sm="3"
-        label-align-sm="end"
-      >
-        <b-form-input id="nested-street"></b-form-input>
-      </b-form-group>
-      <b-form-group label="City:" label-for="nested-city" label-cols-sm="3" label-align-sm="end">
-        <b-form-input id="nested-city"></b-form-input>
-      </b-form-group>
-      <b-form-group label="State:" label-for="nested-state" label-cols-sm="3" label-align-sm="end">
-        <b-form-input id="nested-state"></b-form-input>
-      </b-form-group>
-      <b-form-group
-        label="Country:"
-        label-for="nested-country"
-        label-cols-sm="3"
-        label-align-sm="end"
-      >
-        <b-form-input id="nested-country"></b-form-input>
-      </b-form-group>
-      <b-form-group
-        label="Ship via:"
-        label-cols-sm="3"
-        label-align-sm="end"
-        class="mb-0"
-      >
-        <b-form-radio-group
-          class="pt-2"
-          :options="['Air', 'Courier', 'Mail']"
-        ></b-form-radio-group>
-      </b-form-group>
+      <b-form-radio-group
+        class="pt-2"
+        :options="['Air', 'Courier', 'Mail']"
+      ></b-form-radio-group>
     </b-form-group>
-  </b-card>
-</div>
+  </b-form-group>
+</b-card>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ## Disabled form group
 
@@ -374,8 +404,8 @@ You can make a floating label by setting the property `floating` to true and spe
 
 ### Example
 
-<b-card>
-  <div>
+<b-card no-body class="mb-5">
+  <b-card-body>
     <b-form-group
       id="fieldset-1"
       description="Let us know your name."
@@ -388,31 +418,32 @@ You can make a floating label by setting the property `floating` to true and spe
     >
       <b-form-input id="input-floating-1" v-model="floatingName" :state="floatingState" trim placeholder="Enter your name please"></b-form-input>
     </b-form-group>
-  </div>
-</b-card>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
-  <div>
-    <b-form-group
-      id="fieldset-1"
-      description="Let us know your name."
-      label="Name"
-      label-for="input-floating-1"
-      valid-feedback="Thank you!"
-      :invalid-feedback="floatingInvalidFeedback"
+  <b-form-group
+    id="fieldset-1"
+    description="Let us know your name."
+    label="Name"
+    label-for="input-floating-1"
+    valid-feedback="Thank you!"
+    :invalid-feedback="floatingInvalidFeedback"
+    :state="floatingState"
+    floating
+  >
+    <b-form-input
+      id="input-floating-1"
+      v-model="floatingName"
       :state="floatingState"
-      floating
-    >
-      <b-form-input
-        id="input-floating-1"
-        v-model="floatingName"
-        :state="floatingState"
-        trim
-        placeholder="Enter your name please"
-      ></b-form-input>
-    </b-form-group>
-  </div>
+      trim
+      placeholder="Enter your name please"
+    ></b-form-input>
+  </b-form-group>
 </template>
 
 <script setup lang="ts">
@@ -425,6 +456,10 @@ const floatingInvalidFeedback = computed(() =>
 )
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ### Restrictions
 
@@ -466,7 +501,7 @@ scoped `default` slot.
 <script setup lang="ts">
 import {data} from '../../data/components/formGroup.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {BCard, BFormRadioGroup, BFormGroup, BFormInput} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BFormRadioGroup, BFormGroup, BFormInput} from 'bootstrap-vue-next'
 import {computed, ref} from 'vue'
 
 const name = ref('')

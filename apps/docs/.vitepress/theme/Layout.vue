@@ -183,6 +183,9 @@ const globalData = inject(appInfoKey, {
   .breadcrumb {
     margin-bottom: 0;
   }
+  [id^='input-group-'] {
+    margin-bottom: 1rem;
+  }
   .html {
     border-top: var(--bs-border-width) solid rgba(255, 255, 255, 0.2);
     padding: 1rem 1.25rem;
