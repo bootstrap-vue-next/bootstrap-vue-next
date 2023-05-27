@@ -9,8 +9,6 @@
 <b-card v-b-tooltip.focus.right="{title: 'My title'}" />
 ```
 
-  </b-card-body>
-
 </b-card>
 
 A directive is composed by modifiers and a value, like the examples above.
