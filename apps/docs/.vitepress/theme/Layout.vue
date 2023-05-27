@@ -212,6 +212,9 @@ const globalData = inject(appInfoKey, {
       h4:first-child {
         margin-top: 0;
       }
+      .card {
+        margin-bottom: 0;
+      }
     }
   }
   [class^='language-'] {
