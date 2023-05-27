@@ -42,7 +42,7 @@ Install the necessary packages for `BootstrapVueNext`:
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next
@@ -55,7 +55,7 @@ pnpm add unplugin-vue-components -D
   </b-tab>
   <b-tab title="YARN">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 yarn add bootstrap bootstrap-vue-next
@@ -68,7 +68,7 @@ yarn add unplugin-vue-components -D
   </b-tab>
   <b-tab title="NPM">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 npm i bootstrap bootstrap-vue-next
@@ -84,7 +84,7 @@ npm i unplugin-vue-components -D
 
 The following is an example of a basic `vite.config.js/ts`. All you need to do is add **Components** to the Vite **plugins** option, with the additional imports:
 
-<b-card>
+<b-card class="bg-body-tertiary">
 
 ```ts
 // vite.config.js/ts
@@ -107,7 +107,7 @@ export default defineConfig({
 
 Finally, in your `main.js/ts` import the CSS:
 
-<b-card>
+<b-card class="bg-body-tertiary">
 
 ```ts
 // main.js/ts
@@ -121,7 +121,7 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 If using TypeScript you will want to add `components.d.ts` to the `include` array in your tsconfig.json:
 
-<b-card>
+<b-card class="bg-body-tertiary">
 
 ```json
 // tsconfig.json
@@ -142,7 +142,7 @@ Install the necessary packages for `bootstrap-vue-next`:
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next
@@ -153,7 +153,7 @@ pnpm add bootstrap bootstrap-vue-next
   </b-tab>
   <b-tab title="YARN">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 yarn add bootstrap bootstrap-vue-next
@@ -164,7 +164,7 @@ yarn add bootstrap bootstrap-vue-next
   </b-tab>
   <b-tab title="NPM">
 
-  <b-card class="border-top-0 rounded-top-0">
+  <b-card class="bg-body-tertiary">
 
 ```bash
 npm i bootstrap bootstrap-vue-next
@@ -178,7 +178,7 @@ npm i bootstrap bootstrap-vue-next
 
 Then, add to your `main.js/ts`:
 
-<b-card>
+<b-card class="bg-body-tertiary">
 
 ```typescript
 // main.js/ts
@@ -209,7 +209,7 @@ In your Nuxt3 application, install the necessary packages for `bootstrap-vue-nex
 <b-tabs v-model="codePreference">
   <b-tab title="PNPM">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
@@ -220,7 +220,7 @@ pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
   </b-tab>
   <b-tab title="YARN">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
@@ -231,7 +231,7 @@ yarn add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
   </b-tab>
   <b-tab title="NPM">
 
-  <b-card>
+  <b-card class="bg-body-tertiary">
 
 ```bash
 npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
@@ -245,7 +245,7 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 
 Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed
 
-<b-card>
+<b-card class="bg-body-tertiary">
 
 ```ts
 // nuxt.config.js/ts
@@ -259,9 +259,9 @@ export default defineNuxtConfig({
 
 Enjoy it in your app without manual imports, and automatic tree-shaking
 
-<b-card>
+<b-card class="bg-body-tertiary">
 
-```vue
+```vue-html
 <template>
   <div>
     <b-button variant="primary" @click="show = !show">Click me</b-button>
@@ -278,7 +278,7 @@ const show = ref(false)
 
 You can customize the options with the bootstrapVueNext key in your nuxt.config
 
-<b-card class="mb-1">
+<b-card class="bg-body-tertiary">
 
 ```ts
 // nuxt.config.js/ts
@@ -301,7 +301,7 @@ The practical difference between manually including an item and not is null as N
 
 Directives should be imported directly from the `bootstrap-vue-next` package
 
-<b-card>
+<b-card class="bg-body-tertiary">
 
 ```ts
 import {vBColorMode} from 'bootstrap-vue-next'
