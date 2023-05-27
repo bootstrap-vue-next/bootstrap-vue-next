@@ -17,17 +17,7 @@ import {
   stringToInteger,
   suffixPropName,
 } from '../../utils'
-import {
-  computed,
-  defineComponent,
-  h,
-  nextTick,
-  onMounted,
-  type PropType,
-  ref,
-  toRef,
-  watch,
-} from 'vue'
+import {computed, defineComponent, h, nextTick, onMounted, type PropType, ref, watch} from 'vue'
 import BCol from '../BCol.vue'
 import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
@@ -83,12 +73,12 @@ export default defineComponent({
     floating: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   },
   setup(props, {attrs}) {
-    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-    const labelSrOnlyBoolean = useBooleanish(toRef(props, 'labelSrOnly'))
-    const stateBoolean = useBooleanish(toRef(props, 'state'))
-    const tooltipBoolean = useBooleanish(toRef(props, 'tooltip'))
-    const validatedBoolean = useBooleanish(toRef(props, 'validated'))
-    const floatingBoolean = useBooleanish(toRef(props, 'floating'))
+    const disabledBoolean = useBooleanish(() => props.disabled)
+    const labelSrOnlyBoolean = useBooleanish(() => props.labelSrOnly)
+    const stateBoolean = useBooleanish(() => props.state)
+    const tooltipBoolean = useBooleanish(() => props.tooltip)
+    const validatedBoolean = useBooleanish(() => props.validated)
+    const floatingBoolean = useBooleanish(() => props.floating)
 
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
@@ -404,7 +394,7 @@ export default defineComponent({
           'was-validated': this.validatedBoolean,
         },
       ],
-      'id': useId(toRef(props, 'id')).value,
+      'id': useId(() => props.id).value,
       'disabled': isFieldset ? this.disabledBoolean : null,
       'role': isFieldset ? null : 'group',
       'aria-invalid': this.computedAriaInvalid,

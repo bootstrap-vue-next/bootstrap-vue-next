@@ -1,7 +1,9 @@
 <template>
-  <router-link
+  <component
+    :is="tag"
     v-if="tag === 'router-link'"
-    v-slot="{href, navigate, isActive}"
+    v-slot="//@ts-ignore 
+    {href, navigate, isActive}"
     v-bind="routerAttr"
     custom
   >
@@ -15,7 +17,7 @@
     >
       <slot />
     </component>
-  </router-link>
+  </component>
   <component
     :is="tag"
     v-else
@@ -32,7 +34,15 @@
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
-import {computed, defineComponent, getCurrentInstance, inject, type PropType, ref, toRef} from 'vue'
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  inject,
+  type PropType,
+  ref,
+  type SlotsType,
+} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
 export const BLINK_PROPS = {
@@ -55,13 +65,16 @@ export const BLINK_PROPS = {
 
 export default defineComponent({
   // TODO this component will likely have an issue with inheritAttrs
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   props: BLINK_PROPS,
   emits: ['click'],
   setup(props, {emit, attrs}) {
-    const activeBoolean = useBooleanish(toRef(props, 'active'))
-    const appendBoolean = useBooleanish(toRef(props, 'append'))
-    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-    const replaceBoolean = useBooleanish(toRef(props, 'replace'))
+    const activeBoolean = useBooleanish(() => props.active)
+    const appendBoolean = useBooleanish(() => props.append)
+    const disabledBoolean = useBooleanish(() => props.disabled)
+    const replaceBoolean = useBooleanish(() => props.replace)
     const collapseData = inject(collapseInjectionKey, null)
     const navbarData = inject(navbarInjectionKey, null)
     const closeCollapse = () => {

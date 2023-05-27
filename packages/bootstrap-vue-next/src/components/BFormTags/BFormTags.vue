@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, ref, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId} from '../../composables'
 import type {
@@ -204,20 +204,36 @@ interface BFormTagsEmits {
 
 const emit = defineEmits<BFormTagsEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: typeof slotAttrs.value) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'add-button-text'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'tag'?: (props: {
+    tag: string
+    tagClass: ClassValue
+    tagVariant: ColorVariant | null
+    tagPills: boolean
+    removeTag: (tag?: string) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+}>()
+
 const modelValue = useVModel(props, 'modelValue', emit)
 
 const computedId = useId()
 
-const addOnChangeBoolean = useBooleanish(toRef(props, 'addOnChange'))
-const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const noAddOnEnterBoolean = useBooleanish(toRef(props, 'noAddOnEnter'))
-const noOuterFocusBoolean = useBooleanish(toRef(props, 'noOuterFocus'))
-const noTagRemoveBoolean = useBooleanish(toRef(props, 'noTagRemove'))
-const removeOnDeleteBoolean = useBooleanish(toRef(props, 'removeOnDelete'))
-const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = useBooleanish(toRef(props, 'state'))
-const tagPillsBoolean = useBooleanish(toRef(props, 'tagPills'))
+const addOnChangeBoolean = useBooleanish(() => props.addOnChange)
+const autofocusBoolean = useBooleanish(() => props.autofocus)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const noAddOnEnterBoolean = useBooleanish(() => props.noAddOnEnter)
+const noOuterFocusBoolean = useBooleanish(() => props.noOuterFocus)
+const noTagRemoveBoolean = useBooleanish(() => props.noTagRemove)
+const removeOnDeleteBoolean = useBooleanish(() => props.removeOnDelete)
+const requiredBoolean = useBooleanish(() => props.required)
+const stateBoolean = useBooleanish(() => props.state)
+const tagPillsBoolean = useBooleanish(() => props.tagPills)
 
 const input = ref<HTMLInputElement | null>(null)
 

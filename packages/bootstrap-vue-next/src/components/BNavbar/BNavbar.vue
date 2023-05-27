@@ -35,8 +35,13 @@ const props = withDefaults(defineProps<Props>(), {
   container: 'fluid',
 })
 
-const printBoolean = useBooleanish(toRef(props, 'print'))
-const darkBoolean = useBooleanish(toRef(props, 'dark'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const printBoolean = useBooleanish(() => props.print)
+const darkBoolean = useBooleanish(() => props.dark)
 
 const computedRole = computed<undefined | 'navigation'>(() =>
   props.tag === 'nav' ? undefined : 'navigation'

@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, type PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, LinkTarget, Size} from '../../types'
@@ -34,6 +34,10 @@ import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import {useVModel} from '@vueuse/core'
 
 export default defineComponent({
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+    loading?: Record<string, never>
+  }>,
   components: {BLink, BSpinner},
   props: {
     ...BLINK_PROPS,
@@ -57,13 +61,13 @@ export default defineComponent({
   setup(props, {emit}) {
     const pressedValue = useVModel(props, 'pressed', emit)
 
-    const activeBoolean = useBooleanish(toRef(props, 'active'))
-    const blockBoolean = useBooleanish(toRef(props, 'block'))
-    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-    const pillBoolean = useBooleanish(toRef(props, 'pill'))
-    const pressedBoolean = useBooleanish(toRef(props, 'pressed'))
-    const squaredBoolean = useBooleanish(toRef(props, 'squared'))
-    const loadingBoolean = useBooleanish(toRef(props, 'loading'))
+    const activeBoolean = useBooleanish(() => props.active)
+    const blockBoolean = useBooleanish(() => props.block)
+    const disabledBoolean = useBooleanish(() => props.disabled)
+    const pillBoolean = useBooleanish(() => props.pill)
+    const pressedBoolean = useBooleanish(() => props.pressed)
+    const squaredBoolean = useBooleanish(() => props.squared)
+    const loadingBoolean = useBooleanish(() => props.loading)
 
     const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
     const isButton = computed<boolean>(

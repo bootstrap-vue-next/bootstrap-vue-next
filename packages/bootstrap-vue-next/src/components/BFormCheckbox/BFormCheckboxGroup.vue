@@ -99,19 +99,26 @@ interface BFormCheckboxGroupEmits {
 
 const emit = defineEmits<BFormCheckboxGroupEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  first?: (props: Record<string, never>) => any
+}>()
+
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const computedId = useId(toRef(props, 'id'), 'checkbox')
-const computedName = useId(toRef(props, 'name'), 'checkbox')
-const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-const buttonsBoolean = useBooleanish(toRef(props, 'buttons'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const plainBoolean = useBooleanish(toRef(props, 'plain'))
-const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stackedBoolean = useBooleanish(toRef(props, 'stacked'))
-const stateBoolean = useBooleanish(toRef(props, 'state'))
-const switchesBoolean = useBooleanish(toRef(props, 'switches'))
-const validatedBoolean = useBooleanish(toRef(props, 'validated'))
+const computedId = useId(() => props.id, 'checkbox')
+const computedName = useId(() => props.name, 'checkbox')
+const autofocusBoolean = useBooleanish(() => props.autofocus)
+const buttonsBoolean = useBooleanish(() => props.buttons)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const plainBoolean = useBooleanish(() => props.plain)
+const requiredBoolean = useBooleanish(() => props.required)
+const stackedBoolean = useBooleanish(() => props.stacked)
+const stateBoolean = useBooleanish(() => props.state)
+const switchesBoolean = useBooleanish(() => props.switches)
+const validatedBoolean = useBooleanish(() => props.validated)
 
 const element = ref<HTMLElement | null>(null)
 

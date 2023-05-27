@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../../types'
 import {useBooleanish} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
@@ -82,14 +82,25 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  overlay?: (props: {
+    type: SpinnerType
+    variant: ColorVariant | null | undefined
+    small: boolean
+  }) => any
+}>()
+
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0}
 
-const fixedBoolean = useBooleanish(toRef(props, 'fixed'))
-const noSpinnerBoolean = useBooleanish(toRef(props, 'noSpinner'))
-const noCenterBoolean = useBooleanish(toRef(props, 'noCenter'))
-const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
-const showBoolean = useBooleanish(toRef(props, 'show'))
-const spinnerSmallBoolean = useBooleanish(toRef(props, 'spinnerSmall'))
+const fixedBoolean = useBooleanish(() => props.fixed)
+const noSpinnerBoolean = useBooleanish(() => props.noSpinner)
+const noCenterBoolean = useBooleanish(() => props.noCenter)
+const noWrapBoolean = useBooleanish(() => props.noWrap)
+const showBoolean = useBooleanish(() => props.show)
+const spinnerSmallBoolean = useBooleanish(() => props.spinnerSmall)
 
 const computedRounded = computed(() =>
   props.rounded === true || props.rounded === ''

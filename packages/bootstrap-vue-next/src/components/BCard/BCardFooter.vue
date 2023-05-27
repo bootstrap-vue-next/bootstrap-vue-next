@@ -27,4 +27,9 @@ const props = withDefaults(defineProps<BCardFooterProps>(), {
   html: undefined,
   textVariant: undefined,
 })
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 </script>

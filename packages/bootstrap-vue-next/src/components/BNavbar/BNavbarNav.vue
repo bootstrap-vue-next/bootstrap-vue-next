@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {AlignmentJustifyContent, Booleanish} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useAlignment, useBooleanish} from '../../composables'
 
 interface Props {
@@ -25,10 +25,15 @@ const props = withDefaults(defineProps<Props>(), {
   tag: 'ul',
 })
 
-const fillBoolean = useBooleanish(toRef(props, 'fill'))
-const justifiedBoolean = useBooleanish(toRef(props, 'justified'))
-const smallBoolean = useBooleanish(toRef(props, 'small'))
-const alignment = useAlignment(toRef(props, 'align'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const fillBoolean = useBooleanish(() => props.fill)
+const justifiedBoolean = useBooleanish(() => props.justified)
+const smallBoolean = useBooleanish(() => props.small)
+const alignment = useAlignment(() => props.align)
 
 const computedClasses = computed(() => ({
   'nav-fill': fillBoolean.value,

@@ -80,6 +80,15 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'toggle-text'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'button-content'?: (props: Record<string, never>) => any
+}>()
+
 const modelValue = useVModel(props, 'modelValue', emit)
 
 const modelValueBoolean = useBooleanish(modelValue)

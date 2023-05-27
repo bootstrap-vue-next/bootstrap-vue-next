@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
-import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, type StyleValue, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, Size, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -78,6 +78,13 @@ interface BAvatarEmits {
 
 const emit = defineEmits<BAvatarEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  badge?: (props: Record<string, never>) => any
+}>()
+
 const slots = useSlots()
 
 const parentData = inject(avatarGroupInjectionKey, null)
@@ -86,11 +93,11 @@ const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
-const badgeLeftBoolean = useBooleanish(toRef(props, 'badgeLeft'))
-const badgeTopBoolean = useBooleanish(toRef(props, 'badgeTop'))
-const buttonBoolean = useBooleanish(toRef(props, 'button'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const squareBoolean = useBooleanish(toRef(props, 'square'))
+const badgeLeftBoolean = useBooleanish(() => props.badgeLeft)
+const badgeTopBoolean = useBooleanish(() => props.badgeTop)
+const buttonBoolean = useBooleanish(() => props.button)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const squareBoolean = useBooleanish(() => props.square)
 
 const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
 const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))

@@ -108,7 +108,7 @@ import {
   BRow,
   useColorMode,
 } from 'bootstrap-vue-next'
-import {computed, inject, toRef, readonly} from 'vue'
+import {computed, inject} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'

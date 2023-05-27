@@ -16,5 +16,5 @@
 import {ref} from 'vue'
 
 const tooltip = ref('Tooltip on <em>top</em>')
-const setTooltip = () => (tooltip.value = `${new Date()} <strong>fechaaa</strong>`)
+const setTooltip = () => {tooltip.value = `${new Date()} <strong>fechaaa</strong>`}
 </script>

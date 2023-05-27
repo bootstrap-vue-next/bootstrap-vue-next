@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef, useSlots} from 'vue'
+import {computed, useSlots} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -57,13 +57,18 @@ interface BFormTagEmits {
 
 const emit = defineEmits<BFormTagEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const slots = useSlots()
 
-const computedId = useId(toRef(props, 'id'))
+const computedId = useId(() => props.id)
 
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const noRemoveBoolean = useBooleanish(toRef(props, 'noRemove'))
-const pillBoolean = useBooleanish(toRef(props, 'pill'))
+const disabledBoolean = useBooleanish(() => props.disabled)
+const noRemoveBoolean = useBooleanish(() => props.noRemove)
+const pillBoolean = useBooleanish(() => props.pill)
 
 const tagText = computed<string>(
   () => ((slots.default?.()[0].children ?? '').toString() || props.title) ?? ''

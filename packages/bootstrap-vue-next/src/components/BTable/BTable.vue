@@ -183,7 +183,7 @@
 
 <script setup lang="ts">
 // import type {Breakpoint} from '../../types'
-import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import {cloneDeepAsync} from '../../utils/object'
 import {titleCase} from '../../utils/stringUtils'
@@ -325,21 +325,22 @@ interface BTableEmits {
 }
 
 const emit = defineEmits<BTableEmits>()
+
 const slots = useSlots()
 
 const itemHelper = useItemHelper()
 
-const footCloneBoolean = useBooleanish(toRef(props, 'footClone'))
-const sortDescBoolean = useBooleanish(toRef(props, 'sortDesc'))
-const sortInternalBoolean = useBooleanish(toRef(props, 'sortInternal'))
-const selectableBoolean = useBooleanish(toRef(props, 'selectable'))
-const stickySelectBoolean = useBooleanish(toRef(props, 'stickySelect'))
-const labelStackedBoolean = useBooleanish(toRef(props, 'labelStacked'))
-const busyBoolean = useBooleanish(toRef(props, 'busy'))
-const showEmptyBoolean = useBooleanish(toRef(props, 'showEmpty'))
-const noProviderPagingBoolean = useBooleanish(toRef(props, 'noProviderPaging'))
-const noProviderSortingBoolean = useBooleanish(toRef(props, 'noProviderSorting'))
-const noProviderFilteringBoolean = useBooleanish(toRef(props, 'noProviderFiltering'))
+const footCloneBoolean = useBooleanish(() => props.footClone)
+const sortDescBoolean = useBooleanish(() => props.sortDesc)
+const sortInternalBoolean = useBooleanish(() => props.sortInternal)
+const selectableBoolean = useBooleanish(() => props.selectable)
+const stickySelectBoolean = useBooleanish(() => props.stickySelect)
+const labelStackedBoolean = useBooleanish(() => props.labelStacked)
+const busyBoolean = useBooleanish(() => props.busy)
+const showEmptyBoolean = useBooleanish(() => props.showEmpty)
+const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
+const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
+const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 
 const internalBusyFlag = ref(busyBoolean.value)
 itemHelper.filterEvent.value = async (items) => {

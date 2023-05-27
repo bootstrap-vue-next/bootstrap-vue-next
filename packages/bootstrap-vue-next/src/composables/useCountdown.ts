@@ -1,10 +1,14 @@
+import {useIntervalFn, type UseIntervalFnOptions} from '@vueuse/core'
 import {
+  computed,
+  type ComputedRef,
   type MaybeRefOrGetter,
-  resolveUnref,
-  useIntervalFn,
-  type UseIntervalFnOptions,
-} from '@vueuse/core'
-import {computed, type ComputedRef, readonly, type Ref, ref, watchEffect} from 'vue'
+  readonly,
+  type Ref,
+  ref,
+  toValue,
+  watchEffect,
+} from 'vue'
 
 type VoidFn = () => void
 
@@ -33,13 +37,13 @@ export default (
 ): CountdownReturn => {
   const isPaused = ref(false)
 
-  const intervalsPassed = ref<number>(0)
+  const intervalsPassed = ref(0)
 
   // Has watchEffect to set
-  const resolvedLength = ref<number>(resolveUnref(length))
+  const resolvedLength = ref(toValue(length))
 
   // Has watchEffect to set
-  const intervalLength = ref<number>(resolveUnref(interval))
+  const intervalLength = ref(toValue(interval))
 
   const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / intervalLength.value))
 
@@ -50,7 +54,9 @@ export default (
   )
 
   const {pause, resume, isActive} = useIntervalFn(
-    () => (intervalsPassed.value = intervalsPassed.value + 1),
+    () => {
+      intervalsPassed.value = intervalsPassed.value + 1
+    },
     interval,
     intervalOpts
   )
@@ -68,7 +74,7 @@ export default (
   }
 
   watchEffect(() => {
-    const newVal = resolveUnref<number>(length)
+    const newVal = toValue(length)
     const oldVal = resolvedLength.value
     if (newVal === oldVal) return
     resolvedLength.value = newVal
@@ -77,7 +83,7 @@ export default (
   })
 
   watchEffect(() => {
-    const newVal = resolveUnref<number>(interval)
+    const newVal = toValue(interval)
     const oldVal = intervalLength.value
     if (newVal === oldVal) return
     intervalLength.value = newVal

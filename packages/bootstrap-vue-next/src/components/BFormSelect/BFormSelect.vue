@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
-import {computed, nextTick, ref, toRef} from 'vue'
+import {computed, nextTick, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId} from '../../composables'
@@ -98,16 +98,23 @@ interface BFormSelectEmits {
 
 const emit = defineEmits<BFormSelectEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  first?: (props: Record<string, never>) => any
+}>()
+
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const computedId = useId(toRef(props, 'id'), 'input')
+const computedId = useId(() => props.id, 'input')
 
-const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const multipleBoolean = useBooleanish(toRef(props, 'multiple'))
-const plainBoolean = useBooleanish(toRef(props, 'plain'))
-const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = useBooleanish(toRef(props, 'state'))
+const autofocusBoolean = useBooleanish(() => props.autofocus)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const multipleBoolean = useBooleanish(() => props.multiple)
+const plainBoolean = useBooleanish(() => props.plain)
+const requiredBoolean = useBooleanish(() => props.required)
+const stateBoolean = useBooleanish(() => props.state)
 
 const input = ref<HTMLElement>()
 

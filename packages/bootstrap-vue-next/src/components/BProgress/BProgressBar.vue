@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, inject, toRef} from 'vue'
+import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
 interface Props {
@@ -46,12 +46,17 @@ const props = withDefaults(defineProps<Props>(), {
   value: 0,
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const parentData = inject(progressInjectionKey, null)
 
-const animatedBoolean = useBooleanish(toRef(props, 'animated'))
-const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
-const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
-const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+const animatedBoolean = useBooleanish(() => props.animated)
+const showProgressBoolean = useBooleanish(() => props.showProgress)
+const showValueBoolean = useBooleanish(() => props.showValue)
+const stripedBoolean = useBooleanish(() => props.striped)
 
 const computedClasses = computed(() => ({
   'progress-bar-animated': animatedBoolean.value || parentData?.animated.value,

@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import {toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish} from '../../types'
 import BInputGroupText from './BInputGroupText.vue'
@@ -19,5 +18,10 @@ const props = withDefaults(defineProps<BInputGroupAddonProps>(), {
   isText: false,
 })
 
-const isTextBoolean = useBooleanish(toRef(props, 'isText'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const isTextBoolean = useBooleanish(() => props.isText)
 </script>

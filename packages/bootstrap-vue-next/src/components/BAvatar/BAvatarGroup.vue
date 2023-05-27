@@ -31,7 +31,12 @@ const props = withDefaults(defineProps<BAvatarGroupProps>(), {
   variant: null,
 })
 
-const squareBoolean = useBooleanish(toRef(props, 'square'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const squareBoolean = useBooleanish(() => props.square)
 
 const computedSize = computed<string | null>(() => computeSize(props.size))
 

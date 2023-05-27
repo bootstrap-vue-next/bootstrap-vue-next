@@ -34,7 +34,7 @@ import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonType, ButtonVariant, ColorVariant} from '../../types'
-import {computed, onBeforeUnmount, toRef, useSlots, watchEffect} from 'vue'
+import {computed, onBeforeUnmount, useSlots, watchEffect} from 'vue'
 import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useVModel} from '@vueuse/core'
@@ -75,15 +75,22 @@ interface BAlertEmits {
 
 const emit = defineEmits<BAlertEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  close?: (props: Record<string, never>) => any
+}>()
+
 const slots = useSlots()
 
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const dismissibleBoolean = useBooleanish(toRef(props, 'dismissible'))
-const fadeBoolean = useBooleanish(toRef(props, 'fade'))
-const immediateBoolean = useBooleanish(toRef(props, 'immediate'))
-const showOnPauseBoolean = useBooleanish(toRef(props, 'showOnPause'))
-const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
+const dismissibleBoolean = useBooleanish(() => props.dismissible)
+const fadeBoolean = useBooleanish(() => props.fade)
+const immediateBoolean = useBooleanish(() => props.immediate)
+const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
+const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
 
 const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
 
@@ -104,7 +111,7 @@ const {
   stop,
   isPaused,
   value: remainingMs,
-} = useCountdown(countdownLength, toRef(props, 'interval'), {
+} = useCountdown(countdownLength, () => props.interval, {
   immediate: typeof modelValue.value === 'number' && immediateBoolean.value,
 })
 

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
 interface BButtonToolbarProps {
@@ -22,7 +22,12 @@ const props = withDefaults(defineProps<BButtonToolbarProps>(), {
   justify: false,
 })
 
-const justifyBoolean = useBooleanish(toRef(props, 'justify'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const justifyBoolean = useBooleanish(() => props.justify)
 
 const computedClasses = computed(() => ({
   'justify-content-between': justifyBoolean.value,

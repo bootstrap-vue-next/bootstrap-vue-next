@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
 import {onClickOutside, useToNumber, useVModel} from '@vueuse/core'
-import {computed, provide, ref, toRef, watch} from 'vue'
+import {computed, provide, ref, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {BvEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
@@ -158,25 +158,34 @@ interface BDropdownEmits {
 
 const emit = defineEmits<BDropdownEmits>()
 
-const computedId = useId(toRef(props, 'id'), 'dropdown')
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'button-content'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'toggle-text'?: (props: Record<string, never>) => any
+}>()
+
+const computedId = useId(() => props.id, 'dropdown')
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
-const blockBoolean = useBooleanish(toRef(props, 'block'))
-const darkBoolean = useBooleanish(toRef(props, 'dark'))
-const dropupBoolean = useBooleanish(toRef(props, 'dropup'))
-const dropendBoolean = useBooleanish(toRef(props, 'dropend'))
-const isNavBoolean = useBooleanish(toRef(props, 'isNav'))
-const dropstartBoolean = useBooleanish(toRef(props, 'dropstart'))
-const centerBoolean = useBooleanish(toRef(props, 'center'))
-const endBoolean = useBooleanish(toRef(props, 'end'))
-const splitBoolean = useBooleanish(toRef(props, 'split'))
-const noCaretBoolean = useBooleanish(toRef(props, 'noCaret'))
-const noFlipBoolean = useBooleanish(toRef(props, 'noFlip'))
-const noShiftBoolean = useBooleanish(toRef(props, 'noShift'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
-const splitDisabledBoolean = useBooleanish(toRef(props, 'splitDisabled'))
+const blockBoolean = useBooleanish(() => props.block)
+const darkBoolean = useBooleanish(() => props.dark)
+const dropupBoolean = useBooleanish(() => props.dropup)
+const dropendBoolean = useBooleanish(() => props.dropend)
+const isNavBoolean = useBooleanish(() => props.isNav)
+const dropstartBoolean = useBooleanish(() => props.dropstart)
+const centerBoolean = useBooleanish(() => props.center)
+const endBoolean = useBooleanish(() => props.end)
+const splitBoolean = useBooleanish(() => props.split)
+const noCaretBoolean = useBooleanish(() => props.noCaret)
+const noFlipBoolean = useBooleanish(() => props.noFlip)
+const noShiftBoolean = useBooleanish(() => props.noShift)
+const lazyBoolean = useBooleanish(() => props.lazy)
+const splitDisabledBoolean = useBooleanish(() => props.splitDisabled)
 
 const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
@@ -285,16 +294,22 @@ const onClickInside = () => {
   }
 }
 
-const close = () => (modelValue.value = false)
-const open = () => (modelValue.value = true)
-const toggle = () => (modelValue.value = !modelValueBoolean.value)
+const close = () => {
+  modelValue.value = false
+}
+const open = () => {
+  modelValue.value = true
+}
+const toggle = () => {
+  modelValue.value = !modelValueBoolean.value
+}
 
 watch(modelValueBoolean, update)
 
 defineExpose({
   close,
   open,
-  toggle
+  toggle,
 })
 
 provide(dropdownInjectionKey, {

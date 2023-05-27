@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import type {Booleanish} from '../types'
 import {useBooleanish} from '../composables'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 
 interface BImgProps {
   alt?: string
@@ -52,15 +52,15 @@ const BLANK_TEMPLATE =
   '<rect width="100%" height="100%" style="fill:%{f};"></rect>' +
   '</svg>'
 
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
-const blankBoolean = useBooleanish(toRef(props, 'blank'))
-const blockBoolean = useBooleanish(toRef(props, 'block'))
-const centerBoolean = useBooleanish(toRef(props, 'center'))
-const fluidBoolean = useBooleanish(toRef(props, 'fluid'))
-const fluidGrowBoolean = useBooleanish(toRef(props, 'fluidGrow'))
-const startBoolean = useBooleanish(toRef(props, 'start'))
-const endBoolean = useBooleanish(toRef(props, 'end'))
-const thumbnailBoolean = useBooleanish(toRef(props, 'thumbnail'))
+const lazyBoolean = useBooleanish(() => props.lazy)
+const blankBoolean = useBooleanish(() => props.blank)
+const blockBoolean = useBooleanish(() => props.block)
+const centerBoolean = useBooleanish(() => props.center)
+const fluidBoolean = useBooleanish(() => props.fluid)
+const fluidGrowBoolean = useBooleanish(() => props.fluidGrow)
+const startBoolean = useBooleanish(() => props.start)
+const endBoolean = useBooleanish(() => props.end)
+const thumbnailBoolean = useBooleanish(() => props.thumbnail)
 
 const computedSrcset = computed<string | undefined>(() =>
   typeof props.srcset === 'string'

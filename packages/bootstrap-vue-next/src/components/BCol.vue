@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, type PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
 import type {AlignmentVertical, Booleanish} from '../types'
 import {getBreakpointProps, getClasses} from '../utils'
 import {useBooleanish} from '../composables'
@@ -16,6 +16,9 @@ const breakpointOrder = getBreakpointProps('order', [''], {type: [String, Number
 
 export default defineComponent({
   name: 'BCol',
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   props: {
     col: {type: [Boolean, String] as PropType<Booleanish>, default: false}, // Generic flexbox .col (xs)
     cols: {type: [String, Number], default: null}, // .col-[1-12]|auto (xs)
@@ -34,7 +37,7 @@ export default defineComponent({
       {content: breakpointOrder, propPrefix: 'order'},
     ]
 
-    const colBoolean = useBooleanish(toRef(props, 'col'))
+    const colBoolean = useBooleanish(() => props.col)
 
     const classList = computed(() =>
       properties.flatMap((el) => getClasses(props, el.content, el.propPrefix, el.classPrefix))

@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, useSlots} from 'vue'
+import {computed, ref, useSlots} from 'vue'
 import {useBooleanish, useId, useModalManager} from '../composables'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
@@ -225,30 +225,49 @@ interface BModalEmits {
 
 const emit = defineEmits<BModalEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'title'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header-close'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'footer'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'cancel'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'ok'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'backdrop'?: (props: Record<string, never>) => any
+}>()
+
 const slots = useSlots()
 
-const computedId = useId(toRef(props, 'id'), 'modal')
+const computedId = useId(() => props.id, 'modal')
 
 const modelValue = useVModel(props, 'modelValue', emit)
 
-const busyBoolean = useBooleanish(toRef(props, 'busy'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
-const cancelDisabledBoolean = useBooleanish(toRef(props, 'cancelDisabled'))
-const centeredBoolean = useBooleanish(toRef(props, 'centered'))
-const hideBackdropBoolean = useBooleanish(toRef(props, 'hideBackdrop'))
-const hideFooterBoolean = useBooleanish(toRef(props, 'hideFooter'))
-const hideHeaderBoolean = useBooleanish(toRef(props, 'hideHeader'))
-const hideHeaderCloseBoolean = useBooleanish(toRef(props, 'hideHeaderClose'))
+const busyBoolean = useBooleanish(() => props.busy)
+const lazyBoolean = useBooleanish(() => props.lazy)
+const cancelDisabledBoolean = useBooleanish(() => props.cancelDisabled)
+const centeredBoolean = useBooleanish(() => props.centered)
+const hideBackdropBoolean = useBooleanish(() => props.hideBackdrop)
+const hideFooterBoolean = useBooleanish(() => props.hideFooter)
+const hideHeaderBoolean = useBooleanish(() => props.hideHeader)
+const hideHeaderCloseBoolean = useBooleanish(() => props.hideHeaderClose)
 const modelValueBoolean = useBooleanish(modelValue)
-const noCloseOnBackdropBoolean = useBooleanish(toRef(props, 'noCloseOnBackdrop'))
-const noCloseOnEscBoolean = useBooleanish(toRef(props, 'noCloseOnEsc'))
-const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
-const autoFocusBoolean = useBooleanish(toRef(props, 'autoFocus'))
-const okDisabledBoolean = useBooleanish(toRef(props, 'okDisabled'))
-const okOnlyBoolean = useBooleanish(toRef(props, 'okOnly'))
-const scrollableBoolean = useBooleanish(toRef(props, 'scrollable'))
-const titleSrOnlyBoolean = useBooleanish(toRef(props, 'titleSrOnly'))
-const staticBoolean = useBooleanish(toRef(props, 'static'))
+const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
+const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
+const noFadeBoolean = useBooleanish(() => props.noFade)
+const autoFocusBoolean = useBooleanish(() => props.autoFocus)
+const okDisabledBoolean = useBooleanish(() => props.okDisabled)
+const okOnlyBoolean = useBooleanish(() => props.okOnly)
+const scrollableBoolean = useBooleanish(() => props.scrollable)
+const titleSrOnlyBoolean = useBooleanish(() => props.titleSrOnly)
+const staticBoolean = useBooleanish(() => props.static)
 
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
@@ -402,7 +421,9 @@ const onAfterEnter = () => {
   emit('shown', buildTriggerableEvent('shown'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = true
 }
-const onLeave = () => (isActive.value = false)
+const onLeave = () => {
+  isActive.value = false
+}
 const onAfterLeave = () => {
   emit('hidden', buildTriggerableEvent('hidden'))
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, toRef, useAttrs} from 'vue'
+import {computed, inject, useAttrs} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -53,14 +53,19 @@ const props = withDefaults(defineProps<BListGroupItemProps>(), {
   target: '_self',
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const attrs = useAttrs()
 
 const parentData = inject(listGroupInjectionKey, null)
 
-const actionBoolean = useBooleanish(toRef(props, 'action'))
-const activeBoolean = useBooleanish(toRef(props, 'active'))
-const buttonBoolean = useBooleanish(toRef(props, 'button'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+const actionBoolean = useBooleanish(() => props.action)
+const activeBoolean = useBooleanish(() => props.active)
+const buttonBoolean = useBooleanish(() => props.button)
+const disabledBoolean = useBooleanish(() => props.disabled)
 
 const link = computed<boolean>(() => !buttonBoolean.value && (!!props.href || !!props.to))
 

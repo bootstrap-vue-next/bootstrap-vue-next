@@ -16,13 +16,16 @@
 <script lang="ts">
 import {omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, type PropType, toRef} from 'vue'
+import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import type {Booleanish} from '../../types'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
 export default defineComponent({
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   components: {BLink},
   props: {
     ...linkProps,
@@ -33,8 +36,8 @@ export default defineComponent({
   },
   emits: ['click'],
   setup(props, {emit}) {
-    const activeBoolean = useBooleanish(toRef(props, 'active'))
-    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
+    const activeBoolean = useBooleanish(() => props.active)
+    const disabledBoolean = useBooleanish(() => props.disabled)
 
     const computedClasses = computed(() => ({
       active: activeBoolean.value,

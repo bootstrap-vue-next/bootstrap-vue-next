@@ -49,6 +49,13 @@ const props = withDefaults(defineProps<BDropdownGroupProps>(), {
   headerVariant: null,
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: (props: Record<string, never>) => any
+}>()
+
 const headerId = computed<string | undefined>(() =>
   props.id ? `${props.id}_group_dd_header` : undefined
 )

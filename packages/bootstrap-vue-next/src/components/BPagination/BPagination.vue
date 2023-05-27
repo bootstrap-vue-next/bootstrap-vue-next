@@ -1,6 +1,6 @@
 <script lang="ts">
 import {BvEvent, normalizeSlot, toInteger} from '../../utils'
-import {computed, defineComponent, h, type PropType, reactive, toRef, watch} from 'vue'
+import {computed, defineComponent, h, type PropType, reactive, watch} from 'vue'
 import type {
   AlignmentJustifyContent,
   Booleanish,
@@ -73,17 +73,17 @@ export default defineComponent({
   setup(props, {emit, slots}) {
     const modelValue = useVModel(props, 'modelValue', emit)
 
-    const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-    const firstNumberBoolean = useBooleanish(toRef(props, 'firstNumber'))
-    const hideEllipsisBoolean = useBooleanish(toRef(props, 'hideEllipsis'))
-    const hideGotoEndButtonsBoolean = useBooleanish(toRef(props, 'hideGotoEndButtons'))
-    const lastNumberBoolean = useBooleanish(toRef(props, 'lastNumber'))
-    const pillsBoolean = useBooleanish(toRef(props, 'pills'))
+    const disabledBoolean = useBooleanish(() => props.disabled)
+    const firstNumberBoolean = useBooleanish(() => props.firstNumber)
+    const hideEllipsisBoolean = useBooleanish(() => props.hideEllipsis)
+    const hideGotoEndButtonsBoolean = useBooleanish(() => props.hideGotoEndButtons)
+    const lastNumberBoolean = useBooleanish(() => props.lastNumber)
+    const pillsBoolean = useBooleanish(() => props.pills)
 
     const justifyAlign = computed<AlignmentJustifyContent>(() =>
       props.align === 'fill' ? 'start' : props.align
     )
-    const alignment = useAlignment(toRef(justifyAlign, 'value'))
+    const alignment = useAlignment(justifyAlign)
 
     // Use Active to on page-item to denote active tab
     const numberOfPages = computed(() =>

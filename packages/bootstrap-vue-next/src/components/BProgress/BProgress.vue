@@ -37,10 +37,15 @@ const props = withDefaults(defineProps<BProgressProps>(), {
   value: 0,
 })
 
-const animatedBoolean = useBooleanish(toRef(props, 'animated'))
-const showProgressBoolean = useBooleanish(toRef(props, 'showProgress'))
-const showValueBoolean = useBooleanish(toRef(props, 'showValue'))
-const stripedBoolean = useBooleanish(toRef(props, 'striped'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const animatedBoolean = useBooleanish(() => props.animated)
+const showProgressBoolean = useBooleanish(() => props.showProgress)
+const showValueBoolean = useBooleanish(() => props.showValue)
+const stripedBoolean = useBooleanish(() => props.striped)
 
 const computedAttrs = computed(() => ({
   animated: props.animated,

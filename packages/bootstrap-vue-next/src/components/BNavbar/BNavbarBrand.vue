@@ -6,12 +6,15 @@
 
 <script lang="ts">
 import {isLink, omit, pluckProps} from '../../utils'
-import {computed, defineComponent} from 'vue'
+import {computed, defineComponent, type SlotsType} from 'vue'
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 
 const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
 export default defineComponent({
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   components: {
     BLink,
   },

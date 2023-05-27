@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, type CSSProperties, defineComponent, type PropType, toRef} from 'vue'
+import {computed, type CSSProperties, defineComponent, type PropType} from 'vue'
 import {COMMON_INPUT_PROPS, useBooleanish, useFormInput} from '../../composables'
 
 export default defineComponent({
@@ -38,7 +38,7 @@ export default defineComponent({
     const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
       useFormInput(props, emit)
 
-    const noResizeBoolean = useBooleanish(toRef(props, 'noResize'))
+    const noResizeBoolean = useBooleanish(() => props.noResize)
 
     const computedClasses = computed(() => ({
       'form-control': !props.plaintext,

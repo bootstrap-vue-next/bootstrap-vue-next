@@ -16,4 +16,9 @@ interface BDropdownTextProps {
 withDefaults(defineProps<BDropdownTextProps>(), {
   text: '',
 })
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 </script>

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, ref, toRef, watch} from 'vue'
+import {computed, inject, ref, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'
 import {tabsInjectionKey} from '../../utils'
@@ -48,11 +48,18 @@ const props = withDefaults(defineProps<BTabProps>(), {
   titleLinkAttributes: undefined,
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const parentData = inject(tabsInjectionKey, null)
 
-const activeBoolean = useBooleanish(toRef(props, 'active'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const lazyBoolean = useBooleanish(toRef(props, props.lazyOnce !== undefined ? 'lazyOnce' : 'lazy'))
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const lazyBoolean = useBooleanish(
+  computed(() => (props.lazyOnce !== undefined ? props.lazyOnce : props.lazy))
+)
 
 const lazyRenderCompleted = ref(false)
 

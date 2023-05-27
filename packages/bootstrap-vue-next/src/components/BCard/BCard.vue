@@ -44,7 +44,7 @@ import type {
   TextColorVariant,
 } from '../../types'
 import {isEmptySlot} from '../../utils'
-import {computed, toRef, useSlots} from 'vue'
+import {computed, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
@@ -135,12 +135,23 @@ const props = withDefaults(defineProps<BCardProps>(), {
   titleTag: 'h4',
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  img?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  footer?: (props: Record<string, never>) => any
+}>()
+
 const slots = useSlots()
 
-const imgBottomBoolean = useBooleanish(toRef(props, 'imgBottom'))
-const imgEndBoolean = useBooleanish(toRef(props, 'imgEnd'))
-const imgStartBoolean = useBooleanish(toRef(props, 'imgStart'))
-const noBodyBoolean = useBooleanish(toRef(props, 'noBody'))
+const imgBottomBoolean = useBooleanish(() => props.imgBottom)
+const imgEndBoolean = useBooleanish(() => props.imgEnd)
+const imgStartBoolean = useBooleanish(() => props.imgStart)
+const noBodyBoolean = useBooleanish(() => props.noBody)
 
 const hasHeaderSlot = computed<boolean>(() => !isEmptySlot(slots.header))
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))

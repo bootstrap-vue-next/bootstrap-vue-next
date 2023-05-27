@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, toRef} from 'vue'
+import {computed, provide} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
 import type {Booleanish, Breakpoint} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -24,8 +24,13 @@ const props = withDefaults(defineProps<BListGroupProps>(), {
   tag: 'div',
 })
 
-const flushBoolean = useBooleanish(toRef(props, 'flush'))
-const numberedBoolean = useBooleanish(toRef(props, 'numbered'))
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
+const flushBoolean = useBooleanish(() => props.flush)
+const numberedBoolean = useBooleanish(() => props.numbered)
 
 const computedClasses = computed(() => {
   const horizontal = flushBoolean.value ? false : props.horizontal

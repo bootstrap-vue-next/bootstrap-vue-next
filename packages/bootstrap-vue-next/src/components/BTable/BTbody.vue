@@ -16,6 +16,11 @@ const props = withDefaults(defineProps<BTBodyProps>(), {
   variant: null,
 })
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const computedClasses = computed(() => ({
   [`thead-${props.variant}`]: props.variant !== null,
 }))

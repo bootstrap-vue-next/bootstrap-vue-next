@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
+import {computed, inject, nextTick, ref, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -105,22 +105,27 @@ interface BFormCheckboxEmits {
 
 const emit = defineEmits<BFormCheckboxEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
+
 const slots = useSlots()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const computedId = useId(toRef(props, 'id'), 'form-check')
+const computedId = useId(() => props.id, 'form-check')
 
-const indeterminateBoolean = useBooleanish(toRef(props, 'indeterminate'))
-const autofocusBoolean = useBooleanish(toRef(props, 'autofocus'))
-const plainBoolean = useBooleanish(toRef(props, 'plain'))
-const buttonBoolean = useBooleanish(toRef(props, 'button'))
-const buttonGroupBoolean = useBooleanish(toRef(props, 'buttonGroup'))
-const switchBoolean = useBooleanish(toRef(props, 'switch'))
-const disabledBoolean = useBooleanish(toRef(props, 'disabled'))
-const inlineBoolean = useBooleanish(toRef(props, 'inline'))
-const requiredBoolean = useBooleanish(toRef(props, 'required'))
-const stateBoolean = useBooleanish(toRef(props, 'state'))
+const indeterminateBoolean = useBooleanish(() => props.indeterminate)
+const autofocusBoolean = useBooleanish(() => props.autofocus)
+const plainBoolean = useBooleanish(() => props.plain)
+const buttonBoolean = useBooleanish(() => props.button)
+const buttonGroupBoolean = useBooleanish(() => props.buttonGroup)
+const switchBoolean = useBooleanish(() => props.switch)
+const disabledBoolean = useBooleanish(() => props.disabled)
+const inlineBoolean = useBooleanish(() => props.inline)
+const requiredBoolean = useBooleanish(() => props.required)
+const stateBoolean = useBooleanish(() => props.state)
 
 const parentData = inject(checkboxGroupKey, null)
 

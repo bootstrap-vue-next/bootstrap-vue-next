@@ -123,19 +123,19 @@ const emit = defineEmits<BCarouselEmits>()
 
 const slots = useSlots()
 
-const computedId = useId(toRef(props, 'id'), 'carousel')
+const computedId = useId(() => props.id, 'carousel')
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
-const keyboardBoolean = useBooleanish(toRef(props, 'keyboard'))
-const rideReverseBoolean = useBooleanish(toRef(props, 'rideReverse'))
-const noHoverPauseBoolean = useBooleanish(toRef(props, 'noHoverPause'))
-const fadeBoolean = useBooleanish(toRef(props, 'fade'))
-const controlsBoolean = useBooleanish(toRef(props, 'controls'))
-const indicatorsBoolean = useBooleanish(toRef(props, 'indicators'))
-const noTouchBoolean = useBooleanish(toRef(props, 'noTouch'))
-const noWrapBoolean = useBooleanish(toRef(props, 'noWrap'))
-const touchThresholdNumber = useToNumber(toRef(props, 'touchThreshold'), {
+const keyboardBoolean = useBooleanish(() => props.keyboard)
+const rideReverseBoolean = useBooleanish(() => props.rideReverse)
+const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
+const fadeBoolean = useBooleanish(() => props.fade)
+const controlsBoolean = useBooleanish(() => props.controls)
+const indicatorsBoolean = useBooleanish(() => props.indicators)
+const noTouchBoolean = useBooleanish(() => props.noTouch)
+const noWrapBoolean = useBooleanish(() => props.noWrap)
+const touchThresholdNumber = useToNumber(() => props.touchThreshold, {
   nanToZero: true,
   method: 'parseInt',
 })
@@ -170,7 +170,7 @@ const {pause, resume} = useIntervalFn(
   () => {
     rideReverseBoolean.value ? prev() : next()
   },
-  toRef(props, 'interval'),
+  () => props.interval,
   {immediate: rideResolved.value === 'carousel'}
 )
 
@@ -285,7 +285,9 @@ const onAfterLeave = () => {
 
 watch(
   () => props.ride,
-  () => (rideStarted.value = false)
+  () => {
+    rideStarted.value = false
+  }
 )
 
 defineExpose({pause, resume, prev, next})

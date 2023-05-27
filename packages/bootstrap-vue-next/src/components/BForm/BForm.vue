@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, toRef} from 'vue'
+import {computed} from 'vue'
 
 interface BFormProps {
   id?: string
@@ -28,15 +28,20 @@ const props = withDefaults(defineProps<BFormProps>(), {
   validated: false,
 })
 
-const floatingBoolean = useBooleanish(toRef(props, 'floating'))
-const novalidateBoolean = useBooleanish(toRef(props, 'novalidate'))
-const validatedBoolean = useBooleanish(toRef(props, 'validated'))
+const floatingBoolean = useBooleanish(() => props.floating)
+const novalidateBoolean = useBooleanish(() => props.novalidate)
+const validatedBoolean = useBooleanish(() => props.validated)
 
 interface BFormEmits {
   (e: 'submit', value: Event): void
 }
 
 const emit = defineEmits<BFormEmits>()
+
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedClasses = computed(() => ({
   'form-floating': floatingBoolean.value,

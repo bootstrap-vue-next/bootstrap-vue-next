@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, provide, ref, toRef, useSlots, type VNode, watch} from 'vue'
+import {computed, onMounted, provide, ref, useSlots, type VNode, watch} from 'vue'
 import {BvEvent, getId, getSlotElements, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {AlignmentJustifyContent, Booleanish, ClassValue} from '../../types'
@@ -138,20 +138,29 @@ interface BTabsEmits {
 
 const emit = defineEmits<BTabsEmits>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'tabs-start'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'empty'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'tabs-end'?: (props: Record<string, never>) => any
+}>()
+
 const modelValue = useVModel(props, 'modelValue', emit)
 
 const slots = useSlots()
 
-const cardBoolean = useBooleanish(toRef(props, 'card'))
-const endBoolean = useBooleanish(toRef(props, 'end'))
-const fillBoolean = useBooleanish(toRef(props, 'fill'))
-const justifiedBoolean = useBooleanish(toRef(props, 'justified'))
-const lazyBoolean = useBooleanish(toRef(props, 'lazy'))
-const noFadeBoolean = useBooleanish(toRef(props, 'noFade'))
-const noNavStyleBoolean = useBooleanish(toRef(props, 'noNavStyle'))
-const pillsBoolean = useBooleanish(toRef(props, 'pills'))
-const smallBoolean = useBooleanish(toRef(props, 'small'))
-const verticalBoolean = useBooleanish(toRef(props, 'vertical'))
+const cardBoolean = useBooleanish(() => props.card)
+const endBoolean = useBooleanish(() => props.end)
+const fillBoolean = useBooleanish(() => props.fill)
+const justifiedBoolean = useBooleanish(() => props.justified)
+const lazyBoolean = useBooleanish(() => props.lazy)
+const noFadeBoolean = useBooleanish(() => props.noFade)
+const noNavStyleBoolean = useBooleanish(() => props.noNavStyle)
+const pillsBoolean = useBooleanish(() => props.pills)
+const smallBoolean = useBooleanish(() => props.small)
+const verticalBoolean = useBooleanish(() => props.vertical)
 
 const _tabIndex = ref(modelValue.value)
 const _currentTabButton = ref('')
@@ -248,7 +257,7 @@ const computedClasses = computed(() => ({
   'align-items-start': verticalBoolean.value,
 }))
 
-const alignment = useAlignment(toRef(props, 'align'))
+const alignment = useAlignment(() => props.align)
 
 const navTabsClasses = computed(() => ({
   'nav-pills': pillsBoolean.value,
