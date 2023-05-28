@@ -2,16 +2,12 @@
 
 <b-card class="bg-body-tertiary">
 
-  <b-card-body>
-
 ```vue-html
 <b-card v-b-tooltip="'My title'" />
 <b-card v-b-tooltip="{title: 'My title'}" />
 <b-card v-b-tooltip.hover.top="'My title'" />
 <b-card v-b-tooltip.focus.right="{title: 'My title'}" />
 ```
-
-  </b-card-body>
 
 </b-card>
 
