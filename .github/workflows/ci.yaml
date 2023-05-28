@@ -1,3 +1,5 @@
+# This workflow runs through the test suite
+
 name: ci
 
 on:
@@ -10,14 +12,12 @@ on:
       - dev
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -26,7 +26,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
 
       - name: Install PNPM
         uses: pnpm/action-setup@v2.2.4
@@ -53,12 +53,7 @@ jobs:
         run: pnpm run build
 
   test-lint:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -67,7 +62,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
 
       - name: Install PNPM
         uses: pnpm/action-setup@v2.2.4
@@ -94,12 +89,7 @@ jobs:
         run: pnpm run test:lint:ci
 
   test-unit:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -108,7 +98,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
 
       - name: Install PNPM
         uses: pnpm/action-setup@v2.2.4
@@ -135,12 +125,7 @@ jobs:
         run: pnpm run test:unit:ci
 
   test-coverage:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -149,7 +134,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
 
       - name: Install PNPM
         uses: pnpm/action-setup@v2.2.4
