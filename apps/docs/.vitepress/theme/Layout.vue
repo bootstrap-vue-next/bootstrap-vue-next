@@ -84,7 +84,7 @@
         <b-container>
           <b-row>
             <b-col>
-              <Content />
+              <Content class="bd-content mt-5" />
             </b-col>
           </b-row>
         </b-container>
@@ -143,3 +143,102 @@ const globalData = inject(appInfoKey, {
   opencollectiveUrl: '',
 })
 </script>
+
+<style lang="scss">
+#app {
+  .bd-content > div > {
+    h2,
+    h3,
+    h4,
+    h5 {
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      margin-top: 3rem;
+    }
+    h3 {
+      margin-top: 2rem;
+    }
+    h4 {
+      margin-top: 1.5rem;
+    }
+    hr {
+      margin: 3rem 0;
+    }
+  }
+  .alert {
+    p:last-child {
+      margin-bottom: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .lead {
+    margin-bottom: 1rem;
+  }
+  .breadcrumb {
+    margin-bottom: 0;
+  }
+  [id^='input-group-'] {
+    margin-bottom: 1rem;
+  }
+  .html {
+    border-top: var(--bs-border-width) solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 1.25rem;
+  }
+  .tabs {
+    margin: 1rem 0 3rem;
+    .card {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top: 0;
+      .card-body {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .card {
+    margin-bottom: 3rem;
+    pre {
+      margin-bottom: 0;
+    }
+    .card-header {
+      h3 {
+        margin-top: 0;
+      }
+    }
+    .card-body {
+      h4:first-child {
+        margin-top: 0;
+      }
+      .card {
+        margin-bottom: 0;
+      }
+      .list-group {
+        max-width: 400px;
+      }
+    }
+  }
+  // Short term fix for navbar modes.
+  .navbar {
+    color: #fff;
+    .nav-link,
+    .navbar-brand,
+    .btn {
+      color: #fff;
+    }
+  }
+  [class^='language-'] {
+    .copy {
+      float: right;
+    }
+    .lang {
+      display: none;
+    }
+  }
+}
+</style>

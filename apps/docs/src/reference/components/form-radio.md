@@ -1,29 +1,40 @@
 # Form Radio
 
-> For cross browser consistency, `<b-form-radio-group>` and `<b-form-radio>` uses Bootstrap's custom radio input to replace the browser default radio input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default radio input
+<div class="lead mb-5">
+
+For cross browser consistency, `<b-form-radio-group>` and `<b-form-radio>` uses Bootstrap's custom radio input to replace the browser default radio input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default radio input
+
+</div>
 
 ## Individual radios
 
-<b-card>
-  <div class="my-2">
-    <label>Individual radios</label>
-  </div>
-  <div>
-    <b-form-radio v-model="individualSelected" name="some-radios" value="A">Option A</b-form-radio>
-    <b-form-radio v-model="individualSelected" name="some-radios" value="B">Option B</b-form-radio>
-  </div>
-  <div class="mt-3">Selected: <strong>{{ individualSelected }}</strong></div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div class="my-2">
+      <label>Individual radios</label>
+    </div>
+    <div>
+      <b-form-radio v-model="individualSelected" name="some-radios" value="A">Option A</b-form-radio>
+      <b-form-radio v-model="individualSelected" name="some-radios" value="B">Option B</b-form-radio>
+    </div>
+    <div class="mt-3">Selected: <strong>{{ individualSelected }}</strong></div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
   <div class="my-2">
     <label>Individual radios</label>
   </div>
+
   <div>
     <b-form-radio v-model="individualSelected" name="some-radios" value="A">Option A </b-form-radio>
     <b-form-radio v-model="individualSelected" name="some-radios" value="B">Option B </b-form-radio>
   </div>
+
   <div class="mt-3">Selected: <strong>{{ individualSelected }}</strong></div>
 </template>
 
@@ -34,6 +45,10 @@ const individualSelected = ref()
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ## Grouped radios
 
 The individual radio inputs in `<b-form-radio-group>` can be specified via the `options` prop, or
@@ -41,32 +56,38 @@ via manual placement of the `<b-form-radio>` sub-component. When using manually 
 `<b-form-radio>` components within a `<b-form-radio-group>`, they will inherit most props and the
 v-model from the `<b-form-radio-group>`.
 
-<b-card>
-  <div class="my-2">
-    <label>Radios using options</label>
-  </div>
-  <div>
-      <b-form-radio-group id="radio-group-1" v-model="groupedSelected" :options="groupedOptions" name="radio-options"></b-form-radio-group>
-  </div>
-  <div class="my-2">
-    <label>Radios using sub-components</label>
-  </div>
-  <div>
-    <b-form-radio-group id="radio-group-2" v-model="groupedSelected" name="radio-sub-component">
-      <b-form-radio value="first">Toggle this custom radio</b-form-radio>
-      <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
-      <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
-      <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
-    </b-form-radio-group>
-  </div>
-  <div class="mt-3">Selected: <strong>{{ groupedSelected }}</strong></div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div class="my-2">
+      <label>Radios using options</label>
+    </div>
+    <div>
+        <b-form-radio-group id="radio-group-1" v-model="groupedSelected" :options="groupedOptions" name="radio-options"></b-form-radio-group>
+    </div>
+    <div class="my-2">
+      <label>Radios using sub-components</label>
+    </div>
+    <div>
+      <b-form-radio-group id="radio-group-2" v-model="groupedSelected" name="radio-sub-component">
+        <b-form-radio value="first">Toggle this custom radio</b-form-radio>
+        <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
+        <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
+        <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
+      </b-form-radio-group>
+    </div>
+    <div class="mt-3">Selected: <strong>{{ groupedSelected }}</strong></div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
   <div class="my-2">
     <label>Radios using options</label>
   </div>
+
   <div>
     <b-form-radio-group
       id="radio-group-1"
@@ -75,9 +96,11 @@ v-model from the `<b-form-radio-group>`.
       name="radio-options"
     ></b-form-radio-group>
   </div>
+
   <div class="my-2">
     <label>Radios using sub-components</label>
   </div>
+
   <div>
     <b-form-radio-group id="radio-group-2" v-model="groupedSelected" name="radio-sub-component">
       <b-form-radio value="first">Toggle this custom radio</b-form-radio>
@@ -86,6 +109,7 @@ v-model from the `<b-form-radio-group>`.
       <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
     </b-form-radio-group>
   </div>
+
   <div class="mt-3">Selected: <strong>{{ groupedSelected }}</strong></div>
 </template>
 
@@ -102,31 +126,41 @@ const groupedOptions = [
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 Feel free to mix and match `options` prop and `<b-form-radio>` in `<b-form-radio-group>`. Manually
 placed `<b-form-radio>` inputs will appear _below_ any radio inputs generated by the `options` prop.
 To have them appear _above_ the inputs generated by `options`, place them in the named slot `first`.
 
-<b-card>
-  <div class="my-2">
-    <label>Radios using options and slots</label>
-  </div>
-  <div>
-    <b-form-radio-group id="radio-slots" v-model="mixedGroupedSelected" :options="mixedGroupedOptions" name="radio-options-slots">
-      <template #first>
-        <b-form-radio value="first">Toggle this custom radio from slot first</b-form-radio>
-      </template>
-      <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
-      <b-form-radio value="fifth">This is the 5th radio</b-form-radio>
-    </b-form-radio-group>
-  </div>
-  <div class="mt-3">Selected: <strong>{{ mixedGroupedSelected }}</strong></div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div class="my-2">
+      <label>Radios using options and slots</label>
+    </div>
+    <div>
+      <b-form-radio-group id="radio-slots" v-model="mixedGroupedSelected" :options="mixedGroupedOptions" name="radio-options-slots">
+        <template #first>
+          <b-form-radio value="first">Toggle this custom radio from slot first</b-form-radio>
+        </template>
+        <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
+        <b-form-radio value="fifth">This is the 5th radio</b-form-radio>
+      </b-form-radio-group>
+    </div>
+    <div class="mt-3">Selected: <strong>{{ mixedGroupedSelected }}</strong></div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
   <div class="my-2">
     <label>Radios using options and slots</label>
   </div>
+
   <div>
     <b-form-radio-group
       id="radio-slots"
@@ -137,10 +171,12 @@ To have them appear _above_ the inputs generated by `options`, place them in the
       <template #first>
         <b-form-radio value="first">Toggle this custom radio from slot first</b-form-radio>
       </template>
+
       <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
       <b-form-radio value="fifth">This is the 5th radio</b-form-radio>
     </b-form-radio-group>
   </div>
+
   <div class="mt-3">Selected: <strong>{{ mixedGroupedSelected }}</strong></div>
 </template>
 
@@ -154,6 +190,10 @@ const mixedGroupedOptions = [
 ]
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ## Radio group options array
 
@@ -169,18 +209,25 @@ If both `html` and `text` are provided, `html` will take precedence. Only basic/
 supported in the `html` field (components will not work). Note that not all browsers will render
 inline html (i.e. `<i>`, `<strong>`, etc.) inside `<option>` elements of a `<select>`.
 
-<p class="alert alert-danger">
+<b-alert variant="danger" :model-value="true" class="mt-4">
   <strong>Be cautious</strong> of placing user supplied content in the <code>html</code> field,
   as it may make you vulnerable to
   <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
   <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
   <a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
   user supplied string.
-</p>
+</b-alert>
+
+<b-card no-body class="mb-4">
+  <b-card-body class="bg-body-tertiary">
 
 ```ts
 const options = ['A', 'B', 'C', {text: 'D', value: {d: 1}, disabled: true}, 'E', 'F']
 ```
+
+  </b-card-body>
+
+</b-card>
 
 If an array entry is a string, it will be used for both the generated `value` and `text` fields.
 
@@ -188,6 +235,9 @@ You can mix using strings and [objects](#options-as-an-array-of-objects) in the 
 
 Internally, bootstrap-vue-next will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
+
+<b-card no-body class="mb-4">
+  <b-card-body class="bg-body-tertiary">
 
 ```ts
 const options = [
@@ -200,7 +250,14 @@ const options = [
 ]
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ### Options as an array of objects
+
+<b-card no-body class="mb-4 mt-3">
+  <b-card-body class="bg-body-tertiary">
 
 ```ts
 const options = [
@@ -212,11 +269,18 @@ const options = [
 ]
 ```
 
+  </b-card-body>
+
+</b-card>
+
 If `value` is missing, then `text` will be used as both the `value` and `text` fields. If you use
 the `html` property, you **must** supply a `value` property.
 
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
+
+<b-card no-body class="mb-4">
+  <b-card-body class="bg-body-tertiary">
 
 ```ts
 const options = [
@@ -228,14 +292,18 @@ const options = [
 ]
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ### Changing the option field names
 
 If you want to customize the field property names (for example using `name` field for display
 `text`) you can easily change them by setting the `text-field`, `html-field`, `value-field`, and
 `disabled-field` props to a string that contains the property name you would like to use:
 
-<b-card>
-  <div>
+<b-card no-body class="mb-5">
+  <b-card-body>
     <b-form-radio-group
       v-model="customFieldNameSelected"
       :options="customFieldNameOptions"
@@ -244,22 +312,24 @@ If you want to customize the field property names (for example using `name` fiel
       text-field="name"
       disabled-field="notEnabled">
     </b-form-radio-group>
-  </div>
-  <div class="mt-3">Selected: <strong>{{ customFieldNameSelected }}</strong></div>
-</b-card>
+    <div class="mt-3">Selected: <strong>{{ customFieldNameSelected }}</strong></div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
-  <div>
-    <b-form-radio-group
-      v-model="customFieldNameSelected"
-      :options="customFieldNameOptions"
-      class="mb-3"
-      value-field="item"
-      text-field="name"
-      disabled-field="notEnabled"
-    ></b-form-radio-group>
-  </div>
+  <b-form-radio-group
+    v-model="customFieldNameSelected"
+    :options="customFieldNameOptions"
+    class="mb-3"
+    value-field="item"
+    text-field="name"
+    disabled-field="notEnabled"
+  ></b-form-radio-group>
+
   <div class="mt-3">Selected: <strong>{{ customFieldNameSelected }}</strong></div>
 </template>
 
@@ -273,6 +343,10 @@ const mixedGroupedOptions = [
 ]
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ## Radio value and v-model
 
@@ -293,27 +367,33 @@ stacked radios. Set the prop `stacked` on `<b-form-radio-group>` to make the rad
 the other, or when using radios not in a group, set the `inline` prop on `b-form-radio` to true to
 render them inline.
 
-<b-card>
-  <div class="my-2">
-    <label>Inline radios (default)</label>
-  </div>
-  <div>
-    <b-form-radio-group v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-inline"></b-form-radio-group>
-  </div>
-  <div class="my-2">
-      <label>Stacked radios</label>
-  </div>
-  <div>
-    <b-form-radio-group v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-stacked" stacked></b-form-radio-group>
-  </div>
-  <div class="mt-3">Selected: <strong>{{ inlineStackedSelected }}</strong></div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div class="my-2">
+      <label>Inline radios (default)</label>
+    </div>
+    <div>
+      <b-form-radio-group v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-inline"></b-form-radio-group>
+    </div>
+    <div class="my-2">
+        <label>Stacked radios</label>
+    </div>
+    <div>
+      <b-form-radio-group v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-stacked" stacked></b-form-radio-group>
+    </div>
+    <div class="mt-3">Selected: <strong>{{ inlineStackedSelected }}</strong></div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
   <div class="my-2">
     <label>Inline radios (default)</label>
   </div>
+
   <div>
     <b-form-radio-group
       v-model="inlineStackedSelected"
@@ -321,9 +401,11 @@ render them inline.
       name="radio-inline"
     ></b-form-radio-group>
   </div>
+
   <div class="my-2">
     <label>Stacked radios</label>
   </div>
+
   <div>
     <b-form-radio-group
       v-model="inlineStackedSelected"
@@ -332,6 +414,7 @@ render them inline.
       stacked
     ></b-form-radio-group>
   </div>
+
   <div class="mt-3">Selected: <strong>{{ inlineStackedSelected }}</strong></div>
 </template>
 
@@ -347,16 +430,25 @@ const inlineStackedOptions = [
 </script>
 ```
 
+  </b-card-body>
+
+</b-card>
+
 ## Control sizing
 
 Use the `size` prop to control the size of the radio. The default size is medium. Supported size
 values are `sm` (small) and `lg` (large).
 
-<b-card>
-  <b-form-radio name="radio-size" size="sm">Small</b-form-radio>
-  <b-form-radio name="radio-size">Default</b-form-radio>
-  <b-form-radio name="radio-size" size="lg">Large</b-form-radio>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-form-radio name="radio-size" size="sm">Small</b-form-radio>
+    <b-form-radio name="radio-size">Default</b-form-radio>
+    <b-form-radio name="radio-size" size="lg">Large</b-form-radio>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -365,6 +457,10 @@ values are `sm` (small) and `lg` (large).
   <b-form-radio name="radio-size" size="lg">Large</b-form-radio>
 </template>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 Sizes can be set on individual `<b-form-radio>` components, or inherited from the `size` setting of
 `<b-form-radio-group>`.
@@ -385,46 +481,52 @@ not set.
 Button style radios will have the class `.active` automatically applied to their label when they are
 in the checked state.
 
-<b-card>
-  <div class="my-2">
-      <label>Button style radios</label>
-  </div>
-  <div>
-    <b-form-radio-group v-model="buttonsSelected" :options="buttonsOptions" name="radios-btn-default" buttons></b-form-radio-group>
-  </div>
-  <div class="my-2">
-      <label>Button style radios with outline-primary variant and size lg</label>
-  </div>
-  <div>
-    <b-form-radio-group
-      v-model="buttonsSelected"
-      :options="buttonsOptions"
-      button-variant="outline-primary"
-      size="lg"
-      name="radios-btn-outline"
-      buttons
-    ></b-form-radio-group>
-  </div>
-  <div class="my-2">
-      <label>Stacked button style radios</label>
-  </div>
-  <div>
-    <b-form-radio-group
-      v-model="buttonsSelected"
-      :options="buttonsOptions"
-      name="radios-btn-stacked"
-      buttons
-      stacked
-    ></b-form-radio-group>
-  </div>
-  <div class="mt-3">Selected: <strong>{{ buttonsSelected }}</strong></div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div class="my-2">
+        <label>Button style radios</label>
+    </div>
+    <div>
+      <b-form-radio-group v-model="buttonsSelected" :options="buttonsOptions" name="radios-btn-default" buttons></b-form-radio-group>
+    </div>
+    <div class="my-2">
+        <label>Button style radios with outline-primary variant and size lg</label>
+    </div>
+    <div>
+      <b-form-radio-group
+        v-model="buttonsSelected"
+        :options="buttonsOptions"
+        button-variant="outline-primary"
+        size="lg"
+        name="radios-btn-outline"
+        buttons
+      ></b-form-radio-group>
+    </div>
+    <div class="my-2">
+        <label>Stacked button style radios</label>
+    </div>
+    <div>
+      <b-form-radio-group
+        v-model="buttonsSelected"
+        :options="buttonsOptions"
+        name="radios-btn-stacked"
+        buttons
+        stacked
+      ></b-form-radio-group>
+    </div>
+    <div class="mt-3">Selected: <strong>{{ buttonsSelected }}</strong></div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
   <div class="my-2">
     <label>Button style radios</label>
   </div>
+
   <div>
     <b-form-radio-group
       v-model="buttonsSelected"
@@ -433,9 +535,11 @@ in the checked state.
       buttons
     ></b-form-radio-group>
   </div>
+
   <div class="my-2">
     <label>Button style radios with outline-primary variant and size lg</label>
   </div>
+
   <div>
     <b-form-radio-group
       v-model="buttonsSelected"
@@ -446,9 +550,11 @@ in the checked state.
       buttons
     ></b-form-radio-group>
   </div>
+
   <div class="my-2">
     <label>Stacked button style radios</label>
   </div>
+
   <div>
     <b-form-radio-group
       v-model="buttonsSelected"
@@ -458,48 +564,59 @@ in the checked state.
       stacked
     ></b-form-radio-group>
   </div>
+
   <div class="mt-3">Selected: <strong>{{ buttonsSelected }}</strong></div>
 </template>
 
 <script setup lang="ts">
-  import {ref} from 'vue'
+import {ref} from 'vue'
 
-  const buttonsSelected = ref()
-  const buttonsOptions = [
-    {text: 'Radio 1', value: 'radio1'},
-    {text: 'Radio 3', value: 'radio2'},
-    {text: 'Radio 3 (disabled)', value: 'radio3', disabled: true},
-    {text: 'Radio 4', value: 'radio4'},
-  ]
+const buttonsSelected = ref()
+const buttonsOptions = [
+  {text: 'Radio 1', value: 'radio1'},
+  {text: 'Radio 3', value: 'radio2'},
+  {text: 'Radio 3 (disabled)', value: 'radio3', disabled: true},
+  {text: 'Radio 4', value: 'radio4'},
+]
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ## Non-custom style radio inputs (plain)
 
 You can have `<b-form-radio>` and `<b-form-radio-group>` render a browser native-styled radio input
 by setting the `plain` prop.
 
-<b-card>
-  <div class="my-2">
-      <label>Plain inline radios</label>
-  </div>
-  <div>
-    <b-form-radio-group v-model="plainSelected" :options="plainOptions" name="plain-inline" plain></b-form-radio-group>
-  </div>
-  <div class="my-2">
-      <label>Plain stacked radios</label>
-  </div>
-  <div>
-    <b-form-radio-group v-model="plainSelected" :options="plainOptions" name="plain-stacked" plain></b-form-radio-group>
-  </div>
-  <div class="mt-3">Selected: <strong>{{ plainSelected }}</strong></div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <div class="my-2">
+        <label>Plain inline radios</label>
+    </div>
+    <div>
+      <b-form-radio-group v-model="plainSelected" :options="plainOptions" name="plain-inline" plain></b-form-radio-group>
+    </div>
+    <div class="my-2">
+        <label>Plain stacked radios</label>
+    </div>
+    <div>
+      <b-form-radio-group v-model="plainSelected" :options="plainOptions" name="plain-stacked" plain></b-form-radio-group>
+    </div>
+    <div class="mt-3">Selected: <strong>{{ plainSelected }}</strong></div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
   <div class="my-2">
     <label>Plain inline radios</label>
   </div>
+
   <div>
     <b-form-radio-group
       v-model="plainSelected"
@@ -508,9 +625,11 @@ by setting the `plain` prop.
       plain
     ></b-form-radio-group>
   </div>
+
   <div class="my-2">
     <label>Plain stacked radios</label>
   </div>
+
   <div>
     <b-form-radio-group
       v-model="plainSelected"
@@ -519,6 +638,7 @@ by setting the `plain` prop.
       plain
     ></b-form-radio-group>
   </div>
+
   <div class="mt-3">Selected: <strong>{{ plainSelected }}</strong></div>
 </template>
 
@@ -533,6 +653,10 @@ const plainOptions = [
 ]
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 **Note:** `plain` will have no effect if `buttons`/`button` is set.
 
@@ -575,16 +699,21 @@ invalid), `true` (for valid), or `null` (no validation state).
 
 ### Contextual state with feedback example
 
-<b-card>
-  <b-form-radio-group
-    v-model="contextualSelected"
-    :options="contextualOptions"
-    :state="contextualState"
-    name="radio-validation"
-  ></b-form-radio-group>
-  <div class="text-danger" v-if="!contextualState">Please select one</div>
-  <div class="text-success" v-if="contextualState">Thank you</div>
-</b-card>
+<b-card no-body class="mb-5">
+  <b-card-body>
+    <b-form-radio-group
+      v-model="contextualSelected"
+      :options="contextualOptions"
+      :state="contextualState"
+      name="radio-validation"
+    ></b-form-radio-group>
+    <div class="text-danger" v-if="!contextualState">Please select one</div>
+    <div class="text-success" v-if="contextualState">Thank you</div>
+  </b-card-body>
+
+  <div class="html">HTML</div>
+
+  <b-card-body class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -594,6 +723,7 @@ invalid), `true` (for valid), or `null` (no validation state).
     :state="contextualState"
     name="radio-validation"
   ></b-form-radio-group>
+
   <div class="text-danger" v-if="!contextualState">Please select one</div>
   <div class="text-success" v-if="contextualState">Thank you</div>
 </template>
@@ -610,6 +740,10 @@ const contextualOptions = [
 ]
 </script>
 ```
+
+  </b-card-body>
+
+</b-card>
 
 ### Conveying contextual validation state to assistive technologies and colorblind users
 
@@ -639,7 +773,7 @@ Supported `aria-invalid` values are:
 <script setup lang="ts">
 import {data} from '../../data/components/formRadio.data'
 import ComponentReference from '../../components/ComponentReference.vue'
-import {BFormRadioGroup, BCard, BFormRadio} from 'bootstrap-vue-next'
+import {BFormRadioGroup, BCard, BCardBody, BFormRadio, BAlert} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
 const individualSelected = ref()

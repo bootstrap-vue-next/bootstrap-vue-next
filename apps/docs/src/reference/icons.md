@@ -17,30 +17,44 @@ The preferred installation makes use of [unplugin-vue-components](https://github
 To start, install the necessary packages:
 
 <client-only>
-<b-tabs v-model="codePreference">
+<b-tabs v-model="codePreference" class="mb-3">
   <b-tab title="PNPM">
+
+  <b-card class="bg-body-tertiary">
 
 ```bash
 pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
+  </b-card>
+
   </b-tab>
   <b-tab title="YARN">
+
+  <b-card class="bg-body-tertiary">
 
 ```bash
 yarn add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
+  </b-card>
+
   </b-tab>
   <b-tab title="NPM">
+
+  <b-card class="bg-body-tertiary">
 
 ```bash
 npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
+  </b-card>
+
   </b-tab>
 </b-tabs>
 </client-only>
+
+<b-card class="bg-body-tertiary">
 
 ```ts
 // vite.config.js/ts
@@ -66,9 +80,13 @@ export default defineConfig({
 })
 ```
 
+</b-card>
+
 With `autoInstall: true` using any icon set in your app will automatically import and include that icon set in your dependencies! No manual imports are required!
 
 If you are using TypeScript you will want to add the `unplugin-icons/types/vue` to the `compilerOptions.types` array. While there, you should also make sure you included the `components.d.ts` in the `include` array:
+
+<b-card class="bg-body-tertiary">
 
 ```json
 // tsconfig.json
@@ -80,7 +98,11 @@ If you are using TypeScript you will want to add the `unplugin-icons/types/vue` 
 }
 ```
 
+</b-card>
+
 Then to include an icon, follow the format `i-{collection}-{icon-name}` in your template, where the collection is the id on <https://icon-sets.iconify.design/>. For example, to include `0-circle` in your app, simply use the component `<i-bi-0-circle>`, no import is needed. As stated, you can use any icon from any icon set
+
+<b-card class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -93,6 +115,8 @@ Then to include an icon, follow the format `i-{collection}-{icon-name}` in your 
 </template>
 ```
 
+</b-card>
+
 View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) documentation for their extra feature, such as [Global Custom Icon Transformation](https://github.com/antfu/unplugin-icons#global-custom-icon-transformation) and other information
 
 #### Basic Installation
@@ -100,33 +124,47 @@ View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-compone
 Of course, there is always the ability to slim down. To slim down the installation, you can manually import only the bootstrap-icons icon set, disable auto importing, and not use unplugin-vue-components read below. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size
 
 <client-only>
-<b-tabs v-model="codePreference">
+<b-tabs v-model="codePreference" class="mb-3">
   <b-tab title="PNPM">
+
+  <b-card class="bg-body-tertiary">
 
 ```bash
 pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
+  </b-card>
+
   </b-tab>
   <b-tab title="YARN">
+
+  <b-card class="bg-body-tertiary">
 
 ```bash
 yarn add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
+  </b-card>
+
   </b-tab>
   <b-tab title="NPM">
+
+  <b-card class="bg-body-tertiary">
 
 ```bash
 npm i unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
+  </b-card>
+
   </b-tab>
 </b-tabs>
 </client-only>
 
+<b-card class="bg-body-tertiary">
+
 ```ts
-// vite.config.ts
+// vite.config.js/ts
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Icons from 'unplugin-icons/vite'
@@ -142,7 +180,11 @@ export default defineConfig({
 })
 ```
 
+</b-card>
+
 Using this method, you will need to manually import each icon:
+
+<b-card class="bg-body-tertiary">
 
 ```vue-html
 <template>
@@ -162,8 +204,10 @@ import IBiActivity from '~icons/bi/activity'
 </script>
 ```
 
+</b-card>
+
 <script setup lang="ts">
-import {BTab, BTabs} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 
 const codePreference = useLocalStorage('code-group-preference', 0)

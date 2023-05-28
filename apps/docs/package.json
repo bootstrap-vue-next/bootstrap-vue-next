@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitepress build",
     "preview": "vitepress preview",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix src",
     "test:lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore src",
@@ -20,6 +20,7 @@
     "@vueuse/core": "^10.1.2",
     "bootstrap": "^5.3.0-alpha3",
     "bootstrap-vue-next": "workspace:^",
+    "cross-env": "^7.0.3",
     "eslint": "^8.40.0",
     "eslint-define-config": "^1.20.0",
     "eslint-plugin-vue": "^9.12.0",
