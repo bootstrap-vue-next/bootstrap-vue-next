@@ -6,21 +6,16 @@ Create multi-line text inputs with support for auto height sizing, minimum and m
 
 </div>
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-textarea
-      id="textarea"
-      v-model="textEx1"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
-    <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-textarea
+    id="textarea"
+    v-model="textEx1"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+  ></b-form-textarea>
+  <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
+  <template #html>
 
 ```vue-html
 <template>
@@ -42,9 +37,8 @@ const textEx1 = ref()
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Control sizing
 
@@ -52,37 +46,32 @@ Set text height using the `size` prop to `sm` or `lg` for small or large respect
 
 To control width, place the input inside standard Bootstrap grid column.
 
-<b-card no-body class="mb-5">
-    <b-card-body>
-    <b-row>
-      <b-col sm="2">
-        <label for="textarea-small">Small:</label>
-      </b-col>
-      <b-col sm="10">
-        <b-form-textarea id="textarea-small" size="sm" placeholder="Small textarea"></b-form-textarea>
-      </b-col>
-    </b-row>
-    <b-row class="mt-2">
-      <b-col sm="2">
-        <label for="textarea-default">Default:</label>
-      </b-col>
-      <b-col sm="10">
-        <b-form-textarea id="textarea-default" placeholder="Default textarea"></b-form-textarea>
-      </b-col>
-    </b-row>
-    <b-row class="mt-2">
-      <b-col sm="2">
-        <label for="textarea-large">Large:</label>
-      </b-col>
-      <b-col sm="10">
-        <b-form-textarea id="textarea-large" size="lg" placeholder="Large textarea"></b-form-textarea>
-      </b-col>
-    </b-row>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-row>
+    <b-col sm="2">
+      <label for="textarea-small">Small:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-textarea id="textarea-small" size="sm" placeholder="Small textarea"></b-form-textarea>
+    </b-col>
+  </b-row>
+  <b-row class="mt-2">
+    <b-col sm="2">
+      <label for="textarea-default">Default:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-textarea id="textarea-default" placeholder="Default textarea"></b-form-textarea>
+    </b-col>
+  </b-row>
+  <b-row class="mt-2">
+    <b-col sm="2">
+      <label for="textarea-large">Large:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-textarea id="textarea-large" size="lg" placeholder="Large textarea"></b-form-textarea>
+    </b-col>
+  </b-row>
+  <template #html>
 
 ```vue-html
 <b-row>
@@ -113,9 +102,8 @@ To control width, place the input inside standard Bootstrap grid column.
 </b-row>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Displayed rows
 
@@ -123,41 +111,30 @@ To set the height of `<b-form-textarea>`, set the `rows` prop to the desired num
 value is provided to `rows`, then it will default to `2` (the browser default and minimum acceptable
 value). Setting it to null or a value below 2 will result in the default of `2` being used.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
+  <template #html>
 
 ```vue-html
 <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Disable resize handle
 
 Some web browsers will allow the user to re-size the height of the textarea. To disable this
 feature, set the `no-resize` prop to `true`.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-textarea
-      id="textarea-no-resize"
-      placeholder="Fixed height textarea"
-      rows="3"
-      no-resize
-    ></b-form-textarea>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-textarea
+    id="textarea-no-resize"
+    placeholder="Fixed height textarea"
+    rows="3"
+    no-resize
+  ></b-form-textarea>
+  <template #html>
 
 ```vue-html
 <b-form-textarea
@@ -168,9 +145,8 @@ feature, set the `no-resize` prop to `true`.
 ></b-form-textarea>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Auto height
 
@@ -191,20 +167,15 @@ Generally speaking, you'll want to use a particular state for specific types of 
 To apply one of the contextual state icons on `<b-form-textarea>`, set the `state` prop to `false`
 (for invalid), `true` (for valid), or `null` (no validation state).
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-textarea
-      id="textarea-state"
-      v-model="textStates"
-      :state="textStates.length >= 10"
-      placeholder="Enter at least 10 characters"
-      rows="3"
-    ></b-form-textarea>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-textarea
+    id="textarea-state"
+    v-model="textStates"
+    :state="textStates.length >= 10"
+    placeholder="Enter at least 10 characters"
+    rows="3"
+  ></b-form-textarea>
+  <template #html>
 
 ```vue-html
 <template>
@@ -224,9 +195,8 @@ const textStates = ref('')
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Conveying contextual state to assistive technologies and colorblind users
 
@@ -270,42 +240,37 @@ The `formatter` function should return the formatted value as a _string_.
 
 Formatting does not occur if a `formatter` is not provided.
 
-<b-card no-body class="mb-5">
-    <b-card-body>
-    <b-form-group
-      label="Textarea with formatter (on input)"
-      label-for="textarea-formatter"
-      description="We will convert your text to lowercase instantly"
-      class="mb-0"
-    >
-      <b-form-textarea
-        id="textarea-formatter"
-        v-model="textFormatter"
-        placeholder="Enter your text"
-        :formatter="formatter"
-      ></b-form-textarea>
-    </b-form-group>
-    <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
-    <b-form-group
-      label="Textarea with lazy formatter (on blur)"
-      label-for="textarea-lazy"
-      description="This one is a little lazy!"
-      class="mb-0"
-    >
-      <b-form-textarea
-        id="textarea-lazy"
-        v-model="textFormatter2"
-        placeholder="Enter your text"
-        lazy-formatter
-        :formatter="formatter"
-      ></b-form-textarea>
-    </b-form-group>
-    <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-group
+    label="Textarea with formatter (on input)"
+    label-for="textarea-formatter"
+    description="We will convert your text to lowercase instantly"
+    class="mb-0"
+  >
+    <b-form-textarea
+      id="textarea-formatter"
+      v-model="textFormatter"
+      placeholder="Enter your text"
+      :formatter="formatter"
+    ></b-form-textarea>
+  </b-form-group>
+  <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
+  <b-form-group
+    label="Textarea with lazy formatter (on blur)"
+    label-for="textarea-lazy"
+    description="This one is a little lazy!"
+    class="mb-0"
+  >
+    <b-form-textarea
+      id="textarea-lazy"
+      v-model="textFormatter2"
+      placeholder="Enter your text"
+      lazy-formatter
+      :formatter="formatter"
+    ></b-form-textarea>
+  </b-form-group>
+  <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
+  <template #html>
 
 ```vue-html
 <template>
@@ -353,9 +318,8 @@ const formatter = (value) => value.toLowerCase()
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 **Note:** With non-lazy formatting, if the cursor is not at the end of the input value, the cursor
 may jump to the end _after_ a character is typed. You can use the provided event object and the
@@ -368,14 +332,9 @@ If you want to have `<b-form-textarea readonly>` elements in your form styled as
 `plaintext` prop (no need to set `readonly` as it will be set automatically) to remove the default
 form field styling and preserve the correct text size, margin, padding and height.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-textarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></b-form-textarea>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-textarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></b-form-textarea>
+  <template #html>
 
 ```vue-html
 <template>
@@ -393,9 +352,8 @@ const textReadOnly = "This is some text.\nIt is read only and doesn't look like 
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## `v-model` modifiers
 
@@ -446,22 +404,17 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
 
 ### example
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-textarea
-      id="textarea"
-      ref="textArea"
-      v-model="textSelectEx"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
-    <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-textarea
+    id="textarea"
+    ref="textArea"
+    v-model="textSelectEx"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+  ></b-form-textarea>
+  <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
+  <template #html>
 
 ```vue-html
 <template>
@@ -489,9 +442,8 @@ const selectText = () => {
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Input properties
 
@@ -526,6 +478,7 @@ these methods and properties. Support will vary based on input type.
 import {data} from '../../data/components/formTextarea.data'
 import {ref, computed} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
+import HighlightCard from '../../components/HighlightCard.vue'
 import {BFormGroup, BRow, BCol, BFormTextarea, BCard, BCardBody} from 'bootstrap-vue-next'
 
 const textEx1 = ref()
