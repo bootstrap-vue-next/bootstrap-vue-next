@@ -13,7 +13,8 @@ on:
       - main
 
 permissions:
-  issues: read
+  contents: none
+  packages: none
 
 jobs:
   build:
