@@ -2,7 +2,4 @@ import {getId} from '../utils'
 import {computed, type ComputedRef, type MaybeRefOrGetter, toValue} from 'vue'
 
 export default (id?: MaybeRefOrGetter<string | undefined>, suffix?: string): ComputedRef<string> =>
-  computed(() => {
-    const value = toValue(id)
-    return value || getId(suffix)
-  })
+  computed(() => toValue(id) || getId(suffix))
