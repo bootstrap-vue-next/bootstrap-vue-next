@@ -93,8 +93,8 @@ export default defineComponent({
     ])
 
     const computedAttrs = computed(() => ({
-      'aria-disabled': props.ariaLabel,
-      'aria-label': nonStandardTag.value ? disabledBoolean.value : null,
+      'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
+      'aria-label': props.ariaLabel,
       'aria-pressed': isToggle.value ? pressedBoolean.value : null,
       'autocomplete': isToggle.value ? 'off' : null,
       'disabled': isButton.value ? disabledBoolean.value : null,
