@@ -12,10 +12,6 @@ on:
       - dev
       - main
 
-permissions:
-  contents: none
-  packages: none
-
 jobs:
   build:
     runs-on: ubuntu-latest
