@@ -17,26 +17,21 @@ element. This is easily customized via styles or standard Bootstrap v4 sizing cl
 
 Change the default `div` root tag to any other HTML element by specifying via the `tag` prop
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card
-      title="Card Title"
-      img-src="https://picsum.photos/600/300/?image=25"
-      img-alt="Image"
-      img-top
-      tag="article"
-      style="max-width: 20rem;"
-    >
-      <b-card-text>
-        Some quick example text to build on the card title and make up the bulk of the card's content.
-      </b-card-text>
-      <b-button href="#" variant="primary">Go somewhere</b-button>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card
+    title="Card Title"
+    img-src="https://picsum.photos/600/300/?image=25"
+    img-alt="Image"
+    img-top
+    tag="article"
+    style="max-width: 20rem;"
+  >
+    <b-card-text>
+      Some quick example text to build on the card title and make up the bulk of the card's content.
+    </b-card-text>
+    <b-button href="#" variant="primary">Go somewhere</b-button>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card
@@ -55,9 +50,8 @@ Change the default `div` root tag to any other HTML element by specifying via th
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Content types
 
@@ -71,20 +65,15 @@ within a card.
 
 By default, the `<b-card>` content is automatically placed in a `<b-card-body>` section:
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card class="text-center">
-      <div class="bg-secondary text-light">
-        This is some content within the default <samp>&lt;b-card-body&gt;</samp> block of the
-        <samp>&lt;b-card&gt;</samp> component. Notice the padding between the card's border and this
-        gray <samp>&lt;div&gt;</samp>.
-      </div>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card class="text-center">
+    <div class="bg-secondary text-light">
+      This is some content within the default <samp>&lt;b-card-body&gt;</samp> block of the
+      <samp>&lt;b-card&gt;</samp> component. Notice the padding between the card's border and this
+      gray <samp>&lt;div&gt;</samp>.
+    </div>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card class="text-center">
@@ -96,26 +85,20 @@ By default, the `<b-card>` content is automatically placed in a `<b-card-body>` 
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 Disable the automatic `<b-card-body>` section (and associated padding) by setting the prop `no-body`
 on the `<b-card>`.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card no-body class="text-center">
-        <div class="bg-secondary text-light">
-          This is some content without the default <samp>&lt;b-card-body&gt;</samp> section. Notice the
-          lack of padding between the card's border and this gray <samp>&lt;div&gt;</samp>.
-        </div>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card no-body class="text-center">
+    <div class="bg-secondary text-light">
+      This is some content without the default <samp>&lt;b-card-body&gt;</samp> section. Notice the
+      lack of padding between the card's border and this gray <samp>&lt;div&gt;</samp>.
+    </div>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card no-body class="text-center">
@@ -126,9 +109,8 @@ on the `<b-card>`.
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 Note that with `no-body` enabled, the content of the `title` and `subtitle` props will not be
 rendered.
@@ -149,22 +131,17 @@ within `<b-card-text>` can also be styled with the standard HTML tags.
 Links can be added and placed next to each other by adding the `.card-link` class to a `<a>` tag (or
 `<b-link>` component).
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card title="Card title" subtitle="Card subtitle">
-      <b-card-text>
-        Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
-        content.
-      </b-card-text>
-      <b-card-text>A second paragraph of text in the card.</b-card-text>
-      <a href="#" class="card-link">Card link</a>
-      <b-link href="#" class="card-link">Another link</b-link>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card title="Card title" subtitle="Card subtitle">
+    <b-card-text>
+      Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
+      content.
+    </b-card-text>
+    <b-card-text>A second paragraph of text in the card.</b-card-text>
+    <a href="#" class="card-link">Card link</a>
+    <b-link href="#" class="card-link">Another link</b-link>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card title="Card title" subtitle="Card subtitle">
@@ -178,9 +155,8 @@ Links can be added and placed next to each other by adding the `.card-link` clas
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Images
 
@@ -191,41 +167,36 @@ prop will be responsive and will adjust its width when the width of the card is 
 Alternatively you can manually place images inside `<b-card>` using the sub-component
 `<b-card-img>`. See the kitchen sink example below for usage.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <div>
-      <h4>Top and Bottom</h4>
-        <b-card-group deck>
-        <b-card img-src="https://placekitten.com/1000/300" img-alt="Card image" img-top>
-          <b-card-text>
-            Some quick example text to build on the card and make up the bulk of the card's content.
-          </b-card-text>
-        </b-card>
-        <b-card img-src="https://placekitten.com/1000/300" img-alt="Card image" img-bottom>
-          <b-card-text>
-            Some quick example text to build on the card and make up the bulk of the card's content.
-          </b-card-text>
-        </b-card>
-      </b-card-group>
-    </div>
-    <div class="mt-4">
-      <h4>Left and Right (or Start and End)</h4>
-      <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-left class="mb-3">
+<HighlightCard>
+  <div>
+    <h4>Top and Bottom</h4>
+      <b-card-group deck>
+      <b-card img-src="https://placekitten.com/1000/300" img-alt="Card image" img-top>
         <b-card-text>
           Some quick example text to build on the card and make up the bulk of the card's content.
         </b-card-text>
       </b-card>
-      <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-right>
+      <b-card img-src="https://placekitten.com/1000/300" img-alt="Card image" img-bottom>
         <b-card-text>
           Some quick example text to build on the card and make up the bulk of the card's content.
         </b-card-text>
       </b-card>
-    </div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+    </b-card-group>
+  </div>
+  <div class="mt-4">
+    <h4>Left and Right (or Start and End)</h4>
+    <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-left class="mb-3">
+      <b-card-text>
+        Some quick example text to build on the card and make up the bulk of the card's content.
+      </b-card-text>
+    </b-card>
+    <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-right>
+      <b-card-text>
+        Some quick example text to build on the card and make up the bulk of the card's content.
+      </b-card-text>
+    </b-card>
+  </div>
+  <template #html>
 
 ```vue-html
 <h4>Top and Bottom</h4>
@@ -257,9 +228,8 @@ Alternatively you can manually place images inside `<b-card>` using the sub-comp
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 **Note:** For left and right images, you may need to apply additional styles to classes
 `.card-img-left` and `.card-img-right`, as images will "stretch" in height if you have content that
@@ -271,25 +241,20 @@ flexible when creating a responsive horizontal card.
 
 Place the image in the background of the card by setting the boolean prop `overlay`:
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card
-      overlay
-      img-src="https://picsum.photos/900/250/?image=3"
-      img-alt="Card Image"
-      text-variant="white"
-      title="Image Overlay"
-      subtitle="Subtitle"
-    >
-      <b-card-text>
-        Some quick example text to build on the card and make up the bulk of the card's content.
-      </b-card-text>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card
+    overlay
+    img-src="https://picsum.photos/900/250/?image=3"
+    img-alt="Card Image"
+    text-variant="white"
+    title="Image Overlay"
+    subtitle="Subtitle"
+  >
+    <b-card-text>
+      Some quick example text to build on the card and make up the bulk of the card's content.
+    </b-card-text>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card
@@ -306,9 +271,8 @@ Place the image in the background of the card by setting the boolean prop `overl
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 #### Lazy loaded images
 
@@ -320,35 +284,30 @@ Add an optional header and/or footer within a card via the `header`/`footer` pro
 You can control the wrapper element tags used by setting the `header-tag` and `footer-tag` props
 (both default is `div`)
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card-group deck>
-      <b-card
-        header="featured"
-        header-tag="header"
-        footer="Card Footer"
-        footer-tag="footer"
-        title="Title"
-      >
-        <b-card-text>Header and footers using props.</b-card-text>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-      </b-card>
-      <b-card title="Title" header-tag="header" footer-tag="footer">
-        <template #header>
-            <h6 class="mb-0">Header Slot</h6>
-        </template>
-        <b-card-text>Header and footers using slots.</b-card-text>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-        <template #footer>
-            <em>Footer Slot</em>
-        </template>
-      </b-card>
-    </b-card-group>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card-group deck>
+    <b-card
+      header="featured"
+      header-tag="header"
+      footer="Card Footer"
+      footer-tag="footer"
+      title="Title"
+    >
+      <b-card-text>Header and footers using props.</b-card-text>
+      <b-button href="#" variant="primary">Go somewhere</b-button>
+    </b-card>
+    <b-card title="Title" header-tag="header" footer-tag="footer">
+      <template #header>
+          <h6 class="mb-0">Header Slot</h6>
+      </template>
+      <b-card-text>Header and footers using slots.</b-card-text>
+      <b-button href="#" variant="primary">Go somewhere</b-button>
+      <template #footer>
+          <em>Footer Slot</em>
+      </template>
+    </b-card>
+  </b-card-group>
+  <template #html>
 
 ```vue-html
 <b-card-group deck>
@@ -362,6 +321,7 @@ You can control the wrapper element tags used by setting the `header-tag` and `f
     <b-card-text>Header and footers using props.</b-card-text>
     <b-button href="#" variant="primary">Go somewhere</b-button>
   </b-card>
+
   <b-card title="Title" header-tag="header" footer-tag="footer">
     <template #header>
       <h6 class="mb-0">Header Slot</h6>
@@ -375,9 +335,8 @@ You can control the wrapper element tags used by setting the `header-tag` and `f
 </b-card-group>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Kitchen sink example
 
@@ -385,43 +344,38 @@ Mix and match multiple content types to create the card you need, or throw every
 Shown below are image styles, blocks, text styles, and a list group—all wrapped in a fixed-width
 card.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card
-        no-body
-        style="max-width: 20rem;"
-        img-src="https://placekitten.com/380/200"
-        img-alt="Image"
-        img-top
-    >
-      <template #header>
-        <h4 class="mb-0">Hello World</h4>
-      </template>
-      <b-card-body>
-        <b-card-title>Card Title</b-card-title>
-        <b-card-subtitle class="mb-2">Card Sub Title</b-card-subtitle>
-        <b-card-text>
-          Some quick example text to build on the card title and make up the bulk of the card's
-          content.
-        </b-card-text>
-      </b-card-body>
-      <b-list-group flush>
-        <b-list-group-item>Cras justo odio</b-list-group-item>
-        <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-        <b-list-group-item>Vestibulum at eros</b-list-group-item>
-      </b-list-group>
-      <b-card-body>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-      </b-card-body>
-      <b-card-footer>This is a footer</b-card-footer>
-      <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card
+    no-body
+    style="max-width: 20rem;"
+    img-src="https://placekitten.com/380/200"
+    img-alt="Image"
+    img-top
+  >
+    <template #header>
+      <h4 class="mb-0">Hello World</h4>
+    </template>
+    <b-card-body>
+      <b-card-title>Card Title</b-card-title>
+      <b-card-subtitle class="mb-2">Card Sub Title</b-card-subtitle>
+      <b-card-text>
+        Some quick example text to build on the card title and make up the bulk of the card's
+        content.
+      </b-card-text>
+    </b-card-body>
+    <b-list-group flush>
+      <b-list-group-item>Cras justo odio</b-list-group-item>
+      <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
+      <b-list-group-item>Vestibulum at eros</b-list-group-item>
+    </b-list-group>
+    <b-card-body>
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </b-card-body>
+    <b-card-footer>This is a footer</b-card-footer>
+    <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card
@@ -442,6 +396,7 @@ card.
       content.
     </b-card-text>
   </b-card-body>
+
   <b-list-group flush>
     <b-list-group-item>Cras justo odio</b-list-group-item>
     <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
@@ -456,9 +411,8 @@ card.
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Horizontal card layout
 
@@ -471,28 +425,23 @@ removes the rounding of the `<b-card-img>` corners while class `overflow-hidden`
 appropriately clip the image's corners based on the border-radius of the card. Further adjustments
 may be needed depending on your card content.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-      <b-row class="g-0">
-        <b-col md="6">
-          <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
-        </b-col>
-        <b-col md="6">
-          <b-card-body title="Horizontal Card">
-            <b-card-text>
-              This is a wider card with supporting text as a natural lead-in to additional content.
-              This content is a little bit longer.
-            </b-card-text>
-          </b-card-body>
-        </b-col>
-      </b-row>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card no-body class="overflow-hidden" style="max-width: 540px;">
+    <b-row class="g-0">
+      <b-col md="6">
+        <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        <b-card-body title="Horizontal Card">
+          <b-card-text>
+            This is a wider card with supporting text as a natural lead-in to additional content.
+            This content is a little bit longer.
+          </b-card-text>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card no-body class="overflow-hidden" style="max-width: 540px;">
@@ -516,9 +465,8 @@ may be needed depending on your card content.
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Text variants
 
@@ -526,19 +474,14 @@ By default, cards use dark text and assume a light background. You can reverse t
 color of text within, as well as that of the card's sub-components, via the prop `text-variant`.
 Then, specify a dark background variant.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card bg-variant="dark" text-variant="white" title="Card Title">
-      <b-card-text>
-        With supporting text below as a natural lead-in to additional content.
-      </b-card-text>
-      <b-button href="#" variant="primary">Go somewhere</b-button>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card bg-variant="dark" text-variant="white" title="Card Title">
+    <b-card-text>
+      With supporting text below as a natural lead-in to additional content.
+    </b-card-text>
+    <b-button href="#" variant="primary">Go somewhere</b-button>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card bg-variant="dark" text-variant="white" title="Card Title">
@@ -549,9 +492,8 @@ Then, specify a dark background variant.
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Background and border variants
 
@@ -561,52 +503,47 @@ the `bg-variant` and `border-variant` props. Darker solid variants may require s
 
 ### Solid
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <div>
+<HighlightCard>
+  <div>
+    <b-card-group deck>
+      <b-card bg-variant="primary" text-variant="white" header="Primary" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card bg-variant="secondary" text-variant="white" header="Secondary" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card bg-variant="success" text-variant="white" header="Success" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+    </b-card-group>
+  </div>
+  <div class="mt-3">
       <b-card-group deck>
-        <b-card bg-variant="primary" text-variant="white" header="Primary" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card bg-variant="secondary" text-variant="white" header="Secondary" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card bg-variant="success" text-variant="white" header="Success" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-      </b-card-group>
-    </div>
-    <div class="mt-3">
-        <b-card-group deck>
-        <b-card bg-variant="info" text-variant="white" header="Info" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card bg-variant="warning" text-variant="white" header="Warning" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card bg-variant="danger" text-variant="white" header="Danger" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-      </b-card-group>
-    </div>
-    <div class="mt-3">
-      <b-card-group deck>
-        <b-card bg-variant="light" header="Light" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card bg-variant="dark" header="Dark" text-variant="white" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card header="Default" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-      </b-card-group>
-    </div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+      <b-card bg-variant="info" text-variant="white" header="Info" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card bg-variant="warning" text-variant="white" header="Warning" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card bg-variant="danger" text-variant="white" header="Danger" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+    </b-card-group>
+  </div>
+  <div class="mt-3">
+    <b-card-group deck>
+      <b-card bg-variant="light" header="Light" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card bg-variant="dark" header="Dark" text-variant="white" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card header="Default" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+    </b-card-group>
+  </div>
+  <template #html>
 
 ```vue-html
 <b-card-group deck>
@@ -646,77 +583,71 @@ the `bg-variant` and `border-variant` props. Darker solid variants may require s
 </b-card-group>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Bordered
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <div>
-      <b-card-group deck>
-        <b-card
-          border-variant="primary"
-          header="Primary"
-          header-bg-variant="primary"
-          header-text-variant="white"
-          align="center"
-        >
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card
-          border-variant="secondary"
-          header="Secondary"
-          header-border-variant="secondary"
-          align="center"
-        >
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card border-variant="success" header="Success" align="center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-      </b-card-group>
-    </div>
-    <div class="mt-3">
-      <b-card-group deck>
-        <b-card border-variant="info" header="Info" align="center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card
-          border-variant="warning"
-          header="Warning"
-          header-bg-variant="transparent"
-          align="center"
-        >
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card
-          border-variant="danger"
-          header="Danger"
-          header-border-variant="danger"
-          header-text-variant="danger"
-          align="center"
-        >
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-      </b-card-group>
-    </div>
-    <div class="mt-3">
-      <b-card-group deck class="mb-3">
-        <b-card border-variant="light" header="Light" class="text-center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-        <b-card border-variant="dark" header="Dark" align="center">
-          <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-        </b-card>
-      </b-card-group>
-    </div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <div>
+    <b-card-group deck>
+      <b-card
+        border-variant="primary"
+        header="Primary"
+        header-bg-variant="primary"
+        header-text-variant="white"
+        align="center"
+      >
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card
+        border-variant="secondary"
+        header="Secondary"
+        header-border-variant="secondary"
+        align="center"
+      >
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card border-variant="success" header="Success" align="center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+    </b-card-group>
+  </div>
+  <div class="mt-3">
+    <b-card-group deck>
+      <b-card border-variant="info" header="Info" align="center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card
+        border-variant="warning"
+        header="Warning"
+        header-bg-variant="transparent"
+        align="center"
+      >
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card
+        border-variant="danger"
+        header="Danger"
+        header-border-variant="danger"
+        header-text-variant="danger"
+        align="center"
+      >
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+    </b-card-group>
+  </div>
+  <div class="mt-3">
+    <b-card-group deck class="mb-3">
+      <b-card border-variant="light" header="Light" class="text-center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+      <b-card border-variant="dark" header="Dark" align="center">
+        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+      </b-card>
+    </b-card-group>
+  </div>
+  <template #html>
 
 ```vue-html
 <b-card-group deck>
@@ -775,9 +706,8 @@ the `bg-variant` and `border-variant` props. Darker solid variants may require s
 </b-card-group>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 #### Variant to class mapping
 
@@ -790,27 +720,22 @@ You can also apply the solid and border variants individually to card headers an
 `header-bg-variant`, `header-border-variant`, `header-text-variant`, `footer-bg-variant`,
 `footer-border-variant`, and `footer-text-variant` props.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card
-      header="Card Header"
-      header-text-variant="white"
-      header-tag="header"
-      header-bg-variant="dark"
-      footer="Card Footer"
-      footer-tag="footer"
-      footer-bg-variant="success"
-      footer-border-variant="dark"
-      title="Title"
-      style="max-width: 20rem;"
-    >
-      <b-card-text>Header and footers variants.</b-card-text>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card
+    header="Card Header"
+    header-text-variant="white"
+    header-tag="header"
+    header-bg-variant="dark"
+    footer="Card Footer"
+    footer-tag="footer"
+    footer-bg-variant="success"
+    footer-border-variant="dark"
+    title="Title"
+    style="max-width: 20rem;"
+  >
+    <b-card-text>Header and footers variants.</b-card-text>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card
@@ -829,9 +754,8 @@ You can also apply the solid and border variants individually to card headers an
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Conveying meaning to assistive technologies
 
@@ -846,26 +770,21 @@ Integrate [`<b-nav>`](/docs/components/nav) into card headers easily.
 
 **Using the `header` slot**:
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card title="Card Title" body-class="text-center" header-tag="nav">
-      <template #header>
-        <b-nav card-header tabs>
-          <b-nav-item active>Active</b-nav-item>
-          <b-nav-item>Inactive</b-nav-item>
-          <b-nav-item disabled>Disabled</b-nav-item>
-        </b-nav>
-      </template>
-      <b-card-text>
-        With supporting text below as a natural lead-in to additional content.
-      </b-card-text>
-      <b-button variant="primary">Go somewhere</b-button>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card title="Card Title" body-class="text-center" header-tag="nav">
+    <template #header>
+      <b-nav card-header tabs>
+        <b-nav-item active>Active</b-nav-item>
+        <b-nav-item>Inactive</b-nav-item>
+        <b-nav-item disabled>Disabled</b-nav-item>
+      </b-nav>
+    </template>
+    <b-card-text>
+      With supporting text below as a natural lead-in to additional content.
+    </b-card-text>
+    <b-button variant="primary">Go somewhere</b-button>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card title="Card Title" body-class="text-center" header-tag="nav">
@@ -876,6 +795,7 @@ Integrate [`<b-nav>`](/docs/components/nav) into card headers easily.
       <b-nav-item disabled>Disabled</b-nav-item>
     </b-nav>
   </template>
+
   <b-card-text>
     With supporting text below as a natural lead-in to additional content.
   </b-card-text>
@@ -883,35 +803,29 @@ Integrate [`<b-nav>`](/docs/components/nav) into card headers easily.
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 **Using `<b-card-header>` sub-component:**
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card no-body>
-      <b-card-header header-tag="nav">
-        <b-nav card-header tabs>
-          <b-nav-item active>Active</b-nav-item>
-          <b-nav-item>Inactive</b-nav-item>
-          <b-nav-item disabled>Disabled</b-nav-item>
-        </b-nav>
-      </b-card-header>
-      <b-card-body class="text-center">
-        <b-card-title>Card Title</b-card-title>
-        <b-card-text>
-          With supporting text below as a natural lead-in to additional content.
-        </b-card-text>
-        <b-button variant="primary">Go somewhere</b-button>
-      </b-card-body>
-    </b-card>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card no-body>
+    <b-card-header header-tag="nav">
+      <b-nav card-header tabs>
+        <b-nav-item active>Active</b-nav-item>
+        <b-nav-item>Inactive</b-nav-item>
+        <b-nav-item disabled>Disabled</b-nav-item>
+      </b-nav>
+    </b-card-header>
+    <b-card-body class="text-center">
+      <b-card-title>Card Title</b-card-title>
+      <b-card-text>
+        With supporting text below as a natural lead-in to additional content.
+      </b-card-text>
+      <b-button variant="primary">Go somewhere</b-button>
+    </b-card-body>
+  </b-card>
+  <template #html>
 
 ```vue-html
 <b-card no-body>
@@ -922,6 +836,7 @@ Integrate [`<b-nav>`](/docs/components/nav) into card headers easily.
       <b-nav-item disabled>Disabled</b-nav-item>
     </b-nav>
   </b-card-header>
+
   <b-card-body class="text-center">
     <b-card-title>Card Title</b-card-title>
     <b-card-text>
@@ -932,9 +847,8 @@ Integrate [`<b-nav>`](/docs/components/nav) into card headers easily.
 </b-card>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 For more information on using `<b-nav>` in card headers, refer to the
 [Navs documentation](/docs/components/nav).
@@ -951,41 +865,36 @@ Card groups use display: flex; to achieve their uniform sizing.
 
 When using card groups with footers, their content will automatically line up.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card-group>
-      <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
-        <b-card-text>
-          This is a wider card with supporting text below as a natural lead-in to additional content.
-          This content is a little bit longer.
-        </b-card-text>
-        <template #footer>
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </template>
-      </b-card>
-      <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
-        <b-card-text>
-          This card has supporting text below as a natural lead-in to additional content.
-        </b-card-text>
-        <template #footer>
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </template>
-      </b-card>
-      <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
-        <b-card-text>
-          This is a wider card with supporting text below as a natural lead-in to additional content.
-          This card has even longer content than the first to show that equal height action.
-        </b-card-text>
-        <template #footer>
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </template>
-      </b-card>
-    </b-card-group>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card-group>
+    <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+      <b-card-text>
+        This is a wider card with supporting text below as a natural lead-in to additional content.
+        This content is a little bit longer.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </template>
+    </b-card>
+    <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+      <b-card-text>
+        This card has supporting text below as a natural lead-in to additional content.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </template>
+    </b-card>
+    <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+      <b-card-text>
+        This is a wider card with supporting text below as a natural lead-in to additional content.
+        This card has even longer content than the first to show that equal height action.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </template>
+    </b-card>
+  </b-card-group>
+  <template #html>
 
 ```vue-html
 <b-card-group>
@@ -998,6 +907,7 @@ When using card groups with footers, their content will automatically line up.
       <small class="text-muted">Last updated 3 mins ago</small>
     </template>
   </b-card>
+
   <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
     <b-card-text>
       This card has supporting text below as a natural lead-in to additional content.
@@ -1006,6 +916,7 @@ When using card groups with footers, their content will automatically line up.
       <small class="text-muted">Last updated 3 mins ago</small>
     </template>
   </b-card>
+
   <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
     <b-card-text>
       This is a wider card with supporting text below as a natural lead-in to additional content.
@@ -1018,9 +929,8 @@ When using card groups with footers, their content will automatically line up.
 </b-card-group>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Card deck groups
 
@@ -1028,41 +938,36 @@ Need a set of equal width and height cards that aren't attached to one another? 
 setting the `deck` prop. And just like with regular card groups, card footers in decks will
 automatically line up.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card-group deck>
-      <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-        <b-card-text>
-          This is a wider card with supporting text below as a natural lead-in to additional content.
-          This content is a little bit longer.
-        </b-card-text>
-        <template #footer>
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </template>
-      </b-card>
-      <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-        <b-card-text>
-          This card has supporting text below as a natural lead-in to additional content.
-        </b-card-text>
-        <template #footer>
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </template>
-      </b-card>
-      <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-        <b-card-text>
-          This is a wider card with supporting text below as a natural lead-in to additional content.
-          This card has even longer content than the first to show that equal height action.
-        </b-card-text>
-        <template #footer>
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </template>
-      </b-card>
-    </b-card-group>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card-group deck>
+    <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+      <b-card-text>
+        This is a wider card with supporting text below as a natural lead-in to additional content.
+        This content is a little bit longer.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </template>
+    </b-card>
+    <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+      <b-card-text>
+        This card has supporting text below as a natural lead-in to additional content.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </template>
+    </b-card>
+    <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+      <b-card-text>
+        This is a wider card with supporting text below as a natural lead-in to additional content.
+        This card has even longer content than the first to show that equal height action.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </template>
+    </b-card>
+  </b-card-group>
+  <template #html>
 
 ```vue-html
 <b-card-group deck>
@@ -1075,6 +980,7 @@ automatically line up.
       <small class="text-muted">Last updated 3 mins ago</small>
     </template>
   </b-card>
+
   <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
     <b-card-text>
       This card has supporting text below as a natural lead-in to additional content.
@@ -1083,6 +989,7 @@ automatically line up.
       <small class="text-muted">Last updated 3 mins ago</small>
     </template>
   </b-card>
+
   <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
     <b-card-text>
       This is a wider card with supporting text below as a natural lead-in to additional content.
@@ -1095,9 +1002,8 @@ automatically line up.
 </b-card-group>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Card column groups
 
@@ -1108,65 +1014,60 @@ alignment. Cards are ordered from top to bottom and left to right.
 Heads up! Your mileage with card columns may vary. To prevent cards breaking across columns, we must
 set them to display: inline-block as column-break-inside: avoid isn't a bulletproof solution yet.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-card-group columns>
-      <b-card
-        title="Card title that wraps to a new line"
-        img-src="https://placekitten.com/g/400/450"
-        img-alt="Image"
-        img-top
-        >
-        <b-card-text>
-          This is a wider card with supporting text below as a natural lead-in to additional content.
-          This content is a little bit longer.
-        </b-card-text>
-      </b-card>
-      <b-card header="Quote">
-        <blockquote class="blockquote mb-0">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-          <footer class="blockquote-footer">
-            Someone famous in <cite title="Source Title">Source Title</cite>
-          </footer>
-        </blockquote>
-      </b-card>
-      <b-card title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
-        <b-card-text>
-          This card has supporting text below as a natural lead-in to additional content.
-        </b-card-text>
-        <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
-      </b-card>
-      <b-card bg-variant="primary" text-variant="white">
-        <blockquote class="card-blockquote">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-          <footer>
-            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-          </footer>
-        </blockquote>
-      </b-card>
-      <b-card>
-        <b-card-title>Title</b-card-title>
-        <b-card-text>
-          This card has supporting text below as a natural lead-in to additional content.
-        </b-card-text>
-        <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
-      </b-card>
-      <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay></b-card>
-      <b-card img-src="https://picsum.photos/400/200/?image=41" img-alt="Image" img-top>
-        <b-card-text>
-          This is a wider card with supporting text below as a natural lead-in to additional content.
-          This card has even longer content than the first.
-        </b-card-text>
-        <template #footer>
-          <small class="text-muted">Footer Text</small>
-        </template>
-      </b-card>
-    </b-card-group>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-card-group columns>
+    <b-card
+      title="Card title that wraps to a new line"
+      img-src="https://placekitten.com/g/400/450"
+      img-alt="Image"
+      img-top
+      >
+      <b-card-text>
+        This is a wider card with supporting text below as a natural lead-in to additional content.
+        This content is a little bit longer.
+      </b-card-text>
+    </b-card>
+    <b-card header="Quote">
+      <blockquote class="blockquote mb-0">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer class="blockquote-footer">
+          Someone famous in <cite title="Source Title">Source Title</cite>
+        </footer>
+      </blockquote>
+    </b-card>
+    <b-card title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
+      <b-card-text>
+        This card has supporting text below as a natural lead-in to additional content.
+      </b-card-text>
+      <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
+    </b-card>
+    <b-card bg-variant="primary" text-variant="white">
+      <blockquote class="card-blockquote">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer>
+          <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+        </footer>
+      </blockquote>
+    </b-card>
+    <b-card>
+      <b-card-title>Title</b-card-title>
+      <b-card-text>
+        This card has supporting text below as a natural lead-in to additional content.
+      </b-card-text>
+      <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
+    </b-card>
+    <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay></b-card>
+    <b-card img-src="https://picsum.photos/400/200/?image=41" img-alt="Image" img-top>
+      <b-card-text>
+        This is a wider card with supporting text below as a natural lead-in to additional content.
+        This card has even longer content than the first.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Footer Text</small>
+      </template>
+    </b-card>
+  </b-card-group>
+  <template #html>
 
 ```vue-html
 <b-card-group columns>
@@ -1181,6 +1082,7 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
       This content is a little bit longer.
     </b-card-text>
   </b-card>
+
   <b-card header="Quote">
     <blockquote class="blockquote mb-0">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -1189,12 +1091,14 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
       </footer>
     </blockquote>
   </b-card>
+
   <b-card title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
     <b-card-text>
       This card has supporting text below as a natural lead-in to additional content.
     </b-card-text>
     <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
   </b-card>
+
   <b-card bg-variant="primary" text-variant="white">
     <blockquote class="card-blockquote">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -1203,6 +1107,7 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
       </footer>
     </blockquote>
   </b-card>
+
   <b-card>
     <b-card-title>Title</b-card-title>
     <b-card-text>
@@ -1210,7 +1115,9 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
     </b-card-text>
     <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
   </b-card>
+
   <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay></b-card>
+
   <b-card img-src="https://picsum.photos/400/200/?image=41" img-alt="Image" img-top>
     <b-card-text>
       This is a wider card with supporting text below as a natural lead-in to additional content.
@@ -1223,15 +1130,15 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
 </b-card-group>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 <ComponentReference :data="data"></ComponentReference>
 
 <script setup lang="ts">
 import {data} from '../../data/components/card.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BCard,
   BCardHeader,
@@ -1241,7 +1148,6 @@ import {
   BCardImg,
   BNavItem,
   BCardFooter,
-  BCardBody,
   BListGroupItem,
   BListGroup,
   BCardSubtitle,

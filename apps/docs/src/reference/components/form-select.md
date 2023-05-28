@@ -8,16 +8,11 @@ Bootstrap custom `<select>` using custom styles. Optionally specify options base
 
 Generate your select options by passing an array or object to the `options` props:
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
-    <b-form-select v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3"></b-form-select>
-    <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
+  <b-form-select v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3"></b-form-select>
+  <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -47,21 +42,15 @@ const ex1Options = [
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 You can even define option groups with the `options` prop:
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select v-model="exGroupSelected" :options="ex1GroupOptions"></b-form-select>
-    <div class="mt-3">Selected: <strong>{{ exGroupSelected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select v-model="exGroupSelected" :options="ex1GroupOptions"></b-form-select>
+  <div class="mt-3">Selected: <strong>{{ exGroupSelected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -89,29 +78,23 @@ const ex1GroupOptions = [
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 Or manually provide your options and option groups:
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select v-model="exManualSelected">
-      <b-form-select-option :value="null">Please select an option</b-form-select-option>
-      <b-form-select-option value="a">Option A</b-form-select-option>
-      <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option>
-      <b-form-select-option-group label="Grouped options">
-        <b-form-select-option :value="{ C: '3PO' }">Option with object value</b-form-select-option>
-        <b-form-select-option :value="{ R: '2D2' }">Another option with object value</b-form-select-option>
-      </b-form-select-option-group>
-    </b-form-select>
-    <div class="mt-3">Selected: <strong>{{ exManualSelected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select v-model="exManualSelected">
+    <b-form-select-option :value="null">Please select an option</b-form-select-option>
+    <b-form-select-option value="a">Option A</b-form-select-option>
+    <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option>
+    <b-form-select-option-group label="Grouped options">
+      <b-form-select-option :value="{ C: '3PO' }">Option with object value</b-form-select-option>
+      <b-form-select-option :value="{ R: '2D2' }">Another option with object value</b-form-select-option>
+    </b-form-select-option-group>
+  </b-form-select>
+  <div class="mt-3">Selected: <strong>{{ exManualSelected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -137,32 +120,26 @@ const exManualSelected = ref(null)
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 Feel free to mix the `options` prop with `<b-form-select-option>` and
 `<b-form-select-option-group>`. Manually placed options and option groups will appear _below_ the
 options generated via the `options` prop. To place manual options and option groups _above_ the
 options specified by the `options` prop, use the named slot `first`.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
-      <!-- This slot appears above the options from 'options' prop -->
-      <template #first>
-        <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
-      </template>
-      <!-- These options will appear after the ones from 'options' prop -->
-      <b-form-select-option value="C">Option C</b-form-select-option>
-      <b-form-select-option value="D">Option D</b-form-select-option>
-    </b-form-select>
-    <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
+    <!-- This slot appears above the options from 'options' prop -->
+    <template #first>
+      <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
+    </template>
+    <!-- These options will appear after the ones from 'options' prop -->
+    <b-form-select-option value="C">Option C</b-form-select-option>
+    <b-form-select-option value="D">Option D</b-form-select-option>
+  </b-form-select>
+  <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -194,9 +171,8 @@ const exFirstSlotOptions = [
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Options property
 
@@ -223,14 +199,11 @@ inline html (i.e. `<i>`, `<strong>`, etc.) inside `<option>` elements of a `<sel
 
 ### Options as an array
 
-<b-card no-body class="mb-4">
-  <b-card-body class="bg-body-tertiary">
+<b-card class="bg-body-tertiary mb-4">
 
 ```ts
 const options = ['A', 'B', 'C', {text: 'D', value: {d: 1}, disabled: true}, 'E', 'F']
 ```
-
-  </b-card-body>
 
 </b-card>
 
@@ -241,8 +214,7 @@ You can mix using strings and [objects](#options-as-an-array-of-objects) in the 
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card no-body class="mb-4">
-  <b-card-body class="bg-body-tertiary">
+<b-card class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -255,14 +227,11 @@ const options = [
 ]
 ```
 
-  </b-card-body>
-
 </b-card>
 
 ### Options as an array of objects
 
-<b-card no-body class="mb-4 mt-3">
-  <b-card-body class="bg-body-tertiary">
+<b-card class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -274,8 +243,6 @@ const options = [
 ]
 ```
 
-  </b-card-body>
-
 </b-card>
 
 If `value` is missing, then `text` will be used as both the `value` and `text` fields. If you use
@@ -283,8 +250,7 @@ the `html` property, you **must** supply a `value` property.
 
 To define option groups, just add an object with a `label` prop as the groups name and a `options` property with the array of options of the group.
 
-<b-card no-body class="mb-4">
-  <b-card-body class="bg-body-tertiary">
+<b-card class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -298,8 +264,6 @@ const options = [
 ]
 ```
 
-  </b-card-body>
-
 </b-card>
 
 ### Options as an object
@@ -308,8 +272,7 @@ const options = [
 
 Keys are mapped to `value` and values are mapped to option `text`.
 
-<b-card no-body class="mb-4">
-  <b-card-body class="bg-body-tertiary">
+<b-card class="bg-body-tertiary mb-4">
 
 ```ts
 const options = {
@@ -321,15 +284,12 @@ const options = {
 }
 ```
 
-  </b-card-body>
-
 </b-card>
 
 Internally, BootstrapVueNext will convert the above object to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card no-body class="mb-4">
-  <b-card-body class="bg-body-tertiary">
+<b-card class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -340,8 +300,6 @@ const options = [
   {text: 'Item E', value: {foo: 'bar', baz: true}, disabled: false},
 ]
 ```
-
-  </b-card-body>
 
 </b-card>
 
@@ -354,22 +312,17 @@ If you want to customize the field property names (for example using `name` fiel
 `text`) you can easily change them by setting the `text-field`, `html-field`, `value-field`, and
 `disabled-field` props to a string that contains the property name you would like to use:
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select
-      v-model="exFirstSlotSelected"
-      :options="exFieldNamesOptions"
-      class="mb-3"
-      value-field="item"
-      text-field="name"
-      disabled-field="notEnabled"
-    ></b-form-select>
-    <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select
+    v-model="exFirstSlotSelected"
+    :options="exFieldNamesOptions"
+    class="mb-3"
+    value-field="item"
+    text-field="name"
+    disabled-field="notEnabled"
+  ></b-form-select>
+  <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -398,9 +351,8 @@ const exFieldNamesOptions = [
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Option notes
 
@@ -429,15 +381,10 @@ By default, Bootstrap v5's custom select styling is applied.
 In non `multiple` mode, `<b-form-select>` returns the single `value` of the currently selected
 option.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
-    <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
+  <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -460,9 +407,8 @@ const ex1Options = [
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ### Select sizing (displayed rows)
 
@@ -475,15 +421,10 @@ Note when `select-size` is set to a value greater than 1, the Bootstrap v5 custo
 
 Note that not all mobile browsers will show the select as a list-box.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select v-model="ex1Selected" :options="ex1Options" :select-size="4"></b-form-select>
-    <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select v-model="ex1Selected" :options="ex1Options" :select-size="4"></b-form-select>
+  <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -506,9 +447,8 @@ const ex1Options = [
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Multiple select support
 
@@ -521,20 +461,15 @@ default is to let the browser use its default (typically 4).
 In `multiple` mode, `<b-form-select>` always returns an array of option values. You **must** provide
 an array reference as your `v-model` when in `multiple` mode.
 
-<b-card no-body class="mb-5">
-  <b-card-body>
-    <b-form-select
-      v-model="exMultiSelected"
-      :options="exMultiOptions"
-      multiple
-      :select-size="4"
-    ></b-form-select>
-    <div class="mt-3">Selected: <strong>{{ exMultiSelected }}</strong></div>
-  </b-card-body>
-
-  <div class="html">HTML</div>
-
-  <b-card-body class="bg-body-tertiary">
+<HighlightCard>
+  <b-form-select
+    v-model="exMultiSelected"
+    :options="exMultiOptions"
+    multiple
+    :select-size="4"
+  ></b-form-select>
+  <div class="mt-3">Selected: <strong>{{ exMultiSelected }}</strong></div>
+  <template #html>
 
 ```vue-html
 <template>
@@ -564,9 +499,8 @@ const exMultiOptions = [
 </script>
 ```
 
-  </b-card-body>
-
-</b-card>
+  </template>
+</HighlightCard>
 
 ## Control sizing
 
@@ -626,6 +560,7 @@ When `state` is set to `false`, aria-invalid will also be set to true.
 <script setup lang="ts">
 import {data} from '../../data/components/formSelect.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import HighlightCard from '../../components/HighlightCard.vue'
 import {BFormSelectOptionGroup, BFormSelectOption, BCard, BCardBody, BFormSelect, BAlert} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
