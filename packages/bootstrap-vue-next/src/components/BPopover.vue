@@ -278,7 +278,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
-  const off = props.offset ? props.offset : tooltipBoolean.value ? 0 : 10
+  const off = typeof props.offset === 'number' ? props.offset : tooltipBoolean.value ? 0 : 10
   const arr: Middleware[] = [offset(off)]
   if (noFlipBoolean.value === false && !isAutoPlacement.value) {
     arr.push(flip())
