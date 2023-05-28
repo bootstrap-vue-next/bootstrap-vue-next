@@ -6,7 +6,7 @@ import {
   readonly,
   type Ref,
   ref,
-  toValue,
+  toRef,
   watchEffect,
 } from 'vue'
 
@@ -35,15 +35,13 @@ export default (
   interval: MaybeRefOrGetter<number> = ref(1000),
   intervalOpts: UseIntervalFnOptions = {}
 ): CountdownReturn => {
+  const resolvedLength = toRef(length)
+
+  const intervalLength = toRef(interval)
+
   const isPaused = ref(false)
 
   const intervalsPassed = ref(0)
-
-  // Has watchEffect to set
-  const resolvedLength = ref(toValue(length))
-
-  // Has watchEffect to set
-  const intervalLength = ref(toValue(interval))
 
   const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / intervalLength.value))
 
@@ -72,25 +70,6 @@ export default (
     intervalsPassed.value = amountOfIntervals.value
     // pause() // Only here for the sake of demonstrating the flow. It will be called in the watchEffect
   }
-
-  watchEffect(() => {
-    const newVal = toValue(length)
-    const oldVal = resolvedLength.value
-    if (newVal === oldVal) return
-    resolvedLength.value = newVal
-    stop()
-    restart()
-  })
-
-  watchEffect(() => {
-    const newVal = toValue(interval)
-    const oldVal = intervalLength.value
-    if (newVal === oldVal) return
-    intervalLength.value = newVal
-    stop()
-    restart()
-  })
-
   watchEffect(() => {
     if (intervalsPassed.value > amountOfIntervals.value) {
       intervalsPassed.value = amountOfIntervals.value
