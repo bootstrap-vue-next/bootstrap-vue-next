@@ -41,6 +41,7 @@ export default defineComponent({
   components: {BLink, BSpinner},
   props: {
     ...BLINK_PROPS,
+    ariaLabel: {type: String, default: null},
     active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     href: {type: String, default: undefined},
@@ -92,7 +93,8 @@ export default defineComponent({
     ])
 
     const computedAttrs = computed(() => ({
-      'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
+      'aria-disabled': props.ariaLabel,
+      'aria-label': nonStandardTag.value ? disabledBoolean.value : null,
       'aria-pressed': isToggle.value ? pressedBoolean.value : null,
       'autocomplete': isToggle.value ? 'off' : null,
       'disabled': isButton.value ? disabledBoolean.value : null,
