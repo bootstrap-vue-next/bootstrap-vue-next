@@ -10,7 +10,6 @@ on:
 jobs:
   publish-npm:
     permissions:
-      contents: write
       id-token: write
 
     runs-on: ubuntu-latest
