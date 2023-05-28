@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.1...bootstrap-vue-next-v0.9.2) (2023-05-28)
+
+
+### Bug Fixes
+
+* **BPopover:** zero value is a valid configuration for offset property ([3b7477d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3b7477d175389f478cbef2a7e4e8acb1aeaaede7))
+
 ## [0.9.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.0...bootstrap-vue-next-v0.9.1) (2023-05-27)
 
 
