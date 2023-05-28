@@ -13,12 +13,11 @@ on:
 
 jobs:
   stale:
-    runs-on: ${{ matrix.os }} 
+    permissions:
+      issues: write
+      pull-requests: write
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Use stale

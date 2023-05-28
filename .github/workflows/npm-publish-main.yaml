@@ -1,20 +1,18 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# This workflow will publish the main package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: npm-publish
+name: npm-publish-main
 
 on:
   release:
     types: [created]
 
 jobs:
-  publish-npm:
-    runs-on: ${{ matrix.os }}
+  publish-npm-main:
+    permissions:
+      id-token: write
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -25,7 +23,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install PNPM
@@ -50,14 +48,9 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Build Library
-        run: pnpm run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
+        run: pnpm run build --filter bootstrap-vue-next
 
       - name: Publish Main
-        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
+        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public --provenance
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: Publish Nuxt
-        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}

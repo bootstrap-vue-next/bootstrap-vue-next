@@ -1,5 +1,5 @@
 # This workflow is for the release please action. It automates releases when using conventional commit messages
-# It also auto publishes releases to npm under the @latest tag
+# It also auto publishes releases to npm under the @latest tag on merge
 # For more information see: https://github.com/google-github-actions/release-please-action
 
 name: release-main
@@ -9,22 +9,14 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
-
-env:
-  ACTIONS_RUNNER_DEBUG: true
-  ACTIONS_STEP_DEBUG: true
-
 jobs:
   release-please:
-    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Use Release Please
@@ -33,7 +25,7 @@ jobs:
         with:
           command: manifest
           monorepo-tags: true
-          
+  
       # The logic below handles the npm publication:
 
       - name: Clone Repository
@@ -43,7 +35,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
           registry-url: 'https://registry.npmjs.org'
         if: ${{ steps.release.outputs.releases_created }}
 
@@ -77,13 +69,13 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish Main
-        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
+        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public --provenance
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/bootstrap-vue-next--release_created'] }}
 
       - name: Publish Nuxt
-        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
+        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public --provenance
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}
         if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/nuxt--release_created'] }}
