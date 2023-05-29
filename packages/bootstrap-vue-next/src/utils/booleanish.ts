@@ -16,4 +16,4 @@ export const isBooleanish = (input: unknown): input is Booleanish =>
  * @returns
  */
 export const resolveBooleanish = (input: Booleanish): boolean =>
-  typeof input === 'boolean' ? input : input === '' ? true : input === 'true' ? true : false
+  typeof input === 'boolean' ? input : input === '' || input === 'true' ? true : false
