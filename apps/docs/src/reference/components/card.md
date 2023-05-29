@@ -373,7 +373,7 @@ card.
       <a href="#" class="card-link">Another link</a>
     </b-card-body>
     <b-card-footer>This is a footer</b-card-footer>
-    <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
+    <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
   </b-card>
   <template #html>
 
@@ -407,7 +407,7 @@ card.
     <a href="#" class="card-link">Another link</a>
   </b-card-body>
   <b-card-footer>This is a footer</b-card-footer>
-  <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
+  <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
 </b-card>
 ```
 
@@ -429,7 +429,7 @@ may be needed depending on your card content.
   <b-card no-body class="overflow-hidden" style="max-width: 540px;">
     <b-row class="g-0">
       <b-col md="6">
-        <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
+        <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0" />
       </b-col>
       <b-col md="6">
         <b-card-body title="Horizontal Card">
@@ -451,7 +451,7 @@ may be needed depending on your card content.
         src="https://picsum.photos/400/400/?image=20"
         alt="Image"
         class="rounded-0"
-      ></b-card-img>
+      />
     </b-col>
     <b-col md="6">
       <b-card-body title="Horizontal Card">
@@ -1056,7 +1056,7 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
       </b-card-text>
       <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
     </b-card>
-    <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay></b-card>
+    <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay />
     <b-card img-src="https://picsum.photos/400/200/?image=41" img-alt="Image" img-top>
       <b-card-text>
         This is a wider card with supporting text below as a natural lead-in to additional content.
@@ -1116,7 +1116,7 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
     <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
   </b-card>
 
-  <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay></b-card>
+  <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay />
 
   <b-card img-src="https://picsum.photos/400/200/?image=41" img-alt="Image" img-top>
     <b-card-text>
@@ -1133,7 +1133,7 @@ set them to display: inline-block as column-break-inside: avoid isn't a bulletpr
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/card.data'

@@ -18,14 +18,13 @@ The component `<b-form-spinbutton>` is
   <p>Value: {{ ex1Value }}</p>
   <template #html>
 
-```vue-html
+```vue
 <template>
-  <b-form-spin-button  min="1" max="100" step="1" />
+  <b-form-spin-button min="1" max="100" step="1" />
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-const ex1Value = ref(50);
+const ex1Value = ref(50)
 </script>
 ```
 
@@ -56,15 +55,14 @@ value.
   <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <label for="sb-inline">Inline spin button</label>
   <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-const ex1Value = ref(50);
+const ex1Value = ref(50)
 </script>
 ```
 
@@ -78,17 +76,14 @@ const ex1Value = ref(50);
   <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical></b-form-spin-button>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <label for="sb-vertical">Vertical spin button</label>
-  <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical>
-  </b-form-spin-button>
+  <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical> </b-form-spin-button>
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
-const ex1Value = ref(50);
+const ex1Value = ref(50)
 </script>
 ```
 
@@ -157,7 +152,7 @@ const ex1Value = ref(50);
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/spinButton.data'

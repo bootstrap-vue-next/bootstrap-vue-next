@@ -40,7 +40,7 @@ The overlay visibility is controlled via the `show` prop. By default, the overla
   <b-button class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</b-button>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-overlay :show="showOverlayEx1" rounded="sm">
     <b-card title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
@@ -56,8 +56,6 @@ The overlay visibility is controlled via the `show` prop. By default, the overla
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const showOverlayEx1 = ref(false)
 </script>
 ```
@@ -124,7 +122,7 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <div class="row">
     <div class="col-lg-6" aria-controls="overlay-background">
@@ -176,11 +174,6 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const variant = ref('light')
-const opacity = ref(0.85)
-const blur = ref('2px')
 const variants = [
   'transparent',
   'white',
@@ -194,6 +187,10 @@ const variants = [
   'info',
 ]
 const blurs = [{text: 'None', value: ''}, '1px', '2px', '5px', '0.5em', '1rem']
+
+const variant = ref('light')
+const opacity = ref(0.85)
+const blur = ref('2px')
 </script>
 ```
 
@@ -303,7 +300,7 @@ Possible values are:
   </b-row>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
 
@@ -337,8 +334,6 @@ Possible values are:
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const showRoundedEx = ref(false)
 </script>
 ```
@@ -376,7 +371,7 @@ Place custom content in the overlay (replacing the default spinner) via the opti
   </b-overlay>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-overlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
     <b-card title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
@@ -403,8 +398,6 @@ Place custom content in the overlay (replacing the default spinner) via the opti
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const showCustomEx = ref(false)
 
 const onShown = () => {
@@ -510,12 +503,10 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
   <b-button class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</b-button>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <div class="position-relative p-4 bg-info">
-    <p class="text-light fw-bold">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    </p>
+    <p class="text-light fw-bold">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     <b-card title="Card with parent overlay">
       <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
       <b-card-text>Click the button to toggle the overlay:</b-card-text>
@@ -523,17 +514,13 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
         Show overlay
       </b-button>
     </b-card>
-    <p class="text-light fw-bold mb-0">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    </p>
+    <p class="text-light fw-bold mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     <b-overlay :show="showNoWrapEx" no-wrap> </b-overlay>
   </div>
   <b-button class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</b-button>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const showNoWrapEx = ref(false)
 </script>
 ```
@@ -566,7 +553,7 @@ descendant of `<b-card>`:
   <b-button @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</b-button>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-card header="Card header" footer="Card footer">
     <b-img
@@ -587,8 +574,6 @@ descendant of `<b-card>`:
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const showNoWrapEx2 = ref(false)
 </script>
 ```
@@ -671,7 +656,7 @@ Easily create a loading button:
     @hidden="onBuzyHidden"
   >
     <b-button
-      ref="button"
+      ref="buzyButton"
       :disabled="loadingBuzy"
       variant="primary"
       @click="setBuzyClick"
@@ -681,7 +666,7 @@ Easily create a loading button:
   </b-overlay>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-overlay
     :show="loadingBuzy"
@@ -692,18 +677,17 @@ Easily create a loading button:
     class="d-inline-block"
     @hidden="onBuzyHidden"
   >
-    <b-button ref="button" :disabled="loadingBuzy" variant="primary" @click="setBuzyClick">
+    <b-button ref="buzyButton" :disabled="loadingBuzy" variant="primary" @click="setBuzyClick">
       Do something
     </b-button>
   </b-overlay>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+let timeout = null
 
 const loadingBuzy = ref(false)
-const buzyButton = ref(null)
-let timeout = null
+const buzyButton = ref<HTMLElment | null>(null)
 
 const clearTimer = () => {
   if (timeout) {
@@ -790,7 +774,7 @@ This example also demonstrates additional accessibility markup.
   </b-form>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form class="position-relative p-3" @submit.prevent="onFormSubmit">
     <div class="row">
@@ -843,12 +827,10 @@ This example also demonstrates additional accessibility markup.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const formbusy = ref(false)
 const processing = ref(false)
 const processingcounter = ref(1)
-const formdialog = ref(null)
+const formdialog = ref<HTMLElment | null>(null)
 let processingInterval = null
 
 const clearProcessingInterval = () => {
@@ -906,7 +888,7 @@ body only the modal body will be obscured. If you wish to obscure the entire mod
 header and footer), you will need to set the `<b-modal>` prop `body-class` to `position-static`, and
 also set the `rounded` prop on `<b-overlay>`.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/overlay.data'
@@ -955,7 +937,7 @@ const showNoWrapEx = ref(false)
 const showNoWrapEx2 = ref(false)
 
 const loadingBuzy = ref(false)
-const buzyButton = ref(null)
+const buzyButton = ref<HTMLElment | null>(null)
 let timeout = null;
 
 const clearTimer = () => {
@@ -987,7 +969,7 @@ const onFormOverlayShown = () => {
 const formbusy = ref(false)
 const processing = ref(false)
 const processingcounter = ref(1)
-const formdialog = ref(null)
+const formdialog = ref<HTMLElment | null>(null)
 let processingInterval = null;
 
 const clearProcessingInterval = () => {

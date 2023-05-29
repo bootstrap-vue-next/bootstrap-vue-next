@@ -66,7 +66,7 @@ supported components, form layout, and more.
   </b-card>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form @submit="onSubmit" @reset="onReset" v-if="show">
     <b-form-group
@@ -97,10 +97,7 @@ supported components, form layout, and more.
     </b-form-group>
 
     <b-form-group id="input-group-4">
-      <b-form-checkbox-group
-        v-model="form.checked"
-        id="checkboxes-4"
-      >
+      <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
         <b-form-checkbox value="me">Check me out</b-form-checkbox>
         <b-form-checkbox value="that">Check that out</b-form-checkbox>
       </b-form-checkbox-group>
@@ -115,7 +112,7 @@ supported components, form layout, and more.
 </template>
 
 <script setup lang="ts">
-import {ref, computed, reactive, nextTick} from 'vue'
+const foods = [{text: 'Select One', value: null}, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
 
 const form = reactive({
   email: '',
@@ -123,8 +120,6 @@ const form = reactive({
   food: null,
   checked: [],
 })
-
-const foods = [{text: 'Select One', value: null}, 'Carrots', 'Beans', 'Tomatoes', 'Corn']
 const show = ref(true)
 
 const onSubmit = (event) => {
@@ -397,7 +392,7 @@ or the `force-show` prop to display the feedback.
     </b-form>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form @submit.stop.prevent>
     <label for="feedback-user">User Id</label>
@@ -410,9 +405,8 @@ or the `force-show` prop to display the feedback.
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const userId = ref('')
+
 const validation = computed(() => userId.value.length > 4 && userId.value.length < 13)
 </script>
 ```
@@ -440,7 +434,7 @@ Refer to the
 [Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.0/forms/validation/)
 for details on the Bootstrap v5 validation states.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/form.data'

@@ -120,7 +120,7 @@ support.
   </b-collapse>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-card>
     <b-button
@@ -138,8 +138,6 @@ support.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const visible = ref(true)
 </script>
 ```
@@ -237,7 +235,7 @@ at a time.
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-card>
     <div id="my-accordion" class="accordion" role="tablist">
@@ -281,8 +279,6 @@ at a time.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const text = `
   Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
   richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
@@ -389,7 +385,7 @@ inside an element with `role="tablist"` and set `role="tab"` on each trigger ele
 order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVueNext cannot
 apply those roles for you automatically, as it depends on your final document markup.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/collapse.data'

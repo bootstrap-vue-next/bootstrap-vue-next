@@ -163,7 +163,7 @@ For more detailed documentation and understanding, please visit Bootstrap's offi
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/gridSystem.data'

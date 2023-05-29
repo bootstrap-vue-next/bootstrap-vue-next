@@ -40,7 +40,7 @@ Alerts are available for any length of text, as well as an optional dismiss butt
   </b-button-group>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-alert :model-value="true">Default Alert</b-alert>
 
@@ -57,12 +57,7 @@ Alerts are available for any length of text, as well as an optional dismiss butt
     @close-countdown="countdown = $event"
   >
     <p>This alert will dismiss after {{ countdown / 1000 }} seconds...</p>
-    <b-progress
-      variant="warning"
-      :max="dismissCountDown"
-      :value="countdown"
-      height="4px"
-    />
+    <b-progress variant="warning" :max="dismissCountDown" :value="countdown" height="4px" />
   </b-alert>
 
   <b-button @click="dismissCountDown = dismissCountDown + 1000" variant="info" class="m-1">
@@ -75,12 +70,10 @@ Alerts are available for any length of text, as well as an optional dismiss butt
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+const showDismissibleAlert = ref(false)
 
-const showDismissibleAlert = ref(false);
-
-const dismissCountDown = ref(10000);
-const countdown = ref(0);
+const dismissCountDown = ref(10000)
+const countdown = ref(0)
 </script>
 ```
 
@@ -203,7 +196,7 @@ Using the `dismissible` prop it's possible to dismiss any `<b-alert>` inline. Th
   </b-alert>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-alert v-model="dismissibleAlert" dismissible>
     Dismissible Alert! Click the close button over there <b>&rArr;</b>
@@ -211,9 +204,7 @@ Using the `dismissible` prop it's possible to dismiss any `<b-alert>` inline. Th
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const dismissibleAlert = ref(true);
+const dismissibleAlert = ref(true)
 </script>
 ```
 
@@ -240,7 +231,7 @@ To create a `<b-alert>` that dismisses automatically after some time set the `v-
   </b-button-group>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-alert
     v-model="autoDismissingAlert"
@@ -251,19 +242,25 @@ To create a `<b-alert>` that dismisses automatically after some time set the `v-
   </b-alert>
 
   <b-button-group>
-    <b-button @click="autoDismissingAlert = autoDismissingAlert + 1000">Adjust Alert Time +1000</b-button>
-    <b-button @click="autoDismissingAlert = autoDismissingAlert - 1000">Adjust Alert Time -1000</b-button>
-    <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100">Adjust Alert interval +100</b-button>
-    <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100">Adjust Alert interval -100</b-button>
+    <b-button @click="autoDismissingAlert = autoDismissingAlert + 1000"
+      >Adjust Alert Time +1000</b-button
+    >
+    <b-button @click="autoDismissingAlert = autoDismissingAlert - 1000"
+      >Adjust Alert Time -1000</b-button
+    >
+    <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval + 100"
+      >Adjust Alert interval +100</b-button
+    >
+    <b-button @click="autoDismissingAlertInterval = autoDismissingAlertInterval - 100"
+      >Adjust Alert interval -100</b-button
+    >
   </b-button-group>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const autoDismissingAlert = ref(10000);
-const autoDismissingAlertInterval = ref(1000);
-const autoDismissingAlertCountdown = ref(0);
+const autoDismissingAlert = ref(10000)
+const autoDismissingAlertInterval = ref(1000)
+const autoDismissingAlertCountdown = ref(0)
 </script>
 ```
 
@@ -295,7 +292,7 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
   </b-button-group>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-alert
     v-model="secondAutoDismissingAlert"
@@ -314,11 +311,10 @@ The BAlert exposes four functions to manipulate the state of an active timer: `p
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
 import type {BAlert} from 'bootstrap-vue-next'
 
-const secondAutoDismissingAlert = ref(10000);
-const secondAutoDismissingAlertCountdown = ref(0);
+const secondAutoDismissingAlert = ref(10000)
+const secondAutoDismissingAlertCountdown = ref(0)
 const myAlert = ref<null | InstanceType<typeof BAlert>>(null)
 
 // Where 'myAlert' is the **ref** of the BAlert
@@ -337,7 +333,7 @@ const stop = () => myAlert.value?.stop()
 - `Immediate`: Will cause a timer to not start immediately upon render. A timer that is not started is not rendered. It must manually be started with `resume()` or `restart()`
 - `showOnPause`: Overwrites the behavior of showing an Alert when the timer is paused
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/alert.data'
@@ -359,7 +355,7 @@ const autoDismissingAlertCountdown = ref(0);
 
 const secondAutoDismissingAlert = ref(10000);
 const secondAutoDismissingAlertCountdown = ref(0);
-const myAlert = ref(null)
+const myAlert = ref<HTMLElment | null>(null)
 
 const pause = () => myAlert.value?.pause()
 const resume = () => myAlert.value?.resume()

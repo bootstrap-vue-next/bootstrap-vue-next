@@ -119,7 +119,7 @@ The `b-placeholder-wrapper` is a renderless component that picks between a 'load
   <b-button @click="startLoading">Restart</b-button>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-placeholder-wrapper :loading="loading">
     <template #loading>
@@ -135,7 +135,8 @@ The `b-placeholder-wrapper` is a renderless component that picks between a 'load
       class="mb-2"
     >
       <b-card-text>
-        Some quick example text to build on the card title and make up the bulk of the card's content.
+        Some quick example text to build on the card title and make up the bulk of the card's
+        content.
       </b-card-text>
       <b-button href="#placeholder-wrapper" variant="primary">Go somewhere</b-button>
     </b-card>
@@ -144,12 +145,10 @@ The `b-placeholder-wrapper` is a renderless component that picks between a 'load
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, watchEffect} from 'vue'
-
 const loading = ref(false)
 
 watchEffect(() => {
-  if(loading.value === true){
+  if (loading.value === true) {
     setTimeout(() => {
       loading.value = false
     }, 5000)
@@ -157,7 +156,7 @@ watchEffect(() => {
 })
 
 const startLoading = () => {
-  if(loading.value === true) return
+  if (loading.value === true) return
   loading.value = true
 }
 
@@ -330,7 +329,7 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/placeholder.data'

@@ -80,7 +80,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
   Current page : {{ ex1CurrentPage }}
   <template #html>
 
-```vue-html
+```vue
 <template>
   <!-- Use text in props -->
   <b-pagination
@@ -106,12 +106,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
   ></b-pagination>
 
   <!-- Use HTML and sub-components in slots -->
-  <b-pagination
-    v-model="ex1CurrentPage"
-    :total-rows="ex1Rows"
-    :per-page="ex1PerPage"
-    class="mt-4"
-  >
+  <b-pagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
     <template #first-text><span class="text-success">First</span></template>
     <template #prev-text><span class="text-danger">Prev</span></template>
     <template #next-text><span class="text-warning">Next</span></template>
@@ -121,7 +116,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
       <b-spinner small type="grow"></b-spinner>
       <b-spinner small type="grow"></b-spinner>
     </template>
-    <template #page="{ page, active }">
+    <template #page="{page, active}">
       <b v-if="active">{{ page }}</b>
       <i v-else>{{ page }}</i>
     </template>
@@ -130,8 +125,6 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const ex1CurrentPage = ref(1)
 const ex1PerPage = ref(10)
 const ex1Rows = ref(100)
@@ -199,7 +192,7 @@ use the `first-number` and `last-number` props.
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <h6>Goto first button number</h6>
   <b-pagination
@@ -228,8 +221,6 @@ use the `first-number` and `last-number` props.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const ex2CurrentPage = ref(5)
 const ex2PerPage = ref(1)
 const ex2Rows = ref(100)
@@ -259,7 +250,7 @@ smaller buttons or `'lg'` for larger buttons.
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <h6>Small</h6>
   <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></b-pagination>
@@ -272,8 +263,6 @@ smaller buttons or `'lg'` for larger buttons.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const ex3CurrentPage = ref(1)
 const ex3Rows = ref(100)
 </script>
@@ -301,7 +290,7 @@ Easily switch to pill style buttons by setting the `pills` prop
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <h6>Small Pills</h6>
   <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
@@ -314,8 +303,6 @@ Easily switch to pill style buttons by setting the `pills` prop
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const ex4CurrentPage = ref(1)
 const ex4Rows = ref(100)
 </script>
@@ -350,7 +337,7 @@ or `fill` by setting the prop `align` to the appropriate value.
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <h6>Small Pills</h6>
   <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
@@ -363,8 +350,6 @@ or `fill` by setting the prop `align` to the appropriate value.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const ex5CurrentPage = ref(1)
 const ex5Rows = ref(100)
 </script>
@@ -420,7 +405,7 @@ recommended unless the content of the button textually conveys its purpose.
 
 ### Keyboard navigation support
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/pagination.data'

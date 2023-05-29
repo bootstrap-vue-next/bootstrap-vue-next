@@ -15,7 +15,7 @@
   <b-button variant="danger" @click="breadcrumb.reset">Clear</b-button>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-breadcrumb />
 
@@ -26,7 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
 import {useBreadcrumb} from 'bootstrap-vue-next'
 
 const breadcrumb = useBreadcrumb()

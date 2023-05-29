@@ -14,24 +14,18 @@ Generate your select options by passing an array or object to the `options` prop
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
 
-  <b-form-select
-    v-model="ex1Selected"
-    :options="ex1Options"
-    size="sm"
-    class="mt-3"
-  ></b-form-select>
+  <b-form-select v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3"></b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ ex1Selected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const ex1Selected = ref()
 const ex1Options = [
   {value: null, text: 'Please select an option'},
   {value: 'a', text: 'This is First option'},
@@ -39,6 +33,8 @@ const ex1Options = [
   {value: {C: '3PO'}, text: 'This is an option with object value'},
   {value: 'd', text: 'This one is disabled', disabled: true},
 ]
+
+const ex1Selected = ref()
 </script>
 ```
 
@@ -52,17 +48,16 @@ You can even define option groups with the `options` prop:
   <div class="mt-3">Selected: <strong>{{ exGroupSelected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select v-model="exGroupSelected" :options="ex1GroupOptions"></b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ exGroupSelected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ exGroupSelected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const exGroupSelected = ref()
 const ex1GroupOptions = [
   {value: null, text: 'Please select an option'},
   {value: 'a', text: 'This is First option'},
@@ -75,6 +70,8 @@ const ex1GroupOptions = [
     ],
   },
 ]
+
+const exGroupSelected = ref()
 </script>
 ```
 
@@ -96,26 +93,26 @@ Or manually provide your options and option groups:
   <div class="mt-3">Selected: <strong>{{ exManualSelected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select v-model="exManualSelected">
     <b-form-select-option :value="null">Please select an option</b-form-select-option>
     <b-form-select-option value="a">Option A</b-form-select-option>
     <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option>
     <b-form-select-option-group label="Grouped options">
-      <b-form-select-option :value="{ C: '3PO' }">Option with object value</b-form-select-option>
-      <b-form-select-option :value="{ R: '2D2' }"
+      <b-form-select-option :value="{C: '3PO'}">Option with object value</b-form-select-option>
+      <b-form-select-option :value="{R: '2D2'}"
         >Another option with object value</b-form-select-option
       >
     </b-form-select-option-group>
   </b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ exManualSelected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ exManualSelected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const exManualSelected = ref(null)
 </script>
 ```
@@ -141,10 +138,9 @@ options specified by the `options` prop, use the named slot `first`.
   <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
-
     <!-- This slot appears above the options from 'options' prop -->
     <template #first>
       <b-form-select-option :value="null" disabled
@@ -157,17 +153,18 @@ options specified by the `options` prop, use the named slot `first`.
     <b-form-select-option value="D">Option D</b-form-select-option>
   </b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ exFirstSlotSelected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const exFirstSlotSelected = ref(null)
 const exFirstSlotOptions = [
   {value: 'A', text: 'Option A (from options prop)'},
   {value: 'B', text: 'Option B (from options prop)'},
 ]
+
+const exFirstSlotSelected = ref(null)
 </script>
 ```
 
@@ -324,7 +321,7 @@ If you want to customize the field property names (for example using `name` fiel
   <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select
     v-model="exFirstSlotSelected"
@@ -335,19 +332,20 @@ If you want to customize the field property names (for example using `name` fiel
     disabled-field="notEnabled"
   ></b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ exFirstSlotSelected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const exFieldNamesSelected = ref('A')
 const exFieldNamesOptions = [
   {item: 'A', name: 'Option A'},
   {item: 'B', name: 'Option B'},
   {item: 'D', name: 'Option C', notEnabled: true},
   {item: {d: 1}, name: 'Option D'},
 ]
+
+const exFieldNamesSelected = ref('A')
 </script>
 ```
 
@@ -386,17 +384,16 @@ option.
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ ex1Selected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const ex1Selected = ref()
 const ex1Options = [
   {value: null, text: 'Please select an option'},
   {value: 'a', text: 'This is First option'},
@@ -404,6 +401,8 @@ const ex1Options = [
   {value: {C: '3PO'}, text: 'This is an option with object value'},
   {value: 'd', text: 'This one is disabled', disabled: true},
 ]
+
+const ex1Selected = ref()
 </script>
 ```
 
@@ -426,17 +425,16 @@ Note that not all mobile browsers will show the select as a list-box.
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select v-model="ex1Selected" :options="ex1Options" :select-size="4"></b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ ex1Selected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const ex1Selected = ref()
 const ex1Options = [
   {value: null, text: 'Please select an option'},
   {value: 'a', text: 'This is First option'},
@@ -444,6 +442,8 @@ const ex1Options = [
   {value: {C: '3PO'}, text: 'This is an option with object value'},
   {value: 'd', text: 'This one is disabled', disabled: true},
 ]
+
+const ex1Selected = ref()
 </script>
 ```
 
@@ -471,7 +471,7 @@ an array reference as your `v-model` when in `multiple` mode.
   <div class="mt-3">Selected: <strong>{{ exMultiSelected }}</strong></div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-select
     v-model="exMultiSelected"
@@ -480,13 +480,12 @@ an array reference as your `v-model` when in `multiple` mode.
     :select-size="4"
   ></b-form-select>
 
-  <div class="mt-3">Selected: <strong>{{ exMultiSelected }}</strong></div>
+  <div class="mt-3">
+    Selected: <strong>{{ exMultiSelected }}</strong>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const exMultiSelected = ref(['b'])
 const exMultiOptions = [
   {value: 'a', text: 'This is First option'},
   {value: 'b', text: 'Default Selected Option'},
@@ -496,6 +495,8 @@ const exMultiOptions = [
   {value: 'f', text: 'This is option f'},
   {value: 'g', text: 'This is option g'},
 ]
+
+const exMultiSelected = ref(['b'])
 </script>
 ```
 
@@ -555,7 +556,7 @@ Supported `invalid` values are:
 
 When `state` is set to `false`, aria-invalid will also be set to true.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/formSelect.data'

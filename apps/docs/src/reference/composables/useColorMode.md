@@ -16,17 +16,14 @@
   </b-card>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-card ref="target">
-    <b-button @click="changeColor">
-      Current color: {{ mode }}
-    </b-button>
+    <b-button @click="changeColor"> Current color: {{ mode }} </b-button>
   </b-card>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
 import {useColorMode} from 'bootstrap-vue-next'
 
 const target = ref<HTMLElement | null>(null)
