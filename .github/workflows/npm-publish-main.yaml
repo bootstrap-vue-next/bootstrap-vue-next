@@ -51,6 +51,7 @@ jobs:
         run: pnpm run build --filter bootstrap-vue-next
 
       - name: Publish Main
-        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public --provenance
+        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_CONFIG_PROVENANCE: true
