@@ -69,14 +69,16 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish Main
-        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public --provenance
+        run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_CONFIG_PROVENANCE: true
         if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/bootstrap-vue-next--release_created'] }}
 
       - name: Publish Nuxt
-        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public --provenance
+        run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_NUXT_PACKAGE}}
+          NPM_CONFIG_PROVENANCE: true
         if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/nuxt--release_created'] }}
         
