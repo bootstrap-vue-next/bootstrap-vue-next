@@ -142,7 +142,7 @@ const toggler = () => {
   sidebar.value = !sidebar.value
 }
 watch(isLargeScreen, (newValue) => {
-  if (newValue === true) {
+  if (newValue) {
     sidebar.value = true
   } else {
     sidebar.value = false
