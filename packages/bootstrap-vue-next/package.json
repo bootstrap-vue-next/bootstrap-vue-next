@@ -83,8 +83,8 @@
     "vue-tsc": "^1.6.5"
   },
   "repository": {
-    "type": "github",
-    "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/tree/main/packages/bootstrap-vue-next",
+    "type": "git",
+    "url": "git+https://github.com/bootstrap-vue-next/bootstrap-vue-next.git",
     "directory": "packages/bootstrap-vue-next"
   },
   "bugs": {
