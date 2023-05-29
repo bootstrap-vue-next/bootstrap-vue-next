@@ -2,6 +2,7 @@ import {type Directive, ref} from 'vue'
 import {
   bind,
   type ElementWithPopper,
+  resolveActiveStatus,
   resolveContent,
   resolveDirectiveProps,
   unbind,
@@ -9,6 +10,9 @@ import {
 
 export default {
   mounted(el, binding) {
+    const isActive = resolveActiveStatus(binding.value)
+    if (!isActive) return
+
     const text = resolveContent(binding.value, el)
 
     el.$__state = ref({
@@ -18,6 +22,9 @@ export default {
     bind(el, binding)
   },
   updated(el, binding) {
+    const isActive = resolveActiveStatus(binding.value)
+    if (!isActive) return
+
     const text = resolveContent(binding.value, el)
 
     if (!el.$__state) return
