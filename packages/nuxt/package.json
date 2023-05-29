@@ -8,6 +8,7 @@
     "url": "https://github.com/VividLemon"
   },
   "type": "module",
+  "main": "./dist/module.cjs",
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",
@@ -15,11 +16,10 @@
       "require": "./dist/module.cjs"
     }
   },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
   "files": [
     "dist"
   ],
+  "types": "./dist/types.d.ts",
   "scripts": {
     "prepack": "nuxt-module-build",
     "dev": "nuxi dev playground --port 3030",
@@ -50,11 +50,16 @@
     "vue": "^3.3.4"
   },
   "repository": {
-    "type": "github",
-    "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/tree/main/packages/nuxt"
+    "type": "git",
+    "url": "git+https://github.com/bootstrap-vue-next/bootstrap-vue-next.git",
+    "directory": "packages/nuxt"
   },
   "bugs": {
     "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/bootstrap-vue-next"
   },
   "homepage": "https://github.com/bootstrap-vue-next/bootstrap-vue-next",
   "keywords": [

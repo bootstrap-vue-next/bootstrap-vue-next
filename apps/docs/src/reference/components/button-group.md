@@ -137,13 +137,13 @@ that split dropdown menus are not supported when prop `vertical` is set.
     <b-dropdown right text="Menu">
       <b-dropdown-item>Item 1</b-dropdown-item>
       <b-dropdown-item>Item 2</b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-divider />
       <b-dropdown-item>Item 3</b-dropdown-item>
     </b-dropdown>
     <b-dropdown right split text="Split Menu">
       <b-dropdown-item>Item 1</b-dropdown-item>
       <b-dropdown-item>Item 2</b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-divider />
       <b-dropdown-item>Item 3</b-dropdown-item>
     </b-dropdown>
   </b-button-group>
@@ -155,13 +155,13 @@ that split dropdown menus are not supported when prop `vertical` is set.
   <b-dropdown right text="Menu">
     <b-dropdown-item>Item 1</b-dropdown-item>
     <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-divider />
     <b-dropdown-item>Item 3</b-dropdown-item>
   </b-dropdown>
   <b-dropdown right split text="Split Menu">
     <b-dropdown-item>Item 1</b-dropdown-item>
     <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-divider />
     <b-dropdown-item>Item 3</b-dropdown-item>
   </b-dropdown>
 </b-button-group>
@@ -175,7 +175,7 @@ that split dropdown menus are not supported when prop `vertical` is set.
 Also check out the [`<b-button-toolbar>`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/buttonGroup.data'

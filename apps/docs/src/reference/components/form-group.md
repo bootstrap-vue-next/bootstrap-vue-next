@@ -21,7 +21,7 @@ The `<b-form-group>` component is the easiest way to add some structure to forms
   </b-form-group>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-group
     id="fieldset-1"
@@ -38,9 +38,8 @@ The `<b-form-group>` component is the easiest way to add some structure to forms
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
-
 const name = ref('')
+
 const state = computed(() => name.value.length >= 4)
 const invalidFeedback = computed(() =>
   name.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
@@ -395,7 +394,7 @@ You can make a floating label by setting the property `floating` to true and spe
   </b-form-group>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-group
     id="fieldset-1"
@@ -418,9 +417,8 @@ You can make a floating label by setting the property `floating` to true and spe
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
-
 const floatingName = ref('')
+
 const floatingState = computed(() => floatingName.value.length >= 4)
 const floatingInvalidFeedback = computed(() =>
   floatingName.value.length > 0 ? 'Enter at least 4 characters.' : 'Please enter something.'
@@ -466,7 +464,7 @@ auto-assigned to the input. When the form group has multiple form controls, make
 attribute to each control yourself by using the `ariaDescribedby` prop value from the optionally
 scoped `default` slot.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/formGroup.data'

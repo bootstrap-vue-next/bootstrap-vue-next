@@ -445,7 +445,7 @@ Sticky columns are supported with `<b-table-simple>`, but you will need to set t
 
 As with `<b-table>` and `<b-table-lite>`, sticky columns are not supported when the stacked prop is set on `<b-table-simple>`.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/table.data'

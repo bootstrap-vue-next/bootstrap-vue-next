@@ -309,7 +309,7 @@ To create a button that can be toggled between active and non-active states, use
   <p>Pressed States: <strong>{{ btnStates }}</strong></p>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <h5>Pressed and un-pressed state</h5>
   <div class="d-flex gap-2">
@@ -318,7 +318,9 @@ To create a button that can be toggled between active and non-active states, use
   </div>
   <h5 class="mt-3">Toggleable Button</h5>
   <b-button v-model:pressed="buttonToggle" variant="primary">Toggle Me</b-button>
-  <p>Pressed State: <strong>{{ buttonToggle }}</strong></p>
+  <p>
+    Pressed State: <strong>{{ buttonToggle }}</strong>
+  </p>
   <h5>In a button group</h5>
   <b-button-group size="sm">
     <b-button
@@ -330,12 +332,12 @@ To create a button that can be toggled between active and non-active states, use
       {{ btn.caption }}
     </b-button>
   </b-button-group>
-  <p>Pressed States: <strong>{{ btnStates }}</strong></p>
+  <p>
+    Pressed States: <strong>{{ btnStates }}</strong>
+  </p>
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const buttonToggle = ref(false)
 const buttons = ref([
   {caption: 'Toggle 1', state: true},
@@ -370,7 +372,7 @@ disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.
 When the `href` is set to any other value (~~or the `to` prop is used~~), `role="button"` will not be
 added, nor will the keyboard event listeners be enabled.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/button.data'

@@ -2,7 +2,7 @@
   "name": "bootstrap-vue-next",
   "displayName": "BootstrapVueNext",
   "description": "Early (but lovely) implementation of Vue 3, Bootstrap 5 and Typescript",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "license": "MIT",
   "main": "./dist/bootstrap-vue-next.umd.js",
   "module": "./dist/bootstrap-vue-next.mjs",
@@ -83,11 +83,16 @@
     "vue-tsc": "^1.6.5"
   },
   "repository": {
-    "type": "github",
-    "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/tree/main/packages/bootstrap-vue-next"
+    "type": "git",
+    "url": "git+https://github.com/bootstrap-vue-next/bootstrap-vue-next.git",
+    "directory": "packages/bootstrap-vue-next"
   },
   "bugs": {
     "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/bootstrap-vue-next"
   },
   "homepage": "https://github.com/bootstrap-vue-next/bootstrap-vue-next",
   "keywords": [

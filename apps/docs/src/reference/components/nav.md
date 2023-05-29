@@ -44,13 +44,13 @@ Dropdowns can be added like so
     >
       <b-dropdown-item>One</b-dropdown-item>
       <b-dropdown-item>Two</b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-divider />
       <b-dropdown-item>Three</b-dropdown-item>
     </b-nav-item-dropdown>
   </b-nav>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-nav pills>
     <b-nav-item active>Active</b-nav-item>
@@ -64,15 +64,13 @@ Dropdowns can be added like so
     >
       <b-dropdown-item>One</b-dropdown-item>
       <b-dropdown-item>Two</b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-divider />
       <b-dropdown-item>Three</b-dropdown-item>
     </b-nav-item-dropdown>
   </b-nav>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const dropdownShow = ref(false)
 </script>
 ```
@@ -180,7 +178,7 @@ Use the `<b-nav-text>` child component to place plain text content into the nav:
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/nav.data'

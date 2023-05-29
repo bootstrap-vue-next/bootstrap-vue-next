@@ -112,7 +112,7 @@ You can use the `variant` prop to colorize links. Some of the link styles use a 
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/link.data'

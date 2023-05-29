@@ -47,7 +47,7 @@ Customize location with four standard options `top, bottom, start, end`
   <b-offcanvas v-model="show2" :placement="placement" />
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-button @click="click" class="m-2">Show start</b-button>
   <b-button @click="click" class="m-2">Show end</b-button>
@@ -58,12 +58,10 @@ Customize location with four standard options `top, bottom, start, end`
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const show = ref(false)
 const placement = ref('start')
 
-const click = (place ="start") => {
+const click = (place = 'start') => {
   placement.value = place
   show.value = !show.value
 }
@@ -73,7 +71,7 @@ const click = (place ="start") => {
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/offcanvas.data'

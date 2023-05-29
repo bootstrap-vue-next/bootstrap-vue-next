@@ -120,7 +120,7 @@ values:
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
   <b-img v-bind="mainProps" rounded="top" alt="Top-rounded image"></b-img>
@@ -137,7 +137,7 @@ const mainProps = {
   blankColor: '#777',
   width: 75,
   height: 75,
-  class: 'm1'
+  class: 'm1',
 }
 </script>
 ```
@@ -212,7 +212,7 @@ The default `blank-color` is `transparent`.
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-img v-bind="propsTr" alt="Transparent image"></b-img>
   <b-img v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
@@ -228,7 +228,7 @@ const propsTr = {
   blank: true,
   width: 75,
   height: 75,
-  class: 'm1'
+  class: 'm1',
 }
 </script>
 ```
@@ -274,7 +274,7 @@ guide.
 
 Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/image.data'

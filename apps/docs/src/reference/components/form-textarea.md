@@ -17,7 +17,7 @@ Create multi-line text inputs with support for auto height sizing, minimum and m
   <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-textarea
     id="textarea"
@@ -31,8 +31,6 @@ Create multi-line text inputs with support for auto height sizing, minimum and m
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const textEx1 = ref()
 </script>
 ```
@@ -177,7 +175,7 @@ To apply one of the contextual state icons on `<b-form-textarea>`, set the `stat
   ></b-form-textarea>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-textarea
     id="textarea-state"
@@ -189,8 +187,6 @@ To apply one of the contextual state icons on `<b-form-textarea>`, set the `stat
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const textStates = ref('')
 </script>
 ```
@@ -272,7 +268,7 @@ Formatting does not occur if a `formatter` is not provided.
   <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-group
     label="Textarea with formatter (on input)"
@@ -309,8 +305,6 @@ Formatting does not occur if a `formatter` is not provided.
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const textFormatter = ref('')
 const textFormatter2 = ref('')
 
@@ -336,18 +330,12 @@ form field styling and preserve the correct text size, margin, padding and heigh
   <b-form-textarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></b-form-textarea>
   <template #html>
 
-```vue-html
+```vue
 <template>
-  <b-form-textarea
-    id="textarea-plaintext"
-    plaintext
-    :model-value="textReadOnly"
-  ></b-form-textarea>
+  <b-form-textarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></b-form-textarea>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const textReadOnly = "This is some text.\nIt is read only and doesn't look like an input."
 </script>
 ```
@@ -416,23 +404,21 @@ component reference (i.e. assign a `ref` to your `<b-form-textarea ref="foo" ...
   <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
   <template #html>
 
-```vue-html
+```vue
 <template>
-    <b-form-textarea
-      id="textarea"
-      ref="textArea"
-      v-model="textSelectEx"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
+  <b-form-textarea
+    id="textarea"
+    ref="textArea"
+    v-model="textSelectEx"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+  ></b-form-textarea>
 
   <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const textSelectEx = ref('')
 const textArea = ref<HTMLElement>(null)
 
@@ -472,7 +458,7 @@ const selectText = () => {
 Refer to https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement for more information on
 these methods and properties. Support will vary based on input type.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/formTextarea.data'
