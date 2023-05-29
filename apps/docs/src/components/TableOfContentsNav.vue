@@ -5,19 +5,25 @@
     </b-list-group-item>
   </b-list-group>
   <b-list-group>
-    <strong class="bd-links-heading">Components</strong>
+    <strong class="bd-links-heading">
+      <b-link :to="withBase('/reference/components')">Components</b-link>
+    </strong>
     <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
     </b-list-group-item>
   </b-list-group>
   <b-list-group>
-    <strong class="bd-links-heading">Composables</strong>
+    <strong class="bd-links-heading">
+      <b-link :to="withBase('/reference/composables')">Composables</b-link>
+    </strong>
     <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
     </b-list-group-item>
   </b-list-group>
   <b-list-group>
-    <strong class="bd-links-heading">Directives</strong>
+    <strong class="bd-links-heading">
+      <b-link :to="withBase('/reference/directives')">Directives</b-link>
+    </strong>
     <b-list-group-item v-for="component in directivesComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
     </b-list-group-item>

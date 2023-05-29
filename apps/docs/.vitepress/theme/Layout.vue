@@ -327,6 +327,10 @@ const globalData = inject(appInfoKey, {
       .bd-links-heading {
         display: block;
         margin: 0 0 1rem;
+        a {
+          color: var(--bs-body-color);
+          text-decoration: none;
+        }
       }
       .list-group-item {
         border: none;
