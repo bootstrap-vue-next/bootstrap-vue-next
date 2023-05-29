@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.2...bootstrap-vue-next-v0.9.3) (2023-05-29)
+
+
+### Bug Fixes
+
+* **useCountdown:** timer not restarting when input values change ([42f9ab5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/42f9ab5cc77fe326bc53abfdb2ff047412e79a13))
+
 ## [0.9.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.1...bootstrap-vue-next-v0.9.2) (2023-05-28)
 
 
