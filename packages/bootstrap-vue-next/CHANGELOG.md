@@ -1,6 +1,18 @@
 # Changelog
 
 
+## [0.9.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.3...bootstrap-vue-next-v0.9.4) (2023-05-29)
+
+
+### Features
+
+* **BDropdown:** allow define aria-label to b-button ([b09536a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b09536a5fd5801e1e515a81d0e102900ef3c28e4))
+
+
+### Bug Fixes
+
+* **VBTooltip:** don't render a BPopover when is disabled by code the "v-b-tooltip" ([c89a147](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c89a1473677b78315634d53bc8f32189ae535531))
+
 ## [0.9.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.2...bootstrap-vue-next-v0.9.3) (2023-05-29)
 
 

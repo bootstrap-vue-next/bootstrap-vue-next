@@ -73,6 +73,7 @@ defineOptions({
 // TODO standardize keydown vs keyup events globally
 
 interface BDropdownProps {
+  ariaLabel?: string
   id?: string
   menuClass?: ClassValue
   size?: Size
@@ -109,6 +110,7 @@ interface BDropdownProps {
 }
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
+  ariaLabel: undefined,
   id: undefined,
   menuClass: undefined,
   size: 'md',
@@ -256,6 +258,7 @@ const dropdownMenuClasses = computed(() => [
 ])
 
 const buttonAttr = computed(() => ({
+  'aria-label': props.ariaLabel,
   'aria-expanded': splitBoolean.value ? undefined : modelValueBoolean.value,
   'aria-haspopup': splitBoolean.value ? undefined : 'menu',
   'href': splitBoolean.value ? props.splitHref : undefined,
