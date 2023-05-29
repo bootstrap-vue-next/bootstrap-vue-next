@@ -1,10 +1,10 @@
 # Icons
 
-<div class="lead mb-5">
+<b-alert variant="danger" :model-value="true" class="my-5">
 
 The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, BootstrapVueNext has no part in the mentioned libraries and some content may be out of date
 
-</div>
+</b-alert>
 
 ## [Unplugin Icons](https://github.com/antfu/unplugin-icons)
 
@@ -211,7 +211,7 @@ import IBiActivity from '~icons/bi/activity'
 </b-card>
 
 <script setup lang="ts">
-import {BCard, BCardBody, BTab, BTabs} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BTab, BTabs, BAlert} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
 
 const codePreference = useLocalStorage('code-group-preference', 0)
