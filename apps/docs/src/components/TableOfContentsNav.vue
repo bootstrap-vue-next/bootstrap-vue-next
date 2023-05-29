@@ -1,7 +1,17 @@
 <template>
   <b-list-group v-if="!isLargeScreen">
+    <strong class="bd-links-heading">General</strong>
     <b-list-group-item>
       <b-link :to="withBase('/getting-started')">Getting Started</b-link>
+    </b-list-group-item>
+    <b-list-group-item>
+      <b-link :to="withBase('/reference/icons')">Icons</b-link>
+    </b-list-group-item>
+    <b-list-group-item>
+      <b-link :to="withBase('/reference/icons')">Types</b-link>
+    </b-list-group-item>
+    <b-list-group-item>
+      <b-link :to="withBase('/migration-guide')">Migrate</b-link>
     </b-list-group-item>
   </b-list-group>
   <b-list-group>
@@ -28,18 +38,6 @@
       <b-link :to="component.route">{{ component.name }}</b-link>
     </b-list-group-item>
   </b-list-group>
-  <b-list-group v-if="!isLargeScreen">
-    <strong class="bd-links-heading">General</strong>
-    <b-list-group-item>
-      <b-link :to="withBase('/reference/icons')">Icons</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/reference/icons')">Types</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/migration-guide')">Migrate</b-link>
-    </b-list-group-item>
-  </b-list-group>
 </template>
 
 <script setup lang="ts">
@@ -47,10 +45,12 @@ import {computed} from 'vue'
 import {BLink, BListGroup, BListGroupItem} from 'bootstrap-vue-next'
 import {withBase} from 'vitepress'
 import {useMediaQuery} from '@vueuse/core'
+
 defineProps<{
   name?: string
   route?: string
 }>()
+
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const routeLocationComponents = (name: string): string =>
   withBase(`/reference/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
@@ -58,6 +58,7 @@ const routeLocationComposables = (name: string): string =>
   withBase(`/reference/composables/${name}`).trim()
 const routeLocationDirectives = (name: string): string =>
   withBase(`/reference/directives/${name}`).trim()
+
 const componentsList: {name: string}[] = [
   {name: 'Accordion'},
   {name: 'Alert'},
@@ -98,7 +99,9 @@ const componentsList: {name: string}[] = [
   {name: 'Tabs'},
   {name: 'Toast'},
 ]
+
 const composablesList: {name: string}[] = [{name: 'useBreadcrumb'}, {name: 'useColorMode'}]
+
 const directivesList: {name: string}[] = [
   {name: 'BColorMode'},
   {name: 'BModal'},
@@ -106,6 +109,7 @@ const directivesList: {name: string}[] = [
   {name: 'BToggle'},
   {name: 'BTooltip'},
 ]
+
 const componentsComputedList = computed(() =>
   [...componentsList]
     .map((el) => ({
@@ -114,6 +118,7 @@ const componentsComputedList = computed(() =>
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 )
+
 const composablesComputedList = computed(() =>
   [...composablesList]
     .map((el) => ({
@@ -122,6 +127,7 @@ const composablesComputedList = computed(() =>
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 )
+
 const directivesComputedList = computed(() =>
   [...directivesList]
     .map((el) => ({

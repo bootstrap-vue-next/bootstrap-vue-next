@@ -6,9 +6,6 @@
         <b-navbar-brand :to="withBase('/')">Home</b-navbar-brand>
         <b-nav>
           <b-nav-item :to="withBase('/getting-started')">Getting Started</b-nav-item>
-          <!-- <b-nav-item :to="withBase('/reference/components')">Components</b-nav-item>
-          <b-nav-item :to="withBase('/reference/composables')">Composables</b-nav-item>
-          <b-nav-item :to="withBase('/reference/directives')">Directives</b-nav-item> -->
           <b-nav-item :to="withBase('/reference/icons')">Icons</b-nav-item>
           <b-nav-item :to="withBase('/reference/types')">Types</b-nav-item>
           <b-nav-item :to="withBase('/migration-guide')">Migrate</b-nav-item>
@@ -141,6 +138,7 @@ const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const toggler = () => {
   sidebar.value = !sidebar.value
 }
+
 watch(isLargeScreen, (newValue) => {
   if (newValue) {
     sidebar.value = true
