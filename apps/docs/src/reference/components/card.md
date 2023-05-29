@@ -1142,6 +1142,7 @@ import HighlightCard from '../../components/HighlightCard.vue'
 import {
   BCard,
   BCardHeader,
+  BCardBody,
   BNav,
   BRow,
   BCol,
