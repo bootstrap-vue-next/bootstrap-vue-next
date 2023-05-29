@@ -157,7 +157,7 @@ Add `free` property to make accordion items stay open when another item is opene
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/accordion.data'

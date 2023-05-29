@@ -179,29 +179,23 @@ You can adjust the speed at which the Carousel is moving by adjusting the interv
   Current Interval Speed: {{ slideInterval }} ms
   <template #html>
 
-```vue-html
+```vue
 <template>
-<b-carousel :interval="slideInterval" controls indicators ride="carousel">
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=19" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
-  <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
-</b-carousel>
+  <b-carousel :interval="slideInterval" controls indicators ride="carousel">
+    <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=19" />
+    <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=20" />
+    <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=21" />
+  </b-carousel>
 
-<b-button-group>
-  <b-button variant="danger" @click="slideInterval = slideInterval - 1000">
-    Minus 1000
-  </b-button>
-  <b-button variant="success" @click="slideInterval = slideInterval + 1000">
-    Plus 1000
-  </b-button>
-</b-button-group>
+  <b-button-group>
+    <b-button variant="danger" @click="slideInterval = slideInterval - 1000"> Minus 1000 </b-button>
+    <b-button variant="success" @click="slideInterval = slideInterval + 1000"> Plus 1000 </b-button>
+  </b-button-group>
 
-Current Interval Speed: {{ slideInterval }} ms
+  Current Interval Speed: {{ slideInterval }} ms
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const slideInterval = ref(5000)
 </script>
 ```
@@ -248,7 +242,7 @@ There can come situations where you need to manually pause/resume the state of a
   </b-button-group>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-carousel ref="myCarousel" :interval="2500" controls indicators ride="carousel">
     <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=25" />
@@ -263,7 +257,6 @@ There can come situations where you need to manually pause/resume the state of a
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
 import type {BCarousel} from 'bootstrap-vue-next'
 
 const myCarousel = ref<null | InstanceType<typeof BCarousel>>(null)
@@ -319,7 +312,7 @@ You can adjust the distance in pixels it takes to cause a transition to occur by
   Threshold: {{ slideThreshold }}
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-carousel :touch-threshold="threshold">
     <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=31" />
@@ -336,8 +329,6 @@ You can adjust the distance in pixels it takes to cause a transition to occur by
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const threshold = ref(50)
 </script>
 ```
@@ -357,7 +348,7 @@ You are not required to, but you can bind the v-model. This allows for finer con
   </b-carousel>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-carousel v-model="slide" controls>
     <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=1" />
@@ -367,8 +358,6 @@ You are not required to, but you can bind the v-model. This allows for finer con
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const slide = ref(0)
 </script>
 ```
@@ -390,7 +379,7 @@ You can change the default starting slide by binding the v-model to the index of
   </b-carousel>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-carousel v-model="slide" indicators>
     <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=34" />
@@ -400,8 +389,6 @@ You can change the default starting slide by binding the v-model to the index of
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const slide = ref(2)
 </script>
 ```
@@ -430,7 +417,7 @@ You are also able to use the built in methods for going to the next, or previous
   </b-button-group>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-carousel ref="myCarousel">
     <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=37" />
@@ -445,10 +432,10 @@ You are also able to use the built in methods for going to the next, or previous
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
 import type {BCarousel} from 'bootstrap-vue-next'
 
 const myCarousel = ref<null | InstanceType<typeof BCarousel>>(null)
+
 const prev = () => myCarousel.value?.prev()
 const next = () => myCarousel.value?.next()
 </script>
@@ -527,7 +514,7 @@ const next = () => myCarousel.value?.next()
 
 ## Reference
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/carousel.data'

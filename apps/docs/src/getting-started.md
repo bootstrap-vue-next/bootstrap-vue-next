@@ -261,7 +261,7 @@ Enjoy it in your app without manual imports, and automatic tree-shaking
 
 <b-card class="bg-body-tertiary">
 
-```vue-html
+```vue
 <template>
   <div>
     <b-button variant="primary" @click="show = !show">Click me</b-button>

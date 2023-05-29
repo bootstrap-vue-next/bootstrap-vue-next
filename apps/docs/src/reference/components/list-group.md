@@ -560,7 +560,7 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/listGroup.data'

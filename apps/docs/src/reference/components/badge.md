@@ -201,7 +201,7 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/badge.data'

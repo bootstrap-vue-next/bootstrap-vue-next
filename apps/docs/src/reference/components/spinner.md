@@ -283,7 +283,7 @@ For accessibility purposes, each spinner will automatically have a `role="status
 
 As well, when no label is provided, the spinner will automatically have the attribute `aria-hidden="true"` to hide the spinner from screen reader users.
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/spinner.data'

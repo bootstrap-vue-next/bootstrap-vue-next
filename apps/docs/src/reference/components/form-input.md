@@ -11,15 +11,13 @@ Create various type inputs such as: `text`, `password`, `number`, `url`, `email`
   <div class="mt-2">Value: {{ selectedText }}</div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-form-input v-model="selectedText" placeholder="Enter your name"></b-form-input>
   <div class="mt-2">Value: {{ selectedText }}</div>
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const selectedText = ref('')
 </script>
 ```
@@ -42,11 +40,14 @@ const selectedText = ref('')
   </b-row>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-row class="my-1" v-for="type in inputTypes" :key="type">
     <b-col sm="3">
-      <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
+      <label :for="`type-${type}`"
+        >Type <code>{{ type }}</code
+        >:</label
+      >
     </b-col>
     <b-col sm="9">
       <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
@@ -55,8 +56,6 @@ const selectedText = ref('')
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const inputTypes = [
   'text',
   'number',
@@ -128,7 +127,7 @@ new values for those using the `min` and `max` props.
   <div class="mt-2">Value: {{ rangeValue }}</div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <label for="range-1">Example range with min and max</label>
   <b-form-input id="range-1" v-model="rangeValue" type="range" min="0" max="5"></b-form-input>
@@ -136,8 +135,6 @@ new values for those using the `min` and `max` props.
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const rangeValue = ref('2')
 </script>
 ```
@@ -154,7 +151,7 @@ In the example below, we double the number of steps by using step="0.5".
   <div class="mt-2">Value: {{ rangeValueStep }}</div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <label for="range-1">Example range with min and max</label>
   <b-form-input
@@ -169,8 +166,6 @@ In the example below, we double the number of steps by using step="0.5".
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const rangeValueStep = ref('2')
 </script>
 ```
@@ -360,7 +355,7 @@ invalid), `true` (for valid), or `null` (no validation state).
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <div role="group">
     <label for="input-live">Name:</label>
@@ -382,9 +377,8 @@ invalid), `true` (for valid), or `null` (no validation state).
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const lifeName = ref('')
+
 const lifeNameState = computed(() => (lifeName.value?.length > 2 ? true : false))
 </script>
 ```
@@ -460,7 +454,7 @@ Formatting does not occur if a `formatter` is not provided.
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <div role="group">
     <label for="input-formatter">"Text input with formatter (on input)"</label>
@@ -487,10 +481,9 @@ Formatting does not occur if a `formatter` is not provided.
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 const formatInputText = ref('')
 const formatLazyInputText = ref('')
+
 const toLowerCaseFormatter = (value: string) => value.toLowerCase()
 </script>
 ```
@@ -608,7 +601,7 @@ these methods and properties. Support will vary based on input type.
   </div>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <div role="group">
     <b-form-input
@@ -623,12 +616,10 @@ these methods and properties. Support will vary based on input type.
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-
 // refs are unified in vue3. We need a ref variable with the same as used in the template.
 // The variable will be filled up during mount with the reference to custom component.
 // inputRef will become the reference to the b-form-input component.
-const inputRef = ref(null)
+const inputRef = ref<HTMLElment | null>(null)
 const sampleInputText = ref('sample text')
 
 // The inner native input is exposed as ref with name "input"
@@ -639,7 +630,7 @@ const selectAllText = () => inputRef.value.input.select()
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/formInput.data'
@@ -676,7 +667,7 @@ const formatInputText = ref('')
 const formatLazyInputText = ref('')
 const toLowerCaseFormatter = (value: string) => value.toLowerCase()
 
-const inputRef = ref(null)
+const inputRef = ref<HTMLElment | null>(null)
 const sampleInputText = ref('sample text')
 
 const selectAllText = () => inputRef.value.input.select()

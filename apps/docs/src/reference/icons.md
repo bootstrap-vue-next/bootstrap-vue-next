@@ -186,7 +186,7 @@ Using this method, you will need to manually import each icon:
 
 <b-card class="bg-body-tertiary">
 
-```vue-html
+```vue
 <template>
   <i-bi-0-circle />
   <i-bi-activity color="red" />

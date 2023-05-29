@@ -9,21 +9,20 @@ Indicate the current page's location within a navigational hierarchy. Separators
 ## Overview
 
 <HighlightCard>
-  <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
+  <b-breadcrumb :items="breadcrumbItems" />
   <template #html>
 
-```vue-html
-<b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
+```vue
+<b-breadcrumb :items="breadcrumbItems" />
 
 <script setup lang="ts">
-  import {ref, type Ref} from 'vue'
-  import type {BreadcrumbItem} from 'bootstrap-vue-next'
+import type {BreadcrumbItem} from 'bootstrap-vue-next'
 
-  const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
-    {text: 'Admin', href: 'https://google.com'},
-    {text: 'Manage', href: '#'},
-    {text: 'Library'},
-  ])
+const breadcrumbItems = ref<BreadcrumbItem[]>([
+  {text: 'Admin', href: 'https://google.com'},
+  {text: 'Manage', href: '#'},
+  {text: 'Library'},
+])
 </script>
 ```
 
@@ -39,16 +38,14 @@ element is automatically set if it is `undefined`.
 ### Breadcrumb items as array of strings
 
 <HighlightCard>
-  <b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
+  <b-breadcrumb :items="breadcrumbStringArray" />
   <template #html>
 
-```vue-html
-<b-breadcrumb :items="breadcrumbStringArray"></b-breadcrumb>
+```vue
+<b-breadcrumb :items="breadcrumbStringArray" />
 
 <script setup lang="ts">
-  import {ref, type Ref} from 'vue'
-
-  const breadcrumbStringArray = ['Admin', 'Manage', 'Library']
+const breadcrumbStringArray = ['Admin', 'Manage', 'Library']
 </script>
 ```
 
@@ -72,7 +69,7 @@ over the content of each item:
   </b-breadcrumb>
   <template #html>
 
-```vue-html
+```vue
 <b-breadcrumb>
   <b-breadcrumb-item href="#home"> Home </b-breadcrumb-item>
   <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
@@ -81,9 +78,9 @@ over the content of each item:
 </b-breadcrumb>
 
 <script setup lang="ts">
-  const alertEvent = (event: PointerEvent) => {
-    alert(`Event ${event.target}`)
-  }
+const alertEvent = (event: PointerEvent) => {
+  alert(`Event ${event.target}`)
+}
 </script>
 ```
 
@@ -126,17 +123,17 @@ Use slot `prepend` to put content before the breadcrumb. Use slot `append` to pu
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/breadcrumb.data'
-import {ref, type Ref} from 'vue';
+import {ref} from 'vue';
 import {BBreadcrumbItem, BBreadcrumb} from 'bootstrap-vue-next'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import type {BreadcrumbItem} from 'bootstrap-vue-next'
 
-const breadcrumbItems: Ref<BreadcrumbItem[]> = ref([
+const breadcrumbItems = ref<BreadcrumbItem[]>([
   { text: 'Admin', href:'https://google.com'},
   { text: 'Manage', href:'#'},
   { text: 'Library'},

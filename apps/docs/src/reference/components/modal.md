@@ -11,19 +11,13 @@
   </b-modal>
   <template #html>
 
-```vue-html
+```vue
 <template>
-  <b-button @click="modal = !modal">
-    Toggle modal
-  </b-button>
-  <b-modal v-model="modal">
-    Foo bar
-  </b-modal>
+  <b-button @click="modal = !modal"> Toggle modal </b-button>
+  <b-modal v-model="modal"> Foo bar </b-modal>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const modal = ref(false)
 </script>
 ```
@@ -49,11 +43,9 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
   </b-modal>
   <template #html>
 
-```vue-html
+```vue
 <template>
-  <b-button @click="preventableModal = !preventableModal">
-    Toggle modal
-  </b-button>
+  <b-button @click="preventableModal = !preventableModal"> Toggle modal </b-button>
 
   <b-modal v-model="preventableModal" title="Hello, World!" @hide.prevent>
     Foobar?
@@ -62,8 +54,6 @@ It is possible to prevent showing/closing modals. You can prevent hiding on the 
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const preventableModal = ref(false)
 </script>
 ```
@@ -88,7 +78,7 @@ const preventableModal = ref(false)
   </b-modal>
   <template #html>
 
-```vue-html
+```vue
 <template>
   <b-button @click="nestedModal1 = !nestedModal1">Open First Modal</b-button>
 
@@ -108,8 +98,6 @@ const preventableModal = ref(false)
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
 const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
 const nestedModal3 = ref(false)
@@ -119,7 +107,7 @@ const nestedModal3 = ref(false)
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/modal.data'

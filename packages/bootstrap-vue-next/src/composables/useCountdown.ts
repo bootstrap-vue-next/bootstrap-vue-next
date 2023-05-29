@@ -4,9 +4,10 @@ import {
   type ComputedRef,
   type MaybeRefOrGetter,
   readonly,
-  type Ref,
   ref,
+  type Ref,
   toRef,
+  watch,
   watchEffect,
 } from 'vue'
 
@@ -37,17 +38,17 @@ export default (
 ): CountdownReturn => {
   const resolvedLength = toRef(length)
 
-  const intervalLength = toRef(interval)
+  const resolvedInterval = toRef(interval)
 
   const isPaused = ref(false)
 
   const intervalsPassed = ref(0)
 
-  const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / intervalLength.value))
+  const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / resolvedInterval.value))
 
   const value = computed(() =>
     isActive.value || isPaused.value
-      ? Math.round(resolvedLength.value - intervalsPassed.value * intervalLength.value)
+      ? Math.round(resolvedLength.value - intervalsPassed.value * resolvedInterval.value)
       : 0
   )
 
@@ -77,6 +78,11 @@ export default (
     if (intervalsPassed.value === amountOfIntervals.value) {
       pause()
     }
+  })
+
+  watch([resolvedInterval, resolvedLength], () => {
+    stop()
+    restart()
   })
 
   const myPause = () => {

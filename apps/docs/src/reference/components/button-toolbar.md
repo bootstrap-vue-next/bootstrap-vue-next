@@ -56,7 +56,7 @@ Group a series of button-groups and/or input-groups together on a single line.
       <b-button>Cancel</b-button>
     </b-button-group>
     <b-input-group size="sm" prepend="$" append=".00">
-      <b-form-input value="100" class="text-end"></b-form-input>
+      <b-form-input value="100" class="text-end" />
     </b-input-group>
   </b-button-toolbar>
   <template #html>
@@ -68,7 +68,7 @@ Group a series of button-groups and/or input-groups together on a single line.
     <b-button>Cancel</b-button>
   </b-button-group>
   <b-input-group size="sm" prepend="$" append=".00">
-    <b-form-input value="100" class="text-end"></b-form-input>
+    <b-form-input value="100" class="text-end" />
   </b-input-group>
 </b-button-toolbar>
 ```
@@ -251,7 +251,7 @@ input groups and dropdowns, by setting the prop `justify`.
   </template>
 </HighlightCard>
 
-<ComponentReference :data="data"></ComponentReference>
+<ComponentReference :data="data" />
 
 <script setup lang="ts">
 import {data} from '../../data/components/buttonToolbar.data'
