@@ -353,7 +353,9 @@ watch(tabs, () => {
     activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).indexOf(true)
   }
   // ensure only one tab active at a time
-  tabs.value.forEach((tab: any, idx: number) => (tab.active = idx === activeTabIndex))
+  tabs.value.forEach((tab: any, idx: number) => {
+    tab.active = idx === activeTabIndex
+  })
 
   activateTab(activeTabIndex)
 })

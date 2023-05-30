@@ -21,7 +21,7 @@
             <path
               fill="currentColor"
               d="M92 0h769c50 0 92 42 92 92v769c0 50-42 92-92 92H92c-50 0-92-42-92-92V92C0 42 42 0 92 0zm216 710c100 0 160-50 160-133 0-62-44-107-108-113v-3c48-8 86-52 86-102 0-71-55-117-140-117H111v468h197zM195 307h90c50 0 78 23 78 64 0 44-33 68-91 68h-77V307zm0 338V499h90c64 0 98 25 98 73s-33 73-94 73h-94zm503 65l163-468h-90L652 621h-2L531 242h-92l163 468h96z"
-            ></path>
+            />
           </svg>
         </b-navbar-brand>
         <b-nav>
@@ -123,22 +123,21 @@
 import {
   BButton,
   BCol,
+  BCollapse,
   BContainer,
   BDropdown,
   BDropdownItem,
   BNav,
   BNavbar,
-  BNavbarToggle,
-  BCollapse,
   BNavbarBrand,
   BNavbarNav,
+  BNavbarToggle,
   BNavItem,
+  BOffcanvas,
   BRow,
   useColorMode,
-  BOffcanvas,
 } from 'bootstrap-vue-next'
-import {computed, inject, watch, onMounted} from 'vue'
-import {ref, type Ref} from 'vue'
+import {computed, inject, ref, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -153,31 +152,29 @@ import {useRoute} from 'vitepress'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
-const path = useRoute()
+const route = useRoute()
 
-const sidebar = ref(true)
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
+const sidebar = ref(isLargeScreen.value)
 
 const toggler = () => {
   sidebar.value = !sidebar.value
 }
 
-onMounted(() => {
-  if (isLargeScreen.value === false) {
-    sidebar.value = false
-  }
-})
-
-watch([isLargeScreen, path], ([newValue], [path]) => {
+watch(isLargeScreen, (newValue) => {
   if (newValue === true) {
     sidebar.value = true
-  } else {
-    sidebar.value = false
-    if (path) {
-      sidebar.value = false
-    }
+    return
   }
+  sidebar.value = false
 })
+
+watch(
+  () => route.path,
+  () => {
+    sidebar.value = false
+  }
+)
 
 const dark = useColorMode({
   persist: true,
@@ -193,7 +190,9 @@ const options = Object.keys(map) as (keyof typeof map)[]
 
 const currentIcon = computed(() => map[dark.value])
 
-const set = (newValue: keyof typeof map) => (dark.value = newValue)
+const set = (newValue: keyof typeof map) => {
+  dark.value = newValue
+}
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',
