@@ -174,7 +174,9 @@ watch(isLargeScreen, (newValue) => {
 watch(
   () => route.path,
   () => {
-    sidebar.value = false
+    if (isLargeScreen.value === false) {
+      sidebar.value = false
+    }
   }
 )
 
