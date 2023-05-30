@@ -357,12 +357,13 @@ const globalData = inject(appInfoKey, {
   }
   .offcanvas {
     .list-group {
-      padding: 0.5rem;
+      padding: 0 0 1.5rem 0;
+      font-size: 0.875em;
       .bd-links-heading {
         display: block;
-        margin: 0 0 1rem;
+        margin: 0 0 0.5rem;
+        text-transform: uppercase;
         a {
-          color: var(--bs-body-color);
           text-decoration: none;
         }
       }
@@ -370,8 +371,9 @@ const globalData = inject(appInfoKey, {
         border: none;
         padding: 0;
         a {
+          color: var(--bs-body-color);
           display: block;
-          padding: 0.1875rem 0.7rem;
+          padding: 0.13rem 0.7rem 0.13rem 0;
           margin: 0.125rem 0;
           text-decoration: none;
         }
@@ -396,7 +398,6 @@ const globalData = inject(appInfoKey, {
       padding-left: 0.25rem;
       margin-left: -0.25rem;
       overflow-y: auto;
-      min-width: 300px;
       .offcanvas {
         transition: none !important;
         transform: 0;
@@ -421,9 +422,7 @@ const globalData = inject(appInfoKey, {
     }
   }
 }
-@media (max-width: 992px) {
-  .offcanvas.offcanvas-start {
-    width: 300px !important;
-  }
+.offcanvas.offcanvas-start {
+  width: 200px !important;
 }
 </style>
