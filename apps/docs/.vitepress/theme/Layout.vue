@@ -287,6 +287,7 @@ const globalData = inject(appInfoKey, {
   // Short term fix for navbar modes.
   .navbar {
     color: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
     .nav-link,
     .navbar-brand,
     .btn {
