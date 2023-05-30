@@ -190,7 +190,9 @@ const options = Object.keys(map) as (keyof typeof map)[]
 
 const currentIcon = computed(() => map[dark.value])
 
-const set = (newValue: keyof typeof map) => (dark.value = newValue)
+const set = (newValue: keyof typeof map) => {
+  dark.value = newValue
+}
 
 const globalData = inject(appInfoKey, {
   discordUrl: '',

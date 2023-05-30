@@ -95,7 +95,9 @@ const modelValueBoolean = useBooleanish(modelValue)
 
 const dropdownValue = computed({
   get: () => modelValueBoolean.value,
-  set: (value: boolean) => (modelValue.value = value),
+  set: (value: boolean) => {
+    modelValue.value = value
+  },
 })
 const usableProps = computed(() => omit(props, ['modelValue'] as const))
 </script>
