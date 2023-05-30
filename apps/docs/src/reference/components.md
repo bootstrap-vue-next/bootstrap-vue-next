@@ -2,7 +2,7 @@
 
 <div class="lead mb-5">
 
-BootstrapVueNext components list
+BootstrapVueNext components list.
 
 </div>
 

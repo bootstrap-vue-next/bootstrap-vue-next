@@ -2,7 +2,7 @@
 
 <div class="lead mb-5">
 
-BootstrapVueNext exposes some custom composables that integrate with various components
+BootstrapVueNext exposes some custom composables that integrate with various components.
 
 </div>
 

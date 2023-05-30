@@ -2,7 +2,7 @@
 
 <div class="lead">
 
-Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites
+Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites.
 
 </div>
 
@@ -16,7 +16,7 @@ This project is still in **alpha version**. There is a lot of work to do and the
 
 ## Why BootstrapVueNext?
 
-BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience
+BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.org/) components in Vue3, Bootstrap 5, and typescript. Another goal is to have the components written in a simple and readable way for a better developer experience.
 
 ## Contribute and Support 🙌
 
@@ -25,7 +25,7 @@ This project is still in **alpha version** so there is a lot of work to do. If y
 - submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues)
 - or better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls)
 
-Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md) on how to start helping
+Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md) on how to start helping.
 
 ## Install
 
@@ -134,7 +134,7 @@ If using TypeScript you will want to add `components.d.ts` to the `include` arra
 
 #### Legacy Installation
 
-- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Note, the preferred installation automatically tree-shakes all components, both installation methods should have the same final dist size
+- This is the old installation method. It is recommended to use the [**preferred**](#preferred-installation) installation as it will automatically remove unused components, resulting in a lower bundle size. You can, however, still use this installation method. Note, the preferred installation automatically tree-shakes all components, both installation methods should have the same final dist size.
 
 Install the necessary packages for `bootstrap-vue-next`:
 
@@ -203,7 +203,7 @@ app.mount('#app')
 
 ### Installation - Nuxt.js 3
 
-In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`
+In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`.
 
 <client-only>
 <b-tabs v-model="codePreference">
@@ -243,7 +243,7 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 </b-tabs>
 </client-only>
 
-Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed
+Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed.
 
 <b-card class="bg-body-tertiary">
 
@@ -257,7 +257,7 @@ export default defineNuxtConfig({
 
 </b-card>
 
-Enjoy it in your app without manual imports, and automatic tree-shaking
+Enjoy it in your app without manual imports, and automatic tree-shaking.
 
 <b-card class="bg-body-tertiary">
 
@@ -276,7 +276,7 @@ const show = ref(false)
 
 </b-card>
 
-You can customize the options with the bootstrapVueNext key in your nuxt.config
+You can customize the options with the bootstrapVueNext key in your nuxt.config.
 
 <b-card class="bg-body-tertiary">
 
@@ -295,11 +295,11 @@ export default defineNuxtConfig({
 
 </b-card>
 
-The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build
+The practical difference between manually including an item and not is null as Nuxt should tree-shake out anything that is not used in the final build.
 
 #### Nuxt and Directives
 
-Directives should be imported directly from the `bootstrap-vue-next` package
+Directives should be imported directly from the `bootstrap-vue-next` package.
 
 <b-card class="bg-body-tertiary">
 
@@ -311,7 +311,7 @@ import {vBColorMode} from 'bootstrap-vue-next'
 
 ## Tree-shake CSS
 
-If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application
+If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
 
 ## Comparison with BootstrapVue
 
@@ -319,7 +319,7 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 
 <!-- To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet. -->
 
-You can view the planned compatibility list in the following [section](./reference/parityList.md). It is _not_ a migration guide, which will be finalized upon v1.0.0
+You can view the planned compatibility list in the following [section](./reference/parityList.md). It is _not_ a migration guide, which will be finalized upon v1.0.0.
 
 <script setup lang="ts">
 import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'

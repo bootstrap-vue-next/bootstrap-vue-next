@@ -192,7 +192,7 @@ Create responsive stacks of full-width, “block buttons” like those in Bootst
   </template>
 </HighlightCard>
 
-**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.0/components/buttons/#block-buttons)
+**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.0/components/buttons/#block-buttons).
 
 ## Pill style
 
@@ -284,7 +284,7 @@ The `pressed` prop can be set to one of three values:
 - `false`: Clears the `.active` class and adds the attribute `aria-pressed="false"`.
 - `null`: (default) Neither the class `.active` nor the attribute `aria-pressed` will be set.
 
-To create a button that can be toggled between active and non-active states, use the `v-model` (available in Vue 3.0+) on the `pressed` property by specifying `v-model:pressed`
+To create a button that can be toggled between active and non-active states, use the `v-model` (available in Vue 3.0+) on the `pressed` property by specifying `v-model:pressed`.
 
 <HighlightCard>
   <h5>Pressed and un-pressed state</h5>

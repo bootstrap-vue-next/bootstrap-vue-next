@@ -136,8 +136,8 @@ Or if you prefer `<button>` elements over links, set the `button` prop to `true`
 **Notes:**
 
 - When the prop `button` is `true`, all [link related props](/docs/components/link) (other than
-  `active`) and the `tag` prop will have no effect.
-- When `href` or `to` are set, the `tag` prop has no effect.
+  `active`) and the `tag` prop will have no effect
+- When `href` or `to` are set, the `tag` prop has no effect
 
 ~~Refer to the [Router support](/docs/reference/router-links) reference page for router-link specific
 props.~~

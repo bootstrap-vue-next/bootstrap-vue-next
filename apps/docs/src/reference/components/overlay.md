@@ -215,10 +215,10 @@ fade transition via adding the `no-fade` prop to `<b-overlay>`.
 The default overlay content is a [`<b-spinner>`](/docs/components/spinner) of type `'border'`. You
 can control the appearance of the spinner via the following props:
 
-- `spinner-type`: Currently supported values are `'border'` (the default) or `'grow'`.
+- `spinner-type`: Currently supported values are `'border'` (the default) or `'grow'`
 - `spinner-variant`: Variant theme color for the spinner. Default is `null` which inherits the
-  current font color.
-- `spinner-small`: Set to `true` to render a small size spinner.
+  current font color
+- `spinner-small`: Set to `true` to render a small size spinner
 
 <HighlightCard>
   <b-overlay

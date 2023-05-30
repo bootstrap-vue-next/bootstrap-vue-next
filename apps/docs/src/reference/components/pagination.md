@@ -29,8 +29,8 @@ The showing of the `ellipsis` can be optionally disabled by setting the `hide-el
 On smaller screens (i.e. mobile), some of the `<b-pagination>` buttons will be hidden to minimize
 the potential of the pagination interface wrapping onto multiple lines:
 
-- The ellipsis indicators will be hidden on screens `xs` and smaller.
-- Page number buttons will be limited to a maximum of 3 visible on `xs` screens and smaller.
+- The ellipsis indicators will be hidden on screens `xs` and smaller
+- Page number buttons will be limited to a maximum of 3 visible on `xs` screens and smaller
 
 This ensures that no more than 3 page number buttons are visible, along with the goto _first_,
 _prev_, _next_, and _last_ buttons.
@@ -273,7 +273,7 @@ const ex3Rows = ref(100)
 
 ### Pill style
 
-Easily switch to pill style buttons by setting the `pills` prop
+Easily switch to pill style buttons by setting the `pills` prop.
 
 <HighlightCard>
   <div>

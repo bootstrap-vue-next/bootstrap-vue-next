@@ -78,11 +78,11 @@ const dropdownShow = ref(false)
   </template>
 </HighlightCard>
 
-`<b-nav-item-dropdown>` has many props in common with `<b-dropdown` so you can easily integrate custom options
+`<b-nav-item-dropdown>` has many props in common with `<b-dropdown` so you can easily integrate custom options.
 
 ## Styles
 
-You can make nav item styles in various ways
+You can make nav item styles in various ways.
 
 ### Tab Style
 
@@ -132,7 +132,7 @@ You can make nav item styles in various ways
 
 ## Vertical Orientation
 
-By default `<b-nav>` appear on a horizontal line. Stack your navigation by setting the vertical prop
+By default `<b-nav>` appear on a horizontal line. Stack your navigation by setting the vertical prop.
 
 <HighlightCard>
   <b-nav vertical class="w-25">

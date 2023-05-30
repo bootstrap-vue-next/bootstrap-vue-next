@@ -8,7 +8,7 @@ Documentation and examples for badges, our small count and labeling component.
 
 ## Examples
 
-Badges scale to match the size of the immediate parent element by using relative font sizing and em units. As of v5, badges no longer have focus or hover styles for links
+Badges scale to match the size of the immediate parent element by using relative font sizing and em units. As of v5, badges no longer have focus or hover styles for links.
 
 ### Headings
 

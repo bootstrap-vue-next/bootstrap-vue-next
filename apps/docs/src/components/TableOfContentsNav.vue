@@ -8,7 +8,7 @@
       <b-link :to="withBase('/reference/icons')">Icons</b-link>
     </b-list-group-item>
     <b-list-group-item>
-      <b-link :to="withBase('/reference/icons')">Types</b-link>
+      <b-link :to="withBase('/reference/types')">Types</b-link>
     </b-list-group-item>
     <b-list-group-item>
       <b-link :to="withBase('/migration-guide')">Migrate</b-link>

@@ -2,7 +2,7 @@
 
 ## Links without Router
 
-By defaut links with no options will default to # location
+By defaut links with no options will default to # location.
 
 <b-card class="bg-body-tertiary mb-4">
   <b-link>
@@ -45,7 +45,7 @@ External Links can be specified with the `href` prop.
 
 ## Styling Links
 
-External Links can be specified with the `href` prop
+External Links can be specified with the `href` prop.
 
 <HighlightCard>
   <b-link class="btn btn-primary me-2" href="https://getbootstrap.com/docs/5.0">
@@ -71,7 +71,7 @@ External Links can be specified with the `href` prop
 
 ## Colored Links
 
-You can use the `variant` prop to colorize links. Some of the link styles use a relatively light foreground color, and should only be used on a dark background in order to have sufficient contrast
+You can use the `variant` prop to colorize links. Some of the link styles use a relatively light foreground color, and should only be used on a dark background in order to have sufficient contrast.
 
 <HighlightCard>
   <p

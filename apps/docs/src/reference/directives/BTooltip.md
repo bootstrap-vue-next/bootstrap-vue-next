@@ -118,6 +118,7 @@ When we are using a directive, we have two ways to define the title to use in th
 </b-card>
 
 Where our title is going to be attached to a child element, but the custom directive is attached to our parent div with class "card".
+
 So, it's not going to work, and we are going to see a warning in the developer's console.
 
 <b-card class="bg-body-tertiary">
@@ -128,7 +129,7 @@ So, it's not going to work, and we are going to see a warning in the developer's
 
 </b-card>
 
-Here we are not using a string, because is reading ts or js code. So, we need to set a literal string, a variable, function or so on
+Here we are not using a string, because is reading ts or js code. So, we need to set a literal string, a variable, function or so on.
 
 ## Correct use
 
@@ -164,7 +165,7 @@ In that case, the directive is detecting the title value, and it's going to be u
 
 </b-card>
 
-We should use the value type when the component is not setting to the root component a title. Notice that we should use ts/js code, a variable and so on
+We should use the value type when the component is not setting to the root component a title. Notice that we should use ts/js code, a variable and so on.
 
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'
