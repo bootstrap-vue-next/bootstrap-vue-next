@@ -75,15 +75,17 @@
   </b-navbar>
   <b-container fluid class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
-      <b-offcanvas
-        v-model="sidebar"
-        static="true"
-        backdrop="false"
-        title="Browse docs"
-        class="h-100"
-      >
-        <TableOfContentsNav />
-      </b-offcanvas>
+      <client-only>
+        <b-offcanvas
+          v-model="sidebar"
+          static="true"
+          backdrop="false"
+          title="Browse docs"
+          class="h-100"
+        >
+          <TableOfContentsNav />
+        </b-offcanvas>
+      </client-only>
     </aside>
     <main class="bd-main">
       <div class="bd-content">
