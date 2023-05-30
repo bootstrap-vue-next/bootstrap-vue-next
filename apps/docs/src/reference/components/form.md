@@ -148,7 +148,7 @@ const onReset = (event) => {
 
 ## Inline form
 
-Bootstrap 5 has dropped form-specific layout classes for the grid system. See [this](https://getbootstrap.com/docs/5.0/migration/#forms)
+Bootstrap 5 has dropped form-specific layout classes for the grid system. See [this](https://getbootstrap.com/docs/5.0/migration/#forms).
 
 To create horizontal forms with the grid by add the `.row` class to form groups and use the `.col-_-_` classes to specify the width of your labels and controls. Be sure to add `.col-form-label` to your `<label>`s as well, so they’re vertically centered with their associated form controls.
 
@@ -419,15 +419,15 @@ const validation = computed(() => userId.value.length > 4 && userId.value.length
 Disable browser native HTML5 validation by setting the `novalidate` prop to true on `<b-form>`.
 
 Set the `validated` prop, on `<b-form>`, to `true` to add the Bootstrap v5 `.was-validated` class to
-the form to trigger validation states
+the form to trigger validation states.
 
 All form controls support a `state` prop, which can be used to set the form control into one
 of three contextual states:
 
 - `false` (denotes invalid state) is great for when there's a blocking or required field. A user
-  must fill in this field properly to submit the form.
+  must fill in this field properly to submit the form
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout
-  a form and want to encourage a user through the rest of the fields.
+  a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
 Refer to the

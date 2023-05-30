@@ -2,13 +2,13 @@
 
 <div class="lead mb-5">
 
-Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages
+Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
 
 </div>
 
 ## Overview
 
-Alerts are available for any length of text, as well as an optional dismiss button (and optional auto-dismissing)
+Alerts are available for any length of text, as well as an optional dismiss button (and optional auto-dismissing).
 
 <HighlightCard>
   <b-alert :model-value="true">Default Alert</b-alert>
@@ -82,11 +82,11 @@ const countdown = ref(0)
 
 ### `v-model` Support
 
-You can use the `v-model` directive to create two-way data bindings as in `v-model="showDismissibleAlert"`. Useful when you use dismissible because when the user closes the alert, your variable will be updated. The v-model prop accepts boolean `true` or `false` to show and hide the alert respectively. It can also be set to a positive integer (representing seconds) to create a self-dismissing alert. See the [Auto Dismissing Alerts](#auto-dismissing-alerts) section below for details
+You can use the `v-model` directive to create two-way data bindings as in `v-model="showDismissibleAlert"`. Useful when you use dismissible because when the user closes the alert, your variable will be updated. The v-model prop accepts boolean `true` or `false` to show and hide the alert respectively. It can also be set to a positive integer (representing seconds) to create a self-dismissing alert. See the [Auto Dismissing Alerts](#auto-dismissing-alerts) section below for details.
 
 ## Contextual Variants
 
-For proper styling of `<b-alert>`, use one of the four required contextual variants by setting the `variant` prop to one of the following: `info`, `success`, `warning`, or `danger`. The default is `info`
+For proper styling of `<b-alert>`, use one of the four required contextual variants by setting the `variant` prop to one of the following: `info`, `success`, `warning`, or `danger`. The default is `info`.
 
 <HighlightCard>
   <b-alert :model-value="true" variant="primary">Primary Alert</b-alert>
@@ -115,11 +115,11 @@ For proper styling of `<b-alert>`, use one of the four required contextual varia
 
 ### Conveying Meaning to Assistive Technologies
 
-Using color variants to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (e.g. the visible text) or is included through alternative means, such as additional text hidden with the `.visually-hidden` class
+Using color variants to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (e.g. the visible text) or is included through alternative means, such as additional text hidden with the `.visually-hidden` class.
 
 ## Additional Content Inside Alerts
 
-`<b-alerts>` can also contain additional HTML elements like headings and paragraphs, which will be styled with the appropriate color matching the variant
+`<b-alerts>` can also contain additional HTML elements like headings and paragraphs, which will be styled with the appropriate color matching the variant.
 
 <HighlightCard>
   <b-alert :model-value="true" variant="success">
@@ -159,7 +159,7 @@ Using color variants to add meaning only provides a visual indication, which wil
 
 ### Color of Links Within Alerts
 
-Use the `.alert-link` utility CSS class to quickly provide matching colored links within any alert. Use on `<a>` or `<b-link>`
+Use the `.alert-link` utility CSS class to quickly provide matching colored links within any alert. Use on `<a>` or `<b-link>`.
 
 <HighlightCard>
   <b-alert :model-value="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></b-alert>
@@ -188,7 +188,7 @@ Use the `.alert-link` utility CSS class to quickly provide matching colored link
 
 ## Dismissible Alerts
 
-Using the `dismissible` prop it's possible to dismiss any `<b-alert>` inline. The alert must be v-modeled to a reactive value. This will add a close `X` button. Use the `dismiss-label` prop to change the hidden aria-label text associated with the dismiss button
+Using the `dismissible` prop it's possible to dismiss any `<b-alert>` inline. The alert must be v-modeled to a reactive value. This will add a close `X` button. Use the `dismiss-label` prop to change the hidden aria-label text associated with the dismiss button.
 
 <HighlightCard>
   <b-alert v-model="secondDismissibleAlert" dismissible>
@@ -213,7 +213,7 @@ const dismissibleAlert = ref(true)
 
 ## Auto-dismissing Alerts
 
-To create a `<b-alert>` that dismisses automatically after some time set the `v-model` to the number of **milliseconds** you would like the `<b-alert>` to remain visible for. Timed Alerts are automatically paused when hovering with a mouse. You can disable pausing during hover by using the `noHoverPause` prop. You must only use an integer for milliseconds. Changing the v-model in any way will cause the timer to reset. The **interval** prop determines how often the timer will update, with the default being 1000 to trigger an update every 1 whole second. Due to the nature of this, one should be careful when creating many timed alerts with low intervals as it could negatively affect performance. Negative numbers for either v-model or interval will stop the timer. A value that does not divide wholely by an interval will continue to the greatest interval, ex: a value of 5400 ms and an interval of 1000 ms will run for exactly 6000 ms. To work around this, plan your interval to divide into this number easily. For example, use an interval of 540 ms or 1080 ms
+To create a `<b-alert>` that dismisses automatically after some time set the `v-model` to the number of **milliseconds** you would like the `<b-alert>` to remain visible for. Timed Alerts are automatically paused when hovering with a mouse. You can disable pausing during hover by using the `noHoverPause` prop. You must only use an integer for milliseconds. Changing the v-model in any way will cause the timer to reset. The **interval** prop determines how often the timer will update, with the default being 1000 to trigger an update every 1 whole second. Due to the nature of this, one should be careful when creating many timed alerts with low intervals as it could negatively affect performance. Negative numbers for either v-model or interval will stop the timer. A value that does not divide wholely by an interval will continue to the greatest interval, ex: a value of 5400 ms and an interval of 1000 ms will run for exactly 6000 ms. To work around this, plan your interval to divide into this number easily. For example, use an interval of 540 ms or 1080 ms.
 
 <HighlightCard>
   <b-alert
@@ -269,7 +269,7 @@ const autoDismissingAlertCountdown = ref(0)
 
 ### Exposed functions
 
-The BAlert exposes four functions to manipulate the state of an active timer: `pause(), resume(), restart() & stop()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
+The BAlert exposes four functions to manipulate the state of an active timer: `pause(), resume(), restart() & stop()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
 
 1. Pause: pauses the active timer at the time that it is currently at
 2. Resume: resumes the active timer at the place saved by `pause()`

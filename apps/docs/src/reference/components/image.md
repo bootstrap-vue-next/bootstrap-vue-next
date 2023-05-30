@@ -2,7 +2,7 @@
 
 <div class="lead mb-5">
 
-Documentation and examples for opting images (via `<b-img>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props
+Documentation and examples for opting images (via `<b-img>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.
 
 </div>
 
@@ -12,7 +12,7 @@ images is available via the `lazy` prop.
 
 ## Image src resolving
 
-The `src` prop and `blank-src` prop, out of the box, works only with absolute or fully-qualified-domain-name URLs. If you are using project assets as image sources, please refer to [Asset URL handling](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#asset-url-handling) to configure Vite to transform asset urls. If using a different build tool, you will need to find the relevant documentation to transform assets
+The `src` prop and `blank-src` prop, out of the box, works only with absolute or fully-qualified-domain-name URLs. If you are using project assets as image sources, please refer to [Asset URL handling](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#asset-url-handling) to configure Vite to transform asset urls. If using a different build tool, you will need to find the relevant documentation to transform assets.
 
 ## Styling images
 
@@ -239,14 +239,14 @@ const propsTr = {
 **Notes:**
 
 - In blank image mode, if only one of width or height is set, the image will have both width and
-  height set to the same value.
+  height set to the same value
 - In blank image mode, if width and height are not set, both width and height will internally be set
-  to 1.
+  to 1
 - The `blank` prop takes precedence over the `src` prop. If you set both and later set `blank` to
-  `false` the image specified in `src` will then be displayed.
-- Blank images are rendered using SVG image data URLs.
+  `false` the image specified in `src` will then be displayed
+- Blank images are rendered using SVG image data URLs
 - The `width` and `height` props will also apply the `width` and `height` attributes to the rendered
-  `<img>` tag, even if `blank` is not set.
+  `<img>` tag, even if `blank` is not set
 
 ## `srcset` support
 

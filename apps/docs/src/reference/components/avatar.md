@@ -113,21 +113,21 @@ distortion will occur. The image will be scaled up or down to fit within the ava
 **Notes:**
 
 - When using a module bundler and project relative image URLs, please refer to the
-  [Component img src resolving](/docs/reference/images) reference section for additional details.
-- The `src` prop takes precedence over the `icon` and `text` props.
+  [Component img src resolving](/docs/reference/images) reference section for additional details
+- The `src` prop takes precedence over the `icon` and `text` props
 - <span class="badge badge-secondary">2.11.0+</span> If the image fails to load, the avatar will
   fall back to the value of the `icon` or `text` props. If neither the `icon` or `text` props are
   provided, then the default avatar icon will be shown. Also, when the image fails to load, the
-  `img-error` event will be emitted.
+  `img-error` event will be emitted
 - [Variant colors](#variants) when using images not normally visible, unless the image fails load.
   The variant will affect the focus styling when the image avatar is also an
-  [actionable avatar](#actionable-avatars).
+  [actionable avatar](#actionable-avatars)
 
 **Notes:**
 
-- The `icon` prop takes precedence over the `text` prop.
+- The `icon` prop takes precedence over the `text` prop
 - If the `text`, `src`, or `icon` props are not provided _and_ the [default slot](#custom-content)
-  has no content, then the `person-fill` icon will be used.
+  has no content, then the `person-fill` icon will be used
 
 ### Text content
 
@@ -354,9 +354,9 @@ When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 
 **Notes:**
 
-- The `square` prop takes precedence over the `rounded` prop.
+- The `square` prop takes precedence over the `rounded` prop
 - Alternatively to the `square` prop, you can set the `rounded` prop to the string `'0'` to
-  achieve a square avatar.
+  achieve a square avatar
 
 ### Alignment
 

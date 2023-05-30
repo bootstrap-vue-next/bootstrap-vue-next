@@ -145,7 +145,7 @@ By default, `<b-form-checkbox>` value will be true when checked and false when u
 
 When you have multiple checkboxes that bind to a single data state variable, you must provide an array reference (`[ ]`) to your v-model.
 
-Note that when v-model is bound to multiple checkboxes (i.e an array ref), the unchecked-value is **not used**. Only the value(s) of the checked checkboxes will be returned in the v-model bound array. You should provide a unique value for each checkbox's value prop (the default of true will not work when bound to an array)
+Note that when v-model is bound to multiple checkboxes (i.e an array ref), the unchecked-value is **not used**. Only the value(s) of the checked checkboxes will be returned in the v-model bound array. You should provide a unique value for each checkbox's value prop (the default of true will not work when bound to an array).
 
 To pre-check any checkboxes, set the v-model to the value(s) of the checks that you would like pre-selected.
 
@@ -333,7 +333,7 @@ Button style checkboxes will have the class .active automatically applied to the
 
 ### Individual checkbox button style
 
-A single checkbox can be rendered with a button appearance by setting the prop button to true
+A single checkbox can be rendered with a button appearance by setting the prop button to true.
 
 Change the button variant by setting the button-variant prop to one of the standard Bootstrap button variants (see `<b-button>` for supported variants). The default variant is secondary.
 
@@ -462,7 +462,7 @@ effect.
 
 ### Individual checkbox switch style
 
-A single checkbox can be rendered with a switch appearance by setting the prop switch to true
+A single checkbox can be rendered with a switch appearance by setting the prop switch to true.
 
 <HighlightCard>
   <b-form-checkbox v-model="switchChecked" switch>Switch Checkbox <strong>(Checked: {{ switchChecked }})</strong></b-form-checkbox>
@@ -626,8 +626,8 @@ Bootstrap includes validation styles for valid and invalid states on most form c
 
 Generally speaking, you'll want to use a particular state for specific types of feedback:
 
-- `false` (denotes invalid state) is great for when there's a blocking or required field. A user must fill in this field properly to submit the form.
-- `true` (denotes valid state) is ideal for situations when you have per-field validation throughout a form and want to encourage a user through the rest of the fields.
+- `false` (denotes invalid state) is great for when there's a blocking or required field. A user must fill in this field properly to submit the form
+- `true` (denotes valid state) is ideal for situations when you have per-field validation throughout a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
 To apply one of the contextual state icons on `<b-form-checkbox>`, set the `state` prop to `false`
@@ -708,11 +708,11 @@ tell when the input becomes visible.
 
 ## Indeterminate (tri-state) support
 
-Normally a checkbox input can only have two states: checked or unchecked. They can have any value, but they either submit that value (checked) or don't (unchecked) with a form submission (although BootstrapVueNext allows a value for the unchecked state on a single checkbox)
+Normally a checkbox input can only have two states: checked or unchecked. They can have any value, but they either submit that value (checked) or don't (unchecked) with a form submission (although BootstrapVueNext allows a value for the unchecked state on a single checkbox).
 
 Visually, there are actually three states a checkbox can be in: checked, unchecked, or **indeterminate**.
 
-The indeterminate state is **visual only**. The checkbox is still either checked or unchecked as a value. That means the visual indeterminate state masks the real value of the checkbox, so that better make sense in your UI!
+The indeterminate state is **visual only**. The checkbox is still either checked or unchecked as a value. That means the visual indeterminate state masks the real value of the checkbox, so that better make sense in your UI!.
 
 `<b-form-checkbox>` supports setting this visual indeterminate state via the indeterminate prop (defaults to false). Clicking the checkbox will clear its indeterminate state.
 

@@ -300,11 +300,11 @@ const text = `
 - When using accordion mode, make sure you place the trigger elements and `<b-collapse>` components
   inside an element with `role="tablist"` and set `role="tab"` on each trigger element's container
   (each trigger element should be wrapped) in order to help screen reader users navigate the
-  accordion group.
+  accordion group
 - If using the `v-model` feature of `<b-collapse>` in accordion mode, do not bind the `v-model` or
   `visible` prop of all the collapses in the accordion group to the same variable!
 - Ensure, at most, only one `<b-collapse>` in the accordion group has the `visible` prop and/or
-  `v-model` set to `true`. Only one collapse in an accordion group can be open at a time.
+  `v-model` set to `true`. Only one collapse in an accordion group can be open at a time
 
 ## Hiding and showing content in the toggle button based on collapse state
 

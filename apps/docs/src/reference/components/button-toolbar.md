@@ -47,7 +47,7 @@ Group a series of button-groups and/or input-groups together on a single line.
   </template>
 </HighlightCard>
 
-**Example 2:** with mixture of small button group and small input group
+**Example 2:** with mixture of small button group and small input group.
 
 <HighlightCard>
   <b-button-toolbar aria-label="Toolbar with button groups and input groups">
@@ -76,7 +76,7 @@ Group a series of button-groups and/or input-groups together on a single line.
   </template>
 </HighlightCard>
 
-**Example 3:** with button groups and dropdown menu
+**Example 3:** with button groups and dropdown menu.
 
 <HighlightCard>
   <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">

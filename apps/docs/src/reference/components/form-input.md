@@ -2,7 +2,7 @@
 
 <div class="lead mb-5">
 
-Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more
+Create various type inputs such as: `text`, `password`, `number`, `url`, `email`, `search`, `range`, `date` and more.
 
 </div>
 
@@ -27,7 +27,7 @@ const selectedText = ref('')
 
 ## Input type
 
-`<b-form-input>` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`
+`<b-form-input>` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`.
 
 <HighlightCard>
   <b-row class="my-1" v-for="type in inputTypes" :key="type">
@@ -84,34 +84,34 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 **Caveats with input types:**
 
 - Not all browsers support all input types, nor do some types render in the same format across
-  browser types/versions. Refer to [Can I use](https://caniuse.com/?search=input).
+  browser types/versions. Refer to [Can I use](https://caniuse.com/?search=input)
 - Browsers that do not support a particular type will fall back to a `text` input type (even though
-  the rendered `type` attribute markup shows the requested type).
-- No testing is performed to see if the requested input type is supported by the browser.
-- Chrome lost support for `datetime` in version 26, Opera in version 15, and Safari in iOS 7.
+  the rendered `type` attribute markup shows the requested type)
+- No testing is performed to see if the requested input type is supported by the browser
+- Chrome lost support for `datetime` in version 26, Opera in version 15, and Safari in iOS 7
   Instead of using `datetime`, since support should be deprecated, use `date` and `time` as two
-  separate inputs.
-- `date` and `time` inputs are native browser types, and are not a custom date/time picker.
+  separate inputs
+- `date` and `time` inputs are native browser types, and are not a custom date/time picker
 - For date and time style inputs, where supported, the displayed value in the GUI may be different
-  from what is returned by its value (i.e. ordering of year-month-date).
-- Regardless of input type, the value is **always** returned as a string representation.
+  from what is returned by its value (i.e. ordering of year-month-date)
+- Regardless of input type, the value is **always** returned as a string representation
 - `v-model.lazy` is not supported by `<b-form-input>` (nor any custom Vue component). Use the `lazy`
-  prop instead.
+  prop instead
 - `v-model` modifiers `.number` and `.trim` can cause unexpected cursor jumps when the user is
   typing (this is a Vue issue with `v-model` on custom components). _Avoid using these modifiers_.
-  Use the `number` or `trim` props instead.
-- Older version of Firefox may not support `readonly` for `range` type inputs.
+  Use the `number` or `trim` props instead
+- Older version of Firefox may not support `readonly` for `range` type inputs
 - Input types that do not support `min`, `max` and `step` (i.e. `text`, `password`, `tel`, `email`,
   `url`, etc.) will silently ignore these values (although they will still be rendered on the input
-  markup) if values are provided.
+  markup) if values are provided
 
 **Caveats with predictive text entry and IME composition entry:**
 
 - When using predictive text auto-suggested words, the `v-model` will not update until the
   auto-suggested word is selected (or a space is typed). If an auto suggested word is not selected,
-  the v-model will update with the current _displayed text_ of the input when the input is blurred.
+  the v-model will update with the current _displayed text_ of the input when the input is blurred
 - When using IME composition (ie. Chinese, Japanese, etc.), the `v-model` will not update until the
-  IME composition is completed.
+  IME composition is completed
 
 ### Range type input
 
@@ -263,9 +263,9 @@ Bootstrap includes validation styles for `valid` and `invalid` states on most fo
 Generally speaking, you'll want to use a particular state for specific types of feedback:
 
 - `false` (denotes invalid state) is great for when there's a blocking or required field. A user
-  must fill in this field properly to submit the form.
+  must fill in this field properly to submit the form
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout
-  a form and want to encourage a user through the rest of the fields.
+  a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
 To apply one of the contextual state icons on `<b-form-input>`, set the `state` prop to `false` (for
@@ -407,9 +407,9 @@ When `<b-form-input>` has an invalid contextual state (i.e. state is `false`) yo
 set the `<b-form-input>` prop `aria-invalid` to `true`, or to one of the supported values:
 
 - `false`: Convey no errors detected (default)
-- `true` (or `'true'`): Convey that the value has failed validation.
-- `'grammar'` Convey that a grammatical error has been detected.
-- `'spelling'` Convey that a spelling error has been detected.
+- `true` (or `'true'`): Convey that the value has failed validation
+- `'grammar'` Convey that a grammatical error has been detected
+- `'spelling'` Convey that a spelling error has been detected
 
 If `aria-invalid` is not explicitly set and `state` is set to `false`, then the `aria-invalid`
 attribute on the input will automatically be set to `'true'`;
@@ -525,14 +525,14 @@ emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` res
 **Notes:**
 
 - The `number` prop takes precedence over the `trim` prop (i.e. `trim` will have no effect when
-  `number` is set).
+  `number` is set)
 - When using the `number` prop, and if the value can be parsed as a number (via `parseFloat`) it
   will return a value of type `Number` to the `v-model`, otherwise the original input value is
-  returned as type `String`. This is the same behaviour as the native `.number` modifier.
+  returned as type `String`. This is the same behaviour as the native `.number` modifier
 - The `trim` and `number` modifier props do not affect the value returned by the `input` or `change`
   events. These events will always return the string value of the content of `<textarea>` after
   optional formatting (which may not match the value returned via the `v-model` `update` event,
-  which handles the modifiers).
+  which handles the modifiers)
 
 ## ~~Debounce support~~
 
@@ -597,7 +597,7 @@ these methods and properties. Support will vary based on input type.
     ></b-form-input>
   </div>
   <div class="mt-2">
-      <b-button primary @click="selectAllText">Select all text</b-button>
+    <b-button primary @click="selectAllText">Select all text</b-button>
   </div>
   <template #html>
 

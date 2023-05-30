@@ -2,7 +2,7 @@
 
 <div class="lead mb-5">
 
-Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction
+Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.
 
 </div>
 
@@ -33,7 +33,7 @@ const click = () => {
 
 ## Customizing Location
 
-Customize location with four standard options `top, bottom, start, end`
+Customize location with four standard options `top, bottom, start, end`.
 
 <HighlightCard>
   <b-button

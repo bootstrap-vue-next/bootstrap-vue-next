@@ -15,7 +15,7 @@ components.
 `<b-card>` has no fixed width to start, so they'll naturally fill the full width of its parent
 element. This is easily customized via styles or standard Bootstrap v4 sizing classes.
 
-Change the default `div` root tag to any other HTML element by specifying via the `tag` prop
+Change the default `div` root tag to any other HTML element by specifying via the `tag` prop.
 
 <HighlightCard>
   <b-card
@@ -56,7 +56,7 @@ Change the default `div` root tag to any other HTML element by specifying via th
 ## Content types
 
 Cards support a wide variety of content, including images, text, list groups, links and more. The
-following are examples of what's supported inside a `<b-card>`
+following are examples of what's supported inside a `<b-card>`.
 
 ### Card body
 
@@ -276,13 +276,13 @@ Place the image in the background of the card by setting the boolean prop `overl
 
 #### Lazy loaded images
 
-`<b-card-img-lazy>` has been removed in favor of using a standalone prop on b-img. Use prop `lazy` on b-img and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers
+`<b-card-img-lazy>` has been removed in favor of using a standalone prop on b-img. Use prop `lazy` on b-img and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers.
 
 ### Header and footer
 
 Add an optional header and/or footer within a card via the `header`/`footer` props or named slots.
 You can control the wrapper element tags used by setting the `header-tag` and `footer-tag` props
-(both default is `div`)
+(both default is `div`).
 
 <HighlightCard>
   <b-card-group deck>

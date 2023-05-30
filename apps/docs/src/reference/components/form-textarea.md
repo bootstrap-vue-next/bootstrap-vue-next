@@ -113,7 +113,7 @@ value). Setting it to null or a value below 2 will result in the default of `2` 
   <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
   <template #html>
 
-```vue-html
+```vue
 <b-form-textarea id="textarea-rows" placeholder="Tall textarea" rows="8"></b-form-textarea>
 ```
 
@@ -134,7 +134,7 @@ feature, set the `no-resize` prop to `true`.
   ></b-form-textarea>
   <template #html>
 
-```vue-html
+```vue
 <b-form-textarea
   id="textarea-no-resize"
   placeholder="Fixed height textarea"
@@ -157,9 +157,9 @@ Bootstrap includes validation styles for `valid` and `invalid` states on most fo
 Generally speaking, you'll want to use a particular state for specific types of feedback:
 
 - `false` (denotes invalid state) is great for when there's a blocking or required field. A user
-  must fill in this field properly to submit the form.
+  must fill in this field properly to submit the form
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout
-  a form and want to encourage a user through the rest of the fields.
+  a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
 To apply one of the contextual state icons on `<b-form-textarea>`, set the `state` prop to `false`
@@ -210,9 +210,9 @@ When `<b-form-textarea>` has an invalid contextual state (i.e. state is `false`)
 to set the prop `aria-invalid` to `true`, or one of the supported values:
 
 - `false`: No errors (default)
-- `true` or `'true'`: The value has failed validation.
-- `'grammar'`: A grammatical error has been detected.
-- `'spelling'` A spelling error has been detected.
+- `true` or `'true'`: The value has failed validation
+- `'grammar'`: A grammatical error has been detected
+- `'spelling'` A spelling error has been detected
 
 If the `state` prop is set to `false`, and the `aria-invalid` prop is not explicitly set,
 `<b-form-textarea>` will automatically set the `aria-invalid` attribute to `'true'`.
@@ -355,14 +355,14 @@ emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` res
 **Notes:**
 
 - The `number` prop takes precedence over the `trim` prop (i.e. `trim` will have no effect when
-  `number` is set).
+  `number` is set)
 - When using the `number` prop, and if the value can be parsed as a number (via `parseFloat`) it
   will return a value of type `Number` to the `v-model`, otherwise the original input value is
-  returned as type `String`. This is the same behaviour as the native `.number` modifier.
+  returned as type `String`. This is the same behaviour as the native `.number` modifier
 - The `trim` and `number` modifier props do not affect the value returned by the `input` or `change`
   events. These events will always return the string value of the content of `<textarea>` after
   optional formatting (which may not match the value returned via the `v-model` `update` event,
-  which handles the modifiers).
+  which handles the modifiers)
 
 ## Autofocus
 

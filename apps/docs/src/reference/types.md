@@ -33,7 +33,7 @@ type Booleanish = 'true' | 'false' | '' | boolean
 
 ## BodyProp
 
-- This type is only used for the Toast component
+This type is only used for the Toast component.
 
 <b-card class="bg-body-tertiary">
 
@@ -54,7 +54,7 @@ type BodyProp =
 
 ## BPopoverDelayObject
 
-- This type is only used for the Popover component
+This type is only used for the Popover component.
 
 <b-card class="bg-body-tertiary">
 
@@ -69,7 +69,7 @@ interface BPopoverDelayObject {
 
 ## BreadcrumbItem
 
-- This type is only used for the Breadcrumb component
+This type is only used for the Breadcrumb component.
 
 <b-card class="bg-body-tertiary">
 
