@@ -2,21 +2,23 @@
   <b-list-group v-if="!isLargeScreen">
     <strong class="bd-links-heading">General</strong>
     <b-list-group-item>
-      <b-link :to="withBase('/getting-started')">Getting Started</b-link>
+      <b-link :to="withBase('/docs')">Getting Started</b-link>
     </b-list-group-item>
     <b-list-group-item>
-      <b-link :to="withBase('/reference/icons')">Icons</b-link>
+      <b-link :to="withBase('/docs/icons')">Icons</b-link>
     </b-list-group-item>
     <b-list-group-item>
-      <b-link :to="withBase('/reference/types')">Types</b-link>
+      <b-link :to="withBase('/docs/types')">Types</b-link>
     </b-list-group-item>
     <b-list-group-item>
-      <b-link :to="withBase('/migration-guide')">Migrate</b-link>
+      <b-link :to="withBase('/docs/migration-guide')">Migrate</b-link>
     </b-list-group-item>
   </b-list-group>
   <b-list-group>
     <strong class="bd-links-heading">
-      <b-link :to="withBase('/reference/components')">Components</b-link>
+      <b-link :to="withBase('/docs/components')">
+        <intersect-icon aria-hidden /> Components
+      </b-link>
     </strong>
     <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
@@ -24,7 +26,9 @@
   </b-list-group>
   <b-list-group>
     <strong class="bd-links-heading">
-      <b-link :to="withBase('/reference/composables')">Composables</b-link>
+      <b-link :to="withBase('/docs/composables')">
+        <pie-chart-icon aria-hidden /> Composables
+      </b-link>
     </strong>
     <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
@@ -32,7 +36,10 @@
   </b-list-group>
   <b-list-group>
     <strong class="bd-links-heading">
-      <b-link :to="withBase('/reference/directives')">Directives</b-link>
+      <b-link :to="withBase('/docs/directives')">
+        <code-slash-icon aria-hidden />
+        Directives
+      </b-link>
     </strong>
     <b-list-group-item v-for="component in directivesComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
@@ -45,6 +52,9 @@ import {computed} from 'vue'
 import {BLink, BListGroup, BListGroupItem} from 'bootstrap-vue-next'
 import {withBase} from 'vitepress'
 import {useMediaQuery} from '@vueuse/core'
+import IntersectIcon from '~icons/bi/intersect'
+import CodeSlashIcon from '~icons/bi/code-slash'
+import PieChartIcon from '~icons/bi/pie-chart'
 
 defineProps<{
   name?: string
@@ -53,11 +63,11 @@ defineProps<{
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const routeLocationComponents = (name: string): string =>
-  withBase(`/reference/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
+  withBase(`/docs/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
 const routeLocationComposables = (name: string): string =>
-  withBase(`/reference/composables/${name}`).trim()
+  withBase(`/docs/composables/${name}`).trim()
 const routeLocationDirectives = (name: string): string =>
-  withBase(`/reference/directives/${name}`).trim()
+  withBase(`/docs/directives/${name}`).trim()
 
 const componentsList: {name: string}[] = [
   {name: 'Accordion'},

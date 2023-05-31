@@ -25,10 +25,10 @@
     <b-collapse is-nav>
       <b-navbar-nav>
         <b-nav>
-          <b-nav-item :to="withBase('/getting-started')">Getting Started</b-nav-item>
-          <b-nav-item :to="withBase('/reference/icons')">Icons</b-nav-item>
-          <b-nav-item :to="withBase('/reference/types')">Types</b-nav-item>
-          <b-nav-item :to="withBase('/migration-guide')">Migrate</b-nav-item>
+          <b-nav-item :to="withBase('/docs')">Getting Started</b-nav-item>
+          <b-nav-item :to="withBase('/docs/icons')">Icons</b-nav-item>
+          <b-nav-item :to="withBase('/docs/types')">Types</b-nav-item>
+          <b-nav-item :to="withBase('/docs/migration-guide')">Migrate</b-nav-item>
         </b-nav>
       </b-navbar-nav>
     </b-collapse>
@@ -283,6 +283,12 @@ const globalData = inject(appInfoKey, {
         max-width: 400px;
       }
     }
+    .icon-lg {
+      font-size: 2.65rem;
+    }
+  }
+  .card-link {
+    text-decoration: none;
   }
   // Short term fix for navbar modes.
   .navbar {
@@ -360,6 +366,11 @@ const globalData = inject(appInfoKey, {
       padding: 0 0 1.5rem 0;
       font-size: 0.875em;
       .bd-links-heading {
+        svg {
+          position: relative;
+          top: -1px;
+          margin-right: 0.3rem;
+        }
         display: block;
         margin: 0 0 0.5rem;
         text-transform: uppercase;

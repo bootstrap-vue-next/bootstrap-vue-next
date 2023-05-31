@@ -13,7 +13,7 @@ import {withBase} from 'vitepress'
 import {computed} from 'vue'
 import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 
-const routeLocation = (name: string): string => withBase(`/reference/composables/${name}`).trim()
+const routeLocation = (name: string): string => withBase(`/docs/composables/${name}`).trim()
 
 const composablesList: {name: string; description: string}[] = [
   {
