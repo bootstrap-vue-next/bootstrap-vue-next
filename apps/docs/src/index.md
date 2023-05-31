@@ -40,7 +40,7 @@ With more than 35 components, several directives and composibles (and growing), 
 
 <div class="d-flex gap-2 mt-4">
   <b-button :to="withBase('/docs')" variant="primary">Get Started</b-button>
-  <b-button to="https://github.com/bootstrap-vue-next/bootstrap-vue-next" variant="outline-secondary">GitHub</b-button>
+  <b-button :to="globalData.githubUrl" variant="outline-secondary">GitHub</b-button>
 </div>
 
 ## Integrate with Nuxt.js
@@ -59,7 +59,13 @@ import {
   BBadge,
   BRow,
 } from 'bootstrap-vue-next'
+import {inject} from 'vue'
 import {withBase} from 'vitepress'
 import BootstrapIcon from '~icons/simple-icons/bootstrap'
 import VueIcon from '~icons/simple-icons/vuedotjs'
+import {appInfoKey} from '../.vitepress/theme/keys'
+
+const globalData = inject(appInfoKey, {
+  githubUrl: '',
+})
 </script>

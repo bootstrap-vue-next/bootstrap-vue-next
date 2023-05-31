@@ -146,11 +146,10 @@ import DiscordIcon from '~icons/bi/discord'
 import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
 import CircleHalf from '~icons/bi/circle-half'
-import {useData, withBase} from 'vitepress'
+import {useData, withBase, useRoute} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
-import {useRoute} from 'vitepress'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
