@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.4...bootstrap-vue-next-v0.9.5) (2023-05-31)
+
+
+### Bug Fixes
+
+* **VBTooltip:** don't render a BTooltip when is disabled by code using the directive ([cc97b3c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc97b3ca0c9430dbd93c93fbb7849f5da8a7d05d))
+
 ## [0.9.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.3...bootstrap-vue-next-v0.9.4) (2023-05-29)
 
 
