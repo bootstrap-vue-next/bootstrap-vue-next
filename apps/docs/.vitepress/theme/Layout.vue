@@ -366,6 +366,10 @@ const globalData = inject(appInfoKey, {
       padding: 0 0 1.5rem 0;
       font-size: 0.875em;
       .bd-links-heading {
+        svg {
+          position: relative;
+          top: -2px;
+        }
         display: block;
         margin: 0 0 0.5rem;
         text-transform: uppercase;

@@ -16,7 +16,9 @@
   </b-list-group>
   <b-list-group>
     <strong class="bd-links-heading">
-      <b-link :to="withBase('/docs/components')">Components</b-link>
+      <b-link :to="withBase('/docs/components')">
+        <components-icon aria-hidden /> Components
+      </b-link>
     </strong>
     <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
@@ -24,7 +26,9 @@
   </b-list-group>
   <b-list-group>
     <strong class="bd-links-heading">
-      <b-link :to="withBase('/docs/composables')">Composables</b-link>
+      <b-link :to="withBase('/docs/composables')">
+        <components-icon aria-hidden /> Composables
+      </b-link>
     </strong>
     <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
@@ -32,7 +36,10 @@
   </b-list-group>
   <b-list-group>
     <strong class="bd-links-heading">
-      <b-link :to="withBase('/docs/directives')">Directives</b-link>
+      <b-link :to="withBase('/docs/directives')">
+        <components-icon aria-hidden />
+        Directives
+      </b-link>
     </strong>
     <b-list-group-item v-for="component in directivesComputedList" :key="component.name">
       <b-link :to="component.route">{{ component.name }}</b-link>
@@ -45,6 +52,7 @@ import {computed} from 'vue'
 import {BLink, BListGroup, BListGroupItem} from 'bootstrap-vue-next'
 import {withBase} from 'vitepress'
 import {useMediaQuery} from '@vueuse/core'
+import ComponentsIcon from '~icons/simple-icons/webcomponentsdotorg'
 
 defineProps<{
   name?: string
