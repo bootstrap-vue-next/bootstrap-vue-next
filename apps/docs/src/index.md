@@ -3,7 +3,6 @@
 <div class="lead mb-5">
 
 With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
-Integrate with Nuxt.js v3
 
 </div>
 
