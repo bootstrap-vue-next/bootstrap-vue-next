@@ -11,6 +11,8 @@ import {
 export default {
   mounted(el, binding) {
     const isActive = resolveActiveStatus(binding.value)
+    if (!isActive) return
+
     const text = resolveContent(binding.value, el)
 
     el.$__state = ref({
@@ -22,6 +24,8 @@ export default {
   },
   updated(el, binding) {
     const isActive = resolveActiveStatus(binding.value)
+    if (!isActive) return
+
     const text = resolveContent(binding.value, el)
     if (!el.$__state) return
     el.$__state.value = {
