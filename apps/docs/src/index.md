@@ -46,7 +46,7 @@ With more than 35 components, several directives and composibles (and growing), 
 
 Easily integrate BootstrapVueNext into your Nuxt.js projects using our included Nuxt.js module. You can optionally specify only the components, directives and/or plugins you require.
 
-<b-button variant="secondary" to="/getting-started#nuxtjs" class="mt-3">BootstrapVueNext Nuxt.js module</b-button>
+<b-button variant="secondary" to="/docs#nuxtjs" class="mt-3">BootstrapVueNext Nuxt.js module</b-button>
 
 <script setup lang="ts">
 import {

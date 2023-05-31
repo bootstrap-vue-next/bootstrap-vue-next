@@ -2,7 +2,7 @@
   <b-list-group v-if="!isLargeScreen">
     <strong class="bd-links-heading">General</strong>
     <b-list-group-item>
-      <b-link :to="withBase('/docs/docs')">Getting Started</b-link>
+      <b-link :to="withBase('/docs')">Getting Started</b-link>
     </b-list-group-item>
     <b-list-group-item>
       <b-link :to="withBase('/docs/icons')">Icons</b-link>
