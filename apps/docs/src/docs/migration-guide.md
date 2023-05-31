@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import MigrationWrapper from './components/MigrationWrapper.vue'
+import MigrationWrapper from '../components/MigrationWrapper.vue'
 
 const changes = computed<{
   difficulty: 'hard' | 'medium' | 'easy'

@@ -25,10 +25,10 @@
     <b-collapse is-nav>
       <b-navbar-nav>
         <b-nav>
-          <b-nav-item :to="withBase('/getting-started')">Getting Started</b-nav-item>
-          <b-nav-item :to="withBase('/reference/icons')">Icons</b-nav-item>
-          <b-nav-item :to="withBase('/reference/types')">Types</b-nav-item>
-          <b-nav-item :to="withBase('/migration-guide')">Migrate</b-nav-item>
+          <b-nav-item :to="withBase('/docs/docs')">Getting Started</b-nav-item>
+          <b-nav-item :to="withBase('/docs/icons')">Icons</b-nav-item>
+          <b-nav-item :to="withBase('/docs/types')">Types</b-nav-item>
+          <b-nav-item :to="withBase('/docs/migration-guide')">Migrate</b-nav-item>
         </b-nav>
       </b-navbar-nav>
     </b-collapse>
@@ -284,7 +284,7 @@ const globalData = inject(appInfoKey, {
       }
     }
     .icon-lg {
-      font-size: 3rem;
+      font-size: 2.65rem;
     }
   }
   .card-link {
