@@ -283,6 +283,12 @@ const globalData = inject(appInfoKey, {
         max-width: 400px;
       }
     }
+    .icon-lg {
+      font-size: 3rem;
+    }
+  }
+  .card-link {
+    text-decoration: none;
   }
   // Short term fix for navbar modes.
   .navbar {

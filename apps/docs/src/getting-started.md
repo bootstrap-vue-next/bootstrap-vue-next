@@ -201,7 +201,7 @@ app.mount('#app')
 
 </b-card>
 
-### Installation - Nuxt.js 3
+### <a id="nuxtjs"></a> Installation - Nuxt.js 3
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`.
 

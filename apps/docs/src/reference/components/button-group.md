@@ -28,20 +28,17 @@ Button Groups are an easy way to group a series of buttons together.
   <template #html>
 
 ```vue-html
-<div>
-  <b-button-group>
-    <b-button>Button 1</b-button>
-    <b-button>Button 2</b-button>
-    <b-button>Button 3</b-button>
-  </b-button-group>
-</div>
-<div class="mt-3">
-  <b-button-group>
-    <b-button variant="success">Success</b-button>
-    <b-button variant="info">Info</b-button>
-    <b-button variant="warning">Warning</b-button>
-  </b-button-group>
-</div>
+<b-button-group>
+  <b-button>Button 1</b-button>
+  <b-button>Button 2</b-button>
+  <b-button>Button 3</b-button>
+</b-button-group>
+
+<b-button-group>
+  <b-button variant="success">Success</b-button>
+  <b-button variant="info">Info</b-button>
+  <b-button variant="warning">Warning</b-button>
+</b-button-group>
 ```
 
   </template>
@@ -87,11 +84,13 @@ need to specify the size on the individual buttons.
   <b-button>Button 2</b-button>
   <b-button>Button 3</b-button>
 </b-button-group>
+
 <b-button-group size="sm">
   <b-button>Left</b-button>
   <b-button>Middle</b-button>
   <b-button>Right</b-button>
 </b-button-group>
+
 <b-button-group size="lg">
   <b-button>Left</b-button>
   <b-button>Middle</b-button>
