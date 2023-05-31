@@ -29,15 +29,17 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
   </b-col>
 </b-row>
 
-Current Version
-<b-badge>v0.9.4</b-badge>
+<p class="mb-2 d-flex small">Current Version:</p>
+<a href="https://www.npmjs.com/package/bootstrap-vue-next">
+<img src="https://flat.badgen.net/npm/v/bootstrap-vue-next" alt="Current version">
+</a>
 
 ## Overview
 
 With more than 35 components, several directives and composibles (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
 
 <div class="d-flex gap-2 mt-4">
-  <b-button to="docs" variant="primary">Get Started</b-button>
+  <b-button :to="withBase('/docs')" variant="primary">Get Started</b-button>
   <b-button to="https://github.com/bootstrap-vue-next/bootstrap-vue-next" variant="outline-secondary">GitHub</b-button>
 </div>
 
@@ -45,7 +47,7 @@ With more than 35 components, several directives and composibles (and growing), 
 
 Easily integrate BootstrapVueNext into your Nuxt.js projects using our included Nuxt.js module. You can optionally specify only the components, directives and/or plugins you require.
 
-<b-button variant="secondary" to="docs#nuxtjs" class="mt-3">BootstrapVueNext Nuxt.js module</b-button>
+<b-button variant="secondary" :to="withBase('/docs#nuxtjs')" class="mt-3">BootstrapVueNext Nuxt.js module</b-button>
 
 <script setup lang="ts">
 import {
@@ -57,6 +59,7 @@ import {
   BBadge,
   BRow,
 } from 'bootstrap-vue-next'
+import {withBase} from 'vitepress'
 import BootstrapIcon from '~icons/simple-icons/bootstrap'
 import VueIcon from '~icons/simple-icons/vuedotjs'
 </script>
