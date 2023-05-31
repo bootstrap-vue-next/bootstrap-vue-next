@@ -40,7 +40,7 @@ With more than 35 components, several directives and composibles (and growing), 
 
 <div class="d-flex gap-2 mt-4">
   <b-button :to="withBase('/docs')" variant="primary">Get Started</b-button>
-  <b-button :href="globalData.githubUrl" target="_blank" rel="noopener" variant="outline-secondary">GitHub</b-button>
+  <b-button :href="globalData.githubUrl" target="_blank" aria-label="Open Github" rel="noopener" variant="outline-secondary">GitHub</b-button>
 </div>
 
 ## Integrate with Nuxt.js
