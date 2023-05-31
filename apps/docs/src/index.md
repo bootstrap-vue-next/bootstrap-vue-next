@@ -38,7 +38,7 @@ Current Version
 With more than 35 components, several directives and composibles (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
 
 <div class="d-flex gap-2 mt-4">
-  <b-button to="/getting-started" variant="primary">Get Started</b-button>
+  <b-button to="/docs" variant="primary">Get Started</b-button>
   <b-button to="https://github.com/bootstrap-vue-next/bootstrap-vue-next" variant="outline-secondary">GitHub</b-button>
 </div>
 
