@@ -369,6 +369,7 @@ const globalData = inject(appInfoKey, {
         svg {
           position: relative;
           top: -2px;
+          margin-right: 0.3rem;
         }
         display: block;
         margin: 0 0 0.5rem;

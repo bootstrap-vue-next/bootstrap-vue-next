@@ -17,7 +17,7 @@
   <b-list-group>
     <strong class="bd-links-heading">
       <b-link :to="withBase('/docs/components')">
-        <components-icon aria-hidden /> Components
+        <intersect-icon aria-hidden /> Components
       </b-link>
     </strong>
     <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
@@ -27,7 +27,7 @@
   <b-list-group>
     <strong class="bd-links-heading">
       <b-link :to="withBase('/docs/composables')">
-        <components-icon aria-hidden /> Composables
+        <pie-chart-icon aria-hidden /> Composables
       </b-link>
     </strong>
     <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
@@ -37,7 +37,7 @@
   <b-list-group>
     <strong class="bd-links-heading">
       <b-link :to="withBase('/docs/directives')">
-        <components-icon aria-hidden />
+        <code-slash-icon aria-hidden />
         Directives
       </b-link>
     </strong>
@@ -52,7 +52,9 @@ import {computed} from 'vue'
 import {BLink, BListGroup, BListGroupItem} from 'bootstrap-vue-next'
 import {withBase} from 'vitepress'
 import {useMediaQuery} from '@vueuse/core'
-import ComponentsIcon from '~icons/simple-icons/webcomponentsdotorg'
+import IntersectIcon from '~icons/bi/intersect'
+import CodeSlashIcon from '~icons/bi/code-slash'
+import PieChartIcon from '~icons/bi/pie-chart'
 
 defineProps<{
   name?: string
