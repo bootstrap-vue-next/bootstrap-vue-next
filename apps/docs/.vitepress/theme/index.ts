@@ -3,9 +3,8 @@ import Layout from './Layout.vue'
 import type {Theme} from 'vitepress'
 import {appInfoKey} from './keys'
 
-// import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
-import './assets/css/styles.css'
 
 export default {
   Layout,
