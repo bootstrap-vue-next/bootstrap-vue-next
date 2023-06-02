@@ -206,6 +206,22 @@ const globalData = inject(appInfoKey, {
 
 <style lang="scss">
 #app {
+  --bvn-primary: #6528e0;
+  --black: #000000;
+  --white: #ffffff;
+  --bvn-bg-primary: linear-gradient(rgba(var(--bvn-primary), 1), rgba(var(--bvn-primary), 0.95));
+  @mixin hover-focus-active() {
+    &:hover,
+    &:focus,
+    &:active {
+      @content;
+    }
+  }
+  .bg-primary {
+    background-color: var(--bvn-primary) !important;
+    border-color: var(--bvn-primary);
+    color: var(--white);
+  }
   .bd-content > div > {
     h2,
     h3,
@@ -289,14 +305,14 @@ const globalData = inject(appInfoKey, {
   .card-link {
     text-decoration: none;
   }
-  // Short term fix for navbar modes.
+  // Navbar.
   .navbar {
-    color: #fff;
+    color: var(--white);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
     .nav-link,
     .navbar-brand,
     .btn {
-      color: #fff;
+      color: var(--white);
     }
   }
   [class^='language-'] {
@@ -360,6 +376,7 @@ const globalData = inject(appInfoKey, {
       }
     }
   }
+  // Sidebar.
   .offcanvas {
     .list-group {
       padding: 0 0 1.5rem 0;
@@ -391,7 +408,7 @@ const globalData = inject(appInfoKey, {
     }
   }
 }
-// TOC
+// Sidebar onscreen.
 @media (min-width: 992px) {
   .bd-layout {
     display: grid !important;
@@ -432,6 +449,7 @@ const globalData = inject(appInfoKey, {
     }
   }
 }
+// Sidebar width.
 .offcanvas.offcanvas-start {
   width: 200px !important;
 }
