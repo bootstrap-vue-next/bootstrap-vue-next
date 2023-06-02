@@ -206,6 +206,7 @@ const globalData = inject(appInfoKey, {
 
 <style lang="scss">
 #app {
+  --bvn-primary: #6528e0;
   --black: #000000;
   --white: #ffffff;
   --bvn-bg-primary: linear-gradient(rgba(var(--bvn-primary), 1), rgba(var(--bvn-primary), 0.95));
