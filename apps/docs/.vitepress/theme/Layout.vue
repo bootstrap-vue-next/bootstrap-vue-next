@@ -287,6 +287,7 @@ const globalData = inject(appInfoKey, {
       text-decoration: none;
     }
     .table {
+      margin-top: 0.5rem;
       font-size: 0.9rem;
       & > tbody > tr > td,
       & > tbody > tr > th,
