@@ -209,6 +209,7 @@ const globalData = inject(appInfoKey, {
   --bvn-primary: #6528e0;
   --black: #000000;
   --white: #ffffff;
+  --pink: #e83e8c;
   --bvn-bg-primary: linear-gradient(rgba(var(--bvn-primary), 1), rgba(var(--bvn-primary), 0.95));
   .bg-primary {
     background-color: var(--bvn-primary) !important;
@@ -267,6 +268,36 @@ const globalData = inject(appInfoKey, {
       border-top: 0;
       .card-body {
         margin-bottom: 0;
+      }
+    }
+  }
+  .component-reference {
+    .display-6 {
+      font-size: 1.5rem;
+      display: block;
+      margin: 0.75rem 0 1rem;
+    }
+    ul {
+      li {
+        margin-bottom: 0.4rem;
+      }
+    }
+    h5 > a {
+      color: var(--bs-body-color);
+      text-decoration: none;
+    }
+    .table {
+      font-size: 0.9rem;
+      & > tbody > tr > td,
+      & > tbody > tr > th,
+      & > tfoot > tr > td,
+      & > tfoot > tr > th,
+      & > thead > tr > td,
+      & > thead > tr > th {
+        padding: 0.5rem;
+      }
+      & > tbody > tr > td:first-child {
+        color: var(--pink);
       }
     }
   }
