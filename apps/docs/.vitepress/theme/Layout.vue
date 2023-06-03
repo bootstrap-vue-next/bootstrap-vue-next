@@ -501,7 +501,7 @@ const globalData = inject(appInfoKey, {
   }
 }
 // Sidebar width.
-.bd-sidebar.offcanvas.offcanvas-start {
+.bd-sidebar .offcanvas.offcanvas-start {
   width: 200px !important;
 }
 </style>
