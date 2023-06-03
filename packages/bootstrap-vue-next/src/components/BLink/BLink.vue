@@ -9,7 +9,6 @@
   >
     <component
       :is="routerTag"
-      ref="link"
       :href="href"
       :class="[(activeBoolean ?? isActive) && activeClass]"
       v-bind="$attrs"
@@ -18,14 +17,7 @@
       <slot />
     </component>
   </component>
-  <component
-    :is="tag"
-    v-else
-    ref="link"
-    :class="computedLinkClasses"
-    v-bind="routerAttr"
-    @click="clicked"
-  >
+  <component :is="tag" v-else :class="computedLinkClasses" v-bind="routerAttr" @click="clicked">
     <slot />
   </component>
 </template>
@@ -40,7 +32,6 @@ import {
   getCurrentInstance,
   inject,
   type PropType,
-  ref,
   type SlotsType,
 } from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
@@ -84,7 +75,6 @@ export default defineComponent({
     }
 
     const instance = getCurrentInstance()
-    const link = ref<HTMLElement>(null as unknown as HTMLElement)
 
     const tag = computed<string>(() => {
       const routerName = props.routerComponentName
@@ -157,7 +147,6 @@ export default defineComponent({
       computedLinkClasses,
       tag,
       routerAttr,
-      link,
       clicked,
       activeBoolean,
       appendBoolean,

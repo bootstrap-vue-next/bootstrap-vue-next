@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {BToggle as vBToggle} from '../../directives'
+import {vBToggle} from '../../directives'
 import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
