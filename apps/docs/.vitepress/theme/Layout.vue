@@ -216,6 +216,13 @@ const globalData = inject(appInfoKey, {
     border-color: var(--bvn-primary);
     color: var(--white);
   }
+  @mixin hover-focus-active() {
+    &:hover,
+    &:focus,
+    &:active {
+      @content;
+    }
+  }
   .bd-content > div > {
     h2,
     h3,
@@ -300,6 +307,12 @@ const globalData = inject(appInfoKey, {
       & > tbody > tr > td:first-child {
         color: var(--pink);
       }
+    }
+  }
+  .anchorjs-link {
+    text-decoration: none;
+    &::after {
+      content: '#';
     }
   }
   .card {
