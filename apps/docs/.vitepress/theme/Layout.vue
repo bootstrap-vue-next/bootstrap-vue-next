@@ -110,7 +110,7 @@
             <b-container>
               <b-row>
                 <b-col>
-                  <Content class="bd-content" />
+                  <Content class="doc-content" />
                 </b-col>
               </b-row>
             </b-container>
@@ -223,7 +223,7 @@ const globalData = inject(appInfoKey, {
       @content;
     }
   }
-  .bd-content > div > {
+  .doc-content > div > {
     h2,
     h3,
     h4,
@@ -477,7 +477,7 @@ const globalData = inject(appInfoKey, {
     .bd-main {
       display: grid;
       grid-area: main;
-      grid-template-areas: 'intro toc' 'content toc';
+      grid-template-areas: 'content toc';
       grid-template-rows: auto 1fr;
       grid-template-columns: 4fr 1fr;
       .bd-content {
@@ -485,10 +485,20 @@ const globalData = inject(appInfoKey, {
         min-width: 1px;
       }
     }
+    .bd-toc {
+      grid-area: toc;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 5rem;
+      right: 0;
+      z-index: 2;
+      height: calc(100vh - 7rem);
+      overflow-y: auto;
+    }
   }
 }
 // Sidebar width.
-.offcanvas.offcanvas-start {
+.bd-sidebar.offcanvas.offcanvas-start {
   width: 200px !important;
 }
 </style>
