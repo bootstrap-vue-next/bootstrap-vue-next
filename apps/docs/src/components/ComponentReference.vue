@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="p-0">
+  <b-container fluid class="p-0 component-reference">
     <b-row>
       <b-col>
         <h2>Component Reference</h2>
@@ -10,29 +10,21 @@
         <b-container v-for="component in sortData" :key="component.component" fluid class="p-0">
           <b-row>
             <b-col>
-              <h3>
-                {{ component.component }}
-              </h3>
+              <code class="display-6">{{ `<` + component.component + `>` }}</code>
             </b-col>
           </b-row>
           <b-row>
             <b-col>
               <ul>
                 <li v-for="section in sections" :key="section">
-                  <h4>
-                    <b-link :to="buildCompReferenceLink(`${component.component}-${section}`)">
-                      &lt;{{ component.component }}&gt; {{ section }}
-                    </b-link>
-                  </h4>
+                  <b-link :to="buildCompReferenceLink(`${component.component}-${section}`)">
+                    &lt;{{ component.component }}&gt; {{ section }}
+                  </b-link>
                 </li>
               </ul>
             </b-col>
           </b-row>
-          <b-row
-            v-for="section in sections"
-            :key="section"
-            class="border-bottom border-secondary my-3"
-          >
+          <b-row v-for="section in sections" :key="section" class="my-3">
             <b-col>
               <b-container fluid>
                 <b-row>
@@ -50,7 +42,14 @@
                 </b-row>
                 <b-row>
                   <b-col>
-                    <b-table :items="component[sectionToComponentItem(section)]" />
+                    <b-table
+                      :items="component[sectionToComponentItem(section)]"
+                      hover
+                      small
+                      responsive
+                      bordered
+                      striped
+                    />
                   </b-col>
                 </b-row>
               </b-container>
@@ -79,9 +78,9 @@ const sortData = computed(() =>
       props: el.props
         .map((inner) => ({
           prop: inner.prop,
-          description: inner.description,
           type: inner.type,
           default: inner.default,
+          description: inner.description,
         }))
         .sort((a, b) => a.prop.localeCompare(b.prop)),
       emits: el.emits
