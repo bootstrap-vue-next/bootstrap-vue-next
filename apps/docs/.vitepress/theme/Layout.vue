@@ -284,6 +284,9 @@ const globalData = inject(appInfoKey, {
       display: block;
       margin: 0.75rem 0 1rem;
     }
+    h2 {
+      margin-top: 2rem;
+    }
     ul {
       li {
         margin-bottom: 0.4rem;
