@@ -110,7 +110,7 @@
             <b-container>
               <b-row>
                 <b-col>
-                  <Content class="bd-content" />
+                  <Content class="doc-content" />
                 </b-col>
               </b-row>
             </b-container>
@@ -206,7 +206,24 @@ const globalData = inject(appInfoKey, {
 
 <style lang="scss">
 #app {
-  .bd-content > div > {
+  --bvn-primary: #6528e0;
+  --black: #000000;
+  --white: #ffffff;
+  --pink: #e83e8c;
+  --bvn-bg-primary: linear-gradient(rgba(var(--bvn-primary), 1), rgba(var(--bvn-primary), 0.95));
+  .bg-primary {
+    background-color: var(--bvn-primary) !important;
+    border-color: var(--bvn-primary);
+    color: var(--white);
+  }
+  @mixin hover-focus-active() {
+    &:hover,
+    &:focus,
+    &:active {
+      @content;
+    }
+  }
+  .doc-content > div > {
     h2,
     h3,
     h4,
@@ -261,6 +278,46 @@ const globalData = inject(appInfoKey, {
       }
     }
   }
+  .component-reference {
+    .display-6 {
+      font-size: 1.5rem;
+      display: block;
+      margin: 0.75rem 0 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    ul {
+      li {
+        margin-bottom: 0.4rem;
+      }
+    }
+    h5 > a {
+      color: var(--bs-body-color);
+      text-decoration: none;
+    }
+    .table {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      & > tbody > tr > td,
+      & > tbody > tr > th,
+      & > tfoot > tr > td,
+      & > tfoot > tr > th,
+      & > thead > tr > td,
+      & > thead > tr > th {
+        padding: 0.5rem;
+      }
+      & > tbody > tr > td:first-child {
+        color: var(--pink);
+      }
+    }
+  }
+  .anchorjs-link {
+    text-decoration: none;
+    &::after {
+      content: '#';
+    }
+  }
   .card {
     margin-bottom: 3rem;
     pre {
@@ -289,14 +346,14 @@ const globalData = inject(appInfoKey, {
   .card-link {
     text-decoration: none;
   }
-  // Short term fix for navbar modes.
+  // Navbar.
   .navbar {
-    color: #fff;
+    color: var(--white);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
     .nav-link,
     .navbar-brand,
     .btn {
-      color: #fff;
+      color: var(--white);
     }
   }
   [class^='language-'] {
@@ -360,6 +417,7 @@ const globalData = inject(appInfoKey, {
       }
     }
   }
+  // Sidebar.
   .offcanvas {
     .list-group {
       padding: 0 0 1.5rem 0;
@@ -391,7 +449,7 @@ const globalData = inject(appInfoKey, {
     }
   }
 }
-// TOC
+// Sidebar onscreen.
 @media (min-width: 992px) {
   .bd-layout {
     display: grid !important;
@@ -422,7 +480,7 @@ const globalData = inject(appInfoKey, {
     .bd-main {
       display: grid;
       grid-area: main;
-      grid-template-areas: 'intro toc' 'content toc';
+      grid-template-areas: 'content toc';
       grid-template-rows: auto 1fr;
       grid-template-columns: 4fr 1fr;
       .bd-content {
@@ -430,9 +488,20 @@ const globalData = inject(appInfoKey, {
         min-width: 1px;
       }
     }
+    .bd-toc {
+      grid-area: toc;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 5rem;
+      right: 0;
+      z-index: 2;
+      height: calc(100vh - 7rem);
+      overflow-y: auto;
+    }
   }
 }
-.offcanvas.offcanvas-start {
+// Sidebar width.
+.bd-sidebar .offcanvas.offcanvas-start {
   width: 200px !important;
 }
 </style>
