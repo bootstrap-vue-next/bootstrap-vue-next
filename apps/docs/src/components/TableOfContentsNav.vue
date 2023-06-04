@@ -1,50 +1,52 @@
 <template>
-  <b-list-group v-if="!isLargeScreen">
-    <strong class="bd-links-heading">General</strong>
-    <b-list-group-item>
-      <b-link :to="withBase('/docs')">Getting Started</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/docs/icons')">Icons</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/docs/types')">Types</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/docs/migration-guide')">Migrate</b-link>
-    </b-list-group-item>
-  </b-list-group>
-  <b-list-group>
-    <strong class="bd-links-heading">
-      <b-link :to="withBase('/docs/components')">
-        <intersect-icon aria-hidden /> Components
-      </b-link>
-    </strong>
-    <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
-      <b-link :to="component.route">{{ component.name }}</b-link>
-    </b-list-group-item>
-  </b-list-group>
-  <b-list-group>
-    <strong class="bd-links-heading">
-      <b-link :to="withBase('/docs/composables')">
-        <pie-chart-icon aria-hidden /> Composables
-      </b-link>
-    </strong>
-    <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
-      <b-link :to="component.route">{{ component.name }}</b-link>
-    </b-list-group-item>
-  </b-list-group>
-  <b-list-group>
-    <strong class="bd-links-heading">
-      <b-link :to="withBase('/docs/directives')">
-        <code-slash-icon aria-hidden />
-        Directives
-      </b-link>
-    </strong>
-    <b-list-group-item v-for="component in directivesComputedList" :key="component.name">
-      <b-link :to="component.route">{{ component.name }}</b-link>
-    </b-list-group-item>
-  </b-list-group>
+  <div class="bd-links-nav">
+    <b-list-group v-if="!isLargeScreen">
+      <strong class="bd-links-heading">General</strong>
+      <b-list-group-item>
+        <b-link :to="withBase('/docs')">Getting Started</b-link>
+      </b-list-group-item>
+      <b-list-group-item>
+        <b-link :to="withBase('/docs/icons')">Icons</b-link>
+      </b-list-group-item>
+      <b-list-group-item>
+        <b-link :to="withBase('/docs/types')">Types</b-link>
+      </b-list-group-item>
+      <b-list-group-item>
+        <b-link :to="withBase('/docs/migration-guide')">Migrate</b-link>
+      </b-list-group-item>
+    </b-list-group>
+    <b-list-group>
+      <strong class="bd-links-heading">
+        <b-link :to="withBase('/docs/components')">
+          <intersect-icon aria-hidden /> Components
+        </b-link>
+      </strong>
+      <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
+        <b-link :to="component.route">{{ component.name }}</b-link>
+      </b-list-group-item>
+    </b-list-group>
+    <b-list-group>
+      <strong class="bd-links-heading">
+        <b-link :to="withBase('/docs/composables')">
+          <pie-chart-icon aria-hidden /> Composables
+        </b-link>
+      </strong>
+      <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
+        <b-link :to="component.route">{{ component.name }}</b-link>
+      </b-list-group-item>
+    </b-list-group>
+    <b-list-group>
+      <strong class="bd-links-heading">
+        <b-link :to="withBase('/docs/directives')">
+          <code-slash-icon aria-hidden />
+          Directives
+        </b-link>
+      </strong>
+      <b-list-group-item v-for="component in directivesComputedList" :key="component.name">
+        <b-link :to="component.route">{{ component.name }}</b-link>
+      </b-list-group-item>
+    </b-list-group>
+  </div>
 </template>
 
 <script setup lang="ts">
