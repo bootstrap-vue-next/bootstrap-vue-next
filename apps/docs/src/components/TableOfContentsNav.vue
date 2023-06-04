@@ -1,7 +1,7 @@
 <template>
   <div class="bd-links-nav">
     <b-list-group v-if="!isLargeScreen">
-      <strong class="bd-links-heading">General</strong>
+      <strong class="bd-links-heading"><gear-icon aria-hidden /> General</strong>
       <b-list-group-item>
         <b-link :to="withBase('/docs')">Getting Started</b-link>
       </b-list-group-item>
@@ -57,6 +57,7 @@ import {useMediaQuery} from '@vueuse/core'
 import IntersectIcon from '~icons/bi/intersect'
 import CodeSlashIcon from '~icons/bi/code-slash'
 import PieChartIcon from '~icons/bi/pie-chart'
+import GearIcon from '~icons/bi/gear'
 
 defineProps<{
   name?: string
