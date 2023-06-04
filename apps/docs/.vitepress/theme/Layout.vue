@@ -206,16 +206,15 @@ const globalData = inject(appInfoKey, {
 
 <style lang="scss">
 #app {
-  --bvn-primary: hsla(260, 92%, 57%, 1);
-  --bvn-green: hsla(153, 62%, 54%, 1);
+  --bvn-primary: hsla(237, 31%, 35%, 1);
   --black: #000000;
   --white: #ffffff;
   --pink: #e83e8c;
   --bvn-bg-primary: linear-gradient(
     45deg,
     var(--bvn-primary) 0%,
-    hsla(190, 38%, 50%, 1) 72%,
-    var(--bvn-green) 100%
+    hsla(230, 25%, 18%, 1) 72%,
+    hsla(220, 19%, 13%, 1) 100%
   );
   .bg-primary {
     background: var(--bvn-bg-primary) !important;
