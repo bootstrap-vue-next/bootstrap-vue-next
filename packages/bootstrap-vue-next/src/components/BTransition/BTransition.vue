@@ -69,3 +69,15 @@ const computedAttrs = computed(() =>
     : baseProperties.value
 )
 </script>
+
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s linear;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
