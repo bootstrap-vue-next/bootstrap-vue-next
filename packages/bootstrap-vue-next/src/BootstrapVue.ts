@@ -1,4 +1,5 @@
 import type {App, Plugin} from 'vue'
+import {BToastPlugin} from './components'
 import type {BootstrapVueOptions} from './types'
 
 import './styles/styles.scss'
@@ -116,20 +117,19 @@ declare module '@vue/runtime-core' {
 
 // Main app plugin
 const plugin: Plugin = {
-  // TODO: use options in the future
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  install(app: App, options: BootstrapVueOptions = {}) {
+  install(app: App, options?: BootstrapVueOptions) {
     Object.entries(Components).forEach(([name, component]) => {
-      app.component(name, component)
+      if (!options?.components || options?.components[name as keyof typeof Components])
+        app.component(name, component)
     })
 
     Object.entries(Directives).forEach(([name, component]) => {
-      if (name.toLowerCase().startsWith('v')) {
-        app.directive(name.slice(1), component)
-      } else {
-        app.directive(name, component)
-      }
+      const parsedName = name.toLowerCase().startsWith('v') ? name.slice(1) : name
+      if (!options?.directives || options?.directives[parsedName as keyof typeof Directives])
+        app.directive(parsedName, component)
     })
+
+    if (options?.BToast) app.use(BToastPlugin, options)
   },
 }
 
