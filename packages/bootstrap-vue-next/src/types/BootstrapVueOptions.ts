@@ -6,7 +6,7 @@ interface BToastPluginOptions {
 }
 
 export interface BootstrapVueOptions {
-  components?: Record<keyof typeof Components, boolean>
-  directives?: Record<keyof typeof Directives, boolean>
-  BToast?: BToastPluginOptions
+  components?: boolean | Record<keyof typeof Components, boolean>
+  directives?: boolean | Record<keyof typeof Directives, boolean>
+  BToast?: boolean | BToastPluginOptions
 }

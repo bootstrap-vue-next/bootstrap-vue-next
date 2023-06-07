@@ -117,15 +117,21 @@ declare module '@vue/runtime-core' {
 
 // Main app plugin
 const plugin: Plugin = {
-  install(app: App, options?: BootstrapVueOptions) {
+  install(app: App, options: BootstrapVueOptions = {components: true, directives: true}) {
+    const allComponents = typeof options?.components === 'boolean' && options?.components
+    const selectedComponents =
+      typeof options?.components === 'object' ? options?.components : undefined
+    const allDirectives = typeof options?.directives === 'boolean' && options?.directives
+    const selectedDirectives =
+      typeof options?.directives === 'object' ? options?.directives : undefined
     Object.entries(Components).forEach(([name, component]) => {
-      if (!options?.components || options?.components[name as keyof typeof Components])
+      if (allComponents || selectedComponents?.[name as keyof typeof Components])
         app.component(name, component)
     })
 
     Object.entries(Directives).forEach(([name, component]) => {
       const parsedName = name.toLowerCase().startsWith('v') ? name.slice(1) : name
-      if (!options?.directives || options?.directives[parsedName as keyof typeof Directives])
+      if (allDirectives || selectedDirectives?.[parsedName as keyof typeof Directives])
         app.directive(parsedName, component)
     })
 
