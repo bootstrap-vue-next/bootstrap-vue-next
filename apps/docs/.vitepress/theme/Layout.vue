@@ -206,14 +206,19 @@ const globalData = inject(appInfoKey, {
 
 <style lang="scss">
 #app {
-  --bvn-primary: #6528e0;
+  --bvn-primary: hsla(237, 31%, 35%, 1);
   --black: #000000;
   --white: #ffffff;
   --pink: #e83e8c;
-  --bvn-bg-primary: linear-gradient(rgba(var(--bvn-primary), 1), rgba(var(--bvn-primary), 0.95));
+  --bvn-bg-primary: linear-gradient(
+    45deg,
+    var(--bvn-primary) 0%,
+    hsla(230, 25%, 18%, 1) 72%,
+    hsla(220, 19%, 13%, 1) 100%
+  );
   .bg-primary {
-    background-color: var(--bvn-primary) !important;
-    border-color: var(--bvn-primary);
+    background: var(--bvn-bg-primary) !important;
+    border-color: var(--bvn-bg-primary);
     color: var(--white);
   }
   @mixin hover-focus-active() {
@@ -336,7 +341,7 @@ const globalData = inject(appInfoKey, {
         margin-bottom: 0;
       }
       .list-group {
-        max-width: 400px;
+        max-width: 25rem;
       }
     }
     .icon-lg {
@@ -501,7 +506,22 @@ const globalData = inject(appInfoKey, {
   }
 }
 // Sidebar width.
-.bd-sidebar .offcanvas.offcanvas-start {
-  width: 200px !important;
+.bd-sidebar {
+  @media (min-width: 992px) {
+    min-width: 12.5rem;
+  }
+  .offcanvas.offcanvas-start {
+    @media (min-width: 992px) {
+      width: 12.5rem !important;
+    }
+    @media (max-width: 991px) {
+      .bd-links-nav {
+        -moz-column-count: 2;
+        column-count: 2;
+        -moz-column-gap: 1.5rem;
+        column-gap: 1.5rem;
+      }
+    }
+  }
 }
 </style>
