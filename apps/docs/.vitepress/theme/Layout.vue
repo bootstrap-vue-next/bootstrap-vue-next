@@ -88,35 +88,28 @@
       </client-only>
     </aside>
     <main class="bd-main">
-      <div class="bd-content">
-        <b-row v-if="page.isNotFound">
-          <b-col>
-            <b-container class="text-center my-auto p-5">
-              <b-row>
-                <b-col>
-                  <h1>Oh No!</h1>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
-                  <h2>File Not Found</h2>
-                </b-col>
-              </b-row>
-            </b-container>
-          </b-col>
-        </b-row>
-        <b-row v-else>
-          <b-col>
-            <b-container>
-              <b-row>
-                <b-col>
-                  <Content class="doc-content" />
-                </b-col>
-              </b-row>
-            </b-container>
-          </b-col>
-        </b-row>
-      </div>
+      <b-row v-if="page.isNotFound">
+        <b-col>
+          <b-container class="text-center my-auto p-5">
+            <b-row>
+              <b-col>
+                <h1>Oh No!</h1>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <h2>File Not Found</h2>
+              </b-col>
+            </b-row>
+          </b-container>
+        </b-col>
+      </b-row>
+      <b-row v-else>
+        <div class="bd-content">
+          <div class="bd-toc" />
+          <Content class="doc-content" />
+        </div>
+      </b-row>
     </main>
   </b-container>
 </template>
@@ -352,7 +345,7 @@ const globalData = inject(appInfoKey, {
     text-decoration: none;
   }
   // Navbar.
-  .navbar {
+  > .navbar {
     color: var(--white);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
     .nav-link,
@@ -483,25 +476,62 @@ const globalData = inject(appInfoKey, {
       }
     }
     .bd-main {
-      display: grid;
-      grid-area: main;
-      grid-template-areas: 'content toc';
-      grid-template-rows: auto 1fr;
-      grid-template-columns: 4fr 1fr;
       .bd-content {
-        grid-area: content;
-        min-width: 1px;
+        display: grid;
+        grid-area: main;
+        grid-template-areas: 'intro toc' 'content toc';
+        grid-template-rows: auto 1fr;
+        grid-template-columns: 4fr 1fr;
+        gap: inherit;
+        .doc-content {
+          grid-area: content;
+          min-width: 1px;
+        }
+        .bd-toc {
+          &::before {
+            content: 'On this page';
+            display: block;
+            margin: 0 0 0.5rem 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: var(--bs-border-width) solid rgba(255, 255, 255, 0.2);
+          }
+          margin-left: 1.25rem;
+          grid-area: toc;
+          position: -webkit-sticky;
+          position: sticky;
+          top: 5rem;
+          right: 0;
+          z-index: 2;
+          height: calc(100vh - 7rem);
+          overflow-y: auto;
+          .table-of-contents {
+            font-size: 0.875rem;
+            ul {
+              padding-left: 0;
+              margin-bottom: 0;
+              list-style: none;
+              a {
+                display: block;
+                padding: 0.125rem 0 0.125rem 0.75rem;
+                color: inherit;
+                text-decoration: none;
+                border-left: 0.125rem solid transparent;
+                &.active {
+                  color: var(--bd-toc-color);
+                  border-left-color: var(--bd-toc-color);
+                }
+                &:hover {
+                  color: var(--bd-toc-color);
+                  border-left-color: var(--bd-toc-color);
+                }
+              }
+              ul {
+                padding-left: 1rem;
+              }
+            }
+          }
+        }
       }
-    }
-    .bd-toc {
-      grid-area: toc;
-      position: -webkit-sticky;
-      position: sticky;
-      top: 5rem;
-      right: 0;
-      z-index: 2;
-      height: calc(100vh - 7rem);
-      overflow-y: auto;
     }
   }
 }

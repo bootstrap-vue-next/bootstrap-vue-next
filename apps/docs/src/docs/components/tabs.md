@@ -1,5 +1,13 @@
 # Tabs
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 ## Docs to be written
 
 <ComponentReference :data="data" />

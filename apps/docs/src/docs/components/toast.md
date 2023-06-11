@@ -1,5 +1,13 @@
 # Toast
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 ## To be implemented
 
 <ComponentReference :data="data" />

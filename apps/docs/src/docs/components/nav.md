@@ -1,5 +1,13 @@
 # Nav
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Bootstrap's vue nav component is a simple wrapper for building navigation components.

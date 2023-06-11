@@ -1,5 +1,13 @@
 # Button Group
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Group a series of buttons together on a single line or stack them in a vertical column with `<b-button-group>`.

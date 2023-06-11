@@ -1,5 +1,13 @@
 # Form Textarea
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.

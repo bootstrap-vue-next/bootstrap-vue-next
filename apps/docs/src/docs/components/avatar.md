@@ -1,5 +1,13 @@
 # Avatar
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Avatars are a custom component, and are typically used to display a user profile as a
