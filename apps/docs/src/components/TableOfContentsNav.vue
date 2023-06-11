@@ -12,6 +12,9 @@
         <b-link :to="withBase('/docs/types')">Types</b-link>
       </b-list-group-item>
       <b-list-group-item>
+        <b-link :to="withBase('/docs/reference')">Reference</b-link>
+      </b-list-group-item>
+      <b-list-group-item>
         <b-link :to="withBase('/docs/migration-guide')">Migrate</b-link>
       </b-list-group-item>
     </b-list-group>

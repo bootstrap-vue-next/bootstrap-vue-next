@@ -28,6 +28,7 @@
           <b-nav-item :to="withBase('/docs')">Getting Started</b-nav-item>
           <b-nav-item :to="withBase('/docs/icons')">Icons</b-nav-item>
           <b-nav-item :to="withBase('/docs/types')">Types</b-nav-item>
+          <b-nav-item :to="withBase('/docs/reference')">Reference</b-nav-item>
           <b-nav-item :to="withBase('/docs/migration-guide')">Migrate</b-nav-item>
         </b-nav>
       </b-navbar-nav>
