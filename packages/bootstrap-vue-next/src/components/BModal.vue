@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body" :disabled="staticBoolean">
+  <teleport :to="props.to" :disabled="staticBoolean">
     <b-transition
       :no-fade="true"
       :trans-props="{enterToClass: 'show'}"
@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, useSlots} from 'vue'
+import {computed, ref, type RendererElement, useSlots} from 'vue'
 import {useBooleanish, useId, useModalManager} from '../composables'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
@@ -158,6 +158,7 @@ interface BModalProps {
   titleTag?: string
   static?: Booleanish
   autoFocusButton?: 'ok' | 'cancel' | 'close'
+  to?: string | RendererElement | null | undefined
 }
 
 const props = withDefaults(defineProps<BModalProps>(), {
@@ -208,6 +209,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   show: false,
   titleSrOnly: false,
   titleTag: 'h5',
+  to: 'body',
 })
 
 interface BModalEmits {
