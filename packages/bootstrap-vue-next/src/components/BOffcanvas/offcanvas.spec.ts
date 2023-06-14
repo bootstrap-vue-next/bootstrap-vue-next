@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import BOffcanvas from './BOffcanvas.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
@@ -7,6 +7,29 @@ describe.skip('offcanvas', () => {
   enableAutoUnmount(afterEach)
 
   // TODO afaik these tests are not finished
+
+  beforeEach(() => {
+    const el = document.createElement('div')
+    el.id = 'body-teleports'
+    document.body.appendChild(el)
+  })
+
+  afterEach(() => {
+    document.body.outerHTML = ''
+  })
+
+  it('has body teleports element set by to property', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {
+        to: '#body-teleports',
+        modelValue: true,
+      },
+      global: {stubs: {teleport: true}},
+    })
+    const div = wrapper.find('#body-teleports')
+    const offcanvas = div.find('.offcanvas')
+    expect(offcanvas.exists()).toBe(true)
+  })
 
   it('has static class offcanvas', () => {
     const wrapper = mount(BOffcanvas, {

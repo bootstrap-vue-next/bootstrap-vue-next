@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body" :disabled="staticBoolean">
+  <teleport :to="props.to" :disabled="staticBoolean">
     <b-transition
       :no-fade="true"
       :trans-props="{
@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, ref, useSlots} from 'vue'
+import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
@@ -94,6 +94,7 @@ interface BOffcanvasProps {
   noFocus?: Booleanish
   static?: Booleanish
   backdropVariant?: ColorVariant | null
+  to?: string | RendererElement | null | undefined
   // TODO responsive doesn't work
   // responsive?: Breakpoint
 }
@@ -114,6 +115,7 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   placement: 'start',
   noHeaderClose: false,
   noHeader: false,
+  to: 'body',
 })
 
 interface BOffcanvasEmits {
