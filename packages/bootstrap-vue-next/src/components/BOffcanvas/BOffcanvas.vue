@@ -15,6 +15,7 @@
     >
       <div
         v-show="modelValue"
+        :id="computedId"
         ref="element"
         aria-modal="true"
         role="dialog"
