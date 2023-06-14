@@ -15,7 +15,8 @@ describe.skip('offcanvas', () => {
   })
 
   afterEach(() => {
-    document.body.outerHTML = ''
+    const el = document.getElementById('body-teleports')
+    if (el) document.body.removeChild(el)
   })
 
   it('has body teleports element set by to property', () => {
@@ -24,11 +25,9 @@ describe.skip('offcanvas', () => {
         to: '#body-teleports',
         modelValue: true,
       },
-      global: {stubs: {teleport: true}},
     })
-    const div = wrapper.find('#body-teleports')
-    const offcanvas = div.find('.offcanvas')
-    expect(offcanvas.exists()).toBe(true)
+    expect(wrapper.exists()).toBe(true)
+    expect(document.getElementById('body-teleports')?.querySelector('.offcanvas')).not.toBe(null)
   })
 
   it('has static class offcanvas', () => {
