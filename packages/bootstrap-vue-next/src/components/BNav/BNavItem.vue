@@ -1,7 +1,7 @@
 <template>
   <li class="nav-item">
     <b-link
-      class="nav-link"
+      :class="computedLinkClasses"
       v-bind="$props"
       active-class="active"
       :tabindex="disabledBoolean ? -1 : undefined"
@@ -16,7 +16,7 @@
 import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import {omit} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {defineComponent, type SlotsType} from 'vue'
+import {computed, defineComponent, type SlotsType} from 'vue'
 
 export default defineComponent({
   slots: Object as SlotsType<{
@@ -25,11 +25,14 @@ export default defineComponent({
   components: {BLink},
   props: {
     ...omit(BLINK_PROPS, ['event', 'routerTag'] as const),
+    linkClasses: {type: String, default: null},
   },
   setup(props) {
     const disabledBoolean = useBooleanish(() => props.disabled)
 
-    return {disabledBoolean}
+    const computedLinkClasses = computed(() => ['nav-link', props.linkClasses])
+
+    return {disabledBoolean, computedLinkClasses}
   },
 })
 </script>
