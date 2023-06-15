@@ -1,5 +1,7 @@
-import type {Composables} from 'bootstrap-vue-next'
+import type {ConfigurationOption, Composables} from 'bootstrap-vue-next'
+
+export type ComposableType = keyof typeof Composables
 
 export interface ModuleOptions {
-  composables: (Partial<Record<keyof typeof Composables, boolean>> & {all: boolean}) | boolean
+  composables: ConfigurationOption<ComposableType> | boolean
 }
