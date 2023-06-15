@@ -1,5 +1,19 @@
 # Link
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
+<div class="lead mb-5">
+
+Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `<router-link>`. `<b-link>` supports the disabled state and click event propagation.
+
+</div>
+
 ## Links without Router
 
 By defaut links with no options will default to # location.

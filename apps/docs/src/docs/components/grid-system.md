@@ -1,5 +1,13 @@
 # Grid System
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Bootstrap Vue offers several utility components to assist in building your grid layout.

@@ -1,5 +1,13 @@
 # Form
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 BootstrapVueNext form component and helper components that optionally support inline form styles and

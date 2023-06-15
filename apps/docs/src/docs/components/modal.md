@@ -1,5 +1,19 @@
 # Modal
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
+<div class="lead mb-5">
+
+Modals are streamlined, but flexible dialog prompts powered by JavaScript and CSS. They support a number of use cases from user notification to completely custom content and feature a handful of helpful sub-components, sizes, variants, accessibility, and more.
+
+</div>
+
 ## Usage
 
 <HighlightCard>

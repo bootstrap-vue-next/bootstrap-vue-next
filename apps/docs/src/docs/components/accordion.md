@@ -1,5 +1,13 @@
 # Accordion
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Build vertically collapsing accordions in combination with `<b-collapse>` component.

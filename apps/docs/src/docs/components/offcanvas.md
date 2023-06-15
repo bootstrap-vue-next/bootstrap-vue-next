@@ -1,5 +1,13 @@
 # Offcanvas
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Build hidden sidebars into your project. Sidebars can aid in enhancing user interaction or preventing further interaction.

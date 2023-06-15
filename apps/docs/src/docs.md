@@ -1,5 +1,13 @@
 # Introduction
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead">
 
 Get started with BootstrapVueNext and Bootstrap `v5`, the world’s most popular framework for building responsive, mobile-first sites.
@@ -201,7 +209,7 @@ app.mount('#app')
 
 </b-card>
 
-### Installation - Nuxt.js 3 <a id="nuxtjs" class="anchorjs-link"></a>
+### Installation - Nuxt.js 3
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`.
 
