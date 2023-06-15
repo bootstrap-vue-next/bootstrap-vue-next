@@ -19,10 +19,10 @@ describe.skip('offcanvas', () => {
     if (el) document.body.removeChild(el)
   })
 
-  it('has body teleports element set by to property', () => {
+  it('has body teleports element set by teleportTo property', () => {
     const wrapper = mount(BOffcanvas, {
       props: {
-        to: '#body-teleports',
+        teleportTo: '#body-teleports',
         modelValue: true,
       },
     })

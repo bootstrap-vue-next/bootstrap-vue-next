@@ -1,5 +1,5 @@
 <template>
-  <teleport :to="props.to" :disabled="staticBoolean">
+  <teleport :to="props.teleportTo" :disabled="teleportDisabledBoolean">
     <b-transition
       :no-fade="true"
       :trans-props="{
@@ -93,9 +93,9 @@ interface BOffcanvasProps {
   lazy?: Booleanish
   id?: string
   noFocus?: Booleanish
-  static?: Booleanish
   backdropVariant?: ColorVariant | null
-  to?: string | RendererElement | null | undefined
+  teleportDisabled?: Booleanish
+  teleportTo?: string | RendererElement | null | undefined
   // TODO responsive doesn't work
   // responsive?: Breakpoint
 }
@@ -105,7 +105,6 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   id: undefined,
   title: undefined,
   modelValue: false,
-  static: false,
   backdropVariant: 'dark',
   noFocus: false,
   bodyScrolling: false,
@@ -116,7 +115,8 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   placement: 'start',
   noHeaderClose: false,
   noHeader: false,
-  to: 'body',
+  teleportDisabled: false,
+  teleportTo: 'body',
 })
 
 interface BOffcanvasEmits {
@@ -167,7 +167,7 @@ const noFocusBoolean = useBooleanish(() => props.noFocus)
 const noCloseOnBackdropBoolean = useBooleanish(() => props.noCloseOnBackdrop)
 const noCloseOnEscBoolean = useBooleanish(() => props.noCloseOnEsc)
 const lazyBoolean = useBooleanish(() => props.lazy)
-const staticBoolean = useBooleanish(() => props.static)
+const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
 const computedId = useId(() => props.id, 'offcanvas')
 
