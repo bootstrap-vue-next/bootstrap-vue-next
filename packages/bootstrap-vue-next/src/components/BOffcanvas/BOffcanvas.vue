@@ -65,8 +65,8 @@
 import {computed, nextTick, ref, useSlots} from 'vue'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, ColorVariant, Size} from '../../types'
-import {BvTriggerableEvent, isBooleanish, isEmptySlot, resolveBooleanish} from '../../utils'
+import type {Booleanish, ColorVariant} from '../../types'
+import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
@@ -97,9 +97,6 @@ interface BOffcanvasProps {
   headerClass?: string
   bodyClass?: string
   footerClass?: string
-  bgVariant?: ColorVariant | null
-  textVariant?: ColorVariant | null
-  shadow: Booleanish | Size
   // TODO responsive doesn't work
   // responsive?: Breakpoint
 }
@@ -123,9 +120,6 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   headerClass: undefined,
   bodyClass: undefined,
   footerClass: undefined,
-  bgVariant: undefined,
-  textVariant: undefined,
-  shadow: false,
 })
 
 interface BOffcanvasEmits {
@@ -200,14 +194,6 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const shadowResolved = computed<boolean | Size>(() => {
-  let resolved = isBooleanish(props.shadow) ? resolveBooleanish(props.shadow) : props.shadow
-  if (resolved === true) {
-    resolved = 'md'
-  }
-  return resolved
-})
-
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
@@ -215,9 +201,6 @@ const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
   {
     show: modelValueBoolean.value && isActive.value === true,
-    [`bg-${props.bgVariant}`]: props.bgVariant !== null,
-    [`text-${props.textVariant}`]: props.textVariant !== null,
-    [`shadow-${shadowResolved.value}`]: shadowResolved.value !== false,
   },
 ])
 

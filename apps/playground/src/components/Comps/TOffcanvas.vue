@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-offcanvas v-model="showOffcanvas" title="Title" header-class="bg-success">
+    <b-offcanvas v-model="showOffcanvas" title="Title">
       content
     </b-offcanvas>    
 
