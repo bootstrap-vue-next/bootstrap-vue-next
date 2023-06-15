@@ -120,7 +120,7 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   noHeader: false,
   headerClass: undefined,
   bodyClass: undefined,
-  footerClass: undefined,  
+  footerClass: undefined,
   teleportDisabled: false,
   teleportTo: 'body',
 })
