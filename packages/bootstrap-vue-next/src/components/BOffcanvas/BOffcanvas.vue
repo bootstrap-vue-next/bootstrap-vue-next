@@ -1,5 +1,5 @@
 <template>
-  <teleport :to="props.teleportTo" :disabled="teleportDisabledBoolean">
+  <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
     <b-transition
       :no-fade="true"
       :trans-props="{
