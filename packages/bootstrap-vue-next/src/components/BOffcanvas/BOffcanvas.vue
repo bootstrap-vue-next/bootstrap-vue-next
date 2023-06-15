@@ -94,6 +94,9 @@ interface BOffcanvasProps {
   id?: string
   noFocus?: Booleanish
   backdropVariant?: ColorVariant | null
+  headerClass?: string
+  bodyClass?: string
+  footerClass?: string
   teleportDisabled?: Booleanish
   teleportTo?: string | RendererElement | null | undefined
   // TODO responsive doesn't work
@@ -115,6 +118,9 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   placement: 'start',
   noHeaderClose: false,
   noHeader: false,
+  headerClass: undefined,
+  bodyClass: undefined,
+  footerClass: undefined,  
   teleportDisabled: false,
   teleportTo: 'body',
 })
