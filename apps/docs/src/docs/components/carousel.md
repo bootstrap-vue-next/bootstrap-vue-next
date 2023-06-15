@@ -1,5 +1,13 @@
 # Carousel
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 The Carousel is a slideshow for cycling through a series of content.

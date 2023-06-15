@@ -1,5 +1,13 @@
 # Form Spinbutton
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 The Form SpinButton allows the user to adjusting a numeric range with finite control.

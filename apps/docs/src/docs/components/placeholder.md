@@ -1,5 +1,13 @@
 # Placeholder
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Placeholders are components that indicate that something may still be loading.

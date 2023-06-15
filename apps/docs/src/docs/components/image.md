@@ -1,5 +1,13 @@
 # Image
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Documentation and examples for opting images (via `<b-img>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.

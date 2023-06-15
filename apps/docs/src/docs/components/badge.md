@@ -1,5 +1,13 @@
 # Badge
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Documentation and examples for badges, our small count and labeling component.

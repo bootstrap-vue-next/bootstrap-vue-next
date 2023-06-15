@@ -1,5 +1,13 @@
 # Button Toolbar
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Group a series of button-groups and/or input-groups together on a single line.
