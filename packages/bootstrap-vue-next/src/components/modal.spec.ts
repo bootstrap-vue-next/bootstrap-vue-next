@@ -20,7 +20,7 @@ describe('modal', () => {
   it('has body teleports element set by to property', () => {
     const wrapper = mount(BModal, {
       props: {
-        to: '#body-teleports',
+        teleportTo: '#body-teleports',
       },
     })
     expect(wrapper.exists()).toBe(true)
