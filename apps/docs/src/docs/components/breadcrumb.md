@@ -1,5 +1,13 @@
 # Breadcrumb
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Indicate the current page's location within a navigational hierarchy. Separators are automatically added in CSS through `::before` and `content`.
