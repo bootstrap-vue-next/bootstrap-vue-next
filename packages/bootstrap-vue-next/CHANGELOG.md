@@ -1,6 +1,20 @@
 # Changelog
 
 
+## [0.9.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.5...bootstrap-vue-next-v0.9.6) (2023-06-16)
+
+
+### Features
+
+* **BNavItem:** adds linkClasses property. ([3521a85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3521a85a180314f8860070ae02318034021c4e2f))
+* **BNavItemDropdown:** adds open, close and toggle methods. ([683c51d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/683c51dcd52563f4ffaf54a3ed67cedf3954ed76))
+
+
+### Bug Fixes
+
+* **BFormGroup:** allow Booleanish and null for state prop ([f952450](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f952450e053f96ad00d65f406809ffecfab70c9d)), closes [#1167](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1167)
+* **BOffcanvas:** respect manually set property id. ([ae3f09f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ae3f09f90b4c9a6425bfc8fba8218a593d600adf))
+
 ## [0.9.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.4...bootstrap-vue-next-v0.9.5) (2023-05-31)
 
 
