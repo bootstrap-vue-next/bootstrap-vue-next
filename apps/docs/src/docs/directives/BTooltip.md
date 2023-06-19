@@ -1,5 +1,13 @@
 # Tooltip
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <b-card class="bg-body-tertiary">
 
 ```vue-html

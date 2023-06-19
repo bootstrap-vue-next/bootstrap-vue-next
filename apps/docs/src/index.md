@@ -1,5 +1,13 @@
 # Introduction
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 With BootstrapVueNext you can build fast, responsive, and ARIA accessible projects on the web using Vue.js and Bootstrap v5.
@@ -47,7 +55,7 @@ With more than 35 components, several directives and composibles (and growing), 
 
 Easily integrate BootstrapVueNext into your Nuxt.js projects using our included Nuxt.js module. You can optionally specify only the components, directives and/or plugins you require.
 
-<b-button variant="secondary" :to="withBase('/docs#nuxtjs')" class="mt-3">BootstrapVueNext Nuxt.js module</b-button>
+<b-button variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="mt-3">BootstrapVueNext Nuxt.js module</b-button>
 
 <script setup lang="ts">
 import {

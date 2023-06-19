@@ -1,5 +1,13 @@
 # Button
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Use Bootstrap's custom `b-button` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more.

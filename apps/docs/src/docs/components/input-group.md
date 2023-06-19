@@ -1,5 +1,13 @@
 # Input Group
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs.

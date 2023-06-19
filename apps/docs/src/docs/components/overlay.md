@@ -1,5 +1,13 @@
 # Overlay
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
 <div class="lead mb-5">
 
 BootstrapVueNext's custom `b-overlay` component is used to _visually obscure_ a particular element or component and its content. It signals to the user of a state change within the element or component and can be used for creating loaders, warnings/alerts, prompts, and more.

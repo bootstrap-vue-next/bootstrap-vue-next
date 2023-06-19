@@ -1,8 +1,26 @@
 # Form Tags
 
+<ClientOnly>
+  <Teleport to=".bd-toc">
+
+[[toc]]
+
+  </Teleport>
+</ClientOnly>
+
+<div class="lead mb-5">
+
+Lightweight custom tagged input form control, with options for customized interface rendering, duplicate tag detection and optional tag validation.
+
+</div>
+
+Tags are arrays of short strings, used in various ways such as assigning categories. Use the default user interface, or create your own custom interface via the use of the default scoped slot.
+
 ## Docs to be written
 
 ## Example
+
+<b-card class="bg-body-tertiary">
 
 ```vue
 <template>
@@ -15,3 +33,9 @@
 const value = ref<string[]>(['apple', 'orange'])
 </script>
 ```
+
+</b-card>
+
+<script setup lang="ts">
+import {BCard} from 'bootstrap-vue-next'
+</script>

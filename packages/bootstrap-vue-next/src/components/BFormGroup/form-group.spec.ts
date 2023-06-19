@@ -31,6 +31,14 @@ describe('form-group', () => {
     expect(wrapper.classes()).toContain('is-invalid')
   })
 
+  it('does not contain a valid class when prop state is null', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {state: null},
+    })
+    expect(wrapper.classes()).not.toContain('is-valid')
+    expect(wrapper.classes()).not.toContain('is-invalid')
+  })
+
   it('does not contain a valid class when prop state is undefined', () => {
     const wrapper = mount(BFormGroup, {
       props: {state: undefined},
