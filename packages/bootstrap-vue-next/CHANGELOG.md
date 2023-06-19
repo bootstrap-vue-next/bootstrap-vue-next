@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.6...bootstrap-vue-next-v0.9.7) (2023-06-19)
+
+
+### Bug Fixes
+
+* **BOffcanvas:** toggle offcanvas with toggle directive. ([e4d47f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e4d47f5b0428ff155f69d7b11073f1711bb878e5))
+
 ## [0.9.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.5...bootstrap-vue-next-v0.9.6) (2023-06-16)
 
 
