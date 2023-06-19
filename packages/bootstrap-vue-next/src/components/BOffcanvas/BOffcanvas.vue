@@ -158,7 +158,7 @@ defineSlots<{
 
 const slots = useSlots()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
 // TODO
