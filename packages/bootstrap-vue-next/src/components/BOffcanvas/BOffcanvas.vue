@@ -102,6 +102,18 @@ interface BOffcanvasProps {
   // responsive?: Breakpoint
 }
 
+interface BOffcanvasEmits {
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'esc', value: BvTriggerableEvent): void
+  (e: 'close', value: BvTriggerableEvent): void
+}
+
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
   dismissLabel: 'Close',
   id: undefined,
@@ -122,18 +134,6 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   bodyClass: undefined,
   footerClass: undefined,
 })
-
-interface BOffcanvasEmits {
-  (e: 'update:modelValue', value: boolean): void
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'esc', value: BvTriggerableEvent): void
-  (e: 'close', value: BvTriggerableEvent): void
-}
 
 const emit = defineEmits<BOffcanvasEmits>()
 

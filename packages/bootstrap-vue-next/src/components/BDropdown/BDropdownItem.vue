@@ -33,6 +33,10 @@ interface BDropdownItemProps {
   variant?: ColorVariant | null
 }
 
+interface BDropdownItemEmits {
+  (e: 'click', value: MouseEvent): void
+}
+
 const props = withDefaults(defineProps<BDropdownItemProps>(), {
   active: false,
   disabled: false,
@@ -43,14 +47,10 @@ const props = withDefaults(defineProps<BDropdownItemProps>(), {
   href: undefined,
 })
 
+const emit = defineEmits<BDropdownItemEmits>()
+
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
-
-interface BDropdownItemEmits {
-  (e: 'click', value: MouseEvent): void
-}
-
-const emit = defineEmits<BDropdownItemEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

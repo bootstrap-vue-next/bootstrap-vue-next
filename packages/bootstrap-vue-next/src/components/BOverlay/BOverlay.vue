@@ -34,7 +34,7 @@ import {useBooleanish} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
 
-interface Props {
+interface BOverlayProps {
   bgColor?: string
   blur?: string
   fixed?: Booleanish
@@ -54,7 +54,13 @@ interface Props {
   zIndex?: number | string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+interface BOverlayEmits {
+  (e: 'click', value: MouseEvent): void
+  (e: 'hidden'): void
+  (e: 'shown'): void
+}
+
+const props = withDefaults(defineProps<BOverlayProps>(), {
   blur: '2px',
   bgColor: undefined,
   spinnerVariant: undefined,
@@ -74,13 +80,7 @@ const props = withDefaults(defineProps<Props>(), {
   zIndex: 10,
 })
 
-interface Emits {
-  (e: 'click', value: MouseEvent): void
-  (e: 'hidden'): void
-  (e: 'shown'): void
-}
-
-const emit = defineEmits<Emits>()
+const emit = defineEmits<BOverlayEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

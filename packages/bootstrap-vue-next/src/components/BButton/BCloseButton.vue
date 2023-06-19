@@ -21,16 +21,16 @@ interface BCloseButtonProps {
   type?: ButtonType
 }
 
+interface BCloseButtonEmits {
+  (e: 'click', value: MouseEvent): void
+}
+
 const props = withDefaults(defineProps<BCloseButtonProps>(), {
   ariaLabel: 'Close',
   disabled: false,
   white: false,
   type: 'button',
 })
-
-interface BCloseButtonEmits {
-  (e: 'click', value: MouseEvent): void
-}
 
 const emit = defineEmits<BCloseButtonEmits>()
 

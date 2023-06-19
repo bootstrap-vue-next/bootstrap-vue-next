@@ -65,6 +65,21 @@ interface BFormCheckboxProps {
   modelValue?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
 }
 
+interface BFormCheckboxEmits {
+  (
+    e: 'update:modelValue',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+  ): void
+  (
+    e: 'input',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+  ): void
+  (
+    e: 'change',
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+  ): void
+}
+
 const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   ariaLabel: undefined,
   ariaLabelledBy: undefined,
@@ -87,21 +102,6 @@ const props = withDefaults(defineProps<BFormCheckboxProps>(), {
   value: true,
   uncheckedValue: false,
 })
-
-interface BFormCheckboxEmits {
-  (
-    e: 'update:modelValue',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ): void
-  (
-    e: 'input',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ): void
-  (
-    e: 'change',
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ): void
-}
 
 const emit = defineEmits<BFormCheckboxEmits>()
 

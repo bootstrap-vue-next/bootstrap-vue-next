@@ -53,6 +53,12 @@ interface BAlertProps {
   showOnPause?: Booleanish
 }
 
+interface BAlertEmits {
+  (e: 'closed'): void
+  (e: 'close-countdown', value: number): void
+  (e: 'update:modelValue', value: boolean | number): void
+}
+
 const props = withDefaults(defineProps<BAlertProps>(), {
   closeContent: undefined,
   closeVariant: 'secondary',
@@ -66,12 +72,6 @@ const props = withDefaults(defineProps<BAlertProps>(), {
   immediate: true,
   showOnPause: true,
 })
-
-interface BAlertEmits {
-  (e: 'closed'): void
-  (e: 'close-countdown', value: number): void
-  (e: 'update:modelValue', value: boolean | number): void
-}
 
 const emit = defineEmits<BAlertEmits>()
 

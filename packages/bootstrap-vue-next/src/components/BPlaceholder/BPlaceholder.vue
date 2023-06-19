@@ -18,7 +18,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface Props {
+interface BPlaceholderProps {
   tag?: string
   wrapperTag?: string
   width?: string | number
@@ -28,7 +28,7 @@ interface Props {
   animation?: PlaceholderAnimation
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BPlaceholderProps>(), {
   variant: null,
   size: 'md',
   animation: undefined,

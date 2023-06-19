@@ -13,7 +13,7 @@ import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
-interface Props {
+interface BNavbarProps {
   fixed?: 'top' | 'bottom'
   print?: Booleanish
   sticky?: 'top' | 'bottom'
@@ -24,7 +24,7 @@ interface Props {
   container?: 'fluid' | boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BNavbarProps>(), {
   variant: null,
   sticky: undefined,
   fixed: undefined,

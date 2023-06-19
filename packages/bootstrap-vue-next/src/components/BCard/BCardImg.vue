@@ -24,6 +24,10 @@ interface BCardImgProps {
   width?: number | string
 }
 
+interface BCardImgEmits {
+  (e: 'load', value: Event): void
+}
+
 const props = withDefaults(defineProps<BCardImgProps>(), {
   sizes: undefined,
   src: undefined,
@@ -40,11 +44,7 @@ const props = withDefaults(defineProps<BCardImgProps>(), {
   blank: false,
 })
 
-interface Emits {
-  (e: 'load', value: Event): void
-}
-
-const emit = defineEmits<Emits>()
+const emit = defineEmits<BCardImgEmits>()
 
 const bottomBoolean = useBooleanish(() => props.bottom)
 const endBoolean = useBooleanish(() => props.end)

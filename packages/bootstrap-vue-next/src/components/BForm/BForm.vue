@@ -21,6 +21,10 @@ interface BFormProps {
   validated?: Booleanish
 }
 
+interface BFormEmits {
+  (e: 'submit', value: Event): void
+}
+
 const props = withDefaults(defineProps<BFormProps>(), {
   floating: false,
   id: undefined,
@@ -28,15 +32,11 @@ const props = withDefaults(defineProps<BFormProps>(), {
   validated: false,
 })
 
+const emit = defineEmits<BFormEmits>()
+
 const floatingBoolean = useBooleanish(() => props.floating)
 const novalidateBoolean = useBooleanish(() => props.novalidate)
 const validatedBoolean = useBooleanish(() => props.validated)
-
-interface BFormEmits {
-  (e: 'submit', value: Event): void
-}
-
-const emit = defineEmits<BFormEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

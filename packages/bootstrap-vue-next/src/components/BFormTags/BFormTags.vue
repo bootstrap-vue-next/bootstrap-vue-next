@@ -158,6 +158,16 @@ interface BFormTagsProps {
   tagVariant?: ColorVariant | null
 }
 
+interface BFormTagsEmits {
+  (e: 'update:modelValue', value: string[]): void
+  (e: 'input', value: string[]): void
+  (e: 'tag-state', ...args: string[][]): void
+  (e: 'focus', value: FocusEvent): void
+  (e: 'focusin', value: FocusEvent): void
+  (e: 'focusout', value: FocusEvent): void
+  (e: 'blur', value: FocusEvent): void
+}
+
 const props = withDefaults(defineProps<BFormTagsProps>(), {
   inputAttrs: undefined,
   tagRemoveLabel: undefined,
@@ -191,16 +201,6 @@ const props = withDefaults(defineProps<BFormTagsProps>(), {
   tagValidator: () => true,
   tagVariant: 'secondary',
 })
-
-interface BFormTagsEmits {
-  (e: 'update:modelValue', value: string[]): void
-  (e: 'input', value: string[]): void
-  (e: 'tag-state', ...args: string[][]): void
-  (e: 'focus', value: FocusEvent): void
-  (e: 'focusin', value: FocusEvent): void
-  (e: 'focusout', value: FocusEvent): void
-  (e: 'blur', value: FocusEvent): void
-}
 
 const emit = defineEmits<BFormTagsEmits>()
 

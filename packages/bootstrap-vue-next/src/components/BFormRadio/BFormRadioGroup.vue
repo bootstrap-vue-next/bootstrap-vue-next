@@ -49,6 +49,15 @@ interface BFormRadioGroupProps {
   valueField?: string
 }
 
+interface BFormRadioGroupEmits {
+  (e: 'input', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
+  (
+    e: 'update:modelValue',
+    value: string | boolean | unknown[] | Record<string, unknown> | number | null
+  ): void
+  (e: 'change', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
+}
+
 const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   size: 'md',
   form: undefined,
@@ -71,15 +80,6 @@ const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
   validated: false,
   valueField: 'value',
 })
-
-interface BFormRadioGroupEmits {
-  (e: 'input', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
-  (
-    e: 'update:modelValue',
-    value: string | boolean | unknown[] | Record<string, unknown> | number | null
-  ): void
-  (e: 'change', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
-}
 
 const emit = defineEmits<BFormRadioGroupEmits>()
 

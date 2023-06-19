@@ -40,6 +40,10 @@ interface BFormTagProps {
   variant?: ColorVariant | null
 }
 
+interface BFormTagEmits {
+  (e: 'remove', value: string): void
+}
+
 const props = withDefaults(defineProps<BFormTagProps>(), {
   id: undefined,
   title: undefined,
@@ -50,10 +54,6 @@ const props = withDefaults(defineProps<BFormTagProps>(), {
   tag: 'span',
   variant: 'secondary',
 })
-
-interface BFormTagEmits {
-  (e: 'remove', value: string): void
-}
 
 const emit = defineEmits<BFormTagEmits>()
 

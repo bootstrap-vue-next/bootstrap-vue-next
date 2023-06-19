@@ -12,27 +12,39 @@
   </li>
 </template>
 
-<script lang="ts">
-import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
-import {omit} from '../../utils'
+<script setup lang="ts">
+import BLink, {type BLinkProps} from '../BLink/BLink.vue'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, type SlotsType} from 'vue'
+import {computed} from 'vue'
 
-export default defineComponent({
-  slots: Object as SlotsType<{
-    default?: Record<string, never>
-  }>,
-  components: {BLink},
-  props: {
-    ...omit(BLINK_PROPS, ['event', 'routerTag'] as const),
-    linkClasses: {type: String, default: null},
-  },
-  setup(props) {
-    const disabledBoolean = useBooleanish(() => props.disabled)
+defineSlots<{
+  default?: Record<string, never>
+}>()
 
-    const computedLinkClasses = computed(() => ['nav-link', props.linkClasses])
+interface BNavItemProps {
+  linkClasses?: string
+}
 
-    return {disabledBoolean, computedLinkClasses}
-  },
+const props = withDefaults(defineProps<BNavItemProps & Omit<BLinkProps, 'event' | 'routerTag'>>(), {
+  linkClasses: undefined,
+  // Link props
+  active: undefined,
+  activeClass: 'router-link-active',
+  append: false,
+  disabled: false,
+  href: undefined,
+  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+  rel: undefined,
+  replace: false,
+  routerComponentName: 'router-link',
+  target: '_self',
+  to: undefined,
+  variant: undefined,
+  // End link props
 })
+
+const disabledBoolean = useBooleanish(() => props.disabled)
+
+const computedLinkClasses = computed(() => ['nav-link', props.linkClasses])
 </script>

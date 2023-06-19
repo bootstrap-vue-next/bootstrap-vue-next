@@ -49,6 +49,10 @@ interface BNavItemDropdownProps {
   menuClass?: ClassValue
 }
 
+interface BNavItemDropdownEmits {
+  (e: 'update:modelValue', value: boolean): void
+}
+
 const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
   lazy: undefined,
   strategy: undefined,
@@ -74,11 +78,7 @@ const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
   modelValue: false,
 })
 
-interface Emits {
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const emit = defineEmits<Emits>()
+const emit = defineEmits<BNavItemDropdownEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -7,7 +7,7 @@ import BPlaceholder from './BPlaceholder.vue'
 import type {ColorVariant, PlaceholderAnimation} from '../../types'
 import {computed} from 'vue'
 
-interface Props {
+interface BPlaceholderButtonProps {
   tag?: string
   width?: string | number
   cols?: string | number
@@ -15,7 +15,7 @@ interface Props {
   animation?: PlaceholderAnimation
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BPlaceholderButtonProps>(), {
   tag: 'div',
   width: undefined,
   cols: undefined,

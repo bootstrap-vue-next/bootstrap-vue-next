@@ -160,6 +160,19 @@ interface BModalProps {
   autoFocusButton?: 'ok' | 'cancel' | 'close'
 }
 
+interface BModalEmits {
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'ok', value: BvTriggerableEvent): void
+  (e: 'cancel', value: BvTriggerableEvent): void
+  (e: 'close', value: BvTriggerableEvent): void
+}
+
 const props = withDefaults(defineProps<BModalProps>(), {
   bodyBgVariant: null,
   bodyClass: undefined,
@@ -209,19 +222,6 @@ const props = withDefaults(defineProps<BModalProps>(), {
   titleSrOnly: false,
   titleTag: 'h5',
 })
-
-interface BModalEmits {
-  (e: 'update:modelValue', value: boolean): void
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'ok', value: BvTriggerableEvent): void
-  (e: 'cancel', value: BvTriggerableEvent): void
-  (e: 'close', value: BvTriggerableEvent): void
-}
 
 const emit = defineEmits<BModalEmits>()
 

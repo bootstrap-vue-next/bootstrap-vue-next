@@ -19,23 +19,23 @@ import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface Props {
+interface BNavbarToggleProps {
   disabled?: Booleanish
   label?: string
   target?: string | string[]
 }
 
-const props = withDefaults(defineProps<Props>(), {
+interface BNavbarToggleEmits {
+  (e: 'click', value: MouseEvent): void
+}
+
+const props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',
   disabled: false,
   target: undefined,
 })
 
-interface Emits {
-  (e: 'click', value: MouseEvent): void
-}
-
-const emit = defineEmits<Emits>()
+const emit = defineEmits<BNavbarToggleEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
