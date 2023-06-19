@@ -91,6 +91,12 @@ interface BCarouselProps {
   touchThreshold?: number | string
 }
 
+interface BCarouselEmits {
+  (e: 'slid', value: BvCarouselEvent): void
+  (e: 'slide', value: BvCarouselEvent): void
+  (e: 'update:modelValue', value: number): void
+}
+
 const props = withDefaults(defineProps<BCarouselProps>(), {
   id: undefined,
   imgHeight: undefined,
@@ -112,12 +118,6 @@ const props = withDefaults(defineProps<BCarouselProps>(), {
   indicatorsButtonLabel: 'Slide',
   touchThreshold: 50,
 })
-
-interface BCarouselEmits {
-  (e: 'slid', value: BvCarouselEvent): void
-  (e: 'slide', value: BvCarouselEvent): void
-  (e: 'update:modelValue', value: number): void
-}
 
 const emit = defineEmits<BCarouselEmits>()
 

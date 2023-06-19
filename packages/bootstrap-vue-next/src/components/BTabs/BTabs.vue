@@ -108,6 +108,12 @@ interface BTabsProps {
   modelValue?: number
 }
 
+interface BTabsEmits {
+  (e: 'update:modelValue', value: number): void
+  (e: 'activate-tab', v1: number, v2: number, v3: BvEvent): void
+  (e: 'click'): void // TODO click event is never used
+}
+
 const props = withDefaults(defineProps<BTabsProps>(), {
   navClass: undefined,
   navWrapperClass: undefined,
@@ -129,12 +135,6 @@ const props = withDefaults(defineProps<BTabsProps>(), {
   vertical: false,
   modelValue: -1,
 })
-
-interface BTabsEmits {
-  (e: 'update:modelValue', value: number): void
-  (e: 'activate-tab', v1: number, v2: number, v3: BvEvent): void
-  (e: 'click'): void // TODO click event is never used
-}
 
 const emit = defineEmits<BTabsEmits>()
 

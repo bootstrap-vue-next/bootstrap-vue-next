@@ -18,6 +18,10 @@ interface BAccordionProps {
   modelValue?: string
 }
 
+interface BAccordionEmits {
+  (e: 'update:modelValue', value: string): void
+}
+
 const props = withDefaults(defineProps<BAccordionProps>(), {
   flush: false,
   free: false,
@@ -25,7 +29,7 @@ const props = withDefaults(defineProps<BAccordionProps>(), {
   modelValue: undefined,
 })
 
-const emit = defineEmits<(e: 'update:modelValue', value: string) => void>()
+const emit = defineEmits<BAccordionEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

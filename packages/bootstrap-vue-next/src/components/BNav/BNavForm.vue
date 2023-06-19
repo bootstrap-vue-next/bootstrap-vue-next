@@ -9,7 +9,7 @@ import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import BForm from '../BForm/BForm.vue'
 
-interface Props {
+interface BNavFormProps {
   role?: string
   id?: string // Extend BFormProps
   floating?: Booleanish
@@ -17,17 +17,17 @@ interface Props {
   validated?: Booleanish
 }
 
-const props = withDefaults(defineProps<Props>(), {
+interface BNavFormEmits {
+  (e: 'submit', value: Event): void
+}
+
+const props = withDefaults(defineProps<BNavFormProps>(), {
   role: undefined,
   id: undefined,
   floating: false,
   novalidate: false,
   validated: false,
 })
-
-interface BNavFormEmits {
-  (e: 'submit', value: Event): void
-}
 
 const emit = defineEmits<BNavFormEmits>()
 

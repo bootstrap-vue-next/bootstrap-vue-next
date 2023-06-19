@@ -55,6 +55,15 @@ interface BFormRadioProps {
   value?: string | boolean | Record<string, unknown> | number
 }
 
+interface BFormRadioEmits {
+  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
+  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
+  (
+    e: 'update:modelValue',
+    value: boolean | string | unknown[] | Record<string, unknown> | number | null
+  ): void
+}
+
 const props = withDefaults(defineProps<BFormRadioProps>(), {
   ariaLabel: undefined,
   ariaLabelledby: undefined,
@@ -74,15 +83,6 @@ const props = withDefaults(defineProps<BFormRadioProps>(), {
   required: false,
   value: true,
 })
-
-interface BFormRadioEmits {
-  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
-  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
-  (
-    e: 'update:modelValue',
-    value: boolean | string | unknown[] | Record<string, unknown> | number | null
-  ): void
-}
 
 const emit = defineEmits<BFormRadioEmits>()
 

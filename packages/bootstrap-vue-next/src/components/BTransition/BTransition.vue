@@ -9,14 +9,14 @@ import type {Booleanish, TransitionMode} from '../../types'
 import {computed, type TransitionProps} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface Props {
+interface BTransitionProps {
   appear?: Booleanish
   mode?: TransitionMode
   noFade?: Booleanish
   transProps?: TransitionProps
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BTransitionProps>(), {
   appear: false,
   noFade: false,
   transProps: undefined,

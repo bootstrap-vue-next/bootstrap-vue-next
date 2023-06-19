@@ -58,6 +58,16 @@ interface BAccordionItemProps {
   isNav?: Booleanish
 }
 
+interface BAccordionItemEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'update:modelValue', value: boolean): void
+}
+
 const props = withDefaults(defineProps<BAccordionItemProps>(), {
   headerTag: 'h2',
   id: undefined,
@@ -69,16 +79,6 @@ const props = withDefaults(defineProps<BAccordionItemProps>(), {
   modelValue: false,
   visible: false,
 })
-
-interface BAccordionItemEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
 
 const emit = defineEmits<BAccordionItemEmits>()
 

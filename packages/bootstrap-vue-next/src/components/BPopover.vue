@@ -100,11 +100,6 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface DelayObject {
-  show: number
-  hide: number
-}
-
 interface BPopoverProps {
   modelValue?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
@@ -125,7 +120,12 @@ interface BPopoverProps {
   content?: string
   id?: string
   title?: string
-  delay?: number | DelayObject
+  delay?:
+    | number
+    | {
+        show: number
+        hide: number
+      }
   click?: Booleanish
   manual?: Booleanish
   variant?: ColorVariant | null
@@ -143,6 +143,16 @@ interface BPopoverProps {
   inline?: Booleanish
   tooltip?: Booleanish
   html?: Booleanish
+}
+
+interface BPopoverEmits {
+  (e: 'show', value: BvTriggerableEvent): void
+  (e: 'shown', value: BvTriggerableEvent): void
+  (e: 'hide', value: BvTriggerableEvent): void
+  (e: 'hidden', value: BvTriggerableEvent): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'update:modelValue', value: boolean): void
 }
 
 const props = withDefaults(defineProps<BPopoverProps>(), {
@@ -172,16 +182,6 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   reference: null,
   target: null,
 })
-
-interface BPopoverEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
 
 const emit = defineEmits<BPopoverEmits>()
 
