@@ -89,7 +89,7 @@ defineSlots<{
   'button-content'?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
 
@@ -100,4 +100,20 @@ const dropdownValue = computed({
   },
 })
 const usableProps = computed(() => omit(props, ['modelValue'] as const))
+
+const close = () => {
+  modelValue.value = false
+}
+const open = () => {
+  modelValue.value = true
+}
+const toggle = () => {
+  modelValue.value = !modelValueBoolean.value
+}
+
+defineExpose({
+  close,
+  open,
+  toggle,
+})
 </script>

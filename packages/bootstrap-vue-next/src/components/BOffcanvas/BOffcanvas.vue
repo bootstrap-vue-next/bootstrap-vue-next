@@ -27,7 +27,7 @@
         @keyup.esc="hide('esc')"
       >
         <template v-if="lazyShowing">
-          <div v-if="!noHeaderBoolean" class="offcanvas-header">
+          <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
             <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
               <h5 id="offcanvasLabel" class="offcanvas-title">
                 <slot name="title">
@@ -42,10 +42,10 @@
               />
             </slot>
           </div>
-          <div class="offcanvas-body">
+          <div class="offcanvas-body" :class="bodyClass">
             <slot />
           </div>
-          <div v-if="hasFooterSlot">
+          <div v-if="hasFooterSlot" :class="footerClass">
             <slot name="footer" v-bind="{visible: modelValueBoolean, placement, hide}" />
           </div>
         </template>

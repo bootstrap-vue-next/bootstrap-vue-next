@@ -66,7 +66,7 @@ export default defineComponent({
     labelFor: {type: String, default: undefined},
     labelSize: {type: String, default: undefined},
     labelSrOnly: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    state: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    state: {type: [Boolean, String] as PropType<Booleanish | null>, default: null},
     tooltip: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     validFeedback: {type: String, default: undefined},
     validated: {type: [Boolean, String] as PropType<Booleanish>, default: false},
