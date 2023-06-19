@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body" :disabled="staticBoolean">
+  <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
     <b-transition
       :no-fade="true"
       :trans-props="{enterToClass: 'show'}"
@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, useSlots} from 'vue'
+import {computed, ref, type RendererElement, useSlots} from 'vue'
 import {useBooleanish, useId, useModalManager} from '../composables'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
@@ -156,8 +156,9 @@ interface BModalProps {
   titleClass?: string
   titleSrOnly?: Booleanish
   titleTag?: string
-  static?: Booleanish
   autoFocusButton?: 'ok' | 'cancel' | 'close'
+  teleportDisabled?: Booleanish
+  teleportTo?: string | RendererElement | null | undefined
 }
 
 const props = withDefaults(defineProps<BModalProps>(), {
@@ -202,12 +203,13 @@ const props = withDefaults(defineProps<BModalProps>(), {
   okDisabled: false,
   okOnly: false,
   okTitle: 'Ok',
-  static: false,
   okVariant: 'primary',
   scrollable: false,
   show: false,
   titleSrOnly: false,
   titleTag: 'h5',
+  teleportDisabled: false,
+  teleportTo: 'body',
 })
 
 interface BModalEmits {
@@ -267,7 +269,7 @@ const okDisabledBoolean = useBooleanish(() => props.okDisabled)
 const okOnlyBoolean = useBooleanish(() => props.okOnly)
 const scrollableBoolean = useBooleanish(() => props.scrollable)
 const titleSrOnlyBoolean = useBooleanish(() => props.titleSrOnly)
-const staticBoolean = useBooleanish(() => props.static)
+const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
