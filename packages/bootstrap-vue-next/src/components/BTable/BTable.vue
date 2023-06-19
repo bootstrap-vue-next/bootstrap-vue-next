@@ -411,6 +411,10 @@ const computedItems = computed(() => {
       })
     : props.items
 
+  if (usesProvider.value && !noProviderPagingBoolean.value) {
+    return items
+  }
+
   if (props.perPage !== undefined) {
     const startIndex = (props.currentPage - 1) * props.perPage
     const endIndex =
