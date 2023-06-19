@@ -20,7 +20,7 @@ import {useBooleanish} from '../../composables'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
-interface BProgressBarProps {
+interface Props {
   animated?: Booleanish
   label?: string
   labelHtml?: string
@@ -33,7 +33,7 @@ interface BProgressBarProps {
   variant?: ColorVariant | null
 }
 
-const props = withDefaults(defineProps<BProgressBarProps>(), {
+const props = withDefaults(defineProps<Props>(), {
   label: undefined,
   labelHtml: undefined,
   max: undefined,

@@ -50,11 +50,6 @@ interface BAvatarProps {
   variant?: ColorVariant | null
 }
 
-interface BAvatarEmits {
-  (e: 'click', value: MouseEvent): void
-  (e: 'img-error', value: Event): void
-}
-
 const props = withDefaults(defineProps<BAvatarProps>(), {
   ariaLabel: undefined,
   badgeOffset: undefined,
@@ -75,6 +70,11 @@ const props = withDefaults(defineProps<BAvatarProps>(), {
   square: false,
   variant: 'secondary',
 })
+
+interface BAvatarEmits {
+  (e: 'click', value: MouseEvent): void
+  (e: 'img-error', value: Event): void
+}
 
 const emit = defineEmits<BAvatarEmits>()
 

@@ -58,21 +58,6 @@ interface BFormCheckboxGroupProps {
   valueField?: string
 }
 
-interface BFormCheckboxGroupEmits {
-  (
-    e: 'input',
-    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
-  ): void
-  (
-    e: 'update:modelValue',
-    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
-  ): void
-  (
-    e: 'change',
-    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
-  ): void
-}
-
 const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   id: undefined,
   size: 'md',
@@ -96,6 +81,21 @@ const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
   validated: false,
   valueField: 'value',
 })
+
+interface BFormCheckboxGroupEmits {
+  (
+    e: 'input',
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
+  ): void
+  (
+    e: 'update:modelValue',
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
+  ): void
+  (
+    e: 'change',
+    value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
+  ): void
+}
 
 const emit = defineEmits<BFormCheckboxGroupEmits>()
 
