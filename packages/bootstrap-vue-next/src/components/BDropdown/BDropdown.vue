@@ -109,18 +109,6 @@ interface BDropdownProps {
   splitTo?: RouteLocationRaw
 }
 
-interface BDropdownEmits {
-  (e: 'show', value: BvEvent): void
-  (e: 'shown'): void
-  (e: 'hide', value: BvEvent): void
-  (e: 'hidden'): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'click', event: MouseEvent): void
-  (e: 'toggle'): void
-  (e: 'update:modelValue', value: boolean): void
-}
-
 const props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
   id: undefined,
@@ -157,6 +145,18 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   modelValue: false,
   strategy: 'absolute',
 })
+
+interface BDropdownEmits {
+  (e: 'show', value: BvEvent): void
+  (e: 'shown'): void
+  (e: 'hide', value: BvEvent): void
+  (e: 'hidden'): void
+  (e: 'hide-prevented'): void
+  (e: 'show-prevented'): void
+  (e: 'click', event: MouseEvent): void
+  (e: 'toggle'): void
+  (e: 'update:modelValue', value: boolean): void
+}
 
 const emit = defineEmits<BDropdownEmits>()
 
@@ -286,14 +286,14 @@ onClickOutside(
   floating,
   () => {
     if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'outside')) {
-      toggle()
+      modelValue.value = !modelValueBoolean.value
     }
   },
   {ignore: [button, splitButton]}
 )
 const onClickInside = () => {
   if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'inside')) {
-    toggle()
+    modelValue.value = !modelValueBoolean.value
   }
 }
 

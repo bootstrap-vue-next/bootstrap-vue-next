@@ -13,90 +13,64 @@
   </li>
 </template>
 
-<script setup lang="ts">
-import {pluckProps} from '../../utils'
+<script lang="ts">
+import {omit, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {computed} from 'vue'
-import BLink, {type BLinkProps} from '../BLink/BLink.vue'
+import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
+import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
 import type {Booleanish} from '../../types'
 
-defineSlots<{
-  default?: Record<string, never>
-}>()
+const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
 
-interface BBreadcrumbItemProps {
-  active?: Booleanish
-  ariaCurrent?: string
-  disabled?: Booleanish
-  text?: string
-}
+export default defineComponent({
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
+  components: {BLink},
+  props: {
+    ...linkProps,
+    active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    ariaCurrent: {type: String, default: 'location'},
+    disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    text: {type: String, default: undefined},
+  },
+  emits: ['click'],
+  setup(props, {emit}) {
+    const activeBoolean = useBooleanish(() => props.active)
+    const disabledBoolean = useBooleanish(() => props.disabled)
 
-interface BBreadcrumbItemEmits {
-  (e: 'click', value: MouseEvent): void
-}
+    const computedClasses = computed(() => ({
+      active: activeBoolean.value,
+    }))
 
-const props = withDefaults(
-  defineProps<BBreadcrumbItemProps & Omit<BLinkProps, 'event' | 'routerTag'>>(),
-  {
-    active: false,
-    ariaCurrent: 'location',
-    text: undefined,
-    // Link props
-    activeClass: 'router-link-active',
-    append: false,
-    disabled: false,
-    event: 'click',
-    href: undefined,
-    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: undefined,
-    replace: false,
-    routerComponentName: 'router-link',
-    routerTag: 'a',
-    target: '_self',
-    to: undefined,
-    variant: undefined,
-    // End link props
-  }
-)
+    const computedTag = computed<'span' | typeof BLink>(() =>
+      activeBoolean.value ? 'span' : BLink
+    )
 
-const emit = defineEmits<BBreadcrumbItemEmits>()
+    const computedAriaCurrent = computed(() =>
+      activeBoolean.value ? props.ariaCurrent : undefined
+    )
 
-const activeBoolean = useBooleanish(() => props.active)
-const disabledBoolean = useBooleanish(() => props.disabled)
+    const computedLinkProps = computed(() =>
+      computedTag.value !== 'span' ? pluckProps(props, linkProps) : {}
+    )
 
-const computedClasses = computed(() => ({
-  active: activeBoolean.value,
-}))
+    const clicked = (e: MouseEvent): void => {
+      if (disabledBoolean.value || activeBoolean.value) {
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        return
+      }
+      if (!disabledBoolean.value) emit('click', e)
+    }
 
-const computedTag = computed<'span' | typeof BLink>(() => (activeBoolean.value ? 'span' : BLink))
-
-const computedAriaCurrent = computed(() => (activeBoolean.value ? props.ariaCurrent : undefined))
-
-const computedLinkProps = computed(() =>
-  computedTag.value !== 'span'
-    ? pluckProps(props, {
-        active: true,
-        activeClass: true,
-        append: true,
-        disabled: true,
-        href: true,
-        rel: true,
-        replace: true,
-        routerComponentName: true,
-        target: true,
-        to: true,
-        variant: true,
-      } as Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
-    : {}
-)
-
-const clicked = (e: MouseEvent): void => {
-  if (disabledBoolean.value || activeBoolean.value) {
-    e.preventDefault()
-    e.stopImmediatePropagation()
-    return
-  }
-  if (!disabledBoolean.value) emit('click', e)
-}
+    return {
+      computedLinkProps,
+      computedClasses,
+      computedTag,
+      computedAriaCurrent,
+      clicked,
+    }
+  },
+})
 </script>

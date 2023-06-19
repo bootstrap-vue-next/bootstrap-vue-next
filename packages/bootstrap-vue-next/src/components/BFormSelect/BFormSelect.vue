@@ -67,12 +67,6 @@ interface BFormSelectProps {
   modelValue?: string | unknown[] | Record<string, unknown> | number | null
 }
 
-interface BFormSelectEmits {
-  (e: 'input', value: unknown): void
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'change', value: unknown): void
-}
-
 const props = withDefaults(defineProps<BFormSelectProps>(), {
   form: undefined,
   id: undefined,
@@ -95,6 +89,12 @@ const props = withDefaults(defineProps<BFormSelectProps>(), {
   valueField: 'value',
   modelValue: '',
 })
+
+interface BFormSelectEmits {
+  (e: 'input', value: unknown): void
+  (e: 'update:modelValue', value: unknown): void
+  (e: 'change', value: unknown): void
+}
 
 const emit = defineEmits<BFormSelectEmits>()
 

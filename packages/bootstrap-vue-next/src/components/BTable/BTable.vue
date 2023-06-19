@@ -248,39 +248,6 @@ interface BTableProps {
   emptyFilteredText?: string
 }
 
-interface BTableEmits {
-  (
-    e: 'headClicked',
-    ...value: Parameters<
-      (key: TableFieldObject['key'], field: TableField, event: MouseEvent, isFooter: boolean) => any
-    >
-  ): void
-  (
-    e: 'rowClicked',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowDblClicked',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowHovered',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowUnhovered',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (e: 'rowSelected', value: TableItem): void
-  (e: 'rowUnselected', value: TableItem): void
-  (e: 'selection', value: TableItem[]): void
-  (e: 'update:busy', value: boolean): void
-  (e: 'update:sortBy', value: string): void
-  (e: 'update:sortDesc', value: boolean): void
-  (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
-  (e: 'filtered', value: TableItem[]): void
-}
-
 const props = withDefaults(defineProps<BTableProps>(), {
   perPage: undefined,
   sortBy: undefined,
@@ -323,6 +290,39 @@ const props = withDefaults(defineProps<BTableProps>(), {
   emptyText: 'There are no records to show',
   emptyFilteredText: 'There are no records matching your request',
 })
+
+interface BTableEmits {
+  (
+    e: 'headClicked',
+    ...value: Parameters<
+      (key: TableFieldObject['key'], field: TableField, event: MouseEvent, isFooter: boolean) => any
+    >
+  ): void
+  (
+    e: 'rowClicked',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowDblClicked',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowHovered',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (
+    e: 'rowUnhovered',
+    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
+  ): void
+  (e: 'rowSelected', value: TableItem): void
+  (e: 'rowUnselected', value: TableItem): void
+  (e: 'selection', value: TableItem[]): void
+  (e: 'update:busy', value: boolean): void
+  (e: 'update:sortBy', value: string): void
+  (e: 'update:sortDesc', value: boolean): void
+  (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
+  (e: 'filtered', value: TableItem[]): void
+}
 
 const emit = defineEmits<BTableEmits>()
 

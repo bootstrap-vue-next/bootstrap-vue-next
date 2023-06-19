@@ -9,7 +9,7 @@ import type {AlignmentJustifyContent, Booleanish} from '../../types'
 import {computed} from 'vue'
 import {useAlignment, useBooleanish} from '../../composables'
 
-interface BNavbarNavProps {
+interface Props {
   align?: AlignmentJustifyContent
   fill?: Booleanish
   justified?: Booleanish
@@ -17,7 +17,7 @@ interface BNavbarNavProps {
   tag?: string
 }
 
-const props = withDefaults(defineProps<BNavbarNavProps>(), {
+const props = withDefaults(defineProps<Props>(), {
   fill: false,
   align: undefined,
   justified: false,

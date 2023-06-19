@@ -3,13 +3,14 @@
     :is="tag"
     v-if="tag === 'router-link'"
     v-slot="//@ts-ignore 
-    {href: localHref, navigate, isActive}"
+    {href, navigate, isActive}"
     v-bind="routerAttr"
     custom
   >
     <component
       :is="routerTag"
-      :href="localHref"
+      ref="link"
+      :href="href"
       :class="[(activeBoolean ?? isActive) && activeClass]"
       v-bind="$attrs"
       @click=";[navigate($event), closeCollapse()]"
@@ -17,157 +18,33 @@
       <slot />
     </component>
   </component>
-  <component :is="tag" v-else :class="computedLinkClasses" v-bind="routerAttr" @click="clicked">
+  <component
+    :is="tag"
+    v-else
+    ref="link"
+    :class="computedLinkClasses"
+    v-bind="routerAttr"
+    @click="clicked"
+  >
     <slot />
   </component>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
-import {computed, getCurrentInstance, inject, type PropType, useAttrs} from 'vue'
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  inject,
+  type PropType,
+  ref,
+  type SlotsType,
+} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
 
-export interface BLinkProps {
-  active?: Booleanish
-  activeClass?: string
-  append?: Booleanish
-  disabled?: Booleanish
-  event?: string | any[]
-  href?: string
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-  rel?: string
-  replace?: Booleanish
-  routerComponentName?: string
-  routerTag?: string
-  target?: LinkTarget
-  to?: RouteLocationRaw
-  variant?: ColorVariant | null
-}
-
-interface BLinkEmits {
-  (e: 'click', value: MouseEvent): void
-}
-
-// TODO this component will likely have an issue with inheritAttrs
-defineSlots<{
-  default?: Record<string, never>
-}>()
-
-const props = withDefaults(defineProps<BLinkProps>(), {
-  active: undefined,
-  activeClass: 'router-link-active',
-  append: false,
-  disabled: false,
-  event: 'click',
-  href: undefined,
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-  rel: undefined,
-  replace: false,
-  routerComponentName: 'router-link',
-  routerTag: 'a',
-  target: '_self',
-  to: undefined,
-  variant: undefined,
-})
-
-const emit = defineEmits<BLinkEmits>()
-
-const attrs = useAttrs()
-
-const activeBoolean = useBooleanish(() => props.active)
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const appendBoolean = useBooleanish(() => props.append)
-const disabledBoolean = useBooleanish(() => props.disabled)
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const replaceBoolean = useBooleanish(() => props.replace)
-const collapseData = inject(collapseInjectionKey, null)
-const navbarData = inject(navbarInjectionKey, null)
-const closeCollapse = () => {
-  if (navbarData !== null) {
-    collapseData?.close?.()
-  }
-}
-
-const instance = getCurrentInstance()
-
-const tag = computed<string>(() => {
-  const routerName = props.routerComponentName
-    .split('-')
-    .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
-    .join('')
-  const hasRouter = instance?.appContext.app.component(routerName) !== undefined
-  if (!hasRouter || disabledBoolean.value || !props.to) {
-    return 'a'
-  }
-  return props.routerComponentName
-})
-
-const computedHref = computed<string>(() => {
-  const toFallback = '#'
-  if (props.href) return props.href
-
-  if (typeof props.to === 'string') return props.to || toFallback
-
-  const to = props.to as RouteLocation
-
-  if (
-    Object.prototype.toString.call(to) === '[object Object]' &&
-    (to.path || to.query || to.hash)
-  ) {
-    const path = to.path || ''
-    const query = to.query
-      ? `?${Object.keys(to.query)
-          .map((e) => `${e}=${to.query[e]}`)
-          .join('=')}`
-      : ''
-    const hash = !to.hash || to.hash.charAt(0) === '#' ? to.hash || '' : `#${to.hash}`
-    return `${path}${query}${hash}` || toFallback
-  }
-
-  return toFallback
-})
-
-const routerAttr = computed(() => ({
-  'class': props.variant !== null && `link-${props.variant}`,
-  'to': props.to,
-  'href': computedHref.value,
-  'target': props.target,
-  'rel': props.target === '_blank' && props.rel === null ? 'noopener' : props.rel || null,
-  'tabindex': disabledBoolean.value
-    ? '-1'
-    : typeof attrs.tabindex === 'undefined'
-    ? null
-    : attrs.tabindex,
-  'aria-disabled': disabledBoolean.value ? true : null,
-}))
-
-const computedLinkClasses = computed(() => ({
-  active: activeBoolean.value,
-  disabled: disabledBoolean.value,
-}))
-
-const clicked = (e: MouseEvent): void => {
-  if (disabledBoolean.value) {
-    e.preventDefault()
-    e.stopImmediatePropagation()
-    return
-  }
-  collapseData?.close?.()
-
-  emit('click', e)
-}
-</script>
-
-<script lang="ts">
-/**
- * @deprecated will be removed when BToast is refactored
- */
 export const BLINK_PROPS = {
   active: {type: [Boolean, String, undefined] as PropType<Booleanish>, default: undefined},
   activeClass: {type: String, default: 'router-link-active'},
@@ -185,4 +62,109 @@ export const BLINK_PROPS = {
   to: {type: [String, Object] as PropType<RouteLocationRaw>, default: null},
   variant: {type: String as PropType<ColorVariant | null>, default: null},
 }
+
+export default defineComponent({
+  // TODO this component will likely have an issue with inheritAttrs
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
+  props: BLINK_PROPS,
+  emits: ['click'],
+  setup(props, {emit, attrs}) {
+    const activeBoolean = useBooleanish(() => props.active)
+    const appendBoolean = useBooleanish(() => props.append)
+    const disabledBoolean = useBooleanish(() => props.disabled)
+    const replaceBoolean = useBooleanish(() => props.replace)
+    const collapseData = inject(collapseInjectionKey, null)
+    const navbarData = inject(navbarInjectionKey, null)
+    const closeCollapse = () => {
+      if (navbarData !== null) {
+        collapseData?.close?.()
+      }
+    }
+
+    const instance = getCurrentInstance()
+    const link = ref<HTMLElement>(null as unknown as HTMLElement)
+
+    const tag = computed<string>(() => {
+      const routerName = props.routerComponentName
+        .split('-')
+        .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
+        .join('')
+      const hasRouter = instance?.appContext.app.component(routerName) !== undefined
+      if (!hasRouter || disabledBoolean.value || !props.to) {
+        return 'a'
+      }
+      return props.routerComponentName
+    })
+
+    const computedHref = computed<string>(() => {
+      const toFallback = '#'
+      if (props.href) return props.href
+
+      if (typeof props.to === 'string') return props.to || toFallback
+
+      const to = props.to as RouteLocation
+
+      if (
+        Object.prototype.toString.call(to) === '[object Object]' &&
+        (to.path || to.query || to.hash)
+      ) {
+        const path = to.path || ''
+        const query = to.query
+          ? `?${Object.keys(to.query)
+              .map((e) => `${e}=${to.query[e]}`)
+              .join('=')}`
+          : ''
+        const hash = !to.hash || to.hash.charAt(0) === '#' ? to.hash || '' : `#${to.hash}`
+        return `${path}${query}${hash}` || toFallback
+      }
+
+      return toFallback
+    })
+
+    const routerAttr = computed(() => ({
+      'class': props.variant !== null && `link-${props.variant}`,
+      'to': props.to,
+      'href': computedHref.value,
+      'target': props.target,
+      'rel': props.target === '_blank' && props.rel === null ? 'noopener' : props.rel || null,
+      'tabindex': disabledBoolean.value
+        ? '-1'
+        : typeof attrs.tabindex === 'undefined'
+        ? null
+        : attrs.tabindex,
+      'aria-disabled': disabledBoolean.value ? true : null,
+    }))
+
+    const computedLinkClasses = computed(() => ({
+      active: activeBoolean.value,
+      disabled: disabledBoolean.value,
+    }))
+
+    const clicked = (e: MouseEvent): void => {
+      if (disabledBoolean.value) {
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        return
+      }
+      collapseData?.close?.()
+
+      emit('click', e)
+    }
+
+    return {
+      computedLinkClasses,
+      tag,
+      routerAttr,
+      link,
+      clicked,
+      activeBoolean,
+      appendBoolean,
+      disabledBoolean,
+      replaceBoolean,
+      closeCollapse,
+    }
+  },
+})
 </script>

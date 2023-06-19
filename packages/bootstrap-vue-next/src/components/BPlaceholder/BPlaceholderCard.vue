@@ -36,7 +36,7 @@ import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} fr
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface BPlaceholderCardProps {
+interface Props {
   noHeader?: Booleanish
   headerWidth?: string | number
   headerVariant?: ColorVariant | null
@@ -58,7 +58,7 @@ interface BPlaceholderCardProps {
   noImg?: Booleanish
 }
 
-const props = withDefaults(defineProps<BPlaceholderCardProps>(), {
+const props = withDefaults(defineProps<Props>(), {
   footerVariant: undefined,
   footerAnimation: undefined,
   footerSize: 'md',
