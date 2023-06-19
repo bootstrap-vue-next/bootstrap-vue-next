@@ -1,10 +1,10 @@
 {
-    "extends": "@vue/tsconfig/tsconfig.dom.json",
-    "include": [".vitepress/**/*", "src/**/*.vue", "src/**/*.ts"],
-    "compilerOptions": {
-        "types": [
-            "unplugin-icons/types/vue"
-        ],
-        "lib": ["ESNext", "DOM", "DOM.Iterable"]
-    }
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [".vitepress/**/*", "src/**/*.vue", "src/**/*.ts"],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "types": ["unplugin-icons/types/vue"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
+  }
 }

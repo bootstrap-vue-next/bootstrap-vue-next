@@ -1,4 +1,10 @@
-import {createSharedComposable, getSSRHandler, unrefElement, useCounter} from '@vueuse/core'
+import {
+  createSharedComposable,
+  getSSRHandler,
+  tryOnScopeDispose,
+  unrefElement,
+  useCounter,
+} from '@vueuse/core'
 import {type Ref, watch} from 'vue'
 
 const MODAL_OPEN_CLASS_NAME = 'modal-open'
@@ -18,6 +24,10 @@ const useSharedModalCounter = createSharedComposable(() => {
     } else {
       el.setAttribute(attribute, value)
     }
+  })
+
+  tryOnScopeDispose(() => {
+    updateHTMLAttrs('body', 'class', '')
   })
 
   watch(count, (newValue) => {
