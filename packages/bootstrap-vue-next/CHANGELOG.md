@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.8...bootstrap-vue-next-v0.9.9) (2023-06-20)
+
+
+### Bug Fixes
+
+* **BFormRadio:** update value with empty string. ([1a0f733](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a0f7338b922e7abb2ff83ad21379f65150a88cb))
+
 ## [0.9.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.7...bootstrap-vue-next-v0.9.8) (2023-06-20)
 
 
