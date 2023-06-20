@@ -441,7 +441,7 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   emit('rowClicked', row, index, e)
 
-  handleRowSelection(row, index, e.shiftKey, e.ctrlKey)
+  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowDblClicked', row, index, e)
@@ -476,7 +476,8 @@ const handleRowSelection = (
   row: TableItem,
   index: number,
   shiftClicked = false,
-  ctrlClicked = false
+  ctrlClicked = false,
+  metaClicked = false
 ) => {
   if (!selectableBoolean.value) return
 
@@ -491,7 +492,7 @@ const handleRowSelection = (
         emit('rowSelected', item)
       }
     })
-  } else if (ctrlClicked) {
+  } else if (ctrlClicked || metaClicked) {
     if (selectedItems.value.has(row)) {
       selectedItems.value.delete(row)
       emit('rowUnselected', row)
