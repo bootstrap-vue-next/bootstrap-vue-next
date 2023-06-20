@@ -122,7 +122,7 @@ const localValue = computed({
       ? JSON.stringify(parentData.modelValue.value) === JSON.stringify(props.value)
       : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue: string | boolean | unknown[] | Record<string, unknown> | number | null) => {
-    const updateValue = newValue || newValue === 0 ? props.value : false
+    const updateValue = newValue || newValue === '' || newValue === 0 ? props.value : false
 
     emit('input', updateValue)
     modelValue.value = updateValue
