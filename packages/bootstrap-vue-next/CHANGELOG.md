@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.7...bootstrap-vue-next-v0.9.8) (2023-06-20)
+
+
+### Bug Fixes
+
+* **BTable:** support multi select mode for macOS users ([3a76884](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3a76884c203e28718a73d36e97fd16a60c503a3e))
+
 ## [0.9.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.6...bootstrap-vue-next-v0.9.7) (2023-06-19)
 
 
