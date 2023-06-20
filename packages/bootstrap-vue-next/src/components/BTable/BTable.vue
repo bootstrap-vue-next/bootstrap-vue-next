@@ -49,6 +49,11 @@
                 v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
                 :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
                 :label="field.label"
+                :column="field.key"
+                :field="field"
+                :is-foot="false"
+                :select-all-rows="selectAllRows"
+                :clear-selected="clearSelected"
               />
               <template v-else>{{ getFieldHeadLabel(field) }}</template>
             </div>
