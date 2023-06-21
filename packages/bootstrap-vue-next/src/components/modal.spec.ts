@@ -1,6 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import BModal from './BModal.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
 // import BTransition from './BTransition/BTransition.vue'
 
 describe('modal', () => {
@@ -311,6 +312,26 @@ describe('modal', () => {
     const $div2 = $div.get('div')
     const $div3 = $div2.find('div')
     expect($div3.exists()).toBe(true)
+  })
+
+  it('nested div BCloseButton has class when prop header-close-class', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {'header-close-class': 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.classes()).toContain('foobar')
+  })
+
+  it('nested div BCloseButton has class when prop header-close-white', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {'header-close-white': true},
+    })
+    const $div = wrapper.get('div')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.classes()).toContain('btn-close-white')
   })
 
   // Test isActive states

@@ -36,16 +36,17 @@
                   </slot>
                 </component>
                 <template v-if="!hideHeaderCloseBoolean">
-                  <button v-if="hasHeaderCloseSlot" type="button" @click="hide('close')">
-                    <slot name="header-close" />
-                  </button>
                   <b-close-button
-                    v-else
                     ref="closeButton"
+                    :class="headerCloseClasses"
                     :aria-label="headerCloseLabel"
                     :white="headerCloseWhite"
                     @click="hide('close')"
-                  />
+                  >
+                    <template v-if="hasHeaderCloseSlot" #default>
+                      <slot name="header-close" />
+                    </template>
+                  </b-close-button>
                 </template>
               </slot>
             </div>
@@ -131,6 +132,7 @@ interface BModalProps {
   headerBgVariant?: ColorVariant | null
   headerBorderVariant?: ColorVariant | null
   headerClass?: ClassValue
+  headerCloseClass?: ClassValue
   headerCloseLabel?: string
   headerCloseWhite?: Booleanish
   headerTextVariant?: ColorVariant | null
@@ -171,6 +173,9 @@ const props = withDefaults(defineProps<BModalProps>(), {
   headerBgVariant: null,
   headerBorderVariant: null,
   headerClass: undefined,
+  headerCloseClass: undefined,
+  headerCloseLabel: 'Close',
+  headerCloseWhite: false,
   footerBgVariant: null,
   footerBorderVariant: null,
   footerClass: undefined,
@@ -189,8 +194,6 @@ const props = withDefaults(defineProps<BModalProps>(), {
   cancelVariant: 'secondary',
   centered: false,
   fullscreen: false,
-  headerCloseLabel: 'Close',
-  headerCloseWhite: false,
   hideBackdrop: false,
   hideFooter: false,
   hideHeader: false,
@@ -250,7 +253,7 @@ const slots = useSlots()
 
 const computedId = useId(() => props.id, 'modal')
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const busyBoolean = useBooleanish(() => props.busy)
 const lazyBoolean = useBooleanish(() => props.lazy)
@@ -335,6 +338,8 @@ const headerClasses = computed(() => [
     [`text-${props.headerTextVariant}`]: props.headerTextVariant !== null,
   },
 ])
+
+const headerCloseClasses = computed(() => [props.headerCloseClass])
 
 const footerClasses = computed(() => [
   props.footerClass,
