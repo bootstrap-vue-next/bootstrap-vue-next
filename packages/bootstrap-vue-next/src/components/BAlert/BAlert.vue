@@ -12,18 +12,17 @@
     >
       <slot />
       <template v-if="dismissibleBoolean">
-        <!-- TODO this renders incorrectly -->
-        <b-button v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="closeClicked">
-          <slot name="close">
-            {{ closeContent }}
-          </slot>
-        </b-button>
         <b-close-button
-          v-else
+          ref="closeButton"
+          :class="closeClasses"
           :aria-label="dismissLabel"
-          v-bind="closeAttrs"
-          @click="closeClicked"
-        />
+          :white="closeWhite"
+          @click="hide"
+        >
+          <template v-if="hasCloseSlot" #default>
+            <slot name="close" />
+          </template>
+        </b-close-button>
       </template>
     </div>
   </b-transition>
@@ -32,30 +31,29 @@
 <script setup lang="ts">
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import BButton from '../BButton/BButton.vue'
-import type {Booleanish, ButtonType, ButtonVariant, ColorVariant} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {computed, onBeforeUnmount, useSlots, watchEffect} from 'vue'
 import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useVModel} from '@vueuse/core'
 
 interface BAlertProps {
+  closeClass?: ClassValue
+  closeWhite?: Booleanish
   noHoverPause?: Booleanish
   dismissLabel?: string
   dismissible?: Booleanish
   fade?: Booleanish
-  closeVariant?: ButtonVariant | null
   modelValue?: boolean | number
   variant?: ColorVariant | null
-  closeContent?: string
   immediate?: Booleanish
   interval?: number
   showOnPause?: Booleanish
 }
 
 const props = withDefaults(defineProps<BAlertProps>(), {
-  closeContent: undefined,
-  closeVariant: 'secondary',
+  closeClass: undefined,
+  closeWhite: false,
   noHoverPause: false,
   interval: 1000,
   dismissLabel: 'Close',
@@ -68,7 +66,7 @@ const props = withDefaults(defineProps<BAlertProps>(), {
 })
 
 interface BAlertEmits {
-  (e: 'closed'): void
+  (e: 'close'): void
   (e: 'close-countdown', value: number): void
   (e: 'update:modelValue', value: boolean | number): void
 }
@@ -103,6 +101,8 @@ const computedClasses = computed(() => ({
   'alert-dismissible': dismissibleBoolean.value,
 }))
 
+const closeClasses = computed(() => [props.closeClass])
+
 const {
   isActive,
   pause,
@@ -121,21 +121,17 @@ const isAlertVisible = computed<boolean>(() =>
     : isActive.value || (showOnPauseBoolean.value && isPaused.value)
 )
 
-const closeAttrs = computed(() => ({
-  variant: props.closeVariant,
-  type: 'button' as ButtonType,
-}))
-
 watchEffect(() => emit('close-countdown', remainingMs.value))
 
-const closeClicked = (): void => {
+const hide = (): void => {
+  emit('close')
+
   if (typeof modelValue.value === 'boolean') {
     modelValue.value = false
   } else {
     modelValue.value = 0
     stop()
   }
-  emit('closed')
 }
 
 // TODO mouseleave/mouseenter could be replaced with useElementHover with a watcher
@@ -148,3 +144,13 @@ onBeforeUnmount(stop)
 
 defineExpose({pause, resume, restart, stop})
 </script>
+
+<style lang="scss" scoped>
+.btn-close-custom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  margin: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
+}
+</style>

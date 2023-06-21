@@ -2,7 +2,6 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BAlert from './BAlert.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import BButton from '../BButton/BButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
 
 describe('alert', () => {
@@ -146,89 +145,24 @@ describe('alert', () => {
     expect($bclosebutton.exists()).toBe(false)
   })
 
-  it('nested div does not have BCloseButton when prop dismissible but also slot close', () => {
+  it('nested div does have BCloseButton when prop dismissible but also slot close', () => {
     const wrapper = mount(BAlert, {
       props: {modelValue: true, dismissible: true},
       slots: {close: 'foobar'},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.findComponent(BCloseButton)
-    expect($bclosebutton.exists()).toBe(false)
+    expect($bclosebutton.exists()).toBe(true)
   })
 
-  it('nested div does not have BCloseButton when prop dismissible but also prop closeContent', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bclosebutton = $div.findComponent(BCloseButton)
-    expect($bclosebutton.exists()).toBe(false)
-  })
-
-  it('nested div has BButton when prop dismissible but also prop closeContent', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.findComponent(BButton)
-    expect($bbutton.exists()).toBe(true)
-  })
-
-  it('nested div has BButton when prop dismissible but also slot close', () => {
+  it('nested div BCloseButton renders slot close', () => {
     const wrapper = mount(BAlert, {
       props: {modelValue: true, dismissible: true},
       slots: {close: 'foobar'},
     })
     const $div = wrapper.get('div')
-    const $bbutton = $div.findComponent(BButton)
-    expect($bbutton.exists()).toBe(true)
-  })
-
-  it('nested div does not have BButton when prop dismissible and nothing else', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.findComponent(BButton)
-    expect($bbutton.exists()).toBe(false)
-  })
-
-  it('nested div BButton has static attr type to be button', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.attributes('type')).toBe('button')
-  })
-
-  it('nested div BButton renders prop closeContent', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.text()).toBe('foobar')
-  })
-
-  it('nested div BButton renders slot close', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true},
-      slots: {close: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.text()).toBe('foobar')
-  })
-
-  it('nested div BButton renders slot over props', () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, closeContent: 'props'},
-      slots: {close: 'slots'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.text()).toBe('slots')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.text()).toBe('foobar')
   })
 
   it('nested div BCloseButton has aria-label to be Close by default', () => {
@@ -249,7 +183,6 @@ describe('alert', () => {
     expect($bclosebutton.attributes('aria-label')).toBe('foobar')
   })
 
-  // BCloseButton variant
   it('nested div BCloseButton emits update:modelValue when clicked when modelValue boolean', async () => {
     const wrapper = mount(BAlert, {
       props: {modelValue: true, dismissible: true},
@@ -292,66 +225,32 @@ describe('alert', () => {
     expect(emitted[0][0]).toBe(0)
   })
 
-  it('nested div BCloseButton clicked emits closed', async () => {
+  it('nested div BCloseButton clicked emits close', async () => {
     const wrapper = mount(BAlert, {
       props: {modelValue: 5, dismissible: true},
     })
     const $div = wrapper.get('div')
     const $bclosebutton = $div.getComponent(BCloseButton)
     await $bclosebutton.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('closed')
-  })
-  // BButton variant
-  it('nested div BButton emits update:modelValue when clicked when modelValue boolean', async () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    await $bbutton.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('update:modelValue')
+    expect(wrapper.emitted()).toHaveProperty('close')
   })
 
-  it('nested div BButton clicked update:modelValue emits arg false when modelValue boolean', async () => {
+  it('nested div BCloseButton has class when prop close-class', () => {
     const wrapper = mount(BAlert, {
-      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
+      props: {'modelValue': true, 'dismissible': true, 'close-class': 'foobar'},
     })
     const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    await $bbutton.trigger('click')
-    const emitted = wrapper.emitted('update:modelValue') ?? []
-    expect(emitted[0][0]).toBe(false)
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.classes()).toContain('foobar')
   })
 
-  it('nested div BButton emits update:modelValue when clicked when modelValue number > 0', async () => {
+  it('nested div BCloseButton has class when prop close-white', () => {
     const wrapper = mount(BAlert, {
-      props: {modelValue: 5, dismissible: true, closeContent: 'foobar'},
+      props: {'modelValue': true, 'dismissible': true, 'close-white': true},
     })
     const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    await $bbutton.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('update:modelValue')
-  })
-
-  it('nested div BButton clicked update:modelValue emits arg 0 when modelValue number > 0', async () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: 5, dismissible: true, closeContent: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    await $bbutton.trigger('click')
-    const emitted = wrapper.emitted('update:modelValue') ?? []
-    expect(emitted[0][0]).toBe(0)
-  })
-
-  it('nested div BButton clicked emits closed', async () => {
-    const wrapper = mount(BAlert, {
-      props: {modelValue: 5, dismissible: true, closeContent: 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    await $bbutton.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('closed')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.classes()).toContain('btn-close-white')
   })
 
   // TODO try to test countdown items
