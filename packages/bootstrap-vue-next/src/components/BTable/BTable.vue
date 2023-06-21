@@ -210,126 +210,113 @@ import useItemHelper from './itemHelper'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
-interface BTableProps {
-  align?: VerticalAlign
-  caption?: string
-  captionTop?: Booleanish
-  borderless?: Booleanish
-  bordered?: Booleanish
-  borderVariant?: ColorVariant | null
-  dark?: Booleanish
-  fields?: TableField[]
-  footClone?: Booleanish
-  hover?: Booleanish
-  items?: TableItem[]
-  provider?: BTableProvider
-  sortCompare?: BTableSortCompare
-  noProvider?: NoProviderTypes[]
-  noProviderPaging?: Booleanish
-  noProviderSorting?: Booleanish
-  noProviderFiltering?: Booleanish
-  responsive?: boolean | Breakpoint
-  small?: Booleanish
-  striped?: Booleanish
-  stacked?: boolean | Breakpoint
-  labelStacked?: boolean
-  variant?: ColorVariant | null
-  sortBy?: string
-  sortDesc?: Booleanish
-  sortInternal?: Booleanish
-  selectable?: Booleanish
-  stickySelect?: Booleanish
-  selectHead?: boolean | string
-  selectMode?: 'multi' | 'single' | 'range'
-  selectionVariant?: ColorVariant | null
-  stickyHeader?: Booleanish
-  busy?: Booleanish
-  showEmpty?: Booleanish
-  perPage?: number
-  currentPage?: number
-  filter?: string
-  filterable?: string[]
-  emptyText?: string
-  emptyFilteredText?: string
-}
+const props = withDefaults(
+  defineProps<{
+    align?: VerticalAlign
+    caption?: string
+    captionTop?: Booleanish
+    borderless?: Booleanish
+    bordered?: Booleanish
+    borderVariant?: ColorVariant | null
+    dark?: Booleanish
+    fields?: TableField[]
+    footClone?: Booleanish
+    hover?: Booleanish
+    items?: TableItem[]
+    provider?: BTableProvider
+    sortCompare?: BTableSortCompare
+    noProvider?: NoProviderTypes[]
+    noProviderPaging?: Booleanish
+    noProviderSorting?: Booleanish
+    noProviderFiltering?: Booleanish
+    responsive?: boolean | Breakpoint
+    small?: Booleanish
+    striped?: Booleanish
+    stacked?: boolean | Breakpoint
+    labelStacked?: boolean
+    variant?: ColorVariant | null
+    sortBy?: string
+    sortDesc?: Booleanish
+    sortInternal?: Booleanish
+    selectable?: Booleanish
+    stickySelect?: Booleanish
+    selectHead?: boolean | string
+    selectMode?: 'multi' | 'single' | 'range'
+    selectionVariant?: ColorVariant | null
+    stickyHeader?: Booleanish
+    busy?: Booleanish
+    showEmpty?: Booleanish
+    perPage?: number
+    currentPage?: number
+    filter?: string
+    filterable?: string[]
+    emptyText?: string
+    emptyFilteredText?: string
+  }>(),
+  {
+    perPage: undefined,
+    sortBy: undefined,
+    variant: undefined,
+    borderVariant: undefined,
+    caption: undefined,
+    align: undefined,
+    filter: undefined,
+    filterable: undefined,
+    provider: undefined,
+    sortCompare: undefined,
+    noProvider: undefined,
+    noProviderPaging: undefined,
+    noProviderSorting: undefined,
+    noProviderFiltering: undefined,
+    captionTop: false,
+    borderless: false,
+    bordered: false,
+    dark: false,
+    fields: () => [],
+    footClone: false,
+    hover: false,
+    items: () => [],
+    responsive: false,
+    small: false,
+    striped: false,
+    labelStacked: false,
+    stacked: false,
+    sortDesc: false,
+    sortInternal: true,
+    selectable: false,
+    stickySelect: false,
+    selectHead: true,
+    selectMode: 'single',
+    selectionVariant: 'primary',
+    stickyHeader: false,
+    busy: false,
+    showEmpty: false,
+    currentPage: 1,
+    emptyText: 'There are no records to show',
+    emptyFilteredText: 'There are no records matching your request',
+  }
+)
 
-interface BTableEmits {
-  (
-    e: 'headClicked',
-    ...value: Parameters<
-      (key: TableFieldObject['key'], field: TableField, event: MouseEvent, isFooter: boolean) => any
-    >
-  ): void
-  (
-    e: 'rowClicked',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowDblClicked',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowHovered',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowUnhovered',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (e: 'rowSelected', value: TableItem): void
-  (e: 'rowUnselected', value: TableItem): void
-  (e: 'selection', value: TableItem[]): void
-  (e: 'update:busy', value: boolean): void
-  (e: 'update:sortBy', value: string): void
-  (e: 'update:sortDesc', value: boolean): void
-  (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
-  (e: 'filtered', value: TableItem[]): void
-}
-
-const props = withDefaults(defineProps<BTableProps>(), {
-  perPage: undefined,
-  sortBy: undefined,
-  variant: undefined,
-  borderVariant: undefined,
-  caption: undefined,
-  align: undefined,
-  filter: undefined,
-  filterable: undefined,
-  provider: undefined,
-  sortCompare: undefined,
-  noProvider: undefined,
-  noProviderPaging: undefined,
-  noProviderSorting: undefined,
-  noProviderFiltering: undefined,
-  captionTop: false,
-  borderless: false,
-  bordered: false,
-  dark: false,
-  fields: () => [],
-  footClone: false,
-  hover: false,
-  items: () => [],
-  responsive: false,
-  small: false,
-  striped: false,
-  labelStacked: false,
-  stacked: false,
-  sortDesc: false,
-  sortInternal: true,
-  selectable: false,
-  stickySelect: false,
-  selectHead: true,
-  selectMode: 'single',
-  selectionVariant: 'primary',
-  stickyHeader: false,
-  busy: false,
-  showEmpty: false,
-  currentPage: 1,
-  emptyText: 'There are no records to show',
-  emptyFilteredText: 'There are no records matching your request',
-})
-
-const emit = defineEmits<BTableEmits>()
+const emit = defineEmits<{
+  'headClicked': [
+    key: TableFieldObject['key'],
+    field: TableField,
+    event: MouseEvent,
+    isFooter: boolean
+  ]
+  'rowClicked': [item: TableItem, index: number, event: MouseEvent]
+  'rowDblClicked': [item: TableItem, index: number, event: MouseEvent]
+  'rowHovered': [item: TableItem, index: number, event: MouseEvent]
+  'rowUnhovered': [item: TableItem, index: number, event: MouseEvent]
+  'rowSelected': [value: TableItem]
+  'rowUnselected': [value: TableItem]
+  'selection': [value: TableItem[]]
+  'update:busy': [value: boolean]
+  'update:sortBy': [value: string]
+  'update:sortDesc': [value: boolean]
+  'sorted': [sortBy: string, isDesc: boolean]
+  'filtered': [value: TableItem[]]
+}>()
 
 const slots = useSlots()
 

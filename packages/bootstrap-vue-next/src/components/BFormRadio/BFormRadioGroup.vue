@@ -26,62 +26,60 @@ import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
 import {useFocus, useVModel} from '@vueuse/core'
 
-interface BFormRadioGroupProps {
-  size?: Size
-  form?: string
-  id?: string
-  name?: string
-  modelValue?: string | boolean | unknown[] | Record<string, unknown> | number | null
-  ariaInvalid?: AriaInvalid
-  autofocus?: Booleanish
-  buttonVariant?: ButtonVariant | null
-  buttons?: Booleanish
-  disabled?: Booleanish
-  disabledField?: string
-  htmlField?: string
-  options?: (string | number | Record<string, unknown>)[]
-  plain?: Booleanish
-  required?: Booleanish
-  stacked?: Booleanish
-  state?: Booleanish | null
-  textField?: string
-  validated?: Booleanish
-  valueField?: string
-}
+const props = withDefaults(
+  defineProps<{
+    size?: Size
+    form?: string
+    id?: string
+    name?: string
+    modelValue?: string | boolean | unknown[] | Record<string, unknown> | number | null
+    ariaInvalid?: AriaInvalid
+    autofocus?: Booleanish
+    buttonVariant?: ButtonVariant | null
+    buttons?: Booleanish
+    disabled?: Booleanish
+    disabledField?: string
+    htmlField?: string
+    options?: (string | number | Record<string, unknown>)[]
+    plain?: Booleanish
+    required?: Booleanish
+    stacked?: Booleanish
+    state?: Booleanish | null
+    textField?: string
+    validated?: Booleanish
+    valueField?: string
+  }>(),
+  {
+    size: 'md',
+    form: undefined,
+    id: undefined,
+    name: undefined,
+    modelValue: null,
+    autofocus: false,
+    buttonVariant: 'secondary',
+    buttons: false,
+    ariaInvalid: undefined,
+    state: null,
+    disabled: false,
+    disabledField: 'disabled',
+    htmlField: 'html',
+    options: () => [],
+    plain: false,
+    required: false,
+    stacked: false,
+    textField: 'text',
+    validated: false,
+    valueField: 'value',
+  }
+)
 
-interface BFormRadioGroupEmits {
-  (e: 'input', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
-  (
-    e: 'update:modelValue',
+const emit = defineEmits<{
+  'input': [value: string | boolean | unknown[] | Record<string, unknown> | number | null]
+  'update:modelValue': [
     value: string | boolean | unknown[] | Record<string, unknown> | number | null
-  ): void
-  (e: 'change', value: string | boolean | unknown[] | Record<string, unknown> | number | null): void
-}
-
-const props = withDefaults(defineProps<BFormRadioGroupProps>(), {
-  size: 'md',
-  form: undefined,
-  id: undefined,
-  name: undefined,
-  modelValue: null,
-  autofocus: false,
-  buttonVariant: 'secondary',
-  buttons: false,
-  ariaInvalid: undefined,
-  state: null,
-  disabled: false,
-  disabledField: 'disabled',
-  htmlField: 'html',
-  options: () => [],
-  plain: false,
-  required: false,
-  stacked: false,
-  textField: 'text',
-  validated: false,
-  valueField: 'value',
-})
-
-const emit = defineEmits<BFormRadioGroupEmits>()
+  ]
+  'change': [value: string | boolean | unknown[] | Record<string, unknown> | number | null]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

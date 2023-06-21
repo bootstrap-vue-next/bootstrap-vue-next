@@ -13,23 +13,24 @@ import {avatarGroupInjectionKey, isNumeric, toFloat} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
 
-interface BAvatarGroupProps {
-  overlap?: number | string
-  rounded?: boolean | string
-  size?: Size | string
-  square?: Booleanish
-  tag?: string
-  variant?: ColorVariant | null
-}
-
-const props = withDefaults(defineProps<BAvatarGroupProps>(), {
-  overlap: 0.3,
-  rounded: false,
-  square: false,
-  tag: 'div',
-  size: undefined,
-  variant: null,
-})
+const props = withDefaults(
+  defineProps<{
+    overlap?: number | string
+    rounded?: boolean | string
+    size?: Size | string
+    square?: Booleanish
+    tag?: string
+    variant?: ColorVariant | null
+  }>(),
+  {
+    overlap: 0.3,
+    rounded: false,
+    square: false,
+    tag: 'div',
+    size: undefined,
+    variant: null,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

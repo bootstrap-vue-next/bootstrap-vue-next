@@ -8,13 +8,14 @@
 import type {Booleanish} from '../../types'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 
-interface BInputGroupAppendProps {
-  isText?: Booleanish
-}
-
-withDefaults(defineProps<BInputGroupAppendProps>(), {
-  isText: false,
-})
+withDefaults(
+  defineProps<{
+    isText?: Booleanish
+  }>(),
+  {
+    isText: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -22,23 +22,24 @@ import {computed} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import {normalizeOptions} from '../../composables'
 
-interface BFormSelectOptionGroupProps {
-  label?: string
-  disabledField?: string
-  htmlField?: string
-  options?: unknown[] | Record<string, unknown>
-  textField?: string
-  valueField?: string
-}
-
-const props = withDefaults(defineProps<BFormSelectOptionGroupProps>(), {
-  disabledField: 'disabled',
-  label: undefined,
-  htmlField: 'html',
-  options: () => [],
-  textField: 'text',
-  valueField: 'value',
-})
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    disabledField?: string
+    htmlField?: string
+    options?: unknown[] | Record<string, unknown>
+    textField?: string
+    valueField?: string
+  }>(),
+  {
+    disabledField: 'disabled',
+    label: undefined,
+    htmlField: 'html',
+    options: () => [],
+    textField: 'text',
+    valueField: 'value',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -72,93 +72,95 @@ defineOptions({
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
 
-interface BDropdownProps {
-  ariaLabel?: string
-  id?: string
-  menuClass?: ClassValue
-  size?: Size
-  splitClass?: ClassValue
-  splitVariant?: ButtonVariant | null
-  text?: string
-  toggleClass?: ClassValue
-  autoClose?: boolean | 'inside' | 'outside'
-  block?: Booleanish
-  dark?: Booleanish
-  disabled?: Booleanish
-  isNav?: Booleanish
-  dropup?: Booleanish
-  dropend?: Booleanish
-  dropstart?: Booleanish
-  center?: Booleanish
-  end?: Booleanish
-  noFlip?: Booleanish
-  noShift?: Booleanish
-  offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
-  role?: string
-  split?: Booleanish
-  splitButtonType?: ButtonType
-  splitHref?: string
-  splitDisabled?: Booleanish
-  noCaret?: Booleanish
-  toggleText?: string
-  variant?: ButtonVariant | null
-  modelValue?: Booleanish
-  lazy?: Booleanish
-  strategy?: Strategy
-  floatingMiddleware?: Middleware[]
-  splitTo?: RouteLocationRaw
-}
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    id?: string
+    menuClass?: ClassValue
+    size?: Size
+    splitClass?: ClassValue
+    splitVariant?: ButtonVariant | null
+    text?: string
+    toggleClass?: ClassValue
+    autoClose?: boolean | 'inside' | 'outside'
+    block?: Booleanish
+    dark?: Booleanish
+    disabled?: Booleanish
+    isNav?: Booleanish
+    dropup?: Booleanish
+    dropend?: Booleanish
+    dropstart?: Booleanish
+    center?: Booleanish
+    end?: Booleanish
+    noFlip?: Booleanish
+    noShift?: Booleanish
+    offset?:
+      | number
+      | string
+      | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
+    role?: string
+    split?: Booleanish
+    splitButtonType?: ButtonType
+    splitHref?: string
+    splitDisabled?: Booleanish
+    noCaret?: Booleanish
+    toggleText?: string
+    variant?: ButtonVariant | null
+    modelValue?: Booleanish
+    lazy?: Booleanish
+    strategy?: Strategy
+    floatingMiddleware?: Middleware[]
+    splitTo?: RouteLocationRaw
+  }>(),
+  {
+    ariaLabel: undefined,
+    id: undefined,
+    menuClass: undefined,
+    size: 'md',
+    splitClass: undefined,
+    splitVariant: undefined,
+    text: undefined,
+    toggleClass: undefined,
+    splitTo: undefined,
+    floatingMiddleware: undefined,
+    splitDisabled: undefined,
+    autoClose: true,
+    block: false,
+    dark: false,
+    disabled: false,
+    dropup: false,
+    isNav: false,
+    dropend: false,
+    dropstart: false,
+    end: false,
+    center: false,
+    lazy: false,
+    noFlip: false,
+    noShift: false,
+    offset: 0,
+    role: 'menu',
+    split: false,
+    splitButtonType: 'button',
+    splitHref: undefined,
+    noCaret: false,
+    toggleText: 'Toggle dropdown',
+    variant: 'secondary',
+    modelValue: false,
+    strategy: 'absolute',
+  }
+)
 
-interface BDropdownEmits {
-  (e: 'show', value: BvEvent): void
-  (e: 'shown'): void
-  (e: 'hide', value: BvEvent): void
-  (e: 'hidden'): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'click', event: MouseEvent): void
-  (e: 'toggle'): void
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const props = withDefaults(defineProps<BDropdownProps>(), {
-  ariaLabel: undefined,
-  id: undefined,
-  menuClass: undefined,
-  size: 'md',
-  splitClass: undefined,
-  splitVariant: undefined,
-  text: undefined,
-  toggleClass: undefined,
-  splitTo: undefined,
-  floatingMiddleware: undefined,
-  splitDisabled: undefined,
-  autoClose: true,
-  block: false,
-  dark: false,
-  disabled: false,
-  dropup: false,
-  isNav: false,
-  dropend: false,
-  dropstart: false,
-  end: false,
-  center: false,
-  lazy: false,
-  noFlip: false,
-  noShift: false,
-  offset: 0,
-  role: 'menu',
-  split: false,
-  splitButtonType: 'button',
-  splitHref: undefined,
-  noCaret: false,
-  toggleText: 'Toggle dropdown',
-  variant: 'secondary',
-  modelValue: false,
-  strategy: 'absolute',
-})
-
-const emit = defineEmits<BDropdownEmits>()
+const emit = defineEmits<{
+  'show': [value: BvEvent]
+  'shown': []
+  'hide': [value: BvEvent]
+  'hidden': []
+  'hide-prevented': []
+  'show-prevented': []
+  'click': [event: MouseEvent]
+  'toggle': []
+  'update:modelValue': [value: boolean]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

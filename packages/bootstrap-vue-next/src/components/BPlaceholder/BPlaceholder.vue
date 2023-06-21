@@ -18,25 +18,26 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BPlaceholderProps {
-  tag?: string
-  wrapperTag?: string
-  width?: string | number
-  cols?: string | number
-  variant?: ColorVariant | null
-  size?: PlaceholderSize
-  animation?: PlaceholderAnimation
-}
-
-const props = withDefaults(defineProps<BPlaceholderProps>(), {
-  variant: null,
-  size: 'md',
-  animation: undefined,
-  width: undefined,
-  tag: 'span',
-  wrapperTag: 'span',
-  cols: 12,
-})
+const props = withDefaults(
+  defineProps<{
+    tag?: string
+    wrapperTag?: string
+    width?: string | number
+    cols?: string | number
+    variant?: ColorVariant | null
+    size?: PlaceholderSize
+    animation?: PlaceholderAnimation
+  }>(),
+  {
+    variant: null,
+    size: 'md',
+    animation: undefined,
+    width: undefined,
+    tag: 'span',
+    wrapperTag: 'span',
+    cols: 12,
+  }
+)
 
 const widthString = computed<string | undefined>(() =>
   props.width === undefined

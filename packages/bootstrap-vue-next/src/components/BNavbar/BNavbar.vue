@@ -13,27 +13,28 @@ import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
-interface BNavbarProps {
-  fixed?: 'top' | 'bottom'
-  print?: Booleanish
-  sticky?: 'top' | 'bottom'
-  tag?: string
-  toggleable?: boolean | Breakpoint
-  dark?: Booleanish
-  variant?: ColorVariant | null
-  container?: 'fluid' | boolean
-}
-
-const props = withDefaults(defineProps<BNavbarProps>(), {
-  variant: null,
-  sticky: undefined,
-  fixed: undefined,
-  print: false,
-  tag: 'nav',
-  dark: false,
-  toggleable: false,
-  container: 'fluid',
-})
+const props = withDefaults(
+  defineProps<{
+    fixed?: 'top' | 'bottom'
+    print?: Booleanish
+    sticky?: 'top' | 'bottom'
+    tag?: string
+    toggleable?: boolean | Breakpoint
+    dark?: Booleanish
+    variant?: ColorVariant | null
+    container?: 'fluid' | boolean
+  }>(),
+  {
+    variant: null,
+    sticky: undefined,
+    fixed: undefined,
+    print: false,
+    tag: 'nav',
+    dark: false,
+    toggleable: false,
+    container: 'fluid',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

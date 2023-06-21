@@ -13,12 +13,12 @@ defineSlots<{
   default?: Record<string, never>
 }>()
 
-interface BNavbarBrandProps {
-  tag?: string
-}
-
 const props = withDefaults(
-  defineProps<BNavbarBrandProps & Omit<BLinkProps, 'event' | 'routerTag'>>(),
+  defineProps<
+    {
+      tag?: string
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
   {
     tag: 'div',
     // Link props
@@ -35,6 +35,14 @@ const props = withDefaults(
     target: '_self',
     to: undefined,
     variant: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
+    icon: false,
     // End link props
   }
 )
@@ -56,6 +64,14 @@ const computedLinkProps = computed(() =>
         target: true,
         to: true,
         variant: true,
+        opacity: true,
+        opacityHover: true,
+        underlineVariant: true,
+        underlineOffset: true,
+        underlineOffsetHover: true,
+        underlineOpacity: true,
+        underlineOpacityHover: true,
+        icon: true,
       } as Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
     : {}
 )

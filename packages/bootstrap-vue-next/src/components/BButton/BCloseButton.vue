@@ -14,25 +14,24 @@ import {computed} from 'vue'
 import type {Booleanish, ButtonType} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BCloseButtonProps {
-  ariaLabel?: string
-  disabled?: Booleanish
-  white?: Booleanish
-  type?: ButtonType
-}
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    disabled?: Booleanish
+    white?: Booleanish
+    type?: ButtonType
+  }>(),
+  {
+    ariaLabel: 'Close',
+    disabled: false,
+    white: false,
+    type: 'button',
+  }
+)
 
-interface BCloseButtonEmits {
-  (e: 'click', value: MouseEvent): void
-}
-
-const props = withDefaults(defineProps<BCloseButtonProps>(), {
-  ariaLabel: 'Close',
-  disabled: false,
-  white: false,
-  type: 'button',
-})
-
-const emit = defineEmits<BCloseButtonEmits>()
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
 
 const disabledBoolean = useBooleanish(() => props.disabled)
 const whiteBoolean = useBooleanish(() => props.white)

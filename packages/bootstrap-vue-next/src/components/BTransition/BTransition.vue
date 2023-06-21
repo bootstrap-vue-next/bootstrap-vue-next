@@ -9,19 +9,20 @@ import type {Booleanish, TransitionMode} from '../../types'
 import {computed, type TransitionProps} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface BTransitionProps {
-  appear?: Booleanish
-  mode?: TransitionMode
-  noFade?: Booleanish
-  transProps?: TransitionProps
-}
-
-const props = withDefaults(defineProps<BTransitionProps>(), {
-  appear: false,
-  noFade: false,
-  transProps: undefined,
-  mode: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    appear?: Booleanish
+    mode?: TransitionMode
+    noFade?: Booleanish
+    transProps?: TransitionProps
+  }>(),
+  {
+    appear: false,
+    noFade: false,
+    transProps: undefined,
+    mode: undefined,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

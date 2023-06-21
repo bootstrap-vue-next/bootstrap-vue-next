@@ -39,41 +39,40 @@ import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useVModel} from '@vueuse/core'
 
-interface BAlertProps {
-  noHoverPause?: Booleanish
-  dismissLabel?: string
-  dismissible?: Booleanish
-  fade?: Booleanish
-  closeVariant?: ButtonVariant | null
-  modelValue?: boolean | number
-  variant?: ColorVariant | null
-  closeContent?: string
-  immediate?: Booleanish
-  interval?: number
-  showOnPause?: Booleanish
-}
+const props = withDefaults(
+  defineProps<{
+    noHoverPause?: Booleanish
+    dismissLabel?: string
+    dismissible?: Booleanish
+    fade?: Booleanish
+    closeVariant?: ButtonVariant | null
+    modelValue?: boolean | number
+    variant?: ColorVariant | null
+    closeContent?: string
+    immediate?: Booleanish
+    interval?: number
+    showOnPause?: Booleanish
+  }>(),
+  {
+    closeContent: undefined,
+    closeVariant: 'secondary',
+    noHoverPause: false,
+    interval: 1000,
+    dismissLabel: 'Close',
+    dismissible: false,
+    fade: false,
+    modelValue: false,
+    variant: 'info',
+    immediate: true,
+    showOnPause: true,
+  }
+)
 
-interface BAlertEmits {
-  (e: 'closed'): void
-  (e: 'close-countdown', value: number): void
-  (e: 'update:modelValue', value: boolean | number): void
-}
-
-const props = withDefaults(defineProps<BAlertProps>(), {
-  closeContent: undefined,
-  closeVariant: 'secondary',
-  noHoverPause: false,
-  interval: 1000,
-  dismissLabel: 'Close',
-  dismissible: false,
-  fade: false,
-  modelValue: false,
-  variant: 'info',
-  immediate: true,
-  showOnPause: true,
-})
-
-const emit = defineEmits<BAlertEmits>()
+const emit = defineEmits<{
+  'closed': []
+  'close-countdown': [value: number]
+  'update:modelValue': [value: boolean | number]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

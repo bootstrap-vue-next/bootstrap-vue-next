@@ -11,21 +11,22 @@ import {computed} from 'vue'
 import type {Booleanish, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BFormTextProps {
-  id?: string
-  inline?: Booleanish
-  tag?: string
-  text?: string
-  textVariant?: TextColorVariant | null
-}
-
-const props = withDefaults(defineProps<BFormTextProps>(), {
-  inline: false,
-  id: undefined,
-  text: undefined,
-  tag: 'small',
-  textVariant: 'muted',
-})
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    inline?: Booleanish
+    tag?: string
+    text?: string
+    textVariant?: TextColorVariant | null
+  }>(),
+  {
+    inline: false,
+    id: undefined,
+    text: undefined,
+    tag: 'small',
+    textVariant: 'muted',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

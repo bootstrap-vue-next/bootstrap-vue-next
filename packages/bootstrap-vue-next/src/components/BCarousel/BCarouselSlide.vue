@@ -42,49 +42,50 @@ import type {Booleanish} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
 
-interface BCarouselSlideProps {
-  imgSrc?: string
-  imgHeight?: string | number
-  imgWidth?: string | number
-  interval?: string | number
-  background?: string
-  caption?: string
-  captionHtml?: string
-  captionTag?: string
-  contentTag?: string
-  contentVisibleUp?: string
-  id?: string
-  imgAlt?: string
-  imgBlank?: Booleanish
-  imgBlankColor?: string
-  text?: string
-  textHtml?: string
-  textTag?: string
-}
-
 // TODO interval is unused
 // Need to add https://getbootstrap.com/docs/5.3/components/carousel/#individual-carousel-item-interval
 // Perhaps a provide/inject with next/prev values where the component can call those would work.
 
-const props = withDefaults(defineProps<BCarouselSlideProps>(), {
-  imgSrc: undefined,
-  imgHeight: undefined,
-  imgWidth: undefined,
-  interval: undefined,
-  text: undefined,
-  textHtml: undefined,
-  id: undefined,
-  imgAlt: undefined,
-  contentVisibleUp: undefined,
-  background: undefined,
-  caption: undefined,
-  captionHtml: undefined,
-  captionTag: 'h3',
-  contentTag: 'div',
-  imgBlank: false,
-  imgBlankColor: 'transparent',
-  textTag: 'p',
-})
+const props = withDefaults(
+  defineProps<{
+    imgSrc?: string
+    imgHeight?: string | number
+    imgWidth?: string | number
+    interval?: string | number
+    background?: string
+    caption?: string
+    captionHtml?: string
+    captionTag?: string
+    contentTag?: string
+    contentVisibleUp?: string
+    id?: string
+    imgAlt?: string
+    imgBlank?: Booleanish
+    imgBlankColor?: string
+    text?: string
+    textHtml?: string
+    textTag?: string
+  }>(),
+  {
+    imgSrc: undefined,
+    imgHeight: undefined,
+    imgWidth: undefined,
+    interval: undefined,
+    text: undefined,
+    textHtml: undefined,
+    id: undefined,
+    imgAlt: undefined,
+    contentVisibleUp: undefined,
+    background: undefined,
+    caption: undefined,
+    captionHtml: undefined,
+    captionTag: 'h3',
+    contentTag: 'div',
+    imgBlank: false,
+    imgBlankColor: 'transparent',
+    textTag: 'p',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

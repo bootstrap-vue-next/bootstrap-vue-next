@@ -110,122 +110,121 @@ defineOptions({
 // Note, attempt to return focus to item that openned the modal after close
 // Implement auto focus props like autoFocusButton
 
-interface BModalProps {
-  bodyBgVariant?: ColorVariant | null
-  bodyClass?: ClassValue
-  bodyTextVariant?: ColorVariant | null
-  busy?: Booleanish
-  lazy?: Booleanish
-  buttonSize?: Size
-  cancelDisabled?: Booleanish
-  cancelTitle?: string
-  cancelVariant?: ButtonVariant | null
-  centered?: Booleanish
-  contentClass?: ClassValue
-  dialogClass?: ClassValue
-  footerBgVariant?: ColorVariant | null
-  footerBorderVariant?: ColorVariant | null
-  footerClass?: ClassValue
-  footerTextVariant?: ColorVariant | null
-  fullscreen?: boolean | string
-  headerBgVariant?: ColorVariant | null
-  headerBorderVariant?: ColorVariant | null
-  headerClass?: ClassValue
-  headerCloseLabel?: string
-  headerCloseWhite?: Booleanish
-  headerTextVariant?: ColorVariant | null
-  hideBackdrop?: Booleanish
-  hideFooter?: Booleanish
-  hideHeader?: Booleanish
-  hideHeaderClose?: Booleanish
-  id?: string
-  modalClass?: ClassValue
-  modelValue?: Booleanish
-  noCloseOnBackdrop?: Booleanish
-  noCloseOnEsc?: Booleanish
-  noFade?: Booleanish
-  autoFocus?: Booleanish
-  okDisabled?: Booleanish
-  okOnly?: Booleanish
-  okTitle?: string
-  okVariant?: ButtonVariant | null
-  scrollable?: Booleanish
-  show?: Booleanish
-  size?: Size | 'xl'
-  title?: string
-  titleClass?: string
-  titleSrOnly?: Booleanish
-  titleTag?: string
-  autoFocusButton?: 'ok' | 'cancel' | 'close'
-  teleportDisabled?: Booleanish
-  teleportTo?: string | RendererElement | null | undefined
-}
+const props = withDefaults(
+  defineProps<{
+    bodyBgVariant?: ColorVariant | null
+    bodyClass?: ClassValue
+    bodyTextVariant?: ColorVariant | null
+    busy?: Booleanish
+    lazy?: Booleanish
+    buttonSize?: Size
+    cancelDisabled?: Booleanish
+    cancelTitle?: string
+    cancelVariant?: ButtonVariant | null
+    centered?: Booleanish
+    contentClass?: ClassValue
+    dialogClass?: ClassValue
+    footerBgVariant?: ColorVariant | null
+    footerBorderVariant?: ColorVariant | null
+    footerClass?: ClassValue
+    footerTextVariant?: ColorVariant | null
+    fullscreen?: boolean | string
+    headerBgVariant?: ColorVariant | null
+    headerBorderVariant?: ColorVariant | null
+    headerClass?: ClassValue
+    headerCloseLabel?: string
+    headerCloseWhite?: Booleanish
+    headerTextVariant?: ColorVariant | null
+    hideBackdrop?: Booleanish
+    hideFooter?: Booleanish
+    hideHeader?: Booleanish
+    hideHeaderClose?: Booleanish
+    id?: string
+    modalClass?: ClassValue
+    modelValue?: Booleanish
+    noCloseOnBackdrop?: Booleanish
+    noCloseOnEsc?: Booleanish
+    noFade?: Booleanish
+    autoFocus?: Booleanish
+    okDisabled?: Booleanish
+    okOnly?: Booleanish
+    okTitle?: string
+    okVariant?: ButtonVariant | null
+    scrollable?: Booleanish
+    show?: Booleanish
+    size?: Size | 'xl'
+    title?: string
+    titleClass?: string
+    titleSrOnly?: Booleanish
+    titleTag?: string
+    autoFocusButton?: 'ok' | 'cancel' | 'close'
+    teleportDisabled?: Booleanish
+    teleportTo?: string | RendererElement | null | undefined
+  }>(),
+  {
+    bodyBgVariant: null,
+    bodyClass: undefined,
+    bodyTextVariant: null,
+    contentClass: undefined,
+    headerTextVariant: null,
+    dialogClass: undefined,
+    headerBgVariant: null,
+    headerBorderVariant: null,
+    headerClass: undefined,
+    footerBgVariant: null,
+    footerBorderVariant: null,
+    footerClass: undefined,
+    footerTextVariant: null,
+    autoFocusButton: undefined,
+    titleClass: undefined,
+    title: undefined,
+    size: 'md',
+    modalClass: undefined,
+    id: undefined,
+    busy: false,
+    lazy: false,
+    buttonSize: 'md',
+    cancelDisabled: false,
+    cancelTitle: 'Cancel',
+    cancelVariant: 'secondary',
+    centered: false,
+    fullscreen: false,
+    headerCloseLabel: 'Close',
+    headerCloseWhite: false,
+    hideBackdrop: false,
+    hideFooter: false,
+    hideHeader: false,
+    hideHeaderClose: false,
+    modelValue: false,
+    noCloseOnBackdrop: false,
+    noCloseOnEsc: false,
+    noFade: false,
+    autoFocus: true,
+    okDisabled: false,
+    okOnly: false,
+    okTitle: 'Ok',
+    okVariant: 'primary',
+    scrollable: false,
+    show: false,
+    titleSrOnly: false,
+    titleTag: 'h5',
+    teleportDisabled: false,
+    teleportTo: 'body',
+  }
+)
 
-interface BModalEmits {
-  (e: 'update:modelValue', value: boolean): void
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'ok', value: BvTriggerableEvent): void
-  (e: 'cancel', value: BvTriggerableEvent): void
-  (e: 'close', value: BvTriggerableEvent): void
-}
-
-const props = withDefaults(defineProps<BModalProps>(), {
-  bodyBgVariant: null,
-  bodyClass: undefined,
-  bodyTextVariant: null,
-  contentClass: undefined,
-  headerTextVariant: null,
-  dialogClass: undefined,
-  headerBgVariant: null,
-  headerBorderVariant: null,
-  headerClass: undefined,
-  footerBgVariant: null,
-  footerBorderVariant: null,
-  footerClass: undefined,
-  footerTextVariant: null,
-  autoFocusButton: undefined,
-  titleClass: undefined,
-  title: undefined,
-  size: 'md',
-  modalClass: undefined,
-  id: undefined,
-  busy: false,
-  lazy: false,
-  buttonSize: 'md',
-  cancelDisabled: false,
-  cancelTitle: 'Cancel',
-  cancelVariant: 'secondary',
-  centered: false,
-  fullscreen: false,
-  headerCloseLabel: 'Close',
-  headerCloseWhite: false,
-  hideBackdrop: false,
-  hideFooter: false,
-  hideHeader: false,
-  hideHeaderClose: false,
-  modelValue: false,
-  noCloseOnBackdrop: false,
-  noCloseOnEsc: false,
-  noFade: false,
-  autoFocus: true,
-  okDisabled: false,
-  okOnly: false,
-  okTitle: 'Ok',
-  okVariant: 'primary',
-  scrollable: false,
-  show: false,
-  titleSrOnly: false,
-  titleTag: 'h5',
-  teleportDisabled: false,
-  teleportTo: 'body',
-})
-
-const emit = defineEmits<BModalEmits>()
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show-prevented': []
+  'ok': [value: BvTriggerableEvent]
+  'cancel': [value: BvTriggerableEvent]
+  'close': [value: BvTriggerableEvent]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

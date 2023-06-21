@@ -23,27 +23,26 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BDropdownItemButtonProps {
-  buttonClass?: ClassValue
-  active?: Booleanish
-  activeClass?: string
-  disabled?: Booleanish
-  variant?: ColorVariant | null
-}
+const props = withDefaults(
+  defineProps<{
+    buttonClass?: ClassValue
+    active?: Booleanish
+    activeClass?: string
+    disabled?: Booleanish
+    variant?: ColorVariant | null
+  }>(),
+  {
+    active: false,
+    activeClass: 'active',
+    disabled: false,
+    variant: null,
+    buttonClass: undefined,
+  }
+)
 
-interface BDropdownItemButtonEmits {
-  (e: 'click', value: MouseEvent): void
-}
-
-const props = withDefaults(defineProps<BDropdownItemButtonProps>(), {
-  active: false,
-  activeClass: 'active',
-  disabled: false,
-  variant: null,
-  buttonClass: undefined,
-})
-
-const emit = defineEmits<BDropdownItemButtonEmits>()
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
 
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)

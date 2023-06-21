@@ -15,35 +15,46 @@ defineSlots<{
   default?: Record<string, never>
 }>()
 
-interface BBadgeProps {
-  pill?: Booleanish
-  tag?: string
-  textIndicator?: Booleanish
-  dotIndicator?: Booleanish
-  variant?: ColorVariant | null
-}
-
-const props = withDefaults(defineProps<BBadgeProps & Omit<BLinkProps, 'event' | 'routerTag'>>(), {
-  pill: false,
-  tag: 'span',
-  textIndicator: false,
-  dotIndicator: false,
-  variant: 'secondary',
-  // Link props
-  active: undefined,
-  activeClass: 'router-link-active',
-  append: false,
-  disabled: false,
-  href: undefined,
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-  rel: undefined,
-  replace: false,
-  routerComponentName: 'router-link',
-  target: '_self',
-  to: undefined,
-  // End link props
-})
+const props = withDefaults(
+  defineProps<
+    {
+      pill?: Booleanish
+      tag?: string
+      textIndicator?: Booleanish
+      dotIndicator?: Booleanish
+      variant?: ColorVariant | null
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
+  {
+    pill: false,
+    tag: 'span',
+    textIndicator: false,
+    dotIndicator: false,
+    variant: 'secondary',
+    // Link props
+    active: undefined,
+    activeClass: 'router-link-active',
+    append: false,
+    disabled: false,
+    href: undefined,
+    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    rel: undefined,
+    replace: false,
+    routerComponentName: 'router-link',
+    target: '_self',
+    to: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
+    icon: false,
+    // End link props
+  }
+)
 
 const pillBoolean = useBooleanish(() => props.pill)
 const textIndicatorBoolean = useBooleanish(() => props.textIndicator)
@@ -81,6 +92,14 @@ const computedLinkProps = computed(() =>
         target: true,
         to: true,
         variant: true,
+        opacity: true,
+        opacityHover: true,
+        underlineVariant: true,
+        underlineOffset: true,
+        underlineOffsetHover: true,
+        underlineOpacity: true,
+        underlineOpacityHover: true,
+        icon: true,
       } as Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
     : {}
 )

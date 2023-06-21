@@ -11,25 +11,24 @@ import {accordionInjectionKey} from '../../utils'
 import {useBooleanish, useId} from '../../composables'
 import {useVModel} from '@vueuse/core'
 
-interface BAccordionProps {
-  flush?: Booleanish
-  free?: Booleanish
-  id?: string
-  modelValue?: string
-}
+const props = withDefaults(
+  defineProps<{
+    flush?: Booleanish
+    free?: Booleanish
+    id?: string
+    modelValue?: string
+  }>(),
+  {
+    flush: false,
+    free: false,
+    id: undefined,
+    modelValue: undefined,
+  }
+)
 
-interface BAccordionEmits {
-  (e: 'update:modelValue', value: string): void
-}
-
-const props = withDefaults(defineProps<BAccordionProps>(), {
-  flush: false,
-  free: false,
-  id: undefined,
-  modelValue: undefined,
-})
-
-const emit = defineEmits<BAccordionEmits>()
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

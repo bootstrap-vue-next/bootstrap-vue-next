@@ -14,25 +14,24 @@ import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
 
-interface BFormProps {
-  id?: string
-  floating?: Booleanish
-  novalidate?: Booleanish
-  validated?: Booleanish
-}
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    floating?: Booleanish
+    novalidate?: Booleanish
+    validated?: Booleanish
+  }>(),
+  {
+    floating: false,
+    id: undefined,
+    novalidate: false,
+    validated: false,
+  }
+)
 
-interface BFormEmits {
-  (e: 'submit', value: Event): void
-}
-
-const props = withDefaults(defineProps<BFormProps>(), {
-  floating: false,
-  id: undefined,
-  novalidate: false,
-  validated: false,
-})
-
-const emit = defineEmits<BFormEmits>()
+const emit = defineEmits<{
+  submit: [value: Event]
+}>()
 
 const floatingBoolean = useBooleanish(() => props.floating)
 const novalidateBoolean = useBooleanish(() => props.novalidate)

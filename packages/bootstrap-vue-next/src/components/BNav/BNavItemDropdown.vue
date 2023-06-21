@@ -24,61 +24,60 @@ import {omit} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
 
 // TODO see how this works in a b-collapse navbar ie https://bootstrap-vue.org/docs/components/navbar first example
-interface BNavItemDropdownProps {
-  id?: string
-  text?: string
-  toggleClass?: ClassValue
-  size?: Size
-  offset?: string
-  autoClose?: boolean | 'inside' | 'outside'
-  dark?: Booleanish
-  splitVariant?: ButtonVariant | null
-  noCaret?: Booleanish
-  variant?: ButtonVariant | null
-  modelValue?: Booleanish
-  lazy?: Booleanish
-  strategy?: Strategy
-  floatingMiddleware?: Middleware[]
-  noFlip?: Booleanish
-  noShift?: Booleanish
-  dropup?: Booleanish
-  dropend?: Booleanish
-  dropstart?: Booleanish
-  center?: Booleanish
-  end?: Booleanish
-  menuClass?: ClassValue
-}
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    text?: string
+    toggleClass?: ClassValue
+    size?: Size
+    offset?: string
+    autoClose?: boolean | 'inside' | 'outside'
+    dark?: Booleanish
+    splitVariant?: ButtonVariant | null
+    noCaret?: Booleanish
+    variant?: ButtonVariant | null
+    modelValue?: Booleanish
+    lazy?: Booleanish
+    strategy?: Strategy
+    floatingMiddleware?: Middleware[]
+    noFlip?: Booleanish
+    noShift?: Booleanish
+    dropup?: Booleanish
+    dropend?: Booleanish
+    dropstart?: Booleanish
+    center?: Booleanish
+    end?: Booleanish
+    menuClass?: ClassValue
+  }>(),
+  {
+    lazy: undefined,
+    strategy: undefined,
+    floatingMiddleware: undefined,
+    noFlip: undefined,
+    noShift: undefined,
+    dropup: undefined,
+    dropend: undefined,
+    dropstart: undefined,
+    center: undefined,
+    end: undefined,
+    menuClass: undefined,
+    id: undefined,
+    text: undefined,
+    toggleClass: undefined,
+    size: 'md',
+    offset: undefined,
+    autoClose: undefined,
+    dark: undefined,
+    splitVariant: undefined,
+    noCaret: undefined,
+    variant: 'link',
+    modelValue: false,
+  }
+)
 
-interface BNavItemDropdownEmits {
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const props = withDefaults(defineProps<BNavItemDropdownProps>(), {
-  lazy: undefined,
-  strategy: undefined,
-  floatingMiddleware: undefined,
-  noFlip: undefined,
-  noShift: undefined,
-  dropup: undefined,
-  dropend: undefined,
-  dropstart: undefined,
-  center: undefined,
-  end: undefined,
-  menuClass: undefined,
-  id: undefined,
-  text: undefined,
-  toggleClass: undefined,
-  size: 'md',
-  offset: undefined,
-  autoClose: undefined,
-  dark: undefined,
-  splitVariant: undefined,
-  noCaret: undefined,
-  variant: 'link',
-  modelValue: false,
-})
-
-const emit = defineEmits<BNavItemDropdownEmits>()
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

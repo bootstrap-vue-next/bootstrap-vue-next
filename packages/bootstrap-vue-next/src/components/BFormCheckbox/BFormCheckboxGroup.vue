@@ -26,78 +26,74 @@ import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composa
 import {checkboxGroupKey} from '../../utils'
 import {useFocus, useVModel} from '@vueuse/core'
 
-interface BFormCheckboxGroupProps {
-  id?: string
-  form?: string
-  modelValue?: (
-    | unknown[]
-    | Set<unknown>
-    | boolean
-    | string
-    | Record<string, unknown>
-    | number
-    | null
-  )[]
-  ariaInvalid?: AriaInvalid
-  autofocus?: Booleanish
-  buttonVariant?: ButtonVariant | null
-  buttons?: Booleanish
-  disabled?: Booleanish
-  disabledField?: string
-  htmlField?: string
-  name?: string
-  options?: (string | number | Record<string, unknown>)[]
-  plain?: Booleanish
-  required?: Booleanish
-  size?: Size
-  stacked?: Booleanish
-  state?: Booleanish | null
-  switches?: Booleanish
-  textField?: string
-  validated?: Booleanish
-  valueField?: string
-}
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    form?: string
+    modelValue?: (
+      | unknown[]
+      | Set<unknown>
+      | boolean
+      | string
+      | Record<string, unknown>
+      | number
+      | null
+    )[]
+    ariaInvalid?: AriaInvalid
+    autofocus?: Booleanish
+    buttonVariant?: ButtonVariant | null
+    buttons?: Booleanish
+    disabled?: Booleanish
+    disabledField?: string
+    htmlField?: string
+    name?: string
+    options?: (string | number | Record<string, unknown>)[]
+    plain?: Booleanish
+    required?: Booleanish
+    size?: Size
+    stacked?: Booleanish
+    state?: Booleanish | null
+    switches?: Booleanish
+    textField?: string
+    validated?: Booleanish
+    valueField?: string
+  }>(),
+  {
+    id: undefined,
+    size: 'md',
+    name: undefined,
+    form: undefined,
+    modelValue: () => [],
+    autofocus: false,
+    buttonVariant: 'secondary',
+    buttons: false,
+    ariaInvalid: undefined,
+    state: null,
+    disabled: false,
+    disabledField: 'disabled',
+    htmlField: 'html',
+    options: () => [],
+    plain: false,
+    required: false,
+    stacked: false,
+    switches: false,
+    textField: 'text',
+    validated: false,
+    valueField: 'value',
+  }
+)
 
-interface BFormCheckboxGroupEmits {
-  (
-    e: 'input',
+const emit = defineEmits<{
+  'input': [
     value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
-  ): void
-  (
-    e: 'update:modelValue',
+  ]
+  'update:modelValue': [
     value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
-  ): void
-  (
-    e: 'change',
+  ]
+  'change': [
     value: (unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]
-  ): void
-}
-
-const props = withDefaults(defineProps<BFormCheckboxGroupProps>(), {
-  id: undefined,
-  size: 'md',
-  name: undefined,
-  form: undefined,
-  modelValue: () => [],
-  autofocus: false,
-  buttonVariant: 'secondary',
-  buttons: false,
-  ariaInvalid: undefined,
-  state: null,
-  disabled: false,
-  disabledField: 'disabled',
-  htmlField: 'html',
-  options: () => [],
-  plain: false,
-  required: false,
-  stacked: false,
-  switches: false,
-  textField: 'text',
-  validated: false,
-  valueField: 'value',
-})
-
-const emit = defineEmits<BFormCheckboxGroupEmits>()
+  ]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

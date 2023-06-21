@@ -35,56 +35,54 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BFormRadioProps {
-  ariaLabel?: string
-  ariaLabelledby?: string
-  form?: string
-  id?: string
-  name?: string
-  size?: Size
-  autofocus?: Booleanish
-  modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
-  plain?: Booleanish
-  button?: Booleanish
-  buttonGroup?: Booleanish
-  disabled?: Booleanish
-  buttonVariant?: ButtonVariant | null
-  inline?: Booleanish
-  required?: Booleanish
-  state?: Booleanish | null
-  value?: string | boolean | Record<string, unknown> | number
-}
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    ariaLabelledby?: string
+    form?: string
+    id?: string
+    name?: string
+    size?: Size
+    autofocus?: Booleanish
+    modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
+    plain?: Booleanish
+    button?: Booleanish
+    buttonGroup?: Booleanish
+    disabled?: Booleanish
+    buttonVariant?: ButtonVariant | null
+    inline?: Booleanish
+    required?: Booleanish
+    state?: Booleanish | null
+    value?: string | boolean | Record<string, unknown> | number
+  }>(),
+  {
+    ariaLabel: undefined,
+    ariaLabelledby: undefined,
+    form: undefined,
+    id: undefined,
+    name: undefined,
+    autofocus: false,
+    plain: false,
+    button: false,
+    buttonGroup: false,
+    disabled: false,
+    modelValue: undefined,
+    state: null,
+    size: undefined,
+    buttonVariant: null,
+    inline: false,
+    required: false,
+    value: true,
+  }
+)
 
-interface BFormRadioEmits {
-  (e: 'input', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
-  (e: 'change', value: boolean | string | unknown[] | Record<string, unknown> | number | null): void
-  (
-    e: 'update:modelValue',
+const emit = defineEmits<{
+  'input': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
+  'change': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
+  'update:modelValue': [
     value: boolean | string | unknown[] | Record<string, unknown> | number | null
-  ): void
-}
-
-const props = withDefaults(defineProps<BFormRadioProps>(), {
-  ariaLabel: undefined,
-  ariaLabelledby: undefined,
-  form: undefined,
-  id: undefined,
-  name: undefined,
-  autofocus: false,
-  plain: false,
-  button: false,
-  buttonGroup: false,
-  disabled: false,
-  modelValue: undefined,
-  state: null,
-  size: undefined,
-  buttonVariant: null,
-  inline: false,
-  required: false,
-  value: true,
-})
-
-const emit = defineEmits<BFormRadioEmits>()
+  ]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

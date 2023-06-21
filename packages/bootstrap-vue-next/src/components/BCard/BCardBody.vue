@@ -30,31 +30,32 @@ import BCardSubtitle from './BCardSubtitle.vue'
 import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BCardBodyProps {
-  bodyBgVariant?: ColorVariant | null
-  bodyTag?: string
-  bodyTextVariant?: TextColorVariant | null
-  overlay?: Booleanish
-  subtitle?: string
-  subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant | null
-  title?: string
-  titleTag?: string
-  text?: string
-}
-
-const props = withDefaults(defineProps<BCardBodyProps>(), {
-  bodyTag: 'div',
-  overlay: false,
-  titleTag: 'h4',
-  subtitleTag: 'h4',
-  bodyBgVariant: null,
-  bodyTextVariant: null,
-  subtitleTextVariant: undefined,
-  subtitle: undefined,
-  title: undefined,
-  text: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    bodyBgVariant?: ColorVariant | null
+    bodyTag?: string
+    bodyTextVariant?: TextColorVariant | null
+    overlay?: Booleanish
+    subtitle?: string
+    subtitleTag?: string
+    subtitleTextVariant?: TextColorVariant | null
+    title?: string
+    titleTag?: string
+    text?: string
+  }>(),
+  {
+    bodyTag: 'div',
+    overlay: false,
+    titleTag: 'h4',
+    subtitleTag: 'h4',
+    bodyBgVariant: null,
+    bodyTextVariant: null,
+    subtitleTextVariant: undefined,
+    subtitle: undefined,
+    title: undefined,
+    text: undefined,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

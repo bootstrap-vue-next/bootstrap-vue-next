@@ -18,21 +18,22 @@ import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
 
-interface BThProps {
-  colspan?: string | number
-  rowspan?: string | number
-  stackedHeading?: string
-  stickyColumn?: Booleanish
-  variant?: ColorVariant | null
-}
-
-const props = withDefaults(defineProps<BThProps>(), {
-  colspan: undefined,
-  rowspan: undefined,
-  variant: null,
-  stackedHeading: undefined,
-  stickyColumn: false,
-})
+const props = withDefaults(
+  defineProps<{
+    colspan?: string | number
+    rowspan?: string | number
+    stackedHeading?: string
+    stickyColumn?: Booleanish
+    variant?: ColorVariant | null
+  }>(),
+  {
+    colspan: undefined,
+    rowspan: undefined,
+    variant: null,
+    stackedHeading: undefined,
+    stickyColumn: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

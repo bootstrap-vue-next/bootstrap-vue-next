@@ -44,59 +44,58 @@ import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId} from '../../composables'
 import {useFocus, useVModel} from '@vueuse/core'
 
-interface BFormSelectProps {
-  ariaInvalid?: AriaInvalid
-  autofocus?: Booleanish
-  disabled?: Booleanish
-  disabledField?: string
-  form?: string
-  htmlField?: string
-  id?: string
-  labelField?: string
-  multiple?: Booleanish
-  name?: string
-  options?: unknown[] | Record<string, unknown>
-  optionsField?: string
-  plain?: Booleanish
-  required?: Booleanish
-  selectSize?: number
-  size?: Size
-  state?: Booleanish | null
-  textField?: string
-  valueField?: string
-  modelValue?: string | unknown[] | Record<string, unknown> | number | null
-}
+const props = withDefaults(
+  defineProps<{
+    ariaInvalid?: AriaInvalid
+    autofocus?: Booleanish
+    disabled?: Booleanish
+    disabledField?: string
+    form?: string
+    htmlField?: string
+    id?: string
+    labelField?: string
+    multiple?: Booleanish
+    name?: string
+    options?: unknown[] | Record<string, unknown>
+    optionsField?: string
+    plain?: Booleanish
+    required?: Booleanish
+    selectSize?: number
+    size?: Size
+    state?: Booleanish | null
+    textField?: string
+    valueField?: string
+    modelValue?: string | unknown[] | Record<string, unknown> | number | null
+  }>(),
+  {
+    form: undefined,
+    id: undefined,
+    name: undefined,
+    size: 'md',
+    ariaInvalid: undefined,
+    autofocus: false,
+    disabled: false,
+    disabledField: 'disabled',
+    htmlField: 'html',
+    state: null,
+    labelField: 'label',
+    multiple: false,
+    options: () => [],
+    optionsField: 'options',
+    plain: false,
+    required: false,
+    selectSize: 0,
+    textField: 'text',
+    valueField: 'value',
+    modelValue: '',
+  }
+)
 
-interface BFormSelectEmits {
-  (e: 'input', value: unknown): void
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'change', value: unknown): void
-}
-
-const props = withDefaults(defineProps<BFormSelectProps>(), {
-  form: undefined,
-  id: undefined,
-  name: undefined,
-  size: 'md',
-  ariaInvalid: undefined,
-  autofocus: false,
-  disabled: false,
-  disabledField: 'disabled',
-  htmlField: 'html',
-  state: null,
-  labelField: 'label',
-  multiple: false,
-  options: () => [],
-  optionsField: 'options',
-  plain: false,
-  required: false,
-  selectSize: 0,
-  textField: 'text',
-  valueField: 'value',
-  modelValue: '',
-})
-
-const emit = defineEmits<BFormSelectEmits>()
+const emit = defineEmits<{
+  'input': [value: unknown]
+  'update:modelValue': [value: unknown]
+  'change': [value: unknown]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -36,49 +36,50 @@ import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} fr
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface BPlaceholderCardProps {
-  noHeader?: Booleanish
-  headerWidth?: string | number
-  headerVariant?: ColorVariant | null
-  headerAnimation?: PlaceholderAnimation
-  headerSize?: PlaceholderSize
-  noFooter?: Booleanish
-  footerWidth?: string | number
-  footerVariant?: ColorVariant | null
-  footerAnimation?: PlaceholderAnimation
-  footerSize?: PlaceholderSize
-  animation?: PlaceholderAnimation
-  size?: PlaceholderSize
-  variant?: ColorVariant | null
-  noButton?: Booleanish
-  imgBottom?: Booleanish
-  imgSrc?: string
-  imgBlankColor?: string
-  imgHeight?: string | number
-  noImg?: Booleanish
-}
-
-const props = withDefaults(defineProps<BPlaceholderCardProps>(), {
-  footerVariant: undefined,
-  footerAnimation: undefined,
-  footerSize: 'md',
-  animation: undefined,
-  size: 'md',
-  variant: undefined,
-  imgSrc: undefined,
-  headerAnimation: undefined,
-  headerSize: 'md',
-  headerVariant: undefined,
-  noButton: false,
-  headerWidth: 100,
-  footerWidth: 100,
-  noHeader: false,
-  noFooter: false,
-  imgBlankColor: '#868e96',
-  imgHeight: 100,
-  imgBottom: false,
-  noImg: false,
-})
+const props = withDefaults(
+  defineProps<{
+    noHeader?: Booleanish
+    headerWidth?: string | number
+    headerVariant?: ColorVariant | null
+    headerAnimation?: PlaceholderAnimation
+    headerSize?: PlaceholderSize
+    noFooter?: Booleanish
+    footerWidth?: string | number
+    footerVariant?: ColorVariant | null
+    footerAnimation?: PlaceholderAnimation
+    footerSize?: PlaceholderSize
+    animation?: PlaceholderAnimation
+    size?: PlaceholderSize
+    variant?: ColorVariant | null
+    noButton?: Booleanish
+    imgBottom?: Booleanish
+    imgSrc?: string
+    imgBlankColor?: string
+    imgHeight?: string | number
+    noImg?: Booleanish
+  }>(),
+  {
+    footerVariant: undefined,
+    footerAnimation: undefined,
+    footerSize: 'md',
+    animation: undefined,
+    size: 'md',
+    variant: undefined,
+    imgSrc: undefined,
+    headerAnimation: undefined,
+    headerSize: 'md',
+    headerVariant: undefined,
+    noButton: false,
+    headerWidth: 100,
+    footerWidth: 100,
+    noHeader: false,
+    noFooter: false,
+    imgBlankColor: '#868e96',
+    imgHeight: 100,
+    imgBottom: false,
+    noImg: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

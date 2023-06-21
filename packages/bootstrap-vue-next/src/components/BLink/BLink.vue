@@ -34,6 +34,7 @@ export interface BLinkProps {
   activeClass?: string
   append?: Booleanish
   disabled?: Booleanish
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   event?: string | any[]
   href?: string
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -45,10 +46,14 @@ export interface BLinkProps {
   target?: LinkTarget
   to?: RouteLocationRaw
   variant?: ColorVariant | null
-}
-
-interface BLinkEmits {
-  (e: 'click', value: MouseEvent): void
+  opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
+  opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
+  underlineVariant?: ColorVariant | null
+  underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
+  underlineOffsetHover?: 1 | 2 | 3 | '1' | '2' | '3'
+  underlineOpacity?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
+  underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
+  icon?: Booleanish
 }
 
 // TODO this component will likely have an issue with inheritAttrs
@@ -72,13 +77,24 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   target: '_self',
   to: undefined,
   variant: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  underlineVariant: null,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
+  icon: false,
 })
 
-const emit = defineEmits<BLinkEmits>()
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
 
 const attrs = useAttrs()
 
 const activeBoolean = useBooleanish(() => props.active)
+const iconBoolean = useBooleanish(() => props.icon)
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const appendBoolean = useBooleanish(() => props.append)
@@ -133,8 +149,21 @@ const computedHref = computed<string>(() => {
   return toFallback
 })
 
+const computedClasses = computed(() => ({
+  [`link-${props.variant}`]: props.variant !== null,
+  [`link-opacity-${props.opacity}`]: props.opacity !== undefined,
+  [`link-opacity-${props.opacityHover}-hover`]: props.opacityHover !== undefined,
+  [`link-underline-${props.underlineVariant}`]: props.underlineVariant !== null,
+  [`link-offset-${props.underlineOffset}`]: props.underlineOffset !== undefined,
+  [`link-offset-${props.underlineOffsetHover}-hover`]: props.underlineOffsetHover !== undefined,
+  [`link-underline-opacity-${props.underlineOpacity}`]: props.underlineOpacity !== undefined,
+  [`link-underline-opacity-${props.underlineOpacityHover}-hover`]:
+    props.underlineOpacityHover !== undefined,
+  'icon-link': iconBoolean.value === true,
+}))
+
 const routerAttr = computed(() => ({
-  'class': props.variant !== null && `link-${props.variant}`,
+  'class': computedClasses.value,
   'to': props.to,
   'href': computedHref.value,
   'target': props.target,

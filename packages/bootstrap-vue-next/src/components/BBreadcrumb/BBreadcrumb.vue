@@ -17,11 +17,12 @@ import {useBreadcrumb} from '../../composables'
 import type {BreadcrumbItem, BreadcrumbItemObject} from '../../types'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 
-interface BBreadcrumbProps {
-  items?: BreadcrumbItem[]
-}
-
-const props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
+const props = withDefaults(
+  defineProps<{
+    items?: BreadcrumbItem[]
+  }>(),
+  {items: undefined}
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

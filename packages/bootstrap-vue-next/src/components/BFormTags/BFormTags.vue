@@ -124,85 +124,84 @@ import type {
 import {useFocus, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
 
-interface BFormTagsProps {
-  addButtonText?: string
-  addButtonVariant?: ButtonVariant | null
-  addOnChange?: Booleanish
-  autofocus?: Booleanish
-  disabled?: Booleanish
-  duplicateTagText?: string
-  inputAttrs?: Record<string, unknown>
-  inputClass?: ClassValue
-  inputId?: string
-  inputType?: InputType
-  invalidTagText?: string
-  form?: string
-  limit?: number
-  limitTagsText?: string
-  modelValue?: string[]
-  name?: string
-  noAddOnEnter?: Booleanish
-  noOuterFocus?: Booleanish
-  noTagRemove?: Booleanish
-  placeholder?: string
-  removeOnDelete?: Booleanish
-  required?: Booleanish
-  separator?: string | string[]
-  state?: Booleanish | null
-  size?: Size
-  tagClass?: ClassValue
-  tagPills?: Booleanish
-  tagRemoveLabel?: string
-  tagRemovedLabel?: string
-  tagValidator?: (t: string) => boolean
-  tagVariant?: ColorVariant | null
-}
+const props = withDefaults(
+  defineProps<{
+    addButtonText?: string
+    addButtonVariant?: ButtonVariant | null
+    addOnChange?: Booleanish
+    autofocus?: Booleanish
+    disabled?: Booleanish
+    duplicateTagText?: string
+    inputAttrs?: Record<string, unknown>
+    inputClass?: ClassValue
+    inputId?: string
+    inputType?: InputType
+    invalidTagText?: string
+    form?: string
+    limit?: number
+    limitTagsText?: string
+    modelValue?: string[]
+    name?: string
+    noAddOnEnter?: Booleanish
+    noOuterFocus?: Booleanish
+    noTagRemove?: Booleanish
+    placeholder?: string
+    removeOnDelete?: Booleanish
+    required?: Booleanish
+    separator?: string | string[]
+    state?: Booleanish | null
+    size?: Size
+    tagClass?: ClassValue
+    tagPills?: Booleanish
+    tagRemoveLabel?: string
+    tagRemovedLabel?: string
+    tagValidator?: (t: string) => boolean
+    tagVariant?: ColorVariant | null
+  }>(),
+  {
+    inputAttrs: undefined,
+    tagRemoveLabel: undefined,
+    tagClass: undefined,
+    separator: undefined,
+    size: 'md',
+    name: undefined,
+    limit: undefined,
+    form: undefined,
+    inputClass: undefined,
+    inputId: undefined,
+    addButtonText: 'Add',
+    addButtonVariant: 'outline-secondary',
+    addOnChange: false,
+    autofocus: false,
+    disabled: false,
+    duplicateTagText: 'Duplicate tag(s)',
+    inputType: 'text',
+    invalidTagText: 'Invalid tag(s)',
+    limitTagsText: 'Tag limit reached',
+    modelValue: () => [],
+    noAddOnEnter: false,
+    noOuterFocus: false,
+    noTagRemove: false,
+    placeholder: 'Add tag...',
+    removeOnDelete: false,
+    required: false,
+    state: null,
+    tagPills: false,
+    tagRemovedLabel: 'Tag removed',
+    tagValidator: () => true,
+    tagVariant: 'secondary',
+  }
+)
 
-interface BFormTagsEmits {
-  (e: 'update:modelValue', value: string[]): void
-  (e: 'input', value: string[]): void
-  (e: 'tag-state', ...args: string[][]): void
-  (e: 'focus', value: FocusEvent): void
-  (e: 'focusin', value: FocusEvent): void
-  (e: 'focusout', value: FocusEvent): void
-  (e: 'blur', value: FocusEvent): void
-}
-
-const props = withDefaults(defineProps<BFormTagsProps>(), {
-  inputAttrs: undefined,
-  tagRemoveLabel: undefined,
-  tagClass: undefined,
-  separator: undefined,
-  size: 'md',
-  name: undefined,
-  limit: undefined,
-  form: undefined,
-  inputClass: undefined,
-  inputId: undefined,
-  addButtonText: 'Add',
-  addButtonVariant: 'outline-secondary',
-  addOnChange: false,
-  autofocus: false,
-  disabled: false,
-  duplicateTagText: 'Duplicate tag(s)',
-  inputType: 'text',
-  invalidTagText: 'Invalid tag(s)',
-  limitTagsText: 'Tag limit reached',
-  modelValue: () => [],
-  noAddOnEnter: false,
-  noOuterFocus: false,
-  noTagRemove: false,
-  placeholder: 'Add tag...',
-  removeOnDelete: false,
-  required: false,
-  state: null,
-  tagPills: false,
-  tagRemovedLabel: 'Tag removed',
-  tagValidator: () => true,
-  tagVariant: 'secondary',
-})
-
-const emit = defineEmits<BFormTagsEmits>()
+const emit = defineEmits<{
+  'update:modelValue': [value: string[]]
+  'input': [value: string[]]
+  'tag-state': [...args: string[][]]
+  'focus': [value: FocusEvent]
+  'focusin': [value: FocusEvent]
+  'focusout': [value: FocusEvent]
+  'blur': [value: FocusEvent]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

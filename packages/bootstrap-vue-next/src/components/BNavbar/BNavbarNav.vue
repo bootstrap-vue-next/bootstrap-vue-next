@@ -9,21 +9,22 @@ import type {AlignmentJustifyContent, Booleanish} from '../../types'
 import {computed} from 'vue'
 import {useAlignment, useBooleanish} from '../../composables'
 
-interface BNavbarNavProps {
-  align?: AlignmentJustifyContent
-  fill?: Booleanish
-  justified?: Booleanish
-  small?: Booleanish
-  tag?: string
-}
-
-const props = withDefaults(defineProps<BNavbarNavProps>(), {
-  fill: false,
-  align: undefined,
-  justified: false,
-  small: false,
-  tag: 'ul',
-})
+const props = withDefaults(
+  defineProps<{
+    align?: AlignmentJustifyContent
+    fill?: Booleanish
+    justified?: Booleanish
+    small?: Booleanish
+    tag?: string
+  }>(),
+  {
+    fill: false,
+    align: undefined,
+    justified: false,
+    small: false,
+    tag: 'ul',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

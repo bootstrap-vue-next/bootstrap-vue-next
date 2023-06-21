@@ -38,47 +38,48 @@ import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
 
-interface BPlaceholderTableProps {
-  rows?: string | number
-  columns?: string | number
-  cellWidth?: string | number
-  size?: PlaceholderSize
-  animation?: PlaceholderAnimation
-  variant?: ColorVariant | null
-  headerColumns?: string | number
-  hideHeader?: Booleanish
-  headerCellWidth?: string | number
-  headerSize?: PlaceholderSize
-  headerAnimation?: PlaceholderAnimation
-  headerVariant?: ColorVariant | null
-  footerColumns?: string | number
-  showFooter?: Booleanish
-  footerCellWidth?: string | number
-  footerSize?: PlaceholderSize
-  footerAnimation?: PlaceholderAnimation
-  footerVariant?: ColorVariant | null
-}
-
-const props = withDefaults(defineProps<BPlaceholderTableProps>(), {
-  headerSize: 'md',
-  headerAnimation: undefined,
-  headerVariant: undefined,
-  footerColumns: undefined,
-  footerSize: 'md',
-  footerAnimation: undefined,
-  footerVariant: undefined,
-  size: 'md',
-  animation: undefined,
-  variant: undefined,
-  headerColumns: undefined,
-  columns: 5,
-  rows: 3,
-  cellWidth: 100,
-  showFooter: false,
-  footerCellWidth: 100,
-  hideHeader: false,
-  headerCellWidth: 100,
-})
+const props = withDefaults(
+  defineProps<{
+    rows?: string | number
+    columns?: string | number
+    cellWidth?: string | number
+    size?: PlaceholderSize
+    animation?: PlaceholderAnimation
+    variant?: ColorVariant | null
+    headerColumns?: string | number
+    hideHeader?: Booleanish
+    headerCellWidth?: string | number
+    headerSize?: PlaceholderSize
+    headerAnimation?: PlaceholderAnimation
+    headerVariant?: ColorVariant | null
+    footerColumns?: string | number
+    showFooter?: Booleanish
+    footerCellWidth?: string | number
+    footerSize?: PlaceholderSize
+    footerAnimation?: PlaceholderAnimation
+    footerVariant?: ColorVariant | null
+  }>(),
+  {
+    headerSize: 'md',
+    headerAnimation: undefined,
+    headerVariant: undefined,
+    footerColumns: undefined,
+    footerSize: 'md',
+    footerAnimation: undefined,
+    footerVariant: undefined,
+    size: 'md',
+    animation: undefined,
+    variant: undefined,
+    headerColumns: undefined,
+    columns: 5,
+    rows: 3,
+    cellWidth: 100,
+    showFooter: false,
+    footerCellWidth: 100,
+    hideHeader: false,
+    headerCellWidth: 100,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -69,57 +69,56 @@ import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 import {useIntervalFn, useSwipe, useToNumber, useVModel} from '@vueuse/core'
 
-interface BCarouselProps {
-  ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
-  noHoverPause?: Booleanish
-  rideReverse?: Booleanish
-  fade?: Booleanish
-  id?: string
-  imgHeight?: string
-  imgWidth?: string
-  background?: string
-  modelValue?: number
-  controls?: Booleanish
-  indicators?: Booleanish
-  interval?: number
-  noTouch?: Booleanish
-  noWrap?: Booleanish
-  controlsPrevText?: string
-  controlsNextText?: string
-  indicatorsButtonLabel?: string
-  keyboard?: Booleanish
-  touchThreshold?: number | string
-}
+const props = withDefaults(
+  defineProps<{
+    ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
+    noHoverPause?: Booleanish
+    rideReverse?: Booleanish
+    fade?: Booleanish
+    id?: string
+    imgHeight?: string
+    imgWidth?: string
+    background?: string
+    modelValue?: number
+    controls?: Booleanish
+    indicators?: Booleanish
+    interval?: number
+    noTouch?: Booleanish
+    noWrap?: Booleanish
+    controlsPrevText?: string
+    controlsNextText?: string
+    indicatorsButtonLabel?: string
+    keyboard?: Booleanish
+    touchThreshold?: number | string
+  }>(),
+  {
+    id: undefined,
+    imgHeight: undefined,
+    imgWidth: undefined,
+    background: undefined,
+    ride: false,
+    noHoverPause: false,
+    rideReverse: false,
+    modelValue: 0,
+    fade: false,
+    controls: false,
+    indicators: false,
+    keyboard: true,
+    interval: 5000,
+    noTouch: false,
+    noWrap: false,
+    controlsNextText: 'Next',
+    controlsPrevText: 'Previous',
+    indicatorsButtonLabel: 'Slide',
+    touchThreshold: 50,
+  }
+)
 
-interface BCarouselEmits {
-  (e: 'slid', value: BvCarouselEvent): void
-  (e: 'slide', value: BvCarouselEvent): void
-  (e: 'update:modelValue', value: number): void
-}
-
-const props = withDefaults(defineProps<BCarouselProps>(), {
-  id: undefined,
-  imgHeight: undefined,
-  imgWidth: undefined,
-  background: undefined,
-  ride: false,
-  noHoverPause: false,
-  rideReverse: false,
-  modelValue: 0,
-  fade: false,
-  controls: false,
-  indicators: false,
-  keyboard: true,
-  interval: 5000,
-  noTouch: false,
-  noWrap: false,
-  controlsNextText: 'Next',
-  controlsPrevText: 'Previous',
-  indicatorsButtonLabel: 'Slide',
-  touchThreshold: 50,
-})
-
-const emit = defineEmits<BCarouselEmits>()
+const emit = defineEmits<{
+  'slid': [value: BvCarouselEvent]
+  'slide': [value: BvCarouselEvent]
+  'update:modelValue': [value: number]
+}>()
 
 const slots = useSlots()
 

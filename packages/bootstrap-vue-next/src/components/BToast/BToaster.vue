@@ -23,16 +23,17 @@ import type {ContainerPosition} from '../../types'
 import type {ToastInstance} from '../BToast/plugin'
 import BToast from './BToast.vue'
 
-interface BToasterProps {
-  position?: ContainerPosition
-  instance?: ToastInstance
-  // appendToast?: Booleanish
-}
-
-const props = withDefaults(defineProps<BToasterProps>(), {
-  position: 'top-right',
-  instance: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    position?: ContainerPosition
+    instance?: ToastInstance
+    // appendToast?: Booleanish
+  }>(),
+  {
+    position: 'top-right',
+    instance: undefined,
+  }
+)
 
 const toastPositions: Record<ContainerPosition, string> = {
   'top-left': 'top-0 start-0',

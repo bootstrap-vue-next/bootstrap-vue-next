@@ -24,19 +24,15 @@ defineSlots<{
   default?: Record<string, never>
 }>()
 
-interface BBreadcrumbItemProps {
-  active?: Booleanish
-  ariaCurrent?: string
-  disabled?: Booleanish
-  text?: string
-}
-
-interface BBreadcrumbItemEmits {
-  (e: 'click', value: MouseEvent): void
-}
-
 const props = withDefaults(
-  defineProps<BBreadcrumbItemProps & Omit<BLinkProps, 'event' | 'routerTag'>>(),
+  defineProps<
+    {
+      active?: Booleanish
+      ariaCurrent?: string
+      disabled?: Booleanish
+      text?: string
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
   {
     active: false,
     ariaCurrent: 'location',
@@ -56,11 +52,21 @@ const props = withDefaults(
     target: '_self',
     to: undefined,
     variant: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
+    icon: false,
     // End link props
   }
 )
 
-const emit = defineEmits<BBreadcrumbItemEmits>()
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
 
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
@@ -87,6 +93,14 @@ const computedLinkProps = computed(() =>
         target: true,
         to: true,
         variant: true,
+        opacity: true,
+        opacityHover: true,
+        underlineVariant: true,
+        underlineOffset: true,
+        underlineOffsetHover: true,
+        underlineOpacity: true,
+        underlineOpacityHover: true,
+        icon: true,
       } as Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
     : {}
 )

@@ -38,59 +38,68 @@ defineSlots<{
   loading?: Record<string, never>
 }>()
 
-interface BButtonProps {
-  active?: Booleanish
-  disabled?: Booleanish
-  href?: string
-  pill?: Booleanish
-  pressed?: Booleanish
-  rel?: string
-  size?: Size
-  squared?: Booleanish
-  tag?: string
-  target?: LinkTarget
-  type?: ButtonType
-  variant?: ButtonVariant | null
-  loading?: Booleanish
-  loadingMode?: 'fill' | 'inline'
-  block?: Booleanish
-}
+const props = withDefaults(
+  defineProps<
+    {
+      active?: Booleanish
+      disabled?: Booleanish
+      href?: string
+      pill?: Booleanish
+      pressed?: Booleanish
+      rel?: string
+      size?: Size
+      squared?: Booleanish
+      tag?: string
+      target?: LinkTarget
+      type?: ButtonType
+      variant?: ButtonVariant | null
+      loading?: Booleanish
+      loadingMode?: 'fill' | 'inline'
+      block?: Booleanish
+    } & BLinkProps
+  >(),
+  {
+    active: false,
+    pill: false,
+    pressed: undefined,
+    size: 'md',
+    squared: false,
+    tag: 'button',
+    type: 'button',
+    variant: 'secondary',
+    loading: false,
+    loadingMode: 'inline',
+    block: false,
+    // Link props
+    activeClass: 'router-link-active',
+    append: false,
+    disabled: false,
+    event: 'click',
+    href: undefined,
+    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    rel: undefined,
+    replace: false,
+    routerComponentName: 'router-link',
+    routerTag: 'a',
+    target: '_self',
+    to: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
+    icon: false,
+    // End link props
+  }
+)
 
-interface BButtonEmits {
-  (e: 'click', value: MouseEvent): void
-  (e: 'update:pressed', value: boolean): void
-}
-
-const props = withDefaults(defineProps<BButtonProps & BLinkProps>(), {
-  active: false,
-  pill: false,
-  pressed: undefined,
-  size: 'md',
-  squared: false,
-  tag: 'button',
-  type: 'button',
-  variant: 'secondary',
-  loading: false,
-  loadingMode: 'inline',
-  block: false,
-  // Link props
-  activeClass: 'router-link-active',
-  append: false,
-  disabled: false,
-  event: 'click',
-  href: undefined,
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-  rel: undefined,
-  replace: false,
-  routerComponentName: 'router-link',
-  routerTag: 'a',
-  target: '_self',
-  to: undefined,
-  // End link props
-})
-
-const emit = defineEmits<BButtonEmits>()
+const emit = defineEmits<{
+  'click': [value: MouseEvent]
+  'update:pressed': [value: boolean]
+}>()
 
 const pressedValue = useVModel(props, 'pressed', emit)
 

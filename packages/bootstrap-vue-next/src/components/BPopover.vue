@@ -100,90 +100,89 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BPopoverProps {
-  modelValue?: Booleanish
-  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-  target?:
-    | (() => HTMLElement | VNode)
-    | string
-    | ComponentPublicInstance<HTMLElement>
-    | HTMLSpanElement
-    | HTMLElement
-    | null
-  reference?:
-    | (() => HTMLElement | VNode)
-    | string
-    | ComponentPublicInstance<HTMLElement>
-    | HTMLSpanElement
-    | HTMLElement
-    | null
-  content?: string
-  id?: string
-  title?: string
-  delay?:
-    | number
-    | {
-        show: number
-        hide: number
-      }
-  click?: Booleanish
-  manual?: Booleanish
-  variant?: ColorVariant | null
-  offset?: number | null
-  customClass?: string
-  placement?: BPopoverPlacement
-  strategy?: Strategy
-  floatingMiddleware?: Middleware[]
-  noFlip?: Booleanish
-  noShift?: Booleanish
-  noFade?: Booleanish
-  noAutoClose?: Booleanish
-  hide?: Booleanish
-  realtime?: Booleanish
-  inline?: Booleanish
-  tooltip?: Booleanish
-  html?: Booleanish
-}
+const props = withDefaults(
+  defineProps<{
+    modelValue?: Booleanish
+    container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+    target?:
+      | (() => HTMLElement | VNode)
+      | string
+      | ComponentPublicInstance<HTMLElement>
+      | HTMLSpanElement
+      | HTMLElement
+      | null
+    reference?:
+      | (() => HTMLElement | VNode)
+      | string
+      | ComponentPublicInstance<HTMLElement>
+      | HTMLSpanElement
+      | HTMLElement
+      | null
+    content?: string
+    id?: string
+    title?: string
+    delay?:
+      | number
+      | {
+          show: number
+          hide: number
+        }
+    click?: Booleanish
+    manual?: Booleanish
+    variant?: ColorVariant | null
+    offset?: number | null
+    customClass?: string
+    placement?: BPopoverPlacement
+    strategy?: Strategy
+    floatingMiddleware?: Middleware[]
+    noFlip?: Booleanish
+    noShift?: Booleanish
+    noFade?: Booleanish
+    noAutoClose?: Booleanish
+    hide?: Booleanish
+    realtime?: Booleanish
+    inline?: Booleanish
+    tooltip?: Booleanish
+    html?: Booleanish
+  }>(),
+  {
+    floatingMiddleware: undefined,
+    title: undefined,
+    id: undefined,
+    content: undefined,
+    modelValue: false,
+    container: undefined,
+    customClass: '',
+    placement: 'top',
+    strategy: 'absolute',
+    delay: () => ({show: 100, hide: 300}),
+    click: false,
+    manual: false,
+    variant: null,
+    offset: null,
+    noFlip: false,
+    noShift: false,
+    noFade: false,
+    noAutoClose: false,
+    hide: true,
+    realtime: false,
+    inline: false,
+    tooltip: false,
+    html: false,
+    reference: null,
+    target: null,
+  }
+)
 
-interface BPopoverEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const props = withDefaults(defineProps<BPopoverProps>(), {
-  floatingMiddleware: undefined,
-  title: undefined,
-  id: undefined,
-  content: undefined,
-  modelValue: false,
-  container: undefined,
-  customClass: '',
-  placement: 'top',
-  strategy: 'absolute',
-  delay: () => ({show: 100, hide: 300}),
-  click: false,
-  manual: false,
-  variant: null,
-  offset: null,
-  noFlip: false,
-  noShift: false,
-  noFade: false,
-  noAutoClose: false,
-  hide: true,
-  realtime: false,
-  inline: false,
-  tooltip: false,
-  html: false,
-  reference: null,
-  target: null,
-})
-
-const emit = defineEmits<BPopoverEmits>()
+const emit = defineEmits<{
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show-prevented': []
+  'update:modelValue': [value: boolean]
+}>()
 
 defineSlots<{
   target?: (props: {
@@ -488,13 +487,10 @@ onClickOutside(
   {ignore: [trigger]}
 )
 
-watch(
-  () => [props.click, props.target, props.reference],
-  () => {
-    unbind()
-    bind()
-  }
-)
+watch([() => props.click, () => props.target, () => props.reference], () => {
+  unbind()
+  bind()
+})
 
 onMounted(bind)
 

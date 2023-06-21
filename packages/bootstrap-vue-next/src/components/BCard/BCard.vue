@@ -51,89 +51,90 @@ import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 
-interface BCardProps {
-  align?: AlignmentTextHorizontal
-  bgVariant?: ColorVariant | null
-  bodyBgVariant?: ColorVariant | null
-  bodyClass?: ClassValue
-  bodyTag?: string
-  bodyTextVariant?: TextColorVariant | null
-  borderVariant?: ColorVariant | null
-  footer?: string
-  footerBgVariant?: ColorVariant | null
-  footerBorderVariant?: ColorVariant | null
-  footerClass?: ClassValue
-  footerHtml?: string
-  footerTag?: string
-  footerTextVariant?: TextColorVariant | null
-  header?: string
-  headerBgVariant?: ColorVariant | null
-  headerBorderVariant?: ColorVariant | null
-  headerClass?: ClassValue
-  headerHtml?: string
-  headerTag?: string
-  headerTextVariant?: TextColorVariant | null
-  imgAlt?: string
-  imgBottom?: Booleanish
-  imgEnd?: Booleanish
-  imgHeight?: string | number
-  imgSrc?: string
-  imgStart?: Booleanish
-  imgTop?: Booleanish
-  imgWidth?: string | number
-  noBody?: Booleanish
-  overlay?: Booleanish
-  subtitle?: string
-  subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant | null
-  tag?: string
-  textVariant?: TextColorVariant | null
-  title?: string
-  titleTag?: string
-  bodyText?: string
-}
-
-const props = withDefaults(defineProps<BCardProps>(), {
-  align: undefined,
-  bgVariant: null,
-  bodyBgVariant: undefined,
-  bodyClass: undefined,
-  bodyTextVariant: undefined,
-  borderVariant: null,
-  footer: undefined,
-  footerBgVariant: undefined,
-  footerBorderVariant: undefined,
-  footerClass: undefined,
-  footerTextVariant: undefined,
-  header: undefined,
-  headerBgVariant: undefined,
-  headerBorderVariant: undefined,
-  headerClass: undefined,
-  textVariant: null,
-  headerTextVariant: undefined,
-  imgAlt: undefined,
-  title: undefined,
-  subtitle: undefined,
-  imgWidth: undefined,
-  imgHeight: undefined,
-  imgSrc: undefined,
-  bodyTag: 'div',
-  footerHtml: '',
-  footerTag: 'div',
-  headerHtml: '',
-  headerTag: 'div',
-  imgBottom: false,
-  imgEnd: false,
-  imgStart: false,
-  bodyText: '',
-  imgTop: false,
-  noBody: false,
-  overlay: false,
-  subtitleTag: 'h6',
-  subtitleTextVariant: 'muted',
-  tag: 'div',
-  titleTag: 'h4',
-})
+const props = withDefaults(
+  defineProps<{
+    align?: AlignmentTextHorizontal
+    bgVariant?: ColorVariant | null
+    bodyBgVariant?: ColorVariant | null
+    bodyClass?: ClassValue
+    bodyTag?: string
+    bodyTextVariant?: TextColorVariant | null
+    borderVariant?: ColorVariant | null
+    footer?: string
+    footerBgVariant?: ColorVariant | null
+    footerBorderVariant?: ColorVariant | null
+    footerClass?: ClassValue
+    footerHtml?: string
+    footerTag?: string
+    footerTextVariant?: TextColorVariant | null
+    header?: string
+    headerBgVariant?: ColorVariant | null
+    headerBorderVariant?: ColorVariant | null
+    headerClass?: ClassValue
+    headerHtml?: string
+    headerTag?: string
+    headerTextVariant?: TextColorVariant | null
+    imgAlt?: string
+    imgBottom?: Booleanish
+    imgEnd?: Booleanish
+    imgHeight?: string | number
+    imgSrc?: string
+    imgStart?: Booleanish
+    imgTop?: Booleanish
+    imgWidth?: string | number
+    noBody?: Booleanish
+    overlay?: Booleanish
+    subtitle?: string
+    subtitleTag?: string
+    subtitleTextVariant?: TextColorVariant | null
+    tag?: string
+    textVariant?: TextColorVariant | null
+    title?: string
+    titleTag?: string
+    bodyText?: string
+  }>(),
+  {
+    align: undefined,
+    bgVariant: null,
+    bodyBgVariant: undefined,
+    bodyClass: undefined,
+    bodyTextVariant: undefined,
+    borderVariant: null,
+    footer: undefined,
+    footerBgVariant: undefined,
+    footerBorderVariant: undefined,
+    footerClass: undefined,
+    footerTextVariant: undefined,
+    header: undefined,
+    headerBgVariant: undefined,
+    headerBorderVariant: undefined,
+    headerClass: undefined,
+    textVariant: null,
+    headerTextVariant: undefined,
+    imgAlt: undefined,
+    title: undefined,
+    subtitle: undefined,
+    imgWidth: undefined,
+    imgHeight: undefined,
+    imgSrc: undefined,
+    bodyTag: 'div',
+    footerHtml: '',
+    footerTag: 'div',
+    headerHtml: '',
+    headerTag: 'div',
+    imgBottom: false,
+    imgEnd: false,
+    imgStart: false,
+    bodyText: '',
+    imgTop: false,
+    noBody: false,
+    overlay: false,
+    subtitleTag: 'h6',
+    subtitleTextVariant: 'muted',
+    tag: 'div',
+    titleTag: 'h4',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

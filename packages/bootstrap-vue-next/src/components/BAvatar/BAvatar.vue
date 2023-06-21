@@ -29,54 +29,53 @@ import {computed, type CSSProperties, inject, type StyleValue, useSlots} from 'v
 import type {Booleanish, ButtonType, ColorVariant, Size, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BAvatarProps {
-  alt?: string
-  ariaLabel?: string
-  badge?: boolean | string
-  badgeLeft?: Booleanish
-  badgeOffset?: string
-  badgeTop?: Booleanish
-  badgeVariant?: ColorVariant | null
-  button?: Booleanish
-  buttonType?: ButtonType
-  disabled?: Booleanish
-  icon?: string
-  rounded?: boolean | string
-  size?: Size | string // TODO number --> compat
-  square?: Booleanish
-  src?: string
-  text?: string
-  textVariant?: TextColorVariant | null
-  variant?: ColorVariant | null
-}
+const props = withDefaults(
+  defineProps<{
+    alt?: string
+    ariaLabel?: string
+    badge?: boolean | string
+    badgeLeft?: Booleanish
+    badgeOffset?: string
+    badgeTop?: Booleanish
+    badgeVariant?: ColorVariant | null
+    button?: Booleanish
+    buttonType?: ButtonType
+    disabled?: Booleanish
+    icon?: string
+    rounded?: boolean | string
+    size?: Size | string // TODO number --> compat
+    square?: Booleanish
+    src?: string
+    text?: string
+    textVariant?: TextColorVariant | null
+    variant?: ColorVariant | null
+  }>(),
+  {
+    ariaLabel: undefined,
+    badgeOffset: undefined,
+    icon: undefined,
+    size: undefined,
+    src: undefined,
+    text: undefined,
+    textVariant: null,
+    alt: 'avatar',
+    badge: false,
+    badgeLeft: false,
+    badgeTop: false,
+    badgeVariant: 'primary',
+    button: false,
+    buttonType: 'button',
+    disabled: false,
+    rounded: 'circle',
+    square: false,
+    variant: 'secondary',
+  }
+)
 
-interface BAvatarEmits {
-  (e: 'click', value: MouseEvent): void
-  (e: 'img-error', value: Event): void
-}
-
-const props = withDefaults(defineProps<BAvatarProps>(), {
-  ariaLabel: undefined,
-  badgeOffset: undefined,
-  icon: undefined,
-  size: undefined,
-  src: undefined,
-  text: undefined,
-  textVariant: null,
-  alt: 'avatar',
-  badge: false,
-  badgeLeft: false,
-  badgeTop: false,
-  badgeVariant: 'primary',
-  button: false,
-  buttonType: 'button',
-  disabled: false,
-  rounded: 'circle',
-  square: false,
-  variant: 'secondary',
-})
-
-const emit = defineEmits<BAvatarEmits>()
+const emit = defineEmits<{
+  'click': [value: MouseEvent]
+  'img-error': [value: Event]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

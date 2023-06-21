@@ -9,27 +9,26 @@ import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import BForm from '../BForm/BForm.vue'
 
-interface BNavFormProps {
-  role?: string
-  id?: string // Extend BFormProps
-  floating?: Booleanish
-  novalidate?: Booleanish
-  validated?: Booleanish
-}
+const props = withDefaults(
+  defineProps<{
+    role?: string
+    id?: string // Extend BFormProps
+    floating?: Booleanish
+    novalidate?: Booleanish
+    validated?: Booleanish
+  }>(),
+  {
+    role: undefined,
+    id: undefined,
+    floating: false,
+    novalidate: false,
+    validated: false,
+  }
+)
 
-interface BNavFormEmits {
-  (e: 'submit', value: Event): void
-}
-
-const props = withDefaults(defineProps<BNavFormProps>(), {
-  role: undefined,
-  id: undefined,
-  floating: false,
-  novalidate: false,
-  validated: false,
-})
-
-const emit = defineEmits<BNavFormEmits>()
+const emit = defineEmits<{
+  submit: [value: Event]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -8,43 +8,42 @@ import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
 
-interface BCardImgProps {
-  alt?: string
-  blank?: Booleanish
-  blankColor?: string
-  bottom?: Booleanish
-  lazy?: Booleanish
-  height?: number | string
-  start?: Booleanish
-  end?: Booleanish
-  sizes?: string | string[]
-  src?: string
-  srcset?: string | string[]
-  top?: Booleanish
-  width?: number | string
-}
+const props = withDefaults(
+  defineProps<{
+    alt?: string
+    blank?: Booleanish
+    blankColor?: string
+    bottom?: Booleanish
+    lazy?: Booleanish
+    height?: number | string
+    start?: Booleanish
+    end?: Booleanish
+    sizes?: string | string[]
+    src?: string
+    srcset?: string | string[]
+    top?: Booleanish
+    width?: number | string
+  }>(),
+  {
+    sizes: undefined,
+    src: undefined,
+    height: undefined,
+    alt: undefined,
+    blankColor: undefined,
+    width: undefined,
+    srcset: undefined,
+    bottom: false,
+    end: false,
+    lazy: false,
+    start: false,
+    top: false,
+    blank: false,
+  }
+)
 
-interface BCardImgEmits {
-  (e: 'load', value: Event): void
-}
-
-const props = withDefaults(defineProps<BCardImgProps>(), {
-  sizes: undefined,
-  src: undefined,
-  height: undefined,
-  alt: undefined,
-  blankColor: undefined,
-  width: undefined,
-  srcset: undefined,
-  bottom: false,
-  end: false,
-  lazy: false,
-  start: false,
-  top: false,
-  blank: false,
-})
-
-const emit = defineEmits<BCardImgEmits>()
+const emit = defineEmits<{
+  load: [value: Event]
+}>()
 
 const bottomBoolean = useBooleanish(() => props.bottom)
 const endBoolean = useBooleanish(() => props.end)
