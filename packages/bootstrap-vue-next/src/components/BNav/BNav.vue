@@ -19,6 +19,7 @@ interface BNavProps {
   tabs?: Booleanish
   tag?: string
   vertical?: Booleanish
+  underline?: Booleanish
 }
 
 const props = withDefaults(defineProps<BNavProps>(), {
@@ -31,6 +32,7 @@ const props = withDefaults(defineProps<BNavProps>(), {
   tabs: false,
   tag: 'ul',
   vertical: false,
+  underline: false,
 })
 
 defineSlots<{
@@ -46,6 +48,7 @@ const smallBoolean = useBooleanish(() => props.small)
 const tabsBoolean = useBooleanish(() => props.tabs)
 const verticalBoolean = useBooleanish(() => props.vertical)
 const alignment = useAlignment(() => props.align)
+const underlineBoolean = useBooleanish(() => props.underline)
 
 const computedClasses = computed(() => ({
   'nav-tabs': tabsBoolean.value,
@@ -58,5 +61,6 @@ const computedClasses = computed(() => ({
   'nav-justified': !verticalBoolean.value && justifiedBoolean.value,
   [alignment.value]: !verticalBoolean.value && props.align !== undefined,
   'small': smallBoolean.value,
+  'nav-underline': underlineBoolean.value,
 }))
 </script>
