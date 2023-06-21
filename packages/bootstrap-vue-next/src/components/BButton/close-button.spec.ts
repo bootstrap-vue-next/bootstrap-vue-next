@@ -31,6 +31,19 @@ describe('close-button', () => {
     expect(wrapper.attributes('aria-label')).toBe('Close')
   })
 
+  it('has class btn-close when no default slot', () => {
+    const wrapper = mount(BCloseButton)
+    expect(wrapper.classes()).toContain('btn-close')
+  })
+
+  it('has class btn-close-custom when renders custom default slot', () => {
+    const wrapper = mount(BCloseButton, {
+      props: {white: true},
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.classes()).toContain('btn-close-custom')
+  })
+
   it('has class btn-close-white when prop white', () => {
     const wrapper = mount(BCloseButton, {
       props: {white: true},

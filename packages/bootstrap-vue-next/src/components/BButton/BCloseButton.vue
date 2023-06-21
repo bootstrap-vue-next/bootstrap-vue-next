@@ -1,18 +1,20 @@
 <template>
   <button
     :type="type"
-    class="btn-close"
     :disabled="disabledBoolean"
     :class="computedClasses"
     :aria-label="ariaLabel"
     @click="emit('click', $event)"
-  />
+  >
+    <slot />
+  </button>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, useSlots} from 'vue'
 import type {Booleanish, ButtonType} from '../../types'
 import {useBooleanish} from '../../composables'
+import {isEmptySlot} from '../../utils'
 
 interface BCloseButtonProps {
   ariaLabel?: string
@@ -34,10 +36,16 @@ interface BCloseButtonEmits {
 
 const emit = defineEmits<BCloseButtonEmits>()
 
+const slots = useSlots()
+
 const disabledBoolean = useBooleanish(() => props.disabled)
 const whiteBoolean = useBooleanish(() => props.white)
 
+const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
+
 const computedClasses = computed(() => ({
+  'btn-close-custom': hasDefaultSlot.value,
+  'btn-close': !hasDefaultSlot.value,
   'btn-close-white': whiteBoolean.value,
 }))
 </script>
