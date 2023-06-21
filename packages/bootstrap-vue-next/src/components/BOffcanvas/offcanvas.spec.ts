@@ -178,6 +178,24 @@ describe.skip('offcanvas', () => {
     expect($closebutton.classes()).toContain('text-reset')
   })
 
+  it('first child div child BCloseButton has class when prop header-close-class', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {'header-close-class': 'foobar'},
+    })
+    const [, $div] = wrapper.findAll('div')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.classes()).toContain('foobar')
+  })
+
+  it('first child div child BCloseButton has class when prop header-close-white', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {'header-close-white': true},
+    })
+    const [, $div] = wrapper.findAll('div')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.classes()).toContain('btn-close-white')
+  })
+
   it('second child div has static class offcanvas-body', () => {
     const wrapper = mount(BOffcanvas)
     const offcanvas = wrapper.find('.offcanvas')
@@ -192,5 +210,14 @@ describe.skip('offcanvas', () => {
     const offcanvas = wrapper.find('.offcanvas')
     const [, $body] = offcanvas.findAll('div')
     expect($body.text()).toBe('foobar')
+  })
+
+  it('content of BCloseButton renders close slot', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {teleportDisabled: true},
+      slots: {close: 'foobar'},
+    })
+    const $closebutton = wrapper.getComponent(BCloseButton)
+    expect($closebutton.text()).toBe('foobar')
   })
 })

@@ -34,12 +34,19 @@
                   {{ title }}
                 </slot>
               </h5>
-              <b-close-button
-                v-if="!noHeaderCloseBoolean"
-                class="text-reset"
-                :aria-label="dismissLabel"
-                @click="hide('close')"
-              />
+              <template v-if="!noHeaderCloseBoolean">
+                <b-close-button
+                  ref="closeButton"
+                  :class="headerCloseClasses"
+                  :aria-label="headerCloseLabel"
+                  :white="headerCloseWhite"
+                  @click="hide('close')"
+                >
+                  <template v-if="hasHeaderCloseSlot" #default>
+                    <slot name="header-close" />
+                  </template>
+                </b-close-button>
+              </template>
             </slot>
           </div>
           <div class="offcanvas-body" :class="bodyClass">
@@ -66,7 +73,7 @@
 import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -77,7 +84,6 @@ defineOptions({
 })
 
 interface BOffcanvasProps {
-  dismissLabel?: string
   modelValue?: Booleanish
   bodyScrolling?: Booleanish
   backdrop?: Booleanish
@@ -95,6 +101,9 @@ interface BOffcanvasProps {
   noFocus?: Booleanish
   backdropVariant?: ColorVariant | null
   headerClass?: string
+  headerCloseClass?: ClassValue
+  headerCloseLabel?: string
+  headerCloseWhite?: Booleanish
   bodyClass?: string
   footerClass?: string
   teleportDisabled?: Booleanish
@@ -104,7 +113,6 @@ interface BOffcanvasProps {
 }
 
 const props = withDefaults(defineProps<BOffcanvasProps>(), {
-  dismissLabel: 'Close',
   id: undefined,
   title: undefined,
   modelValue: false,
@@ -119,6 +127,9 @@ const props = withDefaults(defineProps<BOffcanvasProps>(), {
   noHeaderClose: false,
   noHeader: false,
   headerClass: undefined,
+  headerCloseClass: undefined,
+  headerCloseLabel: 'Close',
+  headerCloseWhite: false,
   bodyClass: undefined,
   footerClass: undefined,
   teleportDisabled: false,
@@ -141,16 +152,18 @@ const emit = defineEmits<BOffcanvasEmits>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  'default'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: Record<string, never>) => any
-  header?: (props: {
+  'title'?: (props: Record<string, never>) => any
+  'header'?: (props: {
     visible: boolean
     placement: 'top' | 'bottom' | 'start' | 'end'
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
-  footer?: (props: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header-close'?: (props: Record<string, never>) => any
+  'footer'?: (props: {
     visible: boolean
     placement: 'top' | 'bottom' | 'start' | 'end'
     hide: (trigger?: string) => void
@@ -197,7 +210,9 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
+const hasHeaderCloseSlot = computed<boolean>(() => !isEmptySlot(slots['header-close']))
 const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed
@@ -206,6 +221,8 @@ const computedClasses = computed(() => [
     show: modelValueBoolean.value && isActive.value === true,
   },
 ])
+
+const headerCloseClasses = computed(() => ['text-reset', props.headerCloseClass])
 
 const buildTriggerableEvent = (
   type: string,
