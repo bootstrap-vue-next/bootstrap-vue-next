@@ -79,7 +79,7 @@
       <client-only>
         <b-offcanvas
           v-model="sidebar"
-          static="true"
+          teleport-disabled="true"
           backdrop="false"
           title="Browse docs"
           class="h-100"

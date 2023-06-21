@@ -1,6 +1,27 @@
 # Changelog
 
 
+## [0.9.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.8...bootstrap-vue-next-v0.9.9) (2023-06-20)
+
+
+### Bug Fixes
+
+* **BFormRadio:** update value with empty string. ([1a0f733](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a0f7338b922e7abb2ff83ad21379f65150a88cb))
+
+## [0.9.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.7...bootstrap-vue-next-v0.9.8) (2023-06-20)
+
+
+### Bug Fixes
+
+* **BTable:** support multi select mode for macOS users ([3a76884](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3a76884c203e28718a73d36e97fd16a60c503a3e))
+
+## [0.9.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.6...bootstrap-vue-next-v0.9.7) (2023-06-19)
+
+
+### Bug Fixes
+
+* **BOffcanvas:** toggle offcanvas with toggle directive. ([e4d47f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e4d47f5b0428ff155f69d7b11073f1711bb878e5))
+
 ## [0.9.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.5...bootstrap-vue-next-v0.9.6) (2023-06-16)
 
 

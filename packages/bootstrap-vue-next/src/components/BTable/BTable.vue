@@ -49,6 +49,11 @@
                 v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
                 :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
                 :label="field.label"
+                :column="field.key"
+                :field="field"
+                :is-foot="false"
+                :select-all-rows="selectAllRows"
+                :clear-selected="clearSelected"
               />
               <template v-else>{{ getFieldHeadLabel(field) }}</template>
             </div>
@@ -411,6 +416,10 @@ const computedItems = computed(() => {
       })
     : props.items
 
+  if (usesProvider.value && !noProviderPagingBoolean.value) {
+    return items
+  }
+
   if (props.perPage !== undefined) {
     const startIndex = (props.currentPage - 1) * props.perPage
     const endIndex =
@@ -437,7 +446,7 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   emit('rowClicked', row, index, e)
 
-  handleRowSelection(row, index, e.shiftKey, e.ctrlKey)
+  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowDblClicked', row, index, e)
@@ -472,7 +481,8 @@ const handleRowSelection = (
   row: TableItem,
   index: number,
   shiftClicked = false,
-  ctrlClicked = false
+  ctrlClicked = false,
+  metaClicked = false
 ) => {
   if (!selectableBoolean.value) return
 
@@ -487,7 +497,7 @@ const handleRowSelection = (
         emit('rowSelected', item)
       }
     })
-  } else if (ctrlClicked) {
+  } else if (ctrlClicked || metaClicked) {
     if (selectedItems.value.has(row)) {
       selectedItems.value.delete(row)
       emit('rowUnselected', row)
