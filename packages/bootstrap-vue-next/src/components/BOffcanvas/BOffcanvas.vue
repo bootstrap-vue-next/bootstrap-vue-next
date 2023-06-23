@@ -277,4 +277,9 @@ const OnAfterLeave = () => {
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : show()
 })
+
+defineExpose({
+  hide,
+  show,
+})
 </script>
