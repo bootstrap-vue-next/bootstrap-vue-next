@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.9...bootstrap-vue-next-v0.9.10) (2023-06-22)
+
+
+### Features
+
+* **BOffcanvas:** expose hide and show to programmatically control BOffcanvas. ([da99fa1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da99fa1c06cc172066a911d1cb4257e5a00eea65))
+
 ## [0.9.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.8...bootstrap-vue-next-v0.9.9) (2023-06-20)
 
 
