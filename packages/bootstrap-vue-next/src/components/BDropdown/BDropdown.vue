@@ -56,7 +56,14 @@
 </template>
 
 <script setup lang="ts">
-import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
+import {
+  flip,
+  offset as floatingOffset,
+  type Middleware,
+  shift,
+  type Strategy,
+  useFloating,
+} from '@floating-ui/vue'
 import {onClickOutside, useToNumber, useVModel} from '@vueuse/core'
 import {computed, provide, ref, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
@@ -218,7 +225,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     typeof props.offset === 'string' || typeof props.offset === 'number'
       ? offsetToNumber.value
       : props.offset
-  const arr: Middleware[] = [offset(localOffset)]
+  const arr: Middleware[] = [floatingOffset(localOffset)]
   if (noFlipBoolean.value === false) {
     arr.push(flip())
   }

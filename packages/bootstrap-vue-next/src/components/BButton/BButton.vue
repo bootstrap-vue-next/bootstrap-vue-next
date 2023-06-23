@@ -28,35 +28,33 @@
 import {computed} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBooleanish} from '../../composables'
-import type {Booleanish, ButtonType, ButtonVariant, LinkTarget, Size} from '../../types'
+import type {Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
 import {isLink} from '../../utils'
-import BLink, {type BLinkProps} from '../BLink/BLink.vue'
+import BLink from '../BLink/BLink.vue'
 import {useVModel} from '@vueuse/core'
+import type {BLinkProps} from '../../types/BLinkProps'
 
 defineSlots<{
-  default?: Record<string, never>
-  loading?: Record<string, never>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  loading?: (props: Record<string, never>) => any
 }>()
 
 const props = withDefaults(
   defineProps<
     {
-      active?: Booleanish
-      disabled?: Booleanish
-      href?: string
       pill?: Booleanish
       pressed?: Booleanish
-      rel?: string
       size?: Size
       squared?: Booleanish
       tag?: string
-      target?: LinkTarget
       type?: ButtonType
       variant?: ButtonVariant | null
       loading?: Booleanish
       loadingMode?: 'fill' | 'inline'
       block?: Booleanish
-    } & BLinkProps
+    } & Omit<BLinkProps, 'variant'>
   >(),
   {
     active: false,

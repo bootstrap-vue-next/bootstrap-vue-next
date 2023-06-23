@@ -14,11 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import BLink, {type BLinkProps} from '../BLink/BLink.vue'
+import BLink from '../BLink/BLink.vue'
 import {useBooleanish} from '../../composables'
+import type {BLinkProps} from '../../types/BLinkProps'
 
 defineSlots<{
-  default?: Record<string, never>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
 }>()
 
 const props = withDefaults(

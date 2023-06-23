@@ -17,27 +17,26 @@
 import {pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
-import BLink, {type BLinkProps} from '../BLink/BLink.vue'
-import type {Booleanish} from '../../types'
+import BLink from '../BLink/BLink.vue'
+import type {BLinkProps} from '../../types/BLinkProps'
 
 defineSlots<{
-  default?: Record<string, never>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
 }>()
 
 const props = withDefaults(
   defineProps<
     {
-      active?: Booleanish
       ariaCurrent?: string
-      disabled?: Booleanish
       text?: string
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
-    active: false,
     ariaCurrent: 'location',
     text: undefined,
     // Link props
+    active: false,
     activeClass: 'router-link-active',
     append: false,
     disabled: false,

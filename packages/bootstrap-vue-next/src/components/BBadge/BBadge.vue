@@ -8,11 +8,13 @@
 import {isLink, pluckProps} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
-import type {Booleanish, ColorVariant} from '../../types'
-import BLink, {type BLinkProps} from '../BLink/BLink.vue'
+import type {Booleanish} from '../../types'
+import BLink from '../BLink/BLink.vue'
+import type {BLinkProps} from '../../types/BLinkProps'
 
 defineSlots<{
-  default?: Record<string, never>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
 }>()
 
 const props = withDefaults(
@@ -22,7 +24,6 @@ const props = withDefaults(
       tag?: string
       textIndicator?: Booleanish
       dotIndicator?: Booleanish
-      variant?: ColorVariant | null
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
