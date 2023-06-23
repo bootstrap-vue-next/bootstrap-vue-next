@@ -74,7 +74,7 @@
       </client-only>
     </b-nav>
   </b-navbar>
-  <b-container fluid class="container-lg mt-3 my-md-4 bd-layout">
+  <b-container fluid :toast="true" class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
       <client-only>
         <b-offcanvas

@@ -1,15 +1,6 @@
 <script lang="ts">
 import type {Breakpoint, Position} from '../types'
-import {
-  computed,
-  defineComponent,
-  h,
-  onMounted,
-  type PropType,
-  ref,
-  type SlotsType,
-  type VNode,
-} from 'vue'
+import {computed, defineComponent, h, type PropType, ref, type SlotsType, type VNode} from 'vue'
 import {ToastInstance, useToast} from './BToast/plugin'
 import BToaster from './BToast/BToaster.vue'
 
@@ -21,7 +12,7 @@ export default defineComponent({
     gutterX: {type: String, default: null},
     gutterY: {type: String, default: null},
     fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
-    toast: {type: Object, default: undefined},
+    toast: {type: Boolean, default: false},
     position: {type: String as PropType<Position>, default: undefined},
   },
   setup(props, {slots, expose}) {
@@ -36,15 +27,8 @@ export default defineComponent({
       [`gy-${props.gutterY}`]: props.gutterY !== null,
     }))
 
-    onMounted(() => {
-      if (props.toast) {
-        // toastInstance.setVmContainer(container)
-      }
-    })
-
-    // let this be the container for the toast
     if (props.toast) {
-      toastInstance = useToast({container, root: props.toast.root})
+      toastInstance = useToast()
       expose({
         // ...toastInstance?.useMethods,
       })
