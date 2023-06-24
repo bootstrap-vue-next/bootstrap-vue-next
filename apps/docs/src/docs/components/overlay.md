@@ -16,51 +16,51 @@ BootstrapVueNext's custom `b-overlay` component is used to _visually obscure_ a 
 
 ## Overview
 
-`<b-overlay>` can be used to obscure almost anything. [Example use cases](#use-case-examples) would
+`<BOverlay>` can be used to obscure almost anything. [Example use cases](#use-case-examples) would
 be forms, tables, delete confirmation dialogs, or anywhere you need to signal that the application
 is busy performing a background task, to signal that a certain component is unavailable, or to
 provide additional context to the end user.
 
-`<b-overlay>` can be used to overlay (wrap) an element or component (the default behaviour), or can
+`<BOverlay>` can be used to overlay (wrap) an element or component (the default behaviour), or can
 be placed as a descendant of a `position: relative` element
 ([non-wrapping mode](#non-wrapping-mode)).
 
 The overlay visibility is controlled via the `show` prop. By default, the overlay is _not_ shown.
 
-<b-alert variant="danger" :model-value="true">
+<BAlert variant="danger" :model-value="true">
   Note that this component only <em>visually obscures</em> its content (or the page). Refer to the
   <a href="#accessibility" class="alert-link">Accessibility section</a> below for additional
   accessibility details and concerns.
-</b-alert>
+</BAlert>
 
 **Default wrapping mode example:**
 
 <HighlightCard>
-  <b-overlay :show="showOverlayEx1" rounded="sm">
-    <b-card title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
-      <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
-      <b-card-text>Click the button to toggle the overlay:</b-card-text>
-      <b-button :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
+  <BOverlay :show="showOverlayEx1" rounded="sm">
+    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
         Show overlay
-      </b-button>
-    </b-card>
-  </b-overlay>
-  <b-button class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</b-button>
+      </BButton>
+    </BCard>
+  </BOverlay>
+  <BButton class="mt-3" @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
   <template #html>
 
 ```vue
 <template>
-  <b-overlay :show="showOverlayEx1" rounded="sm">
-    <b-card title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
-      <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
-      <b-card-text>Click the button to toggle the overlay:</b-card-text>
-      <b-button :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
+  <BOverlay :show="showOverlayEx1" rounded="sm">
+    <BCard title="Card with overlay" :aria-hidden="showOverlayEx1 ? 'true' : null">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showOverlayEx1" variant="primary" @click="showOverlayEx1 = true">
         Show overlay
-      </b-button>
-    </b-card>
-  </b-overlay>
+      </BButton>
+    </BCard>
+  </BOverlay>
 
-  <b-button @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</b-button>
+  <BButton @click="showOverlayEx1 = !showOverlayEx1">Toggle overlay</BButton>
 </template>
 
 <script setup lang="ts">
@@ -88,10 +88,10 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
   <div class="row">
     <div class="col-lg-6" aria-controls="overlay-background">
       <label for="bg-variant">Variant</label>
-      <b-form-select id="bg-variant" v-model="variant" :options="variants"></b-form-select>
+      <BFormSelect id="bg-variant" v-model="variant" :options="variants"></BFormSelect>
       <label for="bg-opacity">Opacity</label>
       <div class="d-inline">
-        <b-form-input
+        <BFormInput
           id="bg-opacity"
           v-model="opacity"
           type="range"
@@ -100,16 +100,16 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
           max="1"
           step="0.01"
           class="d-inline"
-        ></b-form-input>
+        ></BFormInput>
       </div>
       {{ opacity.toFixed(2) }}
       <div>
         <label for="bg-blur">Blur</label>
-        <b-form-select id="bg-blur" v-model="blur" :options="blurs"></b-form-select>
+        <BFormSelect id="bg-blur" v-model="blur" :options="blurs"></BFormSelect>
       </div>
     </div>
-    <b-col lg="6">
-      <b-overlay
+    <BCol lg="6">
+      <BOverlay
         id="overlay-background"
         show
         :variant="variant"
@@ -117,16 +117,16 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
         :blur="blur"
         rounded="sm"
         >
-        <b-card title="Card with overlay" aria-hidden="true">
-          <b-card-text>
+        <BCard title="Card with overlay" aria-hidden="true">
+          <BCardText>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </b-card-text>
-          <b-button disabled variant="primary">Button</b-button>
-        </b-card>
-      </b-overlay>
-    </b-col>
+          </BCardText>
+          <BButton disabled variant="primary">Button</BButton>
+        </BCard>
+      </BOverlay>
+    </BCol>
   </div>
   <template #html>
 
@@ -135,11 +135,11 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
   <div class="row">
     <div class="col-lg-6" aria-controls="overlay-background">
       <label for="bg-variant">Variant</label>
-      <b-form-select id="bg-variant" v-model="variant" :options="variants"></b-form-select>
+      <BFormSelect id="bg-variant" v-model="variant" :options="variants"></BFormSelect>
 
       <label for="bg-opacity">Opacity</label>
       <div class="d-inline">
-        <b-form-input
+        <BFormInput
           id="bg-opacity"
           v-model="opacity"
           type="range"
@@ -148,19 +148,19 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
           max="1"
           step="0.01"
           class="d-inline"
-        ></b-form-input>
+        ></BFormInput>
       </div>
 
       {{ opacity.toFixed(2) }}
 
       <div>
         <label for="bg-blur">Blur</label>
-        <b-form-select id="bg-blur" v-model="blur" :options="blurs"></b-form-select>
+        <BFormSelect id="bg-blur" v-model="blur" :options="blurs"></BFormSelect>
       </div>
     </div>
 
-    <b-col lg="6">
-      <b-overlay
+    <BCol lg="6">
+      <BOverlay
         id="overlay-background"
         show
         :variant="variant"
@@ -168,16 +168,16 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
         :blur="blur"
         rounded="sm"
       >
-        <b-card title="Card with overlay" aria-hidden="true">
-          <b-card-text>
+        <BCard title="Card with overlay" aria-hidden="true">
+          <BCardText>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </b-card-text>
-          <b-button disabled variant="primary">Button</b-button>
-        </b-card>
-      </b-overlay>
-    </b-col>
+          </BCardText>
+          <BButton disabled variant="primary">Button</BButton>
+        </BCard>
+      </BOverlay>
+    </BCol>
   </div>
 </template>
 
@@ -216,11 +216,11 @@ prop. When a value is provided for `bg-color`, the `variant` prop value is ignor
 ### Fade transition
 
 By default, the overlay uses Bootstrap's fade transition when showing or hiding. You can disable the
-fade transition via adding the `no-fade` prop to `<b-overlay>`.
+fade transition via adding the `no-fade` prop to `<BOverlay>`.
 
 ### Default spinner styling
 
-The default overlay content is a [`<b-spinner>`](/docs/components/spinner) of type `'border'`. You
+The default overlay content is a [`<BSpinner>`](/docs/components/spinner) of type `'border'`. You
 can control the appearance of the spinner via the following props:
 
 - `spinner-type`: Currently supported values are `'border'` (the default) or `'grow'`
@@ -229,7 +229,7 @@ can control the appearance of the spinner via the following props:
 - `spinner-small`: Set to `true` to render a small size spinner
 
 <HighlightCard>
-  <b-overlay
+  <BOverlay
     show
     spinner-variant="primary"
     spinner-type="grow"
@@ -237,19 +237,19 @@ can control the appearance of the spinner via the following props:
     rounded="sm"
     style="max-width: 320px;"
   >
-    <b-card title="Card with spinner style" aria-hidden="true">
-      <b-card-text>
+    <BCard title="Card with spinner style" aria-hidden="true">
+      <BCardText>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </b-card-text>
-      <b-button disabled variant="primary">Button</b-button>
-    </b-card>
-  </b-overlay>
+      </BCardText>
+      <BButton disabled variant="primary">Button</BButton>
+    </BCard>
+  </BOverlay>
   <template #html>
 
 ```vue-html
-<b-overlay
+<BOverlay
   show
   spinner-variant="primary"
   spinner-type="grow"
@@ -257,15 +257,15 @@ can control the appearance of the spinner via the following props:
   rounded="sm"
   style="max-width: 320px;"
 >
-  <b-card title="Card with spinner style" aria-hidden="true">
-    <b-card-text>
+  <BCard title="Card with spinner style" aria-hidden="true">
+    <BCardText>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
       laboris nisi ut aliquip ex ea commodo consequat.
-    </b-card-text>
-    <b-button disabled variant="primary">Button</b-button>
-  </b-card>
-</b-overlay>
+    </BCardText>
+    <BButton disabled variant="primary">Button</BButton>
+  </BCard>
+</BOverlay>
 ```
 
   </template>
@@ -291,54 +291,54 @@ Possible values are:
 - `'right'` for rounding only the two right corners
 
 <HighlightCard>
-  <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
-  <b-row class="text-center mt-3">
-    <b-col md="6">
+  <BButton @click="showRoundedEx = !showRoundedEx">Toggle overlay</BButton>
+  <BRow class="text-center mt-3">
+    <BCol md="6">
       <p>With rounding</p>
-      <b-overlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
-        <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
-      </b-overlay>
-    </b-col>
-    <b-col md="6">
+      <BOverlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
+        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></BImg>
+      </BOverlay>
+    </BCol>
+    <BCol md="6">
       <p>Without rounding</p>
-      <b-overlay :show="showRoundedEx" class="d-inline-block">
-        <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
-      </b-overlay>
-    </b-col>
-  </b-row>
+      <BOverlay :show="showRoundedEx" class="d-inline-block">
+        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></BImg>
+      </BOverlay>
+    </BCol>
+  </BRow>
   <template #html>
 
 ```vue
 <template>
-  <b-button @click="showRoundedEx = !showRoundedEx">Toggle overlay</b-button>
+  <BButton @click="showRoundedEx = !showRoundedEx">Toggle overlay</BButton>
 
-  <b-row class="text-center mt-3">
-    <b-col md="6">
+  <BRow class="text-center mt-3">
+    <BCol md="6">
       <p>With rounding</p>
-      <b-overlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
-        <b-img
+      <BOverlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
+        <BImg
           thumbnail
           rounded="circle"
           fluid
           src="https://picsum.photos/200/200/?image=54"
           alt="Image 1"
-        ></b-img>
-      </b-overlay>
-    </b-col>
+        ></BImg>
+      </BOverlay>
+    </BCol>
 
-    <b-col md="6">
+    <BCol md="6">
       <p>Without rounding</p>
-      <b-overlay :show="showRoundedEx" class="d-inline-block">
-        <b-img
+      <BOverlay :show="showRoundedEx" class="d-inline-block">
+        <BImg
           thumbnail
           rounded="circle"
           fluid
           src="https://picsum.photos/200/200/?image=54"
           alt="Image 1"
-        ></b-img>
-      </b-overlay>
-    </b-col>
-  </b-row>
+        ></BImg>
+      </BOverlay>
+    </BCol>
+  </BRow>
 </template>
 
 <script setup lang="ts">
@@ -355,54 +355,54 @@ Place custom content in the overlay (replacing the default spinner) via the opti
 `overlay`.
 
 <HighlightCard>
-  <b-overlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
-    <b-card title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
-      <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-      <b-card-text>Click the button to toggle the overlay:</b-card-text>
-      <b-button :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
+  <BOverlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
+    <BCard title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
+      <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
         Show overlay
-      </b-button>
-    </b-card>
+      </BButton>
+    </BCard>
     <template #overlay>
       <div class="text-center">
         <p id="cancel-label">Please wait...</p>
-        <b-button
+        <BButton
           variant="outline-danger"
           size="sm"
           aria-describedby="cancel-label"
           @click="showCustomEx = false"
         >
           Cancel
-        </b-button>
+        </BButton>
       </div>
     </template>
-  </b-overlay>
+  </BOverlay>
   <template #html>
 
 ```vue
 <template>
-  <b-overlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
-    <b-card title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
-      <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-      <b-card-text>Click the button to toggle the overlay:</b-card-text>
-      <b-button :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
+  <BOverlay :show="showCustomEx" rounded="sm" @shown="onShown" @hidden="onHidden">
+    <BCard title="Card with custom overlay content" :aria-hidden="showCustomEx ? 'true' : null">
+      <BCardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showCustomEx" variant="primary" @click="showCustomEx = true">
         Show overlay
-      </b-button>
-    </b-card>
+      </BButton>
+    </BCard>
     <template #overlay>
       <div class="text-center">
         <p id="cancel-label">Please wait...</p>
-        <b-button
+        <BButton
           variant="outline-danger"
           size="sm"
           aria-describedby="cancel-label"
           @click="showCustomEx = false"
         >
           Cancel
-        </b-button>
+        </BButton>
       </div>
     </template>
-  </b-overlay>
+  </BOverlay>
 </template>
 
 <script setup lang="ts">
@@ -430,7 +430,7 @@ The following scope properties are available to the `overlay` slot:
 
 When placing interactive content in the overlay, you should focus the container of the custom
 content or one of the focusable controls in the overlay content for accessibility reasons. You can
-listen for the `<b-overlay>` `'shown'` event to know when the overlay content is available in the
+listen for the `<BOverlay>` `'shown'` event to know when the overlay content is available in the
 document.
 
 ### Overlay content centering
@@ -442,33 +442,33 @@ In the following example, we have set the `no-center` prop, and absolutely posit
 overlay slot content at the top right.
 
 <HighlightCard>
-  <b-overlay no-center show rounded="sm">
+  <BOverlay no-center show rounded="sm">
     <template #overlay>
       foo
     </template>
-    <b-card title="Card with no-center overlay" aria-hidden="true">
-      <b-card-text>
+    <BCard title="Card with no-center overlay" aria-hidden="true">
+      <BCardText>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua.
-      </b-card-text>
-      <b-button disabled variant="primary">Button</b-button>
-    </b-card>
-  </b-overlay>
+      </BCardText>
+      <BButton disabled variant="primary">Button</BButton>
+    </BCard>
+  </BOverlay>
   <template #html>
 
 ```vue-html
-<b-overlay no-center show rounded="sm">
+<BOverlay no-center show rounded="sm">
   <template #overlay>
     foo
   </template>
-  <b-card title="Card with no-center overlay" aria-hidden="true">
-    <b-card-text>
+  <BCard title="Card with no-center overlay" aria-hidden="true">
+    <BCardText>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
       incididunt ut labore et dolore magna aliqua.
-    </b-card-text>
-    <b-button disabled variant="primary">Button</b-button>
-  </b-card>
-</b-overlay>
+    </BCardText>
+    <BButton disabled variant="primary">Button</BButton>
+  </BCard>
+</BOverlay>
 ```
 
   </template>
@@ -476,15 +476,15 @@ overlay slot content at the top right.
 
 ### Width
 
-`<b-overlay>` defaults to a width of `100%`. When wrapping an inline or inline-block element, you
-will need to add the class `d-inline-block` (e.g. `<b-overlay class="d-inline-block">`).
+`<BOverlay>` defaults to a width of `100%`. When wrapping an inline or inline-block element, you
+will need to add the class `d-inline-block` (e.g. `<BOverlay class="d-inline-block">`).
 
 You can also use the width [utility classes](/docs/reference/utility-classes) or CSS styles to
 control the width of the overlay's wrapping container element.
 
 ### Non-wrapping mode
 
-By default, `<b-overlay>` wraps the content of the default slot. In some cases you may want to
+By default, `<BOverlay>` wraps the content of the default slot. In some cases you may want to
 obscure a parent container. Use the `no-wrap` prop to disable rendering of the wrapping (and ignore
 the default slot). Note that this requires that the ancestor element that is to be obscured to have
 relative positioning (either via the utility class `'position-relative'`, or CSS style
@@ -495,37 +495,37 @@ relative positioning (either via the utility class `'position-relative'`, or CSS
     <p class="text-light fw-bold">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     </p>
-    <b-card title="Card with parent overlay">
-      <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
-      <b-card-text>Click the button to toggle the overlay:</b-card-text>
-      <b-button :disabled="showNoWrapEx" variant="primary" @click="showNoWrapEx = true">
+    <BCard title="Card with parent overlay">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showNoWrapEx" variant="primary" @click="showNoWrapEx = true">
         Show overlay
-      </b-button>
-    </b-card>
+      </BButton>
+    </BCard>
     <p class="text-light fw-bold mb-0">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     </p>
-    <b-overlay :show="showNoWrapEx" no-wrap>
-    </b-overlay>
+    <BOverlay :show="showNoWrapEx" no-wrap>
+    </BOverlay>
   </div>
-  <b-button class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</b-button>
+  <BButton class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</BButton>
   <template #html>
 
 ```vue
 <template>
   <div class="position-relative p-4 bg-info">
     <p class="text-light fw-bold">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <b-card title="Card with parent overlay">
-      <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
-      <b-card-text>Click the button to toggle the overlay:</b-card-text>
-      <b-button :disabled="showNoWrapEx" variant="primary" @click="showNoWrapEx = true">
+    <BCard title="Card with parent overlay">
+      <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+      <BCardText>Click the button to toggle the overlay:</BCardText>
+      <BButton :disabled="showNoWrapEx" variant="primary" @click="showNoWrapEx = true">
         Show overlay
-      </b-button>
-    </b-card>
+      </BButton>
+    </BCard>
     <p class="text-light fw-bold mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <b-overlay :show="showNoWrapEx" no-wrap> </b-overlay>
+    <BOverlay :show="showNoWrapEx" no-wrap> </BOverlay>
   </div>
-  <b-button class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</b-button>
+  <BButton class="mt-3" @click="showNoWrapEx = !showNoWrapEx">Toggle overlay</BButton>
 </template>
 
 <script setup lang="ts">
@@ -537,48 +537,48 @@ const showNoWrapEx = ref(false)
 </HighlightCard>
 
 Note that some of Bootstrap v5's component styles have relative positioning defined (e.g. cards,
-cols, etc.). You may need to adjust the placement of `<b-overlay>` in your markup.
+cols, etc.). You may need to adjust the placement of `<BOverlay>` in your markup.
 
-For example, `<b-card>` has relative positioning, so you can place the `<b-overlay no-wrap>` as a
-descendant of `<b-card>`:
+For example, `<BCard>` has relative positioning, so you can place the `<BOverlay no-wrap>` as a
+descendant of `<BCard>`:
 
 <HighlightCard>
-  <b-card header="Card header" footer="Card footer">
-    <b-img
+  <BCard header="Card header" footer="Card footer">
+    <BImg
       thumbnail
       rounded="circle"
       src="https://picsum.photos/72/72/?image=58"
       alt="Image"
       class="d-inline"
-    ></b-img>
+    ></BImg>
     <p class=" d-inline align-top mb-0">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
-    <b-overlay :show="showNoWrapEx2" no-wrap></b-overlay>
-  </b-card>
-  <b-button @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</b-button>
+    <BOverlay :show="showNoWrapEx2" no-wrap></BOverlay>
+  </BCard>
+  <BButton @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</BButton>
   <template #html>
 
 ```vue
 <template>
-  <b-card header="Card header" footer="Card footer">
-    <b-img
+  <BCard header="Card header" footer="Card footer">
+    <BImg
       thumbnail
       rounded="circle"
       src="https://picsum.photos/72/72/?image=58"
       alt="Image"
       class="d-inline"
-    ></b-img>
+    ></BImg>
     <p class=" d-inline align-top mb-0">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
       laboris nisi ut aliquip ex ea commodo consequat.
     </p>
-    <b-overlay :show="showNoWrapEx2" no-wrap></b-overlay>
-  </b-card>
-  <b-button @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</b-button>
+    <BOverlay :show="showNoWrapEx2" no-wrap></BOverlay>
+  </BCard>
+  <BButton @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</BButton>
 </template>
 
 <script setup lang="ts">
@@ -589,7 +589,7 @@ const showNoWrapEx2 = ref(false)
   </template>
 </HighlightCard>
 
-When in `no-wrap` mode, `<b-overlay>` will not set the `aria-busy` attribute on the obscured
+When in `no-wrap` mode, `<BOverlay>` will not set the `aria-busy` attribute on the obscured
 element. You may also want to use an `aria-live` region in your app that announces to screen reader
 users that the page is busy.
 
@@ -598,7 +598,7 @@ Refer to the [Accessibility section](#accessibility) below for additional detail
 #### Absolute vs fixed positioning for `no-wrap`
 
 In cases where you want to obscure the entire app or page, when using the `no-wrap` prop, you can
-switch to viewport fixed positioning via setting the prop `fixed` on `<b-overlay>`. Note that this
+switch to viewport fixed positioning via setting the prop `fixed` on `<BOverlay>`. Note that this
 does not disable scrolling of the page, and note that any interactive elements on the page will
 still be in the document tab sequence.
 
@@ -621,12 +621,12 @@ etc.) when the overlay is showing, otherwise the obscured elements will still be
 keyboard navigation (i.e. still in the document tab sequence).
 
 If you have any links in the obscured content, we recommend using the
-[`<b-link>` component](/docs/components/link), as it supports the `disabled` state, as native links
-(`<a href="...">`) and `<router-link>` components do not support the disabled state.
+[`<BLink>` component](/docs/components/link), as it supports the `disabled` state, as native links
+(`<a href="...">`) and `<RouterLink>` components do not support the disabled state.
 
 It is also recommended adding either the `aria-hidden="true"` or `aria-busy="true"` attribute to
 your obscured content when the overlay is visible. Just be careful not to add `aria-hidden="true"`
-to the wrapper that contains the `<b-overlay>` component (when using `no-wrap`), as that would hide
+to the wrapper that contains the `<BOverlay>` component (when using `no-wrap`), as that would hide
 any interactive content in the `overlay` slot for screen reader users.
 
 If you are placing interactive content in the `overlay` slot, you should focus the content once the
@@ -643,7 +643,7 @@ have been disabled and are _not_ in the document tab sequence.
 
 ## Use case examples
 
-Here are just a few examples of common use cases of `<b-overlay>`. In all cases, we disable any
+Here are just a few examples of common use cases of `<BOverlay>`. In all cases, we disable any
 interactive elements in the obscured area to prevent reachability via keyboard navigation (i.e.
 <kbd>Tab</kbd> key) or screen reader access.
 
@@ -654,7 +654,7 @@ Please refer to the [Accessibility section](#accessibility) for additional detai
 Easily create a loading button:
 
 <HighlightCard>
-  <b-overlay
+  <BOverlay
     :show="loadingBuzy"
     rounded
     opacity="0.6"
@@ -663,20 +663,20 @@ Easily create a loading button:
     class="d-inline-block"
     @hidden="onBuzyHidden"
   >
-    <b-button
+    <BButton
       ref="buzyButton"
       :disabled="loadingBuzy"
       variant="primary"
       @click="setBuzyClick"
     >
       Do something
-    </b-button>
-  </b-overlay>
+    </BButton>
+  </BOverlay>
   <template #html>
 
 ```vue
 <template>
-  <b-overlay
+  <BOverlay
     :show="loadingBuzy"
     rounded
     opacity="0.6"
@@ -685,10 +685,10 @@ Easily create a loading button:
     class="d-inline-block"
     @hidden="onBuzyHidden"
   >
-    <b-button ref="buzyButton" :disabled="loadingBuzy" variant="primary" @click="setBuzyClick">
+    <BButton ref="buzyButton" :disabled="loadingBuzy" variant="primary" @click="setBuzyClick">
       Do something
-    </b-button>
-  </b-overlay>
+    </BButton>
+  </BOverlay>
 </template>
 
 <script setup lang="ts">
@@ -735,30 +735,30 @@ present the user with a prompt dialog, and once confirmed it shows an uploading 
 This example also demonstrates additional accessibility markup.
 
 <HighlightCard>
-  <b-form class="position-relative p-3" @submit.prevent="onFormSubmit">
+  <BForm class="position-relative p-3" @submit.prevent="onFormSubmit">
     <div class="row">
       <label class="col-lg-2" label-for="form-name">Name</label>
-      <b-form-input id="form-name" class="col" :disabled="formbusy"></b-form-input>
+      <BFormInput id="form-name" class="col" :disabled="formbusy"></BFormInput>
     </div>
     <div class="row mt-2">
       <label class="col-lg-2" label-for="form-mail">Email</label>
-      <b-form-input id="form-email" class="col" type="email" :disabled="formbusy"></b-form-input>
+      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy"></BFormInput>
     </div>
     <div class="d-flex justify-content-center mt-2">
-        <b-button ref="formsubmit" type="submit" :disabled="formbusy">Submit</b-button>
+        <BButton ref="formsubmit" type="submit" :disabled="formbusy">Submit</BButton>
     </div>
-    <b-overlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
+    <BOverlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
       <template #overlay>
         <div v-if="processing" class="text-center p-4 bg-primary text-light rounded">
           <div class="mb-3">Processing...</div>
-          <b-progress
+          <BProgress
             min="1"
             max="20"
             :value="processingcounter"
             variant="success"
             height="3px"
             class="mx-n4 rounded-0"
-          ></b-progress>
+          ></BProgress>
         </div>
         <div
           v-else
@@ -771,46 +771,46 @@ This example also demonstrates additional accessibility markup.
         >
           <p><strong id="form-confirm-label">Are you sure?</strong></p>
           <div class="d-flex"  style="column-gap: 5%;">
-            <b-button variant="outline-danger" class="me-3" @click="onFormCancel">
+            <BButton variant="outline-danger" class="me-3" @click="onFormCancel">
               Cancel
-            </b-button>
-            <b-button variant="outline-success" @click="onFormOK">OK</b-button>
+            </BButton>
+            <BButton variant="outline-success" @click="onFormOK">OK</BButton>
           </div>
         </div>
       </template>
-    </b-overlay>
-  </b-form>
+    </BOverlay>
+  </BForm>
   <template #html>
 
 ```vue
 <template>
-  <b-form class="position-relative p-3" @submit.prevent="onFormSubmit">
+  <BForm class="position-relative p-3" @submit.prevent="onFormSubmit">
     <div class="row">
       <label class="col-lg-2" label-for="form-name">Name</label>
-      <b-form-input id="form-name" class="col" :disabled="formbusy"></b-form-input>
+      <BFormInput id="form-name" class="col" :disabled="formbusy"></BFormInput>
     </div>
 
     <div class="row mt-2">
       <label class="col-lg-2" label-for="form-mail">Email</label>
-      <b-form-input id="form-email" class="col" type="email" :disabled="formbusy"></b-form-input>
+      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy"></BFormInput>
     </div>
 
     <div class="d-flex justify-content-center mt-2">
-      <b-button ref="formsubmit" type="submit" :disabled="formbusy">Submit</b-button>
+      <BButton ref="formsubmit" type="submit" :disabled="formbusy">Submit</BButton>
     </div>
 
-    <b-overlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
+    <BOverlay :show="formbusy" no-wrap @shown="onFormOverlayShown" @hidden="onFormOverlayHidden">
       <template #overlay>
         <div v-if="processing" class="text-center p-4 bg-primary text-light rounded">
           <div class="mb-3">Processing...</div>
-          <b-progress
+          <BProgress
             min="1"
             max="20"
             :value="processingcounter"
             variant="success"
             height="3px"
             class="mx-n4 rounded-0"
-          ></b-progress>
+          ></BProgress>
         </div>
         <div
           v-else
@@ -823,15 +823,15 @@ This example also demonstrates additional accessibility markup.
         >
           <p><strong id="form-confirm-label">Are you sure?</strong></p>
           <div class="d-flex" style="column-gap: 5%;">
-            <b-button variant="outline-danger" class="me-3" @click="onFormCancel">
+            <BButton variant="outline-danger" class="me-3" @click="onFormCancel">
               Cancel
-            </b-button>
-            <b-button variant="outline-success" @click="onFormOK">OK</b-button>
+            </BButton>
+            <BButton variant="outline-success" @click="onFormOK">OK</BButton>
           </div>
         </div>
       </template>
-    </b-overlay>
-  </b-form>
+    </BOverlay>
+  </BForm>
 </template>
 
 <script setup lang="ts">
@@ -889,12 +889,12 @@ const onFormOK = () => {
   </template>
 </HighlightCard>
 
-### Using in `<b-modal>`
+### Using in `<BModal>`
 
-The modal body has `position: relative;` set, so when using `<b-overlay no-wrap ...>` in the modal
+The modal body has `position: relative;` set, so when using `<BOverlay no-wrap ...>` in the modal
 body only the modal body will be obscured. If you wish to obscure the entire modal (including the
-header and footer), you will need to set the `<b-modal>` prop `body-class` to `position-static`, and
-also set the `rounded` prop on `<b-overlay>`.
+header and footer), you will need to set the `<BModal>` prop `body-class` to `position-static`, and
+also set the `rounded` prop on `<BOverlay>`.
 
 <ComponentReference :data="data" />
 

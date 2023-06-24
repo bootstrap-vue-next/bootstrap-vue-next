@@ -1,9 +1,9 @@
 <template>
-  <b-card-head-foot class="card-footer" v-bind="props">
+  <BCardHeadFoot class="card-footer" v-bind="props">
     <slot>
       {{ text }}
     </slot>
-  </b-card-head-foot>
+  </BCardHeadFoot>
 </template>
 
 <script setup lang="ts">

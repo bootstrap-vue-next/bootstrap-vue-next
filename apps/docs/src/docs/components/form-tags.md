@@ -20,12 +20,12 @@ Tags are arrays of short strings, used in various ways such as assigning categor
 
 ## Example
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
 <template>
   <label for="tags-basic">Type a new tag and press enter</label>
-  <b-form-tags input-id="tags-basic" v-model="value"></b-form-tags>
+  <BFormTags input-id="tags-basic" v-model="value"></BFormTags>
   <p class="mt-2">Value: {{ value }}</p>
 </template>
 
@@ -34,7 +34,7 @@ const value = ref<string[]>(['apple', 'orange'])
 </script>
 ```
 
-</b-card>
+</BCard>
 
 <script setup lang="ts">
 import {BCard} from 'bootstrap-vue-next'

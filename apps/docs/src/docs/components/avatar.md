@@ -11,7 +11,7 @@
 <div class="lead mb-5">
 
 Avatars are a custom component, and are typically used to display a user profile as a
-picture, an icon, or short text. `<b-avatar>` provides several props for customizing its
+picture, an icon, or short text. `<BAvatar>` provides several props for customizing its
 appearance such as color variant and roundness, and optionally supports acting as a button, link
 or ~~[router link](/docs/reference/router-links)~~.
 
@@ -25,65 +25,65 @@ centered beside any adjoining plain text. They also can be used as children of o
 <HighlightCard>
   <p>Using stand-alone:</p>
   <div class="d-flex mb-4" style="column-gap: 1%;">
-    <b-avatar />
-    <b-avatar variant="primary" text="BV" />
-    <b-avatar variant="info" src="https://placekitten.com/300/300" />
-    <b-avatar variant="success" icon="people-fill" />
+    <BAvatar />
+    <BAvatar variant="primary" text="BV" />
+    <BAvatar variant="info" src="https://placekitten.com/300/300" />
+    <BAvatar variant="success" icon="people-fill" />
   </div>
   <p>Using in components (list group) example:</p>
-  <b-list-group style="max-width: 300px;">
-    <b-list-group-item class="d-flex align-items-center">
-      <b-avatar class="mx-3" />
+  <BListGroup style="max-width: 300px;">
+    <BListGroupItem class="d-flex align-items-center">
+      <BAvatar class="mx-3" />
       <span class="me-auto">J. Circlehead</span>
-      <b-badge>5</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex align-items-center">
-      <b-avatar variant="primary" text="BV" class="mx-3" />
+      <BBadge>5</BBadge>
+    </BListGroupItem>
+    <BListGroupItem class="d-flex align-items-center">
+      <BAvatar variant="primary" text="BV" class="mx-3" />
       <span class="me-auto">BootstrapVueNext</span>
-      <b-badge>12</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex align-items-center">
-      <b-avatar variant="info" src="https://placekitten.com/300/300" class="mx-3" />
+      <BBadge>12</BBadge>
+    </BListGroupItem>
+    <BListGroupItem class="d-flex align-items-center">
+      <BAvatar variant="info" src="https://placekitten.com/300/300" class="mx-3" />
       <span class="me-auto">Super Kitty</span>
-      <b-badge>9</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex align-items-center">
-      <b-avatar variant="success" icon="people-fill" class="mx-3" />
+      <BBadge>9</BBadge>
+    </BListGroupItem>
+    <BListGroupItem class="d-flex align-items-center">
+      <BAvatar variant="success" icon="people-fill" class="mx-3" />
       <span class="me-auto">ACME group</span>
-      <b-badge>7</b-badge>
-    </b-list-group-item>
-  </b-list-group>
+      <BBadge>7</BBadge>
+    </BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
 <p>Using stand-alone:</p>
-<b-avatar />
-<b-avatar variant="primary" text="BV" />
-<b-avatar variant="info" src="https://placekitten.com/300/300" />
-<b-avatar variant="success" icon="people-fill" />
+<BAvatar />
+<BAvatar variant="primary" text="BV" />
+<BAvatar variant="info" src="https://placekitten.com/300/300" />
+<BAvatar variant="success" icon="people-fill" />
 <p>Using in components (list group) example:</p>
-<b-list-group style="max-width: 300px;">
-  <b-list-group-item class="d-flex align-items-center">
-    <b-avatar class="mx-3" />
+<BListGroup style="max-width: 300px;">
+  <BListGroupItem class="d-flex align-items-center">
+    <BAvatar class="mx-3" />
     <span class="me-auto">J. Circlehead</span>
-    <b-badge>5</b-badge>
-  </b-list-group-item>
-  <b-list-group-item class="d-flex align-items-center">
-    <b-avatar variant="primary" text="BV" class="mx-3" />
+    <BBadge>5</BBadge>
+  </BListGroupItem>
+  <BListGroupItem class="d-flex align-items-center">
+    <BAvatar variant="primary" text="BV" class="mx-3" />
     <span class="me-auto">BootstrapVueNext</span>
-    <b-badge>12</b-badge>
-  </b-list-group-item>
-  <b-list-group-item class="d-flex align-items-center">
-    <b-avatar variant="info" src="https://placekitten.com/300/300" class="mx-3" />
+    <BBadge>12</BBadge>
+  </BListGroupItem>
+  <BListGroupItem class="d-flex align-items-center">
+    <BAvatar variant="info" src="https://placekitten.com/300/300" class="mx-3" />
     <span class="me-auto">Super Kitty</span>
-    <b-badge>9</b-badge>
-  </b-list-group-item>
-  <b-list-group-item class="d-flex align-items-center">
-    <b-avatar variant="success" icon="people-fill" class="mx-3" />
+    <BBadge>9</BBadge>
+  </BListGroupItem>
+  <BListGroupItem class="d-flex align-items-center">
+    <BAvatar variant="success" icon="people-fill" class="mx-3" />
     <span class="me-auto">ACME group</span>
-    <b-badge>7</b-badge>
-  </b-list-group-item>
-</b-list-group>
+    <BBadge>7</BBadge>
+  </BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -105,14 +105,14 @@ distortion will occur. The image will be scaled up or down to fit within the ava
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar src="https://placekitten.com/300/300" />
-    <b-avatar src="https://placekitten.com/300/300" size="6rem" />
+    <BAvatar src="https://placekitten.com/300/300" />
+    <BAvatar src="https://placekitten.com/300/300" size="6rem" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar src="https://placekitten.com/300/300" />
-<b-avatar src="https://placekitten.com/300/300" size="6rem" />
+<BAvatar src="https://placekitten.com/300/300" />
+<BAvatar src="https://placekitten.com/300/300" size="6rem" />
 ```
 
   </template>
@@ -145,18 +145,18 @@ be scaled relative to the [`size` prop setting](#sizing).
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar text="BV" />
-    <b-avatar text="a" />
-    <b-avatar text="Foo" />
-    <b-avatar text="BV" size="4rem" />
+    <BAvatar text="BV" />
+    <BAvatar text="a" />
+    <BAvatar text="Foo" />
+    <BAvatar text="BV" size="4rem" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar text="BV" />
-<b-avatar text="a" />
-<b-avatar text="Foo" />
-<b-avatar text="BV" size="4rem" />
+<BAvatar text="BV" />
+<BAvatar text="a" />
+<BAvatar text="Foo" />
+<BAvatar text="BV" size="4rem" />
 ```
 
   </template>
@@ -169,14 +169,14 @@ appearance, or if using custom icons or SVGs e.g.:
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar size="4em">Hello<br>World</b-avatar>
-    <b-avatar size="4em">你好<br>世界</b-avatar>
+    <BAvatar size="4em">Hello<br>World</BAvatar>
+    <BAvatar size="4em">你好<br>世界</BAvatar>
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar size="4em">Hello<br />World</b-avatar>
-<b-avatar size="4em">你好<br />世界</b-avatar>
+<BAvatar size="4em">Hello<br />World</BAvatar>
+<BAvatar size="4em">你好<br />世界</BAvatar>
 ```
 
   </template>
@@ -198,26 +198,26 @@ Use the `variant` prop to specify one of Bootstrap theme variant colors. The def
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar variant="secondary" />
-    <b-avatar variant="primary" />
-    <b-avatar variant="dark" />
-    <b-avatar variant="light" />
-    <b-avatar variant="success" />
-    <b-avatar variant="danger" />
-    <b-avatar variant="warning" />
-    <b-avatar variant="info" />
+    <BAvatar variant="secondary" />
+    <BAvatar variant="primary" />
+    <BAvatar variant="dark" />
+    <BAvatar variant="light" />
+    <BAvatar variant="success" />
+    <BAvatar variant="danger" />
+    <BAvatar variant="warning" />
+    <BAvatar variant="info" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar variant="secondary" />
-<b-avatar variant="primary" />
-<b-avatar variant="dark" />
-<b-avatar variant="light" />
-<b-avatar variant="success" />
-<b-avatar variant="danger" />
-<b-avatar variant="warning" />
-<b-avatar variant="info" />
+<BAvatar variant="secondary" />
+<BAvatar variant="primary" />
+<BAvatar variant="dark" />
+<BAvatar variant="light" />
+<BAvatar variant="success" />
+<BAvatar variant="danger" />
+<BAvatar variant="warning" />
+<BAvatar variant="info" />
 ```
 
   </template>
@@ -227,26 +227,26 @@ When displaying an icon as avatar, icon colors are calculated based on the `vari
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar variant="secondary" icon-variant="info" />
-    <b-avatar variant="primary" icon-variant="dark" />
-    <b-avatar variant="dark" icon-variant="warning" />
-    <b-avatar variant="light" icon-variant="success" />
-    <b-avatar variant="success" icon-variant="dark" />
-    <b-avatar variant="danger" icon-variant="warning" />
-    <b-avatar variant="warning" icon-variant="primary" />
-    <b-avatar variant="info" icon-variant="secondary" />
+    <BAvatar variant="secondary" icon-variant="info" />
+    <BAvatar variant="primary" icon-variant="dark" />
+    <BAvatar variant="dark" icon-variant="warning" />
+    <BAvatar variant="light" icon-variant="success" />
+    <BAvatar variant="success" icon-variant="dark" />
+    <BAvatar variant="danger" icon-variant="warning" />
+    <BAvatar variant="warning" icon-variant="primary" />
+    <BAvatar variant="info" icon-variant="secondary" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar variant="secondary" icon-variant="info" />
-<b-avatar variant="primary" icon-variant="dark" />
-<b-avatar variant="dark" icon-variant="warning" />
-<b-avatar variant="light" icon-variant="success" />
-<b-avatar variant="success" icon-variant="dark" />
-<b-avatar variant="danger" icon-variant="warning" />
-<b-avatar variant="warning" icon-variant="primary" />
-<b-avatar variant="info" icon-variant="secondary" />
+<BAvatar variant="secondary" icon-variant="info" />
+<BAvatar variant="primary" icon-variant="dark" />
+<BAvatar variant="dark" icon-variant="warning" />
+<BAvatar variant="light" icon-variant="success" />
+<BAvatar variant="success" icon-variant="dark" />
+<BAvatar variant="danger" icon-variant="warning" />
+<BAvatar variant="warning" icon-variant="primary" />
+<BAvatar variant="info" icon-variant="secondary" />
 ```
 
   </template>
@@ -256,22 +256,22 @@ When displaying text inside the avatar, text colors are calculated based on the 
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar variant="primary" text="P" />
-    <b-avatar variant="primary" text-variant="dark" text="P" />
-    <b-avatar variant="secondary" text="A" />
-    <b-avatar variant="secondary" text-variant="info" text="A" />
-    <b-avatar variant="warning" text="A" />
-    <b-avatar variant="warning" text-variant="primary" text="A" />
+    <BAvatar variant="primary" text="P" />
+    <BAvatar variant="primary" text-variant="dark" text="P" />
+    <BAvatar variant="secondary" text="A" />
+    <BAvatar variant="secondary" text-variant="info" text="A" />
+    <BAvatar variant="warning" text="A" />
+    <BAvatar variant="warning" text-variant="primary" text="A" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar variant="primary" text="P" />
-<b-avatar variant="primary" text-variant="dark" text="P" />
-<b-avatar variant="secondary" text="A" />
-<b-avatar variant="secondary" text-variant="info" text="A" />
-<b-avatar variant="warning" text="A" />
-<b-avatar variant="warning" text-variant="primary" text="A" />
+<BAvatar variant="primary" text="P" />
+<BAvatar variant="primary" text-variant="dark" text="P" />
+<BAvatar variant="secondary" text="A" />
+<BAvatar variant="secondary" text-variant="info" text="A" />
+<BAvatar variant="warning" text="A" />
+<BAvatar variant="warning" text-variant="primary" text="A" />
 ```
 
   </template>
@@ -286,22 +286,22 @@ converted to pixel values. Any other value _must_ include the units (such as `px
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar />
-    <b-avatar size="sm" />
-    <b-avatar size="lg" />
-    <b-avatar :size="24" />
-    <b-avatar size="3em" />
-    <b-avatar size="72px" />
+    <BAvatar />
+    <BAvatar size="sm" />
+    <BAvatar size="lg" />
+    <BAvatar :size="24" />
+    <BAvatar size="3em" />
+    <BAvatar size="72px" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar />
-<b-avatar size="sm" />
-<b-avatar size="lg" />
-<b-avatar :size="24" />
-<b-avatar size="3em" />
-<b-avatar size="72px" />
+<BAvatar />
+<BAvatar size="sm" />
+<BAvatar size="lg" />
+<BAvatar :size="24" />
+<BAvatar size="3em" />
+<BAvatar size="72px" />
 ```
 
   </template>
@@ -314,11 +314,11 @@ converted to pixel values. Any other value _must_ include the units (such as `px
 Prefer a square avatar? simply set the `square` prop to `true`.
 
 <HighlightCard>
-    <b-avatar square />
+    <BAvatar square />
   <template #html>
 
 ```vue-html
-<b-avatar square />
+<BAvatar square />
 ```
 
   </template>
@@ -326,35 +326,35 @@ Prefer a square avatar? simply set the `square` prop to `true`.
 
 ### Rounding
 
-`<b-avatar>` renders with a circular border radius. You can change the rounding by setting the prop
+`<BAvatar>` renders with a circular border radius. You can change the rounding by setting the prop
 `rounded` to one of the values `true`, `'circle'`, `'sm'`, `'lg'`, `'top'`, `'left'`, `'right'`, or `'bottom'`.
 When set to `true` (or the empty string `''`), it uses the Bootstrap default of medium rounding.
 When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar rounded="sm" />
-    <b-avatar rounded />
-    <b-avatar rounded="lg" />
-    <b-avatar rounded="top" />
-    <b-avatar rounded="left" />
-    <b-avatar rounded="right" />
-    <b-avatar rounded="bottom" />
-    <b-avatar rounded="circle" />
-    <b-avatar rounded="0" />
+    <BAvatar rounded="sm" />
+    <BAvatar rounded />
+    <BAvatar rounded="lg" />
+    <BAvatar rounded="top" />
+    <BAvatar rounded="left" />
+    <BAvatar rounded="right" />
+    <BAvatar rounded="bottom" />
+    <BAvatar rounded="circle" />
+    <BAvatar rounded="0" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar rounded="sm" />
-<b-avatar rounded />
-<b-avatar rounded="lg" />
-<b-avatar rounded="top" />
-<b-avatar rounded="left" />
-<b-avatar rounded="right" />
-<b-avatar rounded="bottom" />
-<b-avatar rounded="circle" />
-<b-avatar rounded="0" />
+<BAvatar rounded="sm" />
+<BAvatar rounded />
+<BAvatar rounded="lg" />
+<BAvatar rounded="top" />
+<BAvatar rounded="left" />
+<BAvatar rounded="right" />
+<BAvatar rounded="bottom" />
+<BAvatar rounded="circle" />
+<BAvatar rounded="0" />
 ```
 
   </template>
@@ -368,11 +368,11 @@ When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 
 ### Alignment
 
-By default, `<b-avatar>` will be vertically centered with its adjoining content. In some cases you
+By default, `<BAvatar>` will be vertically centered with its adjoining content. In some cases you
 may want to alter the alignment, such as ensuring that a text-only avatar aligns its text with the
 adjoining text. Simply set a [vertical alignment utility](/docs/reference/utility-classes) class on
-the component, such as `<b-avatar class="align-baseline" ...>` or
-`<b-avatar class="align-top" ...>`, etc.
+the component, such as `<BAvatar class="align-baseline" ...>` or
+`<BAvatar class="align-top" ...>`, etc.
 
 ## Actionable avatars
 
@@ -385,30 +385,30 @@ Image avatars, when actionable, employ a basic scale transform on the image when
 ### Button
 
 Want to trigger the opening of a modal or trigger an action? Set the `button` prop to instruct
-`<b-avatar>` to render as a `<button>` element. When rendered as a button, the component will emit
+`<BAvatar>` to render as a `<button>` element. When rendered as a button, the component will emit
 the `click` event whenever clicked.
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item>
-      <b-avatar button @click="alertEvent" variant="primary" text="FF" class="align-baseline" />
+  <BListGroup>
+    <BListGroupItem>
+      <BAvatar button @click="alertEvent" variant="primary" text="FF" class="align-baseline" />
       Button Text Avatar
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-avatar button @click="alertEvent" src="https://placekitten.com/300/300" />
+    </BListGroupItem>
+    <BListGroupItem>
+      <BAvatar button @click="alertEvent" src="https://placekitten.com/300/300" />
       Button Image Avatar
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-avatar button @click="alertEvent" icon="star-fill" class="align-center" />
+    </BListGroupItem>
+    <BListGroupItem>
+      <BAvatar button @click="alertEvent" icon="star-fill" class="align-center" />
       Button Icon Avatar
-    </b-list-group-item>
-  </b-list-group>
+    </BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item>
-    <b-avatar
+<BListGroup>
+  <BListGroupItem>
+    <BAvatar
       button
       @click="alertEvent"
       variant="primary"
@@ -416,16 +416,16 @@ the `click` event whenever clicked.
       class="align-baseline"
      />
     Button Text Avatar
-  </b-list-group-item>
-  <b-list-group-item>
-    <b-avatar button @click="alertEvent" src="https://placekitten.com/300/300" />
+  </BListGroupItem>
+  <BListGroupItem>
+    <BAvatar button @click="alertEvent" src="https://placekitten.com/300/300" />
     Button Image Avatar
-  </b-list-group-item>
-  <b-list-group-item>
-    <b-avatar button @click="alertEvent" icon="star-fill" class="align-center" />
+  </BListGroupItem>
+  <BListGroupItem>
+    <BAvatar button @click="alertEvent" icon="star-fill" class="align-center" />
     Button Icon Avatar
-  </b-list-group-item>
-</b-list-group>
+  </BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -441,37 +441,37 @@ Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`
 `Vue router` (or equivalent) be installed~~.
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item>
-      <b-avatar href="#foo" variant="primary" text="FF" class="align-baseline" />
+  <BListGroup>
+    <BListGroupItem>
+      <BAvatar href="#foo" variant="primary" text="FF" class="align-baseline" />
       Link Text Avatar
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-avatar href="#bar" src="https://placekitten.com/300/300" />
+    </BListGroupItem>
+    <BListGroupItem>
+      <BAvatar href="#bar" src="https://placekitten.com/300/300" />
       Link Image Avatar
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-avatar href="#baz" icon="star-fill" class="align-center" />
+    </BListGroupItem>
+    <BListGroupItem>
+      <BAvatar href="#baz" icon="star-fill" class="align-center" />
       Link Icon Avatar
-    </b-list-group-item>
-  </b-list-group>
+    </BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item>
-    <b-avatar href="#foo" variant="primary" text="FF" class="align-baseline" />
+<BListGroup>
+  <BListGroupItem>
+    <BAvatar href="#foo" variant="primary" text="FF" class="align-baseline" />
     Link Text Avatar
-  </b-list-group-item>
-  <b-list-group-item>
-    <b-avatar href="#bar" src="https://placekitten.com/300/300" />
+  </BListGroupItem>
+  <BListGroupItem>
+    <BAvatar href="#bar" src="https://placekitten.com/300/300" />
     Link Image Avatar
-  </b-list-group-item>
-  <b-list-group-item>
-    <b-avatar href="#baz" icon="star-fill" class="align-center" />
+  </BListGroupItem>
+  <BListGroupItem>
+    <BAvatar href="#baz" icon="star-fill" class="align-center" />
     Link Icon Avatar
-  </b-list-group-item>
-</b-list-group>
+  </BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -480,7 +480,7 @@ Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`
 **Note:**
 
 - The `button` prop takes precedence over the `href` and ~~`to`~~ props.
-- ~~For additional details on the `<router-link>` compatible props, please refer to the
+- ~~For additional details on the `<RouterLink>` compatible props, please refer to the
   [Router support reference section](/docs/reference/router-links).~~
 
 ## Badge avatars
@@ -490,22 +490,22 @@ be set via the `badge-variant` prop. The badge will scale with the size of the a
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar badge />
-    <b-avatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
-    <b-avatar badge badge-variant="warning" icon="people-fill" />
-    <b-avatar badge badge-variant="success" src="https://placekitten.com/300/300" />
-    <b-avatar badge badge-variant="dark" text="BV" />
-    <b-avatar square badge badge-variant="dark" text="BV" />
+    <BAvatar badge />
+    <BAvatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
+    <BAvatar badge badge-variant="warning" icon="people-fill" />
+    <BAvatar badge badge-variant="success" src="https://placekitten.com/300/300" />
+    <BAvatar badge badge-variant="dark" text="BV" />
+    <BAvatar square badge badge-variant="dark" text="BV" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar badge />
-<b-avatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
-<b-avatar badge badge-variant="warning" icon="people-fill" />
-<b-avatar badge badge-variant="success" src="https://placekitten.com/300/300" />
-<b-avatar badge badge-variant="dark" text="BV" />
-<b-avatar square badge badge-variant="dark" text="BV" />
+<BAvatar badge />
+<BAvatar badge badge-variant="danger" src="https://placekitten.com/300/300" />
+<BAvatar badge badge-variant="warning" icon="people-fill" />
+<BAvatar badge badge-variant="success" src="https://placekitten.com/300/300" />
+<BAvatar badge badge-variant="dark" text="BV" />
+<BAvatar square badge badge-variant="dark" text="BV" />
 ```
 
   </template>
@@ -518,14 +518,14 @@ Add textual content to the badge by supplying a string to the `badge` prop, or u
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar badge="BV" />
-    <b-avatar badge="7" variant="primary" badge-variant="dark" />
+    <BAvatar badge="BV" />
+    <BAvatar badge="7" variant="primary" badge-variant="dark" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar badge="BV" />
-<b-avatar badge="7" variant="primary" badge-variant="dark" />
+<BAvatar badge="BV" />
+<BAvatar badge="7" variant="primary" badge-variant="dark" />
 ```
 
   </template>
@@ -539,18 +539,18 @@ right of the avatar.
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar badge />
-    <b-avatar badge badge-left />
-    <b-avatar badge badge-top />
-    <b-avatar badge badge-left badge-top />
+    <BAvatar badge />
+    <BAvatar badge badge-left />
+    <BAvatar badge badge-top />
+    <BAvatar badge badge-left badge-top />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar badge />
-<b-avatar badge badge-left />
-<b-avatar badge badge-top />
-<b-avatar badge badge-left badge-top />
+<BAvatar badge />
+<BAvatar badge badge-left />
+<BAvatar badge badge-top />
+<BAvatar badge badge-left badge-top />
 ```
 
   </template>
@@ -562,26 +562,26 @@ inward, while negative values will move the badge outward.
 
 <HighlightCard>
   <div class="d-flex" style="column-gap: 1%;">
-    <b-avatar badge />
-    <b-avatar badge badge-offset="-0.5em" />
-    <b-avatar badge badge-offset="-2px" />
-    <b-avatar badge badge-offset="2px" />
-    <b-avatar badge badge-top />
-    <b-avatar badge badge-top badge-offset="-0.5em" />
-    <b-avatar badge badge-top badge-offset="-2px" />
-    <b-avatar badge badge-top badge-offset="2px" />
+    <BAvatar badge />
+    <BAvatar badge badge-offset="-0.5em" />
+    <BAvatar badge badge-offset="-2px" />
+    <BAvatar badge badge-offset="2px" />
+    <BAvatar badge badge-top />
+    <BAvatar badge badge-top badge-offset="-0.5em" />
+    <BAvatar badge badge-top badge-offset="-2px" />
+    <BAvatar badge badge-top badge-offset="2px" />
   </div>
   <template #html>
 
 ```vue-html
-<b-avatar badge />
-<b-avatar badge badge-offset="-0.5em" />
-<b-avatar badge badge-offset="-2px" />
-<b-avatar badge badge-offset="2px" />
-<b-avatar badge badge-top />
-<b-avatar badge badge-top badge-offset="-0.5em" />
-<b-avatar badge badge-top badge-offset="-2px" />
-<b-avatar badge badge-top badge-offset="2px" />
+<BAvatar badge />
+<BAvatar badge badge-offset="-0.5em" />
+<BAvatar badge badge-offset="-2px" />
+<BAvatar badge badge-offset="2px" />
+<BAvatar badge badge-top />
+<BAvatar badge badge-top badge-offset="-0.5em" />
+<BAvatar badge badge-top badge-offset="-2px" />
+<BAvatar badge badge-top badge-offset="2px" />
 ```
 
   </template>
@@ -589,30 +589,30 @@ inward, while negative values will move the badge outward.
 
 ## Avatar groups
 
-Group multiple avatars together by wrapping them in a `<b-avatar-group>` component:
+Group multiple avatars together by wrapping them in a `<BAvatarGroup>` component:
 
 <HighlightCard>
-  <b-avatar-group size="60px">
-    <b-avatar />
-    <b-avatar text="BV" variant="primary" />
-    <b-avatar src="https://placekitten.com/300/300" variant="info" />
-    <b-avatar text="OK" variant="danger" />
-    <b-avatar variant="warning" />
-    <b-avatar src="https://placekitten.com/320/320" variant="dark" />
-    <b-avatar icon="music-note" variant="success" />
-  </b-avatar-group>
+  <BAvatarGroup size="60px">
+    <BAvatar />
+    <BAvatar text="BV" variant="primary" />
+    <BAvatar src="https://placekitten.com/300/300" variant="info" />
+    <BAvatar text="OK" variant="danger" />
+    <BAvatar variant="warning" />
+    <BAvatar src="https://placekitten.com/320/320" variant="dark" />
+    <BAvatar icon="music-note" variant="success" />
+  </BAvatarGroup>
   <template #html>
 
 ```vue-html
-<b-avatar-group size="60px">
-  <b-avatar />
-  <b-avatar text="BV" variant="primary" />
-  <b-avatar src="https://placekitten.com/300/300" variant="info" />
-  <b-avatar text="OK" variant="danger" />
-  <b-avatar variant="warning" />
-  <b-avatar src="https://placekitten.com/320/320" variant="dark" />
-  <b-avatar icon="music-note" variant="success" />
-</b-avatar-group>
+<BAvatarGroup size="60px">
+  <BAvatar />
+  <BAvatar text="BV" variant="primary" />
+  <BAvatar src="https://placekitten.com/300/300" variant="info" />
+  <BAvatar text="OK" variant="danger" />
+  <BAvatar variant="warning" />
+  <BAvatar src="https://placekitten.com/320/320" variant="dark" />
+  <BAvatar icon="music-note" variant="success" />
+</BAvatarGroup>
 ```
 
   </template>
@@ -620,33 +620,33 @@ Group multiple avatars together by wrapping them in a `<b-avatar-group>` compone
 
 **Notes:**
 
-- The `variant`, `square` and `rounded` props on `<b-avatar-group>` will take precedence over the
+- The `variant`, `square` and `rounded` props on `<BAvatarGroup>` will take precedence over the
   respective props on individual avatars.
 
 ### Group size
 
-To size the avatars, use the prop `size` on `<b-avatar-group>`. The `size` prop accepts the same
-type of values as the `size` prop on `<b-avatar>`. Note that the `size` prop will be ignored on
-individual avatars when they are placed inside a `<b-avatar-group>`.
+To size the avatars, use the prop `size` on `<BAvatarGroup>`. The `size` prop accepts the same
+type of values as the `size` prop on `<BAvatar>`. Note that the `size` prop will be ignored on
+individual avatars when they are placed inside a `<BAvatarGroup>`.
 
 <HighlightCard>
-  <b-avatar-group size="5rem">
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-  </b-avatar-group>
+  <BAvatarGroup size="5rem">
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+  </BAvatarGroup>
   <template #html>
 
 ```vue-html
-<b-avatar-group size="5rem">
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-</b-avatar-group>
+<BAvatarGroup size="5rem">
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+</BAvatarGroup>
 ```
 
   </template>
@@ -654,27 +654,27 @@ individual avatars when they are placed inside a `<b-avatar-group>`.
 
 ### Group variant
 
-Use the `variant` prop to color all child avatars in the `<b-avatar-group>`. Note that the `variant`
+Use the `variant` prop to color all child avatars in the `<BAvatarGroup>`. Note that the `variant`
 prop, when set, will override the the `variant` specified on individual avatars.
 
 <HighlightCard>
-  <b-avatar-group variant="success">
-    <b-avatar />
-    <b-avatar variant="info" />
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-  </b-avatar-group>
+  <BAvatarGroup variant="success">
+    <BAvatar />
+    <BAvatar variant="info" />
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+  </BAvatarGroup>
   <template #html>
 
 ```vue-html
-<b-avatar-group variant="success">
-  <b-avatar />
-  <b-avatar variant="info" />
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-</b-avatar-group>
+<BAvatarGroup variant="success">
+  <BAvatar />
+  <BAvatar variant="info" />
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+</BAvatarGroup>
 ```
 
   </template>
@@ -682,27 +682,27 @@ prop, when set, will override the the `variant` specified on individual avatars.
 
 ### Group rounding
 
-Similar to the `variant` prop, the `<b-avatar-group>` props `square` and `rounded` take precedence
+Similar to the `variant` prop, the `<BAvatarGroup>` props `square` and `rounded` take precedence
 over the respective props on individual child avatars.
 
 <HighlightCard>
-  <b-avatar-group rounded="lg">
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-  </b-avatar-group>
+  <BAvatarGroup rounded="lg">
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+  </BAvatarGroup>
   <template #html>
 
 ```vue-html
-<b-avatar-group rounded="lg">
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-</b-avatar-group>
+<BAvatarGroup rounded="lg">
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+</BAvatarGroup>
 ```
 
   </template>
@@ -710,28 +710,28 @@ over the respective props on individual child avatars.
 
 ### Group overlap
 
-By default, child avatars inside a `<b-avatar-group>` will overlap by a factor of `0.3` (relative to
+By default, child avatars inside a `<BAvatarGroup>` will overlap by a factor of `0.3` (relative to
 the size of the avatar). You can control the overlap amount by setting the `overlap` prop to a value
 between `0` and `1`, where `0` means no overlap and `1` means 100% overlap.
 
 <HighlightCard>
-  <b-avatar-group size="3rem" overlap="0.65">
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-    <b-avatar />
-  </b-avatar-group>
+  <BAvatarGroup size="3rem" overlap="0.65">
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+    <BAvatar />
+  </BAvatarGroup>
   <template #html>
 
 ```vue-html
-<b-avatar-group size="3rem" overlap="0.65">
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-  <b-avatar />
-</b-avatar-group>
+<BAvatarGroup size="3rem" overlap="0.65">
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+  <BAvatar />
+</BAvatarGroup>
 ```
 
   </template>
@@ -753,7 +753,7 @@ the `to` or `href` props when changing routes or changing URLs) for accessibilit
 
 ## Implementation notes
 
-Avatars are based upon `<b-badge>` and `<b-button>` components, and as such, rely upon Bootstrap's
+Avatars are based upon `<BBadge>` and `<BButton>` components, and as such, rely upon Bootstrap's
 `badge-*` and `btn-*` variant classes, as well as the `rounded-*`
 [utility classes](/docs/reference/utility-classes).
 

@@ -1,30 +1,30 @@
 <template>
-  <b-card :img-bottom="imgBottom">
+  <BCard :img-bottom="imgBottom">
     <template v-if="!noImgBoolean" #img>
       <slot name="img">
-        <b-card-img v-bind="imgAttrs" />
+        <BCardImg v-bind="imgAttrs" />
       </slot>
     </template>
 
     <template v-if="!noHeaderBoolean" #header>
       <slot name="header">
-        <b-placeholder v-bind="headerAttrs" />
+        <BPlaceholder v-bind="headerAttrs" />
       </slot>
     </template>
     <slot>
-      <b-placeholder cols="7" v-bind="defaultAttrs" />
-      <b-placeholder cols="4" v-bind="defaultAttrs" />
-      <b-placeholder cols="4" v-bind="defaultAttrs" />
-      <b-placeholder cols="6" v-bind="defaultAttrs" />
-      <b-placeholder cols="8" v-bind="defaultAttrs" />
+      <BPlaceholder cols="7" v-bind="defaultAttrs" />
+      <BPlaceholder cols="4" v-bind="defaultAttrs" />
+      <BPlaceholder cols="4" v-bind="defaultAttrs" />
+      <BPlaceholder cols="6" v-bind="defaultAttrs" />
+      <BPlaceholder cols="8" v-bind="defaultAttrs" />
     </slot>
     <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
-        <b-placeholder-button v-if="!noButtonBoolean" v-bind="footerAttrs" />
-        <b-placeholder v-else v-bind="footerAttrs" />
+        <BPlaceholderButton v-if="!noButtonBoolean" v-bind="footerAttrs" />
+        <BPlaceholder v-else v-bind="footerAttrs" />
       </slot>
     </template>
-  </b-card>
+  </BCard>
 </template>
 
 <script setup lang="ts">

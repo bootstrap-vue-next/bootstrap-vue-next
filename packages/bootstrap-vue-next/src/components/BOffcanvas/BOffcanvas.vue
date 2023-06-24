@@ -1,6 +1,6 @@
 <template>
   <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
-    <b-transition
+    <BTransition
       :no-fade="true"
       :trans-props="{
         enterToClass: 'showing',
@@ -34,7 +34,7 @@
                   {{ title }}
                 </slot>
               </h5>
-              <b-close-button
+              <BCloseButton
                 v-if="!noHeaderCloseBoolean"
                 class="text-reset"
                 :aria-label="dismissLabel"
@@ -50,8 +50,8 @@
           </div>
         </template>
       </div>
-    </b-transition>
-    <b-overlay
+    </BTransition>
+    <BOverlay
       :variant="backdropVariant"
       :show="showBackdrop"
       :fixed="true"

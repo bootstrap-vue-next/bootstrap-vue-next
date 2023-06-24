@@ -1,111 +1,111 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Individual</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio v-model="radioDefault">Default</b-form-radio>
-      </b-col>
-      <b-col>Checked: {{ radioDefault }}</b-col>
-    </b-row>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio v-model="radioDefault">Default</BFormRadio>
+      </BCol>
+      <BCol>Checked: {{ radioDefault }}</BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
-        <b-form-radio v-model="radioButton" button>Button format</b-form-radio>
-      </b-col>
-      <b-col> Checked: {{ radioButton }} </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio v-model="radioRequired" required>Required</b-form-radio>
-      </b-col>
-      <b-col>Checked: {{ radioRequired }}</b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio disabled>Disabled</b-form-radio>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio v-model="radioIndeterminate" indeterminate>Indeterminate</b-form-radio>
-      </b-col>
-      <b-col>Checked: {{ radioIndeterminate }}</b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio v-model="radioString" value="correct" unchecked-value="incorrect"
-          >Bound to string</b-form-radio
+    <BRow>
+      <BCol>
+        <BFormRadio v-model="radioButton" button>Button format</BFormRadio>
+      </BCol>
+      <BCol> Checked: {{ radioButton }} </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio v-model="radioRequired" required>Required</BFormRadio>
+      </BCol>
+      <BCol>Checked: {{ radioRequired }}</BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio disabled>Disabled</BFormRadio>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio v-model="radioIndeterminate" indeterminate>Indeterminate</BFormRadio>
+      </BCol>
+      <BCol>Checked: {{ radioIndeterminate }}</BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio v-model="radioString" value="correct" unchecked-value="incorrect"
+          >Bound to string</BFormRadio
         >
-      </b-col>
-      <b-col>Value: {{ radioString }}</b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio v-model="radioPlain" plain>Plain</b-form-radio>
-      </b-col>
-      <b-col>Checked: {{ radioPlain }}</b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+      <BCol>Value: {{ radioString }}</BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio v-model="radioPlain" plain>Plain</BFormRadio>
+      </BCol>
+      <BCol>Checked: {{ radioPlain }}</BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4>Individual radios grouped</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio v-model="radioSelected" name="some-radios" value="A">Option A</b-form-radio>
-      </b-col>
-      <b-col>
-        <b-form-radio v-model="radioSelected" name="some-radios" value="B">Option B</b-form-radio>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio v-model="radioSelected" name="some-radios" value="A">Option A</BFormRadio>
+      </BCol>
+      <BCol>
+        <BFormRadio v-model="radioSelected" name="some-radios" value="B">Option B</BFormRadio>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         Selected:
         <strong>{{ radioSelected }}</strong>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <button class="btn btn-primary mx-1" @click="radioSelected = 'A'">Set value A</button>
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
         <button class="btn btn-primary mx-1" @click="radioSelected = 'B'">Set value B</button>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4>Radio bound to array</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <strong>Select some cars</strong>
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
         <strong>Selected cars</strong>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadio
           v-for="(car, index) in radioAvailableCars"
           :key="index"
           v-model="radioSelectedCars"
           :value="car"
-          >{{ car }}</b-form-radio
+          >{{ car }}</BFormRadio
         >
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
         <ul>
           <li v-for="(car, index) in radioSelectedCars" :key="index">{{ car }}</li>
         </ul>
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

@@ -1,6 +1,6 @@
 <template>
   <div class="accordion-item">
-    <b-collapse
+    <BCollapse
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
@@ -30,7 +30,7 @@
       <div class="accordion-body">
         <slot />
       </div>
-    </b-collapse>
+    </BCollapse>
   </div>
 </template>
 

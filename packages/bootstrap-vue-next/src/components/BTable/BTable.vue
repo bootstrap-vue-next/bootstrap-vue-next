@@ -1,5 +1,5 @@
 <template>
-  <b-table-simple v-bind="containerAttrs">
+  <BTableSimple v-bind="containerAttrs">
     <!-- <table :class="classes"> -->
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
@@ -135,7 +135,7 @@
         <td :colspan="computedFieldsTotal">
           <slot name="table-busy">
             <div class="d-flex align-items-center justify-content-center gap-2">
-              <b-spinner class="align-middle" />
+              <BSpinner class="align-middle" />
               <strong>Loading...</strong>
             </div>
           </slot>
@@ -183,7 +183,7 @@
       }}
     </caption>
     <!-- </table> -->
-  </b-table-simple>
+  </BTableSimple>
 </template>
 
 <script setup lang="ts">

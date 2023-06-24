@@ -458,10 +458,10 @@ describe('tabs', () => {
 
     const HelloWorld = {
       template: ` 
-      <b-form-group label="msg">
-        <b-form-input v-model="msg" />
+      <BFormGroup label="msg">
+        <BFormInput v-model="msg" />
         <slot :msg="msg"/>      
-      </b-form-group>`,
+      </BFormGroup>`,
       data() {
         return {
           msg,
@@ -477,9 +477,9 @@ describe('tabs', () => {
       template: `
       <HelloWorld v-slot="{msg}" class="mt-3">
         out of tabs: {{ msg }}
-        <b-tabs>
-         <b-tab title="First" active><p>{{msg}}</p></b-tab>
-        </b-tabs>
+        <BTabs>
+         <BTab title="First" active><p>{{msg}}</p></BTab>
+        </BTabs>
       </HelloWorld>
       `,
       data() {

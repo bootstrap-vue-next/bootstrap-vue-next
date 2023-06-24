@@ -2,9 +2,9 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <slot name="prepend" />
-      <b-breadcrumb-item v-for="(item, i) in breadcrumbItemObjects" :key="i" v-bind="item">
+      <BBreadcrumbItem v-for="(item, i) in breadcrumbItemObjects" :key="i" v-bind="item">
         {{ item.text }}
-      </b-breadcrumb-item>
+      </BBreadcrumbItem>
       <slot />
       <slot name="append" />
     </ol>

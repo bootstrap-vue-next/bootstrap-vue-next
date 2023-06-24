@@ -37,14 +37,14 @@
             name="tag"
             v-bind="{tag, tagClass, tagVariant, tagPills: tagPillsBoolean, removeTag}"
           >
-            <b-form-tag
+            <BFormTag
               :key="tag"
               :class="tagClass"
               tag="li"
               :variant="tagVariant"
               :pill="tagPills"
               @remove="removeTag"
-              >{{ tag }}</b-form-tag
+              >{{ tag }}</BFormTag
             >
           </slot>
         </template>

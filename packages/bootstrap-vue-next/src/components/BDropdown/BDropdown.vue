@@ -1,6 +1,6 @@
 <template>
   <div :class="computedClasses" class="btn-group" v-bind="$attrs">
-    <b-button
+    <BButton
       :id="computedId"
       ref="splitButton"
       :variant="splitVariant || variant"
@@ -15,8 +15,8 @@
       <slot name="button-content">
         {{ text }}
       </slot>
-    </b-button>
-    <b-button
+    </BButton>
+    <BButton
       v-if="splitBoolean"
       ref="button"
       :variant="variant"
@@ -33,7 +33,7 @@
           {{ toggleText }}
         </slot>
       </span>
-    </b-button>
+    </BButton>
   </div>
   <ul
     v-if="!lazyBoolean || modelValueBoolean"

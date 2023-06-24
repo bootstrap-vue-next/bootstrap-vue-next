@@ -23,7 +23,7 @@
     </div>
 
     <div ref="relatedTarget" class="carousel-inner">
-      <transition-group
+      <TransitionGroup
         :enter-from-class="enterClasses"
         :enter-active-class="enterClasses"
         :enter-to-class="enterClasses"
@@ -40,7 +40,7 @@
           :key="i"
           :class="{active: i === modelValue && isTransitioning === false}"
         />
-      </transition-group>
+      </TransitionGroup>
     </div>
 
     <template v-if="controlsBoolean">

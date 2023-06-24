@@ -1,6 +1,6 @@
 <template>
   <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
-    <b-transition
+    <BTransition
       :no-fade="true"
       :trans-props="{enterToClass: 'show'}"
       @before-enter="onBeforeEnter"
@@ -39,7 +39,7 @@
                   <button v-if="hasHeaderCloseSlot" type="button" @click="hide('close')">
                     <slot name="header-close" />
                   </button>
-                  <b-close-button
+                  <BCloseButton
                     v-else
                     ref="closeButton"
                     :aria-label="headerCloseLabel"
@@ -55,7 +55,7 @@
             <div v-if="!hideFooterBoolean" class="modal-footer" :class="footerClasses">
               <slot name="footer">
                 <slot name="cancel">
-                  <b-button
+                  <BButton
                     v-if="!okOnlyBoolean"
                     ref="cancelButton"
                     :disabled="disableCancel"
@@ -64,10 +64,10 @@
                     @click="hide('cancel')"
                   >
                     {{ cancelTitle }}
-                  </b-button>
+                  </BButton>
                 </slot>
                 <slot name="ok">
-                  <b-button
+                  <BButton
                     ref="okButton"
                     :disabled="disableOk"
                     :size="buttonSize"
@@ -75,7 +75,7 @@
                     @click="hide('ok')"
                   >
                     {{ okTitle }}
-                  </b-button>
+                  </BButton>
                 </slot>
               </slot>
             </div>
@@ -85,7 +85,7 @@
           <div class="modal-backdrop fade show" @click="hide('backdrop')" />
         </slot>
       </div>
-    </b-transition>
+    </BTransition>
   </teleport>
 </template>
 

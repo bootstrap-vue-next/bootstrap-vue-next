@@ -16,14 +16,14 @@
   >
     <slot name="first" />
     <template v-for="(option, index) in formOptions" :key="index">
-      <b-form-select-option-group
+      <BFormSelectOptionGroup
         v-if="Array.isArray((option as any).options)"
         :label="(option as any).label"
         :options="(option as any).options"
       />
       <!-- eslint-disable vue/no-v-text-v-html-on-component -->
       <!-- eslint-disable vue/no-v-html -->
-      <b-form-select-option
+      <BFormSelectOption
         v-else
         :value="(option as any).value"
         :disabled="(option as any).disabled"

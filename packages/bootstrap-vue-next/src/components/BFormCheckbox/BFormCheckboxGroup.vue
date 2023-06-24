@@ -9,11 +9,11 @@
     tabindex="-1"
   >
     <slot name="first" />
-    <b-form-checkbox v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
+    <BFormCheckbox v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <span v-if="item.html" v-html="item.html" />
       <span v-else v-text="item.text" />
-    </b-form-checkbox>
+    </BFormCheckbox>
     <slot />
   </div>
 </template>

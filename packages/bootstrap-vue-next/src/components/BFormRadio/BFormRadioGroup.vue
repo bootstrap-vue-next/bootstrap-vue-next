@@ -9,11 +9,11 @@
     tabindex="-1"
   >
     <slot name="first" />
-    <b-form-radio v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
+    <BFormRadio v-for="item in normalizeOptions" :key="item.self" v-bind="item.props">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <span v-if="item.html" v-html="item.html" />
       <span v-else v-text="item.text" />
-    </b-form-radio>
+    </BFormRadio>
     <slot />
   </div>
 </template>

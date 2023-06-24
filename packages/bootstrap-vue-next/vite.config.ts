@@ -38,9 +38,9 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     visualizer(),
-    dts({
-      tsConfigFilePath: './tsconfig.app.json',
-    }),
+    // dts({
+    //   tsConfigFilePath: './tsconfig.app.json',
+    // }),
   ],
 
   server: {

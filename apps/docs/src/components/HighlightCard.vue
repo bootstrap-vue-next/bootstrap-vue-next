@@ -1,13 +1,13 @@
 <template>
-  <b-card no-body class="mb-5">
-    <b-card-body>
+  <BCard no-body class="mb-5">
+    <BCardBody>
       <slot />
-    </b-card-body>
+    </BCardBody>
     <div class="html">HTML</div>
-    <b-card-body class="bg-body-tertiary">
+    <BCardBody class="bg-body-tertiary">
       <slot name="html" />
-    </b-card-body>
-  </b-card>
+    </BCardBody>
+  </BCard>
 </template>
 
 <script setup lang="ts">

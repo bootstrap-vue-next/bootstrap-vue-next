@@ -1,27 +1,27 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
         <h4 class="my-3">Table without field definitions</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-table responsive caption="List of users" :items="items" striped hover foot-clone>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BTable responsive caption="List of users" :items="items" striped hover foot-clone>
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
-        </b-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+        </BTable>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="my-3">Table with string field definitions</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-table
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BTable
           responsive
           caption="List of users"
           :items="items"
@@ -33,18 +33,18 @@
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
-        </b-table>
-      </b-col>
-    </b-row>
+        </BTable>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
+    <BRow>
+      <BCol>
         <h4 class="my-3">Table with object field definitions</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-table
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BTable
           responsive
           caption="List of users"
           :items="items"
@@ -56,39 +56,39 @@
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
-        </b-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+        </BTable>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="my-3">Selectable table</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox
           id="checkbox-1"
           v-model="showSelectBox"
           name="checkbox-1"
           :value="true"
           :unchecked-value="false"
-          >Show Selectable column</b-form-checkbox
+          >Show Selectable column</BFormCheckbox
         >
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
         <p>Selection mode</p>
-        <b-form-radio
+        <BFormRadio
           v-for="(car, index) in ['single', 'multi', 'range']"
           :key="index"
           v-model="selectionMode"
           :value="car"
-          >{{ car }}</b-form-radio
+          >{{ car }}</BFormRadio
         >
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-table
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BTable
           selectable
           :select-head="showSelectBox"
           caption="List of users"
@@ -103,18 +103,18 @@
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
-        </b-table>
-      </b-col>
+        </BTable>
+      </BCol>
       <div>Selected rows: {{ selection }}</div>
-    </b-row>
-    <b-row>
-      <b-col>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="my-3">Table: Adding additional rows to the header</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-table
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BTable
           responsive
           caption="List of users"
           :items="items"
@@ -135,33 +135,33 @@
             <tr class="my">
               <th variant="danger" />
               <th variant="danger">
-                <b-form-select :placeholder="label" :options="[label, key]" label-field="label" />
+                <BFormSelect :placeholder="label" :options="[label, key]" label-field="label" />
               </th>
             </tr>
           </template>
           <template #cell(first_name)="data">
             <a href="#">{{ data.value }}</a>
           </template>
-        </b-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+        </BTable>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="my-3">Refreshable table (displays current time)</h4>
-        <b-button @click="currentTimeTable?.refresh()">Refresh</b-button>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-table
+        <BButton @click="currentTimeTable?.refresh()">Refresh</BButton>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BTable
           ref="currentTimeTable"
           responsive
           :fields="currentTimeTableDefinitions"
           :provider="currentTimeProvider"
         />
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-modal v-model="show"> Nuxt module playground! </b-modal>
-    <b-button @click="show = !show"> Click me </b-button>
+    <BModal v-model="show"> Nuxt module playground! </BModal>
+    <BButton @click="show = !show"> Click me </BButton>
     {{ a }}
     {{ f }}
   </div>

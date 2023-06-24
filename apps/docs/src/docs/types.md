@@ -16,7 +16,7 @@
 
 ## Alignment
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type CommonAlignment = 'start' | 'end' | 'center' | 'fill'
@@ -27,23 +27,23 @@ type JustifyContent = 'start' | 'end' | 'center' | 'between' | 'around' | 'evenl
 type TextHorizontal = 'start' | 'end' | 'center'
 ```
 
-</b-card>
+</BCard>
 
 ## Booleanish
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type Booleanish = 'true' | 'false' | '' | boolean
 ```
 
-</b-card>
+</BCard>
 
 ## BodyProp
 
 This type is only used for the Toast component.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type BodyProp =
@@ -58,13 +58,13 @@ type BodyProp =
   | undefined
 ```
 
-</b-card>
+</BCard>
 
 ## BPopoverDelayObject
 
 This type is only used for the Popover component.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 interface BPopoverDelayObject {
@@ -73,13 +73,13 @@ interface BPopoverDelayObject {
 }
 ```
 
-</b-card>
+</BCard>
 
 ## BreadcrumbItem
 
 This type is only used for the Breadcrumb component.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 interface BreadcrumbItemObject {
@@ -92,31 +92,31 @@ interface BreadcrumbItemObject {
 type BreadcrumbItem = BreadcrumbItemObject | string
 ```
 
-</b-card>
+</BCard>
 
 ## Breakpoint
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 ```
 
-</b-card>
+</BCard>
 
 ## ButtonType
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type ButtonType = 'button' | 'submit' | 'reset'
 ```
 
-</b-card>
+</BCard>
 
 ## ButtonVariant
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type ButtonVariant =
@@ -132,11 +132,11 @@ type ButtonVariant =
   | 'outline-dark'
 ```
 
-</b-card>
+</BCard>
 
 ## ColorVariant
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type ColorVariant =
@@ -150,11 +150,11 @@ type ColorVariant =
   | 'dark'
 ```
 
-</b-card>
+</BCard>
 
 ## ContainerPosition
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type ContainerVerticalAlign = Exclude<VerticalAlign, 'baseline' | 'text-top' | 'text-bottom'>
@@ -162,11 +162,11 @@ type ContainerHorizontalAlign = 'left' | 'center' | 'right'
 type ContainerPosition = `${ContainerVerticalAlign}-${ContainerHorizontalAlign}`
 ```
 
-</b-card>
+</BCard>
 
 ## InputType
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type InputType =
@@ -187,21 +187,21 @@ type InputType =
   | 'week'
 ```
 
-</b-card>
+</BCard>
 
 ## LinkTarget
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type LinkTarget = '_self' | '_blank' | '_parent' | '_top'
 ```
 
-</b-card>
+</BCard>
 
 ## Position
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type Position =
@@ -212,31 +212,31 @@ type Position =
   | 'position-sticky'
 ```
 
-</b-card>
+</BCard>
 
 ## Size
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type Size = 'sm' | 'md' | 'lg'
 ```
 
-</b-card>
+</BCard>
 
 ## SpinnerType
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type SpinnerType = 'border' | 'grow'
 ```
 
-</b-card>
+</BCard>
 
 ## TableField
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 interface TableFieldObject<T = Record<string, unknown>> {
@@ -263,11 +263,11 @@ interface TableFieldObject<T = Record<string, unknown>> {
 type TableField<T = Record<string, unknown>> = string | TableFieldObject<T>
 ```
 
-</b-card>
+</BCard>
 
 ## TableItem
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type TableItem<T = Record<string, unknown>> = T & {
@@ -277,11 +277,11 @@ type TableItem<T = Record<string, unknown>> = T & {
 }
 ```
 
-</b-card>
+</BCard>
 
 ## TextColorVariant
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type TextColorVariant =
@@ -301,27 +301,27 @@ type TextColorVariant =
   | 'reset'
 ```
 
-</b-card>
+</BCard>
 
 ## TransitionMode
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type TransitionMode = 'in-out' | 'out-in'
 ```
 
-</b-card>
+</BCard>
 
 ## VerticalAlign
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom'
 ```
 
-</b-card>
+</BCard>
 
 ## Extending types
 
@@ -335,7 +335,7 @@ You can extend some types to use your own values (e.g. colors, sizes). This requ
 Suppose we want to add a purple style and extra-large (xl) sizes.
 We need to create a declaration file in the root of vue project.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 // shims-bootstrap-vue-next.d.ts
@@ -359,18 +359,18 @@ declare module 'bootstrap-vue-next/dist/src/types' {
 }
 ```
 
-</b-card>
+</BCard>
 
 New values can be used now and the type check will be successful:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
-<b-button variant="purple" size="xl">Extra large purple button</b-button>
-<b-button variant="outline-purple">Outline purple button</b-button>
+<BButton variant="purple" size="xl">Extra large purple button</BButton>
+<BButton variant="outline-purple">Outline purple button</BButton>
 ```
 
-</b-card>
+</BCard>
 
 <script setup lang="ts">
 import {BCard, BCardBody} from 'bootstrap-vue-next'

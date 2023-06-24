@@ -1,24 +1,24 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-overlay :show="showOverlay" rounded="sm">
-          <b-card title="Card with overlay" :aria-hidden="showOverlay ? true : null">
-            <b-card-text>Laborum consequat non elit enim exercitation cillum.</b-card-text>
-            <b-card-text>Click the button to toggle the overlay:</b-card-text>
-            <b-button :disabled="showOverlay" variant="primary" @click="showOverlay = true"
-              >Show overlay</b-button
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BOverlay :show="showOverlay" rounded="sm">
+          <BCard title="Card with overlay" :aria-hidden="showOverlay ? true : null">
+            <BCardText>Laborum consequat non elit enim exercitation cillum.</BCardText>
+            <BCardText>Click the button to toggle the overlay:</BCardText>
+            <BButton :disabled="showOverlay" variant="primary" @click="showOverlay = true"
+              >Show overlay</BButton
             >
-          </b-card>
-        </b-overlay>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-button class="mt-3" @click="showOverlay = !showOverlay">Toggle overlay</b-button>
-      </b-col>
-    </b-row>
-  </b-container>
+          </BCard>
+        </BOverlay>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BButton class="mt-3" @click="showOverlay = !showOverlay">Toggle overlay</BButton>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

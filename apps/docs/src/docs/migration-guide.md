@@ -1,6 +1,6 @@
 # Migration Guide
 
-<migration-wrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
+<MigrationWrapper v-for="(item, i) in changes" :key="i" v-bind="item" />
 
 <script setup lang="ts">
 import {computed} from 'vue'

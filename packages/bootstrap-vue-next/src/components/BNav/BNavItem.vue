@@ -1,6 +1,6 @@
 <template>
   <li class="nav-item">
-    <b-link
+    <BLink
       class="nav-link"
       :class="linkClasses"
       v-bind="$props"
@@ -9,7 +9,7 @@
       :aria-disabled="disabledBoolean ? true : undefined"
     >
       <slot />
-    </b-link>
+    </BLink>
   </li>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
   <component :is="tag" class="card" :class="computedClasses">
     <slot v-if="!imgBottomBoolean" name="img">
-      <b-card-img v-if="imgSrc" v-bind="imgAttr" />
+      <BCardImg v-if="imgSrc" v-bind="imgAttr" />
     </slot>
-    <b-card-header
+    <BCardHeader
       v-if="header || hasHeaderSlot || headerHtml"
       v-bind="headerAttrs"
       :class="headerClass"
@@ -11,16 +11,16 @@
       <slot name="header">
         {{ header }}
       </slot>
-    </b-card-header>
-    <b-card-body v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
+    </BCardHeader>
+    <BCardBody v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
       <slot>
         {{ bodyText }}
       </slot>
-    </b-card-body>
+    </BCardBody>
     <slot v-else>
       {{ bodyText }}
     </slot>
-    <b-card-footer
+    <BCardFooter
       v-if="footer || hasFooterSlot || footerHtml"
       v-bind="footerAttrs"
       :class="footerClass"
@@ -28,9 +28,9 @@
       <slot name="footer">
         {{ footer }}
       </slot>
-    </b-card-footer>
+    </BCardFooter>
     <slot v-if="imgBottomBoolean" name="img">
-      <b-card-img v-if="imgSrc" v-bind="imgAttr" />
+      <BCardImg v-if="imgSrc" v-bind="imgAttr" />
     </slot>
   </component>
 </template>

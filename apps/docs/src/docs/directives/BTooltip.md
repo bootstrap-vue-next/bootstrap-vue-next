@@ -8,16 +8,16 @@
   </Teleport>
 </ClientOnly>
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
-<b-card v-b-tooltip="'My title'" />
-<b-card v-b-tooltip="{title: 'My title'}" />
-<b-card v-b-tooltip.hover.top="'My title'" />
-<b-card v-b-tooltip.focus.right="{title: 'My title'}" />
+<BCard v-b-tooltip="'My title'" />
+<BCard v-b-tooltip="{title: 'My title'}" />
+<BCard v-b-tooltip.hover.top="'My title'" />
+<BCard v-b-tooltip.focus.right="{title: 'My title'}" />
 ```
 
-</b-card>
+</BCard>
 
 A directive is composed by modifiers and a value, like the examples above.
 The anatomy of directive is: v-{name}.{modifier1}.{modifier2}.{etc.}={value}.
@@ -52,7 +52,7 @@ If we don't define any modifier by default is enabled "top".
 A tooltip text could be defined using the value. If we remember the anatomy of a custom directive, we can define at a value.
 With a value we can use an object, a string, a function, or an element.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 /**
@@ -66,11 +66,11 @@ With a value we can use an object, a string, a function, or an element.
 title: string | Element | JQuery | ((this: HTMLElement) => string | Element | JQuery)
 ```
 
-</b-card>
+</BCard>
 
 If we want to use an object, we should use the following interface:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 interface ValueObject {
@@ -89,7 +89,7 @@ interface ValueObject {
 }
 ```
 
-</b-card>
+</BCard>
 
 ## Delay
 
@@ -101,17 +101,17 @@ When we are using a directive, we have two ways to define the title to use in th
 
 ### Incorrect use
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
-<b-card v-b-tooltip.hover.top title="my title" />
+<BCard v-b-tooltip.hover.top title="my title" />
 ```
 
-</b-card>
+</BCard>
 
 - First example it's using the property from BCard "title", this property is going to render something like:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
 <div class="card">
@@ -123,19 +123,19 @@ When we are using a directive, we have two ways to define the title to use in th
 </div>
 ```
 
-</b-card>
+</BCard>
 
 Where our title is going to be attached to a child element, but the custom directive is attached to our parent div with class "card".
 
 So, it's not going to work, and we are going to see a warning in the developer's console.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
-<b-card v-b-tooltip.hover.top="my title" />
+<BCard v-b-tooltip.hover.top="my title" />
 ```
 
-</b-card>
+</BCard>
 
 Here we are not using a string, because is reading ts or js code. So, we need to set a literal string, a variable, function or so on.
 
@@ -143,7 +143,7 @@ Here we are not using a string, because is reading ts or js code. So, we need to
 
 In that cases is working when the title is created in the root component, like this example:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
 <div v-b-tooltip.hover.top title="my title">
@@ -151,9 +151,9 @@ In that cases is working when the title is created in the root component, like t
 </div>
 ```
 
-</b-card>
+</BCard>
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
 <div class="card" title="my title">
@@ -161,17 +161,17 @@ In that cases is working when the title is created in the root component, like t
 </div>
 ```
 
-</b-card>
+</BCard>
 
 In that case, the directive is detecting the title value, and it's going to be used correctly.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
-<b-card v-b-tooltip.hover.top="'my title'" />
+<BCard v-b-tooltip.hover.top="'my title'" />
 ```
 
-</b-card>
+</BCard>
 
 We should use the value type when the component is not setting to the root component a title. Notice that we should use ts/js code, a variable and so on.
 

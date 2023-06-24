@@ -17,30 +17,30 @@ Includes support for making accordions. Visibility can be easily toggled with ou
 </div>
 
 <HighlightCard>
-  <b-button v-b-toggle.collapse-1 variant="primary">Toggle Collapse</b-button>
-  <b-collapse id="collapse-1">
-    <b-card class="mt-4">
+  <BButton v-b-toggle.collapse-1 variant="primary">Toggle Collapse</BButton>
+  <BCollapse id="collapse-1">
+    <BCard class="mt-4">
       <p class="card-text">Collapse contents Here</p>
-      <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button>
-      <b-collapse id="collapse-1-inner">
-        <b-card class="mt-4">Hello!</b-card>
-      </b-collapse>
-    </b-card>
-  </b-collapse>
+      <BButton v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</BButton>
+      <BCollapse id="collapse-1-inner">
+        <BCard class="mt-4">Hello!</BCard>
+      </BCollapse>
+    </BCard>
+  </BCollapse>
   <template #html>
 
 ```vue-html
-<b-button v-b-toggle.collapse-1 variant="primary">Toggle Collapse</b-button>
+<BButton v-b-toggle.collapse-1 variant="primary">Toggle Collapse</BButton>
 
-<b-collapse id="collapse-1">
-  <b-card>
+<BCollapse id="collapse-1">
+  <BCard>
     <p class="card-text">Collapse contents Here</p>
-    <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button>
-    <b-collapse id="collapse-1-inner" class="mt-2">
-      <b-card>Hello!</b-card>
-    </b-collapse>
-  </b-card>
-</b-collapse>
+    <BButton v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</BButton>
+    <BCollapse id="collapse-1-inner" class="mt-2">
+      <BCard>Hello!</BCard>
+    </BCollapse>
+  </BCard>
+</BCollapse>
 ```
 
   </template>
@@ -48,31 +48,31 @@ Includes support for making accordions. Visibility can be easily toggled with ou
 
 ## Usage
 
-Other elements can easily toggle `<b-collapse>` components using the
+Other elements can easily toggle `<BCollapse>` components using the
 [`v-b-toggle` directive](/docs/directives/toggle).
 
 <HighlightCard>
   <!-- Using modifiers -->
-  <b-button v-b-toggle.collapse-2 class="m-1">Toggle Collapse</b-button>
+  <BButton v-b-toggle.collapse-2 class="m-1">Toggle Collapse</BButton>
   <!-- Using value -->
-  <b-button v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</b-button>
+  <BButton v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</BButton>
   <!-- Element to collapse -->
-  <b-collapse id="collapse-2">
-    <b-card class="mt-4">I am collapsible content!</b-card>
-  </b-collapse>
+  <BCollapse id="collapse-2">
+    <BCard class="mt-4">I am collapsible content!</BCard>
+  </BCollapse>
   <template #html>
 
 ```vue-html
   <!-- Using modifiers -->
-  <b-button v-b-toggle.collapse-2 class="m-1">Toggle Collapse</b-button>
+  <BButton v-b-toggle.collapse-2 class="m-1">Toggle Collapse</BButton>
 
   <!-- Using value -->
-  <b-button v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</b-button>
+  <BButton v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</BButton>
 
   <!-- Element to collapse -->
-  <b-collapse id="collapse-2">
-    <b-card>I am collapsible content!</b-card>
-  </b-collapse>
+  <BCollapse id="collapse-2">
+    <BCard>I am collapsible content!</BCard>
+  </BCollapse>
 ```
 
   </template>
@@ -80,21 +80,21 @@ Other elements can easily toggle `<b-collapse>` components using the
 
 ## Initial visibility (start expanded)
 
-To make the `<b-collapse>` show initially, set the `v-model` prop:
+To make the `<BCollapse>` show initially, set the `v-model` prop:
 
 <HighlightCard>
-  <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
-  <b-collapse visible id="collapse-3">
-    <b-card class="mt-4">I should start open!</b-card>
-  </b-collapse>
+  <BButton v-b-toggle.collapse-3 class="m-1">Toggle Collapse</BButton>
+  <BCollapse visible id="collapse-3">
+    <BCard class="mt-4">I should start open!</BCard>
+  </BCollapse>
   <template #html>
 
 ```vue-html
-<b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
+<BButton v-b-toggle.collapse-3 class="m-1">Toggle Collapse</BButton>
 
-<b-collapse visible id="collapse-3">
-  <b-card>I should start open!</b-card>
-</b-collapse>
+<BCollapse visible id="collapse-3">
+  <BCard>I should start open!</BCard>
+</BCollapse>
 ```
 
   </template>
@@ -102,47 +102,47 @@ To make the `<b-collapse>` show initially, set the `v-model` prop:
 
 ~~By default, an initially visible collapse will not animate on mount. To enable the collapse
 expanding animation on mount (when `visible` or `v-model` is `true`), set the `appear` prop on
-`<b-collapse>`.~~
+`<BCollapse>`.~~
 
 ## `v-model` support
 
 The component's collapsed (visible) state can also be set with `v-model` which binds internally to
 the `visible` prop.
 
-Note, when using `v-model` to control `<b-collapse>`, the `aria-*` attributes and class `collapsed`
+Note, when using `v-model` to control `<BCollapse>`, the `aria-*` attributes and class `collapsed`
 are not automatically placed on the trigger button (as is the case when using the `v-b-toggle`
 directive). In this example we **must control the attributes ourselves** for proper accessibility
 support.
 
 <HighlightCard>
-  <b-button
+  <BButton
     :class="visible ? null : 'collapsed'"
     :aria-expanded="visible ? 'true' : 'false'"
     aria-controls="collapse-4"
     @click="visible = !visible"
   >
     Toggle Collapse
-  </b-button>
-  <b-collapse id="collapse-4" v-model="visible">
-    <b-card class="mt-4">I should start open!</b-card>
-  </b-collapse>
+  </BButton>
+  <BCollapse id="collapse-4" v-model="visible">
+    <BCard class="mt-4">I should start open!</BCard>
+  </BCollapse>
   <template #html>
 
 ```vue
 <template>
-  <b-card>
-    <b-button
+  <BCard>
+    <BButton
       :class="visible ? null : 'collapsed'"
       :aria-expanded="visible ? 'true' : 'false'"
       aria-controls="collapse-4"
       @click="visible = !visible"
     >
       Toggle Collapse
-    </b-button>
-    <b-collapse id="collapse-4" v-model="visible" class="mt-2">
-      <b-card>I should start open!</b-card>
-    </b-collapse>
-  </b-card>
+    </BButton>
+    <BCollapse id="collapse-4" v-model="visible" class="mt-2">
+      <BCard>I should start open!</BCard>
+    </BCollapse>
+  </BCard>
 </template>
 
 <script setup lang="ts">
@@ -155,7 +155,7 @@ const visible = ref(true)
 
 ## Trigger multiple collapse elements
 
-You can even collapse multiple `<b-collapse>` components via a single `v-b-toggle` by providing
+You can even collapse multiple `<BCollapse>` components via a single `v-b-toggle` by providing
 multiple target Ids using _modifiers_.
 
 You can also pass multiple target Ids via the directive _value_ in BootstrapVueNext.
@@ -163,39 +163,39 @@ You can also pass multiple target Ids via the directive _value_ in BootstrapVueN
 <HighlightCard>
   <div class="d-flex gap-2">
     <!-- Via multiple directive modifiers -->
-    <b-button v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</b-button>
+    <BButton v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</BButton>
     <!-- Via space separated string of Ids passed to directive value -->
-    <b-button v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</b-button>
+    <BButton v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</BButton>
     <!-- Via array of string Ids passed to directive value -->
-    <b-button v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</b-button>
+    <BButton v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</BButton>
   </div>
   <!-- Elements to collapse -->
-  <b-collapse id="collapse-a">
-      <b-card class="mt-4">I am collapsible content A!</b-card>
-  </b-collapse>
-  <b-collapse id="collapse-b">
-      <b-card class="mt-4">I am collapsible content B!</b-card>
-  </b-collapse>
+  <BCollapse id="collapse-a">
+      <BCard class="mt-4">I am collapsible content A!</BCard>
+  </BCollapse>
+  <BCollapse id="collapse-b">
+      <BCard class="mt-4">I am collapsible content B!</BCard>
+  </BCollapse>
   <template #html>
 
 ```vue-html
   <!-- Via multiple directive modifiers -->
-  <b-button v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</b-button>
+  <BButton v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</BButton>
 
   <!-- Via space separated string of Ids passed to directive value -->
-  <b-button v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</b-button>
+  <BButton v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</BButton>
 
   <!-- Via array of string Ids passed to directive value -->
-  <b-button v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</b-button>
+  <BButton v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</BButton>
 
   <!-- Elements to collapse -->
-  <b-collapse id="collapse-a">
-    <b-card>I am collapsible content A!</b-card>
-  </b-collapse>
+  <BCollapse id="collapse-a">
+    <BCard>I am collapsible content A!</BCard>
+  </BCollapse>
 
-  <b-collapse id="collapse-b">
-    <b-card>I am collapsible content B!</b-card>
-  </b-collapse>
+  <BCollapse id="collapse-b">
+    <BCard>I am collapsible content B!</BCard>
+  </BCollapse>
 ```
 
   </template>
@@ -203,87 +203,87 @@ You can also pass multiple target Ids via the directive _value_ in BootstrapVueN
 
 ## Accordion support
 
-Turn a group of `<b-collapse>` components into an accordion by supplying an accordion group
+Turn a group of `<BCollapse>` components into an accordion by supplying an accordion group
 identifier via the `accordion` prop. Note that only one collapse in an accordion group can be open
 at a time.
 
 <HighlightCard>
   <div id="my-accordion" class="accordion" role="tablist">
-    <b-card no-body class="mb-1">
-      <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
-        <b-button v-b-toggle.accordion-1 variant="info">Accordion 1</b-button>
-      </b-card-header>
-      <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-        <b-card-body>
-          <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
-          <b-card-text>{{ text }}</b-card-text>
-        </b-card-body>
-      </b-collapse>
-    </b-card>
-    <b-card no-body class="mb-1">
-      <b-card-header header-tag="header" class="p-1  d-grid gap-2" role="tab">
-        <b-button v-b-toggle.accordion-2 variant="info">Accordion 2</b-button>
-      </b-card-header>
-      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-        <b-card-body>
-          <b-card-text>{{ text }}</b-card-text>
-        </b-card-body>
-      </b-collapse>
-    </b-card>
-    <b-card no-body class="mb-1">
-      <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
-        <b-button v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
-      </b-card-header>
-      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-        <b-card-body>
-          <b-card-text>{{ text }}</b-card-text>
-        </b-card-body>
-      </b-collapse>
-    </b-card>
+    <BCard no-body class="mb-1">
+      <BCardHeader header-tag="header" class="p-1 d-grid gap-2" role="tab">
+        <BButton v-b-toggle.accordion-1 variant="info">Accordion 1</BButton>
+      </BCardHeader>
+      <BCollapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+        <BCardBody>
+          <BCardText>I start opened because <code>visible</code> is <code>true</code></BCardText>
+          <BCardText>{{ text }}</BCardText>
+        </BCardBody>
+      </BCollapse>
+    </BCard>
+    <BCard no-body class="mb-1">
+      <BCardHeader header-tag="header" class="p-1  d-grid gap-2" role="tab">
+        <BButton v-b-toggle.accordion-2 variant="info">Accordion 2</BButton>
+      </BCardHeader>
+      <BCollapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <BCardBody>
+          <BCardText>{{ text }}</BCardText>
+        </BCardBody>
+      </BCollapse>
+    </BCard>
+    <BCard no-body class="mb-1">
+      <BCardHeader header-tag="header" class="p-1 d-grid gap-2" role="tab">
+        <BButton v-b-toggle.accordion-3 variant="info">Accordion 3</BButton>
+      </BCardHeader>
+      <BCollapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <BCardBody>
+          <BCardText>{{ text }}</BCardText>
+        </BCardBody>
+      </BCollapse>
+    </BCard>
   </div>
   <template #html>
 
 ```vue
 <template>
-  <b-card>
+  <BCard>
     <div id="my-accordion" class="accordion" role="tablist">
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
-          <b-button v-b-toggle.accordion-1 variant="info">Accordion 1</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-          <b-card-body>
-            <b-card-text
-              >I start opened because <code>visible</code> is <code>true</code></b-card-text
+      <BCard no-body class="mb-1">
+        <BCardHeader header-tag="header" class="p-1 d-grid gap-2" role="tab">
+          <BButton v-b-toggle.accordion-1 variant="info">Accordion 1</BButton>
+        </BCardHeader>
+        <BCollapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+          <BCardBody>
+            <BCardText
+              >I start opened because <code>visible</code> is <code>true</code></BCardText
             >
-            <b-card-text>{{ text }}</b-card-text>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
+            <BCardText>{{ text }}</BCardText>
+          </BCardBody>
+        </BCollapse>
+      </BCard>
 
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1  d-grid gap-2" role="tab">
-          <b-button v-b-toggle.accordion-2 variant="info">Accordion 2</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-          <b-card-body>
-            <b-card-text>{{ text }}</b-card-text>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
+      <BCard no-body class="mb-1">
+        <BCardHeader header-tag="header" class="p-1  d-grid gap-2" role="tab">
+          <BButton v-b-toggle.accordion-2 variant="info">Accordion 2</BButton>
+        </BCardHeader>
+        <BCollapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+          <BCardBody>
+            <BCardText>{{ text }}</BCardText>
+          </BCardBody>
+        </BCollapse>
+      </BCard>
 
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1 d-grid gap-2" role="tab">
-          <b-button v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-          <b-card-body>
-            <b-card-text>{{ text }}</b-card-text>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
+      <BCard no-body class="mb-1">
+        <BCardHeader header-tag="header" class="p-1 d-grid gap-2" role="tab">
+          <BButton v-b-toggle.accordion-3 variant="info">Accordion 3</BButton>
+        </BCardHeader>
+        <BCollapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+          <BCardBody>
+            <BCardText>{{ text }}</BCardText>
+          </BCardBody>
+        </BCollapse>
+      </BCard>
     </div>
-  </b-card>
+  </BCard>
 </template>
 
 <script setup lang="ts">
@@ -305,13 +305,13 @@ const text = `
 
 **Notes:**
 
-- When using accordion mode, make sure you place the trigger elements and `<b-collapse>` components
+- When using accordion mode, make sure you place the trigger elements and `<BCollapse>` components
   inside an element with `role="tablist"` and set `role="tab"` on each trigger element's container
   (each trigger element should be wrapped) in order to help screen reader users navigate the
   accordion group
-- If using the `v-model` feature of `<b-collapse>` in accordion mode, do not bind the `v-model` or
+- If using the `v-model` feature of `<BCollapse>` in accordion mode, do not bind the `v-model` or
   `visible` prop of all the collapses in the accordion group to the same variable!
-- Ensure, at most, only one `<b-collapse>` in the accordion group has the `visible` prop and/or
+- Ensure, at most, only one `<BCollapse>` in the accordion group has the `visible` prop and/or
   `v-model` set to `true`. Only one collapse in an accordion group can be open at a time
 
 ## Hiding and showing content in the toggle button based on collapse state
@@ -320,7 +320,7 @@ const text = `
 
 The `header` slot can be used to create custom toggles for your collapsible content. The `footer` slot is also available and can be used in the same manner.
 
-Using the `v-b-toggle` directive to toggle the `<b-collapse>` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
+Using the `v-b-toggle` directive to toggle the `<BCollapse>` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
 
 The following properties are available for the `header` and `footer` slots:
 
@@ -333,27 +333,27 @@ The following properties are available for the `header` and `footer` slots:
 | `id`      | String   | The ID of the collapsible element     |
 
 <HighlightCard>
-  <b-collapse id="my-collapse">
+  <BCollapse id="my-collapse">
     <template #header="{visible, toggle, id}">
-      <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
+      <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
           <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
-      </b-button>
+      </BButton>
     </template>
     <!-- Content here -->
     <div class="mt-2">This is data that's being collapsed</div>
-  </b-collapse>
+  </BCollapse>
   <template #html>
 
 ```vue-html
-<b-collapse id="my-collapse">
+<BCollapse id="my-collapse">
   <template #header="{visible, toggle, id}">
-    <b-button variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
+    <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
       <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
-    </b-button>
+    </BButton>
   </template>
   <!-- Content here -->
   <div class="mt-2">This is data that's being collapsed</div>
-</b-collapse>
+</BCollapse>
 ```
 
   </template>
@@ -374,8 +374,8 @@ The default slot can be optionally scoped. The following scope properties are av
 
 The `v-b-toggle` directive will automatically add the ARIA attributes `aria-controls` and
 `aria-expanded` to the component that the directive appears on (as well as add the class `collapsed`
-when not expanded). `aria-expanded` will reflect the state of the target `<b-collapse>` component,
-while `aria-controls` will be set to the Id(s) of the target `<b-collapse>` component(s).
+when not expanded). `aria-expanded` will reflect the state of the target `<BCollapse>` component,
+while `aria-controls` will be set to the Id(s) of the target `<BCollapse>` component(s).
 
 If using `v-model` to set the visible state instead of the directive `v-b-toggle`, you will be
 required to, on the toggle element, add the `aria-controls` and other appropriate attributes and
@@ -388,7 +388,7 @@ something other than a button or link (or similar component), you should add the
 `tabindex="0"` and `role="button"` to allow users of assistive technology to reach your trigger
 element.
 
-When using accordion mode, make sure you place the trigger elements and `<b-collapse>` components
+When using accordion mode, make sure you place the trigger elements and `<BCollapse>` components
 inside an element with `role="tablist"` and set `role="tab"` on each trigger element's container in
 order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVueNext cannot
 apply those roles for you automatically, as it depends on your final document markup.

@@ -10,7 +10,7 @@
     <span :id="taglabelId" class="b-form-tag-content flex-grow-1 text-truncate">
       <slot>{{ tagText }}</slot>
     </span>
-    <b-close-button
+    <BCloseButton
       v-if="!disabledBoolean && !noRemoveBoolean"
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"

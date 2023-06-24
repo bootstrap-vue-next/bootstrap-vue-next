@@ -1,5 +1,5 @@
 <template>
-  <b-img :class="baseClass" v-bind="computedAttrs" @load="emit('load', $event)" />
+  <BImg :class="baseClass" v-bind="computedAttrs" @load="emit('load', $event)" />
 </template>
 
 <script setup lang="ts">

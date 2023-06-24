@@ -1,7 +1,7 @@
 <template>
-  <b-input-group-addon :is-text="isText">
+  <BInputGroupAddon :is-text="isText">
     <slot />
-  </b-input-group-addon>
+  </BInputGroupAddon>
 </template>
 
 <script setup lang="ts">

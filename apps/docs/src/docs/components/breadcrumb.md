@@ -17,11 +17,11 @@ Indicate the current page's location within a navigational hierarchy. Separators
 ## Overview
 
 <HighlightCard>
-  <b-breadcrumb :items="breadcrumbItems" />
+  <BBreadcrumb :items="breadcrumbItems" />
   <template #html>
 
 ```vue
-<b-breadcrumb :items="breadcrumbItems" />
+<BBreadcrumb :items="breadcrumbItems" />
 
 <script setup lang="ts">
 import type {BreadcrumbItem} from 'bootstrap-vue-next'
@@ -46,11 +46,11 @@ element is automatically set if it is `undefined`.
 ### Breadcrumb items as array of strings
 
 <HighlightCard>
-  <b-breadcrumb :items="breadcrumbStringArray" />
+  <BBreadcrumb :items="breadcrumbStringArray" />
   <template #html>
 
 ```vue
-<b-breadcrumb :items="breadcrumbStringArray" />
+<BBreadcrumb :items="breadcrumbStringArray" />
 
 <script setup lang="ts">
 const breadcrumbStringArray = ['Admin', 'Manage', 'Library']
@@ -62,28 +62,28 @@ const breadcrumbStringArray = ['Admin', 'Manage', 'Library']
 
 ## Manually placed items
 
-You may also manually place individual `<b-breadcrumb-item>` child components in the default slot of
-the `<b-breadcrumb>` component, as an alternative to using the `items` prop, for greater control
+You may also manually place individual `<BBreadcrumbItem>` child components in the default slot of
+the `<BBreadcrumb>` component, as an alternative to using the `items` prop, for greater control
 over the content of each item:
 
 <HighlightCard>
-  <b-breadcrumb>
-    <b-breadcrumb-item href="#home">
+  <BBreadcrumb>
+    <BBreadcrumbItem href="#home">
       Home
-    </b-breadcrumb-item>
-    <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
-    <b-breadcrumb-item href="#bar" @click="alertEvent">Bar</b-breadcrumb-item>
-    <b-breadcrumb-item active>Baz</b-breadcrumb-item>
-  </b-breadcrumb>
+    </BBreadcrumbItem>
+    <BBreadcrumbItem href="#foo">Foo</BBreadcrumbItem>
+    <BBreadcrumbItem href="#bar" @click="alertEvent">Bar</BBreadcrumbItem>
+    <BBreadcrumbItem active>Baz</BBreadcrumbItem>
+  </BBreadcrumb>
   <template #html>
 
 ```vue
-<b-breadcrumb>
-  <b-breadcrumb-item href="#home"> Home </b-breadcrumb-item>
-  <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
-  <b-breadcrumb-item href="#bar" @click="alertEvent">Bar</b-breadcrumb-item>
-  <b-breadcrumb-item active>Baz</b-breadcrumb-item>
-</b-breadcrumb>
+<BBreadcrumb>
+  <BBreadcrumbItem href="#home"> Home </BBreadcrumbItem>
+  <BBreadcrumbItem href="#foo">Foo</BBreadcrumbItem>
+  <BBreadcrumbItem href="#bar" @click="alertEvent">Bar</BBreadcrumbItem>
+  <BBreadcrumbItem active>Baz</BBreadcrumbItem>
+</BBreadcrumb>
 
 <script setup lang="ts">
 const alertEvent = (event: PointerEvent) => {
@@ -97,7 +97,7 @@ const alertEvent = (event: PointerEvent) => {
 
 Remember to set the `active` prop on the last item.
 
-`<b-breadcrumb-item>` also supports the various `<router-link>` props such as `to`, etc.
+`<BBreadcrumbItem>` also supports the various `<RouterLink>` props such as `to`, etc.
 
 ## Slots
 
@@ -105,27 +105,27 @@ Two slots are provided to put additional content before and after the breadcrumb
 Use slot `prepend` to put content before the breadcrumb. Use slot `append` to put content after the breadcrumb.
 
 <HighlightCard>
-  <b-breadcrumb>
-    <b-breadcrumb-item href="#home">
+  <BBreadcrumb>
+    <BBreadcrumbItem href="#home">
       Home
-    </b-breadcrumb-item>
-    <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
-    <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>
-    <b-breadcrumb-item active>Baz</b-breadcrumb-item>
+    </BBreadcrumbItem>
+    <BBreadcrumbItem href="#foo">Foo</BBreadcrumbItem>
+    <BBreadcrumbItem href="#bar">Bar</BBreadcrumbItem>
+    <BBreadcrumbItem active>Baz</BBreadcrumbItem>
     <template v-slot:prepend><span class="mx-2">prepend text</span></template>
     <template v-slot:append><span class="mx-2">append text</span></template>
-  </b-breadcrumb>
+  </BBreadcrumb>
   <template #html>
 
 ```vue-html
-<b-breadcrumb>
-  <b-breadcrumb-item href="#home"> Home </b-breadcrumb-item>
-  <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
-  <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>
-  <b-breadcrumb-item active>Baz</b-breadcrumb-item>
+<BBreadcrumb>
+  <BBreadcrumbItem href="#home"> Home </BBreadcrumbItem>
+  <BBreadcrumbItem href="#foo">Foo</BBreadcrumbItem>
+  <BBreadcrumbItem href="#bar">Bar</BBreadcrumbItem>
+  <BBreadcrumbItem active>Baz</BBreadcrumbItem>
   <template v-slot:prepend><span class="mx-2">prepend text</span></template>
   <template v-slot:append><span class="mx-2">append text</span></template>
-</b-breadcrumb>
+</BBreadcrumb>
 ```
 
   </template>

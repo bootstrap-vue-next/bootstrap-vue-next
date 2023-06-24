@@ -4,7 +4,7 @@
     <!-- eslint-disable vue/no-v-text-v-html-on-component -->
     <!-- eslint-disable vue/no-v-html -->
     <!-- TODO these options don't seem right for the component -->
-    <b-form-select-option
+    <BFormSelectOption
       v-for="(option, index) in formOptions"
       :key="index"
       :value="(option as any).value"

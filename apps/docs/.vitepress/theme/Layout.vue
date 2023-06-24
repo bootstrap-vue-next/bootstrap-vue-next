@@ -1,7 +1,7 @@
 <template>
-  <b-navbar variant="primary" sticky="top" toggleable="lg">
-    <b-navbar-toggle @click="toggler" />
-    <b-navbar-brand :to="withBase('/')" class="p-0 me-0 me-lg-2">
+  <BNavbar variant="primary" sticky="top" toggleable="lg">
+    <BNavbarToggle @click="toggler" />
+    <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 953 953"
@@ -21,63 +21,63 @@
           d="M92 0h769c50 0 92 42 92 92v769c0 50-42 92-92 92H92c-50 0-92-42-92-92V92C0 42 42 0 92 0zm216 710c100 0 160-50 160-133 0-62-44-107-108-113v-3c48-8 86-52 86-102 0-71-55-117-140-117H111v468h197zM195 307h90c50 0 78 23 78 64 0 44-33 68-91 68h-77V307zm0 338V499h90c64 0 98 25 98 73s-33 73-94 73h-94zm503 65l163-468h-90L652 621h-2L531 242h-92l163 468h96z"
         />
       </svg>
-    </b-navbar-brand>
-    <b-collapse is-nav>
-      <b-navbar-nav>
-        <b-nav>
-          <b-nav-item :to="withBase('/docs')">Getting Started</b-nav-item>
-          <b-nav-item :to="withBase('/docs/icons')">Icons</b-nav-item>
-          <b-nav-item :to="withBase('/docs/types')">Types</b-nav-item>
-          <b-nav-item :to="withBase('/docs/reference')">Reference</b-nav-item>
-          <b-nav-item :to="withBase('/docs/migration-guide')">Migrate</b-nav-item>
-        </b-nav>
-      </b-navbar-nav>
-    </b-collapse>
-    <b-nav>
-      <b-button
+    </BNavbarBrand>
+    <BCollapse is-nav>
+      <BNavbarNav>
+        <BNav>
+          <BNavItem :to="withBase('/docs')">Getting Started</BNavItem>
+          <BNavItem :to="withBase('/docs/icons')">Icons</BNavItem>
+          <BNavItem :to="withBase('/docs/types')">Types</BNavItem>
+          <BNavItem :to="withBase('/docs/reference')">Reference</BNavItem>
+          <BNavItem :to="withBase('/docs/migration-guide')">Migrate</BNavItem>
+        </BNav>
+      </BNavbarNav>
+    </BCollapse>
+    <BNav>
+      <BButton
         :variant="null"
         :href="globalData.githubUrl"
         aria-label="Open Github"
         target="_blank"
         rel="noopener"
       >
-        <github-icon aria-hidden />
-      </b-button>
-      <b-button
+        <GithubIcon aria-hidden />
+      </BButton>
+      <BButton
         :variant="null"
         :href="globalData.opencollectiveUrl"
         aria-label="Open Github"
         target="_blank"
         rel="noopener"
       >
-        <opencollective-icon />
-      </b-button>
-      <b-button
+        <OpencollectiveIcon />
+      </BButton>
+      <BButton
         :variant="null"
         :href="globalData.discordUrl"
         aria-label="Open Discord Server"
         target="_blank"
         rel="noopener"
       >
-        <discord-icon aria-hidden />
-      </b-button>
-      <client-only>
-        <b-dropdown :variant="null">
+        <DiscordIcon aria-hidden />
+      </BButton>
+      <ClientOnly>
+        <BDropdown :variant="null">
           <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
           <template #button-content>
             <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
           </template>
-          <b-dropdown-item v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
+          <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
             <component :is="map[el]" /> {{ el }}
-          </b-dropdown-item>
-        </b-dropdown>
-      </client-only>
-    </b-nav>
-  </b-navbar>
-  <b-container fluid class="container-lg mt-3 my-md-4 bd-layout">
+          </BDropdownItem>
+        </BDropdown>
+      </ClientOnly>
+    </BNav>
+  </BNavbar>
+  <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
-      <client-only>
-        <b-offcanvas
+      <ClientOnly>
+        <BOffcanvas
           v-model="sidebar"
           teleport-disabled="true"
           backdrop="false"
@@ -85,34 +85,34 @@
           class="h-100"
         >
           <TableOfContentsNav />
-        </b-offcanvas>
-      </client-only>
+        </BOffcanvas>
+      </ClientOnly>
     </aside>
     <main class="bd-main">
-      <b-row v-if="page.isNotFound">
-        <b-col>
-          <b-container class="text-center my-auto p-5">
-            <b-row>
-              <b-col>
+      <BRow v-if="page.isNotFound">
+        <BCol>
+          <BContainer class="text-center my-auto p-5">
+            <BRow>
+              <BCol>
                 <h1>Oh No!</h1>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col>
+              </BCol>
+            </BRow>
+            <BRow>
+              <BCol>
                 <h2>File Not Found</h2>
-              </b-col>
-            </b-row>
-          </b-container>
-        </b-col>
-      </b-row>
-      <b-row v-else>
+              </BCol>
+            </BRow>
+          </BContainer>
+        </BCol>
+      </BRow>
+      <BRow v-else>
         <div class="bd-content">
           <div class="bd-toc" />
           <Content class="doc-content" />
         </div>
-      </b-row>
+      </BRow>
     </main>
-  </b-container>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

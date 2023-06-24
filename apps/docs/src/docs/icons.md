@@ -8,11 +8,11 @@
   </Teleport>
 </ClientOnly>
 
-<b-alert variant="danger" :model-value="true" class="my-5">
+<BAlert variant="danger" :model-value="true" class="my-5">
 
 The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application! This documentation only serves as a reference, BootstrapVueNext has no part in the mentioned libraries and some content may be out of date.
 
-</b-alert>
+</BAlert>
 
 ## [Unplugin Icons](https://github.com/antfu/unplugin-icons)
 
@@ -28,45 +28,45 @@ The preferred installation makes use of [unplugin-vue-components](https://github
 
 To start, install the necessary packages:
 
-<client-only>
-<b-tabs v-model="codePreference" class="mb-3">
-  <b-tab title="PNPM">
+<ClientOnly>
+<BTabs v-model="codePreference" class="mb-3">
+  <BTab title="PNPM">
 
-  <b-card class="bg-body-tertiary">
+  <BCard class="bg-body-tertiary">
 
 ```bash
 pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-  </b-card>
+  </BCard>
 
-  </b-tab>
-  <b-tab title="YARN">
+  </BTab>
+  <BTab title="YARN">
 
-  <b-card class="bg-body-tertiary">
+  <BCard class="bg-body-tertiary">
 
 ```bash
 yarn add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-  </b-card>
+  </BCard>
 
-  </b-tab>
-  <b-tab title="NPM">
+  </BTab>
+  <BTab title="NPM">
 
-  <b-card class="bg-body-tertiary">
+  <BCard class="bg-body-tertiary">
 
 ```bash
 npm i unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
 ```
 
-  </b-card>
+  </BCard>
 
-  </b-tab>
-</b-tabs>
-</client-only>
+  </BTab>
+</BTabs>
+</ClientOnly>
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 // vite.config.js/ts
@@ -92,13 +92,13 @@ export default defineConfig({
 })
 ```
 
-</b-card>
+</BCard>
 
 With `autoInstall: true` using any icon set in your app will automatically import and include that icon set in your dependencies! No manual imports are required!
 
 If you are using TypeScript you will want to add the `unplugin-icons/types/vue` to the `compilerOptions.types` array. While there, you should also make sure you included the `components.d.ts` in the `include` array:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```json
 // tsconfig.json
@@ -110,24 +110,24 @@ If you are using TypeScript you will want to add the `unplugin-icons/types/vue` 
 }
 ```
 
-</b-card>
+</BCard>
 
-Then to include an icon, follow the format `i-{collection}-{icon-name}` in your template, where the collection is the id on <https://icon-sets.iconify.design/>. For example, to include `0-circle` in your app, simply use the component `<i-bi-0-circle>`, no import is needed. As stated, you can use any icon from any icon set.
+Then to include an icon, follow the format `i-{collection}-{icon-name}` in your template, where the collection is the id on <https://icon-sets.iconify.design/>. For example, to include `0-circle` in your app, simply use the component `<IBi0Circle>`, no import is needed. As stated, you can use any icon from any icon set.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue-html
 <template>
-  <i-bi-0-circle />
-  <i-bi-activity color="red" />
+  <IBi0Circle />
+  <IBiActivity color="red" />
   <!-- You can use any icon set, no need to worry about importing -->
-  <i-mdi-account-box />
+  <IMdiAccountBox />
   <!-- fa -->
-  <i-fa-angellist />
+  <IFaAngellist />
 </template>
 ```
 
-</b-card>
+</BCard>
 
 View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) documentation for their extra feature, such as [Global Custom Icon Transformation](https://github.com/antfu/unplugin-icons#global-custom-icon-transformation) and other information.
 
@@ -135,45 +135,45 @@ View the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-compone
 
 Of course, there is always the ability to slim down. To slim down the installation, you can manually import only the bootstrap-icons icon set, disable auto importing, and not use unplugin-vue-components read below. Note, the preferred installation automatically treeshakes all components, both installation methods should have the same final dist size.
 
-<client-only>
-<b-tabs v-model="codePreference" class="mb-3">
-  <b-tab title="PNPM">
+<ClientOnly>
+<BTabs v-model="codePreference" class="mb-3">
+  <BTab title="PNPM">
 
-  <b-card class="bg-body-tertiary">
+  <BCard class="bg-body-tertiary">
 
 ```bash
 pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-  </b-card>
+  </BCard>
 
-  </b-tab>
-  <b-tab title="YARN">
+  </BTab>
+  <BTab title="YARN">
 
-  <b-card class="bg-body-tertiary">
+  <BCard class="bg-body-tertiary">
 
 ```bash
 yarn add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-  </b-card>
+  </BCard>
 
-  </b-tab>
-  <b-tab title="NPM">
+  </BTab>
+  <BTab title="NPM">
 
-  <b-card class="bg-body-tertiary">
+  <BCard class="bg-body-tertiary">
 
 ```bash
 npm i unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
-  </b-card>
+  </BCard>
 
-  </b-tab>
-</b-tabs>
-</client-only>
+  </BTab>
+</BTabs>
+</ClientOnly>
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 // vite.config.js/ts
@@ -192,20 +192,20 @@ export default defineConfig({
 })
 ```
 
-</b-card>
+</BCard>
 
 Using this method, you will need to manually import each icon:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
 <template>
-  <i-bi-0-circle />
-  <i-bi-activity color="red" />
+  <IBi0Circle />
+  <IBiActivity color="red" />
   <!-- Cannot use, is not a dependency -->
-  <!-- <i-mdi-account-box /> -->
+  <!-- <IMdiAccountBox /> -->
   <!-- fa -->
-  <!-- <i-fa-angellist /> -->
+  <!-- <IFaAngellist /> -->
 </template>
 
 <script setup lang="ts">
@@ -216,7 +216,7 @@ import IBiActivity from '~icons/bi/activity'
 </script>
 ```
 
-</b-card>
+</BCard>
 
 <script setup lang="ts">
 import {BCard, BCardBody, BTab, BTabs, BAlert} from 'bootstrap-vue-next'

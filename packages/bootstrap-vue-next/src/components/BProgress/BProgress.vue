@@ -1,7 +1,7 @@
 <template>
   <div class="progress" :style="{height}">
     <slot>
-      <b-progress-bar v-bind="computedAttrs" />
+      <BProgressBar v-bind="computedAttrs" />
     </slot>
   </div>
 </template>

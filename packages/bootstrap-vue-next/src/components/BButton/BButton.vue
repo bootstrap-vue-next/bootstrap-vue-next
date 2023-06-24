@@ -12,7 +12,7 @@
       :class="{'mode-fill': loadingMode === 'fill', 'mode-inline': loadingMode === 'inline'}"
     >
       <slot name="loading">
-        <b-spinner class="btn-spinner" :small="size !== 'lg'" />
+        <BSpinner class="btn-spinner" :small="size !== 'lg'" />
       </slot>
     </div>
     <div

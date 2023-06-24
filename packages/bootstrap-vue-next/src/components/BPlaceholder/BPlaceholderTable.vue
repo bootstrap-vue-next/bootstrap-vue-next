@@ -1,10 +1,10 @@
 <template>
-  <b-table-simple>
+  <BTableSimple>
     <slot v-if="!hideHeaderBoolean" name="thead">
       <thead>
         <tr>
           <th v-for="(_, i) in computedHeaderColumnsLength" :key="i">
-            <b-placeholder v-bind="headerAttrs" />
+            <BPlaceholder v-bind="headerAttrs" />
           </th>
         </tr>
       </thead>
@@ -13,7 +13,7 @@
       <tbody>
         <tr v-for="(_, j) in rowsNumber" :key="j">
           <td v-for="(__, k) in columnsNumber" :key="k">
-            <b-placeholder v-bind="placeholderAttrs" />
+            <BPlaceholder v-bind="placeholderAttrs" />
           </td>
         </tr>
       </tbody>
@@ -22,12 +22,12 @@
       <tfoot>
         <tr>
           <th v-for="(_, l) in computedFooterColumnsLength" :key="l">
-            <b-placeholder v-bind="footerAttrs" />
+            <BPlaceholder v-bind="footerAttrs" />
           </th>
         </tr>
       </tfoot>
     </slot>
-  </b-table-simple>
+  </BTableSimple>
 </template>
 
 <script setup lang="ts">

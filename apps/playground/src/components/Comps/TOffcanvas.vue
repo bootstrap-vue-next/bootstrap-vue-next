@@ -1,10 +1,10 @@
 <template>
   <div>
-    <b-offcanvas v-model="showOffcanvas" title="Title">
+    <BOffcanvas v-model="showOffcanvas" title="Title">
       content
-    </b-offcanvas>    
+    </BOffcanvas>    
 
-    <b-button @click="showOffcanvas = !showOffcanvas">Toggle Offcanvas</b-button>
+    <BButton @click="showOffcanvas = !showOffcanvas">Toggle Offcanvas</BButton>
   </div>
 </template>
 

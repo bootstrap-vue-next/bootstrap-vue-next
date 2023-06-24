@@ -1,5 +1,5 @@
 <template>
-  <b-placeholder class="btn disabled" :class="computedClasses" v-bind="computedAttrs" />
+  <BPlaceholder class="btn disabled" :class="computedClasses" v-bind="computedAttrs" />
 </template>
 
 <script setup lang="ts">

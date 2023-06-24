@@ -1,11 +1,11 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-breadcrumb />
-      </b-col>
-    </b-row>
-  </b-container>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BBreadcrumb />
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

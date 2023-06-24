@@ -1,7 +1,7 @@
 <template>
   <component :is="wrapTag" class="b-overlay-wrap position-relative" :aria-busy="computedAriaBusy">
     <slot />
-    <b-transition
+    <BTransition
       :no-fade="noFade"
       :trans-props="{enterToClass: 'show'}"
       name="fade"
@@ -19,11 +19,11 @@
 
         <div class="position-absolute" :style="spinWrapperStyles">
           <slot name="overlay" v-bind="spinnerAttrs">
-            <b-spinner v-if="!noSpinnerBoolean" v-bind="spinnerAttrs" />
+            <BSpinner v-if="!noSpinnerBoolean" v-bind="spinnerAttrs" />
           </slot>
         </div>
       </component>
-    </b-transition>
+    </BTransition>
   </component>
 </template>
 

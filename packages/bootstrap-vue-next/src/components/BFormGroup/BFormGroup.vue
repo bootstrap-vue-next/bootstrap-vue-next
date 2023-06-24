@@ -29,7 +29,7 @@ const INPUTS = ['input', 'select', 'textarea']
 // Selector for finding first input in the form group
 const INPUT_SELECTOR = INPUTS.map((v) => `${v}:not([disabled])`).join()
 
-// A list of interactive elements (tag names) inside `<b-form-group>`'s legend
+// A list of interactive elements (tag names) inside `<BFormGroup>`'s legend
 const LEGEND_INTERACTIVE_ELEMENTS = [...INPUTS, 'a', 'button', 'label']
 
 export const SLOT_NAME_LABEL = 'label'
@@ -111,7 +111,7 @@ export default defineComponent({
           propValue = propValue > 0 ? propValue : false
         }
 
-        // Add the prop to the list of props to give to `<b-col>`
+        // Add the prop to the list of props to give to `</BCol>`
         // If breakpoint is '' (`${prefix}Cols` is `true`), then we use
         // the 'col' prop to make equal width at 'xs'
         if (propValue) {

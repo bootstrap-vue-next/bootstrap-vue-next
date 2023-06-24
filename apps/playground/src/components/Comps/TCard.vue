@@ -1,8 +1,8 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-card
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BCard
           no-body
           style="max-width: 20rem"
           img-src="https://placekitten.com/380/200"
@@ -13,33 +13,33 @@
             <h4 class="mb-0">Hello World</h4>
           </template>
 
-          <b-card-body>
-            <b-card-title>Card Title</b-card-title>
-            <b-card-subtitle class="mb-2">Card Sub Title</b-card-subtitle>
-            <b-card-text>
+          <BCardBody>
+            <BCardTitle>Card Title</BCardTitle>
+            <BCardSubtitle class="mb-2">Card Sub Title</BCardSubtitle>
+            <BCardText>
               Some quick example text to build on the card title and make up the bulk of the card's
               content.
-            </b-card-text>
-          </b-card-body>
+            </BCardText>
+          </BCardBody>
 
-          <b-list-group flush>
-            <b-list-group-item>Cras justo odio</b-list-group-item>
-            <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-            <b-list-group-item>Vestibulum at eros</b-list-group-item>
-          </b-list-group>
+          <BListGroup flush>
+            <BListGroupItem>Cras justo odio</BListGroupItem>
+            <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+            <BListGroupItem>Vestibulum at eros</BListGroupItem>
+          </BListGroup>
 
-          <b-card-body>
+          <BCardBody>
             <a href="#" class="card-link">Card link</a>
             <a href="#" class="card-link">Another link</a>
-          </b-card-body>
+          </BCardBody>
 
-          <b-card-footer>This is a footer</b-card-footer>
+          <BCardFooter>This is a footer</BCardFooter>
 
-          <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
-        </b-card>
-      </b-col>
-      <b-col>
-        <b-card
+          <BCardImg src="https://placekitten.com/480/210" alt="Image" bottom />
+        </BCard>
+      </BCol>
+      <BCol>
+        <BCard
           title="Card Title"
           img-src="https://picsum.photos/600/300/?image=25"
           img-alt="Image"
@@ -48,35 +48,35 @@
           style="max-width: 20rem"
           class="mb-2"
         >
-          <b-card-text>
+          <BCardText>
             Some quick example text to build on the card title and make up the bulk of the card's
             content.
-          </b-card-text>
+          </BCardText>
 
-          <b-button href="#" variant="primary">Go somewhere</b-button>
-        </b-card>
-      </b-col>
-      <b-col cols="6">
-        <b-card no-body class="overflow-hidden" style="max-width: 540px">
-          <b-row class="g-0">
-            <b-col md="6">
-              <b-card-img
+          <BButton href="#" variant="primary">Go somewhere</BButton>
+        </BCard>
+      </BCol>
+      <BCol cols="6">
+        <BCard no-body class="overflow-hidden" style="max-width: 540px">
+          <BRow class="g-0">
+            <BCol md="6">
+              <BCardImg
                 src="https://picsum.photos/400/400/?image=20"
                 alt="Image"
                 class="rounded-0"
               />
-            </b-col>
-            <b-col md="6">
-              <b-card-body title="Horizontal Card">
-                <b-card-text>
+            </BCol>
+            <BCol md="6">
+              <BCardBody title="Horizontal Card">
+                <BCardText>
                   This is a wider card with supporting text as a natural lead-in to additional
                   content. This content is a little bit longer.
-                </b-card-text>
-              </b-card-body>
-            </b-col>
-          </b-row>
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
+                </BCardText>
+              </BCardBody>
+            </BCol>
+          </BRow>
+        </BCard>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>

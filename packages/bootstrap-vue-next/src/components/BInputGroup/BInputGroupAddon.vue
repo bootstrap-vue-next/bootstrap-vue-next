@@ -1,7 +1,7 @@
 <template>
-  <b-input-group-text v-if="isTextBoolean">
+  <BInputGroupText v-if="isTextBoolean">
     <slot />
-  </b-input-group-text>
+  </BInputGroupText>
   <slot v-else />
 </template>
 

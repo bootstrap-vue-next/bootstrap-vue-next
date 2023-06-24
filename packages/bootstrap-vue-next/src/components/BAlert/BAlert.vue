@@ -1,5 +1,5 @@
 <template>
-  <b-transition :no-fade="!fadeBoolean" :trans-props="{enterToClass: 'show'}">
+  <BTransition :no-fade="!fadeBoolean" :trans-props="{enterToClass: 'show'}">
     <div
       v-if="isAlertVisible"
       class="alert"
@@ -13,12 +13,12 @@
       <slot />
       <template v-if="dismissibleBoolean">
         <!-- TODO this renders incorrectly -->
-        <b-button v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="closeClicked">
+        <BButton v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="closeClicked">
           <slot name="close">
             {{ closeContent }}
           </slot>
-        </b-button>
-        <b-close-button
+        </BButton>
+        <BCloseButton
           v-else
           :aria-label="dismissLabel"
           v-bind="closeAttrs"
@@ -26,7 +26,7 @@
         />
       </template>
     </div>
-  </b-transition>
+  </BTransition>
 </template>
 
 <script setup lang="ts">

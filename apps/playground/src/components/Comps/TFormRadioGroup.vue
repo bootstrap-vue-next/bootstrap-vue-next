@@ -1,46 +1,46 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Grouped (with options or slots)</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio-group
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadioGroup
           id="radio-group-1"
           v-model="radios.ex1.selected"
           :options="radios.ex1.options"
           name="radio-options"
         />
 
-        <b-form-radio-group
+        <BFormRadioGroup
           id="radio-group-2"
           v-model="radios.ex1.selected"
           name="radio-sub-component"
         >
-          <b-form-radio value="first">Toggle this custom radio</b-form-radio>
-          <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
-          <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
-          <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
-          <b-form-radio :value="{fifth: 5}">This is the 5th radio</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+          <BFormRadio value="first">Toggle this custom radio</BFormRadio>
+          <BFormRadio value="second">Or toggle this other custom radio</BFormRadio>
+          <BFormRadio value="third" disabled>This one is Disabled</BFormRadio>
+          <BFormRadio :value="{fourth: 4}">This is the 4th radio</BFormRadio>
+          <BFormRadio :value="{fifth: 5}">This is the 5th radio</BFormRadio>
+        </BFormRadioGroup>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         Selected:
         <strong>{{ radios.ex1.selected }}</strong>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Changing the option field names</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio-group
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadioGroup
           v-model="radios.ex2.selected"
           :options="radios.ex2.options"
           class="mb-3"
@@ -48,28 +48,28 @@
           text-field="name"
           disabled-field="notEnabled"
         />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         Selected:
         <strong>{{ radios.ex2.selected }}</strong>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Button styles radios</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         Selected:
         <strong>{{ radios.ex3.selected }}</strong>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-radio-group
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadioGroup
           id="btn-radios-1"
           v-model="radios.ex3.selected"
           :options="radios.ex3.options"
@@ -77,7 +77,7 @@
           buttons
         />
 
-        <b-form-radio-group
+        <BFormRadioGroup
           id="btn-radios-2"
           v-model="radios.ex3.selected"
           :options="radios.ex3.options"
@@ -87,7 +87,7 @@
           buttons
         />
 
-        <b-form-radio-group
+        <BFormRadioGroup
           id="btn-radios-3"
           v-model="radios.ex3.selected"
           :options="radios.ex3.options"
@@ -95,9 +95,9 @@
           buttons
           stacked
         />
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

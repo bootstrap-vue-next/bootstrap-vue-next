@@ -1,6 +1,6 @@
 <template>
   <li class="nav-item dropdown">
-    <b-dropdown v-model="dropdownValue" v-bind="usableProps" is-nav>
+    <BDropdown v-model="dropdownValue" v-bind="usableProps" is-nav>
       <template #button-content>
         <slot name="button-content" />
       </template>
@@ -10,7 +10,7 @@
       <template #default>
         <slot />
       </template>
-    </b-dropdown>
+    </BDropdown>
   </li>
 </template>
 

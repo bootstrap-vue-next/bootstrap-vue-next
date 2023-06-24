@@ -1,7 +1,7 @@
 <template>
-  <b-card-head-foot class="card-header" v-bind="props">
+  <BCardHeadFoot class="card-header" v-bind="props">
     <slot />
-  </b-card-head-foot>
+  </BCardHeadFoot>
 </template>
 
 <script setup lang="ts">

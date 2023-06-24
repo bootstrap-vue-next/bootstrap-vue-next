@@ -17,39 +17,39 @@ Group a series of button-groups and/or input-groups together on a single line.
 **Example 1:** with button groups
 
 <HighlightCard>
-  <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-    <b-button-group class="mx-1">
-      <b-button>&laquo;</b-button>
-      <b-button>&lsaquo;</b-button>
-    </b-button-group>
-    <b-button-group class="mx-1">
-      <b-button>Edit</b-button>
-      <b-button>Undo</b-button>
-      <b-button>Redo</b-button>
-    </b-button-group>
-    <b-button-group class="mx-1">
-      <b-button>&rsaquo;</b-button>
-      <b-button>&raquo;</b-button>
-    </b-button-group>
-  </b-button-toolbar>
+  <BButtonToolbar key-nav aria-label="Toolbar with button groups">
+    <BButtonGroup class="mx-1">
+      <BButton>&laquo;</BButton>
+      <BButton>&lsaquo;</BButton>
+    </BButtonGroup>
+    <BButtonGroup class="mx-1">
+      <BButton>Edit</BButton>
+      <BButton>Undo</BButton>
+      <BButton>Redo</BButton>
+    </BButtonGroup>
+    <BButtonGroup class="mx-1">
+      <BButton>&rsaquo;</BButton>
+      <BButton>&raquo;</BButton>
+    </BButtonGroup>
+  </BButtonToolbar>
   <template #html>
 
 ```vue-html
-<b-button-toolbar key-nav aria-label="Toolbar with button groups">
-  <b-button-group class="mx-1">
-    <b-button>&laquo;</b-button>
-    <b-button>&lsaquo;</b-button>
-  </b-button-group>
-  <b-button-group class="mx-1">
-    <b-button>Edit</b-button>
-    <b-button>Undo</b-button>
-    <b-button>Redo</b-button>
-  </b-button-group>
-  <b-button-group class="mx-1">
-    <b-button>&rsaquo;</b-button>
-    <b-button>&raquo;</b-button>
-  </b-button-group>
-</b-button-toolbar>
+<BButtonToolbar key-nav aria-label="Toolbar with button groups">
+  <BButtonGroup class="mx-1">
+    <BButton>&laquo;</BButton>
+    <BButton>&lsaquo;</BButton>
+  </BButtonGroup>
+  <BButtonGroup class="mx-1">
+    <BButton>Edit</BButton>
+    <BButton>Undo</BButton>
+    <BButton>Redo</BButton>
+  </BButtonGroup>
+  <BButtonGroup class="mx-1">
+    <BButton>&rsaquo;</BButton>
+    <BButton>&raquo;</BButton>
+  </BButtonGroup>
+</BButtonToolbar>
 ```
 
   </template>
@@ -58,27 +58,27 @@ Group a series of button-groups and/or input-groups together on a single line.
 **Example 2:** with mixture of small button group and small input group.
 
 <HighlightCard>
-  <b-button-toolbar aria-label="Toolbar with button groups and input groups">
-    <b-button-group size="sm" class="me-1">
-      <b-button>Save</b-button>
-      <b-button>Cancel</b-button>
-    </b-button-group>
-    <b-input-group size="sm" prepend="$" append=".00">
-      <b-form-input value="100" class="text-end" />
-    </b-input-group>
-  </b-button-toolbar>
+  <BButtonToolbar aria-label="Toolbar with button groups and input groups">
+    <BButtonGroup size="sm" class="me-1">
+      <BButton>Save</BButton>
+      <BButton>Cancel</BButton>
+    </BButtonGroup>
+    <BInputGroup size="sm" prepend="$" append=".00">
+      <BFormInput value="100" class="text-end" />
+    </BInputGroup>
+  </BButtonToolbar>
   <template #html>
 
 ```vue-html
-<b-button-toolbar aria-label="Toolbar with button groups and input groups">
-  <b-button-group size="sm" class="me-1">
-    <b-button>Save</b-button>
-    <b-button>Cancel</b-button>
-  </b-button-group>
-  <b-input-group size="sm" prepend="$" append=".00">
-    <b-form-input value="100" class="text-end" />
-  </b-input-group>
-</b-button-toolbar>
+<BButtonToolbar aria-label="Toolbar with button groups and input groups">
+  <BButtonGroup size="sm" class="me-1">
+    <BButton>Save</BButton>
+    <BButton>Cancel</BButton>
+  </BButtonGroup>
+  <BInputGroup size="sm" prepend="$" append=".00">
+    <BFormInput value="100" class="text-end" />
+  </BInputGroup>
+</BButtonToolbar>
 ```
 
   </template>
@@ -87,41 +87,41 @@ Group a series of button-groups and/or input-groups together on a single line.
 **Example 3:** with button groups and dropdown menu.
 
 <HighlightCard>
-  <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-    <b-button-group class="mx-1">
-      <b-button>New</b-button>
-      <b-button>Edit</b-button>
-      <b-button>Undo</b-button>
-    </b-button-group>
-    <b-dropdown class="mx-1" right text="menu">
-      <b-dropdown-item>Item 1</b-dropdown-item>
-      <b-dropdown-item>Item 2</b-dropdown-item>
-      <b-dropdown-item>Item 3</b-dropdown-item>
-    </b-dropdown>
-    <b-button-group class="mx-1">
-      <b-button>Save</b-button>
-      <b-button>Cancel</b-button>
-    </b-button-group>
-  </b-button-toolbar>
+  <BButtonToolbar aria-label="Toolbar with button groups and dropdown menu">
+    <BButtonGroup class="mx-1">
+      <BButton>New</BButton>
+      <BButton>Edit</BButton>
+      <BButton>Undo</BButton>
+    </BButtonGroup>
+    <BDropdown class="mx-1" right text="menu">
+      <BDropdownItem>Item 1</BDropdownItem>
+      <BDropdownItem>Item 2</BDropdownItem>
+      <BDropdownItem>Item 3</BDropdownItem>
+    </BDropdown>
+    <BButtonGroup class="mx-1">
+      <BButton>Save</BButton>
+      <BButton>Cancel</BButton>
+    </BButtonGroup>
+  </BButtonToolbar>
   <template #html>
 
 ```vue-html
-<b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-  <b-button-group class="mx-1">
-    <b-button>New</b-button>
-    <b-button>Edit</b-button>
-    <b-button>Undo</b-button>
-  </b-button-group>
-  <b-dropdown class="mx-1" right text="menu">
-    <b-dropdown-item>Item 1</b-dropdown-item>
-    <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-item>Item 3</b-dropdown-item>
-  </b-dropdown>
-  <b-button-group class="mx-1">
-    <b-button>Save</b-button>
-    <b-button>Cancel</b-button>
-  </b-button-group>
-</b-button-toolbar>
+<BButtonToolbar aria-label="Toolbar with button groups and dropdown menu">
+  <BButtonGroup class="mx-1">
+    <BButton>New</BButton>
+    <BButton>Edit</BButton>
+    <BButton>Undo</BButton>
+  </BButtonGroup>
+  <BDropdown class="mx-1" right text="menu">
+    <BDropdownItem>Item 1</BDropdownItem>
+    <BDropdownItem>Item 2</BDropdownItem>
+    <BDropdownItem>Item 3</BDropdownItem>
+  </BDropdown>
+  <BButtonGroup class="mx-1">
+    <BButton>Save</BButton>
+    <BButton>Cancel</BButton>
+  </BButtonGroup>
+</BButtonToolbar>
 ```
 
   </template>
@@ -135,79 +135,79 @@ example above, you'll likely need some utility classes though to space things pr
 ## Sizing
 
 Note, if you want smaller or larger buttons or controls, set the `size` prop directly on the
-`<b-button-group>`, `<b-input-group>`, and `<b-dropdown>` components.
+`<BButtonGroup>`, `<BInputGroup>`, and `<BDropdown>` components.
 
 <HighlightCard>
   <div>
-    <b-button-toolbar aria-label="Toolbar with size sm">
-      <b-button-group size="sm" class="mx-1">
-        <b-button>New</b-button>
-        <b-button>Edit</b-button>
-        <b-button>Undo</b-button>
-      </b-button-group>
-    </b-button-toolbar>
+    <BButtonToolbar aria-label="Toolbar with size sm">
+      <BButtonGroup size="sm" class="mx-1">
+        <BButton>New</BButton>
+        <BButton>Edit</BButton>
+        <BButton>Undo</BButton>
+      </BButtonGroup>
+    </BButtonToolbar>
   </div>
   <div class="mt-2">
-    <b-button-toolbar aria-label="Toolbar with dropdown size sm">
-        <b-dropdown size="sm" class="mx-1" right text="menu">
-          <b-dropdown-item>Item 1</b-dropdown-item>
-          <b-dropdown-item>Item 2</b-dropdown-item>
-          <b-dropdown-item>Item 3</b-dropdown-item>
-        </b-dropdown>
-    </b-button-toolbar>
+    <BButtonToolbar aria-label="Toolbar with dropdown size sm">
+        <BDropdown size="sm" class="mx-1" right text="menu">
+          <BDropdownItem>Item 1</BDropdownItem>
+          <BDropdownItem>Item 2</BDropdownItem>
+          <BDropdownItem>Item 3</BDropdownItem>
+        </BDropdown>
+    </BButtonToolbar>
   </div>
   <div class="mt-2">
-    <b-button-toolbar aria-label="Toolbar with size lg">
-      <b-button-group size="lg" class="mx-1">
-        <b-button>New</b-button>
-        <b-button>Edit</b-button>
-        <b-button>Undo</b-button>
-      </b-button-group>
-    </b-button-toolbar>
+    <BButtonToolbar aria-label="Toolbar with size lg">
+      <BButtonGroup size="lg" class="mx-1">
+        <BButton>New</BButton>
+        <BButton>Edit</BButton>
+        <BButton>Undo</BButton>
+      </BButtonGroup>
+    </BButtonToolbar>
   </div>
   <div class="mt-2">
-    <b-button-toolbar aria-label="Toolbar with dropdown size lg">
-      <b-dropdown size="lg" class="mx-1" right text="menu">
-        <b-dropdown-item>Item 1</b-dropdown-item>
-        <b-dropdown-item>Item 2</b-dropdown-item>
-        <b-dropdown-item>Item 3</b-dropdown-item>
-      </b-dropdown>
-    </b-button-toolbar>
+    <BButtonToolbar aria-label="Toolbar with dropdown size lg">
+      <BDropdown size="lg" class="mx-1" right text="menu">
+        <BDropdownItem>Item 1</BDropdownItem>
+        <BDropdownItem>Item 2</BDropdownItem>
+        <BDropdownItem>Item 3</BDropdownItem>
+      </BDropdown>
+    </BButtonToolbar>
   </div>
   <template #html>
 
 ```vue-html
-<b-button-toolbar aria-label="Toolbar with size sm">
-  <b-button-group size="sm" class="mx-1">
-    <b-button>New</b-button>
-    <b-button>Edit</b-button>
-    <b-button>Undo</b-button>
-  </b-button-group>
-</b-button-toolbar>
+<BButtonToolbar aria-label="Toolbar with size sm">
+  <BButtonGroup size="sm" class="mx-1">
+    <BButton>New</BButton>
+    <BButton>Edit</BButton>
+    <BButton>Undo</BButton>
+  </BButtonGroup>
+</BButtonToolbar>
 
-<b-button-toolbar aria-label="Toolbar with dropdown size sm">
-  <b-dropdown size="sm" class="mx-1" right text="menu">
-    <b-dropdown-item>Item 1</b-dropdown-item>
-    <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-item>Item 3</b-dropdown-item>
-  </b-dropdown>
-</b-button-toolbar>
+<BButtonToolbar aria-label="Toolbar with dropdown size sm">
+  <BDropdown size="sm" class="mx-1" right text="menu">
+    <BDropdownItem>Item 1</BDropdownItem>
+    <BDropdownItem>Item 2</BDropdownItem>
+    <BDropdownItem>Item 3</BDropdownItem>
+  </BDropdown>
+</BButtonToolbar>
 
-<b-button-toolbar aria-label="Toolbar with size lg">
-  <b-button-group size="lg" class="mx-1">
-    <b-button>New</b-button>
-    <b-button>Edit</b-button>
-    <b-button>Undo</b-button>
-  </b-button-group>
-</b-button-toolbar>
+<BButtonToolbar aria-label="Toolbar with size lg">
+  <BButtonGroup size="lg" class="mx-1">
+    <BButton>New</BButton>
+    <BButton>Edit</BButton>
+    <BButton>Undo</BButton>
+  </BButtonGroup>
+</BButtonToolbar>
 
-<b-button-toolbar aria-label="Toolbar with dropdown size lg">
-  <b-dropdown size="lg" class="mx-1" right text="menu">
-    <b-dropdown-item>Item 1</b-dropdown-item>
-    <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-item>Item 3</b-dropdown-item>
-  </b-dropdown>
-</b-button-toolbar>
+<BButtonToolbar aria-label="Toolbar with dropdown size lg">
+  <BDropdown size="lg" class="mx-1" right text="menu">
+    <BDropdownItem>Item 1</BDropdownItem>
+    <BDropdownItem>Item 2</BDropdownItem>
+    <BDropdownItem>Item 3</BDropdownItem>
+  </BDropdown>
+</BButtonToolbar>
 ```
 
   </template>
@@ -219,41 +219,41 @@ Make the toolbar span the maximum available width, by increasing spacing between
 input groups and dropdowns, by setting the prop `justify`.
 
 <HighlightCard>
-  <b-button-toolbar justify aria-label="Toolbar with justify">
-    <b-button-group class="mx-1">
-      <b-button>New</b-button>
-      <b-button>Edit</b-button>
-      <b-button>Undo</b-button>
-    </b-button-group>
-    <b-dropdown class="mx-1" right text="menu">
-      <b-dropdown-item>Item 1</b-dropdown-item>
-      <b-dropdown-item>Item 2</b-dropdown-item>
-      <b-dropdown-item>Item 3</b-dropdown-item>
-    </b-dropdown>
-    <b-button-group class="mx-1">
-      <b-button>Save</b-button>
-      <b-button>Cancel</b-button>
-    </b-button-group>
-  </b-button-toolbar>
+  <BButtonToolbar justify aria-label="Toolbar with justify">
+    <BButtonGroup class="mx-1">
+      <BButton>New</BButton>
+      <BButton>Edit</BButton>
+      <BButton>Undo</BButton>
+    </BButtonGroup>
+    <BDropdown class="mx-1" right text="menu">
+      <BDropdownItem>Item 1</BDropdownItem>
+      <BDropdownItem>Item 2</BDropdownItem>
+      <BDropdownItem>Item 3</BDropdownItem>
+    </BDropdown>
+    <BButtonGroup class="mx-1">
+      <BButton>Save</BButton>
+      <BButton>Cancel</BButton>
+    </BButtonGroup>
+  </BButtonToolbar>
   <template #html>
 
 ```vue-html
-<b-button-toolbar justify aria-label="Toolbar with justify">
-  <b-button-group class="mx-1">
-    <b-button>New</b-button>
-    <b-button>Edit</b-button>
-    <b-button>Undo</b-button>
-  </b-button-group>
-  <b-dropdown class="mx-1" right text="menu">
-    <b-dropdown-item>Item 1</b-dropdown-item>
-    <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-item>Item 3</b-dropdown-item>
-  </b-dropdown>
-  <b-button-group class="mx-1">
-    <b-button>Save</b-button>
-    <b-button>Cancel</b-button>
-  </b-button-group>
-</b-button-toolbar>
+<BButtonToolbar justify aria-label="Toolbar with justify">
+  <BButtonGroup class="mx-1">
+    <BButton>New</BButton>
+    <BButton>Edit</BButton>
+    <BButton>Undo</BButton>
+  </BButtonGroup>
+  <BDropdown class="mx-1" right text="menu">
+    <BDropdownItem>Item 1</BDropdownItem>
+    <BDropdownItem>Item 2</BDropdownItem>
+    <BDropdownItem>Item 3</BDropdownItem>
+  </BDropdown>
+  <BButtonGroup class="mx-1">
+    <BButton>Save</BButton>
+    <BButton>Cancel</BButton>
+  </BButtonGroup>
+</BButtonToolbar>
 ```
 
   </template>

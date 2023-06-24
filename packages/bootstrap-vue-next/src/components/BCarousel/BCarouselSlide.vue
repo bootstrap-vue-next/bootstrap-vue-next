@@ -1,7 +1,7 @@
 <template>
   <div class="carousel-item" :style="computedStyle">
     <slot name="img">
-      <b-img
+      <BImg
         class="d-block w-100"
         :alt="imgAlt"
         :src="imgSrc"

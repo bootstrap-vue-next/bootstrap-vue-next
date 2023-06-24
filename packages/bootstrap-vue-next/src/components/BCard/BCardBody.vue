@@ -1,12 +1,12 @@
 <template>
   <component :is="bodyTag" class="card-body" :class="computedClasses">
-    <b-card-title v-if="!!title || hasTitleSlot" :tag="titleTag">
+    <BCardTitle v-if="!!title || hasTitleSlot" :tag="titleTag">
       <slot name="title">
         {{ title }}
       </slot>
-    </b-card-title>
+    </BCardTitle>
 
-    <b-card-subtitle
+    <BCardSubtitle
       v-if="!!subtitle || hasSubtitleSlot"
       :tag="subtitleTag"
       :text-variant="subtitleTextVariant"
@@ -14,7 +14,7 @@
       <slot name="subtitle">
         {{ subtitle }}
       </slot>
-    </b-card-subtitle>
+    </BCardSubtitle>
 
     <slot>
       {{ text }}
