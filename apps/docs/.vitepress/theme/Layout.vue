@@ -173,10 +173,6 @@ const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const sidebar = ref(isLargeScreen.value)
 const onThisPage = ref(isLargeScreen.value)
 
-// const toggler = () => {
-//   sidebar.value = !sidebar.value
-// }
-
 watch(isLargeScreen, (newValue) => {
   if (newValue === true) {
     sidebar.value = true
