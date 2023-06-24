@@ -128,7 +128,7 @@
         </tr>
       </template>
       <tr
-        v-if="internalBusyFlag"
+        v-if="busyBoolean"
         class="b-table-busy-slot"
         :class="{'b-table-static-busy': computedItems.length === 0}"
       >
@@ -207,6 +207,7 @@ import type {
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import useItemHelper from './itemHelper'
+import {useVModel} from '@vueuse/core'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -318,23 +319,26 @@ const emit = defineEmits<{
   'filtered': [value: TableItem[]]
 }>()
 
+const sortByModel = useVModel(props, 'sortBy', emit)
+const busyModel = useVModel(props, 'busy', emit, {passive: true})
+const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
+
 const slots = useSlots()
 
 const itemHelper = useItemHelper()
 
 const footCloneBoolean = useBooleanish(() => props.footClone)
-const sortDescBoolean = useBooleanish(() => props.sortDesc)
+const sortDescBoolean = useBooleanish(sortDescModel)
 const sortInternalBoolean = useBooleanish(() => props.sortInternal)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const stickySelectBoolean = useBooleanish(() => props.stickySelect)
 const labelStackedBoolean = useBooleanish(() => props.labelStacked)
-const busyBoolean = useBooleanish(() => props.busy)
+const busyBoolean = useBooleanish(busyModel)
 const showEmptyBoolean = useBooleanish(() => props.showEmpty)
 const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
 const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 
-const internalBusyFlag = ref(busyBoolean.value)
 itemHelper.filterEvent.value = async (items) => {
   if (usesProvider.value) {
     await callItemsProvider()
@@ -352,7 +356,7 @@ const tableClasses = computed(() => ({
   'b-table-selectable': selectableBoolean.value,
   [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
   'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
-  'b-table-busy': internalBusyFlag.value,
+  'b-table-busy': busyBoolean.value,
   'b-table-sortable': isSortable.value,
   'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
   'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
@@ -452,9 +456,9 @@ const handleFieldSorting = (field: TableField) => {
   if (isSortable.value === true && fieldSortable === true) {
     const sortDesc = !sortDescBoolean.value
     if (fieldKey !== props.sortBy) {
-      emit('update:sortBy', fieldKey)
+      sortByModel.value = fieldKey
     }
-    emit('update:sortDesc', sortDesc)
+    sortDescModel.value = sortDesc
     emit('sorted', fieldKey, sortDesc)
   }
 }
@@ -508,8 +512,8 @@ const handleRowSelection = (
 }
 
 const callItemsProvider = async () => {
-  if (!usesProvider.value || !props.provider || internalBusyFlag.value) return
-  internalBusyFlag.value = true
+  if (!usesProvider.value || !props.provider || busyBoolean.value) return
+  busyModel.value = true
   const context = new Proxy(
     {
       currentPage: props.currentPage,
@@ -536,8 +540,8 @@ const callItemsProvider = async () => {
       const internalItems = await itemHelper.updateInternalItems(items)
       return internalItems
     } finally {
-      if (internalBusyFlag.value) {
-        internalBusyFlag.value = false
+      if (busyBoolean.value) {
+        busyModel.value = false
       }
     }
   }
@@ -546,8 +550,8 @@ const callItemsProvider = async () => {
     const internalItems = await itemHelper.updateInternalItems(response)
     return internalItems
   } finally {
-    if (internalBusyFlag.value) {
-      internalBusyFlag.value = false
+    if (busyBoolean.value) {
+      busyModel.value = false
     }
   }
 }
@@ -659,14 +663,6 @@ watch(
   }
 )
 
-watch(
-  internalBusyFlag,
-  () => internalBusyFlag.value !== busyBoolean.value && emit('update:busy', internalBusyFlag.value)
-)
-watch(
-  busyBoolean,
-  () => internalBusyFlag.value !== busyBoolean.value && (internalBusyFlag.value = busyBoolean.value)
-)
 watch(
   () => props.filter,
   (val, oldVal) => providerPropsWatch('filter', val, oldVal)
