@@ -1,6 +1,24 @@
 # Changelog
 
 
+## [0.9.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.10...bootstrap-vue-next-v0.9.11) (2023-06-25)
+
+
+### Features
+
+* **BFormFile:** add in BFormFile ([85396d3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85396d37e7f75fcd1a35b9de7d00cf0acea2e1c3))
+* **BTable:** do not require sortDesc when using sortBy ([d47d56c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d47d56ce05203bab359b4827edaa0607bcd75051))
+
+
+### Bug Fixes
+
+* defineSlot issues ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* import interface from other vue file ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* no-dupe issues ([85396d3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85396d37e7f75fcd1a35b9de7d00cf0acea2e1c3))
+* no-dupe-keys issues ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* tests ([a7acb09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a7acb09f1496523e915c1287187aac4ca7e3957b))
+* types generation ([9537680](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/953768011c1f49a560c878babcf400ef765b8190))
+
 ## [0.9.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.9...bootstrap-vue-next-v0.9.10) (2023-06-22)
 
 

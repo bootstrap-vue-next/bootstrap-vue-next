@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.1.0...nuxt-v0.1.1) (2023-06-25)
+
+
+### Bug Fixes
+
+* defineSlot issues ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* import interface from other vue file ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* no-dupe-keys issues ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* types generation ([9537680](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/953768011c1f49a560c878babcf400ef765b8190))
+
 ## [0.1.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.0.7...nuxt-v0.1.0) (2023-05-26)
 
 
