@@ -74,7 +74,7 @@
       </client-only>
     </b-nav>
     <b-navbar-toggle v-b-toggle.otp-menu class="otp-menu-toggle">
-      On the page <ChevronRight :variant="null" aria-label="On this page menu" />
+      On the page <ChevronRight :variant="null" aria-hidden />
     </b-navbar-toggle>
   </b-navbar>
   <b-container fluid class="container-lg mt-3 my-md-4 bd-layout">
