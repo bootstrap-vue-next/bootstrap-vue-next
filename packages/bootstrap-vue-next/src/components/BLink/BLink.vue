@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   routerTag: 'a',
   target: '_self',
   to: undefined,
-  variant: undefined,
+  variant: null,
   opacity: undefined,
   opacityHover: undefined,
   underlineVariant: null,
@@ -142,7 +142,7 @@ const routerAttr = computed(() => ({
   'to': props.to,
   'href': computedHref.value,
   'target': props.target,
-  'rel': props.target === '_blank' && props.rel === null ? 'noopener' : props.rel || null,
+  'rel': props.target === '_blank' && props.rel === undefined ? 'noopener' : props.rel || undefined,
   'tabindex': disabledBoolean.value
     ? '-1'
     : typeof attrs.tabindex === 'undefined'

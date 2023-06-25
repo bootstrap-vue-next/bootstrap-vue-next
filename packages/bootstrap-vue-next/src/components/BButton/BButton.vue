@@ -111,10 +111,10 @@ const loadingBoolean = useBooleanish(() => props.loading)
 
 const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
 const isButton = computed<boolean>(
-  () => props.tag === 'button' && props.href === undefined && props.to === null
+  () => props.tag === 'button' && props.href === undefined && props.to === undefined
 )
 const computedLink = computed<boolean>(() => isLink(props))
-const isBLink = computed<boolean>(() => props.to !== null)
+const isBLink = computed<boolean>(() => props.to !== undefined)
 const nonStandardTag = computed<boolean>(() => (props.href !== undefined ? false : !isButton.value))
 
 const computedClasses = computed(() => [
