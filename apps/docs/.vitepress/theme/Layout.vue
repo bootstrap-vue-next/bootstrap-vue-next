@@ -1,6 +1,6 @@
 <template>
   <b-navbar variant="primary" sticky="top" toggleable="lg">
-    <b-navbar-toggle @click="toggler" />
+    <b-navbar-toggle v-b-toggle.sidebar-menu />
     <b-navbar-brand :to="withBase('/')" class="p-0 me-0 me-lg-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -73,11 +73,15 @@
         </b-dropdown>
       </client-only>
     </b-nav>
+    <b-navbar-toggle v-b-toggle.otp-menu class="otp-menu-toggle">
+      On the page <chevron-right aria-hidden />
+    </b-navbar-toggle>
   </b-navbar>
   <b-container fluid class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
       <client-only>
         <b-offcanvas
+          id="sidebar-menu"
           v-model="sidebar"
           teleport-disabled="true"
           backdrop="false"
@@ -107,7 +111,21 @@
       </b-row>
       <b-row v-else>
         <div class="bd-content">
-          <div class="bd-toc" />
+          <aside class="otp-sidebar">
+            <client-only>
+              <b-offcanvas
+                id="otp-menu"
+                v-model="onThisPage"
+                teleport-disabled="true"
+                backdrop="false"
+                placement="end"
+                title="On this page"
+                class="h-100"
+              >
+                <div class="bd-toc" />
+              </b-offcanvas>
+            </client-only>
+          </aside>
           <Content class="doc-content" />
         </div>
       </b-row>
@@ -132,6 +150,7 @@ import {
   BOffcanvas,
   BRow,
   useColorMode,
+  vBToggle,
 } from 'bootstrap-vue-next'
 import {computed, inject, ref, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
@@ -139,6 +158,7 @@ import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
 import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
+import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import {useData, withBase, useRoute} from 'vitepress'
 import {appInfoKey} from './keys'
@@ -151,17 +171,16 @@ const route = useRoute()
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const sidebar = ref(isLargeScreen.value)
-
-const toggler = () => {
-  sidebar.value = !sidebar.value
-}
+const onThisPage = ref(isLargeScreen.value)
 
 watch(isLargeScreen, (newValue) => {
   if (newValue === true) {
     sidebar.value = true
+    onThisPage.value = true
     return
   }
   sidebar.value = false
+  onThisPage.value = false
 })
 
 watch(
@@ -354,6 +373,10 @@ const globalData = inject(appInfoKey, {
     .btn {
       color: var(--white);
     }
+    .otp-menu-toggle {
+      border: none;
+      font-size: small;
+    }
   }
   [class^='language-'] {
     position: relative;
@@ -455,7 +478,8 @@ const globalData = inject(appInfoKey, {
     grid-template-areas: 'sidebar main';
     grid-template-columns: 1fr 5fr;
     gap: 1.5rem;
-    .bd-sidebar {
+    .bd-sidebar,
+    .otp-sidebar {
       grid-area: sidebar;
       position: -webkit-sticky;
       position: sticky;
@@ -488,60 +512,22 @@ const globalData = inject(appInfoKey, {
           grid-area: content;
           min-width: 1px;
         }
-        .bd-toc {
-          &::before {
-            content: 'On this page';
-            display: block;
-            margin: 0 0 0.5rem 0.8rem;
-            padding-bottom: 0.5rem;
-            border-bottom: var(--bs-border-width) solid rgba(255, 255, 255, 0.2);
-          }
+        .otp-sidebar {
           margin-left: 1.25rem;
           grid-area: toc;
-          position: -webkit-sticky;
-          position: sticky;
-          top: 5rem;
-          right: 0;
-          z-index: 2;
-          height: calc(100vh - 7rem);
-          overflow-y: auto;
-          .table-of-contents {
-            font-size: 0.875rem;
-            ul {
-              padding-left: 0;
-              margin-bottom: 0;
-              list-style: none;
-              a {
-                display: block;
-                padding: 0.125rem 0 0.125rem 0.75rem;
-                color: inherit;
-                text-decoration: none;
-                border-left: 0.125rem solid transparent;
-                &.active {
-                  color: var(--bd-toc-color);
-                  border-left-color: var(--bd-toc-color);
-                }
-                &:hover {
-                  color: var(--bd-toc-color);
-                  border-left-color: var(--bd-toc-color);
-                }
-              }
-              ul {
-                padding-left: 1rem;
-              }
-            }
-          }
         }
       }
     }
   }
 }
 // Sidebar width.
-.bd-sidebar {
+.bd-sidebar,
+.otp-sidebar {
   @media (min-width: 992px) {
     min-width: 12.5rem;
   }
-  .offcanvas.offcanvas-start {
+  .offcanvas.offcanvas-start,
+  .offcanvas.offcanvas-end {
     @media (min-width: 992px) {
       width: 12.5rem !important;
     }
@@ -551,6 +537,32 @@ const globalData = inject(appInfoKey, {
         column-count: 2;
         -moz-column-gap: 1.5rem;
         column-gap: 1.5rem;
+      }
+    }
+    .table-of-contents {
+      font-size: 0.875rem;
+      ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        a {
+          display: block;
+          padding: 0.125rem 0 0.125rem 0.75rem;
+          color: inherit;
+          text-decoration: none;
+          border-left: 0.125rem solid transparent;
+          &.active {
+            color: var(--bd-toc-color);
+            border-left-color: var(--bd-toc-color);
+          }
+          &:hover {
+            color: var(--bd-toc-color);
+            border-left-color: var(--bd-toc-color);
+          }
+        }
+        ul {
+          padding-left: 1rem;
+        }
       }
     }
   }
