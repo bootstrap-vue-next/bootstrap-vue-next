@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.1.1...nuxt-v0.1.2) (2023-06-25)
+
+
+### Bug Fixes
+
+* scss ([02750f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/02750f5e5c2d93d3486a5cdaa363763a6a18c239))
+
 ## [0.1.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.1.0...nuxt-v0.1.1) (2023-06-25)
 
 

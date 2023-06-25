@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.11...bootstrap-vue-next-v0.9.12) (2023-06-25)
+
+
+### Bug Fixes
+
+* scss ([02750f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/02750f5e5c2d93d3486a5cdaa363763a6a18c239))
+
 ## [0.9.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.10...bootstrap-vue-next-v0.9.11) (2023-06-25)
 
 
