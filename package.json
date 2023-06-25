@@ -26,6 +26,7 @@
     "prepare": "husky install && turbo run build",
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
+    "build-emit": "turbo run build-emit",
     "lint": "turbo run lint",
     "test:lint": "turbo run test:lint",
     "test:unit": "turbo run test:unit",
