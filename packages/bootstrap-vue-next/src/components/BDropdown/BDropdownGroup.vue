@@ -31,23 +31,24 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BDropdownGroupProps {
-  id?: string
-  ariaDescribedby?: string
-  header?: string
-  headerClass?: ClassValue
-  headerTag?: string
-  headerVariant?: ColorVariant | null
-}
-
-const props = withDefaults(defineProps<BDropdownGroupProps>(), {
-  headerTag: 'header',
-  id: undefined,
-  ariaDescribedby: undefined,
-  header: undefined,
-  headerClass: undefined,
-  headerVariant: null,
-})
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    ariaDescribedby?: string
+    header?: string
+    headerClass?: ClassValue
+    headerTag?: string
+    headerVariant?: ColorVariant | null
+  }>(),
+  {
+    headerTag: 'header',
+    id: undefined,
+    ariaDescribedby: undefined,
+    header: undefined,
+    headerClass: undefined,
+    headerVariant: null,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

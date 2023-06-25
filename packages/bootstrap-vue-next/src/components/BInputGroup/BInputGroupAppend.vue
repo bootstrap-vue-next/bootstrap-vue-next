@@ -1,20 +1,21 @@
 <template>
-  <b-input-group-addon :is-text="isText">
+  <BInputGroupAddon :is-text="isText">
     <slot />
-  </b-input-group-addon>
+  </BInputGroupAddon>
 </template>
 
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 
-interface BInputGroupAppendProps {
-  isText?: Booleanish
-}
-
-withDefaults(defineProps<BInputGroupAppendProps>(), {
-  isText: false,
-})
+withDefaults(
+  defineProps<{
+    isText?: Booleanish
+  }>(),
+  {
+    isText: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

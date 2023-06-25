@@ -1,8 +1,18 @@
 <script lang="ts">
-import {defineComponent, h, type PropType, type RendererElement, Teleport} from 'vue'
+import {
+  defineComponent,
+  h,
+  type PropType,
+  type RendererElement,
+  type SlotsType,
+  Teleport,
+} from 'vue'
 
 export default defineComponent({
   name: 'ComponentOrEmpty',
+  slots: Object as SlotsType<{
+    default?: Record<string, never>
+  }>,
   props: {
     tag: {
       type: String,

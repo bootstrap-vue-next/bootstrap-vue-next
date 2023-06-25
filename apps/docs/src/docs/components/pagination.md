@@ -11,13 +11,13 @@
 <div class="lead mb-5">
 
 Quick first, previous, next, last, and page buttons for pagination control of another component
-(such as `<b-table>` or lists).
+(such as `<BTable>` or lists).
 
 </div>
 
 ## Customizing appearance
 
-`<b-pagination>` supports several props/slots that allow you to customize the appearance. All
+`<BPagination>` supports several props/slots that allow you to customize the appearance. All
 `*-text` props are text-only and strip out HTML, but you can use their equally named slot
 counterparts for that.
 
@@ -34,7 +34,7 @@ The showing of the `ellipsis` can be optionally disabled by setting the `hide-el
 
 #### Small screen support
 
-On smaller screens (i.e. mobile), some of the `<b-pagination>` buttons will be hidden to minimize
+On smaller screens (i.e. mobile), some of the `<BPagination>` buttons will be hidden to minimize
 the potential of the pagination interface wrapping onto multiple lines:
 
 - The ellipsis indicators will be hidden on screens `xs` and smaller
@@ -49,7 +49,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
 
 <HighlightCard>
   <!-- Use text in props -->
-  <b-pagination
+  <BPagination
     v-model="ex1CurrentPage"
     :total-rows="ex1Rows"
     :per-page="ex1PerPage"
@@ -57,9 +57,9 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     prev-text="Prev"
     next-text="Next"
     last-text="Last"
-  ></b-pagination>
+  ></BPagination>
   <!-- Use emojis in props -->
-  <b-pagination
+  <BPagination
     v-model="ex1CurrentPage"
     :total-rows="ex1Rows"
     :per-page="ex1PerPage"
@@ -68,30 +68,30 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     next-text="⏩"
     last-text="⏭"
     class="mt-4"
-  ></b-pagination>
+  ></BPagination>
   <!-- Use HTML and sub-components in slots -->
-  <b-pagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
+  <BPagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
     <template #first-text><span class="text-success">First</span></template>
     <template #prev-text><span class="text-danger">Prev</span></template>
     <template #next-text><span class="text-warning">Next</span></template>
     <template #last-text><span class="text-info">Last</span></template>
     <template #ellipsis-text>
-      <b-spinner small type="grow"></b-spinner>
-      <b-spinner small type="grow"></b-spinner>
-      <b-spinner small type="grow"></b-spinner>
+      <BSpinner small type="grow"></BSpinner>
+      <BSpinner small type="grow"></BSpinner>
+      <BSpinner small type="grow"></BSpinner>
     </template>
     <template #page="{ page, active }">
       <b v-if="active">{{ page }}</b>
       <i v-else>{{ page }}</i>
     </template>
-  </b-pagination>
+  </BPagination>
   Current page : {{ ex1CurrentPage }}
   <template #html>
 
 ```vue
 <template>
   <!-- Use text in props -->
-  <b-pagination
+  <BPagination
     v-model="ex1CurrentPage"
     :total-rows="ex1Rows"
     :per-page="ex1PerPage"
@@ -99,10 +99,10 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     prev-text="Prev"
     next-text="Next"
     last-text="Last"
-  ></b-pagination>
+  ></BPagination>
 
   <!-- Use emojis in props -->
-  <b-pagination
+  <BPagination
     v-model="ex1CurrentPage"
     :total-rows="ex1Rows"
     :per-page="ex1PerPage"
@@ -111,24 +111,24 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     next-text="⏩"
     last-text="⏭"
     class="mt-4"
-  ></b-pagination>
+  ></BPagination>
 
   <!-- Use HTML and sub-components in slots -->
-  <b-pagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
+  <BPagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
     <template #first-text><span class="text-success">First</span></template>
     <template #prev-text><span class="text-danger">Prev</span></template>
     <template #next-text><span class="text-warning">Next</span></template>
     <template #last-text><span class="text-info">Last</span></template>
     <template #ellipsis-text>
-      <b-spinner small type="grow"></b-spinner>
-      <b-spinner small type="grow"></b-spinner>
-      <b-spinner small type="grow"></b-spinner>
+      <BSpinner small type="grow"></BSpinner>
+      <BSpinner small type="grow"></BSpinner>
+      <BSpinner small type="grow"></BSpinner>
     </template>
     <template #page="{page, active}">
       <b v-if="active">{{ page }}</b>
       <i v-else>{{ page }}</i>
     </template>
-  </b-pagination>
+  </BPagination>
   Current page : {{ ex1CurrentPage }}
 </template>
 
@@ -172,60 +172,60 @@ use the `first-number` and `last-number` props.
 <HighlightCard>
   <div>
     <h6>Goto first button number</h6>
-    <b-pagination
+    <BPagination
       v-model="ex2CurrentPage"
       :total-rows="ex2Rows"
       :per-page="ex2PerPage"
       first-number
-    ></b-pagination>
+    ></BPagination>
   </div>
   <div class="mt-3">
     <h6>Goto last button number</h6>
-    <b-pagination
+    <BPagination
       v-model="ex2CurrentPage"
       :total-rows="ex2Rows"
       :per-page="ex2PerPage"
       last-number
-    ></b-pagination>
+    ></BPagination>
   </div>
   <div class="mt-3">
     <h6>Goto first and last button number</h6>
-    <b-pagination
+    <BPagination
       v-model="ex2CurrentPage"
       :total-rows="ex2Rows"
       :per-page="ex2PerPage"
       first-number
       last-number
-    ></b-pagination>
+    ></BPagination>
   </div>
   <template #html>
 
 ```vue
 <template>
   <h6>Goto first button number</h6>
-  <b-pagination
+  <BPagination
     v-model="ex2CurrentPage"
     :total-rows="ex2Rows"
     :per-page="ex2PerPage"
     first-number
-  ></b-pagination>
+  ></BPagination>
 
   <h6>Goto last button number</h6>
-  <b-pagination
+  <BPagination
     v-model="ex2CurrentPage"
     :total-rows="ex2Rows"
     :per-page="ex2PerPage"
     last-number
-  ></b-pagination>
+  ></BPagination>
 
   <h6>Goto first and last button number</h6>
-  <b-pagination
+  <BPagination
     v-model="ex2CurrentPage"
     :total-rows="ex2Rows"
     :per-page="ex2PerPage"
     first-number
     last-number
-  ></b-pagination>
+  ></BPagination>
 </template>
 
 <script setup lang="ts">
@@ -246,28 +246,28 @@ smaller buttons or `'lg'` for larger buttons.
 <HighlightCard>
   <div>
     <h6>Small</h6>
-    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></b-pagination>
+    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></BPagination>
   </div>
   <div class="mt-3">
     <h6>Default</h6>
-    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></b-pagination>
+    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></BPagination>
   </div>
   <div class="mt-3">
     <h6>Large</h6>
-    <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></b-pagination>
+    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></BPagination>
   </div>
   <template #html>
 
 ```vue
 <template>
   <h6>Small</h6>
-  <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></b-pagination>
+  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></BPagination>
 
   <h6>Default</h6>
-  <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></b-pagination>
+  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></BPagination>
 
   <h6>Large</h6>
-  <b-pagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></b-pagination>
+  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></BPagination>
 </template>
 
 <script setup lang="ts">
@@ -286,28 +286,28 @@ Easily switch to pill style buttons by setting the `pills` prop.
 <HighlightCard>
   <div>
     <h6>Small Pills</h6>
-    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
+    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></BPagination>
   </div>
   <div class="mt-3">
     <h6>Default Pills</h6>
-    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
+    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></BPagination>
   </div>
   <div class="mt-3">
     <h6>Large Pills</h6>
-    <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
+    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></BPagination>
   </div>
   <template #html>
 
 ```vue
 <template>
   <h6>Small Pills</h6>
-  <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></BPagination>
 
   <h6>Default Pills</h6>
-  <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></BPagination>
 
   <h6>Large Pills</h6>
-  <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></BPagination>
 </template>
 
 <script setup lang="ts">
@@ -329,32 +329,32 @@ or `fill` by setting the prop `align` to the appropriate value.
 <HighlightCard>
   <div>
     <h6>Left alignment (default)</h6>
-    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows"></b-pagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows"></BPagination>
   </div>
   <div class="mt-3">
     <h6 class="text-center">Center alignment</h6>
-    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="center"></b-pagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="center"></BPagination>
   </div>
   <div class="mt-3">
     <h6 class="text-end">Right (end) alignment</h6>
-    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="end"></b-pagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="end"></BPagination>
   </div>
   <div class="mt-3">
     <h6 class="text-center">Fill alignment</h6>
-    <b-pagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="fill"></b-pagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="fill"></BPagination>
   </div>
   <template #html>
 
 ```vue
 <template>
   <h6>Small Pills</h6>
-  <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></b-pagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></BPagination>
 
   <h6>Default Pills</h6>
-  <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></b-pagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></BPagination>
 
   <h6>Large Pills</h6>
-  <b-pagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></b-pagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></BPagination>
 </template>
 
 <script setup lang="ts">
@@ -376,23 +376,23 @@ selected. The event is emitted with two arguments:
 
 For accessibility reasons, when using the `page-click` event to prevent a page from being selected,
 you should provide some means of notification to the user as to why the page is not able to be
-selected. It is recommended to use the `disabled` attribute on the `<b-pagination>` component
+selected. It is recommended to use the `disabled` attribute on the `<BPagination>` component
 instead of using the `page-click` event (as `disabled` is more intuitive for screen reader users).
 
 ## Accessibility
 
-The `<b-pagination>` component provides many features to support assistive technology users, such as
+The `<BPagination>` component provides many features to support assistive technology users, such as
 `aria-` attributes and keyboard navigation.
 
 ### `aria-controls`
 
-When pagination is controlling another component on the page (such as `<b-table>`), set the
+When pagination is controlling another component on the page (such as `<BTable>`), set the
 `aria-controls` prop to the `id` of the element it is controlling. This will help non-sighted users
 know what component is being updated/controlled.
 
 ### ARIA labels
 
-`<b-pagination>` provides various `*-label-*` props which are used to set the `aria-label`
+`<BPagination>` provides various `*-label-*` props which are used to set the `aria-label`
 attributes on the various elements within the component, which will help users of assistive
 technology.
 

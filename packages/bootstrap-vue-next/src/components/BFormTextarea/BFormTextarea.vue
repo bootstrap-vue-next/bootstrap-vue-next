@@ -5,12 +5,12 @@
     :class="computedClasses"
     :name="name || undefined"
     :form="form || undefined"
-    :disabled="disabled"
+    :disabled="disabledBoolean"
     :placeholder="placeholder"
-    :required="required"
+    :required="requiredBoolean || undefined"
     :autocomplete="autocomplete || undefined"
-    :readonly="readonly || plaintext"
-    :aria-required="required ? true : undefined"
+    :readonly="readonlyBoolean || plaintextBoolean"
+    :aria-required="required || undefined"
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
     :style="computedStyles"
@@ -21,49 +21,77 @@
   />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type {Booleanish} from '../../types'
-import {computed, type CSSProperties, defineComponent, type PropType} from 'vue'
-import {COMMON_INPUT_PROPS, useBooleanish, useFormInput} from '../../composables'
+import {computed, type CSSProperties} from 'vue'
+import {useBooleanish, useFormInput, useStateClass} from '../../composables'
+import type {CommonInputProps} from '../../composables/useFormInput'
 
-export default defineComponent({
-  props: {
-    ...COMMON_INPUT_PROPS,
-    noResize: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    rows: {type: [String, Number], required: false, default: 2},
-    wrap: {type: String, default: 'soft'},
+const props = withDefaults(
+  defineProps<
+    {
+      noResize?: Booleanish
+      rows?: string | number
+      wrap?: string
+    } & CommonInputProps
+  >(),
+  {
+    noResize: false,
+    rows: 2,
+    wrap: 'soft',
+    // CommonInputProps
+    ariaInvalid: undefined,
+    autocomplete: undefined,
+    autofocus: false,
+    disabled: false,
+    form: undefined,
+    formatter: undefined,
+    id: undefined,
+    lazy: false,
+    lazyFormatter: false,
+    list: undefined,
+    modelValue: '',
+    name: undefined,
+    number: false,
+    placeholder: undefined,
+    plaintext: false,
+    readonly: false,
+    required: false,
+    size: undefined,
+    state: null,
+    trim: false,
+  }
+)
+
+const emit = defineEmits<{
+  'update:modelValue': [val: any]
+  'change': [val: any]
+  'blur': [val: any]
+  'input': [val: any]
+}>()
+
+const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
+  useFormInput(props, emit)
+
+const disabledBoolean = useBooleanish(() => props.disabled)
+const requiredBoolean = useBooleanish(() => props.required)
+const readonlyBoolean = useBooleanish(() => props.readonly)
+const plaintextBoolean = useBooleanish(() => props.plaintext)
+const noResizeBoolean = useBooleanish(() => props.noResize)
+const stateBoolean = useBooleanish(() => props.state)
+
+const stateClass = useStateClass(stateBoolean)
+
+const computedClasses = computed(() => [
+  stateClass.value,
+  {
+    'form-control': !props.plaintext,
+    'form-control-plaintext': props.plaintext,
+    [`form-control-${props.size}`]: !!props.size,
   },
-  emits: ['update:modelValue', 'change', 'blur', 'input'],
-  setup(props, {emit}) {
-    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-      useFormInput(props, emit)
+])
 
-    const noResizeBoolean = useBooleanish(() => props.noResize)
-
-    const computedClasses = computed(() => ({
-      'form-control': !props.plaintext,
-      'form-control-plaintext': props.plaintext,
-      [`form-control-${props.size}`]: !!props.size,
-      'is-valid': props.state === true,
-      'is-invalid': props.state === false,
-    }))
-
-    const computedStyles = computed<CSSProperties>(() => ({
-      resize: noResizeBoolean.value ? 'none' : undefined,
-    }))
-
-    return {
-      input,
-      computedId,
-      computedAriaInvalid,
-      onInput,
-      onChange,
-      onBlur,
-      focus,
-      blur,
-      computedClasses,
-      computedStyles,
-    }
-  },
-})
+const computedStyles = computed<CSSProperties>(() => ({
+  resize: noResizeBoolean.value ? 'none' : undefined,
+}))
 </script>

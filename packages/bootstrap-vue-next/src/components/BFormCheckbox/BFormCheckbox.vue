@@ -8,12 +8,12 @@
       :class="inputClasses"
       type="checkbox"
       :disabled="disabledBoolean || parentData?.disabled.value"
-      :required="computedRequired ? true : undefined"
+      :required="computedRequired || undefined"
       :name="name || parentData?.name.value"
       :form="form || parentData?.form.value"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledBy"
-      :aria-required="computedRequired ? true : undefined"
+      :aria-required="computedRequired || undefined"
       :value="value"
       :indeterminate="indeterminateBoolean"
     />
@@ -35,75 +35,78 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BFormCheckboxProps {
-  ariaLabel?: string
-  ariaLabelledBy?: string
-  form?: string
-  indeterminate?: Booleanish
-  name?: string
-  id?: string
-  autofocus?: Booleanish
-  plain?: Booleanish
-  button?: Booleanish
-  buttonGroup?: Booleanish
-  switch?: Booleanish
-  disabled?: Booleanish
-  buttonVariant?: ButtonVariant | null
-  inline?: Booleanish
-  required?: Booleanish
-  size?: Size
-  state?: Booleanish | null
-  uncheckedValue?:
-    | unknown[]
-    | Set<unknown>
-    | boolean
-    | string
-    | Record<string, unknown>
-    | number
-    | null
-  value?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  modelValue?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-}
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    ariaLabelledBy?: string
+    form?: string
+    indeterminate?: Booleanish
+    name?: string
+    id?: string
+    autofocus?: Booleanish
+    plain?: Booleanish
+    button?: Booleanish
+    buttonGroup?: Booleanish
+    switch?: Booleanish
+    disabled?: Booleanish
+    buttonVariant?: ButtonVariant | null
+    inline?: Booleanish
+    required?: Booleanish
+    size?: Size
+    state?: Booleanish | null
+    uncheckedValue?:
+      | unknown[]
+      | Set<unknown>
+      | boolean
+      | string
+      | Record<string, unknown>
+      | number
+      | null
+    value?: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+    modelValue?:
+      | unknown[]
+      | Set<unknown>
+      | boolean
+      | string
+      | Record<string, unknown>
+      | number
+      | null
+  }>(),
+  {
+    ariaLabel: undefined,
+    ariaLabelledBy: undefined,
+    form: undefined,
+    indeterminate: undefined,
+    name: undefined,
+    autofocus: false,
+    plain: false,
+    button: false,
+    buttonGroup: false,
+    id: undefined,
+    required: undefined,
+    state: null,
+    modelValue: undefined,
+    switch: false,
+    disabled: false,
+    buttonVariant: null,
+    inline: false,
+    size: undefined,
+    value: true,
+    uncheckedValue: false,
+  }
+)
 
-const props = withDefaults(defineProps<BFormCheckboxProps>(), {
-  ariaLabel: undefined,
-  ariaLabelledBy: undefined,
-  form: undefined,
-  indeterminate: undefined,
-  name: undefined,
-  autofocus: false,
-  plain: false,
-  button: false,
-  buttonGroup: false,
-  id: undefined,
-  required: undefined,
-  state: null,
-  modelValue: undefined,
-  switch: false,
-  disabled: false,
-  buttonVariant: null,
-  inline: false,
-  size: undefined,
-  value: true,
-  uncheckedValue: false,
-})
-
-interface BFormCheckboxEmits {
-  (
-    e: 'update:modelValue',
+const emit = defineEmits<{
+  'update:modelValue': [
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ): void
-  (
-    e: 'input',
+  ]
+  'input': [
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ): void
-  (
-    e: 'change',
+  ]
+  'change': [
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ): void
-}
-
-const emit = defineEmits<BFormCheckboxEmits>()
+  ]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

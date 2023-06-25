@@ -1,8 +1,8 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-pagination
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BPagination
           v-model="paginationPageNumber"
           :limit="paginationLimit"
           :total-rows="paginationRows"
@@ -11,26 +11,26 @@
           last-number
           @page-click="handlePaginationPageClick"
         />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <span class="mx-3">Select page 7 is prevented</span>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-pagination
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BPagination
           v-model="paginationPageNumber"
           :limit="paginationLimit"
           :total-rows="paginationRows"
           :per-page="paginationPerPage"
         />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-pagination
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BPagination
           v-model="paginationPageNumber"
           :limit="paginationLimit"
           :total-rows="paginationRows"
@@ -40,11 +40,11 @@
           first-text="First"
           last-text="Last"
         />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-pagination
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BPagination
           v-model="paginationPageNumber"
           :total-rows="paginationRows"
           :per-page="paginationPerPage"
@@ -63,20 +63,20 @@
             <span class="text-info">Last</span>
           </template>
           <template #ellipsis-text>
-            <b-spinner small type="grow" />
-            <b-spinner small type="grow" />
-            <b-spinner small type="grow" />
+            <BSpinner small type="grow" />
+            <BSpinner small type="grow" />
+            <BSpinner small type="grow" />
           </template>
           <template #page="{page, active}">
             <b v-if="active">{{ page }}</b>
             <i v-else>{{ page }}</i>
           </template>
-        </b-pagination>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-pagination
+        </BPagination>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BPagination
           v-model="paginationPageNumber"
           :limit="paginationLimit"
           :total-rows="paginationRows"
@@ -89,11 +89,11 @@
           last-class="border border-4 border-info"
           ellipsis-class="border border-3 border-success"
         />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-pagination
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BPagination
           v-model="paginationPageNumber"
           :limit="paginationLimit"
           :total-rows="paginationRows"
@@ -104,17 +104,17 @@
           last-text="Last"
           align="end"
         />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col> Current page : {{ paginationPageNumber }} </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol> Current page : {{ paginationPageNumber }} </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <button class="btn btn-primary" @click="paginationPageNumber = 4">Set to page 4</button>
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

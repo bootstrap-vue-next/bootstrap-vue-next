@@ -17,18 +17,18 @@
 ## Demo
 
 <HighlightCard>
-  <b-card ref="target">
-    <b-button @click="changeColor">
+  <BCard ref="target">
+    <BButton @click="changeColor">
       Current color: {{ mode }}
-    </b-button>
-  </b-card>
+    </BButton>
+  </BCard>
   <template #html>
 
 ```vue
 <template>
-  <b-card ref="target">
-    <b-button @click="changeColor"> Current color: {{ mode }} </b-button>
-  </b-card>
+  <BCard ref="target">
+    <BButton @click="changeColor"> Current color: {{ mode }} </BButton>
+  </BCard>
 </template>
 
 <script setup lang="ts">

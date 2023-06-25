@@ -14,29 +14,29 @@ Dropdowns are toggleable, contextual overlays for displaying lists of links and 
 
 </div>
 
-`<b-dropdown>` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
+`<BDropdown>` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
 
 <HighlightCard>
-  <b-dropdown v-model="show1" text="Dropdown Button" class="me-2">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item>Second Action</b-dropdown-item>
-    <b-dropdown-item>Third Action</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show1" text="Dropdown Button" class="me-2">
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem>Second Action</BDropdownItem>
+    <BDropdownItem>Third Action</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown Button">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item>Second Action</b-dropdown-item>
-    <b-dropdown-item>Third Action</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" text="Dropdown Button">
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem>Second Action</BDropdownItem>
+    <BDropdownItem>Third Action</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -54,33 +54,33 @@ You can customize the text of the dropdown button by using either the `text` pro
 If both the prop `text` and slot `button-content` are present, the slot `button-content` will take precedence.
 
 <HighlightCard>
-  <b-dropdown v-model="show2" text="Button text via Prop" class="me-2">
-    <b-dropdown-item href="#">An item</b-dropdown-item>
-    <b-dropdown-item href="#">Another item</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown v-model="show3" class="me-2">
+  <BDropdown v-model="show2" text="Button text via Prop" class="me-2">
+    <BDropdownItem href="#">An item</BDropdownItem>
+    <BDropdownItem href="#">Another item</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show3" class="me-2">
     <template #button-content>
     Custom <strong>Content</strong> with <em>HTML</em> via Slot
     </template>
-    <b-dropdown-item href="#">An item</b-dropdown-item>
-    <b-dropdown-item href="#">Another item</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">An item</BDropdownItem>
+    <BDropdownItem href="#">Another item</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" text="Button text via Prop" class="m-1">
-    <b-dropdown-item href="#">An item</b-dropdown-item>
-    <b-dropdown-item href="#">Another item</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show1" text="Button text via Prop" class="m-1">
+    <BDropdownItem href="#">An item</BDropdownItem>
+    <BDropdownItem href="#">Another item</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown v-model="show2" class="m-1">
+  <BDropdown v-model="show2" class="m-1">
     <template #button-content>
       Custom <strong>Content</strong> with <em>HTML</em> via Slot
     </template>
-    <b-dropdown-item href="#">An item</b-dropdown-item>
-    <b-dropdown-item href="#">Another item</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">An item</BDropdownItem>
+    <BDropdownItem href="#">Another item</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -101,42 +101,42 @@ Dropdown supports various positioning such as left and right aligned, dropdown a
 The dropdown menu can either be _start_ aligned (default) or _end_ aligned to the button above it. To have the dropdown aligned on the _end_, set the `alignEnd` prop.
 
 <HighlightCard>
-  <b-dropdown v-model="show4" text="Default Alignment" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown v-model="show5" alignStart text="Start Alignment" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown v-model="show6" alignEnd text="End Align" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show4" text="Default Alignment" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show5" alignStart text="Start Alignment" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show6" alignEnd text="End Align" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" text="Default Alignment" variant="primary">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show1" text="Default Alignment" variant="primary">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown v-model="show2" alignStart text="Start Alignment" variant="primary">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show2" alignStart text="Start Alignment" variant="primary">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown v-model="show3" alignEnd text="End Align" variant="primary">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show3" alignEnd text="End Align" variant="primary">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -154,20 +154,20 @@ const show3 = ref(false)
 Turn your dropdown menu into a drop-up menu by setting the `dropup` prop.
 
 <HighlightCard>
-  <b-dropdown v-model="show7" dropup text="Drop-Up" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show7" dropup text="Drop-Up" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" dropup text="Drop-up" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" dropup text="Drop-up" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -185,31 +185,31 @@ Turn your dropdown menu into a drop-end menu by setting the `dropend` prop. Or, 
 The order of precedence is top -> start -> end -> bottom.
 
 <HighlightCard>
-  <b-dropdown v-model="show8" dropend text="Drop-end" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown v-model="show9" dropstart text="Drop-start" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-      <b-dropdown-item href="#">Another action</b-dropdown-item>
-      <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show8" dropend text="Drop-end" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show9" dropstart text="Drop-start" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+      <BDropdownItem href="#">Another action</BDropdownItem>
+      <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" dropend text="Drop-end" variant="primary">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show1" dropend text="Drop-end" variant="primary">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown v-model="show2" dropstart text="Drop-start" variant="primary">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show2" dropstart text="Drop-start" variant="primary">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -226,20 +226,20 @@ const show2 = ref(false)
 By default, dropdowns may flip to the top, or the bottom, based on their current position in the viewport. To disable this auto-flip feature, set the `no-flip` prop.
 
 <HighlightCard>
-  <b-dropdown v-model="show10" text="No flipping" no-flip class="me-2">
-    <b-dropdown-item href="#">An item</b-dropdown-item>
-    <b-dropdown-item href="#">Another item</b-dropdown-item>
-    <b-dropdown-item href="#">Yet Another item</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show10" text="No flipping" no-flip class="me-2">
+    <BDropdownItem href="#">An item</BDropdownItem>
+    <BDropdownItem href="#">Another item</BDropdownItem>
+    <BDropdownItem href="#">Yet Another item</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="No flipping" no-flip>
-    <b-dropdown-item href="#">An item</b-dropdown-item>
-    <b-dropdown-item href="#">Another item</b-dropdown-item>
-    <b-dropdown-item href="#">Yet Another item</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" text="No flipping" no-flip>
+    <BDropdownItem href="#">An item</BDropdownItem>
+    <BDropdownItem href="#">Another item</BDropdownItem>
+    <BDropdownItem href="#">Yet Another item</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -255,35 +255,35 @@ const show = ref(false)
 Like to move your menu away from the toggle buttons a bit? Then use the `offset` prop to specify the number of pixels to push right (or left when negative) from the toggle button:
 
 <HighlightCard>
-  <b-dropdown v-model="show11" offset="25" text="Offset Dropdown" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown v-model="show12" :offset="{alignmentAxis: 50, crossAxis: 60, mainAxis: 70}" text="Offset Dropdown 2 dimensions" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show11" offset="25" text="Offset Dropdown" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show12" :offset="{alignmentAxis: 50, crossAxis: 60, mainAxis: 70}" text="Offset Dropdown 2 dimensions" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" offset="25" text="Offset Dropdown">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show1" offset="25" text="Offset Dropdown">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown
+  <BDropdown
     v-model="show2"
     :offset="{alignmentAxis: 50, crossAxis: 60, mainAxis: 70}"
     text="Offset Dropdown 2 dimensions"
   >
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -300,20 +300,20 @@ const show2 = ref(false)
 By default, the floating element will render using _absolute_. You can change this using the `strategy` prop. The only other option is `fixed`.
 
 <HighlightCard>
-  <b-dropdown v-model="show13" text="Strategy fixed" strategy="fixed" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show13" text="Strategy fixed" strategy="fixed" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Strategy fixed" strategy="fixed">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" text="Strategy fixed" strategy="fixed">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -345,53 +345,53 @@ The `auto-close`property has 4 options.
 - `outside` : the dropdown will be closed (only) by clicking outside the dropdown menu
 
 <HighlightCard>
-  <b-dropdown v-model="show14" text="Default Dropdown" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
-  <b-dropdown v-model="show15" text="Clickable outside (auto-close=inside)" auto-close="inside" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
-  <b-dropdown v-model="show16" text="Clickable inside (auto-close=outside)" auto-close="outside" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
-  <b-dropdown v-model="show17" text="Manual close (auto-close=false)" :auto-close="false" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show14" text="Default Dropdown" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
+  <BDropdown v-model="show15" text="Clickable outside (auto-close=inside)" auto-close="inside" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
+  <BDropdown v-model="show16" text="Clickable inside (auto-close=outside)" auto-close="outside" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
+  <BDropdown v-model="show17" text="Manual close (auto-close=false)" :auto-close="false" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" text="Default Dropdown">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show1" text="Default Dropdown">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
 
-  <b-dropdown v-model="show2" text="Clickable outside (auto-close=inside)" auto-close="inside">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show2" text="Clickable outside (auto-close=inside)" auto-close="inside">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
 
-  <b-dropdown v-model="show3" text="Clickable inside (auto-close=outside)" auto-close="outside">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show3" text="Clickable inside (auto-close=outside)" auto-close="outside">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
 
-  <b-dropdown v-model="show4" text="Manual close (auto-close=false)" :auto-close="false">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show4" text="Manual close (auto-close=false)" :auto-close="false">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -418,20 +418,20 @@ You can view the [Floating-ui docs](https://floating-ui.com/docs/middleware) to 
 Create a split dropdown button, where the left button provides standard `click` event and link support, while the right-hand side is the dropdown menu toggle button.
 
 <HighlightCard>
-  <b-dropdown v-model="show18" split text="Split Dropdown" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show18" split text="Split Dropdown" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" split text="Split Dropdown" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" split text="Split Dropdown" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -444,23 +444,23 @@ const show = ref(false)
 
 ### Split button link support
 
-The left split button defaults to an element of type `<button>` (a `<b-button>` to be exact). To convert this button into a link or `<router-link>`, specify the href via the `split-href` prop or a router link `to` value via the `split-to` prop, while maintaining the look of a button.
+The left split button defaults to an element of type `<button>` (a `<BButton>` to be exact). To convert this button into a link or `<RouterLink>`, specify the href via the `split-href` prop or a router link `to` value via the `split-to` prop, while maintaining the look of a button.
 
 <HighlightCard>
-  <b-dropdown v-model="show19" split split-href="#foo/bar" text="Split Link" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show19" split split-href="#foo/bar" text="Split Link" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" split split-href="#foo/bar" text="Split Link">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" split split-href="#foo/bar" text="Split Link">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -488,52 +488,52 @@ Dropdowns work with trigger buttons of all sizes, including default and split dr
 Set the `size` prop to either `sm` for a small button, or `lg` for a large button.
 
 <HighlightCard>
-  <b-dropdown v-model="show20" size="lg" text="Large" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-    </b-dropdown>
-    <b-dropdown v-model="show21" size="lg" split text="Large Split" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-  </b-dropdown>
-  <b-dropdown v-model="show22" size="sm" text="Small" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-  </b-dropdown>
-  <b-dropdown v-model="show23" size="sm" split text="Small Split" class="me-2">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show20" size="lg" text="Large" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+    </BDropdown>
+    <BDropdown v-model="show21" size="lg" split text="Large Split" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here...</BDropdownItemButton>
+  </BDropdown>
+  <BDropdown v-model="show22" size="sm" text="Small" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here...</BDropdownItemButton>
+  </BDropdown>
+  <BDropdown v-model="show23" size="sm" split text="Small Split" class="me-2">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here...</BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" size="lg" text="Large">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show1" size="lg" text="Large">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here</BDropdownItemButton>
+  </BDropdown>
 
-  <b-dropdown v-model="show2" size="lg" split text="Large Split">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-  </b-dropdown>
-  <b-dropdown v-model="show3" size="sm" text="Small">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show2" size="lg" split text="Large Split">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here...</BDropdownItemButton>
+  </BDropdown>
+  <BDropdown v-model="show3" size="sm" text="Small">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here...</BDropdownItemButton>
+  </BDropdown>
 
-  <b-dropdown v-model="show4" size="sm" split text="Small Split">
-    <b-dropdown-item-button>Action</b-dropdown-item-button>
-    <b-dropdown-item-button>Another action</b-dropdown-item-button>
-    <b-dropdown-item-button>Something else here...</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show4" size="sm" split text="Small Split">
+    <BDropdownItemButton>Action</BDropdownItemButton>
+    <BDropdownItemButton>Another action</BDropdownItemButton>
+    <BDropdownItemButton>Something else here...</BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -556,42 +556,42 @@ The dropdown toggle button can have one of the standard Bootstrap contextual var
 See the [Variant Reference](/docs/reference/color-variants) for a full list of built-in contextual variants.
 
 <HighlightCard>
-  <b-dropdown v-model="show24" text="Primary" variant="primary" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown v-model="show25" text="Success" variant="success" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown v-model="show26" text="Outline Danger" variant="outline-danger" class="me-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show24" text="Primary" variant="primary" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show25" text="Success" variant="success" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
+  <BDropdown v-model="show26" text="Outline Danger" variant="outline-danger" class="me-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" text="Primary" variant="primary">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show1" text="Primary" variant="primary">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown v-model="show2" text="Success" variant="success">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show2" text="Success" variant="success">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown v-model="show3" text="Outline Danger" variant="outline-danger">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show3" text="Outline Danger" variant="outline-danger">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -612,7 +612,7 @@ By default, the left split button uses the same `variant` as the `toggle` button
 split button its variant via the `split-variant` prop.
 
 <HighlightCard>
-  <b-dropdown
+  <BDropdown
     v-model="show27"
     split
     split-variant="outline-primary"
@@ -620,25 +620,25 @@ split button its variant via the `split-variant` prop.
     text="Split Variant Dropdown"
     class="me-2"
   >
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown
+  <BDropdown
     v-model="show"
     split
     split-variant="outline-primary"
     variant="primary"
     text="Split Variant Dropdown"
   >
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -656,26 +656,26 @@ const show = ref(false)
 You can render the dropdown menu in dark mode by setting the `dark` property.
 
 <HighlightCard>
-  <b-dropdown v-model="show28" text="Dropdown Button" dark class="m-md-2">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item>Second Action</b-dropdown-item>
-    <b-dropdown-item>Third Action</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show28" text="Dropdown Button" dark class="m-md-2">
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem>Second Action</BDropdownItem>
+    <BDropdownItem>Third Action</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown Button" dark>
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item>Second Action</b-dropdown-item>
-    <b-dropdown-item>Third Action</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" text="Dropdown Button" dark>
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem>Second Action</BDropdownItem>
+    <BDropdownItem>Third Action</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -691,12 +691,12 @@ const show = ref(false)
 By default, dropdowns act like buttons and are displayed inline. To create block-level dropdowns (that span to the full width of a parent) set the `block` prop. Both, regular and split button dropdowns are supported.
 
 <HighlightCard>
-  <b-dropdown v-model="show29" text="Block Level Dropdown" block variant="primary" class="mb-2">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown
+  <BDropdown v-model="show29" text="Block Level Dropdown" block variant="primary" class="mb-2">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
+  <BDropdown
     v-model="show30"
     text="Block Level Split Dropdown"
     block
@@ -704,21 +704,21 @@ By default, dropdowns act like buttons and are displayed inline. To create block
     split-variant="outline-primary"
     variant="primary"
   >
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show1" text="Block Level Dropdown" block variant="primary">
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show1" text="Block Level Dropdown" block variant="primary">
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 
-  <b-dropdown
+  <BDropdown
     v-model="show2"
     text="Block Level Split Dropdown"
     block
@@ -726,10 +726,10 @@ By default, dropdowns act like buttons and are displayed inline. To create block
     split-variant="outline-primary"
     variant="primary"
   >
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -745,32 +745,32 @@ If you want the dropdown menu to span to the full width of the parent container 
 utility class to the `menu-class` prop.
 
 <HighlightCard>
-  <b-dropdown
+  <BDropdown
     v-model="show31"
     text="Block Level Dropdown Menu"
     block
     variant="primary"
     menu-class="w-100"
   >
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown
+  <BDropdown
     v-model="show"
     text="Block Level Dropdown Menu"
     block
     variant="primary"
     menu-class="w-100"
   >
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -791,24 +791,24 @@ Many of the supported dropdown [sub-components](#dropdown-supported-sub-componen
 The dropdown can be created with the toggle's caret visually hidden by setting the `no-caret` prop to `true`. This is useful when the dropdown is to be displayed as an icon.
 
 <HighlightCard>
-  <b-dropdown v-model="show32" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
+  <BDropdown v-model="show32" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
     <template #button-content>
       &#x1f50d;<span class="visually-hidden">Search</span>
     </template>
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
+  <BDropdown v-model="show" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
     <template #button-content> &#x1f50d;<span class="visually-hidden">Search</span> </template>
-    <b-dropdown-item href="#">Action</b-dropdown-item>
-    <b-dropdown-item href="#">Another action</b-dropdown-item>
-    <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-  </b-dropdown>
+    <BDropdownItem href="#">Action</BDropdownItem>
+    <BDropdownItem href="#">Another action</BDropdownItem>
+    <BDropdownItem href="#">Something else here...</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -827,40 +827,40 @@ The following components can be placed inside your dropdowns. Using any other co
 may break layout and/or keyboard navigation.
 | Sub-component | Description |
 | ----------------- | ---------------------------- |
-| `<b-dropdown-item>` | Action items that provide click, link, and `<router-link>`/`<nuxt-link>` functionality. Renders as an `<a>` element by default |
-| <span style="white-space:nowrap;">`<b-dropdown-item-button>`</span> | An alternative to `<b-dropdown-item>` that renders a menu item using a `<button>` element |
-| `<b-dropdown-divider>` | A divider/spacer which can be used to separate dropdown items |
-| `<b-dropdown-text>` | Free flowing text content in a menu |
-| `<b-dropdown-group>` | For grouping dropdown sub-components with an optional header |
-| `<b-dropdown-header>` | A header item, used to help identify a group of dropdown items |
+| `<BDropdownItem>` | Action items that provide click, link, and `<RouterLink>`/`<NuxtLink>` functionality. Renders as an `<a>` element by default |
+| <span style="white-space:nowrap;">`<BDropdownItemButton>`</span> | An alternative to `<BDropdownItem>` that renders a menu item using a `<button>` element |
+| `<BDropdownDivider>` | A divider/spacer which can be used to separate dropdown items |
+| `<BDropdownText>` | Free flowing text content in a menu |
+| `<BDropdownGroup>` | For grouping dropdown sub-components with an optional header |
+| `<BDropdownHeader>` | A header item, used to help identify a group of dropdown items |
 
 **Note:** _Nested sub-menus are **not** supported._
 
-### `<b-dropdown-item>`
+### `<BDropdownItem>`
 
-The `<b-dropdown-item>` is typically used to create a navigation link inside your menu. Use either the `href` prop or the `to` prop (for router link support) to generate the appropriate navigation link. If neither `href` nor `to` are provided, a standard `<a>` link will be generated with an `href` of `#` (with an event handler that will prevent scroll to top behavior by preventing the default link action).
+The `<BDropdownItem>` is typically used to create a navigation link inside your menu. Use either the `href` prop or the `to` prop (for router link support) to generate the appropriate navigation link. If neither `href` nor `to` are provided, a standard `<a>` link will be generated with an `href` of `#` (with an event handler that will prevent scroll to top behavior by preventing the default link action).
 
 Disabled the dropdown item by setting the `disabled` prop.
 
 <HighlightCard>
-  <b-dropdown v-model="show33" text="Dropdown">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item variant="primary">Second Action</b-dropdown-item>
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-    <b-dropdown-item href="Badge">Badge</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show33" text="Dropdown">
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem variant="primary">Second Action</BDropdownItem>
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+    <BDropdownItem href="Badge">Badge</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown Button">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item variant="primary">Second Action</b-dropdown-item>
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-    <b-dropdown-item href="Badge">Badge</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" text="Dropdown Button">
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem variant="primary">Second Action</BDropdownItem>
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+    <BDropdownItem href="Badge">Badge</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -871,32 +871,32 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-### `<b-dropdown-item-button>`
+### `<BDropdownItemButton>`
 
-Historically dropdown menu contents had to be links (`<b-dropdown-item>`), but that's no longer the
+Historically dropdown menu contents had to be links (`<BDropdownItem>`), but that's no longer the
 case with Bootstrap v5. Now you can optionally create `<button>` elements in your dropdowns by using
-the `<b-dropdown-item-button>` sub-component. `<b-dropdown-item-button>` does not support the `href`
+the `<BDropdownItemButton>` sub-component. `<BDropdownItemButton>` does not support the `href`
 or `to` props.
 
 Disabled the dropdown item button by setting the `disabled` prop.
 
 <HighlightCard>
-  <b-dropdown v-model="show34" text="Dropdown using buttons as menu items">
-    <b-dropdown-item-button>I'm a button</b-dropdown-item-button>
-    <b-dropdown-item-button active>I'm a active button</b-dropdown-item-button>
-    <b-dropdown-item-button disabled>I'm a button, but disabled!</b-dropdown-item-button>
-    <b-dropdown-item-button>I don't look like a button, but I am!</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show34" text="Dropdown using buttons as menu items">
+    <BDropdownItemButton>I'm a button</BDropdownItemButton>
+    <BDropdownItemButton active>I'm a active button</BDropdownItemButton>
+    <BDropdownItemButton disabled>I'm a button, but disabled!</BDropdownItemButton>
+    <BDropdownItemButton>I don't look like a button, but I am!</BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown using buttons as menu items">
-    <b-dropdown-item-button>I'm a button</b-dropdown-item-button>
-    <b-dropdown-item-button active>I'm an active button</b-dropdown-item-button>
-    <b-dropdown-item-button disabled>I'm a button, but disabled!</b-dropdown-item-button>
-    <b-dropdown-item-button>I don't look like a button, but I am!</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show" text="Dropdown using buttons as menu items">
+    <BDropdownItemButton>I'm a button</BDropdownItemButton>
+    <BDropdownItemButton active>I'm an active button</BDropdownItemButton>
+    <BDropdownItemButton disabled>I'm a button, but disabled!</BDropdownItemButton>
+    <BDropdownItemButton>I don't look like a button, but I am!</BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -908,29 +908,29 @@ const show = ref(false)
 </HighlightCard>
 
 When the menu item doesn't trigger navigation, it is recommended to use the
-`<b-dropdown-item-button>` sub-component.
+`<BDropdownItemButton>` sub-component.
 
-### `<b-dropdown-divider>`
+### `<BDropdownDivider>`
 
-Separate groups of related menu items with `<b-dropdown-divider>`.
+Separate groups of related menu items with `<BDropdownDivider>`.
 
 <HighlightCard>
-  <b-dropdown v-model="show35" text="Dropdown with divider">
-    <b-dropdown-item-button>First item</b-dropdown-item-button>
-    <b-dropdown-item-button>Second item</b-dropdown-item-button>
-    <b-dropdown-divider />
-    <b-dropdown-item-button>Separated Item</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show35" text="Dropdown with divider">
+    <BDropdownItemButton>First item</BDropdownItemButton>
+    <BDropdownItemButton>Second item</BDropdownItemButton>
+    <BDropdownDivider />
+    <BDropdownItemButton>Separated Item</BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown with divider">
-    <b-dropdown-item-button>First item</b-dropdown-item-button>
-    <b-dropdown-item-button>Second item</b-dropdown-item-button>
-    <b-dropdown-divider />
-    <b-dropdown-item-button>Separated Item</b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show" text="Dropdown with divider">
+    <BDropdownItemButton>First item</BDropdownItemButton>
+    <BDropdownItemButton>Second item</BDropdownItemButton>
+    <BDropdownDivider />
+    <BDropdownItemButton>Separated Item</BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -941,35 +941,35 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-### `<b-dropdown-text>`
+### `<BDropdownText>`
 
-Place any freeform text within a dropdown menu using the `<b-dropdown-text>` sub-component or use
+Place any freeform text within a dropdown menu using the `<BDropdownText>` sub-component or use
 text and use spacing utilities. Note that you'll likely need additional sizing styles to
 constrain/set the menu width.
 
 <HighlightCard>
-  <b-dropdown v-model="show36" text="Dropdown with text">
-    <b-dropdown-text style="width: 240px;">
+  <BDropdown v-model="show36" text="Dropdown with text">
+    <BDropdownText style="width: 240px;">
       Some example text that's free-flowing within the dropdown menu.
-    </b-dropdown-text>
-    <b-dropdown-text  tag="span">And this is more example text.</b-dropdown-text>
-    <b-dropdown-divider />
-    <b-dropdown-item-button>First item</b-dropdown-item-button>
-    <b-dropdown-item-button>Second Item</b-dropdown-item-button>
-  </b-dropdown>
+    </BDropdownText>
+    <BDropdownText  tag="span">And this is more example text.</BDropdownText>
+    <BDropdownDivider />
+    <BDropdownItemButton>First item</BDropdownItemButton>
+    <BDropdownItemButton>Second Item</BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown with text">
-    <b-dropdown-text style="width: 240px;">
+  <BDropdown v-model="show" text="Dropdown with text">
+    <BDropdownText style="width: 240px;">
       Some example text that's free-flowing within the dropdown menu.
-    </b-dropdown-text>
-    <b-dropdown-text>And this is more example text.</b-dropdown-text>
-    <b-dropdown-divider />
-    <b-dropdown-item-button>First item</b-dropdown-item-button>
-    <b-dropdown-item-button>Second Item</b-dropdown-item-button>
-  </b-dropdown>
+    </BDropdownText>
+    <BDropdownText>And this is more example text.</BDropdownText>
+    <BDropdownDivider />
+    <BDropdownItemButton>First item</BDropdownItemButton>
+    <BDropdownItemButton>Second Item</BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -980,47 +980,47 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-`<b-dropdown-text>` has the BootstrapVueNext custom class `.b-dropdown-text` applied to it which sets some basic styles which are suitable in most situations. By default, its width will be the same as the widest `<b-dropdown-item>` content. You may need to place additional styles or helper classes on the component.
+`<BDropdownText>` has the BootstrapVueNext custom class `.b-dropdown-text` applied to it which sets some basic styles which are suitable in most situations. By default, its width will be the same as the widest `<BDropdownItem>` content. You may need to place additional styles or helper classes on the component.
 
-~~By default, `<b-dropdown-text>` renders using tag `<p>`. You can change the rendered tag by setting the `tag` prop to any valid HTML5 tag on the `<b-dropdown-text>` sub-component~~.
+~~By default, `<BDropdownText>` renders using tag `<p>`. You can change the rendered tag by setting the `tag` prop to any valid HTML5 tag on the `<BDropdownText>` sub-component~~.
 
-### `<b-dropdown-group>`
+### `<BDropdownGroup>`
 
-Group a set of dropdown sub-components with an optional associated header. Place a `<b-dropdown-divider>` between your `<b-dropdown-group>` and other groups or non-grouped dropdown contents.
+Group a set of dropdown sub-components with an optional associated header. Place a `<BDropdownDivider>` between your `<BDropdownGroup>` and other groups or non-grouped dropdown contents.
 
 <HighlightCard>
-  <b-dropdown v-model="show37" text="Dropdown with group">
-    <b-dropdown-item-button> Non-grouped Item </b-dropdown-item-button>
-    <b-dropdown-divider />
-    <b-dropdown-group header="Group 1">
-      <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
-      <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
-    </b-dropdown-group>
-    <b-dropdown-group header="Group 2" header-variant="primary">
-      <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
-      <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
-    </b-dropdown-group>
-    <b-dropdown-divider />
-    <b-dropdown-item-button> Another Non-grouped Item </b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show37" text="Dropdown with group">
+    <BDropdownItemButton> Non-grouped Item </BDropdownItemButton>
+    <BDropdownDivider />
+    <BDropdownGroup header="Group 1">
+      <BDropdownItemButton>First Grouped item</BDropdownItemButton>
+      <BDropdownItemButton>Second Grouped Item</BDropdownItemButton>
+    </BDropdownGroup>
+    <BDropdownGroup header="Group 2" header-variant="primary">
+      <BDropdownItemButton>First Grouped item</BDropdownItemButton>
+      <BDropdownItemButton>Second Grouped Item</BDropdownItemButton>
+    </BDropdownGroup>
+    <BDropdownDivider />
+    <BDropdownItemButton> Another Non-grouped Item </BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown with group">
-    <b-dropdown-item-button> Non-grouped Item </b-dropdown-item-button>
-    <b-dropdown-divider />
-    <b-dropdown-group header="Group 1">
-      <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
-      <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
-    </b-dropdown-group>
-    <b-dropdown-group header="Group 2" header-variant="primary">
-      <b-dropdown-item-button>First Grouped item</b-dropdown-item-button>
-      <b-dropdown-item-button>Second Grouped Item</b-dropdown-item-button>
-    </b-dropdown-group>
-    <b-dropdown-divider />
-    <b-dropdown-item-button> Another Non-grouped Item </b-dropdown-item-button>
-  </b-dropdown>
+  <BDropdown v-model="show" text="Dropdown with group">
+    <BDropdownItemButton> Non-grouped Item </BDropdownItemButton>
+    <BDropdownDivider />
+    <BDropdownGroup header="Group 1">
+      <BDropdownItemButton>First Grouped item</BDropdownItemButton>
+      <BDropdownItemButton>Second Grouped Item</BDropdownItemButton>
+    </BDropdownGroup>
+    <BDropdownGroup header="Group 2" header-variant="primary">
+      <BDropdownItemButton>First Grouped item</BDropdownItemButton>
+      <BDropdownItemButton>Second Grouped Item</BDropdownItemButton>
+    </BDropdownGroup>
+    <BDropdownDivider />
+    <BDropdownItemButton> Another Non-grouped Item </BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -1031,33 +1031,33 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-### `<b-dropdown-header>`
+### `<BDropdownHeader>`
 
 Add a header to label sections of actions in any dropdown menu.
 
 <HighlightCard>
-  <b-dropdown v-model="show38" text="Dropdown with header">
-    <b-dropdown-header> Dropdown header </b-dropdown-header>
-    <b-dropdown-item-button aria-describedby="dropdown-header-label">
+  <BDropdown v-model="show38" text="Dropdown with header">
+    <BDropdownHeader> Dropdown header </BDropdownHeader>
+    <BDropdownItemButton aria-describedby="dropdown-header-label">
       First item
-    </b-dropdown-item-button>
-    <b-dropdown-item-button aria-describedby="dropdown-header-label">
+    </BDropdownItemButton>
+    <BDropdownItemButton aria-describedby="dropdown-header-label">
       Second Item
-    </b-dropdown-item-button>
-  </b-dropdown>
+    </BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown with header">
-    <b-dropdown-header> Dropdown header </b-dropdown-header>
-    <b-dropdown-item-button aria-describedby="dropdown-header-label">
+  <BDropdown v-model="show" text="Dropdown with header">
+    <BDropdownHeader> Dropdown header </BDropdownHeader>
+    <BDropdownItemButton aria-describedby="dropdown-header-label">
       First item
-    </b-dropdown-item-button>
-    <b-dropdown-item-button aria-describedby="dropdown-header-label">
+    </BDropdownItemButton>
+    <BDropdownItemButton aria-describedby="dropdown-header-label">
       Second Item
-    </b-dropdown-item-button>
-  </b-dropdown>
+    </BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -1070,7 +1070,7 @@ const show = ref(false)
 
 See Section [Dropdown headers and accessibility](#headers-and-accessibility) for details on making headers more accessible for users of assistive technologies.
 
-Using the `<b-dropdown-group>` sub-component simplifies creating accessible grouped dropdown items with an associated header.
+Using the `<BDropdownGroup>` sub-component simplifies creating accessible grouped dropdown items with an associated header.
 
 ## Accessibility
 
@@ -1078,44 +1078,44 @@ Providing a unique `id` prop ensures ARIA compliance by automatically adding the
 
 The default ARIA role is set to `menu`, but you can change this default to another role (such as `navigation`) via the `role` prop, depending on your use case.
 
-When a menu item doesn't trigger navigation, it is recommended to use the `<b-dropdown-item-button>` sub-component (which is not announced as a link) instead of `<b-dropdown-item>` (which is presented as a link to the user).
+When a menu item doesn't trigger navigation, it is recommended to use the `<BDropdownItemButton>` sub-component (which is not announced as a link) instead of `<BDropdownItem>` (which is presented as a link to the user).
 
 ### Headers and accessibility
 
-When using `<b-dropdown-header>` components in the dropdown menu, it is recommended to add an `id` attribute to each of the headers, and then set the `aria-describedby` attribute (set to the `id` value of the associated header) on each following dropdown items under that header. This will provide users of assistive technologies (i.e. sight-impaired users) additional context about the dropdown item:
+When using `<BDropdownHeader>` components in the dropdown menu, it is recommended to add an `id` attribute to each of the headers, and then set the `aria-describedby` attribute (set to the `id` value of the associated header) on each following dropdown items under that header. This will provide users of assistive technologies (i.e. sight-impaired users) additional context about the dropdown item:
 
 <HighlightCard>
-  <b-dropdown v-model="show39" text="Dropdown ARIA" variant="primary">
-    <b-dropdown-header id="dropdown-header-1">Groups</b-dropdown-header>
-    <b-dropdown-item-button aria-describedby="dropdown-header-1">Add</b-dropdown-item-button>
-    <b-dropdown-item-button aria-describedby="dropdown-header-1">Delete</b-dropdown-item-button>
-    <b-dropdown-header id="dropdown-header-2">Users</b-dropdown-header>
-    <b-dropdown-item-button aria-describedby="dropdown-header-2">Add</b-dropdown-item-button>
-    <b-dropdown-item-button aria-describedby="dropdown-header-2">Delete</b-dropdown-item-button>
-    <b-dropdown-divider />
-    <b-dropdown-item-button>
+  <BDropdown v-model="show39" text="Dropdown ARIA" variant="primary">
+    <BDropdownHeader id="dropdown-header-1">Groups</BDropdownHeader>
+    <BDropdownItemButton aria-describedby="dropdown-header-1">Add</BDropdownItemButton>
+    <BDropdownItemButton aria-describedby="dropdown-header-1">Delete</BDropdownItemButton>
+    <BDropdownHeader id="dropdown-header-2">Users</BDropdownHeader>
+    <BDropdownItemButton aria-describedby="dropdown-header-2">Add</BDropdownItemButton>
+    <BDropdownItemButton aria-describedby="dropdown-header-2">Delete</BDropdownItemButton>
+    <BDropdownDivider />
+    <BDropdownItemButton>
       Something <strong>not</strong> associated with Users
-    </b-dropdown-item-button>
-  </b-dropdown>
+    </BDropdownItemButton>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" text="Dropdown ARIA" variant="primary">
-    <b-dropdown-header id="dropdown-header-1">Groups</b-dropdown-header>
-    <b-dropdown-item-button aria-describedby="dropdown-header-1">Add</b-dropdown-item-button>
-    <b-dropdown-item-button aria-describedby="dropdown-header-1">Delete</b-dropdown-item-button>
+  <BDropdown v-model="show" text="Dropdown ARIA" variant="primary">
+    <BDropdownHeader id="dropdown-header-1">Groups</BDropdownHeader>
+    <BDropdownItemButton aria-describedby="dropdown-header-1">Add</BDropdownItemButton>
+    <BDropdownItemButton aria-describedby="dropdown-header-1">Delete</BDropdownItemButton>
 
-    <b-dropdown-header id="dropdown-header-2">Users</b-dropdown-header>
-    <b-dropdown-item-button aria-describedby="dropdown-header-2">Add</b-dropdown-item-button>
-    <b-dropdown-item-button aria-describedby="dropdown-header-2">Delete</b-dropdown-item-button>
+    <BDropdownHeader id="dropdown-header-2">Users</BDropdownHeader>
+    <BDropdownItemButton aria-describedby="dropdown-header-2">Add</BDropdownItemButton>
+    <BDropdownItemButton aria-describedby="dropdown-header-2">Delete</BDropdownItemButton>
 
-    <b-dropdown-divider />
+    <BDropdownDivider />
 
-    <b-dropdown-item-button>
+    <BDropdownItemButton>
       Something <strong>not</strong> associated with Users
-    </b-dropdown-item-button>
-  </b-dropdown>
+    </BDropdownItemButton>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -1126,39 +1126,39 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-As a simplified alternative, use the `<b-dropdown-group>` instead to easily associate header text to the contained dropdown sub-components.
+As a simplified alternative, use the `<BDropdownGroup>` instead to easily associate header text to the contained dropdown sub-components.
 
 ### Keyboard navigation
 
 Dropdowns support keyboard navigation, emulating native `<select>` behavior.
 
-Note that <kbd>Down</kbd> and <kbd>Up</kbd> will not move focus into `<b-dropdown-form>` sub-components, but users can still use <kbd>Tab</kbd> or <kbd>Shift</kbd>+<kbd>Tab</kbd> to move into form controls within the menu.
+Note that <kbd>Down</kbd> and <kbd>Up</kbd> will not move focus into `<BDropdownForm>` sub-components, but users can still use <kbd>Tab</kbd> or <kbd>Shift</kbd>+<kbd>Tab</kbd> to move into form controls within the menu.
 
 ## Lazy
 
 Dropdown menus can have their inner content rendered lazily through the `lazy` prop. By default, this is turned off. For navigation elements, it may be beneficial to keep lazy off, so web crawlers can properly comb through your sites navigation.
 
 <HighlightCard>
-  <b-dropdown v-model="show40" lazy text="Dropdown">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item>Second Action</b-dropdown-item>
-    <b-dropdown-item>Third Action</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show40" lazy text="Dropdown">
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem>Second Action</BDropdownItem>
+    <BDropdownItem>Third Action</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+  </BDropdown>
   <template #html>
 
 ```vue
 <template>
-  <b-dropdown v-model="show" lazy text="Dropdown">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item>Second Action</b-dropdown-item>
-    <b-dropdown-item>Third Action</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  </b-dropdown>
+  <BDropdown v-model="show" lazy text="Dropdown">
+    <BDropdownItem>First Action</BDropdownItem>
+    <BDropdownItem>Second Action</BDropdownItem>
+    <BDropdownItem>Third Action</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem active>Active action</BDropdownItem>
+    <BDropdownItem disabled>Disabled action</BDropdownItem>
+  </BDropdown>
 </template>
 
 <script setup lang="ts">
@@ -1175,8 +1175,8 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 ## See also
 
-- [`<b-nav-item-dropdown>`](/bootstrap-vue-next/components/nav#dropdown-support) for dropdown support inside `<b-nav>` and `<n-navbar>`
-- [Router Link Support](/bootstrap-vue-next/reference/router-links) reference for information about router-link specific props available on `<b-dropdown-item>`
+- [`<BNavItemDropdown>`](/bootstrap-vue-next/components/nav#dropdown-support) for dropdown support inside `<BNav>` and `<BNavbar>`
+- [Router Link Support](/bootstrap-vue-next/reference/router-links) reference for information about router-link specific props available on `<BDropdownItem>`
 
 <ComponentReference :data="data" />
 

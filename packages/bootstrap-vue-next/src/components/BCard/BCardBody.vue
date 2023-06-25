@@ -1,12 +1,12 @@
 <template>
   <component :is="bodyTag" class="card-body" :class="computedClasses">
-    <b-card-title v-if="!!title || hasTitleSlot" :tag="titleTag">
+    <BCardTitle v-if="!!title || hasTitleSlot" :tag="titleTag">
       <slot name="title">
         {{ title }}
       </slot>
-    </b-card-title>
+    </BCardTitle>
 
-    <b-card-subtitle
+    <BCardSubtitle
       v-if="!!subtitle || hasSubtitleSlot"
       :tag="subtitleTag"
       :text-variant="subtitleTextVariant"
@@ -14,7 +14,7 @@
       <slot name="subtitle">
         {{ subtitle }}
       </slot>
-    </b-card-subtitle>
+    </BCardSubtitle>
 
     <slot>
       {{ text }}
@@ -30,31 +30,32 @@ import BCardSubtitle from './BCardSubtitle.vue'
 import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BCardBodyProps {
-  bodyBgVariant?: ColorVariant | null
-  bodyTag?: string
-  bodyTextVariant?: TextColorVariant | null
-  overlay?: Booleanish
-  subtitle?: string
-  subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant | null
-  title?: string
-  titleTag?: string
-  text?: string
-}
-
-const props = withDefaults(defineProps<BCardBodyProps>(), {
-  bodyTag: 'div',
-  overlay: false,
-  titleTag: 'h4',
-  subtitleTag: 'h4',
-  bodyBgVariant: null,
-  bodyTextVariant: null,
-  subtitleTextVariant: undefined,
-  subtitle: undefined,
-  title: undefined,
-  text: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    bodyBgVariant?: ColorVariant | null
+    bodyTag?: string
+    bodyTextVariant?: TextColorVariant | null
+    overlay?: Booleanish
+    subtitle?: string
+    subtitleTag?: string
+    subtitleTextVariant?: TextColorVariant | null
+    title?: string
+    titleTag?: string
+    text?: string
+  }>(),
+  {
+    bodyTag: 'div',
+    overlay: false,
+    titleTag: 'h4',
+    subtitleTag: 'h4',
+    bodyBgVariant: null,
+    bodyTextVariant: null,
+    subtitleTextVariant: undefined,
+    subtitle: undefined,
+    title: undefined,
+    text: undefined,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,8 +70,8 @@ const slots = useSlots()
 
 const overlayBoolean = useBooleanish(() => props.overlay)
 
-const hasTitleSlot = computed<boolean>(() => !isEmptySlot(slots.title))
-const hasSubtitleSlot = computed<boolean>(() => !isEmptySlot(slots.subtitle))
+const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
+const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))
 
 const computedClasses = computed(() => ({
   'card-img-overlay': overlayBoolean.value,

@@ -1,16 +1,16 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
         <h2 class="m-2">Form Checkbox Group</h2>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <span>
           <b>With options</b>
         </span>
-        <b-form-checkbox-group
+        <BFormCheckboxGroup
           id="checkbox-group-1"
           v-model="checkboxes.selected"
           :options="checkboxes.options"
@@ -19,7 +19,7 @@
         <span>
           <b>Buttons</b>
         </span>
-        <b-form-checkbox-group
+        <BFormCheckboxGroup
           id="checkbox-group-1"
           v-model="checkboxes.selected"
           :options="checkboxes.options"
@@ -29,23 +29,23 @@
         <span>
           <b>With slots</b>
         </span>
-        <b-form-checkbox-group id="checkbox-group-2" v-model="checkboxes.selected">
-          <b-form-checkbox value="orange">Orange</b-form-checkbox>
-          <b-form-checkbox value="apple">Apple</b-form-checkbox>
-          <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
-          <b-form-checkbox :value="{foo: 1}">Object</b-form-checkbox>
-          <b-form-checkbox value="grape">Grapess</b-form-checkbox>
-        </b-form-checkbox-group>
+        <BFormCheckboxGroup id="checkbox-group-2" v-model="checkboxes.selected">
+          <BFormCheckbox value="orange">Orange</BFormCheckbox>
+          <BFormCheckbox value="apple">Apple</BFormCheckbox>
+          <BFormCheckbox value="pineapple">Pineapple</BFormCheckbox>
+          <BFormCheckbox :value="{foo: 1}">Object</BFormCheckbox>
+          <BFormCheckbox value="grape">Grapess</BFormCheckbox>
+        </BFormCheckboxGroup>
         <br />
         <div>
           Selected:
           <strong>{{ checkboxes.selected }}</strong>
         </div>
-        <b-button class="me-2" @click="checkboxes.selected = ['orange']">Orange only</b-button>
-        <b-button class="me-2" @click="checkboxes.selected = ['grape']">Grape only</b-button>
-      </b-col>
-    </b-row>
-  </b-container>
+        <BButton class="me-2" @click="checkboxes.selected = ['orange']">Orange only</BButton>
+        <BButton class="me-2" @click="checkboxes.selected = ['grape']">Grape only</BButton>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

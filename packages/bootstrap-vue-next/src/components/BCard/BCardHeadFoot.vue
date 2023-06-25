@@ -12,23 +12,24 @@
 import {computed} from 'vue'
 import type {ColorVariant, TextColorVariant} from '../../types'
 
-interface BCardHeaderProps {
-  text?: string
-  bgVariant?: ColorVariant | null
-  borderVariant?: ColorVariant | null
-  html?: string
-  tag?: string
-  textVariant?: TextColorVariant | null
-}
-
-const props = withDefaults(defineProps<BCardHeaderProps>(), {
-  tag: 'div',
-  text: undefined,
-  bgVariant: null,
-  borderVariant: null,
-  html: undefined,
-  textVariant: null,
-})
+const props = withDefaults(
+  defineProps<{
+    text?: string
+    bgVariant?: ColorVariant | null
+    borderVariant?: ColorVariant | null
+    html?: string
+    tag?: string
+    textVariant?: TextColorVariant | null
+  }>(),
+  {
+    tag: 'div',
+    text: undefined,
+    bgVariant: null,
+    borderVariant: null,
+    html: undefined,
+    textVariant: null,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

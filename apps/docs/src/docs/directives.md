@@ -8,7 +8,7 @@
 
 Depending on the installation method, directives may be automatically registered globally. However, if they are not automatically imported, you will want to import them manually. Every directive is exposed using the v- prefix. For example, for directive `BToggle`, it is imported under `vBToggle`. When using the composition api, it will function as expected. However, if you are using the options api you will want to manually remove the v- prefix during registry. For more information, visit the [vue docs](https://vuejs.org/guide/reusability/custom-directives.html#introduction).
 
-<table-of-contents-card v-for="composable in computedComposablesList" :key="composable.name" class="my-5" :name="composable.name" :description="composable.description" :route="composable.route" />
+<TableOfContentsCard v-for="composable in computedComposablesList" :key="composable.name" class="my-5" :name="composable.name" :description="composable.description" :route="composable.route" />
 
 <script setup lang="ts">
 import {withBase} from 'vitepress'

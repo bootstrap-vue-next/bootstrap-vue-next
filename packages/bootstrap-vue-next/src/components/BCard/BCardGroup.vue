@@ -9,17 +9,18 @@ import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BCardGroupProps {
-  columns?: Booleanish
-  deck?: Booleanish
-  tag?: string
-}
-
-const props = withDefaults(defineProps<BCardGroupProps>(), {
-  columns: false,
-  deck: false,
-  tag: 'div',
-})
+const props = withDefaults(
+  defineProps<{
+    columns?: Booleanish
+    deck?: Booleanish
+    tag?: string
+  }>(),
+  {
+    columns: false,
+    deck: false,
+    tag: 'div',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

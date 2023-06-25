@@ -6,7 +6,7 @@ BootstrapVueNext exposes some custom composables that integrate with various com
 
 </div>
 
-<table-of-contents-card v-for="composable in computedComposablesList" :key="composable.name" class="my-3" :name="composable.name" :description="composable.description" :route="composable.route" />
+<TableOfContentsCard v-for="composable in computedComposablesList" :key="composable.name" class="my-3" :name="composable.name" :description="composable.description" :route="composable.route" />
 
 <script setup lang="ts">
 import {withBase} from 'vitepress'

@@ -1,54 +1,52 @@
 <template>
   <div class="bd-links-nav">
-    <b-list-group v-if="!isLargeScreen">
-      <strong class="bd-links-heading"><gear-icon aria-hidden /> General</strong>
-      <b-list-group-item>
-        <b-link :to="withBase('/docs')">Getting Started</b-link>
-      </b-list-group-item>
-      <b-list-group-item>
-        <b-link :to="withBase('/docs/icons')">Icons</b-link>
-      </b-list-group-item>
-      <b-list-group-item>
-        <b-link :to="withBase('/docs/types')">Types</b-link>
-      </b-list-group-item>
-      <b-list-group-item>
-        <b-link :to="withBase('/docs/reference')">Reference</b-link>
-      </b-list-group-item>
-      <b-list-group-item>
-        <b-link :to="withBase('/docs/migration-guide')">Migrate</b-link>
-      </b-list-group-item>
-    </b-list-group>
-    <b-list-group>
+    <BListGroup v-if="!isLargeScreen">
+      <strong class="bd-links-heading"><GearIcon aria-hidden /> General</strong>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs')">Getting Started</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/icons')">Icons</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/types')">Types</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/reference')">Reference</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/migration-guide')">Migrate</BLink>
+      </BListGroupItem>
+    </BListGroup>
+    <BListGroup>
       <strong class="bd-links-heading">
-        <b-link :to="withBase('/docs/components')">
-          <intersect-icon aria-hidden /> Components
-        </b-link>
+        <BLink :to="withBase('/docs/components')"> <IntersectIcon aria-hidden /> Components </BLink>
       </strong>
-      <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
-        <b-link :to="component.route">{{ component.name }}</b-link>
-      </b-list-group-item>
-    </b-list-group>
-    <b-list-group>
+      <BListGroupItem v-for="component in componentsComputedList" :key="component.name">
+        <BLink :to="component.route">{{ component.name }}</BLink>
+      </BListGroupItem>
+    </BListGroup>
+    <BListGroup>
       <strong class="bd-links-heading">
-        <b-link :to="withBase('/docs/composables')">
-          <pie-chart-icon aria-hidden /> Composables
-        </b-link>
+        <BLink :to="withBase('/docs/composables')">
+          <PieChartIcon aria-hidden /> Composables
+        </BLink>
       </strong>
-      <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
-        <b-link :to="component.route">{{ component.name }}</b-link>
-      </b-list-group-item>
-    </b-list-group>
-    <b-list-group>
+      <BListGroupItem v-for="component in composablesComputedList" :key="component.name">
+        <BLink :to="component.route">{{ component.name }}</BLink>
+      </BListGroupItem>
+    </BListGroup>
+    <BListGroup>
       <strong class="bd-links-heading">
-        <b-link :to="withBase('/docs/directives')">
-          <code-slash-icon aria-hidden />
+        <BLink :to="withBase('/docs/directives')">
+          <CodeSlashIcon aria-hidden />
           Directives
-        </b-link>
+        </BLink>
       </strong>
-      <b-list-group-item v-for="component in directivesComputedList" :key="component.name">
-        <b-link :to="component.route">{{ component.name }}</b-link>
-      </b-list-group-item>
-    </b-list-group>
+      <BListGroupItem v-for="component in directivesComputedList" :key="component.name">
+        <BLink :to="component.route">{{ component.name }}</BLink>
+      </BListGroupItem>
+    </BListGroup>
   </div>
 </template>
 
@@ -90,6 +88,7 @@ const componentsList: {name: string}[] = [
   {name: 'Dropdown'},
   {name: 'Form'},
   {name: 'Form Checkbox'},
+  {name: 'Form File'},
   {name: 'Form Group'},
   {name: 'Form Input'},
   {name: 'Form Radio'},

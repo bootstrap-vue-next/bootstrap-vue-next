@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Documentation and examples for opting images (via `<b-img>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.
+Documentation and examples for opting images (via `<BImg>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.
 
 </div>
 
@@ -34,11 +34,11 @@ Images in BootstrapVueNext can be made responsive with the `fluid` prop (which s
 the maximum native width of the image.
 
 <HighlightCard>
-  <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></b-img>
+  <BImg src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></BImg>
   <template #html>
 
 ```vue-html
-<b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></b-img>
+<BImg src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"></BImg>
 ```
 
   </template>
@@ -49,16 +49,16 @@ Note this may cause blurring on small bitmap images.
 
 <HighlightCard>
   <h5>Small image with <code>fluid</code>:</h5>
-  <b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
+  <BImg src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></BImg>
   <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
-  <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
+  <BImg src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></BImg>
   <template #html>
 
 ```vue-html
 <h5>Small image with <code>fluid</code>:</h5>
-<b-img src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></b-img>
+<BImg src="https://picsum.photos/300/150/?image=41" fluid alt="Fluid image"></BImg>
 <h5 class="my-3">Small image with <code>fluid-grow</code>:</h5>
-<b-img src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></b-img>
+<BImg src="https://picsum.photos/300/150/?image=41" fluid-grow alt="Fluid-grow image"></BImg>
 ```
 
   </template>
@@ -72,31 +72,31 @@ default of inline-block element.
 You can use prop `thumbnail` to give an image a rounded light border appearance.
 
 <HighlightCard>
-  <b-row>
-    <b-col>
-      <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
-    </b-col>
-    <b-col>
-      <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></b-img>
-    </b-col>
-    <b-col>
-      <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></b-img>
-    </b-col>
-  </b-row>
+  <BRow>
+    <BCol>
+      <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></BImg>
+    </BCol>
+    <BCol>
+      <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></BImg>
+    </BCol>
+    <BCol>
+      <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></BImg>
+    </BCol>
+  </BRow>
   <template #html>
 
 ```vue-html
-<b-row>
-  <b-col>
-    <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
-  </b-col>
-  <b-col>
-    <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></b-img>
-  </b-col>
-  <b-col>
-    <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></b-img>
-  </b-col>
-</b-row>
+<BRow>
+  <BCol>
+    <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></BImg>
+  </BCol>
+  <BCol>
+    <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></BImg>
+  </BCol>
+  <BCol>
+    <BImg thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></BImg>
+  </BCol>
+</BRow>
 ```
 
   </template>
@@ -118,25 +118,25 @@ values:
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
-    <b-img v-bind="mainProps" rounded="top" alt="Top-rounded image"></b-img>
-    <b-img v-bind="mainProps" rounded="end" alt="Right-rounded image"></b-img>
-    <b-img v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></b-img>
-    <b-img v-bind="mainProps" rounded="start" alt="Left-rounded image"></b-img>
-    <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
-    <b-img v-bind="mainProps" rounded="0" alt="Not rounded image"></b-img>
+    <BImg v-bind="mainProps" rounded alt="Rounded image"></BImg>
+    <BImg v-bind="mainProps" rounded="top" alt="Top-rounded image"></BImg>
+    <BImg v-bind="mainProps" rounded="end" alt="Right-rounded image"></BImg>
+    <BImg v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></BImg>
+    <BImg v-bind="mainProps" rounded="start" alt="Left-rounded image"></BImg>
+    <BImg v-bind="mainProps" rounded="circle" alt="Circle image"></BImg>
+    <BImg v-bind="mainProps" rounded="0" alt="Not rounded image"></BImg>
   </div>
   <template #html>
 
 ```vue
 <template>
-  <b-img v-bind="mainProps" rounded alt="Rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="top" alt="Top-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="end" alt="Right-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="start" alt="Left-rounded image"></b-img>
-  <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
-  <b-img v-bind="mainProps" rounded="0" alt="Not rounded image"></b-img>
+  <BImg v-bind="mainProps" rounded alt="Rounded image"></BImg>
+  <BImg v-bind="mainProps" rounded="top" alt="Top-rounded image"></BImg>
+  <BImg v-bind="mainProps" rounded="end" alt="Right-rounded image"></BImg>
+  <BImg v-bind="mainProps" rounded="bottom" alt="Bottom-rounded image"></BImg>
+  <BImg v-bind="mainProps" rounded="start" alt="Left-rounded image"></BImg>
+  <BImg v-bind="mainProps" rounded="circle" alt="Circle image"></BImg>
+  <BImg v-bind="mainProps" rounded="0" alt="Not rounded image"></BImg>
 </template>
 
 <script setup lang="ts">
@@ -163,14 +163,14 @@ left+right margins). You can also center images by placing them in a container t
 
 <HighlightCard>
   <div class="clearfix">
-    <b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
-    <b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
+    <BImg left src="https://picsum.photos/125/125/?image=58" alt="Left image"></BImg>
+    <BImg right src="https://picsum.photos/125/125/?image=58" alt="Right image"></BImg>
   </div>
   <template #html>
 
 ```vue-html
-<b-img left src="https://picsum.photos/125/125/?image=58" alt="Left image"></b-img>
-<b-img right src="https://picsum.photos/125/125/?image=58" alt="Right image"></b-img>
+<BImg left src="https://picsum.photos/125/125/?image=58" alt="Left image"></BImg>
+<BImg right src="https://picsum.photos/125/125/?image=58" alt="Right image"></BImg>
 ```
 
   </template>
@@ -179,11 +179,11 @@ left+right margins). You can also center images by placing them in a container t
 **Center aligned (block):**
 
 <HighlightCard>
-  <b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
+  <BImg center src="https://picsum.photos/125/125/?image=58" alt="Center image"></BImg>
   <template #html>
 
 ```vue-html
-<b-img center src="https://picsum.photos/125/125/?image=58" alt="Center image"></b-img>
+<BImg center src="https://picsum.photos/125/125/?image=58" alt="Center image"></BImg>
 ```
 
   </template>
@@ -193,9 +193,9 @@ Note: `left` takes precedence over `right` which takes precedence over `center`.
 
 ## Blank (or solid color) images
 
-`<b-img>` provides built-in support for generating blank images (transparent by default) of any
+`<BImg>` provides built-in support for generating blank images (transparent by default) of any
 width and height, by setting the `blank` prop, and specifying `width` and `height` values (in
-pixels). You can apply any of the other `<b-img>` props to change the style/behavior of the
+pixels). You can apply any of the other `<BImg>` props to change the style/behavior of the
 generated image.
 
 Use the `blank-color` prop to set the blank image color. The `blank-color`prop can accept any CSS
@@ -210,25 +210,25 @@ The default `blank-color` is `transparent`.
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-img v-bind="propsTr" alt="Transparent image"></b-img>
-    <b-img v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
-    <b-img v-bind="propsTr" blank-color="red" alt="Named color image (red)"></b-img>
-    <b-img v-bind="propsTr" blank-color="black" alt="Named color image (black)"></b-img>
-    <b-img v-bind="propsTr" blank-color="#338833" alt="HEX color image"></b-img>
-    <b-img v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
-    <b-img v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
+    <BImg v-bind="propsTr" alt="Transparent image"></BImg>
+    <BImg v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></BImg>
+    <BImg v-bind="propsTr" blank-color="red" alt="Named color image (red)"></BImg>
+    <BImg v-bind="propsTr" blank-color="black" alt="Named color image (black)"></BImg>
+    <BImg v-bind="propsTr" blank-color="#338833" alt="HEX color image"></BImg>
+    <BImg v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></BImg>
+    <BImg v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></BImg>
   </div>
   <template #html>
 
 ```vue
 <template>
-  <b-img v-bind="propsTr" alt="Transparent image"></b-img>
-  <b-img v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></b-img>
-  <b-img v-bind="propsTr" blank-color="red" alt="Named color image (red)"></b-img>
-  <b-img v-bind="propsTr" blank-color="black" alt="Named color image (black)"></b-img>
-  <b-img v-bind="propsTr" blank-color="#338833" alt="HEX color image"></b-img>
-  <b-img v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></b-img>
-  <b-img v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></b-img>
+  <BImg v-bind="propsTr" alt="Transparent image"></BImg>
+  <BImg v-bind="propsTr" blank-color="#777" alt="HEX shorthand color image (#777)"></BImg>
+  <BImg v-bind="propsTr" blank-color="red" alt="Named color image (red)"></BImg>
+  <BImg v-bind="propsTr" blank-color="black" alt="Named color image (black)"></BImg>
+  <BImg v-bind="propsTr" blank-color="#338833" alt="HEX color image"></BImg>
+  <BImg v-bind="propsTr" blank-color="rgba(128, 255, 255, 0.5)" alt="RGBa color image"></BImg>
+  <BImg v-bind="propsTr" blank-color="#88f" alt="HEX shorthand color (#88f)"></BImg>
 </template>
 
 <script setup lang="ts">
@@ -258,7 +258,7 @@ const propsTr = {
 
 ## `srcset` support
 
-`<b-img>` supports the
+`<BImg>` supports the
 [`srcset` and `sizes` attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset)
 on images. The props accept either a string value, or an array of strings (the array of strings will
 be converted into a single string separated by commas).

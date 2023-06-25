@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-For cross browser consistency, `<b-form-checkbox-group>` and `<b-form-checkbox>` use Bootstrap's custom checkbox input to replace the browser default checkbox input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default checkbox input.
+For cross browser consistency, `<BFormCheckboxGroup>` and `<BFormCheckbox>` use Bootstrap's custom checkbox input to replace the browser default checkbox input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default checkbox input.
 
 </div>
 
@@ -26,18 +26,18 @@ For cross browser consistency, `<b-form-checkbox-group>` and `<b-form-checkbox>`
 
 If both `html` and `text` are provided, `html` will take precedence. Only basic/native HTML is supported in the `html` field (components will not work). Note that not all browsers will render inline html (i.e. `<i>`, `<strong>`, etc.) inside `<option>` elements of a `<select>`.
 
-<b-alert :model-value="true" variant="danger">
+<BAlert :model-value="true" variant="danger">
   <strong>Be cautious</strong> of placing user supplied content in the <code>html</code> field, as it may make you vulnerable to <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
   <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first <a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the user supplied string.
-</b-alert>
+</BAlert>
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 const options = ['A', 'B', 'C', {text: 'D', value: {d: 1}, disabled: true}, 'E', 'F']
 ```
 
-</b-card>
+</BCard>
 
 If an array entry is a string, it will be used for both the generated `value` and `text` fields.
 
@@ -46,7 +46,7 @@ You can mix using strings and [objects](#options-as-an-array-of-objects) in the 
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 const options = [
@@ -59,11 +59,11 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 ### Options as an array of objects
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 const options = [
@@ -75,7 +75,7 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 If `value` is missing, then `text` will be used as both the `value` and `text` fields. If you use
 the `html` property, you **must** supply a `value` property.
@@ -83,7 +83,7 @@ the `html` property, you **must** supply a `value` property.
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```ts
 const options = [
@@ -95,7 +95,7 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 ### Changing the option field names
 
@@ -104,7 +104,7 @@ If you want to customize the field property names (for example using `name` fiel
 `disabled-field` props to a string that contains the property name you would like to use:
 
 <HighlightCard>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx2Selected"
     :options="checkEx2Options"
     class="mb-3"
@@ -119,7 +119,7 @@ If you want to customize the field property names (for example using `name` fiel
 
 ```vue
 <template>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx2Selected"
     :options="checkEx2Options"
     class="mb-3"
@@ -149,7 +149,7 @@ const checkEx2Options = [
 
 ## Checkbox values and `v-model`
 
-By default, `<b-form-checkbox>` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the value and unchecked-value properties, respectively.
+By default, `<BFormCheckbox>` value will be true when checked and false when unchecked. You can customize the checked and unchecked values by specifying the value and unchecked-value properties, respectively.
 
 When you have multiple checkboxes that bind to a single data state variable, you must provide an array reference (`[ ]`) to your v-model.
 
@@ -157,33 +157,33 @@ Note that when v-model is bound to multiple checkboxes (i.e an array ref), the u
 
 To pre-check any checkboxes, set the v-model to the value(s) of the checks that you would like pre-selected.
 
-When placing individual `<b-form-checkbox>` components within a `<b-form-checkbox-group>`, most
-props and the `v-model` are inherited from the `<b-form-checkbox-group>`.
+When placing individual `<BFormCheckbox>` components within a `<BFormCheckboxGroup>`, most
+props and the `v-model` are inherited from the `<BFormCheckboxGroup>`.
 
 Note: the unchecked-value prop does not affect the native `<input>`'s `value` attribute, because browsers don't include unchecked boxes in form submissions. To guarantee that one of two values is submitted in a native `<form>` submit (e.g. 'yes' or 'no'), use radio inputs instead. This is the same limitation that Vue has with native checkbox inputs.
 
 <HighlightCard>
-  <b-form-checkbox
+  <BFormCheckbox
     v-for="(car, index) in availableCars"
     :key="index"
     v-model="selectedCars"
     :value="car"
   >
     {{ car }}
-  </b-form-checkbox>
+  </BFormCheckbox>
   <div class="mt-2">Selected: <strong>{{ concatSelectedCars}}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-checkbox
+  <BFormCheckbox
     v-for="(car, index) in availableCars"
     :key="index"
     v-model="selectedCars"
     :value="car"
   >
     {{ car }}
-  </b-form-checkbox>
+  </BFormCheckbox>
 
   Selected: <strong>{{ concatSelectedCars }}</strong>
 </template>
@@ -203,22 +203,22 @@ const concatSelectedCars = computed(() => {
 
 ### Multiple checkboxes and accessibility
 
-When binding multiple checkboxes together, you must set the name prop to the same value for all `<b-form-checkbox>`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
+When binding multiple checkboxes together, you must set the name prop to the same value for all `<BFormCheckbox>`s in the group individually. This will inform users of assistive technologies that the checkboxes are related and enables native browser keyboard navigation.
 
 ## Inline and stacked checkboxes
 
-`<b-form-checkbox-group>` components render inline checkboxes by default, while `<b-form-checkbox>`
+`<BFormCheckboxGroup>` components render inline checkboxes by default, while `<BFormCheckbox>`
 renders block-level (stacked) checkboxes.
 
-Set the prop `stacked` on `<b-form-checkbox-group>` to place each form control one over the other,
-or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set the `inline` prop on
-`<b-form-checkbox>`.
+Set the prop `stacked` on `<BFormCheckboxGroup>` to place each form control one over the other,
+or if using individual checkboxes not inside a `<BFormCheckboxGroup>`, set the `inline` prop on
+`<BFormCheckbox>`.
 
 <HighlightCard>
   <div class="my-2">
     <label>Form-checkbox-group inline checkboxes (default)</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx3Selected"
     :options="checkEx3Options"
     name="flavour-1a"
@@ -226,7 +226,7 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
   <div class="my-2">
     <label>Form-checkbox-group stacked checkboxes</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx3Selected"
     :options="checkEx3Options"
     name="flavour-2a"
@@ -235,7 +235,7 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
   <div class="my-2">
     <label>Individual stacked checkboxes (default)</label>
   </div>
-  <b-form-checkbox
+  <BFormCheckbox
     v-for="option in checkEx3Options"
     v-model="checkEx3Selected"
     :key="option.value"
@@ -243,11 +243,11 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
     name="flavour-3a"
   >
     {{ option.text }}
-  </b-form-checkbox>
+  </BFormCheckbox>
   <div class="my-2">
       <label>Individual inline checkboxes</label>
   </div>
-  <b-form-checkbox
+  <BFormCheckbox
     v-for="option in checkEx3Options"
     v-model="checkEx3Selected"
     :key="option.value"
@@ -256,7 +256,7 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
     inline
   >
     {{ option.text }}
-  </b-form-checkbox>
+  </BFormCheckbox>
   <template #html>
 
 ```vue-html
@@ -264,7 +264,7 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
   <label>Form-checkbox-group inline checkboxes (default)</label>
 </div>
 
-<b-form-checkbox-group
+<BFormCheckboxGroup
   v-model="checkEx3Selected"
   :options="checkEx3Options"
   name="flavour-1a"
@@ -274,7 +274,7 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
   <label>Form-checkbox-group stacked checkboxes</label>
 </div>
 
-<b-form-checkbox-group
+<BFormCheckboxGroup
   v-model="checkEx3Selected"
   :options="checkEx3Options"
   name="flavour-2a"
@@ -285,7 +285,7 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
   <label>Individual stacked checkboxes (default)</label>
 </div>
 
-<b-form-checkbox
+<BFormCheckbox
   v-for="option in checkEx3Options"
   v-model="checkEx3Selected"
   :key="option.value"
@@ -293,13 +293,13 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
   name="flavour-3a"
 >
   {{ option.text }}
-</b-form-checkbox>
+</BFormCheckbox>
 
 <div class="my-2">
   <label>Individual inline checkboxes</label>
 </div>
 
-<b-form-checkbox
+<BFormCheckbox
   v-for="option in checkEx3Options"
   v-model="checkEx3Selected"
   :key="option.value"
@@ -308,7 +308,7 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
   inline
 >
   {{ option.text }}
-</b-form-checkbox>
+</BFormCheckbox>
 ```
 
   </template>
@@ -319,15 +319,15 @@ or if using individual checkboxes not inside a `<b-form-checkbox-group>`, set th
 Use the `size` prop to control the size of the checkbox. The default size is medium. Supported size values are `sm` (small) and `lg` (large).
 
 <HighlightCard>
-  <b-form-checkbox size="sm">Small</b-form-checkbox>
-  <b-form-checkbox>Default</b-form-checkbox>
-  <b-form-checkbox size="lg">Large</b-form-checkbox>
+  <BFormCheckbox size="sm">Small</BFormCheckbox>
+  <BFormCheckbox>Default</BFormCheckbox>
+  <BFormCheckbox size="lg">Large</BFormCheckbox>
   <template #html>
 
 ```vue-html
-<b-form-checkbox size="sm">Small</b-form-checkbox>
-<b-form-checkbox>Default</b-form-checkbox>
-<b-form-checkbox size="lg">Large</b-form-checkbox>
+<BFormCheckbox size="sm">Small</BFormCheckbox>
+<BFormCheckbox>Default</BFormCheckbox>
+<BFormCheckbox size="lg">Large</BFormCheckbox>
 ```
 
   </template>
@@ -343,26 +343,26 @@ Button style checkboxes will have the class .active automatically applied to the
 
 A single checkbox can be rendered with a button appearance by setting the prop button to true.
 
-Change the button variant by setting the button-variant prop to one of the standard Bootstrap button variants (see `<b-button>` for supported variants). The default variant is secondary.
+Change the button variant by setting the button-variant prop to one of the standard Bootstrap button variants (see `<BButton>` for supported variants). The default variant is secondary.
 
 <HighlightCard>
-  <b-form-checkbox v-model="button1Checked" class="m-2" button>
+  <BFormCheckbox v-model="button1Checked" class="m-2" button>
     Button Checkbox (Checked: {{ button1Checked }})
-  </b-form-checkbox>
-  <b-form-checkbox v-model="button2Checked" class="m-2" button button-variant="danger">
+  </BFormCheckbox>
+  <BFormCheckbox v-model="button2Checked" class="m-2" button button-variant="danger">
     Button Checkbox (Checked: {{ button2Checked }})
-  </b-form-checkbox>
+  </BFormCheckbox>
   <template #html>
 
 ```vue
 <template>
-  <b-form-checkbox v-model="button1Checked" button>
+  <BFormCheckbox v-model="button1Checked" button>
     Button Checkbox (Checked: {{ button1Checked }})
-  </b-form-checkbox>
+  </BFormCheckbox>
 
-  <b-form-checkbox v-model="button2Checked" button button-variant="danger">
+  <BFormCheckbox v-model="button2Checked" button button-variant="danger">
     Button Checkbox (Checked: {{ button2Checked }})
-  </b-form-checkbox>
+  </BFormCheckbox>
 </template>
 
 <script setup lang="ts">
@@ -377,15 +377,15 @@ const button2Checked = ref(false)
 ### Grouped button style checkboxes
 
 Render groups of checkboxes with the look of a button-group by setting the prop `buttons` on
-`<b-form-checkbox-group>`. Change the button variant by setting the `button-variant` prop to one of
-the standard Bootstrap button variants (see [`<b-button>`](/docs/components/button) for supported
+`<BFormCheckboxGroup>`. Change the button variant by setting the `button-variant` prop to one of
+the standard Bootstrap button variants (see [`<BButton>`](/docs/components/button) for supported
 variants). The default `button-variant` is `secondary`.
 
 <HighlightCard>
   <div class="my-2">
     <label>Form-checkbox-group inline checkboxes (default)</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx3Selected"
     :options="checkEx3Options"
     name="buttons-1"
@@ -394,7 +394,7 @@ variants). The default `button-variant` is `secondary`.
   <div class="my-2">
     <label>Button-group style checkboxes with variant primary and large buttons</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx3Selected"
     :options="checkEx3Options"
     buttons
@@ -405,7 +405,7 @@ variants). The default `button-variant` is `secondary`.
   <div class="my-2">
     <label>Stacked (vertical) button-group style checkboxes</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx3Selected"
     :options="checkEx3Options"
     stacked
@@ -419,7 +419,7 @@ variants). The default `button-variant` is `secondary`.
     <label>Form-checkbox-group inline checkboxes (default)</label>
   </div>
 
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx3Selected"
     :options="checkEx3Options"
     name="buttons-1"
@@ -430,7 +430,7 @@ variants). The default `button-variant` is `secondary`.
     <label>Button-group style checkboxes with variant primary and large buttons</label>
   </div>
 
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="checkEx3Selected"
     :options="checkEx3Options"
     buttons
@@ -443,7 +443,7 @@ variants). The default `button-variant` is `secondary`.
     <label>Stacked (vertical) button-group style checkboxes</label>
   </div>
 
-  <b-form-checkbox-group v-model="checkEx3Selected" :options="checkEx3Options" stacked buttons />
+  <BFormCheckboxGroup v-model="checkEx3Selected" :options="checkEx3Options" stacked buttons />
 </template>
 
 <script setup lang="ts">
@@ -463,7 +463,7 @@ const checkEx3Options = [
 
 ## Switch style checkboxes
 
-Switch styling is supported on `<b-form-checkbox>` and `<b-form-checkbox-group>` components.
+Switch styling is supported on `<BFormCheckbox>` and `<BFormCheckboxGroup>` components.
 
 **Note:** If the checkbox is in [button mode](#button-style-checkboxes), switch mode will have no
 effect.
@@ -473,14 +473,14 @@ effect.
 A single checkbox can be rendered with a switch appearance by setting the prop switch to true.
 
 <HighlightCard>
-  <b-form-checkbox v-model="switchChecked" switch>Switch Checkbox <strong>(Checked: {{ switchChecked }})</strong></b-form-checkbox>
+  <BFormCheckbox v-model="switchChecked" switch>Switch Checkbox <strong>(Checked: {{ switchChecked }})</strong></BFormCheckbox>
   <template #html>
 
 ```vue
 <template>
-  <b-form-checkbox v-model="switchChecked" switch>
+  <BFormCheckbox v-model="switchChecked" switch>
     Switch Checkbox <strong>(Checked: {{ switchChecked }})</strong>
-  </b-form-checkbox>
+  </BFormCheckbox>
 </template>
 
 <script setup lang="ts">
@@ -494,13 +494,13 @@ const switchChecked = ref(false)
 ### Grouped switch style checkboxes
 
 Render groups of checkboxes with the look of a switches by setting the prop `switches` on
-`<b-form-checkbox-group>`.
+`<BFormCheckboxGroup>`.
 
 <HighlightCard>
   <div class="my-2">
     <label>Inline switch style checkboxes</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="groupSwitchSelected"
     :options="groupSwitchOptions"
     switches
@@ -508,7 +508,7 @@ Render groups of checkboxes with the look of a switches by setting the prop `swi
   <div class="my-2">
     <label>Stacked (vertical) switch style checkboxes</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="groupSwitchSelected"
     :options="groupSwitchOptions"
     switches
@@ -522,13 +522,13 @@ Render groups of checkboxes with the look of a switches by setting the prop `swi
     <label>Inline switch style checkboxes</label>
   </div>
 
-  <b-form-checkbox-group v-model="groupSwitchSelected" :options="groupSwitchOptions" switches />
+  <BFormCheckboxGroup v-model="groupSwitchSelected" :options="groupSwitchOptions" switches />
 
   <div class="my-2">
     <label>Stacked (vertical) switch style checkboxes</label>
   </div>
 
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="groupSwitchSelected"
     :options="groupSwitchOptions"
     switches
@@ -557,36 +557,36 @@ Use the `size` prop to control the size of the switch. The default size is mediu
 values are `sm` (small) and `lg` (large).
 
 <HighlightCard>
-  <b-form-checkbox switch size="sm">Small</b-form-checkbox>
-  <b-form-checkbox switch>Default</b-form-checkbox>
-  <b-form-checkbox switch size="lg">Large</b-form-checkbox>
+  <BFormCheckbox switch size="sm">Small</BFormCheckbox>
+  <BFormCheckbox switch>Default</BFormCheckbox>
+  <BFormCheckbox switch size="lg">Large</BFormCheckbox>
   <template #html>
 
 ```vue-html
-<b-form-checkbox switch size="sm">Small</b-form-checkbox>
-<b-form-checkbox switch>Default</b-form-checkbox>
-<b-form-checkbox switch size="lg">Large</b-form-checkbox>
+<BFormCheckbox switch size="sm">Small</BFormCheckbox>
+<BFormCheckbox switch>Default</BFormCheckbox>
+<BFormCheckbox switch size="lg">Large</BFormCheckbox>
 ```
 
   </template>
 </HighlightCard>
 
-Sizes can be set on individual `<b-form-checkbox>` components, or inherited from the size setting of
-`<b-form-checkbox-group>`.
+Sizes can be set on individual `<BFormCheckbox>` components, or inherited from the size setting of
+`<BFormCheckboxGroup>`.
 
 **Note:** Bootstrap v5.x does not natively support sizes for the custom switch control. However,
 bootstrap-vue-next includes custom SCSS/CSS that adds support for sizing the custom switches.
 
 ## Non-custom check inputs (plain)
 
-You can have `<b-form-checkbox-group>` or `<b-form-checkbox>` render a browser native checkbox input
+You can have `<BFormCheckboxGroup>` or `<BFormCheckbox>` render a browser native checkbox input
 by setting the `plain` prop.
 
 <HighlightCard>
   <div class="my-2">
     <label>Plain inline checkboxes</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="groupSwitchSelected"
     :options="groupSwitchOptions"
     plain
@@ -594,7 +594,7 @@ by setting the `plain` prop.
   <div class="my-2">
     <label>Plain stacked checkboxes</label>
   </div>
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="groupSwitchSelected"
     :options="groupSwitchOptions"
     plain
@@ -607,7 +607,7 @@ by setting the `plain` prop.
   <label>Plain inline checkboxes</label>
 </div>
 
-<b-form-checkbox-group
+<BFormCheckboxGroup
   v-model="groupSwitchSelected"
   :options="groupSwitchOptions"
   plain
@@ -617,7 +617,7 @@ by setting the `plain` prop.
   <label>Plain stacked checkboxes</label>
 </div>
 
-<b-form-checkbox-group
+<BFormCheckboxGroup
   v-model="groupSwitchSelected"
   :options="groupSwitchOptions"
   plain
@@ -638,7 +638,7 @@ Generally speaking, you'll want to use a particular state for specific types of 
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
-To apply one of the contextual state icons on `<b-form-checkbox>`, set the `state` prop to `false`
+To apply one of the contextual state icons on `<BFormCheckbox>`, set the `state` prop to `false`
 (for invalid), `true` (for valid), or `null` (no validation state).
 
 **Note:** Contextual states are **not** supported when in button mode.
@@ -646,33 +646,33 @@ To apply one of the contextual state icons on `<b-form-checkbox>`, set the `stat
 ### Contextual state and validation example
 
 <HighlightCard>
-  <b-form-checkbox :state="false">Checkbox state false</b-form-checkbox>
-  <b-form-checkbox :state="true">Checkbox state true</b-form-checkbox>
-  <b-form-checkbox>Checkbox state null</b-form-checkbox>
-  <b-form-checkbox-group
+  <BFormCheckbox :state="false">Checkbox state false</BFormCheckbox>
+  <BFormCheckbox :state="true">Checkbox state true</BFormCheckbox>
+  <BFormCheckbox>Checkbox state null</BFormCheckbox>
+  <BFormCheckboxGroup
     v-model="contextualSelected"
     :options="contextualStateOptions"
     :state="contextualState"
     name="checkbox-validation"
   >
-  </b-form-checkbox-group>
+  </BFormCheckboxGroup>
   <div v-if="!contextualState">Please select two</div>
   <div v-if="contextualState">Thank you</div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-checkbox :state="false">Checkbox state false</b-form-checkbox>
-  <b-form-checkbox :state="true">Checkbox state true</b-form-checkbox>
-  <b-form-checkbox>Checkbox state null</b-form-checkbox>
+  <BFormCheckbox :state="false">Checkbox state false</BFormCheckbox>
+  <BFormCheckbox :state="true">Checkbox state true</BFormCheckbox>
+  <BFormCheckbox>Checkbox state null</BFormCheckbox>
 
-  <b-form-checkbox-group
+  <BFormCheckboxGroup
     v-model="contextualSelected"
     :options="contextualStateOptions"
     :state="contextualState"
     name="checkbox-validation"
   >
-  </b-form-checkbox-group>
+  </BFormCheckboxGroup>
 
   <div v-if="!contextualState">Please select two</div>
   <div v-if="contextualState">Thank you</div>
@@ -696,21 +696,21 @@ const contextualState = computed(() => contextualSelected.value.length === 2)
 
 ### Required constraint
 
-When using individual `<b-form-checkbox>` components (not in a `<b-form-checkbox-group>`), and you
+When using individual `<BFormCheckbox>` components (not in a `<BFormCheckboxGroup>`), and you
 want the checkbox(es) to be `required` in your form, you **must** provide a `name` on each
-`<b-form-checkbox>` in order for the required constraint to work. All `<b-form-checkbox>` components
+`<BFormCheckbox>` in order for the required constraint to work. All `<BFormCheckbox>` components
 tied to the same `v-model` **must** have the same `name`.
 
 The `name` is required in order for Assistive Technologies (such as screen readers, and keyboard
 only users) to know which checkboxes belong to the same form variable (the name also automatically
 enables native browser keyboard navigation), hence `required` will only work if `name` is set.
-`<b-form-checkbox-group>` will automatically generate a unique input name if one is not provided on
+`<BFormCheckboxGroup>` will automatically generate a unique input name if one is not provided on
 the group.
 
 ## Autofocus
 
-When the `autofocus` prop is set on `<b-form-checkbox>`, the input will be auto-focused when it is
-inserted (i.e. **mounted**) into the document, or re-activated when inside a Vue `<keep-alive>`
+When the `autofocus` prop is set on `<BFormCheckbox>`, the input will be auto-focused when it is
+inserted (i.e. **mounted**) into the document, or re-activated when inside a Vue `<KeepAlive>`
 component. Note that this prop **does not** set the `autofocus` attribute on the input, nor can it
 tell when the input becomes visible.
 
@@ -722,10 +722,10 @@ Visually, there are actually three states a checkbox can be in: checked, uncheck
 
 The indeterminate state is **visual only**. The checkbox is still either checked or unchecked as a value. That means the visual indeterminate state masks the real value of the checkbox, so that better make sense in your UI!.
 
-`<b-form-checkbox>` supports setting this visual indeterminate state via the indeterminate prop (defaults to false). Clicking the checkbox will clear its indeterminate state.
+`<BFormCheckbox>` supports setting this visual indeterminate state via the indeterminate prop (defaults to false). Clicking the checkbox will clear its indeterminate state.
 
 <HighlightCard>
-  <b-form-checkbox v-model="intermChecked" :indeterminate="true">Click me to see what happens</b-form-checkbox>
+  <BFormCheckbox v-model="intermChecked" :indeterminate="true">Click me to see what happens</BFormCheckbox>
   <div class="mt-2">
     Checked: <strong>{{ intermChecked }}</strong>
   </div>
@@ -733,7 +733,7 @@ The indeterminate state is **visual only**. The checkbox is still either checked
 
 ```vue
 <template>
-  <b-form-checkbox :indeterminate="true">Click me to see what happens</b-form-checkbox>
+  <BFormCheckbox :indeterminate="true">Click me to see what happens</BFormCheckbox>
 </template>
 
 <script setup lang="ts">

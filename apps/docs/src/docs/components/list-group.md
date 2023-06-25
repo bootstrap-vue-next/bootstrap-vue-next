@@ -15,23 +15,23 @@ List Groups are a flexible and powerful component for displaying a series of con
 </div>
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item>Cras justo odio</b-list-group-item>
-    <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-    <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-    <b-list-group-item>Vestibulum at eros</b-list-group-item>
-  </b-list-group>
+  <BListGroup>
+    <BListGroupItem>Cras justo odio</BListGroupItem>
+    <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+    <BListGroupItem>Morbi leo risus</BListGroupItem>
+    <BListGroupItem>Porta ac consectetur ac</BListGroupItem>
+    <BListGroupItem>Vestibulum at eros</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item>Cras justo odio</b-list-group-item>
-  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-  <b-list-group-item>Morbi leo risus</b-list-group-item>
-  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-  <b-list-group-item>Vestibulum at eros</b-list-group-item>
-</b-list-group>
+<BListGroup>
+  <BListGroupItem>Cras justo odio</BListGroupItem>
+  <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+  <BListGroupItem>Morbi leo risus</BListGroupItem>
+  <BListGroupItem>Porta ac consectetur ac</BListGroupItem>
+  <BListGroupItem>Vestibulum at eros</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -39,26 +39,26 @@ List Groups are a flexible and powerful component for displaying a series of con
 
 ## Active items
 
-Set the `active` prop on a `<b-list-group-item>` to indicate the current active selection.
+Set the `active` prop on a `<BListGroupItem>` to indicate the current active selection.
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item>Cras justo odio</b-list-group-item>
-    <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-    <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-    <b-list-group-item>Vestibulum at eros</b-list-group-item>
-  </b-list-group>
+  <BListGroup>
+    <BListGroupItem>Cras justo odio</BListGroupItem>
+    <BListGroupItem active>Dapibus ac facilisis in</BListGroupItem>
+    <BListGroupItem>Morbi leo risus</BListGroupItem>
+    <BListGroupItem>Porta ac consectetur ac</BListGroupItem>
+    <BListGroupItem>Vestibulum at eros</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item>Cras justo odio</b-list-group-item>
-  <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item>
-  <b-list-group-item>Morbi leo risus</b-list-group-item>
-  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-  <b-list-group-item>Vestibulum at eros</b-list-group-item>
-</b-list-group>
+<BListGroup>
+  <BListGroupItem>Cras justo odio</BListGroupItem>
+  <BListGroupItem active>Dapibus ac facilisis in</BListGroupItem>
+  <BListGroupItem>Morbi leo risus</BListGroupItem>
+  <BListGroupItem>Porta ac consectetur ac</BListGroupItem>
+  <BListGroupItem>Vestibulum at eros</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -66,27 +66,27 @@ Set the `active` prop on a `<b-list-group-item>` to indicate the current active 
 
 ## Disabled items
 
-Set the `disabled` prop on a `<b-list-group-item>` to make it appear disabled (also works with
+Set the `disabled` prop on a `<BListGroupItem>` to make it appear disabled (also works with
 actionable items. see below).
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item disabled>Cras justo odio</b-list-group-item>
-    <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-    <b-list-group-item disabled>Porta ac consectetur ac</b-list-group-item>
-    <b-list-group-item>Vestibulum at eros</b-list-group-item>
-  </b-list-group>
+  <BListGroup>
+    <BListGroupItem disabled>Cras justo odio</BListGroupItem>
+    <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+    <BListGroupItem>Morbi leo risus</BListGroupItem>
+    <BListGroupItem disabled>Porta ac consectetur ac</BListGroupItem>
+    <BListGroupItem>Vestibulum at eros</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item disabled>Cras justo odio</b-list-group-item>
-  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-  <b-list-group-item>Morbi leo risus</b-list-group-item>
-  <b-list-group-item disabled>Porta ac consectetur ac</b-list-group-item>
-  <b-list-group-item>Vestibulum at eros</b-list-group-item>
-</b-list-group>
+<BListGroup>
+  <BListGroupItem disabled>Cras justo odio</BListGroupItem>
+  <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+  <BListGroupItem>Morbi leo risus</BListGroupItem>
+  <BListGroupItem disabled>Porta ac consectetur ac</BListGroupItem>
+  <BListGroupItem>Vestibulum at eros</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -94,25 +94,25 @@ actionable items. see below).
 
 ## Actionable list group items
 
-Turn a `<b-list-group-item>` into an actionable _link_ (`<a href="...">`) by specifying either an
+Turn a `<BListGroupItem>` into an actionable _link_ (`<a href="...">`) by specifying either an
 `href` prop or ~~[router-link](/docs/reference/router-links)~~ `to` prop.
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item href="#some-link">Awesome link</b-list-group-item>
-    <b-list-group-item href="#" active>Link with active state</b-list-group-item>
-    <b-list-group-item href="#">Action links are easy</b-list-group-item>
-    <b-list-group-item href="#foobar" disabled>Disabled link</b-list-group-item>
-  </b-list-group>
+  <BListGroup>
+    <BListGroupItem href="#some-link">Awesome link</BListGroupItem>
+    <BListGroupItem href="#" active>Link with active state</BListGroupItem>
+    <BListGroupItem href="#">Action links are easy</BListGroupItem>
+    <BListGroupItem href="#foobar" disabled>Disabled link</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item href="#some-link">Awesome link</b-list-group-item>
-  <b-list-group-item href="#" active>Link with active state</b-list-group-item>
-  <b-list-group-item href="#">Action links are easy</b-list-group-item>
-  <b-list-group-item href="#foobar" disabled>Disabled link</b-list-group-item>
-</b-list-group>
+<BListGroup>
+  <BListGroupItem href="#some-link">Awesome link</BListGroupItem>
+  <BListGroupItem href="#" active>Link with active state</BListGroupItem>
+  <BListGroupItem href="#">Action links are easy</BListGroupItem>
+  <BListGroupItem href="#foobar" disabled>Disabled link</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -121,21 +121,21 @@ Turn a `<b-list-group-item>` into an actionable _link_ (`<a href="...">`) by spe
 Or if you prefer `<button>` elements over links, set the `button` prop to `true`.
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item button>Button item</b-list-group-item>
-    <b-list-group-item button>I am a button</b-list-group-item>
-    <b-list-group-item button disabled>Disabled button</b-list-group-item>
-    <b-list-group-item button>This is a button too</b-list-group-item>
-  </b-list-group>
+  <BListGroup>
+    <BListGroupItem button>Button item</BListGroupItem>
+    <BListGroupItem button>I am a button</BListGroupItem>
+    <BListGroupItem button disabled>Disabled button</BListGroupItem>
+    <BListGroupItem button>This is a button too</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item button>Button item</b-list-group-item>
-  <b-list-group-item button>I am a button</b-list-group-item>
-  <b-list-group-item button disabled>Disabled button</b-list-group-item>
-  <b-list-group-item button>This is a button too</b-list-group-item>
-</b-list-group>
+<BListGroup>
+  <BListGroupItem button>Button item</BListGroupItem>
+  <BListGroupItem button>I am a button</BListGroupItem>
+  <BListGroupItem button disabled>Disabled button</BListGroupItem>
+  <BListGroupItem button>This is a button too</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -156,31 +156,31 @@ Use contextual variants to style list items with a stateful background and color
 prop.
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item>Default list group item</b-list-group-item>
-    <b-list-group-item variant="primary">Primary list group item</b-list-group-item>
-    <b-list-group-item variant="secondary">Secondary list group item</b-list-group-item>
-    <b-list-group-item variant="success">Success list group item</b-list-group-item>
-    <b-list-group-item variant="danger">Danger list group item</b-list-group-item>
-    <b-list-group-item variant="warning">Warning list group item</b-list-group-item>
-    <b-list-group-item variant="info">Info list group item</b-list-group-item>
-    <b-list-group-item variant="light">Light list group item</b-list-group-item>
-    <b-list-group-item variant="dark">Dark list group item</b-list-group-item>
-  </b-list-group>
+  <BListGroup>
+    <BListGroupItem>Default list group item</BListGroupItem>
+    <BListGroupItem variant="primary">Primary list group item</BListGroupItem>
+    <BListGroupItem variant="secondary">Secondary list group item</BListGroupItem>
+    <BListGroupItem variant="success">Success list group item</BListGroupItem>
+    <BListGroupItem variant="danger">Danger list group item</BListGroupItem>
+    <BListGroupItem variant="warning">Warning list group item</BListGroupItem>
+    <BListGroupItem variant="info">Info list group item</BListGroupItem>
+    <BListGroupItem variant="light">Light list group item</BListGroupItem>
+    <BListGroupItem variant="dark">Dark list group item</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item>Default list group item</b-list-group-item>
-  <b-list-group-item variant="primary">Primary list group item</b-list-group-item>
-  <b-list-group-item variant="secondary">Secondary list group item</b-list-group-item>
-  <b-list-group-item variant="success">Success list group item</b-list-group-item>
-  <b-list-group-item variant="danger">Danger list group item</b-list-group-item>
-  <b-list-group-item variant="warning">Warning list group item</b-list-group-item>
-  <b-list-group-item variant="info">Info list group item</b-list-group-item>
-  <b-list-group-item variant="light">Light list group item</b-list-group-item>
-  <b-list-group-item variant="dark">Dark list group item</b-list-group-item>
-</b-list-group>
+<BListGroup>
+  <BListGroupItem>Default list group item</BListGroupItem>
+  <BListGroupItem variant="primary">Primary list group item</BListGroupItem>
+  <BListGroupItem variant="secondary">Secondary list group item</BListGroupItem>
+  <BListGroupItem variant="success">Success list group item</BListGroupItem>
+  <BListGroupItem variant="danger">Danger list group item</BListGroupItem>
+  <BListGroupItem variant="warning">Warning list group item</BListGroupItem>
+  <BListGroupItem variant="info">Info list group item</BListGroupItem>
+  <BListGroupItem variant="light">Light list group item</BListGroupItem>
+  <BListGroupItem variant="dark">Dark list group item</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -191,31 +191,31 @@ present in the previous example. Also supported is the `active` state; set it to
 selection on a contextual list group item.
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item href="#">Default list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="primary">Primary list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="secondary">Secondary list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="success">Success list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="danger">Danger list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="warning">Warning list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="info">Info list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="light">Light list group item</b-list-group-item>
-    <b-list-group-item href="#" variant="dark">Dark list group item</b-list-group-item>
-  </b-list-group>
+  <BListGroup>
+    <BListGroupItem href="#">Default list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="primary">Primary list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="secondary">Secondary list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="success">Success list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="danger">Danger list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="warning">Warning list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="info">Info list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="light">Light list group item</BListGroupItem>
+    <BListGroupItem href="#" variant="dark">Dark list group item</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item href="#">Default list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="primary">Primary list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="secondary">Secondary list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="success">Success list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="danger">Danger list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="warning">Warning list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="info">Info list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="light">Light list group item</b-list-group-item>
-  <b-list-group-item href="#" variant="dark">Dark list group item</b-list-group-item>
-</b-list-group>
+<BListGroup>
+  <BListGroupItem href="#">Default list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="primary">Primary list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="secondary">Secondary list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="success">Success list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="danger">Danger list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="warning">Warning list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="info">Info list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="light">Light list group item</BListGroupItem>
+  <BListGroupItem href="#" variant="dark">Dark list group item</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -234,39 +234,39 @@ Add [badges](/docs/components/badge) to any list group item to show unread count
 more with the help of some [flex utility classes](/docs/reference/utility-classes).
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item class="d-flex justify-content-between align-items-center">
+  <BListGroup>
+    <BListGroupItem class="d-flex justify-content-between align-items-center">
       Cras justo odio
-      <b-badge variant="primary" pill>14</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex justify-content-between align-items-center">
+      <BBadge variant="primary" pill>14</BBadge>
+    </BListGroupItem>
+    <BListGroupItem class="d-flex justify-content-between align-items-center">
       Dapibus ac facilisis in
-      <b-badge variant="primary" pill>2</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex justify-content-between align-items-center">
+      <BBadge variant="primary" pill>2</BBadge>
+    </BListGroupItem>
+    <BListGroupItem class="d-flex justify-content-between align-items-center">
       Morbi leo risus
-      <b-badge variant="primary" pill>1</b-badge>
-    </b-list-group-item>
-  </b-list-group>
+      <BBadge variant="primary" pill>1</BBadge>
+    </BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item class="d-flex justify-content-between align-items-center">
+<BListGroup>
+  <BListGroupItem class="d-flex justify-content-between align-items-center">
     Cras justo odio
-    <b-badge variant="primary" pill>14</b-badge>
-  </b-list-group-item>
+    <BBadge variant="primary" pill>14</BBadge>
+  </BListGroupItem>
 
-  <b-list-group-item class="d-flex justify-content-between align-items-center">
+  <BListGroupItem class="d-flex justify-content-between align-items-center">
     Dapibus ac facilisis in
-    <b-badge variant="primary" pill>2</b-badge>
-  </b-list-group-item>
+    <BBadge variant="primary" pill>2</BBadge>
+  </BListGroupItem>
 
-  <b-list-group-item class="d-flex justify-content-between align-items-center">
+  <BListGroupItem class="d-flex justify-content-between align-items-center">
     Morbi leo risus
-    <b-badge variant="primary" pill>1</b-badge>
-  </b-list-group-item>
-</b-list-group>
+    <BBadge variant="primary" pill>1</BBadge>
+  </BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -277,23 +277,23 @@ more with the help of some [flex utility classes](/docs/reference/utility-classe
 Add the `numbered` property to opt into numbered list group items. Numbers are generated via CSS (as opposed to a `<ol>s` default browser styling) for better placement inside list group items and to allow for better customization.
 
 <HighlightCard>
-  <b-list-group numbered>
-    <b-list-group-item>Cras justo odioo</b-list-group-item>
-    <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-    <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-    <b-list-group-item>Vestibulum at eros</b-list-group-item>
-  </b-list-group>
+  <BListGroup numbered>
+    <BListGroupItem>Cras justo odioo</BListGroupItem>
+    <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+    <BListGroupItem>Morbi leo risus</BListGroupItem>
+    <BListGroupItem>Porta ac consectetur ac</BListGroupItem>
+    <BListGroupItem>Vestibulum at eros</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group numbered>
-  <b-list-group-item>Cras justo odioo</b-list-group-item>
-  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-  <b-list-group-item>Morbi leo risus</b-list-group-item>
-  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-  <b-list-group-item>Vestibulum at eros</b-list-group-item>
-</b-list-group>
+<BListGroup numbered>
+  <BListGroupItem>Cras justo odioo</BListGroupItem>
+  <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+  <BListGroupItem>Morbi leo risus</BListGroupItem>
+  <BListGroupItem>Porta ac consectetur ac</BListGroupItem>
+  <BListGroupItem>Vestibulum at eros</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -302,57 +302,57 @@ Add the `numbered` property to opt into numbered list group items. Numbers are g
 These work great with custom content as well.
 
 <HighlightCard>
-  <b-list-group numbered>
-    <b-list-group-item class="d-flex justify-content-between align-items-start">
+  <BListGroup numbered>
+    <BListGroupItem class="d-flex justify-content-between align-items-start">
       <div class="ms-2 me-auto">
         <div class="fw-bold">Subheading</div>
         Cras justo odio
       </div>
-      <b-badge variant="primary" pill>14</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex justify-content-between align-items-start">
+      <BBadge variant="primary" pill>14</BBadge>
+    </BListGroupItem>
+    <BListGroupItem class="d-flex justify-content-between align-items-start">
       <div class="ms-2 me-auto">
         <div class="fw-bold">Subheading</div>
         Dapibus ac facilisis in
         </div>
-        <b-badge variant="primary" pill>2</b-badge>
-    </b-list-group-item>
-    <b-list-group-item class="d-flex justify-content-between align-items-start">
+        <BBadge variant="primary" pill>2</BBadge>
+    </BListGroupItem>
+    <BListGroupItem class="d-flex justify-content-between align-items-start">
       <div class="ms-2 me-auto">
         <div class="fw-bold">Subheading</div>
         Morbi leo risus
       </div>
-      <b-badge variant="primary" pill>1</b-badge>
-    </b-list-group-item>
-  </b-list-group>
+      <BBadge variant="primary" pill>1</BBadge>
+    </BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group numbered>
-  <b-list-group-item class="d-flex justify-content-between align-items-start">
+<BListGroup numbered>
+  <BListGroupItem class="d-flex justify-content-between align-items-start">
     <div class="ms-2 me-auto">
       <div class="fw-bold">Subheading</div>
       Cras justo odio
     </div>
-    <b-badge variant="primary" pill>14</b-badge>
-  </b-list-group-item>
+    <BBadge variant="primary" pill>14</BBadge>
+  </BListGroupItem>
 
-  <b-list-group-item class="d-flex justify-content-between align-items-start">
+  <BListGroupItem class="d-flex justify-content-between align-items-start">
     <div class="ms-2 me-auto">
       <div class="fw-bold">Subheading</div>
       Dapibus ac facilisis in
     </div>
-    <b-badge variant="primary" pill>2</b-badge>
-  </b-list-group-item>
+    <BBadge variant="primary" pill>2</BBadge>
+  </BListGroupItem>
 
-  <b-list-group-item class="d-flex justify-content-between align-items-start">
+  <BListGroupItem class="d-flex justify-content-between align-items-start">
     <div class="ms-2 me-auto">
       <div class="fw-bold">Subheading</div>
       Morbi leo risus
     </div>
-    <b-badge variant="primary" pill>1</b-badge>
-  </b-list-group-item>
-</b-list-group>
+    <BBadge variant="primary" pill>1</BBadge>
+  </BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -363,68 +363,68 @@ With numbered set, the `b-list-group`is always rendered as a `ol`, while the `b-
 
 ## List Groups inside cards
 
-Incorporate list groups into [cards](/docs/components/card). Use the `<b-list-group>` prop `flush`
+Incorporate list groups into [cards](/docs/components/card). Use the `<BListGroup>` prop `flush`
 prop when using cards with `no-body` to make the sides of the list group flush with the card.
 
 <HighlightCard>
-  <b-card-group deck>
-    <b-card header="Card with list group">
-      <b-list-group>
-        <b-list-group-item href="#">Cras justo odio</b-list-group-item>
-        <b-list-group-item href="#">Dapibus ac facilisis in</b-list-group-item>
-        <b-list-group-item href="#">Vestibulum at eros</b-list-group-item>
-      </b-list-group>
+  <BCardGroup deck>
+    <BCard header="Card with list group">
+      <BListGroup>
+        <BListGroupItem href="#">Cras justo odio</BListGroupItem>
+        <BListGroupItem href="#">Dapibus ac facilisis in</BListGroupItem>
+        <BListGroupItem href="#">Vestibulum at eros</BListGroupItem>
+      </BListGroup>
       <p class="card-text mt-2">
         Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla tempor. Laborum
         consequat non elit enim exercitation cillum aliqua consequat id aliqua. Esse ex consectetur
         mollit voluptate est in duis laboris ad sit ipsum anim Lorem.
       </p>
-    </b-card>
-    <b-card no-body header="Card with flush list group">
-      <b-list-group flush>
-        <b-list-group-item href="#">Cras justo odio</b-list-group-item>
-        <b-list-group-item href="#">Dapibus ac facilisis in</b-list-group-item>
-        <b-list-group-item href="#">Vestibulum at eros</b-list-group-item>
-      </b-list-group>
-      <b-card-body>
+    </BCard>
+    <BCard no-body header="Card with flush list group">
+      <BListGroup flush>
+        <BListGroupItem href="#">Cras justo odio</BListGroupItem>
+        <BListGroupItem href="#">Dapibus ac facilisis in</BListGroupItem>
+        <BListGroupItem href="#">Vestibulum at eros</BListGroupItem>
+      </BListGroup>
+      <BCardBody>
         Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla tempor. Laborum
         consequat non elit enim exercitation cillum aliqua consequat id aliqua. Esse ex consectetur
         mollit voluptate est in duis laboris ad sit ipsum anim Lorem.
-      </b-card-body>
-    </b-card>
-  </b-card-group>
+      </BCardBody>
+    </BCard>
+  </BCardGroup>
   <template #html>
 
 ```vue-html
-<b-card-group deck>
-  <b-card header="Card with list group">
-    <b-list-group>
-      <b-list-group-item href="#">Cras justo odio</b-list-group-item>
-      <b-list-group-item href="#">Dapibus ac facilisis in</b-list-group-item>
-      <b-list-group-item href="#">Vestibulum at eros</b-list-group-item>
-    </b-list-group>
+<BCardGroup deck>
+  <BCard header="Card with list group">
+    <BListGroup>
+      <BListGroupItem href="#">Cras justo odio</BListGroupItem>
+      <BListGroupItem href="#">Dapibus ac facilisis in</BListGroupItem>
+      <BListGroupItem href="#">Vestibulum at eros</BListGroupItem>
+    </BListGroup>
 
     <p class="card-text mt-2">
       Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla tempor. Laborum
       consequat non elit enim exercitation cillum aliqua consequat id aliqua. Esse ex consectetur
       mollit voluptate est in duis laboris ad sit ipsum anim Lorem.
     </p>
-  </b-card>
+  </BCard>
 
-  <b-card no-body header="Card with flush list group">
-    <b-list-group flush>
-      <b-list-group-item href="#">Cras justo odio</b-list-group-item>
-      <b-list-group-item href="#">Dapibus ac facilisis in</b-list-group-item>
-      <b-list-group-item href="#">Vestibulum at eros</b-list-group-item>
-    </b-list-group>
+  <BCard no-body header="Card with flush list group">
+    <BListGroup flush>
+      <BListGroupItem href="#">Cras justo odio</BListGroupItem>
+      <BListGroupItem href="#">Dapibus ac facilisis in</BListGroupItem>
+      <BListGroupItem href="#">Vestibulum at eros</BListGroupItem>
+    </BListGroup>
 
-    <b-card-body>
+    <BCardBody>
       Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla tempor. Laborum
       consequat non elit enim exercitation cillum aliqua consequat id aliqua. Esse ex consectetur
       mollit voluptate est in duis laboris ad sit ipsum anim Lorem.
-    </b-card-body>
-  </b-card>
-</b-card-group>
+    </BCardBody>
+  </BCard>
+</BCardGroup>
 ```
 
   </template>
@@ -443,19 +443,19 @@ list group item.
 **Always horizontal:**
 
 <HighlightCard>
-  <b-list-group horizontal>
-    <b-list-group-item>Cras justo odio</b-list-group-item>
-    <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-  </b-list-group>
+  <BListGroup horizontal>
+    <BListGroupItem>Cras justo odio</BListGroupItem>
+    <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+    <BListGroupItem>Morbi leo risus</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group horizontal>
-  <b-list-group-item>Cras justo odio</b-list-group-item>
-  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-  <b-list-group-item>Morbi leo risus</b-list-group-item>
-</b-list-group>
+<BListGroup horizontal>
+  <BListGroupItem>Cras justo odio</BListGroupItem>
+  <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+  <BListGroupItem>Morbi leo risus</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -464,19 +464,19 @@ list group item.
 **Horizontal at breakpoint `md` and above:**
 
 <HighlightCard>
-  <b-list-group horizontal="md">
-    <b-list-group-item>Cras justo odio</b-list-group-item>
-    <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-    <b-list-group-item>Morbi leo risus</b-list-group-item>
-  </b-list-group>
+  <BListGroup horizontal="md">
+    <BListGroupItem>Cras justo odio</BListGroupItem>
+    <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+    <BListGroupItem>Morbi leo risus</BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group horizontal="md">
-  <b-list-group-item>Cras justo odio</b-list-group-item>
-  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-  <b-list-group-item>Morbi leo risus</b-list-group-item>
-</b-list-group>
+<BListGroup horizontal="md">
+  <BListGroupItem>Cras justo odio</BListGroupItem>
+  <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+  <BListGroupItem>Morbi leo risus</BListGroupItem>
+</BListGroup>
 ```
 
   </template>
@@ -488,8 +488,8 @@ Add nearly any HTML or component within, even for linked list groups like the on
 help of [flexbox utility classes](/docs/reference/utility-classes).
 
 <HighlightCard>
-  <b-list-group>
-    <b-list-group-item href="#" active class="flex-column align-items-start">
+  <BListGroup>
+    <BListGroupItem href="#" active class="flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">List Group item heading</h5>
           <small>3 days ago</small>
@@ -498,8 +498,8 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
           Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
         </p>
         <small>Donec id elit non mi porta.</small>
-    </b-list-group-item>
-    <b-list-group-item href="#" class="flex-column align-items-start">
+    </BListGroupItem>
+    <BListGroupItem href="#" class="flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">List Group item heading</h5>
         <small class="text-muted">3 days ago</small>
@@ -508,8 +508,8 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
       Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
       </p>
       <small class="text-muted">Donec id elit non mi porta.</small>
-    </b-list-group-item>
-    <b-list-group-item href="#" disabled class="flex-column align-items-start">
+    </BListGroupItem>
+    <BListGroupItem href="#" disabled class="flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">Disabled List Group item</h5>
         <small class="text-muted">3 days ago</small>
@@ -518,13 +518,13 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
       Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
       </p>
       <small class="text-muted">Donec id elit non mi porta.</small>
-    </b-list-group-item>
-  </b-list-group>
+    </BListGroupItem>
+  </BListGroup>
   <template #html>
 
 ```vue-html
-<b-list-group>
-  <b-list-group-item href="#" active class="flex-column align-items-start">
+<BListGroup>
+  <BListGroupItem href="#" active class="flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">List Group item heading</h5>
       <small>3 days ago</small>
@@ -535,9 +535,9 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
     </p>
 
     <small>Donec id elit non mi porta.</small>
-  </b-list-group-item>
+  </BListGroupItem>
 
-  <b-list-group-item href="#" class="flex-column align-items-start">
+  <BListGroupItem href="#" class="flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">List Group item heading</h5>
       <small class="text-muted">3 days ago</small>
@@ -548,9 +548,9 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
     </p>
 
     <small class="text-muted">Donec id elit non mi porta.</small>
-  </b-list-group-item>
+  </BListGroupItem>
 
-  <b-list-group-item href="#" disabled class="flex-column align-items-start">
+  <BListGroupItem href="#" disabled class="flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">Disabled List Group item</h5>
       <small class="text-muted">3 days ago</small>
@@ -561,8 +561,8 @@ help of [flexbox utility classes](/docs/reference/utility-classes).
     </p>
 
     <small class="text-muted">Donec id elit non mi porta.</small>
-  </b-list-group-item>
-</b-list-group>
+  </BListGroupItem>
+</BListGroup>
 ```
 
   </template>

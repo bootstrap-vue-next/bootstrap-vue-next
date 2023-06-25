@@ -190,26 +190,6 @@ describe('form-input', () => {
     expect($input.attributes('type')).toBe('number')
   })
 
-  it('renders text input when type not supported', () => {
-    const warnHandler = vitest.fn()
-
-    const wrapper = mount(BFormInput, {
-      global: {
-        config: {
-          warnHandler,
-        },
-      },
-      props: {
-        type: 'foobar',
-      },
-    })
-
-    const $input = wrapper.get('input')
-    expect($input.attributes('type')).toBe('text')
-
-    expect(warnHandler).toHaveBeenCalled()
-  })
-
   it('does not have is-valid or is-invalid classes when state is default', () => {
     const wrapper = mount(BFormInput)
 

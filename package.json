@@ -39,12 +39,12 @@
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
-    "release-please": "^15.10.4",
+    "release-please": "^15.11.0",
     "turbo": "latest"
   },
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@8.6.0"
+  "packageManager": "pnpm@8.6.3"
 }

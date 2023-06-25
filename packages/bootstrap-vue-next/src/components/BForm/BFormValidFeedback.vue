@@ -18,27 +18,28 @@ import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BFormValidFeedbackProps {
-  ariaLive?: string
-  forceShow?: Booleanish
-  id?: string
-  role?: string
-  text?: string
-  state?: Booleanish | null
-  tag?: string
-  tooltip?: Booleanish
-}
-
-const props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
-  id: undefined,
-  role: undefined,
-  text: undefined,
-  ariaLive: undefined,
-  forceShow: false,
-  tag: 'div',
-  tooltip: false,
-  state: null,
-})
+const props = withDefaults(
+  defineProps<{
+    ariaLive?: string
+    forceShow?: Booleanish
+    id?: string
+    role?: string
+    text?: string
+    state?: Booleanish | null
+    tag?: string
+    tooltip?: Booleanish
+  }>(),
+  {
+    id: undefined,
+    role: undefined,
+    text: undefined,
+    ariaLive: undefined,
+    forceShow: false,
+    tag: 'div',
+    tooltip: false,
+    state: null,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

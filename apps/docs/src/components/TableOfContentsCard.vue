@@ -1,13 +1,13 @@
 <template>
-  <b-card :body-text="description">
+  <BCard :body-text="description">
     <template #header>
-      <b-link :to="route">
+      <BLink :to="route">
         <h3 class="m-0">
           {{ name }}
         </h3>
-      </b-link>
+      </BLink>
     </template>
-  </b-card>
+  </BCard>
 </template>
 
 <script setup lang="ts">

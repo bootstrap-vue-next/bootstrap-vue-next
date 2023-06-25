@@ -22,36 +22,37 @@ import {useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 import {listGroupInjectionKey} from '../../utils'
 
-interface BListGroupItemProps {
-  action?: Booleanish
-  active?: Booleanish
-  // activeClass?: string
-  // append?: Booleanish
-  button?: Booleanish
-  disabled?: Booleanish
-  href?: string
-  // noPrefetch?: Booleanish
-  // prefetch?: Booleanish
-  // rel?: String
-  // replace?: Booleanish
-  // routerComponentName?: String
-  tag?: string
-  target?: LinkTarget
-  to?: RouteLocationRaw
-  variant?: ColorVariant | null
-}
-
-const props = withDefaults(defineProps<BListGroupItemProps>(), {
-  to: undefined,
-  variant: null,
-  href: undefined,
-  action: false,
-  active: false,
-  button: false,
-  disabled: false,
-  tag: 'div',
-  target: '_self',
-})
+const props = withDefaults(
+  defineProps<{
+    action?: Booleanish
+    active?: Booleanish
+    // activeClass?: string
+    // append?: Booleanish
+    button?: Booleanish
+    disabled?: Booleanish
+    href?: string
+    // noPrefetch?: Booleanish
+    // prefetch?: Booleanish
+    // rel?: String
+    // replace?: Booleanish
+    // routerComponentName?: String
+    tag?: string
+    target?: LinkTarget
+    to?: RouteLocationRaw
+    variant?: ColorVariant | null
+  }>(),
+  {
+    to: undefined,
+    variant: null,
+    href: undefined,
+    action: false,
+    active: false,
+    button: false,
+    disabled: false,
+    tag: 'div',
+    target: '_self',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

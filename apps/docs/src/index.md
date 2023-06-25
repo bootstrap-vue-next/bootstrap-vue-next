@@ -14,28 +14,28 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
 
 </div>
 
-<b-row cols="2" cols-lg="2">
-  <b-col class="text-center">
-    <b-link class="card-link" to="https://getbootstrap.com">
-      <b-card class="p-3">
-        <bootstrap-icon aria-hidden class="icon-lg" />
-        <b-card-text class="mt-4">
+<BRow cols="2" cols-lg="2">
+  <BCol class="text-center">
+    <BLink class="card-link" to="https://getbootstrap.com">
+      <BCard class="p-3">
+        <BootstrapIcon aria-hidden class="icon-lg" />
+        <BCardText class="mt-4">
           Bootstrap v5 is the world's most popular framework for building responsive, mobile-first sites.
-        </b-card-text>
-      </b-card>
-    </b-link>
-  </b-col>
-  <b-col class="text-center">
-    <b-link class="card-link" to="https://vuejs.org">
-      <b-card class="p-3">
-        <vue-icon aria-hidden class="icon-lg" />
-        <b-card-text class="mt-4">
+        </BCardText>
+      </BCard>
+    </BLink>
+  </BCol>
+  <BCol class="text-center">
+    <BLink class="card-link" to="https://vuejs.org">
+      <BCard class="p-3">
+        <VueIcon aria-hidden class="icon-lg" />
+        <BCardText class="mt-4">
           Vue.js (pronounced /vjuː/, like view) is a progressive framework for building user interfaces.
-        </b-card-text>
-      </b-card>
-    </b-link>
-  </b-col>
-</b-row>
+        </BCardText>
+      </BCard>
+    </BLink>
+  </BCol>
+</BRow>
 
 <p class="mb-2 d-flex small">Current Version:</p>
 <a href="https://www.npmjs.com/package/bootstrap-vue-next">
@@ -47,15 +47,15 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
 With more than 35 components, several directives and composibles (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
 
 <div class="d-flex gap-2 mt-4">
-  <b-button :to="withBase('/docs')" variant="primary">Get Started</b-button>
-  <b-button :href="globalData.githubUrl" target="_blank" aria-label="Open Github" rel="noopener" variant="outline-secondary">GitHub</b-button>
+  <BButton :to="withBase('/docs')" variant="primary">Get Started</BButton>
+  <BButton :href="globalData.githubUrl" target="_blank" aria-label="Open Github" rel="noopener" variant="outline-secondary">GitHub</BButton>
 </div>
 
 ## Integrate with Nuxt.js
 
 Easily integrate BootstrapVueNext into your Nuxt.js projects using our included Nuxt.js module. You can optionally specify only the components, directives and/or plugins you require.
 
-<b-button variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="mt-3">BootstrapVueNext Nuxt.js module</b-button>
+<BButton variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="mt-3">BootstrapVueNext Nuxt.js module</BButton>
 
 <script setup lang="ts">
 import {

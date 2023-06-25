@@ -26,97 +26,97 @@ Here's a quick example to demonstrate BootstrapVueNext's form styles. Keep readi
 supported components, form layout, and more.
 
 <HighlightCard>
-  <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-    <b-form-group
+  <BForm @submit="onSubmit" @reset="onReset" v-if="show">
+    <BFormGroup
       id="input-group-1"
       label="Email address:"
       label-for="input-1"
       description="We'll never share your email with anyone else."
     >
-      <b-form-input
+      <BFormInput
         id="input-1"
         v-model="form.email"
         type="email"
         placeholder="Enter email"
         required
-      ></b-form-input>
-    </b-form-group>
-    <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-      <b-form-input
+      ></BFormInput>
+    </BFormGroup>
+    <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
+      <BFormInput
         id="input-2"
         v-model="form.name"
         placeholder="Enter name"
         required
-      ></b-form-input>
-    </b-form-group>
-    <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-      <b-form-select
+      ></BFormInput>
+    </BFormGroup>
+    <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
+      <BFormSelect
         id="input-3"
         v-model="form.food"
         :options="foods"
         required
-      ></b-form-select>
-    </b-form-group>
-    <b-form-group id="input-group-4">
-      <b-form-checkbox-group
+      ></BFormSelect>
+    </BFormGroup>
+    <BFormGroup id="input-group-4">
+      <BFormCheckboxGroup
         v-model="form.checked"
         id="checkboxes-4"
       >
-        <b-form-checkbox value="me">Check me out</b-form-checkbox>
-        <b-form-checkbox value="that">Check that out</b-form-checkbox>
-      </b-form-checkbox-group>
-    </b-form-group>
-    <b-button type="submit" variant="primary" class="me-2">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
-  </b-form>
-  <b-card class="mt-3" header="Form Data Result">
+        <BFormCheckbox value="me">Check me out</BFormCheckbox>
+        <BFormCheckbox value="that">Check that out</BFormCheckbox>
+      </BFormCheckboxGroup>
+    </BFormGroup>
+    <BButton type="submit" variant="primary" class="me-2">Submit</BButton>
+    <BButton type="reset" variant="danger">Reset</BButton>
+  </BForm>
+  <BCard class="mt-3" header="Form Data Result">
     <pre class="m-0">{{ form }}</pre>
-  </b-card>
+  </BCard>
   <template #html>
 
 ```vue
 <template>
-  <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-    <b-form-group
+  <BForm @submit="onSubmit" @reset="onReset" v-if="show">
+    <BFormGroup
       id="input-group-1"
       label="Email address:"
       label-for="input-1"
       description="We'll never share your email with anyone else."
     >
-      <b-form-input
+      <BFormInput
         id="input-1"
         v-model="form.email"
         type="email"
         placeholder="Enter email"
         required
-      ></b-form-input>
-    </b-form-group>
+      ></BFormInput>
+    </BFormGroup>
 
-    <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-      <b-form-input
+    <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
+      <BFormInput
         id="input-2"
         v-model="form.name"
         placeholder="Enter name"
         required
-      ></b-form-input>
-    </b-form-group>
-    <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-      <b-form-select id="input-3" v-model="form.food" :options="foods" required></b-form-select>
-    </b-form-group>
+      ></BFormInput>
+    </BFormGroup>
+    <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
+      <BFormSelect id="input-3" v-model="form.food" :options="foods" required></BFormSelect>
+    </BFormGroup>
 
-    <b-form-group id="input-group-4">
-      <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-        <b-form-checkbox value="me">Check me out</b-form-checkbox>
-        <b-form-checkbox value="that">Check that out</b-form-checkbox>
-      </b-form-checkbox-group>
-    </b-form-group>
-    <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
-  </b-form>
+    <BFormGroup id="input-group-4">
+      <BFormCheckboxGroup v-model="form.checked" id="checkboxes-4">
+        <BFormCheckbox value="me">Check me out</BFormCheckbox>
+        <BFormCheckbox value="that">Check that out</BFormCheckbox>
+      </BFormCheckboxGroup>
+    </BFormGroup>
+    <BButton type="submit" variant="primary">Submit</BButton>
+    <BButton type="reset" variant="danger">Reset</BButton>
+  </BForm>
 
-  <b-card class="mt-3" header="Form Data Result">
+  <BCard class="mt-3" header="Form Data Result">
     <pre class="m-0">{{ form }}</pre>
-  </b-card>
+  </BCard>
 </template>
 
 <script setup lang="ts">
@@ -166,64 +166,64 @@ include a `<label>` with each form control, even if you need to hide it from non
 visitors with class `.visually-hidden`.
 
 <HighlightCard>
-  <b-form>
+  <BForm>
     <div class="row">
       <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
       <div class="col-lg-3">
-        <b-form-input
+        <BFormInput
           id="inline-form-input-name"
           class="mb-2 me-sm-2 mb-sm-0"
           placeholder="Jane Doe"
-        ></b-form-input>
+        ></BFormInput>
       </div>
       <label class="col-form-label visually-hidden" for="inline-form-input-username"
         >Username</label
       >
       <div class="col-lg-3">
-        <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
-          <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
-        </b-input-group>
+        <BInputGroup prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
+          <BFormInput id="inline-form-input-username" placeholder="Username"></BFormInput>
+        </BInputGroup>
       </div>
-      <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
-        >Remember me</b-form-checkbox
+      <BFormCheckbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
+        >Remember me</BFormCheckbox
       >
       <div class="col-lg-1">
-        <b-button variant="primary">Save</b-button>
+        <BButton variant="primary">Save</BButton>
       </div>
     </div>
-  </b-form>
+  </BForm>
   <template #html>
 
 ```vue-html
-<b-form>
+<BForm>
   <div class="row">
     <label class="col-form-label visually-hidden" for="inline-form-input-name">Name</label>
     <div class="col-lg-3">
-      <b-form-input
+      <BFormInput
         id="inline-form-input-name"
         class="mb-2 me-sm-2 mb-sm-0"
         placeholder="Jane Doe"
-      ></b-form-input>
+      ></BFormInput>
     </div>
 
     <label class="col-form-label visually-hidden" for="inline-form-input-username"
       >Username</label
     >
     <div class="col-lg-3">
-      <b-input-group prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
-        <b-form-input id="inline-form-input-username" placeholder="Username"></b-form-input>
-      </b-input-group>
+      <BInputGroup prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
+        <BFormInput id="inline-form-input-username" placeholder="Username"></BFormInput>
+      </BInputGroup>
     </div>
 
-    <b-form-checkbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
-      >Remember me</b-form-checkbox
+    <BFormCheckbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
+      >Remember me</BFormCheckbox
     >
 
     <div class="col-lg-1">
-      <b-button variant="primary">Save</b-button>
+      <BButton variant="primary">Save</BButton>
     </div>
   </div>
-</b-form>
+</BForm>
 ```
 
   </template>
@@ -232,51 +232,51 @@ visitors with class `.visually-hidden`.
 Custom form controls and selects are also supported.
 
 <HighlightCard>
-  <b-form>
+  <BForm>
     <div class="row">
       <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
         >Preference</label
       >
       <div class="col-lg-2">
-        <b-form-select
+        <BFormSelect
           id="inline-form-custom-select-pref"
           class="mb-2 me-sm-2 mb-sm-0"
           :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
           :value="null"
-        ></b-form-select>
+        ></BFormSelect>
       </div>
-      <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
-        >Remember my preference</b-form-checkbox
+      <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
+        >Remember my preference</BFormCheckbox
       >
       <div class="col-lg-2 col-form-label">
-        <b-button variant="primary">Save</b-button>
+        <BButton variant="primary">Save</BButton>
       </div>
     </div>
-  </b-form>
+  </BForm>
   <template #html>
 
 ```vue-html
-<b-form>
+<BForm>
   <div class="row">
     <label class="col-form-label col-lg-2 me-sm-2" for="inline-form-custom-select-pref"
       >Preference</label
     >
     <div class="col-lg-2">
-      <b-form-select
+      <BFormSelect
         id="inline-form-custom-select-pref"
         class="mb-2 me-sm-2 mb-sm-0"
         :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
         :value="null"
-      ></b-form-select>
+      ></BFormSelect>
     </div>
-    <b-form-checkbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
-      >Remember my preference</b-form-checkbox
+    <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
+      >Remember my preference</BFormCheckbox
     >
     <div class="col-lg-2 col-form-label">
-      <b-button variant="primary">Save</b-button>
+      <BButton variant="primary">Save</BButton>
     </div>
   </div>
-</b-form>
+</BForm>
 ```
 
   </template>
@@ -295,36 +295,36 @@ technologies may resort to using the `placeholder` attribute, if present, but no
 
 See also:
 
-- [`<b-form-input>`](/docs/components/form-input) Textual and text-like inputs
-- [`<b-form-textarea>`](/docs/components/form-textarea) Text area inputs
-- [`<b-form-select>`](/docs/components/form-select) Select input
-- [`<b-form-radio>`](/docs/components/form-radio) Radio Inputs
-- [`<b-form-checkbox>`](/docs/components/form-checkbox) Checkbox Inputs
-- ~~[`<b-form-file>`](/docs/components/form-file) File Input~~
-- ~~[`<b-form-datepicker>`](/docs/components/form-datepicker) Date picker input~~
-- ~~[`<b-form-spinbutton>`](/docs/components/form-spinbutton) Numerical range spinbutton input~~
-- ~~[`<b-form-tags>`](/docs/components/form-tags) Customizable tag input~~
-- ~~[`<b-form-timepicker>`](/docs/components/form-timepicker) Time picker custom form input~~
-- ~~[`<b-form-rating>`](/docs/components/form-rating) Star rating custom form input and display~~
-- [`<b-button>`](/docs/components/button) Buttons
-- [`<b-form-group>`](/docs/components/form-group) Form Input wrapper to generate form-groups that
+- [`<BFormInput>`](/docs/components/form-input) Textual and text-like inputs
+- [`<BFormTextarea>`](/docs/components/form-textarea) Text area inputs
+- [`<BFormSelect>`](/docs/components/form-select) Select input
+- [`<BFormRadio>`](/docs/components/form-radio) Radio Inputs
+- [`<BFormCheckbox>`](/docs/components/form-checkbox) Checkbox Inputs
+- ~~[`<BFormFile>`](/docs/components/form-file) File Input~~
+- ~~[`<BFormDatepicker>`](/docs/components/form-datepicker) Date picker input~~
+- ~~[`<BFormSpinButton>`](/docs/components/form-spinbutton) Numerical range spinbutton input~~
+- ~~[`<BFormTags>`](/docs/components/form-tags) Customizable tag input~~
+- ~~[`<BFormTimepicker>`](/docs/components/form-timepicker) Time picker custom form input~~
+- ~~[`<BFormRating>`](/docs/components/form-rating) Star rating custom form input and display~~
+- [`<BButton>`](/docs/components/button) Buttons
+- [`<BFormGroup>`](/docs/components/form-group) Form Input wrapper to generate form-groups that
   support labels, help text and feedback
-- [`<b-input-group>`](/docs/components/input) Form Inputs with add-ons
-- ~~[`<b-form-row>`](/docs/components/layout) Create grid rows and columns with tighter margins
+- [`<BInputGroup>`](/docs/components/input) Form Inputs with add-ons
+- ~~[`<BFormRow>`](/docs/components/layout) Create grid rows and columns with tighter margins
   (available via the [Layout and grid components](/docs/components/layout))~~
 
 ## Form helper components
 
 The following helper components are available with the `Form` plugin:
 
-- `<b-form-text>` Help text blocks for inputs
-- `<b-form-invalid-feedback>` Invalid feedback text blocks for input `invalid` states
-- `<b-form-valid-feedback>` Valid feedback text blocks for input `valid` states
-- ~~`<b-form-datalist>` Easily create a `<datalist>` for use with `<b-form-input>` or plain `<input>`~~
+- `<BFormText>` Help text blocks for inputs
+- `<BFormInvalidFeedback>` Invalid feedback text blocks for input `invalid` states
+- `<BFormValidFeedback>` Valid feedback text blocks for input `valid` states
+- ~~`<BFormDatalist>` Easily create a `<datalist>` for use with `<BFormInput>` or plain `<input>`~~
 
 ### Form text helper
 
-Display a block of help text below an input with the `<b-form-text>` helper component. text is
+Display a block of help text below an input with the `<BFormText>` helper component. text is
 displayed with a muted color and slightly smaller font-size.
 
 **Tip:** Help text should be explicitly associated with the form control it relates to using the
@@ -332,33 +332,33 @@ displayed with a muted color and slightly smaller font-size.
 will announce this help text when the user focuses or enters the control.
 
 <HighlightCard>
-  <b-form @submit.stop.prevent>
+  <BForm @submit.stop.prevent>
     <label for="text-password">Password</label>
-    <b-form-input
+    <BFormInput
       type="password"
       id="text-password"
       aria-describedby="password-help-block"
-    ></b-form-input>
-    <b-form-text id="password-help-block">
+    ></BFormInput>
+    <BFormText id="password-help-block">
       Your password must be 8-20 characters long, contain letters and numbers, and must not
       contain spaces, special characters, or emoji.
-    </b-form-text>
-  </b-form>
+    </BFormText>
+  </BForm>
   <template #html>
 
 ```vue-html
-<b-form @submit.stop.prevent>
+<BForm @submit.stop.prevent>
   <label for="text-password">Password</label>
-  <b-form-input
+  <BFormInput
     type="password"
     id="text-password"
     aria-describedby="password-help-block"
-  ></b-form-input>
-  <b-form-text id="password-help-block">
+  ></BFormInput>
+  <BFormText id="password-help-block">
     Your password must be 8-20 characters long, contain letters and numbers, and must not
     contain spaces, special characters, or emoji.
-  </b-form-text>
-</b-form>
+  </BFormText>
+</BForm>
 ```
 
   </template>
@@ -366,7 +366,7 @@ will announce this help text when the user focuses or enters the control.
 
 ### Feedback helpers
 
-The `<b-form-valid-feedback>` and `<b-form-invalid-feedback>` helper components will display
+The `<BFormValidFeedback>` and `<BFormInvalidFeedback>` helper components will display
 feedback (based on input state) as a block of colored text. They rely on being placed after an input
 (sibling) and will show based on the browser native validation state of the input. To force them to
 show, set the prop `force-show` to `true`, or bind the controls `state` to the `state` prop of the
@@ -380,36 +380,36 @@ class). Note that tooltip style feedback may, since its positioning is static, o
 labels, etc.
 
 **Note:** Some form controls, such as
-[`<b-form-radio>`](/docs/components/form-radio#contextual-states),
-[`<b-form-checkbox>`](/docs/components/form-checkbox#contextual-states), and
-~~[`<b-form-file>`](/docs/components/form-file)~~ have wrapper elements which will prevent the feedback
+[`<BFormRadio>`](/docs/components/form-radio#contextual-states),
+[`<BFormCheckbox>`](/docs/components/form-checkbox#contextual-states), and
+~~[`<BFormFile>`](/docs/components/form-file)~~ have wrapper elements which will prevent the feedback
 text from automatically showing (as the feedback component is not a direct sibling of the form
 control's input). Use the feedback component's `state` prop (bound to the state of the form control)
 or the `force-show` prop to display the feedback.
 
 <HighlightCard>
-  <b-form  @submit.stop.prevent>
+  <BForm  @submit.stop.prevent>
     <label for="feedback-user">User Id</label>
-    <b-form-input v-model="userId" :state="validation" id="feedback-user"></b-form-input>
-    <b-form-invalid-feedback :state="validation">
+    <BFormInput v-model="userId" :state="validation" id="feedback-user"></BFormInput>
+    <BFormInvalidFeedback :state="validation">
       Your user Id must be 5-12 characters long.
-    </b-form-invalid-feedback>
-    <b-form-valid-feedback :state="validation">
+    </BFormInvalidFeedback>
+    <BFormValidFeedback :state="validation">
       Looks Good.
-    </b-form-valid-feedback>
-    </b-form>
+    </BFormValidFeedback>
+    </BForm>
   <template #html>
 
 ```vue
 <template>
-  <b-form @submit.stop.prevent>
+  <BForm @submit.stop.prevent>
     <label for="feedback-user">User Id</label>
-    <b-form-input v-model="userId" :state="validation" id="feedback-user"></b-form-input>
-    <b-form-invalid-feedback :state="validation">
+    <BFormInput v-model="userId" :state="validation" id="feedback-user"></BFormInput>
+    <BFormInvalidFeedback :state="validation">
       Your user Id must be 5-12 characters long.
-    </b-form-invalid-feedback>
-    <b-form-valid-feedback :state="validation"> Looks Good. </b-form-valid-feedback>
-  </b-form>
+    </BFormInvalidFeedback>
+    <BFormValidFeedback :state="validation"> Looks Good. </BFormValidFeedback>
+  </BForm>
 </template>
 
 <script setup lang="ts">
@@ -424,9 +424,9 @@ const validation = computed(() => userId.value.length > 4 && userId.value.length
 
 ## Validation
 
-Disable browser native HTML5 validation by setting the `novalidate` prop to true on `<b-form>`.
+Disable browser native HTML5 validation by setting the `novalidate` prop to true on `<BForm>`.
 
-Set the `validated` prop, on `<b-form>`, to `true` to add the Bootstrap v5 `.was-validated` class to
+Set the `validated` prop, on `<BForm>`, to `true` to add the Bootstrap v5 `.was-validated` class to
 the form to trigger validation states.
 
 All form controls support a `state` prop, which can be used to set the form control into one

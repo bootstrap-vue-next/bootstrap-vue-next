@@ -10,17 +10,18 @@
 import type {TextColorVariant} from '../../types'
 import {computed} from 'vue'
 
-interface BCardSubtitleProps {
-  text?: string
-  tag?: string
-  textVariant?: TextColorVariant | null
-}
-
-const props = withDefaults(defineProps<BCardSubtitleProps>(), {
-  tag: 'h6',
-  textVariant: 'muted',
-  text: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    text?: string
+    tag?: string
+    textVariant?: TextColorVariant | null
+  }>(),
+  {
+    tag: 'h6',
+    textVariant: 'muted',
+    text: undefined,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,4 +1,4 @@
-import BFormSpinbutton from './BFormSpinButton.vue'
+import BFormSpinButton from './BFormSpinButton.vue'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 describe('form-spin-button', () => {
@@ -6,12 +6,12 @@ describe('form-spin-button', () => {
   // --- Structure, class and attributes tests ---
 
   it('tag is div', () => {
-    const wrapper = mount(BFormSpinbutton)
+    const wrapper = mount(BFormSpinButton)
     expect(wrapper.element.tagName).toBe('DIV')
   })
 
   it('has static classes', () => {
-    const wrapper = mount(BFormSpinbutton)
+    const wrapper = mount(BFormSpinButton)
     expect(wrapper.classes()).toContain('b-form-spinbutton')
     expect(wrapper.classes()).toContain('form-control')
     expect(wrapper.classes()).toContain('d-flex')
@@ -23,12 +23,12 @@ describe('form-spin-button', () => {
   })
   // Should have 4 child elements (btn, hidden,output, btn) REVIEW
   it('button has four children', () => {
-    const wrapper = mount(BFormSpinbutton)
+    const wrapper = mount(BFormSpinButton)
     expect(wrapper.findAll('.b-form-spinbutton > *').length).toBe(4)
   })
 
   it('decrement button', () => {
-    const wrapper = mount(BFormSpinbutton)
+    const wrapper = mount(BFormSpinButton)
     const $decrement = wrapper.find('[aria-label="Decrement"]')
     expect($decrement.exists()).toBe(true)
     expect($decrement.element.tagName).toBe('BUTTON')
@@ -37,7 +37,7 @@ describe('form-spin-button', () => {
   })
 
   it('increment button', () => {
-    const wrapper = mount(BFormSpinbutton)
+    const wrapper = mount(BFormSpinButton)
     const $increment = wrapper.find('[aria-label="Increment"]')
     expect($increment.exists()).toBe(true)
     expect($increment.element.tagName).toBe('BUTTON')
@@ -46,7 +46,7 @@ describe('form-spin-button', () => {
   })
 
   it('output button', async () => {
-    const wrapper = mount(BFormSpinbutton)
+    const wrapper = mount(BFormSpinButton)
     const $output = wrapper.find('output')
     expect($output.exists()).toBe(true)
     expect($output.attributes('role')).toEqual('spinbutton')
@@ -67,7 +67,7 @@ describe('form-spin-button', () => {
   })
 
   it('has expected structure when value set', async () => {
-    const wrapper = mount(BFormSpinbutton, {
+    const wrapper = mount(BFormSpinButton, {
       propsData: {
         min: 0,
         max: 10,
@@ -120,7 +120,7 @@ describe('form-spin-button', () => {
   })
 
   it('has expected structure when prop inline set', async () => {
-    const wrapper = mount(BFormSpinbutton, {
+    const wrapper = mount(BFormSpinButton, {
       propsData: {
         inline: true,
       },
@@ -164,7 +164,7 @@ describe('form-spin-button', () => {
   })
 
   it('has expected structure when prop vertical set', async () => {
-    const wrapper = mount(BFormSpinbutton, {
+    const wrapper = mount(BFormSpinButton, {
       propsData: {
         vertical: true,
       },
@@ -209,7 +209,7 @@ describe('form-spin-button', () => {
   })
 
   it('renders hidden input when name set', async () => {
-    const wrapper = mount(BFormSpinbutton, {
+    const wrapper = mount(BFormSpinButton, {
       propsData: {
         name: 'foobar',
         modelValue: null,
@@ -234,7 +234,7 @@ describe('form-spin-button', () => {
   })
 
   it('basic +/- buttons click', async () => {
-    const wrapper = mount(BFormSpinbutton, {
+    const wrapper = mount(BFormSpinButton, {
       attachTo: document.body,
     })
     expect(wrapper.vm).toBeDefined()
@@ -373,7 +373,7 @@ describe('form-spin-button', () => {
     expect($output.attributes('aria-valuetext')).toEqual('1')
   })
   it('basic keyboard control works', async () => {
-    const wrapper = mount(BFormSpinbutton, {
+    const wrapper = mount(BFormSpinButton, {
       attachTo: document.body,
     })
     expect(wrapper.vm).toBeDefined()
@@ -483,7 +483,7 @@ describe('form-spin-button', () => {
   it('auto repeat works', async () => {
     vi.useFakeTimers()
 
-    const wrapper = mount(BFormSpinbutton, {
+    const wrapper = mount(BFormSpinButton, {
       attachTo: document.body,
       props: {
         'min': 1,

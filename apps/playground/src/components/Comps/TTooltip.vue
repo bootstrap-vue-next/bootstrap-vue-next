@@ -1,15 +1,15 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-button v-b-tooltip.top :title="tooltip">Tooltip on top</b-button>
-        <b-button @click="setTooltip">Change tooltip</b-button>
-        <b-button v-b-tooltip.left title="Tooltip on left">Tooltip on left</b-button>
-        <b-button v-b-tooltip.right.click title="Tooltip on right">Tooltip on right</b-button>
-        <b-button v-b-tooltip.bottom title="Tooltip on bottom">Tooltip on bottom</b-button>
-      </b-col>
-    </b-row>
-  </b-container>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BButton v-b-tooltip.top :title="tooltip">Tooltip on top</BButton>
+        <BButton @click="setTooltip">Change tooltip</BButton>
+        <BButton v-b-tooltip.left title="Tooltip on left">Tooltip on left</BButton>
+        <BButton v-b-tooltip.right.click title="Tooltip on right">Tooltip on right</BButton>
+        <BButton v-b-tooltip.bottom title="Tooltip on bottom">Tooltip on bottom</BButton>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

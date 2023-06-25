@@ -7,45 +7,46 @@ import type {Booleanish} from '../types'
 import {useBooleanish} from '../composables'
 import {computed} from 'vue'
 
-interface BImgProps {
-  alt?: string
-  blank?: Booleanish
-  blankColor?: string
-  block?: Booleanish
-  center?: Booleanish
-  fluid?: Booleanish
-  lazy?: Booleanish
-  fluidGrow?: Booleanish
-  height?: number | string
-  start?: Booleanish
-  end?: Booleanish
-  rounded?: boolean | string
-  sizes?: string | string[]
-  src?: string
-  srcset?: string | string[]
-  thumbnail?: Booleanish
-  width?: number | string
-}
-
-const props = withDefaults(defineProps<BImgProps>(), {
-  sizes: undefined,
-  src: undefined,
-  srcset: undefined,
-  width: undefined,
-  height: undefined,
-  alt: undefined,
-  blank: false,
-  lazy: false,
-  blankColor: 'transparent',
-  block: false,
-  center: false,
-  fluid: false,
-  fluidGrow: false,
-  end: false,
-  start: false,
-  rounded: false,
-  thumbnail: false,
-})
+const props = withDefaults(
+  defineProps<{
+    alt?: string
+    blank?: Booleanish
+    blankColor?: string
+    block?: Booleanish
+    center?: Booleanish
+    fluid?: Booleanish
+    lazy?: Booleanish
+    fluidGrow?: Booleanish
+    height?: number | string
+    start?: Booleanish
+    end?: Booleanish
+    rounded?: boolean | string
+    sizes?: string | string[]
+    src?: string
+    srcset?: string | string[]
+    thumbnail?: Booleanish
+    width?: number | string
+  }>(),
+  {
+    sizes: undefined,
+    src: undefined,
+    srcset: undefined,
+    width: undefined,
+    height: undefined,
+    alt: undefined,
+    blank: false,
+    lazy: false,
+    blankColor: 'transparent',
+    block: false,
+    center: false,
+    fluid: false,
+    fluidGrow: false,
+    end: false,
+    start: false,
+    rounded: false,
+    thumbnail: false,
+  }
+)
 
 const BLANK_TEMPLATE =
   '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +

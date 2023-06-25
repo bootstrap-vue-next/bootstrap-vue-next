@@ -1,14 +1,14 @@
 <template>
-  <b-card>
+  <BCard>
     <template #header>
       <h3>{{ component }} - {{ change }}</h3>
-      <b-badge :variant="difficultyVariant">{{ difficulty }}</b-badge>
+      <BBadge :variant="difficultyVariant">{{ difficulty }}</BBadge>
     </template>
     <h4>Rationale:</h4>
     {{ rationale }}
     <h4>Fix:</h4>
     {{ fix }}
-  </b-card>
+  </BCard>
 </template>
 
 <script setup lang="ts">

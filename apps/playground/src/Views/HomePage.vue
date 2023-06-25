@@ -1,16 +1,16 @@
 <template>
-  <b-row>
-    <b-col>
-      <b-container fluid>
-        <b-row>
-          <b-col>
-            <b-form-input v-model="searchQuery" placeholder="Search" />
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col>
-            <b-button variant="danger" @click="clearActiveList">Clear all</b-button>
-            <b-button
+  <BRow>
+    <BCol>
+      <BContainer fluid>
+        <BRow>
+          <BCol>
+            <BFormInput v-model="searchQuery" placeholder="Search" />
+          </BCol>
+        </BRow>
+        <BRow>
+          <BCol>
+            <BButton variant="danger" @click="clearActiveList">Clear all</BButton>
+            <BButton
               v-for="(comp, index) in filteredSearch"
               :key="index"
               class="m-1"
@@ -19,33 +19,33 @@
               @click="switchActive(comp.name)"
             >
               {{ comp.name }}
-            </b-button>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col>
-            <b-container v-for="(comp, index) in filteredActive" :key="index" fluid>
-              <b-row>
-                <b-col>
+            </BButton>
+          </BCol>
+        </BRow>
+        <BRow>
+          <BCol>
+            <BContainer v-for="(comp, index) in filteredActive" :key="index" fluid>
+              <BRow>
+                <BCol>
                   <h1>{{ comp.name }}</h1>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
+                </BCol>
+              </BRow>
+              <BRow>
+                <BCol>
                   <component :is="comp.is" />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
+                </BCol>
+              </BRow>
+              <BRow>
+                <BCol>
                   <hr />
-                </b-col>
-              </b-row>
-            </b-container>
-          </b-col>
-        </b-row>
-      </b-container>
-    </b-col>
-  </b-row>
+                </BCol>
+              </BRow>
+            </BContainer>
+          </BCol>
+        </BRow>
+      </BContainer>
+    </BCol>
+  </BRow>
 </template>
 
 <script setup lang="ts">

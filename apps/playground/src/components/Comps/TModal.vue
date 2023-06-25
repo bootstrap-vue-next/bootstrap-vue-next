@@ -1,54 +1,54 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-button @click="showModal = !showModal">Toggle modal v-model</b-button>
-        <b-button v-b-toggle.exampleModal>Toggle with v-b-toggle directive</b-button>
-        <b-button v-b-modal.exampleModal>Toggle with v-b-modal directive</b-button>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BButton @click="showModal = !showModal">Toggle modal v-model</BButton>
+        <BButton v-b-toggle.exampleModal>Toggle with v-b-toggle directive</BButton>
+        <BButton v-b-modal.exampleModal>Toggle with v-b-modal directive</BButton>
         {{ showModal }}
-        <!-- <b-button v-b-modal:exampleModal>Launch demo modal</b-button> -->
-        <b-modal
+        <!-- <BButton v-b-modal:exampleModal>Launch demo modal</BButton> -->
+        <BModal
           id="exampleModal"
           v-model="showModal"
           :no-close-on-backdrop="noClose"
           size="xl"
           title="Modal title"
           fade
-          >...</b-modal
+          >...</BModal
         >
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-modal
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BModal
           v-model="isModalVisible"
           :no-close-on-esc="noClose"
           :no-close-on-backdrop="noClose"
           title="My Modal"
         >
           abc
-        </b-modal>
+        </BModal>
 
-        <b-button @click="isModalVisible = true">Show Modal</b-button>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-modal v-model="showModal2">
-          <b-button @click="showModal3 = true">Click me</b-button>
-          <b-modal v-model="showModal3" />
-        </b-modal>
-        <b-button @click="showModal2 = true">Show Modal</b-button>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+        <BButton @click="isModalVisible = true">Show Modal</BButton>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BModal v-model="showModal2">
+          <BButton @click="showModal3 = true">Click me</BButton>
+          <BModal v-model="showModal3" />
+        </BModal>
+        <BButton @click="showModal2 = true">Show Modal</BButton>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <div>noClose is {{ noClose }}</div>
-        <b-button @click="noClose = true">Set noClose = true</b-button>
-        <b-button @click="noClose = false">Set noClose = false</b-button>
-      </b-col>
-    </b-row>
-  </b-container>
+        <BButton @click="noClose = true">Set noClose = true</BButton>
+        <BButton @click="noClose = false">Set noClose = false</BButton>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

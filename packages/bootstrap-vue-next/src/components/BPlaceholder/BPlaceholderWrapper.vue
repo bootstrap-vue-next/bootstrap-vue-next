@@ -7,13 +7,14 @@
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BPlaceholderWrapperProps {
-  loading?: Booleanish
-}
-
-const props = withDefaults(defineProps<BPlaceholderWrapperProps>(), {
-  loading: false,
-})
+const props = withDefaults(
+  defineProps<{
+    loading?: Booleanish
+  }>(),
+  {
+    loading: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

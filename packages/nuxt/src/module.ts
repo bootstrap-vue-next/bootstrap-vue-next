@@ -1,4 +1,4 @@
-import {defineNuxtModule, addPlugin, createResolver, addImports} from '@nuxt/kit'
+import {defineNuxtModule, createResolver, addImports} from '@nuxt/kit'
 import type {Import} from 'unimport'
 import useComponents from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'

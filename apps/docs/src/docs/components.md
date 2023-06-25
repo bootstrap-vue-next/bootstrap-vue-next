@@ -6,7 +6,7 @@ BootstrapVueNext components list.
 
 </div>
 
-<table-of-contents-card v-for="component in computedComponentsList" :key="component.name" class="my-3" :name="component.name" :description="component.description" :route="component.route" />
+<TableOfContentsCard v-for="component in computedComponentsList" :key="component.name" class="my-3" :name="component.name" :description="component.description" :route="component.route" />
 
 <script setup lang="ts">
 import {withBase} from 'vitepress'

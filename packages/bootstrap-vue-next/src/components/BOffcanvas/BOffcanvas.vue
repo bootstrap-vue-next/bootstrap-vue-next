@@ -1,6 +1,6 @@
 <template>
-  <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
-    <b-transition
+  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+    <BTransition
       :no-fade="true"
       :trans-props="{
         enterToClass: 'showing',
@@ -34,7 +34,7 @@
                   {{ title }}
                 </slot>
               </h5>
-              <b-close-button
+              <BCloseButton
                 v-if="!noHeaderCloseBoolean"
                 class="text-reset"
                 :aria-label="dismissLabel"
@@ -50,8 +50,8 @@
           </div>
         </template>
       </div>
-    </b-transition>
-    <b-overlay
+    </BTransition>
+    <BOverlay
       :variant="backdropVariant"
       :show="showBackdrop"
       :fixed="true"
@@ -59,7 +59,7 @@
       :no-spinner="true"
       @click="hide('backdrop')"
     />
-  </teleport>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -76,68 +76,67 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BOffcanvasProps {
-  dismissLabel?: string
-  modelValue?: Booleanish
-  bodyScrolling?: Booleanish
-  backdrop?: Booleanish
-  noCloseOnBackdrop?: Booleanish
-  noCloseOnEsc?: Booleanish
-  // TODO standardize this. Create a dedicated type
-  // Then in components that use individual props (BImg)
-  // Make them just use prop placement
-  placement?: 'top' | 'bottom' | 'start' | 'end'
-  title?: string
-  noHeaderClose?: Booleanish
-  noHeader?: Booleanish
-  lazy?: Booleanish
-  id?: string
-  noFocus?: Booleanish
-  backdropVariant?: ColorVariant | null
-  headerClass?: string
-  bodyClass?: string
-  footerClass?: string
-  teleportDisabled?: Booleanish
-  teleportTo?: string | RendererElement | null | undefined
-  // TODO responsive doesn't work
-  // responsive?: Breakpoint
-}
+const props = withDefaults(
+  defineProps<{
+    dismissLabel?: string
+    modelValue?: Booleanish
+    bodyScrolling?: Booleanish
+    backdrop?: Booleanish
+    noCloseOnBackdrop?: Booleanish
+    noCloseOnEsc?: Booleanish
+    // TODO standardize this. Create a dedicated type
+    // Then in components that use individual props (BImg)
+    // Make them just use prop placement
+    placement?: 'top' | 'bottom' | 'start' | 'end'
+    title?: string
+    noHeaderClose?: Booleanish
+    noHeader?: Booleanish
+    lazy?: Booleanish
+    id?: string
+    noFocus?: Booleanish
+    backdropVariant?: ColorVariant | null
+    headerClass?: string
+    bodyClass?: string
+    footerClass?: string
+    teleportDisabled?: Booleanish
+    teleportTo?: string | RendererElement | null | undefined
+    // TODO responsive doesn't work
+    // responsive?: Breakpoint
+  }>(),
+  {
+    dismissLabel: 'Close',
+    id: undefined,
+    title: undefined,
+    modelValue: false,
+    backdropVariant: 'dark',
+    noFocus: false,
+    bodyScrolling: false,
+    noCloseOnBackdrop: false,
+    noCloseOnEsc: false,
+    backdrop: true,
+    lazy: false,
+    placement: 'start',
+    noHeaderClose: false,
+    noHeader: false,
+    headerClass: undefined,
+    bodyClass: undefined,
+    footerClass: undefined,
+    teleportDisabled: false,
+    teleportTo: 'body',
+  }
+)
 
-const props = withDefaults(defineProps<BOffcanvasProps>(), {
-  dismissLabel: 'Close',
-  id: undefined,
-  title: undefined,
-  modelValue: false,
-  backdropVariant: 'dark',
-  noFocus: false,
-  bodyScrolling: false,
-  noCloseOnBackdrop: false,
-  noCloseOnEsc: false,
-  backdrop: true,
-  lazy: false,
-  placement: 'start',
-  noHeaderClose: false,
-  noHeader: false,
-  headerClass: undefined,
-  bodyClass: undefined,
-  footerClass: undefined,
-  teleportDisabled: false,
-  teleportTo: 'body',
-})
-
-interface BOffcanvasEmits {
-  (e: 'update:modelValue', value: boolean): void
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'esc', value: BvTriggerableEvent): void
-  (e: 'close', value: BvTriggerableEvent): void
-}
-
-const emit = defineEmits<BOffcanvasEmits>()
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show-prevented': []
+  'esc': [value: BvTriggerableEvent]
+  'close': [value: BvTriggerableEvent]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -197,7 +196,7 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed

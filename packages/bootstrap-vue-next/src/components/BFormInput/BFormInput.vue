@@ -5,17 +5,17 @@
     :class="computedClasses"
     :name="name || undefined"
     :form="form || undefined"
-    :type="localType"
-    :disabled="disabled"
+    :type="type"
+    :disabled="disabledBoolean"
     :placeholder="placeholder"
-    :required="required"
+    :required="requiredBoolean || undefined"
     :autocomplete="autocomplete || undefined"
-    :readonly="readonly || plaintext"
+    :readonly="readonlyBoolean || plaintextBoolean"
     :min="min"
     :max="max"
     :step="step"
     :list="type !== 'password' ? list : undefined"
-    :aria-required="required ? true : undefined"
+    :aria-required="requiredBoolean || undefined"
     :aria-invalid="computedAriaInvalid"
     @input="onInput($event)"
     @change="onChange($event)"
@@ -23,90 +23,94 @@
   />
 </template>
 
-<script lang="ts">
-import {computed, defineComponent, type PropType, ref} from 'vue'
-import {COMMON_INPUT_PROPS, useFormInput} from '../../composables'
+<script setup lang="ts">
+import {computed, ref} from 'vue'
+import {useBooleanish, useFormInput, useStateClass} from '../../composables'
+import type {CommonInputProps} from '../../composables/useFormInput'
 import type {InputType} from '../../types'
 
-const allowedTypes = [
-  'text',
-  'number',
-  'email',
-  'password',
-  'search',
-  'url',
-  'tel',
-  'date',
-  'time',
-  'range',
-  'color',
-  'datetime',
-  'datetime-local',
-  'month',
-  'week',
-]
+const props = withDefaults(
+  defineProps<
+    {
+      // debounce: {type: [String, Number], default: 0}, TODO: not implemented yet
+      // The above is likely a CommonInputProp
+      max?: string | number
+      min?: string | number
+      // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
+      step?: string | number
+      type?: InputType
+    } & CommonInputProps
+  >(),
+  {
+    max: undefined,
+    min: undefined,
+    step: undefined,
+    type: 'text',
+    // CommonInputProps
+    ariaInvalid: undefined,
+    autocomplete: undefined,
+    autofocus: false,
+    disabled: false,
+    form: undefined,
+    formatter: undefined,
+    id: undefined,
+    lazy: false,
+    lazyFormatter: false,
+    list: undefined,
+    modelValue: '',
+    name: undefined,
+    number: false,
+    placeholder: undefined,
+    plaintext: false,
+    readonly: false,
+    required: false,
+    size: undefined,
+    state: null,
+    trim: false,
+  }
+)
 
-export default defineComponent({
-  props: {
-    ...COMMON_INPUT_PROPS,
-    // debounce: {type: [String, Number], default: 0}, TODO: not implemented yet
-    max: {type: [String, Number], default: undefined},
-    min: {type: [String, Number], default: undefined},
-    // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
-    step: {type: [String, Number], default: undefined},
-    type: {
-      type: String as PropType<InputType>,
-      default: 'text',
-      validator: (value: string) => allowedTypes.includes(value),
+const emit = defineEmits<{
+  'update:modelValue': [val: any]
+  'change': [val: any]
+  'blur': [val: any]
+  'input': [val: any]
+}>()
+
+const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
+  useFormInput(props, emit)
+
+const disabledBoolean = useBooleanish(() => props.disabled)
+const requiredBoolean = useBooleanish(() => props.required)
+const readonlyBoolean = useBooleanish(() => props.readonly)
+const plaintextBoolean = useBooleanish(() => props.plaintext)
+const stateBoolean = useBooleanish(() => props.state)
+
+const stateClass = useStateClass(stateBoolean)
+
+const isHighlighted = ref(false)
+
+const computedClasses = computed(() => {
+  const isRange = props.type === 'range'
+  const isColor = props.type === 'color'
+  return [
+    stateClass.value,
+    {
+      'form-control-highlighted': isHighlighted.value,
+      'form-range': isRange,
+      'form-control': isColor || (!props.plaintext && !isRange),
+      'form-control-color': isColor,
+      'form-control-plaintext': props.plaintext && !isRange && !isColor,
+      [`form-control-${props.size}`]: !!props.size,
     },
-  },
-  emits: ['update:modelValue', 'change', 'blur', 'input'],
-  setup(props, {emit}) {
-    const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
-      useFormInput(props, emit)
-
-    const isHighlighted = ref(false)
-
-    const computedClasses = computed(() => {
-      const isRange = props.type === 'range'
-      const isColor = props.type === 'color'
-      return {
-        'form-control-highlighted': isHighlighted.value,
-        'form-range': isRange,
-        'form-control': isColor || (!props.plaintext && !isRange),
-        'form-control-color': isColor,
-        'form-control-plaintext': props.plaintext && !isRange && !isColor,
-        [`form-control-${props.size}`]: !!props.size,
-        'is-valid': props.state === true,
-        'is-invalid': props.state === false,
-      }
-    })
-
-    const localType = computed<InputType>(() =>
-      allowedTypes.includes(props.type) ? props.type : 'text'
-    )
-
-    const highlight = () => {
-      if (isHighlighted.value === true) return
-      isHighlighted.value = true
-      setTimeout(() => {
-        isHighlighted.value = false
-      }, 2000)
-    }
-
-    return {
-      computedClasses,
-      localType,
-      input,
-      computedId,
-      computedAriaInvalid,
-      onInput,
-      onChange,
-      onBlur,
-      focus,
-      blur,
-      highlight,
-    }
-  },
+  ]
 })
+
+// const highlight = () => {
+//   if (isHighlighted.value === true) return
+//   isHighlighted.value = true
+//   setTimeout(() => {
+//     isHighlighted.value = false
+//   }, 2000)
+// }
 </script>

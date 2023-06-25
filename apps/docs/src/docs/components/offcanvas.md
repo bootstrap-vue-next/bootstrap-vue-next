@@ -15,14 +15,14 @@ Build hidden sidebars into your project. Sidebars can aid in enhancing user inte
 </div>
 
 <HighlightCard>
-  <b-button @click="click">Show OffCanvas</b-button>
-  <b-offcanvas v-model="show" />
+  <BButton @click="click">Show OffCanvas</BButton>
+  <BOffcanvas v-model="show" />
   <template #html>
 
 ```vue-html
 <template>
-  <b-button @click="click">Show OffCanvas</b-button>
-  <b-offcanvas v-model="show"></b-offcanvas>
+  <BButton @click="click">Show OffCanvas</BButton>
+  <BOffcanvas v-model="show"></BOffcanvas>
 </template>
 
 <script lang = 'ts'setup>
@@ -44,25 +44,25 @@ const click = () => {
 Customize location with four standard options `top, bottom, start, end`.
 
 <HighlightCard>
-  <b-button
+  <BButton
     v-for="placement in ['start', 'end', 'bottom', 'top']"
     :key="placement"
     @click="clickTwo(placement)"
     class="me-2"
   >
     Show {{ placement }}
-  </b-button>
-  <b-offcanvas v-model="show2" :placement="placement" />
+  </BButton>
+  <BOffcanvas v-model="show2" :placement="placement" />
   <template #html>
 
 ```vue
 <template>
-  <b-button @click="click" class="m-2">Show start</b-button>
-  <b-button @click="click" class="m-2">Show end</b-button>
-  <b-button @click="click" class="m-2">Show bottom</b-button>
-  <b-button @click="click" class="m-2">Show top</b-button>
+  <BButton @click="click" class="m-2">Show start</BButton>
+  <BButton @click="click" class="m-2">Show end</BButton>
+  <BButton @click="click" class="m-2">Show bottom</BButton>
+  <BButton @click="click" class="m-2">Show top</BButton>
 
-  <b-offcanvas v-model="show" :placement="placement" />
+  <BOffcanvas v-model="show" :placement="placement" />
 </template>
 
 <script setup lang="ts">

@@ -31,39 +31,38 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BCollapseProps {
-  // appear?: Booleanish
-  id?: string
-  modelValue?: Booleanish
-  tag?: string
-  toggle?: Booleanish
-  horizontal?: Booleanish
-  visible?: Booleanish
-  isNav?: Booleanish
-}
+const props = withDefaults(
+  defineProps<{
+    // appear?: Booleanish
+    id?: string
+    modelValue?: Booleanish
+    tag?: string
+    toggle?: Booleanish
+    horizontal?: Booleanish
+    visible?: Booleanish
+    isNav?: Booleanish
+  }>(),
+  {
+    accordion: undefined,
+    id: undefined,
+    modelValue: false,
+    tag: 'div',
+    toggle: false,
+    horizontal: false,
+    visible: false,
+    isNav: false,
+  }
+)
 
-interface BCollapseEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const props = withDefaults(defineProps<BCollapseProps>(), {
-  accordion: undefined,
-  id: undefined,
-  modelValue: false,
-  tag: 'div',
-  toggle: false,
-  horizontal: false,
-  visible: false,
-  isNav: false,
-})
-
-const emit = defineEmits<BCollapseEmits>()
+const emit = defineEmits<{
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show-prevented': []
+  'update:modelValue': [value: boolean]
+}>()
 
 defineSlots<{
   header?: (props: {

@@ -1,6 +1,6 @@
 <template>
   <div :class="computedClasses" class="btn-group" v-bind="$attrs">
-    <b-button
+    <BButton
       :id="computedId"
       ref="splitButton"
       :variant="splitVariant || variant"
@@ -15,8 +15,8 @@
       <slot name="button-content">
         {{ text }}
       </slot>
-    </b-button>
-    <b-button
+    </BButton>
+    <BButton
       v-if="splitBoolean"
       ref="button"
       :variant="variant"
@@ -33,7 +33,7 @@
           {{ toggleText }}
         </slot>
       </span>
-    </b-button>
+    </BButton>
   </div>
   <ul
     v-if="!lazyBoolean || modelValueBoolean"
@@ -56,7 +56,14 @@
 </template>
 
 <script setup lang="ts">
-import {flip, type Middleware, offset, shift, type Strategy, useFloating} from '@floating-ui/vue'
+import {
+  flip,
+  offset as floatingOffset,
+  type Middleware,
+  shift,
+  type Strategy,
+  useFloating,
+} from '@floating-ui/vue'
 import {onClickOutside, useToNumber, useVModel} from '@vueuse/core'
 import {computed, provide, ref, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
@@ -72,93 +79,95 @@ defineOptions({
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
 
-interface BDropdownProps {
-  ariaLabel?: string
-  id?: string
-  menuClass?: ClassValue
-  size?: Size
-  splitClass?: ClassValue
-  splitVariant?: ButtonVariant | null
-  text?: string
-  toggleClass?: ClassValue
-  autoClose?: boolean | 'inside' | 'outside'
-  block?: Booleanish
-  dark?: Booleanish
-  disabled?: Booleanish
-  isNav?: Booleanish
-  dropup?: Booleanish
-  dropend?: Booleanish
-  dropstart?: Booleanish
-  center?: Booleanish
-  end?: Booleanish
-  noFlip?: Booleanish
-  noShift?: Booleanish
-  offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
-  role?: string
-  split?: Booleanish
-  splitButtonType?: ButtonType
-  splitHref?: string
-  splitDisabled?: Booleanish
-  noCaret?: Booleanish
-  toggleText?: string
-  variant?: ButtonVariant | null
-  modelValue?: Booleanish
-  lazy?: Booleanish
-  strategy?: Strategy
-  floatingMiddleware?: Middleware[]
-  splitTo?: RouteLocationRaw
-}
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    id?: string
+    menuClass?: ClassValue
+    size?: Size
+    splitClass?: ClassValue
+    splitVariant?: ButtonVariant | null
+    text?: string
+    toggleClass?: ClassValue
+    autoClose?: boolean | 'inside' | 'outside'
+    block?: Booleanish
+    dark?: Booleanish
+    disabled?: Booleanish
+    isNav?: Booleanish
+    dropup?: Booleanish
+    dropend?: Booleanish
+    dropstart?: Booleanish
+    center?: Booleanish
+    end?: Booleanish
+    noFlip?: Booleanish
+    noShift?: Booleanish
+    offset?:
+      | number
+      | string
+      | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
+    role?: string
+    split?: Booleanish
+    splitButtonType?: ButtonType
+    splitHref?: string
+    splitDisabled?: Booleanish
+    noCaret?: Booleanish
+    toggleText?: string
+    variant?: ButtonVariant | null
+    modelValue?: Booleanish
+    lazy?: Booleanish
+    strategy?: Strategy
+    floatingMiddleware?: Middleware[]
+    splitTo?: RouteLocationRaw
+  }>(),
+  {
+    ariaLabel: undefined,
+    id: undefined,
+    menuClass: undefined,
+    size: 'md',
+    splitClass: undefined,
+    splitVariant: undefined,
+    text: undefined,
+    toggleClass: undefined,
+    splitTo: undefined,
+    floatingMiddleware: undefined,
+    splitDisabled: undefined,
+    autoClose: true,
+    block: false,
+    dark: false,
+    disabled: false,
+    dropup: false,
+    isNav: false,
+    dropend: false,
+    dropstart: false,
+    end: false,
+    center: false,
+    lazy: false,
+    noFlip: false,
+    noShift: false,
+    offset: 0,
+    role: 'menu',
+    split: false,
+    splitButtonType: 'button',
+    splitHref: undefined,
+    noCaret: false,
+    toggleText: 'Toggle dropdown',
+    variant: 'secondary',
+    modelValue: false,
+    strategy: 'absolute',
+  }
+)
 
-const props = withDefaults(defineProps<BDropdownProps>(), {
-  ariaLabel: undefined,
-  id: undefined,
-  menuClass: undefined,
-  size: 'md',
-  splitClass: undefined,
-  splitVariant: undefined,
-  text: undefined,
-  toggleClass: undefined,
-  splitTo: undefined,
-  floatingMiddleware: undefined,
-  splitDisabled: undefined,
-  autoClose: true,
-  block: false,
-  dark: false,
-  disabled: false,
-  dropup: false,
-  isNav: false,
-  dropend: false,
-  dropstart: false,
-  end: false,
-  center: false,
-  lazy: false,
-  noFlip: false,
-  noShift: false,
-  offset: 0,
-  role: 'menu',
-  split: false,
-  splitButtonType: 'button',
-  splitHref: undefined,
-  noCaret: false,
-  toggleText: 'Toggle dropdown',
-  variant: 'secondary',
-  modelValue: false,
-  strategy: 'absolute',
-})
-
-interface BDropdownEmits {
-  (e: 'show', value: BvEvent): void
-  (e: 'shown'): void
-  (e: 'hide', value: BvEvent): void
-  (e: 'hidden'): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'click', event: MouseEvent): void
-  (e: 'toggle'): void
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const emit = defineEmits<BDropdownEmits>()
+const emit = defineEmits<{
+  'show': [value: BvEvent]
+  'shown': []
+  'hide': [value: BvEvent]
+  'hidden': []
+  'hide-prevented': []
+  'show-prevented': []
+  'click': [event: MouseEvent]
+  'toggle': []
+  'update:modelValue': [value: boolean]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -216,7 +225,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     typeof props.offset === 'string' || typeof props.offset === 'number'
       ? offsetToNumber.value
       : props.offset
-  const arr: Middleware[] = [offset(localOffset)]
+  const arr: Middleware[] = [floatingOffset(localOffset)]
   if (noFlipBoolean.value === false) {
     arr.push(flip())
   }
@@ -286,14 +295,14 @@ onClickOutside(
   floating,
   () => {
     if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'outside')) {
-      modelValue.value = !modelValueBoolean.value
+      toggle()
     }
   },
   {ignore: [button, splitButton]}
 )
 const onClickInside = () => {
   if (modelValueBoolean.value && (props.autoClose === true || props.autoClose === 'inside')) {
-    modelValue.value = !modelValueBoolean.value
+    toggle()
   }
 }
 

@@ -1,9 +1,9 @@
 <template>
   <component :is="tag" class="card" :class="computedClasses">
     <slot v-if="!imgBottomBoolean" name="img">
-      <b-card-img v-if="imgSrc" v-bind="imgAttr" />
+      <BCardImg v-if="imgSrc" v-bind="imgAttr" />
     </slot>
-    <b-card-header
+    <BCardHeader
       v-if="header || hasHeaderSlot || headerHtml"
       v-bind="headerAttrs"
       :class="headerClass"
@@ -11,16 +11,16 @@
       <slot name="header">
         {{ header }}
       </slot>
-    </b-card-header>
-    <b-card-body v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
+    </BCardHeader>
+    <BCardBody v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
       <slot>
         {{ bodyText }}
       </slot>
-    </b-card-body>
+    </BCardBody>
     <slot v-else>
       {{ bodyText }}
     </slot>
-    <b-card-footer
+    <BCardFooter
       v-if="footer || hasFooterSlot || footerHtml"
       v-bind="footerAttrs"
       :class="footerClass"
@@ -28,9 +28,9 @@
       <slot name="footer">
         {{ footer }}
       </slot>
-    </b-card-footer>
+    </BCardFooter>
     <slot v-if="imgBottomBoolean" name="img">
-      <b-card-img v-if="imgSrc" v-bind="imgAttr" />
+      <BCardImg v-if="imgSrc" v-bind="imgAttr" />
     </slot>
   </component>
 </template>
@@ -51,89 +51,90 @@ import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 
-interface BCardProps {
-  align?: AlignmentTextHorizontal
-  bgVariant?: ColorVariant | null
-  bodyBgVariant?: ColorVariant | null
-  bodyClass?: ClassValue
-  bodyTag?: string
-  bodyTextVariant?: TextColorVariant | null
-  borderVariant?: ColorVariant | null
-  footer?: string
-  footerBgVariant?: ColorVariant | null
-  footerBorderVariant?: ColorVariant | null
-  footerClass?: ClassValue
-  footerHtml?: string
-  footerTag?: string
-  footerTextVariant?: TextColorVariant | null
-  header?: string
-  headerBgVariant?: ColorVariant | null
-  headerBorderVariant?: ColorVariant | null
-  headerClass?: ClassValue
-  headerHtml?: string
-  headerTag?: string
-  headerTextVariant?: TextColorVariant | null
-  imgAlt?: string
-  imgBottom?: Booleanish
-  imgEnd?: Booleanish
-  imgHeight?: string | number
-  imgSrc?: string
-  imgStart?: Booleanish
-  imgTop?: Booleanish
-  imgWidth?: string | number
-  noBody?: Booleanish
-  overlay?: Booleanish
-  subtitle?: string
-  subtitleTag?: string
-  subtitleTextVariant?: TextColorVariant | null
-  tag?: string
-  textVariant?: TextColorVariant | null
-  title?: string
-  titleTag?: string
-  bodyText?: string
-}
-
-const props = withDefaults(defineProps<BCardProps>(), {
-  align: undefined,
-  bgVariant: null,
-  bodyBgVariant: undefined,
-  bodyClass: undefined,
-  bodyTextVariant: undefined,
-  borderVariant: null,
-  footer: undefined,
-  footerBgVariant: undefined,
-  footerBorderVariant: undefined,
-  footerClass: undefined,
-  footerTextVariant: undefined,
-  header: undefined,
-  headerBgVariant: undefined,
-  headerBorderVariant: undefined,
-  headerClass: undefined,
-  textVariant: null,
-  headerTextVariant: undefined,
-  imgAlt: undefined,
-  title: undefined,
-  subtitle: undefined,
-  imgWidth: undefined,
-  imgHeight: undefined,
-  imgSrc: undefined,
-  bodyTag: 'div',
-  footerHtml: '',
-  footerTag: 'div',
-  headerHtml: '',
-  headerTag: 'div',
-  imgBottom: false,
-  imgEnd: false,
-  imgStart: false,
-  bodyText: '',
-  imgTop: false,
-  noBody: false,
-  overlay: false,
-  subtitleTag: 'h6',
-  subtitleTextVariant: 'muted',
-  tag: 'div',
-  titleTag: 'h4',
-})
+const props = withDefaults(
+  defineProps<{
+    align?: AlignmentTextHorizontal
+    bgVariant?: ColorVariant | null
+    bodyBgVariant?: ColorVariant | null
+    bodyClass?: ClassValue
+    bodyTag?: string
+    bodyTextVariant?: TextColorVariant | null
+    borderVariant?: ColorVariant | null
+    footer?: string
+    footerBgVariant?: ColorVariant | null
+    footerBorderVariant?: ColorVariant | null
+    footerClass?: ClassValue
+    footerHtml?: string
+    footerTag?: string
+    footerTextVariant?: TextColorVariant | null
+    header?: string
+    headerBgVariant?: ColorVariant | null
+    headerBorderVariant?: ColorVariant | null
+    headerClass?: ClassValue
+    headerHtml?: string
+    headerTag?: string
+    headerTextVariant?: TextColorVariant | null
+    imgAlt?: string
+    imgBottom?: Booleanish
+    imgEnd?: Booleanish
+    imgHeight?: string | number
+    imgSrc?: string
+    imgStart?: Booleanish
+    imgTop?: Booleanish
+    imgWidth?: string | number
+    noBody?: Booleanish
+    overlay?: Booleanish
+    subtitle?: string
+    subtitleTag?: string
+    subtitleTextVariant?: TextColorVariant | null
+    tag?: string
+    textVariant?: TextColorVariant | null
+    title?: string
+    titleTag?: string
+    bodyText?: string
+  }>(),
+  {
+    align: undefined,
+    bgVariant: null,
+    bodyBgVariant: undefined,
+    bodyClass: undefined,
+    bodyTextVariant: undefined,
+    borderVariant: null,
+    footer: undefined,
+    footerBgVariant: undefined,
+    footerBorderVariant: undefined,
+    footerClass: undefined,
+    footerTextVariant: undefined,
+    header: undefined,
+    headerBgVariant: undefined,
+    headerBorderVariant: undefined,
+    headerClass: undefined,
+    textVariant: null,
+    headerTextVariant: undefined,
+    imgAlt: undefined,
+    title: undefined,
+    subtitle: undefined,
+    imgWidth: undefined,
+    imgHeight: undefined,
+    imgSrc: undefined,
+    bodyTag: 'div',
+    footerHtml: '',
+    footerTag: 'div',
+    headerHtml: '',
+    headerTag: 'div',
+    imgBottom: false,
+    imgEnd: false,
+    imgStart: false,
+    bodyText: '',
+    imgTop: false,
+    noBody: false,
+    overlay: false,
+    subtitleTag: 'h6',
+    subtitleTextVariant: 'muted',
+    tag: 'div',
+    titleTag: 'h4',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -153,8 +154,8 @@ const imgEndBoolean = useBooleanish(() => props.imgEnd)
 const imgStartBoolean = useBooleanish(() => props.imgStart)
 const noBodyBoolean = useBooleanish(() => props.noBody)
 
-const hasHeaderSlot = computed<boolean>(() => !isEmptySlot(slots.header))
-const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 
 const computedClasses = computed(() => ({
   [`text-${props.align}`]: props.align !== undefined,

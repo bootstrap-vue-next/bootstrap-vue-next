@@ -1,13 +1,13 @@
 <template>
-  <b-container fluid >
-    <b-row class="pt-3">
-      <b-col>
+  <BContainer fluid >
+    <BRow class="pt-3">
+      <BCol>
         <h2>Basic usage</h2>
 
-        <b-form-tags v-model="formTagsBasic" separator="," />
-      </b-col>
-    </b-row>
-  </b-container>
+        <BFormTags v-model="formTagsBasic" separator="," />
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

@@ -1,138 +1,138 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Simple</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox
           id="checkbox-1"
           v-model="checkboxes.status"
           name="checkbox-1"
           value="accepted"
           unchecked-value="not_accepted"
-          >I accept the terms and use</b-form-checkbox
+          >I accept the terms and use</BFormCheckbox
         >
         <div>
           State:
           <strong>{{ checkboxes.status }}</strong>
         </div>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="m-2">array with uncheckedValue</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox
           id="checkbox-2"
           v-model="checkboxes.statusArray"
           name="checkbox-2"
           value="accepted"
           unchecked-value="not_accepted"
-          >I accept the terms and use</b-form-checkbox
+          >I accept the terms and use</BFormCheckbox
         >
-        <b-form-checkbox
+        <BFormCheckbox
           id="checkbox-3"
           v-model="checkboxes.statusArray"
           name="checkbox-3"
           value="accepted2"
           unchecked-value="not_accepted2"
-          >I accept the terms and use</b-form-checkbox
+          >I accept the terms and use</BFormCheckbox
         >
         <div>
           State:
           <strong>{{ checkboxes.statusArray }}</strong>
         </div>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Individual</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-col>
-          <b-form-checkbox v-model="checkedDefault">Default</b-form-checkbox>
-        </b-col>
-        <b-col> Checked: {{ checkedDefault }} </b-col>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox v-model="checkedButton" button>Button format</b-form-checkbox>
-      </b-col>
-      <b-col> Checked: {{ checkedButton }} </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox v-model="checkedRequired" required>Required</b-form-checkbox>
-      </b-col>
-      <b-col> Checked: {{ checkedRequired }} </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox disabled>Disabled</b-form-checkbox>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox v-model="checkedIndeterminate" indeterminate
-          >Indeterminate</b-form-checkbox
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BCol>
+          <BFormCheckbox v-model="checkedDefault">Default</BFormCheckbox>
+        </BCol>
+        <BCol> Checked: {{ checkedDefault }} </BCol>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox v-model="checkedButton" button>Button format</BFormCheckbox>
+      </BCol>
+      <BCol> Checked: {{ checkedButton }} </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox v-model="checkedRequired" required>Required</BFormCheckbox>
+      </BCol>
+      <BCol> Checked: {{ checkedRequired }} </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox disabled>Disabled</BFormCheckbox>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox v-model="checkedIndeterminate" indeterminate
+          >Indeterminate</BFormCheckbox
         >
-      </b-col>
-      <b-col> Checked: {{ checkedIndeterminate }} </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-form-checkbox v-model="checkedPlain" plain>Plain</b-form-checkbox>
-      </b-col>
-      <b-col> Checked: {{ checkedPlain }} </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+      <BCol> Checked: {{ checkedIndeterminate }} </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormCheckbox v-model="checkedPlain" plain>Plain</BFormCheckbox>
+      </BCol>
+      <BCol> Checked: {{ checkedPlain }} </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4>Checkbox bound to array</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <strong>Select some cars</strong>
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
         <strong>Selected cars</strong>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-col>
-          <b-form-checkbox
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BCol>
+          <BFormCheckbox
             v-for="(car, index) in checkedAvailableCars"
             :key="index"
             v-model="checkedSelectedCars"
             :value="car"
-            >{{ car }}</b-form-checkbox
+            >{{ car }}</BFormCheckbox
           >
-        </b-col>
-        <b-col>
+        </BCol>
+        <BCol>
           <ul>
             <li v-for="(car, index) in checkedSelectedCars" :key="index">{{ car }}</li>
           </ul>
-        </b-col>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+        </BCol>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <button class="btn btn-primary" @click="setCheckedSelectedCars">
           Set selected cars to Mercedes and Toyota
         </button>
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">
