@@ -18,12 +18,7 @@
             {{ closeContent }}
           </slot>
         </BButton>
-        <BCloseButton
-          v-else
-          :aria-label="dismissLabel"
-          v-bind="closeAttrs"
-          @click="closeClicked"
-        />
+        <BCloseButton v-else :aria-label="dismissLabel" v-bind="closeAttrs" @click="closeClicked" />
       </template>
     </div>
   </BTransition>
@@ -91,7 +86,7 @@ const immediateBoolean = useBooleanish(() => props.immediate)
 const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
 const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
 
-const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
+const hasCloseSlot = computed(() => !isEmptySlot(slots.close))
 
 const countdownLength = computed(() =>
   typeof modelValue.value === 'boolean' ? 0 : modelValue.value

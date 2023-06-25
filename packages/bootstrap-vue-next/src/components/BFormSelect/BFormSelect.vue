@@ -10,8 +10,8 @@
     :multiple="multipleBoolean || undefined"
     :size="computedSelectSize"
     :disabled="disabledBoolean"
-    :required="requiredBoolean"
-    :aria-required="requiredBoolean ? true : undefined"
+    :required="requiredBoolean || undefined"
+    :aria-required="requiredBoolean || undefined"
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
@@ -41,7 +41,7 @@ import type {AriaInvalid, Booleanish, Size} from '../../types'
 import {computed, nextTick, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {normalizeOptions, useBooleanish, useId} from '../../composables'
+import {normalizeOptions, useBooleanish, useId, useStateClass} from '../../composables'
 import {useFocus, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
@@ -115,20 +115,23 @@ const plainBoolean = useBooleanish(() => props.plain)
 const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
 
+const stateClass = useStateClass(stateBoolean)
+
 const input = ref<HTMLElement>()
 
 useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
-const computedClasses = computed(() => ({
-  'form-control': plainBoolean.value,
-  [`form-control-${props.size}`]: props.size !== 'md' && plainBoolean.value,
-  'form-select': !plainBoolean.value,
-  [`form-select-${props.size}`]: props.size !== 'md' && !plainBoolean.value,
-  'is-valid': stateBoolean.value === true,
-  'is-invalid': stateBoolean.value === false,
-}))
+const computedClasses = computed(() => [
+  stateClass.value,
+  {
+    'form-control': plainBoolean.value,
+    [`form-control-${props.size}`]: props.size !== 'md' && plainBoolean.value,
+    'form-select': !plainBoolean.value,
+    [`form-select-${props.size}`]: props.size !== 'md' && !plainBoolean.value,
+  },
+])
 
 const computedSelectSize = computed<number | undefined>(() =>
   props.selectSize || plainBoolean.value ? props.selectSize : undefined

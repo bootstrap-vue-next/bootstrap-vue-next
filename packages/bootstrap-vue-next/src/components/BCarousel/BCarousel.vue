@@ -1,7 +1,7 @@
 <template>
   <div
     :id="computedId"
-    ref="target"
+    ref="element"
     :class="computedClasses"
     @keydown.left="onKeydown(prev)"
     @keydown.right="onKeydown(next)"
@@ -143,7 +143,7 @@ const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
 const relatedTarget = ref<HTMLElement | null>(null)
-const target = ref<HTMLElement | null>(null)
+const element = ref<HTMLElement | null>(null)
 const previousModelValue = ref(modelValue.value)
 
 const rideResolved = computed<boolean | 'carousel'>(() =>
@@ -197,7 +197,7 @@ const buildBvCarouselEvent = (event: 'slid' | 'slide') =>
   new BvCarouselEvent(event, {
     componentId: computedId.value,
     cancelable: false,
-    target: target.value,
+    target: element.value,
     direction: direction.value ? 'right' : 'left',
     from: previousModelValue.value,
     to: modelValue.value,
@@ -249,7 +249,7 @@ const onMouseLeave = () => {
   resume()
 }
 
-const {lengthX} = useSwipe(target, {
+const {lengthX} = useSwipe(element, {
   passive: true,
   onSwipeStart() {
     if (noTouchBoolean.value === true) return

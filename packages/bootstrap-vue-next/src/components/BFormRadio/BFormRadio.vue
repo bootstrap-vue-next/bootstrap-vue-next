@@ -9,13 +9,13 @@
       :class="inputClasses"
       type="radio"
       :disabled="disabledBoolean || parentData?.disabled.value"
-      :required="computedRequired ? true : undefined"
+      :required="computedRequired || undefined"
       :name="name || parentData?.name.value"
       :form="form || parentData?.form.value"
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledby"
       :value="value"
-      :aria-required="computedRequired ? true : undefined"
+      :aria-required="computedRequired || undefined"
     />
     <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />

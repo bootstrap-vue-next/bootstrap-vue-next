@@ -94,11 +94,11 @@ const columnsToNumber = useToNumber(() => props.columns, {nanToZero: true, metho
 const rowsToNumber = useToNumber(() => props.rows, {nanToZero: true, method: 'parseInt'})
 const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
 const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
-const headerColumns = useToNumber(computedHeaderColumns, {
+const headerColumnsNumber = useToNumber(computedHeaderColumns, {
   nanToZero: true,
   method: 'parseInt',
 })
-const footerColumns = useToNumber(computedFooterColumns, {
+const footerColumnsNumber = useToNumber(computedFooterColumns, {
   nanToZero: true,
   method: 'parseInt',
 })
@@ -107,10 +107,10 @@ const columnsNumber = computed<number>(() => columnsToNumber.value || 5)
 const rowsNumber = computed<number>(() => rowsToNumber.value || 3)
 
 const computedHeaderColumnsLength = computed<number>(() =>
-  props.headerColumns === undefined ? columnsNumber.value : headerColumns.value
+  props.headerColumns === undefined ? columnsNumber.value : headerColumnsNumber.value
 )
 const computedFooterColumnsLength = computed<number>(() =>
-  props.footerColumns === undefined ? columnsNumber.value : footerColumns.value
+  props.footerColumns === undefined ? columnsNumber.value : footerColumnsNumber.value
 )
 
 const placeholderAttrs = computed(() => ({

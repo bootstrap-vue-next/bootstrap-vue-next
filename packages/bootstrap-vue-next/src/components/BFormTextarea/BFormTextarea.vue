@@ -7,10 +7,10 @@
     :form="form || undefined"
     :disabled="disabledBoolean"
     :placeholder="placeholder"
-    :required="requiredBoolean"
+    :required="requiredBoolean || undefined"
     :autocomplete="autocomplete || undefined"
     :readonly="readonlyBoolean || plaintextBoolean"
-    :aria-required="required ? true : undefined"
+    :aria-required="required || undefined"
     :aria-invalid="computedAriaInvalid"
     :rows="rows"
     :style="computedStyles"
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import type {Booleanish} from '../../types'
 import {computed, type CSSProperties} from 'vue'
-import {useBooleanish, useFormInput} from '../../composables'
+import {useBooleanish, useFormInput, useStateClass} from '../../composables'
 import type {CommonInputProps} from '../../composables/useFormInput'
 
 const props = withDefaults(
@@ -78,14 +78,18 @@ const requiredBoolean = useBooleanish(() => props.required)
 const readonlyBoolean = useBooleanish(() => props.readonly)
 const plaintextBoolean = useBooleanish(() => props.plaintext)
 const noResizeBoolean = useBooleanish(() => props.noResize)
+const stateBoolean = useBooleanish(() => props.state)
 
-const computedClasses = computed(() => ({
-  'form-control': !props.plaintext,
-  'form-control-plaintext': props.plaintext,
-  [`form-control-${props.size}`]: !!props.size,
-  'is-valid': props.state === true,
-  'is-invalid': props.state === false,
-}))
+const stateClass = useStateClass(stateBoolean)
+
+const computedClasses = computed(() => [
+  stateClass.value,
+  {
+    'form-control': !props.plaintext,
+    'form-control-plaintext': props.plaintext,
+    [`form-control-${props.size}`]: !!props.size,
+  },
+])
 
 const computedStyles = computed<CSSProperties>(() => ({
   resize: noResizeBoolean.value ? 'none' : undefined,

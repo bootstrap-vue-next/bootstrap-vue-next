@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vitepress dev",
+    "dev": "vitepress dev --port 8000",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitepress build",
     "preview": "vitepress preview",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix src",

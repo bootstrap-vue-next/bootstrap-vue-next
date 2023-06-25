@@ -1,5 +1,5 @@
 <template>
-  <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
     <BTransition
       :no-fade="true"
       :trans-props="{
@@ -59,7 +59,7 @@
       :no-spinner="true"
       @click="hide('backdrop')"
     />
-  </teleport>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -196,7 +196,7 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed

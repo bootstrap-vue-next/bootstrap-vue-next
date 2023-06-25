@@ -20,9 +20,7 @@
     </BListGroup>
     <BListGroup>
       <strong class="bd-links-heading">
-        <BLink :to="withBase('/docs/components')">
-          <IntersectIcon aria-hidden /> Components
-        </BLink>
+        <BLink :to="withBase('/docs/components')"> <IntersectIcon aria-hidden /> Components </BLink>
       </strong>
       <BListGroupItem v-for="component in componentsComputedList" :key="component.name">
         <BLink :to="component.route">{{ component.name }}</BLink>
@@ -90,6 +88,7 @@ const componentsList: {name: string}[] = [
   {name: 'Dropdown'},
   {name: 'Form'},
   {name: 'Form Checkbox'},
+  {name: 'Form File'},
   {name: 'Form Group'},
   {name: 'Form Input'},
   {name: 'Form Radio'},

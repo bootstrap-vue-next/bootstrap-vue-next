@@ -1,5 +1,5 @@
 <script lang="ts">
-import {useBooleanish, useId} from '../../composables'
+import {useBooleanish, useId, useStateClass} from '../../composables'
 import {RX_SPACE_SPLIT} from '../../constants/regex'
 import {
   attemptFocus,
@@ -169,14 +169,9 @@ export default defineComponent({
         // based on the existence of 'content-col' or 'label-col' props
         Object.keys(contentColProps.value).length > 0 || Object.keys(labelColProps.value).length > 0
     )
-    const computedState = computed(() =>
-      // If not a boolean, ensure that value is null
-      typeof stateBoolean.value === 'boolean' ? stateBoolean.value : null
-    )
-    const stateClass = computed(() => {
-      const state = computedState.value
-      return state === true ? 'is-valid' : state === false ? 'is-invalid' : null
-    })
+
+    const stateClass = useStateClass(stateBoolean)
+
     const computedAriaInvalid = computed(() =>
       resolveAriaInvalid(attrs.ariaInvalid as unknown as AriaInvalid, stateBoolean.value)
     )

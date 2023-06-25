@@ -66,7 +66,8 @@
               style="outline: currentcolor none 0px; min-width: 5rem"
               v-bind="inputAttrs"
               :form="form"
-              :required="requiredBoolean"
+              :required="requiredBoolean || undefined"
+              :aria-required="requiredBoolean || undefined"
               @input="onInput"
               @change="onChange"
               @keydown="onKeydown"
@@ -112,7 +113,7 @@
 <script setup lang="ts">
 import {computed, ref, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
-import {useBooleanish, useId} from '../../composables'
+import {useBooleanish, useId, useStateClass} from '../../composables'
 import type {
   Booleanish,
   ButtonVariant,
@@ -234,6 +235,8 @@ const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
 const tagPillsBoolean = useBooleanish(() => props.tagPills)
 
+const stateClass = useStateClass(stateBoolean)
+
 const input = ref<HTMLInputElement | null>(null)
 
 const {focused} = useFocus(input, {
@@ -250,13 +253,14 @@ const validTags = ref<string[]>([])
 const invalidTags = ref<string[]>([])
 const duplicateTags = ref<string[]>([])
 
-const computedClasses = computed(() => ({
-  [`form-control-${props.size}`]: props.size !== 'md',
-  'disabled': disabledBoolean.value,
-  'focus': focus.value,
-  'is-invalid': stateBoolean.value === false,
-  'is-valid': stateBoolean.value === true,
-}))
+const computedClasses = computed(() => [
+  stateClass.value,
+  {
+    [`form-control-${props.size}`]: props.size !== 'md',
+    disabled: disabledBoolean.value,
+    focus: focus.value,
+  },
+])
 
 const isDuplicate = computed<boolean>(() => tags.value.includes(inputValue.value))
 

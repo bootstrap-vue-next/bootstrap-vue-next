@@ -53,5 +53,5 @@ const computedClasses = computed(() => ({
   [`text-${props.variant}`]: props.variant !== null,
 }))
 
-const hasLabelSlot = computed<boolean>(() => !isEmptySlot(slots.label))
+const hasLabelSlot = computed(() => !isEmptySlot(slots.label))
 </script>

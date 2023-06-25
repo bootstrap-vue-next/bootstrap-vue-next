@@ -98,8 +98,8 @@ const buttonBoolean = useBooleanish(() => props.button)
 const disabledBoolean = useBooleanish(() => props.disabled)
 const squareBoolean = useBooleanish(() => props.square)
 
-const hasDefaultSlot = computed<boolean>(() => !isEmptySlot(slots.default))
-const hasBadgeSlot = computed<boolean>(() => !isEmptySlot(slots.badge))
+const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
+const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
 
 const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 

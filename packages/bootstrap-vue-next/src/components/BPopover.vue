@@ -64,9 +64,9 @@ import {
   autoUpdate,
   flip,
   hide as hideMiddleware,
-  inline,
+  inline as inlineMiddleware,
   type Middleware,
-  offset,
+  offset as offsetMiddleware,
   type Placement as OriginalPlacement,
   shift,
   type Strategy,
@@ -226,7 +226,7 @@ const isHtml = useBooleanish(() => props.html)
 const hidden = ref(false)
 
 const element = ref<HTMLElement | null>(null)
-const target = ref<HTMLElement | null>(null)
+const targetTrigger = ref<HTMLElement | null>(null)
 const arrow = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
 const placeholder = ref<HTMLElement | null>(null)
@@ -278,7 +278,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     return props.floatingMiddleware
   }
   const off = typeof props.offset === 'number' ? props.offset : tooltipBoolean.value ? 0 : 10
-  const arr: Middleware[] = [offset(off)]
+  const arr: Middleware[] = [offsetMiddleware(off)]
   if (noFlipBoolean.value === false && !isAutoPlacement.value) {
     arr.push(flip())
   }
@@ -296,7 +296,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     arr.push(hideMiddleware({padding: 10}))
   }
   if (inlineBoolean.value === true) {
-    arr.push(inline())
+    arr.push(inlineMiddleware())
   }
   arr.push(arrowMiddleware({element: arrow, padding: 10}))
   return arr
@@ -306,7 +306,7 @@ const placementRef = computed(() =>
   isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
 )
 
-const {x, y, strategy, middlewareData, placement, update} = useFloating(target, element, {
+const {x, y, strategy, middlewareData, placement, update} = useFloating(targetTrigger, element, {
   placement: placementRef,
   middleware: floatingMiddleware,
   strategy: props.strategy,
@@ -449,13 +449,13 @@ const bind = () => {
   if (props.reference) {
     const elem = getElement(cleanElementProp(props.reference))
     if (elem) {
-      target.value = elem
+      targetTrigger.value = elem
     } else {
       // eslint-disable-next-line no-console
       console.warn('Reference element not found', props.reference)
     }
   } else {
-    target.value = trigger.value
+    targetTrigger.value = trigger.value
   }
   if (!trigger.value || manualBoolean.value) {
     return

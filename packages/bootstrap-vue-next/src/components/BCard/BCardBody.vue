@@ -70,8 +70,8 @@ const slots = useSlots()
 
 const overlayBoolean = useBooleanish(() => props.overlay)
 
-const hasTitleSlot = computed<boolean>(() => !isEmptySlot(slots.title))
-const hasSubtitleSlot = computed<boolean>(() => !isEmptySlot(slots.subtitle))
+const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
+const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))
 
 const computedClasses = computed(() => ({
   'card-img-overlay': overlayBoolean.value,

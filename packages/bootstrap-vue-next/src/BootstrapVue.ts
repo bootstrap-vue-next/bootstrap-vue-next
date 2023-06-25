@@ -8,6 +8,7 @@ import * as Directives from './directives'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BFormFile: typeof Components.BFormFile
     BAccordion: typeof Components.BAccordion
     BAccordionItem: typeof Components.BAccordionItem
     BAlert: typeof Components.BAlert

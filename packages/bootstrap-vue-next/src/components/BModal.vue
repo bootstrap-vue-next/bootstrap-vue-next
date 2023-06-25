@@ -1,5 +1,5 @@
 <template>
-  <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
     <BTransition
       :no-fade="true"
       :trans-props="{enterToClass: 'show'}"
@@ -86,7 +86,7 @@
         </slot>
       </div>
     </BTransition>
-  </teleport>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -393,7 +393,7 @@ const hide = (trigger = '') => {
 
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
 // I'm not sure how to wait for the event to be determined. Before showing
-const show = () => {
+const showFn = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
@@ -415,7 +415,7 @@ const pickFocusItem = () => {
     : (modalFocus.value = true)
 }
 
-const onBeforeEnter = () => show()
+const onBeforeEnter = () => showFn()
 const onAfterEnter = () => {
   isActive.value = true
   pickFocusItem()
@@ -433,12 +433,12 @@ const onAfterLeave = () => {
 useModalManager(isActive)
 
 useEventListener(element, 'bv-toggle', () => {
-  modelValueBoolean.value ? hide() : show()
+  modelValueBoolean.value ? hide() : showFn()
 })
 
 defineExpose({
   hide,
-  show,
+  show: showFn,
 })
 </script>
 

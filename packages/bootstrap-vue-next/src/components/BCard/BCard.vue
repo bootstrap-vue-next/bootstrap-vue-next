@@ -154,8 +154,8 @@ const imgEndBoolean = useBooleanish(() => props.imgEnd)
 const imgStartBoolean = useBooleanish(() => props.imgStart)
 const noBodyBoolean = useBooleanish(() => props.noBody)
 
-const hasHeaderSlot = computed<boolean>(() => !isEmptySlot(slots.header))
-const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 
 const computedClasses = computed(() => ({
   [`text-${props.align}`]: props.align !== undefined,

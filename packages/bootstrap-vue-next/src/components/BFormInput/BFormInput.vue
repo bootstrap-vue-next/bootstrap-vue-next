@@ -8,14 +8,14 @@
     :type="type"
     :disabled="disabledBoolean"
     :placeholder="placeholder"
-    :required="requiredBoolean"
+    :required="requiredBoolean || undefined"
     :autocomplete="autocomplete || undefined"
     :readonly="readonlyBoolean || plaintextBoolean"
     :min="min"
     :max="max"
     :step="step"
     :list="type !== 'password' ? list : undefined"
-    :aria-required="requiredBoolean ? true : undefined"
+    :aria-required="requiredBoolean || undefined"
     :aria-invalid="computedAriaInvalid"
     @input="onInput($event)"
     @change="onChange($event)"
@@ -25,9 +25,9 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import {useBooleanish, useFormInput} from '../../composables'
-import type {InputType} from '../../types'
+import {useBooleanish, useFormInput, useStateClass} from '../../composables'
 import type {CommonInputProps} from '../../composables/useFormInput'
+import type {InputType} from '../../types'
 
 const props = withDefaults(
   defineProps<
@@ -84,22 +84,26 @@ const disabledBoolean = useBooleanish(() => props.disabled)
 const requiredBoolean = useBooleanish(() => props.required)
 const readonlyBoolean = useBooleanish(() => props.readonly)
 const plaintextBoolean = useBooleanish(() => props.plaintext)
+const stateBoolean = useBooleanish(() => props.state)
+
+const stateClass = useStateClass(stateBoolean)
 
 const isHighlighted = ref(false)
 
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'
   const isColor = props.type === 'color'
-  return {
-    'form-control-highlighted': isHighlighted.value,
-    'form-range': isRange,
-    'form-control': isColor || (!props.plaintext && !isRange),
-    'form-control-color': isColor,
-    'form-control-plaintext': props.plaintext && !isRange && !isColor,
-    [`form-control-${props.size}`]: !!props.size,
-    'is-valid': props.state === true,
-    'is-invalid': props.state === false,
-  }
+  return [
+    stateClass.value,
+    {
+      'form-control-highlighted': isHighlighted.value,
+      'form-range': isRange,
+      'form-control': isColor || (!props.plaintext && !isRange),
+      'form-control-color': isColor,
+      'form-control-plaintext': props.plaintext && !isRange && !isColor,
+      [`form-control-${props.size}`]: !!props.size,
+    },
+  ]
 })
 
 // const highlight = () => {
