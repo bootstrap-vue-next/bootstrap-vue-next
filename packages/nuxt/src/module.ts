@@ -1,8 +1,8 @@
 import {defineNuxtModule, createResolver, addImports} from '@nuxt/kit'
-import {parseActiveImports} from 'bootstrap-vue-next'
 import type {Import} from 'unimport'
 import useComponents from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'
+import parseActiveImports from './utils/parseActiveImports'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
