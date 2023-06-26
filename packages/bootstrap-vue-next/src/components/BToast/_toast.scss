@@ -1,4 +1,4 @@
-$b-toast-background-opacity: alpha($toast-background-color) !default;
+$b-toast-background-opacity: 0.85;
 
 .b-toast {
   display: block;
@@ -13,7 +13,7 @@ $b-toast-background-opacity: alpha($toast-background-color) !default;
   .toast {
     // Allow us to override Bootstrap's default toast opacity
     // As they do not provide it as a variable
-    background-color: rgba($toast-background-color, $b-toast-background-opacity);
+    background-color: $toast-background-color;
   }
 
   &:not(:last-child) {
@@ -22,7 +22,7 @@ $b-toast-background-opacity: alpha($toast-background-color) !default;
 
   &.b-toast-solid {
     .toast {
-      background-color: rgba($toast-background-color, 1);
+      background-color: $toast-background-color;
     }
   }
 
@@ -35,10 +35,6 @@ $b-toast-background-opacity: alpha($toast-background-color) !default;
   }
 }
 
-// .b-toast-primary{
-//       color: red
-// }
-// rgba(204,229,255,.85)
 @mixin b-toast-variant($background, $border, $color) {
   // Based on alert-variant mixin
   background-color: rgba(lighten($background, 5%), $b-toast-background-opacity) !important;
