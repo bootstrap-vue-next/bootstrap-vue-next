@@ -1,5 +1,5 @@
 import * as Components from '../components'
-import * as Directives from '../directives/exports'
+import * as Directives from '../directives'
 
 interface BToastPluginOptions {
   injectkey: symbol
