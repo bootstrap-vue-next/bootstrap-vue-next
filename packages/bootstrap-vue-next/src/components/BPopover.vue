@@ -64,9 +64,9 @@ import {
   autoUpdate,
   flip,
   hide as hideMiddleware,
-  inline,
+  inline as inlineMiddleware,
   type Middleware,
-  offset,
+  offset as offsetMiddleware,
   type Placement as OriginalPlacement,
   shift,
   type Strategy,
@@ -100,90 +100,89 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface DelayObject {
-  show: number
-  hide: number
-}
+const props = withDefaults(
+  defineProps<{
+    modelValue?: Booleanish
+    container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+    target?:
+      | (() => HTMLElement | VNode)
+      | string
+      | ComponentPublicInstance<HTMLElement>
+      | HTMLSpanElement
+      | HTMLElement
+      | null
+    reference?:
+      | (() => HTMLElement | VNode)
+      | string
+      | ComponentPublicInstance<HTMLElement>
+      | HTMLSpanElement
+      | HTMLElement
+      | null
+    content?: string
+    id?: string
+    title?: string
+    delay?:
+      | number
+      | {
+          show: number
+          hide: number
+        }
+    click?: Booleanish
+    manual?: Booleanish
+    variant?: ColorVariant | null
+    offset?: number | null
+    customClass?: string
+    placement?: BPopoverPlacement
+    strategy?: Strategy
+    floatingMiddleware?: Middleware[]
+    noFlip?: Booleanish
+    noShift?: Booleanish
+    noFade?: Booleanish
+    noAutoClose?: Booleanish
+    hide?: Booleanish
+    realtime?: Booleanish
+    inline?: Booleanish
+    tooltip?: Booleanish
+    html?: Booleanish
+  }>(),
+  {
+    floatingMiddleware: undefined,
+    title: undefined,
+    id: undefined,
+    content: undefined,
+    modelValue: false,
+    container: undefined,
+    customClass: '',
+    placement: 'top',
+    strategy: 'absolute',
+    delay: () => ({show: 100, hide: 300}),
+    click: false,
+    manual: false,
+    variant: null,
+    offset: null,
+    noFlip: false,
+    noShift: false,
+    noFade: false,
+    noAutoClose: false,
+    hide: true,
+    realtime: false,
+    inline: false,
+    tooltip: false,
+    html: false,
+    reference: null,
+    target: null,
+  }
+)
 
-interface BPopoverProps {
-  modelValue?: Booleanish
-  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-  target?:
-    | (() => HTMLElement | VNode)
-    | string
-    | ComponentPublicInstance<HTMLElement>
-    | HTMLSpanElement
-    | HTMLElement
-    | null
-  reference?:
-    | (() => HTMLElement | VNode)
-    | string
-    | ComponentPublicInstance<HTMLElement>
-    | HTMLSpanElement
-    | HTMLElement
-    | null
-  content?: string
-  id?: string
-  title?: string
-  delay?: number | DelayObject
-  click?: Booleanish
-  manual?: Booleanish
-  variant?: ColorVariant | null
-  offset?: number | null
-  customClass?: string
-  placement?: BPopoverPlacement
-  strategy?: Strategy
-  floatingMiddleware?: Middleware[]
-  noFlip?: Booleanish
-  noShift?: Booleanish
-  noFade?: Booleanish
-  noAutoClose?: Booleanish
-  hide?: Booleanish
-  realtime?: Booleanish
-  inline?: Booleanish
-  tooltip?: Booleanish
-  html?: Booleanish
-}
-
-const props = withDefaults(defineProps<BPopoverProps>(), {
-  floatingMiddleware: undefined,
-  title: undefined,
-  id: undefined,
-  content: undefined,
-  modelValue: false,
-  container: undefined,
-  customClass: '',
-  placement: 'top',
-  strategy: 'absolute',
-  delay: () => ({show: 100, hide: 300}),
-  click: false,
-  manual: false,
-  variant: null,
-  offset: null,
-  noFlip: false,
-  noShift: false,
-  noFade: false,
-  noAutoClose: false,
-  hide: true,
-  realtime: false,
-  inline: false,
-  tooltip: false,
-  html: false,
-  reference: null,
-  target: null,
-})
-
-interface BPopoverEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const emit = defineEmits<BPopoverEmits>()
+const emit = defineEmits<{
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show-prevented': []
+  'update:modelValue': [value: boolean]
+}>()
 
 defineSlots<{
   target?: (props: {
@@ -227,7 +226,7 @@ const isHtml = useBooleanish(() => props.html)
 const hidden = ref(false)
 
 const element = ref<HTMLElement | null>(null)
-const target = ref<HTMLElement | null>(null)
+const targetTrigger = ref<HTMLElement | null>(null)
 const arrow = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
 const placeholder = ref<HTMLElement | null>(null)
@@ -279,7 +278,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     return props.floatingMiddleware
   }
   const off = typeof props.offset === 'number' ? props.offset : tooltipBoolean.value ? 0 : 10
-  const arr: Middleware[] = [offset(off)]
+  const arr: Middleware[] = [offsetMiddleware(off)]
   if (noFlipBoolean.value === false && !isAutoPlacement.value) {
     arr.push(flip())
   }
@@ -297,7 +296,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     arr.push(hideMiddleware({padding: 10}))
   }
   if (inlineBoolean.value === true) {
-    arr.push(inline())
+    arr.push(inlineMiddleware())
   }
   arr.push(arrowMiddleware({element: arrow, padding: 10}))
   return arr
@@ -307,7 +306,7 @@ const placementRef = computed(() =>
   isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
 )
 
-const {x, y, strategy, middlewareData, placement, update} = useFloating(target, element, {
+const {x, y, strategy, middlewareData, placement, update} = useFloating(targetTrigger, element, {
   placement: placementRef,
   middleware: floatingMiddleware,
   strategy: props.strategy,
@@ -450,13 +449,13 @@ const bind = () => {
   if (props.reference) {
     const elem = getElement(cleanElementProp(props.reference))
     if (elem) {
-      target.value = elem
+      targetTrigger.value = elem
     } else {
       // eslint-disable-next-line no-console
       console.warn('Reference element not found', props.reference)
     }
   } else {
-    target.value = trigger.value
+    targetTrigger.value = trigger.value
   }
   if (!trigger.value || manualBoolean.value) {
     return
@@ -488,13 +487,10 @@ onClickOutside(
   {ignore: [trigger]}
 )
 
-watch(
-  () => [props.click, props.target, props.reference],
-  () => {
-    unbind()
-    bind()
-  }
-)
+watch([() => props.click, () => props.target, () => props.reference], () => {
+  unbind()
+  bind()
+})
 
 onMounted(bind)
 

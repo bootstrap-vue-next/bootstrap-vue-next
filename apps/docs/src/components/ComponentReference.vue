@@ -1,65 +1,64 @@
 <template>
-  <b-container fluid class="p-0">
-    <b-row>
-      <b-col>
+  <BContainer fluid class="p-0 component-reference">
+    <BRow>
+      <BCol>
         <h2>Component Reference</h2>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-container v-for="component in sortData" :key="component.component" fluid class="p-0">
-          <b-row>
-            <b-col>
-              <h3>
-                {{ component.component }}
-              </h3>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BContainer v-for="component in sortData" :key="component.component" fluid class="p-0">
+          <BRow>
+            <BCol>
+              <code class="display-6">{{ `<` + component.component + `>` }}</code>
+            </BCol>
+          </BRow>
+          <BRow>
+            <BCol>
               <ul>
                 <li v-for="section in sections" :key="section">
-                  <h4>
-                    <b-link :to="buildCompReferenceLink(`${component.component}-${section}`)">
-                      &lt;{{ component.component }}&gt; {{ section }}
-                    </b-link>
-                  </h4>
+                  <BLink :to="buildCompReferenceLink(`${component.component}-${section}`)">
+                    &lt;{{ component.component }}&gt; {{ section }}
+                  </BLink>
                 </li>
               </ul>
-            </b-col>
-          </b-row>
-          <b-row
-            v-for="section in sections"
-            :key="section"
-            class="border-bottom border-secondary my-3"
-          >
-            <b-col>
-              <b-container fluid>
-                <b-row>
-                  <b-col>
+            </BCol>
+          </BRow>
+          <BRow v-for="section in sections" :key="section" class="my-3">
+            <BCol>
+              <BContainer fluid>
+                <BRow>
+                  <BCol>
                     <h5>
-                      <b-link
+                      <BLink
                         :id="buildCompReferenceLink(`${component.component}-${section}`).slice(1)"
                         variant="info"
                         :href="buildCompReferenceLink(`${component.component}-${section}`)"
                       >
                         {{ section }}
-                      </b-link>
+                      </BLink>
                     </h5>
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col>
-                    <b-table :items="component[sectionToComponentItem(section)]" />
-                  </b-col>
-                </b-row>
-              </b-container>
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-col>
-    </b-row>
-  </b-container>
+                  </BCol>
+                </BRow>
+                <BRow>
+                  <BCol>
+                    <BTable
+                      :items="component[sectionToComponentItem(section)]"
+                      hover
+                      small
+                      responsive
+                      bordered
+                      striped
+                    />
+                  </BCol>
+                </BRow>
+              </BContainer>
+            </BCol>
+          </BRow>
+        </BContainer>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">
@@ -79,9 +78,9 @@ const sortData = computed(() =>
       props: el.props
         .map((inner) => ({
           prop: inner.prop,
-          description: inner.description,
           type: inner.type,
           default: inner.default,
+          description: inner.description,
         }))
         .sort((a, b) => a.prop.localeCompare(b.prop)),
       emits: el.emits

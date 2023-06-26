@@ -1,10 +1,32 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import BModal from './BModal.vue'
 // import BTransition from './BTransition/BTransition.vue'
 
 describe('modal', () => {
   enableAutoUnmount(afterEach)
+
+  beforeEach(() => {
+    const el = document.createElement('div')
+    el.id = 'body-teleports'
+    document.body.appendChild(el)
+  })
+
+  afterEach(() => {
+    const el = document.getElementById('body-teleports')
+    if (el) document.body.removeChild(el)
+  })
+
+  it('has body teleports element set by to property', () => {
+    const wrapper = mount(BModal, {
+      props: {
+        teleportTo: '#body-teleports',
+      },
+    })
+    expect(wrapper.exists()).toBe(true)
+    expect(document.getElementById('body-teleports')?.querySelector('.modal')).not.toBe(null)
+  })
+
   // Having issues getting the 'body' from the VDOM
   it('has body element', () => {
     const wrapper = mount(BModal, {

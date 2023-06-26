@@ -1,7 +1,7 @@
 <template>
-  <b-container id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
-    <router-view />
-  </b-container>
+  <BContainer id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+    <RouterView />
+  </BContainer>
 </template>
 
 <script setup lang="ts">

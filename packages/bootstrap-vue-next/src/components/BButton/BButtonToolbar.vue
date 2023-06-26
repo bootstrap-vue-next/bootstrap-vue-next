@@ -9,18 +9,19 @@ import type {Booleanish} from '../../types'
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface BButtonToolbarProps {
-  ariaLabel?: string
-  justify?: Booleanish
-  role?: string
-  // keyNav?: Booleanish
-}
-
-const props = withDefaults(defineProps<BButtonToolbarProps>(), {
-  role: 'toolbar',
-  ariaLabel: 'Group',
-  justify: false,
-})
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    justify?: Booleanish
+    role?: string
+    // keyNav?: Booleanish
+  }>(),
+  {
+    role: 'toolbar',
+    ariaLabel: 'Group',
+    justify: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

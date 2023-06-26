@@ -85,58 +85,58 @@ import {useAlignment, useBooleanish} from '../../composables'
 import type {AlignmentJustifyContent, Booleanish, ClassValue} from '../../types'
 import {useVModel} from '@vueuse/core'
 // TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
-interface BTabsProps {
-  activeNavItemClass?: ClassValue
-  activeTabClass?: ClassValue
-  align?: AlignmentJustifyContent
-  contentClass?: ClassValue
-  card?: Booleanish
-  end?: Booleanish
-  fill?: Booleanish
-  id?: string
-  justified?: Booleanish
-  lazy?: Booleanish
-  navClass?: ClassValue
-  navWrapperClass?: ClassValue
-  noFade?: Booleanish
-  // noKeyNav?: Booleanish
-  noNavStyle?: Booleanish
-  pills?: Booleanish
-  small?: Booleanish
-  tag?: string
-  vertical?: Booleanish
-  modelValue?: number
-}
 
-const props = withDefaults(defineProps<BTabsProps>(), {
-  navClass: undefined,
-  navWrapperClass: undefined,
-  id: undefined,
-  activeNavItemClass: undefined,
-  activeTabClass: undefined,
-  align: undefined,
-  contentClass: undefined,
-  card: false,
-  end: false,
-  fill: false,
-  justified: false,
-  lazy: false,
-  noFade: false,
-  noNavStyle: false,
-  pills: false,
-  small: false,
-  tag: 'div',
-  vertical: false,
-  modelValue: -1,
-})
+const props = withDefaults(
+  defineProps<{
+    activeNavItemClass?: ClassValue
+    activeTabClass?: ClassValue
+    align?: AlignmentJustifyContent
+    contentClass?: ClassValue
+    card?: Booleanish
+    end?: Booleanish
+    fill?: Booleanish
+    id?: string
+    justified?: Booleanish
+    lazy?: Booleanish
+    navClass?: ClassValue
+    navWrapperClass?: ClassValue
+    noFade?: Booleanish
+    // noKeyNav?: Booleanish
+    noNavStyle?: Booleanish
+    pills?: Booleanish
+    small?: Booleanish
+    tag?: string
+    vertical?: Booleanish
+    modelValue?: number
+  }>(),
+  {
+    navClass: undefined,
+    navWrapperClass: undefined,
+    id: undefined,
+    activeNavItemClass: undefined,
+    activeTabClass: undefined,
+    align: undefined,
+    contentClass: undefined,
+    card: false,
+    end: false,
+    fill: false,
+    justified: false,
+    lazy: false,
+    noFade: false,
+    noNavStyle: false,
+    pills: false,
+    small: false,
+    tag: 'div',
+    vertical: false,
+    modelValue: -1,
+  }
+)
 
-interface BTabsEmits {
-  (e: 'update:modelValue', value: number): void
-  (e: 'activate-tab', v1: number, v2: number, v3: BvEvent): void
-  (e: 'click'): void // TODO click event is never used
-}
-
-const emit = defineEmits<BTabsEmits>()
+const emit = defineEmits<{
+  'update:modelValue': [value: number]
+  'activate-tab': [v1: number, v2: number, v3: BvEvent]
+  'click': [] // TODO click event is never used
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -337,12 +337,12 @@ watch(modelValue, (newValue, oldValue) => {
 
 watch(tabs, () => {
   // find last active tab
-  let activeTabIndex = tabs.value.map((tab: any) => tab.active && !tab.disabled).lastIndexOf(true)
+  let activeTabIndex = tabs.value.map((tab) => tab.active && !tab.disabled).lastIndexOf(true)
 
   if (activeTabIndex < 0) {
     if (tabIndex.value >= tabs.value.length) {
       // handle last tab removed, so find the last non-disabled tab
-      activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).lastIndexOf(true)
+      activeTabIndex = tabs.value.map((tab) => !tab.disabled).lastIndexOf(true)
     } else {
       if (tabs.value[tabIndex.value] && !tabs.value[tabIndex.value].disabled)
         activeTabIndex = tabIndex.value
@@ -350,10 +350,10 @@ watch(tabs, () => {
   }
   // still no active tab found, find first non-disabled tab
   if (activeTabIndex < 0) {
-    activeTabIndex = tabs.value.map((tab: any) => !tab.disabled).indexOf(true)
+    activeTabIndex = tabs.value.map((tab) => !tab.disabled).indexOf(true)
   }
   // ensure only one tab active at a time
-  tabs.value.forEach((tab: any, idx: number) => {
+  tabs.value.forEach((tab, idx) => {
     tab.active = idx === activeTabIndex
   })
 
@@ -362,7 +362,7 @@ watch(tabs, () => {
 
 onMounted(() => {
   // If there are tabs available, make sure a tab is set active
-  if (tabIndex.value < 0 && tabs.value.length > 0 && !tabs.value.some((tab: any) => tab.active)) {
+  if (tabIndex.value < 0 && tabs.value.length > 0 && !tabs.value.some((tab) => tab.active)) {
     const firstTab = tabs.value.map((t) => !t.disabled).indexOf(true)
     activateTab(firstTab >= 0 ? firstTab : -1)
   }

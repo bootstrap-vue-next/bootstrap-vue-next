@@ -10,7 +10,7 @@
     <span :id="taglabelId" class="b-form-tag-content flex-grow-1 text-truncate">
       <slot>{{ tagText }}</slot>
     </span>
-    <b-close-button
+    <BCloseButton
       v-if="!disabledBoolean && !noRemoveBoolean"
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"
@@ -29,33 +29,32 @@ import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
 
-interface BFormTagProps {
-  id?: string
-  title?: string
-  disabled?: Booleanish
-  noRemove?: Booleanish
-  pill?: Booleanish
-  removeLabel?: string
-  tag?: string
-  variant?: ColorVariant | null
-}
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    title?: string
+    disabled?: Booleanish
+    noRemove?: Booleanish
+    pill?: Booleanish
+    removeLabel?: string
+    tag?: string
+    variant?: ColorVariant | null
+  }>(),
+  {
+    id: undefined,
+    title: undefined,
+    disabled: false,
+    noRemove: false,
+    pill: false,
+    removeLabel: 'Remove tag',
+    tag: 'span',
+    variant: 'secondary',
+  }
+)
 
-const props = withDefaults(defineProps<BFormTagProps>(), {
-  id: undefined,
-  title: undefined,
-  disabled: false,
-  noRemove: false,
-  pill: false,
-  removeLabel: 'Remove tag',
-  tag: 'span',
-  variant: 'secondary',
-})
-
-interface BFormTagEmits {
-  (e: 'remove', value: string): void
-}
-
-const emit = defineEmits<BFormTagEmits>()
+const emit = defineEmits<{
+  remove: [value: string]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

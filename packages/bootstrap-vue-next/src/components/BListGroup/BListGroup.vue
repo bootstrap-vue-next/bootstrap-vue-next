@@ -10,19 +10,20 @@ import {listGroupInjectionKey} from '../../utils'
 import type {Booleanish, Breakpoint} from '../../types'
 import {useBooleanish} from '../../composables'
 
-interface BListGroupProps {
-  flush?: Booleanish
-  horizontal?: boolean | Breakpoint
-  numbered?: Booleanish
-  tag?: string
-}
-
-const props = withDefaults(defineProps<BListGroupProps>(), {
-  flush: false,
-  horizontal: false,
-  numbered: false,
-  tag: 'div',
-})
+const props = withDefaults(
+  defineProps<{
+    flush?: Booleanish
+    horizontal?: boolean | Breakpoint
+    numbered?: Booleanish
+    tag?: string
+  }>(),
+  {
+    flush: false,
+    horizontal: false,
+    numbered: false,
+    tag: 'div',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

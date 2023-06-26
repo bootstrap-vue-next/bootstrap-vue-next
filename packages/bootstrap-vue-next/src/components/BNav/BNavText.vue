@@ -7,11 +7,12 @@
 </template>
 
 <script setup lang="ts">
-interface BNavTextProps {
-  text?: string
-}
-
-withDefaults(defineProps<BNavTextProps>(), {text: undefined})
+withDefaults(
+  defineProps<{
+    text?: string
+  }>(),
+  {text: undefined}
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

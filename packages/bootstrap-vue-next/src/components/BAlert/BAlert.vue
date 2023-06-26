@@ -1,5 +1,5 @@
 <template>
-  <b-transition :no-fade="!fadeBoolean" :trans-props="{enterToClass: 'show'}">
+  <BTransition :no-fade="!fadeBoolean" :trans-props="{enterToClass: 'show'}">
     <div
       v-if="isAlertVisible"
       class="alert"
@@ -13,20 +13,15 @@
       <slot />
       <template v-if="dismissibleBoolean">
         <!-- TODO this renders incorrectly -->
-        <b-button v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="closeClicked">
+        <BButton v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="closeClicked">
           <slot name="close">
             {{ closeContent }}
           </slot>
-        </b-button>
-        <b-close-button
-          v-else
-          :aria-label="dismissLabel"
-          v-bind="closeAttrs"
-          @click="closeClicked"
-        />
+        </BButton>
+        <BCloseButton v-else :aria-label="dismissLabel" v-bind="closeAttrs" @click="closeClicked" />
       </template>
     </div>
-  </b-transition>
+  </BTransition>
 </template>
 
 <script setup lang="ts">
@@ -39,41 +34,40 @@ import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useVModel} from '@vueuse/core'
 
-interface BAlertProps {
-  noHoverPause?: Booleanish
-  dismissLabel?: string
-  dismissible?: Booleanish
-  fade?: Booleanish
-  closeVariant?: ButtonVariant | null
-  modelValue?: boolean | number
-  variant?: ColorVariant | null
-  closeContent?: string
-  immediate?: Booleanish
-  interval?: number
-  showOnPause?: Booleanish
-}
+const props = withDefaults(
+  defineProps<{
+    noHoverPause?: Booleanish
+    dismissLabel?: string
+    dismissible?: Booleanish
+    fade?: Booleanish
+    closeVariant?: ButtonVariant | null
+    modelValue?: boolean | number
+    variant?: ColorVariant | null
+    closeContent?: string
+    immediate?: Booleanish
+    interval?: number
+    showOnPause?: Booleanish
+  }>(),
+  {
+    closeContent: undefined,
+    closeVariant: 'secondary',
+    noHoverPause: false,
+    interval: 1000,
+    dismissLabel: 'Close',
+    dismissible: false,
+    fade: false,
+    modelValue: false,
+    variant: 'info',
+    immediate: true,
+    showOnPause: true,
+  }
+)
 
-const props = withDefaults(defineProps<BAlertProps>(), {
-  closeContent: undefined,
-  closeVariant: 'secondary',
-  noHoverPause: false,
-  interval: 1000,
-  dismissLabel: 'Close',
-  dismissible: false,
-  fade: false,
-  modelValue: false,
-  variant: 'info',
-  immediate: true,
-  showOnPause: true,
-})
-
-interface BAlertEmits {
-  (e: 'closed'): void
-  (e: 'close-countdown', value: number): void
-  (e: 'update:modelValue', value: boolean | number): void
-}
-
-const emit = defineEmits<BAlertEmits>()
+const emit = defineEmits<{
+  'closed': []
+  'close-countdown': [value: number]
+  'update:modelValue': [value: boolean | number]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,7 +86,7 @@ const immediateBoolean = useBooleanish(() => props.immediate)
 const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
 const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
 
-const hasCloseSlot = computed<boolean>(() => !isEmptySlot(slots.close))
+const hasCloseSlot = computed(() => !isEmptySlot(slots.close))
 
 const countdownLength = computed(() =>
   typeof modelValue.value === 'boolean' ? 0 : modelValue.value

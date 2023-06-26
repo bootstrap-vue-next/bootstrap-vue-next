@@ -1,5 +1,5 @@
 <template>
-  <b-table-simple v-bind="containerAttrs">
+  <BTableSimple v-bind="containerAttrs">
     <!-- <table :class="classes"> -->
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
@@ -49,6 +49,11 @@
                 v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
                 :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
                 :label="field.label"
+                :column="field.key"
+                :field="field"
+                :is-foot="false"
+                :select-all-rows="selectAllRows"
+                :clear-selected="clearSelected"
               />
               <template v-else>{{ getFieldHeadLabel(field) }}</template>
             </div>
@@ -123,14 +128,14 @@
         </tr>
       </template>
       <tr
-        v-if="internalBusyFlag"
+        v-if="busyBoolean"
         class="b-table-busy-slot"
         :class="{'b-table-static-busy': computedItems.length === 0}"
       >
         <td :colspan="computedFieldsTotal">
           <slot name="table-busy">
             <div class="d-flex align-items-center justify-content-center gap-2">
-              <b-spinner class="align-middle" />
+              <BSpinner class="align-middle" />
               <strong>Loading...</strong>
             </div>
           </slot>
@@ -178,7 +183,7 @@
       }}
     </caption>
     <!-- </table> -->
-  </b-table-simple>
+  </BTableSimple>
 </template>
 
 <script setup lang="ts">
@@ -202,147 +207,138 @@ import type {
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import useItemHelper from './itemHelper'
+import {useVModel} from '@vueuse/core'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
-interface BTableProps {
-  align?: VerticalAlign
-  caption?: string
-  captionTop?: Booleanish
-  borderless?: Booleanish
-  bordered?: Booleanish
-  borderVariant?: ColorVariant | null
-  dark?: Booleanish
-  fields?: TableField[]
-  footClone?: Booleanish
-  hover?: Booleanish
-  items?: TableItem[]
-  provider?: BTableProvider
-  sortCompare?: BTableSortCompare
-  noProvider?: NoProviderTypes[]
-  noProviderPaging?: Booleanish
-  noProviderSorting?: Booleanish
-  noProviderFiltering?: Booleanish
-  responsive?: boolean | Breakpoint
-  small?: Booleanish
-  striped?: Booleanish
-  stacked?: boolean | Breakpoint
-  labelStacked?: boolean
-  variant?: ColorVariant | null
-  sortBy?: string
-  sortDesc?: Booleanish
-  sortInternal?: Booleanish
-  selectable?: Booleanish
-  stickySelect?: Booleanish
-  selectHead?: boolean | string
-  selectMode?: 'multi' | 'single' | 'range'
-  selectionVariant?: ColorVariant | null
-  stickyHeader?: Booleanish
-  busy?: Booleanish
-  showEmpty?: Booleanish
-  perPage?: number
-  currentPage?: number
-  filter?: string
-  filterable?: string[]
-  emptyText?: string
-  emptyFilteredText?: string
-}
+const props = withDefaults(
+  defineProps<{
+    align?: VerticalAlign
+    caption?: string
+    captionTop?: Booleanish
+    borderless?: Booleanish
+    bordered?: Booleanish
+    borderVariant?: ColorVariant | null
+    dark?: Booleanish
+    fields?: TableField[]
+    footClone?: Booleanish
+    hover?: Booleanish
+    items?: TableItem[]
+    provider?: BTableProvider
+    sortCompare?: BTableSortCompare
+    noProvider?: NoProviderTypes[]
+    noProviderPaging?: Booleanish
+    noProviderSorting?: Booleanish
+    noProviderFiltering?: Booleanish
+    responsive?: boolean | Breakpoint
+    small?: Booleanish
+    striped?: Booleanish
+    stacked?: boolean | Breakpoint
+    labelStacked?: boolean
+    variant?: ColorVariant | null
+    sortBy?: string
+    sortDesc?: Booleanish
+    sortInternal?: Booleanish
+    selectable?: Booleanish
+    stickySelect?: Booleanish
+    selectHead?: boolean | string
+    selectMode?: 'multi' | 'single' | 'range'
+    selectionVariant?: ColorVariant | null
+    stickyHeader?: Booleanish
+    busy?: Booleanish
+    showEmpty?: Booleanish
+    perPage?: number
+    currentPage?: number
+    filter?: string
+    filterable?: string[]
+    emptyText?: string
+    emptyFilteredText?: string
+  }>(),
+  {
+    perPage: undefined,
+    sortBy: undefined,
+    variant: undefined,
+    borderVariant: undefined,
+    caption: undefined,
+    align: undefined,
+    filter: undefined,
+    filterable: undefined,
+    provider: undefined,
+    sortCompare: undefined,
+    noProvider: undefined,
+    noProviderPaging: undefined,
+    noProviderSorting: undefined,
+    noProviderFiltering: undefined,
+    captionTop: false,
+    borderless: false,
+    bordered: false,
+    dark: false,
+    fields: () => [],
+    footClone: false,
+    hover: false,
+    items: () => [],
+    responsive: false,
+    small: false,
+    striped: false,
+    labelStacked: false,
+    stacked: false,
+    sortDesc: false,
+    sortInternal: true,
+    selectable: false,
+    stickySelect: false,
+    selectHead: true,
+    selectMode: 'single',
+    selectionVariant: 'primary',
+    stickyHeader: false,
+    busy: false,
+    showEmpty: false,
+    currentPage: 1,
+    emptyText: 'There are no records to show',
+    emptyFilteredText: 'There are no records matching your request',
+  }
+)
 
-const props = withDefaults(defineProps<BTableProps>(), {
-  perPage: undefined,
-  sortBy: undefined,
-  variant: undefined,
-  borderVariant: undefined,
-  caption: undefined,
-  align: undefined,
-  filter: undefined,
-  filterable: undefined,
-  provider: undefined,
-  sortCompare: undefined,
-  noProvider: undefined,
-  noProviderPaging: undefined,
-  noProviderSorting: undefined,
-  noProviderFiltering: undefined,
-  captionTop: false,
-  borderless: false,
-  bordered: false,
-  dark: false,
-  fields: () => [],
-  footClone: false,
-  hover: false,
-  items: () => [],
-  responsive: false,
-  small: false,
-  striped: false,
-  labelStacked: false,
-  stacked: false,
-  sortDesc: false,
-  sortInternal: true,
-  selectable: false,
-  stickySelect: false,
-  selectHead: true,
-  selectMode: 'single',
-  selectionVariant: 'primary',
-  stickyHeader: false,
-  busy: false,
-  showEmpty: false,
-  currentPage: 1,
-  emptyText: 'There are no records to show',
-  emptyFilteredText: 'There are no records matching your request',
-})
+const emit = defineEmits<{
+  'headClicked': [
+    key: TableFieldObject['key'],
+    field: TableField,
+    event: MouseEvent,
+    isFooter: boolean
+  ]
+  'rowClicked': [item: TableItem, index: number, event: MouseEvent]
+  'rowDblClicked': [item: TableItem, index: number, event: MouseEvent]
+  'rowHovered': [item: TableItem, index: number, event: MouseEvent]
+  'rowUnhovered': [item: TableItem, index: number, event: MouseEvent]
+  'rowSelected': [value: TableItem]
+  'rowUnselected': [value: TableItem]
+  'selection': [value: TableItem[]]
+  'update:busy': [value: boolean]
+  'update:sortBy': [value: string]
+  'update:sortDesc': [value: boolean]
+  'sorted': [sortBy: string, isDesc: boolean]
+  'filtered': [value: TableItem[]]
+}>()
 
-interface BTableEmits {
-  (
-    e: 'headClicked',
-    ...value: Parameters<
-      (key: TableFieldObject['key'], field: TableField, event: MouseEvent, isFooter: boolean) => any
-    >
-  ): void
-  (
-    e: 'rowClicked',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowDblClicked',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowHovered',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (
-    e: 'rowUnhovered',
-    ...value: Parameters<(item: TableItem, index: number, event: MouseEvent) => any>
-  ): void
-  (e: 'rowSelected', value: TableItem): void
-  (e: 'rowUnselected', value: TableItem): void
-  (e: 'selection', value: TableItem[]): void
-  (e: 'update:busy', value: boolean): void
-  (e: 'update:sortBy', value: string): void
-  (e: 'update:sortDesc', value: boolean): void
-  (e: 'sorted', ...value: Parameters<(sortBy: string, isDesc: boolean) => any>): void
-  (e: 'filtered', value: TableItem[]): void
-}
-
-const emit = defineEmits<BTableEmits>()
+const sortByModel = useVModel(props, 'sortBy', emit)
+const busyModel = useVModel(props, 'busy', emit, {passive: true})
+const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
 
 const slots = useSlots()
 
 const itemHelper = useItemHelper()
 
 const footCloneBoolean = useBooleanish(() => props.footClone)
-const sortDescBoolean = useBooleanish(() => props.sortDesc)
+const sortDescBoolean = useBooleanish(sortDescModel)
 const sortInternalBoolean = useBooleanish(() => props.sortInternal)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const stickySelectBoolean = useBooleanish(() => props.stickySelect)
 const labelStackedBoolean = useBooleanish(() => props.labelStacked)
-const busyBoolean = useBooleanish(() => props.busy)
+const busyBoolean = useBooleanish(busyModel)
 const showEmptyBoolean = useBooleanish(() => props.showEmpty)
 const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
 const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 
-const internalBusyFlag = ref(busyBoolean.value)
 itemHelper.filterEvent.value = async (items) => {
   if (usesProvider.value) {
     await callItemsProvider()
@@ -360,7 +356,7 @@ const tableClasses = computed(() => ({
   'b-table-selectable': selectableBoolean.value,
   [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
   'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
-  'b-table-busy': internalBusyFlag.value,
+  'b-table-busy': busyBoolean.value,
   'b-table-sortable': isSortable.value,
   'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
   'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
@@ -411,6 +407,10 @@ const computedItems = computed(() => {
       })
     : props.items
 
+  if (usesProvider.value && !noProviderPagingBoolean.value) {
+    return items
+  }
+
   if (props.perPage !== undefined) {
     const startIndex = (props.currentPage - 1) * props.perPage
     const endIndex =
@@ -437,7 +437,7 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   emit('rowClicked', row, index, e)
 
-  handleRowSelection(row, index, e.shiftKey, e.ctrlKey)
+  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowDblClicked', row, index, e)
@@ -456,9 +456,9 @@ const handleFieldSorting = (field: TableField) => {
   if (isSortable.value === true && fieldSortable === true) {
     const sortDesc = !sortDescBoolean.value
     if (fieldKey !== props.sortBy) {
-      emit('update:sortBy', fieldKey)
+      sortByModel.value = fieldKey
     }
-    emit('update:sortDesc', sortDesc)
+    sortDescModel.value = sortDesc
     emit('sorted', fieldKey, sortDesc)
   }
 }
@@ -472,7 +472,8 @@ const handleRowSelection = (
   row: TableItem,
   index: number,
   shiftClicked = false,
-  ctrlClicked = false
+  ctrlClicked = false,
+  metaClicked = false
 ) => {
   if (!selectableBoolean.value) return
 
@@ -487,7 +488,7 @@ const handleRowSelection = (
         emit('rowSelected', item)
       }
     })
-  } else if (ctrlClicked) {
+  } else if (ctrlClicked || metaClicked) {
     if (selectedItems.value.has(row)) {
       selectedItems.value.delete(row)
       emit('rowUnselected', row)
@@ -511,8 +512,8 @@ const handleRowSelection = (
 }
 
 const callItemsProvider = async () => {
-  if (!usesProvider.value || !props.provider || internalBusyFlag.value) return
-  internalBusyFlag.value = true
+  if (!usesProvider.value || !props.provider || busyBoolean.value) return
+  busyModel.value = true
   const context = new Proxy(
     {
       currentPage: props.currentPage,
@@ -539,8 +540,8 @@ const callItemsProvider = async () => {
       const internalItems = await itemHelper.updateInternalItems(items)
       return internalItems
     } finally {
-      if (internalBusyFlag.value) {
-        internalBusyFlag.value = false
+      if (busyBoolean.value) {
+        busyModel.value = false
       }
     }
   }
@@ -549,8 +550,8 @@ const callItemsProvider = async () => {
     const internalItems = await itemHelper.updateInternalItems(response)
     return internalItems
   } finally {
-    if (internalBusyFlag.value) {
-      internalBusyFlag.value = false
+    if (busyBoolean.value) {
+      busyModel.value = false
     }
   }
 }
@@ -662,14 +663,6 @@ watch(
   }
 )
 
-watch(
-  internalBusyFlag,
-  () => internalBusyFlag.value !== busyBoolean.value && emit('update:busy', internalBusyFlag.value)
-)
-watch(
-  busyBoolean,
-  () => internalBusyFlag.value !== busyBoolean.value && (internalBusyFlag.value = busyBoolean.value)
-)
 watch(
   () => props.filter,
   (val, oldVal) => providerPropsWatch('filter', val, oldVal)

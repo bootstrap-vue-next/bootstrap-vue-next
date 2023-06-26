@@ -1,7 +1,7 @@
 <template>
-  <b-navbar variant="primary" sticky="top" toggleable="lg">
-    <b-navbar-toggle @click="toggler" />
-    <b-navbar-brand :to="withBase('/')" class="p-0 me-0 me-lg-2">
+  <BNavbar variant="primary" sticky="top" toggleable="lg">
+    <BNavbarToggle v-b-toggle.sidebar-menu />
+    <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 953 953"
@@ -21,104 +21,116 @@
           d="M92 0h769c50 0 92 42 92 92v769c0 50-42 92-92 92H92c-50 0-92-42-92-92V92C0 42 42 0 92 0zm216 710c100 0 160-50 160-133 0-62-44-107-108-113v-3c48-8 86-52 86-102 0-71-55-117-140-117H111v468h197zM195 307h90c50 0 78 23 78 64 0 44-33 68-91 68h-77V307zm0 338V499h90c64 0 98 25 98 73s-33 73-94 73h-94zm503 65l163-468h-90L652 621h-2L531 242h-92l163 468h96z"
         />
       </svg>
-    </b-navbar-brand>
-    <b-collapse is-nav>
-      <b-navbar-nav>
-        <b-nav>
-          <b-nav-item :to="withBase('/getting-started')">Getting Started</b-nav-item>
-          <b-nav-item :to="withBase('/reference/icons')">Icons</b-nav-item>
-          <b-nav-item :to="withBase('/reference/types')">Types</b-nav-item>
-          <b-nav-item :to="withBase('/migration-guide')">Migrate</b-nav-item>
-        </b-nav>
-      </b-navbar-nav>
-    </b-collapse>
-    <b-nav>
-      <b-button
+    </BNavbarBrand>
+    <BCollapse is-nav>
+      <BNavbarNav>
+        <BNav>
+          <BNavItem :to="withBase('/docs')">Getting Started</BNavItem>
+          <BNavItem :to="withBase('/docs/icons')">Icons</BNavItem>
+          <BNavItem :to="withBase('/docs/types')">Types</BNavItem>
+          <BNavItem :to="withBase('/docs/reference')">Reference</BNavItem>
+          <BNavItem :to="withBase('/docs/migration-guide')">Migrate</BNavItem>
+        </BNav>
+      </BNavbarNav>
+    </BCollapse>
+    <BNav>
+      <BButton
         :variant="null"
         :href="globalData.githubUrl"
         aria-label="Open Github"
         target="_blank"
         rel="noopener"
       >
-        <github-icon aria-hidden />
-      </b-button>
-      <b-button
+        <GithubIcon aria-hidden />
+      </BButton>
+      <BButton
         :variant="null"
         :href="globalData.opencollectiveUrl"
         aria-label="Open Github"
         target="_blank"
         rel="noopener"
       >
-        <opencollective-icon />
-      </b-button>
-      <b-button
+        <OpencollectiveIcon />
+      </BButton>
+      <BButton
         :variant="null"
         :href="globalData.discordUrl"
         aria-label="Open Discord Server"
         target="_blank"
         rel="noopener"
       >
-        <discord-icon aria-hidden />
-      </b-button>
-      <client-only>
-        <b-dropdown :variant="null">
+        <DiscordIcon aria-hidden />
+      </BButton>
+      <ClientOnly>
+        <BDropdown :variant="null">
           <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
           <template #button-content>
             <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
           </template>
-          <b-dropdown-item v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
+          <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
             <component :is="map[el]" /> {{ el }}
-          </b-dropdown-item>
-        </b-dropdown>
-      </client-only>
-    </b-nav>
-  </b-navbar>
-  <b-container fluid class="container-lg mt-3 my-md-4 bd-layout">
+          </BDropdownItem>
+        </BDropdown>
+      </ClientOnly>
+    </BNav>
+    <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
+      On the page <ChevronRight aria-hidden />
+    </BNavbarToggle>
+  </BNavbar>
+  <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
-      <client-only>
-        <b-offcanvas
+      <ClientOnly>
+        <BOffcanvas
+          id="sidebar-menu"
           v-model="sidebar"
-          static="true"
+          teleport-disabled="true"
           backdrop="false"
           title="Browse docs"
           class="h-100"
         >
           <TableOfContentsNav />
-        </b-offcanvas>
-      </client-only>
+        </BOffcanvas>
+      </ClientOnly>
     </aside>
     <main class="bd-main">
-      <div class="bd-content">
-        <b-row v-if="page.isNotFound">
-          <b-col>
-            <b-container class="text-center my-auto p-5">
-              <b-row>
-                <b-col>
-                  <h1>Oh No!</h1>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
-                  <h2>File Not Found</h2>
-                </b-col>
-              </b-row>
-            </b-container>
-          </b-col>
-        </b-row>
-        <b-row v-else>
-          <b-col>
-            <b-container>
-              <b-row>
-                <b-col>
-                  <Content class="bd-content" />
-                </b-col>
-              </b-row>
-            </b-container>
-          </b-col>
-        </b-row>
-      </div>
+      <BRow v-if="page.isNotFound">
+        <BCol>
+          <BContainer class="text-center my-auto p-5">
+            <BRow>
+              <BCol>
+                <h1>Oh No!</h1>
+              </BCol>
+            </BRow>
+            <BRow>
+              <BCol>
+                <h2>File Not Found</h2>
+              </BCol>
+            </BRow>
+          </BContainer>
+        </BCol>
+      </BRow>
+      <BRow v-else>
+        <div class="bd-content">
+          <aside class="otp-sidebar">
+            <ClientOnly>
+              <BOffcanvas
+                id="otp-menu"
+                v-model="onThisPage"
+                teleport-disabled="true"
+                backdrop="false"
+                placement="end"
+                title="On this page"
+                class="h-100"
+              >
+                <div class="bd-toc" />
+              </BOffcanvas>
+            </ClientOnly>
+          </aside>
+          <Content class="doc-content" />
+        </div>
+      </BRow>
     </main>
-  </b-container>
+  </BContainer>
 </template>
 
 <script setup lang="ts">
@@ -138,6 +150,7 @@ import {
   BOffcanvas,
   BRow,
   useColorMode,
+  vBToggle,
 } from 'bootstrap-vue-next'
 import {computed, inject, ref, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
@@ -145,12 +158,12 @@ import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
 import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
+import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
-import {useData, withBase} from 'vitepress'
+import {useData, withBase, useRoute} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
-import {useRoute} from 'vitepress'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
@@ -158,17 +171,16 @@ const route = useRoute()
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const sidebar = ref(isLargeScreen.value)
-
-const toggler = () => {
-  sidebar.value = !sidebar.value
-}
+const onThisPage = ref(isLargeScreen.value)
 
 watch(isLargeScreen, (newValue) => {
   if (newValue === true) {
     sidebar.value = true
+    onThisPage.value = true
     return
   }
   sidebar.value = false
+  onThisPage.value = false
 })
 
 watch(
@@ -207,7 +219,29 @@ const globalData = inject(appInfoKey, {
 
 <style lang="scss">
 #app {
-  .bd-content > div > {
+  --bvn-primary: hsla(237, 31%, 35%, 1);
+  --black: #000000;
+  --white: #ffffff;
+  --pink: #e83e8c;
+  --bvn-bg-primary: linear-gradient(
+    45deg,
+    var(--bvn-primary) 0%,
+    hsla(230, 25%, 18%, 1) 72%,
+    hsla(220, 19%, 13%, 1) 100%
+  );
+  .bg-primary {
+    background: var(--bvn-bg-primary) !important;
+    border-color: var(--bvn-bg-primary);
+    color: var(--white);
+  }
+  @mixin hover-focus-active() {
+    &:hover,
+    &:focus,
+    &:active {
+      @content;
+    }
+  }
+  .doc-content > div > {
     h2,
     h3,
     h4,
@@ -262,6 +296,46 @@ const globalData = inject(appInfoKey, {
       }
     }
   }
+  .component-reference {
+    .display-6 {
+      font-size: 1.5rem;
+      display: block;
+      margin: 0.75rem 0 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    ul {
+      li {
+        margin-bottom: 0.4rem;
+      }
+    }
+    h5 > a {
+      color: var(--bs-body-color);
+      text-decoration: none;
+    }
+    .table {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      & > tbody > tr > td,
+      & > tbody > tr > th,
+      & > tfoot > tr > td,
+      & > tfoot > tr > th,
+      & > thead > tr > td,
+      & > thead > tr > th {
+        padding: 0.5rem;
+      }
+      & > tbody > tr > td:first-child {
+        color: var(--pink);
+      }
+    }
+  }
+  .anchorjs-link {
+    text-decoration: none;
+    &::after {
+      content: '#';
+    }
+  }
   .card {
     margin-bottom: 3rem;
     pre {
@@ -280,18 +354,28 @@ const globalData = inject(appInfoKey, {
         margin-bottom: 0;
       }
       .list-group {
-        max-width: 400px;
+        max-width: 25rem;
       }
     }
+    .icon-lg {
+      font-size: 2.65rem;
+    }
   }
-  // Short term fix for navbar modes.
-  .navbar {
-    color: #fff;
+  .card-link {
+    text-decoration: none;
+  }
+  // Navbar.
+  > .navbar {
+    color: var(--white);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
     .nav-link,
     .navbar-brand,
     .btn {
-      color: #fff;
+      color: var(--white);
+    }
+    .otp-menu-toggle {
+      border: none;
+      font-size: small;
     }
   }
   [class^='language-'] {
@@ -355,11 +439,17 @@ const globalData = inject(appInfoKey, {
       }
     }
   }
+  // Sidebar.
   .offcanvas {
     .list-group {
       padding: 0 0 1.5rem 0;
       font-size: 0.875em;
       .bd-links-heading {
+        svg {
+          position: relative;
+          top: -1px;
+          margin-right: 0.3rem;
+        }
         display: block;
         margin: 0 0 0.5rem;
         text-transform: uppercase;
@@ -381,14 +471,15 @@ const globalData = inject(appInfoKey, {
     }
   }
 }
-// TOC
+// Sidebar onscreen.
 @media (min-width: 992px) {
   .bd-layout {
     display: grid !important;
     grid-template-areas: 'sidebar main';
     grid-template-columns: 1fr 5fr;
     gap: 1.5rem;
-    .bd-sidebar {
+    .bd-sidebar,
+    .otp-sidebar {
       grid-area: sidebar;
       position: -webkit-sticky;
       position: sticky;
@@ -410,19 +501,70 @@ const globalData = inject(appInfoKey, {
       }
     }
     .bd-main {
-      display: grid;
-      grid-area: main;
-      grid-template-areas: 'intro toc' 'content toc';
-      grid-template-rows: auto 1fr;
-      grid-template-columns: 4fr 1fr;
       .bd-content {
-        grid-area: content;
-        min-width: 1px;
+        display: grid;
+        grid-area: main;
+        grid-template-areas: 'intro toc' 'content toc';
+        grid-template-rows: auto 1fr;
+        grid-template-columns: 4fr 1fr;
+        gap: inherit;
+        .doc-content {
+          grid-area: content;
+          min-width: 1px;
+        }
+        .otp-sidebar {
+          margin-left: 1.25rem;
+          grid-area: toc;
+        }
       }
     }
   }
 }
-.offcanvas.offcanvas-start {
-  width: 200px !important;
+// Sidebar width.
+.bd-sidebar,
+.otp-sidebar {
+  @media (min-width: 992px) {
+    min-width: 12.5rem;
+  }
+  .offcanvas.offcanvas-start,
+  .offcanvas.offcanvas-end {
+    @media (min-width: 992px) {
+      width: 12.5rem !important;
+    }
+    @media (max-width: 991px) {
+      .bd-links-nav {
+        -moz-column-count: 2;
+        column-count: 2;
+        -moz-column-gap: 1.5rem;
+        column-gap: 1.5rem;
+      }
+    }
+    .table-of-contents {
+      font-size: 0.875rem;
+      ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        a {
+          display: block;
+          padding: 0.125rem 0 0.125rem 0.75rem;
+          color: inherit;
+          text-decoration: none;
+          border-left: 0.125rem solid transparent;
+          &.active {
+            color: var(--bd-toc-color);
+            border-left-color: var(--bd-toc-color);
+          }
+          &:hover {
+            color: var(--bd-toc-color);
+            border-left-color: var(--bd-toc-color);
+          }
+        }
+        ul {
+          padding-left: 1rem;
+        }
+      }
+    }
+  }
 }
 </style>

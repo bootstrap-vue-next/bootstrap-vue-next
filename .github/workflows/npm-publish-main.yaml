@@ -48,7 +48,7 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Build Library
-        run: pnpm run build --filter bootstrap-vue-next
+        run: pnpm run build-emit --filter bootstrap-vue-next
 
       - name: Publish Main
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public

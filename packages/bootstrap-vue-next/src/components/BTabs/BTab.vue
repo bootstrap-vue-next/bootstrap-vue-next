@@ -17,36 +17,37 @@ import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'
 import {tabsInjectionKey} from '../../utils'
 
-interface BTabProps {
-  id?: string
-  title?: string
-  active?: Booleanish
-  buttonId?: string
-  disabled?: Booleanish
-  lazy?: Booleanish
-  lazyOnce?: Booleanish
-  noBody?: boolean | string
-  tag?: string
-  titleItemClass?: ClassValue
-  titleLinkAttributes?: Record<string, unknown>
-  titleLinkClass?: ClassValue
-}
-
-const props = withDefaults(defineProps<BTabProps>(), {
-  titleItemClass: undefined,
-  titleLinkClass: undefined,
-  id: undefined,
-  title: undefined,
-  active: false,
-  // TODO this is unused - Compat issue
-  buttonId: undefined,
-  disabled: false,
-  lazy: undefined,
-  lazyOnce: undefined,
-  noBody: false,
-  tag: 'div',
-  titleLinkAttributes: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    title?: string
+    active?: Booleanish
+    buttonId?: string
+    disabled?: Booleanish
+    lazy?: Booleanish
+    lazyOnce?: Booleanish
+    noBody?: boolean | string
+    tag?: string
+    titleItemClass?: ClassValue
+    titleLinkAttributes?: Record<string, unknown>
+    titleLinkClass?: ClassValue
+  }>(),
+  {
+    titleItemClass: undefined,
+    titleLinkClass: undefined,
+    id: undefined,
+    title: undefined,
+    active: false,
+    // TODO this is unused - Compat issue
+    buttonId: undefined,
+    disabled: false,
+    lazy: undefined,
+    lazyOnce: undefined,
+    noBody: false,
+    tag: 'div',
+    titleLinkAttributes: undefined,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

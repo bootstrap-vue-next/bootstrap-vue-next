@@ -1,6 +1,80 @@
 # Changelog
 
 
+## [0.9.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.11...bootstrap-vue-next-v0.9.12) (2023-06-25)
+
+
+### Bug Fixes
+
+* scss ([02750f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/02750f5e5c2d93d3486a5cdaa363763a6a18c239))
+
+## [0.9.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.10...bootstrap-vue-next-v0.9.11) (2023-06-25)
+
+
+### Features
+
+* **BFormFile:** add in BFormFile ([85396d3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85396d37e7f75fcd1a35b9de7d00cf0acea2e1c3))
+* **BTable:** do not require sortDesc when using sortBy ([d47d56c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d47d56ce05203bab359b4827edaa0607bcd75051))
+
+
+### Bug Fixes
+
+* defineSlot issues ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* import interface from other vue file ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* no-dupe issues ([85396d3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85396d37e7f75fcd1a35b9de7d00cf0acea2e1c3))
+* no-dupe-keys issues ([bb72530](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bb725308fe5805f3a78318613d538171a9d3ee29))
+* tests ([a7acb09](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a7acb09f1496523e915c1287187aac4ca7e3957b))
+* types generation ([9537680](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/953768011c1f49a560c878babcf400ef765b8190))
+
+## [0.9.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.9...bootstrap-vue-next-v0.9.10) (2023-06-22)
+
+
+### Features
+
+* **BOffcanvas:** expose hide and show to programmatically control BOffcanvas. ([da99fa1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da99fa1c06cc172066a911d1cb4257e5a00eea65))
+
+## [0.9.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.8...bootstrap-vue-next-v0.9.9) (2023-06-20)
+
+
+### Bug Fixes
+
+* **BFormRadio:** update value with empty string. ([1a0f733](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a0f7338b922e7abb2ff83ad21379f65150a88cb))
+
+## [0.9.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.7...bootstrap-vue-next-v0.9.8) (2023-06-20)
+
+
+### Bug Fixes
+
+* **BTable:** support multi select mode for macOS users ([3a76884](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3a76884c203e28718a73d36e97fd16a60c503a3e))
+
+## [0.9.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.6...bootstrap-vue-next-v0.9.7) (2023-06-19)
+
+
+### Bug Fixes
+
+* **BOffcanvas:** toggle offcanvas with toggle directive. ([e4d47f5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e4d47f5b0428ff155f69d7b11073f1711bb878e5))
+
+## [0.9.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.5...bootstrap-vue-next-v0.9.6) (2023-06-16)
+
+
+### Features
+
+* **BNavItem:** adds linkClasses property. ([3521a85](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3521a85a180314f8860070ae02318034021c4e2f))
+* **BNavItemDropdown:** adds open, close and toggle methods. ([683c51d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/683c51dcd52563f4ffaf54a3ed67cedf3954ed76))
+
+
+### Bug Fixes
+
+* **BFormGroup:** allow Booleanish and null for state prop ([f952450](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f952450e053f96ad00d65f406809ffecfab70c9d)), closes [#1167](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1167)
+* **BOffcanvas:** respect manually set property id. ([ae3f09f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ae3f09f90b4c9a6425bfc8fba8218a593d600adf))
+
+## [0.9.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.4...bootstrap-vue-next-v0.9.5) (2023-05-31)
+
+
+### Bug Fixes
+
+* **VBTooltip:** don't render a BTooltip when is disabled by code using the directive ([cc97b3c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cc97b3ca0c9430dbd93c93fbb7849f5da8a7d05d))
+
 ## [0.9.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.3...bootstrap-vue-next-v0.9.4) (2023-05-29)
 
 
@@ -149,7 +223,7 @@
 * **BDropdown:** add floatingMiddleware prop ([bc401f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add lazy prop ([bc401f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add offset prop ([bc401f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
-* **Bdropdown:** add prop noShift ([bc401f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add prop noShift ([bc401f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add splitDisabled proop ([bc401f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add strategy prop ([bc401f2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** close on esc ([d94959e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d94959e95201cb56e69f14227651260b922314d9))
@@ -508,7 +582,7 @@
 * **BDropdown:** add floatingMiddleware prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add lazy prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add offset prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
-* **Bdropdown:** add prop noShift ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
+* **BDropdown:** add prop noShift ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add splitDisabled proop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** add strategy prop ([bc401f2](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/bc401f27a97a3752e461e842670ac07dc0df4fc8))
 * **BDropdown:** close on esc ([d94959e](https://github.com/bootstrap-vue/bootstrap-vue-next/commit/d94959e95201cb56e69f14227651260b922314d9))
@@ -1245,8 +1319,8 @@
 - **BDropdown:** event to be MouseEvent on click ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
 - **BDropdownGroup:** rename headerClasses prop to headerClass ([3c72126](https://github.com/cdmoro/bootstrap-vue-3/commit/3c721260160970fe3898b196ae6365a67745828e))
 - **BDropdownItem:** contains disabled on button ([972c452](https://github.com/cdmoro/bootstrap-vue-3/commit/972c452efe168bfcbfb926b51e47031bfed81ac0))
-- **Bdropdown:** slot button-content to not render both prop text andslot ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
-- **Bdropdown:** toggleText prop given additional slot opt ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
+- **BDropdown:** slot button-content to not render both prop text andslot ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
+- **BDropdown:** toggleText prop given additional slot opt ([df957f5](https://github.com/cdmoro/bootstrap-vue-3/commit/df957f51ab5403319e38034ffafada101517fd61))
 - **BTableContainer:** rename prop responsiveClasses to responsiveClass ([3c72126](https://github.com/cdmoro/bootstrap-vue-3/commit/3c721260160970fe3898b196ae6365a67745828e))
 - **composables:** Do not spread array inside `concat` function ([f9841f5](https://github.com/cdmoro/bootstrap-vue-3/commit/f9841f511c1370a6ac09fd5eedc7648cfff91f25))
 - **composables:** Spread out children from Fragment slots ([963f7a6](https://github.com/cdmoro/bootstrap-vue-3/commit/963f7a6c680a40409c0987ceb674a32cd971df84))

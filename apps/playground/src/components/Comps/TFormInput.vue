@@ -1,95 +1,95 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
         <h4>Form Input Types</h4>
         <div>type text</div>
-        <b-form-input ref="input" type="text" class="mb-1" />
+        <BFormInput ref="input" type="text" class="mb-1" />
         <div>type number</div>
-        <b-form-input type="number" />
+        <BFormInput type="number" />
         <div>type email</div>
-        <b-form-input type="email" />
+        <BFormInput type="email" />
         <div>type password</div>
-        <b-form-input v-model="password" :type="showPassword ? 'text' : 'password'" class="mb-1" />
-        <b-form-input :type="showPassword ? 'text' : 'password'" class="mb-1" />
-        <b-form-checkbox v-model="showPassword">Show password</b-form-checkbox>
+        <BFormInput v-model="password" :type="showPassword ? 'text' : 'password'" class="mb-1" />
+        <BFormInput :type="showPassword ? 'text' : 'password'" class="mb-1" />
+        <BFormCheckbox v-model="showPassword">Show password</BFormCheckbox>
         {{ password }}
         <div>type search</div>
-        <b-form-input type="search" />
+        <BFormInput type="search" />
         <div>type url</div>
-        <b-form-input type="url" />
+        <BFormInput type="url" />
         <div>type tel</div>
-        <b-form-input type="tel" />
+        <BFormInput type="tel" />
         <div>type date</div>
-        <b-form-input type="date" />
+        <BFormInput type="date" />
         <div>type time</div>
-        <b-form-input type="time" />
+        <BFormInput type="time" />
         <div>type datetime</div>
-        <b-form-input type="datetime" />
+        <BFormInput type="datetime" />
         <div>type datetime-local</div>
-        <b-form-input type="datetime-local" />
+        <BFormInput type="datetime-local" />
         <div>type month</div>
-        <b-form-input type="month" />
+        <BFormInput type="month" />
         <div>type week</div>
-        <b-form-input type="week" />
+        <BFormInput type="week" />
         <div>type range</div>
-        <b-form-input v-model="formInputRangeValue" type="range" min="0" max="5" step="0.5" />
+        <BFormInput v-model="formInputRangeValue" type="range" min="0" max="5" step="0.5" />
         <div>value : {{ formInputRangeValue }}</div>
         <div>type color</div>
-        <b-form-input type="color" />
+        <BFormInput type="color" />
         <div>plaintext</div>
-        <b-form-input type="text" plaintext value="a" />
+        <BFormInput type="text" plaintext value="a" />
         <div>Disabled</div>
-        <b-form-input disabled value="disabled input" />
-      </b-col>
-    </b-row>
+        <BFormInput disabled value="disabled input" />
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
+    <BRow>
+      <BCol>
         <h4>Form Input Sizes</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <div class="mb-1">small</div>
-      </b-col>
-      <b-col>
-        <b-form-input type="text" size="sm" class="col" />
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
+        <BFormInput type="text" size="sm" class="col" />
+      </BCol>
+      <BCol>
         <div>large</div>
-      </b-col>
-      <b-col>
-        <b-form-input type="text" size="lg" class="col" />
-      </b-col>
-    </b-row>
+      </BCol>
+      <BCol>
+        <BFormInput type="text" size="lg" class="col" />
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
+    <BRow>
+      <BCol>
         <h4>Form Input Contextual states</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <div>null</div>
-      </b-col>
-      <b-col>
-        <b-form-input type="text" :state="null" />
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
+        <BFormInput type="text" :state="null" />
+      </BCol>
+      <BCol>
         <div>true</div>
-      </b-col>
-      <b-col>
-        <b-form-input type="text" :state="true" />
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
+        <BFormInput type="text" :state="true" />
+      </BCol>
+      <BCol>
         <div>false</div>
-      </b-col>
-      <b-col>
-        <b-form-input type="text" :state="false" />
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+      <BCol>
+        <BFormInput type="text" :state="false" />
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

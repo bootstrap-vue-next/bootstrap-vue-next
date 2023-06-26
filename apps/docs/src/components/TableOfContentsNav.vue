@@ -1,43 +1,53 @@
 <template>
-  <b-list-group v-if="!isLargeScreen">
-    <strong class="bd-links-heading">General</strong>
-    <b-list-group-item>
-      <b-link :to="withBase('/getting-started')">Getting Started</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/reference/icons')">Icons</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/reference/types')">Types</b-link>
-    </b-list-group-item>
-    <b-list-group-item>
-      <b-link :to="withBase('/migration-guide')">Migrate</b-link>
-    </b-list-group-item>
-  </b-list-group>
-  <b-list-group>
-    <strong class="bd-links-heading">
-      <b-link :to="withBase('/reference/components')">Components</b-link>
-    </strong>
-    <b-list-group-item v-for="component in componentsComputedList" :key="component.name">
-      <b-link :to="component.route">{{ component.name }}</b-link>
-    </b-list-group-item>
-  </b-list-group>
-  <b-list-group>
-    <strong class="bd-links-heading">
-      <b-link :to="withBase('/reference/composables')">Composables</b-link>
-    </strong>
-    <b-list-group-item v-for="component in composablesComputedList" :key="component.name">
-      <b-link :to="component.route">{{ component.name }}</b-link>
-    </b-list-group-item>
-  </b-list-group>
-  <b-list-group>
-    <strong class="bd-links-heading">
-      <b-link :to="withBase('/reference/directives')">Directives</b-link>
-    </strong>
-    <b-list-group-item v-for="component in directivesComputedList" :key="component.name">
-      <b-link :to="component.route">{{ component.name }}</b-link>
-    </b-list-group-item>
-  </b-list-group>
+  <div class="bd-links-nav">
+    <BListGroup v-if="!isLargeScreen">
+      <strong class="bd-links-heading"><GearIcon aria-hidden /> General</strong>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs')">Getting Started</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/icons')">Icons</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/types')">Types</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/reference')">Reference</BLink>
+      </BListGroupItem>
+      <BListGroupItem>
+        <BLink :to="withBase('/docs/migration-guide')">Migrate</BLink>
+      </BListGroupItem>
+    </BListGroup>
+    <BListGroup>
+      <strong class="bd-links-heading">
+        <BLink :to="withBase('/docs/components')"> <IntersectIcon aria-hidden /> Components </BLink>
+      </strong>
+      <BListGroupItem v-for="component in componentsComputedList" :key="component.name">
+        <BLink :to="component.route">{{ component.name }}</BLink>
+      </BListGroupItem>
+    </BListGroup>
+    <BListGroup>
+      <strong class="bd-links-heading">
+        <BLink :to="withBase('/docs/composables')">
+          <PieChartIcon aria-hidden /> Composables
+        </BLink>
+      </strong>
+      <BListGroupItem v-for="component in composablesComputedList" :key="component.name">
+        <BLink :to="component.route">{{ component.name }}</BLink>
+      </BListGroupItem>
+    </BListGroup>
+    <BListGroup>
+      <strong class="bd-links-heading">
+        <BLink :to="withBase('/docs/directives')">
+          <CodeSlashIcon aria-hidden />
+          Directives
+        </BLink>
+      </strong>
+      <BListGroupItem v-for="component in directivesComputedList" :key="component.name">
+        <BLink :to="component.route">{{ component.name }}</BLink>
+      </BListGroupItem>
+    </BListGroup>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -45,6 +55,10 @@ import {computed} from 'vue'
 import {BLink, BListGroup, BListGroupItem} from 'bootstrap-vue-next'
 import {withBase} from 'vitepress'
 import {useMediaQuery} from '@vueuse/core'
+import IntersectIcon from '~icons/bi/intersect'
+import CodeSlashIcon from '~icons/bi/code-slash'
+import PieChartIcon from '~icons/bi/pie-chart'
+import GearIcon from '~icons/bi/gear'
 
 defineProps<{
   name?: string
@@ -53,11 +67,11 @@ defineProps<{
 
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const routeLocationComponents = (name: string): string =>
-  withBase(`/reference/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
+  withBase(`/docs/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
 const routeLocationComposables = (name: string): string =>
-  withBase(`/reference/composables/${name}`).trim()
+  withBase(`/docs/composables/${name}`).trim()
 const routeLocationDirectives = (name: string): string =>
-  withBase(`/reference/directives/${name}`).trim()
+  withBase(`/docs/directives/${name}`).trim()
 
 const componentsList: {name: string}[] = [
   {name: 'Accordion'},
@@ -74,6 +88,7 @@ const componentsList: {name: string}[] = [
   {name: 'Dropdown'},
   {name: 'Form'},
   {name: 'Form Checkbox'},
+  {name: 'Form File'},
   {name: 'Form Group'},
   {name: 'Form Input'},
   {name: 'Form Radio'},

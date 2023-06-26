@@ -1,9 +1,9 @@
 <template>
-  <b-container>
-    <b-row>
-      <b-col> Hello World! </b-col>
-    </b-row>
-  </b-container>
+  <BContainer>
+    <BRow>
+      <BCol> Hello World! </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

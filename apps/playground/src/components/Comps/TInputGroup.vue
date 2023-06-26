@@ -1,85 +1,85 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-input-group prepend="@" class="mb-3">
-          <b-form-input placeholder="Username" />
-        </b-input-group>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-input-group append="@example.com" class="mb-3">
-          <b-form-input placeholder="Recipient's username" />
-        </b-input-group>
-      </b-col>
-    </b-row>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BInputGroup prepend="@" class="mb-3">
+          <BFormInput placeholder="Username" />
+        </BInputGroup>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BInputGroup append="@example.com" class="mb-3">
+          <BFormInput placeholder="Recipient's username" />
+        </BInputGroup>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
+    <BRow>
+      <BCol>
         <label>Your vanity URL</label>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-input-group prepend="https://example.com/users/" class="mb-3">
-          <b-form-input />
-        </b-input-group>
-      </b-col>
-    </b-row>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BInputGroup prepend="https://example.com/users/" class="mb-3">
+          <BFormInput />
+        </BInputGroup>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
-        <b-input-group prepend="$" append=".00" class="mb-3">
-          <b-form-input />
-        </b-input-group>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-input-group class="mb-3">
-          <b-form-input placeholder="Username" />
-          <b-input-group-text>@</b-input-group-text>
-          <b-form-input placeholder="Server" />
-        </b-input-group>
-      </b-col>
-    </b-row>
+    <BRow>
+      <BCol>
+        <BInputGroup prepend="$" append=".00" class="mb-3">
+          <BFormInput />
+        </BInputGroup>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BInputGroup class="mb-3">
+          <BFormInput placeholder="Username" />
+          <BInputGroupText>@</BInputGroupText>
+          <BFormInput placeholder="Server" />
+        </BInputGroup>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
-        <b-input-group class="mb-3" prepend="With textarea">
+    <BRow>
+      <BCol>
+        <BInputGroup class="mb-3" prepend="With textarea">
           <textarea class="form-control" />
-        </b-input-group>
-      </b-col>
-    </b-row>
+        </BInputGroup>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
+    <BRow>
+      <BCol>
         <h4>Input Group Sizes</h4>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-input-group prepend="Small" size="sm" class="mb-3">
-          <b-form-input />
-        </b-input-group>
-      </b-col>
-    </b-row>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BInputGroup prepend="Small" size="sm" class="mb-3">
+          <BFormInput />
+        </BInputGroup>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
-        <b-input-group prepend="Default" class="mb-3">
-          <b-form-input />
-        </b-input-group>
-      </b-col>
-    </b-row>
+    <BRow>
+      <BCol>
+        <BInputGroup prepend="Default" class="mb-3">
+          <BFormInput />
+        </BInputGroup>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
-        <b-input-group prepend="Large" size="lg" class="mb-3">
-          <b-form-input />
-        </b-input-group>
-      </b-col>
-    </b-row>
-  </b-container>
+    <BRow>
+      <BCol>
+        <BInputGroup prepend="Large" size="lg" class="mb-3">
+          <BFormInput />
+        </BInputGroup>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>

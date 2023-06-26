@@ -5,14 +5,13 @@ import type {BootstrapVueOptions} from './types'
 import './styles/styles.scss'
 
 import * as Components from './components'
-import * as Directives from './directives/exports'
+import * as Directives from './directives'
 import type {ComponentType, DirectiveType} from './types/BootstrapVueOptions'
 import parseActiveImports from './utils/parseActiveImports'
 
-// Inject all components into the global @vue/runtime-core
-// This allows intellisense in templates w/out direct importing
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BFormFile: typeof Components.BFormFile
     BAccordion: typeof Components.BAccordion
     BAccordionItem: typeof Components.BAccordionItem
     BAlert: typeof Components.BAlert
@@ -149,8 +148,8 @@ const plugin: Plugin = {
 
 export * from './components'
 export * as Components from './components'
-export * from './directives/exports'
-export * as Directives from './directives/exports'
+export * from './directives'
+export * as Directives from './directives'
 export * from './composables/exports'
 export * as Composables from './composables/exports'
 export * from './utils/exports'

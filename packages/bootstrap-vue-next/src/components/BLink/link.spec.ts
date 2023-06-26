@@ -151,7 +151,7 @@ describe('link', () => {
           path: '/',
           component: {
             name: 'Root',
-            template: '<router-view></router-view>',
+            template: '<RouterView></RouterView>',
           },
           children: [
             {
@@ -188,9 +188,9 @@ describe('link', () => {
       const wrapper = mount(
         createApp(`
           <main>
-            <b-link :active-class="'active'" :to="{name: 'Subview'}">Subview</b-link>
-            <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
-            <router-view></router-view>
+            <BLink :active-class="'active'" :to="{name: 'Subview'}">Subview</BLink>
+            <BLink :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</BLink>
+            <RouterView></RouterView>
           </main>
         `),
         {
@@ -224,9 +224,9 @@ describe('link', () => {
       const wrapper = mount(
         createApp(`
             <main>
-              <b-link :active-class="'active'" :active="false" :to="{name: 'Subview'}">Subview</b-link>
-              <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
-              <router-view></router-view>
+              <BLink :active-class="'active'" :active="false" :to="{name: 'Subview'}">Subview</BLink>
+              <BLink :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</BLink>
+              <RouterView></RouterView>
             </main>
         `),
         {
@@ -260,9 +260,9 @@ describe('link', () => {
       const wrapper = mount(
         createApp(`
             <main>
-              <b-link :active-class="'active'" :to="{name: 'Subview'}">Subview</b-link>
-              <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
-              <router-view></router-view>
+              <BLink :active-class="'active'" :to="{name: 'Subview'}">Subview</BLink>
+              <BLink :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</BLink>
+              <RouterView></RouterView>
             </main>
         `),
         {
@@ -296,9 +296,9 @@ describe('link', () => {
       const wrapper = mount(
         createApp(`
             <main>
-              <b-link :active-class="'active'" :active="false" :to="{name: 'Subview'}">Subview</b-link>
-              <b-link :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</b-link>
-              <router-view></router-view>
+              <BLink :active-class="'active'" :active="false" :to="{name: 'Subview'}">Subview</BLink>
+              <BLink :active-class="'active'" :to="{name: 'AnotherSubview'}">AnotherSubview</BLink>
+              <RouterView></RouterView>
             </main>
         `),
         {
@@ -430,7 +430,7 @@ describe('link', () => {
   /*
   describe('router-link support', () => {
     it('works', () => {
-      // Fake Gridsome `<g-link>` component
+      // Fake Gridsome `<GLink>` component
       const GLink = {
         name: 'GLink',
         props: {
@@ -441,7 +441,7 @@ describe('link', () => {
         },
         render() {
           // We just us a simple A tag to render the
-          // fake `<g-link>` and assume `to` is a string
+          // fake `GLink>` and assume `to` is a string
           return h('a', { attrs: { href: this.to } }, this.$slots.default())
         }
       }
