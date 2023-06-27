@@ -24,7 +24,6 @@
     "prepack": "nuxt-module-build",
     "dev": "nuxi dev playground --port 3030",
     "build": "pnpm run dev:build && pnpm run prepack",
-    "build-emit": "pnpm run build",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix",
@@ -34,20 +33,20 @@
     "bootstrap-vue-next": "workspace:^"
   },
   "dependencies": {
-    "@nuxt/kit": "~3.5.2"
+    "@nuxt/kit": "^3.6.1"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.1.1",
     "@nuxt/module-builder": "^0.4.0",
-    "@nuxt/schema": "~3.5.2",
+    "@nuxt/schema": "^3.6.1",
     "@rushstack/eslint-patch": "^1.3.2",
     "@vue/eslint-config-prettier": "^7.1.0",
     "bootstrap-vue-next": "workspace:^",
     "eslint": "^8.43.0",
     "eslint-define-config": "^1.21.0",
-    "nuxt": "~3.5.2",
+    "nuxt": "^3.6.1",
     "prettier": "^2.8.8",
-    "unimport": "^3.0.8",
+    "unimport": "^3.0.10",
     "vue": "^3.3.4"
   },
   "repository": {

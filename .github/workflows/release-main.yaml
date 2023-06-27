@@ -65,7 +65,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Build Library
-        run: pnpm run build-emit --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
+        run: pnpm run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
         if: ${{ steps.release.outputs.releases_created }}
 
       - name: Publish Main
