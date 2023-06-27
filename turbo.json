@@ -5,10 +5,6 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "build-emit": {
-      "dependsOn": ["^build-emit"],
-      "outputs": ["dist/**"]
-    },
     "test": {
       "outputs": []
     },

@@ -10,7 +10,7 @@
     ".": {
       "import": "./dist/bootstrap-vue-next.mjs",
       "require": "./dist/bootstrap-vue-next.umd.js",
-      "types": "./src/BootstrapVue.d.ts"
+      "types": "./dist/src/BootstrapVue.d.ts"
     },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
@@ -23,7 +23,7 @@
     "!src/App.vue",
     "!src/main.ts"
   ],
-  "types": "./src/BootstrapVue.d.ts",
+  "types": "./dist/src/BootstrapVue.d.ts",
   "private": false,
   "scripts": {
     "dev": "vite --port 5174",
@@ -32,7 +32,6 @@
     "type-check-emit": "vue-tsc --declaration --emitDeclarationOnly -p tsconfig.app.json --composite false",
     "preview": "vite preview",
     "build": "pnpm run type-check && pnpm run build-only",
-    "build-emit": "pnpm run type-check-emit && pnpm run build-only",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix src",
     "test:lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore src",
     "test:unit": "vitest",
