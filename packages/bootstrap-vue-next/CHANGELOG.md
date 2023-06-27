@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.12...bootstrap-vue-next-v0.9.13) (2023-06-27)
+
+
+### Bug Fixes
+
+* types generation ([1a63e2f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1a63e2fd71e448faca92001539f1cbd78c9d1164))
+
 ## [0.9.12](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.11...bootstrap-vue-next-v0.9.12) (2023-06-25)
 
 
