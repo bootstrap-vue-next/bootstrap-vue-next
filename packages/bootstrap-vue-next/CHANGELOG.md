@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.13...bootstrap-vue-next-v0.9.14) (2023-06-28)
+
+
+### Features
+
+* **BLink:** adds clicked to click event. ([f865571](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f865571b862e2dd3274a173e2532572f54aecd2e))
+
 ## [0.9.13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.12...bootstrap-vue-next-v0.9.13) (2023-06-27)
 
 
