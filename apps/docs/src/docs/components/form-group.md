@@ -381,7 +381,7 @@ the invalid feedback to show when using one of the above-mentioned form controls
 
 ## Floating labels
 
-BFormGroup supports the new and fancy [Floating labels](https://getbootstrap.com/docs/5.0/forms/floating-labels/) feature of Bootstrap 5.
+BFormGroup supports the new and fancy [Floating labels](https://getbootstrap.com/docs/5.3/forms/floating-labels/) feature of Bootstrap 5.
 
 You can make a floating label by setting the property `floating` to true and specify a placeholder on the `<BFormInput>`.
 
