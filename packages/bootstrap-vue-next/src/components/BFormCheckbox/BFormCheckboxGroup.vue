@@ -118,7 +118,7 @@ const validatedBoolean = useBooleanish(() => props.validated)
 
 const element = ref<HTMLElement | null>(null)
 
-useFocus(element, {
+const {focused} = useFocus(element, {
   initialValue: autofocusBoolean.value,
 })
 
@@ -198,4 +198,13 @@ const classesObject = computed(() => ({
 }))
 const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)
+
+defineExpose({
+  focus: () => {
+    focused.value = true
+  },
+  blur: () => {
+    focused.value = false
+  },
+})
 </script>
