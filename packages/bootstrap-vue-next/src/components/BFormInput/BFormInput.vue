@@ -106,6 +106,11 @@ const computedClasses = computed(() => {
   ]
 })
 
+defineExpose({
+  focus,
+  blur,
+})
+
 // const highlight = () => {
 //   if (isHighlighted.value === true) return
 //   isHighlighted.value = true

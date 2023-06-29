@@ -94,4 +94,9 @@ const computedClasses = computed(() => [
 const computedStyles = computed<CSSProperties>(() => ({
   resize: noResizeBoolean.value ? 'none' : undefined,
 }))
+
+defineExpose({
+  focus,
+  blur,
+})
 </script>

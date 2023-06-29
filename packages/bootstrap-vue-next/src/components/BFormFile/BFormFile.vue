@@ -112,7 +112,7 @@ const stateClass = useStateClass(stateBoolean)
 
 const input = ref<HTMLInputElement | null>(null)
 
-useFocus(input, {initialValue: autofocusBoolean.value})
+const {focused} = useFocus(input, {initialValue: autofocusBoolean.value})
 
 const hasLabelSlot = computed(() => !isEmptySlot(slots['label']))
 const computedAccept = computed(() =>
@@ -143,4 +143,13 @@ const onDrop = (e: Event) => {
     e.preventDefault()
   }
 }
+
+defineExpose({
+  focus: () => {
+    focused.value = true
+  },
+  blur: () => {
+    focused.value = false
+  },
+})
 </script>

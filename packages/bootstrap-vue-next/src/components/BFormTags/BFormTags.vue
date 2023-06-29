@@ -12,7 +12,7 @@
       :id="`${computedId}selected_tags__`"
       class="visually-hidden"
       :for="_inputId"
-      :aria-live="focus ? 'polite' : 'off'"
+      :aria-live="focused ? 'polite' : 'off'"
       aria-atomic="true"
       aria-relevant="additions text"
       >{{ tags.join(', ') }}</output
@@ -20,7 +20,7 @@
     <div
       :id="`${computedId}removed_tags__`"
       role="status"
-      :aria-live="focus ? 'assertive' : 'off'"
+      :aria-live="focused ? 'assertive' : 'off'"
       aria-atomic="true"
       class="visually-hidden"
     >
@@ -247,7 +247,6 @@ const _inputId = computed<string>(() => props.inputId || `${computedId.value}inp
 const tags = ref<string[]>(modelValue.value)
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
-const focus = ref<boolean>(false)
 const lastRemovedTag = ref<string>('')
 const validTags = ref<string[]>([])
 const invalidTags = ref<string[]>([])
@@ -258,7 +257,7 @@ const computedClasses = computed(() => [
   {
     [`form-control-${props.size}`]: props.size !== 'md',
     disabled: disabledBoolean.value,
-    focus: focus.value,
+    focus: focused.value,
   },
 ])
 
@@ -334,12 +333,12 @@ const onFocus = (e: FocusEvent): void => {
     return
   }
 
-  focus.value = true
+  focused.value = true
   emit('focus', e)
 }
 
 const onBlur = (e: FocusEvent): void => {
-  focus.value = false
+  focused.value = false
   emit('blur', e)
 }
 
@@ -447,4 +446,14 @@ const removeTag = (tag?: string): void => {
   lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
   modelValue.value = tags.value
 }
+
+// TODO these focus/blur events aren't quite in line with use useFormInput implementation. Perhaps we should bring them together?
+defineExpose({
+  focus: () => {
+    focused.value = true
+  },
+  blur: () => {
+    focused.value = false
+  },
+})
 </script>

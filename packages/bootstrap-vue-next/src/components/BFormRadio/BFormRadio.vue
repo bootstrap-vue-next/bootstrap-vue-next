@@ -108,7 +108,7 @@ const parentData = inject(radioGroupKey, null)
 
 const input = ref<HTMLElement | null>(null)
 
-useFocus(input, {
+const {focused} = useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
@@ -168,4 +168,13 @@ const classesObject = computed(() => ({
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
+
+defineExpose({
+  focus: () => {
+    focused.value = true
+  },
+  blur: () => {
+    focused.value = false
+  },
+})
 </script>

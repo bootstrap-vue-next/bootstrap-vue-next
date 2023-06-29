@@ -119,7 +119,7 @@ const stateClass = useStateClass(stateBoolean)
 
 const input = ref<HTMLElement>()
 
-useFocus(input, {
+const {focused} = useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
@@ -155,6 +155,15 @@ const localValue = computed({
     nextTick(() => {
       emit('change', newValue)
     })
+  },
+})
+
+defineExpose({
+  focus: () => {
+    focused.value = true
+  },
+  blur: () => {
+    focused.value = false
   },
 })
 </script>
