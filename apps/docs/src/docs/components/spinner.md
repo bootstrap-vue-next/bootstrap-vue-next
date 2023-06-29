@@ -110,7 +110,7 @@ Spinners in Bootstrap are built with `rem`s, currentColor, and `display: inline-
 
 ### Margin
 
-Use [margin utilities](https://getbootstrap.com/docs/5.0/utilities/spacing/) like `.m-5` for easy spacing.
+Use [margin utilities](https://getbootstrap.com/docs/5.3/utilities/spacing/) like `.m-5` for easy spacing.
 
 <HighlightCard>
   <BSpinner class="m-5"></BSpinner>
@@ -125,7 +125,7 @@ Use [margin utilities](https://getbootstrap.com/docs/5.0/utilities/spacing/) lik
 
 ### Placement
 
-Use [flexbox utilities](https://getbootstrap.com/docs/5.0/utilities/flex/), [float utilities](https://getbootstrap.com/docs/5.0/utilities/float/), or [text alignment](https://getbootstrap.com/docs/5.0/utilities/text/) utilities to place spinners exactly where you need them in any situation.
+Use [flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex/), [float utilities](https://getbootstrap.com/docs/5.3/utilities/float/), or [text alignment](https://getbootstrap.com/docs/5.3/utilities/text/) utilities to place spinners exactly where you need them in any situation.
 
 #### Flex
 

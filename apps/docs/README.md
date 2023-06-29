@@ -9,7 +9,7 @@ The documentation requires a specific style guide for consistency purposes. You 
 5. Code examples should always contain a `<template>` if they require a `<script>` tag.
 6. `<script>` tags should always be `<script setup lang="ts">` in that exact format
 7. Rendered Vue code must be directly _before_ the code example from above. This code example must always be wrapped in a `<BCard>`
-8. Use kebab-case for components. In Vue code or example code
+8. Use PascalCase for components. In Vue code or example code
 9. Headers should be APA Title Case <https://capitalizemytitle.com/style/APA/>
 10. Props should always be kebab case, ex modelValue => model-value
 11. Unordered lists should always use `-`, not any alternative (ie never `*`, `+`)

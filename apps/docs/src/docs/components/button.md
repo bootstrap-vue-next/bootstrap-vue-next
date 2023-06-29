@@ -200,7 +200,7 @@ Create responsive stacks of full-width, “block buttons” like those in Bootst
   </template>
 </HighlightCard>
 
-**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.0/components/buttons/#block-buttons).
+**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons).
 
 ## Pill style
 
@@ -331,12 +331,7 @@ To create a button that can be toggled between active and non-active states, use
   </p>
   <h5>In a button group</h5>
   <BButtonGroup size="sm">
-    <BButton
-      v-for="(btn, idx) in buttons"
-      :key="idx"
-      v-model:pressed="btn.state"
-      variant="primary"
-    >
+    <BButton v-for="(btn, idx) in buttons" :key="idx" v-model:pressed="btn.state" variant="primary">
       {{ btn.caption }}
     </BButton>
   </BButtonGroup>

@@ -20,7 +20,7 @@ export default {
           prop: 'id',
           type: 'string',
           description:
-            'The Id to be injected to accordian items and used to in b-collaspe for state managment',
+            'The Id to be injected to accordian items and used to in BCollapse for state managment',
         },
       ],
       emits: [],

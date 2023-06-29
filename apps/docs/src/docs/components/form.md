@@ -93,12 +93,7 @@ supported components, form layout, and more.
     </BFormGroup>
 
     <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
-      <BFormInput
-        id="input-2"
-        v-model="form.name"
-        placeholder="Enter name"
-        required
-      ></BFormInput>
+      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required></BFormInput>
     </BFormGroup>
     <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
       <BFormSelect id="input-3" v-model="form.food" :options="foods" required></BFormSelect>
@@ -156,7 +151,7 @@ const onReset = (event) => {
 
 ## Inline form
 
-Bootstrap 5 has dropped form-specific layout classes for the grid system. See [this](https://getbootstrap.com/docs/5.0/migration/#forms).
+Bootstrap 5 has dropped form-specific layout classes for the grid system. See [this](https://getbootstrap.com/docs/5.3/migration/#forms).
 
 To create horizontal forms with the grid by add the `.row` class to form groups and use the `.col-_-_` classes to specify the width of your labels and controls. Be sure to add `.col-form-label` to your `<label>`s as well, so they’re vertically centered with their associated form controls.
 
@@ -439,7 +434,7 @@ of three contextual states:
 - `null` Displays no validation state (neither valid nor invalid)
 
 Refer to the
-[Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.0/forms/validation/)
+[Bootstrap v5 Form Validation Documentation](https://getbootstrap.com/docs/5.3/forms/validation/)
 for details on the Bootstrap v5 validation states.
 
 <ComponentReference :data="data" />

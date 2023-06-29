@@ -76,8 +76,8 @@ By default, the `<BCard>` content is automatically placed in a `<BCardBody>` sec
 <HighlightCard>
   <BCard class="text-center">
     <div class="bg-secondary text-light">
-      This is some content within the default <samp>&lt;b-card-body&gt;</samp> block of the
-      <samp>&lt;b-card&gt;</samp> component. Notice the padding between the card's border and this
+      This is some content within the default <samp>&lt;BCardBody&gt;</samp> block of the
+      <samp>&lt;BCard&gt;</samp> component. Notice the padding between the card's border and this
       gray <samp>&lt;div&gt;</samp>.
     </div>
   </BCard>
@@ -86,8 +86,8 @@ By default, the `<BCard>` content is automatically placed in a `<BCardBody>` sec
 ```vue-html
 <BCard class="text-center">
   <div class="bg-secondary text-light">
-    This is some content within the default <samp>&lt;b-card-body&gt;</samp> block of the
-    <samp>&lt;b-card&gt;</samp> component. Notice the padding between the card's border and this
+    This is some content within the default <samp>&lt;BCardBody&gt;</samp> block of the
+    <samp>&lt;BCard&gt;</samp> component. Notice the padding between the card's border and this
     gray <samp>&lt;div&gt;</samp>.
   </div>
 </BCard>
@@ -102,7 +102,7 @@ on the `<BCard>`.
 <HighlightCard>
   <BCard no-body class="text-center">
     <div class="bg-secondary text-light">
-      This is some content without the default <samp>&lt;b-card-body&gt;</samp> section. Notice the
+      This is some content without the default <samp>&lt;BCardBody&gt;</samp> section. Notice the
       lack of padding between the card's border and this gray <samp>&lt;div&gt;</samp>.
     </div>
   </BCard>
@@ -111,7 +111,7 @@ on the `<BCard>`.
 ```vue-html
 <BCard no-body class="text-center">
   <div class="bg-secondary text-light">
-    This is some content without the default <samp>&lt;b-card-body&gt;</samp> section. Notice the
+    This is some content without the default <samp>&lt;BCardBody&gt;</samp> section. Notice the
     lack of padding between the card's border and this gray <samp>&lt;div&gt;</samp>.
   </div>
 </BCard>
@@ -284,7 +284,7 @@ Place the image in the background of the card by setting the boolean prop `overl
 
 #### Lazy loaded images
 
-`<BCardImgLazy>` has been removed in favor of using a standalone prop on b-img. Use prop `lazy` on b-img and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers.
+`<BCardImgLazy>` has been removed in favor of using a standalone prop on BImg. Use prop `lazy` on BImg and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers.
 
 ### Header and footer
 

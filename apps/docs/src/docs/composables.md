@@ -18,7 +18,7 @@ const routeLocation = (name: string): string => withBase(`/docs/composables/${na
 const composablesList: {name: string; description: string}[] = [
   {
     name: 'useBreadcrumb',
-    description: 'A global breadcrumb system to pair with the b-breadcrumb component'
+    description: 'A global breadcrumb system to pair with the BBreadcrumb component'
   },
   {
     name: 'useColorMode',

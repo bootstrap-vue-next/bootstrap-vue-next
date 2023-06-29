@@ -29,7 +29,7 @@ By defaut links with no options will default to # location.
 External Links can be specified with the `href` prop.
 
 <HighlightCard>
-  <BLink href="https://getbootstrap.com/docs/5.0">
+  <BLink href="https://getbootstrap.com/docs/5.3">
     External Link to Bootstrap
   </BLink>
   <BLink to="sample">
@@ -41,7 +41,7 @@ External Links can be specified with the `href` prop.
   <template #html>
 
 ```vue-html
-<BLink href="https://getbootstrap.com/docs/5.0">
+<BLink href="https://getbootstrap.com/docs/5.3">
   External Link to Bootstrap
 </BLink>
 
@@ -62,20 +62,20 @@ External Links can be specified with the `href` prop.
 External Links can be specified with the `href` prop.
 
 <HighlightCard>
-  <BLink class="btn btn-primary me-2" href="https://getbootstrap.com/docs/5.0">
+  <BLink class="btn btn-primary me-2" href="https://getbootstrap.com/docs/5.3">
       External Link to Bootstrap
   </BLink>
-  <BLink class="btn btn-primary disabled" href="https://getbootstrap.com/docs/5.0">
+  <BLink class="btn btn-primary disabled" href="https://getbootstrap.com/docs/5.3">
       Disabled Link
   </BLink>
   <template #html>
 
 ```vue-html
-<BLink class="btn btn-primary m-2" href="https://getbootstrap.com/docs/5.0">
+<BLink class="btn btn-primary m-2" href="https://getbootstrap.com/docs/5.3">
   External Link to Bootstrap
 </BLink>
 
-<BLink class="btn btn-primary disabled m-2" href="https://getbootstrap.com/docs/5.0">
+<BLink class="btn btn-primary disabled m-2" href="https://getbootstrap.com/docs/5.3">
   Disabled Link
 </BLink>
 ```
