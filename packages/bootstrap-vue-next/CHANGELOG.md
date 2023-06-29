@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.14...bootstrap-vue-next-v0.9.15) (2023-06-29)
+
+
+### Bug Fixes
+
+* defineExpose focus and blur on Input items ([1248cea](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1248ceadc7a2b35f4b828ed257e2ea81a0a4ead3))
+
 ## [0.9.14](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.13...bootstrap-vue-next-v0.9.14) (2023-06-28)
 
 
