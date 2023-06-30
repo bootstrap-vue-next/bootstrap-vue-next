@@ -220,6 +220,14 @@ You can use the `state` prop to provide visual feedback on the state of the inpu
 
 With inputs that are of type `file`, the value is strictly `uni-directional`. Meaning that you cannot change the value of the input via JavaScript. You can change the value of the `v-model`, and this will work for an "outside view", however, the actual `input` element will not have its [FileList](https://developer.mozilla.org/en-US/docs/Web/API/FileList) changed. This is for security reasons as a malicious script could attempt to read and steal documents
 
+## Exposed functions
+
+The BFormFile exposes functions to control the component: `focus(), blur(), reset()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
+
+1. Focus: focuses the file input
+2. Blur: blurs the file input focus
+3. Reset: Resets the file selection so that no file is selected
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">

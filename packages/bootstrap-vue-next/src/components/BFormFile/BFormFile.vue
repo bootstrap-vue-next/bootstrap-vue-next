@@ -144,6 +144,15 @@ const onDrop = (e: Event) => {
   }
 }
 
+/**
+ * Reset the form input
+ */
+const reset = () => {
+  if (input.value !== null) {
+    input.value.value = ''
+  }
+}
+
 defineExpose({
   focus: () => {
     focused.value = true
@@ -151,5 +160,6 @@ defineExpose({
   blur: () => {
     focused.value = false
   },
+  reset,
 })
 </script>
