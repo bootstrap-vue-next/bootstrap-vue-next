@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.15...bootstrap-vue-next-v0.9.16) (2023-07-01)
+
+
+### Features
+
+* defineExpose reset on BFormFile input ([b23e51d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b23e51d0c1f241aa62fcbf9e04578b85b09ac1b3))
+
 ## [0.9.15](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.14...bootstrap-vue-next-v0.9.15) (2023-06-29)
 
 
