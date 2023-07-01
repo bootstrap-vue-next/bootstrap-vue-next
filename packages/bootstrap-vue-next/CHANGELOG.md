@@ -1,6 +1,20 @@
 # Changelog
 
 
+## [0.9.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.16...bootstrap-vue-next-v0.9.17) (2023-07-01)
+
+
+### Features
+
+* BOffcanvas & BModal body scrolling prevented ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+
+
+### Bug Fixes
+
+* **BFormFile:** ModelValue not synced up when using reset ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+* **BFormFile:** unnecessary wrapper element ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+* readonly some refs ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+
 ## [0.9.16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.15...bootstrap-vue-next-v0.9.16) (2023-07-01)
 
 
