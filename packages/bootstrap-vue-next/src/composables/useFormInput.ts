@@ -1,14 +1,5 @@
 import type {AriaInvalid, Booleanish, Size} from '../types'
-import {
-  computed,
-  type defineEmits,
-  nextTick,
-  onActivated,
-  onMounted,
-  type PropType,
-  ref,
-  watch,
-} from 'vue'
+import {computed, nextTick, onActivated, onMounted, ref, watch} from 'vue'
 import {useBooleanish, useId} from '.'
 import {resolveAriaInvalid} from '../utils'
 import {useFocus} from '@vueuse/core'
@@ -73,8 +64,11 @@ export default (props: Readonly<CommonInputProps>, emit: any) => {
   const lazyBoolean = useBooleanish(() => props.lazy)
   const lazyFormatterBoolean = useBooleanish(() => props.lazyFormatter)
   const numberBoolean = useBooleanish(() => props.number)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const plaintextBoolean = useBooleanish(() => props.plaintext)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const readonlyBoolean = useBooleanish(() => props.readonly)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const requiredBoolean = useBooleanish(() => props.required)
   const stateBoolean = useBooleanish(() => props.state)
   const trimBoolean = useBooleanish(() => props.trim)
