@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.1.2...nuxt-v0.1.3) (2023-07-01)
+
+
+### Features
+
+* BOffcanvas & BModal body scrolling prevented ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+
+
+### Bug Fixes
+
+* **BFormFile:** ModelValue not synced up when using reset ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+* **BFormFile:** unnecessary wrapper element ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+* readonly some refs ([af0a97d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af0a97df8a2a4b44bd0364de6e262db5b1809d3d))
+
 ## [0.1.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.1.1...nuxt-v0.1.2) (2023-06-25)
 
 
