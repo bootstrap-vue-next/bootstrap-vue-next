@@ -1,35 +1,33 @@
 <template>
-  <div :class="wrapperClasses">
-    <label v-if="hasLabelSlot || label" :for="computedId" class="form-label" :class="labelClasses">
-      <slot name="label">
-        {{ label }}
-      </slot>
-    </label>
-    <input
-      :id="computedId"
-      v-bind="$attrs"
-      ref="input"
-      type="file"
-      class="form-control"
-      :class="computedClasses"
-      :form="form"
-      :name="name"
-      :multiple="multipleBoolean"
-      :disabled="disabledBoolean"
-      :capture="computedCapture"
-      :accept="computedAccept || undefined"
-      :required="requiredBoolean || undefined"
-      :aria-required="requiredBoolean || undefined"
-      :directory="directoryBoolean"
-      :webkitdirectory="directoryBoolean"
-      @change="onChange"
-      @drop="onDrop"
-    />
-  </div>
+  <label v-if="hasLabelSlot || label" :for="computedId" class="form-label" :class="labelClasses">
+    <slot name="label">
+      {{ label }}
+    </slot>
+  </label>
+  <input
+    :id="computedId"
+    v-bind="$attrs"
+    ref="input"
+    type="file"
+    class="form-control"
+    :class="computedClasses"
+    :form="form"
+    :name="name"
+    :multiple="multipleBoolean"
+    :disabled="disabledBoolean"
+    :capture="computedCapture"
+    :accept="computedAccept || undefined"
+    :required="requiredBoolean || undefined"
+    :aria-required="requiredBoolean || undefined"
+    :directory="directoryBoolean"
+    :webkitdirectory="directoryBoolean"
+    @change="onChange"
+    @drop="onDrop"
+  />
 </template>
 
 <script setup lang="ts">
-import {computed, ref, useSlots} from 'vue'
+import {computed, ref, useSlots, watch} from 'vue'
 import {useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, Size} from '../../types'
 import {useBooleanish, useId, useStateClass} from '../../composables'
@@ -62,7 +60,6 @@ const props = withDefaults(
     state?: Booleanish | null
     modelValue?: File[] | File | null
     label?: string
-    wrapperClasses?: ClassValue
     labelClasses?: ClassValue
   }>(),
   {
@@ -83,7 +80,6 @@ const props = withDefaults(
     modelValue: null,
     label: '',
     labelClasses: undefined,
-    wrapperClasses: undefined,
   }
 )
 
@@ -148,10 +144,14 @@ const onDrop = (e: Event) => {
  * Reset the form input
  */
 const reset = () => {
-  if (input.value !== null) {
+  modelValue.value = null
+}
+
+watch(modelValue, (newValue) => {
+  if (newValue === null && input.value !== null) {
     input.value.value = ''
   }
-}
+})
 
 defineExpose({
   focus: () => {

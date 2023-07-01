@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
-import {useBooleanish, useId} from '../../composables'
+import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
@@ -162,8 +162,6 @@ const slots = useSlots()
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
 const backdropBoolean = useBooleanish(() => props.backdrop)
 const noHeaderCloseBoolean = useBooleanish(() => props.noHeaderClose)
@@ -175,6 +173,7 @@ const lazyBoolean = useBooleanish(() => props.lazy)
 const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
 const computedId = useId(() => props.id, 'offcanvas')
+useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
 
 const element = ref<HTMLElement | null>(null)
 

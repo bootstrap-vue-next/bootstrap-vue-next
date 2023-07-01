@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 import {computed, ref, type RendererElement, useSlots} from 'vue'
-import {useBooleanish, useId, useModalManager} from '../composables'
+import {useBooleanish, useId, useModalManager, useSafeScrollLock} from '../composables'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
@@ -160,6 +160,7 @@ const props = withDefaults(
     autoFocusButton?: 'ok' | 'cancel' | 'close'
     teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
+    bodyScrolling?: Booleanish
   }>(),
   {
     bodyBgVariant: null,
@@ -210,6 +211,7 @@ const props = withDefaults(
     titleTag: 'h5',
     teleportDisabled: false,
     teleportTo: 'body',
+    bodyScrolling: false,
   }
 )
 
@@ -269,6 +271,7 @@ const okOnlyBoolean = useBooleanish(() => props.okOnly)
 const scrollableBoolean = useBooleanish(() => props.scrollable)
 const titleSrOnlyBoolean = useBooleanish(() => props.titleSrOnly)
 const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
+const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
 
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
@@ -277,6 +280,7 @@ const closeButton = ref<HTMLElement | null>(null)
 const isActive = ref(modelValueBoolean.value)
 const lazyLoadCompleted = ref(false)
 
+useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
 const {focused: modalFocus} = useFocus(element, {
   initialValue: modelValueBoolean.value && props.autoFocusButton === undefined,
 })

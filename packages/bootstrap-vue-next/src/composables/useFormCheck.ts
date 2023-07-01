@@ -1,5 +1,5 @@
 import type {AriaInvalid, ButtonVariant, Size} from '../types'
-import {computed, type MaybeRefOrGetter, toRef} from 'vue'
+import {computed, type MaybeRefOrGetter, readonly, toRef} from 'vue'
 import {resolveAriaInvalid} from '../utils'
 
 interface ClassesItemsInput {
@@ -11,7 +11,7 @@ interface ClassesItemsInput {
 }
 
 const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   return computed(() => ({
     'form-check': resolvedItems.value.plain === false && resolvedItems.value.button === false,
@@ -31,7 +31,7 @@ interface InputClassesItemsInput {
 }
 
 const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   return computed(() => ({
     'form-check-input': resolvedItems.value.plain === false && resolvedItems.value.button === false,
@@ -49,7 +49,7 @@ interface LabelClasesItemsInput {
 }
 
 const getLabelClasses = (items: MaybeRefOrGetter<LabelClasesItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   return computed(() => ({
     'form-check-label': resolvedItems.value.plain === false && resolvedItems.value.button === false,
@@ -70,7 +70,7 @@ interface GroupAttrItemsInput {
 }
 
 const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   return computed(() => ({
     'aria-invalid': resolveAriaInvalid(resolvedItems.value.ariaInvalid, resolvedItems.value.state),
@@ -86,7 +86,7 @@ interface GroupClassesItemsInput {
 }
 
 const getGroupClasses = (items: MaybeRefOrGetter<GroupClassesItemsInput>) => {
-  const resolvedItems = toRef(items)
+  const resolvedItems = readonly(toRef(items))
 
   return computed(() => ({
     'was-validated': resolvedItems.value.validated === true,
