@@ -25,7 +25,7 @@ The `<BFormGroup>` component is the easiest way to add some structure to forms. 
     :state="state"
     label-class="mb-1"
   >
-    <BFormInput id="input-1" v-model="name" :state="state" trim></BFormInput>
+    <BFormInput id="input-1" v-model="name" :state="state" trim />
   </BFormGroup>
   <template #html>
 
@@ -41,7 +41,7 @@ The `<BFormGroup>` component is the easiest way to add some structure to forms. 
     :state="state"
     label-class="mb-1"
   >
-    <BFormInput id="input-1" v-model="name" :state="state" trim></BFormInput>
+    <BFormInput id="input-1" v-model="name" :state="state" trim />
   </BFormGroup>
 </template>
 
@@ -123,7 +123,7 @@ See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for 
     label="Enter your name"
     label-for="input-horizontal"
     >
-    <BFormInput id="input-horizontal"></BFormInput>
+    <BFormInput id="input-horizontal" />
   </BFormGroup>
   <template #html>
 
@@ -138,7 +138,7 @@ See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for 
   label="Enter your name"
   label-for="input-horizontal"
 >
-  <BFormInput id="input-horizontal"></BFormInput>
+  <BFormInput id="input-horizontal" />
 </BFormGroup>
 ```
 
@@ -155,27 +155,27 @@ for both horizontal and non-horizontal form groups.
 
 <HighlightCard>
   <BFormGroup label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
-    <BFormInput id="input-sm" size="sm"></BFormInput>
+    <BFormInput id="input-sm" size="sm" />
   </BFormGroup>
   <BFormGroup label-cols="4" label-cols-lg="2" label="Default" label-for="input-default">
-    <BFormInput id="input-default"></BFormInput>
+    <BFormInput id="input-default" />
   </BFormGroup>
   <BFormGroup label-cols="4" label-cols-lg="2" label-size="lg" label="Large" label-for="input-lg">
-    <BFormInput id="input-lg" size="lg"></BFormInput>
+    <BFormInput id="input-lg" size="lg" />
   </BFormGroup>
   <template #html>
 
 ```vue-html
 <BFormGroup label-cols="4" label-cols-lg="2" label-size="sm" label="Small" label-for="input-sm">
-  <BFormInput id="input-sm" size="sm"></BFormInput>
+  <BFormInput id="input-sm" size="sm" />
 </BFormGroup>
 
 <BFormGroup label-cols="4" label-cols-lg="2" label="Default" label-for="input-default">
-  <BFormInput id="input-default"></BFormInput>
+  <BFormInput id="input-default" />
 </BFormGroup>
 
 <BFormGroup label-cols="4" label-cols-lg="2" label-size="lg" label="Large" label-for="input-lg">
-  <BFormInput id="input-lg" size="lg"></BFormInput>
+  <BFormInput id="input-lg" size="lg" />
 </BFormGroup>
 ```
 
@@ -217,7 +217,7 @@ of related form controls:
         label-cols-sm="3"
         label-align-sm="end"
       >
-        <BFormInput id="nested-street"></BFormInput>
+        <BFormInput id="nested-street" />
       </BFormGroup>
       <BFormGroup
         label="City:"
@@ -225,7 +225,7 @@ of related form controls:
         label-cols-sm="3"
         label-align-sm="end"
       >
-        <BFormInput id="nested-city"></BFormInput>
+        <BFormInput id="nested-city" />
       </BFormGroup>
       <BFormGroup
         label="State:"
@@ -233,7 +233,7 @@ of related form controls:
         label-cols-sm="3"
         label-align-sm="end"
       >
-        <BFormInput id="nested-state"></BFormInput>
+        <BFormInput id="nested-state" />
       </BFormGroup>
       <BFormGroup
         label="Country:"
@@ -241,7 +241,7 @@ of related form controls:
         label-cols-sm="3"
         label-align-sm="end"
       >
-        <BFormInput id="nested-country"></BFormInput>
+        <BFormInput id="nested-country" />
       </BFormGroup>
       <BFormGroup
         label="Ship via:"
@@ -252,7 +252,7 @@ of related form controls:
       <BFormRadioGroup
         class="pt-2"
         :options="['Air', 'Courier', 'Mail']"
-        ></BFormRadioGroup>
+      />
       </BFormGroup>
     </BFormGroup>
   </BCard>
@@ -273,15 +273,15 @@ of related form controls:
       label-cols-sm="3"
       label-align-sm="end"
     >
-      <BFormInput id="nested-street"></BFormInput>
+      <BFormInput id="nested-street" />
     </BFormGroup>
 
     <BFormGroup label="City:" label-for="nested-city" label-cols-sm="3" label-align-sm="end">
-      <BFormInput id="nested-city"></BFormInput>
+      <BFormInput id="nested-city" />
     </BFormGroup>
 
     <BFormGroup label="State:" label-for="nested-state" label-cols-sm="3" label-align-sm="end">
-      <BFormInput id="nested-state"></BFormInput>
+      <BFormInput id="nested-state" />
     </BFormGroup>
 
     <BFormGroup
@@ -290,7 +290,7 @@ of related form controls:
       label-cols-sm="3"
       label-align-sm="end"
     >
-      <BFormInput id="nested-country"></BFormInput>
+      <BFormInput id="nested-country" />
     </BFormGroup>
 
     <BFormGroup
@@ -302,7 +302,7 @@ of related form controls:
       <BFormRadioGroup
         class="pt-2"
         :options="['Air', 'Courier', 'Mail']"
-      ></BFormRadioGroup>
+      />
     </BFormGroup>
   </BFormGroup>
 </BCard>
@@ -398,7 +398,7 @@ You can make a floating label by setting the property `floating` to true and spe
     :state="floatingState"
     floating
   >
-    <BFormInput id="input-floating-1" v-model="floatingName" :state="floatingState" trim placeholder="Enter your name please"></BFormInput>
+    <BFormInput id="input-floating-1" v-model="floatingName" :state="floatingState" trim placeholder="Enter your name please" />
   </BFormGroup>
   <template #html>
 
@@ -420,7 +420,7 @@ You can make a floating label by setting the property `floating` to true and spe
       :state="floatingState"
       trim
       placeholder="Enter your name please"
-    ></BFormInput>
+    />
   </BFormGroup>
 </template>
 

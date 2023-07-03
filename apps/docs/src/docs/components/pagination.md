@@ -57,7 +57,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     prev-text="Prev"
     next-text="Next"
     last-text="Last"
-  ></BPagination>
+  />
   <!-- Use emojis in props -->
   <BPagination
     v-model="ex1CurrentPage"
@@ -68,7 +68,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     next-text="⏩"
     last-text="⏭"
     class="mt-4"
-  ></BPagination>
+  />
   <!-- Use HTML and sub-components in slots -->
   <BPagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
     <template #first-text><span class="text-success">First</span></template>
@@ -76,9 +76,9 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     <template #next-text><span class="text-warning">Next</span></template>
     <template #last-text><span class="text-info">Last</span></template>
     <template #ellipsis-text>
-      <BSpinner small type="grow"></BSpinner>
-      <BSpinner small type="grow"></BSpinner>
-      <BSpinner small type="grow"></BSpinner>
+      <BSpinner small type="grow" />
+      <BSpinner small type="grow" />
+      <BSpinner small type="grow" />
     </template>
     <template #page="{ page, active }">
       <b v-if="active">{{ page }}</b>
@@ -99,7 +99,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     prev-text="Prev"
     next-text="Next"
     last-text="Last"
-  ></BPagination>
+  />
 
   <!-- Use emojis in props -->
   <BPagination
@@ -111,7 +111,7 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     next-text="⏩"
     last-text="⏭"
     class="mt-4"
-  ></BPagination>
+  />
 
   <!-- Use HTML and sub-components in slots -->
   <BPagination v-model="ex1CurrentPage" :total-rows="ex1Rows" :per-page="ex1PerPage" class="mt-4">
@@ -120,9 +120,9 @@ For a full list of all available slots see the [Slots](#comp-ref-b-pagination-sl
     <template #next-text><span class="text-warning">Next</span></template>
     <template #last-text><span class="text-info">Last</span></template>
     <template #ellipsis-text>
-      <BSpinner small type="grow"></BSpinner>
-      <BSpinner small type="grow"></BSpinner>
-      <BSpinner small type="grow"></BSpinner>
+      <BSpinner small type="grow" />
+      <BSpinner small type="grow" />
+      <BSpinner small type="grow" />
     </template>
     <template #page="{page, active}">
       <b v-if="active">{{ page }}</b>
@@ -177,7 +177,7 @@ use the `first-number` and `last-number` props.
       :total-rows="ex2Rows"
       :per-page="ex2PerPage"
       first-number
-    ></BPagination>
+    />
   </div>
   <div class="mt-3">
     <h6>Goto last button number</h6>
@@ -186,7 +186,7 @@ use the `first-number` and `last-number` props.
       :total-rows="ex2Rows"
       :per-page="ex2PerPage"
       last-number
-    ></BPagination>
+    />
   </div>
   <div class="mt-3">
     <h6>Goto first and last button number</h6>
@@ -196,7 +196,7 @@ use the `first-number` and `last-number` props.
       :per-page="ex2PerPage"
       first-number
       last-number
-    ></BPagination>
+    />
   </div>
   <template #html>
 
@@ -208,7 +208,7 @@ use the `first-number` and `last-number` props.
     :total-rows="ex2Rows"
     :per-page="ex2PerPage"
     first-number
-  ></BPagination>
+  />
 
   <h6>Goto last button number</h6>
   <BPagination
@@ -216,7 +216,7 @@ use the `first-number` and `last-number` props.
     :total-rows="ex2Rows"
     :per-page="ex2PerPage"
     last-number
-  ></BPagination>
+  />
 
   <h6>Goto first and last button number</h6>
   <BPagination
@@ -225,7 +225,7 @@ use the `first-number` and `last-number` props.
     :per-page="ex2PerPage"
     first-number
     last-number
-  ></BPagination>
+  />
 </template>
 
 <script setup lang="ts">
@@ -246,28 +246,28 @@ smaller buttons or `'lg'` for larger buttons.
 <HighlightCard>
   <div>
     <h6>Small</h6>
-    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></BPagination>
+    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm" />
   </div>
   <div class="mt-3">
     <h6>Default</h6>
-    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></BPagination>
+    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" />
   </div>
   <div class="mt-3">
     <h6>Large</h6>
-    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></BPagination>
+    <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg" />
   </div>
   <template #html>
 
 ```vue
 <template>
   <h6>Small</h6>
-  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm"></BPagination>
+  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="sm" />
 
   <h6>Default</h6>
-  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows"></BPagination>
+  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" />
 
   <h6>Large</h6>
-  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg"></BPagination>
+  <BPagination v-model="ex3CurrentPage" :total-rows="ex3Rows" size="lg" />
 </template>
 
 <script setup lang="ts">
@@ -286,28 +286,28 @@ Easily switch to pill style buttons by setting the `pills` prop.
 <HighlightCard>
   <div>
     <h6>Small Pills</h6>
-    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></BPagination>
+    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm" />
   </div>
   <div class="mt-3">
     <h6>Default Pills</h6>
-    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></BPagination>
+    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" />
   </div>
   <div class="mt-3">
     <h6>Large Pills</h6>
-    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></BPagination>
+    <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg" />
   </div>
   <template #html>
 
 ```vue
 <template>
   <h6>Small Pills</h6>
-  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></BPagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm" />
 
   <h6>Default Pills</h6>
-  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></BPagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" />
 
   <h6>Large Pills</h6>
-  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></BPagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg" />
 </template>
 
 <script setup lang="ts">
@@ -329,32 +329,32 @@ or `fill` by setting the prop `align` to the appropriate value.
 <HighlightCard>
   <div>
     <h6>Left alignment (default)</h6>
-    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows"></BPagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" />
   </div>
   <div class="mt-3">
     <h6 class="text-center">Center alignment</h6>
-    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="center"></BPagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="center" />
   </div>
   <div class="mt-3">
     <h6 class="text-end">Right (end) alignment</h6>
-    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="end"></BPagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="end" />
   </div>
   <div class="mt-3">
     <h6 class="text-center">Fill alignment</h6>
-    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="fill"></BPagination>
+    <BPagination v-model="ex5CurrentPage" :total-rows="ex5Rows" align="fill" />
   </div>
   <template #html>
 
 ```vue
 <template>
   <h6>Small Pills</h6>
-  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm"></BPagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="sm" />
 
   <h6>Default Pills</h6>
-  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows"></BPagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" />
 
   <h6>Large Pills</h6>
-  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg"></BPagination>
+  <BPagination v-model="ex4CurrentPage" pills :total-rows="ex4Rows" size="lg" />
 </template>
 
 <script setup lang="ts">

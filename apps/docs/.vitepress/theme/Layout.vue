@@ -87,6 +87,7 @@
           backdrop="false"
           title="Browse docs"
           class="h-100"
+          :body-scrolling="isLargeScreen"
         >
           <TableOfContentsNav />
         </BOffcanvas>
@@ -121,6 +122,7 @@
                 placement="end"
                 title="On this page"
                 class="h-100"
+                :body-scrolling="isLargeScreen"
               >
                 <div class="bd-toc" />
               </BOffcanvas>

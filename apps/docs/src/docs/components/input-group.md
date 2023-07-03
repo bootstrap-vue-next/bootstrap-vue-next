@@ -17,18 +17,18 @@ Easily extend form controls by adding text, buttons, or button groups on either 
 <HighlightCard>
   <!-- Using props -->
   <BInputGroup size="lg" prepend="$" append=".00">
-    <BFormInput></BFormInput>
+    <BFormInput />
   </BInputGroup>
   <!-- Using slots -->
   <BInputGroup class="mt-3">
     <template #append>
       <BInputGroupText><strong class="text-danger">!</strong></BInputGroupText>
     </template>
-    <BFormInput></BFormInput>
+    <BFormInput />
   </BInputGroup>
   <!-- Using components -->
   <BInputGroup prepend="Username" class="mt-3">
-    <BFormInput></BFormInput>
+    <BFormInput />
     <BInputGroupAppend>
       <BButton variant="outline-success">Button</BButton>
       <BButton variant="info">Button</BButton>
@@ -39,7 +39,7 @@ Easily extend form controls by adding text, buttons, or button groups on either 
 ```vue-html
 <!-- Using props -->
 <BInputGroup size="lg" prepend="$" append=".00">
-  <BFormInput></BFormInput>
+  <BFormInput />
 </BInputGroup>
 
 <!-- Using slots -->
@@ -47,12 +47,12 @@ Easily extend form controls by adding text, buttons, or button groups on either 
   <template #append>
     <BInputGroupText><strong class="text-danger">!</strong></BInputGroupText>
   </template>
-  <BFormInput></BFormInput>
+  <BFormInput />
 </BInputGroup>
 
 <!-- Using components -->
 <BInputGroup prepend="Username" class="mt-3">
-  <BFormInput></BFormInput>
+  <BFormInput />
   <BInputGroupAppend>
     <BButton variant="outline-success">Button</BButton>
     <BButton variant="info">Button</BButton>
@@ -75,20 +75,20 @@ Values will be internally wrapped by a `<BInputGroupText>` to display correctly.
 
 <HighlightCard>
   <BInputGroup prepend="$" append=".00">
-    <BFormInput></BFormInput>
+    <BFormInput />
   </BInputGroup>
   <BInputGroup prepend="0" append="100" class="mt-3">
-    <BFormInput type="range" min="0" max="100"></BFormInput>
+    <BFormInput type="range" min="0" max="100" />
   </BInputGroup>
   <template #html>
 
 ```vue-html
 <BInputGroup prepend="$" append=".00">
-  <BFormInput></BFormInput>
+  <BFormInput />
 </BInputGroup>
 
 <BInputGroup prepend="0" append="100" class="mt-3">
-  <BFormInput type="range" min="0" max="100"></BFormInput>
+  <BFormInput type="range" min="0" max="100" />
 </BInputGroup>
 ```
 
@@ -107,7 +107,7 @@ The slot content will automatically be wrapped by
     <template #prepend>
       <BInputGroupText >Username</BInputGroupText>
     </template>
-    <BFormInput></BFormInput>
+    <BFormInput />
     <template #append>
       <BDropdown text="Dropdown" variant="success">
         <BDropdownItem>Action A</BDropdownItem>
@@ -122,7 +122,7 @@ The slot content will automatically be wrapped by
   <template #prepend>
     <BInputGroupText>Username</BInputGroupText>
   </template>
-  <BFormInput></BFormInput>
+  <BFormInput />
   <template #append>
     <BDropdown text="Dropdown" variant="success">
       <BDropdownItem>Action A</BDropdownItem>
@@ -146,7 +146,7 @@ wrapped in these components for proper styling.
     <BInputGroupPrepend>
       <BButton variant="outline-info">Button</BButton>
     </BInputGroupPrepend>
-    <BFormInput type="number" min="0.00"></BFormInput>
+    <BFormInput type="number" min="0.00" />
     <BInputGroupAppend>
       <BButton variant="outline-secondary">Button</BButton>
       <BButton variant="outline-primary">Button</BButton>
@@ -159,7 +159,7 @@ wrapped in these components for proper styling.
   <BInputGroupPrepend>
     <BButton variant="outline-info">Button</BButton>
   </BInputGroupPrepend>
-  <BFormInput type="number" min="0.00"></BFormInput>
+  <BFormInput type="number" min="0.00" />
   <BInputGroupAppend>
     <BButton variant="outline-secondary">Button</BButton>
     <BButton variant="outline-primary">Button</BButton>
@@ -211,13 +211,13 @@ classes applied.
     <BInputGroupPrepend is-text>
       <input type="checkbox" aria-label="Checkbox for following text input">
     </BInputGroupPrepend>
-    <BFormInput aria-label="Text input with checkbox"></BFormInput>
+    <BFormInput aria-label="Text input with checkbox" />
   </BInputGroup>
   <BInputGroup>
     <BInputGroupPrepend is-text>
       <input type="radio" aria-label="Radio for following text input">
     </BInputGroupPrepend>
-    <BFormInput aria-label="Text input with radio input"></BFormInput>
+    <BFormInput aria-label="Text input with radio input" />
   </BInputGroup>
   <template #html>
 
@@ -226,14 +226,14 @@ classes applied.
   <BInputGroupPrepend is-text>
     <input type="checkbox" aria-label="Checkbox for following text input" />
   </BInputGroupPrepend>
-  <BFormInput aria-label="Text input with checkbox"></BFormInput>
+  <BFormInput aria-label="Text input with checkbox" />
 </BInputGroup>
 
 <BInputGroup>
   <BInputGroupPrepend is-text>
     <input type="radio" aria-label="Radio for following text input" />
   </BInputGroupPrepend>
-  <BFormInput aria-label="Text input with radio input"></BFormInput>
+  <BFormInput aria-label="Text input with radio input" />
 </BInputGroup>
 ```
 
@@ -253,7 +253,7 @@ the addon:
         <span class="visually-hidden">Checkbox for following text input</span>
       </BFormCheckbox>
     </BInputGroupPrepend>
-    <BFormInput aria-label="Text input with checkbox"></BFormInput>
+    <BFormInput aria-label="Text input with checkbox" />
   </BInputGroup>
   <BInputGroup class="mb-2">
     <BInputGroupPrepend is-text>
@@ -261,7 +261,7 @@ the addon:
         <span class="visually-hidden">Radio for following text input</span>
       </BFormRadio>
     </BInputGroupPrepend>
-    <BFormInput aria-label="Text input with radio input"></BFormInput>
+    <BFormInput aria-label="Text input with radio input" />
   </BInputGroup>
   <BInputGroup>
     <BInputGroupPrepend is-text>
@@ -269,7 +269,7 @@ the addon:
         <span class="visually-hidden">Switch for following text input</span>
       </BFormCheckbox>
     </BInputGroupPrepend>
-    <BFormInput aria-label="Text input with switch"></BFormInput>
+    <BFormInput aria-label="Text input with switch" />
   </BInputGroup>
   <template #html>
 
@@ -280,7 +280,7 @@ the addon:
       <span class="visually-hidden">Checkbox for following text input</span>
     </BFormCheckbox>
   </BInputGroupPrepend>
-  <BFormInput aria-label="Text input with checkbox"></BFormInput>
+  <BFormInput aria-label="Text input with checkbox" />
 </BInputGroup>
 
 <BInputGroup class="mb-2">
@@ -289,7 +289,7 @@ the addon:
       <span class="visually-hidden">Radio for following text input</span>
     </BFormRadio>
   </BInputGroupPrepend>
-  <BFormInput aria-label="Text input with radio input"></BFormInput>
+  <BFormInput aria-label="Text input with radio input" />
 </BInputGroup>
 
 <BInputGroup>
@@ -298,7 +298,7 @@ the addon:
       <span class="visually-hidden">Switch for following text input</span>
     </BFormCheckbox>
   </BInputGroupPrepend>
-  <BFormInput aria-label="Text input with switch"></BFormInput>
+  <BFormInput aria-label="Text input with switch" />
 </BInputGroup>
 ```
 
@@ -314,15 +314,15 @@ the control and the hidden label.
 
 <HighlightCard>
   <BInputGroup prepend="First and last name" class="mb-2">
-    <BFormInput aria-label="First name"></BFormInput>
-    <BFormInput aria-label="Last name"></BFormInput>
+    <BFormInput aria-label="First name" />
+    <BFormInput aria-label="Last name" />
   </BInputGroup>
   <template #html>
 
 ```vue-html
 <BInputGroup prepend="First and last name" class="mb-2">
-  <BFormInput aria-label="First name"></BFormInput>
-  <BFormInput aria-label="Last name"></BFormInput>
+  <BFormInput aria-label="First name" />
+  <BFormInput aria-label="Last name" />
 </BInputGroup>
 ```
 
@@ -339,7 +339,7 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
       <input type="checkbox" aria-label="Checkbox for following text input">
     </BInputGroupPrepend>
     <BInputGroupPrepend is-text><b>$</b></BInputGroupPrepend>
-    <BFormInput type="number" aria-label="Text input with checkbox"></BFormInput>
+    <BFormInput type="number" aria-label="Text input with checkbox" />
   </BInputGroup>
   <template #html>
 
@@ -349,7 +349,7 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
     <input type="checkbox" aria-label="Checkbox for following text input" />
   </BInputGroupPrepend>
   <BInputGroupPrepend is-text><b>$</b></BInputGroupPrepend>
-  <BFormInput type="number" aria-label="Text input with checkbox"></BFormInput>
+  <BFormInput type="number" aria-label="Text input with checkbox" />
 </BInputGroup>
 ```
 
@@ -366,7 +366,7 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
         <BDropdownItem>Action B</BDropdownItem>
       </BDropdown>
     </template>
-    <BFormInput></BFormInput>
+    <BFormInput />
     <template #append>
       <BDropdown text="Dropdown" variant="outline-secondary" v-for="i in 2" :key="i">
         <BDropdownItem>Action C</BDropdownItem>
@@ -384,7 +384,7 @@ Multiple add-ons are supported and can be mixed with checkbox and radio input ve
       <BDropdownItem>Action B</BDropdownItem>
     </BDropdown>
   </template>
-  <BFormInput></BFormInput>
+  <BFormInput />
   <template #append>
     <BDropdown text="Dropdown" variant="outline-secondary" v-for="i in 2" :key="i">
       <BDropdownItem>Action C</BDropdownItem>
@@ -411,7 +411,7 @@ the size on dropdowns.
     class="mb-3"
     prepend="Label"
   >
-    <BFormInput></BFormInput>
+    <BFormInput />
     <BInputGroupAppend>
       <BButton size="sm" text="Button" variant="success">Button</BButton>
     </BInputGroupAppend>
@@ -426,7 +426,7 @@ the size on dropdowns.
   class="mb-3"
   prepend="Label"
 >
-  <BFormInput></BFormInput>
+  <BFormInput />
   <BInputGroupAppend>
     <BButton size="sm" text="Button" variant="success">Button</BButton>
   </BInputGroupAppend>
@@ -445,7 +445,7 @@ required to make everything fit correctly, depending on the size chosen:
 
 <HighlightCard>
   <BInputGroup size="sm" prepend="Small" class="mb-2">
-    <BFormInput aria-label="Small text input with custom switch"></BFormInput>
+    <BFormInput aria-label="Small text input with custom switch" />
     <BInputGroupAppend is-text>
     <BFormCheckbox switch class="me-n2 mb-n1">
         <span class="visually-hidden">Checkbox for previous text input</span>
@@ -453,7 +453,7 @@ required to make everything fit correctly, depending on the size chosen:
     </BInputGroupAppend>
   </BInputGroup>
   <BInputGroup size="lg" prepend="Large" class="mb-2">
-    <BFormInput aria-label="Large text input with switch"></BFormInput>
+    <BFormInput aria-label="Large text input with switch" />
     <BInputGroupAppend is-text>
       <BFormCheckbox switch class="me-n2">
         <span class="visually-hidden">Switch for previous text input</span>
@@ -464,7 +464,7 @@ required to make everything fit correctly, depending on the size chosen:
 
 ```vue-html
 <BInputGroup size="sm" prepend="Small" class="mb-2">
-  <BFormInput aria-label="Small text input with custom switch"></BFormInput>
+  <BFormInput aria-label="Small text input with custom switch" />
   <BInputGroupAppend is-text>
     <BFormCheckbox switch class="me-n2 mb-n1">
       <span class="visually-hidden">Checkbox for previous text input</span>
@@ -473,7 +473,7 @@ required to make everything fit correctly, depending on the size chosen:
 </BInputGroup>
 
 <BInputGroup size="lg" prepend="Large" class="mb-2">
-  <BFormInput aria-label="Large text input with switch"></BFormInput>
+  <BFormInput aria-label="Large text input with switch" />
   <BInputGroupAppend is-text>
     <BFormCheckbox switch class="me-n2">
       <span class="visually-hidden">Switch for previous text input</span>

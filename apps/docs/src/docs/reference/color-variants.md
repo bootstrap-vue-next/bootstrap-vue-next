@@ -36,24 +36,24 @@ The base variants will translate to various Bootstrap v5 contextual class names 
 <BCard class="bg-body-tertiary">
 
   <div class="gap-2">
-    <span class="border border-primary"></span>
-    <span class="border border-primary-subtle"></span>
-    <span class="border border-secondary"></span>
-    <span class="border border-secondary-subtle"></span>
-    <span class="border border-success"></span>
-    <span class="border border-success-subtle"></span>
-    <span class="border border-danger"></span>
-    <span class="border border-danger-subtle"></span>
-    <span class="border border-warning"></span>
-    <span class="border border-warning-subtle"></span>
-    <span class="border border-info"></span>
-    <span class="border border-info-subtle"></span>
-    <span class="border border-light"></span>
-    <span class="border border-light-subtle"></span>
-    <span class="border border-dark"></span>
-    <span class="border border-dark-subtle"></span>
-    <span class="border border-black"></span>
-    <span class="border border-white"></span>
+    <span class="border border-primary" />
+    <span class="border border-primary-subtle" />
+    <span class="border border-secondary" />
+    <span class="border border-secondary-subtle" />
+    <span class="border border-success" />
+    <span class="border border-success-subtle" />
+    <span class="border border-danger" />
+    <span class="border border-danger-subtle" />
+    <span class="border border-warning" />
+    <span class="border border-warning-subtle" />
+    <span class="border border-info" />
+    <span class="border border-info-subtle" />
+    <span class="border border-light" />
+    <span class="border border-light-subtle" />
+    <span class="border border-dark" />
+    <span class="border border-dark-subtle" />
+    <span class="border border-black" />
+    <span class="border border-white" />
   </div>
 
 </BCard>

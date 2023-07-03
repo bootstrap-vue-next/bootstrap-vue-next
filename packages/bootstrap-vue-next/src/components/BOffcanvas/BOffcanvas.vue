@@ -72,6 +72,14 @@ import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
 
+// TODO once the responsive stuff may be implemented correctly,
+// What needs to occur is a fixing of the "body scrolling".
+// If the offcanvas is on the screen on a large screen, body scrolling is not disabled
+// Even though the modelValue is true
+// When it's a small screen and close, it works, as normal,
+// But then when it opens up on a small screen, it must disable again
+// This is implemented on Layout.vue, but is not officially supported.
+
 defineOptions({
   inheritAttrs: false,
 })

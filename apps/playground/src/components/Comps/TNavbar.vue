@@ -3,7 +3,7 @@
     <BNavbar toggleable="lg" type="dark" variant="info">
       <BNavbarBrand href="#">NavBar</BNavbarBrand>
 
-      <BNavbarToggle target="nav-collapse"></BNavbarToggle>
+      <BNavbarToggle target="nav-collapse" />
 
       <BCollapse id="nav-collapse" is-nav>
         <BNavbarNav>
@@ -18,7 +18,7 @@
               size="sm"
               class="me-sm-2"
               placeholder="Search"
-            ></BFormInput>
+            />
             <BButton size="sm" class="my-2 my-sm-0" type="submit"
               >Search</BButton
             >

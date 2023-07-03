@@ -17,16 +17,16 @@ Bootstrap custom `<select>` using custom styles. Optionally specify options base
 Generate your select options by passing an array or object to the `options` props:
 
 <HighlightCard>
-  <BFormSelect v-model="ex1Selected" :options="ex1Options"></BFormSelect>
-  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3"></BFormSelect>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" />
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <BFormSelect v-model="ex1Selected" :options="ex1Options"></BFormSelect>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
 
-  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3"></BFormSelect>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" />
 
   <div class="mt-3">
     Selected: <strong>{{ ex1Selected }}</strong>
@@ -52,13 +52,13 @@ const ex1Selected = ref()
 You can even define option groups with the `options` prop:
 
 <HighlightCard>
-  <BFormSelect v-model="exGroupSelected" :options="ex1GroupOptions"></BFormSelect>
+  <BFormSelect v-model="exGroupSelected" :options="ex1GroupOptions" />
   <div class="mt-3">Selected: <strong>{{ exGroupSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <BFormSelect v-model="exGroupSelected" :options="ex1GroupOptions"></BFormSelect>
+  <BFormSelect v-model="exGroupSelected" :options="ex1GroupOptions" />
 
   <div class="mt-3">
     Selected: <strong>{{ exGroupSelected }}</strong>
@@ -325,7 +325,7 @@ If you want to customize the field property names (for example using `name` fiel
     value-field="item"
     text-field="name"
     disabled-field="notEnabled"
-  ></BFormSelect>
+  />
   <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
   <template #html>
 
@@ -338,7 +338,7 @@ If you want to customize the field property names (for example using `name` fiel
     value-field="item"
     text-field="name"
     disabled-field="notEnabled"
-  ></BFormSelect>
+  />
 
   <div class="mt-3">
     Selected: <strong>{{ exFirstSlotSelected }}</strong>
@@ -388,13 +388,13 @@ In non `multiple` mode, `<BFormSelect>` returns the single `value` of the curren
 option.
 
 <HighlightCard>
-  <BFormSelect v-model="ex1Selected" :options="ex1Options"></BFormSelect>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <BFormSelect v-model="ex1Selected" :options="ex1Options"></BFormSelect>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
 
   <div class="mt-3">
     Selected: <strong>{{ ex1Selected }}</strong>
@@ -429,13 +429,13 @@ Note when `select-size` is set to a value greater than 1, the Bootstrap v5 custo
 Note that not all mobile browsers will show the select as a list-box.
 
 <HighlightCard>
-  <BFormSelect v-model="ex1Selected" :options="ex1Options" :select-size="4"></BFormSelect>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" :select-size="4" />
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <BFormSelect v-model="ex1Selected" :options="ex1Options" :select-size="4"></BFormSelect>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" :select-size="4" />
 
   <div class="mt-3">
     Selected: <strong>{{ ex1Selected }}</strong>
@@ -475,7 +475,7 @@ an array reference as your `v-model` when in `multiple` mode.
     :options="exMultiOptions"
     multiple
     :select-size="4"
-  ></BFormSelect>
+  />
   <div class="mt-3">Selected: <strong>{{ exMultiSelected }}</strong></div>
   <template #html>
 
@@ -486,7 +486,7 @@ an array reference as your `v-model` when in `multiple` mode.
     :options="exMultiOptions"
     multiple
     :select-size="4"
-  ></BFormSelect>
+  />
 
   <div class="mt-3">
     Selected: <strong>{{ exMultiSelected }}</strong>
@@ -570,7 +570,7 @@ When `state` is set to `false`, aria-invalid will also be set to true.
 import {data} from '../../data/components/formSelect.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BFormSelectOptionGroup, BFormSelectOption, BCard, BCardBody, BFormSelect, BAlert} from 'bootstrap-vue-next'
+import {BFormSelectOptionGroup, BFormSelectOption, BCard, BCardBody, BFormSelect, BAlert, BBadge} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
 const ex1Selected = ref()

@@ -88,7 +88,7 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
   <div class="row">
     <div class="col-lg-6" aria-controls="overlay-background">
       <label for="bg-variant">Variant</label>
-      <BFormSelect id="bg-variant" v-model="variant" :options="variants"></BFormSelect>
+      <BFormSelect id="bg-variant" v-model="variant" :options="variants" />
       <label for="bg-opacity">Opacity</label>
       <div class="d-inline">
         <BFormInput
@@ -100,12 +100,12 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
           max="1"
           step="0.01"
           class="d-inline"
-        ></BFormInput>
+        />
       </div>
       {{ opacity.toFixed(2) }}
       <div>
         <label for="bg-blur">Blur</label>
-        <BFormSelect id="bg-blur" v-model="blur" :options="blurs"></BFormSelect>
+        <BFormSelect id="bg-blur" v-model="blur" :options="blurs" />
       </div>
     </div>
     <BCol lg="6">
@@ -135,7 +135,7 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
   <div class="row">
     <div class="col-lg-6" aria-controls="overlay-background">
       <label for="bg-variant">Variant</label>
-      <BFormSelect id="bg-variant" v-model="variant" :options="variants"></BFormSelect>
+      <BFormSelect id="bg-variant" v-model="variant" :options="variants" />
 
       <label for="bg-opacity">Opacity</label>
       <div class="d-inline">
@@ -148,14 +148,14 @@ Control the opacity of the backdrop via the `opacity` prop (opacity values can r
           max="1"
           step="0.01"
           class="d-inline"
-        ></BFormInput>
+        />
       </div>
 
       {{ opacity.toFixed(2) }}
 
       <div>
         <label for="bg-blur">Blur</label>
-        <BFormSelect id="bg-blur" v-model="blur" :options="blurs"></BFormSelect>
+        <BFormSelect id="bg-blur" v-model="blur" :options="blurs" />
       </div>
     </div>
 
@@ -296,13 +296,13 @@ Possible values are:
     <BCol md="6">
       <p>With rounding</p>
       <BOverlay :show="showRoundedEx" class="d-inline-block" rounded="circle">
-        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></BImg>
+        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1" />
       </BOverlay>
     </BCol>
     <BCol md="6">
       <p>Without rounding</p>
       <BOverlay :show="showRoundedEx" class="d-inline-block">
-        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></BImg>
+        <BImg thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1" />
       </BOverlay>
     </BCol>
   </BRow>
@@ -322,7 +322,7 @@ Possible values are:
           fluid
           src="https://picsum.photos/200/200/?image=54"
           alt="Image 1"
-        ></BImg>
+        />
       </BOverlay>
     </BCol>
 
@@ -335,7 +335,7 @@ Possible values are:
           fluid
           src="https://picsum.photos/200/200/?image=54"
           alt="Image 1"
-        ></BImg>
+        />
       </BOverlay>
     </BCol>
   </BRow>
@@ -550,13 +550,13 @@ descendant of `<BCard>`:
       src="https://picsum.photos/72/72/?image=58"
       alt="Image"
       class="d-inline"
-    ></BImg>
+    />
     <p class=" d-inline align-top mb-0">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
-    <BOverlay :show="showNoWrapEx2" no-wrap></BOverlay>
+    <BOverlay :show="showNoWrapEx2" no-wrap />
   </BCard>
   <BButton @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</BButton>
   <template #html>
@@ -570,13 +570,13 @@ descendant of `<BCard>`:
       src="https://picsum.photos/72/72/?image=58"
       alt="Image"
       class="d-inline"
-    ></BImg>
+    />
     <p class=" d-inline align-top mb-0">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
       laboris nisi ut aliquip ex ea commodo consequat.
     </p>
-    <BOverlay :show="showNoWrapEx2" no-wrap></BOverlay>
+    <BOverlay :show="showNoWrapEx2" no-wrap />
   </BCard>
   <BButton @click="showNoWrapEx2 = !showNoWrapEx2" class="mt-3">Toggle overlay</BButton>
 </template>
@@ -738,11 +738,11 @@ This example also demonstrates additional accessibility markup.
   <BForm class="position-relative p-3" @submit.prevent="onFormSubmit">
     <div class="row">
       <label class="col-lg-2" label-for="form-name">Name</label>
-      <BFormInput id="form-name" class="col" :disabled="formbusy"></BFormInput>
+      <BFormInput id="form-name" class="col" :disabled="formbusy" />
     </div>
     <div class="row mt-2">
       <label class="col-lg-2" label-for="form-mail">Email</label>
-      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy"></BFormInput>
+      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy" />
     </div>
     <div class="d-flex justify-content-center mt-2">
         <BButton ref="formsubmit" type="submit" :disabled="formbusy">Submit</BButton>
@@ -758,7 +758,7 @@ This example also demonstrates additional accessibility markup.
             variant="success"
             height="3px"
             class="mx-n4 rounded-0"
-          ></BProgress>
+          />
         </div>
         <div
           v-else
@@ -787,12 +787,12 @@ This example also demonstrates additional accessibility markup.
   <BForm class="position-relative p-3" @submit.prevent="onFormSubmit">
     <div class="row">
       <label class="col-lg-2" label-for="form-name">Name</label>
-      <BFormInput id="form-name" class="col" :disabled="formbusy"></BFormInput>
+      <BFormInput id="form-name" class="col" :disabled="formbusy" />
     </div>
 
     <div class="row mt-2">
       <label class="col-lg-2" label-for="form-mail">Email</label>
-      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy"></BFormInput>
+      <BFormInput id="form-email" class="col" type="email" :disabled="formbusy" />
     </div>
 
     <div class="d-flex justify-content-center mt-2">
@@ -810,7 +810,7 @@ This example also demonstrates additional accessibility markup.
             variant="success"
             height="3px"
             class="mx-n4 rounded-0"
-          ></BProgress>
+          />
         </div>
         <div
           v-else

@@ -336,7 +336,7 @@ The following properties are available for the `header` and `footer` slots:
   <BCollapse id="my-collapse">
     <template #header="{visible, toggle, id}">
       <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
-          <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
+          <span>{{ visible ? 'Close' : 'Open' }}</span> My Collapse
       </BButton>
     </template>
     <!-- Content here -->
@@ -348,7 +348,7 @@ The following properties are available for the `header` and `footer` slots:
 <BCollapse id="my-collapse">
   <template #header="{visible, toggle, id}">
     <BButton variant="primary" :aria-expanded="visible" :aria-controls="id" @click="toggle">
-      <span v-if="visible">Close</span><span v-else>Open</span> My Collapse
+      <span>{{ visible ? 'Close' : 'Open' }}</span> My Collapse
     </BButton>
   </template>
   <!-- Content here -->

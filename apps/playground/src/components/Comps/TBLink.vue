@@ -26,7 +26,7 @@
       </BCol>
     </BRow>
     <!-- activate "vue-router" in "main.ts" to test the "router-view" component
-      <RouterView></RouterView>
+      <RouterView />
       -->
   </BContainer>
 </template>

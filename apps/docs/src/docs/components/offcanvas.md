@@ -22,7 +22,7 @@ Build hidden sidebars into your project. Sidebars can aid in enhancing user inte
 ```vue-html
 <template>
   <BButton @click="click">Show OffCanvas</BButton>
-  <BOffcanvas v-model="show"></BOffcanvas>
+  <BOffcanvas v-model="show" />
 </template>
 
 <script lang = 'ts'setup>
