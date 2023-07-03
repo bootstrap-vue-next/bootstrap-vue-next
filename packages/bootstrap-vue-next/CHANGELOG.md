@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.17...bootstrap-vue-next-v0.9.18) (2023-07-03)
+
+
+### Performance Improvements
+
+* **usseSafeScrollLock:** use document.body over document.querySelector('body') ([88aae2d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/88aae2dec44073676e27fe69362094759c8f587c))
+
 ## [0.9.17](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.16...bootstrap-vue-next-v0.9.17) (2023-07-01)
 
 
