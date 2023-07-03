@@ -39,7 +39,7 @@ supported components, form layout, and more.
         type="email"
         placeholder="Enter email"
         required
-      ></BFormInput>
+      />
     </BFormGroup>
     <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
       <BFormInput
@@ -47,7 +47,7 @@ supported components, form layout, and more.
         v-model="form.name"
         placeholder="Enter name"
         required
-      ></BFormInput>
+      />
     </BFormGroup>
     <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
       <BFormSelect
@@ -55,7 +55,7 @@ supported components, form layout, and more.
         v-model="form.food"
         :options="foods"
         required
-      ></BFormSelect>
+      />
     </BFormGroup>
     <BFormGroup id="input-group-4">
       <BFormCheckboxGroup
@@ -89,14 +89,14 @@ supported components, form layout, and more.
         type="email"
         placeholder="Enter email"
         required
-      ></BFormInput>
+      />
     </BFormGroup>
 
     <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
-      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required></BFormInput>
+      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required/>
     </BFormGroup>
     <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
-      <BFormSelect id="input-3" v-model="form.food" :options="foods" required></BFormSelect>
+      <BFormSelect id="input-3" v-model="form.food" :options="foods" required/>
     </BFormGroup>
 
     <BFormGroup id="input-group-4">
@@ -169,14 +169,14 @@ visitors with class `.visually-hidden`.
           id="inline-form-input-name"
           class="mb-2 me-sm-2 mb-sm-0"
           placeholder="Jane Doe"
-        ></BFormInput>
+        />
       </div>
       <label class="col-form-label visually-hidden" for="inline-form-input-username"
         >Username</label
       >
       <div class="col-lg-3">
         <BInputGroup prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
-          <BFormInput id="inline-form-input-username" placeholder="Username"></BFormInput>
+          <BFormInput id="inline-form-input-username" placeholder="Username" />
         </BInputGroup>
       </div>
       <BFormCheckbox class="col-form-label col-lg-2 mb-2 me-sm-2 mb-sm-0"
@@ -198,7 +198,7 @@ visitors with class `.visually-hidden`.
         id="inline-form-input-name"
         class="mb-2 me-sm-2 mb-sm-0"
         placeholder="Jane Doe"
-      ></BFormInput>
+      />
     </div>
 
     <label class="col-form-label visually-hidden" for="inline-form-input-username"
@@ -206,7 +206,7 @@ visitors with class `.visually-hidden`.
     >
     <div class="col-lg-3">
       <BInputGroup prepend="@" class="col-lg-4 mb-2 me-sm-2 mb-sm-0">
-        <BFormInput id="inline-form-input-username" placeholder="Username"></BFormInput>
+        <BFormInput id="inline-form-input-username" placeholder="Username" />
       </BInputGroup>
     </div>
 
@@ -238,7 +238,7 @@ Custom form controls and selects are also supported.
           class="mb-2 me-sm-2 mb-sm-0"
           :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
           :value="null"
-        ></BFormSelect>
+        />
       </div>
       <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
         >Remember my preference</BFormCheckbox
@@ -262,7 +262,7 @@ Custom form controls and selects are also supported.
         class="mb-2 me-sm-2 mb-sm-0"
         :options="[{ text: 'Choose...', value: null }, 'One', 'Two', 'Three']"
         :value="null"
-      ></BFormSelect>
+      />
     </div>
     <BFormCheckbox class="col-form-label col-lg-3 mb-2 me-sm-2 mb-sm-0"
       >Remember my preference</BFormCheckbox
@@ -333,7 +333,7 @@ will announce this help text when the user focuses or enters the control.
       type="password"
       id="text-password"
       aria-describedby="password-help-block"
-    ></BFormInput>
+    />
     <BFormText id="password-help-block">
       Your password must be 8-20 characters long, contain letters and numbers, and must not
       contain spaces, special characters, or emoji.
@@ -348,7 +348,7 @@ will announce this help text when the user focuses or enters the control.
     type="password"
     id="text-password"
     aria-describedby="password-help-block"
-  ></BFormInput>
+  />
   <BFormText id="password-help-block">
     Your password must be 8-20 characters long, contain letters and numbers, and must not
     contain spaces, special characters, or emoji.
@@ -385,7 +385,7 @@ or the `force-show` prop to display the feedback.
 <HighlightCard>
   <BForm  @submit.stop.prevent>
     <label for="feedback-user">User Id</label>
-    <BFormInput v-model="userId" :state="validation" id="feedback-user"></BFormInput>
+    <BFormInput v-model="userId" :state="validation" id="feedback-user" />
     <BFormInvalidFeedback :state="validation">
       Your user Id must be 5-12 characters long.
     </BFormInvalidFeedback>
@@ -399,7 +399,7 @@ or the `force-show` prop to display the feedback.
 <template>
   <BForm @submit.stop.prevent>
     <label for="feedback-user">User Id</label>
-    <BFormInput v-model="userId" :state="validation" id="feedback-user"></BFormInput>
+    <BFormInput v-model="userId" :state="validation" id="feedback-user" />
     <BFormInvalidFeedback :state="validation">
       Your user Id must be 5-12 characters long.
     </BFormInvalidFeedback>

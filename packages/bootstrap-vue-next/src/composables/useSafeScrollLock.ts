@@ -10,10 +10,10 @@ export default (isOpen: MaybeRefOrGetter<boolean>, bodyScroll: MaybeRefOrGetter<
    */
   const inverseBodyScrollingValue = computed(() => !bodyScrollingValue.value)
 
-  const bodyRef = ref<HTMLBodyElement | null>(null)
+  const bodyRef = ref<HTMLElement | null>(null)
 
   onMounted(() => {
-    bodyRef.value = document.querySelector('body')
+    bodyRef.value = document.body
   })
 
   const isLocked = useScrollLock(bodyRef, modelValue.value && inverseBodyScrollingValue.value)

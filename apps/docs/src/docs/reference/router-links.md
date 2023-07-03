@@ -65,7 +65,7 @@ Setting replace prop will call `router.replace()` instead of `router.push()` whe
 <BCard class="bg-body-tertiary">
 
 ```vue
-<BLink :to="{path: '/abc'}" replace></BLink>
+<BLink :to="{path: '/abc'}" replace />
 ```
 
 </BCard>
@@ -80,7 +80,7 @@ Setting `append` prop always appends the relative path to the current path. For 
 <BCard class="bg-body-tertiary">
 
 ```vue
-<BLink :to="{path: 'relative/path'}" append></BLink>
+<BLink :to="{path: 'relative/path'}" append />
 ```
 
 </BCard>
@@ -131,7 +131,7 @@ One consequence of this is that `<BLink to="/">` will be active for every route!
 
 ```vue
 <!-- This link will only be active at `/` -->
-<BLink to="/" exact></BLink>
+<BLink to="/" exact />
 ```
 
 </BCard>

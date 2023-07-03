@@ -48,11 +48,11 @@ value.
 
 <BCard class="bg-body-tertiary mb-4">
   <label for="sb-small">Spin button - Small size</label>
-  <BFormSpinButton id="sb-small" size="sm" placeholder="--" class="mb-2"></BFormSpinButton>
+  <BFormSpinButton id="sb-small" size="sm" placeholder="--" class="mb-2" />
   <label for="sb-default">Spin button - Default size</label>
-  <BFormSpinButton id="sb-default" placeholder="--" class="mb-2"></BFormSpinButton>
+  <BFormSpinButton id="sb-default" placeholder="--" class="mb-2" />
   <label for="sb-large">Spin button - Large size</label>
-  <BFormSpinButton id="sb-large" size="lg" placeholder="--" class="mb-2"></BFormSpinButton>
+  <BFormSpinButton id="sb-large" size="lg" placeholder="--" class="mb-2" />
 </BCard>
 
 ### Inline
@@ -60,13 +60,13 @@ value.
 <HighlightCard>
   <label for="demo-sb">Spin Button</label>
   <label for="sb-inline">Inline spin button</label>
-  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline></BFormSpinButton>
+  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline />
   <template #html>
 
 ```vue
 <template>
   <label for="sb-inline">Inline spin button</label>
-  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline></BFormSpinButton>
+  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline />
 </template>
 
 <script setup lang="ts">
@@ -81,7 +81,7 @@ const ex1Value = ref(50)
 
 <HighlightCard>
   <label for="sb-vertical">Vertical spin button</label>
-  <BFormSpinButton id="sb-vertical" v-model="ex1Value" vertical></BFormSpinButton>
+  <BFormSpinButton id="sb-vertical" v-model="ex1Value" vertical />
   <template #html>
 
 ```vue
@@ -135,11 +135,11 @@ const ex1Value = ref(50)
   <BRow>
     <BCol md="6" class="mb-2">
       <label for="sb-disabled">Disabled spin button</label>
-      <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled></BFormSpinButton>
+      <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled />
     </BCol>
     <BCol md="6" class="mb-2">
       <label for="sb-readonly" class="">Readonly spin button</label>
-      <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly></BFormSpinButton>
+      <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly />
     </BCol>
   </BRow>
   <template #html>
@@ -148,11 +148,11 @@ const ex1Value = ref(50)
 <BRow>
   <BCol md="6" class="mb-2">
     <label for="sb-disabled">Disabled spin button</label>
-    <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled></BFormSpinButton>
+    <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled />
   </BCol>
   <BCol md="6" class="mb-2">
     <label for="sb-readonly" class="">Readonly spin button</label>
-    <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly></BFormSpinButton>
+    <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly />
   </BCol>
 </BRow>
 ```

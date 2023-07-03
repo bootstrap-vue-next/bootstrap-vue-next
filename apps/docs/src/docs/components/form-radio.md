@@ -63,7 +63,7 @@ v-model from the `<BFormRadioGroup>`.
     <label>Radios using options</label>
   </div>
   <div>
-      <BFormRadioGroup id="radio-group-1" v-model="groupedSelected" :options="groupedOptions" name="radio-options"></BFormRadioGroup>
+      <BFormRadioGroup id="radio-group-1" v-model="groupedSelected" :options="groupedOptions" name="radio-options" />
   </div>
   <div class="my-2">
     <label>Radios using sub-components</label>
@@ -91,7 +91,7 @@ v-model from the `<BFormRadioGroup>`.
       v-model="groupedSelected"
       :options="groupedOptions"
       name="radio-options"
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="my-2">
@@ -303,7 +303,7 @@ If you want to customize the field property names (for example using `name` fiel
     value-field="item"
     text-field="name"
     disabled-field="notEnabled"
-  ></BFormRadioGroup>
+  />
 
   <div class="mt-3">
     Selected: <strong>{{ customFieldNameSelected }}</strong>
@@ -347,13 +347,13 @@ render them inline.
     <label>Inline radios (default)</label>
   </div>
   <div>
-    <BFormRadioGroup v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-inline"></BFormRadioGroup>
+    <BFormRadioGroup v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-inline" />
   </div>
   <div class="my-2">
       <label>Stacked radios</label>
   </div>
   <div>
-    <BFormRadioGroup v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-stacked" stacked></BFormRadioGroup>
+    <BFormRadioGroup v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-stacked" stacked />
   </div>
   <div class="mt-3">Selected: <strong>{{ inlineStackedSelected }}</strong></div>
   <template #html>
@@ -369,7 +369,7 @@ render them inline.
       v-model="inlineStackedSelected"
       :options="inlineStackedOptions"
       name="radio-inline"
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="my-2">
@@ -382,7 +382,7 @@ render them inline.
       :options="inlineStackedOptions"
       name="radio-stacked"
       stacked
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="mt-3">
@@ -450,7 +450,7 @@ in the checked state.
       <label>Button style radios</label>
   </div>
   <div>
-    <BFormRadioGroup v-model="buttonsSelected" :options="buttonsOptions" name="radios-btn-default" buttons></BFormRadioGroup>
+    <BFormRadioGroup v-model="buttonsSelected" :options="buttonsOptions" name="radios-btn-default" buttons />
   </div>
   <div class="my-2">
       <label>Button style radios with outline-primary variant and size lg</label>
@@ -463,7 +463,7 @@ in the checked state.
       size="lg"
       name="radios-btn-outline"
       buttons
-    ></BFormRadioGroup>
+    />
   </div>
   <div class="my-2">
       <label>Stacked button style radios</label>
@@ -475,7 +475,7 @@ in the checked state.
       name="radios-btn-stacked"
       buttons
       stacked
-    ></BFormRadioGroup>
+    />
   </div>
   <div class="mt-3">Selected: <strong>{{ buttonsSelected }}</strong></div>
   <template #html>
@@ -492,7 +492,7 @@ in the checked state.
       :options="buttonsOptions"
       name="radios-btn-default"
       buttons
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="my-2">
@@ -507,7 +507,7 @@ in the checked state.
       size="lg"
       name="radios-btn-outline"
       buttons
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="my-2">
@@ -521,7 +521,7 @@ in the checked state.
       name="radios-btn-stacked"
       buttons
       stacked
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="mt-3">
@@ -554,13 +554,13 @@ by setting the `plain` prop.
     <label>Plain inline radios</label>
   </div>
   <div>
-    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-inline" plain></BFormRadioGroup>
+    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-inline" plain />
   </div>
   <div class="my-2">
       <label>Plain stacked radios</label>
   </div>
   <div>
-    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-stacked" plain></BFormRadioGroup>
+    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-stacked" plain />
   </div>
   <div class="mt-3">Selected: <strong>{{ plainSelected }}</strong></div>
   <template #html>
@@ -577,7 +577,7 @@ by setting the `plain` prop.
       :options="plainOptions"
       name="plain-inline"
       plain
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="my-2">
@@ -590,7 +590,7 @@ by setting the `plain` prop.
       :options="plainOptions"
       name="plain-stacked"
       plain
-    ></BFormRadioGroup>
+    />
   </div>
 
   <div class="mt-3">
@@ -659,7 +659,7 @@ invalid), `true` (for valid), or `null` (no validation state).
     :options="contextualOptions"
     :state="contextualState"
     name="radio-validation"
-  ></BFormRadioGroup>
+  />
   <div class="text-danger" v-if="!contextualState">Please select one</div>
   <div class="text-success" v-if="contextualState">Thank you</div>
   <template #html>
@@ -671,7 +671,7 @@ invalid), `true` (for valid), or `null` (no validation state).
     :options="contextualOptions"
     :state="contextualState"
     name="radio-validation"
-  ></BFormRadioGroup>
+  />
 
   <div class="text-danger" v-if="!contextualState">Please select one</div>
   <div class="text-success" v-if="contextualState">Thank you</div>

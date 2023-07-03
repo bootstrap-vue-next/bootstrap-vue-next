@@ -21,7 +21,7 @@ Create multi-line text inputs with support for auto height sizing, minimum and m
     placeholder="Enter something..."
     rows="3"
     max-rows="6"
-  ></BFormTextarea>
+  />
   <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
   <template #html>
 
@@ -33,7 +33,7 @@ Create multi-line text inputs with support for auto height sizing, minimum and m
     placeholder="Enter something..."
     rows="3"
     max-rows="6"
-  ></BFormTextarea>
+  />
 
   <pre class="mt-3 mb-0">{{ textEx1 }}</pre>
 </template>
@@ -58,7 +58,7 @@ To control width, place the input inside standard Bootstrap grid column.
       <label for="textarea-small">Small:</label>
     </BCol>
     <BCol sm="10">
-      <BFormTextarea id="textarea-small" size="sm" placeholder="Small textarea"></BFormTextarea>
+      <BFormTextarea id="textarea-small" size="sm" placeholder="Small textarea" />
     </BCol>
   </BRow>
   <BRow class="mt-2">
@@ -66,7 +66,7 @@ To control width, place the input inside standard Bootstrap grid column.
       <label for="textarea-default">Default:</label>
     </BCol>
     <BCol sm="10">
-      <BFormTextarea id="textarea-default" placeholder="Default textarea"></BFormTextarea>
+      <BFormTextarea id="textarea-default" placeholder="Default textarea" />
     </BCol>
   </BRow>
   <BRow class="mt-2">
@@ -74,7 +74,7 @@ To control width, place the input inside standard Bootstrap grid column.
       <label for="textarea-large">Large:</label>
     </BCol>
     <BCol sm="10">
-      <BFormTextarea id="textarea-large" size="lg" placeholder="Large textarea"></BFormTextarea>
+      <BFormTextarea id="textarea-large" size="lg" placeholder="Large textarea" />
     </BCol>
   </BRow>
   <template #html>
@@ -85,7 +85,7 @@ To control width, place the input inside standard Bootstrap grid column.
     <label for="textarea-small">Small:</label>
   </BCol>
   <BCol sm="10">
-    <BFormTextarea id="textarea-small" size="sm" placeholder="Small textarea"></BFormTextarea>
+    <BFormTextarea id="textarea-small" size="sm" placeholder="Small textarea" />
   </BCol>
 </BRow>
 
@@ -94,7 +94,7 @@ To control width, place the input inside standard Bootstrap grid column.
     <label for="textarea-default">Default:</label>
   </BCol>
   <BCol sm="10">
-    <BFormTextarea id="textarea-default" placeholder="Default textarea"></BFormTextarea>
+    <BFormTextarea id="textarea-default" placeholder="Default textarea" />
   </BCol>
 </BRow>
 
@@ -103,7 +103,7 @@ To control width, place the input inside standard Bootstrap grid column.
     <label for="textarea-large">Large:</label>
   </BCol>
   <BCol sm="10">
-    <BFormTextarea id="textarea-large" size="lg" placeholder="Large textarea"></BFormTextarea>
+    <BFormTextarea id="textarea-large" size="lg" placeholder="Large textarea" />
   </BCol>
 </BRow>
 ```
@@ -118,11 +118,11 @@ value is provided to `rows`, then it will default to `2` (the browser default an
 value). Setting it to null or a value below 2 will result in the default of `2` being used.
 
 <HighlightCard>
-  <BFormTextarea id="textarea-rows" placeholder="Tall textarea" rows="8"></BFormTextarea>
+  <BFormTextarea id="textarea-rows" placeholder="Tall textarea" rows="8" />
   <template #html>
 
 ```vue
-<BFormTextarea id="textarea-rows" placeholder="Tall textarea" rows="8"></BFormTextarea>
+<BFormTextarea id="textarea-rows" placeholder="Tall textarea" rows="8" />
 ```
 
   </template>
@@ -139,7 +139,7 @@ feature, set the `no-resize` prop to `true`.
     placeholder="Fixed height textarea"
     rows="3"
     no-resize
-  ></BFormTextarea>
+  />
   <template #html>
 
 ```vue
@@ -148,7 +148,7 @@ feature, set the `no-resize` prop to `true`.
   placeholder="Fixed height textarea"
   rows="3"
   no-resize
-></BFormTextarea>
+/>
 ```
 
   </template>
@@ -180,7 +180,7 @@ To apply one of the contextual state icons on `<BFormTextarea>`, set the `state`
     :state="textStates.length >= 10"
     placeholder="Enter at least 10 characters"
     rows="3"
-  ></BFormTextarea>
+  />
   <template #html>
 
 ```vue
@@ -191,7 +191,7 @@ To apply one of the contextual state icons on `<BFormTextarea>`, set the `state`
     :state="textStates.length >= 10"
     placeholder="Enter at least 10 characters"
     rows="3"
-  ></BFormTextarea>
+  />
 </template>
 
 <script setup lang="ts">
@@ -256,7 +256,7 @@ Formatting does not occur if a `formatter` is not provided.
       v-model="textFormatter"
       placeholder="Enter your text"
       :formatter="formatter"
-    ></BFormTextarea>
+    />
   </BFormGroup>
   <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
   <BFormGroup
@@ -271,7 +271,7 @@ Formatting does not occur if a `formatter` is not provided.
       placeholder="Enter your text"
       lazy-formatter
       :formatter="formatter"
-    ></BFormTextarea>
+    />
   </BFormGroup>
   <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
   <template #html>
@@ -289,7 +289,7 @@ Formatting does not occur if a `formatter` is not provided.
       v-model="textFormatter"
       placeholder="Enter your text"
       :formatter="formatter"
-    ></BFormTextarea>
+    />
   </BFormGroup>
 
   <p style="white-space: pre-line"><b>Value:</b> {{ textFormatter }}</p>
@@ -306,7 +306,7 @@ Formatting does not occur if a `formatter` is not provided.
       placeholder="Enter your text"
       lazy-formatter
       :formatter="formatter"
-    ></BFormTextarea>
+    />
   </BFormGroup>
 
   <p class="mb-0" style="white-space: pre-line"><b>Value:</b> {{ textFormatter2 }}</p>
@@ -335,12 +335,12 @@ If you want to have `<BFormTextarea readonly>` elements in your form styled as p
 form field styling and preserve the correct text size, margin, padding and height.
 
 <HighlightCard>
-  <BFormTextarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></BFormTextarea>
+  <BFormTextarea id="textarea-plaintext" plaintext :model-value="textReadOnly" />
   <template #html>
 
 ```vue
 <template>
-  <BFormTextarea id="textarea-plaintext" plaintext :model-value="textReadOnly"></BFormTextarea>
+  <BFormTextarea id="textarea-plaintext" plaintext :model-value="textReadOnly" />
 </template>
 
 <script setup lang="ts">
@@ -408,7 +408,7 @@ component reference (i.e. assign a `ref` to your `<BFormTextarea ref="foo" ...>`
     placeholder="Enter something..."
     rows="3"
     max-rows="6"
-  ></BFormTextarea>
+  />
   <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
   <template #html>
 
@@ -421,7 +421,7 @@ component reference (i.e. assign a `ref` to your `<BFormTextarea ref="foo" ...>`
     placeholder="Enter something..."
     rows="3"
     max-rows="6"
-  ></BFormTextarea>
+  />
 
   <button class="btn btn-primary mt-1" @click="selectText">Select text</button>
 </template>

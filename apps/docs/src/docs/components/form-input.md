@@ -15,13 +15,13 @@ Create various type inputs such as: `text`, `password`, `number`, `url`, `email`
 </div>
 
 <HighlightCard>
-  <BFormInput v-model="selectedText" placeholder="Enter your name"></BFormInput>
+  <BFormInput v-model="selectedText" placeholder="Enter your name" />
   <div class="mt-2">Value: {{ selectedText }}</div>
   <template #html>
 
 ```vue
 <template>
-  <BFormInput v-model="selectedText" placeholder="Enter your name"></BFormInput>
+  <BFormInput v-model="selectedText" placeholder="Enter your name" />
   <div class="mt-2">Value: {{ selectedText }}</div>
 </template>
 
@@ -43,7 +43,7 @@ const selectedText = ref('')
       <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
     </BCol>
     <BCol sm="9">
-      <BFormInput :id="`type-${type}`" :type="type"></BFormInput>
+      <BFormInput :id="`type-${type}`" :type="type" />
     </BCol>
   </BRow>
   <template #html>
@@ -58,7 +58,7 @@ const selectedText = ref('')
       >
     </BCol>
     <BCol sm="9">
-      <BFormInput :id="`type-${type}`" :type="type"></BFormInput>
+      <BFormInput :id="`type-${type}`" :type="type" />
     </BCol>
   </BRow>
 </template>
@@ -131,14 +131,14 @@ new values for those using the `min` and `max` props.
 
 <HighlightCard>
   <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="rangeValue" type="range" min="0" max="5"></BFormInput>
+  <BFormInput id="range-1" v-model="rangeValue" type="range" min="0" max="5" />
   <div class="mt-2">Value: {{ rangeValue }}</div>
   <template #html>
 
 ```vue
 <template>
   <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="rangeValue" type="range" min="0" max="5"></BFormInput>
+  <BFormInput id="range-1" v-model="rangeValue" type="range" min="0" max="5" />
   <div class="mt-2">Value: {{ rangeValue }}</div>
 </template>
 
@@ -155,7 +155,7 @@ In the example below, we double the number of steps by using step="0.5".
 
 <HighlightCard>
   <label for="range-1">Example range with min and max</label>
-  <BFormInput id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5"></BFormInput>
+  <BFormInput id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5" />
   <div class="mt-2">Value: {{ rangeValueStep }}</div>
   <template #html>
 
@@ -169,7 +169,7 @@ In the example below, we double the number of steps by using step="0.5".
     min="0"
     max="5"
     step="0.5"
-  ></BFormInput>
+  />
   <div class="mt-2">Value: {{ rangeValueStep }}</div>
 </template>
 
@@ -201,7 +201,7 @@ To control width, place the input inside standard Bootstrap grid column.
       <label for="input-small">Small:</label>
     </BCol>
     <BCol sm="10">
-      <BFormInput id="input-small" size="sm" placeholder="Enter your name"></BFormInput>
+      <BFormInput id="input-small" size="sm" placeholder="Enter your name" />
     </BCol>
   </BRow>
   <BRow class="my-1">
@@ -209,7 +209,7 @@ To control width, place the input inside standard Bootstrap grid column.
       <label for="input-default">Default:</label>
     </BCol>
     <BCol sm="10">
-      <BFormInput id="input-default" placeholder="Enter your name"></BFormInput>
+      <BFormInput id="input-default" placeholder="Enter your name" />
     </BCol>
   </BRow>
   <BRow class="my-1">
@@ -217,7 +217,7 @@ To control width, place the input inside standard Bootstrap grid column.
       <label for="input-large">Large:</label>
     </BCol>
     <BCol sm="10">
-      <BFormInput id="input-large" size="lg" placeholder="Enter your name"></BFormInput>
+      <BFormInput id="input-large" size="lg" placeholder="Enter your name" />
     </BCol>
   </BRow>
   <template #html>
@@ -229,7 +229,7 @@ To control width, place the input inside standard Bootstrap grid column.
   </BCol>
 
   <BCol sm="10">
-    <BFormInput id="input-small" size="sm" placeholder="Enter your name"></BFormInput>
+    <BFormInput id="input-small" size="sm" placeholder="Enter your name" />
   </BCol>
 </BRow>
 
@@ -239,7 +239,7 @@ To control width, place the input inside standard Bootstrap grid column.
   </BCol>
 
   <BCol sm="10">
-    <BFormInput id="input-default" placeholder="Enter your name"></BFormInput>
+    <BFormInput id="input-default" placeholder="Enter your name" />
   </BCol>
 </BRow>
 
@@ -249,7 +249,7 @@ To control width, place the input inside standard Bootstrap grid column.
   </BCol>
 
   <BCol sm="10">
-    <BFormInput id="input-large" size="lg" placeholder="Enter your name"></BFormInput>
+    <BFormInput id="input-large" size="lg" placeholder="Enter your name" />
   </BCol>
 </BRow>
 ```
@@ -285,7 +285,7 @@ invalid), `true` (for valid), or `null` (no validation state).
       <label for="input-none">No State:</label>
     </BCol>
     <BCol sm="9">
-      <BFormInput id="input-none" :state="null" placeholder="No validation"></BFormInput>
+      <BFormInput id="input-none" :state="null" placeholder="No validation" />
     </BCol>
   </BRow>
   <BRow class="my-1">
@@ -293,7 +293,7 @@ invalid), `true` (for valid), or `null` (no validation state).
       <label for="input-valid">Valid State:</label>
     </BCol>
     <BCol sm="9">
-      <BFormInput id="input-valid" :state="true" placeholder="Valid input"></BFormInput>
+      <BFormInput id="input-valid" :state="true" placeholder="Valid input" />
     </BCol>
   </BRow>
   <BRow class="my-1">
@@ -301,7 +301,7 @@ invalid), `true` (for valid), or `null` (no validation state).
       <label for="input-invalid">Invalid State:</label>
     </BCol>
     <BCol sm="9">
-      <BFormInput id="input-invalid" :state="false" placeholder="Invalid input"></BFormInput>
+      <BFormInput id="input-invalid" :state="false" placeholder="Invalid input" />
     </BCol>
   </BRow>
   <template #html>
@@ -313,7 +313,7 @@ invalid), `true` (for valid), or `null` (no validation state).
   </BCol>
 
   <BCol sm="9">
-    <BFormInput id="input-none" :state="null" placeholder="No validation"></BFormInput>
+    <BFormInput id="input-none" :state="null" placeholder="No validation" />
   </BCol>
 </BRow>
 
@@ -323,7 +323,7 @@ invalid), `true` (for valid), or `null` (no validation state).
   </BCol>
 
   <BCol sm="9">
-    <BFormInput id="input-valid" :state="true" placeholder="Valid input"></BFormInput>
+    <BFormInput id="input-valid" :state="true" placeholder="Valid input" />
   </BCol>
 </BRow>
 
@@ -333,7 +333,7 @@ invalid), `true` (for valid), or `null` (no validation state).
   </BCol>
 
   <BCol sm="9">
-    <BFormInput id="input-invalid" :state="false" placeholder="Invalid input"></BFormInput>
+    <BFormInput id="input-invalid" :state="false" placeholder="Invalid input" />
   </BCol>
 </BRow>
 ```
@@ -353,7 +353,7 @@ invalid), `true` (for valid), or `null` (no validation state).
       aria-describedby="input-live-help input-live-feedback"
       placeholder="Enter your name"
       trim
-    ></BFormInput>
+    />
     <!-- This will only be shown if the preceding input has an invalid state -->
     <BFormInvalidFeedback id="input-live-feedback">
       Enter at least 3 letters
@@ -374,7 +374,7 @@ invalid), `true` (for valid), or `null` (no validation state).
       aria-describedby="input-live-help input-live-feedback"
       placeholder="Enter your name"
       trim
-    ></BFormInput>
+    />
     <!-- This will only be shown if the preceding input has an invalid state -->
     <BFormInvalidFeedback id="input-live-feedback">
       Enter at least 3 letters
@@ -446,7 +446,7 @@ Formatting does not occur if a `formatter` is not provided.
       v-model="formatInputText"
       placeholder="Enter your name"
       :formatter="toLowerCaseFormatter"
-    ></BFormInput>
+    />
     <p><b>Value:</b> {{ formatInputText }}</p>
   </div>
   <div role="group">
@@ -457,7 +457,7 @@ Formatting does not occur if a `formatter` is not provided.
       placeholder="Enter your name"
       lazy-formatter
       :formatter="toLowerCaseFormatter"
-    ></BFormInput>
+    />
     <p><b>Value:</b> {{ formatLazyInputText }}</p>
   </div>
   <template #html>
@@ -471,7 +471,7 @@ Formatting does not occur if a `formatter` is not provided.
       v-model="formatInputText"
       placeholder="Enter your name"
       :formatter="toLowerCaseFormatter"
-    ></BFormInput>
+    />
     <p><b>Value:</b> {{ formatInputText }}</p>
   </div>
 
@@ -483,7 +483,7 @@ Formatting does not occur if a `formatter` is not provided.
       placeholder="Enter your name"
       lazy-formatter
       :formatter="toLowerCaseFormatter"
-    ></BFormInput>
+    />
     <p><b>Value:</b> {{ formatLazyInputText }}</p>
   </div>
 </template>
@@ -602,7 +602,7 @@ these methods and properties. Support will vary based on input type.
       ref="inputRef"
       v-model="sampleInputText"
       placeholder="Enter your name"
-    ></BFormInput>
+    />
   </div>
   <div class="mt-2">
     <BButton primary @click="selectAllText">Select all text</BButton>
@@ -616,7 +616,7 @@ these methods and properties. Support will vary based on input type.
       ref="inputRef"
       v-model="sampleInputText"
       placeholder="Enter your name"
-    ></BFormInput>
+    />
   </div>
   <div class="mt-2">
     <BButton primary @click="selectAllText">Select all text</BButton>

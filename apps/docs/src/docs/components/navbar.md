@@ -17,7 +17,7 @@ The component `<BNavbar>` is a wrapper that positions branding, navigation, and 
 <HighlightCard>
   <BNavbar toggleable="lg" type="dark" variant="dark">
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
-    <BNavbarToggle target="nav-collapse"></BNavbarToggle>
+    <BNavbarToggle target="nav-collapse" />
     <BCollapse id="nav-collapse" is-nav>
       <BNavbarNav>
         <BNavItem href="#">Link</BNavItem>
@@ -41,7 +41,7 @@ The component `<BNavbar>` is a wrapper that positions branding, navigation, and 
         </BNavItemDropdown>
       </BNavbarNav>
       <BNavForm class="d-flex">
-        <BFormInput class="me-2" placeholder="Search"></BFormInput>
+        <BFormInput class="me-2" placeholder="Search" />
         <BButton type="submit" variant="outline-success">Search</BButton>
       </BNavForm>
     </BCollapse>
@@ -52,7 +52,7 @@ The component `<BNavbar>` is a wrapper that positions branding, navigation, and 
 <template>
   <BNavbar toggleable="lg" type="dark" variant="dark">
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
-    <BNavbarToggle target="nav-collapse"></BNavbarToggle>
+    <BNavbarToggle target="nav-collapse" />
     <BCollapse id="nav-collapse" is-nav>
       <BNavbarNav>
         <BNavItem href="#">Link</BNavItem>
@@ -76,7 +76,7 @@ The component `<BNavbar>` is a wrapper that positions branding, navigation, and 
         </BNavItemDropdown>
       </BNavbarNav>
       <BNavForm class="d-flex">
-        <BFormInput class="me-2" placeholder="Search"></BFormInput>
+        <BFormInput class="me-2" placeholder="Search" />
         <BButton type="submit" variant="outline-success">Search</BButton>
       </BNavForm>
     </BCollapse>
@@ -228,7 +228,7 @@ Navbars may contain bits of text with the help of `<BNavText>`. This component a
 
 <HighlightCard>
   <BNavbar toggleable="sm" type="light" variant="light">
-    <BNavbarToggle target="nav-text-collapse"></BNavbarToggle>
+    <BNavbarToggle target="nav-text-collapse" />
     <BNavbarBrand>BootstrapVue</BNavbarBrand>
     <BCollapse id="nav-text-collapse" is-nav>
       <BNavbarNav>
@@ -241,7 +241,7 @@ Navbars may contain bits of text with the help of `<BNavText>`. This component a
 ```vue-html
 <template>
   <BNavbar toggleable="sm" type="light" variant="light">
-    <BNavbarToggle target="nav-text-collapse"></BNavbarToggle>
+    <BNavbarToggle target="nav-text-collapse" />
 
     <BNavbarBrand>BootstrapVue</BNavbarBrand>
 
@@ -312,7 +312,7 @@ Use `<BNavForm>` to place inline form controls into your navbar
 <HighlightCard>
   <BNavbar type="light" variant="light">
     <BNavForm>
-      <BFormInput class="me-sm-2" placeholder="Search"></BFormInput>
+      <BFormInput class="me-sm-2" placeholder="Search" />
       <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
     </BNavForm>
   </BNavbar>
@@ -322,7 +322,7 @@ Use `<BNavForm>` to place inline form controls into your navbar
 <template>
   <BNavbar type="light" variant="light">
     <BNavForm>
-      <BFormInput class="me-sm-2" placeholder="Search"></BFormInput>
+      <BFormInput class="me-sm-2" placeholder="Search" />
       <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
     </BNavForm>
   </BNavbar>
@@ -338,7 +338,7 @@ Input Groups work as well:
   <BNavbar type="light" variant="light">
     <BNavForm>
       <BInputGroup prepend="@">
-        <BFormInput placeholder="Username"></BFormInput>
+        <BFormInput placeholder="Username" />
       </BInputGroup>
     </BNavForm>
   </BNavbar>
@@ -349,7 +349,7 @@ Input Groups work as well:
   <BNavbar type="light" variant="light">
     <BNavForm>
       <BInputGroup prepend="@">
-        <BFormInput placeholder="Username"></BFormInput>
+        <BFormInput placeholder="Username" />
       </BInputGroup>
     </BNavForm>
   </BNavbar>
@@ -388,8 +388,8 @@ Note that the expanded scope property only works when supplying the target prop 
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
     <BNavbarToggle target="navbar-toggle-collapse">
       <template #default="{ expanded }">
-        <BIcon v-if="expanded" icon="chevron-bar-up"></BIcon>
-        <BIcon v-else icon="chevron-bar-down"></BIcon>
+        <ChevronBarUpIcon v-if="expanded" />
+        <ChevronBarDownIcon v-else icon="chevron-bar-down" />
       </template>
     </BNavbarToggle>
     <BCollapse id="navbar-toggle-collapse" is-nav>
@@ -409,8 +409,8 @@ Note that the expanded scope property only works when supplying the target prop 
 
     <BNavbarToggle target="navbar-toggle-collapse">
       <template #default="{ expanded }">
-        <BIcon v-if="expanded" icon="chevron-bar-up"></BIcon>
-        <BIcon v-else icon="chevron-bar-down"></BIcon>
+        <ChevronBarUpIcon v-if="expanded" />
+        <ChevronBarDownIcon v-else icon="chevron-bar-down" />
       </template>
     </BNavbarToggle>
 
@@ -446,5 +446,7 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 import {data} from '../../data/components/navbar.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BNavbar, BNavbarBrand, BNavbarToggle, BCollapse, BNavbarNav, BNavForm, BNavItem, BFormInput, BNavbarItem, BNavItemDropdown, BDropdownItem, BButton} from 'bootstrap-vue-next'
+import {BNavText, BInputGroup, BNavbar, BNavbarBrand, BNavbarToggle, BCollapse, BNavbarNav, BNavForm, BNavItem, BFormInput, BNavbarItem, BNavItemDropdown, BDropdownItem, BButton} from 'bootstrap-vue-next'
+import ChevronBarUpIcon from '~icons/bi/chevron-bar-up'
+import ChevronBarDownIcon from '~icons/bi/chevron-bar-down'
 </script>

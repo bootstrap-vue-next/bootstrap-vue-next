@@ -25,7 +25,7 @@ Tags are arrays of short strings, used in various ways such as assigning categor
 ```vue
 <template>
   <label for="tags-basic">Type a new tag and press enter</label>
-  <BFormTags input-id="tags-basic" v-model="value"></BFormTags>
+  <BFormTags input-id="tags-basic" v-model="value" />
   <p class="mt-2">Value: {{ value }}</p>
 </template>
 

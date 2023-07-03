@@ -25,11 +25,11 @@ For accessibility purposes, each loader here includes `role="status"` and a nest
 Use the border spinners for a lightweight loading indicator.
 
 <HighlightCard>
-  <BSpinner></BSpinner>
+  <BSpinner />
   <template #html>
 
 ```vue-html
-<BSpinner></BSpinner>
+<BSpinner />
 ```
 
   </template>
@@ -40,25 +40,25 @@ Use the border spinners for a lightweight loading indicator.
 The border spinner uses currentColor for its border-color, meaning you can customize the color with text color utilities. You can use any of our text color utilities on the standard spinner.
 
 <HighlightCard>
-  <BSpinner variant="primary" class="me-2"></BSpinner>
-  <BSpinner variant="secondary" class="me-2"></BSpinner>
-  <BSpinner variant="success" class="me-2"></BSpinner>
-  <BSpinner variant="danger" class="me-2"></BSpinner>
-  <BSpinner variant="warning" class="me-2"></BSpinner>
-  <BSpinner variant="info" class="me-2"></BSpinner>
-  <BSpinner variant="light" class="me-2"></BSpinner>
-  <BSpinner variant="dark"></BSpinner>
+  <BSpinner variant="primary" class="me-2" />
+  <BSpinner variant="secondary" class="me-2" />
+  <BSpinner variant="success" class="me-2" />
+  <BSpinner variant="danger" class="me-2" />
+  <BSpinner variant="warning" class="me-2" />
+  <BSpinner variant="info" class="me-2" />
+  <BSpinner variant="light" class="me-2" />
+  <BSpinner variant="dark" />
   <template #html>
 
 ```vue-html
-<BSpinner variant="primary"></BSpinner>
-<BSpinner variant="secondary"></BSpinner>
-<BSpinner variant="success"></BSpinner>
-<BSpinner variant="danger"></BSpinner>
-<BSpinner variant="warning"></BSpinner>
-<BSpinner variant="info"></BSpinner>
-<BSpinner variant="light"></BSpinner>
-<BSpinner variant="dark"></BSpinner>
+<BSpinner variant="primary" />
+<BSpinner variant="secondary" />
+<BSpinner variant="success" />
+<BSpinner variant="danger" />
+<BSpinner variant="warning" />
+<BSpinner variant="info" />
+<BSpinner variant="light" />
+<BSpinner variant="dark" />
 ```
 
   </template>
@@ -69,36 +69,36 @@ The border spinner uses currentColor for its border-color, meaning you can custo
 If you don’t fancy a border spinner, switch to the grow spinner. While it doesn’t technically spin, it does repeatedly grow!
 
 <HighlightCard>
-  <BSpinner type="grow"></BSpinner>
+  <BSpinner type="grow" />
   <template #html>
 
 ```vue-html
-<BSpinner type="grow"></BSpinner>
+<BSpinner type="grow" />
 ```
 
   </template>
 </HighlightCard>
 
 <HighlightCard>
-  <BSpinner type="grow" variant="primary" class="me-2"></BSpinner>
-  <BSpinner type="grow" variant="secondary" class="me-2"></BSpinner>
-  <BSpinner type="grow" variant="success" class="me-2"></BSpinner>
-  <BSpinner type="grow" variant="danger" class="me-2"></BSpinner>
-  <BSpinner type="grow" variant="warning" class="me-2"></BSpinner>
-  <BSpinner type="grow" variant="info" class="me-2"></BSpinner>
-  <BSpinner type="grow" variant="light" class="me-2"></BSpinner>
-  <BSpinner type="grow" variant="dark" class="me-2"></BSpinner>
+  <BSpinner type="grow" variant="primary" class="me-2" />
+  <BSpinner type="grow" variant="secondary" class="me-2" />
+  <BSpinner type="grow" variant="success" class="me-2" />
+  <BSpinner type="grow" variant="danger" class="me-2" />
+  <BSpinner type="grow" variant="warning" class="me-2" />
+  <BSpinner type="grow" variant="info" class="me-2" />
+  <BSpinner type="grow" variant="light" class="me-2" />
+  <BSpinner type="grow" variant="dark" class="me-2" />
   <template #html>
 
 ```vue-html
-<BSpinner type="grow" variant="primary"></BSpinner>
-<BSpinner type="grow" variant="secondary"></BSpinner>
-<BSpinner type="grow" variant="success"></BSpinner>
-<BSpinner type="grow" variant="danger"></BSpinner>
-<BSpinner type="grow" variant="warning"></BSpinner>
-<BSpinner type="grow" variant="info"></BSpinner>
-<BSpinner type="grow" variant="light"></BSpinner>
-<BSpinner type="grow" variant="dark"></BSpinner>
+<BSpinner type="grow" variant="primary" />
+<BSpinner type="grow" variant="secondary" />
+<BSpinner type="grow" variant="success" />
+<BSpinner type="grow" variant="danger" />
+<BSpinner type="grow" variant="warning" />
+<BSpinner type="grow" variant="info" />
+<BSpinner type="grow" variant="light" />
+<BSpinner type="grow" variant="dark" />
 ```
 
   </template>
@@ -113,11 +113,11 @@ Spinners in Bootstrap are built with `rem`s, currentColor, and `display: inline-
 Use [margin utilities](https://getbootstrap.com/docs/5.3/utilities/spacing/) like `.m-5` for easy spacing.
 
 <HighlightCard>
-  <BSpinner class="m-5"></BSpinner>
+  <BSpinner class="m-5" />
   <template #html>
 
 ```vue-html
-<BSpinner class="m-5"></BSpinner>
+<BSpinner class="m-5" />
 ```
 
   </template>
@@ -131,13 +131,13 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex/), [flo
 
 <HighlightCard class="mt-2">
   <div class="d-flex justify-content-center">
-    <BSpinner></BSpinner>
+    <BSpinner />
   </div>
   <template #html>
 
 ```vue-html
 <div class="d-flex justify-content-center">
-  <BSpinner></BSpinner>
+  <BSpinner />
 </div>
 ```
 
@@ -147,14 +147,14 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex/), [flo
 <HighlightCard>
   <div class="d-flex align-items-center">
     <strong>Loading...</strong>
-    <BSpinner class="ms-auto"></BSpinner>
+    <BSpinner class="ms-auto" />
   </div>
   <template #html>
 
 ```vue-html
 <div class="d-flex align-items-center">
   <strong>Loading...</strong>
-  <BSpinner class="ms-auto"></BSpinner>
+  <BSpinner class="ms-auto" />
 </div>
 ```
 
@@ -165,13 +165,13 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex/), [flo
 
 <HighlightCard class="mt-2">
   <div class="clearfix">
-    <BSpinner class="float-end"></BSpinner>
+    <BSpinner class="float-end" />
   </div>
   <template #html>
 
 ```vue-html
 <div class="clearfix">
-  <BSpinner class="float-end"></BSpinner>
+  <BSpinner class="float-end" />
 </div>
 ```
 
@@ -182,13 +182,13 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex/), [flo
 
 <HighlightCard class="mt-2">
   <div class="text-center">
-    <BSpinner></BSpinner>
+    <BSpinner />
   </div>
   <template #html>
 
 ```vue-html
 <div class="text-center">
-  <BSpinner></BSpinner>
+  <BSpinner />
 </div>
 ```
 
@@ -200,13 +200,13 @@ Use [flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex/), [flo
 Set the prop `small` to `true` to make a smaller spinner that can quickly be used within other components.
 
 <HighlightCard>
-  <BSpinner small class="me-2"></BSpinner>
-  <BSpinner small type="grow"></BSpinner>
+  <BSpinner small class="me-2" />
+  <BSpinner small type="grow" />
   <template #html>
 
 ```vue-html
-<BSpinner small label="Small spinner"></BSpinner>
-<BSpinner small label="Small spinner" type="grow"></BSpinner>
+<BSpinner small label="Small spinner" />
+<BSpinner small label="Small spinner" type="grow" />
 ```
 
   </template>
@@ -215,13 +215,13 @@ Set the prop `small` to `true` to make a smaller spinner that can quickly be use
 Or, use custom CSS or inline styles to change the dimensions as needed.
 
 <HighlightCard>
-  <BSpinner style="width: 3rem; height: 3rem;" class="me-2" label="Large Spinner"></BSpinner>
-  <BSpinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow"></BSpinner>
+  <BSpinner style="width: 3rem; height: 3rem;" class="me-2" label="Large Spinner" />
+  <BSpinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow" />
   <template #html>
 
 ```vue-html
-<BSpinner style="width: 3rem; height: 3rem;" label="Large Spinner"></BSpinner>
-<BSpinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow"></BSpinner>
+<BSpinner style="width: 3rem; height: 3rem;" label="Large Spinner" />
+<BSpinner style="width: 3rem; height: 3rem;" label="Large Spinner" type="grow" />
 ```
 
   </template>
@@ -233,23 +233,23 @@ Use spinners within buttons to indicate an action is currently processing or tak
 
 <HighlightCard>
   <BButton variant="primary" disabled class="me-2">
-    <BSpinner small></BSpinner>
+    <BSpinner small />
     <span class="visually-hidden">Loading...</span>
   </BButton>
   <BButton variant="primary" disabled>
-    <BSpinner small></BSpinner>
+    <BSpinner small />
     Loading...
   </BButton>
   <template #html>
 
 ```vue-html
 <BButton variant="primary" disabled>
-  <BSpinner small></BSpinner>
+  <BSpinner small />
   <span class="visually-hidden">Loading...</span>
 </BButton>
 
 <BButton variant="primary" disabled>
-  <BSpinner small></BSpinner>
+  <BSpinner small />
   Loading...
 </BButton>
 ```
@@ -259,23 +259,23 @@ Use spinners within buttons to indicate an action is currently processing or tak
 
 <HighlightCard>
   <BButton variant="primary" disabled class="me-2">
-    <BSpinner small type="grow"></BSpinner>
+    <BSpinner small type="grow" />
     <span class="visually-hidden">Loading...</span>
   </BButton>
   <BButton variant="primary" disabled>
-    <BSpinner small type="grow"></BSpinner>
+    <BSpinner small type="grow" />
     Loading...
   </BButton>
   <template #html>
 
 ```vue-html
 <BButton variant="primary" disabled>
-  <BSpinner small type="grow"></BSpinner>
+  <BSpinner small type="grow" />
   <span class="visually-hidden">Loading...</span>
 </BButton>
 
 <BButton variant="primary" disabled>
-  <BSpinner small type="grow"></BSpinner>
+  <BSpinner small type="grow" />
   Loading...
 </BButton>
 ```
