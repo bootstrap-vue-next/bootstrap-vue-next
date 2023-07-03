@@ -17,11 +17,13 @@
 ## Demo
 
 <HighlightCard>
-  <BCard ref="target">
-    <BButton @click="changeColor">
-      Current color: {{ mode }}
-    </BButton>
-  </BCard>
+  <ClientOnly>
+    <BCard ref="target">
+      <BButton @click="changeColor">
+        Current color: {{ mode }}
+      </BButton>
+    </BCard>
+  </ClientOnly>
   <template #html>
 
 ```vue
@@ -52,6 +54,7 @@ const changeColor = () => {
 <script setup lang="ts">
 import {ref} from 'vue'
 import {useColorMode, BCard, BCardBody, BButton} from 'bootstrap-vue-next'
+import HighlightCard from '../../components/HighlightCard.vue'
 
 const target = ref<HTMLElement | null>(null)
 
