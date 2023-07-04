@@ -1,6 +1,18 @@
 # Changelog
 
 
+## [0.9.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.19...bootstrap-vue-next-v0.9.20) (2023-07-04)
+
+
+### Features
+
+* **BTooltip:** expose hide, show and toggle methods from BPopover ([a7d9718](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a7d9718184d25413407952e9b3a588943124be1d))
+
+
+### Bug Fixes
+
+* build issue ([a8aff52](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a8aff52a011bf93463e8652ac5cd89ca39c81a21))
+
 ## [0.9.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.18...bootstrap-vue-next-v0.9.19) (2023-07-04)
 
 
