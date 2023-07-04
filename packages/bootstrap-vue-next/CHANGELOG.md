@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.19](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.18...bootstrap-vue-next-v0.9.19) (2023-07-04)
+
+
+### Bug Fixes
+
+* BTooltip BPopover, directives, don't show item when both content and title are empty ([04f3ca2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/04f3ca2de2a5ccfeaff5f12aa127388c53227d09))
+
 ## [0.9.18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.17...bootstrap-vue-next-v0.9.18) (2023-07-03)
 
 
