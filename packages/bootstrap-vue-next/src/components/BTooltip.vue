@@ -10,7 +10,7 @@
 import {ref} from 'vue'
 import BPopover from './BPopover.vue'
 
-const popover = ref()
+const popover = ref<null | InstanceType<typeof BPopover>>(null)
 
 /* Extend the hide, show and toggle functions of the BPopover component
  to allow the user to programmatically control the tooltip. */
