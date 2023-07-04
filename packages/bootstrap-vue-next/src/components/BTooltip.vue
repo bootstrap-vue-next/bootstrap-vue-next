@@ -12,15 +12,9 @@ import BPopover from './BPopover.vue'
 
 const popover = ref<null | InstanceType<typeof BPopover>>(null)
 
-/* Extend the hide, show and toggle functions of the BPopover component
- to allow the user to programmatically control the tooltip. */
-const hideFn = (event: Event) => popover.value.hideFn(event)
-const show = () => popover.value.show()
-const toggle = (event: Event) => popover.value.toggle(event)
-
 defineExpose({
-  hideFn,
-  show,
-  toggle,
+  hide: popover.value.hide,
+  show: popover.value.show,
+  toggle: popover.value.toggle,
 })
 </script>
