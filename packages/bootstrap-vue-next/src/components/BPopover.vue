@@ -433,7 +433,7 @@ const hideFn = (e: Event) => {
 }
 
 defineExpose({
-  hideFn,
+  hide: hideFn,
   show,
   toggle,
 })
