@@ -34,6 +34,7 @@ The `BColorMode` directive is similar to [useColorMode](../composables/useColorM
 <script setup lang="ts">
 import {vBColorMode} from 'bootstrap-vue-next'
 
+// Unlike the composable variant, this is not strongly typed by default!
 const currentColor = ref<'light' | 'dark'>('dark')
 
 const changeColor = () => {
