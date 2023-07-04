@@ -13,8 +13,8 @@ import BPopover from './BPopover.vue'
 const popover = ref<null | InstanceType<typeof BPopover>>(null)
 
 defineExpose({
-  hide: popover.value.hide,
-  show: popover.value.show,
-  toggle: popover.value.toggle,
+  hide: popover.value?.hideFn,
+  show: popover.value?.show,
+  toggle: popover.value?.toggle,
 })
 </script>
