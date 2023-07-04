@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-`BColorMode` is similar to [useColorMode](../composables/useColorMode.md) but provides a more low level directive for placement on individual components. It is useful when you want to make an element have one color mode, but do not want the overhead of the composable variant.
+The `BColorMode` directive is similar to [useColorMode](../composables/useColorMode.md) but provides a more low level directive for placement on individual components. It is useful when you want to make an element have one color mode, but do not want the overhead of the composable variant.
 
 </div>
 
