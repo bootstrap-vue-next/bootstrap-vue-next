@@ -15,4 +15,4 @@ export default {
       opencollectiveUrl: 'https://opencollective.com/bootstrap-vue-next',
     })
   },
-} as Theme
+} satisfies Theme
