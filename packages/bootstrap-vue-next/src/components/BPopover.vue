@@ -432,6 +432,12 @@ const hideFn = (e: Event) => {
   }, delay)
 }
 
+defineExpose({
+  hide: hideFn,
+  show,
+  toggle,
+})
+
 const bind = () => {
   // TODO: is this the best way to bind the events?
   // we place a span and get the next element sibling fo rthe listeners
