@@ -223,9 +223,11 @@ export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | und
 }
 
 const BToastPlugin: Plugin = {
-  install: (app: App, options: BootstrapVueOptions = {}) => {
-    app.provide(fetchKey, options?.BToast?.injectkey ?? injectkey)
-    app.provide(options?.BToast?.injectkey ?? injectkey, new ToastController())
+  install: (app: App, options?: BootstrapVueOptions) => {
+    const key =
+      typeof options?.BToast === 'object' ? options?.BToast?.injectkey ?? injectkey : injectkey
+    app.provide(fetchKey, key)
+    app.provide(key, new ToastController())
   },
 }
 

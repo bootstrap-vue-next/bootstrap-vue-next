@@ -31,10 +31,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     const arr: Import[] = []
     if (Object.values(normalizedComposables).some((el) => el === true)) {
-      const imports = parseActiveImports(normalizedComposables, {
-        useBreadcrumb: false,
-        useColorMode: false,
-      }).map(
+      const imports = parseActiveImports(normalizedComposables, [
+        'useBreadcrumb',
+        'useColorMode',
+      ]).map(
         (el) =>
           ({
             from: resolver.resolve('./runtime/composables'),
