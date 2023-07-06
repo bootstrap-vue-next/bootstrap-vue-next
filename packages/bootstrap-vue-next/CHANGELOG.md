@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.20...bootstrap-vue-next-v0.9.21) (2023-07-06)
+
+
+### Bug Fixes
+
+* **package:** EXPORTS_TYPES_SHOULD_BE_FIRST ([5dbf5b8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5dbf5b8ab31360962b7cc5cc629ee8f4f02b63b0))
+
 ## [0.9.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.19...bootstrap-vue-next-v0.9.20) (2023-07-04)
 
 
