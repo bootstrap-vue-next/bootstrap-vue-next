@@ -8,9 +8,9 @@
   "module": "./dist/bootstrap-vue-next.mjs",
   "exports": {
     ".": {
+      "types": "./dist/src/BootstrapVue.d.ts",
       "import": "./dist/bootstrap-vue-next.mjs",
-      "require": "./dist/bootstrap-vue-next.umd.js",
-      "types": "./dist/src/BootstrapVue.d.ts"
+      "require": "./dist/bootstrap-vue-next.umd.js"
     },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
