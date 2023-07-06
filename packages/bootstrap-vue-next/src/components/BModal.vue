@@ -46,7 +46,6 @@
                   <BCloseButton
                     v-else
                     ref="closeButton"
-                    :white="headerCloseWhite"
                     v-bind="headerCloseAttrs"
                     @click="hide('close')"
                   />
@@ -351,6 +350,7 @@ const headerCloseClasses = computed(() => [props.headerCloseClass])
 
 const headerCloseAttrs = computed(() => ({
   'variant': hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
+  'white': !hasHeaderCloseSlot.value ? props.headerCloseWhite : undefined,
   'class': headerCloseClasses.value,
   'aria-label': props.headerCloseLabel,
 }))

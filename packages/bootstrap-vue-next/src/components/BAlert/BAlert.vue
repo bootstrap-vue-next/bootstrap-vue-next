@@ -15,13 +15,7 @@
         <BButton v-if="hasCloseSlot" v-bind="closeAttrs" @click="hide">
           <slot name="close" />
         </BButton>
-        <BCloseButton
-          v-else
-          ref="closeButton"
-          :white="closeWhite"
-          v-bind="closeAttrs"
-          @click="hide"
-        />
+        <BCloseButton v-else ref="closeButton" v-bind="closeAttrs" @click="hide" />
       </template>
     </div>
   </BTransition>
@@ -123,7 +117,8 @@ const isAlertVisible = computed<boolean>(() =>
 )
 
 const closeAttrs = computed(() => ({
-  'variant': hasCloseSlot.value ? props.closeVariant : null,
+  'variant': hasCloseSlot.value ? props.closeVariant : undefined,
+  'white': !hasCloseSlot.value ? props.closeWhite : undefined,
   'class': closeClasses.value,
   'aria-label': props.closeLabel,
 }))
