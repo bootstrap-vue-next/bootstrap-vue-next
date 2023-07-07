@@ -2,6 +2,7 @@ import {ref, type Ref} from 'vue'
 import type {BTableSortCompare, TableField, TableFieldObject, TableItem} from '../../types'
 import {isObject, startCase} from '../../utils'
 import {cloneDeep, cloneDeepAsync} from '../../utils/object'
+import type {TableFieldObjectFormatter} from 'src/types/TableFieldObject'
 
 export default () => {
   const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
@@ -124,12 +125,22 @@ export default () => {
     }
   }
 
-  const formatItem = (item: TableItem, fields: TableFieldObject) => {
-    const value = item[fields.key]
-    if (fields.formatter && typeof fields.formatter === 'function') {
-      return fields.formatter(value, fields.key, item)
+  const formatItem = (
+    item: TableItem,
+    fieldKey: string,
+    formatter?: TableFieldObjectFormatter<typeof item>
+  ) => {
+    const val = item[fieldKey]
+    if (formatter && typeof formatter === 'function') {
+      return formatter(val, fieldKey, item)
     }
-    return item[fields.key]
+    return val
+  }
+
+  const renderItem = (item: TableItem, fields: TableFieldObject) => {
+    const formattedValue = formatItem(item, fields.key, fields.formatter)
+
+    return formattedValue
   }
 
   return {
@@ -139,6 +150,6 @@ export default () => {
     updateInternalItems,
     filterEvent,
     notifyFilteredItems,
-    formatItem,
+    renderItem,
   }
 }
