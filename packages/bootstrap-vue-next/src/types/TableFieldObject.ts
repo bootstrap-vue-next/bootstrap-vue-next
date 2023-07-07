@@ -5,7 +5,7 @@ import type {ColorVariant} from './ColorVariant'
 
 export type TableFieldObjectFormatter<T = any> =
   | string
-  | ((value: unknown, key?: string, item?: T) => string)
+  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
 
 export interface TableFieldObject<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
