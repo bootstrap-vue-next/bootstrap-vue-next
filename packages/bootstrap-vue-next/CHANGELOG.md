@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.21...bootstrap-vue-next-v0.9.22) (2023-07-07)
+
+
+### Features
+
+* **BAvatar:** link and router support. ([ba06fa2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba06fa2d985cab7232602d0b97a3077099c84802))
+
 ## [0.9.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.20...bootstrap-vue-next-v0.9.21) (2023-07-06)
 
 
