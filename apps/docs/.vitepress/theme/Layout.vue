@@ -36,7 +36,7 @@
     <BNav>
       <BNavItem
         :href="globalData.githubUrl"
-        aria-label="Open Github"
+        :link-attrs="{'aria-label': 'Open Our Github'}"
         target="_blank"
         rel="noopener"
       >
@@ -44,7 +44,7 @@
       </BNavItem>
       <BNavItem
         :href="globalData.opencollectiveUrl"
-        aria-label="Open Github"
+        :link-attrs="{'aria-label': 'Open Our Opencollective'}"
         target="_blank"
         rel="noopener"
       >
@@ -52,14 +52,15 @@
       </BNavItem>
       <BNavItem
         :href="globalData.discordUrl"
-        aria-label="Open Discord Server"
+        :link-attrs="{'aria-label': 'Open Our Discord Server'}"
+        aria-label=""
         target="_blank"
         rel="noopener"
       >
         <DiscordIcon aria-hidden />
       </BNavItem>
       <ClientOnly>
-        <BDropdown :variant="null">
+        <BNavItemDropdown>
           <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
           <template #button-content>
             <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
@@ -67,7 +68,7 @@
           <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
             <component :is="map[el]" /> {{ el }}
           </BDropdownItem>
-        </BDropdown>
+        </BNavItemDropdown>
       </ClientOnly>
     </BNav>
     <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
@@ -137,7 +138,7 @@ import {
   BCol,
   BCollapse,
   BContainer,
-  BDropdown,
+  BNavItemDropdown,
   BDropdownItem,
   BNav,
   BNavbar,
