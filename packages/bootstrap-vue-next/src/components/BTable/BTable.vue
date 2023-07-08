@@ -190,7 +190,6 @@
 // import type {Breakpoint} from '../../types'
 import {computed, onMounted, ref, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
-import {cloneDeepAsync} from '../../utils/object'
 import {isObject, startCase, titleCase} from '../../utils'
 import BSpinner from '../BSpinner.vue'
 import type {TableField, TableFieldObject, TableItem} from '../../types'
@@ -362,8 +361,7 @@ filteredHandler.value = async (items) => {
     await callItemsProvider()
     return
   }
-  const clone = await cloneDeepAsync(items)
-  emit('filtered', clone)
+  emit('filtered', items)
 }
 
 const getFieldHeadLabel = (field: TableField) => {
@@ -626,7 +624,7 @@ watch(
   (filter, oldFilter) => {
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
-      cloneDeepAsync(props.items).then((item) => emit('filtered', item))
+      emit('filtered', computedItems.value)
     }
   }
 )
