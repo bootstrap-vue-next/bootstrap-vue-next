@@ -80,7 +80,7 @@ describe('accordion-item', () => {
       props: {id: 'foobar'},
     })
     const [, $bcollapse] = wrapper.findComponent(BCollapse).findAll('*')
-    expect($bcollapse.attributes('aria-labelledby')).toBe('headingfoobar')
+    expect($bcollapse.attributes('aria-labelledby')).toBe('foobar-heading')
   })
 
   it('headerTag is h2 by default', () => {
@@ -114,7 +114,7 @@ describe('accordion-item', () => {
       props: {id: 'foobar'},
     })
     const $h2 = wrapper.get('h2')
-    expect($h2.attributes('id')).toBe('headingfoobar')
+    expect($h2.attributes('id')).toBe('foobar-heading')
   })
 
   it('h2 child has button child', () => {
