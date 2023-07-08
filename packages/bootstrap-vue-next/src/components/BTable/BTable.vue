@@ -94,31 +94,32 @@
             }"
           >
             <slot name="select-cell">
-              <span :class="selectedItems.has(item) ? 'text-primary' : ''">🗹</span>
+              <span
+                class="b-table-selection-icon"
+                :class="selectedItems.has(item) ? 'text-primary selected' : ''"
+                >🗹</span
+              >
             </slot>
           </td>
-          <td
-            v-for="field in computedFields"
-            :key="field.key"
-            v-bind="field.tdAttr"
-            :class="getFieldRowClasses(field, item)"
-          >
-            <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">{{
-              getFieldHeadLabel(field)
-            }}</label>
-            <slot
-              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
-              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-              :value="item[field.key]"
-              :index="itemIndex"
-              :item="item"
-              :field="field"
-              :items="items"
-              :toggle-details="() => toggleRowDetails(item)"
-              :details-showing="item._showDetails"
-            />
-            <template v-else>{{ renderItem(item, field) }}</template>
-          </td>
+          <template v-for="field in computedFields" :key="field.key">
+            <td v-bind="field.tdAttr" :class="getFieldRowClasses(field, item)">
+              <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">{{
+                getFieldHeadLabel(field)
+              }}</label>
+              <slot
+                v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
+                :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
+                :value="item[field.key]"
+                :index="itemIndex"
+                :item="item"
+                :field="field"
+                :items="items"
+                :toggle-details="() => toggleRowDetails(item)"
+                :details-showing="item._showDetails"
+              />
+              <template v-else>{{ renderItem(item, field) }}</template>
+            </td>
+          </template>
         </tr>
 
         <tr v-if="item._showDetails === true && $slots['row-details']" :class="getRowClasses(item)">
