@@ -34,33 +34,30 @@
       </BNavbarNav>
     </BCollapse>
     <BNav>
-      <BButton
-        :variant="null"
+      <BNavItem
         :href="globalData.githubUrl"
         aria-label="Open Github"
         target="_blank"
         rel="noopener"
       >
         <GithubIcon aria-hidden />
-      </BButton>
-      <BButton
-        :variant="null"
+      </BNavItem>
+      <BNavItem
         :href="globalData.opencollectiveUrl"
         aria-label="Open Github"
         target="_blank"
         rel="noopener"
       >
         <OpencollectiveIcon />
-      </BButton>
-      <BButton
-        :variant="null"
+      </BNavItem>
+      <BNavItem
         :href="globalData.discordUrl"
         aria-label="Open Discord Server"
         target="_blank"
         rel="noopener"
       >
         <DiscordIcon aria-hidden />
-      </BButton>
+      </BNavItem>
       <ClientOnly>
         <BDropdown :variant="null">
           <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
@@ -137,7 +134,6 @@
 
 <script setup lang="ts">
 import {
-  BButton,
   BCol,
   BCollapse,
   BContainer,
@@ -162,7 +158,7 @@ import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
-import {useData, withBase, useRoute} from 'vitepress'
+import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
