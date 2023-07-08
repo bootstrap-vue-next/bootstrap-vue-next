@@ -5,7 +5,7 @@
       v-model="modelValue"
       class="accordion-collapse"
       v-bind="$attrs"
-      :aria-labelledby="`heading${computedId}`"
+      :aria-labelledby="`${computedId}-heading`"
       :tag="tag"
       :toggle="toggle"
       :horizontal="horizontal"
@@ -14,7 +14,7 @@
       v-on="events"
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
-        <component :is="headerTag" :id="`heading${computedId}`" class="accordion-header">
+        <component :is="headerTag" :id="`${computedId}-heading`" class="accordion-header">
           <button
             class="accordion-button"
             :class="{collapsed: !toggleVisible}"
