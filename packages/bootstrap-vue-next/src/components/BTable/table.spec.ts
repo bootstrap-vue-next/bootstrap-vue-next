@@ -549,55 +549,6 @@ describe('table', () => {
     expect($firstRow.text()).toBe('hossam')
   })
 
-  it('has items when using a provider callback', async () => {
-    const busyRef = ref(false)
-    const myProvider = async (ctx: any, callback: (items: any) => any) => {
-      callback(items)
-      return undefined
-    }
-    const wrapper = mount(BTable, {
-      props: {
-        fields,
-        busy: busyRef.value,
-        provider: myProvider,
-      },
-    })
-
-    await flushPromises()
-
-    const $table = wrapper.get('table')
-    const $firstRow = $table.get('tbody tr td')
-
-    expect($firstRow.text()).toBe('hossam')
-  })
-
-  it('has sorted items when sortBy prop is passed', () => {
-    const wrapper = mount(BTable, {
-      props: {
-        fields,
-        items,
-        sortBy: 'age',
-      },
-    })
-    const $table = wrapper.get('table')
-    expect($table.get('tbody tr td:last-child').text()).toBe('1')
-  })
-
-  it('has desc sorted items when sortDesc prop is true', () => {
-    const wrapper = mount(BTable, {
-      props: {
-        fields: fields.map((field) =>
-          typeof field === 'string' ? field : {...field, sortable: true}
-        ),
-        items,
-        sortBy: 'age',
-        sortDesc: true,
-      },
-    })
-    const $table = wrapper.get('table')
-    expect($table.get('tbody tr:first-child td:last-child').text()).toBe('2')
-  })
-
   it('has busy class & element when busy prop is true', () => {
     const wrapper = mount(BTable, {
       props: {
@@ -656,5 +607,54 @@ describe('table', () => {
 
     expect($firstCell.text()).toBe('HOSSAM')
     expect($secondCell.text()).toBe('1 years')
+  })
+
+  it('has items when using a provider callback', async () => {
+    const busyRef = ref(false)
+    const myProvider = async (ctx: any, callback: (items: any) => any) => {
+      callback(items)
+      return undefined
+    }
+    const wrapper = mount(BTable, {
+      props: {
+        fields,
+        busy: busyRef.value,
+        provider: myProvider,
+      },
+    })
+
+    await flushPromises()
+
+    const $table = wrapper.get('table')
+    const $firstRow = $table.get('tbody tr td')
+
+    expect($firstRow.text()).toBe('hossam')
+  })
+
+  it('has sorted items when sortBy prop is passed', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        fields,
+        items,
+        sortBy: 'age',
+      },
+    })
+    const $table = wrapper.get('table')
+    expect($table.get('tbody tr td:last-child').text()).toBe('1')
+  })
+
+  it('has desc sorted items when sortDesc prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        fields: fields.map((field) =>
+          typeof field === 'string' ? field : {...field, sortable: true}
+        ),
+        items,
+        sortBy: 'age',
+        sortDesc: true,
+      },
+    })
+    const $table = wrapper.get('table')
+    expect($table.get('tbody tr:first-child td:last-child').text()).toBe('2')
   })
 })

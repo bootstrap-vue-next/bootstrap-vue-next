@@ -1,6 +1,5 @@
 <template>
   <BTableSimple v-bind="containerAttrs">
-    <!-- <table :class="classes"> -->
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
       <tr>
@@ -101,25 +100,28 @@
               >
             </slot>
           </td>
-          <template v-for="field in computedFields" :key="field.key">
-            <td v-bind="field.tdAttr" :class="getFieldRowClasses(field, item)">
-              <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">{{
-                getFieldHeadLabel(field)
-              }}</label>
-              <slot
-                v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
-                :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-                :value="item[field.key]"
-                :index="itemIndex"
-                :item="item"
-                :field="field"
-                :items="items"
-                :toggle-details="() => toggleRowDetails(item)"
-                :details-showing="item._showDetails"
-              />
-              <template v-else>{{ renderItem(item, field) }}</template>
-            </td>
-          </template>
+          <td
+            v-for="field in computedFields"
+            :key="field.key"
+            v-bind="field.tdAttr"
+            :class="getFieldRowClasses(field, item)"
+          >
+            <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">{{
+              getFieldHeadLabel(field)
+            }}</label>
+            <slot
+              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
+              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
+              :value="item[field.key]"
+              :index="itemIndex"
+              :item="item"
+              :field="field"
+              :items="items"
+              :toggle-details="() => toggleRowDetails(item)"
+              :details-showing="item._showDetails"
+            />
+            <template v-else>{{ renderItem(item, field) }}</template>
+          </td>
         </tr>
 
         <tr v-if="item._showDetails === true && $slots['row-details']" :class="getRowClasses(item)">
@@ -183,7 +185,6 @@
         caption
       }}
     </caption>
-    <!-- </table> -->
   </BTableSimple>
 </template>
 

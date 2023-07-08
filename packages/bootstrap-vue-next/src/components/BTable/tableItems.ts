@@ -34,7 +34,6 @@ export const useTableItems = (
       : flags.requireItemsMapping.value
       ? mapItems(internalItems, tableProps, flags)
       : tableProps.items ?? []
-
     if (usesProvider && !flags.noProviderPagingBoolean.value) {
       return items
     }
@@ -51,9 +50,12 @@ export const useTableItems = (
     return items
   })
 
-  const computedDisplayItems = computed<TableItem[]>(() =>
-    computedItems.value.slice(displayStartEndIdx.value[0], displayStartEndIdx.value[1])
-  )
+  const computedDisplayItems = computed<TableItem[]>(() => {
+    if (tableProps.perPage === undefined) {
+      return computedItems.value
+    }
+    return computedItems.value.slice(displayStartEndIdx.value[0], displayStartEndIdx.value[1])
+  })
 
   const updateInternalItems = async (
     items: TableItem<Record<string, any>>[]
