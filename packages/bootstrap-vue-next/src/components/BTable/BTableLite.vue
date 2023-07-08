@@ -220,7 +220,7 @@ const props = withDefaults(
     perPage?: number
     currentPage?: number
     emptyText?: string
-    busy?: boolean
+    busy?: Booleanish
     emptyFilteredText?: string
     tableClasses?: Record<string, any>
     fieldColumnClasses?: (field: TableFieldObject) => Record<string, any>[]
