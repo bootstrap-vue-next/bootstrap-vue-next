@@ -78,7 +78,7 @@
       </tr>
     </thead>
     <tbody>
-      <template v-for="(item, itemIndex) in computedItems" :key="itemIndex">
+      <template v-for="(item, itemIndex) in computedDisplayItems" :key="itemIndex">
         <tr
           :class="getRowClasses(item)"
           @click="!filterEvent($event) && onRowClick(item, itemIndex, $event)"
@@ -117,7 +117,7 @@
               :toggle-details="() => toggleRowDetails(item)"
               :details-showing="item._showDetails"
             />
-            <template v-else>{{ itemHelper.renderItem(item, field) }}</template>
+            <template v-else>{{ renderItem(item, field) }}</template>
           </td>
         </tr>
 
@@ -191,112 +191,59 @@
 import {computed, onMounted, ref, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import {cloneDeepAsync} from '../../utils/object'
-import {titleCase} from '../../utils/stringUtils'
+import {isObject, startCase, titleCase} from '../../utils'
 import BSpinner from '../BSpinner.vue'
-import type {
-  Booleanish,
-  Breakpoint,
-  BTableProvider,
-  BTableSortCompare,
-  ColorVariant,
-  TableField,
-  TableFieldObject,
-  TableItem,
-  VerticalAlign,
-} from '../../types'
+import type {TableField, TableFieldObject, TableItem} from '../../types'
+import type {BTableProps} from './table'
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
-import useItemHelper from './itemHelper'
 import {useVModel} from '@vueuse/core'
+import {renderItem, useTableItems} from './table-items'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
-const props = withDefaults(
-  defineProps<{
-    align?: VerticalAlign
-    caption?: string
-    captionTop?: Booleanish
-    borderless?: Booleanish
-    bordered?: Booleanish
-    borderVariant?: ColorVariant | null
-    dark?: Booleanish
-    fields?: TableField[]
-    footClone?: Booleanish
-    hover?: Booleanish
-    items?: TableItem[]
-    provider?: BTableProvider
-    sortCompare?: BTableSortCompare
-    noProvider?: NoProviderTypes[]
-    noProviderPaging?: Booleanish
-    noProviderSorting?: Booleanish
-    noProviderFiltering?: Booleanish
-    responsive?: boolean | Breakpoint
-    small?: Booleanish
-    striped?: Booleanish
-    stacked?: boolean | Breakpoint
-    labelStacked?: boolean
-    variant?: ColorVariant | null
-    sortBy?: string
-    sortDesc?: Booleanish
-    sortInternal?: Booleanish
-    selectable?: Booleanish
-    stickySelect?: Booleanish
-    selectHead?: boolean | string
-    selectMode?: 'multi' | 'single' | 'range'
-    selectionVariant?: ColorVariant | null
-    stickyHeader?: Booleanish
-    busy?: Booleanish
-    showEmpty?: Booleanish
-    perPage?: number
-    currentPage?: number
-    filter?: string
-    filterable?: string[]
-    emptyText?: string
-    emptyFilteredText?: string
-  }>(),
-  {
-    perPage: undefined,
-    sortBy: undefined,
-    variant: undefined,
-    borderVariant: undefined,
-    caption: undefined,
-    align: undefined,
-    filter: undefined,
-    filterable: undefined,
-    provider: undefined,
-    sortCompare: undefined,
-    noProvider: undefined,
-    noProviderPaging: undefined,
-    noProviderSorting: undefined,
-    noProviderFiltering: undefined,
-    captionTop: false,
-    borderless: false,
-    bordered: false,
-    dark: false,
-    fields: () => [],
-    footClone: false,
-    hover: false,
-    items: () => [],
-    responsive: false,
-    small: false,
-    striped: false,
-    labelStacked: false,
-    stacked: false,
-    sortDesc: false,
-    sortInternal: true,
-    selectable: false,
-    stickySelect: false,
-    selectHead: true,
-    selectMode: 'single',
-    selectionVariant: 'primary',
-    stickyHeader: false,
-    busy: false,
-    showEmpty: false,
-    currentPage: 1,
-    emptyText: 'There are no records to show',
-    emptyFilteredText: 'There are no records matching your request',
-  }
-)
+const props = withDefaults(defineProps<BTableProps>(), {
+  perPage: undefined,
+  sortBy: undefined,
+  variant: undefined,
+  borderVariant: undefined,
+  caption: undefined,
+  align: undefined,
+  filter: undefined,
+  filterable: undefined,
+  provider: undefined,
+  sortCompare: undefined,
+  noProvider: undefined,
+  noProviderPaging: false,
+  noProviderSorting: false,
+  noProviderFiltering: false,
+  captionTop: false,
+  borderless: false,
+  bordered: false,
+  dark: false,
+  fields: () => [],
+  footClone: false,
+  hover: false,
+  items: () => [],
+  responsive: false,
+  small: false,
+  striped: false,
+  labelStacked: false,
+  stacked: false,
+  sortDesc: false,
+  sortInternal: true,
+  selectable: false,
+  stickySelect: false,
+  selectHead: true,
+  selectMode: 'single',
+  selectionVariant: 'primary',
+  stickyHeader: false,
+  busy: false,
+  showEmpty: false,
+  currentPage: 1,
+  emptyText: 'There are no records to show',
+  emptyFilteredText: 'There are no records matching your request',
+})
 
 const emit = defineEmits<{
   'headClicked': [
@@ -325,8 +272,6 @@ const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
 
 const slots = useSlots()
 
-const itemHelper = useItemHelper()
-
 const footCloneBoolean = useBooleanish(() => props.footClone)
 const sortDescBoolean = useBooleanish(sortDescModel)
 const sortInternalBoolean = useBooleanish(() => props.sortInternal)
@@ -339,14 +284,13 @@ const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
 const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 
-itemHelper.filterEvent.value = async (items) => {
-  if (usesProvider.value) {
-    await callItemsProvider()
-    return
-  }
-  const clone = await cloneDeepAsync(items)
-  emit('filtered', clone)
-}
+const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
+
+const isSortable = computed(
+  () =>
+    props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
+)
+const usesProvider = computed(() => props.provider !== undefined)
 
 const selectedItems = ref<Set<TableItem>>(new Set([]))
 const isSelecting = computed(() => selectedItems.value.size > 0)
@@ -378,53 +322,77 @@ const containerAttrs = computed(() => ({
   stickyHeader: props.stickyHeader,
 }))
 
-const computedFields = computed(() => itemHelper.normaliseFields(props.fields, props.items))
+const computedFields = computed(() => normaliseFields(props.fields, props.items))
 const computedFieldsTotal = computed(
   () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
 )
-
-const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
-const usesProvider = computed(() => props.provider !== undefined)
 
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
 
-const isSortable = computed(
-  () =>
-    props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
+const {
+  computedItems,
+  computedDisplayItems,
+  updateInternalItems,
+  filteredHandler,
+  notifyFilteredItems,
+} = useTableItems(
+  props,
+  {
+    footCloneBoolean,
+    sortDescBoolean,
+    sortInternalBoolean,
+    selectableBoolean,
+    stickySelectBoolean,
+    labelStackedBoolean,
+    busyBoolean,
+    showEmptyBoolean,
+    noProviderPagingBoolean,
+    noProviderSortingBoolean,
+    noProviderFilteringBoolean,
+    isFilterableTable,
+    isSortable,
+  },
+  usesProvider.value
 )
 
-const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
-const computedItems = computed(() => {
-  const items = usesProvider.value
-    ? itemHelper.internalItems.value
-    : requireItemsMapping.value
-    ? itemHelper.mapItems(props.fields, props.items, props, {
-        isSortable,
-        isFilterableTable,
-        sortDescBoolean,
-      })
-    : props.items
-
-  if (usesProvider.value && !noProviderPagingBoolean.value) {
-    return items
+filteredHandler.value = async (items) => {
+  if (usesProvider.value) {
+    await callItemsProvider()
+    return
   }
-
-  if (props.perPage !== undefined) {
-    const startIndex = (props.currentPage - 1) * props.perPage
-    const endIndex =
-      startIndex + props.perPage > items.length ? items.length : startIndex + props.perPage
-    return items.slice(startIndex, endIndex)
-  }
-  return items
-})
+  const clone = await cloneDeepAsync(items)
+  emit('filtered', clone)
+}
 
 const getFieldHeadLabel = (field: TableField) => {
   if (typeof field === 'string') return titleCase(field)
   if (field.label !== undefined) return field.label
   if (typeof field.key === 'string') return titleCase(field.key)
   return field.key
+}
+
+const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
+  const fields: TableFieldObject[] = []
+
+  if (!origFields?.length && items?.length) {
+    Object.keys(items[0]).forEach((k) => fields.push({key: k, label: startCase(k)}))
+    return fields
+  }
+
+  if (Array.isArray(origFields)) {
+    origFields.forEach((f) => {
+      if (typeof f === 'string') {
+        fields.push({key: f, label: startCase(f)})
+      } else if (isObject(f) && f.key && typeof f.key === 'string') {
+        fields.push({...f})
+      }
+      // todo handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
+    })
+    return fields
+  }
+  return fields
 }
 
 const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) => {
@@ -531,13 +499,13 @@ const callItemsProvider = async () => {
       },
     }
   )
-  const response = props.provider(context, itemHelper.updateInternalItems)
+  const response = props.provider(context, updateInternalItems)
   if (response === undefined) return
   if (response instanceof Promise) {
     try {
       const items = await response
       if (!Array.isArray(items)) return
-      const internalItems = await itemHelper.updateInternalItems(items)
+      const internalItems = await updateInternalItems(items)
       return internalItems
     } finally {
       if (busyBoolean.value) {
@@ -547,7 +515,7 @@ const callItemsProvider = async () => {
   }
 
   try {
-    const internalItems = await itemHelper.updateInternalItems(response)
+    const internalItems = await updateInternalItems(response)
     return internalItems
   } finally {
     if (busyBoolean.value) {
@@ -650,7 +618,7 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
 
   await callItemsProvider()
 
-  if (notifyFiltered) itemHelper.notifyFilteredItems()
+  if (notifyFiltered) notifyFilteredItems()
 }
 
 watch(
