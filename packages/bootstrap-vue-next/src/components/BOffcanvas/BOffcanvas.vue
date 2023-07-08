@@ -21,7 +21,7 @@
         role="dialog"
         :class="computedClasses"
         tabindex="-1"
-        aria-labelledby="offcanvasLabel"
+        :aria-labelledby="`${computedId}-offcanvas-label`"
         data-bs-backdrop="false"
         v-bind="$attrs"
         @keyup.esc="hide('esc')"
@@ -29,7 +29,7 @@
         <template v-if="lazyShowing">
           <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
             <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
-              <h5 id="offcanvasLabel" class="offcanvas-title">
+              <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title">
                   {{ title }}
                 </slot>
