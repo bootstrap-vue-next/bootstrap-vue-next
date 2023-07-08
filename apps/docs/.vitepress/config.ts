@@ -19,6 +19,10 @@ export default defineConfig({
     ['meta', {property: 'twitter:card', name: 'twitter:card', content: 'summary'}],
     ['meta', {property: 'twitter:title', name: 'twitter:title', content: title}],
     ['meta', {property: 'twitter:description', name: 'twitter:description', content: description}],
+    [
+      'meta',
+      {name: 'google-site-verification', content: '5qaNOhy04EUWiQ3Vr-Ox-BO_x5d024bVp26ukr-dKNc'},
+    ],
   ],
   vite: {
     plugins: [Icons()],
