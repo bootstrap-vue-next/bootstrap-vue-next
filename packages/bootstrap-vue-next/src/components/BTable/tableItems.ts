@@ -28,21 +28,10 @@ export const useTableItems = (
   const filteredHandler = ref<(items: TableItem[]) => void>()
   const internalItems = ref(tableProps.items ?? [])
   const displayStartEndIdx = ref([0, internalItems.value.length])
-  const requireItemsMapping = computed(
-    () => isSortable.value && flags.sortInternalBoolean.value === true
-  )
-
-  const isSortable = computed(() => {
-    const sortableLength = tableProps.fields?.filter((field) =>
-      typeof field === 'string' ? false : field.sortable
-    )?.length
-    return sortableLength && sortableLength > 0
-  })
-
   const computedItems = computed<TableItem[]>(() => {
     const items = usesProvider
       ? internalItems.value
-      : requireItemsMapping.value
+      : flags.requireItemsMapping.value
       ? mapItems(internalItems, tableProps, flags)
       : tableProps.items ?? []
 

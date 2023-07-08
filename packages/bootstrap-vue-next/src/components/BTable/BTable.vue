@@ -338,10 +338,11 @@ const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering
 
 const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
 
-const isSortable = computed(
-  () =>
+const isSortable = computed(() => {
+  const hasSortableFields =
     props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
-)
+  return hasSortableFields || props.sortBy !== undefined
+})
 const usesProvider = computed(() => props.provider !== undefined)
 
 const selectedItems = ref<Set<TableItem>>(new Set([]))
@@ -383,6 +384,8 @@ const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
 
+const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
+
 const {
   computedItems,
   computedDisplayItems,
@@ -396,6 +399,7 @@ const {
     isFilterableTable,
     noProviderPagingBoolean,
     isSortable,
+    requireItemsMapping,
     sortDescBoolean,
   },
   usesProvider.value
