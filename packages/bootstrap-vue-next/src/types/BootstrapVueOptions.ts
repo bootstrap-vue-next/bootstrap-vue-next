@@ -1,24 +1,16 @@
-// TODO: Create the options for every component
+import * as Components from '../components'
+import * as Directives from '../directives'
 
 interface BToastPluginOptions {
   injectkey: symbol
 }
 
+export type ComponentType = keyof typeof Components
+export type DirectiveType = keyof typeof Directives
+export type ConfigurationOption<T extends string> = Partial<Record<T, boolean>> & {all: boolean}
+
 export interface BootstrapVueOptions {
-  BAccordion?: Record<string, any>
-  BAlert?: Record<string, any>
-  BBadge?: Record<string, any>
-  BButton?: Record<string, any>
-  BButtonGroup?: Record<string, any>
-  BButtonToolbar?: Record<string, any>
-  BCard?: Record<string, any>
-  BCollapse?: Record<string, any>
-  BDropdown?: Record<string, any>
-  BListGroup?: Record<string, any>
-  BModal?: Record<string, any>
-  BOffcanvas?: Record<string, any>
-  BProgress?: Record<string, any>
-  BSpinner?: Record<string, any>
-  BTab?: Record<string, any>
-  BToast?: BToastPluginOptions
+  components?: boolean | ConfigurationOption<ComponentType>
+  directives?: boolean | ConfigurationOption<DirectiveType>
+  BToast?: boolean | BToastPluginOptions
 }
