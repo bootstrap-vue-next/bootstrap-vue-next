@@ -1,13 +1,30 @@
 import {computed, ref, type Ref} from 'vue'
-import type {BTableProps} from './table'
-import type {BTableSortCompare, TableField, TableFieldObject, TableItem} from 'src/types'
-import type {TableFieldObjectFormatter} from 'src/types/TableFieldObject'
+import type {
+  Booleanish,
+  BTableSortCompare,
+  TableField,
+  TableFieldObject,
+  TableItem,
+} from '../../types'
+import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
 
-export function useTableItems(
-  tableProps: BTableProps,
+type TableItemsProcessingProps = {
+  items?: TableItem[]
+  fields?: TableField[]
+  perPage?: number
+  currentPage?: number
+  filter?: string
+  filterable?: string[]
+  sortBy?: string
+  sortDesc?: Booleanish
+  sortCompare?: BTableSortCompare
+}
+
+export const useTableItems = (
+  tableProps: TableItemsProcessingProps,
   flags: Record<string, Ref<boolean>>,
   usesProvider: boolean
-) {
+) => {
   const filteredHandler = ref<(items: TableItem[]) => void>()
   const internalItems = ref(tableProps.items ?? [])
   const displayStartEndIdx = ref([0, internalItems.value.length])
@@ -78,7 +95,7 @@ export function useTableItems(
 
 const mapItems = (
   items: Ref<TableItem[]>,
-  props: BTableProps,
+  props: TableItemsProcessingProps,
   flags: Record<string, Ref<boolean>>
 ): TableItem[] => {
   let mappedItems: TableItem[] = items.value

@@ -192,57 +192,110 @@ import {computed, onMounted, ref, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import {isObject, startCase, titleCase} from '../../utils'
 import BSpinner from '../BSpinner.vue'
-import type {TableField, TableFieldObject, TableItem} from '../../types'
-import type {BTableProps} from './table'
+import type {
+  Booleanish,
+  Breakpoint,
+  BTableProvider,
+  BTableSortCompare,
+  ColorVariant,
+  TableField,
+  TableFieldObject,
+  TableItem,
+  VerticalAlign,
+} from '../../types'
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import {useVModel} from '@vueuse/core'
-import {renderItem, useTableItems} from './table-items'
+import {renderItem, useTableItems} from './tableItems'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
-const props = withDefaults(defineProps<BTableProps>(), {
-  perPage: undefined,
-  sortBy: undefined,
-  variant: undefined,
-  borderVariant: undefined,
-  caption: undefined,
-  align: undefined,
-  filter: undefined,
-  filterable: undefined,
-  provider: undefined,
-  sortCompare: undefined,
-  noProvider: undefined,
-  noProviderPaging: false,
-  noProviderSorting: false,
-  noProviderFiltering: false,
-  captionTop: false,
-  borderless: false,
-  bordered: false,
-  dark: false,
-  fields: () => [],
-  footClone: false,
-  hover: false,
-  items: () => [],
-  responsive: false,
-  small: false,
-  striped: false,
-  labelStacked: false,
-  stacked: false,
-  sortDesc: false,
-  sortInternal: true,
-  selectable: false,
-  stickySelect: false,
-  selectHead: true,
-  selectMode: 'single',
-  selectionVariant: 'primary',
-  stickyHeader: false,
-  busy: false,
-  showEmpty: false,
-  currentPage: 1,
-  emptyText: 'There are no records to show',
-  emptyFilteredText: 'There are no records matching your request',
-})
+const props = withDefaults(
+  defineProps<{
+    align?: VerticalAlign
+    caption?: string
+    captionTop?: Booleanish
+    borderless?: Booleanish
+    bordered?: Booleanish
+    borderVariant?: ColorVariant | null
+    dark?: Booleanish
+    fields?: TableField[]
+    footClone?: Booleanish
+    hover?: Booleanish
+    items?: TableItem[]
+    provider?: BTableProvider
+    sortCompare?: BTableSortCompare
+    noProvider?: NoProviderTypes[]
+    noProviderPaging?: Booleanish
+    noProviderSorting?: Booleanish
+    noProviderFiltering?: Booleanish
+    responsive?: boolean | Breakpoint
+    small?: Booleanish
+    striped?: Booleanish
+    stacked?: boolean | Breakpoint
+    labelStacked?: boolean
+    variant?: ColorVariant | null
+    sortBy?: string
+    sortDesc?: Booleanish
+    sortInternal?: Booleanish
+    selectable?: Booleanish
+    stickySelect?: Booleanish
+    selectHead?: boolean | string
+    selectMode?: 'multi' | 'single' | 'range'
+    selectionVariant?: ColorVariant | null
+    stickyHeader?: Booleanish
+    busy?: Booleanish
+    showEmpty?: Booleanish
+    perPage?: number
+    currentPage?: number
+    filter?: string
+    filterable?: string[]
+    emptyText?: string
+    emptyFilteredText?: string
+  }>(),
+  {
+    perPage: undefined,
+    sortBy: undefined,
+    variant: undefined,
+    borderVariant: undefined,
+    caption: undefined,
+    align: undefined,
+    filter: undefined,
+    filterable: undefined,
+    provider: undefined,
+    sortCompare: undefined,
+    noProvider: undefined,
+    noProviderPaging: false,
+    noProviderSorting: false,
+    noProviderFiltering: false,
+    captionTop: false,
+    borderless: false,
+    bordered: false,
+    dark: false,
+    fields: () => [],
+    footClone: false,
+    hover: false,
+    items: () => [],
+    responsive: false,
+    small: false,
+    striped: false,
+    labelStacked: false,
+    stacked: false,
+    sortDesc: false,
+    sortInternal: true,
+    selectable: false,
+    stickySelect: false,
+    selectHead: true,
+    selectMode: 'single',
+    selectionVariant: 'primary',
+    stickyHeader: false,
+    busy: false,
+    showEmpty: false,
+    currentPage: 1,
+    emptyText: 'There are no records to show',
+    emptyFilteredText: 'There are no records matching your request',
+  }
+)
 
 const emit = defineEmits<{
   'headClicked': [
@@ -339,19 +392,11 @@ const {
 } = useTableItems(
   props,
   {
-    footCloneBoolean,
-    sortDescBoolean,
     sortInternalBoolean,
-    selectableBoolean,
-    stickySelectBoolean,
-    labelStackedBoolean,
-    busyBoolean,
-    showEmptyBoolean,
-    noProviderPagingBoolean,
-    noProviderSortingBoolean,
-    noProviderFilteringBoolean,
     isFilterableTable,
+    noProviderPagingBoolean,
     isSortable,
+    sortDescBoolean,
   },
   usesProvider.value
 )
@@ -664,3 +709,4 @@ defineExpose({
   refresh: callItemsProvider,
 })
 </script>
+./tableItems
