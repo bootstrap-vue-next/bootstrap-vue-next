@@ -74,7 +74,7 @@ const computedLinkProps = computed(() =>
         underlineOpacity: true,
         underlineOpacityHover: true,
         icon: true,
-      } as Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+      } satisfies Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
     : {}
 )
 </script>

@@ -34,35 +34,33 @@
       </BNavbarNav>
     </BCollapse>
     <BNav>
-      <BButton
-        :variant="null"
+      <BNavItem
         :href="globalData.githubUrl"
-        aria-label="Open Github"
+        :link-attrs="{'aria-label': 'Open Our Github'}"
         target="_blank"
         rel="noopener"
       >
         <GithubIcon aria-hidden />
-      </BButton>
-      <BButton
-        :variant="null"
+      </BNavItem>
+      <BNavItem
         :href="globalData.opencollectiveUrl"
-        aria-label="Open Github"
+        :link-attrs="{'aria-label': 'Open Our Opencollective'}"
         target="_blank"
         rel="noopener"
       >
         <OpencollectiveIcon />
-      </BButton>
-      <BButton
-        :variant="null"
+      </BNavItem>
+      <BNavItem
         :href="globalData.discordUrl"
-        aria-label="Open Discord Server"
+        :link-attrs="{'aria-label': 'Open Our Discord Server'}"
+        aria-label=""
         target="_blank"
         rel="noopener"
       >
         <DiscordIcon aria-hidden />
-      </BButton>
+      </BNavItem>
       <ClientOnly>
-        <BDropdown :variant="null">
+        <BNavItemDropdown>
           <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
           <template #button-content>
             <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
@@ -70,7 +68,7 @@
           <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
             <component :is="map[el]" /> {{ el }}
           </BDropdownItem>
-        </BDropdown>
+        </BNavItemDropdown>
       </ClientOnly>
     </BNav>
     <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
@@ -137,11 +135,10 @@
 
 <script setup lang="ts">
 import {
-  BButton,
   BCol,
   BCollapse,
   BContainer,
-  BDropdown,
+  BNavItemDropdown,
   BDropdownItem,
   BNav,
   BNavbar,
@@ -162,7 +159,7 @@ import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
-import {useData, withBase, useRoute} from 'vitepress'
+import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'

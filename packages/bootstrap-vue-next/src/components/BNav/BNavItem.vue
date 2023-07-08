@@ -3,7 +3,7 @@
     <BLink
       class="nav-link"
       :class="linkClasses"
-      v-bind="$props"
+      v-bind="{...linkProps, ...linkAttrs}"
       active-class="active"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
@@ -14,9 +14,11 @@
 </template>
 
 <script setup lang="ts">
+import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import {useBooleanish} from '../../composables'
 import type {BLinkProps} from '../../types/BLinkProps'
+import {pluckProps} from '../../utils'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +29,7 @@ const props = withDefaults(
   defineProps<
     {
       linkClasses?: string
+      linkAttrs?: Record<string, unknown>
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
@@ -35,6 +38,7 @@ const props = withDefaults(
     active: undefined,
     activeClass: 'router-link-active',
     append: false,
+    linkAttrs: undefined,
     disabled: false,
     href: undefined,
     // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -58,4 +62,28 @@ const props = withDefaults(
 )
 
 const disabledBoolean = useBooleanish(() => props.disabled)
+
+const linkProps = computed(() =>
+  pluckProps(props, {
+    active: true,
+    activeClass: true,
+    append: true,
+    disabled: true,
+    href: true,
+    icon: true,
+    opacity: true,
+    opacityHover: true,
+    rel: true,
+    replace: true,
+    routerComponentName: true,
+    target: true,
+    to: true,
+    underlineOffset: true,
+    underlineOffsetHover: true,
+    underlineOpacity: true,
+    underlineOpacityHover: true,
+    underlineVariant: true,
+    variant: true,
+  } satisfies Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+)
 </script>
