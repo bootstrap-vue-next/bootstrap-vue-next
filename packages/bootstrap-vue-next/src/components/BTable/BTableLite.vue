@@ -63,7 +63,7 @@
     <tbody>
       <template v-for="(item, itemIndex) in items" :key="itemIndex">
         <tr
-          :class="getRowClasses(item)"
+          :class="getRowClasses(item, 'row')"
           @click="!filterEvent($event) && onRowClick(item, itemIndex, $event)"
           @dblclick="!filterEvent($event) && onRowDblClick(item, itemIndex, $event)"
           @mouseenter="!filterEvent($event) && onRowMouseEnter(item, itemIndex, $event)"
@@ -108,17 +108,16 @@
           </td>
         </tr>
 
-        <tr v-if="item._showDetails === true && $slots['row-details']" :class="getRowClasses(item)">
+        <tr
+          v-if="item._showDetails === true && $slots['row-details']"
+          :class="getRowClasses(item, 'row-details')"
+        >
           <td :colspan="computedFieldsTotal">
             <slot name="row-details" :item="item" :toggle-details="() => toggleRowDetails(item)" />
           </td>
         </tr>
       </template>
-      <tr
-        v-if="busyBoolean"
-        class="b-table-busy-slot"
-        :class="{'b-table-static-busy': items.length === 0}"
-      >
+      <tr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses()">
         <td :colspan="computedFieldsTotal">
           <slot name="table-busy">
             <div class="d-flex align-items-center justify-content-center gap-2">
@@ -224,6 +223,7 @@ const props = withDefaults(
     emptyFilteredText?: string
     tableClasses?: Record<string, any>
     fieldColumnClasses?: (field: TableFieldObject) => Record<string, any>[]
+    tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
   }>(),
   {
     perPage: undefined,
@@ -445,13 +445,35 @@ const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
   },
 ]
 
-const getRowClasses = (item: TableItem) => [
-  item._rowVariant ? `table-${item._rowVariant}` : null,
-  item._rowVariant ? `table-${item._rowVariant}` : null,
-  selectableBoolean.value && selectedItems.value.has(item)
-    ? `selected table-${props.selectionVariant}`
-    : null,
-]
+const getRowClasses = (item: TableItem, type = 'row') => {
+  const classesArray = [
+    item._rowVariant ? `table-${item._rowVariant}` : null,
+    item._rowVariant ? `table-${item._rowVariant}` : null,
+    selectableBoolean.value && selectedItems.value.has(item)
+      ? `selected table-${props.selectionVariant}`
+      : null,
+  ]
+
+  if (props.tbodyTrClass) {
+    const extraClasses = props.tbodyTrClass(item, type)
+    if (extraClasses) {
+      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
+    }
+  }
+  return classesArray
+}
+
+const getBusyRowClasses = () => {
+  const classesArray = [{'b-table-static-busy': props.items.length === 0}]
+
+  if (props.tbodyTrClass) {
+    const extraClasses = props.tbodyTrClass(null, 'table-busy')
+    if (extraClasses) {
+      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
+    }
+  }
+  return classesArray
+}
 
 const selectAllRows = () => {
   if (!selectableBoolean.value) return

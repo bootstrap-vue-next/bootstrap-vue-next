@@ -505,6 +505,24 @@ describe('table', () => {
     expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
   })
 
+  it('has added tbody > tr classes given by tbodyTrClass prop ', () => {
+    const rowClass = (item: TableItem, type: string) => {
+      if (!item || type !== 'row') return null
+      if (item.age === 1) return 'table-success'
+    }
+    const wrapper = mount(BTable, {
+      props: {
+        fields,
+        items,
+        tbodyTrClass: rowClass,
+      },
+    })
+    const $table = wrapper.get('table')
+    const $firstRow = $table.get('tbody tr')
+
+    expect($firstRow.classes()).toContain('table-success')
+  })
+
   it('has accepts a formatter function', async () => {
     const fields2: TableField[] = fields.map((field) => {
       if (typeof field === 'object') {
