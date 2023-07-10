@@ -96,6 +96,7 @@ import type {
 } from '../../types'
 import BTableLite from './BTableLite.vue'
 import {useVModel} from '@vueuse/core'
+import BSpinner from '../BSpinner.vue'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 

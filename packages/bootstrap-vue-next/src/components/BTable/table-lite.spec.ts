@@ -384,32 +384,32 @@ describe('table', () => {
     expect($th.classes()).toContain('b-table-sticky-column')
   })
 
-  it('emits headClicked event when head is clicked', async () => {
+  it('emits head-clicked event when head is clicked', async () => {
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
     const $th = wrapper.get('th')
     await $th.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('headClicked')
+    expect(wrapper.emitted()).toHaveProperty('head-clicked')
   })
 
-  it('first item in headClicked is name', async () => {
+  it('first item in head-clicked is name', async () => {
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
     const $th = wrapper.get('th')
     await $th.trigger('click')
-    const $emitted = wrapper.emitted('headClicked') ?? []
+    const $emitted = wrapper.emitted('head-clicked') ?? []
     expect($emitted[0][0]).toBe('name')
   })
 
-  it("second item in headClicked is {key: 'name'}", async () => {
+  it("second item in head-clicked is {key: 'name'}", async () => {
     const wrapper = mount(BTable, {
       props: {items, fields},
     })
     const $th = wrapper.get('th')
     await $th.trigger('click')
-    const $emitted = wrapper.emitted('headClicked') ?? []
+    const $emitted = wrapper.emitted('head-clicked') ?? []
     expect($emitted[0][1]).toEqual({key: 'name'})
   })
 
@@ -419,7 +419,7 @@ describe('table', () => {
     })
     const $th = wrapper.get('th')
     await $th.trigger('click')
-    const $emitted = wrapper.emitted('headClicked') ?? []
+    const $emitted = wrapper.emitted('head-clicked') ?? []
     expect($emitted[0][2] instanceof MouseEvent).toBe(true)
   })
 
@@ -429,7 +429,7 @@ describe('table', () => {
     })
     const $th = wrapper.get('th')
     await $th.trigger('click')
-    const $emitted = wrapper.emitted('headClicked') ?? []
+    const $emitted = wrapper.emitted('head-clicked') ?? []
     expect($emitted[0][3]).toBe(false)
   })
 
@@ -505,7 +505,7 @@ describe('table', () => {
   })
 
   it('has added tbody > tr classes given by tbodyTrClass prop ', () => {
-    const rowClass = (item: TableItem, type: string) => {
+    const rowClass = (item: TableItem | null, type: string) => {
       if (!item || type !== 'row') return null
       if (item.age === 1) return 'table-success'
     }
