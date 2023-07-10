@@ -137,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, useSlots} from 'vue'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import {isObject, startCase, titleCase} from '../../utils'
 import type {
@@ -151,7 +151,7 @@ import type {
 } from '../../types'
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
-import {renderItem} from './tableItems'
+import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
 
 const props = withDefaults(
   defineProps<{
@@ -204,6 +204,9 @@ const props = withDefaults(
     emptyText: 'There are no records to show',
     emptyFilteredText: 'There are no records matching your request',
     virtualFields: 0,
+    tableClasses: undefined,
+    fieldColumnClasses: undefined,
+    tbodyTrClass: undefined,
   }
 )
 
@@ -219,8 +222,6 @@ const emit = defineEmits<{
   rowHovered: [item: TableItem, index: number, event: MouseEvent]
   rowUnhovered: [item: TableItem, index: number, event: MouseEvent]
 }>()
-
-const slots = useSlots()
 
 const footCloneBoolean = useBooleanish(() => props.footClone)
 const labelStackedBoolean = useBooleanish(() => props.labelStacked)
@@ -277,6 +278,24 @@ const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFie
     return fields
   }
   return fields
+}
+
+const formatItem = (
+  item: TableItem,
+  fieldKey: string,
+  formatter?: TableFieldObjectFormatter<typeof item>
+) => {
+  const val = item[fieldKey]
+  if (formatter && typeof formatter === 'function') {
+    return formatter(val, fieldKey, item)
+  }
+  return val
+}
+
+const renderItem = (item: TableItem, fields: TableFieldObject) => {
+  const formattedValue = formatItem(item, fields.key, fields.formatter)
+
+  return formattedValue
 }
 
 const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) => {
@@ -337,3 +356,4 @@ const getRowClasses = (item: TableItem, type = 'row') => {
   return classesArray
 }
 </script>
+../../composables/tableItems

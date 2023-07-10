@@ -1,12 +1,5 @@
 import {computed, ref, type Ref} from 'vue'
-import type {
-  Booleanish,
-  BTableSortCompare,
-  TableField,
-  TableFieldObject,
-  TableItem,
-} from '../../types'
-import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
+import type {Booleanish, BTableSortCompare, TableField, TableItem} from '../types'
 
 type TableItemsProcessingProps = {
   items?: TableItem[]
@@ -162,20 +155,4 @@ const filterItems = (
       }).length > 0
   )
 
-const formatItem = (
-  item: TableItem,
-  fieldKey: string,
-  formatter?: TableFieldObjectFormatter<typeof item>
-) => {
-  const val = item[fieldKey]
-  if (formatter && typeof formatter === 'function') {
-    return formatter(val, fieldKey, item)
-  }
-  return val
-}
-
-export const renderItem = (item: TableItem, fields: TableFieldObject) => {
-  const formattedValue = formatItem(item, fields.key, fields.formatter)
-
-  return formattedValue
-}
+export default useTableItems

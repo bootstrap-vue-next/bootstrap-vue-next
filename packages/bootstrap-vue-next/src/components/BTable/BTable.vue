@@ -9,7 +9,7 @@
     :field-column-classes="getFieldColumnClasses"
     :virtual-fields="selectableBoolean ? 1 : 0"
     v-on="$attrs"
-    @headClicked="onFieldHeadClick"
+    @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
   >
     <template v-for="(_, name) in $slots" #[name]="slotData">
@@ -81,7 +81,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, useSlots, watch} from 'vue'
-import {useBooleanish} from '../../composables'
+import {useBooleanish, useTableItems} from '../../composables'
 import type {
   Booleanish,
   Breakpoint,
@@ -96,7 +96,6 @@ import type {
 } from '../../types'
 import BTableLite from './BTableLite.vue'
 import {useVModel} from '@vueuse/core'
-import {useTableItems} from './tableItems'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -186,6 +185,8 @@ const props = withDefaults(
     currentPage: 1,
     emptyText: 'There are no records to show',
     emptyFilteredText: 'There are no records matching your request',
+    fieldColumnClasses: undefined,
+    tbodyTrClass: undefined,
   }
 )
 
@@ -293,8 +294,8 @@ const onFieldHeadClick = (
   event: MouseEvent,
   isFooter = false
 ) => {
-  handleFieldSorting(field)
   emit('headClicked', fieldKey, field, event, isFooter)
+  handleFieldSorting(field)
 }
 
 const handleFieldSorting = (field: TableField) => {
@@ -546,4 +547,4 @@ defineExpose({
   refresh: callItemsProvider,
 })
 </script>
-./tableItems
+./tableItems ../../composables/tableItems
