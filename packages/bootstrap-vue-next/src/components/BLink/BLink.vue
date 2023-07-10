@@ -153,6 +153,7 @@ const routerAttr = computed(() => ({
 
 const computedLinkClasses = computed(() => ({
   active: activeBoolean.value,
+  [props.activeClass]: activeBoolean.value,
   disabled: disabledBoolean.value,
 }))
 
