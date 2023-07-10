@@ -1,5 +1,5 @@
 <template>
-  <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" class="navbar-dark">
+  <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" data-bs-theme="dark">
     <div class="d-flex gap-2 align-items-center">
       <BNavbarToggle v-b-toggle.sidebar-menu class="text-light" />
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
