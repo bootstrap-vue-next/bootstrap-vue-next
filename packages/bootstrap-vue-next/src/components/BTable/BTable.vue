@@ -16,8 +16,8 @@
       <slot
         name="sort-icon"
         :field="scope.field"
-        :sort-by="sortByShell"
-        :selected="scope.field.key === sortByShell"
+        :sort-by="sortByModel"
+        :selected="scope.field.key === sortByModel"
         :is-desc="sortDescBoolean"
         :direction="sortDescBoolean ? 'desc' : 'asc'"
       >
@@ -25,8 +25,8 @@
           v-if="isSortable && scope.field.sortable"
           class="b-table-sort-icon"
           :class="{
-            sorted: scope.field.key === sortByShell,
-            [`sorted-${sortDescBoolean ? 'desc' : 'asc'}`]: scope.field.key === sortByShell,
+            sorted: scope.field.key === sortByModel,
+            [`sorted-${sortDescBoolean ? 'desc' : 'asc'}`]: scope.field.key === sortByModel,
           }"
         />
       </slot>
@@ -163,13 +163,12 @@ const emit = defineEmits<{
   'filtered': [value: TableItem[]]
 }>()
 
-const sortByModel = useVModel(props, 'sortBy', emit)
+const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
 const busyModel = useVModel(props, 'busy', emit, {passive: true})
 const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
 
 const slots = useSlots()
 
-const sortByShell = ref(sortByModel.value)
 const liteTable = ref()
 
 const sortDescBoolean = useBooleanish(sortDescModel)
@@ -213,7 +212,7 @@ const {
     sortDescBoolean,
   },
   usesProvider,
-  sortByShell
+  sortByModel
 )
 
 filteredHandler.value = async (items) => {
@@ -241,7 +240,7 @@ const handleFieldSorting = (field: TableField) => {
   const fieldSortable = typeof field === 'string' ? false : field.sortable
   if (isSortable.value === true && fieldSortable === true) {
     const sortDesc = !sortDescBoolean.value
-    sortByShell.value = fieldKey
+    sortByModel.value = fieldKey
     sortDescModel.value = sortDesc
     emit('sorted', fieldKey, sortDesc)
   }
@@ -368,22 +367,6 @@ watch(
 watch(
   () => props.sortDesc,
   (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
-)
-
-watch(
-  () => sortByModel.value,
-  (val) => {
-    if (val === sortByShell.value) return
-    sortByShell.value = val
-  }
-)
-
-watch(
-  () => sortByShell.value,
-  (val) => {
-    if (val === sortByModel.value || val === undefined) return
-    emit('update:sortBy', val)
-  }
 )
 
 onMounted(() => {
