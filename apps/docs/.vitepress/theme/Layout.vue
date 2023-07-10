@@ -65,52 +65,54 @@
         </BNav>
       </BNavbarNav>
     </BCollapse>
-    <BNav class="d-flex gap-4">
-      <BNavItem
-        :href="globalData.githubUrl"
-        :link-attrs="{'aria-label': 'Open Our Github'}"
-        target="_blank"
-        rel="noopener"
-        link-classes="py-1 px-0"
-      >
-        <GithubIcon height="1.1rem" aria-hidden />
-      </BNavItem>
-      <BNavItem
-        :href="globalData.opencollectiveUrl"
-        :link-attrs="{'aria-label': 'Open Our Opencollective'}"
-        target="_blank"
-        rel="noopener"
-        link-classes="py-1 px-0"
-      >
-        <OpencollectiveIcon height="1.1rem" aria-hidden />
-      </BNavItem>
-      <BNavItem
-        :href="globalData.discordUrl"
-        :link-attrs="{'aria-label': 'Open Our Discord Server'}"
-        aria-label=""
-        target="_blank"
-        rel="noopener"
-        link-classes="py-1 px-0"
-      >
-        <DiscordIcon height="1.1rem" aria-hidden />
-      </BNavItem>
-      <div class="border border-secondary"></div>
-      <ClientOnly>
-        <BNavItemDropdown toggle-class="py-1 px-0">
-          <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
-          <template #button-content>
-            <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
-          </template>
-          <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
-            <component :is="map[el]" /> {{ el }}
-          </BDropdownItem>
-        </BNavItemDropdown>
-      </ClientOnly>
-    </BNav>
-    <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
-      On the page
-      <ChevronRight aria-hidden />
-    </BNavbarToggle>
+    <div class="d-flex gap-2 flex-wrap">
+      <BNav class="d-flex gap-4">
+        <BNavItem
+          :href="globalData.githubUrl"
+          :link-attrs="{'aria-label': 'Open Our Github'}"
+          target="_blank"
+          rel="noopener"
+          link-classes="py-1 px-0"
+        >
+          <GithubIcon height="1.1rem" aria-hidden />
+        </BNavItem>
+        <BNavItem
+          :href="globalData.opencollectiveUrl"
+          :link-attrs="{'aria-label': 'Open Our Opencollective'}"
+          target="_blank"
+          rel="noopener"
+          link-classes="py-1 px-0"
+        >
+          <OpencollectiveIcon height="1.1rem" aria-hidden />
+        </BNavItem>
+        <BNavItem
+          :href="globalData.discordUrl"
+          :link-attrs="{'aria-label': 'Open Our Discord Server'}"
+          aria-label=""
+          target="_blank"
+          rel="noopener"
+          link-classes="py-1 px-0"
+        >
+          <DiscordIcon height="1.1rem" aria-hidden />
+        </BNavItem>
+        <div class="border border-secondary"></div>
+        <ClientOnly>
+          <BNavItemDropdown toggle-class="py-1 px-0">
+            <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
+            <template #button-content>
+              <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
+            </template>
+            <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
+              <component :is="map[el]" /> {{ el }}
+            </BDropdownItem>
+          </BNavItemDropdown>
+        </ClientOnly>
+      </BNav>
+      <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
+        On the page
+        <ChevronRight aria-hidden />
+      </BNavbarToggle>
+    </div>
   </BNavbar>
   <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
