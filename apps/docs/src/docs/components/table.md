@@ -14,6 +14,190 @@ For displaying tabular data, `<BTable>` supports pagination, filtering, sorting,
 
 </div>
 
+## `<BTable>`
+
+Example of basic usage:
+
+<HighlightCard>
+<BTable 
+    striped 
+    hover 
+    :items="[
+      { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+      { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+      { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+      { age: 38, first_name: 'Jami', last_name: 'Carney' }
+    ]">
+</BTable>
+
+<template #html>
+
+```vue-html
+<template>
+    <BTable striped hover :items="items" />
+</template>
+```
+
+```ts
+<script setup lang="ts">
+    const items:Array<TableItem> = [
+      { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+      { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+      { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+      { age: 38, first_name: 'Jami', last_name: 'Carney' }
+    ]
+</script>
+```
+
+</template>
+</HighlightCard>
+
+### Items (record data)
+
+`items` is the table data in array format, where each record (row) data are keyed objects. Example format:
+
+```ts
+const items = [
+  {age: 32, first_name: 'Cyndi'},
+  {age: 27, first_name: 'Havij'},
+  {age: 42, first_name: 'Robert'},
+]
+```
+
+`<b-table>` automatically samples the first row to extract field names (the keys in the record data). Field names are automatically "humanized" by converting kebab-case, snake_case, and camelCase to individual words and capitalizes each word. Example conversions:
+
+- `first_name` becomes `First Name`
+- `last-name` becomes `Last Name`
+- `age` becomes `Age`
+- `YEAR` remains `YEAR`
+- `isActive` becomes `Is Active`
+
+These titles will be displayed in the table header, in the order they appear in the first record of data. See the Fields section below for customizing how field headings appear.
+
+### Fields (column definitions)
+
+The `fields` prop is used to customize the table columns headings, and in which order the columns of data are displayed. The field object keys (i.e. age or first_name as shown below) are used to extract the value from each item (record) row, and to provide additional features such as enabling sorting on the column, etc.
+
+Fields can be provided as a _simple array or an array of objects_. **Internally the fields data will be normalized into the array of objects format**. Events or slots that include the column field data will be in the normalized field object format (array of objects for fields, or an object for an individual field).
+
+#### Fields as a simple array
+
+Fields can be a simple array, for defining the order of the columns, and which columns to display:
+
+**Example: Using `array` fields definition**
+
+<HighlightCard>
+<BTable 
+    striped 
+    hover 
+    :items=" [
+          { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+          { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ]"
+    :fields="['first_name','last_name','age']">
+</BTable>
+
+<template #html>
+
+```vue-html
+<template>
+    <BTable striped hover :items="items" />
+</template>
+```
+
+```ts
+<script setup lang="ts">
+    const fields:Array<TableField> = ['first_name','last_name','age']
+
+    const items:Array<TableItem> = [
+      { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+      { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+      { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+      { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+    ]
+</script>
+```
+
+</template>
+</HighlightCard>
+
+#### Fields as an array of objects
+
+Fields can be a an array of objects, providing additional control over the fields (such as sorting, formatting, etc.). Only columns (keys) that appear in the fields array will be shown:
+
+**Example: Using array of objects fields definition**
+
+<HighlightCard>
+<BTable 
+    striped 
+    hover 
+    :items=" [
+          { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+          { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ]"
+    :fields="[
+          {
+            key: 'last_name',
+            sortable: true
+          },
+          {
+            key: 'first_name',
+            sortable: false
+          },
+          {
+            key: 'age',
+            label: 'Person age',
+            sortable: true,
+            // Variant applies to the whole column, including the header and footer
+            variant: 'danger'
+          }
+        ]">
+</BTable>
+
+<template #html>
+
+```vue-html
+<template>
+    <BTable striped hover :items="items" />
+</template>
+```
+
+```ts
+<script setup lang="ts">
+    const fields:Array<TableField> = [
+          {
+            key: 'last_name',
+            sortable: true
+          },
+          {
+            key: 'first_name',
+            sortable: false
+          },
+          {
+            key: 'age',
+            label: 'Person age',
+            sortable: true,
+            // Variant applies to the whole column, including the header and footer
+            variant: 'danger'
+          }
+        ]
+
+    const items:Array<TableItem> = [
+      { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+      { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+      { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+      { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+    ]
+</script>
+```
+
+</template>
+</HighlightCard>
+
 ## Simple tables
 
 The `<BTableSimple>` component gives the user complete control over the rendering of the table content, while providing basic Bootstrap v4 table styling. `<BTableSimple>` is a wrapper component around the `<table>` element. Inside the component, via the default slot, you can use any or all of the BootstrapVue table helper components: `<BThead>`, `<BTfoot>`, `<BTbody>`, `<BTr>`, `<BTh>`, `<BTd>`, and the HTML5 elements `<caption>`, `<colgroup>` and `<col>`. Contrary to the component's name, one can create simple or complex table layouts with `<BTableSimple>`.
@@ -459,5 +643,5 @@ As with `<BTable>` and `<BTableLite>`, sticky columns are not supported when the
 import {data} from '../../data/components/table.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BCard, BCardBody, BTableSimple, BTd, BTbody, BTfoot, BThead, BTh, BTr} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BTableSimple, BTable, BTd, BTbody, BTfoot, BThead, BTh, BTr} from 'bootstrap-vue-next'
 </script>
