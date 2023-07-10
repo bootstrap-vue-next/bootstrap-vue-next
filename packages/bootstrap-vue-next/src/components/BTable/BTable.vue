@@ -191,18 +191,18 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'headClicked': [
+  'head-clicked': [
     key: TableFieldObject['key'],
     field: TableField,
     event: MouseEvent,
     isFooter: boolean
   ]
-  'rowClicked': [item: TableItem, index: number, event: MouseEvent]
-  'rowDblClicked': [item: TableItem, index: number, event: MouseEvent]
-  'rowHovered': [item: TableItem, index: number, event: MouseEvent]
-  'rowUnhovered': [item: TableItem, index: number, event: MouseEvent]
-  'rowSelected': [value: TableItem]
-  'rowUnselected': [value: TableItem]
+  'row-clicked': [item: TableItem, index: number, event: MouseEvent]
+  'row-dbl-clicked': [item: TableItem, index: number, event: MouseEvent]
+  'row-hovered': [item: TableItem, index: number, event: MouseEvent]
+  'row-unhovered': [item: TableItem, index: number, event: MouseEvent]
+  'row-selected': [value: TableItem]
+  'row-unselected': [value: TableItem]
   'selection': [value: TableItem[]]
   'update:busy': [value: boolean]
   'update:sortBy': [value: string]
@@ -217,7 +217,7 @@ const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
 
 const slots = useSlots()
 
-const liteTable = ref()
+const liteTable = ref<null | InstanceType<typeof BTableLite>>(null)
 
 const sortDescBoolean = useBooleanish(sortDescModel)
 const sortInternalBoolean = useBooleanish(() => props.sortInternal)
@@ -285,7 +285,7 @@ filteredHandler.value = async (items) => {
 
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
-  emit('rowClicked', row, index, e)
+  emit('row-clicked', row, index, e)
 }
 
 const onFieldHeadClick = (
@@ -294,7 +294,7 @@ const onFieldHeadClick = (
   event: MouseEvent,
   isFooter = false
 ) => {
-  emit('headClicked', fieldKey, field, event, isFooter)
+  emit('head-clicked', fieldKey, field, event, isFooter)
   handleFieldSorting(field)
 }
 
@@ -415,27 +415,27 @@ const handleRowSelection = (
     props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
       if (!selectedItems.value.has(item)) {
         selectedItems.value.add(item)
-        emit('rowSelected', item)
+        emit('row-selected', item)
       }
     })
   } else if (ctrlClicked || metaClicked) {
     if (selectedItems.value.has(row)) {
       selectedItems.value.delete(row)
-      emit('rowUnselected', row)
+      emit('row-unselected', row)
     } else if (props.selectMode === 'range' || props.selectMode === 'multi') {
       selectedItems.value.add(row)
-      emit('rowSelected', row)
+      emit('row-selected', row)
     } else {
-      selectedItems.value.forEach((item) => emit('rowUnselected', item))
+      selectedItems.value.forEach((item) => emit('row-unselected', item))
       selectedItems.value.clear()
       selectedItems.value.add(row)
-      emit('rowSelected', row)
+      emit('row-selected', row)
     }
   } else {
-    selectedItems.value.forEach((item) => emit('rowUnselected', item))
+    selectedItems.value.forEach((item) => emit('row-unselected', item))
     selectedItems.value.clear()
     selectedItems.value.add(row)
-    emit('rowSelected', row)
+    emit('row-selected', row)
   }
 
   notifySelectionEvent()
@@ -447,7 +447,7 @@ const selectAllRows = () => {
   selectedItems.value = new Set([...props.items])
   selectedItems.value.forEach((item) => {
     if (unselectableItems.includes(item)) return
-    emit('rowSelected', item)
+    emit('row-selected', item)
   })
   notifySelectionEvent()
 }
@@ -455,7 +455,7 @@ const selectAllRows = () => {
 const clearSelected = () => {
   if (!selectableBoolean.value) return
   selectedItems.value.forEach((item) => {
-    emit('rowUnselected', item)
+    emit('row-unselected', item)
   })
   selectedItems.value = new Set([])
   notifySelectionEvent()
@@ -466,7 +466,7 @@ const selectRow = (index: number) => {
   const item = props.items[index]
   if (!item || selectedItems.value.has(item)) return
   selectedItems.value.add(item)
-  emit('rowSelected', item)
+  emit('row-selected', item)
   notifySelectionEvent()
 }
 
@@ -475,7 +475,7 @@ const unselectRow = (index: number) => {
   const item = props.items[index]
   if (!item || !selectedItems.value.has(item)) return
   selectedItems.value.delete(item)
-  emit('rowUnselected', item)
+  emit('row-unselected', item)
   notifySelectionEvent()
 }
 

@@ -211,16 +211,16 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  headClicked: [
+  'head-clicked': [
     key: TableFieldObject['key'],
     field: TableField,
     event: MouseEvent,
     isFooter: boolean
   ]
-  rowClicked: [item: TableItem, index: number, event: MouseEvent]
-  rowDblClicked: [item: TableItem, index: number, event: MouseEvent]
-  rowHovered: [item: TableItem, index: number, event: MouseEvent]
-  rowUnhovered: [item: TableItem, index: number, event: MouseEvent]
+  'row-clicked': [item: TableItem, index: number, event: MouseEvent]
+  'row-dbl-clicked': [item: TableItem, index: number, event: MouseEvent]
+  'row-hovered': [item: TableItem, index: number, event: MouseEvent]
+  'row-unhovered': [item: TableItem, index: number, event: MouseEvent]
 }>()
 
 const footCloneBoolean = useBooleanish(() => props.footClone)
@@ -300,20 +300,20 @@ const renderItem = (item: TableItem, fields: TableFieldObject) => {
 
 const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) => {
   const fieldKey = typeof field === 'string' ? field : field.key
-  emit('headClicked', fieldKey, field, event, isFooter)
+  emit('head-clicked', fieldKey, field, event, isFooter)
 }
 
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
-  emit('rowClicked', row, index, e)
+  emit('row-clicked', row, index, e)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
-  emit('rowDblClicked', row, index, e)
+  emit('row-dbl-clicked', row, index, e)
 
 const onRowMouseEnter = (row: TableItem, index: number, e: MouseEvent) =>
-  emit('rowHovered', row, index, e)
+  emit('row-hovered', row, index, e)
 
 const onRowMouseLeave = (row: TableItem, index: number, e: MouseEvent) =>
-  emit('rowUnhovered', row, index, e)
+  emit('row-unhovered', row, index, e)
 
 const toggleRowDetails = (tr: TableItem) => {
   tr._showDetails = !tr._showDetails
