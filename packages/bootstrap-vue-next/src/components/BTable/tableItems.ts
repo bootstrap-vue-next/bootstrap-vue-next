@@ -23,18 +23,19 @@ type TableItemsProcessingProps = {
 export const useTableItems = (
   tableProps: TableItemsProcessingProps,
   flags: Record<string, Ref<boolean>>,
-  usesProvider: boolean
+  usesProvider: Ref<boolean>,
+  sortBy?: Ref<string | undefined>
 ) => {
   const filteredHandler = ref<(items: TableItem[]) => void>()
   const internalItems = ref(tableProps.items ?? [])
   const displayStartEndIdx = ref([0, internalItems.value.length])
   const computedItems = computed<TableItem[]>(() => {
-    const items = usesProvider
+    const items = usesProvider.value
       ? internalItems.value
       : flags.requireItemsMapping.value
-      ? mapItems(internalItems, tableProps, flags)
+      ? mapItems(internalItems, tableProps, flags, sortBy)
       : tableProps.items ?? []
-    if (usesProvider && !flags.noProviderPagingBoolean.value) {
+    if (usesProvider.value && !flags.noProviderPagingBoolean.value) {
       return items
     }
 
@@ -87,7 +88,8 @@ export const useTableItems = (
 const mapItems = (
   items: Ref<TableItem[]>,
   props: TableItemsProcessingProps,
-  flags: Record<string, Ref<boolean>>
+  flags: Record<string, Ref<boolean>>,
+  sortBy?: Ref<string | undefined>
 ): TableItem[] => {
   let mappedItems: TableItem[] = items.value
 
@@ -99,7 +101,7 @@ const mapItems = (
     mappedItems = sortItems(
       props.fields,
       mappedItems,
-      props.sortBy,
+      sortBy?.value,
       flags.sortDescBoolean.value,
       props.sortCompare
     )

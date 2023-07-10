@@ -16,8 +16,8 @@
       <slot
         name="sort-icon"
         :field="scope.field"
-        :sort-by="sortBy"
-        :selected="scope.field.key === sortBy"
+        :sort-by="sortByShell"
+        :selected="scope.field.key === sortByShell"
         :is-desc="sortDescBoolean"
         :direction="sortDescBoolean ? 'desc' : 'asc'"
       >
@@ -25,8 +25,8 @@
           v-if="isSortable && scope.field.sortable"
           class="b-table-sort-icon"
           :class="{
-            sorted: scope.field.key === sortBy,
-            [`sorted-${sortDescBoolean ? 'desc' : 'asc'}`]: scope.field.key === sortBy,
+            sorted: scope.field.key === sortByShell,
+            [`sorted-${sortDescBoolean ? 'desc' : 'asc'}`]: scope.field.key === sortByShell,
           }"
         />
       </slot>
@@ -169,6 +169,7 @@ const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
 
 const slots = useSlots()
 
+const sortByShell = ref(sortByModel.value)
 const liteTable = ref()
 
 const sortDescBoolean = useBooleanish(sortDescModel)
@@ -211,7 +212,8 @@ const {
     requireItemsMapping,
     sortDescBoolean,
   },
-  usesProvider.value
+  usesProvider,
+  sortByShell
 )
 
 filteredHandler.value = async (items) => {
@@ -239,9 +241,7 @@ const handleFieldSorting = (field: TableField) => {
   const fieldSortable = typeof field === 'string' ? false : field.sortable
   if (isSortable.value === true && fieldSortable === true) {
     const sortDesc = !sortDescBoolean.value
-    if (fieldKey !== props.sortBy) {
-      sortByModel.value = fieldKey
-    }
+    sortByShell.value = fieldKey
     sortDescModel.value = sortDesc
     emit('sorted', fieldKey, sortDesc)
   }
@@ -370,10 +370,24 @@ watch(
   (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
 )
 
-onMounted(() => {
-  if (usesProvider.value) {
-    callItemsProvider()
+watch(
+  () => sortByModel.value,
+  (val) => {
+    if (val === sortByShell.value) return
+    sortByShell.value = val
   }
+)
+
+watch(
+  () => sortByShell.value,
+  (val) => {
+    if (val === sortByModel.value || val === undefined) return
+    emit('update:sortBy', val)
+  }
+)
+
+onMounted(() => {
+  callItemsProvider()
 })
 
 defineExpose({
