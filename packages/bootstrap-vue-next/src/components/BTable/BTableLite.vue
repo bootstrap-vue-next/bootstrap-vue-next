@@ -3,17 +3,7 @@
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
       <tr>
-        <th
-          v-if="addSelectableCell"
-          class="b-table-selection-column"
-          :class="{
-            'b-table-sticky-column': stickySelectBoolean,
-          }"
-        >
-          <slot name="select-head">
-            {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
-          </slot>
-        </th>
+        <slot name="thead-tr-prefix" />
         <th
           v-for="field in computedFields"
           :key="field.key"
@@ -35,8 +25,6 @@
                 :column="field.key"
                 :field="field"
                 :is-foot="false"
-                :select-all-rows="selectAllRows"
-                :clear-selected="clearSelected"
               />
               <template v-else>{{ getFieldHeadLabel(field) }}</template>
             </div>
@@ -69,21 +57,7 @@
           @mouseenter="!filterEvent($event) && onRowMouseEnter(item, itemIndex, $event)"
           @mouseleave="!filterEvent($event) && onRowMouseLeave(item, itemIndex, $event)"
         >
-          <td
-            v-if="addSelectableCell"
-            class="b-table-selection-column"
-            :class="{
-              'b-table-sticky-column': stickySelectBoolean,
-            }"
-          >
-            <slot name="select-cell">
-              <span
-                class="b-table-selection-icon"
-                :class="selectedItems.has(item) ? 'text-primary selected' : ''"
-                >🗹</span
-              >
-            </slot>
-          </td>
+          <slot name="tbody-tr-prefix" :item="item" />
           <td
             v-for="field in computedFields"
             :key="field.key"
@@ -117,16 +91,7 @@
           </td>
         </tr>
       </template>
-      <tr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses()">
-        <td :colspan="computedFieldsTotal">
-          <slot name="table-busy">
-            <div class="d-flex align-items-center justify-content-center gap-2">
-              <BSpinner class="align-middle" />
-              <strong>Loading...</strong>
-            </div>
-          </slot>
-        </td>
-      </tr>
+      <slot name="tbody-prefix" :fields-total="computedFieldsTotal" />
       <tr v-if="showEmptyBoolean && items.length === 0" class="b-table-empty-slot">
         <td :colspan="computedFieldsTotal">
           <slot name="empty" :items="items">
@@ -175,7 +140,6 @@
 import {computed, ref, useSlots} from 'vue'
 import {useBooleanish} from '../../composables'
 import {isObject, startCase, titleCase} from '../../utils'
-import BSpinner from '../BSpinner.vue'
 import type {
   Booleanish,
   Breakpoint,
@@ -187,7 +151,6 @@ import type {
 } from '../../types'
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
-import {useVModel} from '@vueuse/core'
 import {renderItem} from './tableItems'
 
 const props = withDefaults(
@@ -209,24 +172,16 @@ const props = withDefaults(
     stacked?: boolean | Breakpoint
     labelStacked?: boolean
     variant?: ColorVariant | null
-    selectable?: Booleanish
-    stickySelect?: Booleanish
-    selectHead?: boolean | string
-    selectMode?: 'multi' | 'single' | 'range'
-    selectionVariant?: ColorVariant | null
     stickyHeader?: Booleanish
     showEmpty?: Booleanish
-    perPage?: number
-    currentPage?: number
     emptyText?: string
-    busy?: Booleanish
     emptyFilteredText?: string
     tableClasses?: Record<string, any>
     fieldColumnClasses?: (field: TableFieldObject) => Record<string, any>[]
     tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
+    virtualFields?: number
   }>(),
   {
-    perPage: undefined,
     variant: undefined,
     borderVariant: undefined,
     caption: undefined,
@@ -244,57 +199,35 @@ const props = withDefaults(
     striped: false,
     labelStacked: false,
     stacked: false,
-    selectable: false,
-    stickySelect: false,
-    selectHead: true,
-    selectMode: 'single',
-    selectionVariant: 'primary',
     stickyHeader: false,
-    busy: false,
     showEmpty: false,
-    currentPage: 1,
     emptyText: 'There are no records to show',
     emptyFilteredText: 'There are no records matching your request',
+    virtualFields: 0,
   }
 )
 
 const emit = defineEmits<{
-  'headClicked': [
+  headClicked: [
     key: TableFieldObject['key'],
     field: TableField,
     event: MouseEvent,
     isFooter: boolean
   ]
-  'rowClicked': [item: TableItem, index: number, event: MouseEvent]
-  'rowDblClicked': [item: TableItem, index: number, event: MouseEvent]
-  'rowHovered': [item: TableItem, index: number, event: MouseEvent]
-  'rowUnhovered': [item: TableItem, index: number, event: MouseEvent]
-  'rowSelected': [value: TableItem]
-  'rowUnselected': [value: TableItem]
-  'selection': [value: TableItem[]]
-  'update:busy': [value: boolean]
+  rowClicked: [item: TableItem, index: number, event: MouseEvent]
+  rowDblClicked: [item: TableItem, index: number, event: MouseEvent]
+  rowHovered: [item: TableItem, index: number, event: MouseEvent]
+  rowUnhovered: [item: TableItem, index: number, event: MouseEvent]
 }>()
-
-const busyModel = useVModel(props, 'busy', emit, {passive: true})
 
 const slots = useSlots()
 
 const footCloneBoolean = useBooleanish(() => props.footClone)
-const selectableBoolean = useBooleanish(() => props.selectable)
-const stickySelectBoolean = useBooleanish(() => props.stickySelect)
 const labelStackedBoolean = useBooleanish(() => props.labelStacked)
-const busyBoolean = useBooleanish(busyModel)
 const showEmptyBoolean = useBooleanish(() => props.showEmpty)
-
-const selectedItems = ref<Set<TableItem>>(new Set([]))
-const isSelecting = computed(() => selectedItems.value.size > 0)
 
 const tableClasses = computed(() => ({
   [`align-${props.align}`]: props.align !== undefined,
-  'b-table-selectable': selectableBoolean.value,
-  [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
-  'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
-  'b-table-busy': busyBoolean.value,
   ...props.tableClasses,
 }))
 
@@ -315,13 +248,7 @@ const containerAttrs = computed(() => ({
 }))
 
 const computedFields = computed(() => normaliseFields(props.fields, props.items))
-const computedFieldsTotal = computed(
-  () => computedFields.value.length + (selectableBoolean.value ? 1 : 0)
-)
-
-const addSelectableCell = computed(
-  () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
-)
+const computedFieldsTotal = computed(() => computedFields.value.length + props.virtualFields)
 
 const getFieldHeadLabel = (field: TableField) => {
   if (typeof field === 'string') return titleCase(field)
@@ -359,8 +286,6 @@ const headerClicked = (field: TableField, event: MouseEvent, isFooter = false) =
 
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   emit('rowClicked', row, index, e)
-
-  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
 }
 const onRowDblClick = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowDblClicked', row, index, e)
@@ -370,54 +295,6 @@ const onRowMouseEnter = (row: TableItem, index: number, e: MouseEvent) =>
 
 const onRowMouseLeave = (row: TableItem, index: number, e: MouseEvent) =>
   emit('rowUnhovered', row, index, e)
-
-const notifySelectionEvent = () => {
-  if (!selectableBoolean.value) return
-  emit('selection', Array.from(selectedItems.value))
-}
-
-const handleRowSelection = (
-  row: TableItem,
-  index: number,
-  shiftClicked = false,
-  ctrlClicked = false,
-  metaClicked = false
-) => {
-  if (!selectableBoolean.value) return
-
-  if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
-    const lastSelectedItem = Array.from(selectedItems.value).pop()
-    const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
-    const selectStartIndex = Math.min(lastSelectedIndex, index)
-    const selectEndIndex = Math.max(lastSelectedIndex, index)
-    props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-      if (!selectedItems.value.has(item)) {
-        selectedItems.value.add(item)
-        emit('rowSelected', item)
-      }
-    })
-  } else if (ctrlClicked || metaClicked) {
-    if (selectedItems.value.has(row)) {
-      selectedItems.value.delete(row)
-      emit('rowUnselected', row)
-    } else if (props.selectMode === 'range' || props.selectMode === 'multi') {
-      selectedItems.value.add(row)
-      emit('rowSelected', row)
-    } else {
-      selectedItems.value.forEach((item) => emit('rowUnselected', item))
-      selectedItems.value.clear()
-      selectedItems.value.add(row)
-      emit('rowSelected', row)
-    }
-  } else {
-    selectedItems.value.forEach((item) => emit('rowUnselected', item))
-    selectedItems.value.clear()
-    selectedItems.value.add(row)
-    emit('rowSelected', row)
-  }
-
-  notifySelectionEvent()
-}
 
 const toggleRowDetails = (tr: TableItem) => {
   tr._showDetails = !tr._showDetails
@@ -449,9 +326,6 @@ const getRowClasses = (item: TableItem, type = 'row') => {
   const classesArray = [
     item._rowVariant ? `table-${item._rowVariant}` : null,
     item._rowVariant ? `table-${item._rowVariant}` : null,
-    selectableBoolean.value && selectedItems.value.has(item)
-      ? `selected table-${props.selectionVariant}`
-      : null,
   ]
 
   if (props.tbodyTrClass) {
@@ -462,61 +336,4 @@ const getRowClasses = (item: TableItem, type = 'row') => {
   }
   return classesArray
 }
-
-const getBusyRowClasses = () => {
-  const classesArray = [{'b-table-static-busy': props.items.length === 0}]
-
-  if (props.tbodyTrClass) {
-    const extraClasses = props.tbodyTrClass(null, 'table-busy')
-    if (extraClasses) {
-      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
-    }
-  }
-  return classesArray
-}
-
-const selectAllRows = () => {
-  if (!selectableBoolean.value) return
-  const unselectableItems = selectedItems.value.size > 0 ? Array.from(selectedItems.value) : []
-  selectedItems.value = new Set([...props.items])
-  selectedItems.value.forEach((item) => {
-    if (unselectableItems.includes(item)) return
-    emit('rowSelected', item)
-  })
-  notifySelectionEvent()
-}
-
-const clearSelected = () => {
-  if (!selectableBoolean.value) return
-  selectedItems.value.forEach((item) => {
-    emit('rowUnselected', item)
-  })
-  selectedItems.value = new Set([])
-  notifySelectionEvent()
-}
-
-const selectRow = (index: number) => {
-  if (!selectableBoolean.value) return
-  const item = props.items[index]
-  if (!item || selectedItems.value.has(item)) return
-  selectedItems.value.add(item)
-  emit('rowSelected', item)
-  notifySelectionEvent()
-}
-
-const unselectRow = (index: number) => {
-  if (!selectableBoolean.value) return
-  const item = props.items[index]
-  if (!item || !selectedItems.value.has(item)) return
-  selectedItems.value.delete(item)
-  emit('rowUnselected', item)
-  notifySelectionEvent()
-}
-
-defineExpose({
-  selectAllRows,
-  clearSelected,
-  selectRow,
-  unselectRow,
-})
 </script>

@@ -5,9 +5,12 @@
     v-model:busy="busyModel"
     :items="computedDisplayItems"
     :table-classes="tableClasses"
+    :tbody-tr-class="getRowClasses"
     :field-column-classes="getFieldColumnClasses"
+    :virtual-fields="selectableBoolean ? 1 : 0"
     v-on="$attrs"
     @headClicked="onFieldHeadClick"
+    @row-clicked="onRowClick"
   >
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
@@ -30,6 +33,48 @@
           }"
         />
       </slot>
+    </template>
+    <template #thead-tr-prefix>
+      <th
+        v-if="addSelectableCell"
+        class="b-table-selection-column"
+        :class="{
+          'b-table-sticky-column': stickySelectBoolean,
+        }"
+      >
+        <slot name="select-head">
+          {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
+        </slot>
+      </th>
+    </template>
+    <template #tbody-tr-prefix="scope">
+      <td
+        v-if="addSelectableCell"
+        class="b-table-selection-column"
+        :class="{
+          'b-table-sticky-column': stickySelectBoolean,
+        }"
+      >
+        <slot name="select-cell">
+          <span
+            class="b-table-selection-icon"
+            :class="selectedItems.has(scope.item) ? `text-${props.selectionVariant} selected` : ''"
+            >🗹</span
+          >
+        </slot>
+      </td>
+    </template>
+    <template #tbody-prefix="scope">
+      <tr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses()">
+        <td :colspan="scope.fieldsTotal">
+          <slot name="table-busy">
+            <div class="d-flex align-items-center justify-content-center gap-2">
+              <BSpinner class="align-middle" />
+              <strong>Loading...</strong>
+            </div>
+          </slot>
+        </td>
+      </tr>
     </template>
   </BTableLite>
 </template>
@@ -97,6 +142,8 @@ const props = withDefaults(
     filterable?: string[]
     emptyText?: string
     emptyFilteredText?: string
+    fieldColumnClasses?: (field: TableFieldObject) => Record<string, any>[]
+    tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
   }>(),
   {
     perPage: undefined,
@@ -177,8 +224,13 @@ const busyBoolean = useBooleanish(busyModel)
 const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
 const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
+const selectableBoolean = useBooleanish(() => props.selectable)
+const stickySelectBoolean = useBooleanish(() => props.stickySelect)
 
 const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
+
+const selectedItems = ref<Set<TableItem>>(new Set([]))
+const isSelecting = computed(() => selectedItems.value.size > 0)
 
 const isSortable = computed(() => {
   const hasSortableFields =
@@ -191,9 +243,16 @@ const tableClasses = computed(() => ({
   'b-table-sortable': isSortable.value,
   'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
   'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
+  'b-table-busy': busyBoolean.value,
+  'b-table-selectable': selectableBoolean.value,
+  [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
+  'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
 }))
 
 const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
+const addSelectableCell = computed(
+  () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
+)
 
 const {
   computedItems,
@@ -221,6 +280,11 @@ filteredHandler.value = async (items) => {
     return
   }
   emit('filtered', items)
+}
+
+const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
+  handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
+  emit('rowClicked', row, index, e)
 }
 
 const onFieldHeadClick = (
@@ -297,20 +361,121 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   },
 ]
 
+const getRowClasses = (
+  item: TableItem | null,
+  type: string
+): string | Array<any> | null | undefined => {
+  const classesArray = [
+    selectableBoolean.value && item && selectedItems.value.has(item)
+      ? `selected table-${props.selectionVariant}`
+      : null,
+  ]
+
+  if (props.tbodyTrClass) {
+    const extraClasses = props.tbodyTrClass(item, type)
+    if (extraClasses) {
+      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
+    }
+  }
+  return classesArray
+}
+
+const getBusyRowClasses = () => {
+  const classesArray = [{'b-table-static-busy': props.items.length === 0}]
+
+  if (props.tbodyTrClass) {
+    const extraClasses = props.tbodyTrClass(null, 'table-busy')
+    if (extraClasses) {
+      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
+    }
+  }
+  return classesArray
+}
+
+const notifySelectionEvent = () => {
+  if (!selectableBoolean.value) return
+  emit('selection', Array.from(selectedItems.value))
+}
+
+const handleRowSelection = (
+  row: TableItem,
+  index: number,
+  shiftClicked = false,
+  ctrlClicked = false,
+  metaClicked = false
+) => {
+  if (!selectableBoolean.value) return
+
+  if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
+    const lastSelectedItem = Array.from(selectedItems.value).pop()
+    const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
+    const selectStartIndex = Math.min(lastSelectedIndex, index)
+    const selectEndIndex = Math.max(lastSelectedIndex, index)
+    props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
+      if (!selectedItems.value.has(item)) {
+        selectedItems.value.add(item)
+        emit('rowSelected', item)
+      }
+    })
+  } else if (ctrlClicked || metaClicked) {
+    if (selectedItems.value.has(row)) {
+      selectedItems.value.delete(row)
+      emit('rowUnselected', row)
+    } else if (props.selectMode === 'range' || props.selectMode === 'multi') {
+      selectedItems.value.add(row)
+      emit('rowSelected', row)
+    } else {
+      selectedItems.value.forEach((item) => emit('rowUnselected', item))
+      selectedItems.value.clear()
+      selectedItems.value.add(row)
+      emit('rowSelected', row)
+    }
+  } else {
+    selectedItems.value.forEach((item) => emit('rowUnselected', item))
+    selectedItems.value.clear()
+    selectedItems.value.add(row)
+    emit('rowSelected', row)
+  }
+
+  notifySelectionEvent()
+}
+
 const selectAllRows = () => {
-  liteTable.value.selectAllRows()
+  if (!selectableBoolean.value) return
+  const unselectableItems = selectedItems.value.size > 0 ? Array.from(selectedItems.value) : []
+  selectedItems.value = new Set([...props.items])
+  selectedItems.value.forEach((item) => {
+    if (unselectableItems.includes(item)) return
+    emit('rowSelected', item)
+  })
+  notifySelectionEvent()
 }
 
 const clearSelected = () => {
-  liteTable.value.clearSelected()
+  if (!selectableBoolean.value) return
+  selectedItems.value.forEach((item) => {
+    emit('rowUnselected', item)
+  })
+  selectedItems.value = new Set([])
+  notifySelectionEvent()
 }
 
 const selectRow = (index: number) => {
-  liteTable.value.selectRow(index)
+  if (!selectableBoolean.value) return
+  const item = props.items[index]
+  if (!item || selectedItems.value.has(item)) return
+  selectedItems.value.add(item)
+  emit('rowSelected', item)
+  notifySelectionEvent()
 }
 
 const unselectRow = (index: number) => {
-  liteTable.value.unselectRow(index)
+  if (!selectableBoolean.value) return
+  const item = props.items[index]
+  if (!item || !selectedItems.value.has(item)) return
+  selectedItems.value.delete(item)
+  emit('rowUnselected', item)
+  notifySelectionEvent()
 }
 
 const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
