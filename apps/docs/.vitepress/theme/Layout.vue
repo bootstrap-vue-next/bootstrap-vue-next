@@ -41,32 +41,14 @@
     <div class="d-flex gap-2 flex-wrap">
       <BNav class="d-flex gap-4">
         <BNavItem
-          :href="globalData.githubUrl"
-          :link-attrs="{'aria-label': 'Open Our Github'}"
+          v-for="link in headerExternalLinks"
+          :href="link.url"
+          :link-attrs="{'aria-label': link.label}"
           target="_blank"
           rel="noopener"
           link-classes="py-1 px-0"
         >
-          <GithubIcon height="1.1rem" aria-hidden />
-        </BNavItem>
-        <BNavItem
-          :href="globalData.opencollectiveUrl"
-          :link-attrs="{'aria-label': 'Open Our Opencollective'}"
-          target="_blank"
-          rel="noopener"
-          link-classes="py-1 px-0"
-        >
-          <OpencollectiveIcon height="1.1rem" aria-hidden />
-        </BNavItem>
-        <BNavItem
-          :href="globalData.discordUrl"
-          :link-attrs="{'aria-label': 'Open Our Discord Server'}"
-          aria-label=""
-          target="_blank"
-          rel="noopener"
-          link-classes="py-1 px-0"
-        >
-          <DiscordIcon height="1.1rem" aria-hidden />
+          <component :is="link.icon()" height="1.1rem" aria-hidden />
         </BNavItem>
         <div class="border border-secondary"></div>
         <ClientOnly>
@@ -183,6 +165,12 @@ import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
 const {page} = useData()
 const route = useRoute()
 
+const globalData = inject(appInfoKey, {
+  discordUrl: '',
+  githubUrl: '',
+  opencollectiveUrl: '',
+})
+
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const sidebar = ref(isLargeScreen.value)
 const onThisPage = ref(isLargeScreen.value)
@@ -210,24 +198,23 @@ const headerLinks = [
   },
 ]
 
-watch(isLargeScreen, (newValue) => {
-  if (newValue === true) {
-    sidebar.value = true
-    onThisPage.value = true
-    return
-  }
-  sidebar.value = false
-  onThisPage.value = false
-})
-
-watch(
-  () => route.path,
-  () => {
-    if (isLargeScreen.value === false) {
-      sidebar.value = false
-    }
-  }
-)
+const headerExternalLinks = [
+  {
+    url: globalData.githubUrl,
+    label: 'Open Our Github',
+    icon: () => GithubIcon,
+  },
+  {
+    url: globalData.opencollectiveUrl,
+    label: 'Open Our Opencollective',
+    icon: () => OpencollectiveIcon,
+  },
+  {
+    url: globalData.discordUrl,
+    label: 'Open Our Discord Server',
+    icon: () => DiscordIcon,
+  },
+]
 
 const dark = useColorMode({
   persist: true,
@@ -247,11 +234,24 @@ const set = (newValue: keyof typeof map) => {
   dark.value = newValue
 }
 
-const globalData = inject(appInfoKey, {
-  discordUrl: '',
-  githubUrl: '',
-  opencollectiveUrl: '',
+watch(isLargeScreen, (newValue) => {
+  if (newValue === true) {
+    sidebar.value = true
+    onThisPage.value = true
+    return
+  }
+  sidebar.value = false
+  onThisPage.value = false
 })
+
+watch(
+  () => route.path,
+  () => {
+    if (isLargeScreen.value === false) {
+      sidebar.value = false
+    }
+  }
+)
 </script>
 
 <style lang="scss">
