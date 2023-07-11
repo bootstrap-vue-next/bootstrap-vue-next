@@ -2,49 +2,12 @@
   <div class="bd-links-nav">
     <BListGroup v-if="!isLargeScreen">
       <strong class="bd-links-heading"> <GearIcon aria-hidden /> General </strong>
-      <BListGroupItem>
+      <BListGroupItem v-for="link in headerLinks" :key="link.label">
         <BLink
-          :to="withBase('/docs')"
-          :active="routerRoute.path === `${withBase('/docs')}.html`"
+          :active="routerRoute.path === `${link.route}.html`"
           class="px-2 ms-2 rounded"
           active-class="bg-primary text-light"
-          >Getting Started</BLink
-        >
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink
-          :to="withBase('/docs/icons')"
-          :active="routerRoute.path === `${withBase('/docs/icons')}.html`"
-          class="px-2 ms-2 rounded"
-          active-class="bg-primary text-light"
-          >Icons</BLink
-        >
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink
-          :to="withBase('/docs/types')"
-          :active="routerRoute.path === `${withBase('/docs/types')}.html`"
-          class="px-2 ms-2 rounded"
-          active-class="bg-primary text-light"
-          >Types</BLink
-        >
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink
-          :to="withBase('/docs/reference')"
-          :active="routerRoute.path === `${withBase('/docs/reference')}.html`"
-          class="px-2 ms-2 rounded"
-          active-class="bg-primary text-light"
-          >Reference</BLink
-        >
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink
-          :to="withBase('/docs/migration-guide')"
-          :active="routerRoute.path === `${withBase('/docs/migration-guide')}.html`"
-          class="px-2 ms-2 rounded"
-          active-class="bg-primary text-light"
-          >Migrate</BLink
+          >{{ link.label }}</BLink
         >
       </BListGroupItem>
     </BListGroup>
@@ -92,6 +55,29 @@ const routeLocationComposables = (name: string): string =>
   withBase(`/docs/composables/${name}`).trim()
 const routeLocationDirectives = (name: string): string =>
   withBase(`/docs/directives/${name}`).trim()
+
+const headerLinks = [
+  {
+    route: withBase('/docs'),
+    label: 'Getting Started',
+  },
+  {
+    route: withBase('/docs/icons'),
+    label: 'Icons',
+  },
+  {
+    route: withBase('/docs/types'),
+    label: 'Types',
+  },
+  {
+    route: withBase('/docs/reference'),
+    label: 'Reference',
+  },
+  {
+    route: withBase('/docs/migration-guide'),
+    label: 'Migrate',
+  },
+]
 
 const componentsList: {name: string}[] = [
   {name: 'Accordion'},

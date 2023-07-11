@@ -64,7 +64,7 @@
         </ClientOnly>
       </BNav>
       <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
-        On the page
+        On this page
         <ChevronRight aria-hidden />
       </BNavbarToggle>
     </div>
