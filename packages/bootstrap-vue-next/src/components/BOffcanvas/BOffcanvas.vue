@@ -38,12 +38,7 @@
                 <BButton v-if="hasHeaderCloseSlot" v-bind="headerCloseAttrs" @click="hide('close')">
                   <slot name="header-close" />
                 </BButton>
-                <BCloseButton
-                  v-else
-                  ref="closeButton"
-                  v-bind="headerCloseAttrs"
-                  @click="hide('close')"
-                />
+                <BCloseButton v-else v-bind="headerCloseAttrs" @click="hide('close')" />
               </template>
             </slot>
           </div>

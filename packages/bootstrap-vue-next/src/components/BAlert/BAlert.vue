@@ -15,7 +15,7 @@
         <BButton v-if="hasCloseSlot" v-bind="closeAttrs" @click="hide">
           <slot name="close" />
         </BButton>
-        <BCloseButton v-else ref="closeButton" v-bind="closeAttrs" @click="hide" />
+        <BCloseButton v-else v-bind="closeAttrs" @click="hide" />
       </template>
     </div>
   </BTransition>
