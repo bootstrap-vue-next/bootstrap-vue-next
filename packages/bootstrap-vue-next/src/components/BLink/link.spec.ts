@@ -139,7 +139,7 @@ describe('link', () => {
     })
 
     expect(wrapper.element.tagName).toBe('A')
-    expect(wrapper.classes()).toContain('active')
+    expect(wrapper.classes()).toContain('router-link-active')
     expect(wrapper.classes().length).toBe(1)
   })
 
