@@ -1,5 +1,5 @@
 <template>
-  <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" data-bs-theme="dark">
+  <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" v-b-color-mode="'dark'">
     <div class="d-flex gap-2 align-items-center">
       <BNavbarToggle v-b-toggle.sidebar-menu class="text-light" />
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
@@ -204,6 +204,7 @@ import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
+import {vBColorMode} from 'bootstrap-vue-next'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
