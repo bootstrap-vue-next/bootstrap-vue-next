@@ -143,7 +143,7 @@ const props = withDefaults(
     emptyText?: string
     emptyFilteredText?: string
     fieldColumnClasses?: (field: TableFieldObject) => Record<string, any>[]
-    tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
+    tbodyTrClass?: (item: TableItem | null, type: string) => string | any[] | null | undefined
   }>(),
   {
     perPage: undefined,
@@ -363,10 +363,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   },
 ]
 
-const getRowClasses = (
-  item: TableItem | null,
-  type: string
-): string | Array<any> | null | undefined => {
+const getRowClasses = (item: TableItem | null, type: string): string | any[] | null | undefined => {
   const classesArray = [
     selectableBoolean.value && item && selectedItems.value.has(item)
       ? `selected table-${props.selectionVariant}`
@@ -536,9 +533,7 @@ watch(
   (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
 )
 
-onMounted(() => {
-  callItemsProvider()
-})
+onMounted(callItemsProvider)
 
 defineExpose({
   selectAllRows,
@@ -548,4 +543,3 @@ defineExpose({
   refresh: callItemsProvider,
 })
 </script>
-./tableItems ../../composables/tableItems

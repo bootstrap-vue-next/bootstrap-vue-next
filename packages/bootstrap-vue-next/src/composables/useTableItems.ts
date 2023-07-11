@@ -13,7 +13,84 @@ type TableItemsProcessingProps = {
   sortCompare?: BTableSortCompare
 }
 
-export const useTableItems = (
+const sortItems = (
+  fields?: TableField[],
+  items?: TableItem<Record<string, any>>[],
+  sortBy?: string,
+  sortDesc?: boolean,
+  sorter?: BTableSortCompare
+) => {
+  if (fields === undefined || items === undefined || sortBy === undefined || sortDesc === undefined)
+    return items ?? []
+  const sortKey = sortBy
+  return items.sort((a, b) => {
+    if (sorter !== undefined) {
+      return sorter(a, b, sortBy, sortDesc)
+    }
+    const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
+    const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
+    if (aHigher) {
+      return sortDesc ? -1 : 1
+    }
+    const bHigher = realVal(b[sortKey]) > realVal(a[sortKey])
+    if (bHigher) {
+      return sortDesc ? 1 : -1
+    }
+    return 0
+  })
+}
+
+const filterItems = (
+  items: TableItem<Record<string, any>>[],
+  filter: string,
+  filterable?: string[]
+) =>
+  items.filter(
+    (item) =>
+      Object.entries(item).filter((item) => {
+        const [key, val] = item
+        if (
+          !val ||
+          key[0] === '_' ||
+          (filterable && filterable.length > 0 && !filterable.includes(key))
+        )
+          return false
+        const itemValue: string =
+          typeof val === 'object'
+            ? JSON.stringify(Object.values(val))
+            : typeof val === 'string'
+            ? val
+            : val.toString()
+        return itemValue.toLowerCase().includes(filter.toLowerCase())
+      }).length > 0
+  )
+
+const mapItems = (
+  items: Ref<TableItem[]>,
+  props: TableItemsProcessingProps,
+  flags: Record<string, Ref<boolean>>,
+  sortBy?: Ref<string | undefined>
+): TableItem[] => {
+  let mappedItems: TableItem[] = items.value
+
+  if ('isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter) {
+    mappedItems = filterItems(mappedItems, props.filter, props.filterable)
+  }
+
+  if ('isSortable' in flags && flags.isSortable.value === true) {
+    mappedItems = sortItems(
+      props.fields,
+      mappedItems,
+      sortBy?.value,
+      flags.sortDescBoolean.value,
+      props.sortCompare
+    )
+  }
+
+  return mappedItems
+}
+
+const useTableItems = (
   tableProps: TableItemsProcessingProps,
   flags: Record<string, Ref<boolean>>,
   usesProvider: Ref<boolean>,
@@ -77,82 +154,5 @@ export const useTableItems = (
     computedDisplayItems,
   }
 }
-
-const mapItems = (
-  items: Ref<TableItem[]>,
-  props: TableItemsProcessingProps,
-  flags: Record<string, Ref<boolean>>,
-  sortBy?: Ref<string | undefined>
-): TableItem[] => {
-  let mappedItems: TableItem[] = items.value
-
-  if ('isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter) {
-    mappedItems = filterItems(mappedItems, props.filter, props.filterable)
-  }
-
-  if ('isSortable' in flags && flags.isSortable.value === true) {
-    mappedItems = sortItems(
-      props.fields,
-      mappedItems,
-      sortBy?.value,
-      flags.sortDescBoolean.value,
-      props.sortCompare
-    )
-  }
-
-  return mappedItems
-}
-
-const sortItems = (
-  fields?: TableField[],
-  items?: TableItem<Record<string, any>>[],
-  sortBy?: string,
-  sortDesc?: boolean,
-  sorter?: BTableSortCompare
-) => {
-  if (fields === undefined || items === undefined || sortBy === undefined || sortDesc === undefined)
-    return items ?? []
-  const sortKey = sortBy
-  return items.sort((a, b) => {
-    if (sorter !== undefined) {
-      return sorter(a, b, sortBy, sortDesc)
-    }
-    const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
-    const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
-    if (aHigher) {
-      return sortDesc ? -1 : 1
-    }
-    const bHigher = realVal(b[sortKey]) > realVal(a[sortKey])
-    if (bHigher) {
-      return sortDesc ? 1 : -1
-    }
-    return 0
-  })
-}
-
-const filterItems = (
-  items: TableItem<Record<string, any>>[],
-  filter: string,
-  filterable?: string[]
-) =>
-  items.filter(
-    (item) =>
-      Object.entries(item).filter((item) => {
-        const [key, val] = item
-        if (
-          !val ||
-          key[0] === '_' ||
-          (filterable && filterable.length > 0 && !filterable.includes(key))
-        )
-          return false
-        const itemValue: string =
-          typeof val === 'object'
-            ? JSON.stringify(Object.values(val))
-            : typeof val === 'string'
-            ? val
-            : val.toString()
-        return itemValue.toLowerCase().includes(filter.toLowerCase())
-      }).length > 0
-  )
 
 export default useTableItems
