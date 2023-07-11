@@ -1,6 +1,33 @@
 # Changelog
 
 
+## [0.9.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.22...bootstrap-vue-next-v0.9.23) (2023-07-08)
+
+
+### Features
+
+* **BNavItem:** add prop linkAttrs so you can add specific attributes to the link that aren't included as props ([14d1ebf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/14d1ebfbc533e8a9217465d117e0a50978987b77))
+
+
+### Bug Fixes
+
+* **BOffcanvas:** Aria enhancements -- multiple Offcanvas causes duplicate id ([e8bcda5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e8bcda5260d62c87b03f44e6e03fb9ce991cdb6d))
+* replace some instances of TS 'as' with 'satisfies' ([14d1ebf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/14d1ebfbc533e8a9217465d117e0a50978987b77))
+
+## [0.9.22](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.21...bootstrap-vue-next-v0.9.22) (2023-07-07)
+
+
+### Features
+
+* **BAvatar:** link and router support. ([ba06fa2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba06fa2d985cab7232602d0b97a3077099c84802))
+
+## [0.9.21](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.20...bootstrap-vue-next-v0.9.21) (2023-07-06)
+
+
+### Bug Fixes
+
+* **package:** EXPORTS_TYPES_SHOULD_BE_FIRST ([5dbf5b8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5dbf5b8ab31360962b7cc5cc629ee8f4f02b63b0))
+
 ## [0.9.20](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.19...bootstrap-vue-next-v0.9.20) (2023-07-04)
 
 

@@ -24,32 +24,43 @@
 </template>
 
 <script setup lang="ts">
-import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
+import {
+  avatarGroupInjectionKey,
+  isEmptySlot,
+  isLink,
+  isNumeric,
+  pluckProps,
+  toFloat,
+} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, Size, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
+import BLink from '../BLink/BLink.vue'
+import type {BLinkProps} from '../../types/BLinkProps'
 
 const props = withDefaults(
-  defineProps<{
-    alt?: string
-    ariaLabel?: string
-    badge?: boolean | string
-    badgeLeft?: Booleanish
-    badgeOffset?: string
-    badgeTop?: Booleanish
-    badgeVariant?: ColorVariant | null
-    button?: Booleanish
-    buttonType?: ButtonType
-    disabled?: Booleanish
-    icon?: string
-    rounded?: boolean | string
-    size?: Size | string // TODO number --> compat
-    square?: Booleanish
-    src?: string
-    text?: string
-    textVariant?: TextColorVariant | null
-    variant?: ColorVariant | null
-  }>(),
+  defineProps<
+    {
+      alt?: string
+      ariaLabel?: string
+      badge?: boolean | string
+      badgeLeft?: Booleanish
+      badgeOffset?: string
+      badgeTop?: Booleanish
+      badgeVariant?: ColorVariant | null
+      button?: Booleanish
+      buttonType?: ButtonType
+      disabled?: Booleanish
+      icon?: string
+      rounded?: boolean | string
+      size?: Size | string // TODO number --> compat
+      square?: Booleanish
+      src?: string
+      text?: string
+      textVariant?: TextColorVariant | null
+      variant?: ColorVariant | null
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
   {
     ariaLabel: undefined,
     badgeOffset: undefined,
@@ -69,6 +80,25 @@ const props = withDefaults(
     rounded: 'circle',
     square: false,
     variant: 'secondary',
+    // Link props
+    active: undefined,
+    activeClass: 'router-link-active',
+    append: false,
+    href: undefined,
+    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    rel: undefined,
+    replace: false,
+    routerComponentName: 'router-link',
+    target: '_self',
+    to: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
   }
 )
 
@@ -103,6 +133,8 @@ const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
 
 const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 
+const computedLink = computed<boolean>(() => isLink(props))
+
 const computedSize = computed<string | null>(
   () => parentData?.size.value ?? computeSize(props.size)
 )
@@ -114,9 +146,31 @@ const computedVariant = computed<ColorVariant | null>(
 const computedRounded = computed<string | boolean>(() => parentData?.rounded.value ?? props.rounded)
 
 const computedAttrs = computed(() => ({
-  'type': buttonBoolean.value ? props.buttonType : undefined,
+  'type': buttonBoolean.value && !computedLink.value ? props.buttonType : undefined,
   'aria-label': props.ariaLabel || null,
   'disabled': disabledBoolean.value || null,
+  // Link props
+  ...(computedLink.value
+    ? pluckProps(props, {
+        active: true,
+        activeClass: true,
+        append: true,
+        href: true,
+        rel: true,
+        replace: true,
+        routerComponentName: true,
+        target: true,
+        to: true,
+        variant: true,
+        opacity: true,
+        opacityHover: true,
+        underlineVariant: true,
+        underlineOffset: true,
+        underlineOffsetHover: true,
+        underlineOpacity: true,
+        underlineOpacityHover: true,
+      } as Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+    : {}),
 }))
 
 const badgeClasses = computed(() => ({
@@ -185,7 +239,9 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const computedTag = computed<'button' | 'span'>(() => (buttonBoolean.value ? 'button' : 'span'))
+const computedTag = computed<typeof BLink | 'button' | 'span'>(() =>
+  computedLink.value ? BLink : buttonBoolean.value ? 'button' : 'span'
+)
 
 const computedStyle = computed<CSSProperties>(() => ({
   ...marginStyle.value,
@@ -197,7 +253,7 @@ const computeContrastVariant = (colorVariant: ColorVariant): 'dark' | 'light' =>
   colorVariant === 'light' || colorVariant === 'warning' ? 'dark' : 'light'
 
 const clicked = (e: MouseEvent): void => {
-  if (!disabledBoolean.value && buttonBoolean.value) emit('click', e)
+  if (!disabledBoolean.value && (computedLink.value || buttonBoolean.value)) emit('click', e)
 }
 
 const onImgError = (e: Event): void => emit('img-error', e)
