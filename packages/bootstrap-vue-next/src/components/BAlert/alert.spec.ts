@@ -156,6 +156,24 @@ describe('alert', () => {
     expect($bclosebutton.exists()).toBe(false)
   })
 
+  it('nested div does not have BCloseButton when prop dismissible but also prop closeContent', () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    const $bclosebutton = $div.findComponent(BCloseButton)
+    expect($bclosebutton.exists()).toBe(false)
+  })
+
+  it('nested div has BButton when prop dismissible but also prop closeContent', () => {
+    const wrapper = mount(BAlert, {
+      props: {modelValue: true, dismissible: true, closeContent: 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    const $bbutton = $div.findComponent(BButton)
+    expect($bbutton.exists()).toBe(true)
+  })
+
   it('nested div has BButton when prop dismissible but also slot close', () => {
     const wrapper = mount(BAlert, {
       props: {modelValue: true, dismissible: true},

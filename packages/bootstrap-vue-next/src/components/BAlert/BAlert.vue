@@ -12,8 +12,10 @@
     >
       <slot />
       <template v-if="dismissibleBoolean">
-        <BButton v-if="hasCloseSlot" v-bind="closeAttrs" @click="hide">
-          <slot name="close" />
+        <BButton v-if="hasCloseSlot || closeContent" v-bind="closeAttrs" @click="hide">
+          <slot name="close">
+            {{ closeContent }}
+          </slot>
         </BButton>
         <BCloseButton v-else v-bind="closeAttrs" @click="hide" />
       </template>
@@ -37,6 +39,7 @@ const props = withDefaults(
     closeClass?: ClassValue
     closeLabel?: string
     closeWhite?: Booleanish
+    closeContent?: string
     noHoverPause?: Booleanish
     dismissible?: Booleanish
     fade?: Booleanish
@@ -51,6 +54,7 @@ const props = withDefaults(
     closeClass: undefined,
     closeLabel: 'Close',
     closeWhite: false,
+    closeContent: undefined,
     noHoverPause: false,
     interval: 1000,
     dismissible: false,
@@ -64,6 +68,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'close': []
+  'closed': []
   'close-countdown': [value: number]
   'update:modelValue': [value: boolean | number]
 }>()
@@ -134,6 +139,8 @@ const hide = (): void => {
     modelValue.value = 0
     stop()
   }
+
+  emit('closed')
 }
 
 // TODO mouseleave/mouseenter could be replaced with useElementHover with a watcher
