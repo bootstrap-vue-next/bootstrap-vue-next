@@ -1,7 +1,7 @@
 <template>
   <BNavbar variant="primary" sticky="top" toggleable="lg" :container="true" v-b-color-mode="'dark'">
     <div class="d-flex gap-2 align-items-center">
-      <BNavbarToggle v-b-toggle.sidebar-menu class="text-light" />
+      <BNavbarToggle v-b-toggle.sidebar-menu />
       <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,40 +28,13 @@
       <BNavbarNav>
         <BNav>
           <BNavItem
-            :to="withBase('/docs')"
-            :active="route.path === `${withBase('/docs')}.html`"
+            v-for="link in headerLinks"
+            :to="link.route"
+            :active="route.path === `${link.route}.html`"
             class="py-2"
             active-class="active fw-bold"
-            >Getting Started</BNavItem
+            >{{ link.label }}</BNavItem
           >
-          <BNavItem
-            :to="withBase('/docs/icons')"
-            :active="route.path === `${withBase('/docs/icons')}.html`"
-            class="py-2"
-            active-class="active fw-bold"
-            >Icons
-          </BNavItem>
-          <BNavItem
-            :to="withBase('/docs/types')"
-            :active="route.path === `${withBase('/docs/types')}.html`"
-            class="py-2"
-            active-class="active fw-bold"
-            >Types
-          </BNavItem>
-          <BNavItem
-            :to="withBase('/docs/reference')"
-            :active="route.path === `${withBase('/docs/reference')}.html`"
-            class="py-2"
-            active-class="active fw-bold"
-          >
-            Reference</BNavItem
-          >
-          <BNavItem
-            :to="withBase('/docs/migration-guide')"
-            :active="route.path === `${withBase('/docs/migration-guide')}.html`"
-            class="py-2"
-            >Migrate
-          </BNavItem>
         </BNav>
       </BNavbarNav>
     </BCollapse>
@@ -191,6 +164,7 @@ import {
   BRow,
   useColorMode,
   vBToggle,
+  vBColorMode,
 } from 'bootstrap-vue-next'
 import {computed, inject, ref, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
@@ -204,7 +178,6 @@ import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
-import {vBColorMode} from 'bootstrap-vue-next'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
@@ -213,6 +186,29 @@ const route = useRoute()
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const sidebar = ref(isLargeScreen.value)
 const onThisPage = ref(isLargeScreen.value)
+
+const headerLinks = [
+  {
+    route: withBase('/docs'),
+    label: 'Getting Started',
+  },
+  {
+    route: withBase('/docs/icons'),
+    label: 'Icons',
+  },
+  {
+    route: withBase('/docs/types'),
+    label: 'Types',
+  },
+  {
+    route: withBase('/docs/reference'),
+    label: 'Reference',
+  },
+  {
+    route: withBase('/docs/migration-guide'),
+    label: 'Migrate',
+  },
+]
 
 watch(isLargeScreen, (newValue) => {
   if (newValue === true) {
