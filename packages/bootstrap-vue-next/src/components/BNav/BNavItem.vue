@@ -4,7 +4,7 @@
       class="nav-link"
       :class="linkClasses"
       v-bind="{...linkProps, ...linkAttrs}"
-      active-class="active"
+      :active-class="activeClass ?? 'active'"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
     >
