@@ -90,7 +90,7 @@ const mapItems = (
   return mappedItems
 }
 
-const useTableItems = (
+export default (
   tableProps: TableItemsProcessingProps,
   flags: Record<string, Ref<boolean>>,
   usesProvider: Ref<boolean>,
@@ -154,5 +154,3 @@ const useTableItems = (
     computedDisplayItems,
   }
 }
-
-export default useTableItems
