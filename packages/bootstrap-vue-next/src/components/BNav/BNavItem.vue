@@ -7,6 +7,7 @@
       :active-class="activeClass ?? 'active'"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
+      @click.stop="emit('click', $event)"
     >
       <slot />
     </BLink>
@@ -60,6 +61,10 @@ const props = withDefaults(
     // End link props
   }
 )
+
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
 
 const disabledBoolean = useBooleanish(() => props.disabled)
 
