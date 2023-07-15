@@ -56,11 +56,7 @@ const filterItems = (
         )
           return false
         const itemValue: string =
-          typeof val === 'object'
-            ? JSON.stringify(Object.values(val))
-            : typeof val === 'string'
-            ? val
-            : val.toString()
+          typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
         return itemValue.toLowerCase().includes(filter.toLowerCase())
       }).length > 0
   )
