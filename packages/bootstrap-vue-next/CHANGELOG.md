@@ -1,6 +1,21 @@
 # Changelog
 
 
+## [0.9.24](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.23...bootstrap-vue-next-v0.9.24) (2023-07-13)
+
+
+### Features
+
+* **BTable:** added tbodyTrClass prop to update the tbody &gt; rows styles based on function results ([2ca32a8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2ca32a8ba34458d736fd1dc8fdade7cd527440fb))
+* **BTable:** the sort-by prop is now has a shell value to be more flexible and can be used as a v-model, read-only prop, or don't be passed at all. ([480ac8b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/480ac8b09e56a27aa360aca4b1909d09a101a109))
+
+
+### Bug Fixes
+
+* **BLink:** fixed :active-class prop not beign added to the classes when the :active prop is set to true ([0ae54ae](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0ae54aee7cd29224cf16086f6c22fba57e941506))
+* **BLink:** prevented blink from having 'active' class when the link is active and have :active-class prop passed to it ([e9874d8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e9874d88b755aca4adf296b04fed5b37edf81f1a))
+* **BNavItem:** fixed :active-class prop not beign added to the classes when the :active prop is set to true ([92690de](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/92690decfaa3ccf3958a035e7d8af1b1d7b01a62))
+
 ## [0.9.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.22...bootstrap-vue-next-v0.9.23) (2023-07-08)
 
 
