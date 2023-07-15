@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [0.9.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.24...bootstrap-vue-next-v0.9.25) (2023-07-15)
+
+
+### Bug Fixes
+
+* **BNavItem:** BNavItem emitting click event when disabled fixes [#1284](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1284) ([8eb7371](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8eb73718c91f1577b07e6bb7ee862e5f34b32a87))
+* **omit:** can properly omit number values ([6902826](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6902826a2ac3370dc17f85ea2f8ff094c2c9c8c4))
+
 ## [0.9.24](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.23...bootstrap-vue-next-v0.9.24) (2023-07-13)
 
 
