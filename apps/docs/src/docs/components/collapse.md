@@ -253,9 +253,7 @@ at a time.
         </BCardHeader>
         <BCollapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
           <BCardBody>
-            <BCardText
-              >I start opened because <code>visible</code> is <code>true</code></BCardText
-            >
+            <BCardText>I start opened because <code>visible</code> is <code>true</code></BCardText>
             <BCardText>{{ text }}</BCardText>
           </BCardBody>
         </BCollapse>
@@ -404,9 +402,8 @@ import {
   BCardText,
   BCardBody,
   BCardHeader,
-  BCollapseBButton,
-  BButton,
   BCollapse,
+  BButton,
   vBToggle,
 } from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'

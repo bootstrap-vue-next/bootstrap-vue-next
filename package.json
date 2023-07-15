@@ -38,8 +38,7 @@
   },
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
-    "release-please": "^15.11.0",
+    "lint-staged": "^13.2.3",
     "turbo": "latest"
   },
   "engines": {
