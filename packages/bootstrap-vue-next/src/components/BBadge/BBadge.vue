@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {isLink, pluckProps} from '../../utils'
+import {isLink, pick} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
 import type {Booleanish} from '../../types'
@@ -81,27 +81,27 @@ const computedClasses = computed(() => ({
 
 const computedLinkProps = computed(() =>
   computedLink.value
-    ? pluckProps(props, {
-        active: true,
-        activeClass: true,
-        append: true,
-        disabled: true,
-        href: true,
-        rel: true,
-        replace: true,
-        routerComponentName: true,
-        target: true,
-        to: true,
-        variant: true,
-        opacity: true,
-        opacityHover: true,
-        underlineVariant: true,
-        underlineOffset: true,
-        underlineOffsetHover: true,
-        underlineOpacity: true,
-        underlineOpacityHover: true,
-        icon: true,
-      } satisfies Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+    ? pick(props, [
+        'active',
+        'activeClass',
+        'append',
+        'disabled',
+        'href',
+        'rel',
+        'replace',
+        'routerComponentName',
+        'target',
+        'to',
+        'variant',
+        'opacity',
+        'opacityHover',
+        'underlineVariant',
+        'underlineOffset',
+        'underlineOffsetHover',
+        'underlineOpacity',
+        'underlineOpacityHover',
+        'icon',
+      ])
     : {}
 )
 </script>
