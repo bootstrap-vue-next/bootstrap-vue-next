@@ -10,9 +10,7 @@ export const omit = <
   keysToPluck: B | (keyof A)[]
 ): Omit<A, B[number]> =>
   Object.keys(objToPluck)
-    .filter(
-      (key) => !keysToPluck.map((el) => (typeof el === 'string' ? el : el.toString())).includes(key)
-    )
+    .filter((key) => !keysToPluck.map((el) => el.toString()).includes(key))
     .reduce((result, key) => ({...result, [key]: objToPluck[key]}), {} as Omit<A, B[number]>)
 
 /**
