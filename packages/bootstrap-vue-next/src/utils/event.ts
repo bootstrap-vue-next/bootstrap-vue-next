@@ -4,7 +4,6 @@ import {isObject} from './inspect'
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
 export const parseEventOptions = (options: any): boolean | EventListenerOptions | undefined => {
-  /* istanbul ignore else: can't test in JSDOM, as it supports passive */
   if (HAS_PASSIVE_EVENT_SUPPORT) {
     return isObject(options) ? options : {capture: !!options || false}
   }

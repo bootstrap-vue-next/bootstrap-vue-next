@@ -3,6 +3,6 @@
   "name": "my-module-playground",
   "devDependencies": {
     "bootstrap-vue-next": "workspace:^",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.3.0"
   }
 }
