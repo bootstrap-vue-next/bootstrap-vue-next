@@ -7,6 +7,7 @@
       :active-class="activeClass ?? 'active'"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
+      @click.stop="emit('click', $event)"
     >
       <slot />
     </BLink>
@@ -18,7 +19,7 @@ import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import {useBooleanish} from '../../composables'
 import type {BLinkProps} from '../../types/BLinkProps'
-import {pluckProps} from '../../utils'
+import {pick} from '../../utils'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,29 +62,33 @@ const props = withDefaults(
   }
 )
 
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
+
 const disabledBoolean = useBooleanish(() => props.disabled)
 
 const linkProps = computed(() =>
-  pluckProps(props, {
-    active: true,
-    activeClass: true,
-    append: true,
-    disabled: true,
-    href: true,
-    icon: true,
-    opacity: true,
-    opacityHover: true,
-    rel: true,
-    replace: true,
-    routerComponentName: true,
-    target: true,
-    to: true,
-    underlineOffset: true,
-    underlineOffsetHover: true,
-    underlineOpacity: true,
-    underlineOpacityHover: true,
-    underlineVariant: true,
-    variant: true,
-  } satisfies Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+  pick(props, [
+    'active',
+    'activeClass',
+    'append',
+    'disabled',
+    'href',
+    'icon',
+    'opacity',
+    'opacityHover',
+    'rel',
+    'replace',
+    'routerComponentName',
+    'target',
+    'to',
+    'underlineOffset',
+    'underlineOffsetHover',
+    'underlineOpacity',
+    'underlineOpacityHover',
+    'underlineVariant',
+    'variant',
+  ])
 )
 </script>

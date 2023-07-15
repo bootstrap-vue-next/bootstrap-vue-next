@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {pluckProps} from '../../utils'
+import {pick} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
@@ -80,27 +80,27 @@ const computedAriaCurrent = computed(() => (activeBoolean.value ? props.ariaCurr
 
 const computedLinkProps = computed(() =>
   computedTag.value !== 'span'
-    ? pluckProps(props, {
-        active: true,
-        activeClass: true,
-        append: true,
-        disabled: true,
-        href: true,
-        rel: true,
-        replace: true,
-        routerComponentName: true,
-        target: true,
-        to: true,
-        variant: true,
-        opacity: true,
-        opacityHover: true,
-        underlineVariant: true,
-        underlineOffset: true,
-        underlineOffsetHover: true,
-        underlineOpacity: true,
-        underlineOpacityHover: true,
-        icon: true,
-      } satisfies Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+    ? pick(props, [
+        'active',
+        'activeClass',
+        'append',
+        'disabled',
+        'href',
+        'rel',
+        'replace',
+        'routerComponentName',
+        'target',
+        'to',
+        'variant',
+        'opacity',
+        'opacityHover',
+        'underlineVariant',
+        'underlineOffset',
+        'underlineOffsetHover',
+        'underlineOpacity',
+        'underlineOpacityHover',
+        'icon',
+      ])
     : {}
 )
 

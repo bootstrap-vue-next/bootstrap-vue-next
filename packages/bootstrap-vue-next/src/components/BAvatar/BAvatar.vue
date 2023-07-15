@@ -24,14 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  avatarGroupInjectionKey,
-  isEmptySlot,
-  isLink,
-  isNumeric,
-  pluckProps,
-  toFloat,
-} from '../../utils'
+import {avatarGroupInjectionKey, isEmptySlot, isLink, isNumeric, pick, toFloat} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, useSlots} from 'vue'
 import type {Booleanish, ButtonType, ColorVariant, Size, TextColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -151,25 +144,25 @@ const computedAttrs = computed(() => ({
   'disabled': disabledBoolean.value || null,
   // Link props
   ...(computedLink.value
-    ? pluckProps(props, {
-        active: true,
-        activeClass: true,
-        append: true,
-        href: true,
-        rel: true,
-        replace: true,
-        routerComponentName: true,
-        target: true,
-        to: true,
-        variant: true,
-        opacity: true,
-        opacityHover: true,
-        underlineVariant: true,
-        underlineOffset: true,
-        underlineOffsetHover: true,
-        underlineOpacity: true,
-        underlineOpacityHover: true,
-      } as Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+    ? pick(props, [
+        'active',
+        'activeClass',
+        'append',
+        'href',
+        'rel',
+        'replace',
+        'routerComponentName',
+        'target',
+        'to',
+        'variant',
+        'opacity',
+        'opacityHover',
+        'underlineVariant',
+        'underlineOffset',
+        'underlineOffsetHover',
+        'underlineOpacity',
+        'underlineOpacityHover',
+      ])
     : {}),
 }))
 

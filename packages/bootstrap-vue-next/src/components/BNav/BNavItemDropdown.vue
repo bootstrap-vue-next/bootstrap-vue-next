@@ -98,7 +98,7 @@ const dropdownValue = computed({
     modelValue.value = value
   },
 })
-const usableProps = computed(() => omit(props, ['modelValue'] as const))
+const usableProps = computed(() => omit(props, ['modelValue']))
 
 const close = () => {
   modelValue.value = false
