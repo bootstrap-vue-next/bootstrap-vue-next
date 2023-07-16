@@ -43,7 +43,7 @@ export default {
         },
         {
           prop: 'boundary',
-          type: 'Popper.Boundary',
+          type: 'FloatingUI.Boundary | FloatingUI.RootBoundary',
         },
         {
           prop: 'dark',
