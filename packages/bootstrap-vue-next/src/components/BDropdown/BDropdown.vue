@@ -57,6 +57,7 @@
 
 <script setup lang="ts">
 import {
+  autoUpdate,
   flip,
   offset as floatingOffset,
   type Middleware,
@@ -238,6 +239,7 @@ const {x, y, strategy, update} = useFloating(referencePlacement, floating, {
   placement: floatingPlacement,
   middleware: floatingMiddleware,
   strategy: props.strategy,
+  whileElementsMounted: autoUpdate,
 })
 
 const computedClasses = computed(() => ({
