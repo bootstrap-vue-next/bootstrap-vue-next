@@ -70,7 +70,7 @@
           <slot name="table-busy">
             <div class="d-flex align-items-center justify-content-center gap-2">
               <BSpinner class="align-middle" />
-              <strong>Loading...</strong>
+              <strong>{{ busyLoadingText }}</strong>
             </div>
           </slot>
         </td>
@@ -135,6 +135,7 @@ const props = withDefaults(
     selectionVariant?: ColorVariant | null
     stickyHeader?: Booleanish
     busy?: Booleanish
+    busyLoadingText?: string
     showEmpty?: Booleanish
     perPage?: number
     currentPage?: number
@@ -182,6 +183,7 @@ const props = withDefaults(
     selectionVariant: 'primary',
     stickyHeader: false,
     busy: false,
+    busyLoadingText: 'Loading...',
     showEmpty: false,
     currentPage: 1,
     emptyText: 'There are no records to show',
