@@ -139,7 +139,7 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
-import {isObject, startCase, titleCase} from '../../utils'
+import {get, isObject, startCase, titleCase} from '../../utils'
 import type {
   Booleanish,
   Breakpoint,
@@ -152,7 +152,6 @@ import type {
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
-import {get} from '../../utils/object'
 
 const props = withDefaults(
   defineProps<{
@@ -357,4 +356,3 @@ const getRowClasses = (item: TableItem, type = 'row') => {
   return classesArray
 }
 </script>
-../../composables/tableItems
