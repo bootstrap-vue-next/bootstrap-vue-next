@@ -69,7 +69,7 @@
       </BNavbarToggle>
     </div>
   </BNavbar>
-  <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
+  <BContainer fluid :toast="true" class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
       <ClientOnly>
         <BOffcanvas
