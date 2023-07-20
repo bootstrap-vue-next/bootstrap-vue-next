@@ -382,7 +382,7 @@ const getRowClasses = (item: TableItem | null, type: string): string | any[] | n
 }
 
 const getBusyRowClasses = () => {
-  const classesArray = [{'b-table-static-busy': props.items.length === 0}]
+  const classesArray = [{'b-table-static-busy': computedItems.value.length === 0}]
 
   if (props.tbodyTrClass) {
     const extraClasses = props.tbodyTrClass(null, 'table-busy')
