@@ -15,12 +15,12 @@
         <BSpinner class="btn-spinner" :small="size !== 'lg'" />
       </slot>
     </div>
-    <div
+    <span
       class="btn-content"
       :class="{'btn-loading-fill': loadingBoolean && loadingMode === 'fill'}"
     >
       <slot />
-    </div>
+    </span>
   </component>
 </template>
 
