@@ -26,16 +26,16 @@ Toasts are slightly translucent, too, so they blend over whatever they might app
 
 ## Plugin Usage
 
-The toast plugin allows for global access and handling of toasts for a single `<b-container>` instance.
+The toast plugin allows for global access and handling of toasts for a single `<BContainer>` instance.
 
 To use the plugin make sure to include it in your app.
 
-```js
+```ts
 import {BToastPlugin} from 'bootstrap-vue-next'
 app.use(BToastPlugin)
 ```
 
-Then designate a `<b-container>` component using the toast prop.
+Then designate a `<BContainer>` component using the toast prop.
 
 ```vue-html
 <b-container :toast="true" fluid="sm" position="position-fixed"></b-container>
@@ -43,10 +43,9 @@ Then designate a `<b-container>` component using the toast prop.
 
 We then use the toast composable to grab our root toast model for displaying and handling toasts.
 
-```js
-//setup function
+```ts
 import {useToast} from 'bootstrap-vue-next'
-let toast = useToast()
+const toast = useToast()
 ```
 
 Use `toast.show()` method to generate your toasts. The method accepts the following arguments
@@ -63,18 +62,22 @@ Use `toast.show()` method to generate your toasts. The method accepts the follow
   - `variant` : string ColorVariant
 
 <HighlightCard>
-<b-button class="" @click="show1">Show Toast</b-button>
-<b-button class="ms-2" @click="show2">Show Toast with Body</b-button>
+  <b-button class="" @click="show1">Show Toast</b-button>
+  <b-button class="ms-2" @click="show2">Show Toast with Body</b-button>
+  
   <template #html>
 
 ```vue
-<b-button class="" @click="show1">Show Toast</b-button>
-<b-button class="ms-2" @click="show2">Show Toast with Body</b-button>
+<template>
+  <b-button class="" @click="show1">Show Toast</b-button>
+  <b-button class="ms-2" @click="show2">Show Toast with Body</b-button>
+</template>
+
 <script setup lang="ts">
-let show1 = () => {
+const show1 = () => {
   toast.show({body: 'example title'}, {pos: 'bottom-right'})
 }
-let show2 = () => {
+const show2 = () => {
   toast.show(
     {title: 'example title', body: 'This is a toast'},
     {variant: 'info', pos: 'bottom-right'}
@@ -94,33 +97,36 @@ Toasts can be displayed as variants thru various helper methods or be set in `To
   <b-button class="" variant="danger" @click="variantshow1">Show Danger</b-button>
   <b-button class="ms-2" variant="info" @click="variantshow2">Show Info</b-button>
   <b-button class="ms-2" variant="warning" @click="variantshow3">Show Warning</b-button>
-  <b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
+  <b-button class="ms-2" variant="success" @click="variantshow4">Show Success</b-button>
   <template #html>
 
 ```vue
-<b-button class="" variant="danger" @click="variantshow1">Show Danger</b-button>
-<b-button class="ms-2" variant="info" @click="variantshow2">Show Info</b-button>
-<b-button class="ms-2" variant="warning" @click="variantshow3">Show Warning</b-button>
-<b-button class="ms-2" variant="success" @click="variantshow4">Show Sucess</b-button>
+<template>
+  <b-button class="" variant="danger" @click="VariantShow1">Show Danger</b-button>
+  <b-button class="ms-2" variant="info" @click="VariantShow2">Show Info</b-button>
+  <b-button class="ms-2" variant="warning" @click="VariantShow3">Show Warning</b-button>
+  <b-button class="ms-2" variant="success" @click="VariantShow4">Show Success</b-button>
+</template>
+
 <script setup lang="ts">
 import {useToast} from 'bootstrap-vue-next'
-let toast = useToast()
-let variantshow1 = () => {
+const toast = useToast()
+const VariantShow1 = () => {
   toast.show({title: 'Item Deleted'}, {pos: 'bottom-center', variant: 'danger'})
 }
-let variantshow2 = () => {
+const VariantShow2 = () => {
   toast.show(
     {title: 'New Message', body: 'This is a toast'},
     {pos: 'bottom-right', variant: 'info'}
   )
 }
-let variantshow3 = () => {
+const VariantShow3 = () => {
   toast.show(
     {title: 'Warning for Item', body: 'Please check list'},
     {pos: 'bottom-right', variant: 'warning'}
   )
 }
-let variantshow4 = () => {
+const VariantShow4 = () => {
   toast.show(
     {title: 'Event Created!', body: 'Bootstrap Event'},
     {pos: 'bottom-right', variant: 'success'}
@@ -135,36 +141,36 @@ let variantshow4 = () => {
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
-import {data} from '../../data/components/toast.data'
-import ComponentReference from '../../components/ComponentReference.vue'
-import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
-import HighlightCard from '../../components/HighlightCard.vue'
+  import {data} from '../../data/components/toast.data'
+  import ComponentReference from '../../components/ComponentReference.vue'
+  import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
+  import HighlightCard from '../../components/HighlightCard.vue'
 
-let toast = useToast()
+  let toast = useToast()
 
 
-  let show1 = () => {toast.show({title: 'example title'}, {pos:'bottom-right'})};
-  let show2 = () => {toast.show({title: 'example title', body: "This is a toast"}, {variant: 'info', pos:'bottom-right'})};
+    let show1 = () => {toast.show({title: 'example title'}, {pos:'bottom-right'})};
+    let show2 = () => {toast.show({title: 'example title', body: "This is a toast"}, {variant: 'info', pos:'bottom-right'})};
 
-    let variantshow1 = () => {
-    toast.show({title: 'Item Deleted'}, {pos: 'bottom-center', variant: 'danger'})
-  }
-  let variantshow2 = () => {
-    toast.show(
-      {title: 'New Message', body: 'This is a toast'},
-      {pos: 'bottom-right', variant: 'info'}
-    )
-  }
-  let variantshow3 = () => {
-    toast.show(
-      {title: 'Warning for Item', body: 'Please check list'},
-      {pos: 'bottom-right', variant: 'warning'}
-    )
-  }
-  let variantshow4 = () => {
-    toast.show(
-      {title: 'Event Created!', body: 'Bootstrap Event'},
-      {pos: 'bottom-right', variant: 'success'}
-    )
-  }
+      let variantshow1 = () => {
+      toast.show({title: 'Item Deleted'}, {pos: 'bottom-center', variant: 'danger'})
+    }
+    let variantshow2 = () => {
+      toast.show(
+        {title: 'New Message', body: 'This is a toast'},
+        {pos: 'bottom-right', variant: 'info'}
+      )
+    }
+    let variantshow3 = () => {
+      toast.show(
+        {title: 'Warning for Item', body: 'Please check list'},
+        {pos: 'bottom-right', variant: 'warning'}
+      )
+    }
+    let variantshow4 = () => {
+      toast.show(
+        {title: 'Event Created!', body: 'Bootstrap Event'},
+        {pos: 'bottom-right', variant: 'success'}
+      )
+    }
 </script>

@@ -163,7 +163,7 @@ export function getKey(): symbol {
   return injectkey
 }
 
-export function useToast(): ToastInstance | undefined {
+export const useToast = (): ToastInstance | undefined => {
   //let's get our controller to fetch the toast instance
   const controller = inject(getKey()) as ToastController
 

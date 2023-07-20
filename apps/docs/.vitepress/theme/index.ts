@@ -15,8 +15,6 @@ export default {
       opencollectiveUrl: 'https://opencollective.com/bootstrap-vue-next',
     })
 
-    if (!import.meta.env.SSR) {
-      ctx.app.use(BToastPlugin)
-    }
+    ctx.app.use(BToastPlugin)
   },
 } as Theme

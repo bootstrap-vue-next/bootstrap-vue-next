@@ -44,6 +44,7 @@ export default defineComponent({
     static: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     title: {type: String, default: undefined},
     modelValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    opacity: {type: Number as PropType<number>, default: 0.85},
     toastClass: {type: Array as PropType<string[]>, default: undefined},
     variant: {type: String as PropType<ColorVariant | null>, default: null},
   },
@@ -71,6 +72,11 @@ export default defineComponent({
     const classes = computed(() => ({
       [`b-toast-${props.variant}`]: props.variant !== null,
       show: localShow.value || isTransitioning.value,
+      // [`text-bg-${props.variant}`]: props.variant !== null,
+    }))
+
+    const styles = computed(() => ({
+      '--bs-bg-opacity': props.opacity,
     }))
 
     let dismissTimer: ReturnType<typeof setTimeout> | undefined
@@ -246,6 +252,7 @@ export default defineComponent({
           'div',
           {
             class: ['toast', props.toastClass, classes.value],
+            style: [styles.value],
             tabindex: '0',
           },
           $innertoast

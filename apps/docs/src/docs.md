@@ -330,8 +330,8 @@ BootstrapVue is the parent project for which this is based on. We consider Boots
 You can view the planned compatibility list in the following [section](./reference/parityList.md). It is _not_ a migration guide, which will be finalized upon v1.0.0.
 
 <script setup lang="ts">
-import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
-import {useLocalStorage} from '@vueuse/core'
+  import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
+  import {useLocalStorage} from '@vueuse/core'
 
-const codePreference = useLocalStorage('code-group-preference', 0)
+  const codePreference = useLocalStorage('code-group-preference', 0)
 </script>
