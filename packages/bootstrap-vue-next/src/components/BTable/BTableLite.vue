@@ -70,7 +70,7 @@
             <slot
               v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
               :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-              :value="item[field.key]"
+              :value="get(item, field.key)"
               :index="itemIndex"
               :item="item"
               :field="field"
@@ -152,6 +152,7 @@ import type {
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
+import {get} from '../../utils/object'
 
 const props = withDefaults(
   defineProps<{
@@ -285,7 +286,7 @@ const formatItem = (
   fieldKey: string,
   formatter?: TableFieldObjectFormatter<typeof item>
 ) => {
-  const val = item[fieldKey]
+  const val = get(item, fieldKey)
   if (formatter && typeof formatter === 'function') {
     return formatter(val, fieldKey, item)
   }

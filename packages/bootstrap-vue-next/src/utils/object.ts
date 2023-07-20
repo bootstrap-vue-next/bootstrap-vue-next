@@ -28,3 +28,26 @@ export const pick = <
     memo[prop] = objToPluck[prop]
     return memo
   }, {} as Record<PropertyKey, unknown>) as Pick<A, B[number]>
+
+/**
+ * Dynamically get a nested value from an array or
+ * object with a string.
+ *
+ * @example get(person, 'friends[0].name')
+ */
+export const get = <TDefault = unknown>(
+  value: any,
+  path: string,
+  defaultValue?: TDefault
+): TDefault => {
+  const segments = path.split(/[.[\]]/g)
+  let current: any = value
+  for (const key of segments) {
+    if (current === null) return defaultValue as TDefault
+    if (current === undefined) return defaultValue as TDefault
+    if (key.trim() === '') continue
+    current = current[key]
+  }
+  if (current === undefined) return defaultValue as TDefault
+  return current
+}
