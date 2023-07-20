@@ -1,15 +1,15 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-list-group>
-          <b-list-group-item>Cras justo odio</b-list-group-item>
-          <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-          <b-list-group-item>Morbi leo risus</b-list-group-item>
-          <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-          <b-list-group-item>Vestibulum at eros</b-list-group-item>
-        </b-list-group>
-      </b-col>
-    </b-row>
-  </b-container>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BListGroup>
+          <BListGroupItem>Cras justo odio</BListGroupItem>
+          <BListGroupItem>Dapibus ac facilisis in</BListGroupItem>
+          <BListGroupItem>Morbi leo risus</BListGroupItem>
+          <BListGroupItem>Porta ac consectetur ac</BListGroupItem>
+          <BListGroupItem>Vestibulum at eros</BListGroupItem>
+        </BListGroup>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>

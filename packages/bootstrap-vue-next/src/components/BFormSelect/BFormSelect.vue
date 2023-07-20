@@ -10,20 +10,20 @@
     :multiple="multipleBoolean || undefined"
     :size="computedSelectSize"
     :disabled="disabledBoolean"
-    :required="requiredBoolean"
-    :aria-required="requiredBoolean ? true : undefined"
+    :required="requiredBoolean || undefined"
+    :aria-required="requiredBoolean || undefined"
     :aria-invalid="computedAriaInvalid"
   >
     <slot name="first" />
     <template v-for="(option, index) in formOptions" :key="index">
-      <b-form-select-option-group
+      <BFormSelectOptionGroup
         v-if="Array.isArray((option as any).options)"
         :label="(option as any).label"
         :options="(option as any).options"
       />
       <!-- eslint-disable vue/no-v-text-v-html-on-component -->
       <!-- eslint-disable vue/no-v-html -->
-      <b-form-select-option
+      <BFormSelectOption
         v-else
         :value="(option as any).value"
         :disabled="(option as any).disabled"
@@ -41,62 +41,61 @@ import type {AriaInvalid, Booleanish, Size} from '../../types'
 import {computed, nextTick, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {normalizeOptions, useBooleanish, useId} from '../../composables'
+import {normalizeOptions, useBooleanish, useId, useStateClass} from '../../composables'
 import {useFocus, useVModel} from '@vueuse/core'
 
-interface BFormSelectProps {
-  ariaInvalid?: AriaInvalid
-  autofocus?: Booleanish
-  disabled?: Booleanish
-  disabledField?: string
-  form?: string
-  htmlField?: string
-  id?: string
-  labelField?: string
-  multiple?: Booleanish
-  name?: string
-  options?: unknown[] | Record<string, unknown>
-  optionsField?: string
-  plain?: Booleanish
-  required?: Booleanish
-  selectSize?: number
-  size?: Size
-  state?: Booleanish | null
-  textField?: string
-  valueField?: string
-  modelValue?: string | unknown[] | Record<string, unknown> | number | null
-}
+const props = withDefaults(
+  defineProps<{
+    ariaInvalid?: AriaInvalid
+    autofocus?: Booleanish
+    disabled?: Booleanish
+    disabledField?: string
+    form?: string
+    htmlField?: string
+    id?: string
+    labelField?: string
+    multiple?: Booleanish
+    name?: string
+    options?: unknown[] | Record<string, unknown>
+    optionsField?: string
+    plain?: Booleanish
+    required?: Booleanish
+    selectSize?: number
+    size?: Size
+    state?: Booleanish | null
+    textField?: string
+    valueField?: string
+    modelValue?: string | unknown[] | Record<string, unknown> | number | null
+  }>(),
+  {
+    form: undefined,
+    id: undefined,
+    name: undefined,
+    size: 'md',
+    ariaInvalid: undefined,
+    autofocus: false,
+    disabled: false,
+    disabledField: 'disabled',
+    htmlField: 'html',
+    state: null,
+    labelField: 'label',
+    multiple: false,
+    options: () => [],
+    optionsField: 'options',
+    plain: false,
+    required: false,
+    selectSize: 0,
+    textField: 'text',
+    valueField: 'value',
+    modelValue: '',
+  }
+)
 
-const props = withDefaults(defineProps<BFormSelectProps>(), {
-  form: undefined,
-  id: undefined,
-  name: undefined,
-  size: 'md',
-  ariaInvalid: undefined,
-  autofocus: false,
-  disabled: false,
-  disabledField: 'disabled',
-  htmlField: 'html',
-  state: null,
-  labelField: 'label',
-  multiple: false,
-  options: () => [],
-  optionsField: 'options',
-  plain: false,
-  required: false,
-  selectSize: 0,
-  textField: 'text',
-  valueField: 'value',
-  modelValue: '',
-})
-
-interface BFormSelectEmits {
-  (e: 'input', value: unknown): void
-  (e: 'update:modelValue', value: unknown): void
-  (e: 'change', value: unknown): void
-}
-
-const emit = defineEmits<BFormSelectEmits>()
+const emit = defineEmits<{
+  'input': [value: unknown]
+  'update:modelValue': [value: unknown]
+  'change': [value: unknown]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -116,20 +115,23 @@ const plainBoolean = useBooleanish(() => props.plain)
 const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
 
+const stateClass = useStateClass(stateBoolean)
+
 const input = ref<HTMLElement>()
 
-useFocus(input, {
+const {focused} = useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
-const computedClasses = computed(() => ({
-  'form-control': plainBoolean.value,
-  [`form-control-${props.size}`]: props.size !== 'md' && plainBoolean.value,
-  'form-select': !plainBoolean.value,
-  [`form-select-${props.size}`]: props.size !== 'md' && !plainBoolean.value,
-  'is-valid': stateBoolean.value === true,
-  'is-invalid': stateBoolean.value === false,
-}))
+const computedClasses = computed(() => [
+  stateClass.value,
+  {
+    'form-control': plainBoolean.value,
+    [`form-control-${props.size}`]: props.size !== 'md' && plainBoolean.value,
+    'form-select': !plainBoolean.value,
+    [`form-select-${props.size}`]: props.size !== 'md' && !plainBoolean.value,
+  },
+])
 
 const computedSelectSize = computed<number | undefined>(() =>
   props.selectSize || plainBoolean.value ? props.selectSize : undefined
@@ -153,6 +155,15 @@ const localValue = computed({
     nextTick(() => {
       emit('change', newValue)
     })
+  },
+})
+
+defineExpose({
+  focus: () => {
+    focused.value = true
+  },
+  blur: () => {
+    focused.value = false
   },
 })
 </script>

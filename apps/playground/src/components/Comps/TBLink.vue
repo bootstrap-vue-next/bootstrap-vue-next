@@ -1,32 +1,32 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-link :to="{name: 'index', path: '/' /* path is used when vue-router is not present */}"
-          >Home</b-link
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BLink :to="{name: 'index', path: '/' /* path is used when vue-router is not present */}"
+          >Home</BLink
         >
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-link
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BLink
           :to="{
             name: 'about',
             params: {id: '456'},
             query: {param: 'someVal'},
             path: '/about' /* path is used when vue-router is not present */,
           }"
-          >About</b-link
+          >About</BLink
         >
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <p>NB: navigation behavior depends of the usage of "vue-router"</p>
-      </b-col>
-    </b-row>
+      </BCol>
+    </BRow>
     <!-- activate "vue-router" in "main.ts" to test the "router-view" component
-      <router-view></router-view>
+      <RouterView />
       -->
-  </b-container>
+  </BContainer>
 </template>

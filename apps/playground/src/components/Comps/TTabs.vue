@@ -1,60 +1,60 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-tabs v-model="tabIndex" small>
-          <b-tab title="First">
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BTabs v-model="tabIndex" small>
+          <BTab title="First">
             <p>I'm the first tab</p>
-          </b-tab>
-          <b-tab title="Second">
+          </BTab>
+          <BTab title="Second">
             <p>I'm the second tab</p>
-          </b-tab>
-          <b-tab title="Third" disabled>
+          </BTab>
+          <BTab title="Third" disabled>
             <p>I'm a disabled tab!</p>
-          </b-tab>
-          <b-tab title="Fourth" disabled>
+          </BTab>
+          <BTab title="Fourth" disabled>
             <p>I'm a disabled tab!</p>
-          </b-tab>
-          <b-tab title="Fifth">
+          </BTab>
+          <BTab title="Fifth">
             <p>I'm the fifth tab</p>
-          </b-tab>
-          <b-tab title="Sixth" :disabled="true">
+          </BTab>
+          <BTab title="Sixth" :disabled="true">
             <p>I'm a disabled tab!</p>
-          </b-tab>
-        </b-tabs>
+          </BTab>
+        </BTabs>
 
         <div class="text-center">
-          <b-button-group class="mt-2">
-            <b-button @click="tabIndex--">Previous</b-button>
-            <b-button @click="tabIndex++">Next</b-button>
-          </b-button-group>
+          <BButtonGroup class="mt-2">
+            <BButton @click="tabIndex--">Previous</BButton>
+            <BButton @click="tabIndex++">Next</BButton>
+          </BButtonGroup>
 
           <div class="text-muted">Current Tab: {{ tabIndex }}</div>
         </div>
-      </b-col>
-    </b-row>
+      </BCol>
+    </BRow>
 
-    <b-row>
-      <b-col>
+    <BRow>
+      <BCol>
         <h4 class="my-3">Tabs with custom title</h4>
-        <b-tabs>
-          <b-tab active>
+        <BTabs>
+          <BTab active>
             <template #title>
-              <b-spinner type="grow" small />I'm
+              <BSpinner type="grow" small />I'm
               <i>custom</i>
               <strong>title</strong>
             </template>
             <p class="p-3">Tab contents 1</p>
-          </b-tab>
+          </BTab>
 
-          <b-tab>
-            <template #title> <b-spinner type="border" small />Tab 2 </template>
+          <BTab>
+            <template #title> <BSpinner type="border" small />Tab 2 </template>
             <p class="p-3">Tab contents 2</p>
-          </b-tab>
-        </b-tabs>
-      </b-col>
-    </b-row>
-  </b-container>
+          </BTab>
+        </BTabs>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

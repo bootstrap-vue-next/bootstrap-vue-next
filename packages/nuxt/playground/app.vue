@@ -1,16 +1,13 @@
 <template>
-  <div>
-    <b-modal v-model="show"> Nuxt module playground! </b-modal>
-    <b-button @click="show = !show"> Click me </b-button>
-    {{ a }}
+  <div style="min-height: 1000vh">
+    <BModal v-model="show"> Nuxt module playground! </BModal>
+    <BButton @click="show = !show"> Click me </BButton>
     {{ f }}
   </div>
 </template>
 
 <script setup>
-const show = ref(false)
-
-const a = useColorMode()
+const show = ref(true)
 
 const f = useBreadcrumb()
 </script>

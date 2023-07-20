@@ -4,62 +4,104 @@
   </component>
 </template>
 
-<script lang="ts">
-import {isLink, omit, pluckProps} from '../../utils'
+<script setup lang="ts">
+import {isLink, pick} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
-import type {Booleanish, ColorVariant} from '../../types'
-import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
+import {computed} from 'vue'
+import type {Booleanish} from '../../types'
+import BLink from '../BLink/BLink.vue'
+import type {BLinkProps} from '../../types/BLinkProps'
 
-const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
-export default defineComponent({
-  slots: Object as SlotsType<{
-    default?: Record<string, never>
-  }>,
-  components: {BLink},
-  props: {
-    ...linkProps,
-    pill: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    tag: {type: String, default: 'span'},
-    textIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    dotIndicator: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    variant: {type: String as PropType<ColorVariant | null>, default: 'secondary'},
-  },
-  setup(props) {
-    const pillBoolean = useBooleanish(() => props.pill)
-    const textIndicatorBoolean = useBooleanish(() => props.textIndicator)
-    const dotIndicatorBoolean = useBooleanish(() => props.dotIndicator)
-    const activeBoolean = useBooleanish(() => props.active)
-    const disabledBoolean = useBooleanish(() => props.disabled)
+const props = withDefaults(
+  defineProps<
+    {
+      pill?: Booleanish
+      tag?: string
+      textIndicator?: Booleanish
+      dotIndicator?: Booleanish
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
+  {
+    pill: false,
+    tag: 'span',
+    textIndicator: false,
+    dotIndicator: false,
+    variant: 'secondary',
+    // Link props
+    active: undefined,
+    activeClass: 'router-link-active',
+    append: false,
+    disabled: false,
+    href: undefined,
+    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    rel: undefined,
+    replace: false,
+    routerComponentName: 'router-link',
+    target: '_self',
+    to: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
+    icon: false,
+    // End link props
+  }
+)
 
-    const computedLink = computed<boolean>(() => isLink(props))
+const pillBoolean = useBooleanish(() => props.pill)
+const textIndicatorBoolean = useBooleanish(() => props.textIndicator)
+const dotIndicatorBoolean = useBooleanish(() => props.dotIndicator)
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
 
-    const computedTag = computed<string | typeof BLink>(() =>
-      computedLink.value ? BLink : props.tag
-    )
+const computedLink = computed<boolean>(() => isLink(props))
 
-    const computedClasses = computed(() => ({
-      [`bg-${props.variant}`]: props.variant !== null,
-      'active': activeBoolean.value,
-      'disabled': disabledBoolean.value,
-      'text-dark': props.variant !== null && ['warning', 'info', 'light'].includes(props.variant),
-      'rounded-pill': pillBoolean.value,
-      'position-absolute top-0 start-100 translate-middle':
-        textIndicatorBoolean.value || dotIndicatorBoolean.value,
-      'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
-      'text-decoration-none': computedLink.value,
-    }))
+const computedTag = computed<string | typeof BLink>(() => (computedLink.value ? BLink : props.tag))
 
-    const computedLinkProps = computed(() =>
-      computedLink.value ? pluckProps(props, linkProps) : {}
-    )
+const computedClasses = computed(() => ({
+  [`bg-${props.variant}`]: props.variant !== null,
+  'active': activeBoolean.value,
+  'disabled': disabledBoolean.value,
+  'text-dark': props.variant !== null && ['warning', 'info', 'light'].includes(props.variant),
+  'rounded-pill': pillBoolean.value,
+  'position-absolute top-0 start-100 translate-middle':
+    textIndicatorBoolean.value || dotIndicatorBoolean.value,
+  'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
+  'text-decoration-none': computedLink.value,
+}))
 
-    return {
-      computedClasses,
-      computedLinkProps,
-      computedTag,
-    }
-  },
-})
+const computedLinkProps = computed(() =>
+  computedLink.value
+    ? pick(props, [
+        'active',
+        'activeClass',
+        'append',
+        'disabled',
+        'href',
+        'rel',
+        'replace',
+        'routerComponentName',
+        'target',
+        'to',
+        'variant',
+        'opacity',
+        'opacityHover',
+        'underlineVariant',
+        'underlineOffset',
+        'underlineOffsetHover',
+        'underlineOpacity',
+        'underlineOpacityHover',
+        'icon',
+      ])
+    : {}
+)
 </script>

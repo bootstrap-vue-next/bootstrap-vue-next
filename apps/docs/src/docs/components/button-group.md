@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Group a series of buttons together on a single line or stack them in a vertical column with `<b-button-group>`.
+Group a series of buttons together on a single line or stack them in a vertical column with `<BButtonGroup>`.
 
 </div>
 
@@ -20,33 +20,33 @@ Button Groups are an easy way to group a series of buttons together.
 
 <HighlightCard>
   <div>
-    <b-button-group aria-label="Basic example">
-      <b-button>Button 1</b-button>
-      <b-button>Button 2</b-button>
-      <b-button>Button 3</b-button>
-    </b-button-group>
+    <BButtonGroup aria-label="Basic example">
+      <BButton>Button 1</BButton>
+      <BButton>Button 2</BButton>
+      <BButton>Button 3</BButton>
+    </BButtonGroup>
   </div>
   <div class="mt-3">
-    <b-button-group>
-      <b-button variant="success">Success</b-button>
-      <b-button variant="info">Info</b-button>
-      <b-button variant="warning">Warning</b-button>
-    </b-button-group>
+    <BButtonGroup>
+      <BButton variant="success">Success</BButton>
+      <BButton variant="info">Info</BButton>
+      <BButton variant="warning">Warning</BButton>
+    </BButtonGroup>
   </div>
   <template #html>
 
 ```vue-html
-<b-button-group>
-  <b-button>Button 1</b-button>
-  <b-button>Button 2</b-button>
-  <b-button>Button 3</b-button>
-</b-button-group>
+<BButtonGroup>
+  <BButton>Button 1</BButton>
+  <BButton>Button 2</BButton>
+  <BButton>Button 3</BButton>
+</BButtonGroup>
 
-<b-button-group>
-  <b-button variant="success">Success</b-button>
-  <b-button variant="info">Info</b-button>
-  <b-button variant="warning">Warning</b-button>
-</b-button-group>
+<BButtonGroup>
+  <BButton variant="success">Success</BButton>
+  <BButton variant="info">Info</BButton>
+  <BButton variant="warning">Warning</BButton>
+</BButtonGroup>
 ```
 
   </template>
@@ -64,46 +64,46 @@ need to specify the size on the individual buttons.
 
 <HighlightCard>
   <div>
-    <b-button-group>
-      <b-button>Button 1</b-button>
-      <b-button>Button 2</b-button>
-      <b-button>Button 3</b-button>
-    </b-button-group>
+    <BButtonGroup>
+      <BButton>Button 1</BButton>
+      <BButton>Button 2</BButton>
+      <BButton>Button 3</BButton>
+    </BButtonGroup>
   </div>
   <div class="mt-3">
-    <b-button-group size="sm">
-      <b-button>Left</b-button>
-      <b-button>Middle</b-button>
-      <b-button>Right</b-button>
-    </b-button-group>
+    <BButtonGroup size="sm">
+      <BButton>Left</BButton>
+      <BButton>Middle</BButton>
+      <BButton>Right</BButton>
+    </BButtonGroup>
   </div>
   <div class="mt-3">
-    <b-button-group size="lg">
-      <b-button>Left</b-button>
-      <b-button>Middle</b-button>
-      <b-button>Right</b-button>
-    </b-button-group>
+    <BButtonGroup size="lg">
+      <BButton>Left</BButton>
+      <BButton>Middle</BButton>
+      <BButton>Right</BButton>
+    </BButtonGroup>
   </div>
   <template #html>
 
 ```vue-html
-<b-button-group>
-  <b-button>Button 1</b-button>
-  <b-button>Button 2</b-button>
-  <b-button>Button 3</b-button>
-</b-button-group>
+<BButtonGroup>
+  <BButton>Button 1</BButton>
+  <BButton>Button 2</BButton>
+  <BButton>Button 3</BButton>
+</BButtonGroup>
 
-<b-button-group size="sm">
-  <b-button>Left</b-button>
-  <b-button>Middle</b-button>
-  <b-button>Right</b-button>
-</b-button-group>
+<BButtonGroup size="sm">
+  <BButton>Left</BButton>
+  <BButton>Middle</BButton>
+  <BButton>Right</BButton>
+</BButtonGroup>
 
-<b-button-group size="lg">
-  <b-button>Left</b-button>
-  <b-button>Middle</b-button>
-  <b-button>Right</b-button>
-</b-button-group>
+<BButtonGroup size="lg">
+  <BButton>Left</BButton>
+  <BButton>Middle</BButton>
+  <BButton>Right</BButton>
+</BButtonGroup>
 ```
 
   </template>
@@ -115,19 +115,19 @@ Make a set of buttons appear vertically stacked rather than horizontally by sett
 prop. Split button dropdowns are not supported here.
 
 <HighlightCard>
-  <b-button-group vertical>
-    <b-button>Top</b-button>
-    <b-button>Middle</b-button>
-    <b-button>Bottom</b-button>
-  </b-button-group>
+  <BButtonGroup vertical>
+    <BButton>Top</BButton>
+    <BButton>Middle</BButton>
+    <BButton>Bottom</BButton>
+  </BButtonGroup>
   <template #html>
 
 ```vue-html
-<b-button-group vertical>
-  <b-button>Top</b-button>
-  <b-button>Middle</b-button>
-  <b-button>Bottom</b-button>
-</b-button-group>
+<BButtonGroup vertical>
+  <BButton>Top</BButton>
+  <BButton>Middle</BButton>
+  <BButton>Bottom</BButton>
+</BButtonGroup>
 ```
 
   </template>
@@ -135,43 +135,43 @@ prop. Split button dropdowns are not supported here.
 
 ## Dropdown menu support
 
-Add [`<b-dropdown>`](/docs/components/dropdown) menus directly inside your `<b-button-group>`. Note
+Add [`<BDropdown>`](/docs/components/dropdown) menus directly inside your `<BButtonGroup>`. Note
 that split dropdown menus are not supported when prop `vertical` is set.
 
 <HighlightCard>
-  <b-button-group>
-    <b-button>Button</b-button>
-    <b-dropdown right text="Menu">
-      <b-dropdown-item>Item 1</b-dropdown-item>
-      <b-dropdown-item>Item 2</b-dropdown-item>
-      <b-dropdown-divider />
-      <b-dropdown-item>Item 3</b-dropdown-item>
-    </b-dropdown>
-    <b-dropdown right split text="Split Menu">
-      <b-dropdown-item>Item 1</b-dropdown-item>
-      <b-dropdown-item>Item 2</b-dropdown-item>
-      <b-dropdown-divider />
-      <b-dropdown-item>Item 3</b-dropdown-item>
-    </b-dropdown>
-  </b-button-group>
+  <BButtonGroup>
+    <BButton>Button</BButton>
+    <BDropdown right text="Menu">
+      <BDropdownItem>Item 1</BDropdownItem>
+      <BDropdownItem>Item 2</BDropdownItem>
+      <BDropdownDivider />
+      <BDropdownItem>Item 3</BDropdownItem>
+    </BDropdown>
+    <BDropdown right split text="Split Menu">
+      <BDropdownItem>Item 1</BDropdownItem>
+      <BDropdownItem>Item 2</BDropdownItem>
+      <BDropdownDivider />
+      <BDropdownItem>Item 3</BDropdownItem>
+    </BDropdown>
+  </BButtonGroup>
   <template #html>
 
 ```vue-html
-<b-button-group>
-  <b-button>Button</b-button>
-  <b-dropdown right text="Menu">
-    <b-dropdown-item>Item 1</b-dropdown-item>
-    <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item>Item 3</b-dropdown-item>
-  </b-dropdown>
-  <b-dropdown right split text="Split Menu">
-    <b-dropdown-item>Item 1</b-dropdown-item>
-    <b-dropdown-item>Item 2</b-dropdown-item>
-    <b-dropdown-divider />
-    <b-dropdown-item>Item 3</b-dropdown-item>
-  </b-dropdown>
-</b-button-group>
+<BButtonGroup>
+  <BButton>Button</BButton>
+  <BDropdown right text="Menu">
+    <BDropdownItem>Item 1</BDropdownItem>
+    <BDropdownItem>Item 2</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem>Item 3</BDropdownItem>
+  </BDropdown>
+  <BDropdown right split text="Split Menu">
+    <BDropdownItem>Item 1</BDropdownItem>
+    <BDropdownItem>Item 2</BDropdownItem>
+    <BDropdownDivider />
+    <BDropdownItem>Item 3</BDropdownItem>
+  </BDropdown>
+</BButtonGroup>
 ```
 
   </template>
@@ -179,7 +179,7 @@ that split dropdown menus are not supported when prop `vertical` is set.
 
 ## See also
 
-Also check out the [`<b-button-toolbar>`](/docs/components/button-toolbar) component for generating
+Also check out the [`<BButtonToolbar>`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
 
 <ComponentReference :data="data" />

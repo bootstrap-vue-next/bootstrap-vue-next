@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Push notifications to your visitors with a `<b-toast>` and `<b-toaster>`, lightweight components which are easily customizable for generating alert messages.
+Push notifications to your visitors with a `<BToast>` and `<BToaster>`, lightweight components which are easily customizable for generating alert messages.
 
 </div>
 

@@ -6,7 +6,7 @@ BootstrapVueNext and Bootstrap reference, and additional resources documentation
 
 </div>
 
-<table-of-contents-card v-for="component in computedComponentsList" :key="component.name" class="my-3" :name="component.name" :description="component.description" :route="component.route" />
+<TableOfContentsCard v-for="component in computedComponentsList" :key="component.name" class="my-3" :name="component.name" :description="component.description" :route="component.route" />
 
 <script setup lang="ts">
 import {withBase} from 'vitepress'
@@ -33,7 +33,7 @@ const componentList: {name: string; description: string}[] = [
   },
   {
     name: 'Router Links',
-    description: 'Several BootstrapVueNext components support rendering `<router-link>` components compatible with Vue Router and Nuxt.js',
+    description: 'Several BootstrapVueNext components support rendering `<RouterLink>` components compatible with Vue Router and Nuxt.js',
   },
   {
     name: 'Settings',

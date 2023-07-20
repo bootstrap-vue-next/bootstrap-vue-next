@@ -17,16 +17,16 @@ Bootstrap custom `<select>` using custom styles. Optionally specify options base
 Generate your select options by passing an array or object to the `options` props:
 
 <HighlightCard>
-  <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
-  <b-form-select v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3"></b-form-select>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" />
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
 
-  <b-form-select v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3"></b-form-select>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" />
 
   <div class="mt-3">
     Selected: <strong>{{ ex1Selected }}</strong>
@@ -52,13 +52,13 @@ const ex1Selected = ref()
 You can even define option groups with the `options` prop:
 
 <HighlightCard>
-  <b-form-select v-model="exGroupSelected" :options="ex1GroupOptions"></b-form-select>
+  <BFormSelect v-model="exGroupSelected" :options="ex1GroupOptions" />
   <div class="mt-3">Selected: <strong>{{ exGroupSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select v-model="exGroupSelected" :options="ex1GroupOptions"></b-form-select>
+  <BFormSelect v-model="exGroupSelected" :options="ex1GroupOptions" />
 
   <div class="mt-3">
     Selected: <strong>{{ exGroupSelected }}</strong>
@@ -89,31 +89,31 @@ const exGroupSelected = ref()
 Or manually provide your options and option groups:
 
 <HighlightCard>
-  <b-form-select v-model="exManualSelected">
-    <b-form-select-option :value="null">Please select an option</b-form-select-option>
-    <b-form-select-option value="a">Option A</b-form-select-option>
-    <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option>
-    <b-form-select-option-group label="Grouped options">
-      <b-form-select-option :value="{ C: '3PO' }">Option with object value</b-form-select-option>
-      <b-form-select-option :value="{ R: '2D2' }">Another option with object value</b-form-select-option>
-    </b-form-select-option-group>
-  </b-form-select>
+  <BFormSelect v-model="exManualSelected">
+    <BFormSelectOption :value="null">Please select an option</BFormSelectOption>
+    <BFormSelectOption value="a">Option A</BFormSelectOption>
+    <BFormSelectOption value="b" disabled>Option B (disabled)</BFormSelectOption>
+    <BFormSelectOptionGroup label="Grouped options">
+      <BFormSelectOption :value="{ C: '3PO' }">Option with object value</BFormSelectOption>
+      <BFormSelectOption :value="{ R: '2D2' }">Another option with object value</BFormSelectOption>
+    </BFormSelectOptionGroup>
+  </BFormSelect>
   <div class="mt-3">Selected: <strong>{{ exManualSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select v-model="exManualSelected">
-    <b-form-select-option :value="null">Please select an option</b-form-select-option>
-    <b-form-select-option value="a">Option A</b-form-select-option>
-    <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option>
-    <b-form-select-option-group label="Grouped options">
-      <b-form-select-option :value="{C: '3PO'}">Option with object value</b-form-select-option>
-      <b-form-select-option :value="{R: '2D2'}"
-        >Another option with object value</b-form-select-option
+  <BFormSelect v-model="exManualSelected">
+    <BFormSelectOption :value="null">Please select an option</BFormSelectOption>
+    <BFormSelectOption value="a">Option A</BFormSelectOption>
+    <BFormSelectOption value="b" disabled>Option B (disabled)</BFormSelectOption>
+    <BFormSelectOptionGroup label="Grouped options">
+      <BFormSelectOption :value="{C: '3PO'}">Option with object value</BFormSelectOption>
+      <BFormSelectOption :value="{R: '2D2'}"
+        >Another option with object value</BFormSelectOption
       >
-    </b-form-select-option-group>
-  </b-form-select>
+    </BFormSelectOptionGroup>
+  </BFormSelect>
 
   <div class="mt-3">
     Selected: <strong>{{ exManualSelected }}</strong>
@@ -128,38 +128,38 @@ const exManualSelected = ref(null)
   </template>
 </HighlightCard>
 
-Feel free to mix the `options` prop with `<b-form-select-option>` and
-`<b-form-select-option-group>`. Manually placed options and option groups will appear _below_ the
+Feel free to mix the `options` prop with `<BFormSelectOption>` and
+`<BFormSelectOptionGroup>`. Manually placed options and option groups will appear _below_ the
 options generated via the `options` prop. To place manual options and option groups _above_ the
 options specified by the `options` prop, use the named slot `first`.
 
 <HighlightCard>
-  <b-form-select v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
+  <BFormSelect v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
     <!-- This slot appears above the options from 'options' prop -->
     <template #first>
-      <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
+      <BFormSelectOption :value="null" disabled>-- Please select an option --</BFormSelectOption>
     </template>
     <!-- These options will appear after the ones from 'options' prop -->
-    <b-form-select-option value="C">Option C</b-form-select-option>
-    <b-form-select-option value="D">Option D</b-form-select-option>
-  </b-form-select>
+    <BFormSelectOption value="C">Option C</BFormSelectOption>
+    <BFormSelectOption value="D">Option D</BFormSelectOption>
+  </BFormSelect>
   <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
+  <BFormSelect v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
     <!-- This slot appears above the options from 'options' prop -->
     <template #first>
-      <b-form-select-option :value="null" disabled
-        >-- Please select an option --</b-form-select-option
+      <BFormSelectOption :value="null" disabled
+        >-- Please select an option --</BFormSelectOption
       >
     </template>
 
     <!-- These options will appear after the ones from 'options' prop -->
-    <b-form-select-option value="C">Option C</b-form-select-option>
-    <b-form-select-option value="D">Option D</b-form-select-option>
-  </b-form-select>
+    <BFormSelectOption value="C">Option C</BFormSelectOption>
+    <BFormSelectOption value="D">Option D</BFormSelectOption>
+  </BFormSelect>
 
   <div class="mt-3">
     Selected: <strong>{{ exFirstSlotSelected }}</strong>
@@ -193,24 +193,24 @@ If both `html` and `text` are provided, `html` will take precedence. Only basic/
 supported in the `html` field (components will not work). Note that not all browsers will render
 inline html (i.e. `<i>`, `<strong>`, etc.) inside `<option>` elements of a `<select>`.
 
-<b-alert variant="danger" :model-value="true" class="mt-4">
+<BAlert variant="danger" :model-value="true" class="mt-4">
   <strong>Be cautious</strong> of placing user supplied content in the <code>html</code> field,
   as it may make you vulnerable to
   <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
   <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
   <a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
   user supplied string.
-</b-alert>
+</BAlert>
 
 ### Options as an array
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = ['A', 'B', 'C', {text: 'D', value: {d: 1}, disabled: true}, 'E', 'F']
 ```
 
-</b-card>
+</BCard>
 
 If an array entry is a string, it will be used for both the generated `value` and `text` fields.
 
@@ -219,7 +219,7 @@ You can mix using strings and [objects](#options-as-an-array-of-objects) in the 
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -232,11 +232,11 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 ### Options as an array of objects
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -248,14 +248,14 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 If `value` is missing, then `text` will be used as both the `value` and `text` fields. If you use
 the `html` property, you **must** supply a `value` property.
 
 To define option groups, just add an object with a `label` prop as the groups name and a `options` property with the array of options of the group.
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -269,15 +269,15 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 ### Options as an object
 
-<b-badge variant="warning">Deprecated</b-badge>
+<BBadge variant="warning">Deprecated</BBadge>
 
 Keys are mapped to `value` and values are mapped to option `text`.
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = {
@@ -289,12 +289,12 @@ const options = {
 }
 ```
 
-</b-card>
+</BCard>
 
 Internally, BootstrapVueNext will convert the above object to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -306,7 +306,7 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 **Note:** When using the Object format, the order of the final array is **not** guaranteed. For this
 reason, it is recommended to use either of the previously mentioned array formats.
@@ -318,27 +318,27 @@ If you want to customize the field property names (for example using `name` fiel
 `disabled-field` props to a string that contains the property name you would like to use:
 
 <HighlightCard>
-  <b-form-select
+  <BFormSelect
     v-model="exFirstSlotSelected"
     :options="exFieldNamesOptions"
     class="mb-3"
     value-field="item"
     text-field="name"
     disabled-field="notEnabled"
-  ></b-form-select>
+  />
   <div class="mt-3">Selected: <strong>{{ exFirstSlotSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select
+  <BFormSelect
     v-model="exFirstSlotSelected"
     :options="exFieldNamesOptions"
     class="mb-3"
     value-field="item"
     text-field="name"
     disabled-field="notEnabled"
-  ></b-form-select>
+  />
 
   <div class="mt-3">
     Selected: <strong>{{ exFirstSlotSelected }}</strong>
@@ -363,17 +363,17 @@ const exFieldNamesSelected = ref('A')
 ### Option notes
 
 If the initial value of your `v-model` expression does not match any of the options, the
-`<b-form-select>` component (which is a native HTML5 `<select>` under the hood) will render in an
+`<BFormSelect>` component (which is a native HTML5 `<select>` under the hood) will render in an
 _unselected_ state. On iOS this will cause the user not being able to select the first item because
 iOS does not fire a change event in this case. It is therefore recommended providing a disabled
 option with an empty value as your first option.
 
 ```vue-html
-<b-form-select v-model="selected" :options="options">
+<BFormSelect v-model="selected" :options="options">
   <template #first>
-    <b-form-select-option value="" disabled>-- Please select an option --</b-form-select-option>
+    <BFormSelectOption value="" disabled>-- Please select an option --</BFormSelectOption>
   </template>
-</b-form-select>
+</BFormSelect>
 ```
 
 See the [Vue select](https://v3.vuejs.org/guide/forms.html#select) documentation for more details.
@@ -384,17 +384,17 @@ By default, Bootstrap v5's custom select styling is applied.
 
 ### Value in single mode
 
-In non `multiple` mode, `<b-form-select>` returns the single `value` of the currently selected
+In non `multiple` mode, `<BFormSelect>` returns the single `value` of the currently selected
 option.
 
 <HighlightCard>
-  <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select v-model="ex1Selected" :options="ex1Options"></b-form-select>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" />
 
   <div class="mt-3">
     Selected: <strong>{{ ex1Selected }}</strong>
@@ -429,13 +429,13 @@ Note when `select-size` is set to a value greater than 1, the Bootstrap v5 custo
 Note that not all mobile browsers will show the select as a list-box.
 
 <HighlightCard>
-  <b-form-select v-model="ex1Selected" :options="ex1Options" :select-size="4"></b-form-select>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" :select-size="4" />
   <div class="mt-3">Selected: <strong>{{ ex1Selected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select v-model="ex1Selected" :options="ex1Options" :select-size="4"></b-form-select>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" :select-size="4" />
 
   <div class="mt-3">
     Selected: <strong>{{ ex1Selected }}</strong>
@@ -466,27 +466,27 @@ default is to let the browser use its default (typically 4).
 
 ### Value in multiple mode
 
-In `multiple` mode, `<b-form-select>` always returns an array of option values. You **must** provide
+In `multiple` mode, `<BFormSelect>` always returns an array of option values. You **must** provide
 an array reference as your `v-model` when in `multiple` mode.
 
 <HighlightCard>
-  <b-form-select
+  <BFormSelect
     v-model="exMultiSelected"
     :options="exMultiOptions"
     multiple
     :select-size="4"
-  ></b-form-select>
+  />
   <div class="mt-3">Selected: <strong>{{ exMultiSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-select
+  <BFormSelect
     v-model="exMultiSelected"
     :options="exMultiOptions"
     multiple
     :select-size="4"
-  ></b-form-select>
+  />
 
   <div class="mt-3">
     Selected: <strong>{{ exMultiSelected }}</strong>
@@ -516,13 +516,13 @@ const exMultiSelected = ref(['b'])
 Set the form-control text size using the `size` prop to `sm` or `lg` for small or large
 respectively.
 
-By default, `<b-form-select>` will occupy the full width of the container that it appears in. To
+By default, `<BFormSelect>` will occupy the full width of the container that it appears in. To
 control the select width, place the input inside standard Bootstrap grid column.
 
 ## Autofocus
 
-When the `autofocus` prop is set on `<b-form-select>`, the select will be auto-focused when it is
-inserted (i.e. **mounted**) into the document or re-activated when inside a Vue `<keep-alive>`
+When the `autofocus` prop is set on `<BFormSelect>`, the select will be auto-focused when it is
+inserted (i.e. **mounted**) into the document or re-activated when inside a Vue `<KeepAlive>`
 component. Note that this prop **does not** set the `autofocus` attribute on the select, nor can it
 tell when the select becomes visible.
 
@@ -538,7 +538,7 @@ Generally speaking, you'll want to use a particular state for specific types of 
   a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
-To apply one of the contextual state icons on `<b-form-select>`, set the `state` prop to `false`
+To apply one of the contextual state icons on `<BFormSelect>`, set the `state` prop to `false`
 (for invalid), `true` (for valid), or `null` (no validation state).
 
 ### Conveying contextual validation state to assistive technologies and colorblind users
@@ -549,13 +549,13 @@ screen readers - or to colorblind users.
 
 Ensure that an alternative indication of state is also provided. For instance, you could include a
 hint about state in the form control's `<label>` text itself, or by providing an additional help
-text block (via `<b-form-group>` or `<b-form-*-feedback>`). Specifically for assistive technologies,
+text block (via `<BFormGroup>` or `<BForm*Feedback>`). Specifically for assistive technologies,
 invalid form controls can also be assigned an `aria-invalid="true"` attribute (see below).
 
 ### ARIA `aria-invalid` attribute
 
-When `<b-form-select>` has an invalid contextual state (i.e. state = `false`) you may also want to
-set the `<b-form-select>` prop `aria-invalid` to `true`.
+When `<BFormSelect>` has an invalid contextual state (i.e. state = `false`) you may also want to
+set the `<BFormSelect>` prop `aria-invalid` to `true`.
 
 Supported `invalid` values are:
 
@@ -570,7 +570,7 @@ When `state` is set to `false`, aria-invalid will also be set to true.
 import {data} from '../../data/components/formSelect.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BFormSelectOptionGroup, BFormSelectOption, BCard, BCardBody, BFormSelect, BAlert} from 'bootstrap-vue-next'
+import {BFormSelectOptionGroup, BFormSelectOption, BCard, BCardBody, BFormSelect, BAlert, BBadge} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 
 const ex1Selected = ref()

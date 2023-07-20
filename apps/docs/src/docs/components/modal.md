@@ -17,18 +17,18 @@ Modals are streamlined, but flexible dialog prompts powered by JavaScript and CS
 ## Usage
 
 <HighlightCard>
-  <b-button @click="modal = !modal">
+  <BButton @click="modal = !modal">
     Toggle modal
-  </b-button>
-  <b-modal v-model="modal" title="Hello, World!">
+  </BButton>
+  <BModal v-model="modal" title="Hello, World!">
     Foobar?
-  </b-modal>
+  </BModal>
   <template #html>
 
 ```vue
 <template>
-  <b-button @click="modal = !modal"> Toggle modal </b-button>
-  <b-modal v-model="modal"> Foo bar </b-modal>
+  <BButton @click="modal = !modal"> Toggle modal </BButton>
+  <BModal v-model="modal"> Foo bar </BModal>
 </template>
 
 <script setup lang="ts">
@@ -48,23 +48,23 @@ At this time, there is no built in functionality for toggling a modal in a globa
 It is possible to prevent showing/closing modals. You can prevent hiding on the following Events: ok, cancel, close, and hide.
 
 <HighlightCard>
-  <b-button @click="preventableModal = !preventableModal">
+  <BButton @click="preventableModal = !preventableModal">
     Toggle modal
-  </b-button>
-  <b-modal v-model="preventableModal" title="Hello, World!" @hide.prevent>
+  </BButton>
+  <BModal v-model="preventableModal" title="Hello, World!" @hide.prevent>
     Foobar?
-    <b-button @click="preventableModal = false">Force leave</b-button>
-  </b-modal>
+    <BButton @click="preventableModal = false">Force leave</BButton>
+  </BModal>
   <template #html>
 
 ```vue
 <template>
-  <b-button @click="preventableModal = !preventableModal"> Toggle modal </b-button>
+  <BButton @click="preventableModal = !preventableModal"> Toggle modal </BButton>
 
-  <b-modal v-model="preventableModal" title="Hello, World!" @hide.prevent>
+  <BModal v-model="preventableModal" title="Hello, World!" @hide.prevent>
     Foobar?
-    <b-button @click="preventableModal = false">Force leave</b-button>
-  </b-modal>
+    <BButton @click="preventableModal = false">Force leave</BButton>
+  </BModal>
 </template>
 
 <script setup lang="ts">
@@ -78,37 +78,37 @@ const preventableModal = ref(false)
 ## Multiple Modal Support
 
 <HighlightCard>
-  <b-button @click="nestedModal1 = !nestedModal1">Open First Modal</b-button>
-  <b-modal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
+  <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
+  <BModal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
     <p class="my-2">First Modal</p>
-    <b-button @click="nestedModal2 = !nestedModal2">Open Second Modal</b-button>
-  </b-modal>
-  <b-modal v-model="nestedModal2" title="Second Modal" ok-only>
+    <BButton @click="nestedModal2 = !nestedModal2">Open Second Modal</BButton>
+  </BModal>
+  <BModal v-model="nestedModal2" title="Second Modal" ok-only>
     <p class="my-2">Second Modal</p>
-    <b-button @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</b-button>
-  </b-modal>
-  <b-modal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
+    <BButton @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</BButton>
+  </BModal>
+  <BModal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
     <p class="my-1">Third Modal</p>
-  </b-modal>
+  </BModal>
   <template #html>
 
 ```vue
 <template>
-  <b-button @click="nestedModal1 = !nestedModal1">Open First Modal</b-button>
+  <BButton @click="nestedModal1 = !nestedModal1">Open First Modal</BButton>
 
-  <b-modal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
+  <BModal v-model="nestedModal1" size="lg" title="First Modal" ok-only no-stacking>
     <p class="my-2">First Modal</p>
-    <b-button @click="nestedModal2 = !nestedModal2">Open Second Modal</b-button>
-  </b-modal>
+    <BButton @click="nestedModal2 = !nestedModal2">Open Second Modal</BButton>
+  </BModal>
 
-  <b-modal v-model="nestedModal2" title="Second Modal" ok-only>
+  <BModal v-model="nestedModal2" title="Second Modal" ok-only>
     <p class="my-2">Second Modal</p>
-    <b-button @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</b-button>
-  </b-modal>
+    <BButton @click="nestedModal3 = !nestedModal3" size="sm">Open Third Modal</BButton>
+  </BModal>
 
-  <b-modal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
+  <BModal v-model="nestedModal3" size="sm" title="Third Modal" ok-only>
     <p class="my-1">Third Modal</p>
-  </b-modal>
+  </BModal>
 </template>
 
 <script setup lang="ts">

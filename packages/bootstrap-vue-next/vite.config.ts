@@ -39,7 +39,8 @@ export default defineConfig({
     }),
     visualizer(),
     dts({
-      tsConfigFilePath: './tsconfig.app.json',
+      tsconfigPath: './tsconfig.app.json',
+      outDir: './dist',
     }),
   ],
 

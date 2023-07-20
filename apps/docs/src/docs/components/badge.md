@@ -21,21 +21,21 @@ Badges scale to match the size of the immediate parent element by using relative
 ### Headings
 
 <HighlightCard>
-  <h1>Example heading <b-badge>New</b-badge></h1>
-  <h2 class="border-0 pb-0">Example heading <b-badge>New</b-badge></h2>
-  <h3>Example heading <b-badge>New</b-badge></h3>
-  <h4>Example heading <b-badge>New</b-badge></h4>
-  <h5>Example heading <b-badge>New</b-badge></h5>
-  <h6>Example heading <b-badge>New</b-badge></h6>
+  <h1>Example heading <BBadge>New</BBadge></h1>
+  <h2 class="border-0 pb-0">Example heading <BBadge>New</BBadge></h2>
+  <h3>Example heading <BBadge>New</BBadge></h3>
+  <h4>Example heading <BBadge>New</BBadge></h4>
+  <h5>Example heading <BBadge>New</BBadge></h5>
+  <h6>Example heading <BBadge>New</BBadge></h6>
   <template #html>
 
 ```vue-html
-<h1>Example heading <b-badge>New</b-badge></h1>
-<h2>Example heading <b-badge>New</b-badge></h2>
-<h3>Example heading <b-badge>New</b-badge></h3>
-<h4>Example heading <b-badge>New</b-badge></h4>
-<h5>Example heading <b-badge>New</b-badge></h5>
-<h6>Example heading <b-badge>New</b-badge></h6>
+<h1>Example heading <BBadge>New</BBadge></h1>
+<h2>Example heading <BBadge>New</BBadge></h2>
+<h3>Example heading <BBadge>New</BBadge></h3>
+<h4>Example heading <BBadge>New</BBadge></h4>
+<h5>Example heading <BBadge>New</BBadge></h5>
+<h6>Example heading <BBadge>New</BBadge></h6>
 ```
 
   </template>
@@ -46,13 +46,13 @@ Badges scale to match the size of the immediate parent element by using relative
 Badges can be used as part of links or buttons to provide a counter.
 
 <HighlightCard>
-  <b-button variant="primary">
-    Notifications <b-badge variant="light">4</b-badge>
-  </b-button>
+  <BButton variant="primary">
+    Notifications <BBadge variant="light">4</BBadge>
+  </BButton>
   <template #html>
 
 ```vue-html
-<b-button variant="primary">Notifications <b-badge variant="light">4</b-badge></b-button>
+<BButton variant="primary">Notifications <BBadge variant="light">4</BBadge></BButton>
 ```
 
   </template>
@@ -67,23 +67,23 @@ Unless the context is clear (as with the “Notifications” example, where it i
 Use utilities to modify a `.badge` and position it in the corner of a link or button.
 
 <HighlightCard>
-  <b-button variant="primary" class="position-relative">
+  <BButton variant="primary" class="position-relative">
     Inbox
-    <b-badge variant="danger" text-indicator>
+    <BBadge variant="danger" text-indicator>
       99+
       <span class="visually-hidden">unread messages</span>
-    </b-badge>
-  </b-button>
+    </BBadge>
+  </BButton>
   <template #html>
 
 ```vue-html
-<b-button variant="primary" class="position-relative">
+<BButton variant="primary" class="position-relative">
   Inbox
-  <b-badge variant="danger" text-indicator>
+  <BBadge variant="danger" text-indicator>
     99+
     <span class="visually-hidden">unread messages</span>
-  </b-badge>
-</b-button>
+  </BBadge>
+</BButton>
 ```
 
   </template>
@@ -92,21 +92,21 @@ Use utilities to modify a `.badge` and position it in the corner of a link or bu
 You can also replace the `.badge` class with a few more utilities without a count for a more generic indicator.
 
 <HighlightCard>
-  <b-button variant="primary" class="position-relative">
+  <BButton variant="primary" class="position-relative">
     Inbox
-    <b-badge variant="danger" dot-indicator>
+    <BBadge variant="danger" dot-indicator>
       <span class="visually-hidden">New alerts</span>
-    </b-badge>
-  </b-button>
+    </BBadge>
+  </BButton>
   <template #html>
 
 ```vue-html
-<b-button variant="primary" class="position-relative">
+<BButton variant="primary" class="position-relative">
   Inbox
-  <b-badge variant="danger" dot-indicator>
+  <BBadge variant="danger" dot-indicator>
     <span class="visually-hidden">New alerts</span>
-  </b-badge>
-</b-button>
+  </BBadge>
+</BButton>
 ```
 
   </template>
@@ -114,30 +114,30 @@ You can also replace the `.badge` class with a few more utilities without a coun
 
 ## Background colors
 
-Add any of the following variants via the `variant` prop to change the appearance of a `<b-badge>`: `default`, `primary`, `success`, `warning`, `info`, and `danger`. If no variant is specified `default` will be used.
+Add any of the following variants via the `variant` prop to change the appearance of a `<BBadge>`: `default`, `primary`, `success`, `warning`, `info`, and `danger`. If no variant is specified `default` will be used.
 
 <HighlightCard>
   <div class="d-flex mb-4" style="column-gap: 1%;">
-    <b-badge variant="primary">Primary</b-badge>
-    <b-badge variant="secondary">Secondary</b-badge>
-    <b-badge variant="success">Success</b-badge>
-    <b-badge variant="danger">Danger</b-badge>
-    <b-badge variant="warning">Warning</b-badge>
-    <b-badge variant="info">Info</b-badge>
-    <b-badge variant="light">Light</b-badge>
-    <b-badge variant="dark">Dark</b-badge>
+    <BBadge variant="primary">Primary</BBadge>
+    <BBadge variant="secondary">Secondary</BBadge>
+    <BBadge variant="success">Success</BBadge>
+    <BBadge variant="danger">Danger</BBadge>
+    <BBadge variant="warning">Warning</BBadge>
+    <BBadge variant="info">Info</BBadge>
+    <BBadge variant="light">Light</BBadge>
+    <BBadge variant="dark">Dark</BBadge>
   </div>
   <template #html>
 
 ```vue-html
-<b-badge variant="primary">Primary</b-badge>
-<b-badge variant="secondary">Secondary</b-badge>
-<b-badge variant="success">Success</b-badge>
-<b-badge variant="danger">Danger</b-badge>
-<b-badge variant="warning">Warning</b-badge>
-<b-badge variant="info">Info</b-badge>
-<b-badge variant="light">Light</b-badge>
-<b-badge variant="dark">Dark</b-badge>
+<BBadge variant="primary">Primary</BBadge>
+<BBadge variant="secondary">Secondary</BBadge>
+<BBadge variant="success">Success</BBadge>
+<BBadge variant="danger">Danger</BBadge>
+<BBadge variant="warning">Warning</BBadge>
+<BBadge variant="info">Info</BBadge>
+<BBadge variant="light">Light</BBadge>
+<BBadge variant="dark">Dark</BBadge>
 ```
 
   </template>
@@ -153,26 +153,26 @@ Use the `pill` prop to make badges more rounded with a larger border-radius.
 
 <HighlightCard>
   <div class="d-flex mb-4" style="column-gap: 1%;">
-    <b-badge variant="primary" pill>Primary</b-badge>
-    <b-badge variant="secondary" pill>Secondary</b-badge>
-    <b-badge variant="success" pill>Success</b-badge>
-    <b-badge variant="danger" pill>Danger</b-badge>
-    <b-badge variant="warning" pill>Warning</b-badge>
-    <b-badge variant="info" pill>Info</b-badge>
-    <b-badge variant="light" pill>Light</b-badge>
-    <b-badge variant="dark" pill>Dark</b-badge>
+    <BBadge variant="primary" pill>Primary</BBadge>
+    <BBadge variant="secondary" pill>Secondary</BBadge>
+    <BBadge variant="success" pill>Success</BBadge>
+    <BBadge variant="danger" pill>Danger</BBadge>
+    <BBadge variant="warning" pill>Warning</BBadge>
+    <BBadge variant="info" pill>Info</BBadge>
+    <BBadge variant="light" pill>Light</BBadge>
+    <BBadge variant="dark" pill>Dark</BBadge>
   </div>
   <template #html>
 
 ```vue-html
-<b-badge variant="primary" pill>Primary</b-badge>
-<b-badge variant="secondary" pill>Secondary</b-badge>
-<b-badge variant="success" pill>Success</b-badge>
-<b-badge variant="danger" pill>Danger</b-badge>
-<b-badge variant="warning" pill>Warning</b-badge>
-<b-badge variant="info" pill>Info</b-badge>
-<b-badge variant="light" pill>Light</b-badge>
-<b-badge variant="dark" pill>Dark</b-badge>
+<BBadge variant="primary" pill>Primary</BBadge>
+<BBadge variant="secondary" pill>Secondary</BBadge>
+<BBadge variant="success" pill>Success</BBadge>
+<BBadge variant="danger" pill>Danger</BBadge>
+<BBadge variant="warning" pill>Warning</BBadge>
+<BBadge variant="info" pill>Info</BBadge>
+<BBadge variant="light" pill>Light</BBadge>
+<BBadge variant="dark" pill>Dark</BBadge>
 ```
 
   </template>
@@ -184,26 +184,26 @@ Quickly provide actionable badges with ~~hover~~ and ~~focus~~ states by specify
 
 <HighlightCard>
   <div class="d-flex mb-4" style="column-gap: 1%;">
-    <b-badge href="#" variant="primary">Primary</b-badge>
-    <b-badge href="#" variant="secondary">Secondary</b-badge>
-    <b-badge href="#" variant="success">Success</b-badge>
-    <b-badge href="#" variant="danger">Danger</b-badge>
-    <b-badge href="#" variant="warning">Warning</b-badge>
-    <b-badge href="#" variant="info">Info</b-badge>
-    <b-badge href="#" variant="light">Light</b-badge>
-    <b-badge href="#" variant="dark">Dark</b-badge>
+    <BBadge href="#" variant="primary">Primary</BBadge>
+    <BBadge href="#" variant="secondary">Secondary</BBadge>
+    <BBadge href="#" variant="success">Success</BBadge>
+    <BBadge href="#" variant="danger">Danger</BBadge>
+    <BBadge href="#" variant="warning">Warning</BBadge>
+    <BBadge href="#" variant="info">Info</BBadge>
+    <BBadge href="#" variant="light">Light</BBadge>
+    <BBadge href="#" variant="dark">Dark</BBadge>
   </div>
   <template #html>
 
 ```vue-html
-<b-badge href="#" variant="primary">Primary</b-badge>
-<b-badge href="#" variant="secondary">Secondary</b-badge>
-<b-badge href="#" variant="success">Success</b-badge>
-<b-badge href="#" variant="danger">Danger</b-badge>
-<b-badge href="#" variant="warning">Warning</b-badge>
-<b-badge href="#" variant="info">Info</b-badge>
-<b-badge href="#" variant="light">Light</b-badge>
-<b-badge href="#" variant="dark">Dark</b-badge>
+<BBadge href="#" variant="primary">Primary</BBadge>
+<BBadge href="#" variant="secondary">Secondary</BBadge>
+<BBadge href="#" variant="success">Success</BBadge>
+<BBadge href="#" variant="danger">Danger</BBadge>
+<BBadge href="#" variant="warning">Warning</BBadge>
+<BBadge href="#" variant="info">Info</BBadge>
+<BBadge href="#" variant="light">Light</BBadge>
+<BBadge href="#" variant="dark">Dark</BBadge>
 ```
 
   </template>

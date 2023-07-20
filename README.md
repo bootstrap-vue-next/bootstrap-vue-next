@@ -14,7 +14,7 @@
   <a href="https://www.npmjs.com/package/bootstrap-vue-next">
     <img src="https://flat.badgen.net/npm/v/bootstrap-vue-next" alt="Current version">
   </a>
-  <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">
+  <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/">
     <img src="https://flat.badgen.net/badge/bootstrap/5.3.x/563d7c" alt="Bootstrap version">
   </a>
   <a href="https://v3.vuejs.org/">

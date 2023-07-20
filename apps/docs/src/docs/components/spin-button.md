@@ -16,19 +16,19 @@ The Form SpinButton allows the user to adjusting a numeric range with finite con
 
 ## Overview
 
-The component `<b-form-spinbutton>` is
+The component `<BFormSpinButton>` is
 [WAI-ARIA compliant](https://www.w3.org/TR/wai-aria-practices-1.2/#spinbutton), allowing for
 [keyboard control](#accessibility), and supports both horizontal (default) and vertical layout.
 
 <HighlightCard>
   <label for="demo-sb">Spin Button</label>
-  <b-form-spin-button v-model="ex1Value" min="1" max="100" step="1" />
+  <BFormSpinButton v-model="ex1Value" min="1" max="100" step="1" />
   <p>Value: {{ ex1Value }}</p>
   <template #html>
 
 ```vue
 <template>
-  <b-form-spin-button min="1" max="100" step="1" />
+  <BFormSpinButton min="1" max="100" step="1" />
 </template>
 
 <script setup lang="ts">
@@ -46,27 +46,27 @@ value.
 
 ### Sizing
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
   <label for="sb-small">Spin button - Small size</label>
-  <b-form-spin-button id="sb-small" size="sm" placeholder="--" class="mb-2"></b-form-spin-button>
+  <BFormSpinButton id="sb-small" size="sm" placeholder="--" class="mb-2" />
   <label for="sb-default">Spin button - Default size</label>
-  <b-form-spin-button id="sb-default" placeholder="--" class="mb-2"></b-form-spin-button>
+  <BFormSpinButton id="sb-default" placeholder="--" class="mb-2" />
   <label for="sb-large">Spin button - Large size</label>
-  <b-form-spin-button id="sb-large" size="lg" placeholder="--" class="mb-2"></b-form-spin-button>
-</b-card>
+  <BFormSpinButton id="sb-large" size="lg" placeholder="--" class="mb-2" />
+</BCard>
 
 ### Inline
 
 <HighlightCard>
   <label for="demo-sb">Spin Button</label>
   <label for="sb-inline">Inline spin button</label>
-  <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
+  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline />
   <template #html>
 
 ```vue
 <template>
   <label for="sb-inline">Inline spin button</label>
-  <b-form-spin-button id="sb-inline" v-model="ex1Value" inline></b-form-spin-button>
+  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline />
 </template>
 
 <script setup lang="ts">
@@ -81,13 +81,13 @@ const ex1Value = ref(50)
 
 <HighlightCard>
   <label for="sb-vertical">Vertical spin button</label>
-  <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical></b-form-spin-button>
+  <BFormSpinButton id="sb-vertical" v-model="ex1Value" vertical />
   <template #html>
 
 ```vue
 <template>
   <label for="sb-vertical">Vertical spin button</label>
-  <b-form-spin-button id="sb-vertical" v-model="ex1Value" vertical> </b-form-spin-button>
+  <BFormSpinButton id="sb-vertical" v-model="ex1Value" vertical> </BFormSpinButton>
 </template>
 
 <script setup lang="ts">
@@ -103,7 +103,7 @@ const ex1Value = ref(50)
 ### Custom Formatter
 
 <HighlightCard>
-  <b-form-spin-button
+  <BFormSpinButton
     id="sb-days"
     v-model="exDaysValue"
     :formatter-fn="dayFormatter"
@@ -115,7 +115,7 @@ const ex1Value = ref(50)
   <template #html>
 
 ```vue-html
-<b-form-spin-button
+<BFormSpinButton
   id="sb-days"
   v-model="exDaysValue"
   :formatter-fn="dayFormatter"
@@ -132,29 +132,29 @@ const ex1Value = ref(50)
 ## Disabled and readonly states
 
 <HighlightCard>
-  <b-row>
-    <b-col md="6" class="mb-2">
+  <BRow>
+    <BCol md="6" class="mb-2">
       <label for="sb-disabled">Disabled spin button</label>
-      <b-form-spin-button id="sb-disabled" v-model="ex1Value" disabled></b-form-spin-button>
-    </b-col>
-    <b-col md="6" class="mb-2">
+      <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled />
+    </BCol>
+    <BCol md="6" class="mb-2">
       <label for="sb-readonly" class="">Readonly spin button</label>
-      <b-form-spin-button id="sb-readonly" v-model="ex1Value" readonly></b-form-spin-button>
-    </b-col>
-  </b-row>
+      <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly />
+    </BCol>
+  </BRow>
   <template #html>
 
 ```vue-html
-<b-row>
-  <b-col md="6" class="mb-2">
+<BRow>
+  <BCol md="6" class="mb-2">
     <label for="sb-disabled">Disabled spin button</label>
-    <b-form-spin-button id="sb-disabled" v-model="ex1Value" disabled></b-form-spin-button>
-  </b-col>
-  <b-col md="6" class="mb-2">
+    <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled />
+  </BCol>
+  <BCol md="6" class="mb-2">
     <label for="sb-readonly" class="">Readonly spin button</label>
-    <b-form-spin-button id="sb-readonly" v-model="ex1Value" readonly></b-form-spin-button>
-  </b-col>
-</b-row>
+    <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly />
+  </BCol>
+</BRow>
 ```
 
   </template>

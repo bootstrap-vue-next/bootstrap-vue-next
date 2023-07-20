@@ -36,9 +36,9 @@ export default (
   interval: MaybeRefOrGetter<number> = ref(1000),
   intervalOpts: UseIntervalFnOptions = {}
 ): CountdownReturn => {
-  const resolvedLength = toRef(length)
+  const resolvedLength = readonly(toRef(length))
 
-  const resolvedInterval = toRef(interval)
+  const resolvedInterval = readonly(toRef(interval))
 
   const isPaused = ref(false)
 

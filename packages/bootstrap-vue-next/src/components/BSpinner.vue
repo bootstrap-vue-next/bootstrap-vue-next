@@ -17,23 +17,24 @@ import type {Booleanish, ColorVariant, SpinnerType} from '../types'
 import {useBooleanish} from '../composables'
 import {isEmptySlot} from '../utils'
 
-interface BSpinnerProps {
-  label?: string
-  role?: string
-  small?: Booleanish
-  tag?: string
-  type?: SpinnerType
-  variant?: ColorVariant | null
-}
-
-const props = withDefaults(defineProps<BSpinnerProps>(), {
-  role: 'status',
-  small: false,
-  variant: null,
-  label: undefined,
-  tag: 'span',
-  type: 'border',
-})
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    role?: string
+    small?: Booleanish
+    tag?: string
+    type?: SpinnerType
+    variant?: ColorVariant | null
+  }>(),
+  {
+    role: 'status',
+    small: false,
+    variant: null,
+    label: undefined,
+    tag: 'span',
+    type: 'border',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,5 +53,5 @@ const computedClasses = computed(() => ({
   [`text-${props.variant}`]: props.variant !== null,
 }))
 
-const hasLabelSlot = computed<boolean>(() => !isEmptySlot(slots.label))
+const hasLabelSlot = computed(() => !isEmptySlot(slots.label))
 </script>

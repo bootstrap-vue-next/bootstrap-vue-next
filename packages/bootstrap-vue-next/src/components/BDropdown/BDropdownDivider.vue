@@ -5,11 +5,12 @@
 </template>
 
 <script setup lang="ts">
-interface BDropdownDividerProps {
-  tag?: string
-}
-
-withDefaults(defineProps<BDropdownDividerProps>(), {
-  tag: 'hr',
-})
+withDefaults(
+  defineProps<{
+    tag?: string
+  }>(),
+  {
+    tag: 'hr',
+  }
+)
 </script>

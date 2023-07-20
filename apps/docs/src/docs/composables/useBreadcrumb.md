@@ -10,27 +10,27 @@
 
 <div class="lead mb-5">
 
-'useBreadcrumb' is a helper utility for the 'b-breadcrumb' component. It provides a **globally** changable context so you can modify a breadcrumb. It should be noted that the breacrumb component will automatically use the global context by default. 'useBreadcrumb' is shared globally, one modification to the state will be recognized throughout the app. As noted in the BBreadcrumb documentation, the items prop for the component takes precedence over 'useBreadcrumb'.
+`useBreadcrumb` is a helper utility for the `BBreadcrumb` component. It provides a **globally** changable context so you can modify a breadcrumb. It should be noted that the breacrumb component will automatically use the global context by default. `useBreadcrumb` is shared globally, one modification to the state will be recognized throughout the app. As noted in the BBreadcrumb documentation, the items prop for the component takes precedence over `useBreadcrumb`.
 
 </div>
 
 ## Demo
 
 <HighlightCard>
-  <b-breadcrumb />
-  <b-form-input class="my-3" v-model="inputValue" />
-  <b-button @click="addItem" class="me-2">Add</b-button>
-  <b-button variant="danger" @click="breadcrumb.reset">Clear</b-button>
+  <BBreadcrumb />
+  <BFormInput class="my-3" v-model="inputValue" />
+  <BButton @click="addItem" class="me-2">Add</BButton>
+  <BButton variant="danger" @click="breadcrumb.reset">Clear</BButton>
   <template #html>
 
 ```vue
 <template>
-  <b-breadcrumb />
+  <BBreadcrumb />
 
-  <b-form-input v-model="inputValue" />
+  <BFormInput v-model="inputValue" />
 
-  <b-button @click="addItem">Add</b-button>
-  <b-button variant="danger" @click="breadcrumb.reset">Clear</b-button>
+  <BButton @click="addItem">Add</BButton>
+  <BButton variant="danger" @click="breadcrumb.reset">Clear</BButton>
 </template>
 
 <script setup lang="ts">

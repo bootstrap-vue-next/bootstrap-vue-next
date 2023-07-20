@@ -83,7 +83,7 @@ export default {
         {
           name: 'default',
           description:
-            'If Vue-Router has be employed and the `routerComponentName` is `<router-link>` this slot scope is used',
+            'If Vue-Router has be employed and the `routerComponentName` is `<RouterLink>` this slot scope is used',
           scope: [
             {
               prop: 'href',

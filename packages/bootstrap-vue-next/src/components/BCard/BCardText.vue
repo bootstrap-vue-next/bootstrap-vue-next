@@ -7,15 +7,16 @@
 </template>
 
 <script setup lang="ts">
-interface BCardTextProps {
-  text?: string
-  tag?: string
-}
-
-withDefaults(defineProps<BCardTextProps>(), {
-  tag: 'p',
-  text: undefined,
-})
+withDefaults(
+  defineProps<{
+    text?: string
+    tag?: string
+  }>(),
+  {
+    tag: 'p',
+    text: undefined,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

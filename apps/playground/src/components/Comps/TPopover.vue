@@ -1,20 +1,20 @@
 <template>
-  <b-container fluid>
-    <b-row class="my-5">
-      <b-col>
-        <b-button id="popover">hover me</b-button>
-        <b-popover target="popover" :delay="{show: 400, hide: 5000}" placement="right">
+  <BContainer fluid>
+    <BRow class="my-5">
+      <BCol>
+        <BButton id="popover">hover me</BButton>
+        <BPopover target="popover" :delay="{show: 400, hide: 5000}" placement="right">
           <template #title>What?</template>
           Hello Word
-        </b-popover>
+        </BPopover>
         <span ref="popoverContainerRef" class="m-4"> targetRef for popover defined lower. </span>
-      </b-col>
-      <b-col>
-        <b-form-textarea v-model="textValue" type="text" />
-      </b-col>
-    </b-row>
-    <b-row class="my-5">
-      <b-col class="d-flex justify-content-between">
+      </BCol>
+      <BCol>
+        <BFormTextarea v-model="textValue" type="text" />
+      </BCol>
+    </BRow>
+    <BRow class="my-5">
+      <BCol class="d-flex justify-content-between">
         <button
           v-b-tooltip.show.realtime="{
             title: textValue,
@@ -26,8 +26,8 @@
         </button>
 
         <button v-b-popover.body.show="{content: textValue, placement: 'top'}">popover</button>
-      </b-col>
-      <b-col style="width: 250px">
+      </BCol>
+      <BCol style="width: 250px">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         <span v-b-tooltip.show="'tool tip not inline'" class="text-warning">
           this is without using .inline modifier.
@@ -38,46 +38,46 @@
         </span>
         Curabitur bibendum, velit vel gravida finibus, nisl tortor condimentum metus, eu pulvinar
         risus augue in neque.
-      </b-col>
-    </b-row>
-    <b-row class="my-5 justify-content-between">
-      <b-col>
-        <b-popover click :model-value="true" placement="right">
+      </BCol>
+    </BRow>
+    <BRow class="my-5 justify-content-between">
+      <BCol>
+        <BPopover click :model-value="true" placement="right">
           <template #title> Click </template>
           <template #target>
-            <b-button>click</b-button>
+            <BButton>click</BButton>
           </template>
           this should close on click outside
-        </b-popover>
-      </b-col>
-      <b-col>
-        <b-tooltip click>
+        </BPopover>
+      </BCol>
+      <BCol>
+        <BTooltip click>
           <template #target="{showState}">
-            <b-button :variant="showState ? 'primary' : 'secondary'">
+            <BButton :variant="showState ? 'primary' : 'secondary'">
               click tooltip component
-            </b-button>
+            </BButton>
           </template>
           <template #default> <b>Tooltip</b> content </template>
-        </b-tooltip>
-      </b-col>
-    </b-row>
-    <b-row class="my-5">
-      <b-col>
-        <b-popover placement="top">
+        </BTooltip>
+      </BCol>
+    </BRow>
+    <BRow class="my-5">
+      <BCol>
+        <BPopover placement="top">
           <template #title>
             Popover
             <em>Title</em>
             - {{ popoverInput }}
           </template>
           <template #target>
-            <b-button id="popover-target-1">Hover Me</b-button>
+            <BButton id="popover-target-1">Hover Me</BButton>
           </template>
-          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
-          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
+          <BButton @click="consoleLog('Button Click!')">456</BButton>I am popover
+          <b>component</b> content! <BFormInput v-model="popoverInput" type="text" />Name:
           <strong>{{ popoverInput }}</strong>
-        </b-popover>
-      </b-col>
-      <b-col>
+        </BPopover>
+      </BCol>
+      <BCol>
         <button
           v-b-popover.click.top="{
             title: 'Popover title',
@@ -88,8 +88,8 @@
         >
           Click to toggle popover
         </button>
-      </b-col>
-      <b-col>
+      </BCol>
+      <BCol>
         <button
           v-b-popover.left="'I\'m another popover!'"
           type="button"
@@ -97,10 +97,10 @@
         >
           Hover to toggle popover
         </button>
-      </b-col>
-      <b-col>
-        <b-button ref="popoverRef">Hover popover by ref with ref target</b-button>
-        <b-popover
+      </BCol>
+      <BCol>
+        <BButton ref="popoverRef">Hover popover by ref with ref target</BButton>
+        <BPopover
           :target="() => popoverRef"
           :reference="() => popoverContainerRef"
           placement="right"
@@ -113,37 +113,37 @@
           <template #target>
             <span>Not the real trigger or reference</span>
           </template>
-          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
-          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
+          <BButton @click="consoleLog('Button Click!')">456</BButton>I am popover
+          <b>component</b> content! <BFormInput v-model="popoverInput" type="text" />Name:
           <strong>{{ popoverInput }}</strong>
-        </b-popover>
-      </b-col>
-      <b-col>
-        <b-button ref="popoverManualButtonRef" @click="manualClickPopoverExample = !manualClickPopoverExample" >Manual popover showing</b-button>
-        <b-popover
+        </BPopover>
+      </BCol>
+      <BCol>
+        <BButton ref="popoverManualButtonRef" @click="manualClickPopoverExample = !manualClickPopoverExample" >Manual popover showing</BButton>
+        <BPopover
           :target="() => popoverManualButtonRef"
           manual
           :model-value="manualClickPopoverExample"
           placement="right"
         >
           simple content
-        </b-popover>
-      </b-col>
-      <b-col>
-        <b-popover placement="auto">
+        </BPopover>
+      </BCol>
+      <BCol>
+        <BPopover placement="auto">
           <template #title>
             Auto placement
           </template>
           <template #target>
-            <b-button id="popover-target-1">Hover Me</b-button>
+            <BButton id="popover-target-1">Hover Me</BButton>
           </template>
           Pop over content
-        </b-popover>
-      </b-col>
-    </b-row>
-    <b-row class="my-5 position-relative">
-      <b-col>
-        <b-popover
+        </BPopover>
+      </BCol>
+    </BRow>
+    <BRow class="my-5 position-relative">
+      <BCol>
+        <BPopover
           v-model="value"
           :placement="popoverPlacemet"
           strategy="absolute"
@@ -158,69 +158,69 @@
           <p>Position is calculated to parent relative element. (Try changing the textarea size)</p>
 
           <template #target="{toggle, showState}">
-            <b-button @click="toggle">Click to toggle popover</b-button>
+            <BButton @click="toggle">Click to toggle popover</BButton>
             <div>
               {{ showState ? 'Visible' : 'hidden' }}
             </div>
-            <b-form-checkbox :model-value="showState" @click="toggle"> show </b-form-checkbox>
+            <BFormCheckbox :model-value="showState" @click="toggle"> show </BFormCheckbox>
           </template>
-        </b-popover>
-        <b-form-radio-group>
-          <b-form-radio v-model="popoverPlacemet" value="top">top</b-form-radio>
-          <b-form-radio v-model="popoverPlacemet" value="bottom">bottom</b-form-radio>
-          <b-form-radio v-model="popoverPlacemet" value="left">left</b-form-radio>
-          <b-form-radio v-model="popoverPlacemet" value="right">right</b-form-radio>
-        </b-form-radio-group>
-        <b-form-checkbox v-model="value"> show based on v-model</b-form-checkbox>
-      </b-col>
-      <b-col>
-        <b-popover>
+        </BPopover>
+        <BFormRadioGroup>
+          <BFormRadio v-model="popoverPlacemet" value="top">top</BFormRadio>
+          <BFormRadio v-model="popoverPlacemet" value="bottom">bottom</BFormRadio>
+          <BFormRadio v-model="popoverPlacemet" value="left">left</BFormRadio>
+          <BFormRadio v-model="popoverPlacemet" value="right">right</BFormRadio>
+        </BFormRadioGroup>
+        <BFormCheckbox v-model="value"> show based on v-model</BFormCheckbox>
+      </BCol>
+      <BCol>
+        <BPopover>
           <template #title>
             Popover
             <em>Title</em>
           </template>
           <template #target>
-            <b-button>hover / focus</b-button>
+            <BButton>hover / focus</BButton>
           </template>
-          <b-button @click="consoleLog('Button Click!')">456</b-button>I am popover
-          <b>component</b> content! <b-form-input v-model="popoverInput" type="text" />Name:
+          <BButton @click="consoleLog('Button Click!')">456</BButton>I am popover
+          <b>component</b> content! <BFormInput v-model="popoverInput" type="text" />Name:
           <strong>{{ popoverInput }}</strong>
-        </b-popover>
-      </b-col>
-      <b-col>
-        <b-popover realtime :model-value="true" click placement="bottom">
+        </BPopover>
+      </BCol>
+      <BCol>
+        <BPopover realtime :model-value="true" click placement="bottom">
           <template #title> Title </template>
           <template #target>
             <span class="border rounded m-3 p-2">sync position with RequestAnimationFrame</span>
           </template>
           Burn cpu cycles to be more accurate. Try changing the size of the textarea above.
-        </b-popover>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-popover click placement="bottom" container="body">
+        </BPopover>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BPopover click placement="bottom" container="body">
           <template #title> Title </template>
           <template #target>
             <span class="border rounded m-3 p-2">move to body.</span>
           </template>
           in body. {{ textValue }}
-        </b-popover>
-      </b-col>
-      <b-col>
+        </BPopover>
+      </BCol>
+      <BCol>
         <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em;">
           <div v-for="(_, i) in Array(20)" :key="i" style="height: 100px">
-            <b-popover v-bind="vari">
+            <BPopover v-bind="vari">
               jee
               <template #target>
-                <b-button>hover / focus</b-button>
+                <BButton>hover / focus</BButton>
               </template>
-            </b-popover>
+            </BPopover>
           </div>
         </div>
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

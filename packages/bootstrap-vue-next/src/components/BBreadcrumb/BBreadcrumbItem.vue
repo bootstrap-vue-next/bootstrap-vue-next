@@ -13,64 +13,103 @@
   </li>
 </template>
 
-<script lang="ts">
-import {omit, pluckProps} from '../../utils'
+<script setup lang="ts">
+import {pick} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {computed, defineComponent, type PropType, type SlotsType} from 'vue'
-import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
-import type {Booleanish} from '../../types'
+import {computed} from 'vue'
+import BLink from '../BLink/BLink.vue'
+import type {BLinkProps} from '../../types/BLinkProps'
 
-const linkProps = omit(BLINK_PROPS, ['event', 'routerTag'] as const)
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
-export default defineComponent({
-  slots: Object as SlotsType<{
-    default?: Record<string, never>
-  }>,
-  components: {BLink},
-  props: {
-    ...linkProps,
-    active: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    ariaCurrent: {type: String, default: 'location'},
-    disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    text: {type: String, default: undefined},
-  },
-  emits: ['click'],
-  setup(props, {emit}) {
-    const activeBoolean = useBooleanish(() => props.active)
-    const disabledBoolean = useBooleanish(() => props.disabled)
+const props = withDefaults(
+  defineProps<
+    {
+      ariaCurrent?: string
+      text?: string
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
+  {
+    ariaCurrent: 'location',
+    text: undefined,
+    // Link props
+    active: false,
+    activeClass: 'router-link-active',
+    append: false,
+    disabled: false,
+    event: 'click',
+    href: undefined,
+    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    rel: undefined,
+    replace: false,
+    routerComponentName: 'router-link',
+    routerTag: 'a',
+    target: '_self',
+    to: undefined,
+    variant: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
+    icon: false,
+    // End link props
+  }
+)
 
-    const computedClasses = computed(() => ({
-      active: activeBoolean.value,
-    }))
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
 
-    const computedTag = computed<'span' | typeof BLink>(() =>
-      activeBoolean.value ? 'span' : BLink
-    )
+const activeBoolean = useBooleanish(() => props.active)
+const disabledBoolean = useBooleanish(() => props.disabled)
 
-    const computedAriaCurrent = computed(() =>
-      activeBoolean.value ? props.ariaCurrent : undefined
-    )
+const computedClasses = computed(() => ({
+  active: activeBoolean.value,
+}))
 
-    const computedLinkProps = computed(() =>
-      computedTag.value !== 'span' ? pluckProps(props, linkProps) : {}
-    )
+const computedTag = computed<'span' | typeof BLink>(() => (activeBoolean.value ? 'span' : BLink))
 
-    const clicked = (e: MouseEvent): void => {
-      if (disabledBoolean.value || activeBoolean.value) {
-        e.preventDefault()
-        e.stopImmediatePropagation()
-        return
-      }
-      if (!disabledBoolean.value) emit('click', e)
-    }
+const computedAriaCurrent = computed(() => (activeBoolean.value ? props.ariaCurrent : undefined))
 
-    return {
-      computedLinkProps,
-      computedClasses,
-      computedTag,
-      computedAriaCurrent,
-      clicked,
-    }
-  },
-})
+const computedLinkProps = computed(() =>
+  computedTag.value !== 'span'
+    ? pick(props, [
+        'active',
+        'activeClass',
+        'append',
+        'disabled',
+        'href',
+        'rel',
+        'replace',
+        'routerComponentName',
+        'target',
+        'to',
+        'variant',
+        'opacity',
+        'opacityHover',
+        'underlineVariant',
+        'underlineOffset',
+        'underlineOffsetHover',
+        'underlineOpacity',
+        'underlineOpacityHover',
+        'icon',
+      ])
+    : {}
+)
+
+const clicked = (e: MouseEvent): void => {
+  if (disabledBoolean.value || activeBoolean.value) {
+    e.preventDefault()
+    e.stopImmediatePropagation()
+    return
+  }
+  if (!disabledBoolean.value) emit('click', e)
+}
 </script>

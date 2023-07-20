@@ -2,9 +2,9 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <slot name="prepend" />
-      <b-breadcrumb-item v-for="(item, i) in breadcrumbItemObjects" :key="i" v-bind="item">
+      <BBreadcrumbItem v-for="(item, i) in breadcrumbItemObjects" :key="i" v-bind="item">
         {{ item.text }}
-      </b-breadcrumb-item>
+      </BBreadcrumbItem>
       <slot />
       <slot name="append" />
     </ol>
@@ -17,11 +17,12 @@ import {useBreadcrumb} from '../../composables'
 import type {BreadcrumbItem, BreadcrumbItemObject} from '../../types'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
 
-interface BBreadcrumbProps {
-  items?: BreadcrumbItem[]
-}
-
-const props = withDefaults(defineProps<BBreadcrumbProps>(), {items: undefined})
+const props = withDefaults(
+  defineProps<{
+    items?: BreadcrumbItem[]
+  }>(),
+  {items: undefined}
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

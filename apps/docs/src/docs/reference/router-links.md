@@ -10,50 +10,50 @@
 
 <div class="lead mb-5">
 
-Several BootstrapVue components support rendering `<router-link>` components compatible with Vue Router and Nuxt.js. For more information, see the official [Vue Router docs](https://router.vuejs.org) and official [Nuxt.js docs](https://nuxt.com/docs/api/components/nuxt-link#props).
+Several BootstrapVue components support rendering `<RouterLink>` components compatible with Vue Router and Nuxt.js. For more information, see the official [Vue Router docs](https://router.vuejs.org) and official [Nuxt.js docs](https://nuxt.com/docs/api/components/nuxt-link#props).
 
 </div>
 
 ## Common router link props
 
-In the following sections, we are using the `<b-link>` component to render router links. `<b-link>` is the building block of most of BootstrapVue's actionable components. You could use any other component that supports link generation such as `<b-link>`, `<b-button>`, `<b-avatar>`, `<b-breadcrumb-item>`, `<b-list-group-item>`, `<b-nav-item>`, `<b-dropdown-item>`, and `<b-pagination-nav>`. Note that not all props are available on all components. Refer to the respective component documentation for details.
+In the following sections, we are using the `<BLink>` component to render router links. `<BLink>` is the building block of most of BootstrapVue's actionable components. You could use any other component that supports link generation such as `<BLink>`, `<BButton>`, `<BAvatar>`, `<BBreadcrumbItem>`, `<BListGroupItem>`, `<BNavItem>`, `<BDropdownItem>`, and `<BPaginationNav>`. Note that not all props are available on all components. Refer to the respective component documentation for details.
 
 ### `to`
 
 - type: `string | Location`
-- required to generate a `<router-link>`
+- required to generate a `<RouterLink>`
 
 Denotes the target route of the link. When clicked, the value of the `to` prop will be passed to `router.push()` internally, so the value can be either a string or a location descriptor object.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
 <!-- Literal string -->
-<b-link to="home">Home</b-link>
+<BLink to="home">Home</BLink>
 
 <!-- Renders to -->
 <a href="home">Home</a>
 
 <!-- JavaScript expression using `v-bind` -->
-<b-link v-bind:to="'home'">Home</b-link>
+<BLink v-bind:to="'home'">Home</BLink>
 
 <!-- Omitting `v-bind` is fine, just as binding any other prop -->
-<b-link :to="'home'">Home</b-link>
+<BLink :to="'home'">Home</BLink>
 
 <!-- Same as above -->
-<b-link :to="{path: 'home'}">Home</b-link>
+<BLink :to="{path: 'home'}">Home</BLink>
 
 <!-- Named route -->
-<b-link :to="{name: 'user', params: {userId: 123}}">User</b-link>
+<BLink :to="{name: 'user', params: {userId: 123}}">User</BLink>
 
 <!-- With query, resulting in `/register?plan=private` -->
-<b-link :to="{path: 'register', query: {plan: 'private'}}">Register</b-link>
+<BLink :to="{path: 'register', query: {plan: 'private'}}">Register</BLink>
 
 <!-- Render a non-router link by omitting `to` and specifying an `href` -->
-<b-link href="/home">Home</b-link>
+<BLink href="/home">Home</BLink>
 ```
 
-</b-card>
+</BCard>
 
 ### `replace`
 
@@ -62,13 +62,13 @@ Denotes the target route of the link. When clicked, the value of the `to` prop w
 
 Setting replace prop will call `router.replace()` instead of `router.push()` when clicked, so the navigation will not leave a history record.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
-<b-link :to="{path: '/abc'}" replace></b-link>
+<BLink :to="{path: '/abc'}" replace />
 ```
 
-</b-card>
+</BCard>
 
 ### `append`
 
@@ -77,37 +77,37 @@ Setting replace prop will call `router.replace()` instead of `router.push()` whe
 
 Setting `append` prop always appends the relative path to the current path. For example, assuming we are navigating from `/a` to a relative link `b`, without `append` we will end up at `/b`, but with `append` we will end up at `/a/b`.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
-<b-link :to="{path: 'relative/path'}" append></b-link>
+<BLink :to="{path: 'relative/path'}" append />
 ```
 
-</b-card>
+</BCard>
 
 ### `router-tag`
 
 - type: `string`
 - default: 'a'
 
-Sometimes we want `<router-link>` to render as another tag, e.g `<li>`. Then we can use `router-tag` prop to specify which tag to render to, and it will still listen to click events for navigation. `router-tag` translates to the `tag` prop on the final rendered `<router-link>`.
+Sometimes we want `<RouterLink>` to render as another tag, e.g `<li>`. Then we can use `router-tag` prop to specify which tag to render to, and it will still listen to click events for navigation. `router-tag` translates to the `tag` prop on the final rendered `<RouterLink>`.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
-<b-link to="/foo" router-tag="li">foo</b-link>
+<BLink to="/foo" router-tag="li">foo</BLink>
 
 <!-- Renders as -->
 <li>foo</li>
 ```
 
-</b-card>
+</BCard>
 
-<b-alert variant="info" :model-value="true" class="my-5">
+<BAlert variant="info" :model-value="true" class="my-5">
 
 Note: Changing the tag from anything other than `<a>` is discouraged, as it hinders accessibility of keyboard and/or screen-reader users, and is also not very SEO friendly.
 
-</b-alert>
+</BAlert>
 
 ### `active-class`
 
@@ -123,18 +123,18 @@ With components that support router links (have a `to` prop), you will want to s
 - type: `boolean`
 - default: `false`
 
-The default active class matching behavior is inclusive match. For example, `<b-link to="/a">` will get this class applied as long as the current path starts with `/a/` or is `/a`.
+The default active class matching behavior is inclusive match. For example, `<BLink to="/a">` will get this class applied as long as the current path starts with `/a/` or is `/a`.
 
-One consequence of this is that `<b-link to="/">` will be active for every route! To force the link into "exact match mode", use the `exact` prop:
+One consequence of this is that `<BLink to="/">` will be active for every route! To force the link into "exact match mode", use the `exact` prop:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
 <!-- This link will only be active at `/` -->
-<b-link to="/" exact></b-link>
+<BLink to="/" exact />
 ```
 
-</b-card>
+</BCard>
 
 ### `exact-active-class`
 
@@ -154,14 +154,14 @@ With components that support router links (have a `to` prop), you will want to s
 
 Allows matching only using the `path` section of the url, effectively ignoring the `query` and the `hash` sections.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
 <!-- this link will also be active at `/search?page=2` or `/search#filters` -->
-<router-link to="/search" exact-path> </router-link>
+<RouterLink to="/search" exact-path> </RouterLink>
 ```
 
-</b-card>
+</BCard>
 
 ### `exact-path-active-class`
 
@@ -175,7 +175,7 @@ With components that support router links (have a `to` prop), you will want to s
 
 ## Nuxt.js specific router link props
 
-When BootstrapVue detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`<nuxt-link>`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `<router-link>`. `<nuxt-link>` supports all of the above router link props, plus the following additional Nuxt.js specific props.
+When BootstrapVue detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`<NuxtLink>`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `<RouterLink>`. `<NuxtLink>` supports all of the above router link props, plus the following additional Nuxt.js specific props.
 
 ### `prefetch`
 
@@ -193,13 +193,13 @@ To improve the responsiveness of your Nuxt.js applications, when the link will b
 
 To improve the responsiveness of your Nuxt.js applications, when the link will be displayed within the viewport, Nuxt.js will automatically prefetch the code splitted page. Setting `no-prefetch` will disabled this feature for the specific link.
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```vue
 router: { prefetchLinks: false }
 ```
 
-</b-card>
+</BCard>
 
 <script setup lang="ts">
 import {BCard, BAlert} from 'bootstrap-vue-next'

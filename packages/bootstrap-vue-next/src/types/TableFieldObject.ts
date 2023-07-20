@@ -3,13 +3,17 @@ import type {ClassValue} from './ClassValue'
 import type {LiteralUnion} from './LiteralUnion'
 import type {ColorVariant} from './ColorVariant'
 
+export type TableFieldObjectFormatter<T = any> =
+  | string
+  | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
+
 export interface TableFieldObject<T = Record<string, unknown>> {
   key: LiteralUnion<keyof T>
   label?: string
   headerTitle?: string
   headerAbbr?: string
   class?: ClassValue
-  formatter?: string | ((value: unknown, key?: string, item?: T) => string)
+  formatter?: TableFieldObjectFormatter<T>
   sortable?: boolean
   sortKey?: string
   sortDirection?: string

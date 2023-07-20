@@ -1,6 +1,6 @@
 <template>
   <div :class="[positionClass]" class="b-toaster position-fixed p-3" style="z-index: 11">
-    <b-toast
+    <BToast
       v-for="toast in instance?.toasts(position).value"
       :id="toast.options.id"
       :key="toast.options.id"
@@ -23,16 +23,17 @@ import type {ContainerPosition} from '../../types'
 import type {ToastInstance} from '../BToast/plugin'
 import BToast from './BToast.vue'
 
-interface BToasterProps {
-  position?: ContainerPosition
-  instance?: ToastInstance
-  // appendToast?: Booleanish
-}
-
-const props = withDefaults(defineProps<BToasterProps>(), {
-  position: 'top-right',
-  instance: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    position?: ContainerPosition
+    instance?: ToastInstance
+    // appendToast?: Booleanish
+  }>(),
+  {
+    position: 'top-right',
+    instance: undefined,
+  }
+)
 
 const toastPositions: Record<ContainerPosition, string> = {
   'top-left': 'top-0 start-0',

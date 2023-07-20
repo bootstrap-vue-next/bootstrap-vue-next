@@ -4,7 +4,7 @@ A clear and concise description of what the pull request does.
 
 ## Small replication
 
-If the change is large enough, a small replication can help demonstrate the changes made. This is optional, but can help observe the intended changes. A mentioned issue that contains a replication also works.
+A small replication or video walkthrough can help demonstrate the changes made. This is optional, but can help observe the intended changes. A mentioned issue that contains a replication also works.
 
 ## PR checklist
 

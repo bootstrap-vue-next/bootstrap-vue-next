@@ -1,19 +1,19 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-button v-model:pressed="buttonIsPressed" variant="primary" class="mt-3"
-          >Toggle Me</b-button
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BButton v-model:pressed="buttonIsPressed" variant="primary" class="mt-3"
+          >Toggle Me</BButton
         >
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         Pressed State:
         <strong>{{ buttonIsPressed }}</strong>
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

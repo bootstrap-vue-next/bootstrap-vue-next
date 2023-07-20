@@ -10,7 +10,10 @@ export {
   getInputClasses,
   getLabelClasses,
 } from './useFormCheck'
-export {COMMON_INPUT_PROPS, default as useFormInput} from './useFormInput'
+export {default as useFormInput} from './useFormInput'
 export {default as normalizeOptions} from './useFormSelect'
 export {default as useId} from './useId'
 export {default as useModalManager} from './useModalManager'
+export {default as useSafeScrollLock} from './useSafeScrollLock'
+export {default as useStateClass} from './useStateClass'
+export {default as useTableItems} from './useTableItems'

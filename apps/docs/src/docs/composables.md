@@ -6,7 +6,7 @@ BootstrapVueNext exposes some custom composables that integrate with various com
 
 </div>
 
-<table-of-contents-card v-for="composable in computedComposablesList" :key="composable.name" class="my-3" :name="composable.name" :description="composable.description" :route="composable.route" />
+<TableOfContentsCard v-for="composable in computedComposablesList" :key="composable.name" class="my-3" :name="composable.name" :description="composable.description" :route="composable.route" />
 
 <script setup lang="ts">
 import {withBase} from 'vitepress'
@@ -18,7 +18,7 @@ const routeLocation = (name: string): string => withBase(`/docs/composables/${na
 const composablesList: {name: string; description: string}[] = [
   {
     name: 'useBreadcrumb',
-    description: 'A global breadcrumb system to pair with the b-breadcrumb component'
+    description: 'A global breadcrumb system to pair with the BBreadcrumb component'
   },
   {
     name: 'useColorMode',

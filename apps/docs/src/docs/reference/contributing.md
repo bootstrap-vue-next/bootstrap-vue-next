@@ -20,11 +20,11 @@ Conventional commits are required for the automation of changelog and tag releas
 
 Setting up your workspace follows traditional open-source flows, if you are already familiar with the process, you can most likely skip this section:
 
-<b-alert variant="danger" :model-value="true" class="my-5">
+<BAlert variant="danger" :model-value="true" class="my-5">
 
 **Only pnpm is allowed**, attempting to run any other package manager tool will cause a warning error. View pnpm installation at <https://pnpm.io/installation>
 
-</b-alert>
+</BAlert>
 
 1. Go to the <https://github.com/bootstrap-vue-next/bootstrap-vue-next>
 2. Click **Fork** at the top
@@ -34,14 +34,14 @@ This repository is where you will make your changes to. You can safely run `git 
 
 When opening your repository, it is usually best to open the **root** folder, not a subdirectory such as `./packages/bootstrap-vue-next`. Eslint rules can sometimes get lost when opening a subdirectory of a workspace. If you do not have the recommended IDE extensions, it will usually suggest that you install them, but this is technically optional. You can finally run at the root:
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-</b-card>
+</BCard>
 
 Finally, after you have made sufficient changes and you are ready to publish your changes to the main repository, you will:
 

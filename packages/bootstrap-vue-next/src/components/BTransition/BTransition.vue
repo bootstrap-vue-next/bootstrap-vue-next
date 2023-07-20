@@ -1,7 +1,7 @@
 <template>
-  <transition v-bind="computedAttrs">
+  <Transition v-bind="computedAttrs">
     <slot />
-  </transition>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -9,19 +9,20 @@ import type {Booleanish, TransitionMode} from '../../types'
 import {computed, type TransitionProps} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface Props {
-  appear?: Booleanish
-  mode?: TransitionMode
-  noFade?: Booleanish
-  transProps?: TransitionProps
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  appear: false,
-  noFade: false,
-  transProps: undefined,
-  mode: undefined,
-})
+const props = withDefaults(
+  defineProps<{
+    appear?: Booleanish
+    mode?: TransitionMode
+    noFade?: Booleanish
+    transProps?: TransitionProps
+  }>(),
+  {
+    appear: false,
+    noFade: false,
+    transProps: undefined,
+    mode: undefined,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,3 +70,15 @@ const computedAttrs = computed(() =>
     : baseProperties.value
 )
 </script>
+
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s linear;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

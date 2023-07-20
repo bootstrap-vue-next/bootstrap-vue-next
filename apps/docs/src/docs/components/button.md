@@ -16,22 +16,22 @@ Use Bootstrap's custom `b-button` component for actions in forms, dialogs, and m
 
 ## Overview
 
-BootstrapVueNext's `<b-button>` component generates either a `<button>` element, `<a>` element, or `<router-link>` component with the styling of a button.
+BootstrapVueNext's `<BButton>` component generates either a `<button>` element, `<a>` element, or `<RouterLink>` component with the styling of a button.
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button>Button</b-button>
-    <b-button variant="danger">Button</b-button>
-    <b-button variant="success">Button</b-button>
-    <b-button variant="outline-primary">Button</b-button>
+    <BButton>Button</BButton>
+    <BButton variant="danger">Button</BButton>
+    <BButton variant="success">Button</BButton>
+    <BButton variant="outline-primary">Button</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<b-button>Button</b-button>
-<b-button variant="danger">Button</b-button>
-<b-button variant="success">Button</b-button>
-<b-button variant="outline-primary">Button</b-button>
+<BButton>Button</BButton>
+<BButton variant="danger">Button</BButton>
+<BButton variant="success">Button</BButton>
+<BButton variant="outline-primary">Button</BButton>
 ```
 
   </template>
@@ -39,21 +39,21 @@ BootstrapVueNext's `<b-button>` component generates either a `<button>` element,
 
 ## Element type
 
-The `<b-button>` component generally renders a `<button>` element. However, you can also render an
-`<a>` element by providing an `href` prop value. You may also generate `vue-router` `<router-link>`
+The `<BButton>` component generally renders a `<button>` element. However, you can also render an
+`<a>` element by providing an `href` prop value. You may also generate `vue-router` `<RouterLink>`
 when providing a value for the `to` prop (`vue-router` is required).
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button>I am a Button</b-button>
-    <b-button href="#">I am a Link</b-button>
+    <BButton>I am a Button</BButton>
+    <BButton href="#">I am a Link</BButton>
   </div>
   <template #html>
 
 ```vue-html
 <div>
-  <b-button>I am a Button</b-button>
-  <b-button href="#">I am a Link</b-button>
+  <BButton>I am a Button</BButton>
+  <BButton href="#">I am a Link</BButton>
 </div>
 ```
 
@@ -73,16 +73,16 @@ Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button size="sm" class="mx-1">Small Button</b-button>
-    <b-button class="mx-1">Default Button</b-button>
-    <b-button size="lg" class="mx-1">Large Button</b-button>
+    <BButton size="sm" class="mx-1">Small Button</BButton>
+    <BButton class="mx-1">Default Button</BButton>
+    <BButton size="lg" class="mx-1">Large Button</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<b-button size="sm">Small Button</b-button>
-<b-button>Default Button</b-button>
-<b-button size="lg">Large Button</b-button>
+<BButton size="sm">Small Button</BButton>
+<BButton>Default Button</BButton>
+<BButton size="lg">Large Button</BButton>
 ```
 
   </template>
@@ -92,7 +92,7 @@ Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
 
 Use the `variant` prop to generate the various Bootstrap contextual button variants.
 
-By default, `<b-button>` will render with the `secondary` variant.
+By default, `<BButton>` will render with the `secondary` variant.
 
 The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendered button.
 
@@ -102,26 +102,26 @@ The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendere
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button variant="primary">Primary</b-button>
-    <b-button variant="secondary">Secondary</b-button>
-    <b-button variant="success">Success</b-button>
-    <b-button variant="danger">Danger</b-button>
-    <b-button variant="warning">Warning</b-button>
-    <b-button variant="info">Info</b-button>
-    <b-button variant="light">Light</b-button>
-    <b-button variant="dark">Dark</b-button>
+    <BButton variant="primary">Primary</BButton>
+    <BButton variant="secondary">Secondary</BButton>
+    <BButton variant="success">Success</BButton>
+    <BButton variant="danger">Danger</BButton>
+    <BButton variant="warning">Warning</BButton>
+    <BButton variant="info">Info</BButton>
+    <BButton variant="light">Light</BButton>
+    <BButton variant="dark">Dark</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<b-button variant="primary">Primary</b-button>
-<b-button variant="secondary">Secondary</b-button>
-<b-button variant="success">Success</b-button>
-<b-button variant="danger">Danger</b-button>
-<b-button variant="warning">Warning</b-button>
-<b-button variant="info">Info</b-button>
-<b-button variant="light">Light</b-button>
-<b-button variant="dark">Dark</b-button>
+<BButton variant="primary">Primary</BButton>
+<BButton variant="secondary">Secondary</BButton>
+<BButton variant="success">Success</BButton>
+<BButton variant="danger">Danger</BButton>
+<BButton variant="warning">Warning</BButton>
+<BButton variant="info">Info</BButton>
+<BButton variant="light">Light</BButton>
+<BButton variant="dark">Dark</BButton>
 ```
 
   </template>
@@ -130,33 +130,33 @@ The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendere
 ### Outline color variants
 
 In need of a button, but not the hefty background colors they bring? Use the `outline-*` variants to
-remove all background images and colors on any `<b-button>`:
+remove all background images and colors on any `<BButton>`:
 
 `outline-primary`, `outline-secondary`, `outline-success`, `outline-danger`, `outline-warning`,
 `outline-info`, `outline-light` and `outline-dark`.
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button variant="outline-primary">Primary</b-button>
-    <b-button variant="outline-secondary">Secondary</b-button>
-    <b-button variant="outline-success">Success</b-button>
-    <b-button variant="outline-danger">Danger</b-button>
-    <b-button variant="outline-warning">Warning</b-button>
-    <b-button variant="outline-info">Info</b-button>
-    <b-button variant="outline-light">Light</b-button>
-    <b-button variant="outline-dark">Dark</b-button>
+    <BButton variant="outline-primary">Primary</BButton>
+    <BButton variant="outline-secondary">Secondary</BButton>
+    <BButton variant="outline-success">Success</BButton>
+    <BButton variant="outline-danger">Danger</BButton>
+    <BButton variant="outline-warning">Warning</BButton>
+    <BButton variant="outline-info">Info</BButton>
+    <BButton variant="outline-light">Light</BButton>
+    <BButton variant="outline-dark">Dark</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<b-button variant="outline-primary">Primary</b-button>
-<b-button variant="outline-secondary">Secondary</b-button>
-<b-button variant="outline-success">Success</b-button>
-<b-button variant="outline-danger">Danger</b-button>
-<b-button variant="outline-warning">Warning</b-button>
-<b-button variant="outline-info">Info</b-button>
-<b-button variant="outline-light">Light</b-button>
-<b-button variant="outline-dark">Dark</b-button>
+<BButton variant="outline-primary">Primary</BButton>
+<BButton variant="outline-secondary">Secondary</BButton>
+<BButton variant="outline-success">Success</BButton>
+<BButton variant="outline-danger">Danger</BButton>
+<BButton variant="outline-warning">Warning</BButton>
+<BButton variant="outline-info">Info</BButton>
+<BButton variant="outline-light">Light</BButton>
+<BButton variant="outline-dark">Dark</BButton>
 ```
 
   </template>
@@ -168,18 +168,18 @@ Variant `link` will render a button with the appearance of a link while maintain
 padding and size of a button.
 
 <HighlightCard>
-  <b-button variant="link">Link</b-button>
+  <BButton variant="link">Link</BButton>
   <template #html>
 
 ```vue-html
-<b-button variant="link">Link</b-button>
+<BButton variant="link">Link</BButton>
 ```
 
   </template>
 </HighlightCard>
 
 **Tip:** remove the hover underline from a link variant button by adding the Bootstrap v4.3 utility
-class `text-decoration-none` to `<b-button>`.
+class `text-decoration-none` to `<BButton>`.
 
 ## Block level buttons
 
@@ -187,20 +187,20 @@ Create responsive stacks of full-width, “block buttons” like those in Bootst
 
 <HighlightCard>
   <div class="d-grid gap-2">
-    <b-button block variant="primary">Block Level Button</b-button>
-    <b-button block variant="primary">Block Level Button</b-button>
+    <BButton block variant="primary">Block Level Button</BButton>
+    <BButton block variant="primary">Block Level Button</BButton>
   </div>
   <template #html>
 
 ```vue-html
-  <b-button block variant="primary">Block Level Button</b-button>
-  <b-button block variant="primary">Block Level Button</b-button>
+  <BButton block variant="primary">Block Level Button</BButton>
+  <BButton block variant="primary">Block Level Button</BButton>
 ```
 
   </template>
 </HighlightCard>
 
-**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.0/components/buttons/#block-buttons).
+**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons).
 
 ## Pill style
 
@@ -208,22 +208,22 @@ Prefer buttons with a more rounded-pill style? Just set the prop `pill` to true.
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button pill>Button</b-button>
-    <b-button pill variant="primary">Button</b-button>
-    <b-button pill variant="outline-secondary">Button</b-button>
-    <b-button pill variant="success">Button</b-button>
-    <b-button pill variant="outline-danger">Button</b-button>
-    <b-button pill variant="info">Button</b-button>
+    <BButton pill>Button</BButton>
+    <BButton pill variant="primary">Button</BButton>
+    <BButton pill variant="outline-secondary">Button</BButton>
+    <BButton pill variant="success">Button</BButton>
+    <BButton pill variant="outline-danger">Button</BButton>
+    <BButton pill variant="info">Button</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<b-button pill>Button</b-button>
-<b-button pill variant="primary">Button</b-button>
-<b-button pill variant="outline-secondary">Button</b-button>
-<b-button pill variant="success">Button</b-button>
-<b-button pill variant="outline-danger">Button</b-button>
-<b-button pill variant="info">Button</b-button>
+<BButton pill>Button</BButton>
+<BButton pill variant="primary">Button</BButton>
+<BButton pill variant="outline-secondary">Button</BButton>
+<BButton pill variant="success">Button</BButton>
+<BButton pill variant="outline-danger">Button</BButton>
+<BButton pill variant="info">Button</BButton>
 ```
 
   </template>
@@ -237,22 +237,22 @@ Prefer buttons with a more square corner style? Just set the prop `squared` to t
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button squared>Button</b-button>
-    <b-button squared variant="primary">Button</b-button>
-    <b-button squared variant="outline-secondary">Button</b-button>
-    <b-button squared variant="success">Button</b-button>
-    <b-button squared variant="outline-danger">Button</b-button>
-    <b-button squared variant="info">Button</b-button>
+    <BButton squared>Button</BButton>
+    <BButton squared variant="primary">Button</BButton>
+    <BButton squared variant="outline-secondary">Button</BButton>
+    <BButton squared variant="success">Button</BButton>
+    <BButton squared variant="outline-danger">Button</BButton>
+    <BButton squared variant="info">Button</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<b-button squared>Button</b-button>
-<b-button squared variant="primary">Button</b-button>
-<b-button squared variant="outline-secondary">Button</b-button>
-<b-button squared variant="success">Button</b-button>
-<b-button squared variant="outline-danger">Button</b-button>
-<b-button squared variant="info">Button</b-button>
+<BButton squared>Button</BButton>
+<BButton squared variant="primary">Button</BButton>
+<BButton squared variant="outline-secondary">Button</BButton>
+<BButton squared variant="success">Button</BButton>
+<BButton squared variant="outline-danger">Button</BButton>
+<BButton squared variant="info">Button</BButton>
 ```
 
   </template>
@@ -264,18 +264,18 @@ The `squared` prop adds the Bootstrap v5 utility class `.rounded-0` on the rende
 ## Disabled state
 
 Set the `disabled` prop to disable button default functionality. `disabled` also works with buttons
-rendered as `<a>` elements and `<router-link>` (i.e. with the `href` or `to` prop set).
+rendered as `<a>` elements and `<RouterLink>` (i.e. with the `href` or `to` prop set).
 
 <HighlightCard>
   <div class="d-flex gap-2">
-    <b-button disabled size="lg" variant="primary">Disabled</b-button>
-    <b-button disabled size="lg">Also Disabled</b-button>
+    <BButton disabled size="lg" variant="primary">Disabled</BButton>
+    <BButton disabled size="lg">Also Disabled</BButton>
   </div>
   <template #html>
 
 ```vue-html
-<b-button disabled size="lg" variant="primary">Disabled</b-button>
-<b-button disabled size="lg">Also Disabled</b-button>
+<BButton disabled size="lg" variant="primary">Disabled</BButton>
+<BButton disabled size="lg">Also Disabled</BButton>
 ```
 
   </template>
@@ -297,23 +297,23 @@ To create a button that can be toggled between active and non-active states, use
 <HighlightCard>
   <h5>Pressed and un-pressed state</h5>
   <div class="d-flex gap-2">
-    <b-button :pressed="true" variant="success">Always Pressed</b-button>
-    <b-button :pressed="false" variant="success">Not Pressed</b-button>
+    <BButton :pressed="true" variant="success">Always Pressed</BButton>
+    <BButton :pressed="false" variant="success">Not Pressed</BButton>
   </div>
   <h5 class="mt-3">Toggleable Button</h5>
-  <b-button v-model:pressed="buttonToggle" variant="primary">Toggle Me</b-button>
+  <BButton v-model:pressed="buttonToggle" variant="primary">Toggle Me</BButton>
   <p>Pressed State: <strong>{{ buttonToggle }}</strong></p>
   <h5>In a button group</h5>
-  <b-button-group size="sm">
-    <b-button
+  <BButtonGroup size="sm">
+    <BButton
       v-for="(btn, idx) in buttons"
       :key="idx"
       v-model:pressed="btn.state"
       variant="primary"
     >
       {{ btn.caption }}
-    </b-button>
-  </b-button-group>
+    </BButton>
+  </BButtonGroup>
   <p>Pressed States: <strong>{{ btnStates }}</strong></p>
   <template #html>
 
@@ -321,25 +321,20 @@ To create a button that can be toggled between active and non-active states, use
 <template>
   <h5>Pressed and un-pressed state</h5>
   <div class="d-flex gap-2">
-    <b-button :pressed="true" variant="success">Always Pressed</b-button>
-    <b-button :pressed="false" variant="success">Not Pressed</b-button>
+    <BButton :pressed="true" variant="success">Always Pressed</BButton>
+    <BButton :pressed="false" variant="success">Not Pressed</BButton>
   </div>
   <h5 class="mt-3">Toggleable Button</h5>
-  <b-button v-model:pressed="buttonToggle" variant="primary">Toggle Me</b-button>
+  <BButton v-model:pressed="buttonToggle" variant="primary">Toggle Me</BButton>
   <p>
     Pressed State: <strong>{{ buttonToggle }}</strong>
   </p>
   <h5>In a button group</h5>
-  <b-button-group size="sm">
-    <b-button
-      v-for="(btn, idx) in buttons"
-      :key="idx"
-      v-model:pressed="btn.state"
-      variant="primary"
-    >
+  <BButtonGroup size="sm">
+    <BButton v-for="(btn, idx) in buttons" :key="idx" v-model:pressed="btn.state" variant="primary">
       {{ btn.caption }}
-    </b-button>
-  </b-button-group>
+    </BButton>
+  </BButtonGroup>
   <p>
     Pressed States: <strong>{{ btnStates }}</strong>
   </p>
@@ -362,17 +357,17 @@ const btnStates = computed(() => buttons.value.map((b) => b.state))
 </HighlightCard>
 
 If using toggle button style for a radio or checkbox style interface, it is best to use the built-in
-`button` style support of [`<b-form-radio-group>`](/docs/components/form-radio) and
-[`<b-form-checkbox-group>`](/docs/components/form-checkbox).
+`button` style support of [`<BFormRadioGroup>`](/docs/components/form-radio) and
+[`<BFormCheckboxGroup>`](/docs/components/form-checkbox).
 
 ## Router link support
 
 Refer to the [`Router support`](/docs/reference/router-links) reference docs for the various
-supported `<router-link>` related props.
+supported `<RouterLink>` related props.
 
 ## Accessibility
 
-When the `href` prop is set to `'#'`, `<b-button>` will render a link (`<a>`) element with attribute
+When the `href` prop is set to `'#'`, `<BButton>` will render a link (`<a>`) element with attribute
 `role="button"` set and appropriate keydown listeners (<kbd>Enter</kbd> and <kbd>Space</kbd>) so
 that the link acts like a native HTML `<button>` for screen reader and keyboard-only users. When
 disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.

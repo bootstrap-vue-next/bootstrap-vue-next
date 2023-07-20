@@ -1,14 +1,21 @@
-export default <Base extends Record<string, boolean> & {all: boolean}>(
+import {ConfigurationOption} from '../types/ModuleOptions'
+
+export default <Type extends string, Base extends ConfigurationOption<Type>>(
   options: Base,
-  values: Omit<Base, 'all'>
-): string[] => {
+  values: Type[]
+): Type[] => {
   const {all, ...others} = options
-  const valuesCopy: Record<string, boolean> = {...values}
-  Object.keys(valuesCopy).forEach((el) => {
-    valuesCopy[el] = all
-  })
+  const valuesCopy: Partial<Record<keyof Base, boolean>> = {}
+  if (all) {
+    values.forEach((el) => {
+      valuesCopy[el] = all
+    })
+  }
   const merge: Record<string, boolean> = {...valuesCopy, ...others}
-  return Object.entries(merge)
-    .filter(([, value]) => value === true)
-    .map(([name]) => name) as string[]
+  return (
+    Object.entries(merge)
+      // filtering possible invalid keys
+      .filter(([name, value]) => !!value && values.includes(name as Type))
+      .map(([name]) => name as Type)
+  )
 }

@@ -1,11 +1,11 @@
 <template>
   <div class="accordion-item">
-    <b-collapse
+    <BCollapse
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
       v-bind="$attrs"
-      :aria-labelledby="`heading${computedId}`"
+      :aria-labelledby="`${computedId}-heading`"
       :tag="tag"
       :toggle="toggle"
       :horizontal="horizontal"
@@ -14,7 +14,7 @@
       v-on="events"
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
-        <component :is="headerTag" :id="`heading${computedId}`" class="accordion-header">
+        <component :is="headerTag" :id="`${computedId}-heading`" class="accordion-header">
           <button
             class="accordion-button"
             :class="{collapsed: !toggleVisible}"
@@ -30,7 +30,7 @@
       <div class="accordion-body">
         <slot />
       </div>
-    </b-collapse>
+    </BCollapse>
   </div>
 </template>
 
@@ -46,41 +46,40 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface BAccordionItemProps {
-  id?: string
-  title?: string
-  modelValue?: Booleanish
-  headerTag?: string
-  tag?: string
-  toggle?: Booleanish
-  horizontal?: Booleanish
-  visible?: Booleanish
-  isNav?: Booleanish
-}
+const props = withDefaults(
+  defineProps<{
+    id?: string
+    title?: string
+    modelValue?: Booleanish
+    headerTag?: string
+    tag?: string
+    toggle?: Booleanish
+    horizontal?: Booleanish
+    visible?: Booleanish
+    isNav?: Booleanish
+  }>(),
+  {
+    headerTag: 'h2',
+    id: undefined,
+    title: undefined,
+    tag: undefined,
+    horizontal: undefined,
+    toggle: undefined,
+    isNav: undefined,
+    modelValue: false,
+    visible: false,
+  }
+)
 
-const props = withDefaults(defineProps<BAccordionItemProps>(), {
-  headerTag: 'h2',
-  id: undefined,
-  title: undefined,
-  tag: undefined,
-  horizontal: undefined,
-  toggle: undefined,
-  isNav: undefined,
-  modelValue: false,
-  visible: false,
-})
-
-interface BAccordionItemEmits {
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'update:modelValue', value: boolean): void
-}
-
-const emit = defineEmits<BAccordionItemEmits>()
+const emit = defineEmits<{
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show-prevented': []
+  'update:modelValue': [value: boolean]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

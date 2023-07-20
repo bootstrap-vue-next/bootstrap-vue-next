@@ -9,29 +9,32 @@ import type {AlignmentJustifyContent, Booleanish} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
 import {computed} from 'vue'
 
-interface BNavProps {
-  align?: AlignmentJustifyContent
-  cardHeader?: Booleanish
-  fill?: Booleanish
-  justified?: Booleanish
-  pills?: Booleanish
-  small?: Booleanish
-  tabs?: Booleanish
-  tag?: string
-  vertical?: Booleanish
-}
-
-const props = withDefaults(defineProps<BNavProps>(), {
-  align: undefined,
-  cardHeader: false,
-  fill: false,
-  justified: false,
-  pills: false,
-  small: false,
-  tabs: false,
-  tag: 'ul',
-  vertical: false,
-})
+const props = withDefaults(
+  defineProps<{
+    align?: AlignmentJustifyContent
+    cardHeader?: Booleanish
+    fill?: Booleanish
+    justified?: Booleanish
+    pills?: Booleanish
+    small?: Booleanish
+    tabs?: Booleanish
+    tag?: string
+    vertical?: Booleanish
+    underline?: Booleanish
+  }>(),
+  {
+    align: undefined,
+    cardHeader: false,
+    fill: false,
+    justified: false,
+    pills: false,
+    small: false,
+    tabs: false,
+    tag: 'ul',
+    vertical: false,
+    underline: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,6 +49,7 @@ const smallBoolean = useBooleanish(() => props.small)
 const tabsBoolean = useBooleanish(() => props.tabs)
 const verticalBoolean = useBooleanish(() => props.vertical)
 const alignment = useAlignment(() => props.align)
+const underlineBoolean = useBooleanish(() => props.underline)
 
 const computedClasses = computed(() => ({
   'nav-tabs': tabsBoolean.value,
@@ -58,5 +62,6 @@ const computedClasses = computed(() => ({
   'nav-justified': !verticalBoolean.value && justifiedBoolean.value,
   [alignment.value]: !verticalBoolean.value && props.align !== undefined,
   'small': smallBoolean.value,
+  'nav-underline': underlineBoolean.value,
 }))
 </script>

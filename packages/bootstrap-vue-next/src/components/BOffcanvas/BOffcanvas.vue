@@ -1,6 +1,6 @@
 <template>
-  <teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
-    <b-transition
+  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+    <BTransition
       :no-fade="true"
       :trans-props="{
         enterToClass: 'showing',
@@ -21,7 +21,7 @@
         role="dialog"
         :class="computedClasses"
         tabindex="-1"
-        aria-labelledby="offcanvasLabel"
+        :aria-labelledby="`${computedId}-offcanvas-label`"
         data-bs-backdrop="false"
         v-bind="$attrs"
         @keyup.esc="hide('esc')"
@@ -29,12 +29,12 @@
         <template v-if="lazyShowing">
           <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
             <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
-              <h5 id="offcanvasLabel" class="offcanvas-title">
+              <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title">
                   {{ title }}
                 </slot>
               </h5>
-              <b-close-button
+              <BCloseButton
                 v-if="!noHeaderCloseBoolean"
                 class="text-reset"
                 :aria-label="dismissLabel"
@@ -50,8 +50,8 @@
           </div>
         </template>
       </div>
-    </b-transition>
-    <b-overlay
+    </BTransition>
+    <BOverlay
       :variant="backdropVariant"
       :show="showBackdrop"
       :fixed="true"
@@ -59,85 +59,92 @@
       :no-spinner="true"
       @click="hide('backdrop')"
     />
-  </teleport>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
 import {useEventListener, useFocus, useVModel} from '@vueuse/core'
-import {useBooleanish, useId} from '../../composables'
+import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BTransition from '../BTransition/BTransition.vue'
 
+// TODO once the responsive stuff may be implemented correctly,
+// What needs to occur is a fixing of the "body scrolling".
+// If the offcanvas is on the screen on a large screen, body scrolling is not disabled
+// Even though the modelValue is true
+// When it's a small screen and close, it works, as normal,
+// But then when it opens up on a small screen, it must disable again
+// This is implemented on Layout.vue, but is not officially supported.
+
 defineOptions({
   inheritAttrs: false,
 })
 
-interface BOffcanvasProps {
-  dismissLabel?: string
-  modelValue?: Booleanish
-  bodyScrolling?: Booleanish
-  backdrop?: Booleanish
-  noCloseOnBackdrop?: Booleanish
-  noCloseOnEsc?: Booleanish
-  // TODO standardize this. Create a dedicated type
-  // Then in components that use individual props (BImg)
-  // Make them just use prop placement
-  placement?: 'top' | 'bottom' | 'start' | 'end'
-  title?: string
-  noHeaderClose?: Booleanish
-  noHeader?: Booleanish
-  lazy?: Booleanish
-  id?: string
-  noFocus?: Booleanish
-  backdropVariant?: ColorVariant | null
-  headerClass?: string
-  bodyClass?: string
-  footerClass?: string
-  teleportDisabled?: Booleanish
-  teleportTo?: string | RendererElement | null | undefined
-  // TODO responsive doesn't work
-  // responsive?: Breakpoint
-}
+const props = withDefaults(
+  defineProps<{
+    dismissLabel?: string
+    modelValue?: Booleanish
+    bodyScrolling?: Booleanish
+    backdrop?: Booleanish
+    noCloseOnBackdrop?: Booleanish
+    noCloseOnEsc?: Booleanish
+    // TODO standardize this. Create a dedicated type
+    // Then in components that use individual props (BImg)
+    // Make them just use prop placement
+    placement?: 'top' | 'bottom' | 'start' | 'end'
+    title?: string
+    noHeaderClose?: Booleanish
+    noHeader?: Booleanish
+    lazy?: Booleanish
+    id?: string
+    noFocus?: Booleanish
+    backdropVariant?: ColorVariant | null
+    headerClass?: string
+    bodyClass?: string
+    footerClass?: string
+    teleportDisabled?: Booleanish
+    teleportTo?: string | RendererElement | null | undefined
+    // TODO responsive doesn't work
+    // responsive?: Breakpoint
+  }>(),
+  {
+    dismissLabel: 'Close',
+    id: undefined,
+    title: undefined,
+    modelValue: false,
+    backdropVariant: 'dark',
+    noFocus: false,
+    bodyScrolling: false,
+    noCloseOnBackdrop: false,
+    noCloseOnEsc: false,
+    backdrop: true,
+    lazy: false,
+    placement: 'start',
+    noHeaderClose: false,
+    noHeader: false,
+    headerClass: undefined,
+    bodyClass: undefined,
+    footerClass: undefined,
+    teleportDisabled: false,
+    teleportTo: 'body',
+  }
+)
 
-const props = withDefaults(defineProps<BOffcanvasProps>(), {
-  dismissLabel: 'Close',
-  id: undefined,
-  title: undefined,
-  modelValue: false,
-  backdropVariant: 'dark',
-  noFocus: false,
-  bodyScrolling: false,
-  noCloseOnBackdrop: false,
-  noCloseOnEsc: false,
-  backdrop: true,
-  lazy: false,
-  placement: 'start',
-  noHeaderClose: false,
-  noHeader: false,
-  headerClass: undefined,
-  bodyClass: undefined,
-  footerClass: undefined,
-  teleportDisabled: false,
-  teleportTo: 'body',
-})
-
-interface BOffcanvasEmits {
-  (e: 'update:modelValue', value: boolean): void
-  (e: 'show', value: BvTriggerableEvent): void
-  (e: 'shown', value: BvTriggerableEvent): void
-  (e: 'hide', value: BvTriggerableEvent): void
-  (e: 'hidden', value: BvTriggerableEvent): void
-  (e: 'hide-prevented'): void
-  (e: 'show-prevented'): void
-  (e: 'esc', value: BvTriggerableEvent): void
-  (e: 'close', value: BvTriggerableEvent): void
-}
-
-const emit = defineEmits<BOffcanvasEmits>()
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  'show': [value: BvTriggerableEvent]
+  'shown': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show-prevented': []
+  'esc': [value: BvTriggerableEvent]
+  'close': [value: BvTriggerableEvent]
+}>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -163,8 +170,6 @@ const slots = useSlots()
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
 const backdropBoolean = useBooleanish(() => props.backdrop)
 const noHeaderCloseBoolean = useBooleanish(() => props.noHeaderClose)
@@ -176,6 +181,7 @@ const lazyBoolean = useBooleanish(() => props.lazy)
 const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
 const computedId = useId(() => props.id, 'offcanvas')
+useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
 
 const element = ref<HTMLElement | null>(null)
 
@@ -197,7 +203,7 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const hasFooterSlot = computed<boolean>(() => !isEmptySlot(slots.footer))
+const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed

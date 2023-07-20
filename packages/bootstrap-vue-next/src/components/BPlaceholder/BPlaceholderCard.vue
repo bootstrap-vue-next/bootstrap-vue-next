@@ -1,30 +1,30 @@
 <template>
-  <b-card :img-bottom="imgBottom">
+  <BCard :img-bottom="imgBottom">
     <template v-if="!noImgBoolean" #img>
       <slot name="img">
-        <b-card-img v-bind="imgAttrs" />
+        <BCardImg v-bind="imgAttrs" />
       </slot>
     </template>
 
     <template v-if="!noHeaderBoolean" #header>
       <slot name="header">
-        <b-placeholder v-bind="headerAttrs" />
+        <BPlaceholder v-bind="headerAttrs" />
       </slot>
     </template>
     <slot>
-      <b-placeholder cols="7" v-bind="defaultAttrs" />
-      <b-placeholder cols="4" v-bind="defaultAttrs" />
-      <b-placeholder cols="4" v-bind="defaultAttrs" />
-      <b-placeholder cols="6" v-bind="defaultAttrs" />
-      <b-placeholder cols="8" v-bind="defaultAttrs" />
+      <BPlaceholder cols="7" v-bind="defaultAttrs" />
+      <BPlaceholder cols="4" v-bind="defaultAttrs" />
+      <BPlaceholder cols="4" v-bind="defaultAttrs" />
+      <BPlaceholder cols="6" v-bind="defaultAttrs" />
+      <BPlaceholder cols="8" v-bind="defaultAttrs" />
     </slot>
     <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
-        <b-placeholder-button v-if="!noButtonBoolean" v-bind="footerAttrs" />
-        <b-placeholder v-else v-bind="footerAttrs" />
+        <BPlaceholderButton v-if="!noButtonBoolean" v-bind="footerAttrs" />
+        <BPlaceholder v-else v-bind="footerAttrs" />
       </slot>
     </template>
-  </b-card>
+  </BCard>
 </template>
 
 <script setup lang="ts">
@@ -36,49 +36,50 @@ import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} fr
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface Props {
-  noHeader?: Booleanish
-  headerWidth?: string | number
-  headerVariant?: ColorVariant | null
-  headerAnimation?: PlaceholderAnimation
-  headerSize?: PlaceholderSize
-  noFooter?: Booleanish
-  footerWidth?: string | number
-  footerVariant?: ColorVariant | null
-  footerAnimation?: PlaceholderAnimation
-  footerSize?: PlaceholderSize
-  animation?: PlaceholderAnimation
-  size?: PlaceholderSize
-  variant?: ColorVariant | null
-  noButton?: Booleanish
-  imgBottom?: Booleanish
-  imgSrc?: string
-  imgBlankColor?: string
-  imgHeight?: string | number
-  noImg?: Booleanish
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  footerVariant: undefined,
-  footerAnimation: undefined,
-  footerSize: 'md',
-  animation: undefined,
-  size: 'md',
-  variant: undefined,
-  imgSrc: undefined,
-  headerAnimation: undefined,
-  headerSize: 'md',
-  headerVariant: undefined,
-  noButton: false,
-  headerWidth: 100,
-  footerWidth: 100,
-  noHeader: false,
-  noFooter: false,
-  imgBlankColor: '#868e96',
-  imgHeight: 100,
-  imgBottom: false,
-  noImg: false,
-})
+const props = withDefaults(
+  defineProps<{
+    noHeader?: Booleanish
+    headerWidth?: string | number
+    headerVariant?: ColorVariant | null
+    headerAnimation?: PlaceholderAnimation
+    headerSize?: PlaceholderSize
+    noFooter?: Booleanish
+    footerWidth?: string | number
+    footerVariant?: ColorVariant | null
+    footerAnimation?: PlaceholderAnimation
+    footerSize?: PlaceholderSize
+    animation?: PlaceholderAnimation
+    size?: PlaceholderSize
+    variant?: ColorVariant | null
+    noButton?: Booleanish
+    imgBottom?: Booleanish
+    imgSrc?: string
+    imgBlankColor?: string
+    imgHeight?: string | number
+    noImg?: Booleanish
+  }>(),
+  {
+    footerVariant: undefined,
+    footerAnimation: undefined,
+    footerSize: 'md',
+    animation: undefined,
+    size: 'md',
+    variant: undefined,
+    imgSrc: undefined,
+    headerAnimation: undefined,
+    headerSize: 'md',
+    headerVariant: undefined,
+    noButton: false,
+    headerWidth: 100,
+    footerWidth: 100,
+    noHeader: false,
+    noFooter: false,
+    imgBlankColor: '#868e96',
+    imgHeight: 100,
+    imgBottom: false,
+    noImg: false,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

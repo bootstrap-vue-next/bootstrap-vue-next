@@ -1,11 +1,11 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-form-textarea v-model="description" class="my-3" />
-      </b-col>
-    </b-row>
-  </b-container>
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BFormTextarea v-model="description" class="my-3" />
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

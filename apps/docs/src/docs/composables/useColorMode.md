@@ -10,25 +10,27 @@
 
 <div class="lead mb-5">
 
-'useColorMode' provides a convenient utility to adjust the global color theme of your application. You can also use it to target specific components. Bootstrap's default behavior dictates that color modes are applied to all children in the branch. `useColorMode` is simply a wrapper for the [vueuse](https://vueuse.org/core/useColorMode/#usecolormode) utility.
+`useColorMode` provides a convenient utility to adjust the global color theme of your application. You can also use it to target specific components by using a [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs) or a selector. Bootstrap's default behavior dictates that color modes are applied to all children in the branch. `useColorMode` is simply a wrapper for the [vueuse](https://vueuse.org/core/useColorMode/#usecolormode) utility.
 
 </div>
 
 ## Demo
 
 <HighlightCard>
-  <b-card ref="target">
-    <b-button @click="changeColor">
-      Current color: {{ mode }}
-    </b-button>
-  </b-card>
+  <ClientOnly>
+    <BCard ref="target">
+      <BButton @click="changeColor">
+        Current color: {{ mode }}
+      </BButton>
+    </BCard>
+  </ClientOnly>
   <template #html>
 
 ```vue
 <template>
-  <b-card ref="target">
-    <b-button @click="changeColor"> Current color: {{ mode }} </b-button>
-  </b-card>
+  <BCard ref="target">
+    <BButton @click="changeColor"> Current color: {{ mode }} </BButton>
+  </BCard>
 </template>
 
 <script setup lang="ts">
@@ -52,6 +54,7 @@ const changeColor = () => {
 <script setup lang="ts">
 import {ref} from 'vue'
 import {useColorMode, BCard, BCardBody, BButton} from 'bootstrap-vue-next'
+import HighlightCard from '../../components/HighlightCard.vue'
 
 const target = ref<HTMLElement | null>(null)
 

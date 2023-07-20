@@ -16,7 +16,7 @@ Below are the variants available when using the default Bootstrap v5 CSS. When u
 
 ## Base variants
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 <p class="text-primary">.text-primary</p>
 <p class="text-secondary">.text-secondary</p>
@@ -27,36 +27,36 @@ Below are the variants available when using the default Bootstrap v5 CSS. When u
 <p class="text-light bg-dark">.text-light</p>
 <p class="text-dark bg-white">.text-dark</p>
 
-</b-card>
+</BCard>
 
 The base variants will translate to various Bootstrap v5 contextual class names based on the component (and variant purpose) where they are used. See the sections below for details.
 
 ## Background and border variants
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
   <div class="gap-2">
-    <span class="border border-primary"></span>
-    <span class="border border-primary-subtle"></span>
-    <span class="border border-secondary"></span>
-    <span class="border border-secondary-subtle"></span>
-    <span class="border border-success"></span>
-    <span class="border border-success-subtle"></span>
-    <span class="border border-danger"></span>
-    <span class="border border-danger-subtle"></span>
-    <span class="border border-warning"></span>
-    <span class="border border-warning-subtle"></span>
-    <span class="border border-info"></span>
-    <span class="border border-info-subtle"></span>
-    <span class="border border-light"></span>
-    <span class="border border-light-subtle"></span>
-    <span class="border border-dark"></span>
-    <span class="border border-dark-subtle"></span>
-    <span class="border border-black"></span>
-    <span class="border border-white"></span>
+    <span class="border border-primary" />
+    <span class="border border-primary-subtle" />
+    <span class="border border-secondary" />
+    <span class="border border-secondary-subtle" />
+    <span class="border border-success" />
+    <span class="border border-success-subtle" />
+    <span class="border border-danger" />
+    <span class="border border-danger-subtle" />
+    <span class="border border-warning" />
+    <span class="border border-warning-subtle" />
+    <span class="border border-info" />
+    <span class="border border-info-subtle" />
+    <span class="border border-light" />
+    <span class="border border-light-subtle" />
+    <span class="border border-dark" />
+    <span class="border border-dark-subtle" />
+    <span class="border border-black" />
+    <span class="border border-white" />
   </div>
 
-</b-card>
+</BCard>
 
 All the base variants plus:
 
@@ -65,7 +65,7 @@ All the base variants plus:
 
 These translate to class names `bg-{variant}` for backgrounds and `border-{variant}` for borders.
 
-These variants are used by components (such as `<b-card>`, `<b-modal>`, etc.) that provide `bg-variant`, `_-bg-variant`, `border-variant` and `_-border-variant` props.
+These variants are used by components (such as `<BCard>`, `<BModal>`, etc.) that provide `bg-variant`, `_-bg-variant`, `border-variant` and `_-border-variant` props.
 
 ## Text variants
 
@@ -75,7 +75,7 @@ All the base variants plus:
 - `white`
 - `black`
 
-<b-card class="bg-body-tertiary">
+<BCard class="bg-body-tertiary">
 
 <p class="text-primary">.text-primary</p>
 <p class="text-primary-emphasis">.text-primary-emphasis</p>
@@ -104,11 +104,11 @@ All the base variants plus:
 <p class="text-black-50 bg-white">.text-black-50</p>
 <p class="text-white-50 bg-dark">.text-white-50</p>
 
-</b-card>
+</BCard>
 
 These translate to class names `text-{variant}`
 
-These variants are used by components (such as `<b-card>`, `<b-modal>`, etc.) that provide `text-variant` and `*-text-variant` props.
+These variants are used by components (such as `<BCard>`, `<BModal>`, etc.) that provide `text-variant` and `*-text-variant` props.
 
 ## Component specific variants
 
@@ -173,7 +173,7 @@ You may also use the underlying class names directly on elements (and some compo
 
 ## Creating custom variants
 
-When creating custom variants, follow the Bootstrap v4 variant CSS class naming scheme and they will become available to the various components that use that scheme (i.e. create a custom CSS class `btn-purple` and `purple` becomes a valid variant to use on `<b-button>`).
+When creating custom variants, follow the Bootstrap v4 variant CSS class naming scheme and they will become available to the various components that use that scheme (i.e. create a custom CSS class `btn-purple` and `purple` becomes a valid variant to use on `<BButton>`).
 
 Alternatively, you can create new variant theme colors by supplying custom Bootstrap SCSS theme color maps. The default theme color map is (from `bootstrap/scss/\_variables.scss`):
 

@@ -1,7 +1,7 @@
 <template>
   <div class="progress" :style="{height}">
     <slot>
-      <b-progress-bar v-bind="computedAttrs" />
+      <BProgressBar v-bind="computedAttrs" />
     </slot>
   </div>
 </template>
@@ -13,29 +13,30 @@ import {useBooleanish} from '../../composables'
 import {computed, provide, readonly, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
-interface BProgressProps {
-  variant?: ColorVariant | null
-  max?: number | string
-  height?: string
-  animated?: Booleanish
-  precision?: number | string
-  showProgress?: Booleanish
-  showValue?: Booleanish
-  striped?: Booleanish
-  value?: number | string
-}
-
-const props = withDefaults(defineProps<BProgressProps>(), {
-  variant: undefined,
-  max: 100,
-  height: undefined,
-  animated: false,
-  precision: 0,
-  showProgress: false,
-  showValue: false,
-  striped: false,
-  value: 0,
-})
+const props = withDefaults(
+  defineProps<{
+    variant?: ColorVariant | null
+    max?: number | string
+    height?: string
+    animated?: Booleanish
+    precision?: number | string
+    showProgress?: Booleanish
+    showValue?: Booleanish
+    striped?: Booleanish
+    value?: number | string
+  }>(),
+  {
+    variant: undefined,
+    max: 100,
+    height: undefined,
+    animated: false,
+    precision: 0,
+    showProgress: false,
+    showValue: false,
+    striped: false,
+    value: 0,
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

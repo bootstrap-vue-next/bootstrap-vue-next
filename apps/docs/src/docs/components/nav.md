@@ -15,21 +15,21 @@ Bootstrap's vue nav component is a simple wrapper for building navigation compon
 </div>
 
 <HighlightCard>
-  <b-nav>
-    <b-nav-item>Home</b-nav-item>
-    <b-nav-item>About</b-nav-item>
-    <b-nav-item>New</b-nav-item>
-    <b-nav-item disabled>Home</b-nav-item>
-  </b-nav>
+  <BNav>
+    <BNavItem>Home</BNavItem>
+    <BNavItem>About</BNavItem>
+    <BNavItem>New</BNavItem>
+    <BNavItem disabled>Home</BNavItem>
+  </BNav>
   <template #html>
 
 ```vue-html
-<b-nav>
-  <b-nav-item>Home</b-nav-item>
-  <b-nav-item>About</b-nav-item>
-  <b-nav-item>New</b-nav-item>
-  <b-nav-item disabled>Home</b-nav-item>
-</b-nav>
+<BNav>
+  <BNavItem>Home</BNavItem>
+  <BNavItem>About</BNavItem>
+  <BNavItem>New</BNavItem>
+  <BNavItem disabled>Home</BNavItem>
+</BNav>
 ```
 
   </template>
@@ -40,42 +40,42 @@ Bootstrap's vue nav component is a simple wrapper for building navigation compon
 Dropdowns can be added like so
 
 <HighlightCard>
-  <b-nav pills>
-    <b-nav-item active>Active</b-nav-item>
-    <b-nav-item>Link</b-nav-item>
-    <b-nav-item-dropdown
+  <BNav pills>
+    <BNavItem active>Active</BNavItem>
+    <BNavItem>Link</BNavItem>
+    <BNavItemDropdown
       v-model="dropdownShow"
       id="my-nav-dropdown"
       text="Dropdown"
       toggle-class="nav-link-custom"
       end
     >
-      <b-dropdown-item>One</b-dropdown-item>
-      <b-dropdown-item>Two</b-dropdown-item>
-      <b-dropdown-divider />
-      <b-dropdown-item>Three</b-dropdown-item>
-    </b-nav-item-dropdown>
-  </b-nav>
+      <BDropdownItem>One</BDropdownItem>
+      <BDropdownItem>Two</BDropdownItem>
+      <BDropdownDivider />
+      <BDropdownItem>Three</BDropdownItem>
+    </BNavItemDropdown>
+  </BNav>
   <template #html>
 
 ```vue
 <template>
-  <b-nav pills>
-    <b-nav-item active>Active</b-nav-item>
-    <b-nav-item>Link</b-nav-item>
-    <b-nav-item-dropdown
+  <BNav pills>
+    <BNavItem active>Active</BNavItem>
+    <BNavItem>Link</BNavItem>
+    <BNavItemDropdown
       v-model="dropdownShow"
       id="my-nav-dropdown"
       text="Dropdown"
       toggle-class="nav-link-custom"
       end
     >
-      <b-dropdown-item>One</b-dropdown-item>
-      <b-dropdown-item>Two</b-dropdown-item>
-      <b-dropdown-divider />
-      <b-dropdown-item>Three</b-dropdown-item>
-    </b-nav-item-dropdown>
-  </b-nav>
+      <BDropdownItem>One</BDropdownItem>
+      <BDropdownItem>Two</BDropdownItem>
+      <BDropdownDivider />
+      <BDropdownItem>Three</BDropdownItem>
+    </BNavItemDropdown>
+  </BNav>
 </template>
 
 <script setup lang="ts">
@@ -86,7 +86,7 @@ const dropdownShow = ref(false)
   </template>
 </HighlightCard>
 
-`<b-nav-item-dropdown>` has many props in common with `<b-dropdown` so you can easily integrate custom options.
+`<BNavItemDropdown>` has many props in common with `<BDropdown` so you can easily integrate custom options.
 
 ## Styles
 
@@ -95,21 +95,21 @@ You can make nav item styles in various ways.
 ### Tab Style
 
 <HighlightCard>
-  <b-nav tabs>
-    <b-nav-item active>Active</b-nav-item>
-    <b-nav-item>Link</b-nav-item>
-    <b-nav-item>Another Link</b-nav-item>
-    <b-nav-item disabled>Disabled</b-nav-item>
-  </b-nav>
+  <BNav tabs>
+    <BNavItem active>Active</BNavItem>
+    <BNavItem>Link</BNavItem>
+    <BNavItem>Another Link</BNavItem>
+    <BNavItem disabled>Disabled</BNavItem>
+  </BNav>
   <template #html>
 
 ```vue-html
- <b-nav tabs>
-  <b-nav-item active>Active</b-nav-item>
-  <b-nav-item>Link</b-nav-item>
-  <b-nav-item>Another Link</b-nav-item>
-  <b-nav-item disabled>Disabled</b-nav-item>
-</b-nav>
+ <BNav tabs>
+  <BNavItem active>Active</BNavItem>
+  <BNavItem>Link</BNavItem>
+  <BNavItem>Another Link</BNavItem>
+  <BNavItem disabled>Disabled</BNavItem>
+</BNav>
 ```
 
   </template>
@@ -118,21 +118,21 @@ You can make nav item styles in various ways.
 ### Pills Style
 
 <HighlightCard>
-  <b-nav pills>
-    <b-nav-item active>Active</b-nav-item>
-    <b-nav-item>Link</b-nav-item>
-    <b-nav-item>Another Link</b-nav-item>
-    <b-nav-item disabled>Disabled</b-nav-item>
-  </b-nav>
+  <BNav pills>
+    <BNavItem active>Active</BNavItem>
+    <BNavItem>Link</BNavItem>
+    <BNavItem>Another Link</BNavItem>
+    <BNavItem disabled>Disabled</BNavItem>
+  </BNav>
   <template #html>
 
 ```vue-html
-<b-nav pills>
-  <b-nav-item active>Active</b-nav-item>
-  <b-nav-item>Link</b-nav-item>
-  <b-nav-item>Another Link</b-nav-item>
-  <b-nav-item disabled>Disabled</b-nav-item>
-</b-nav>
+<BNav pills>
+  <BNavItem active>Active</BNavItem>
+  <BNavItem>Link</BNavItem>
+  <BNavItem>Another Link</BNavItem>
+  <BNavItem disabled>Disabled</BNavItem>
+</BNav>
 ```
 
   </template>
@@ -140,24 +140,24 @@ You can make nav item styles in various ways.
 
 ## Vertical Orientation
 
-By default `<b-nav>` appear on a horizontal line. Stack your navigation by setting the vertical prop.
+By default `<BNav>` appear on a horizontal line. Stack your navigation by setting the vertical prop.
 
 <HighlightCard>
-  <b-nav vertical class="w-25">
-    <b-nav-item active>Active</b-nav-item>
-    <b-nav-item>Link</b-nav-item>
-    <b-nav-item>Another Link</b-nav-item>
-    <b-nav-item disabled>Disabled</b-nav-item>
-  </b-nav>
+  <BNav vertical class="w-25">
+    <BNavItem active>Active</BNavItem>
+    <BNavItem>Link</BNavItem>
+    <BNavItem>Another Link</BNavItem>
+    <BNavItem disabled>Disabled</BNavItem>
+  </BNav>
   <template #html>
 
 ```vue-html
-<b-nav vertical class="w-25">
-  <b-nav-item active>Active</b-nav-item>
-  <b-nav-item>Link</b-nav-item>
-  <b-nav-item>Another Link</b-nav-item>
-  <b-nav-item disabled>Disabled</b-nav-item>
-</b-nav>
+<BNav vertical class="w-25">
+  <BNavItem active>Active</BNavItem>
+  <BNavItem>Link</BNavItem>
+  <BNavItem>Another Link</BNavItem>
+  <BNavItem disabled>Disabled</BNavItem>
+</BNav>
 ```
 
   </template>
@@ -165,22 +165,22 @@ By default `<b-nav>` appear on a horizontal line. Stack your navigation by setti
 
 ## Nav Text
 
-Use the `<b-nav-text>` child component to place plain text content into the nav:
+Use the `<BNavText>` child component to place plain text content into the nav:
 
 <HighlightCard>
-  <b-nav>
-    <b-nav-item href="#1">Link 1</b-nav-item>
-    <b-nav-item href="#2">Link 2</b-nav-item>
-    <b-nav-text>Plain text</b-nav-text>
-  </b-nav>
+  <BNav>
+    <BNavItem href="#1">Link 1</BNavItem>
+    <BNavItem href="#2">Link 2</BNavItem>
+    <BNavText>Plain text</BNavText>
+  </BNav>
   <template #html>
 
 ```vue-html
-<b-nav>
-  <b-nav-item href="#1">Link 1</b-nav-item>
-  <b-nav-item href="#2">Link 2</b-nav-item>
-  <b-nav-text>Plain text</b-nav-text>
-</b-nav>
+<BNav>
+  <BNavItem href="#1">Link 1</BNavItem>
+  <BNavItem href="#2">Link 2</BNavItem>
+  <BNavText>Plain text</BNavText>
+</BNav>
 ```
 
   </template>

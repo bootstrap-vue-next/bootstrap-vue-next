@@ -54,7 +54,7 @@ export default defineComponent({
 
 <template>
   <component :is="tag" ref="container" :class="computedClasses">
-    <!-- <b-toaster
+    <!-- <BToaster
       v-for="(pos, index) in toasts"
       :key="index"
       :instance="toastInstance"

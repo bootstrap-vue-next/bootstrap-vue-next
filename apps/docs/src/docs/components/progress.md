@@ -1,4 +1,4 @@
-# Placeholder
+# Progress
 
 <ClientOnly>
   <Teleport to=".bd-toc">
@@ -10,328 +10,236 @@
 
 <div class="lead mb-5">
 
-Placeholders are components that indicate that something may still be loading.
+Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars, animated backgrounds, and text labels.
 
 </div>
 
 ## Basic Usage
 
-At the placeholder core, you have the `b-placeholder` component:
-
 <HighlightCard>
-  <b-placeholder />
-  <b-placeholder width="65" variant="danger" />
-  <b-placeholder cols="6" variant="info" />
+  <BCard>
+    <BProgress :value="0" />
+    <BProgress class="mt-3" :value="25" />
+    <BProgress class="mt-3" :value="50" />
+    <BProgress class="mt-3" :value="75" />
+    <BProgress class="mt-3" :value="100" />
+  </BCard>
   <template #html>
 
 ```vue-html
-<b-placeholder cols="7" />
-<b-placeholder width="65" />
-<b-placeholder cols="6" />
+<BProgress :value="0" />
+<BProgress :value="25" />
+<BProgress :value="50" />
+<BProgress :value="75" />
+<BProgress :value="100" />
 ```
 
   </template>
 </HighlightCard>
 
-## Width
+## Value
 
-You can adjust the width using props `width` and `cols`. Cols is a number value 1-12, whereas width is a percentage. Width takes priority over cols.
+Set the maximum value with the `max` prop (default is `100`), and the current value via the `value` prop (default `0`).
+
+When creating multiple bars in a single process, place the value prop on the individual `<BProgressBar>` sub-components (see the Multiple Bars section below for more details)
+
+## Labels
+
+Add labels to your progress bars by either enabling `show-progress` (percentage of max) or `show-value` for the current absolute value. You may also set the precision (number of digits after the decimal) via the `precision` prop (default is `0` digits after the decimal).
 
 <HighlightCard>
-  <b-placeholder width="30" cols="12" />
-  <b-placeholder width="75%" variant="danger" />
-  <b-placeholder width="12" variant="warning" />
-  <b-placeholder :cols="6" variant="info" />
-  <b-placeholder cols="8" variant="info" />
+  <BCard>
+    <h5>No label</h5>
+    <BProgress :value="33.3333" :max="50" class="mb-3" />
+    <h5>Value label</h5>
+    <BProgress :value="33.3333" :max="50" show-value class="mb-3" />
+    <h5>Progress label</h5>
+    <BProgress :value="33.3333" :max="50" show-progress class="mb-3" />
+    <h5>Value label with precision</h5>
+    <BProgress :value="33.3333" :max="50" :precision="2" show-value class="mb-3" />
+    <h5>Progress label with precision</h5>
+    <BProgress :value="33.3333" :max="50" :precision="2" show-progress class="mb-3" />
+  </BCard>
   <template #html>
 
 ```vue-html
-<b-placeholder width="30" cols="12" />
-<b-placeholder width="75%" variant="danger" />
-<b-placeholder width="12" variant="warning" />
-<b-placeholder :cols="6" variant="info" />
-<b-placeholder cols="8" variant="info" />
+<h5>No label</h5>
+<BProgress :value="33.3333" :max="50" />
+<h5>Value label</h5>
+<BProgress :value="33.3333" :max="50" show-value />
+<h5>Progress label</h5>
+<BProgress :value="33.3333" :max="50" show-progress />
+<h5>Value label with precision</h5>
+<BProgress :value="33.3333" :max="50" :precision="2" show-value />
+<h5>Progress label with precision</h5>
+<BProgress :value="33.3333" :max="50" :precision="2" show-progress />
 ```
 
   </template>
 </HighlightCard>
 
-## Placeholder Animations
+### Custom progress label
 
-Bootstrap supports two types of animations, `wave` and `glow`.
-
-- Note: when using `<b-placeholder-card>`, the image does not inherit an animation
+Need more control over the label? Provide your own label by using the default slot within a `<BProgressBar>` sub-component, or by using the `label` or `label-html` property on `<BProgressBar>`:
 
 <HighlightCard>
-  <b-placeholder-card style="max-width: 20rem; " animation="glow" class="mb-3" />
-  <b-placeholder-card style="max-width: 20rem; " animation="wave" class="mb-3" />
-  <b-placeholder animation="glow" />
+  <BCard>
+    <h5>Custom label via default slot</h5>
+    <BProgress :max="50" height="2rem">
+      <BProgressBar :value="33.333333">
+        <span>Progress: <strong>{{ (33.333333).toFixed(2) }} / {{ 50 }}</strong></span>
+      </BProgressBar>
+    </BProgress>
+    <h5 class="mt-3">Custom label via property</h5>
+    <BProgress :max="50">
+      <BProgressBar :value="33.333333" :label="`${((33.333333 / 50) * 100).toFixed(2)}%`" />
+    </BProgress>
+    <h5 class="mt-3">Custom label via property (HTML support)</h5>
+    <BProgress :max="50">
+      <BProgressBar :value="33.333333" :label-html="`<del>${33.333333}</del>`" />
+    </BProgress>
+  </BCard>
   <template #html>
 
 ```vue-html
-<b-placeholder-card style="max-width: 20rem; " animation="glow" />
-<b-placeholder-card style="max-width: 20rem; " animation="wave" />
-<b-placeholder animation="glow" />
+<h5>Custom label via default slot</h5>
+<BProgress :max="50" height="2rem">
+  <BProgressBar :value="33.333333">
+    <span>Progress: <strong>{{ (33.333333).toFixed(2) }} / {{ 50 }}</strong></span>
+  </BProgressBar>
+</BProgress>
+
+<h5 class="mt-3">Custom label via property</h5>
+<BProgress :max="50">
+  <BProgressBar
+    :value="33.333333"
+    :label="`${((33.333333 / 50) * 100).toFixed(2)}%`"
+  />
+</BProgress>
+
+<h5 class="mt-3">Custom label via property (HTML support)</h5>
+<BProgress :max="50">
+  <BProgressBar :value="33.333333" :label-html="`<del>${33.333333}</del>`" />
+</BProgress>
 ```
 
   </template>
 </HighlightCard>
 
-## Sizing
+## Height
 
-You can adjust the sizing of a placeholder by using the `size` prop. Acceptable values are 'xs', 'sm', or 'lg'.
+The height of the progress bar can be controlled with the height prop. The height value should be a standard CSS dimension (px, rem, em, etc.). The default height is 1rem.
 
 <HighlightCard>
-  <b-placeholder size="lg" />
-  <b-placeholder size="sm" />
-  <b-placeholder size="xs" />
+  <BCard>
+    <BProgress :value="25" height="1px" />
+    <BProgress class="mt-3" :value="25" height="20px" />
+  </BCard>
   <template #html>
 
 ```vue-html
-<b-placeholder size="lg" />
-<b-placeholder size="sm" />
-<b-placeholder size="xs" />
+<BProgress :value="25" height="1px" />
+<BProgress :value="25" height="20px" />
 ```
 
   </template>
 </HighlightCard>
 
-## Helper Components
+## Backgrounds
 
-`b-placeholder` has several wrapper components to quickly create larger component sets, such as `b-placeholder-card`, `b-placeholder-table`, and `b-placeholder-button`.
-
-### Placeholder Wrapper
-
-The `b-placeholder-wrapper` is a renderless component that picks between a 'loading' component, and a 'finished' component. It is useful when you have to wait for loading to finish, before rendering the actual content. Depending on the use case, you may prefer to use [Suspense](https://vuejs.org/guide/built-ins/suspense.html) instead.
+Use background variants to change the appearance of individual progress bars. The default variant is `primary`.
 
 <HighlightCard>
-  <b-placeholder-wrapper :loading="loading">
-    <template #loading>
-      <b-placeholder-card style="max-width: 20rem;" no-footer />
-    </template>
-    <b-card
-      title="Card Title"
-      img-src="https://picsum.photos/600/300/?image=25"
-      img-alt="Image"
-      img-top
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
-    >
-      <b-card-text>
-        Some quick example text to build on the card title and make up the bulk of the card's content.
-      </b-card-text>
-      <b-button href="#placeholder-wrapper" variant="primary">Go somewhere</b-button>
-    </b-card>
-  </b-placeholder-wrapper>
-  <b-button @click="startLoading">Restart</b-button>
+  <BCard>
+    <BProgress variant="success" :value="25" />
+    <BProgress class="mt-3" variant="info" :value="50" />
+    <BProgress class="mt-3" variant="warning" :value="75" />
+    <BProgress class="mt-3" variant="danger" :value="100" />
+  </BCard>
   <template #html>
 
-```vue
+```vue-html
+<BProgress variant="success" :value="25" />
+<BProgress variant="info" :value="50" />
+<BProgress variant="warning" :value="75" />
+<BProgress variant="danger" :value="100" />
+```
+
+  </template>
+</HighlightCard>
+
+## Multiple bars
+
+Include multiple `<BProgressBar>` sub-components in a `<BProgress>` component to build a horizontally stacked set of progress bars.
+
+<HighlightCard>
+  <BCard>
+    <BProgress>
+      <BProgressBar :value="15" />
+      <BProgressBar :value="30" variant="success" />
+      <BProgressBar :value="20" variant="info" />
+    </BProgress>
+  </BCard>
+  <template #html>
+
+```vue-html
+<BProgress>
+  <BProgressBar :value="15" />
+  <BProgressBar :value="30" variant="success" />
+  <BProgressBar :value="20" variant="info" />
+</BProgress>
+```
+
+  </template>
+</HighlightCard>
+
+## Striped
+
+Set `striped` to apply a stripe via CSS gradient over the progress bar's background variant.
+
+<HighlightCard>
+  <BCard>
+    <BProgress striped :value="10" />
+    <BProgress striped class="mt-3" variant="success" :value="25" />
+    <BProgress striped class="mt-3" variant="info" :value="50" />
+    <BProgress striped class="mt-3" variant="warning" :value="75" />
+    <BProgress striped class="mt-3" variant="danger" :value="100" />
+  </BCard>
+  <template #html>
+
+```vue-html
+<BProgress striped :value="10" />
+<BProgress striped :value="25" variant="success" />
+<BProgress striped :value="50" variant="info" />
+<BProgress striped :value="75" variant="warning" />
+<BProgress striped :value="100" variant="danger" />
+```
+
+  </template>
+</HighlightCard>
+
+## Animated stripes
+
+The striped gradient can also be animated by setting the `animated` prop.
+
+<HighlightCard>
+  <BCard>
+    <BProgress :value="75" striped :animated="animate" />
+    <BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
+  </BCard>
+  <template #html>
+
+```vue-html
 <template>
-  <b-placeholder-wrapper :loading="loading">
-    <template #loading>
-      <b-placeholder-card style="max-width: 20rem;" no-footer />
-    </template>
-    <b-card
-      title="Card Title"
-      img-src="https://picsum.photos/600/300/?image=25"
-      img-alt="Image"
-      img-top
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
-    >
-      <b-card-text>
-        Some quick example text to build on the card title and make up the bulk of the card's
-        content.
-      </b-card-text>
-      <b-button href="#placeholder-wrapper" variant="primary">Go somewhere</b-button>
-    </b-card>
-  </b-placeholder-wrapper>
-  <b-button @click="startLoading">Restart</b-button>
+<BProgress :value="75" striped :animated="animate" />
+<BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
 </template>
 
 <script setup lang="ts">
-const loading = ref(false)
+import {ref} from 'vue'
 
-watchEffect(() => {
-  if (loading.value === true) {
-    setTimeout(() => {
-      loading.value = false
-    }, 5000)
-  }
-})
-
-const startLoading = () => {
-  if (loading.value === true) return
-  loading.value = true
-}
-
-onMounted(startLoading)
+const animate = ref(false)
 </script>
-```
-
-  </template>
-</HighlightCard>
-
-### Placeholder Buttons
-
-You can easily render a placeholder that has the button styling by using `b-placeholder-button`.
-
-<HighlightCard>
-  <b-placeholder-button cols="3" />
-  <template #html>
-
-```vue-html
-<b-placeholder-button cols="3" />
-```
-
-  </template>
-</HighlightCard>
-
-### Placeholder Cards
-
-Placeholders have built-in support for rendering a placeholder card with `b-placeholder-card`.
-
-<HighlightCard>
-  <b-placeholder-card style="max-width: 20rem" />
-  <template #html>
-
-```vue-html
-<b-placeholder-card style="max-width: 20rem" />
-```
-
-  </template>
-</HighlightCard>
-
-### Placeholder Tables
-
-You can also render a full placeholder table with `b-placeholder-table`.
-
-<HighlightCard>
-  <b-placeholder-table />
-  <template #html>
-
-```vue-html
-<b-placeholder-table />
-```
-
-  </template>
-</HighlightCard>
-
-### Advanced Helper Component Usage
-
-#### Advanced Cards
-
-Cards expose various props and slots to make them more personalized.
-
-You can adjust the image using various props, such as `imgBlankColor`, and `imgBottom`, or you can optionally use `imgSrc` to place a real image, rather than a blank.
-
-Each section of the `b-placeholder-card` exposes its slot elements, so you can easily override the defaults. Available slots are: `img`, `header`, `default`, and `footer`.
-
-The footer also exposes some props that you can use to adjust the behavior of a button. Most notably prop `noButton`. If set to true, it will convert it to a basic placeholder appearance. Alternatively, you can use the `noFooter` prop to remove it altogether.
-
-<HighlightCard>
-  <b-placeholder-card img-src="https://picsum.photos/1024/480/?image=1" img-bottom no-header>
-    <template #footer>
-      Footer
-    </template>
-    <template #default>
-      <b-placeholder />
-      <b-placeholder width="65" variant="danger" />
-      <b-placeholder cols="6" variant="info" />
-    </template>
-  </b-placeholder-card>
-  <template #html>
-
-```vue-html
-<b-placeholder-card img-src="https://picsum.photos/1024/480/?image=1" img-bottom no-header>
-  <template #footer>
-    Footer
-  </template>
-
-  <template #default>
-    <b-placeholder />
-    <b-placeholder width="65" variant="danger" />
-    <b-placeholder cols="6" variant="info" />
-  </template>
-</b-placeholder-card>
-```
-
-  </template>
-</HighlightCard>
-
-#### Advanced Tables
-
-`b-placeholder-table` comes with various props to adjust the number of rows, columns, header/footer, and their stylings.
-
-You can adjust the number of columns and rows using props `columns` and `rows` respectively. You can use `showFooter` to show the footer, or `hideHeader` to hide the header. Both the footer and header have cellWidth, size, animation, and variant adjustments by prepending the type with the styling, eg: `headerCellWidth`, `headerSize`, `footerAnimation`, `footerVariant`.
-
-Optionally, you can manually adjust any scope of the table using slots. The following slots are available: `thead`, `default`, and `tfoot`. Do note that the slots wrap the **entire** table scope, slot `thead` is the entire thead, and slot `default` is the entire tbody, so you will likely need to manually wrap your slot usages in these elements if you plan on using them.
-
-<HighlightCard>
-  <b-placeholder-table
-    columns="3"
-    rows="2"
-    show-footer
-    footer-variant="info"
-    header-size="lg"
-    footer-size="xs"
-    footer-columns="1"
-    header-columns="4"
-  >
-    <template #default>
-      <tbody>
-          <tr>
-            <td>
-              <b-placeholder size="lg" variant="secondary" />
-              <b-placeholder size="sm" variant="secondary" />
-              <b-placeholder size="xs" variant="secondary" />
-            </td>
-            <td>
-              <b-placeholder variant="warning" />
-              <b-placeholder animation="wave" variant="warning" />
-            </td>
-            <td>
-              <b-placeholder animation="glow" variant="danger" />
-            </td>
-          </tr>
-      </tbody>
-    </template>
-  </b-placeholder-table>
-  <template #html>
-
-```vue-html
-<b-placeholder-table
-  columns="3"
-  rows="2"
-  show-footer
-  footer-variant="info"
-  header-size="lg"
-  footer-size="xs"
-  footer-columns="1"
-  header-columns="4"
->
-  <template #default>
-    <tbody>
-      <tr>
-        <td>
-          <b-placeholder size="lg" variant="secondary" />
-          <b-placeholder size="sm" variant="secondary" />
-          <b-placeholder size="xs" variant="secondary" />
-        </td>
-        <td>
-          <b-placeholder variant="warning" />
-          <b-placeholder animation="wave" variant="warning" />
-        </td>
-        <td>
-          <b-placeholder animation="glow" variant="danger" />
-        </td>
-      </tr>
-    </tbody>
-  </template>
-</b-placeholder-table>
 ```
 
   </template>
@@ -340,36 +248,11 @@ Optionally, you can manually adjust any scope of the table using slots. The foll
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
-import {data} from '../../data/components/placeholder.data'
+import {data} from '../../data/components/progress.data'
 import ComponentReference from '../../components/ComponentReference.vue'
+import {BButton, BProgressBar, BCard, BProgress} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {
-  BPlaceholderButton,
-  BPlaceholderTable,
-  BPlaceholderWrapper,
-  BPlaceholderCard,
-  BCard,
-  BCardBody,
-  BButton,
-  BPlaceholder,
-  BCardText
-} from 'bootstrap-vue-next'
-import {ref, onMounted, watchEffect} from 'vue'
+import { ref } from 'vue';
 
-const loading = ref(false)
-
-watchEffect(() => {
-  if(loading.value === true){
-    setTimeout(() => {
-      loading.value = false
-    }, 5000)
-  }
-})
-
-const startLoading = () => {
-  if(loading.value === true) return
-  loading.value = true
-}
-
-onMounted(startLoading)
+const animate = ref(false);
 </script>

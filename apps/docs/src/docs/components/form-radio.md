@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-For cross browser consistency, `<b-form-radio-group>` and `<b-form-radio>` uses Bootstrap's custom radio input to replace the browser default radio input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default radio input.
+For cross browser consistency, `<BFormRadioGroup>` and `<BFormRadio>` uses Bootstrap's custom radio input to replace the browser default radio input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default radio input.
 
 </div>
 
@@ -21,8 +21,8 @@ For cross browser consistency, `<b-form-radio-group>` and `<b-form-radio>` uses 
     <label>Individual radios</label>
   </div>
   <div>
-    <b-form-radio v-model="individualSelected" name="some-radios" value="A">Option A</b-form-radio>
-    <b-form-radio v-model="individualSelected" name="some-radios" value="B">Option B</b-form-radio>
+    <BFormRadio v-model="individualSelected" name="some-radios" value="A">Option A</BFormRadio>
+    <BFormRadio v-model="individualSelected" name="some-radios" value="B">Option B</BFormRadio>
   </div>
   <div class="mt-3">Selected: <strong>{{ individualSelected }}</strong></div>
   <template #html>
@@ -34,8 +34,8 @@ For cross browser consistency, `<b-form-radio-group>` and `<b-form-radio>` uses 
   </div>
 
   <div>
-    <b-form-radio v-model="individualSelected" name="some-radios" value="A">Option A </b-form-radio>
-    <b-form-radio v-model="individualSelected" name="some-radios" value="B">Option B </b-form-radio>
+    <BFormRadio v-model="individualSelected" name="some-radios" value="A">Option A </BFormRadio>
+    <BFormRadio v-model="individualSelected" name="some-radios" value="B">Option B </BFormRadio>
   </div>
 
   <div class="mt-3">
@@ -53,28 +53,28 @@ const individualSelected = ref()
 
 ## Grouped radios
 
-The individual radio inputs in `<b-form-radio-group>` can be specified via the `options` prop, or
-via manual placement of the `<b-form-radio>` sub-component. When using manually placed
-`<b-form-radio>` components within a `<b-form-radio-group>`, they will inherit most props and the
-v-model from the `<b-form-radio-group>`.
+The individual radio inputs in `<BFormRadioGroup>` can be specified via the `options` prop, or
+via manual placement of the `<BFormRadio>` sub-component. When using manually placed
+`<BFormRadio>` components within a `<BFormRadioGroup>`, they will inherit most props and the
+v-model from the `<BFormRadioGroup>`.
 
 <HighlightCard>
   <div class="my-2">
     <label>Radios using options</label>
   </div>
   <div>
-      <b-form-radio-group id="radio-group-1" v-model="groupedSelected" :options="groupedOptions" name="radio-options"></b-form-radio-group>
+      <BFormRadioGroup id="radio-group-1" v-model="groupedSelected" :options="groupedOptions" name="radio-options" />
   </div>
   <div class="my-2">
     <label>Radios using sub-components</label>
   </div>
   <div>
-    <b-form-radio-group id="radio-group-2" v-model="groupedSelected" name="radio-sub-component">
-      <b-form-radio value="first">Toggle this custom radio</b-form-radio>
-      <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
-      <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
-      <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
-    </b-form-radio-group>
+    <BFormRadioGroup id="radio-group-2" v-model="groupedSelected" name="radio-sub-component">
+      <BFormRadio value="first">Toggle this custom radio</BFormRadio>
+      <BFormRadio value="second">Or toggle this other custom radio</BFormRadio>
+      <BFormRadio value="third" disabled>This one is Disabled</BFormRadio>
+      <BFormRadio :value="{ fourth: 4 }">This is the 4th radio</BFormRadio>
+    </BFormRadioGroup>
   </div>
   <div class="mt-3">Selected: <strong>{{ groupedSelected }}</strong></div>
   <template #html>
@@ -86,12 +86,12 @@ v-model from the `<b-form-radio-group>`.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       id="radio-group-1"
       v-model="groupedSelected"
       :options="groupedOptions"
       name="radio-options"
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="my-2">
@@ -99,12 +99,12 @@ v-model from the `<b-form-radio-group>`.
   </div>
 
   <div>
-    <b-form-radio-group id="radio-group-2" v-model="groupedSelected" name="radio-sub-component">
-      <b-form-radio value="first">Toggle this custom radio</b-form-radio>
-      <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
-      <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
-      <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
-    </b-form-radio-group>
+    <BFormRadioGroup id="radio-group-2" v-model="groupedSelected" name="radio-sub-component">
+      <BFormRadio value="first">Toggle this custom radio</BFormRadio>
+      <BFormRadio value="second">Or toggle this other custom radio</BFormRadio>
+      <BFormRadio value="third" disabled>This one is Disabled</BFormRadio>
+      <BFormRadio :value="{fourth: 4}">This is the 4th radio</BFormRadio>
+    </BFormRadioGroup>
   </div>
 
   <div class="mt-3">
@@ -127,8 +127,8 @@ const groupedSelected = ref()
   </template>
 </HighlightCard>
 
-Feel free to mix and match `options` prop and `<b-form-radio>` in `<b-form-radio-group>`. Manually
-placed `<b-form-radio>` inputs will appear _below_ any radio inputs generated by the `options` prop.
+Feel free to mix and match `options` prop and `<BFormRadio>` in `<BFormRadioGroup>`. Manually
+placed `<BFormRadio>` inputs will appear _below_ any radio inputs generated by the `options` prop.
 To have them appear _above_ the inputs generated by `options`, place them in the named slot `first`.
 
 <HighlightCard>
@@ -136,13 +136,13 @@ To have them appear _above_ the inputs generated by `options`, place them in the
     <label>Radios using options and slots</label>
   </div>
   <div>
-    <b-form-radio-group id="radio-slots" v-model="mixedGroupedSelected" :options="mixedGroupedOptions" name="radio-options-slots">
+    <BFormRadioGroup id="radio-slots" v-model="mixedGroupedSelected" :options="mixedGroupedOptions" name="radio-options-slots">
       <template #first>
-        <b-form-radio value="first">Toggle this custom radio from slot first</b-form-radio>
+        <BFormRadio value="first">Toggle this custom radio from slot first</BFormRadio>
       </template>
-      <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio>
-      <b-form-radio value="fifth">This is the 5th radio</b-form-radio>
-    </b-form-radio-group>
+      <BFormRadio :value="{ fourth: 4 }">This is the 4th radio</BFormRadio>
+      <BFormRadio value="fifth">This is the 5th radio</BFormRadio>
+    </BFormRadioGroup>
   </div>
   <div class="mt-3">Selected: <strong>{{ mixedGroupedSelected }}</strong></div>
   <template #html>
@@ -154,19 +154,19 @@ To have them appear _above_ the inputs generated by `options`, place them in the
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       id="radio-slots"
       v-model="mixedGroupedSelected"
       :options="mixedGroupedOptions"
       name="radio-options-slots"
     >
       <template #first>
-        <b-form-radio value="first">Toggle this custom radio from slot first</b-form-radio>
+        <BFormRadio value="first">Toggle this custom radio from slot first</BFormRadio>
       </template>
 
-      <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
-      <b-form-radio value="fifth">This is the 5th radio</b-form-radio>
-    </b-form-radio-group>
+      <BFormRadio :value="{fourth: 4}">This is the 4th radio</BFormRadio>
+      <BFormRadio value="fifth">This is the 5th radio</BFormRadio>
+    </BFormRadioGroup>
   </div>
 
   <div class="mt-3">
@@ -201,22 +201,22 @@ If both `html` and `text` are provided, `html` will take precedence. Only basic/
 supported in the `html` field (components will not work). Note that not all browsers will render
 inline html (i.e. `<i>`, `<strong>`, etc.) inside `<option>` elements of a `<select>`.
 
-<b-alert variant="danger" :model-value="true" class="mt-4">
+<BAlert variant="danger" :model-value="true" class="mt-4">
   <strong>Be cautious</strong> of placing user supplied content in the <code>html</code> field,
   as it may make you vulnerable to
   <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
   <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
   <a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
   user supplied string.
-</b-alert>
+</BAlert>
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = ['A', 'B', 'C', {text: 'D', value: {d: 1}, disabled: true}, 'E', 'F']
 ```
 
-</b-card>
+</BCard>
 
 If an array entry is a string, it will be used for both the generated `value` and `text` fields.
 
@@ -225,7 +225,7 @@ You can mix using strings and [objects](#options-as-an-array-of-objects) in the 
 Internally, bootstrap-vue-next will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -238,11 +238,11 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 ### Options as an array of objects
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -254,7 +254,7 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 If `value` is missing, then `text` will be used as both the `value` and `text` fields. If you use
 the `html` property, you **must** supply a `value` property.
@@ -262,7 +262,7 @@ the `html` property, you **must** supply a `value` property.
 Internally, BootstrapVueNext will convert the above array to the following array (the
 [array of objects](#options-as-an-array-of-objects)) format:
 
-<b-card class="bg-body-tertiary mb-4">
+<BCard class="bg-body-tertiary mb-4">
 
 ```ts
 const options = [
@@ -274,7 +274,7 @@ const options = [
 ]
 ```
 
-</b-card>
+</BCard>
 
 ### Changing the option field names
 
@@ -283,27 +283,27 @@ If you want to customize the field property names (for example using `name` fiel
 `disabled-field` props to a string that contains the property name you would like to use:
 
 <HighlightCard>
-  <b-form-radio-group
+  <BFormRadioGroup
     v-model="customFieldNameSelected"
     :options="customFieldNameOptions"
     class="mb-3"
     value-field="item"
     text-field="name"
     disabled-field="notEnabled">
-  </b-form-radio-group>
+  </BFormRadioGroup>
   <div class="mt-3">Selected: <strong>{{ customFieldNameSelected }}</strong></div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-radio-group
+  <BFormRadioGroup
     v-model="customFieldNameSelected"
     :options="customFieldNameOptions"
     class="mb-3"
     value-field="item"
     text-field="name"
     disabled-field="notEnabled"
-  ></b-form-radio-group>
+  />
 
   <div class="mt-3">
     Selected: <strong>{{ customFieldNameSelected }}</strong>
@@ -325,11 +325,11 @@ const mixedGroupedSelected = ref()
 
 ## Radio value and v-model
 
-`<b-form-radio>` components do not have a value by default. You must explicitly supply a value via
-the `value` prop on `<b-form-radio>`. This value will be sent to the `v-model` when the radio is
+`<BFormRadio>` components do not have a value by default. You must explicitly supply a value via
+the `value` prop on `<BFormRadio>`. This value will be sent to the `v-model` when the radio is
 checked.
 
-The `v-model` of both `<b-form-radio>` and `<b-form-radio-group>` binds to the default `modelValue` prop. To
+The `v-model` of both `<BFormRadio>` and `<BFormRadioGroup>` binds to the default `modelValue` prop. To
 pre-check a radio, you must set the `v-model` value to the one of the radio's value (i.e. must match
 the value of specified on one of the radio's `value` prop). Each radio in a radio group _must_ have a unique value.
 
@@ -337,8 +337,8 @@ Radios support values of many types, such as a `string`, `boolean`, `number`, or
 
 ## Inline or stacked radios
 
-By default, `<b-form-radio-group>` generates inline radio inputs, while `<b-form-radio>` generates
-stacked radios. Set the prop `stacked` on `<b-form-radio-group>` to make the radios appear one over
+By default, `<BFormRadioGroup>` generates inline radio inputs, while `<BFormRadio>` generates
+stacked radios. Set the prop `stacked` on `<BFormRadioGroup>` to make the radios appear one over
 the other, or when using radios not in a group, set the `inline` prop on `b-form-radio` to true to
 render them inline.
 
@@ -347,13 +347,13 @@ render them inline.
     <label>Inline radios (default)</label>
   </div>
   <div>
-    <b-form-radio-group v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-inline"></b-form-radio-group>
+    <BFormRadioGroup v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-inline" />
   </div>
   <div class="my-2">
       <label>Stacked radios</label>
   </div>
   <div>
-    <b-form-radio-group v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-stacked" stacked></b-form-radio-group>
+    <BFormRadioGroup v-model="inlineStackedSelected" :options="inlineStackedOptions" name="radio-stacked" stacked />
   </div>
   <div class="mt-3">Selected: <strong>{{ inlineStackedSelected }}</strong></div>
   <template #html>
@@ -365,11 +365,11 @@ render them inline.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="inlineStackedSelected"
       :options="inlineStackedOptions"
       name="radio-inline"
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="my-2">
@@ -377,12 +377,12 @@ render them inline.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="inlineStackedSelected"
       :options="inlineStackedOptions"
       name="radio-stacked"
       stacked
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="mt-3">
@@ -410,24 +410,24 @@ Use the `size` prop to control the size of the radio. The default size is medium
 values are `sm` (small) and `lg` (large).
 
 <HighlightCard>
-  <b-form-radio name="radio-size" size="sm">Small</b-form-radio>
-  <b-form-radio name="radio-size">Default</b-form-radio>
-  <b-form-radio name="radio-size" size="lg">Large</b-form-radio>
+  <BFormRadio name="radio-size" size="sm">Small</BFormRadio>
+  <BFormRadio name="radio-size">Default</BFormRadio>
+  <BFormRadio name="radio-size" size="lg">Large</BFormRadio>
   <template #html>
 
 ```vue-html
 <template>
-  <b-form-radio name="radio-size" size="sm">Small</b-form-radio>
-  <b-form-radio name="radio-size">Default</b-form-radio>
-  <b-form-radio name="radio-size" size="lg">Large</b-form-radio>
+  <BFormRadio name="radio-size" size="sm">Small</BFormRadio>
+  <BFormRadio name="radio-size">Default</BFormRadio>
+  <BFormRadio name="radio-size" size="lg">Large</BFormRadio>
 </template>
 ```
 
   </template>
 </HighlightCard>
 
-Sizes can be set on individual `<b-form-radio>` components, or inherited from the `size` setting of
-`<b-form-radio-group>`.
+Sizes can be set on individual `<BFormRadio>` components, or inherited from the `size` setting of
+`<BFormRadioGroup>`.
 
 **Note:** Bootstrap v5.x does not natively support sizes for the custom radio control. However,
 bootstrap-vue-next includes custom SCSS/CSS that adds support for sizing the custom radios.
@@ -435,8 +435,8 @@ bootstrap-vue-next includes custom SCSS/CSS that adds support for sizing the cus
 ## Button style radios
 
 Render radios with the look of buttons by setting the prop `buttons` to `true` on
-`<b-form-radio-group>`. Set the button variant by setting the `button-variant` prop to one of the
-standard Bootstrap button variants (see [`<b-button>`](/docs/components/button) for supported
+`<BFormRadioGroup>`. Set the button variant by setting the `button-variant` prop to one of the
+standard Bootstrap button variants (see [`<BButton>`](/docs/components/button) for supported
 variants). The default `button-variant` is `secondary`.
 
 The `buttons` prop has precedence over `plain`, and `button-variant` has no effect if `buttons` is
@@ -450,32 +450,32 @@ in the checked state.
       <label>Button style radios</label>
   </div>
   <div>
-    <b-form-radio-group v-model="buttonsSelected" :options="buttonsOptions" name="radios-btn-default" buttons></b-form-radio-group>
+    <BFormRadioGroup v-model="buttonsSelected" :options="buttonsOptions" name="radios-btn-default" buttons />
   </div>
   <div class="my-2">
       <label>Button style radios with outline-primary variant and size lg</label>
   </div>
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="buttonsSelected"
       :options="buttonsOptions"
       button-variant="outline-primary"
       size="lg"
       name="radios-btn-outline"
       buttons
-    ></b-form-radio-group>
+    />
   </div>
   <div class="my-2">
       <label>Stacked button style radios</label>
   </div>
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="buttonsSelected"
       :options="buttonsOptions"
       name="radios-btn-stacked"
       buttons
       stacked
-    ></b-form-radio-group>
+    />
   </div>
   <div class="mt-3">Selected: <strong>{{ buttonsSelected }}</strong></div>
   <template #html>
@@ -487,12 +487,12 @@ in the checked state.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="buttonsSelected"
       :options="buttonsOptions"
       name="radios-btn-default"
       buttons
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="my-2">
@@ -500,14 +500,14 @@ in the checked state.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="buttonsSelected"
       :options="buttonsOptions"
       button-variant="outline-primary"
       size="lg"
       name="radios-btn-outline"
       buttons
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="my-2">
@@ -515,13 +515,13 @@ in the checked state.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="buttonsSelected"
       :options="buttonsOptions"
       name="radios-btn-stacked"
       buttons
       stacked
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="mt-3">
@@ -546,7 +546,7 @@ const buttonsSelected = ref()
 
 ## Non-custom style radio inputs (plain)
 
-You can have `<b-form-radio>` and `<b-form-radio-group>` render a browser native-styled radio input
+You can have `<BFormRadio>` and `<BFormRadioGroup>` render a browser native-styled radio input
 by setting the `plain` prop.
 
 <HighlightCard>
@@ -554,13 +554,13 @@ by setting the `plain` prop.
     <label>Plain inline radios</label>
   </div>
   <div>
-    <b-form-radio-group v-model="plainSelected" :options="plainOptions" name="plain-inline" plain></b-form-radio-group>
+    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-inline" plain />
   </div>
   <div class="my-2">
       <label>Plain stacked radios</label>
   </div>
   <div>
-    <b-form-radio-group v-model="plainSelected" :options="plainOptions" name="plain-stacked" plain></b-form-radio-group>
+    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-stacked" plain />
   </div>
   <div class="mt-3">Selected: <strong>{{ plainSelected }}</strong></div>
   <template #html>
@@ -572,12 +572,12 @@ by setting the `plain` prop.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="plainSelected"
       :options="plainOptions"
       name="plain-inline"
       plain
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="my-2">
@@ -585,12 +585,12 @@ by setting the `plain` prop.
   </div>
 
   <div>
-    <b-form-radio-group
+    <BFormRadioGroup
       v-model="plainSelected"
       :options="plainOptions"
       name="plain-stacked"
       plain
-    ></b-form-radio-group>
+    />
   </div>
 
   <div class="mt-3">
@@ -616,21 +616,21 @@ const plainSelected = ref()
 
 ## Required constraint
 
-When using individual `<b-form-radio>` components (not in a `<b-form-radio-group>`), and you want
-the radio(s) to be `required` in your form, you **must** provide a `name` on each `<b-form-radio>`
-in order for the required constraint to work. All `<b-form-radio>` components tied to the same
+When using individual `<BFormRadio>` components (not in a `<BFormRadioGroup>`), and you want
+the radio(s) to be `required` in your form, you **must** provide a `name` on each `<BFormRadio>`
+in order for the required constraint to work. All `<BFormRadio>` components tied to the same
 `v-model` **must** have the same `name`.
 
 The `name` is required in order for Assistive Technologies (such as screen readers, and keyboard
 only users) to know which radios belong to the same form variable (the name also automatically
 enables native browser keyboard navigation), hence `required` will only work if `name` is set.
-`<b-form-radio-group>` will automatically generate a unique input name if one is not provided on the
+`<BFormRadioGroup>` will automatically generate a unique input name if one is not provided on the
 group.
 
 ## Autofocus
 
-When the `autofocus` prop is set on `<b-form-radio>`, the input will be auto-focused when it is
-inserted (i.e. **mounted**) into the document or re-activated when inside a Vue `<keep-alive>`
+When the `autofocus` prop is set on `<BFormRadio>`, the input will be auto-focused when it is
+inserted (i.e. **mounted**) into the document or re-activated when inside a Vue `<KeepAlive>`
 component. Note that this prop **does not** set the `autofocus` attribute on the input, nor can it
 tell when the input becomes visible.
 
@@ -646,7 +646,7 @@ Generally speaking, you'll want to use a particular state for specific types of 
   a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
-To apply one of the contextual state icons on `<b-form-radio>`, set the `state` prop to `false` (for
+To apply one of the contextual state icons on `<BFormRadio>`, set the `state` prop to `false` (for
 invalid), `true` (for valid), or `null` (no validation state).
 
 **Note:** Contextual state is not supported for radios rendered in buttons mode.
@@ -654,24 +654,24 @@ invalid), `true` (for valid), or `null` (no validation state).
 ### Contextual state with feedback example
 
 <HighlightCard>
-  <b-form-radio-group
+  <BFormRadioGroup
     v-model="contextualSelected"
     :options="contextualOptions"
     :state="contextualState"
     name="radio-validation"
-  ></b-form-radio-group>
+  />
   <div class="text-danger" v-if="!contextualState">Please select one</div>
   <div class="text-success" v-if="contextualState">Thank you</div>
   <template #html>
 
 ```vue
 <template>
-  <b-form-radio-group
+  <BFormRadioGroup
     v-model="contextualSelected"
     :options="contextualOptions"
     :state="contextualState"
     name="radio-validation"
-  ></b-form-radio-group>
+  />
 
   <div class="text-danger" v-if="!contextualState">Please select one</div>
   <div class="text-success" v-if="contextualState">Thank you</div>
@@ -701,13 +701,13 @@ screen readers - or to colorblind users.
 
 Ensure that an alternative indication of state is also provided. For instance, you could include a
 hint about state in the form control's `<label>` text itself, or by providing an additional help
-text block (i.e. `<b-form-invalid-feedback>`). Specifically for assistive technologies, invalid form
+text block (i.e. `<BFormInvalidFeedback>`). Specifically for assistive technologies, invalid form
 controls can also be assigned an `aria-invalid="true"` attribute (see below).
 
 ### ARIA `aria-invalid` attribute
 
-When `<b-form-radio-group>` has an invalid contextual state (i.e. state = `false`) you may also want
-to set the `<b-form-radio-group>` prop `aria-invalid` to `true`.
+When `<BFormRadioGroup>` has an invalid contextual state (i.e. state = `false`) you may also want
+to set the `<BFormRadioGroup>` prop `aria-invalid` to `true`.
 
 Supported `aria-invalid` values are:
 

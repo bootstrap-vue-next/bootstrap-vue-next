@@ -1,10 +1,10 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <b-form-group label="Tags validation example" label-for="tags-validation" :state="state">
+  <BContainer fluid>
+    <BRow>
+      <BCol>
+        <BFormGroup label="Tags validation example" label-for="tags-validation" :state="state">
           <!-- <label for="tags-basic">Type a new tag and press enter</label> -->
-          <b-form-tags
+          <BFormTags
             v-model="value"
             tag-variant="warning"
             autofocus
@@ -27,15 +27,15 @@
               spaces or press enter.
             </div>
           </template>
-        </b-form-group>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
+        </BFormGroup>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <p class="mt-2">Value: {{ value }}</p>
-      </b-col>
-    </b-row>
-  </b-container>
+      </BCol>
+    </BRow>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

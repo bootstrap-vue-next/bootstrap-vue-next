@@ -1,5 +1,5 @@
 <template>
-  <b-placeholder :class="computedClasses" v-bind="computedAttrs" />
+  <BPlaceholder class="btn disabled" :class="computedClasses" v-bind="computedAttrs" />
 </template>
 
 <script setup lang="ts">
@@ -7,29 +7,26 @@ import BPlaceholder from './BPlaceholder.vue'
 import type {ColorVariant, PlaceholderAnimation} from '../../types'
 import {computed} from 'vue'
 
-interface Props {
-  tag?: string
-  width?: string | number
-  cols?: string | number
-  variant?: ColorVariant | null
-  animation?: PlaceholderAnimation
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  tag: 'div',
-  width: undefined,
-  cols: undefined,
-  animation: undefined,
-  variant: 'primary',
-})
-
-const computedClasses = computed(() => [
-  'btn',
-  'disabled',
+const props = withDefaults(
+  defineProps<{
+    tag?: string
+    width?: string | number
+    cols?: string | number
+    variant?: ColorVariant | null
+    animation?: PlaceholderAnimation
+  }>(),
   {
-    [`btn-${props.variant}`]: props.variant !== null,
-  },
-])
+    tag: 'div',
+    width: undefined,
+    cols: undefined,
+    animation: undefined,
+    variant: 'primary',
+  }
+)
+
+const computedClasses = computed(() => ({
+  [`btn-${props.variant}`]: props.variant !== null,
+}))
 
 const computedAttrs = computed(() => ({
   animation: props.animation,

@@ -17,4 +17,4 @@ export default {
 
     ctx.app.use(BToastPlugin)
   },
-} as Theme
+} satisfies Theme

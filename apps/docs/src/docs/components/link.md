@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `<router-link>`. `<b-link>` supports the disabled state and click event propagation.
+Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `<RouterLink>`. `<BLink>` supports the disabled state and click event propagation.
 
 </div>
 
@@ -18,40 +18,40 @@ Use BootstrapVue's custom b-link component for generating a standard `<a>` link 
 
 By defaut links with no options will default to # location.
 
-<b-card class="bg-body-tertiary mb-4">
-  <b-link>
+<BCard class="bg-body-tertiary mb-4">
+  <BLink>
     Link
-  </b-link>
-</b-card>
+  </BLink>
+</BCard>
 
 ## Links with Router and External Links
 
 External Links can be specified with the `href` prop.
 
 <HighlightCard>
-  <b-link href="https://getbootstrap.com/docs/5.0">
+  <BLink href="https://getbootstrap.com/docs/5.3">
     External Link to Bootstrap
-  </b-link>
-  <b-link to="sample">
+  </BLink>
+  <BLink to="sample">
     To page sample
-  </b-link>
-  <b-link href="#comp-ref--props">
+  </BLink>
+  <BLink href="#comp-ref--props">
     Jump to Properties
-  </b-link>
+  </BLink>
   <template #html>
 
 ```vue-html
-<b-link href="https://getbootstrap.com/docs/5.0">
+<BLink href="https://getbootstrap.com/docs/5.3">
   External Link to Bootstrap
-</b-link>
+</BLink>
 
-<b-link to="sample">
+<BLink to="sample">
   To page sample
-</b-link>
+</BLink>
 
-<b-link href="#comp-ref--props">
+<BLink href="#comp-ref--props">
   Jump to Properties
-</b-link>
+</BLink>
 ```
 
   </template>
@@ -62,22 +62,22 @@ External Links can be specified with the `href` prop.
 External Links can be specified with the `href` prop.
 
 <HighlightCard>
-  <b-link class="btn btn-primary me-2" href="https://getbootstrap.com/docs/5.0">
+  <BLink class="btn btn-primary me-2" href="https://getbootstrap.com/docs/5.3">
       External Link to Bootstrap
-  </b-link>
-  <b-link class="btn btn-primary disabled" href="https://getbootstrap.com/docs/5.0">
+  </BLink>
+  <BLink class="btn btn-primary disabled" href="https://getbootstrap.com/docs/5.3">
       Disabled Link
-  </b-link>
+  </BLink>
   <template #html>
 
 ```vue-html
-<b-link class="btn btn-primary m-2" href="https://getbootstrap.com/docs/5.0">
+<BLink class="btn btn-primary m-2" href="https://getbootstrap.com/docs/5.3">
   External Link to Bootstrap
-</b-link>
+</BLink>
 
-<b-link class="btn btn-primary disabled m-2" href="https://getbootstrap.com/docs/5.0">
+<BLink class="btn btn-primary disabled m-2" href="https://getbootstrap.com/docs/5.3">
   Disabled Link
-</b-link>
+</BLink>
 ```
 
   </template>
@@ -101,7 +101,7 @@ You can use the `variant` prop to colorize links. Some of the link styles use a 
     ]"
     :key="color"
   >
-    <b-link :variant="color"> {{ color }} link </b-link>
+    <BLink :variant="color"> {{ color }} link </BLink>
   </p>
   <template #html>
 
@@ -119,7 +119,7 @@ You can use the `variant` prop to colorize links. Some of the link styles use a 
   ]"
   :key="color"
 >
-  <b-link :variant="color"> {{ color }} link </b-link>
+  <BLink :variant="color"> {{ color }} link </BLink>
 </p>
 ```
 

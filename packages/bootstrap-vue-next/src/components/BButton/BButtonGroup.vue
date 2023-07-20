@@ -9,19 +9,20 @@ import type {Booleanish, Size} from '../../types'
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
-interface BButtonGroupProps {
-  ariaLabel?: string
-  size?: Size
-  tag?: string
-  vertical?: Booleanish
-}
-
-const props = withDefaults(defineProps<BButtonGroupProps>(), {
-  ariaLabel: 'Group',
-  tag: 'div',
-  vertical: false,
-  size: 'md',
-})
+const props = withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    size?: Size
+    tag?: string
+    vertical?: Booleanish
+  }>(),
+  {
+    ariaLabel: 'Group',
+    tag: 'div',
+    vertical: false,
+    size: 'md',
+  }
+)
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

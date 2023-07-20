@@ -1,15 +1,17 @@
 import type {App, Plugin} from 'vue'
+import {BToastPlugin} from './components'
 import type {BootstrapVueOptions} from './types'
 
 import './styles/styles.scss'
 
 import * as Components from './components'
-import * as Directives from './directives/exports'
+import * as Directives from './directives'
+import type {ComponentType, DirectiveType} from './types/BootstrapVueOptions'
+import parseActiveImports from './utils/parseActiveImports'
 
-// Inject all components into the global @vue/runtime-core
-// This allows intellisense in templates w/out direct importing
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BFormFile: typeof Components.BFormFile
     BAccordion: typeof Components.BAccordion
     BAccordionItem: typeof Components.BAccordionItem
     BAlert: typeof Components.BAlert
@@ -116,27 +118,38 @@ declare module '@vue/runtime-core' {
 
 // Main app plugin
 const plugin: Plugin = {
-  // TODO: use options in the future
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  install(app: App, options: BootstrapVueOptions = {}) {
-    Object.entries(Components).forEach(([name, component]) => {
+  install(app: App, options: BootstrapVueOptions = {components: true, directives: true}) {
+    const selectedComponents =
+      typeof options.components === 'boolean' || typeof options.components === 'undefined'
+        ? {all: true}
+        : options.components
+
+    const componentKeys = Object.keys(Components) as unknown as ComponentType[]
+    parseActiveImports(selectedComponents, componentKeys).forEach((name) => {
+      const component = Components[name]
       app.component(name, component)
     })
 
-    Object.entries(Directives).forEach(([name, component]) => {
-      if (name.toLowerCase().startsWith('v')) {
-        app.directive(name.slice(1), component)
-      } else {
-        app.directive(name, component)
-      }
+    const selectedDirectives =
+      typeof options?.directives === 'boolean' || typeof options.directives === 'undefined'
+        ? {all: true}
+        : options?.directives
+
+    const directiveKeys = Object.keys(Directives) as unknown as DirectiveType[]
+    parseActiveImports(selectedDirectives, directiveKeys).forEach((name) => {
+      const parsedName = name.toLowerCase().startsWith('v') ? name.slice(1) : name
+      const directive = Directives[name]
+      app.directive(parsedName, directive)
     })
+
+    if (options?.BToast) app.use(BToastPlugin, options)
   },
 }
 
 export * from './components'
 export * as Components from './components'
-export * from './directives/exports'
-export * as Directives from './directives/exports'
+export * from './directives'
+export * as Directives from './directives'
 export * from './composables/exports'
 export * as Composables from './composables/exports'
 export * from './utils/exports'

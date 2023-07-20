@@ -1,7 +1,7 @@
 <template>
   <div
     :id="computedId"
-    ref="target"
+    ref="element"
     :class="computedClasses"
     @keydown.left="onKeydown(prev)"
     @keydown.right="onKeydown(next)"
@@ -23,7 +23,7 @@
     </div>
 
     <div ref="relatedTarget" class="carousel-inner">
-      <transition-group
+      <TransitionGroup
         :enter-from-class="enterClasses"
         :enter-active-class="enterClasses"
         :enter-to-class="enterClasses"
@@ -40,7 +40,7 @@
           :key="i"
           :class="{active: i === modelValue && isTransitioning === false}"
         />
-      </transition-group>
+      </TransitionGroup>
     </div>
 
     <template v-if="controlsBoolean">
@@ -69,57 +69,56 @@ import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 import {useIntervalFn, useSwipe, useToNumber, useVModel} from '@vueuse/core'
 
-interface BCarouselProps {
-  ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
-  noHoverPause?: Booleanish
-  rideReverse?: Booleanish
-  fade?: Booleanish
-  id?: string
-  imgHeight?: string
-  imgWidth?: string
-  background?: string
-  modelValue?: number
-  controls?: Booleanish
-  indicators?: Booleanish
-  interval?: number
-  noTouch?: Booleanish
-  noWrap?: Booleanish
-  controlsPrevText?: string
-  controlsNextText?: string
-  indicatorsButtonLabel?: string
-  keyboard?: Booleanish
-  touchThreshold?: number | string
-}
+const props = withDefaults(
+  defineProps<{
+    ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
+    noHoverPause?: Booleanish
+    rideReverse?: Booleanish
+    fade?: Booleanish
+    id?: string
+    imgHeight?: string
+    imgWidth?: string
+    background?: string
+    modelValue?: number
+    controls?: Booleanish
+    indicators?: Booleanish
+    interval?: number
+    noTouch?: Booleanish
+    noWrap?: Booleanish
+    controlsPrevText?: string
+    controlsNextText?: string
+    indicatorsButtonLabel?: string
+    keyboard?: Booleanish
+    touchThreshold?: number | string
+  }>(),
+  {
+    id: undefined,
+    imgHeight: undefined,
+    imgWidth: undefined,
+    background: undefined,
+    ride: false,
+    noHoverPause: false,
+    rideReverse: false,
+    modelValue: 0,
+    fade: false,
+    controls: false,
+    indicators: false,
+    keyboard: true,
+    interval: 5000,
+    noTouch: false,
+    noWrap: false,
+    controlsNextText: 'Next',
+    controlsPrevText: 'Previous',
+    indicatorsButtonLabel: 'Slide',
+    touchThreshold: 50,
+  }
+)
 
-const props = withDefaults(defineProps<BCarouselProps>(), {
-  id: undefined,
-  imgHeight: undefined,
-  imgWidth: undefined,
-  background: undefined,
-  ride: false,
-  noHoverPause: false,
-  rideReverse: false,
-  modelValue: 0,
-  fade: false,
-  controls: false,
-  indicators: false,
-  keyboard: true,
-  interval: 5000,
-  noTouch: false,
-  noWrap: false,
-  controlsNextText: 'Next',
-  controlsPrevText: 'Previous',
-  indicatorsButtonLabel: 'Slide',
-  touchThreshold: 50,
-})
-
-interface BCarouselEmits {
-  (e: 'slid', value: BvCarouselEvent): void
-  (e: 'slide', value: BvCarouselEvent): void
-  (e: 'update:modelValue', value: number): void
-}
-
-const emit = defineEmits<BCarouselEmits>()
+const emit = defineEmits<{
+  'slid': [value: BvCarouselEvent]
+  'slide': [value: BvCarouselEvent]
+  'update:modelValue': [value: number]
+}>()
 
 const slots = useSlots()
 
@@ -144,7 +143,7 @@ const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
 const relatedTarget = ref<HTMLElement | null>(null)
-const target = ref<HTMLElement | null>(null)
+const element = ref<HTMLElement | null>(null)
 const previousModelValue = ref(modelValue.value)
 
 const rideResolved = computed<boolean | 'carousel'>(() =>
@@ -198,7 +197,7 @@ const buildBvCarouselEvent = (event: 'slid' | 'slide') =>
   new BvCarouselEvent(event, {
     componentId: computedId.value,
     cancelable: false,
-    target: target.value,
+    target: element.value,
     direction: direction.value ? 'right' : 'left',
     from: previousModelValue.value,
     to: modelValue.value,
@@ -250,7 +249,7 @@ const onMouseLeave = () => {
   resume()
 }
 
-const {lengthX} = useSwipe(target, {
+const {lengthX} = useSwipe(element, {
   passive: true,
   onSwipeStart() {
     if (noTouchBoolean.value === true) return
