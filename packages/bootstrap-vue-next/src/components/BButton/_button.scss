@@ -1,30 +1,3 @@
 .btn {
   position: relative;
-
-  .btn-spinner {
-    margin-inline-end: 0.4rem;
-    --bs-spinner-width: 1.5rem;
-    --bs-spinner-height: 1.5rem;
-    --bs-spinner-border-width: 0.15em;
-
-    &.spinner-border-sm {
-      margin-inline-end: 0.25rem;
-      --bs-spinner-width: 1rem;
-      --bs-spinner-height: 1rem;
-    }
-  }
-
-  &.fw-bold {
-    .btn-spinner {
-      --bs-spinner-border-width: 0.2em;
-    }
-  }
-
-  .btn-content {
-    display: inline-block;
-
-    &.btn-loading-fill {
-      color: transparent;
-    }
-  }
 }
