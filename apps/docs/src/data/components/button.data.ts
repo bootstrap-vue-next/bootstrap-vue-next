@@ -71,9 +71,10 @@ export default {
           type: 'Booleanish',
         },
         {
-          prop: 'loadingMode',
+          prop: 'loadingFill',
           description: '',
-          type: "'fill' | 'inline'",
+          type: 'Booleanish',
+          default: 'false',
         },
       ],
       emits: [
