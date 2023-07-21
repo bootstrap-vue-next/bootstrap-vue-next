@@ -6,7 +6,9 @@
     v-bind="computedAttrs"
     @click="clicked"
   >
-    <BSpinner v-if="loadingBoolean" class="btn-spinner" :small="size !== 'lg'" />
+    <slot v-if="loadingBoolean" name="loading">
+      <BSpinner class="btn-spinner" :small="size !== 'lg'" />
+    </slot>
     <span v-if="(loadingBoolean && !fillBoolean) || !loadingBoolean" class="btn-content">
       <slot />
     </span>
