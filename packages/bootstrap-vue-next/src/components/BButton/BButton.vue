@@ -6,19 +6,8 @@
     v-bind="computedAttrs"
     @click="clicked"
   >
-    <div
-      v-if="loadingBoolean"
-      class="btn-loading"
-      :class="{'mode-fill': loadingMode === 'fill', 'mode-inline': loadingMode === 'inline'}"
-    >
-      <slot name="loading">
-        <BSpinner class="btn-spinner" :small="size !== 'lg'" />
-      </slot>
-    </div>
-    <span
-      class="btn-content"
-      :class="{'btn-loading-fill': loadingBoolean && loadingMode === 'fill'}"
-    >
+    <BSpinner v-if="loadingBoolean" class="btn-spinner" :small="size !== 'lg'" />
+    <span v-if="(loadingBoolean && !fillBoolean) || !loadingBoolean" class="btn-content">
       <slot />
     </span>
   </component>
@@ -52,7 +41,7 @@ const props = withDefaults(
       type?: ButtonType
       variant?: ButtonVariant | null
       loading?: Booleanish
-      loadingMode?: 'fill' | 'inline'
+      loadingFill?: Booleanish
       block?: Booleanish
     } & Omit<BLinkProps, 'variant'>
   >(),
@@ -66,7 +55,7 @@ const props = withDefaults(
     type: 'button',
     variant: 'secondary',
     loading: false,
-    loadingMode: 'inline',
+    loadingFill: false,
     block: false,
     // Link props
     activeClass: 'router-link-active',
@@ -108,6 +97,7 @@ const pillBoolean = useBooleanish(() => props.pill)
 const pressedBoolean = useBooleanish(() => props.pressed)
 const squaredBoolean = useBooleanish(() => props.squared)
 const loadingBoolean = useBooleanish(() => props.loading)
+const fillBoolean = useBooleanish(() => props.loadingFill)
 
 const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
 const isButton = computed<boolean>(
