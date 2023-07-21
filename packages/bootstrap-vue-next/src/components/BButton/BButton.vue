@@ -7,11 +7,11 @@
     @click="clicked"
   >
     <slot v-if="loadingBoolean" name="loading">
-      <BSpinner class="btn-spinner" :small="size !== 'lg'" />
+      <BSpinner :small="size !== 'lg'" />
     </slot>
-    <span v-if="(loadingBoolean && !fillBoolean) || !loadingBoolean" class="btn-content">
+    <template v-if="(loadingBoolean && !fillBoolean) || !loadingBoolean">
       <slot />
-    </span>
+    </template>
   </component>
 </template>
 
