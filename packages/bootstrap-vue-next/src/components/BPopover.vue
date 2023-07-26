@@ -89,6 +89,7 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
+  toRef,
   type VNode,
   watch,
   watchEffect,
@@ -309,7 +310,7 @@ const placementRef = computed(() =>
 const {x, y, strategy, middlewareData, placement, update} = useFloating(targetTrigger, element, {
   placement: placementRef,
   middleware: floatingMiddleware,
-  strategy: props.strategy,
+  strategy: toRef(props, 'strategy'),
   whileElementsMounted: (...args) => {
     const cleanup = autoUpdate(...args, {animationFrame: realtimeBoolean.value})
     // Important! Always return the cleanup function.
