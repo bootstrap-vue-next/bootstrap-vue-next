@@ -162,7 +162,10 @@ const clicked = (e: MouseEvent): void => {
     e.stopImmediatePropagation()
     return
   }
-  collapseData?.close?.()
+
+  if (collapseData?.isNav?.value === true) {
+    collapseData?.close?.()
+  }
 
   emit('click', e)
 }
