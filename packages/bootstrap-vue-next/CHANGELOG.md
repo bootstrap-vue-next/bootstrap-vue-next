@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.9.26](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.25...bootstrap-vue-next-v0.9.26) (2023-07-16)
+
+
+### Bug Fixes
+
+* **BDropdown:** dropdown not automatically flipping ([9157407](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/915740738ea398759dc0031e6cac40b22e3ab4b1))
+
 ## [0.9.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.24...bootstrap-vue-next-v0.9.25) (2023-07-15)
 
 

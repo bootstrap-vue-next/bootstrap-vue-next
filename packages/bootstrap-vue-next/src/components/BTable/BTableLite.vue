@@ -70,7 +70,7 @@
             <slot
               v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
               :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
-              :value="item[field.key]"
+              :value="get(item, field.key)"
               :index="itemIndex"
               :item="item"
               :field="field"
@@ -139,7 +139,7 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
-import {isObject, startCase, titleCase} from '../../utils'
+import {get, isObject, startCase, titleCase} from '../../utils'
 import type {
   Booleanish,
   Breakpoint,
@@ -285,7 +285,7 @@ const formatItem = (
   fieldKey: string,
   formatter?: TableFieldObjectFormatter<typeof item>
 ) => {
-  const val = item[fieldKey]
+  const val = get(item, fieldKey)
   if (formatter && typeof formatter === 'function') {
     return formatter(val, fieldKey, item)
   }
@@ -356,4 +356,3 @@ const getRowClasses = (item: TableItem, type = 'row') => {
   return classesArray
 }
 </script>
-../../composables/tableItems
