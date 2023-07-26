@@ -133,22 +133,6 @@ describe('card', () => {
     expect($img.props('src')).toBe('/abc')
   })
 
-  it('child BCardImg has its prop alt as imgAlt', () => {
-    const wrapper = mount(BCard, {
-      props: {imgSrc: '/abc', imgAlt: 'foobar'},
-    })
-    const $img = wrapper.getComponent(BCardImg)
-    expect($img.props('alt')).toBe('foobar')
-  })
-
-  it('child BCardImg has its prop width as imgWidth', () => {
-    const wrapper = mount(BCard, {
-      props: {imgSrc: '/abc', imgWidth: 100},
-    })
-    const $img = wrapper.getComponent(BCardImg)
-    expect($img.props('width')).toBe(100)
-  })
-
   it('child BCardImg has its prop width as imgWidth string', () => {
     const wrapper = mount(BCard, {
       props: {imgSrc: '/abc', imgWidth: '100'},

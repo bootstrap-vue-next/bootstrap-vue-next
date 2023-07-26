@@ -23,10 +23,10 @@ describe('nav-item', () => {
     expect($blink.classes()).toContain('nav-link')
   })
 
-  it("blink has custom-class class when prop link-classes='custom-class'", () => {
+  it("blink has custom-class class when prop link-class='custom-class'", () => {
     const wrapper = mount(BNavItem, {
       props: {
-        linkClasses: 'custom-class',
+        linkClass: 'custom-class',
       },
     })
     const $blink = wrapper.findComponent(BLink)

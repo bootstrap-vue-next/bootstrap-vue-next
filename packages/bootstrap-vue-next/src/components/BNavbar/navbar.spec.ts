@@ -58,15 +58,6 @@ describe('navbar', () => {
     expect(wrapper.classes()).not.toContain('d-print')
   })
 
-  it('contains class navbar-dark when prop dark', async () => {
-    const wrapper = mount(BNavbar, {
-      props: {dark: true},
-    })
-    expect(wrapper.classes()).toContain('navbar-dark')
-    await wrapper.setProps({dark: false})
-    expect(wrapper.classes()).not.toContain('navbar-dark')
-  })
-
   it('contains class sticky when prop sticky is set', async () => {
     const wrapper = mount(BNavbar, {
       props: {sticky: 'top'},

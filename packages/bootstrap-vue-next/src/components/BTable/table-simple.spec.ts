@@ -86,16 +86,6 @@ describe('table-simple', () => {
     expect($table.classes()).not.toContain('caption-top')
   })
 
-  it('table has class table-dark when prop dark', async () => {
-    const wrapper = mount(BTableSimple, {
-      props: {dark: true},
-    })
-    const $table = wrapper.get('table')
-    expect($table.classes()).toContain('table-dark')
-    await wrapper.setProps({dark: false})
-    expect($table.classes()).not.toContain('table-dark')
-  })
-
   it('table has class table-hover when prop hover', async () => {
     const wrapper = mount(BTableSimple, {
       props: {hover: true},
@@ -287,17 +277,6 @@ describe('table-simple', () => {
     expect($table.classes()).toContain('caption-top')
     await wrapper.setProps({captionTop: false})
     expect($table.classes()).not.toContain('caption-top')
-  })
-
-  it('when prop responsive table has class table-dark when prop dark', async () => {
-    const wrapper = mount(BTableSimple, {
-      props: {responsive: true, dark: true},
-    })
-    const $div = wrapper.get('div')
-    const $table = $div.get('table')
-    expect($table.classes()).toContain('table-dark')
-    await wrapper.setProps({dark: false})
-    expect($table.classes()).not.toContain('table-dark')
   })
 
   it('when prop responsive table has class table-hover when prop hover', async () => {

@@ -6,7 +6,7 @@
     :items="computedDisplayItems"
     :table-classes="tableClasses"
     :tbody-tr-class="getRowClasses"
-    :field-column-classes="getFieldColumnClasses"
+    :field-column-class="getFieldColumnClasses"
     :virtual-fields="selectableBoolean ? 1 : 0"
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"

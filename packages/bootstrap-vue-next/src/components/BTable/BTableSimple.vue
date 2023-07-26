@@ -60,6 +60,7 @@ const stripedBoolean = useBooleanish(() => props.striped)
 const stickyHeaderBoolean = useBooleanish(() => props.stickyHeader)
 
 const computedClasses = computed(() => [
+  props.tableClass,
   'table',
   'b-table',
   {
@@ -74,7 +75,6 @@ const computedClasses = computed(() => [
     'table-sm': smallBoolean.value,
     [`table-${props.tableVariant}`]: props.tableVariant !== null,
   },
-  props.tableClass,
 ])
 
 const responsiveClasses = computed(() => ({

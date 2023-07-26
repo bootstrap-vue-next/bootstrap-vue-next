@@ -9,7 +9,7 @@
     :striped="striped"
     :stacked="stacked"
     :small="small"
-    :table-class="tableClass"
+    :table-class="tableClasses"
     :table-variant="variant"
     :sticky-header="stickyHeader"
   >
@@ -241,10 +241,12 @@ const labelStackedBoolean = useBooleanish(() => props.labelStacked)
 const showEmptyBoolean = useBooleanish(() => props.showEmpty)
 const virtualFieldsNumber = useToNumber(() => props.virtualFields)
 
-const tableClass = computed(() => ({
-  [`align-${props.align}`]: props.align !== undefined,
-  ...props.tableClass,
-}))
+const tableClasses = computed(() => [
+  props.tableClass,
+  {
+    [`align-${props.align}`]: props.align !== undefined,
+  },
+])
 
 const computedFields = computed(() => normaliseFields(props.fields, props.items))
 const computedFieldsTotal = computed(() => computedFields.value.length + virtualFieldsNumber.value)
