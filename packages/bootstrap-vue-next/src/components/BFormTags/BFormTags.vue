@@ -70,7 +70,6 @@
               :aria-required="requiredBoolean || undefined"
               @input="onInput"
               @change="onChange"
-              @keydown="onKeydown"
               @focus="onFocus"
               @blur="onBlur"
             />
@@ -122,7 +121,7 @@ import type {
   InputType,
   Size,
 } from '../../types'
-import {useFocus, useVModel} from '@vueuse/core'
+import {onKeyStroke, useFocus, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
 
 const props = withDefaults(
@@ -396,6 +395,8 @@ const onKeydown = (e: KeyboardEvent): void => {
     shouldRemoveOnDelete.value = true
   }
 }
+
+onKeyStroke(onKeydown, {target: input})
 
 const separator = computed(() => {
   if (!props.separator) {

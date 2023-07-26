@@ -1,13 +1,5 @@
 <template>
-  <div
-    :id="computedId"
-    ref="element"
-    :class="computedClasses"
-    @keydown.left="onKeydown(prev)"
-    @keydown.right="onKeydown(next)"
-    @mouseenter.stop="onMouseEnter"
-    @mouseleave.stop="onMouseLeave"
-  >
+  <div :id="computedId" ref="element" :class="computedClasses">
     <div v-if="indicatorsBoolean" class="carousel-indicators">
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
@@ -67,7 +59,14 @@ import {
 import {computed, provide, readonly, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
-import {useIntervalFn, useSwipe, useToNumber, useVModel} from '@vueuse/core'
+import {
+  onKeyStroke,
+  useElementHover,
+  useIntervalFn,
+  useSwipe,
+  useToNumber,
+  useVModel,
+} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
@@ -145,6 +144,8 @@ const direction = ref(true)
 const relatedTarget = ref<HTMLElement | null>(null)
 const element = ref<HTMLElement | null>(null)
 const previousModelValue = ref(modelValue.value)
+
+const isHovering = useElementHover(element)
 
 const rideResolved = computed<boolean | 'carousel'>(() =>
   isBooleanish(props.ride) ? resolveBooleanish(props.ride) : props.ride
@@ -282,12 +283,35 @@ const onAfterLeave = () => {
   isTransitioning.value = false
 }
 
+onKeyStroke(
+  'ArrowLeft',
+  () => {
+    onKeydown(prev)
+  },
+  {target: element}
+)
+onKeyStroke(
+  'ArrowRight',
+  () => {
+    onKeydown(next)
+  },
+  {target: element}
+)
+
 watch(
   () => props.ride,
   () => {
     rideStarted.value = false
   }
 )
+
+watch(isHovering, (newValue) => {
+  if (newValue) {
+    onMouseEnter()
+    return
+  }
+  onMouseLeave()
+})
 
 defineExpose({pause, resume, prev, next})
 

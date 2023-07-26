@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" class="btn-group" v-bind="$attrs">
+  <div :class="computedClasses" class="btn-group">
     <BButton
       :id="computedId"
       ref="splitButton"
@@ -10,7 +10,6 @@
       :type="splitButtonType"
       v-bind="buttonAttr"
       @click="onSplitClick"
-      @keydown.esc="modelValue = !modelValueBoolean"
     >
       <slot name="button-content">
         {{ text }}
@@ -65,17 +64,13 @@ import {
   type Strategy,
   useFloating,
 } from '@floating-ui/vue'
-import {onClickOutside, useToNumber, useVModel} from '@vueuse/core'
+import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
 import {computed, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {BvEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import type {RouteLocationRaw} from 'vue-router'
-
-defineOptions({
-  inheritAttrs: false,
-})
 
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
@@ -207,6 +202,14 @@ const offsetToNumber = useToNumber(computedOffset, {method: 'parseInt', nanToZer
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
 const splitButton = ref<HTMLElement | null>(null)
+
+onKeyStroke(
+  'Escape',
+  () => {
+    modelValue.value = !modelValueBoolean
+  },
+  {target: splitButton}
+)
 
 const referencePlacement = computed(() => (!splitBoolean.value ? splitButton.value : button.value))
 const floatingPlacement = computed(() =>

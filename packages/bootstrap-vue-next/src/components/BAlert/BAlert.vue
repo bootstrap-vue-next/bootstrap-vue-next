@@ -2,13 +2,12 @@
   <BTransition :no-fade="!fadeBoolean" :trans-props="{enterToClass: 'show'}">
     <div
       v-if="isAlertVisible"
+      ref="element"
       class="alert"
       role="alert"
       aria-live="polite"
       aria-atomic="true"
       :class="computedClasses"
-      @mouseenter.stop="onMouseEnter"
-      @mouseleave.stop="resume"
     >
       <slot />
       <template v-if="dismissibleBoolean">
@@ -29,10 +28,10 @@ import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonType, ButtonVariant, ColorVariant} from '../../types'
-import {computed, onBeforeUnmount, useSlots, watchEffect} from 'vue'
+import {computed, onBeforeUnmount, ref, useSlots, watch, watchEffect} from 'vue'
 import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
-import {useVModel} from '@vueuse/core'
+import {useElementHover, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
@@ -78,7 +77,10 @@ defineSlots<{
 
 const slots = useSlots()
 
+const element = ref<HTMLElement | null>(null)
+
 const modelValue = useVModel(props, 'modelValue', emit)
+const isHovering = useElementHover(element)
 
 const dismissibleBoolean = useBooleanish(() => props.dismissible)
 const fadeBoolean = useBooleanish(() => props.fade)
@@ -137,6 +139,14 @@ const onMouseEnter = () => {
   if (noHoverPauseBoolean.value) return
   pause()
 }
+
+watch(isHovering, (newValue) => {
+  if (newValue) {
+    onMouseEnter()
+    return
+  }
+  resume()
+})
 
 onBeforeUnmount(stop)
 
