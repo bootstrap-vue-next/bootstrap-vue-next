@@ -24,7 +24,6 @@
         :aria-labelledby="`${computedId}-offcanvas-label`"
         data-bs-backdrop="false"
         v-bind="$attrs"
-        @keyup.esc="hide('esc')"
       >
         <template v-if="lazyShowing">
           <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
@@ -66,7 +65,7 @@
 
 <script setup lang="ts">
 import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
-import {useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
@@ -188,6 +187,14 @@ const computedId = useId(() => props.id, 'offcanvas')
 useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
 
 const element = ref<HTMLElement | null>(null)
+
+onKeyStroke(
+  'Escape',
+  () => {
+    hide('esc')
+  },
+  {target: element}
+)
 
 const {focused} = useFocus(element, {
   initialValue: modelValueBoolean.value && noFocusBoolean.value === false,
