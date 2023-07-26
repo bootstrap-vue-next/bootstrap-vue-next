@@ -104,7 +104,7 @@ You can make nav item styles in various ways.
   <template #html>
 
 ```vue-html
- <BNav tabs>
+<BNav tabs>
   <BNavItem active>Active</BNavItem>
   <BNavItem>Link</BNavItem>
   <BNavItem>Another Link</BNavItem>

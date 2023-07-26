@@ -229,10 +229,10 @@ The striped gradient can also be animated by setting the `animated` prop.
   </BCard>
   <template #html>
 
-```vue-html
+```vue
 <template>
-<BProgress :value="75" striped :animated="animate" />
-<BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
+  <BProgress :value="75" striped :animated="animate" />
+  <BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
 </template>
 
 <script setup lang="ts">

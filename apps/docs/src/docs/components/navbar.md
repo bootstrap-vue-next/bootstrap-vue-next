@@ -49,39 +49,37 @@ The component `<BNavbar>` is a wrapper that positions branding, navigation, and 
   <template #html>
 
 ```vue-html
-<template>
-  <BNavbar toggleable="lg" type="dark" variant="dark">
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
-    <BNavbarToggle target="nav-collapse" />
-    <BCollapse id="nav-collapse" is-nav>
-      <BNavbarNav>
-        <BNavItem href="#">Link</BNavItem>
-        <BNavItem href="#" disabled>Disabled</BNavItem>
-      </BNavbarNav>
-      <!-- Right aligned nav items -->
-      <BNavbarNav class="me-auto mb-2 mb-lg-0">
-        <BNavItemDropdown text="Lang" right>
-          <BDropdownItem href="#">EN</BDropdownItem>
-          <BDropdownItem href="#">ES</BDropdownItem>
-          <BDropdownItem href="#">RU</BDropdownItem>
-          <BDropdownItem href="#">FA</BDropdownItem>
-        </BNavItemDropdown>
-        <BNavItemDropdown right>
-          <!-- Using 'button-content' slot -->
-          <template #button-content>
-            <em>User</em>
-          </template>
-          <BDropdownItem href="#">Profile</BDropdownItem>
-          <BDropdownItem href="#">Sign Out</BDropdownItem>
-        </BNavItemDropdown>
-      </BNavbarNav>
-      <BNavForm class="d-flex">
-        <BFormInput class="me-2" placeholder="Search" />
-        <BButton type="submit" variant="outline-success">Search</BButton>
-      </BNavForm>
-    </BCollapse>
-  </BNavbar>
-</template>
+<BNavbar toggleable="lg" type="dark" variant="dark">
+  <BNavbarBrand href="#">NavBar</BNavbarBrand>
+  <BNavbarToggle target="nav-collapse" />
+  <BCollapse id="nav-collapse" is-nav>
+    <BNavbarNav>
+      <BNavItem href="#">Link</BNavItem>
+      <BNavItem href="#" disabled>Disabled</BNavItem>
+    </BNavbarNav>
+    <!-- Right aligned nav items -->
+    <BNavbarNav class="me-auto mb-2 mb-lg-0">
+      <BNavItemDropdown text="Lang" right>
+        <BDropdownItem href="#">EN</BDropdownItem>
+        <BDropdownItem href="#">ES</BDropdownItem>
+        <BDropdownItem href="#">RU</BDropdownItem>
+        <BDropdownItem href="#">FA</BDropdownItem>
+      </BNavItemDropdown>
+      <BNavItemDropdown right>
+        <!-- Using 'button-content' slot -->
+        <template #button-content>
+          <em>User</em>
+        </template>
+        <BDropdownItem href="#">Profile</BDropdownItem>
+        <BDropdownItem href="#">Sign Out</BDropdownItem>
+      </BNavItemDropdown>
+    </BNavbarNav>
+    <BNavForm class="d-flex">
+      <BFormInput class="me-2" placeholder="Search" />
+      <BButton type="submit" variant="outline-success">Search</BButton>
+    </BNavForm>
+  </BCollapse>
+</BNavbar>
 ```
 
   </template>
@@ -126,12 +124,10 @@ The `<BNavbarBrand>` generates a link if href is provided, or a `<RouterLink>` i
   <template #html>
 
 ```vue-html
-<template>
-  <!-- As a link -->
-  <BNavbar variant="faded" type="light">
-    <BNavbarBrand href="#">BootstrapVueNext</BNavbarBrand>
-  </BNavbar>
-</template>
+<!-- As a link -->
+<BNavbar variant="faded" type="light">
+  <BNavbarBrand href="#">BootstrapVueNext</BNavbarBrand>
+</BNavbar>
 ```
 
   </template>
@@ -144,12 +140,10 @@ The `<BNavbarBrand>` generates a link if href is provided, or a `<RouterLink>` i
   <template #html>
 
 ```vue-html
-<template>
-  <!-- As a heading -->
-  <BNavbar variant="faded" type="light">
-    <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
-  </BNavbar>
-</template>
+<!-- As a heading -->
+<BNavbar variant="faded" type="light">
+  <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
+</BNavbar>
 ```
 
   </template>
@@ -166,14 +160,12 @@ Adding images to the `<BNavbarBrand>` will likely always require custom styles o
   <template #html>
 
 ```vue-html
-<template>
-  <!-- Just an image -->
-  <BNavbar variant="faded" type="light">
-    <BNavbarBrand href="#">
-      <img src="https://placekitten.com/g/30/30" alt="Kitten">
-    </BNavbarBrand>
-  </BNavbar>
-</template>
+<!-- Just an image -->
+<BNavbar variant="faded" type="light">
+  <BNavbarBrand href="#">
+    <img src="https://placekitten.com/g/30/30" alt="Kitten">
+  </BNavbarBrand>
+</BNavbar>
 ```
 
   </template>
@@ -189,15 +181,13 @@ Adding images to the `<BNavbarBrand>` will likely always require custom styles o
   <template #html>
 
 ```vue-html
-<template>
-  <!-- Image and text -->
-  <BNavbar variant="faded" type="light">
-    <BNavbarBrand href="#">
-      <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
-      BootstrapVue
-    </BNavbarBrand>
-  </BNavbar>
-</template>
+<!-- Image and text -->
+<BNavbar variant="faded" type="light">
+  <BNavbarBrand href="#">
+    <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
+    BootstrapVue
+  </BNavbarBrand>
+</BNavbar>
 ```
 
   </template>
@@ -239,19 +229,17 @@ Navbars may contain bits of text with the help of `<BNavText>`. This component a
   <template #html>
 
 ```vue-html
-<template>
-  <BNavbar toggleable="sm" type="light" variant="light">
-    <BNavbarToggle target="nav-text-collapse" />
+<BNavbar toggleable="sm" type="light" variant="light">
+  <BNavbarToggle target="nav-text-collapse" />
 
-    <BNavbarBrand>BootstrapVue</BNavbarBrand>
+  <BNavbarBrand>BootstrapVue</BNavbarBrand>
 
-    <BCollapse id="nav-text-collapse" is-nav>
-      <BNavbarNav>
-        <BNavText>Navbar text</BNavText>
-      </BNavbarNav>
-    </BCollapse>
-  </BNavbar>
-</template>
+  <BCollapse id="nav-text-collapse" is-nav>
+    <BNavbarNav>
+      <BNavText>Navbar text</BNavText>
+    </BNavbarNav>
+  </BCollapse>
+</BNavbar>
 ```
 
   </template>
@@ -280,26 +268,24 @@ For `<BNavItemDropdown>` usage, see the `<BDropdown>` docs. Note split dropdowns
   <template #html>
 
 ```vue-html
-<template>
-  <BNavbar type="dark" variant="dark">
-    <BNavbarNav>
-      <BNavItem href="#">Home</BNavItem>
+<BNavbar type="dark" variant="dark">
+  <BNavbarNav>
+    <BNavItem href="#">Home</BNavItem>
 
-      <!-- Navbar dropdowns -->
-      <BNavItemDropdown text="Lang" right>
-        <BDropdownItem href="#">EN</BDropdownItem>
-        <BDropdownItem href="#">ES</BDropdownItem>
-        <BDropdownItem href="#">RU</BDropdownItem>
-        <BDropdownItem href="#">FA</BDropdownItem>
-      </BNavItemDropdown>
+    <!-- Navbar dropdowns -->
+    <BNavItemDropdown text="Lang" right>
+      <BDropdownItem href="#">EN</BDropdownItem>
+      <BDropdownItem href="#">ES</BDropdownItem>
+      <BDropdownItem href="#">RU</BDropdownItem>
+      <BDropdownItem href="#">FA</BDropdownItem>
+    </BNavItemDropdown>
 
-      <BNavItemDropdown text="User" right>
-        <BDropdownItem href="#">Account</BDropdownItem>
-        <BDropdownItem href="#">Settings</BDropdownItem>
-      </BNavItemDropdown>
-    </BNavbarNav>
-  </BNavbar>
-</template>
+    <BNavItemDropdown text="User" right>
+      <BDropdownItem href="#">Account</BDropdownItem>
+      <BDropdownItem href="#">Settings</BDropdownItem>
+    </BNavItemDropdown>
+  </BNavbarNav>
+</BNavbar>
 ```
 
   </template>
@@ -319,14 +305,12 @@ Use `<BNavForm>` to place inline form controls into your navbar
   <template #html>
 
 ```vue-html
-<template>
-  <BNavbar type="light" variant="light">
-    <BNavForm>
-      <BFormInput class="me-sm-2" placeholder="Search" />
-      <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
-    </BNavForm>
-  </BNavbar>
-</template>
+<BNavbar type="light" variant="light">
+  <BNavForm>
+    <BFormInput class="me-sm-2" placeholder="Search" />
+    <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
+  </BNavForm>
+</BNavbar>
 ```
 
   </template>
@@ -345,15 +329,13 @@ Input Groups work as well:
   <template #html>
 
 ```vue-html
-<template>
-  <BNavbar type="light" variant="light">
-    <BNavForm>
-      <BInputGroup prepend="@">
-        <BFormInput placeholder="Username" />
-      </BInputGroup>
-    </BNavForm>
-  </BNavbar>
-</template>
+<BNavbar type="light" variant="light">
+  <BNavForm>
+    <BInputGroup prepend="@">
+      <BFormInput placeholder="Username" />
+    </BInputGroup>
+  </BNavForm>
+</BNavbar>
 ```
 
   </template>
@@ -403,26 +385,24 @@ Note that the expanded scope property only works when supplying the target prop 
   <template #html>
 
 ```vue-html
-<template>
-  <BNavbar toggleable type="dark" variant="dark">
-    <BNavbarBrand href="#">NavBar</BNavbarBrand>
+<BNavbar toggleable type="dark" variant="dark">
+  <BNavbarBrand href="#">NavBar</BNavbarBrand>
 
-    <BNavbarToggle target="navbar-toggle-collapse">
-      <template #default="{ expanded }">
-        <ChevronBarUpIcon v-if="expanded" />
-        <ChevronBarDownIcon v-else icon="chevron-bar-down" />
-      </template>
-    </BNavbarToggle>
+  <BNavbarToggle target="navbar-toggle-collapse">
+    <template #default="{ expanded }">
+      <ChevronBarUpIcon v-if="expanded" />
+      <ChevronBarDownIcon v-else icon="chevron-bar-down" />
+    </template>
+  </BNavbarToggle>
 
-    <BCollapse id="navbar-toggle-collapse" is-nav>
-      <BNavbarNav class="ml-auto">
-        <BNavItem href="#">Link 1</BNavItem>
-        <BNavItem href="#">Link 2</BNavItem>
-        <BNavItem href="#" disabled>Disabled</BNavItem>
-      </BNavbarNav>
-    </BCollapse>
-  </BNavbar>
-</template>
+  <BCollapse id="navbar-toggle-collapse" is-nav>
+    <BNavbarNav class="ml-auto">
+      <BNavItem href="#">Link 1</BNavItem>
+      <BNavItem href="#">Link 2</BNavItem>
+      <BNavItem href="#" disabled>Disabled</BNavItem>
+    </BNavbarNav>
+  </BCollapse>
+</BNavbar>
 ```
 
   </template>

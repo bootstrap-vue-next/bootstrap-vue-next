@@ -63,16 +63,16 @@ Other elements can easily toggle `<BCollapse>` components using the
   <template #html>
 
 ```vue-html
-  <!-- Using modifiers -->
-  <BButton v-b-toggle.collapse-2 class="m-1">Toggle Collapse</BButton>
+<!-- Using modifiers -->
+<BButton v-b-toggle.collapse-2 class="m-1">Toggle Collapse</BButton>
 
-  <!-- Using value -->
-  <BButton v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</BButton>
+<!-- Using value -->
+<BButton v-b-toggle="'collapse-2'" class="m-1">Toggle Collapse</BButton>
 
-  <!-- Element to collapse -->
-  <BCollapse id="collapse-2">
-    <BCard>I am collapsible content!</BCard>
-  </BCollapse>
+<!-- Element to collapse -->
+<BCollapse id="collapse-2">
+  <BCard>I am collapsible content!</BCard>
+</BCollapse>
 ```
 
   </template>
@@ -179,23 +179,23 @@ You can also pass multiple target Ids via the directive _value_ in BootstrapVueN
   <template #html>
 
 ```vue-html
-  <!-- Via multiple directive modifiers -->
-  <BButton v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</BButton>
+<!-- Via multiple directive modifiers -->
+<BButton v-b-toggle.collapse-a.collapse-b>Toggle Collapse A and B</BButton>
 
-  <!-- Via space separated string of Ids passed to directive value -->
-  <BButton v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</BButton>
+<!-- Via space separated string of Ids passed to directive value -->
+<BButton v-b-toggle="'collapse-a collapse-b'">Toggle Collapse A and B</BButton>
 
-  <!-- Via array of string Ids passed to directive value -->
-  <BButton v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</BButton>
+<!-- Via array of string Ids passed to directive value -->
+<BButton v-b-toggle="['collapse-a', 'collapse-b']">Toggle Collapse A and B</BButton>
 
-  <!-- Elements to collapse -->
-  <BCollapse id="collapse-a">
-    <BCard>I am collapsible content A!</BCard>
-  </BCollapse>
+<!-- Elements to collapse -->
+<BCollapse id="collapse-a">
+  <BCard>I am collapsible content A!</BCard>
+</BCollapse>
 
-  <BCollapse id="collapse-b">
-    <BCard>I am collapsible content B!</BCard>
-  </BCollapse>
+<BCollapse id="collapse-b">
+  <BCard>I am collapsible content B!</BCard>
+</BCollapse>
 ```
 
   </template>
