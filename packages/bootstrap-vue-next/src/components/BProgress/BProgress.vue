@@ -1,7 +1,16 @@
 <template>
   <div class="progress" :style="{height}">
     <slot>
-      <BProgressBar v-bind="computedAttrs" />
+      <BProgressBar
+        :animated="animated"
+        :max="max"
+        :precision="precision"
+        :show-progress="showProgress"
+        :show-value="showValue"
+        :striped="striped"
+        :value="value"
+        :variant="variant"
+      />
     </slot>
   </div>
 </template>
@@ -10,7 +19,7 @@
 import BProgressBar from './BProgressBar.vue'
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed, provide, readonly, toRef} from 'vue'
+import {provide, readonly, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
 const props = withDefaults(
@@ -47,17 +56,6 @@ const animatedBoolean = useBooleanish(() => props.animated)
 const showProgressBoolean = useBooleanish(() => props.showProgress)
 const showValueBoolean = useBooleanish(() => props.showValue)
 const stripedBoolean = useBooleanish(() => props.striped)
-
-const computedAttrs = computed(() => ({
-  animated: props.animated,
-  max: props.max,
-  precision: props.precision,
-  showProgress: props.showProgress,
-  showValue: props.showValue,
-  striped: props.striped,
-  value: props.value,
-  variant: props.variant,
-}))
 
 provide(progressInjectionKey, {
   animated: animatedBoolean,

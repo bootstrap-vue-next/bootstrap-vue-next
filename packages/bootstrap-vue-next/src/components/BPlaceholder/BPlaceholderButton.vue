@@ -1,5 +1,12 @@
 <template>
-  <BPlaceholder class="btn disabled" :class="computedClasses" v-bind="computedAttrs" />
+  <BPlaceholder
+    class="btn disabled"
+    :class="computedClasses"
+    :animation="animation"
+    :width="width"
+    :cols="cols"
+    :tag="tag"
+  />
 </template>
 
 <script setup lang="ts">
@@ -26,12 +33,5 @@ const props = withDefaults(
 
 const computedClasses = computed(() => ({
   [`btn-${props.variant}`]: props.variant !== null,
-}))
-
-const computedAttrs = computed(() => ({
-  animation: props.animation,
-  width: props.width,
-  cols: props.cols,
-  tag: props.tag,
 }))
 </script>

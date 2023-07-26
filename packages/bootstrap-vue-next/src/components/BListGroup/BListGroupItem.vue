@@ -26,7 +26,7 @@ const props = withDefaults(
   defineProps<{
     action?: Booleanish
     active?: Booleanish
-    // activeClass?: string
+    // activeClass?: ClassValue
     // append?: Booleanish
     button?: Booleanish
     disabled?: Booleanish

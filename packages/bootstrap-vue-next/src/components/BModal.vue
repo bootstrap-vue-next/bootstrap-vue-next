@@ -162,7 +162,7 @@ const props = withDefaults(
     show?: Booleanish
     size?: Size | 'xl'
     title?: string
-    titleClass?: string
+    titleClass?: ClassValue
     titleSrOnly?: Booleanish
     titleTag?: string
     autoFocusButton?: 'ok' | 'cancel' | 'close'

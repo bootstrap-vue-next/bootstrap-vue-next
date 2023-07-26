@@ -11,6 +11,7 @@
       <component
         :is="overlayTag"
         v-if="showBoolean"
+        class="b-overlay"
         :class="overlayClasses"
         :style="overlayStyles"
         @click="emit('click', $event)"
@@ -84,12 +85,7 @@ const emit = defineEmits<{
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
-  overlay?: (props: {
-    type: SpinnerType
-    variant: ColorVariant | null | undefined
-    small: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  overlay?: (props: typeof spinnerAttrs.value) => any
 }>()
 
 const positionStyles = {top: 0, left: 0, bottom: 0, right: 0}
@@ -126,13 +122,10 @@ const overlayStyles = computed(() => ({
   zIndex: props.zIndex || 10,
 }))
 
-const overlayClasses = computed(() => [
-  'b-overlay',
-  {
-    'position-absolute': !noWrapBoolean.value || !fixedBoolean.value,
-    'position-fixed': noWrapBoolean.value && fixedBoolean.value,
-  },
-])
+const overlayClasses = computed(() => ({
+  'position-absolute': !noWrapBoolean.value || !fixedBoolean.value,
+  'position-fixed': noWrapBoolean.value && fixedBoolean.value,
+}))
 
 const blurClasses = computed(() => [computedVariant.value, computedRounded.value])
 

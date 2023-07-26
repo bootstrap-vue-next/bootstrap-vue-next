@@ -31,7 +31,7 @@ import type {Booleanish, ButtonType, ButtonVariant, ColorVariant} from '../../ty
 import {computed, onBeforeUnmount, ref, useSlots, watch, watchEffect} from 'vue'
 import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
-import {useElementHover, useVModel} from '@vueuse/core'
+import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
@@ -44,7 +44,7 @@ const props = withDefaults(
     variant?: ColorVariant | null
     closeContent?: string
     immediate?: Booleanish
-    interval?: number
+    interval?: number | string
     showOnPause?: Booleanish
   }>(),
   {
@@ -87,6 +87,7 @@ const fadeBoolean = useBooleanish(() => props.fade)
 const immediateBoolean = useBooleanish(() => props.immediate)
 const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
 const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
+const intervalNumber = useToNumber(() => props.interval)
 
 const hasCloseSlot = computed(() => !isEmptySlot(slots.close))
 
@@ -107,7 +108,7 @@ const {
   stop,
   isPaused,
   value: remainingMs,
-} = useCountdown(countdownLength, () => props.interval, {
+} = useCountdown(countdownLength, intervalNumber, {
   immediate: typeof modelValue.value === 'number' && immediateBoolean.value,
 })
 
@@ -122,7 +123,9 @@ const closeAttrs = computed(() => ({
   type: 'button' as ButtonType,
 }))
 
-watchEffect(() => emit('close-countdown', remainingMs.value))
+watchEffect(() => {
+  emit('close-countdown', remainingMs.value)
+})
 
 const closeClicked = (): void => {
   if (typeof modelValue.value === 'boolean') {

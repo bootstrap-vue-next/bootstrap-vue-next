@@ -47,5 +47,7 @@ const computedClasses = computed(() => ({
   'was-validated': validatedBoolean.value,
 }))
 
-const submitted = (e: Event): void => emit('submit', e)
+const submitted = (e: Event) => {
+  emit('submit', e)
+}
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div :id="computedId" ref="element" :class="computedClasses">
+  <div :id="computedId" ref="element" class="carousel slide pointer-event" :class="computedClasses">
     <div v-if="indicatorsBoolean" class="carousel-indicators">
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
@@ -81,7 +81,7 @@ const props = withDefaults(
     modelValue?: number
     controls?: Booleanish
     indicators?: Booleanish
-    interval?: number
+    interval?: number | string
     noTouch?: Booleanish
     noWrap?: Booleanish
     controlsPrevText?: string
@@ -133,10 +133,8 @@ const controlsBoolean = useBooleanish(() => props.controls)
 const indicatorsBoolean = useBooleanish(() => props.indicators)
 const noTouchBoolean = useBooleanish(() => props.noTouch)
 const noWrapBoolean = useBooleanish(() => props.noWrap)
-const touchThresholdNumber = useToNumber(() => props.touchThreshold, {
-  nanToZero: true,
-  method: 'parseInt',
-})
+const touchThresholdNumber = useToNumber(() => props.touchThreshold)
+const intervalNumber = useToNumber(() => props.interval)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
@@ -170,7 +168,7 @@ const {pause, resume} = useIntervalFn(
   () => {
     rideReverseBoolean.value ? prev() : next()
   },
-  () => props.interval,
+  intervalNumber,
   {immediate: rideResolved.value === 'carousel'}
 )
 
@@ -179,12 +177,7 @@ const isRiding = computed(
     (rideResolved.value === true && rideStarted.value === true) || rideResolved.value === 'carousel'
 )
 const slides = computed(() => getSlotElements(slots.default, 'BCarouselSlide'))
-const computedClasses = computed(() => [
-  'carousel',
-  'slide',
-  'pointer-event',
-  {'carousel-fade': fadeBoolean.value},
-])
+const computedClasses = computed(() => ({'carousel-fade': fadeBoolean.value}))
 // TODO a general idea of showing only slides that are in bounds
 // const localValue = computed(() =>
 //   props.modelValue >= slides.value.length

@@ -4,7 +4,8 @@
     class="navbar-toggler"
     type="button"
     :class="computedClasses"
-    v-bind="computedAttrs"
+    :disabled="disabledBoolean"
+    :aria-label="label"
     @click="onClick"
   >
     <slot>
@@ -42,11 +43,6 @@ defineSlots<{
 }>()
 
 const disabledBoolean = useBooleanish(() => props.disabled)
-
-const computedAttrs = computed(() => ({
-  'disabled': disabledBoolean.value,
-  'aria-label': props.label,
-}))
 
 const computedClasses = computed(() => ({
   disabled: disabledBoolean.value,

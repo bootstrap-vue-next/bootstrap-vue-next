@@ -8,7 +8,11 @@
       :class="buttonClasses"
       :disabled="splitDisabledBoolean || disabled"
       :type="splitButtonType"
-      v-bind="buttonAttr"
+      :aria-label="ariaLabel"
+      :aria-expanded="splitBoolean ? undefined : modelValueBoolean"
+      :aria-haspopup="splitBoolean ? undefined : 'menu'"
+      :href="splitBoolean ? splitHref : undefined"
+      :to="splitBoolean && splitTo ? splitTo : undefined"
       @click="onSplitClick"
     >
       <slot name="button-content">
@@ -87,7 +91,6 @@ const props = withDefaults(
     toggleClass?: ClassValue
     autoClose?: boolean | 'inside' | 'outside'
     block?: Booleanish
-    dark?: Booleanish
     disabled?: Booleanish
     isNav?: Booleanish
     dropup?: Booleanish
@@ -129,7 +132,6 @@ const props = withDefaults(
     splitDisabled: undefined,
     autoClose: true,
     block: false,
-    dark: false,
     disabled: false,
     dropup: false,
     isNav: false,
@@ -180,7 +182,6 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
 const blockBoolean = useBooleanish(() => props.block)
-const darkBoolean = useBooleanish(() => props.dark)
 const dropupBoolean = useBooleanish(() => props.dropup)
 const dropendBoolean = useBooleanish(() => props.dropend)
 const isNavBoolean = useBooleanish(() => props.isNav)
@@ -197,7 +198,7 @@ const splitDisabledBoolean = useBooleanish(() => props.splitDisabled)
 const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
-const offsetToNumber = useToNumber(computedOffset, {method: 'parseInt', nanToZero: true})
+const offsetToNumber = useToNumber(computedOffset)
 
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
@@ -264,20 +265,7 @@ const buttonClasses = computed(() => [
   },
 ])
 
-const dropdownMenuClasses = computed(() => [
-  props.menuClass,
-  {
-    'dropdown-menu-dark': darkBoolean.value,
-  },
-])
-
-const buttonAttr = computed(() => ({
-  'aria-label': props.ariaLabel,
-  'aria-expanded': splitBoolean.value ? undefined : modelValueBoolean.value,
-  'aria-haspopup': splitBoolean.value ? undefined : 'menu',
-  'href': splitBoolean.value ? props.splitHref : undefined,
-  'to': splitBoolean.value && props.splitTo ? props.splitTo : undefined,
-}))
+const dropdownMenuClasses = computed(() => props.menuClass)
 
 const onButtonClick = () => {
   emit('toggle')

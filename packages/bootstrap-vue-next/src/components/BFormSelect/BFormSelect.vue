@@ -2,7 +2,6 @@
   <select
     :id="computedId"
     ref="input"
-    v-bind="$attrs"
     v-model="localValue"
     :class="computedClasses"
     :name="name"
@@ -42,7 +41,7 @@ import {computed, nextTick, ref} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId, useStateClass} from '../../composables'
-import {useFocus, useVModel} from '@vueuse/core'
+import {useFocus, useToNumber, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
@@ -60,7 +59,7 @@ const props = withDefaults(
     optionsField?: string
     plain?: Booleanish
     required?: Booleanish
-    selectSize?: number
+    selectSize?: number | string
     size?: Size
     state?: Booleanish | null
     textField?: string
@@ -114,6 +113,7 @@ const multipleBoolean = useBooleanish(() => props.multiple)
 const plainBoolean = useBooleanish(() => props.plain)
 const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
+const selectSizeNumber = useToNumber(() => props.selectSize)
 
 const stateClass = useStateClass(stateBoolean)
 
@@ -133,8 +133,8 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedSelectSize = computed<number | undefined>(() =>
-  props.selectSize || plainBoolean.value ? props.selectSize : undefined
+const computedSelectSize = computed(() =>
+  selectSizeNumber.value || plainBoolean.value ? selectSizeNumber.value : undefined
 )
 
 const computedAriaInvalid = computed(() =>

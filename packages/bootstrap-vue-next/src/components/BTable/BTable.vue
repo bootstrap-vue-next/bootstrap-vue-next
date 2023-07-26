@@ -8,7 +8,6 @@
     :tbody-tr-class="getRowClasses"
     :field-column-classes="getFieldColumnClasses"
     :virtual-fields="selectableBoolean ? 1 : 0"
-    v-on="$attrs"
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
   >
@@ -108,7 +107,6 @@ const props = withDefaults(
     borderless?: Booleanish
     bordered?: Booleanish
     borderVariant?: ColorVariant | null
-    dark?: Booleanish
     fields?: TableField[]
     footClone?: Booleanish
     hover?: Booleanish
@@ -137,13 +135,15 @@ const props = withDefaults(
     busy?: Booleanish
     busyLoadingText?: string
     showEmpty?: Booleanish
+    // TODO number | string => with useToNumber
     perPage?: number
+    // TODO number | string => with useToNumber
     currentPage?: number
     filter?: string
     filterable?: string[]
     emptyText?: string
     emptyFilteredText?: string
-    fieldColumnClasses?: (field: TableFieldObject) => Record<string, any>[]
+    fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
     tbodyTrClass?: (item: TableItem | null, type: string) => string | any[] | null | undefined
   }>(),
   {
@@ -164,7 +164,6 @@ const props = withDefaults(
     captionTop: false,
     borderless: false,
     bordered: false,
-    dark: false,
     fields: () => [],
     footClone: false,
     hover: false,
@@ -188,7 +187,7 @@ const props = withDefaults(
     currentPage: 1,
     emptyText: 'There are no records to show',
     emptyFilteredText: 'There are no records matching your request',
-    fieldColumnClasses: undefined,
+    fieldColumnClass: undefined,
     tbodyTrClass: undefined,
   }
 )
@@ -426,13 +425,17 @@ const handleRowSelection = (
       selectedItems.value.add(row)
       emit('row-selected', row)
     } else {
-      selectedItems.value.forEach((item) => emit('row-unselected', item))
+      selectedItems.value.forEach((item) => {
+        emit('row-unselected', item)
+      })
       selectedItems.value.clear()
       selectedItems.value.add(row)
       emit('row-selected', row)
     }
   } else {
-    selectedItems.value.forEach((item) => emit('row-unselected', item))
+    selectedItems.value.forEach((item) => {
+      emit('row-unselected', item)
+    })
     selectedItems.value.clear()
     selectedItems.value.add(row)
     emit('row-selected', row)

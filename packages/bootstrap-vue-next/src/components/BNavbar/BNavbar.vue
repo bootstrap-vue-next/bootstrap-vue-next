@@ -20,7 +20,6 @@ const props = withDefaults(
     sticky?: 'top' | 'bottom'
     tag?: string
     toggleable?: boolean | Breakpoint
-    dark?: Booleanish
     variant?: ColorVariant | null
     container?: 'fluid' | boolean
   }>(),
@@ -30,7 +29,6 @@ const props = withDefaults(
     fixed: undefined,
     print: false,
     tag: 'nav',
-    dark: false,
     toggleable: false,
     container: 'fluid',
   }
@@ -42,7 +40,6 @@ defineSlots<{
 }>()
 
 const printBoolean = useBooleanish(() => props.print)
-const darkBoolean = useBooleanish(() => props.dark)
 
 const computedRole = computed<undefined | 'navigation'>(() =>
   props.tag === 'nav' ? undefined : 'navigation'
@@ -56,14 +53,11 @@ const computedNavbarExpand = computed<undefined | string>(() =>
     : undefined
 )
 
-const containerClass = computed<'container' | 'container-fluid'>(() =>
-  props.container === true ? 'container' : `container-fluid`
-)
+const containerClass = computed(() => (props.container === true ? 'container' : `container-fluid`))
 
 const computedClasses = computed(() => ({
   'd-print': printBoolean.value,
   [`sticky-${props.sticky}`]: props.sticky !== undefined,
-  'navbar-dark': darkBoolean.value,
   [`bg-${props.variant}`]: props.variant !== null,
   [`fixed-${props.fixed}`]: props.fixed !== undefined,
   [`${computedNavbarExpand.value}`]: computedNavbarExpand.value !== undefined,
