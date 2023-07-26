@@ -51,14 +51,16 @@
         </template>
       </div>
     </BTransition>
-    <BOverlay
-      :variant="backdropVariant"
-      :show="showBackdrop"
-      :fixed="true"
-      no-wrap
-      :no-spinner="true"
-      @click="hide('backdrop')"
-    />
+    <slot name="backdrop">
+      <BOverlay
+        :variant="backdropVariant"
+        :show="showBackdrop"
+        fixed
+        no-wrap
+        no-spinner
+        @click="hide('backdrop')"
+      />
+    </slot>
   </Teleport>
 </template>
 
@@ -163,6 +165,8 @@ defineSlots<{
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  backdrop?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()

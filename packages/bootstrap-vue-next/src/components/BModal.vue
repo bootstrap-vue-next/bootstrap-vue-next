@@ -81,8 +81,16 @@
             </div>
           </div>
         </div>
-        <slot v-if="!hideBackdropBoolean" name="backdrop">
-          <div class="modal-backdrop fade show" @click="hide('backdrop')" />
+        <slot name="backdrop">
+          <BOverlay
+            :variant="computedBackdropVariant"
+            :show="modelValueBoolean"
+            no-spinner
+            fixed
+            no-wrap
+            blur="0px"
+            @click="hide('backdrop')"
+          />
         </slot>
       </div>
     </BTransition>
@@ -98,6 +106,7 @@ import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
+import BOverlay from './BOverlay/BOverlay.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -161,8 +170,10 @@ const props = withDefaults(
     teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
     bodyScrolling?: Booleanish
+    backdropVariant?: ColorVariant | null
   }>(),
   {
+    backdropVariant: undefined,
     bodyBgVariant: null,
     bodyClass: undefined,
     bodyTextVariant: null,
@@ -307,6 +318,14 @@ const lazyShowing = computed(
     lazyBoolean.value === false ||
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
+)
+
+const computedBackdropVariant = computed(() =>
+  props.backdropVariant !== undefined
+    ? props.backdropVariant
+    : hideBackdropBoolean.value
+    ? 'transparent'
+    : 'dark'
 )
 
 const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
