@@ -24,11 +24,10 @@
         :aria-labelledby="`${computedId}-offcanvas-label`"
         data-bs-backdrop="false"
         v-bind="$attrs"
-        @keyup.esc="hide('esc')"
       >
         <template v-if="lazyShowing">
           <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
-            <slot name="header" v-bind="{visible: modelValueBoolean, placement, hide}">
+            <slot name="header" :visible="modelValueBoolean" :placement="placement" :hide="hide">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
                 <slot name="title">
                   {{ title }}
@@ -46,27 +45,29 @@
             <slot />
           </div>
           <div v-if="hasFooterSlot" :class="footerClass">
-            <slot name="footer" v-bind="{visible: modelValueBoolean, placement, hide}" />
+            <slot name="footer" :visible="modelValueBoolean" :placement="placement" :hide="hide" />
           </div>
         </template>
       </div>
     </BTransition>
-    <BOverlay
-      :variant="backdropVariant"
-      :show="showBackdrop"
-      :fixed="true"
-      no-wrap
-      :no-spinner="true"
-      @click="hide('backdrop')"
-    />
+    <slot name="backdrop">
+      <BOverlay
+        :variant="backdropVariant"
+        :show="showBackdrop"
+        fixed
+        no-wrap
+        no-spinner
+        @click="hide('backdrop')"
+      />
+    </slot>
   </Teleport>
 </template>
 
 <script setup lang="ts">
 import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
-import {useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, ClassValue, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -103,9 +104,9 @@ const props = withDefaults(
     id?: string
     noFocus?: Booleanish
     backdropVariant?: ColorVariant | null
-    headerClass?: string
-    bodyClass?: string
-    footerClass?: string
+    headerClass?: ClassValue
+    bodyClass?: ClassValue
+    footerClass?: ClassValue
     teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
     // TODO responsive doesn't work
@@ -163,6 +164,8 @@ defineSlots<{
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  backdrop?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()
@@ -184,6 +187,14 @@ const computedId = useId(() => props.id, 'offcanvas')
 useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
 
 const element = ref<HTMLElement | null>(null)
+
+onKeyStroke(
+  'Escape',
+  () => {
+    hide('esc')
+  },
+  {target: element}
+)
 
 const {focused} = useFocus(element, {
   initialValue: modelValueBoolean.value && noFocusBoolean.value === false,

@@ -11,7 +11,12 @@
       :horizontal="horizontal"
       :visible="visible"
       :is-nav="isNav"
-      v-on="events"
+      @show="$emit('show', $event)"
+      @shown="emit('shown', $event)"
+      @hide="emit('hide', $event)"
+      @hidden="emit('hidden', $event)"
+      @hide-prevented="emit('hide-prevented')"
+      @show-prevented="emit('show-prevented')"
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
         <component :is="headerTag" :id="`${computedId}-heading`" class="accordion-header">
@@ -87,15 +92,6 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   title?: (props: Record<string, never>) => any
 }>()
-
-const events = {
-  'show': (e: BvTriggerableEvent) => emit('show', e),
-  'shown': (e: BvTriggerableEvent) => emit('shown', e),
-  'hide': (e: BvTriggerableEvent) => emit('hide', e),
-  'hidden': (e: BvTriggerableEvent) => emit('hidden', e),
-  'hide-prevented': () => emit('hide-prevented'),
-  'show-prevented': () => emit('show-prevented'),
-}
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 

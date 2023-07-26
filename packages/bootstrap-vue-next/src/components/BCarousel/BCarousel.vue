@@ -1,13 +1,5 @@
 <template>
-  <div
-    :id="computedId"
-    ref="element"
-    :class="computedClasses"
-    @keydown.left="onKeydown(prev)"
-    @keydown.right="onKeydown(next)"
-    @mouseenter.stop="onMouseEnter"
-    @mouseleave.stop="onMouseLeave"
-  >
+  <div :id="computedId" ref="element" class="carousel slide pointer-event" :class="computedClasses">
     <div v-if="indicatorsBoolean" class="carousel-indicators">
       <!-- :data-bs-target="`#${computedId}`" is required since the classes target elems with that attr -->
       <button
@@ -67,7 +59,14 @@ import {
 import {computed, provide, readonly, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
-import {useIntervalFn, useSwipe, useToNumber, useVModel} from '@vueuse/core'
+import {
+  onKeyStroke,
+  useElementHover,
+  useIntervalFn,
+  useSwipe,
+  useToNumber,
+  useVModel,
+} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
@@ -82,7 +81,7 @@ const props = withDefaults(
     modelValue?: number
     controls?: Booleanish
     indicators?: Booleanish
-    interval?: number
+    interval?: number | string
     noTouch?: Booleanish
     noWrap?: Booleanish
     controlsPrevText?: string
@@ -134,10 +133,8 @@ const controlsBoolean = useBooleanish(() => props.controls)
 const indicatorsBoolean = useBooleanish(() => props.indicators)
 const noTouchBoolean = useBooleanish(() => props.noTouch)
 const noWrapBoolean = useBooleanish(() => props.noWrap)
-const touchThresholdNumber = useToNumber(() => props.touchThreshold, {
-  nanToZero: true,
-  method: 'parseInt',
-})
+const touchThresholdNumber = useToNumber(() => props.touchThreshold)
+const intervalNumber = useToNumber(() => props.interval)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
@@ -145,6 +142,8 @@ const direction = ref(true)
 const relatedTarget = ref<HTMLElement | null>(null)
 const element = ref<HTMLElement | null>(null)
 const previousModelValue = ref(modelValue.value)
+
+const isHovering = useElementHover(element)
 
 const rideResolved = computed<boolean | 'carousel'>(() =>
   isBooleanish(props.ride) ? resolveBooleanish(props.ride) : props.ride
@@ -169,7 +168,7 @@ const {pause, resume} = useIntervalFn(
   () => {
     rideReverseBoolean.value ? prev() : next()
   },
-  () => props.interval,
+  intervalNumber,
   {immediate: rideResolved.value === 'carousel'}
 )
 
@@ -178,12 +177,7 @@ const isRiding = computed(
     (rideResolved.value === true && rideStarted.value === true) || rideResolved.value === 'carousel'
 )
 const slides = computed(() => getSlotElements(slots.default, 'BCarouselSlide'))
-const computedClasses = computed(() => [
-  'carousel',
-  'slide',
-  'pointer-event',
-  {'carousel-fade': fadeBoolean.value},
-])
+const computedClasses = computed(() => ({'carousel-fade': fadeBoolean.value}))
 // TODO a general idea of showing only slides that are in bounds
 // const localValue = computed(() =>
 //   props.modelValue >= slides.value.length
@@ -282,12 +276,35 @@ const onAfterLeave = () => {
   isTransitioning.value = false
 }
 
+onKeyStroke(
+  'ArrowLeft',
+  () => {
+    onKeydown(prev)
+  },
+  {target: element}
+)
+onKeyStroke(
+  'ArrowRight',
+  () => {
+    onKeydown(next)
+  },
+  {target: element}
+)
+
 watch(
   () => props.ride,
   () => {
     rideStarted.value = false
   }
 )
+
+watch(isHovering, (newValue) => {
+  if (newValue) {
+    onMouseEnter()
+    return
+  }
+  onMouseLeave()
+})
 
 defineExpose({pause, resume, prev, next})
 

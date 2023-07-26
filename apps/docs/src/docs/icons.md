@@ -117,14 +117,12 @@ Then to include an icon, follow the format `i-{collection}-{icon-name}` in your 
 <BCard class="bg-body-tertiary">
 
 ```vue-html
-<template>
-  <IBi0Circle />
-  <IBiActivity color="red" />
-  <!-- You can use any icon set, no need to worry about importing -->
-  <IMdiAccountBox />
-  <!-- fa -->
-  <IFaAngellist />
-</template>
+<IBi0Circle />
+<IBiActivity color="red" />
+<!-- You can use any icon set, no need to worry about importing -->
+<IMdiAccountBox />
+<!-- fa -->
+<IFaAngellist />
 ```
 
 </BCard>

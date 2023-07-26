@@ -1,5 +1,18 @@
 <template>
-  <BTableSimple v-bind="containerAttrs">
+  <BTableSimple
+    :bordered="bordered"
+    :borderless="borderless"
+    :border-variant="borderVariant"
+    :caption-top="captionTop"
+    :hover="hover"
+    :responsive="responsive"
+    :striped="striped"
+    :stacked="stacked"
+    :small="small"
+    :table-class="tableClasses"
+    :table-variant="variant"
+    :sticky-header="stickyHeader"
+  >
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
       <tr>
@@ -143,6 +156,7 @@ import {get, isObject, startCase, titleCase} from '../../utils'
 import type {
   Booleanish,
   Breakpoint,
+  ClassValue,
   ColorVariant,
   TableField,
   TableFieldObject,
@@ -152,6 +166,7 @@ import type {
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
+import {useToNumber} from '@vueuse/shared'
 
 const props = withDefaults(
   defineProps<{
@@ -161,7 +176,6 @@ const props = withDefaults(
     borderless?: Booleanish
     bordered?: Booleanish
     borderVariant?: ColorVariant | null
-    dark?: Booleanish
     fields?: TableField[]
     footClone?: Booleanish
     hover?: Booleanish
@@ -176,10 +190,10 @@ const props = withDefaults(
     showEmpty?: Booleanish
     emptyText?: string
     emptyFilteredText?: string
-    tableClasses?: Record<string, any>
-    fieldColumnClasses?: (field: TableFieldObject) => Record<string, any>[]
+    tableClass?: ClassValue
+    fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
     tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
-    virtualFields?: number
+    virtualFields?: number | string
   }>(),
   {
     variant: undefined,
@@ -189,7 +203,6 @@ const props = withDefaults(
     captionTop: false,
     borderless: false,
     bordered: false,
-    dark: false,
     fields: () => [],
     footClone: false,
     hover: false,
@@ -204,8 +217,8 @@ const props = withDefaults(
     emptyText: 'There are no records to show',
     emptyFilteredText: 'There are no records matching your request',
     virtualFields: 0,
-    tableClasses: undefined,
-    fieldColumnClasses: undefined,
+    tableClass: undefined,
+    fieldColumnClass: undefined,
     tbodyTrClass: undefined,
   }
 )
@@ -226,30 +239,17 @@ const emit = defineEmits<{
 const footCloneBoolean = useBooleanish(() => props.footClone)
 const labelStackedBoolean = useBooleanish(() => props.labelStacked)
 const showEmptyBoolean = useBooleanish(() => props.showEmpty)
+const virtualFieldsNumber = useToNumber(() => props.virtualFields)
 
-const tableClasses = computed(() => ({
-  [`align-${props.align}`]: props.align !== undefined,
-  ...props.tableClasses,
-}))
-
-const containerAttrs = computed(() => ({
-  bordered: props.bordered,
-  borderless: props.borderless,
-  borderVariant: props.borderVariant,
-  captionTop: props.captionTop,
-  dark: props.dark,
-  hover: props.hover,
-  responsive: props.responsive,
-  striped: props.striped,
-  stacked: props.stacked,
-  small: props.small,
-  tableClass: tableClasses.value,
-  tableVariant: props.variant,
-  stickyHeader: props.stickyHeader,
-}))
+const tableClasses = computed(() => [
+  props.tableClass,
+  {
+    [`align-${props.align}`]: props.align !== undefined,
+  },
+])
 
 const computedFields = computed(() => normaliseFields(props.fields, props.items))
-const computedFieldsTotal = computed(() => computedFields.value.length + props.virtualFields)
+const computedFieldsTotal = computed(() => computedFields.value.length + virtualFieldsNumber.value)
 
 const getFieldHeadLabel = (field: TableField) => {
   if (typeof field === 'string') return titleCase(field)
@@ -326,7 +326,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
     [`table-${field.variant}`]: field.variant !== null,
     'b-table-sticky-column': field.stickyColumn,
   },
-  ...(props.fieldColumnClasses ? props.fieldColumnClasses(field) : []),
+  ...(props.fieldColumnClass ? props.fieldColumnClass(field) : []),
 ]
 
 const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [

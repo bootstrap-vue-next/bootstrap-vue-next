@@ -8,9 +8,8 @@
 import {isLink, pick} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
-import type {Booleanish} from '../../types'
+import type {BLinkProps, Booleanish} from '../../types'
 import BLink from '../BLink/BLink.vue'
-import type {BLinkProps} from '../../types/BLinkProps'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -2,13 +2,25 @@
   <BCard :img-bottom="imgBottom">
     <template v-if="!noImgBoolean" #img>
       <slot name="img">
-        <BCardImg v-bind="imgAttrs" />
+        <BCardImg
+          :blank="!imgSrc ? true : false"
+          :blank-color="imgBlankColor"
+          :height="!imgSrc ? imgHeight : undefined"
+          :src="imgSrc"
+          :top="!imgBottom"
+          :bottom="imgBottom"
+        />
       </slot>
     </template>
 
     <template v-if="!noHeaderBoolean" #header>
       <slot name="header">
-        <BPlaceholder v-bind="headerAttrs" />
+        <BPlaceholder
+          :width="headerWidth"
+          :variant="headerVariant"
+          :animation="headerAnimation"
+          :size="headerSize"
+        />
       </slot>
     </template>
     <slot>
@@ -97,13 +109,6 @@ const noHeaderBoolean = useBooleanish(() => props.noHeader)
 const noFooterBoolean = useBooleanish(() => props.noFooter)
 const noImgBoolean = useBooleanish(() => props.noImg)
 
-const headerAttrs = computed(() => ({
-  width: props.headerWidth,
-  variant: props.headerVariant,
-  animation: props.headerAnimation,
-  size: props.headerSize,
-}))
-
 const footerAttrs = computed(() => ({
   width: props.footerWidth,
   animation: props.footerAnimation,
@@ -115,14 +120,5 @@ const defaultAttrs = computed(() => ({
   animation: props.animation,
   size: props.size,
   variant: props.variant,
-}))
-
-const imgAttrs = computed(() => ({
-  blank: !props.imgSrc ? true : false,
-  blankColor: props.imgBlankColor,
-  height: !props.imgSrc ? props.imgHeight : undefined,
-  src: props.imgSrc,
-  top: !props.imgBottom,
-  bottom: props.imgBottom,
 }))
 </script>

@@ -1,7 +1,11 @@
 <template>
   <slot
+    :id="computedId"
     name="header"
-    v-bind="{visible: modelValueBoolean, toggle: toggleFn, open, close, id: computedId}"
+    :visible="modelValueBoolean"
+    :toggle="toggleFn"
+    :open="open"
+    :close="close"
   />
   <component
     :is="tag"
@@ -12,11 +16,15 @@
     :is-nav="isNavBoolean"
     v-bind="$attrs"
   >
-    <slot v-bind="{visible: modelValueBoolean, toggle, open, close}" />
+    <slot :visible="modelValueBoolean" :toggle="toggle" :open="open" :close="close" />
   </component>
   <slot
+    :id="computedId"
     name="footer"
-    v-bind="{visible: modelValueBoolean, toggle: toggleFn, open, close, id: computedId}"
+    :visible="modelValueBoolean"
+    :toggle="toggleFn"
+    :open="open"
+    :close="close"
   />
 </template>
 

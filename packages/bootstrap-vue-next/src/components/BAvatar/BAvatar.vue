@@ -4,7 +4,9 @@
     class="b-avatar"
     :class="computedClasses"
     :style="computedStyle"
-    v-bind="computedAttrs"
+    v-bind="computedLinkProps"
+    :type="buttonBoolean && !computedLink ? props.buttonType : undefined"
+    :disabled="disabledBoolean || null"
     @click="clicked"
   >
     <span v-if="hasDefaultSlot" class="b-avatar-custom">
@@ -26,16 +28,21 @@
 <script setup lang="ts">
 import {avatarGroupInjectionKey, isEmptySlot, isLink, isNumeric, pick, toFloat} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, useSlots} from 'vue'
-import type {Booleanish, ButtonType, ColorVariant, Size, TextColorVariant} from '../../types'
+import type {
+  BLinkProps,
+  Booleanish,
+  ButtonType,
+  ColorVariant,
+  Size,
+  TextColorVariant,
+} from '../../types'
 import {useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
-import type {BLinkProps} from '../../types/BLinkProps'
 
 const props = withDefaults(
   defineProps<
     {
       alt?: string
-      ariaLabel?: string
       badge?: boolean | string
       badgeLeft?: Booleanish
       badgeOffset?: string
@@ -55,7 +62,6 @@ const props = withDefaults(
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
-    ariaLabel: undefined,
     badgeOffset: undefined,
     icon: undefined,
     size: undefined,
@@ -138,12 +144,8 @@ const computedVariant = computed<ColorVariant | null>(
 
 const computedRounded = computed<string | boolean>(() => parentData?.rounded.value ?? props.rounded)
 
-const computedAttrs = computed(() => ({
-  'type': buttonBoolean.value && !computedLink.value ? props.buttonType : undefined,
-  'aria-label': props.ariaLabel || null,
-  'disabled': disabledBoolean.value || null,
-  // Link props
-  ...(computedLink.value
+const computedLinkProps = computed(() =>
+  computedLink.value
     ? pick(props, [
         'active',
         'activeClass',
@@ -163,8 +165,8 @@ const computedAttrs = computed(() => ({
         'underlineOpacity',
         'underlineOpacityHover',
       ])
-    : {}),
-}))
+    : {}
+)
 
 const badgeClasses = computed(() => ({
   [`bg-${props.badgeVariant}`]: props.badgeVariant !== null,
@@ -249,7 +251,9 @@ const clicked = (e: MouseEvent): void => {
   if (!disabledBoolean.value && (computedLink.value || buttonBoolean.value)) emit('click', e)
 }
 
-const onImgError = (e: Event): void => emit('img-error', e)
+const onImgError = (e: Event) => {
+  emit('img-error', e)
+}
 </script>
 
 <script lang="ts">

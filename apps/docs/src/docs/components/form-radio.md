@@ -416,11 +416,9 @@ values are `sm` (small) and `lg` (large).
   <template #html>
 
 ```vue-html
-<template>
-  <BFormRadio name="radio-size" size="sm">Small</BFormRadio>
-  <BFormRadio name="radio-size">Default</BFormRadio>
-  <BFormRadio name="radio-size" size="lg">Large</BFormRadio>
-</template>
+<BFormRadio name="radio-size" size="sm">Small</BFormRadio>
+<BFormRadio name="radio-size">Default</BFormRadio>
+<BFormRadio name="radio-size" size="lg">Large</BFormRadio>
 ```
 
   </template>
@@ -572,12 +570,7 @@ by setting the `plain` prop.
   </div>
 
   <div>
-    <BFormRadioGroup
-      v-model="plainSelected"
-      :options="plainOptions"
-      name="plain-inline"
-      plain
-    />
+    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-inline" plain />
   </div>
 
   <div class="my-2">
@@ -585,12 +578,7 @@ by setting the `plain` prop.
   </div>
 
   <div>
-    <BFormRadioGroup
-      v-model="plainSelected"
-      :options="plainOptions"
-      name="plain-stacked"
-      plain
-    />
+    <BFormRadioGroup v-model="plainSelected" :options="plainOptions" name="plain-stacked" plain />
   </div>
 
   <div class="mt-3">

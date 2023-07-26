@@ -59,16 +59,6 @@ describe('table', () => {
     expect($tablesimple.props('captionTop')).toBe(false)
   })
 
-  it('tablesimple is given prop dark', async () => {
-    const wrapper = mount(BTable, {
-      props: {dark: true},
-    })
-    const $tablesimple = wrapper.getComponent(BTableSimple)
-    expect($tablesimple.props('dark')).toBe(true)
-    await wrapper.setProps({dark: false})
-    expect($tablesimple.props('dark')).toBe(false)
-  })
-
   it('tablesimple is given prop hover', async () => {
     const wrapper = mount(BTable, {
       props: {hover: true},
@@ -137,16 +127,6 @@ describe('table', () => {
     expect($tablesimple.props('responsive')).toBe(true)
     await wrapper.setProps({responsive: false})
     expect($tablesimple.props('responsive')).toBe(false)
-  })
-
-  it('tablesimple is given prop tableClass', async () => {
-    const wrapper = mount(BTable, {
-      props: {tableClass: true},
-    })
-    const $tablesimple = wrapper.getComponent(BTableSimple)
-    expect($tablesimple.props('tableClass')).toBe(true)
-    await wrapper.setProps({tableClass: false})
-    expect($tablesimple.props('tableClass')).toBe(false)
   })
 
   it('has child thead', () => {
@@ -487,21 +467,6 @@ describe('table', () => {
     })
     const $table = wrapper.get('table')
     expect($table.get('tbody tr td').text()).toBe('hossam')
-  })
-
-  it('has busy class & element when busy prop is true', () => {
-    const wrapper = mount(BTable, {
-      props: {
-        fields: fields.map((field) =>
-          typeof field === 'string' ? field : {...field, sortable: true}
-        ),
-        items,
-        busy: true,
-      },
-    })
-    const $table = wrapper.get('table')
-    expect($table.classes()).toContain('b-table-busy')
-    expect($table.find('tr.b-table-busy-slot').exists()).toBe(true)
   })
 
   it('has added tbody > tr classes given by tbodyTrClass prop ', () => {

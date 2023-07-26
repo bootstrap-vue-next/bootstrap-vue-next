@@ -34,5 +34,5 @@ const cardTypeClass = computed(() =>
   deckBoolean.value ? 'card-deck' : columnsBoolean.value ? 'card-columns' : 'card-group'
 )
 
-const computedClasses = computed(() => [cardTypeClass.value])
+const computedClasses = computed(() => cardTypeClass.value)
 </script>

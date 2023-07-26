@@ -2,8 +2,8 @@
   <li class="nav-item">
     <BLink
       class="nav-link"
-      :class="linkClasses"
-      v-bind="{...linkProps, ...linkAttrs}"
+      :class="linkClass"
+      v-bind="{...computedLinkProps, ...linkAttrs}"
       :active-class="activeClass ?? 'active'"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
@@ -18,7 +18,7 @@
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import {useBooleanish} from '../../composables'
-import type {BLinkProps} from '../../types/BLinkProps'
+import type {BLinkProps, ClassValue} from '../../types'
 import {pick} from '../../utils'
 
 defineSlots<{
@@ -29,12 +29,12 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      linkClasses?: string
+      linkClass?: ClassValue
       linkAttrs?: Record<string, unknown>
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
-    linkClasses: undefined,
+    linkClass: undefined,
     // Link props
     active: undefined,
     activeClass: 'router-link-active',
@@ -68,7 +68,7 @@ const emit = defineEmits<{
 
 const disabledBoolean = useBooleanish(() => props.disabled)
 
-const linkProps = computed(() =>
+const computedLinkProps = computed(() =>
   pick(props, [
     'active',
     'activeClass',

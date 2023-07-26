@@ -212,55 +212,6 @@ describe('modal', () => {
     expect($div2.classes()).not.toContain('modal-dialog-scrollable')
   })
 
-  it('does not have element with class modal-backdrop when hideBackdrop is true', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {hideBackdrop: true},
-    })
-    const $div = wrapper.find('.modal-backdrop')
-    expect($div.exists()).toBe(false)
-  })
-
-  it('has an element with class modal-backdrop by default', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-    })
-    const $div = wrapper.find('.modal-backdrop')
-    expect($div.exists()).toBe(true)
-  })
-
-  it('element with class modal-backdrop is tag DIV', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-    })
-    const $div = wrapper.get('.modal-backdrop')
-    expect($div.element.tagName).toBe('DIV')
-  })
-
-  it('element with class modal-backdrop has static class fade', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-    })
-    const $div = wrapper.get('.modal-backdrop')
-    expect($div.classes()).toContain('fade')
-  })
-
-  it('element with class modal-backdrop has static class show', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-    })
-    const $div = wrapper.get('.modal-backdrop')
-    expect($div.classes()).toContain('show')
-  })
-
-  it('element with class modal-backdrop text is empty', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-    })
-    const $div = wrapper.get('.modal-backdrop')
-    expect($div.text()).toBe('')
-  })
-
   it('second div has another div by default', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},

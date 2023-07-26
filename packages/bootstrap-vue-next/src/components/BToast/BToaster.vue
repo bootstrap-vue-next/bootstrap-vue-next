@@ -1,5 +1,5 @@
 <template>
-  <div :class="[positionClass]" class="b-toaster position-fixed p-3" style="z-index: 11">
+  <div :class="positionClass" class="b-toaster position-fixed p-3" style="z-index: 11">
     <BToast
       v-for="toast in instance?.toasts(position).value"
       :id="toast.options.id"

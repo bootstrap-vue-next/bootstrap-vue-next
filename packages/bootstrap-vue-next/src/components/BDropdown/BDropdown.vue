@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" class="btn-group" v-bind="$attrs">
+  <div :class="computedClasses" class="btn-group">
     <BButton
       :id="computedId"
       ref="splitButton"
@@ -8,9 +8,12 @@
       :class="buttonClasses"
       :disabled="splitDisabledBoolean || disabled"
       :type="splitButtonType"
-      v-bind="buttonAttr"
+      :aria-label="ariaLabel"
+      :aria-expanded="splitBoolean ? undefined : modelValueBoolean"
+      :aria-haspopup="splitBoolean ? undefined : 'menu'"
+      :href="splitBoolean ? splitHref : undefined"
+      :to="splitBoolean && splitTo ? splitTo : undefined"
       @click="onSplitClick"
-      @keydown.esc="modelValue = !modelValueBoolean"
     >
       <slot name="button-content">
         {{ text }}
@@ -65,17 +68,13 @@ import {
   type Strategy,
   useFloating,
 } from '@floating-ui/vue'
-import {onClickOutside, useToNumber, useVModel} from '@vueuse/core'
-import {computed, provide, ref, watch} from 'vue'
+import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
+import {computed, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {BvEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import type {RouteLocationRaw} from 'vue-router'
-
-defineOptions({
-  inheritAttrs: false,
-})
 
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
@@ -92,7 +91,6 @@ const props = withDefaults(
     toggleClass?: ClassValue
     autoClose?: boolean | 'inside' | 'outside'
     block?: Booleanish
-    dark?: Booleanish
     disabled?: Booleanish
     isNav?: Booleanish
     dropup?: Booleanish
@@ -134,7 +132,6 @@ const props = withDefaults(
     splitDisabled: undefined,
     autoClose: true,
     block: false,
-    dark: false,
     disabled: false,
     dropup: false,
     isNav: false,
@@ -185,7 +182,6 @@ const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
 const blockBoolean = useBooleanish(() => props.block)
-const darkBoolean = useBooleanish(() => props.dark)
 const dropupBoolean = useBooleanish(() => props.dropup)
 const dropendBoolean = useBooleanish(() => props.dropend)
 const isNavBoolean = useBooleanish(() => props.isNav)
@@ -202,11 +198,19 @@ const splitDisabledBoolean = useBooleanish(() => props.splitDisabled)
 const computedOffset = computed(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
-const offsetToNumber = useToNumber(computedOffset, {method: 'parseInt', nanToZero: true})
+const offsetToNumber = useToNumber(computedOffset)
 
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
 const splitButton = ref<HTMLElement | null>(null)
+
+onKeyStroke(
+  'Escape',
+  () => {
+    modelValue.value = !modelValueBoolean
+  },
+  {target: splitButton}
+)
 
 const referencePlacement = computed(() => (!splitBoolean.value ? splitButton.value : button.value))
 const floatingPlacement = computed(() =>
@@ -238,7 +242,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
 const {x, y, strategy, update} = useFloating(referencePlacement, floating, {
   placement: floatingPlacement,
   middleware: floatingMiddleware,
-  strategy: props.strategy,
+  strategy: toRef(props, 'strategy'),
   whileElementsMounted: autoUpdate,
 })
 
@@ -261,20 +265,7 @@ const buttonClasses = computed(() => [
   },
 ])
 
-const dropdownMenuClasses = computed(() => [
-  props.menuClass,
-  {
-    'dropdown-menu-dark': darkBoolean.value,
-  },
-])
-
-const buttonAttr = computed(() => ({
-  'aria-label': props.ariaLabel,
-  'aria-expanded': splitBoolean.value ? undefined : modelValueBoolean.value,
-  'aria-haspopup': splitBoolean.value ? undefined : 'menu',
-  'href': splitBoolean.value ? props.splitHref : undefined,
-  'to': splitBoolean.value && props.splitTo ? props.splitTo : undefined,
-}))
+const dropdownMenuClasses = computed(() => props.menuClass)
 
 const onButtonClick = () => {
   emit('toggle')

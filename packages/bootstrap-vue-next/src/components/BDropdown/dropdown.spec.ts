@@ -84,16 +84,6 @@ describe('dropdown', () => {
     expect($ul.classes()).toContain('foobar')
   })
 
-  it('child ul has class dropdown-menu-dark when prop dark', async () => {
-    const wrapper = mount(BDropdown, {
-      props: {dark: true},
-    })
-    const $ul = wrapper.get('ul')
-    expect($ul.classes()).toContain('dropdown-menu-dark')
-    await wrapper.setProps({dark: false})
-    expect($ul.classes()).not.toContain('dropdown-menu-dark')
-  })
-
   // TODO replace this with style pos items
   it.skip('child ul has class dropdown-menu-end when prop right', async () => {
     const wrapper = mount(BDropdown, {

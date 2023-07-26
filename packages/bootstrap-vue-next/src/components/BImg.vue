@@ -1,52 +1,38 @@
 <template>
-  <img :class="computedClasses" v-bind="computedAttrs" />
+  <img
+    :class="computedClasses"
+    :src="!blankBoolean ? props.src : computedBlankImgSrc"
+    :width="computedDimentions.width || undefined"
+    :height="computedDimentions.height || undefined"
+    :srcset="!blankBoolean ? computedSrcset : undefined"
+    :sizes="!blankBoolean ? computedSizes : undefined"
+    :loading="lazyBoolean ? 'lazy' : 'eager'"
+  />
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../types'
+import type {BImgProps} from '../types'
 import {useBooleanish} from '../composables'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    alt?: string
-    blank?: Booleanish
-    blankColor?: string
-    block?: Booleanish
-    center?: Booleanish
-    fluid?: Booleanish
-    lazy?: Booleanish
-    fluidGrow?: Booleanish
-    height?: number | string
-    start?: Booleanish
-    end?: Booleanish
-    rounded?: boolean | string
-    sizes?: string | string[]
-    src?: string
-    srcset?: string | string[]
-    thumbnail?: Booleanish
-    width?: number | string
-  }>(),
-  {
-    sizes: undefined,
-    src: undefined,
-    srcset: undefined,
-    width: undefined,
-    height: undefined,
-    alt: undefined,
-    blank: false,
-    lazy: false,
-    blankColor: 'transparent',
-    block: false,
-    center: false,
-    fluid: false,
-    fluidGrow: false,
-    end: false,
-    start: false,
-    rounded: false,
-    thumbnail: false,
-  }
-)
+const props = withDefaults(defineProps<BImgProps>(), {
+  sizes: undefined,
+  src: undefined,
+  srcset: undefined,
+  width: undefined,
+  height: undefined,
+  blank: false,
+  lazy: false,
+  blankColor: 'transparent',
+  block: false,
+  center: false,
+  fluid: false,
+  fluidGrow: false,
+  end: false,
+  start: false,
+  rounded: false,
+  thumbnail: false,
+})
 
 const BLANK_TEMPLATE =
   '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +
@@ -116,16 +102,6 @@ const computedDimentions = computed<{height: number | undefined; width: number |
 const computedBlankImgSrc = computed(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
-
-const computedAttrs = computed(() => ({
-  src: !blankBoolean.value ? props.src : computedBlankImgSrc.value,
-  alt: props.alt,
-  width: computedDimentions.value.width || undefined,
-  height: computedDimentions.value.height || undefined,
-  srcset: !blankBoolean.value ? computedSrcset.value : undefined,
-  sizes: !blankBoolean.value ? computedSizes.value : undefined,
-  loading: lazyBoolean.value ? 'lazy' : 'eager',
-}))
 
 const alignment = computed<'float-start' | 'float-end' | 'mx-auto' | undefined>(() =>
   startBoolean.value

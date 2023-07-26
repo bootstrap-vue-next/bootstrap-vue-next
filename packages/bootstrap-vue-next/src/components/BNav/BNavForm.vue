@@ -1,11 +1,18 @@
 <template>
-  <BForm v-bind="computedAttrs" class="d-flex" @submit.prevent="submitted">
+  <BForm
+    :id="id"
+    :floating="floating"
+    :role="role"
+    :novalidate="novalidate"
+    :validated="validated"
+    class="d-flex"
+    @submit.prevent="submitted"
+  >
     <slot />
   </BForm>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
 import type {Booleanish} from '../../types'
 import BForm from '../BForm/BForm.vue'
 
@@ -35,13 +42,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const computedAttrs = computed(() => ({
-  floating: props.floating,
-  role: props.role,
-  id: props.id,
-  novalidate: props.novalidate,
-  validated: props.validated,
-}))
-
-const submitted = (e: Event): void => emit('submit', e)
+const submitted = (e: Event) => {
+  emit('submit', e)
+}
 </script>

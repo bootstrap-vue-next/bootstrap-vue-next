@@ -51,10 +51,8 @@ when providing a value for the `to` prop (`vue-router` is required).
   <template #html>
 
 ```vue-html
-<div>
-  <BButton>I am a Button</BButton>
-  <BButton href="#">I am a Link</BButton>
-</div>
+<BButton>I am a Button</BButton>
+<BButton href="#">I am a Link</BButton>
 ```
 
   </template>
@@ -193,8 +191,8 @@ Create responsive stacks of full-width, “block buttons” like those in Bootst
   <template #html>
 
 ```vue-html
-  <BButton block variant="primary">Block Level Button</BButton>
-  <BButton block variant="primary">Block Level Button</BButton>
+<BButton block variant="primary">Block Level Button</BButton>
+<BButton block variant="primary">Block Level Button</BButton>
 ```
 
   </template>

@@ -1,6 +1,6 @@
 <template>
   <span ref="placeholder" />
-  <slot name="target" v-bind="{show, hide: hideFn, toggle, showState}" />
+  <slot name="target" :show="show" :hide="hideFn" :toggle="toggle" :show-state="showState" />
   <!-- TODO: fix this clunky solution when https://github.com/vuejs/core/issues/6152 is fixed -->
   <RenderComponentOrSkip :tag="'Teleport'" :to="container" :skip="!container">
     <div
@@ -79,7 +79,7 @@ import {
   resolveBootstrapPlacement,
 } from '../utils'
 import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
-import {onClickOutside, useMouseInElement} from '@vueuse/core'
+import {onClickOutside, useMouseInElement, useToNumber} from '@vueuse/core'
 import RenderComponentOrSkip from './RenderComponentOrSkip.vue'
 import {
   type ComponentPublicInstance,
@@ -89,12 +89,13 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
+  toRef,
   type VNode,
   watch,
   watchEffect,
 } from 'vue'
 import {useBooleanish, useId} from '../composables'
-import type {Booleanish, BPopoverPlacement, ColorVariant} from '../types'
+import type {Booleanish, BPopoverPlacement, ClassValue, ColorVariant} from '../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -130,8 +131,8 @@ const props = withDefaults(
     click?: Booleanish
     manual?: Booleanish
     variant?: ColorVariant | null
-    offset?: number | null
-    customClass?: string
+    offset?: number | string | null
+    customClass?: ClassValue
     placement?: BPopoverPlacement
     strategy?: Strategy
     floatingMiddleware?: Middleware[]
@@ -272,12 +273,13 @@ const sanitizedContent = computed(() =>
   props.content ? sanitizeHtml(props.content, DefaultAllowlist) : ''
 )
 const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
+const offsetNumber = useToNumber(computed(() => props.offset ?? NaN))
 
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
-  const off = typeof props.offset === 'number' ? props.offset : tooltipBoolean.value ? 0 : 10
+  const off = props.offset !== null ? offsetNumber.value : tooltipBoolean.value ? 0 : 10
   const arr: Middleware[] = [offsetMiddleware(off)]
   if (noFlipBoolean.value === false && !isAutoPlacement.value) {
     arr.push(flip())
@@ -309,7 +311,7 @@ const placementRef = computed(() =>
 const {x, y, strategy, middlewareData, placement, update} = useFloating(targetTrigger, element, {
   placement: placementRef,
   middleware: floatingMiddleware,
-  strategy: props.strategy,
+  strategy: toRef(props, 'strategy'),
   whileElementsMounted: (...args) => {
     const cleanup = autoUpdate(...args, {animationFrame: realtimeBoolean.value})
     // Important! Always return the cleanup function.

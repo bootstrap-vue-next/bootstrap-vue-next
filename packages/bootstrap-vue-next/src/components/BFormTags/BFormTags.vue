@@ -35,7 +35,11 @@
         <template v-for="(tag, index) in tags" :key="index">
           <slot
             name="tag"
-            v-bind="{tag, tagClass, tagVariant, tagPills: tagPillsBoolean, removeTag}"
+            :tag="tag"
+            :tag-class="tagClass"
+            :tag-variant="tagVariant"
+            :tag-pills="tagPillsBoolean"
+            :remove-tag="removeTag"
           >
             <BFormTag
               :key="tag"
@@ -70,7 +74,6 @@
               :aria-required="requiredBoolean || undefined"
               @input="onInput"
               @change="onChange"
-              @keydown="onKeydown"
               @focus="onFocus"
               @blur="onBlur"
             />
@@ -122,7 +125,7 @@ import type {
   InputType,
   Size,
 } from '../../types'
-import {useFocus, useVModel} from '@vueuse/core'
+import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
 
 const props = withDefaults(
@@ -139,7 +142,7 @@ const props = withDefaults(
     inputType?: InputType
     invalidTagText?: string
     form?: string
-    limit?: number
+    limit?: number | string
     limitTagsText?: string
     modelValue?: string[]
     name?: string
@@ -234,6 +237,7 @@ const removeOnDeleteBoolean = useBooleanish(() => props.removeOnDelete)
 const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
 const tagPillsBoolean = useBooleanish(() => props.tagPills)
+const limitNumber = useToNumber(computed(() => props.limit ?? NaN))
 
 const stateClass = useStateClass(stateBoolean)
 
@@ -266,7 +270,7 @@ const isDuplicate = computed<boolean>(() => tags.value.includes(inputValue.value
 const isInvalid = computed<boolean>(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = computed<boolean>(() => tags.value.length === props.limit)
+const isLimitReached = computed<boolean>(() => tags.value.length === limitNumber.value)
 
 const disableAddButton = computed<boolean>(() => !isInvalid.value && !isDuplicate.value)
 
@@ -299,7 +303,7 @@ const slotAttrs = computed(() => ({
   isInvalid: isInvalid.value,
   isLimitReached: isLimitReached.value,
   limitTagsText: props.limitTagsText,
-  limit: props.limit,
+  limit: limitNumber.value,
   noTagRemove: noTagRemoveBoolean.value,
   placeholder: props.placeholder,
   removeTag,
@@ -397,6 +401,8 @@ const onKeydown = (e: KeyboardEvent): void => {
   }
 }
 
+onKeyStroke(onKeydown, {target: input})
+
 const separator = computed(() => {
   if (!props.separator) {
     return
@@ -426,7 +432,7 @@ const addTag = (tag?: string): void => {
       continue
     }
 
-    if (props.limit && isLimitReached.value) {
+    if (limitNumber.value && isLimitReached.value) {
       break
     }
 

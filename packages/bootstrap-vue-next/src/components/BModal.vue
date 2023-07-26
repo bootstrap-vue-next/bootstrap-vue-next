@@ -19,7 +19,6 @@
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
-        @keyup.esc="hide('esc')"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="contentClass">
@@ -81,8 +80,16 @@
             </div>
           </div>
         </div>
-        <slot v-if="!hideBackdropBoolean" name="backdrop">
-          <div class="modal-backdrop fade show" @click="hide('backdrop')" />
+        <slot name="backdrop">
+          <BOverlay
+            :variant="computedBackdropVariant"
+            :show="modelValueBoolean"
+            no-spinner
+            fixed
+            no-wrap
+            blur="0px"
+            @click="hide('backdrop')"
+          />
         </slot>
       </div>
     </BTransition>
@@ -92,12 +99,13 @@
 <script setup lang="ts">
 import {computed, ref, type RendererElement, useSlots} from 'vue'
 import {useBooleanish, useId, useModalManager, useSafeScrollLock} from '../composables'
-import {useEventListener, useFocus, useVModel} from '@vueuse/core'
+import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
+import BOverlay from './BOverlay/BOverlay.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -154,15 +162,17 @@ const props = withDefaults(
     show?: Booleanish
     size?: Size | 'xl'
     title?: string
-    titleClass?: string
+    titleClass?: ClassValue
     titleSrOnly?: Booleanish
     titleTag?: string
     autoFocusButton?: 'ok' | 'cancel' | 'close'
     teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
     bodyScrolling?: Booleanish
+    backdropVariant?: ColorVariant | null
   }>(),
   {
+    backdropVariant: undefined,
     bodyBgVariant: null,
     bodyClass: undefined,
     bodyTextVariant: null,
@@ -280,6 +290,13 @@ const closeButton = ref<HTMLElement | null>(null)
 const isActive = ref(modelValueBoolean.value)
 const lazyLoadCompleted = ref(false)
 
+onKeyStroke(
+  'Escape',
+  () => {
+    hide('esc')
+  },
+  {target: element}
+)
 useSafeScrollLock(modelValueBoolean, bodyScrollingBoolean)
 const {focused: modalFocus} = useFocus(element, {
   initialValue: modelValueBoolean.value && props.autoFocusButton === undefined,
@@ -307,6 +324,14 @@ const lazyShowing = computed(
     lazyBoolean.value === false ||
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
+)
+
+const computedBackdropVariant = computed(() =>
+  props.backdropVariant !== undefined
+    ? props.backdropVariant
+    : hideBackdropBoolean.value
+    ? 'transparent'
+    : 'dark'
 )
 
 const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))

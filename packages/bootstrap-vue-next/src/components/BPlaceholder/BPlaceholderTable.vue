@@ -4,7 +4,12 @@
       <thead>
         <tr>
           <th v-for="(_, i) in computedHeaderColumnsLength" :key="i">
-            <BPlaceholder v-bind="headerAttrs" />
+            <BPlaceholder
+              :size="headerSize"
+              :variant="headerVariant"
+              :animation="headerAnimation"
+              :width="headerCellWidth"
+            />
           </th>
         </tr>
       </thead>
@@ -13,7 +18,12 @@
       <tbody>
         <tr v-for="(_, j) in rowsNumber" :key="j">
           <td v-for="(__, k) in columnsNumber" :key="k">
-            <BPlaceholder v-bind="placeholderAttrs" />
+            <BPlaceholder
+              :size="size"
+              :variant="variant"
+              :animation="animation"
+              :width="cellWidth"
+            />
           </td>
         </tr>
       </tbody>
@@ -22,7 +32,12 @@
       <tfoot>
         <tr>
           <th v-for="(_, l) in computedFooterColumnsLength" :key="l">
-            <BPlaceholder v-bind="footerAttrs" />
+            <BPlaceholder
+              :size="footerSize"
+              :variant="footerVariant"
+              :animation="footerAnimation"
+              :width="footerCellWidth"
+            />
           </th>
         </tr>
       </tfoot>
@@ -90,18 +105,12 @@ defineSlots<{
   tfoot?: (props: Record<string, never>) => any
 }>()
 
-const columnsToNumber = useToNumber(() => props.columns, {nanToZero: true, method: 'parseInt'})
-const rowsToNumber = useToNumber(() => props.rows, {nanToZero: true, method: 'parseInt'})
+const columnsToNumber = useToNumber(() => props.columns)
+const rowsToNumber = useToNumber(() => props.rows)
 const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
 const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
-const headerColumnsNumber = useToNumber(computedHeaderColumns, {
-  nanToZero: true,
-  method: 'parseInt',
-})
-const footerColumnsNumber = useToNumber(computedFooterColumns, {
-  nanToZero: true,
-  method: 'parseInt',
-})
+const headerColumnsNumber = useToNumber(computedHeaderColumns)
+const footerColumnsNumber = useToNumber(computedFooterColumns)
 
 const columnsNumber = computed<number>(() => columnsToNumber.value || 5)
 const rowsNumber = computed<number>(() => rowsToNumber.value || 3)
@@ -112,27 +121,6 @@ const computedHeaderColumnsLength = computed<number>(() =>
 const computedFooterColumnsLength = computed<number>(() =>
   props.footerColumns === undefined ? columnsNumber.value : footerColumnsNumber.value
 )
-
-const placeholderAttrs = computed(() => ({
-  size: props.size,
-  variant: props.variant,
-  animation: props.animation,
-  width: props.cellWidth,
-}))
-
-const headerAttrs = computed(() => ({
-  size: props.headerSize,
-  variant: props.headerVariant,
-  animation: props.headerAnimation,
-  width: props.headerCellWidth,
-}))
-
-const footerAttrs = computed(() => ({
-  size: props.footerSize,
-  variant: props.footerVariant,
-  animation: props.footerAnimation,
-  width: props.footerCellWidth,
-}))
 
 const hideHeaderBoolean = useBooleanish(() => props.hideHeader)
 const showFooterBoolean = useBooleanish(() => props.showFooter)

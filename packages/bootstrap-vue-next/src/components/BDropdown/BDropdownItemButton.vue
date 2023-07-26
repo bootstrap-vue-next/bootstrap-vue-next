@@ -1,6 +1,5 @@
 <template>
-  <li role="presentation" :class="$attrs.class">
-    <!-- Should click be click.prevent ? -->
+  <li role="presentation">
     <button
       role="menu"
       type="button"
@@ -27,7 +26,7 @@ const props = withDefaults(
   defineProps<{
     buttonClass?: ClassValue
     active?: Booleanish
-    activeClass?: string
+    activeClass?: ClassValue
     disabled?: Booleanish
     variant?: ColorVariant | null
   }>(),
@@ -61,5 +60,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const clicked = (e: MouseEvent): void => emit('click', e)
+const clicked = (e: MouseEvent) => {
+  emit('click', e)
+}
 </script>
