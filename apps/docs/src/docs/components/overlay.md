@@ -10,18 +10,18 @@
 
 <div class="lead mb-5">
 
-BootstrapVueNext's custom `b-overlay` component is used to _visually obscure_ a particular element or component and its content. It signals to the user of a state change within the element or component and can be used for creating loaders, warnings/alerts, prompts, and more.
+BootstrapVueNext's custom `BOverlay` component is used to _visually obscure_ a particular element or component and its content. It signals to the user of a state change within the element or component and can be used for creating loaders, warnings/alerts, prompts, and more.
 
 </div>
 
 ## Overview
 
-`<BOverlay>` can be used to obscure almost anything. [Example use cases](#use-case-examples) would
+`BOverlay` can be used to obscure almost anything. [Example use cases](#use-case-examples) would
 be forms, tables, delete confirmation dialogs, or anywhere you need to signal that the application
 is busy performing a background task, to signal that a certain component is unavailable, or to
 provide additional context to the end user.
 
-`<BOverlay>` can be used to overlay (wrap) an element or component (the default behaviour), or can
+`BOverlay` can be used to overlay (wrap) an element or component (the default behaviour), or can
 be placed as a descendant of a `position: relative` element
 ([non-wrapping mode](#non-wrapping-mode)).
 
@@ -216,11 +216,11 @@ prop. When a value is provided for `bg-color`, the `variant` prop value is ignor
 ### Fade transition
 
 By default, the overlay uses Bootstrap's fade transition when showing or hiding. You can disable the
-fade transition via adding the `no-fade` prop to `<BOverlay>`.
+fade transition via adding the `no-fade` prop to `BOverlay`.
 
 ### Default spinner styling
 
-The default overlay content is a [`<BSpinner>`](/docs/components/spinner) of type `'border'`. You
+The default overlay content is a [`BSpinner`](/docs/components/spinner) of type `'border'`. You
 can control the appearance of the spinner via the following props:
 
 - `spinner-type`: Currently supported values are `'border'` (the default) or `'grow'`
@@ -430,7 +430,7 @@ The following scope properties are available to the `overlay` slot:
 
 When placing interactive content in the overlay, you should focus the container of the custom
 content or one of the focusable controls in the overlay content for accessibility reasons. You can
-listen for the `<BOverlay>` `'shown'` event to know when the overlay content is available in the
+listen for the `BOverlay` `'shown'` event to know when the overlay content is available in the
 document.
 
 ### Overlay content centering
@@ -476,7 +476,7 @@ overlay slot content at the top right.
 
 ### Width
 
-`<BOverlay>` defaults to a width of `100%`. When wrapping an inline or inline-block element, you
+`BOverlay` defaults to a width of `100%`. When wrapping an inline or inline-block element, you
 will need to add the class `d-inline-block` (e.g. `<BOverlay class="d-inline-block">`).
 
 You can also use the width [utility classes](/docs/reference/utility-classes) or CSS styles to
@@ -484,7 +484,7 @@ control the width of the overlay's wrapping container element.
 
 ### Non-wrapping mode
 
-By default, `<BOverlay>` wraps the content of the default slot. In some cases you may want to
+By default, `BOverlay` wraps the content of the default slot. In some cases you may want to
 obscure a parent container. Use the `no-wrap` prop to disable rendering of the wrapping (and ignore
 the default slot). Note that this requires that the ancestor element that is to be obscured to have
 relative positioning (either via the utility class `'position-relative'`, or CSS style
@@ -537,10 +537,10 @@ const showNoWrapEx = ref(false)
 </HighlightCard>
 
 Note that some of Bootstrap v5's component styles have relative positioning defined (e.g. cards,
-cols, etc.). You may need to adjust the placement of `<BOverlay>` in your markup.
+cols, etc.). You may need to adjust the placement of `BOverlay` in your markup.
 
-For example, `<BCard>` has relative positioning, so you can place the `<BOverlay no-wrap>` as a
-descendant of `<BCard>`:
+For example, `BCard` has relative positioning, so you can place the `<BOverlay no-wrap>` as a
+descendant of `BCard`:
 
 <HighlightCard>
   <BCard header="Card header" footer="Card footer">
@@ -589,7 +589,7 @@ const showNoWrapEx2 = ref(false)
   </template>
 </HighlightCard>
 
-When in `no-wrap` mode, `<BOverlay>` will not set the `aria-busy` attribute on the obscured
+When in `no-wrap` mode, `BOverlay` will not set the `aria-busy` attribute on the obscured
 element. You may also want to use an `aria-live` region in your app that announces to screen reader
 users that the page is busy.
 
@@ -598,7 +598,7 @@ Refer to the [Accessibility section](#accessibility) below for additional detail
 #### Absolute vs fixed positioning for `no-wrap`
 
 In cases where you want to obscure the entire app or page, when using the `no-wrap` prop, you can
-switch to viewport fixed positioning via setting the prop `fixed` on `<BOverlay>`. Note that this
+switch to viewport fixed positioning via setting the prop `fixed` on `BOverlay`. Note that this
 does not disable scrolling of the page, and note that any interactive elements on the page will
 still be in the document tab sequence.
 
@@ -621,12 +621,12 @@ etc.) when the overlay is showing, otherwise the obscured elements will still be
 keyboard navigation (i.e. still in the document tab sequence).
 
 If you have any links in the obscured content, we recommend using the
-[`<BLink>` component](/docs/components/link), as it supports the `disabled` state, as native links
-(`<a href="...">`) and `<RouterLink>` components do not support the disabled state.
+[`BLink` component](/docs/components/link), as it supports the `disabled` state, as native links
+(`<a href="...">`) and `RouterLink` components do not support the disabled state.
 
 It is also recommended adding either the `aria-hidden="true"` or `aria-busy="true"` attribute to
 your obscured content when the overlay is visible. Just be careful not to add `aria-hidden="true"`
-to the wrapper that contains the `<BOverlay>` component (when using `no-wrap`), as that would hide
+to the wrapper that contains the `BOverlay` component (when using `no-wrap`), as that would hide
 any interactive content in the `overlay` slot for screen reader users.
 
 If you are placing interactive content in the `overlay` slot, you should focus the content once the
@@ -643,7 +643,7 @@ have been disabled and are _not_ in the document tab sequence.
 
 ## Use case examples
 
-Here are just a few examples of common use cases of `<BOverlay>`. In all cases, we disable any
+Here are just a few examples of common use cases of `BOverlay`. In all cases, we disable any
 interactive elements in the obscured area to prevent reachability via keyboard navigation (i.e.
 <kbd>Tab</kbd> key) or screen reader access.
 
@@ -889,12 +889,12 @@ const onFormOK = () => {
   </template>
 </HighlightCard>
 
-### Using in `<BModal>`
+### Using in `BModal`
 
 The modal body has `position: relative;` set, so when using `<BOverlay no-wrap ...>` in the modal
 body only the modal body will be obscured. If you wish to obscure the entire modal (including the
-header and footer), you will need to set the `<BModal>` prop `body-class` to `position-static`, and
-also set the `rounded` prop on `<BOverlay>`.
+header and footer), you will need to set the `BModal` prop `body-class` to `position-static`, and
+also set the `rounded` prop on `BOverlay`.
 
 <ComponentReference :data="data" />
 

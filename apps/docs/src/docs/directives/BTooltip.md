@@ -22,7 +22,7 @@
 A directive is composed by modifiers and a value, like the examples above.
 The anatomy of directive is: v-{name}.{modifier1}.{modifier2}.{etc.}={value}.
 
-So, here we are defining to use the directive "b-tooltip", with different optional modifiers, and an optional value.
+So, here we are defining to use the directive `b-tooltip`, with different optional modifiers, and an optional value.
 
 ## Triggers modifiers
 
@@ -34,7 +34,7 @@ We can define when we want to trigger a tooltip with the following modifiers.
 - manual
 - click
 
-If we don't define any modifier by default is enabled "hover" and "focus".
+If we do not define any modifier by default is enabled "hover" and "focus".
 
 ## Placement modifiers
 
@@ -45,7 +45,7 @@ We can define when we want to placement a tooltip with the following modifiers.
 - bottom
 - top
 
-If we don't define any modifier by default is enabled "top".
+If we do not define any modifier by default is enabled "top".
 
 ## Value
 
@@ -56,7 +56,7 @@ With a value we can use an object, a string, a function, or an element.
 
 ```ts
 /**
- * Default title value if title attribute isn't present.
+ * Default title value if title attribute is not present.
  *
  * If a function is given, it will be called with its this reference set
  * to the element that the popover is attached to.
@@ -93,7 +93,7 @@ interface ValueObject {
 
 ## Delay
 
-We can define a delay to display the tooltip, in that case we need to use the object value format, if not by default it's used 0.
+We can define a delay to display the tooltip, in that case we need to use the object value format, if not by default it is used 0.
 
 ## Pitfalls
 
@@ -109,7 +109,7 @@ When we are using a directive, we have two ways to define the title to use in th
 
 </BCard>
 
-- First example it's using the property from BCard "title", this property is going to render something like:
+- First example it is using the property from BCard "title", this property is going to render something like:
 
 <BCard class="bg-body-tertiary">
 
@@ -127,7 +127,7 @@ When we are using a directive, we have two ways to define the title to use in th
 
 Where our title is going to be attached to a child element, but the custom directive is attached to our parent div with class "card".
 
-So, it's not going to work, and we are going to see a warning in the developer's console.
+So, it is not going to work, and we are going to see a warning in the developer's console.
 
 <BCard class="bg-body-tertiary">
 
@@ -163,7 +163,7 @@ In that cases is working when the title is created in the root component, like t
 
 </BCard>
 
-In that case, the directive is detecting the title value, and it's going to be used correctly.
+In that case, the directive is detecting the title value, and it is going to be used correctly.
 
 <BCard class="bg-body-tertiary">
 

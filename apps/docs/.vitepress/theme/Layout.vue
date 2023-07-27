@@ -53,7 +53,7 @@
         <div class="border border-secondary ms-2 me-3" />
         <ClientOnly>
           <BNavItemDropdown toggle-class="px-0">
-            <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
+            <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
             <template #button-content>
               <component :is="currentIcon" height="1.1rem" :aria-label="`Toggle theme (${dark})`" />
             </template>
@@ -441,7 +441,9 @@ watch(
   // Navbar.
   > .navbar {
     color: var(--white);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 0.5rem 1rem rgba(0, 0, 0, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.15);
 
     .nav-link,
     .navbar-brand,
@@ -532,7 +534,9 @@ watch(
 
   // Sidebar.
   .offcanvas {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 0.5rem 1rem rgba(0, 0, 0, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.15);
     .list-group {
       padding: 0 0 1.5rem 0;
       font-size: 0.875em;

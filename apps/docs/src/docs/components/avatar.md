@@ -11,7 +11,7 @@
 <div class="lead mb-5">
 
 Avatars are a custom component, and are typically used to display a user profile as a
-picture, an icon, or short text. `<BAvatar>` provides several props for customizing its
+picture, an icon, or short text. `BAvatar` provides several props for customizing its
 appearance such as color variant and roundness, and optionally supports acting as a button, link
 or ~~[router link](/docs/reference/router-links)~~.
 
@@ -326,7 +326,7 @@ Prefer a square avatar? simply set the `square` prop to `true`.
 
 ### Rounding
 
-`<BAvatar>` renders with a circular border radius. You can change the rounding by setting the prop
+`BAvatar` renders with a circular border radius. You can change the rounding by setting the prop
 `rounded` to one of the values `true`, `'circle'`, `'sm'`, `'lg'`, `'top'`, `'left'`, `'right'`, or `'bottom'`.
 When set to `true` (or the empty string `''`), it uses the Bootstrap default of medium rounding.
 When set to `circle`, it uses a border radius of 50%, resulting in a circle.
@@ -368,7 +368,7 @@ When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 
 ### Alignment
 
-By default, `<BAvatar>` will be vertically centered with its adjoining content. In some cases you
+By default, `BAvatar` will be vertically centered with its adjoining content. In some cases you
 may want to alter the alignment, such as ensuring that a text-only avatar aligns its text with the
 adjoining text. Simply set a [vertical alignment utility](/docs/reference/utility-classes) class on
 the component, such as `<BAvatar class="align-baseline" ...>` or
@@ -385,7 +385,7 @@ Image avatars, when actionable, employ a basic scale transform on the image when
 ### Button
 
 Want to trigger the opening of a modal or trigger an action? Set the `button` prop to instruct
-`<BAvatar>` to render as a `<button>` element. When rendered as a button, the component will emit
+`BAvatar` to render as a `<button>` element. When rendered as a button, the component will emit
 the `click` event whenever clicked.
 
 <HighlightCard>
@@ -480,7 +480,7 @@ Fancy an avatar as a link or router link? Simply set either the `href` or ~~`to`
 **Note:**
 
 - The `button` prop takes precedence over the `href` and ~~`to`~~ props.
-- ~~For additional details on the `<RouterLink>` compatible props, please refer to the
+- ~~For additional details on the `RouterLink` compatible props, please refer to the
   [Router support reference section](/docs/reference/router-links).~~
 
 ## Badge avatars
@@ -589,7 +589,7 @@ inward, while negative values will move the badge outward.
 
 ## Avatar groups
 
-Group multiple avatars together by wrapping them in a `<BAvatarGroup>` component:
+Group multiple avatars together by wrapping them in a `BAvatarGroup` component:
 
 <HighlightCard>
   <BAvatarGroup size="60px">
@@ -620,14 +620,14 @@ Group multiple avatars together by wrapping them in a `<BAvatarGroup>` component
 
 **Notes:**
 
-- The `variant`, `square` and `rounded` props on `<BAvatarGroup>` will take precedence over the
+- The `variant`, `square` and `rounded` props on `BAvatarGroup` will take precedence over the
   respective props on individual avatars.
 
 ### Group size
 
-To size the avatars, use the prop `size` on `<BAvatarGroup>`. The `size` prop accepts the same
-type of values as the `size` prop on `<BAvatar>`. Note that the `size` prop will be ignored on
-individual avatars when they are placed inside a `<BAvatarGroup>`.
+To size the avatars, use the prop `size` on `BAvatarGroup`. The `size` prop accepts the same
+type of values as the `size` prop on `BAvatar`. Note that the `size` prop will be ignored on
+individual avatars when they are placed inside a `BAvatarGroup`.
 
 <HighlightCard>
   <BAvatarGroup size="5rem">
@@ -654,7 +654,7 @@ individual avatars when they are placed inside a `<BAvatarGroup>`.
 
 ### Group variant
 
-Use the `variant` prop to color all child avatars in the `<BAvatarGroup>`. Note that the `variant`
+Use the `variant` prop to color all child avatars in the `BAvatarGroup`. Note that the `variant`
 prop, when set, will override the the `variant` specified on individual avatars.
 
 <HighlightCard>
@@ -682,7 +682,7 @@ prop, when set, will override the the `variant` specified on individual avatars.
 
 ### Group rounding
 
-Similar to the `variant` prop, the `<BAvatarGroup>` props `square` and `rounded` take precedence
+Similar to the `variant` prop, the `BAvatarGroup` props `square` and `rounded` take precedence
 over the respective props on individual child avatars.
 
 <HighlightCard>
@@ -710,7 +710,7 @@ over the respective props on individual child avatars.
 
 ### Group overlap
 
-By default, child avatars inside a `<BAvatarGroup>` will overlap by a factor of `0.3` (relative to
+By default, child avatars inside a `BAvatarGroup` will overlap by a factor of `0.3` (relative to
 the size of the avatar). You can control the overlap amount by setting the `overlap` prop to a value
 between `0` and `1`, where `0` means no overlap and `1` means 100% overlap.
 
@@ -753,7 +753,7 @@ the `to` or `href` props when changing routes or changing URLs) for accessibilit
 
 ## Implementation notes
 
-Avatars are based upon `<BBadge>` and `<BButton>` components, and as such, rely upon Bootstrap's
+Avatars are based upon `BBadge` and `BButton` components, and as such, rely upon Bootstrap's
 `badge-*` and `btn-*` variant classes, as well as the `rounded-*`
 [utility classes](/docs/reference/utility-classes).
 

@@ -86,7 +86,7 @@ const dropdownShow = ref(false)
   </template>
 </HighlightCard>
 
-`<BNavItemDropdown>` has many props in common with `<BDropdown` so you can easily integrate custom options.
+`BNavItemDropdown` has many props in common with `<BDropdown` so you can easily integrate custom options.
 
 ## Styles
 
@@ -140,7 +140,7 @@ You can make nav item styles in various ways.
 
 ## Vertical Orientation
 
-By default `<BNav>` appear on a horizontal line. Stack your navigation by setting the vertical prop.
+By default `BNav` appear on a horizontal line. Stack your navigation by setting the vertical prop.
 
 <HighlightCard>
   <BNav vertical class="w-25">
@@ -165,7 +165,7 @@ By default `<BNav>` appear on a horizontal line. Stack your navigation by settin
 
 ## Nav Text
 
-Use the `<BNavText>` child component to place plain text content into the nav:
+Use the `BNavText` child component to place plain text content into the nav:
 
 <HighlightCard>
   <BNav>

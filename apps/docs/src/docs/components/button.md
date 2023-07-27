@@ -10,13 +10,13 @@
 
 <div class="lead mb-5">
 
-Use Bootstrap's custom `b-button` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more.
+Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more.
 
 </div>
 
 ## Overview
 
-BootstrapVueNext's `<BButton>` component generates either a `<button>` element, `<a>` element, or `<RouterLink>` component with the styling of a button.
+BootstrapVueNext's `BButton` component generates either a `<button>` element, `<a>` element, or `RouterLink` component with the styling of a button.
 
 <HighlightCard>
   <div class="d-flex gap-2">
@@ -39,8 +39,8 @@ BootstrapVueNext's `<BButton>` component generates either a `<button>` element, 
 
 ## Element type
 
-The `<BButton>` component generally renders a `<button>` element. However, you can also render an
-`<a>` element by providing an `href` prop value. You may also generate `vue-router` `<RouterLink>`
+The `BButton` component generally renders a `<button>` element. However, you can also render an
+`<a>` element by providing an `href` prop value. You may also generate `vue-router` `RouterLink`
 when providing a value for the `to` prop (`vue-router` is required).
 
 <HighlightCard>
@@ -90,7 +90,7 @@ Fancy larger or smaller buttons? Specify `lg` or `sm` via the `size` prop.
 
 Use the `variant` prop to generate the various Bootstrap contextual button variants.
 
-By default, `<BButton>` will render with the `secondary` variant.
+By default, `BButton` will render with the `secondary` variant.
 
 The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendered button.
 
@@ -128,7 +128,7 @@ The `variant` prop adds the Bootstrap v4.3 class `.btn-<variant>` on the rendere
 ### Outline color variants
 
 In need of a button, but not the hefty background colors they bring? Use the `outline-*` variants to
-remove all background images and colors on any `<BButton>`:
+remove all background images and colors on any `BButton`:
 
 `outline-primary`, `outline-secondary`, `outline-success`, `outline-danger`, `outline-warning`,
 `outline-info`, `outline-light` and `outline-dark`.
@@ -177,7 +177,7 @@ padding and size of a button.
 </HighlightCard>
 
 **Tip:** remove the hover underline from a link variant button by adding the Bootstrap v4.3 utility
-class `text-decoration-none` to `<BButton>`.
+class `text-decoration-none` to `BButton`.
 
 ## Block level buttons
 
@@ -198,7 +198,7 @@ Create responsive stacks of full-width, “block buttons” like those in Bootst
   </template>
 </HighlightCard>
 
-**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it's removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons).
+**Note:** Bootstrap 5 no long supports the `.btn-block` class, so it is removed. Use bootstrap 5's utility classes to get the same effect. [See](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons).
 
 ## Pill style
 
@@ -262,7 +262,7 @@ The `squared` prop adds the Bootstrap v5 utility class `.rounded-0` on the rende
 ## Disabled state
 
 Set the `disabled` prop to disable button default functionality. `disabled` also works with buttons
-rendered as `<a>` elements and `<RouterLink>` (i.e. with the `href` or `to` prop set).
+rendered as `<a>` elements and `RouterLink` (i.e. with the `href` or `to` prop set).
 
 <HighlightCard>
   <div class="d-flex gap-2">
@@ -355,17 +355,17 @@ const btnStates = computed(() => buttons.value.map((b) => b.state))
 </HighlightCard>
 
 If using toggle button style for a radio or checkbox style interface, it is best to use the built-in
-`button` style support of [`<BFormRadioGroup>`](/docs/components/form-radio) and
-[`<BFormCheckboxGroup>`](/docs/components/form-checkbox).
+`button` style support of [`BFormRadioGroup`](/docs/components/form-radio) and
+[`BFormCheckboxGroup`](/docs/components/form-checkbox).
 
 ## Router link support
 
 Refer to the [`Router support`](/docs/reference/router-links) reference docs for the various
-supported `<RouterLink>` related props.
+supported `RouterLink` related props.
 
 ## Accessibility
 
-When the `href` prop is set to `'#'`, `<BButton>` will render a link (`<a>`) element with attribute
+When the `href` prop is set to `'#'`, `BButton` will render a link (`<a>`) element with attribute
 `role="button"` set and appropriate keydown listeners (<kbd>Enter</kbd> and <kbd>Space</kbd>) so
 that the link acts like a native HTML `<button>` for screen reader and keyboard-only users. When
 disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.

@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Documentation and examples for opting images (via `<BImg>` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.
+Documentation and examples for opting images (via `BImg` component) into responsive behavior (so they never become larger than their parent elements), optionally adding lightweight styles to them — all via props.
 
 </div>
 
@@ -193,9 +193,9 @@ Note: `left` takes precedence over `right` which takes precedence over `center`.
 
 ## Blank (or solid color) images
 
-`<BImg>` provides built-in support for generating blank images (transparent by default) of any
+`BImg` provides built-in support for generating blank images (transparent by default) of any
 width and height, by setting the `blank` prop, and specifying `width` and `height` values (in
-pixels). You can apply any of the other `<BImg>` props to change the style/behavior of the
+pixels). You can apply any of the other `BImg` props to change the style/behavior of the
 generated image.
 
 Use the `blank-color` prop to set the blank image color. The `blank-color`prop can accept any CSS
@@ -258,7 +258,7 @@ const propsTr = {
 
 ## `srcset` support
 
-`<BImg>` supports the
+`BImg` supports the
 [`srcset` and `sizes` attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset)
 on images. The props accept either a string value, or an array of strings (the array of strings will
 be converted into a single string separated by commas).

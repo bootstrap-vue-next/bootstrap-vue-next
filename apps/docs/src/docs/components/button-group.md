@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Group a series of buttons together on a single line or stack them in a vertical column with `<BButtonGroup>`.
+Group a series of buttons together on a single line or stack them in a vertical column with `BButtonGroup`.
 
 </div>
 
@@ -135,7 +135,7 @@ prop. Split button dropdowns are not supported here.
 
 ## Dropdown menu support
 
-Add [`<BDropdown>`](/docs/components/dropdown) menus directly inside your `<BButtonGroup>`. Note
+Add [`BDropdown`](/docs/components/dropdown) menus directly inside your `BButtonGroup`. Note
 that split dropdown menus are not supported when prop `vertical` is set.
 
 <HighlightCard>
@@ -179,7 +179,7 @@ that split dropdown menus are not supported when prop `vertical` is set.
 
 ## See also
 
-Also check out the [`<BButtonToolbar>`](/docs/components/button-toolbar) component for generating
+Also check out the [`BButtonToolbar`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
 
 <ComponentReference :data="data" />

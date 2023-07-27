@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-The component `<BNavbar>` is a wrapper that positions branding, navigation, and other elements into a concise header. It's easily extensible and thanks to the `<BCollapse>` component, it can easily integrate responsive behaviors.
+The component `BNavbar` is a wrapper that positions branding, navigation, and other elements into a concise header. It is easily extensible and thanks to the `BCollapse` component, it can easily integrate responsive behaviors.
 
 </div>
 
@@ -87,7 +87,7 @@ The component `<BNavbar>` is a wrapper that positions branding, navigation, and 
 
 ## Color schemes
 
-`<BNavbar>` supports the standard Bootstrap v4 available background color variants. Set the variant prop to one of the following values to change the background color: primary, success, info, warning, danger, dark, or light.
+`BNavbar` supports the standard Bootstrap v4 available background color variants. Set the variant prop to one of the following values to change the background color: primary, success, info, warning, danger, dark, or light.
 
 Control the text color by setting `type` prop to `light` for use with light background color variants, or dark for dark background color variants.
 
@@ -104,18 +104,18 @@ Notes:
 
 Navbars come with built-in support for a handful of sub-components. Choose from the following as needed:
 
-- `<BNavbarBrand>` for your company, product, or project name.
-- `<BNavbarToggle>` for use with the `<BCollapse is-nav>` component.
+- `BNavbarBrand` for your company, product, or project name.
+- `BNavbarToggle` for use with the `<BCollapse is-nav>` component.
 - `<BCollapse is-nav>` for grouping and hiding navbar contents by a parent breakpoint.
-- `<BNavbarNav>` for a full-height and lightweight navigation (including support for dropdowns). The following sub-components inside `<BNavbarNav>` are supported:
-  -- `<BNavItem>` for link (and router-link) action items
-  -- `<BNavItemDropdown>` for nav dropdown menus
-  -- `<BNavText>` for adding vertically centered strings of text.
-  -- `<BNavForm>` for any form controls and actions.
+- `BNavbarNav` for a full-height and lightweight navigation (including support for dropdowns). The following sub-components inside `BNavbarNav` are supported:
+  -- `BNavItem` for link (and router-link) action items
+  -- `BNavItemDropdown` for nav dropdown menus
+  -- `BNavText` for adding vertically centered strings of text.
+  -- `BNavForm` for any form controls and actions.
 
-## `<BNavbarBrand>`
+## `BNavbarBrand`
 
-The `<BNavbarBrand>` generates a link if href is provided, or a `<RouterLink>` if to is provided. If neither is given it renders as a `<div>` tag. You can override the tag type by setting the tag prop to the element you would like rendered:
+The `BNavbarBrand` generates a link if href is provided, or a `RouterLink` if to is provided. If neither is given it renders as a `<div>` tag. You can override the tag type by setting the tag prop to the element you would like rendered:
 
 <HighlightCard>
   <BNavbar variant="faded" type="light">
@@ -149,7 +149,7 @@ The `<BNavbarBrand>` generates a link if href is provided, or a `<RouterLink>` i
   </template>
 </HighlightCard>
 
-Adding images to the `<BNavbarBrand>` will likely always require custom styles or utilities to properly size. Here are some examples to demonstrate:
+Adding images to the `BNavbarBrand` will likely always require custom styles or utilities to properly size. Here are some examples to demonstrate:
 
 <HighlightCard>
   <BNavbar variant="faded" type="light">
@@ -193,28 +193,28 @@ Adding images to the `<BNavbarBrand>` will likely always require custom styles o
   </template>
 </HighlightCard>
 
-## `<BNavbarNav>`
+## `BNavbarNav`
 
-Navbar navigation links build on the `<BNavbarNav>` parent component and requires the use of `<BCollapse is-nav>` and `<-toggle>` toggler for proper responsive styling. Navigation in navbars will also grow to occupy as much horizontal space as possible to keep your navbar contents securely aligned.
+Navbar navigation links build on the `BNavbarNav` parent component and requires the use of `<BCollapse is-nav>` and `<-toggle>` toggler for proper responsive styling. Navigation in navbars will also grow to occupy as much horizontal space as possible to keep your navbar contents securely aligned.
 
-`<BNavbarNav>` supports the following child components:
+`BNavbarNav` supports the following child components:
 
-- `<BNavItem>` for link (and router-link) action items
-- `<BNavText>` for adding vertically centered strings of text.
-- `<BNavItemDropdown>` for navbar dropdown menus
-- `<BNavForm>` for adding simple forms to the navbar.
+- `BNavItem` for link (and router-link) action items
+- `BNavText` for adding vertically centered strings of text.
+- `BNavItemDropdown` for navbar dropdown menus
+- `BNavForm` for adding simple forms to the navbar.
 
-## `<BNavItem>`
+## `BNavItem`
 
-`<BNavItem>` is the primary link (and `<RouterLink>`) component. Providing a to prop value will generate a `<RouterLink>` while providing an href prop value will generate a standard link.
+`BNavItem` is the primary link (and `RouterLink`) component. Providing a to prop value will generate a `RouterLink` while providing an href prop value will generate a standard link.
 
-Set the `<BNavItem>` active prop will highlight the item as being the active page, Disable a `<BNavItem>` by setting the prop disabled to true.
+Set the `BNavItem` active prop will highlight the item as being the active page, Disable a `BNavItem` by setting the prop disabled to true.
 
-Handle click events by specifying a handler for the @click event on `<BNavItem>`.
+Handle click events by specifying a handler for the @click event on `BNavItem`.
 
-## `<BNavText>`
+## `BNavText`
 
-Navbars may contain bits of text with the help of `<BNavText>`. This component adjusts vertical alignment and horizontal spacing for strings of text.
+Navbars may contain bits of text with the help of `BNavText`. This component adjusts vertical alignment and horizontal spacing for strings of text.
 
 <HighlightCard>
   <BNavbar toggleable="sm" type="light" variant="light">
@@ -245,9 +245,9 @@ Navbars may contain bits of text with the help of `<BNavText>`. This component a
   </template>
 </HighlightCard>
 
-## `<BNavItemDropdown>`
+## `BNavItemDropdown`
 
-For `<BNavItemDropdown>` usage, see the `<BDropdown>` docs. Note split dropdowns are not supported in `<BNavbar>` and `<BNavbarNav>`.
+For `BNavItemDropdown` usage, see the `BDropdown` docs. Note split dropdowns are not supported in `BNavbar` and `BNavbarNav`.
 
 <HighlightCard>
   <BNavbar type="dark" variant="dark">
@@ -291,9 +291,9 @@ For `<BNavItemDropdown>` usage, see the `<BDropdown>` docs. Note split dropdowns
   </template>
 </HighlightCard>
 
-## `<BNavForm>`
+## `BNavForm`
 
-Use `<BNavForm>` to place inline form controls into your navbar
+Use `BNavForm` to place inline form controls into your navbar
 
 <HighlightCard>
   <BNavbar type="light" variant="light">
@@ -341,27 +341,27 @@ Input Groups work as well:
   </template>
 </HighlightCard>
 
-## `<BNavbarToggle>` and `<BCollapse is-nav>`
+## `BNavbarToggle` and `<BCollapse is-nav>`
 
-Navbars are not responsive by default, but you can easily modify them to change that. Responsive behavior depends on our `<BCollapse>` component.
+Navbars are not responsive by default, but you can easily modify them to change that. Responsive behavior depends on our `BCollapse` component.
 
-Wrap `<BNavbarNav>` components in a `<BCollapse is-nav>` (remember to set the is-nav prop!) to specify content that will collapse based on a particular breakpoint. Assign a document unique id value on the `<BCollapse>`.
+Wrap `BNavbarNav` components in a `<BCollapse is-nav>` (remember to set the is-nav prop!) to specify content that will collapse based on a particular breakpoint. Assign a document unique id value on the `BCollapse`.
 
-Use the `<BNavbarToggle>` component to control the collapse component, and set the target prop of `<BNavbarToggle>` to the id of `<BCollapse>`.
+Use the `BNavbarToggle` component to control the collapse component, and set the target prop of `BNavbarToggle` to the id of `BCollapse`.
 
-Set the toggleable prop on `<BNavbar>` to the desired breakpoint you would like content to automatically expand at. Possible toggleable values are sm, md, lg and xl. Setting toggleable to true (or an empty string) will set the navbar to be always collapsed, while setting it to false (the default) will disable collapsing (always expanded).
+Set the toggleable prop on `BNavbar` to the desired breakpoint you would like content to automatically expand at. Possible toggleable values are sm, md, lg and xl. Setting toggleable to true (or an empty string) will set the navbar to be always collapsed, while setting it to false (the default) will disable collapsing (always expanded).
 
-`<BNavbarToggle>` components are left-aligned by default, but should they follow a sibling element like `<BNavbarBrand>`, they'll automatically be aligned to the far right. Reversing your markup will reverse the placement of the toggler.
+`BNavbarToggle` components are left-aligned by default, but should they follow a sibling element like `BNavbarBrand`, they'll automatically be aligned to the far right. Reversing your markup will reverse the placement of the toggler.
 
-See the first example on this page for reference, and also refer to `<BCollapse>` for details on the collapse component.
+See the first example on this page for reference, and also refer to `BCollapse` for details on the collapse component.
 
-Besides being used to control a collapse, the `<BNavbarToggle>` can also be used to toggle visibility of the `<BSidebar>` component. Just specify the ID of the `<BSidebar>` via the target prop.
+Besides being used to control a collapse, the `BNavbarToggle` can also be used to toggle visibility of the `BSidebar` component. Just specify the ID of the `BSidebar` via the target prop.
 
-Internally, `<BNavbarToggle>` uses the v-b-toggle directive.
+Internally, `BNavbarToggle` uses the v-b-toggle directive.
 
 ### Custom navbar toggle
 
-`<BNavbarToggle>` renders the default Bootstrap v4 hamburger (which is a background SVG image). You can supply your own content (such as an icon) via the optionally scoped default slot. The default slot scope contains the property expanded, which will be true when the collapse is expanded, or false when the collapse is collapsed.
+`BNavbarToggle` renders the default Bootstrap v4 hamburger (which is a background SVG image). You can supply your own content (such as an icon) via the optionally scoped default slot. The default slot scope contains the property expanded, which will be true when the collapse is expanded, or false when the collapse is collapsed.
 
 Note that the expanded scope property only works when supplying the target prop as a string, and not an array.
 
@@ -414,10 +414,10 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 
 ## See also
 
-- `<BCollapse>` component
-- `<BSidebar>` component
+- `BCollapse` component
+- `BSidebar` component
 - v-b-toggle directive
-- `<BNav>` documentation for additional components and sub-component aliases
+- `BNav` documentation for additional components and sub-component aliases
   Refer to the Router support reference page for router-link specific props.
 
 <ComponentReference :data="data" />

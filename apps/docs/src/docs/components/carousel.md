@@ -145,7 +145,7 @@ Related: [Autoplay Manipulation](#autoplay-manipulation),
   </template>
 </HighlightCard>
 
-When the `ride` prop is set to `true`, rather than `carousel`, the Carousel won't automatically start to cycle on page load. Instead, it will only start after the first user interaction.
+When the `ride` prop is set to `true`, rather than `carousel`, the Carousel will not automatically start to cycle on page load. Instead, it will only start after the first user interaction.
 
 <HighlightCard>
   <BCarousel controls indicators ride="true">

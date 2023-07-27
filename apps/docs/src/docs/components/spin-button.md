@@ -16,7 +16,7 @@ The Form SpinButton allows the user to adjusting a numeric range with finite con
 
 ## Overview
 
-The component `<BFormSpinButton>` is
+The component `BFormSpinButton` is
 [WAI-ARIA compliant](https://www.w3.org/TR/wai-aria-practices-1.2/#spinbutton), allowing for
 [keyboard control](#accessibility), and supports both horizontal (default) and vertical layout.
 

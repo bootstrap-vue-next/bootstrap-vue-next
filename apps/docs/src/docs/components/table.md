@@ -10,17 +10,17 @@
 
 <div class="lead mb-5">
 
-For displaying tabular data, `<BTable>` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components `<BTableLite>` and `<BTableSimple>`.
+For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components `BTableLite` and `BTableSimple`.
 
 </div>
 
 ## Simple tables
 
-The `<BTableSimple>` component gives the user complete control over the rendering of the table content, while providing basic Bootstrap v4 table styling. `<BTableSimple>` is a wrapper component around the `<table>` element. Inside the component, via the default slot, you can use any or all of the BootstrapVue table helper components: `<BThead>`, `<BTfoot>`, `<BTbody>`, `<BTr>`, `<BTh>`, `<BTd>`, and the HTML5 elements `<caption>`, `<colgroup>` and `<col>`. Contrary to the component's name, one can create simple or complex table layouts with `<BTableSimple>`.
+The `BTableSimple` component gives the user complete control over the rendering of the table content, while providing basic Bootstrap v4 table styling. `BTableSimple` is a wrapper component around the `<table>` element. Inside the component, via the default slot, you can use any or all of the BootstrapVue table helper components: `BThead`, `BTfoot`, `BTbody`, `BTr`, `BTh`, `BTd`, and the HTML5 elements `<caption>`, `<colgroup>` and `<col>`. Contrary to the component's name, one can create simple or complex table layouts with `BTableSimple`.
 
-`<BTableSimple>` provides basic styling options via props: striped, bordered, borderless, outlined, small, hover, dark, fixed, responsive and sticky-header. Note that stacked mode is available but requires some additional markup to generate the cell headings, as described in the Simple tables and stacked mode section below. Sticky columns are also supported, but also require a bit of additional markup to specify which columns are to be sticky. See below for more information on using sticky columns.
+`BTableSimple` provides basic styling options via props: striped, bordered, borderless, outlined, small, hover, dark, fixed, responsive and sticky-header. Note that stacked mode is available but requires some additional markup to generate the cell headings, as described in the Simple tables and stacked mode section below. Sticky columns are also supported, but also require a bit of additional markup to specify which columns are to be sticky. See below for more information on using sticky columns.
 
-Since b-table-simple is just a wrapper component, of which you will need to render content inside, it does not provide any of the advanced features of `<BTable>` (i.e. row events, head events, sorting, pagination, filtering, foot-clone, items, fields, etc.).
+Since b-table-simple is just a wrapper component, of which you will need to render content inside, it does not provide any of the advanced features of `BTable` (i.e. row events, head events, sorting, pagination, filtering, foot-clone, items, fields, etc.).
 
 <HighlightCard>
   <BTableSimple hover small caption-top responsive>
@@ -189,11 +189,11 @@ Since b-table-simple is just a wrapper component, of which you will need to rend
 
 When in responsive or sticky-header mode, the `<table>` element is wrapped inside a `<div>` element. If you need to apply additional classes to the `<table>` element, use the table-classes prop.
 
-Any additional attributes given to `<BTableSimple>` will always be applied to the `<table>` element.
+Any additional attributes given to `BTableSimple` will always be applied to the `<table>` element.
 
 ## Simple tables and stacked mode
 
-A bit of additional markup is required on your `<BTableSimple>` body cells when the table is in stacked mode. Specifically, BootstrapVue uses a special data attribute to create the cell's heading, of which you can supply to `<BTd>` or `<BTh>` via the stacked-heading prop. Only plain strings are supported (not HTML markup), as we use the pseudo element ::before and css content property.
+A bit of additional markup is required on your `BTableSimple` body cells when the table is in stacked mode. Specifically, BootstrapVue uses a special data attribute to create the cell's heading, of which you can supply to `BTd` or `BTh` via the stacked-heading prop. Only plain strings are supported (not HTML markup), as we use the pseudo element ::before and css content property.
 
 Here is the same table as above, set to be always stacked, which has the extra markup to handle stacked mode (specifically for generating the cell headings):
 
@@ -362,13 +362,13 @@ Here is the same table as above, set to be always stacked, which has the extra m
   </template>
 </HighlightCard>
 
-Like `<BTable>` and `<BTableLite>`, table headers (`<thead>`) and footers (`<tfoot>`) are visually hidden when the table is visually stacked. If you need a header or footer, you can do so by creating an extra `<BTr>` inside of the `<BTbody>` component (or in a second `<BTbody>` component), and set a role of columnheader on the child `<BTh>` cells, and use Bootstrap v4 responsive display utility classes to hide the extra row (or `<BTbody>`) above a certain breakpoint when the table is no longer visually stacked (the breakpoint should match the stacked table breakpoint you have set), i.e. `<BTr class="d-md-none">` would hide the row on medium and wider screens, while `<BTbody class="d-md-none">` would hide the row group on medium and wider screens.
+Like `BTable` and `BTableLite`, table headers (`<thead>`) and footers (`<tfoot>`) are visually hidden when the table is visually stacked. If you need a header or footer, you can do so by creating an extra `BTr` inside of the `BTbody` component (or in a second `BTbody` component), and set a role of columnheader on the child `BTh` cells, and use Bootstrap v4 responsive display utility classes to hide the extra row (or `BTbody`) above a certain breakpoint when the table is no longer visually stacked (the breakpoint should match the stacked table breakpoint you have set), i.e. `<BTr class="d-md-none">` would hide the row on medium and wider screens, while `<BTbody class="d-md-none">` would hide the row group on medium and wider screens.
 
-Note: stacked mode with `<BTableSimple>` requires that you use the BootstrapVue table helper components. Use of the regular `<tbody>`, `<tr>`, `<td>` and `<th>` element tags will not work as expected, nor will they automatically apply any of the required accessibility attributes.
+Note: stacked mode with `BTableSimple` requires that you use the BootstrapVue table helper components. Use of the regular `<tbody>`, `<tr>`, `<td>` and `<th>` element tags will not work as expected, nor will they automatically apply any of the required accessibility attributes.
 
 ## Simple tables and sticky columns
 
-Sticky columns are supported with `<BTableSimple>`, but you will need to set the sticky-column prop on each table cell (in the thead, tbody, and tfoot row groups) in the column that is to be sticky. For example:
+Sticky columns are supported with `BTableSimple`, but you will need to set the sticky-column prop on each table cell (in the thead, tbody, and tfoot row groups) in the column that is to be sticky. For example:
 
 <HighlightCard>
   <BTableSimple responsive>
@@ -451,7 +451,7 @@ Sticky columns are supported with `<BTableSimple>`, but you will need to set the
   </template>
 </HighlightCard>
 
-As with `<BTable>` and `<BTableLite>`, sticky columns are not supported when the stacked prop is set on `<BTableSimple>`.
+As with `BTable` and `BTableLite`, sticky columns are not supported when the stacked prop is set on `BTableSimple`.
 
 <ComponentReference :data="data" />
 

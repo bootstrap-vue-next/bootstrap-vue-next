@@ -128,8 +128,8 @@ const exManualSelected = ref(null)
   </template>
 </HighlightCard>
 
-Feel free to mix the `options` prop with `<BFormSelectOption>` and
-`<BFormSelectOptionGroup>`. Manually placed options and option groups will appear _below_ the
+Feel free to mix the `options` prop with `BFormSelectOption` and
+`BFormSelectOptionGroup`. Manually placed options and option groups will appear _below_ the
 options generated via the `options` prop. To place manual options and option groups _above_ the
 options specified by the `options` prop, use the named slot `first`.
 
@@ -363,7 +363,7 @@ const exFieldNamesSelected = ref('A')
 ### Option notes
 
 If the initial value of your `v-model` expression does not match any of the options, the
-`<BFormSelect>` component (which is a native HTML5 `<select>` under the hood) will render in an
+`BFormSelect` component (which is a native HTML5 `<select>` under the hood) will render in an
 _unselected_ state. On iOS this will cause the user not being able to select the first item because
 iOS does not fire a change event in this case. It is therefore recommended providing a disabled
 option with an empty value as your first option.
@@ -384,7 +384,7 @@ By default, Bootstrap v5's custom select styling is applied.
 
 ### Value in single mode
 
-In non `multiple` mode, `<BFormSelect>` returns the single `value` of the currently selected
+In non `multiple` mode, `BFormSelect` returns the single `value` of the currently selected
 option.
 
 <HighlightCard>
@@ -466,7 +466,7 @@ default is to let the browser use its default (typically 4).
 
 ### Value in multiple mode
 
-In `multiple` mode, `<BFormSelect>` always returns an array of option values. You **must** provide
+In `multiple` mode, `BFormSelect` always returns an array of option values. You **must** provide
 an array reference as your `v-model` when in `multiple` mode.
 
 <HighlightCard>
@@ -516,13 +516,13 @@ const exMultiSelected = ref(['b'])
 Set the form-control text size using the `size` prop to `sm` or `lg` for small or large
 respectively.
 
-By default, `<BFormSelect>` will occupy the full width of the container that it appears in. To
+By default, `BFormSelect` will occupy the full width of the container that it appears in. To
 control the select width, place the input inside standard Bootstrap grid column.
 
 ## Autofocus
 
-When the `autofocus` prop is set on `<BFormSelect>`, the select will be auto-focused when it is
-inserted (i.e. **mounted**) into the document or re-activated when inside a Vue `<KeepAlive>`
+When the `autofocus` prop is set on `BFormSelect`, the select will be auto-focused when it is
+inserted (i.e. **mounted**) into the document or re-activated when inside a Vue `KeepAlive`
 component. Note that this prop **does not** set the `autofocus` attribute on the select, nor can it
 tell when the select becomes visible.
 
@@ -532,13 +532,13 @@ Bootstrap includes validation styles for `valid` and `invalid` states on most fo
 
 Generally speaking, you'll want to use a particular state for specific types of feedback:
 
-- `false` (denotes invalid state) is great for when there's a blocking or required field. A user
+- `false` (denotes invalid state) is great for when there is a blocking or required field. A user
   must fill in this field properly to submit the form
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout
   a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
-To apply one of the contextual state icons on `<BFormSelect>`, set the `state` prop to `false`
+To apply one of the contextual state icons on `BFormSelect`, set the `state` prop to `false`
 (for invalid), `true` (for valid), or `null` (no validation state).
 
 ### Conveying contextual validation state to assistive technologies and colorblind users
@@ -549,13 +549,13 @@ screen readers - or to colorblind users.
 
 Ensure that an alternative indication of state is also provided. For instance, you could include a
 hint about state in the form control's `<label>` text itself, or by providing an additional help
-text block (via `<BFormGroup>` or `<BForm*Feedback>`). Specifically for assistive technologies,
+text block (via `BFormGroup` or `<BForm*Feedback>`). Specifically for assistive technologies,
 invalid form controls can also be assigned an `aria-invalid="true"` attribute (see below).
 
 ### ARIA `aria-invalid` attribute
 
-When `<BFormSelect>` has an invalid contextual state (i.e. state = `false`) you may also want to
-set the `<BFormSelect>` prop `aria-invalid` to `true`.
+When `BFormSelect` has an invalid contextual state (i.e. state = `false`) you may also want to
+set the `BFormSelect` prop `aria-invalid` to `true`.
 
 Supported `invalid` values are:
 
