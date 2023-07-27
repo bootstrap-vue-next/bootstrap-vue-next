@@ -21,21 +21,19 @@
     :router-tag="isBLink ? routerTag : null"
     @click="clicked"
   >
-    <div
-      v-if="loadingBoolean"
-      class="btn-loading"
-      :class="{'mode-fill': loadingMode === 'fill', 'mode-inline': loadingMode === 'inline'}"
-    >
+    <template v-if="loadingBoolean">
       <slot name="loading">
-        <BSpinner class="btn-spinner" :small="size !== 'lg'" />
+        <template v-if="!loadingFillBoolean">
+          {{ loadingText }}
+        </template>
+        <slot name="loading-spinner">
+          <BSpinner :small="size !== 'lg'" :label="loadingFillBoolean ? loadingText : undefined" />
+        </slot>
       </slot>
-    </div>
-    <div
-      class="btn-content"
-      :class="{'btn-loading-fill': loadingBoolean && loadingMode === 'fill'}"
-    >
+    </template>
+    <template v-else>
       <slot />
-    </div>
+    </template>
   </component>
 </template>
 
@@ -50,9 +48,11 @@ import {useVModel} from '@vueuse/core'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  'default'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loading?: (props: Record<string, never>) => any
+  'loading'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'loading-spinner'?: (props: Record<string, never>) => any
 }>()
 
 const props = withDefaults(
@@ -66,8 +66,9 @@ const props = withDefaults(
       type?: ButtonType
       variant?: ButtonVariant | null
       loading?: Booleanish
-      loadingMode?: 'fill' | 'inline'
+      loadingFill?: Booleanish
       block?: Booleanish
+      loadingText?: string
     } & Omit<BLinkProps, 'variant'>
   >(),
   {
@@ -80,8 +81,9 @@ const props = withDefaults(
     type: 'button',
     variant: 'secondary',
     loading: false,
-    loadingMode: 'inline',
+    loadingFill: false,
     block: false,
+    loadingText: 'Loading...',
     // Link props
     activeClass: 'router-link-active',
     append: false,
@@ -122,6 +124,7 @@ const pillBoolean = useBooleanish(() => props.pill)
 const pressedBoolean = useBooleanish(() => props.pressed)
 const squaredBoolean = useBooleanish(() => props.squared)
 const loadingBoolean = useBooleanish(() => props.loading)
+const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
 const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
 const isButton = computed<boolean>(
