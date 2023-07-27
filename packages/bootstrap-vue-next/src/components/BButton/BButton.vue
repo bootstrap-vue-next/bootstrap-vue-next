@@ -3,13 +3,35 @@
     :is="computedTag"
     class="btn"
     :class="computedClasses"
-    v-bind="computedAttrs"
+    :aria-disabled="nonStandardTag ? disabledBoolean : null"
+    :aria-pressed="isToggle ? pressedBoolean : null"
+    :autocomplete="isToggle ? 'off' : null"
+    :disabled="isButton ? disabledBoolean : null"
+    :href="props.href"
+    :rel="computedLink ? props.rel : null"
+    :role="nonStandardTag || computedLink ? 'button' : null"
+    :target="computedLink ? props.target : null"
+    :type="isButton ? props.type : null"
+    :to="!isButton ? props.to : null"
+    :append="computedLink ? props.append : null"
+    :active-class="isBLink ? activeClass : null"
+    :event="isBLink ? event : null"
+    :replace="isBLink ? replace : null"
+    :router-component-name="isBLink ? routerComponentName : null"
+    :router-tag="isBLink ? routerTag : null"
     @click="clicked"
   >
-    <slot v-if="loadingBoolean" name="loading">
-      <BSpinner :small="size !== 'lg'" />
-    </slot>
-    <template v-if="(loadingBoolean && !fillBoolean) || !loadingBoolean">
+    <template v-if="loadingBoolean">
+      <slot name="loading">
+        <template v-if="!loadingFillBoolean">
+          {{ loadingText }}
+        </template>
+        <slot name="loading-spinner">
+          <BSpinner :small="size !== 'lg'" :label="loadingFillBoolean ? loadingText : undefined" />
+        </slot>
+      </slot>
+    </template>
+    <template v-else>
       <slot />
     </template>
   </component>
@@ -19,17 +41,18 @@
 import {computed} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBooleanish} from '../../composables'
-import type {Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
+import type {BLinkProps, Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
 import {isLink} from '../../utils'
 import BLink from '../BLink/BLink.vue'
 import {useVModel} from '@vueuse/core'
-import type {BLinkProps} from '../../types/BLinkProps'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  'default'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loading?: (props: Record<string, never>) => any
+  'loading'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'loading-spinner'?: (props: Record<string, never>) => any
 }>()
 
 const props = withDefaults(
@@ -45,6 +68,7 @@ const props = withDefaults(
       loading?: Booleanish
       loadingFill?: Booleanish
       block?: Booleanish
+      loadingText?: string
     } & Omit<BLinkProps, 'variant'>
   >(),
   {
@@ -59,6 +83,7 @@ const props = withDefaults(
     loading: false,
     loadingFill: false,
     block: false,
+    loadingText: 'Loading...',
     // Link props
     activeClass: 'router-link-active',
     append: false,
@@ -99,7 +124,7 @@ const pillBoolean = useBooleanish(() => props.pill)
 const pressedBoolean = useBooleanish(() => props.pressed)
 const squaredBoolean = useBooleanish(() => props.squared)
 const loadingBoolean = useBooleanish(() => props.loading)
-const fillBoolean = useBooleanish(() => props.loadingFill)
+const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
 const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
 const isButton = computed<boolean>(
@@ -120,25 +145,6 @@ const computedClasses = computed(() => [
     'disabled': disabledBoolean.value,
   },
 ])
-
-const computedAttrs = computed(() => ({
-  'aria-disabled': nonStandardTag.value ? disabledBoolean.value : null,
-  'aria-pressed': isToggle.value ? pressedBoolean.value : null,
-  'autocomplete': isToggle.value ? 'off' : null,
-  'disabled': isButton.value ? disabledBoolean.value : null,
-  'href': props.href,
-  'rel': computedLink.value ? props.rel : null,
-  'role': nonStandardTag.value || computedLink.value ? 'button' : null,
-  'target': computedLink.value ? props.target : null,
-  'type': isButton.value ? props.type : null,
-  'to': !isButton.value ? props.to : null,
-  'append': computedLink.value ? props.append : null,
-  'activeClass': isBLink.value ? props.activeClass : null,
-  'event': isBLink.value ? props.event : null,
-  'replace': isBLink.value ? props.replace : null,
-  'routerComponentName': isBLink.value ? props.routerComponentName : null,
-  'routerTag': isBLink.value ? props.routerTag : null,
-}))
 
 const computedTag = computed<string | typeof BLink>(() =>
   isBLink.value ? BLink : props.href ? 'a' : props.tag
