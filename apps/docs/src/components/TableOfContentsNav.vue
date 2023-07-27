@@ -4,6 +4,7 @@
       <strong class="bd-links-heading"> <GearIcon aria-hidden /> General </strong>
       <BListGroupItem v-for="link in headerLinks" :key="link.label">
         <BLink
+          :to="link.route"
           :active="routerRoute.path === `${link.route}.html`"
           class="px-2 ms-2 rounded"
           active-class="bg-primary text-light"
