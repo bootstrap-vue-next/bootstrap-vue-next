@@ -38,8 +38,8 @@
         </BNav>
       </BNavbarNav>
     </BCollapse>
-    <div class="d-flex gap-2 flex-wrap">
-      <BNav class="d-flex gap-4">
+    <div class="d-flex gap-2 flex-wrap socials">
+      <BNav class="d-flex">
         <BNavItem
           v-for="link in headerExternalLinks"
           :href="link.url"
@@ -50,12 +50,12 @@
         >
           <component :is="link.icon()" height="1.1rem" aria-hidden />
         </BNavItem>
-        <div class="border border-secondary"></div>
+        <div class="border border-secondary ms-2 me-3" />
         <ClientOnly>
-          <BNavItemDropdown toggle-class="py-1 px-0">
+          <BNavItemDropdown toggle-class="px-0">
             <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
             <template #button-content>
-              <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
+              <component :is="currentIcon" height="1.1rem" :aria-label="`Toggle theme (${dark})`" />
             </template>
             <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
               <component :is="map[el]" /> {{ el }}
@@ -63,12 +63,14 @@
           </BNavItemDropdown>
         </ClientOnly>
       </BNav>
-      <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
-        On this page
-        <ChevronRight aria-hidden />
-      </BNavbarToggle>
     </div>
   </BNavbar>
+  <div class="py-4 px-3 text-end" v-if="!isLargeScreen">
+    <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
+      On this page
+      <ChevronRight aria-hidden />
+    </BNavbarToggle>
+  </div>
   <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
       <ClientOnly>
@@ -439,7 +441,9 @@ watch(
   // Navbar.
   > .navbar {
     color: var(--white);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 0.5rem 1rem rgba(0, 0, 0, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.15);
 
     .nav-link,
     .navbar-brand,
@@ -447,10 +451,16 @@ watch(
       color: var(--white);
     }
 
-    .otp-menu-toggle {
-      border: none;
-      font-size: small;
+    .socials {
+      .nav-link {
+        padding: 0 0.5rem;
+      }
     }
+  }
+
+  .otp-menu-toggle {
+    border: none;
+    font-size: small;
   }
 
   [class^='language-'] {
@@ -524,6 +534,9 @@ watch(
 
   // Sidebar.
   .offcanvas {
+    box-shadow:
+      0 0.5rem 1rem rgba(0, 0, 0, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.15);
     .list-group {
       padding: 0 0 1.5rem 0;
       font-size: 0.875em;
@@ -668,6 +681,12 @@ watch(
           padding-left: 1rem;
         }
       }
+    }
+  }
+
+  .offcanvas.offcanvas-end {
+    @media (max-width: 991px) {
+      max-width: 15rem;
     }
   }
 }
