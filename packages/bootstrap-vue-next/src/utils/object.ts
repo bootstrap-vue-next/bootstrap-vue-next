@@ -4,7 +4,7 @@
  */
 export const omit = <
   A extends Record<PropertyKey, unknown>,
-  const B extends ReadonlyArray<PropertyKey>
+  const B extends ReadonlyArray<PropertyKey>,
 >(
   objToPluck: A,
   keysToPluck: B | (keyof A)[]
@@ -19,15 +19,18 @@ export const omit = <
  */
 export const pick = <
   A extends Record<PropertyKey, unknown>,
-  const B extends ReadonlyArray<PropertyKey>
+  const B extends ReadonlyArray<PropertyKey>,
 >(
   objToPluck: A,
   keysToPluck: B | (keyof A)[]
 ): Pick<A, B[number]> =>
-  [...keysToPluck].reduce((memo, prop) => {
-    memo[prop] = objToPluck[prop]
-    return memo
-  }, {} as Record<PropertyKey, unknown>) as Pick<A, B[number]>
+  [...keysToPluck].reduce(
+    (memo, prop) => {
+      memo[prop] = objToPluck[prop]
+      return memo
+    },
+    {} as Record<PropertyKey, unknown>
+  ) as Pick<A, B[number]>
 
 /**
  * Dynamically get a nested value from an array or
