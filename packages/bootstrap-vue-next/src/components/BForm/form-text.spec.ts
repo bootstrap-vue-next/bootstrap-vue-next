@@ -32,7 +32,7 @@ describe('form-text', () => {
     })
     expect(wrapper.classes()).toContain('text-danger')
     await wrapper.setProps({textVariant: undefined})
-    expect(wrapper.classes()).toContain('text-muted')
+    expect(wrapper.classes()).toContain('text-body-secondary')
   })
 
   it('has attr id when prop id', async () => {

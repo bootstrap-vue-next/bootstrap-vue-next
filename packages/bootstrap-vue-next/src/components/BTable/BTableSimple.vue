@@ -21,6 +21,7 @@ const props = withDefaults(
     borderless?: Booleanish
     borderVariant?: ColorVariant | null
     captionTop?: Booleanish
+    dark?: Booleanish
     hover?: Booleanish
     responsive?: boolean | Breakpoint
     stacked?: boolean | Breakpoint
@@ -37,6 +38,7 @@ const props = withDefaults(
     bordered: false,
     borderless: false,
     captionTop: false,
+    dark: false,
     hover: false,
     responsive: false,
     stacked: false,
@@ -54,6 +56,7 @@ defineSlots<{
 const captionTopBoolean = useBooleanish(() => props.captionTop)
 const borderlessBoolean = useBooleanish(() => props.borderless)
 const borderedBoolean = useBooleanish(() => props.bordered)
+const darkBoolean = useBooleanish(() => props.dark)
 const hoverBoolean = useBooleanish(() => props.hover)
 const smallBoolean = useBooleanish(() => props.small)
 const stripedBoolean = useBooleanish(() => props.striped)
@@ -68,6 +71,7 @@ const computedClasses = computed(() => [
     'table-borderless': borderlessBoolean.value,
     [`border-${props.borderVariant}`]: props.borderVariant !== null,
     'caption-top': captionTopBoolean.value,
+    'table-dark': darkBoolean.value,
     'table-hover': hoverBoolean.value,
     'b-table-stacked': typeof props.stacked === 'boolean' && props.stacked,
     [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',

@@ -150,7 +150,7 @@ const props = withDefaults(
     noBody: false,
     overlay: false,
     subtitleTag: 'h6',
-    subtitleTextVariant: 'muted',
+    subtitleTextVariant: 'body-secondary',
     tag: 'div',
     titleTag: 'h4',
   }

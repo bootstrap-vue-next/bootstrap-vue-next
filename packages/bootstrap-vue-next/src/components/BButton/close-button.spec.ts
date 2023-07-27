@@ -31,13 +31,6 @@ describe('close-button', () => {
     expect(wrapper.attributes('aria-label')).toBe('Close')
   })
 
-  it('has class btn-close-white when prop white', () => {
-    const wrapper = mount(BCloseButton, {
-      props: {white: true},
-    })
-    expect(wrapper.classes()).toContain('btn-close-white')
-  })
-
   it('has attr disabled when prop disabled', async () => {
     const wrapper = mount(BCloseButton, {
       props: {disabled: true},

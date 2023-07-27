@@ -18,7 +18,7 @@ const props = withDefaults(
   }>(),
   {
     tag: 'h6',
-    textVariant: 'muted',
+    textVariant: 'body-secondary',
     text: undefined,
   }
 )

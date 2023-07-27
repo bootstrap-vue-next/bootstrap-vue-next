@@ -881,7 +881,7 @@ When using card groups with footers, their content will automatically line up.
         This content is a little bit longer.
       </BCardText>
       <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
       </template>
     </BCard>
     <BCard title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
@@ -889,7 +889,7 @@ When using card groups with footers, their content will automatically line up.
         This card has supporting text below as a natural lead-in to additional content.
       </BCardText>
       <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
       </template>
     </BCard>
     <BCard title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
@@ -898,7 +898,7 @@ When using card groups with footers, their content will automatically line up.
         This card has even longer content than the first to show that equal height action.
       </BCardText>
       <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
       </template>
     </BCard>
   </BCardGroup>
@@ -912,7 +912,7 @@ When using card groups with footers, their content will automatically line up.
       This content is a little bit longer.
     </BCardText>
     <template #footer>
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-body-secondary">Last updated 3 mins ago</small>
     </template>
   </BCard>
 
@@ -921,7 +921,7 @@ When using card groups with footers, their content will automatically line up.
       This card has supporting text below as a natural lead-in to additional content.
     </BCardText>
     <template #footer>
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-body-secondary">Last updated 3 mins ago</small>
     </template>
   </BCard>
 
@@ -931,7 +931,7 @@ When using card groups with footers, their content will automatically line up.
       This card has even longer content than the first to show that equal height action.
     </BCardText>
     <template #footer>
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-body-secondary">Last updated 3 mins ago</small>
     </template>
   </BCard>
 </BCardGroup>
@@ -954,7 +954,7 @@ automatically line up.
         This content is a little bit longer.
       </BCardText>
       <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
       </template>
     </BCard>
     <BCard title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
@@ -962,7 +962,7 @@ automatically line up.
         This card has supporting text below as a natural lead-in to additional content.
       </BCardText>
       <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
       </template>
     </BCard>
     <BCard title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
@@ -971,7 +971,7 @@ automatically line up.
         This card has even longer content than the first to show that equal height action.
       </BCardText>
       <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
       </template>
     </BCard>
   </BCardGroup>
@@ -985,7 +985,7 @@ automatically line up.
       This content is a little bit longer.
     </BCardText>
     <template #footer>
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-body-secondary">Last updated 3 mins ago</small>
     </template>
   </BCard>
 
@@ -994,7 +994,7 @@ automatically line up.
       This card has supporting text below as a natural lead-in to additional content.
     </BCardText>
     <template #footer>
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-body-secondary">Last updated 3 mins ago</small>
     </template>
   </BCard>
 
@@ -1004,7 +1004,7 @@ automatically line up.
       This card has even longer content than the first to show that equal height action.
     </BCardText>
     <template #footer>
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-body-secondary">Last updated 3 mins ago</small>
     </template>
   </BCard>
 </BCardGroup>
@@ -1047,7 +1047,7 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
       <BCardText>
         This card has supporting text below as a natural lead-in to additional content.
       </BCardText>
-      <BCardText class="small text-muted">Last updated 3 mins ago</BCardText>
+      <BCardText class="small text-body-secondary">Last updated 3 mins ago</BCardText>
     </BCard>
     <BCard bg-variant="primary" text-variant="white">
       <blockquote class="card-blockquote">
@@ -1062,7 +1062,7 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
       <BCardText>
         This card has supporting text below as a natural lead-in to additional content.
       </BCardText>
-      <BCardText class="small text-muted">Last updated 3 mins ago</BCardText>
+      <BCardText class="small text-body-secondary">Last updated 3 mins ago</BCardText>
     </BCard>
     <BCard img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay />
     <BCard img-src="https://picsum.photos/400/200/?image=41" img-alt="Image" img-top>
@@ -1071,7 +1071,7 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
         This card has even longer content than the first.
       </BCardText>
       <template #footer>
-        <small class="text-muted">Footer Text</small>
+        <small class="text-body-secondary">Footer Text</small>
       </template>
     </BCard>
   </BCardGroup>
@@ -1104,7 +1104,7 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
     <BCardText>
       This card has supporting text below as a natural lead-in to additional content.
     </BCardText>
-    <BCardText class="small text-muted">Last updated 3 mins ago</BCardText>
+    <BCardText class="small text-body-secondary">Last updated 3 mins ago</BCardText>
   </BCard>
 
   <BCard bg-variant="primary" text-variant="white">
@@ -1121,7 +1121,7 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
     <BCardText>
       This card has supporting text below as a natural lead-in to additional content.
     </BCardText>
-    <BCardText class="small text-muted">Last updated 3 mins ago</BCardText>
+    <BCardText class="small text-body-secondary">Last updated 3 mins ago</BCardText>
   </BCard>
 
   <BCard img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay />
@@ -1132,7 +1132,7 @@ set them to display: inline-block as column-break-inside: avoid is not a bulletp
       This card has even longer content than the first.
     </BCardText>
     <template #footer>
-      <small class="text-muted">Footer Text</small>
+      <small class="text-body-secondary">Footer Text</small>
     </template>
   </BCard>
 </BCardGroup>
