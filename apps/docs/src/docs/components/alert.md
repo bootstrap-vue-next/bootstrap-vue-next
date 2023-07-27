@@ -94,7 +94,7 @@ You can use the `v-model` directive to create two-way data bindings as in `v-mod
 
 ## Contextual Variants
 
-For proper styling of `<BAlert>`, use one of the four required contextual variants by setting the `variant` prop to one of the following: `info`, `success`, `warning`, or `danger`. The default is `info`.
+For proper styling of `BAlert`, use one of the four required contextual variants by setting the `variant` prop to one of the following: `info`, `success`, `warning`, or `danger`. The default is `info`.
 
 <HighlightCard>
   <BAlert :model-value="true" variant="primary">Primary Alert</BAlert>
@@ -127,7 +127,7 @@ Using color variants to add meaning only provides a visual indication, which wil
 
 ## Additional Content Inside Alerts
 
-`<BAlerts>` can also contain additional HTML elements like headings and paragraphs, which will be styled with the appropriate color matching the variant.
+`BAlerts` can also contain additional HTML elements like headings and paragraphs, which will be styled with the appropriate color matching the variant.
 
 <HighlightCard>
   <BAlert :model-value="true" variant="success">
@@ -167,7 +167,7 @@ Using color variants to add meaning only provides a visual indication, which wil
 
 ### Color of Links Within Alerts
 
-Use the `.alert-link` utility CSS class to quickly provide matching colored links within any alert. Use on `<a>` or `<BLink>`.
+Use the `.alert-link` utility CSS class to quickly provide matching colored links within any alert. Use on `<a>` or `BLink`.
 
 <HighlightCard>
   <BAlert :model-value="true" variant="primary"><a href="#" class="alert-link">Primary Alert</a></BAlert>
@@ -196,7 +196,7 @@ Use the `.alert-link` utility CSS class to quickly provide matching colored link
 
 ## Dismissible Alerts
 
-Using the `dismissible` prop it's possible to dismiss any `<BAlert>` inline. The alert must be v-modeled to a reactive value. This will add a close `X` button. Use the `dismiss-label` prop to change the hidden aria-label text associated with the dismiss button.
+Using the `dismissible` prop it is possible to dismiss any `BAlert` inline. The alert must be v-modeled to a reactive value. This will add a close `X` button. Use the `dismiss-label` prop to change the hidden aria-label text associated with the dismiss button.
 
 <HighlightCard>
   <BAlert v-model="secondDismissibleAlert" dismissible>
@@ -221,7 +221,7 @@ const dismissibleAlert = ref(true)
 
 ## Auto-dismissing Alerts
 
-To create a `<BAlert>` that dismisses automatically after some time set the `v-model` to the number of **milliseconds** you would like the `<BAlert>` to remain visible for. Timed Alerts are automatically paused when hovering with a mouse. You can disable pausing during hover by using the `noHoverPause` prop. You must only use an integer for milliseconds. Changing the v-model in any way will cause the timer to reset. The **interval** prop determines how often the timer will update, with the default being 1000 to trigger an update every 1 whole second. Due to the nature of this, one should be careful when creating many timed alerts with low intervals as it could negatively affect performance. Negative numbers for either v-model or interval will stop the timer. A value that does not divide wholely by an interval will continue to the greatest interval, ex: a value of 5400 ms and an interval of 1000 ms will run for exactly 6000 ms. To work around this, plan your interval to divide into this number easily. For example, use an interval of 540 ms or 1080 ms.
+To create a `BAlert` that dismisses automatically after some time set the `v-model` to the number of **milliseconds** you would like the `BAlert` to remain visible for. Timed Alerts are automatically paused when hovering with a mouse. You can disable pausing during hover by using the `noHoverPause` prop. You must only use an integer for milliseconds. Changing the v-model in any way will cause the timer to reset. The **interval** prop determines how often the timer will update, with the default being 1000 to trigger an update every 1 whole second. Due to the nature of this, one should be careful when creating many timed alerts with low intervals as it could negatively affect performance. Negative numbers for either v-model or interval will stop the timer. A value that does not divide wholely by an interval will continue to the greatest interval, ex: a value of 5400 ms and an interval of 1000 ms will run for exactly 6000 ms. To work around this, plan your interval to divide into this number easily. For example, use an interval of 540 ms or 1080 ms.
 
 <HighlightCard>
   <BAlert

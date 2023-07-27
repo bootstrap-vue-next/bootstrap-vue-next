@@ -53,7 +53,7 @@
         <div class="border border-secondary"></div>
         <ClientOnly>
           <BNavItemDropdown toggle-class="py-1 px-0">
-            <!-- TODO there's no way to adjust these options, say if you wanted to remove the padding -->
+            <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
             <template #button-content>
               <component :is="currentIcon" :aria-label="`Toggle theme (${dark})`" />
             </template>

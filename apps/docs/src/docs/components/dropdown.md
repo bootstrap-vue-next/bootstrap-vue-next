@@ -14,7 +14,7 @@ Dropdowns are toggleable, contextual overlays for displaying lists of links and 
 
 </div>
 
-`<BDropdown>` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
+`BDropdown` components are toggleable, contextual overlays for displaying lists of links, and more. They're toggled by clicking (or pressing space or enter when focused), not by hovering; this is an [intentional design decision](https://markdotto.com/2012/02/27/bootstrap-explained-dropdowns/).
 
 <HighlightCard>
   <BDropdown v-model="show1" text="Dropdown Button" class="me-2">
@@ -444,7 +444,7 @@ const show = ref(false)
 
 ### Split button link support
 
-The left split button defaults to an element of type `<button>` (a `<BButton>` to be exact). To convert this button into a link or `<RouterLink>`, specify the href via the `split-href` prop or a router link `to` value via the `split-to` prop, while maintaining the look of a button.
+The left split button defaults to an element of type `<button>` (a `BButton` to be exact). To convert this button into a link or `RouterLink`, specify the href via the `split-href` prop or a router link `to` value via the `split-to` prop, while maintaining the look of a button.
 
 <HighlightCard>
   <BDropdown v-model="show19" split split-href="#foo/bar" text="Split Link" class="me-2">
@@ -827,18 +827,18 @@ The following components can be placed inside your dropdowns. Using any other co
 may break layout and/or keyboard navigation.
 | Sub-component | Description |
 | ----------------- | ---------------------------- |
-| `<BDropdownItem>` | Action items that provide click, link, and `<RouterLink>`/`<NuxtLink>` functionality. Renders as an `<a>` element by default |
-| <span style="white-space:nowrap;">`<BDropdownItemButton>`</span> | An alternative to `<BDropdownItem>` that renders a menu item using a `<button>` element |
-| `<BDropdownDivider>` | A divider/spacer which can be used to separate dropdown items |
-| `<BDropdownText>` | Free flowing text content in a menu |
-| `<BDropdownGroup>` | For grouping dropdown sub-components with an optional header |
-| `<BDropdownHeader>` | A header item, used to help identify a group of dropdown items |
+| `BDropdownItem` | Action items that provide click, link, and `RouterLink`/`NuxtLink` functionality. Renders as an `<a>` element by default |
+| <span style="white-space:nowrap;">`BDropdownItemButton`</span> | An alternative to `BDropdownItem` that renders a menu item using a `<button>` element |
+| `BDropdownDivider` | A divider/spacer which can be used to separate dropdown items |
+| `BDropdownText` | Free flowing text content in a menu |
+| `BDropdownGroup` | For grouping dropdown sub-components with an optional header |
+| `BDropdownHeader` | A header item, used to help identify a group of dropdown items |
 
 **Note:** _Nested sub-menus are **not** supported._
 
-### `<BDropdownItem>`
+### `BDropdownItem`
 
-The `<BDropdownItem>` is typically used to create a navigation link inside your menu. Use either the `href` prop or the `to` prop (for router link support) to generate the appropriate navigation link. If neither `href` nor `to` are provided, a standard `<a>` link will be generated with an `href` of `#` (with an event handler that will prevent scroll to top behavior by preventing the default link action).
+The `BDropdownItem` is typically used to create a navigation link inside your menu. Use either the `href` prop or the `to` prop (for router link support) to generate the appropriate navigation link. If neither `href` nor `to` are provided, a standard `<a>` link will be generated with an `href` of `#` (with an event handler that will prevent scroll to top behavior by preventing the default link action).
 
 Disabled the dropdown item by setting the `disabled` prop.
 
@@ -871,31 +871,31 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-### `<BDropdownItemButton>`
+### `BDropdownItemButton`
 
-Historically dropdown menu contents had to be links (`<BDropdownItem>`), but that's no longer the
+Historically dropdown menu contents had to be links (`BDropdownItem`), but that is no longer the
 case with Bootstrap v5. Now you can optionally create `<button>` elements in your dropdowns by using
-the `<BDropdownItemButton>` sub-component. `<BDropdownItemButton>` does not support the `href`
+the `BDropdownItemButton` sub-component. `BDropdownItemButton` does not support the `href`
 or `to` props.
 
 Disabled the dropdown item button by setting the `disabled` prop.
 
 <HighlightCard>
   <BDropdown v-model="show34" text="Dropdown using buttons as menu items">
-    <BDropdownItemButton>I'm a button</BDropdownItemButton>
-    <BDropdownItemButton active>I'm a active button</BDropdownItemButton>
-    <BDropdownItemButton disabled>I'm a button, but disabled!</BDropdownItemButton>
-    <BDropdownItemButton>I don't look like a button, but I am!</BDropdownItemButton>
+    <BDropdownItemButton>I am a button</BDropdownItemButton>
+    <BDropdownItemButton active>I am a active button</BDropdownItemButton>
+    <BDropdownItemButton disabled>I am a button, but disabled!</BDropdownItemButton>
+    <BDropdownItemButton>I do not look like a button, but I am!</BDropdownItemButton>
   </BDropdown>
   <template #html>
 
 ```vue
 <template>
   <BDropdown v-model="show" text="Dropdown using buttons as menu items">
-    <BDropdownItemButton>I'm a button</BDropdownItemButton>
-    <BDropdownItemButton active>I'm an active button</BDropdownItemButton>
-    <BDropdownItemButton disabled>I'm a button, but disabled!</BDropdownItemButton>
-    <BDropdownItemButton>I don't look like a button, but I am!</BDropdownItemButton>
+    <BDropdownItemButton>I am a button</BDropdownItemButton>
+    <BDropdownItemButton active>I am an active button</BDropdownItemButton>
+    <BDropdownItemButton disabled>I am a button, but disabled!</BDropdownItemButton>
+    <BDropdownItemButton>I do not look like a button, but I am!</BDropdownItemButton>
   </BDropdown>
 </template>
 
@@ -907,12 +907,12 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-When the menu item doesn't trigger navigation, it is recommended to use the
-`<BDropdownItemButton>` sub-component.
+When the menu item does not trigger navigation, it is recommended to use the
+`BDropdownItemButton` sub-component.
 
-### `<BDropdownDivider>`
+### `BDropdownDivider`
 
-Separate groups of related menu items with `<BDropdownDivider>`.
+Separate groups of related menu items with `BDropdownDivider`.
 
 <HighlightCard>
   <BDropdown v-model="show35" text="Dropdown with divider">
@@ -941,16 +941,16 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-### `<BDropdownText>`
+### `BDropdownText`
 
-Place any freeform text within a dropdown menu using the `<BDropdownText>` sub-component or use
+Place any freeform text within a dropdown menu using the `BDropdownText` sub-component or use
 text and use spacing utilities. Note that you'll likely need additional sizing styles to
 constrain/set the menu width.
 
 <HighlightCard>
   <BDropdown v-model="show36" text="Dropdown with text">
     <BDropdownText style="width: 240px;">
-      Some example text that's free-flowing within the dropdown menu.
+      Some example text that is free-flowing within the dropdown menu.
     </BDropdownText>
     <BDropdownText  tag="span">And this is more example text.</BDropdownText>
     <BDropdownDivider />
@@ -963,7 +963,7 @@ constrain/set the menu width.
 <template>
   <BDropdown v-model="show" text="Dropdown with text">
     <BDropdownText style="width: 240px;">
-      Some example text that's free-flowing within the dropdown menu.
+      Some example text that is free-flowing within the dropdown menu.
     </BDropdownText>
     <BDropdownText>And this is more example text.</BDropdownText>
     <BDropdownDivider />
@@ -980,13 +980,13 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-`<BDropdownText>` has the BootstrapVueNext custom class `.b-dropdown-text` applied to it which sets some basic styles which are suitable in most situations. By default, its width will be the same as the widest `<BDropdownItem>` content. You may need to place additional styles or helper classes on the component.
+`BDropdownText` has the BootstrapVueNext custom class `.b-dropdown-text` applied to it which sets some basic styles which are suitable in most situations. By default, its width will be the same as the widest `BDropdownItem` content. You may need to place additional styles or helper classes on the component.
 
-~~By default, `<BDropdownText>` renders using tag `<p>`. You can change the rendered tag by setting the `tag` prop to any valid HTML5 tag on the `<BDropdownText>` sub-component~~.
+~~By default, `BDropdownText` renders using tag `<p>`. You can change the rendered tag by setting the `tag` prop to any valid HTML5 tag on the `BDropdownText` sub-component~~.
 
-### `<BDropdownGroup>`
+### `BDropdownGroup`
 
-Group a set of dropdown sub-components with an optional associated header. Place a `<BDropdownDivider>` between your `<BDropdownGroup>` and other groups or non-grouped dropdown contents.
+Group a set of dropdown sub-components with an optional associated header. Place a `BDropdownDivider` between your `BDropdownGroup` and other groups or non-grouped dropdown contents.
 
 <HighlightCard>
   <BDropdown v-model="show37" text="Dropdown with group">
@@ -1031,7 +1031,7 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-### `<BDropdownHeader>`
+### `BDropdownHeader`
 
 Add a header to label sections of actions in any dropdown menu.
 
@@ -1070,7 +1070,7 @@ const show = ref(false)
 
 See Section [Dropdown headers and accessibility](#headers-and-accessibility) for details on making headers more accessible for users of assistive technologies.
 
-Using the `<BDropdownGroup>` sub-component simplifies creating accessible grouped dropdown items with an associated header.
+Using the `BDropdownGroup` sub-component simplifies creating accessible grouped dropdown items with an associated header.
 
 ## Accessibility
 
@@ -1078,11 +1078,11 @@ Providing a unique `id` prop ensures ARIA compliance by automatically adding the
 
 The default ARIA role is set to `menu`, but you can change this default to another role (such as `navigation`) via the `role` prop, depending on your use case.
 
-When a menu item doesn't trigger navigation, it is recommended to use the `<BDropdownItemButton>` sub-component (which is not announced as a link) instead of `<BDropdownItem>` (which is presented as a link to the user).
+When a menu item does not trigger navigation, it is recommended to use the `BDropdownItemButton` sub-component (which is not announced as a link) instead of `BDropdownItem` (which is presented as a link to the user).
 
 ### Headers and accessibility
 
-When using `<BDropdownHeader>` components in the dropdown menu, it is recommended to add an `id` attribute to each of the headers, and then set the `aria-describedby` attribute (set to the `id` value of the associated header) on each following dropdown items under that header. This will provide users of assistive technologies (i.e. sight-impaired users) additional context about the dropdown item:
+When using `BDropdownHeader` components in the dropdown menu, it is recommended to add an `id` attribute to each of the headers, and then set the `aria-describedby` attribute (set to the `id` value of the associated header) on each following dropdown items under that header. This will provide users of assistive technologies (i.e. sight-impaired users) additional context about the dropdown item:
 
 <HighlightCard>
   <BDropdown v-model="show39" text="Dropdown ARIA" variant="primary">
@@ -1126,13 +1126,13 @@ const show = ref(false)
   </template>
 </HighlightCard>
 
-As a simplified alternative, use the `<BDropdownGroup>` instead to easily associate header text to the contained dropdown sub-components.
+As a simplified alternative, use the `BDropdownGroup` instead to easily associate header text to the contained dropdown sub-components.
 
 ### Keyboard navigation
 
 Dropdowns support keyboard navigation, emulating native `<select>` behavior.
 
-Note that <kbd>Down</kbd> and <kbd>Up</kbd> will not move focus into `<BDropdownForm>` sub-components, but users can still use <kbd>Tab</kbd> or <kbd>Shift</kbd>+<kbd>Tab</kbd> to move into form controls within the menu.
+Note that <kbd>Down</kbd> and <kbd>Up</kbd> will not move focus into `BDropdownForm` sub-components, but users can still use <kbd>Tab</kbd> or <kbd>Shift</kbd>+<kbd>Tab</kbd> to move into form controls within the menu.
 
 ## Lazy
 
@@ -1175,8 +1175,8 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 ## See also
 
-- [`<BNavItemDropdown>`](/bootstrap-vue-next/components/nav#dropdown-support) for dropdown support inside `<BNav>` and `<BNavbar>`
-- [Router Link Support](/bootstrap-vue-next/reference/router-links) reference for information about router-link specific props available on `<BDropdownItem>`
+- [`BNavItemDropdown`](/bootstrap-vue-next/components/nav#dropdown-support) for dropdown support inside `BNav` and `BNavbar`
+- [Router Link Support](/bootstrap-vue-next/reference/router-links) reference for information about router-link specific props available on `BDropdownItem`
 
 <ComponentReference :data="data" />
 

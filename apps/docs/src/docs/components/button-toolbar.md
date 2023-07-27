@@ -135,7 +135,7 @@ example above, you'll likely need some utility classes though to space things pr
 ## Sizing
 
 Note, if you want smaller or larger buttons or controls, set the `size` prop directly on the
-`<BButtonGroup>`, `<BInputGroup>`, and `<BDropdown>` components.
+`BButtonGroup`, `BInputGroup`, and `BDropdown` components.
 
 <HighlightCard>
   <div>

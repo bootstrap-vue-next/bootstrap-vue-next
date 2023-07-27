@@ -65,7 +65,7 @@ All the base variants plus:
 
 These translate to class names `bg-{variant}` for backgrounds and `border-{variant}` for borders.
 
-These variants are used by components (such as `<BCard>`, `<BModal>`, etc.) that provide `bg-variant`, `_-bg-variant`, `border-variant` and `_-border-variant` props.
+These variants are used by components (such as `BCard`, `BModal`, etc.) that provide `bg-variant`, `_-bg-variant`, `border-variant` and `_-border-variant` props.
 
 ## Text variants
 
@@ -108,7 +108,7 @@ All the base variants plus:
 
 These translate to class names `text-{variant}`
 
-These variants are used by components (such as `<BCard>`, `<BModal>`, etc.) that provide `text-variant` and `*-text-variant` props.
+These variants are used by components (such as `BCard`, `BModal`, etc.) that provide `text-variant` and `*-text-variant` props.
 
 ## Component specific variants
 
@@ -173,7 +173,7 @@ You may also use the underlying class names directly on elements (and some compo
 
 ## Creating custom variants
 
-When creating custom variants, follow the Bootstrap v4 variant CSS class naming scheme and they will become available to the various components that use that scheme (i.e. create a custom CSS class `btn-purple` and `purple` becomes a valid variant to use on `<BButton>`).
+When creating custom variants, follow the Bootstrap v4 variant CSS class naming scheme and they will become available to the various components that use that scheme (i.e. create a custom CSS class `btn-purple` and `purple` becomes a valid variant to use on `BButton`).
 
 Alternatively, you can create new variant theme colors by supplying custom Bootstrap SCSS theme color maps. The default theme color map is (from `bootstrap/scss/\_variables.scss`):
 

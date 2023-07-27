@@ -10,18 +10,18 @@
 
 <div class="lead mb-5">
 
-Several BootstrapVue components support rendering `<RouterLink>` components compatible with Vue Router and Nuxt.js. For more information, see the official [Vue Router docs](https://router.vuejs.org) and official [Nuxt.js docs](https://nuxt.com/docs/api/components/nuxt-link#props).
+Several BootstrapVue components support rendering `RouterLink` components compatible with Vue Router and Nuxt.js. For more information, see the official [Vue Router docs](https://router.vuejs.org) and official [Nuxt.js docs](https://nuxt.com/docs/api/components/nuxt-link#props).
 
 </div>
 
 ## Common router link props
 
-In the following sections, we are using the `<BLink>` component to render router links. `<BLink>` is the building block of most of BootstrapVue's actionable components. You could use any other component that supports link generation such as `<BLink>`, `<BButton>`, `<BAvatar>`, `<BBreadcrumbItem>`, `<BListGroupItem>`, `<BNavItem>`, `<BDropdownItem>`, and `<BPaginationNav>`. Note that not all props are available on all components. Refer to the respective component documentation for details.
+In the following sections, we are using the `BLink` component to render router links. `BLink` is the building block of most of BootstrapVue's actionable components. You could use any other component that supports link generation such as `BLink`, `BButton`, `BAvatar`, `BBreadcrumbItem`, `BListGroupItem`, `BNavItem`, `BDropdownItem`, and `BPaginationNav`. Note that not all props are available on all components. Refer to the respective component documentation for details.
 
 ### `to`
 
 - type: `string | Location`
-- required to generate a `<RouterLink>`
+- required to generate a `RouterLink`
 
 Denotes the target route of the link. When clicked, the value of the `to` prop will be passed to `router.push()` internally, so the value can be either a string or a location descriptor object.
 
@@ -90,7 +90,7 @@ Setting `append` prop always appends the relative path to the current path. For 
 - type: `string`
 - default: 'a'
 
-Sometimes we want `<RouterLink>` to render as another tag, e.g `<li>`. Then we can use `router-tag` prop to specify which tag to render to, and it will still listen to click events for navigation. `router-tag` translates to the `tag` prop on the final rendered `<RouterLink>`.
+Sometimes we want `RouterLink` to render as another tag, e.g `<li>`. Then we can use `router-tag` prop to specify which tag to render to, and it will still listen to click events for navigation. `router-tag` translates to the `tag` prop on the final rendered `RouterLink`.
 
 <BCard class="bg-body-tertiary">
 
@@ -175,7 +175,7 @@ With components that support router links (have a `to` prop), you will want to s
 
 ## Nuxt.js specific router link props
 
-When BootstrapVue detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`<NuxtLink>`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `<RouterLink>`. `<NuxtLink>` supports all of the above router link props, plus the following additional Nuxt.js specific props.
+When BootstrapVue detects that your app is running under [Nuxt.js](https://nuxt.com), it will render a [`NuxtLink`](https://nuxt.com/docs/api/components/nuxt-link#nuxtlink) sub component instead of a `RouterLink`. `NuxtLink` supports all of the above router link props, plus the following additional Nuxt.js specific props.
 
 ### `prefetch`
 

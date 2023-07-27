@@ -39,7 +39,7 @@ List Groups are a flexible and powerful component for displaying a series of con
 
 ## Active items
 
-Set the `active` prop on a `<BListGroupItem>` to indicate the current active selection.
+Set the `active` prop on a `BListGroupItem` to indicate the current active selection.
 
 <HighlightCard>
   <BListGroup>
@@ -66,7 +66,7 @@ Set the `active` prop on a `<BListGroupItem>` to indicate the current active sel
 
 ## Disabled items
 
-Set the `disabled` prop on a `<BListGroupItem>` to make it appear disabled (also works with
+Set the `disabled` prop on a `BListGroupItem` to make it appear disabled (also works with
 actionable items. see below).
 
 <HighlightCard>
@@ -94,7 +94,7 @@ actionable items. see below).
 
 ## Actionable list group items
 
-Turn a `<BListGroupItem>` into an actionable _link_ (`<a href="...">`) by specifying either an
+Turn a `BListGroupItem` into an actionable _link_ (`<a href="...">`) by specifying either an
 `href` prop or ~~[router-link](/docs/reference/router-links)~~ `to` prop.
 
 <HighlightCard>
@@ -358,12 +358,12 @@ These work great with custom content as well.
   </template>
 </HighlightCard>
 
-**Note:** When using the numbered property, it supersedes the tag property on `b-list-group` and `b-list-group-item`.
-With numbered set, the `b-list-group`is always rendered as a `ol`, while the `b-list-group-item` is rendered as a `li`.
+**Note:** When using the numbered property, it supersedes the tag property on `BListGroup` and `BListGroupItem`.
+With numbered set, the `BListGroup`is always rendered as a `ol`, while the `BListGroupItem` is rendered as a `li`.
 
 ## List Groups inside cards
 
-Incorporate list groups into [cards](/docs/components/card). Use the `<BListGroup>` prop `flush`
+Incorporate list groups into [cards](/docs/components/card). Use the `BListGroup` prop `flush`
 prop when using cards with `no-body` to make the sides of the list group flush with the card.
 
 <HighlightCard>

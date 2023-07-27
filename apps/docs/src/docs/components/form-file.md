@@ -151,20 +151,20 @@ You can modify the size of the form control by using the `size` prop
 You can add a label above the input by using the `label` prop or the `label` slot
 
 <HighlightCard>
-  <BFormFile label="I'm first!" />
+  <BFormFile label="I am first!" />
   <BFormFile>
     <template #label>
-      I'm second!
+      I am second!
     </template>
   </BFormFile>
 
 <template #html>
 
 ```vue-html
-<BFormFile class="mt-3" label="I'm first!" />
+<BFormFile class="mt-3" label="I am first!" />
 <BFormFile class="mt-3">
   <template #label>
-    I'm second!
+    I am second!
   </template>
 </BFormFile>
 ```

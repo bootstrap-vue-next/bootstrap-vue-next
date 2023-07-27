@@ -16,7 +16,7 @@ Placeholders are components that indicate that something may still be loading.
 
 ## Basic Usage
 
-At the placeholder core, you have the `b-placeholder` component:
+At the placeholder core, you have the `BPlaceholder` component:
 
 <HighlightCard>
   <BPlaceholder />
@@ -60,7 +60,7 @@ You can adjust the width using props `width` and `cols`. Cols is a number value 
 
 Bootstrap supports two types of animations, `wave` and `glow`.
 
-- Note: when using `<BPlaceholderCard>`, the image does not inherit an animation
+- Note: when using `BPlaceholderCard`, the image does not inherit an animation
 
 <HighlightCard>
   <BPlaceholderCard style="max-width: 20rem; " animation="glow" class="mb-3" />
@@ -98,11 +98,11 @@ You can adjust the sizing of a placeholder by using the `size` prop. Acceptable 
 
 ## Helper Components
 
-`b-placeholder` has several wrapper components to quickly create larger component sets, such as `b-placeholder-card`, `b-placeholder-table`, and `b-placeholder-button`.
+`BPlaceholder` has several wrapper components to quickly create larger component sets, such as `BPlaceholderCard`, `BPlaceholderTable`, and `BPlaceholderButton`.
 
 ### Placeholder Wrapper
 
-The `b-placeholder-wrapper` is a renderless component that picks between a 'loading' component, and a 'finished' component. It is useful when you have to wait for loading to finish, before rendering the actual content. Depending on the use case, you may prefer to use [Suspense](https://vuejs.org/guide/built-ins/suspense.html) instead.
+The `BPlaceholderWrapper` is a renderless component that picks between a 'loading' component, and a 'finished' component. It is useful when you have to wait for loading to finish, before rendering the actual content. Depending on the use case, you may prefer to use [Suspense](https://vuejs.org/guide/built-ins/suspense.html) instead.
 
 <HighlightCard>
   <BPlaceholderWrapper :loading="loading">
@@ -177,7 +177,7 @@ onMounted(startLoading)
 
 ### Placeholder Buttons
 
-You can easily render a placeholder that has the button styling by using `b-placeholder-button`.
+You can easily render a placeholder that has the button styling by using `BPlaceholderButton`.
 
 <HighlightCard>
   <BPlaceholderButton cols="3" />
@@ -192,7 +192,7 @@ You can easily render a placeholder that has the button styling by using `b-plac
 
 ### Placeholder Cards
 
-Placeholders have built-in support for rendering a placeholder card with `b-placeholder-card`.
+Placeholders have built-in support for rendering a placeholder card with `BPlaceholderCard`.
 
 <HighlightCard>
   <BPlaceholderCard style="max-width: 20rem" />
@@ -207,7 +207,7 @@ Placeholders have built-in support for rendering a placeholder card with `b-plac
 
 ### Placeholder Tables
 
-You can also render a full placeholder table with `b-placeholder-table`.
+You can also render a full placeholder table with `BPlaceholderTable`.
 
 <HighlightCard>
   <BPlaceholderTable />
@@ -228,7 +228,7 @@ Cards expose various props and slots to make them more personalized.
 
 You can adjust the image using various props, such as `imgBlankColor`, and `imgBottom`, or you can optionally use `imgSrc` to place a real image, rather than a blank.
 
-Each section of the `b-placeholder-card` exposes its slot elements, so you can easily override the defaults. Available slots are: `img`, `header`, `default`, and `footer`.
+Each section of the `BPlaceholderCard` exposes its slot elements, so you can easily override the defaults. Available slots are: `img`, `header`, `default`, and `footer`.
 
 The footer also exposes some props that you can use to adjust the behavior of a button. Most notably prop `noButton`. If set to true, it will convert it to a basic placeholder appearance. Alternatively, you can use the `noFooter` prop to remove it altogether.
 
@@ -264,7 +264,7 @@ The footer also exposes some props that you can use to adjust the behavior of a 
 
 #### Advanced Tables
 
-`b-placeholder-table` comes with various props to adjust the number of rows, columns, header/footer, and their stylings.
+`BPlaceholderTable` comes with various props to adjust the number of rows, columns, header/footer, and their stylings.
 
 You can adjust the number of columns and rows using props `columns` and `rows` respectively. You can use `showFooter` to show the footer, or `hideHeader` to hide the header. Both the footer and header have cellWidth, size, animation, and variant adjustments by prepending the type with the styling, eg: `headerCellWidth`, `headerSize`, `footerAnimation`, `footerVariant`.
 

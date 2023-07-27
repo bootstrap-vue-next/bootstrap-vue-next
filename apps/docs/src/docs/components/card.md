@@ -20,7 +20,7 @@ Cards are built with as little markup and styles as possible, but still manage t
 control and customization. Built with flexbox, they offer easy alignment and mix well with other
 components.
 
-`<BCard>` has no fixed width to start, so they'll naturally fill the full width of its parent
+`BCard` has no fixed width to start, so they'll naturally fill the full width of its parent
 element. This is easily customized via styles or standard Bootstrap v4 sizing classes.
 
 Change the default `div` root tag to any other HTML element by specifying via the `tag` prop.
@@ -64,14 +64,14 @@ Change the default `div` root tag to any other HTML element by specifying via th
 ## Content types
 
 Cards support a wide variety of content, including images, text, list groups, links and more. The
-following are examples of what's supported inside a `<BCard>`.
+following are examples of what is supported inside a `BCard`.
 
 ### Card body
 
-The building block of a `<BCard>` is the `<BCardBody>` section which provides a padded section
+The building block of a `BCard` is the `BCardBody` section which provides a padded section
 within a card.
 
-By default, the `<BCard>` content is automatically placed in a `<BCardBody>` section:
+By default, the `BCard` content is automatically placed in a `BCardBody` section:
 
 <HighlightCard>
   <BCard class="text-center">
@@ -96,8 +96,8 @@ By default, the `<BCard>` content is automatically placed in a `<BCardBody>` sec
   </template>
 </HighlightCard>
 
-Disable the automatic `<BCardBody>` section (and associated padding) by setting the prop `no-body`
-on the `<BCard>`.
+Disable the automatic `BCardBody` section (and associated padding) by setting the prop `no-body`
+on the `BCard`.
 
 <HighlightCard>
   <BCard no-body class="text-center">
@@ -123,21 +123,21 @@ on the `<BCard>`.
 Note that with `no-body` enabled, the content of the `title` and `subtitle` props will not be
 rendered.
 
-Use the `<BCardBody>` sub-component to place your own card body anywhere in a `<BCard>` component
+Use the `BCardBody` sub-component to place your own card body anywhere in a `BCard` component
 that has `no-body` set.
 
 #### Titles, text, and links
 
 _Card titles_ are adding via the `title` prop, and _sub titles_ are added via the `subtitle` prop.
-The title is rendered using the sub-component `<BCardTitle>` while the Sub Title is rendered using
-the sub-component `<BCardSubtitle>`.
+The title is rendered using the sub-component `BCardTitle` while the Sub Title is rendered using
+the sub-component `BCardSubtitle`.
 
-With sub-component `<BCardText>`, paragraph text can be added to the card. The last
-`<BCardText>` in the card body will have its bottom margin automatically removed (via CSS). Text
-within `<BCardText>` can also be styled with the standard HTML tags.
+With sub-component `BCardText`, paragraph text can be added to the card. The last
+`BCardText` in the card body will have its bottom margin automatically removed (via CSS). Text
+within `BCardText` can also be styled with the standard HTML tags.
 
 Links can be added and placed next to each other by adding the `.card-link` class to a `<a>` tag (or
-`<BLink>` component).
+`BLink` component).
 
 <HighlightCard>
   <BCard title="Card title" subtitle="Card subtitle">
@@ -168,12 +168,12 @@ Links can be added and placed next to each other by adding the `.card-link` clas
 
 ### Images
 
-The `<BCard>` prop `img-src` places an image on the top of the card, and use the `img-alt` prop to
+The `BCard` prop `img-src` places an image on the top of the card, and use the `img-alt` prop to
 specify a string to be placed in the image's `alt` attribute. The image specified by the `img-src`
 prop will be responsive and will adjust its width when the width of the card is changed.
 
-Alternatively you can manually place images inside `<BCard>` using the sub-component
-`<BCardImg>`. See the kitchen sink example below for usage.
+Alternatively you can manually place images inside `BCard` using the sub-component
+`BCardImg`. See the kitchen sink example below for usage.
 
 <HighlightCard>
   <div>
@@ -284,7 +284,7 @@ Place the image in the background of the card by setting the boolean prop `overl
 
 #### Lazy loaded images
 
-`<BCardImgLazy>` has been removed in favor of using a standalone prop on BImg. Use prop `lazy` on BImg and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers.
+`BCardImgLazy` has been removed in favor of using a standalone prop on BImg. Use prop `lazy` on BImg and it will automatically use the browsers built in lazy-loading features that are supported natively on all major browsers.
 
 ### Header and footer
 
@@ -427,9 +427,9 @@ card.
 Using a combination of grid components, utility classes and individual card sub-components, cards
 can be made horizontal in a mobile-friendly and responsive way.
 
-In the example below, we remove the row grid gutters with the `class="g-0"` prop on `<BRow>` and use
-`md` props on `<BCol>` to make the card horizontal at the `md` breakpoint. Class `rounded-0`
-removes the rounding of the `<BCardImg>` corners while class `overflow-hidden` on `<BCard>` will
+In the example below, we remove the row grid gutters with the `class="g-0"` prop on `BRow` and use
+`md` props on `BCol` to make the card horizontal at the `md` breakpoint. Class `rounded-0`
+removes the rounding of the `BCardImg` corners while class `overflow-hidden` on `BCard` will
 appropriately clip the image's corners based on the border-radius of the card. Further adjustments
 may be needed depending on your card content.
 
@@ -719,7 +719,7 @@ the `bg-variant` and `border-variant` props. Darker solid variants may require s
 
 #### Variant to class mapping
 
-bootstrap-vue-next `<BCard>` variants are directly mapped to Bootstrap v5 card classes by pre-pending
+bootstrap-vue-next `BCard` variants are directly mapped to Bootstrap v5 card classes by pre-pending
 `bg-` (for solid) or `border-` (for bordered) to the above variant names.
 
 ### Header and footer variants
@@ -774,7 +774,7 @@ means, such as additional text hidden with the `.visually-hidden` class.
 
 ## Nav integration
 
-Integrate [`<BNav>`](/docs/components/nav) into card headers easily.
+Integrate [`BNav`](/docs/components/nav) into card headers easily.
 
 **Using the `header` slot**:
 
@@ -814,7 +814,7 @@ Integrate [`<BNav>`](/docs/components/nav) into card headers easily.
   </template>
 </HighlightCard>
 
-**Using `<BCardHeader>` sub-component:**
+**Using `BCardHeader` sub-component:**
 
 <HighlightCard>
   <BCard no-body>
@@ -858,12 +858,12 @@ Integrate [`<BNav>`](/docs/components/nav) into card headers easily.
   </template>
 </HighlightCard>
 
-For more information on using `<BNav>` in card headers, refer to the
+For more information on using `BNav` in card headers, refer to the
 [Navs documentation](/docs/components/nav).
 
 ## Card groups
 
-In addition to styling the content within cards, BootstrapVueNext includes a `<BCardGroup>` component
+In addition to styling the content within cards, BootstrapVueNext includes a `BCardGroup` component
 for laying out series of cards. For the time being, these layout options are not yet responsive.
 
 ### Default card group
@@ -1015,12 +1015,12 @@ automatically line up.
 
 ### Card column groups
 
-Cards can be organized into Masonry-like columns with by wrapping them in a `<BCardGroup>` with
+Cards can be organized into Masonry-like columns with by wrapping them in a `BCardGroup` with
 the prop `columns` set. Cards are built with CSS column properties instead of flexbox for easier
 alignment. Cards are ordered from top to bottom and left to right.
 
 Heads up! Your mileage with card columns may vary. To prevent cards breaking across columns, we must
-set them to display: inline-block as column-break-inside: avoid isn't a bulletproof solution yet.
+set them to display: inline-block as column-break-inside: avoid is not a bulletproof solution yet.
 
 <HighlightCard>
   <BCardGroup columns>

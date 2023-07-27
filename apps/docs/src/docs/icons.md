@@ -112,7 +112,7 @@ If you are using TypeScript you will want to add the `unplugin-icons/types/vue` 
 
 </BCard>
 
-Then to include an icon, follow the format `i-{collection}-{icon-name}` in your template, where the collection is the id on <https://icon-sets.iconify.design/>. For example, to include `0-circle` in your app, simply use the component `<IBi0Circle>`, no import is needed. As stated, you can use any icon from any icon set.
+Then to include an icon, follow the format `i-{collection}-{icon-name}` in your template, where the collection is the id on <https://icon-sets.iconify.design/>. For example, to include `0-circle` in your app, simply use the component `IBi0Circle`, no import is needed. As stated, you can use any icon from any icon set.
 
 <BCard class="bg-body-tertiary">
 

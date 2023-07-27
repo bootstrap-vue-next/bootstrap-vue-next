@@ -33,7 +33,7 @@ const componentList: {name: string; description: string}[] = [
   },
   {
     name: 'Router Links',
-    description: 'Several BootstrapVueNext components support rendering `<RouterLink>` components compatible with Vue Router and Nuxt.js',
+    description: 'Several BootstrapVueNext components support rendering `RouterLink` components compatible with Vue Router and Nuxt.js',
   },
   {
     name: 'Settings',
@@ -55,7 +55,7 @@ const componentList: {name: string; description: string}[] = [
   {
     name: 'Theming Bootstrap',
     description:
-      `Theming is accomplished by SASS variables, SASS maps, and custom CSS. There's no dedicated theme stylesheet; instead, you can enable the built-in theme to add gradients, shadows, and more.`,
+      `Theming is accomplished by SASS variables, SASS maps, and custom CSS. There is no dedicated theme stylesheet; instead, you can enable the built-in theme to add gradients, shadows, and more.`,
   },
   {
     name: 'Third party libraries',

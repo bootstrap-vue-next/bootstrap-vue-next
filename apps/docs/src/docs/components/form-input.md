@@ -35,7 +35,7 @@ const selectedText = ref('')
 
 ## Input type
 
-`<BFormInput>` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`.
+`BFormInput` defaults to a `text` input, but you can set the `type` prop to one of the supported native browser HTML5 types: `text`, `password`, `email`, `number`, `url`, `tel`, `search`, `date`, `datetime`, `datetime-local`, `month`, `week`, `time`, `range`, or `color`.
 
 <HighlightCard>
   <BRow class="my-1" v-for="type in inputTypes" :key="type">
@@ -103,7 +103,7 @@ If the `type` prop is set to an input type that is not supported (see above), a 
 - For date and time style inputs, where supported, the displayed value in the GUI may be different
   from what is returned by its value (i.e. ordering of year-month-date)
 - Regardless of input type, the value is **always** returned as a string representation
-- `v-model.lazy` is not supported by `<BFormInput>` (nor any custom Vue component). Use the `lazy`
+- `v-model.lazy` is not supported by `BFormInput` (nor any custom Vue component). Use the `lazy`
   prop instead
 - `v-model` modifiers `.number` and `.trim` can cause unexpected cursor jumps when the user is
   typing (this is a Vue issue with `v-model` on custom components). _Avoid using these modifiers_.
@@ -258,11 +258,11 @@ To control width, place the input inside standard Bootstrap grid column.
 </HighlightCard>
 
 ~~**Note:** Input type `range` currently does not support control sizing unless it is placed inside a
-`<BInputGroup>` which has its `size` prop set.~~
+`BInputGroup` which has its `size` prop set.~~
 
 **Note:** The native HTML `<input>` attribute `size` (which sets a horizontal width on the `<input>`
-in characters) is not supported. Use styling, utility classes, or the layout rows (`<BRow>`) and
-columns (`<BCol>`) to set the desired width.
+in characters) is not supported. Use styling, utility classes, or the layout rows (`BRow`) and
+columns (`BCol`) to set the desired width.
 
 ## Contextual states
 
@@ -270,13 +270,13 @@ Bootstrap includes validation styles for `valid` and `invalid` states on most fo
 
 Generally speaking, you'll want to use a particular state for specific types of feedback:
 
-- `false` (denotes invalid state) is great for when there's a blocking or required field. A user
+- `false` (denotes invalid state) is great for when there is a blocking or required field. A user
   must fill in this field properly to submit the form
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout
   a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
-To apply one of the contextual state icons on `<BFormInput>`, set the `state` prop to `false` (for
+To apply one of the contextual state icons on `BFormInput`, set the `state` prop to `false` (for
 invalid), `true` (for valid), or `null` (no validation state).
 
 <HighlightCard>
@@ -394,7 +394,7 @@ const lifeNameState = computed(() => (lifeName.value?.length > 2 ? true : false)
   </template>
 </HighlightCard>
 
-> **Tip:** Use the [`<BFormGroup>`](/docs/components/form-group) component to automatically generate markup similar to above.
+> **Tip:** Use the [`BFormGroup`](/docs/components/form-group) component to automatically generate markup similar to above.
 
 ### Conveying contextual state to assistive technologies and colorblind users
 
@@ -411,8 +411,8 @@ text block.
 Specifically for assistive technologies, invalid form controls can also be assigned an
 `aria-invalid="true"` attribute.
 
-When `<BFormInput>` has an invalid contextual state (i.e. state is `false`) you may also want to
-set the `<BFormInput>` prop `aria-invalid` to `true`, or to one of the supported values:
+When `BFormInput` has an invalid contextual state (i.e. state is `false`) you may also want to
+set the `BFormInput` prop `aria-invalid` to `true`, or to one of the supported values:
 
 - `false`: Convey no errors detected (default)
 - `true` (or `'true'`): Convey that the value has failed validation
@@ -424,7 +424,7 @@ attribute on the input will automatically be set to `'true'`;
 
 ## Formatter support
 
-`<BFormInput>` optionally supports formatting by passing a function reference to the `formatter`
+`BFormInput` optionally supports formatting by passing a function reference to the `formatter`
 prop.
 
 Formatting (when a formatter function is supplied) occurs when the control's native `input` and
@@ -526,7 +526,7 @@ The `plaintext` option is not supported by input types `color` or `range`.
 Vue does not officially support `.lazy`, `.trim`, and `.number` modifiers on the `v-model` of custom
 component based inputs, and may generate a bad user experience. Avoid using Vue's native modifiers.
 
-To get around this, `<BFormInput>` has three boolean props `trim`, `number`, and `lazy` which
+To get around this, `BFormInput` has three boolean props `trim`, `number`, and `lazy` which
 emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` respectively. The
 `lazy` prop will update the v-model on `change`/`blur`events.
 
@@ -547,7 +547,7 @@ emulate the native Vue `v-model` modifiers `.trim` and `.number` and `.lazy` res
 ## Autofocus
 
 When the `autofocus` prop is set, the input will be auto-focused when it is inserted (i.e.
-**mounted**) into the document, or re-activated when inside a Vue `<KeepAlive>` component. Note
+**mounted**) into the document, or re-activated when inside a Vue `KeepAlive` component. Note
 that this prop **does not** set the `autofocus` attribute on the input, nor can it tell when the
 input becomes visible.
 
@@ -566,7 +566,7 @@ You can always access the native `input` and `change` events by using the `.nati
 
 ## Exposed input properties and methods
 
-`<BFormInput>` exposes the native input element on the component reference as a reference with name 'input'.
+`BFormInput` exposes the native input element on the component reference as a reference with name 'input'.
 You can use that reference to access the native properties and methods.
 
 ### Input properties

@@ -48,7 +48,7 @@ Includes support for making accordions. Visibility can be easily toggled with ou
 
 ## Usage
 
-Other elements can easily toggle `<BCollapse>` components using the
+Other elements can easily toggle `BCollapse` components using the
 [`v-b-toggle` directive](/docs/directives/toggle).
 
 <HighlightCard>
@@ -80,7 +80,7 @@ Other elements can easily toggle `<BCollapse>` components using the
 
 ## Initial visibility (start expanded)
 
-To make the `<BCollapse>` show initially, set the `v-model` prop:
+To make the `BCollapse` show initially, set the `v-model` prop:
 
 <HighlightCard>
   <BButton v-b-toggle.collapse-3 class="m-1">Toggle Collapse</BButton>
@@ -102,14 +102,14 @@ To make the `<BCollapse>` show initially, set the `v-model` prop:
 
 ~~By default, an initially visible collapse will not animate on mount. To enable the collapse
 expanding animation on mount (when `visible` or `v-model` is `true`), set the `appear` prop on
-`<BCollapse>`.~~
+`BCollapse`.~~
 
 ## `v-model` support
 
 The component's collapsed (visible) state can also be set with `v-model` which binds internally to
 the `visible` prop.
 
-Note, when using `v-model` to control `<BCollapse>`, the `aria-*` attributes and class `collapsed`
+Note, when using `v-model` to control `BCollapse`, the `aria-*` attributes and class `collapsed`
 are not automatically placed on the trigger button (as is the case when using the `v-b-toggle`
 directive). In this example we **must control the attributes ourselves** for proper accessibility
 support.
@@ -155,7 +155,7 @@ const visible = ref(true)
 
 ## Trigger multiple collapse elements
 
-You can even collapse multiple `<BCollapse>` components via a single `v-b-toggle` by providing
+You can even collapse multiple `BCollapse` components via a single `v-b-toggle` by providing
 multiple target Ids using _modifiers_.
 
 You can also pass multiple target Ids via the directive _value_ in BootstrapVueNext.
@@ -203,7 +203,7 @@ You can also pass multiple target Ids via the directive _value_ in BootstrapVueN
 
 ## Accordion support
 
-Turn a group of `<BCollapse>` components into an accordion by supplying an accordion group
+Turn a group of `BCollapse` components into an accordion by supplying an accordion group
 identifier via the `accordion` prop. Note that only one collapse in an accordion group can be open
 at a time.
 
@@ -293,7 +293,7 @@ const text = `
   assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
   wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
   vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-  synth nesciunt you probably haven't heard of them accusamus labore VHS.
+  synth nesciunt you probably have not heard of them accusamus labore VHS.
 `
 </script>
 ```
@@ -303,13 +303,13 @@ const text = `
 
 **Notes:**
 
-- When using accordion mode, make sure you place the trigger elements and `<BCollapse>` components
+- When using accordion mode, make sure you place the trigger elements and `BCollapse` components
   inside an element with `role="tablist"` and set `role="tab"` on each trigger element's container
   (each trigger element should be wrapped) in order to help screen reader users navigate the
   accordion group
-- If using the `v-model` feature of `<BCollapse>` in accordion mode, do not bind the `v-model` or
+- If using the `v-model` feature of `BCollapse` in accordion mode, do not bind the `v-model` or
   `visible` prop of all the collapses in the accordion group to the same variable!
-- Ensure, at most, only one `<BCollapse>` in the accordion group has the `visible` prop and/or
+- Ensure, at most, only one `BCollapse` in the accordion group has the `visible` prop and/or
   `v-model` set to `true`. Only one collapse in an accordion group can be open at a time
 
 ## Hiding and showing content in the toggle button based on collapse state
@@ -318,7 +318,7 @@ const text = `
 
 The `header` slot can be used to create custom toggles for your collapsible content. The `footer` slot is also available and can be used in the same manner.
 
-Using the `v-b-toggle` directive to toggle the `<BCollapse>` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
+Using the `v-b-toggle` directive to toggle the `BCollapse` will still work but the `collapsed` CSS class will no longer be applied to the element with the directive.
 
 The following properties are available for the `header` and `footer` slots:
 
@@ -338,7 +338,7 @@ The following properties are available for the `header` and `footer` slots:
       </BButton>
     </template>
     <!-- Content here -->
-    <div class="mt-2">This is data that's being collapsed</div>
+    <div class="mt-2">This is data that is being collapsed</div>
   </BCollapse>
   <template #html>
 
@@ -350,7 +350,7 @@ The following properties are available for the `header` and `footer` slots:
     </BButton>
   </template>
   <!-- Content here -->
-  <div class="mt-2">This is data that's being collapsed</div>
+  <div class="mt-2">This is data that is being collapsed</div>
 </BCollapse>
 ```
 
@@ -372,8 +372,8 @@ The default slot can be optionally scoped. The following scope properties are av
 
 The `v-b-toggle` directive will automatically add the ARIA attributes `aria-controls` and
 `aria-expanded` to the component that the directive appears on (as well as add the class `collapsed`
-when not expanded). `aria-expanded` will reflect the state of the target `<BCollapse>` component,
-while `aria-controls` will be set to the Id(s) of the target `<BCollapse>` component(s).
+when not expanded). `aria-expanded` will reflect the state of the target `BCollapse` component,
+while `aria-controls` will be set to the Id(s) of the target `BCollapse` component(s).
 
 If using `v-model` to set the visible state instead of the directive `v-b-toggle`, you will be
 required to, on the toggle element, add the `aria-controls` and other appropriate attributes and
@@ -386,7 +386,7 @@ something other than a button or link (or similar component), you should add the
 `tabindex="0"` and `role="button"` to allow users of assistive technology to reach your trigger
 element.
 
-When using accordion mode, make sure you place the trigger elements and `<BCollapse>` components
+When using accordion mode, make sure you place the trigger elements and `BCollapse` components
 inside an element with `role="tablist"` and set `role="tab"` on each trigger element's container in
 order to help screen reader users navigate the accordion group. Unfortunately, BootstrapVueNext cannot
 apply those roles for you automatically, as it depends on your final document markup.
@@ -410,7 +410,7 @@ import {ref, computed} from 'vue'
 
 const visible = ref(true);
 
-const text = "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore VHS."
+const text = "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore VHS."
 </script>
 
 <style>

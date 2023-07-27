@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-The `<BFormGroup>` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
+The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.
 
 </div>
 
@@ -64,16 +64,16 @@ Use the prop `label` to set the content of the generated `<legend>` or `<label>`
 using the named slot `label`, You may optionally visually hide the label text while still making it
 available to screen readers by setting the prop `label-sr-only`.
 
-`<BFormGroup>` will render a `<fieldset>` with `<legend>` if the `label-for` prop is not set. If
+`BFormGroup` will render a `<fieldset>` with `<legend>` if the `label-for` prop is not set. If
 an input Id is provided to the `label-for` prop, then a `<div>` with `<label>` will be rendered.
 
 If you provide an input `id` value to the `label-for` prop (the `id` must exist on the input
-contained within the `<BFormGroup>`), a `<label>` element will be rendered instead of a `<legend>`
+contained within the `BFormGroup`), a `<label>` element will be rendered instead of a `<legend>`
 element, and will have the `for` attribute set to the `id` specified. When specifying the id, **do
 not** prepend it with `#`. The `label-for` prop should only be used when you have a single form
-input inside the `<BFormGroup>` component. Do not set the `label-for` prop when using
-`<BFormRadioGroup>`, `<BFormCheckboxGroup>`, `<BFormRadio>`, `<BFormCheckbox>` or
-`<BFormFile>` components (or when placing multiple inputs in the same form group), as these inputs
+input inside the `BFormGroup` component. Do not set the `label-for` prop when using
+`BFormRadioGroup`, `BFormCheckboxGroup`, `BFormRadio`, `BFormCheckbox` or
+`BFormFile` components (or when placing multiple inputs in the same form group), as these inputs
 include integrated label element(s) and the `<legend>` element is more suitable.
 
 You can also apply additional classes to the label via the `label-class` prop, such as responsive
@@ -95,7 +95,7 @@ It is also possible to specify how many columns the content should
 occupy in the row via the `content-cols` and `content-cols-{breakpoint}` props.
 
 When using both, the `label-cols` and `content-cols` props, make sure that the total amount of
-columns doesn't exceed `12`.
+columns does not exceed `12`.
 
 See the [Layout and Grid System](/docs/components/layout#how-it-works) docs for further information.
 
@@ -199,7 +199,7 @@ Alignment has no effect if the `label-sr-only` prop is set.
 
 ## Nested form groups
 
-Feel free to nest `<BFormGroup>` components to produce advanced form layouts and semantic grouping
+Feel free to nest `BFormGroup` components to produce advanced form layouts and semantic grouping
 of related form controls:
 
 <HighlightCard>
@@ -324,22 +324,22 @@ Bootstrap includes validation styles for `valid` and `invalid` states on most fo
 
 Generally speaking, you'll want to use a particular state for specific types of feedback:
 
-- `false` (denotes invalid state) is great for when there's a blocking or required field. A user
+- `false` (denotes invalid state) is great for when there is a blocking or required field. A user
   must fill in this field properly to submit the form
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout
   a form and want to encourage a user through the rest of the fields
 - `null` Displays no validation state (neither valid nor invalid)
 
-To apply one of the contextual state icons on `<BFormGroup>`, set the `state` prop to `false` (for
+To apply one of the contextual state icons on `BFormGroup`, set the `state` prop to `false` (for
 invalid), `true` (for valid), or `null` (no validation state).
 
 Bootstrap v5 uses sibling CSS selectors of `:invalid` or `:valid` inputs to show the feedback text.
 Some form controls (such as checkboxes, radios, and file inputs, or inputs inside input-groups) are
 wrapped in additional markup that will no longer make the feedback text a sibling of the input, and
 hence the feedback will not show. In these situations you will need to set the validity `state` on
-the `<BFormGroup>` _as well as_ the input.
+the `BFormGroup` _as well as_ the input.
 
-Feedback will be shown if the parent `<BForm>` component does _not_ have the `novalidate` prop set
+Feedback will be shown if the parent `BForm` component does _not_ have the `novalidate` prop set
 (or set to `false`) along with the `validated` prop set (and the input fails or passes native
 browser validation constraints such as `required`). Refer to Bootstrap v4's
 [Form component](https://getbootstrap.com/docs/4.5/components/forms/#validation) documentation for
@@ -354,7 +354,7 @@ Show optional invalid state feedback text to provide textual state feedback (htm
 setting the prop `invalid-feedback` or using the named slot `invalid-feedback`.
 
 Invalid feedback is rendered using the
-[`<BFormInvalidFeedback>`](/docs/components/form#helper-components) form sub-component.
+[`BFormInvalidFeedback`](/docs/components/form#helper-components) form sub-component.
 
 ### Valid feedback
 
@@ -362,7 +362,7 @@ Show optional valid state feedback text to provide textual state feedback (html 
 setting the prop `valid-feedback` or using the named slot `valid-feedback`.
 
 Valid feedback is rendered using the
-[`<BFormValidFeedback>`](/docs/components/form#helper-components) form sub-component.
+[`BFormValidFeedback`](/docs/components/form#helper-components) form sub-component.
 
 ### Feedback style
 
@@ -372,18 +372,18 @@ the feedback so that it shows as a static tooltip when visible, by setting the p
 
 ### Feedback limitations
 
-**Note:** When using `<BInputGroup>`, `<BFormFile>`, `<BFormRadioGroup>`, `<BFormRadio>`,
-`<BFormCheckboxGroup>` or `<BFormCheckbox>` inside a `<BFormGroup>`, setting an invalid (or
+**Note:** When using `BInputGroup`, `BFormFile`, `BFormRadioGroup`, `BFormRadio`,
+`BFormCheckboxGroup` or `BFormCheckbox` inside a `BFormGroup`, setting an invalid (or
 valid) `state` on the `input` alone will **not** trigger the invalid (or valid) feedback to show
 (due to limitations with the new Bootstrap v4 validation CSS). To get around this, **you must also**
-set the invalid/valid `state` on `<BFormGroup>`. Native browser validation will **not** trigger
+set the invalid/valid `state` on `BFormGroup`. Native browser validation will **not** trigger
 the invalid feedback to show when using one of the above-mentioned form controls.
 
 ## Floating labels
 
 BFormGroup supports the new and fancy [Floating labels](https://getbootstrap.com/docs/5.3/forms/floating-labels/) feature of Bootstrap 5.
 
-You can make a floating label by setting the property `floating` to true and specify a placeholder on the `<BFormInput>`.
+You can make a floating label by setting the property `floating` to true and specify a placeholder on the `BFormInput`.
 
 ### Example
 
@@ -442,32 +442,32 @@ const floatingInvalidFeedback = computed(() =>
 There are restrictions on the use of floating labels.
 
 - floating labels do not work in horizontal layout. Horizontal layout precedes the `floating` property. Do not set any of the `content-cols-` or `label-cols-` properties if you want floating labels
-- the `<BFormInput>` must have a placeholder property set
+- the `BFormInput` must have a placeholder property set
 
 ## Accessibility
 
-By default, when no `label-for` value is provided, `<BFormGroup>` renders the input control(s)
+By default, when no `label-for` value is provided, `BFormGroup` renders the input control(s)
 inside an HTML `<fieldset>` element with the label content placed inside the fieldset's `<legend>`
 element. By nature of this markup, the legend content is automatically associated to the containing
 input control(s).
 
 It is **highly recommended** that you provide a unique `id` prop on your input element and set the
-`label-for` prop to this Id, when you have only a single input in the `<BFormGroup>`.
+`label-for` prop to this Id, when you have only a single input in the `BFormGroup`.
 
-When multiple form controls are placed inside `<BFormGroup>` (i.e. a series or radio or checkbox
+When multiple form controls are placed inside `BFormGroup` (i.e. a series or radio or checkbox
 inputs, or a series of related inputs), **do not set** the `label-for` prop, as a label can only be
 associated with a single input. It is best to use the default rendered markup that produces a
 `<fieldset>` + `<legend>` which will describe the group of inputs.
 
-When placing multiple form controls inside a `<BFormGroup>` (and you are not nesting
-`<BFormGroup>` components), it is recommended to give each control its own associated `label`
+When placing multiple form controls inside a `BFormGroup` (and you are not nesting
+`BFormGroup` components), it is recommended to give each control its own associated `label`
 (which may be visually hidden using the `.visually-hidden` class) and set the labels `for` attribute to the
 `id` of the associated input control. Alternatively, you can set the `aria-label` attribute on each
-input control instead of using a `label`. For `b-form-radio` and `b-form-checkbox` (or the
+input control instead of using a `label`. For `BFormRadio` and `BFormCheckbox` (or the
 group versions), you do not need to set individual labels, as the rendered markup for these types of
 inputs already includes a `label` element.
 
-When the `<BFormGroup>` has a `label-for` prop set, the `aria-describedby` attribute will be
+When the `BFormGroup` has a `label-for` prop set, the `aria-describedby` attribute will be
 auto-assigned to the input. When the form group has multiple form controls, make sure to set the
 attribute to each control yourself by using the `ariaDescribedby` prop value from the optionally
 scoped `default` slot.
