@@ -101,10 +101,12 @@
         <div v-if="isInvalid" class="d-block invalid-feedback">
           {{ invalidTagText }}: {{ inputValue }}
         </div>
-        <small v-if="isDuplicate" class="form-text text-muted"
+        <small v-if="isDuplicate" class="form-text text-body-secondary"
           >{{ duplicateTagText }}: {{ inputValue }}</small
         >
-        <small v-if="tags.length === limit" class="form-text text-muted">Tag limit reached</small>
+        <small v-if="tags.length === limit" class="form-text text-body-secondary"
+          >Tag limit reached</small
+        >
       </div>
     </slot>
     <template v-if="name">

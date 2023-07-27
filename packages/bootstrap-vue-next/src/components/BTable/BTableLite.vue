@@ -4,6 +4,7 @@
     :borderless="borderless"
     :border-variant="borderVariant"
     :caption-top="captionTop"
+    :dark="dark"
     :hover="hover"
     :responsive="responsive"
     :striped="striped"
@@ -176,6 +177,7 @@ const props = withDefaults(
     borderless?: Booleanish
     bordered?: Booleanish
     borderVariant?: ColorVariant | null
+    dark?: Booleanish
     fields?: TableField[]
     footClone?: Booleanish
     hover?: Booleanish
@@ -203,6 +205,7 @@ const props = withDefaults(
     captionTop: false,
     borderless: false,
     bordered: false,
+    dark: false,
     fields: () => [],
     footClone: false,
     hover: false,

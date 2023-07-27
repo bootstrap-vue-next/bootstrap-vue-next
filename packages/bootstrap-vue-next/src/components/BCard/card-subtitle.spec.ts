@@ -56,6 +56,6 @@ describe('card-subtitle', () => {
     expect(wrapper.classes()).toContain('text-primary')
     await wrapper.setProps({textVariant: undefined})
     expect(wrapper.classes()).not.toContain('text-primary')
-    expect(wrapper.classes()).toContain('text-muted')
+    expect(wrapper.classes()).toContain('text-body-secondary')
   })
 })
