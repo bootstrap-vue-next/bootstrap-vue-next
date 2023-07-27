@@ -80,7 +80,7 @@ const emit = defineEmits<{
   'input': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
   'change': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
   'update:modelValue': [
-    value: boolean | string | unknown[] | Record<string, unknown> | number | null
+    value: boolean | string | unknown[] | Record<string, unknown> | number | null,
   ]
 }>()
 

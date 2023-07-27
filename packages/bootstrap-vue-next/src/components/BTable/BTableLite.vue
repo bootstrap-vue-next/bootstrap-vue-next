@@ -228,7 +228,7 @@ const emit = defineEmits<{
     key: TableFieldObject['key'],
     field: TableField,
     event: MouseEvent,
-    isFooter: boolean
+    isFooter: boolean,
   ]
   'row-clicked': [item: TableItem, index: number, event: MouseEvent]
   'row-dbl-clicked': [item: TableItem, index: number, event: MouseEvent]
