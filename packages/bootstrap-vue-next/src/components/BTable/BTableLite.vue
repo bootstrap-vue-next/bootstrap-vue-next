@@ -155,14 +155,11 @@ import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import {get, isObject, startCase, titleCase} from '../../utils'
 import type {
-  Booleanish,
-  Breakpoint,
-  ClassValue,
-  ColorVariant,
+  BTableLiteProps,
+  BTableSimpleProps,
   TableField,
   TableFieldObject,
   TableItem,
-  VerticalAlign,
 } from '../../types'
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
@@ -170,33 +167,7 @@ import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
 import {useToNumber} from '@vueuse/shared'
 
 const props = withDefaults(
-  defineProps<{
-    align?: VerticalAlign
-    caption?: string
-    captionTop?: Booleanish
-    borderless?: Booleanish
-    bordered?: Booleanish
-    borderVariant?: ColorVariant | null
-    dark?: Booleanish
-    fields?: TableField[]
-    footClone?: Booleanish
-    hover?: Booleanish
-    items?: TableItem[]
-    responsive?: boolean | Breakpoint
-    small?: Booleanish
-    striped?: Booleanish
-    stacked?: boolean | Breakpoint
-    labelStacked?: boolean
-    variant?: ColorVariant | null
-    stickyHeader?: Booleanish
-    showEmpty?: Booleanish
-    emptyText?: string
-    emptyFilteredText?: string
-    tableClass?: ClassValue
-    fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
-    tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
-    virtualFields?: number | string
-  }>(),
+  defineProps<BTableLiteProps & Omit<BTableSimpleProps, 'tableVariant'>>(),
   {
     variant: undefined,
     borderVariant: undefined,

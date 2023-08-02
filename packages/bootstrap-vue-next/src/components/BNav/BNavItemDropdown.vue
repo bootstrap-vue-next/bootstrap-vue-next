@@ -23,7 +23,7 @@ import type {Booleanish, ButtonVariant, ClassValue, Size} from '../../types'
 import {omit} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
 
-// TODO see how this works in a b-collapse navbar ie https://bootstrap-vue.org/docs/components/navbar first example
+// TODO share props with BDropdown
 const props = withDefaults(
   defineProps<{
     id?: string

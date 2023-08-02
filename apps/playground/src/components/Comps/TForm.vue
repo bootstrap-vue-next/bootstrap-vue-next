@@ -1,12 +1,8 @@
 <template>
   <BContainer fluid>
-    <!-- TODO doing @submit.stop.prevent alone is not allowed -->
-    <!-- This is an issue for people that want to stop propogation -->
-    <!-- A workaround is to do () => {} -->
-    <!-- But that's not a great solution -->
     <BRow>
       <BCol>
-        <BForm @submit.stop.prevent="() => {}">
+        <BForm @submit.stop.prevent>
           <label for="text-password">Password</label>
           <BFormInput
             id="text-password"

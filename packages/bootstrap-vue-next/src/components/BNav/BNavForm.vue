@@ -13,17 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../../types'
+import type {BFormProps} from '../../types'
 import BForm from '../BForm/BForm.vue'
 
-const props = withDefaults(
-  defineProps<{
-    role?: string
-    id?: string // Extend BFormProps
-    floating?: Booleanish
-    novalidate?: Booleanish
-    validated?: Booleanish
-  }>(),
+withDefaults(
+  defineProps<
+    {
+      role?: string
+    } & BFormProps
+  >(),
   {
     role: undefined,
     id: undefined,
