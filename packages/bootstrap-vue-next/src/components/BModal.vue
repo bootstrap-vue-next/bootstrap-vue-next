@@ -42,7 +42,12 @@
                   >
                     <slot name="header-close" />
                   </BButton>
-                  <BCloseButton v-else v-bind="headerCloseAttrs" @click="hide('close')" />
+                  <BCloseButton
+                    v-else
+                    :aria-label="headerCloseLabel"
+                    v-bind="headerCloseAttrs"
+                    @click="hide('close')"
+                  />
                 </template>
               </slot>
             </div>
@@ -140,7 +145,6 @@ const props = withDefaults(
     headerClass?: ClassValue
     headerCloseClass?: ClassValue
     headerCloseLabel?: string
-    headerCloseWhite?: Booleanish
     headerCloseVariant?: ButtonVariant | null
     headerTextVariant?: ColorVariant | null
     hideBackdrop?: Booleanish
@@ -184,7 +188,6 @@ const props = withDefaults(
     headerClass: undefined,
     headerCloseClass: undefined,
     headerCloseLabel: 'Close',
-    headerCloseWhite: false,
     headerCloseVariant: 'secondary',
     footerBgVariant: null,
     footerBorderVariant: null,
@@ -369,10 +372,8 @@ const headerClasses = computed(() => [
 const headerCloseClasses = computed(() => [props.headerCloseClass])
 
 const headerCloseAttrs = computed(() => ({
-  'variant': hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
-  'white': !hasHeaderCloseSlot.value ? props.headerCloseWhite : undefined,
-  'class': headerCloseClasses.value,
-  'aria-label': props.headerCloseLabel,
+  variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
+  class: headerCloseClasses.value,
 }))
 
 const footerClasses = computed(() => [

@@ -276,16 +276,6 @@ describe('modal', () => {
     expect($bclosebutton.classes()).toContain('foobar')
   })
 
-  it('nested div BCloseButton has class when prop headerCloseWhite', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {headerCloseWhite: true},
-    })
-    const $div = wrapper.get('div')
-    const $bclosebutton = $div.getComponent(BCloseButton)
-    expect($bclosebutton.classes()).toContain('btn-close-white')
-  })
-
   it('nested div BCloseButton has no variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
@@ -326,17 +316,6 @@ describe('modal', () => {
     expect($bbutton.classes()).toContain('foobar')
   })
 
-  it('nested div BButton has class when prop headerCloseWhite', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {headerCloseWhite: true},
-      slots: {'header-close': 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.classes()).not.toContain('btn-close-white')
-  })
-
   it('nested div BButton has variant class when headerCloseVariant', () => {
     const wrapper = mount(BModal, {
       global: {stubs: {teleport: true}},
@@ -346,27 +325,6 @@ describe('modal', () => {
     const $div = wrapper.get('div')
     const $bbutton = $div.getComponent(BButton)
     expect($bbutton.classes()).toContain('btn-warning')
-  })
-
-  it('nested div BButton has aria-label to be Close by default', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      slots: {'header-close': 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.attributes('aria-label')).toBe('Close')
-  })
-
-  it('nested div BButton has aria-label to be prop headerCloseLabel', () => {
-    const wrapper = mount(BModal, {
-      global: {stubs: {teleport: true}},
-      props: {headerCloseLabel: 'foobar'},
-      slots: {'header-close': 'foobar'},
-    })
-    const $div = wrapper.get('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.attributes('aria-label')).toBe('foobar')
   })
 
   // Test isActive states
