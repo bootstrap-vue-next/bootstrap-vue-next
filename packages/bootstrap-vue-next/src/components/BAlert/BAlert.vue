@@ -16,7 +16,7 @@
             {{ closeContent }}
           </slot>
         </BButton>
-        <BCloseButton v-else aria-label="closeLabel" v-bind="closeAttrs" @click="hide" />
+        <BCloseButton v-else :aria-label="closeLabel" v-bind="closeAttrs" @click="hide" />
       </template>
     </div>
   </BTransition>
@@ -37,7 +37,6 @@ const props = withDefaults(
     closeVariant?: ButtonVariant | null
     closeClass?: ClassValue
     closeLabel?: string
-    closeWhite?: Booleanish
     closeContent?: string
     noHoverPause?: Booleanish
     dismissible?: Booleanish
@@ -52,7 +51,6 @@ const props = withDefaults(
     closeVariant: 'secondary',
     closeClass: undefined,
     closeLabel: 'Close',
-    closeWhite: false,
     closeContent: undefined,
     noHoverPause: false,
     interval: 1000,
@@ -126,7 +124,6 @@ const isAlertVisible = computed<boolean>(() =>
 
 const closeAttrs = computed(() => ({
   variant: hasCloseSlot.value ? props.closeVariant : undefined,
-  white: !hasCloseSlot.value ? props.closeWhite : undefined,
   class: closeClasses.value,
 }))
 
