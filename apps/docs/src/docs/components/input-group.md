@@ -71,7 +71,7 @@ You can attach addons using either props, named slots and/or sub-components.
 
 ### Using `prepend` and `append` props
 
-Values will be internally wrapped by a `<BInputGroupText>` to display correctly.
+Values will be internally wrapped by a `BInputGroupText` to display correctly.
 
 <HighlightCard>
   <BInputGroup prepend="$" append=".00">
@@ -100,7 +100,7 @@ Values will be internally wrapped by a `<BInputGroupText>` to display correctly.
 if you want better control over addons, you can use `prepend` and `append` slots instead.
 
 The slot content will automatically be wrapped by
-[`<BInputGroupPrepend>` or `<BInputGroupAppend>`](#using-sub-components) to display correctly.
+[`BInputGroupPrepend` or `BInputGroupAppend`](#using-sub-components) to display correctly.
 
 <HighlightCard>
   <BInputGroup>
@@ -137,7 +137,7 @@ The slot content will automatically be wrapped by
 
 ### Using sub-components
 
-Use the `<BInputGroupPrepend>` or `<BInputGroupAppend>` to add arbitrary addons wherever you
+Use the `BInputGroupPrepend` or `BInputGroupAppend` to add arbitrary addons wherever you
 like, and use these components to group buttons in your input group. Single buttons must always be
 wrapped in these components for proper styling.
 
@@ -170,30 +170,30 @@ wrapped in these components for proper styling.
   </template>
 </HighlightCard>
 
-Set the `is-text` prop on `<BInputGroupPrepend>` or `<BInputGroupAppend>` if the content is
-textual in nature to apply proper styling. Alternatively, place the `<BInputGroupText>`
-subcomponent inside the `<BInputGroupPrepend>` or `<BInputGroupAppend>`.
+Set the `is-text` prop on `BInputGroupPrepend` or `BInputGroupAppend` if the content is
+textual in nature to apply proper styling. Alternatively, place the `BInputGroupText`
+subcomponent inside the `BInputGroupPrepend` or `BInputGroupAppend`.
 
 ## Supported form-controls
 
 The following are the form controls supported as the input-group's _main_ input element:
 
-- [`<BFormInput>`](/docs/components/form-input)
-- [`<BFormTextarea>`](/docs/components/form-textarea)
-- [`<BFormSelect>`](/docs/components/form-select)
-- [`<BFormFile>`](/docs/components/form-file)
-- [`<BFormRating>`](/docs/components/form-rating)
-- [`<BFormTags>`](/docs/components/form-tags)
-- [`<BFormSpinButton>`](/docs/components/form-spinbutton)
-- [`<BFormDatepicker>`](/docs/components/form-datepicker)
-- [`<BFormTimepicker>`](/docs/components/form-timepicker)
+- [`BFormInput`](/docs/components/form-input)
+- [`BFormTextarea`](/docs/components/form-textarea)
+- [`BFormSelect`](/docs/components/form-select)
+- [`BFormFile`](/docs/components/form-file)
+- [`BFormRating`](/docs/components/form-rating)
+- [`BFormTags`](/docs/components/form-tags)
+- [`BFormSpinButton`](/docs/components/form-spinbutton)
+- [`BFormDatepicker`](/docs/components/form-datepicker)
+- [`BFormTimepicker`](/docs/components/form-timepicker)
 
 **Notes:**
 
-- ~~BootstrapVueNext uses custom SCSS/CSS to handling sizing the `<BFormFile>` input when it is placed
-  in a `<BInputGroup>` which has a [`size`](#control-sizing) specified~~
-- ~~BootstrapVueNext uses custom SCSS/CSS when `<BFormInput type="range">` is placed in a `<BInputGroup>`~~
-- ~~BootstrapVueNext's custom components (i.e. `<BFormSpinButton>`, `<BFormRating>`, `<BFormTags>`,
+- ~~BootstrapVueNext uses custom SCSS/CSS to handling sizing the `BFormFile` input when it is placed
+  in a `BInputGroup` which has a [`size`](#control-sizing) specified~~
+- ~~BootstrapVueNext uses custom SCSS/CSS when `<BFormInput type="range">` is placed in a `BInputGroup`~~
+- ~~BootstrapVueNext's custom components (i.e. `BFormSpinButton`, `BFormRating`, `BFormTags`,
   etc.) require BootstrapVueNext's custom SCSS/CSS~~
 
 ## Checkbox and radio addons
@@ -201,7 +201,7 @@ The following are the form controls supported as the input-group's _main_ input 
 Place any checkbox or radio within an input group's addon instead of text.
 
 **Note:** Bootstrap v5 recommends adding `.mt-0` to the `.form-check-input` when there’s no visible text next to the input.
-It is also possible to use as `<BFormRadio>` and `<BFormCheckbox>` with a few utility
+It is also possible to use as `BFormRadio` and `BFormCheckbox` with a few utility
 classes applied.
 
 ### Native checkbox and radio addons
@@ -242,7 +242,7 @@ classes applied.
 
 ### Custom radio, checkbox, and switch addons
 
-Using `<BFormCheckbox>` and `<BFormRadio>` components as addons, using Bootstrap
+Using `BFormCheckbox` and `BFormRadio` components as addons, using Bootstrap
 [utility classes](/docs/reference/utility-classes) for additional styling to get them to "fit" in
 the addon:
 
@@ -440,7 +440,7 @@ To control width, place the input inside standard Bootstrap grid column.
 
 ### Sizing custom radio, checkbox and switch addons
 
-If using `<BFormRadio>` or `<BFormCheckbox>` as addons, additional utility classes may be
+If using `BFormRadio` or `BFormCheckbox` as addons, additional utility classes may be
 required to make everything fit correctly, depending on the size chosen:
 
 <HighlightCard>
@@ -485,7 +485,7 @@ required to make everything fit correctly, depending on the size chosen:
   </template>
 </HighlightCard>
 
-Specifically, when using the `sm` size on `<BInputGroup>` you will need to add a negative bottom
+Specifically, when using the `sm` size on `BInputGroup` you will need to add a negative bottom
 margin, via the use of the `.mb-n1` [utility class](/docs/reference/utility-classes).
 
 ## Contextual states

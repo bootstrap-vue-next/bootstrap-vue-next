@@ -11,7 +11,7 @@
 <div class="lead mb-5">
 
 Bootstrap Vue offers several utility components to assist in building your grid layout.
-Using `<BContainer>` and a combination of `<BRow>` and `<BCol>`, a responsive layout can be built with ease.
+Using `BContainer` and a combination of `BRow` and `BCol`, a responsive layout can be built with ease.
 For more detailed documentation and understanding, please visit Bootstrap's official Grid System.
 
 </div>

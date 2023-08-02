@@ -62,8 +62,8 @@ const breadcrumbStringArray = ['Admin', 'Manage', 'Library']
 
 ## Manually placed items
 
-You may also manually place individual `<BBreadcrumbItem>` child components in the default slot of
-the `<BBreadcrumb>` component, as an alternative to using the `items` prop, for greater control
+You may also manually place individual `BBreadcrumbItem` child components in the default slot of
+the `BBreadcrumb` component, as an alternative to using the `items` prop, for greater control
 over the content of each item:
 
 <HighlightCard>
@@ -97,7 +97,7 @@ const alertEvent = (event: PointerEvent) => {
 
 Remember to set the `active` prop on the last item.
 
-`<BBreadcrumbItem>` also supports the various `<RouterLink>` props such as `to`, etc.
+`BBreadcrumbItem` also supports the various `RouterLink` props such as `to`, etc.
 
 ## Slots
 

@@ -29,7 +29,7 @@
             <BButton @click="tabIndex++">Next</BButton>
           </BButtonGroup>
 
-          <div class="text-muted">Current Tab: {{ tabIndex }}</div>
+          <div class="text-body-secondary">Current Tab: {{ tabIndex }}</div>
         </div>
       </BCol>
     </BRow>

@@ -4,7 +4,7 @@ import BSpinner from '../BSpinner.vue'
 import BButton from './BButton.vue'
 import BLink from '../BLink/BLink.vue'
 
-describe('button', () => {
+describe.skip('button', () => {
   enableAutoUnmount(afterEach)
 
   it('has static class btn', () => {

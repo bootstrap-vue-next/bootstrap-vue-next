@@ -11,13 +11,13 @@
 <div class="lead mb-5">
 
 Quick first, previous, next, last, and page buttons for pagination control of another component
-(such as `<BTable>` or lists).
+(such as `BTable` or lists).
 
 </div>
 
 ## Customizing appearance
 
-`<BPagination>` supports several props/slots that allow you to customize the appearance. All
+`BPagination` supports several props/slots that allow you to customize the appearance. All
 `*-text` props are text-only and strip out HTML, but you can use their equally named slot
 counterparts for that.
 
@@ -34,7 +34,7 @@ The showing of the `ellipsis` can be optionally disabled by setting the `hide-el
 
 #### Small screen support
 
-On smaller screens (i.e. mobile), some of the `<BPagination>` buttons will be hidden to minimize
+On smaller screens (i.e. mobile), some of the `BPagination` buttons will be hidden to minimize
 the potential of the pagination interface wrapping onto multiple lines:
 
 - The ellipsis indicators will be hidden on screens `xs` and smaller
@@ -203,20 +203,10 @@ use the `first-number` and `last-number` props.
 ```vue
 <template>
   <h6>Goto first button number</h6>
-  <BPagination
-    v-model="ex2CurrentPage"
-    :total-rows="ex2Rows"
-    :per-page="ex2PerPage"
-    first-number
-  />
+  <BPagination v-model="ex2CurrentPage" :total-rows="ex2Rows" :per-page="ex2PerPage" first-number />
 
   <h6>Goto last button number</h6>
-  <BPagination
-    v-model="ex2CurrentPage"
-    :total-rows="ex2Rows"
-    :per-page="ex2PerPage"
-    last-number
-  />
+  <BPagination v-model="ex2CurrentPage" :total-rows="ex2Rows" :per-page="ex2PerPage" last-number />
 
   <h6>Goto first and last button number</h6>
   <BPagination
@@ -376,23 +366,23 @@ selected. The event is emitted with two arguments:
 
 For accessibility reasons, when using the `page-click` event to prevent a page from being selected,
 you should provide some means of notification to the user as to why the page is not able to be
-selected. It is recommended to use the `disabled` attribute on the `<BPagination>` component
+selected. It is recommended to use the `disabled` attribute on the `BPagination` component
 instead of using the `page-click` event (as `disabled` is more intuitive for screen reader users).
 
 ## Accessibility
 
-The `<BPagination>` component provides many features to support assistive technology users, such as
+The `BPagination` component provides many features to support assistive technology users, such as
 `aria-` attributes and keyboard navigation.
 
 ### `aria-controls`
 
-When pagination is controlling another component on the page (such as `<BTable>`), set the
+When pagination is controlling another component on the page (such as `BTable`), set the
 `aria-controls` prop to the `id` of the element it is controlling. This will help non-sighted users
 know what component is being updated/controlled.
 
 ### ARIA labels
 
-`<BPagination>` provides various `*-label-*` props which are used to set the `aria-label`
+`BPagination` provides various `*-label-*` props which are used to set the `aria-label`
 attributes on the various elements within the component, which will help users of assistive
 technology.
 

@@ -23,12 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
+import type {BLinkProps, Booleanish, ColorVariant, LinkTarget} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, getCurrentInstance, inject, type PropType, useAttrs} from 'vue'
 import type {RouteLocation, RouteLocationRaw} from 'vue-router'
-import type {BLinkProps} from '../../types/BLinkProps'
 
 // TODO this component will likely have an issue with inheritAttrs
 defineSlots<{
@@ -152,7 +151,7 @@ const routerAttr = computed(() => ({
 }))
 
 const computedLinkClasses = computed(() => ({
-  active: activeBoolean.value,
+  [props.activeClass]: activeBoolean.value,
   disabled: disabledBoolean.value,
 }))
 
@@ -162,7 +161,10 @@ const clicked = (e: MouseEvent): void => {
     e.stopImmediatePropagation()
     return
   }
-  collapseData?.close?.()
+
+  if (collapseData?.isNav?.value === true) {
+    collapseData?.close?.()
+  }
 
   emit('click', e)
 }

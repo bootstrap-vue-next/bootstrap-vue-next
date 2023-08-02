@@ -2,11 +2,12 @@
   <li class="nav-item">
     <BLink
       class="nav-link"
-      :class="linkClasses"
-      v-bind="{...linkProps, ...linkAttrs}"
-      active-class="active"
+      :class="linkClass"
+      v-bind="{...computedLinkProps, ...linkAttrs}"
+      :active-class="activeClass ?? 'active'"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
+      @click.stop="emit('click', $event)"
     >
       <slot />
     </BLink>
@@ -17,8 +18,8 @@
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import {useBooleanish} from '../../composables'
-import type {BLinkProps} from '../../types/BLinkProps'
-import {pluckProps} from '../../utils'
+import type {BLinkProps, ClassValue} from '../../types'
+import {pick} from '../../utils'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,12 +29,12 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      linkClasses?: string
+      linkClass?: ClassValue
       linkAttrs?: Record<string, unknown>
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
-    linkClasses: undefined,
+    linkClass: undefined,
     // Link props
     active: undefined,
     activeClass: 'router-link-active',
@@ -61,29 +62,33 @@ const props = withDefaults(
   }
 )
 
+const emit = defineEmits<{
+  click: [value: MouseEvent]
+}>()
+
 const disabledBoolean = useBooleanish(() => props.disabled)
 
-const linkProps = computed(() =>
-  pluckProps(props, {
-    active: true,
-    activeClass: true,
-    append: true,
-    disabled: true,
-    href: true,
-    icon: true,
-    opacity: true,
-    opacityHover: true,
-    rel: true,
-    replace: true,
-    routerComponentName: true,
-    target: true,
-    to: true,
-    underlineOffset: true,
-    underlineOffsetHover: true,
-    underlineOpacity: true,
-    underlineOpacityHover: true,
-    underlineVariant: true,
-    variant: true,
-  } satisfies Record<keyof Omit<BLinkProps, 'event' | 'routerTag'>, true>)
+const computedLinkProps = computed(() =>
+  pick(props, [
+    'active',
+    'activeClass',
+    'append',
+    'disabled',
+    'href',
+    'icon',
+    'opacity',
+    'opacityHover',
+    'rel',
+    'replace',
+    'routerComponentName',
+    'target',
+    'to',
+    'underlineOffset',
+    'underlineOffsetHover',
+    'underlineOpacity',
+    'underlineOpacityHover',
+    'underlineVariant',
+    'variant',
+  ])
 )
 </script>

@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `<RouterLink>`. `<BLink>` supports the disabled state and click event propagation.
+Use BootstrapVue's custom b-link component for generating a standard `<a>` link or `RouterLink`. `BLink` supports the disabled state and click event propagation.
 
 </div>
 

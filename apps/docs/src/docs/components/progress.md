@@ -41,7 +41,7 @@ Documentation and examples for using Bootstrap custom progress bars featuring su
 
 Set the maximum value with the `max` prop (default is `100`), and the current value via the `value` prop (default `0`).
 
-When creating multiple bars in a single process, place the value prop on the individual `<BProgressBar>` sub-components (see the Multiple Bars section below for more details)
+When creating multiple bars in a single process, place the value prop on the individual `BProgressBar` sub-components (see the Multiple Bars section below for more details)
 
 ## Labels
 
@@ -80,7 +80,7 @@ Add labels to your progress bars by either enabling `show-progress` (percentage 
 
 ### Custom progress label
 
-Need more control over the label? Provide your own label by using the default slot within a `<BProgressBar>` sub-component, or by using the `label` or `label-html` property on `<BProgressBar>`:
+Need more control over the label? Provide your own label by using the default slot within a `BProgressBar` sub-component, or by using the `label` or `label-html` property on `BProgressBar`:
 
 <HighlightCard>
   <BCard>
@@ -170,7 +170,7 @@ Use background variants to change the appearance of individual progress bars. Th
 
 ## Multiple bars
 
-Include multiple `<BProgressBar>` sub-components in a `<BProgress>` component to build a horizontally stacked set of progress bars.
+Include multiple `BProgressBar` sub-components in a `BProgress` component to build a horizontally stacked set of progress bars.
 
 <HighlightCard>
   <BCard>
@@ -229,10 +229,10 @@ The striped gradient can also be animated by setting the `animated` prop.
   </BCard>
   <template #html>
 
-```vue-html
+```vue
 <template>
-<BProgress :value="75" striped :animated="animate" />
-<BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
+  <BProgress :value="75" striped :animated="animate" />
+  <BButton class="mt-3" @click="animate = !animate">Toggle animation</BButton>
 </template>
 
 <script setup lang="ts">

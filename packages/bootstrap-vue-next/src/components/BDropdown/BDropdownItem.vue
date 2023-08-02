@@ -1,9 +1,15 @@
 <template>
-  <li role="presentation" :class="$attrs.class">
+  <li role="presentation">
     <component
       :is="tag"
       class="dropdown-item"
       :class="computedClasses"
+      :disabled="disabledBoolean"
+      :aria-current="activeBoolean ? true : null"
+      :href="tag === 'a' ? href : null"
+      :rel="rel"
+      :type="tag === 'button' ? 'button' : null"
+      :target="target"
       v-bind="componentAttrs"
       @click="clicked"
     >
@@ -72,12 +78,6 @@ const tag = computed<'button' | 'a' | typeof BLink>(() =>
 )
 
 const componentAttrs = computed(() => ({
-  'disabled': disabledBoolean.value,
-  'aria-current': activeBoolean.value ? true : null,
-  'href': tag.value === 'a' ? props.href : null,
-  'rel': props.rel,
-  'type': tag.value === 'button' ? 'button' : null,
-  'target': props.target,
   ...(attrs.to ? {activeClass: 'active', ...attrs} : attrs),
 }))
 

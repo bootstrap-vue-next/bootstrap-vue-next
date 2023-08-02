@@ -1,5 +1,5 @@
 <template>
-  <label v-if="hasLabelSlot || label" :for="computedId" class="form-label" :class="labelClasses">
+  <label v-if="hasLabelSlot || label" :for="computedId" class="form-label" :class="labelClass">
     <slot name="label">
       {{ label }}
     </slot>
@@ -60,7 +60,7 @@ const props = withDefaults(
     state?: Booleanish | null
     modelValue?: File[] | File | null
     label?: string
-    labelClasses?: ClassValue
+    labelClass?: ClassValue
   }>(),
   {
     accept: '',
@@ -79,7 +79,7 @@ const props = withDefaults(
     state: null,
     modelValue: null,
     label: '',
-    labelClasses: undefined,
+    labelClass: undefined,
   }
 )
 

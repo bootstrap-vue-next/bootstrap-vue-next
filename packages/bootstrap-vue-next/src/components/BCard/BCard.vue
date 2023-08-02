@@ -5,14 +5,30 @@
     </slot>
     <BCardHeader
       v-if="header || hasHeaderSlot || headerHtml"
-      v-bind="headerAttrs"
+      :bg-variant="headerBgVariant"
+      :border-variant="headerBorderVariant"
+      :html="headerHtml"
+      :tag="headerTag"
+      :text-variant="headerTextVariant"
       :class="headerClass"
     >
       <slot name="header">
         {{ header }}
       </slot>
     </BCardHeader>
-    <BCardBody v-if="!noBodyBoolean" v-bind="bodyAttrs" :class="bodyClass">
+    <BCardBody
+      v-if="!noBodyBoolean"
+      :overlay="overlay"
+      :body-bg-variant="bodyBgVariant"
+      :body-tag="bodyTag"
+      :body-text-variant="bodyTextVariant"
+      :subtitle="subtitle"
+      :subtitle-tag="subtitleTag"
+      :subtitle-text-variant="subtitleTextVariant"
+      :title="title"
+      :title-tag="titleTag"
+      :class="bodyClass"
+    >
       <slot>
         {{ bodyText }}
       </slot>
@@ -22,7 +38,11 @@
     </slot>
     <BCardFooter
       v-if="footer || hasFooterSlot || footerHtml"
-      v-bind="footerAttrs"
+      :bg-variant="footerBgVariant"
+      :border-variant="footerBorderVariant"
+      :html="footerHtml"
+      :tag="footerTag"
+      :text-variant="footerTextVariant"
       :class="footerClass"
     >
       <slot name="footer">
@@ -130,7 +150,7 @@ const props = withDefaults(
     noBody: false,
     overlay: false,
     subtitleTag: 'h6',
-    subtitleTextVariant: 'muted',
+    subtitleTextVariant: 'body-secondary',
     tag: 'div',
     titleTag: 'h4',
   }
@@ -164,34 +184,6 @@ const computedClasses = computed(() => ({
   [`border-${props.borderVariant}`]: props.borderVariant !== null,
   'flex-row': imgStartBoolean.value,
   'flex-row-reverse': imgEndBoolean.value,
-}))
-
-const headerAttrs = computed(() => ({
-  bgVariant: props.headerBgVariant,
-  borderVariant: props.headerBorderVariant,
-  html: props.headerHtml,
-  tag: props.headerTag,
-  textVariant: props.headerTextVariant,
-}))
-
-const bodyAttrs = computed(() => ({
-  overlay: props.overlay,
-  bodyBgVariant: props.bodyBgVariant,
-  bodyTag: props.bodyTag,
-  bodyTextVariant: props.bodyTextVariant,
-  subtitle: props.subtitle,
-  subtitleTag: props.subtitleTag,
-  subtitleTextVariant: props.subtitleTextVariant,
-  title: props.title,
-  titleTag: props.titleTag,
-}))
-
-const footerAttrs = computed(() => ({
-  bgVariant: props.footerBgVariant,
-  borderVariant: props.footerBorderVariant,
-  html: props.footerHtml,
-  tag: props.footerTag,
-  textVariant: props.footerTextVariant,
 }))
 
 const imgAttr = computed(() => ({

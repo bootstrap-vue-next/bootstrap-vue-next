@@ -249,7 +249,6 @@ export default defineComponent({
     const onKeydown = (event: KeyboardEvent) => {
       const {code, altKey, ctrlKey, metaKey} = event
 
-      /* istanbul ignore if */
       if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) {
         return
       }
@@ -257,7 +256,6 @@ export default defineComponent({
       if (KEY_CODES.includes(code)) {
         // https://w3c.github.io/aria-practices/#spinbutton
         stopEvent(event, {propagation: false})
-        /* istanbul ignore if */
         if ($_keyIsDown) {
           // Keypress is already in progress
           return
@@ -292,7 +290,6 @@ export default defineComponent({
 
       const {code, altKey, ctrlKey, metaKey} = event
 
-      /* istanbul ignore if */
       if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) {
         return
       }
@@ -309,7 +306,6 @@ export default defineComponent({
       const {type} = event || {}
 
       if (!props.disabled && !props.readonly) {
-        /* istanbul ignore if */
         if (isMouseEvent(event)) {
           if (type === 'mousedown' && event.button) {
             // We only respond to left (main === 0) button clicks
@@ -346,7 +342,6 @@ export default defineComponent({
     const onMouseup: EventListener = (event: Event) => {
       // `<body>` listener, only enabled when mousedown starts
 
-      /* istanbul ignore if */
       if (isMouseEvent(event)) {
         if (event.type === 'mouseup' && event.button) {
           // Ignore non left button (main === 0) mouse button click

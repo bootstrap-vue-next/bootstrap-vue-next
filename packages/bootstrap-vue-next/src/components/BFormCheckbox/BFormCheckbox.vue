@@ -98,13 +98,13 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'update:modelValue': [
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null,
   ]
   'input': [
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null,
   ]
   'change': [
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
+    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null,
   ]
 }>()
 

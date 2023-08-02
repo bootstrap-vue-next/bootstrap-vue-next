@@ -45,13 +45,13 @@ const slots = useSlots()
 
 const smallBoolean = useBooleanish(() => props.small)
 
-const computedClasses = computed(() => ({
-  'spinner-border': props.type === 'border',
-  'spinner-border-sm': props.type === 'border' && smallBoolean.value,
-  'spinner-grow': props.type === 'grow',
-  'spinner-grow-sm': props.type === 'grow' && smallBoolean.value,
-  [`text-${props.variant}`]: props.variant !== null,
-}))
+const computedClasses = computed(() => [
+  `spinner-${props.type}`,
+  {
+    [`spinner-${props.type}-sm`]: smallBoolean.value,
+    [`text-${props.variant}`]: props.variant !== null,
+  },
+])
 
 const hasLabelSlot = computed(() => !isEmptySlot(slots.label))
 </script>

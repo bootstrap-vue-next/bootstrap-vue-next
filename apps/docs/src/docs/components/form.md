@@ -22,7 +22,7 @@ Be sure to use an appropriate `type` on all inputs (e.g., `email` for email addr
 numerical information) to take advantage of newer input controls like email verification, number
 selection, and more.
 
-Here's a quick example to demonstrate BootstrapVueNext's form styles. Keep reading for documentation on
+Here is a quick example to demonstrate BootstrapVueNext's form styles. Keep reading for documentation on
 supported components, form layout, and more.
 
 <HighlightCard>
@@ -93,10 +93,10 @@ supported components, form layout, and more.
     </BFormGroup>
 
     <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
-      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required/>
+      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required />
     </BFormGroup>
     <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
-      <BFormSelect id="input-3" v-model="form.food" :options="foods" required/>
+      <BFormSelect id="input-3" v-model="form.food" :options="foods" required />
     </BFormGroup>
 
     <BFormGroup id="input-group-4">
@@ -279,7 +279,7 @@ Custom form controls and selects are also supported.
 
 ### Alternatives to hidden labels
 
-Assistive technologies such as screen readers will have trouble with your forms if you don't include
+Assistive technologies such as screen readers will have trouble with your forms if you do not include
 a label for every input. For these inline forms, you can hide the labels using the `.sr-only` class.
 There are further alternative methods of providing a label for assistive technologies, such as the
 `aria-label`, `aria-labelledby` or `title` attributes. If none of these are present, assistive
@@ -290,36 +290,36 @@ technologies may resort to using the `placeholder` attribute, if present, but no
 
 See also:
 
-- [`<BFormInput>`](/docs/components/form-input) Textual and text-like inputs
-- [`<BFormTextarea>`](/docs/components/form-textarea) Text area inputs
-- [`<BFormSelect>`](/docs/components/form-select) Select input
-- [`<BFormRadio>`](/docs/components/form-radio) Radio Inputs
-- [`<BFormCheckbox>`](/docs/components/form-checkbox) Checkbox Inputs
-- ~~[`<BFormFile>`](/docs/components/form-file) File Input~~
-- ~~[`<BFormDatepicker>`](/docs/components/form-datepicker) Date picker input~~
-- ~~[`<BFormSpinButton>`](/docs/components/form-spinbutton) Numerical range spinbutton input~~
-- ~~[`<BFormTags>`](/docs/components/form-tags) Customizable tag input~~
-- ~~[`<BFormTimepicker>`](/docs/components/form-timepicker) Time picker custom form input~~
-- ~~[`<BFormRating>`](/docs/components/form-rating) Star rating custom form input and display~~
-- [`<BButton>`](/docs/components/button) Buttons
-- [`<BFormGroup>`](/docs/components/form-group) Form Input wrapper to generate form-groups that
+- [`BFormInput`](/docs/components/form-input) Textual and text-like inputs
+- [`BFormTextarea`](/docs/components/form-textarea) Text area inputs
+- [`BFormSelect`](/docs/components/form-select) Select input
+- [`BFormRadio`](/docs/components/form-radio) Radio Inputs
+- [`BFormCheckbox`](/docs/components/form-checkbox) Checkbox Inputs
+- ~~[`BFormFile`](/docs/components/form-file) File Input~~
+- ~~[`BFormDatepicker`](/docs/components/form-datepicker) Date picker input~~
+- ~~[`BFormSpinButton`](/docs/components/form-spinbutton) Numerical range spinbutton input~~
+- ~~[`BFormTags`](/docs/components/form-tags) Customizable tag input~~
+- ~~[`BFormTimepicker`](/docs/components/form-timepicker) Time picker custom form input~~
+- ~~[`BFormRating`](/docs/components/form-rating) Star rating custom form input and display~~
+- [`BButton`](/docs/components/button) Buttons
+- [`BFormGroup`](/docs/components/form-group) Form Input wrapper to generate form-groups that
   support labels, help text and feedback
-- [`<BInputGroup>`](/docs/components/input) Form Inputs with add-ons
-- ~~[`<BFormRow>`](/docs/components/layout) Create grid rows and columns with tighter margins
+- [`BInputGroup`](/docs/components/input) Form Inputs with add-ons
+- ~~[`BFormRow`](/docs/components/layout) Create grid rows and columns with tighter margins
   (available via the [Layout and grid components](/docs/components/layout))~~
 
 ## Form helper components
 
 The following helper components are available with the `Form` plugin:
 
-- `<BFormText>` Help text blocks for inputs
-- `<BFormInvalidFeedback>` Invalid feedback text blocks for input `invalid` states
-- `<BFormValidFeedback>` Valid feedback text blocks for input `valid` states
-- ~~`<BFormDatalist>` Easily create a `<datalist>` for use with `<BFormInput>` or plain `<input>`~~
+- `BFormText` Help text blocks for inputs
+- `BFormInvalidFeedback` Invalid feedback text blocks for input `invalid` states
+- `BFormValidFeedback` Valid feedback text blocks for input `valid` states
+- ~~`BFormDatalist` Easily create a `<datalist>` for use with `BFormInput` or plain `<input>`~~
 
 ### Form text helper
 
-Display a block of help text below an input with the `<BFormText>` helper component. text is
+Display a block of help text below an input with the `BFormText` helper component. text is
 displayed with a muted color and slightly smaller font-size.
 
 **Tip:** Help text should be explicitly associated with the form control it relates to using the
@@ -361,7 +361,7 @@ will announce this help text when the user focuses or enters the control.
 
 ### Feedback helpers
 
-The `<BFormValidFeedback>` and `<BFormInvalidFeedback>` helper components will display
+The `BFormValidFeedback` and `BFormInvalidFeedback` helper components will display
 feedback (based on input state) as a block of colored text. They rely on being placed after an input
 (sibling) and will show based on the browser native validation state of the input. To force them to
 show, set the prop `force-show` to `true`, or bind the controls `state` to the `state` prop of the
@@ -375,9 +375,9 @@ class). Note that tooltip style feedback may, since its positioning is static, o
 labels, etc.
 
 **Note:** Some form controls, such as
-[`<BFormRadio>`](/docs/components/form-radio#contextual-states),
-[`<BFormCheckbox>`](/docs/components/form-checkbox#contextual-states), and
-~~[`<BFormFile>`](/docs/components/form-file)~~ have wrapper elements which will prevent the feedback
+[`BFormRadio`](/docs/components/form-radio#contextual-states),
+[`BFormCheckbox`](/docs/components/form-checkbox#contextual-states), and
+~~[`BFormFile`](/docs/components/form-file)~~ have wrapper elements which will prevent the feedback
 text from automatically showing (as the feedback component is not a direct sibling of the form
 control's input). Use the feedback component's `state` prop (bound to the state of the form control)
 or the `force-show` prop to display the feedback.
@@ -419,15 +419,15 @@ const validation = computed(() => userId.value.length > 4 && userId.value.length
 
 ## Validation
 
-Disable browser native HTML5 validation by setting the `novalidate` prop to true on `<BForm>`.
+Disable browser native HTML5 validation by setting the `novalidate` prop to true on `BForm`.
 
-Set the `validated` prop, on `<BForm>`, to `true` to add the Bootstrap v5 `.was-validated` class to
+Set the `validated` prop, on `BForm`, to `true` to add the Bootstrap v5 `.was-validated` class to
 the form to trigger validation states.
 
 All form controls support a `state` prop, which can be used to set the form control into one
 of three contextual states:
 
-- `false` (denotes invalid state) is great for when there's a blocking or required field. A user
+- `false` (denotes invalid state) is great for when there is a blocking or required field. A user
   must fill in this field properly to submit the form
 - `true` (denotes valid state) is ideal for situations when you have per-field validation throughout
   a form and want to encourage a user through the rest of the fields

@@ -9,9 +9,10 @@
 <script setup lang="ts">
 import {computed, provide, readonly, type StyleValue, toRef} from 'vue'
 import type {Booleanish, ColorVariant, Size} from '../../types'
-import {avatarGroupInjectionKey, isNumeric, toFloat} from '../../utils'
+import {avatarGroupInjectionKey} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
+import {useToNumber} from '@vueuse/shared'
 
 const props = withDefaults(
   defineProps<{
@@ -40,18 +41,14 @@ defineSlots<{
 const squareBoolean = useBooleanish(() => props.square)
 
 const computedSize = computed<string | null>(() => computeSize(props.size))
+const overlapNumber = useToNumber(() => props.overlap)
 
-const overlapScale = computed<number>(
-  () => Math.min(Math.max(computeOverlap(props.overlap), 0), 1) / 2
-)
+const overlapScale = computed<number>(() => Math.min(Math.max(overlapNumber.value, 0), 1) / 2)
 
 const paddingStyle = computed<StyleValue>(() => {
   const value = computedSize.value ? `calc(${computedSize.value} * ${overlapScale.value})` : null
   return value ? {paddingLeft: value, paddingRight: value} : {}
 })
-
-const computeOverlap = (value: any): number =>
-  typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value || 0
 
 provide(avatarGroupInjectionKey, {
   overlapScale,

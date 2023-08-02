@@ -24,7 +24,7 @@ const props = withDefaults(
     id: undefined,
     text: undefined,
     tag: 'small',
-    textVariant: 'muted',
+    textVariant: 'body-secondary',
   }
 )
 

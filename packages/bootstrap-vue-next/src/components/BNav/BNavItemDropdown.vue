@@ -1,6 +1,6 @@
 <template>
   <li class="nav-item dropdown">
-    <BDropdown v-model="dropdownValue" v-bind="usableProps" is-nav>
+    <BDropdown v-model="dropdownValue" v-bind="computedDropdownProps" is-nav>
       <template #button-content>
         <slot name="button-content" />
       </template>
@@ -32,7 +32,6 @@ const props = withDefaults(
     size?: Size
     offset?: string
     autoClose?: boolean | 'inside' | 'outside'
-    dark?: Booleanish
     splitVariant?: ButtonVariant | null
     noCaret?: Booleanish
     variant?: ButtonVariant | null
@@ -67,7 +66,6 @@ const props = withDefaults(
     size: 'md',
     offset: undefined,
     autoClose: undefined,
-    dark: undefined,
     splitVariant: undefined,
     noCaret: undefined,
     variant: 'link',
@@ -98,7 +96,7 @@ const dropdownValue = computed({
     modelValue.value = value
   },
 })
-const usableProps = computed(() => omit(props, ['modelValue'] as const))
+const computedDropdownProps = computed(() => omit(props, ['modelValue']))
 
 const close = () => {
   modelValue.value = false

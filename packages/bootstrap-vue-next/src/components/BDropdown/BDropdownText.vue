@@ -1,6 +1,6 @@
 <template>
   <li role="presentation">
-    <p class="px-4 py-1 mb-0 text-muted">
+    <p class="px-4 py-1 mb-0 text-body-secondary">
       <slot>
         {{ text }}
       </slot>

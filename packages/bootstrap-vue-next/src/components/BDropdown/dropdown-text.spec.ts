@@ -33,10 +33,10 @@ describe('dropdown-text', () => {
     expect($p.classes()).toContain('mb-0')
   })
 
-  it('child p tag has static class text-muted', () => {
+  it('child p tag has static class text-body-secondary', () => {
     const wrapper = mount(BDropdownText)
     const $p = wrapper.get('p')
-    expect($p.classes()).toContain('text-muted')
+    expect($p.classes()).toContain('text-body-secondary')
   })
 
   it('child p tag has static class py-1', () => {

@@ -1,6 +1,7 @@
 import type {AriaInvalid, ButtonVariant, Size} from '../types'
-import {computed, type MaybeRefOrGetter, toValue} from 'vue'
+import {computed, type MaybeRefOrGetter, toRef, toValue} from 'vue'
 import {resolveAriaInvalid} from '../utils'
+import useStateClass from './useStateClass'
 
 interface ClassesItemsInput {
   plain?: boolean
@@ -30,16 +31,20 @@ interface InputClassesItemsInput {
   state?: boolean | null
 }
 
-const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) =>
-  computed(() => {
-    const resolvedItems = toValue(items)
-    return {
-      'form-check-input': resolvedItems.plain === false && resolvedItems.button === false,
-      'is-valid': resolvedItems.state === true,
-      'is-invalid': resolvedItems.state === false,
-      'btn-check': resolvedItems.button === true,
-    }
-  })
+const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
+  const resolvedItems = toRef(items)
+
+  const stateClass = useStateClass(computed(() => resolvedItems.value.state ?? null))
+
+  return computed(() => [
+    stateClass.value,
+    {
+      'form-check-input':
+        resolvedItems.value.plain === false && resolvedItems.value.button === false,
+      'btn-check': resolvedItems.value.button === true,
+    },
+  ])
+}
 
 interface LabelClasesItemsInput {
   plain?: boolean

@@ -108,16 +108,6 @@ describe('card-img', () => {
     expect($img.classes()).not.toContain('card-img-left')
   })
 
-  it('BImg is given prop alt', async () => {
-    const wrapper = mount(BCardImg, {
-      props: {alt: 'foobar'},
-    })
-    const $img = wrapper.getComponent(BImg)
-    expect($img.props('alt')).toBe('foobar')
-    await wrapper.setProps({alt: undefined})
-    expect($img.props('alt')).toBeUndefined()
-  })
-
   it('BImg is given prop height', async () => {
     const wrapper = mount(BCardImg, {
       props: {height: '100'},

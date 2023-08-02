@@ -114,7 +114,7 @@ You can also replace the `.badge` class with a few more utilities without a coun
 
 ## Background colors
 
-Add any of the following variants via the `variant` prop to change the appearance of a `<BBadge>`: `default`, `primary`, `success`, `warning`, `info`, and `danger`. If no variant is specified `default` will be used.
+Add any of the following variants via the `variant` prop to change the appearance of a `BBadge`: `default`, `primary`, `success`, `warning`, `info`, and `danger`. If no variant is specified `default` will be used.
 
 <HighlightCard>
   <div class="d-flex mb-4" style="column-gap: 1%;">

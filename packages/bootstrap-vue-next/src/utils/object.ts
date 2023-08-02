@@ -1,37 +1,59 @@
 /**
  * Removes properties from an object, based on the values in an array, and returns the new object.
  * Equivalent to an object version of TS Omit<>
- *
- * @param {Record<PropertyKey, unknown>} objToPluck
- * @param {ReadonlyArray<PropertyKey>} keysToPluck
- * @returns
  */
-export const omit = <A extends Record<PropertyKey, unknown>, B extends ReadonlyArray<PropertyKey>>(
+export const omit = <
+  A extends Record<PropertyKey, unknown>,
+  const B extends ReadonlyArray<PropertyKey>,
+>(
   objToPluck: A,
-  keysToPluck: B
+  keysToPluck: B | (keyof A)[]
 ): Omit<A, B[number]> =>
   Object.keys(objToPluck)
-    .filter((key) => !keysToPluck.includes(key))
+    .filter((key) => !keysToPluck.map((el) => el.toString()).includes(key))
     .reduce((result, key) => ({...result, [key]: objToPluck[key]}), {} as Omit<A, B[number]>)
 
 /**
- * Deeply clones an item
- *
- * @param {T} source
- * @returns
+ * Picks properties from an object, base on the values in an array, and returns the new object.
+ * Equivalent to an object version of TS Pick<>
  */
-export const cloneDeep = <T>(source: T): T =>
-  Array.isArray(source)
-    ? source.map((item) => cloneDeep(item))
-    : source instanceof Date
-    ? new Date(source.getTime())
-    : source && typeof source === 'object'
-    ? Object.getOwnPropertyNames(source).reduce((o, prop) => {
-        Object.defineProperty(o, prop, Object.getOwnPropertyDescriptor(source, prop) ?? {})
-        o[prop] = cloneDeep((source as unknown as {[key: string]: unknown})[prop])
-        return o
-      }, Object.create(Object.getPrototypeOf(source)))
-    : source
+export const pick = <
+  A extends Record<PropertyKey, unknown>,
+  const B extends ReadonlyArray<PropertyKey>,
+>(
+  objToPluck: A,
+  keysToPluck: B | (keyof A)[]
+): Pick<A, B[number]> =>
+  [...keysToPluck].reduce(
+    (memo, prop) => {
+      memo[prop] = objToPluck[prop]
+      return memo
+    },
+    {} as Record<PropertyKey, unknown>
+  ) as Pick<A, B[number]>
 
-export const cloneDeepAsync = <T>(source: T): Promise<T> =>
-  new Promise((resolve) => resolve(cloneDeep(source)))
+/**
+ * Dynamically get a nested value from an array or
+ * object with a string.
+ *
+ * @example get(person, 'friends[0].name')
+ * @link https://github.com/rayepps/radash/blob/master/src/object.ts#L214
+ */
+export const get = <TDefault = unknown>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any,
+  path: string,
+  defaultValue?: TDefault
+): TDefault => {
+  const segments = path.split(/[.[\]]/g)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let current: any = value
+  for (const key of segments) {
+    if (current === null) return defaultValue as TDefault
+    if (current === undefined) return defaultValue as TDefault
+    if (key.trim() === '') continue
+    current = current[key]
+  }
+  if (current === undefined) return defaultValue as TDefault
+  return current
+}

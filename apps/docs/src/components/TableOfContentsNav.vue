@@ -1,50 +1,32 @@
 <template>
   <div class="bd-links-nav">
     <BListGroup v-if="!isLargeScreen">
-      <strong class="bd-links-heading"><GearIcon aria-hidden /> General</strong>
-      <BListGroupItem>
-        <BLink :to="withBase('/docs')">Getting Started</BLink>
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink :to="withBase('/docs/icons')">Icons</BLink>
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink :to="withBase('/docs/types')">Types</BLink>
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink :to="withBase('/docs/reference')">Reference</BLink>
-      </BListGroupItem>
-      <BListGroupItem>
-        <BLink :to="withBase('/docs/migration-guide')">Migrate</BLink>
+      <strong class="bd-links-heading"> <GearIcon aria-hidden /> General </strong>
+      <BListGroupItem v-for="link in headerLinks" :key="link.label">
+        <BLink
+          :to="link.route"
+          :active="routerRoute.path === `${link.route}.html`"
+          class="px-2 ms-2 rounded"
+          active-class="bg-primary text-light"
+          >{{ link.label }}</BLink
+        >
       </BListGroupItem>
     </BListGroup>
-    <BListGroup>
+    <BListGroup v-for="group in groupComputedList" :key="group.label">
       <strong class="bd-links-heading">
-        <BLink :to="withBase('/docs/components')"> <IntersectIcon aria-hidden /> Components </BLink>
-      </strong>
-      <BListGroupItem v-for="component in componentsComputedList" :key="component.name">
-        <BLink :to="component.route">{{ component.name }}</BLink>
-      </BListGroupItem>
-    </BListGroup>
-    <BListGroup>
-      <strong class="bd-links-heading">
-        <BLink :to="withBase('/docs/composables')">
-          <PieChartIcon aria-hidden /> Composables
+        <BLink :to="withBase(group.uri)">
+          <component :is="group.icon()" /> {{ group.label }}
         </BLink>
       </strong>
-      <BListGroupItem v-for="component in composablesComputedList" :key="component.name">
-        <BLink :to="component.route">{{ component.name }}</BLink>
-      </BListGroupItem>
-    </BListGroup>
-    <BListGroup>
-      <strong class="bd-links-heading">
-        <BLink :to="withBase('/docs/directives')">
-          <CodeSlashIcon aria-hidden />
-          Directives
+      <BListGroupItem v-for="component in group.children" :key="component.name">
+        <BLink
+          :to="component.route"
+          :active="routerRoute.path === `${component.route}.html`"
+          class="px-2 ms-2 rounded"
+          active-class="bg-primary text-light"
+        >
+          {{ component.name }}
         </BLink>
-      </strong>
-      <BListGroupItem v-for="component in directivesComputedList" :key="component.name">
-        <BLink :to="component.route">{{ component.name }}</BLink>
       </BListGroupItem>
     </BListGroup>
   </div>
@@ -53,7 +35,7 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import {BLink, BListGroup, BListGroupItem} from 'bootstrap-vue-next'
-import {withBase} from 'vitepress'
+import {useRoute, withBase} from 'vitepress'
 import {useMediaQuery} from '@vueuse/core'
 import IntersectIcon from '~icons/bi/intersect'
 import CodeSlashIcon from '~icons/bi/code-slash'
@@ -65,6 +47,8 @@ defineProps<{
   route?: string
 }>()
 
+const routerRoute = useRoute()
+
 const isLargeScreen = useMediaQuery('(min-width: 992px)')
 const routeLocationComponents = (name: string): string =>
   withBase(`/docs/components/${name.toLowerCase()}`).trim().replaceAll(/\s+/g, '-')
@@ -72,6 +56,29 @@ const routeLocationComposables = (name: string): string =>
   withBase(`/docs/composables/${name}`).trim()
 const routeLocationDirectives = (name: string): string =>
   withBase(`/docs/directives/${name}`).trim()
+
+const headerLinks = [
+  {
+    route: withBase('/docs'),
+    label: 'Getting Started',
+  },
+  {
+    route: withBase('/docs/icons'),
+    label: 'Icons',
+  },
+  {
+    route: withBase('/docs/types'),
+    label: 'Types',
+  },
+  {
+    route: withBase('/docs/reference'),
+    label: 'Reference',
+  },
+  {
+    route: withBase('/docs/migration-guide'),
+    label: 'Migrate',
+  },
+]
 
 const componentsList: {name: string}[] = [
   {name: 'Accordion'},
@@ -151,4 +158,25 @@ const directivesComputedList = computed(() =>
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 )
+
+const groupComputedList = computed(() => [
+  {
+    label: 'Components',
+    uri: '/docs/components',
+    icon: () => IntersectIcon,
+    children: componentsComputedList.value,
+  },
+  {
+    label: 'Composables',
+    uri: '/docs/composables',
+    icon: () => PieChartIcon,
+    children: composablesComputedList.value,
+  },
+  {
+    label: 'Directives',
+    uri: '/docs/directives',
+    icon: () => CodeSlashIcon,
+    children: directivesComputedList.value,
+  },
+])
 </script>
