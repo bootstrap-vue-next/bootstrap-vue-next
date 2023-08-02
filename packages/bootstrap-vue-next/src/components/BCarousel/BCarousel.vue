@@ -24,7 +24,6 @@
         :leave-to-class="leaveClasses"
         @before-leave="onBeforeLeave"
         @after-leave="onAfterLeave"
-        @after-enter="onAfterEnter"
       >
         <component
           :is="slide"
@@ -157,13 +156,11 @@ const rideResolved = computed<boolean | 'carousel'>(() =>
 // Then reviewing the behavior
 const enterClasses = computed(
   () =>
-    `carousel-item carousel-item-${!direction.value ? 'next' : 'prev'} carousel-item-${
-      !direction.value ? 'start' : 'end'
+    `carousel-item-${direction.value ? 'next' : 'prev'} carousel-item-${
+      direction.value ? 'start' : 'end'
     }`
 )
-const leaveClasses = computed(
-  () => `carousel-item active carousel-item-${direction.value ? 'start' : 'end'}`
-)
+const leaveClasses = computed(() => `active carousel-item-${direction.value ? 'start' : 'end'}`)
 
 const {pause, resume} = useIntervalFn(
   () => {
@@ -275,14 +272,6 @@ const onBeforeLeave = () => {
 const onAfterLeave = () => {
   emit('slid', buildBvCarouselEvent('slid'))
   isTransitioning.value = false
-}
-// carousel-item class is removed from the slide during the transition,
-// as is included within enter classes.
-// The first slide recovers carousel-item class,
-const onAfterEnter = (el: Element) => {
-  if (modelValue.value !== 0) {
-    el.classList.add('carousel-item')
-  }
 }
 
 onKeyStroke(
