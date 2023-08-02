@@ -39,7 +39,7 @@
                 </BButton>
                 <BCloseButton
                   v-else
-                  aria-label="headerCloseLabel"
+                  :aria-label="headerCloseLabel"
                   v-bind="headerCloseAttrs"
                   @click="hide('close')"
                 />
@@ -111,7 +111,6 @@ const props = withDefaults(
     headerClass?: string
     headerCloseClass?: ClassValue
     headerCloseLabel?: string
-    headerCloseWhite?: Booleanish
     headerCloseVariant?: ButtonVariant | null
     bodyClass?: string
     footerClass?: string
@@ -137,7 +136,6 @@ const props = withDefaults(
     headerClass: undefined,
     headerCloseClass: undefined,
     headerCloseLabel: 'Close',
-    headerCloseWhite: false,
     headerCloseVariant: 'secondary',
     bodyClass: undefined,
     footerClass: undefined,
@@ -234,7 +232,6 @@ const headerCloseClasses = computed(() => [
 ])
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
-  white: !hasHeaderCloseSlot.value ? props.headerCloseWhite : undefined,
   class: headerCloseClasses.value,
 }))
 

@@ -188,15 +188,6 @@ describe.skip('offcanvas', () => {
     expect($closebutton.classes()).toContain('foobar')
   })
 
-  it('first child div child BCloseButton has class when prop headerCloseWhite', () => {
-    const wrapper = mount(BOffcanvas, {
-      props: {headerCloseWhite: true},
-    })
-    const [, $div] = wrapper.findAll('div')
-    const $closebutton = $div.getComponent(BCloseButton)
-    expect($closebutton.classes()).toContain('btn-close-white')
-  })
-
   it('first child div child BCloseButton has not variant class when headerCloseVariant', () => {
     const wrapper = mount(BOffcanvas, {
       props: {headerCloseVariant: 'warning'},
@@ -204,25 +195,6 @@ describe.skip('offcanvas', () => {
     const [, $div] = wrapper.findAll('div')
     const $closebutton = $div.getComponent(BCloseButton)
     expect($closebutton.classes()).not.toContain('btn-warning')
-  })
-
-  it('first child div child BButton has prop ariaLabel to be default close', () => {
-    const wrapper = mount(BOffcanvas, {
-      slots: {'header-close': 'foobar'},
-    })
-    const [, $div] = wrapper.findAll('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.props('ariaLabel')).toBe('Close')
-  })
-
-  it('first child div child BButton has prop ariaLabel to be prop headerCloseLabel', () => {
-    const wrapper = mount(BOffcanvas, {
-      props: {headerCloseLabel: 'foobar'},
-      slots: {'header-close': 'foobar'},
-    })
-    const [, $div] = wrapper.findAll('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.props('ariaLabel')).toBe('foobar')
   })
 
   it('first child div child BButton has class when prop headerCloseClass', () => {
@@ -233,16 +205,6 @@ describe.skip('offcanvas', () => {
     const [, $div] = wrapper.findAll('div')
     const $bbutton = $div.getComponent(BButton)
     expect($bbutton.classes()).toContain('foobar')
-  })
-
-  it('first child div child BButton has class when prop headerCloseWhite', () => {
-    const wrapper = mount(BOffcanvas, {
-      props: {headerCloseWhite: true},
-      slots: {'header-close': 'foobar'},
-    })
-    const [, $div] = wrapper.findAll('div')
-    const $bbutton = $div.getComponent(BButton)
-    expect($bbutton.classes()).not.toContain('btn-close-white')
   })
 
   it('first child div child BButton has variant class when headerCloseVariant', () => {
