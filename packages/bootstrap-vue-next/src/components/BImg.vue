@@ -14,6 +14,7 @@
 import type {BImgProps} from '../types'
 import {useBooleanish} from '../composables'
 import {computed} from 'vue'
+import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(defineProps<BImgProps>(), {
   sizes: undefined,
@@ -49,6 +50,9 @@ const startBoolean = useBooleanish(() => props.start)
 const endBoolean = useBooleanish(() => props.end)
 const thumbnailBoolean = useBooleanish(() => props.thumbnail)
 
+const heightNumber = useToNumber(computed(() => props.height ?? NaN))
+const widthNumber = useToNumber(computed(() => props.width ?? NaN))
+
 const computedSrcset = computed<string | undefined>(() =>
   typeof props.srcset === 'string'
     ? props.srcset
@@ -71,17 +75,9 @@ const computedSizes = computed<string | undefined>(() =>
     : undefined
 )
 
-// TODO go through an makes number props type string | number
-// May be able to replace the internal util function with vueuse useToString/useToNumber utils
 const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
-  const parser = (str: string | number | undefined): number | undefined =>
-    str === undefined
-      ? undefined
-      : typeof str === 'number'
-      ? str
-      : Number.parseInt(str, 10) || undefined
-  const width = parser(props.width)
-  const height = parser(props.height)
+  const width = Number.isNaN(widthNumber.value) ? undefined : widthNumber.value
+  const height = Number.isNaN(heightNumber.value) ? undefined : heightNumber.value
   if (blankBoolean.value) {
     if (width !== undefined && height === undefined) {
       return {height: width, width}
