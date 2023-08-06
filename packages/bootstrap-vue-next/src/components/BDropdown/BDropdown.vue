@@ -37,33 +37,35 @@
         </slot>
       </span>
     </BButton>
+    <ul
+      v-if="!lazyBoolean || modelValueBoolean"
+      v-show="lazyBoolean || modelValueBoolean"
+      ref="floating"
+      :style="{
+        position: strategy === 'absolute' ? undefined : 'fixed',
+        top: `${y}px`,
+        left: `${x}px`,
+        width: 'max-content',
+      }"
+      class="dropdown-menu show"
+      :class="dropdownMenuClasses"
+      :aria-labelledby="computedId"
+      :role="role"
+      @click="onClickInside"
+    >
+      <slot />
+    </ul>
   </div>
-  <ul
-    v-if="!lazyBoolean || modelValueBoolean"
-    v-show="lazyBoolean || modelValueBoolean"
-    ref="floating"
-    :style="{
-      position: strategy === 'absolute' ? undefined : 'fixed',
-      top: `${y}px`,
-      left: `${x}px`,
-      width: 'max-content',
-    }"
-    class="dropdown-menu show"
-    :class="dropdownMenuClasses"
-    :aria-labelledby="computedId"
-    :role="role"
-    @click="onClickInside"
-  >
-    <slot />
-  </ul>
 </template>
 
 <script setup lang="ts">
 import {
   autoUpdate,
+  type Boundary,
   flip,
   offset as floatingOffset,
   type Middleware,
+  type RootBoundary,
   shift,
   type Strategy,
   useFloating,
@@ -117,6 +119,7 @@ const props = withDefaults(
     strategy?: Strategy
     floatingMiddleware?: Middleware[]
     splitTo?: RouteLocationRaw
+    boundary?: Boundary | RootBoundary
   }>(),
   {
     ariaLabel: undefined,
@@ -127,20 +130,19 @@ const props = withDefaults(
     splitVariant: undefined,
     text: undefined,
     toggleClass: undefined,
-    splitTo: undefined,
     floatingMiddleware: undefined,
     splitDisabled: undefined,
     autoClose: true,
     block: false,
     disabled: false,
-    dropup: false,
     isNav: false,
+    dropup: false,
     dropend: false,
     dropstart: false,
-    end: false,
     center: false,
-    lazy: false,
+    end: false,
     noFlip: false,
+    lazy: false,
     noShift: false,
     offset: 0,
     role: 'menu',
@@ -152,6 +154,8 @@ const props = withDefaults(
     variant: 'secondary',
     modelValue: false,
     strategy: 'absolute',
+    splitTo: undefined,
+    boundary: 'clippingAncestors',
   }
 )
 
@@ -204,6 +208,13 @@ const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
 const splitButton = ref<HTMLElement | null>(null)
 
+const boundary = computed<Boundary | undefined>(() =>
+  props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
+)
+const rootBoundary = computed<RootBoundary | undefined>(() =>
+  props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
+)
+
 onKeyStroke(
   'Escape',
   () => {
@@ -232,10 +243,20 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       : props.offset
   const arr: Middleware[] = [floatingOffset(localOffset)]
   if (noFlipBoolean.value === false) {
-    arr.push(flip())
+    arr.push(
+      flip({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+      })
+    )
   }
   if (noShiftBoolean.value === false) {
-    arr.push(shift())
+    arr.push(
+      shift({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+      })
+    )
   }
   return arr
 })
@@ -252,6 +273,7 @@ const computedClasses = computed(() => ({
   'dropend': dropendBoolean.value,
   'dropstart': dropstartBoolean.value,
   'd-flex': blockBoolean.value && splitBoolean.value,
+  'position-static': props.boundary !== 'clippingAncestors' && !isNavBoolean.value,
 }))
 
 const buttonClasses = computed(() => [
