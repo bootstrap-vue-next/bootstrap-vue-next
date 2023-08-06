@@ -44,12 +44,24 @@
                   <BCol>
                     <BTable
                       :items="component[sectionToComponentItem(section)]"
+                      :fields="fields"
                       hover
                       small
                       responsive
                       bordered
                       striped
-                    />
+                    >
+                      <template #cell(type)="d">
+                        <code>
+                          {{ d.item.type }}
+                        </code>
+                      </template>
+                      <template #cell(default)="d">
+                        <code>
+                          {{ normalizeDefault(d.item.default) }}
+                        </code>
+                      </template>
+                    </BTable>
                   </BCol>
                 </BRow>
               </BContainer>
@@ -63,7 +75,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {BCol, BContainer, BLink, BRow, BTable} from 'bootstrap-vue-next'
+import {BCol, BContainer, BLink, BRow, BTable, type TableField} from 'bootstrap-vue-next'
 import type {ComponentReference} from '../data/components/ComponentReference'
 
 const props = defineProps<{data: ComponentReference[]}>()
@@ -111,4 +123,9 @@ const sectionToComponentItem = (
   el: (typeof sections)[number]
 ): Exclude<keyof ComponentReference, 'component'> =>
   el === 'Properties' ? 'props' : el === 'Events' ? 'emits' : 'slots'
+
+const fields: TableField[] = ['prop', 'type', 'default', 'description']
+
+const normalizeDefault = (val: unknown) =>
+  val === undefined || val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val
 </script>

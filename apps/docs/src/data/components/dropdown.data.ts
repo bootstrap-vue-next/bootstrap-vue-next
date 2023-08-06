@@ -6,112 +6,174 @@ export default {
       component: 'BDropdown',
       props: [
         {
+          prop: 'ariaLabel',
+          type: 'string',
+          default: undefined,
+        },
+        {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'menuClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'size',
           type: 'Size',
+          default: 'md',
         },
         {
           prop: 'splitClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'splitVariant',
-          type: 'ButtonVariant',
+          type: 'ButtonVariant | null',
+          default: undefined,
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'toggleClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'autoClose',
           type: "boolean | 'inside' | 'outside'",
+          default: true,
         },
         {
           prop: 'block',
           type: 'Booleanish',
-        },
-        {
-          prop: 'boundary',
-          type: 'Popper.Boundary',
-        },
-        {
-          prop: 'dark',
-          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'disabled',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'isNav',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'dropup',
           type: 'Booleanish',
+          default: false,
         },
         {
-          prop: 'dropright',
+          prop: 'dropend',
           type: 'Booleanish',
+          default: false,
         },
         {
-          prop: 'dropleft',
+          prop: 'dropstart',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'center',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'end',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'noFlip',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'noShift',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'offset',
-          type: 'number | string',
-        },
-        {
-          prop: 'popperOpts',
-          type: 'Record<string, unknown>',
-        },
-        {
-          prop: 'right',
-          type: 'Booleanish',
+          type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}',
+          default: 0,
         },
         {
           prop: 'role',
           type: 'string',
+          default: 'menu',
         },
         {
           prop: 'split',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'splitButtonType',
           type: 'ButtonType',
+          default: 'button',
         },
         {
           prop: 'splitHref',
           type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'splitDisabled',
+          type: 'Booleanish',
+          default: undefined,
         },
         {
           prop: 'noCaret',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'toggleText',
           type: 'string',
+          default: 'Toggle dropdown',
         },
         {
           prop: 'variant',
-          type: 'ButtonVariant',
+          type: 'ButtonVariant | null',
+          default: 'secondary',
+        },
+        {
+          prop: 'modelValue',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'lazy',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'strategy',
+          type: 'Strategy',
+          default: 'absolute',
+        },
+        {
+          prop: 'floatingMiddleware',
+          type: 'Middleware[]',
+          default: undefined,
+        },
+        {
+          prop: 'splitTo',
+          type: 'RouteLocationRaw',
+          default: undefined,
+        },
+        {
+          prop: 'boundary',
+          type: 'Boundary | RootBoundary',
+          default: 'clippingAncestors',
         },
       ],
       emits: [
