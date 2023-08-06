@@ -258,7 +258,7 @@ const slots = useSlots()
 
 const computedId = useId(() => props.id, 'modal')
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const busyBoolean = useBooleanish(() => props.busy)
 const lazyBoolean = useBooleanish(() => props.lazy)
