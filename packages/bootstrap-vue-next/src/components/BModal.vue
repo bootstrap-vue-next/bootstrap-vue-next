@@ -42,7 +42,6 @@
                     v-else
                     ref="closeButton"
                     :aria-label="headerCloseLabel"
-                    :white="headerCloseWhite"
                     @click="hide('close')"
                   />
                 </template>
@@ -141,7 +140,6 @@ const props = withDefaults(
     headerBorderVariant?: ColorVariant | null
     headerClass?: ClassValue
     headerCloseLabel?: string
-    headerCloseWhite?: Booleanish
     headerTextVariant?: ColorVariant | null
     hideBackdrop?: Booleanish
     hideFooter?: Booleanish
@@ -201,7 +199,6 @@ const props = withDefaults(
     centered: false,
     fullscreen: false,
     headerCloseLabel: 'Close',
-    headerCloseWhite: false,
     hideBackdrop: false,
     hideFooter: false,
     hideHeader: false,

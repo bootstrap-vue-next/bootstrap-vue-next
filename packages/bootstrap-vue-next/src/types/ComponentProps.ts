@@ -1,7 +1,13 @@
 import type {RouteLocationRaw} from 'vue-router'
+import type {Booleanish} from './Booleanish'
+import type {Breakpoint} from './Breakpoint'
+import type {ClassValue} from './ClassValue'
 import type {ColorVariant} from './ColorVariant'
 import type {LinkTarget} from './LinkTarget'
-import type {Booleanish} from './Booleanish'
+import type {TableField} from './TableField'
+import type {TableFieldObject} from './TableFieldObject'
+import type {TableItem} from './TableItem'
+import type {VerticalAlign} from './VerticalAlign'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -47,4 +53,71 @@ export interface BImgProps {
   srcset?: string | string[]
   thumbnail?: Booleanish
   width?: number | string
+}
+
+export interface BFormProps {
+  id?: string
+  floating?: Booleanish
+  novalidate?: Booleanish
+  validated?: Booleanish
+}
+
+export interface BTableSimpleProps {
+  bordered?: Booleanish
+  borderless?: Booleanish
+  borderVariant?: ColorVariant | null
+  captionTop?: Booleanish
+  dark?: Booleanish
+  hover?: Booleanish
+  responsive?: boolean | Breakpoint
+  stacked?: boolean | Breakpoint
+  striped?: Booleanish
+  small?: Booleanish
+  tableClass?: ClassValue
+  tableVariant?: ColorVariant | null
+  stickyHeader?: Booleanish
+}
+
+export interface BTableLiteProps {
+  align?: VerticalAlign
+  caption?: string
+  fields?: TableField[]
+  footClone?: Booleanish
+  items?: TableItem[]
+  labelStacked?: boolean
+  variant?: ColorVariant | null
+  showEmpty?: Booleanish
+  emptyText?: string
+  emptyFilteredText?: string
+  fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
+  tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
+  virtualFields?: number | string
+}
+
+export interface BProgressBarProps {
+  animated?: Booleanish
+  label?: string
+  labelHtml?: string
+  max?: string | number
+  precision?: string | number
+  showProgress?: Booleanish
+  showValue?: Booleanish
+  striped?: Booleanish
+  value?: string | number
+  variant?: ColorVariant | null
+}
+
+export interface BInputGroupAddonProps {
+  isText?: Booleanish
+}
+
+export interface BFormFeedbackSharedProps {
+  ariaLive?: string
+  forceShow?: Booleanish
+  text?: string
+  id?: string
+  role?: string
+  state?: Booleanish | null
+  tag?: string
+  tooltip?: Booleanish
 }

@@ -15,37 +15,23 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ColorVariant} from '../../types'
+import type {BProgressBarProps} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
-const props = withDefaults(
-  defineProps<{
-    animated?: Booleanish
-    label?: string
-    labelHtml?: string
-    max?: string | number
-    precision?: string | number
-    showProgress?: Booleanish
-    showValue?: Booleanish
-    striped?: Booleanish
-    value?: string | number
-    variant?: ColorVariant | null
-  }>(),
-  {
-    label: undefined,
-    labelHtml: undefined,
-    max: undefined,
-    variant: null,
-    animated: false,
-    precision: 0,
-    showProgress: false,
-    showValue: false,
-    striped: false,
-    value: 0,
-  }
-)
+const props = withDefaults(defineProps<BProgressBarProps>(), {
+  label: undefined,
+  labelHtml: undefined,
+  max: undefined,
+  variant: null,
+  animated: false,
+  precision: 0,
+  showProgress: false,
+  showValue: false,
+  striped: false,
+  value: 0,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

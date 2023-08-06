@@ -17,23 +17,17 @@
 
 <script setup lang="ts">
 import BProgressBar from './BProgressBar.vue'
-import type {Booleanish, ColorVariant} from '../../types'
+import type {BProgressBarProps} from '../../types'
 import {useBooleanish} from '../../composables'
-import {provide, readonly, toRef} from 'vue'
+import {provide, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 
 const props = withDefaults(
-  defineProps<{
-    variant?: ColorVariant | null
-    max?: number | string
-    height?: string
-    animated?: Booleanish
-    precision?: number | string
-    showProgress?: Booleanish
-    showValue?: Booleanish
-    striped?: Booleanish
-    value?: number | string
-  }>(),
+  defineProps<
+    {
+      height?: string
+    } & Omit<BProgressBarProps, 'label' | 'labelHtml'>
+  >(),
   {
     variant: undefined,
     max: 100,
@@ -59,7 +53,7 @@ const stripedBoolean = useBooleanish(() => props.striped)
 
 provide(progressInjectionKey, {
   animated: animatedBoolean,
-  max: readonly(toRef(props, 'max')),
+  max: toRef(() => props.max),
   showProgress: showProgressBoolean,
   showValue: showValueBoolean,
   striped: stripedBoolean,

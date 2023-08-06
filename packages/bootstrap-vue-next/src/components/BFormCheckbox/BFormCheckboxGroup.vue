@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, provide, readonly, ref, toRef} from 'vue'
+import {computed, nextTick, provide, ref, toRef} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -174,12 +174,12 @@ provide(checkboxGroupKey, {
   },
   modelValue: computed(() => modelValue.value),
   switch: switchesBoolean,
-  buttonVariant: readonly(toRef(props, 'buttonVariant')),
-  form: readonly(toRef(props, 'form')),
+  buttonVariant: toRef(() => props.buttonVariant),
+  form: toRef(() => props.form),
   name: computedName,
   state: stateBoolean,
   plain: plainBoolean,
-  size: readonly(toRef(props, 'size')),
+  size: toRef(() => props.size),
   inline: computed(() => !stackedBoolean.value),
   required: requiredBoolean,
   buttons: buttonsBoolean,

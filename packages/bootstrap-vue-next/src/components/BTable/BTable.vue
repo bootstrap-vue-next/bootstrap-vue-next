@@ -83,15 +83,15 @@ import {computed, onMounted, ref, useSlots, watch} from 'vue'
 import {useBooleanish, useTableItems} from '../../composables'
 import type {
   Booleanish,
-  Breakpoint,
+  BTableLiteProps,
   BTableProvider,
+  BTableSimpleProps,
   BTableSortCompare,
   ColorVariant,
   LiteralUnion,
   TableField,
   TableFieldObject,
   TableItem,
-  VerticalAlign,
 } from '../../types'
 import BTableLite from './BTableLite.vue'
 import {useVModel} from '@vueuse/core'
@@ -100,53 +100,33 @@ import BSpinner from '../BSpinner.vue'
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
 const props = withDefaults(
-  defineProps<{
-    align?: VerticalAlign
-    caption?: string
-    captionTop?: Booleanish
-    borderless?: Booleanish
-    bordered?: Booleanish
-    borderVariant?: ColorVariant | null
-    dark?: Booleanish
-    fields?: TableField[]
-    footClone?: Booleanish
-    hover?: Booleanish
-    items?: TableItem[]
-    provider?: BTableProvider
-    sortCompare?: BTableSortCompare
-    noProvider?: NoProviderTypes[]
-    noProviderPaging?: Booleanish
-    noProviderSorting?: Booleanish
-    noProviderFiltering?: Booleanish
-    responsive?: boolean | Breakpoint
-    small?: Booleanish
-    striped?: Booleanish
-    stacked?: boolean | Breakpoint
-    labelStacked?: boolean
-    variant?: ColorVariant | null
-    sortBy?: string
-    sortDesc?: Booleanish
-    sortInternal?: Booleanish
-    selectable?: Booleanish
-    stickySelect?: Booleanish
-    selectHead?: boolean | string
-    selectMode?: 'multi' | 'single' | 'range'
-    selectionVariant?: ColorVariant | null
-    stickyHeader?: Booleanish
-    busy?: Booleanish
-    busyLoadingText?: string
-    showEmpty?: Booleanish
-    // TODO number | string => with useToNumber
-    perPage?: number
-    // TODO number | string => with useToNumber
-    currentPage?: number
-    filter?: string
-    filterable?: string[]
-    emptyText?: string
-    emptyFilteredText?: string
-    fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
-    tbodyTrClass?: (item: TableItem | null, type: string) => string | any[] | null | undefined
-  }>(),
+  defineProps<
+    {
+      provider?: BTableProvider
+      sortCompare?: BTableSortCompare
+      noProvider?: NoProviderTypes[]
+      noProviderPaging?: Booleanish
+      noProviderSorting?: Booleanish
+      noProviderFiltering?: Booleanish
+      sortBy?: string
+      sortDesc?: Booleanish
+      sortInternal?: Booleanish
+      selectable?: Booleanish
+      stickySelect?: Booleanish
+      selectHead?: boolean | string
+      selectMode?: 'multi' | 'single' | 'range'
+      selectionVariant?: ColorVariant | null
+      busy?: Booleanish
+      busyLoadingText?: string
+      // TODO number | string => with useToNumber
+      perPage?: number
+      // TODO number | string => with useToNumber
+      currentPage?: number
+      filter?: string
+      filterable?: string[]
+    } & Omit<BTableSimpleProps, 'tableClass' | 'tableVariant'> &
+      Omit<BTableLiteProps, 'virtualFields'>
+  >(),
   {
     perPage: undefined,
     sortBy: undefined,

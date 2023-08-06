@@ -33,8 +33,8 @@
             <slot name="field-prefix" :field="field" />
             <div>
               <slot
-                v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
-                :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
+                v-if="$slots[`head('${field.key})`] || $slots['head()']"
+                :name="$slots[`head('${field.key})`] ? `head(${field.key})` : 'head()'"
                 :label="field.label"
                 :column="field.key"
                 :field="field"
@@ -82,14 +82,14 @@
               getFieldHeadLabel(field)
             }}</label>
             <slot
-              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
-              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
+              v-if="$slots[`cell(${field.key})`] || $slots['cell()']"
+              :name="$slots[`cell(${field.key})`] ? `cell(${field.key})` : 'cell()'"
               :value="get(item, field.key)"
               :index="itemIndex"
               :item="item"
               :field="field"
               :items="items"
-              :toggle-details="() => toggleRowDetails(item)"
+              :toggle-details="(): void => toggleRowDetails(item)"
               :details-showing="item._showDetails"
             />
             <template v-else>{{ renderItem(item, field) }}</template>
@@ -155,14 +155,11 @@ import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import {get, isObject, startCase, titleCase} from '../../utils'
 import type {
-  Booleanish,
-  Breakpoint,
-  ClassValue,
-  ColorVariant,
+  BTableLiteProps,
+  BTableSimpleProps,
   TableField,
   TableFieldObject,
   TableItem,
-  VerticalAlign,
 } from '../../types'
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
@@ -170,33 +167,7 @@ import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
 import {useToNumber} from '@vueuse/shared'
 
 const props = withDefaults(
-  defineProps<{
-    align?: VerticalAlign
-    caption?: string
-    captionTop?: Booleanish
-    borderless?: Booleanish
-    bordered?: Booleanish
-    borderVariant?: ColorVariant | null
-    dark?: Booleanish
-    fields?: TableField[]
-    footClone?: Booleanish
-    hover?: Booleanish
-    items?: TableItem[]
-    responsive?: boolean | Breakpoint
-    small?: Booleanish
-    striped?: Booleanish
-    stacked?: boolean | Breakpoint
-    labelStacked?: boolean
-    variant?: ColorVariant | null
-    stickyHeader?: Booleanish
-    showEmpty?: Booleanish
-    emptyText?: string
-    emptyFilteredText?: string
-    tableClass?: ClassValue
-    fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
-    tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
-    virtualFields?: number | string
-  }>(),
+  defineProps<BTableLiteProps & Omit<BTableSimpleProps, 'tableVariant'>>(),
   {
     variant: undefined,
     borderVariant: undefined,
@@ -251,7 +222,7 @@ const tableClasses = computed(() => [
   },
 ])
 
-const computedFields = computed(() => normaliseFields(props.fields, props.items))
+const computedFields = computed(() => normalizeFields(props.fields, props.items))
 const computedFieldsTotal = computed(() => computedFields.value.length + virtualFieldsNumber.value)
 
 const getFieldHeadLabel = (field: TableField) => {
@@ -261,7 +232,7 @@ const getFieldHeadLabel = (field: TableField) => {
   return field.key
 }
 
-const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
+const normalizeFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
   const fields: TableFieldObject[] = []
 
   if (!origFields?.length && items?.length) {
