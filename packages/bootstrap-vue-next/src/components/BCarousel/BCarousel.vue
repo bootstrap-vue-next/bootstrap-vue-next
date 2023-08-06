@@ -57,7 +57,7 @@ import {
   isBooleanish,
   resolveBooleanish,
 } from '../../utils'
-import {computed, provide, readonly, ref, toRef, useSlots, watch} from 'vue'
+import {computed, provide, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 import {
@@ -318,8 +318,8 @@ watch(isHovering, (newValue) => {
 defineExpose({pause, resume, prev, next})
 
 provide(carouselInjectionKey, {
-  background: readonly(toRef(props, 'background')),
-  width: readonly(toRef(props, 'imgWidth')),
-  height: readonly(toRef(props, 'imgHeight')),
+  background: toRef(() => props.background),
+  width: toRef(() => props.imgWidth),
+  height: toRef(() => props.imgHeight),
 })
 </script>

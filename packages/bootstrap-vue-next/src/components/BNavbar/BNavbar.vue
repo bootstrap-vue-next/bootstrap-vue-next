@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, readonly, toRef} from 'vue'
+import {computed, provide, toRef} from 'vue'
 import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
@@ -64,6 +64,6 @@ const computedClasses = computed(() => ({
 }))
 
 provide(navbarInjectionKey, {
-  tag: readonly(toRef(props, 'tag')),
+  tag: toRef(() => props.tag),
 })
 </script>

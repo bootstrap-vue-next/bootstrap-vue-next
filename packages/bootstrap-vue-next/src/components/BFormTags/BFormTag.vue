@@ -15,7 +15,6 @@
       aria-keyshortcuts="Delete"
       :aria-label="removeLabel"
       class="b-form-tag-remove"
-      :white="variant !== null && !['warning', 'info', 'light'].includes(variant)"
       :aria-describedby="taglabelId"
       :aria-controls="id"
       @click="emit('remove', tagText)"
