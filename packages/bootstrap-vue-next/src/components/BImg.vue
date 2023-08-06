@@ -75,8 +75,6 @@ const computedSizes = computed<string | undefined>(() =>
     : undefined
 )
 
-// TODO go through an makes number props type string | number
-// May be able to replace the internal util function with vueuse useToString/useToNumber utils
 const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
   const width = Number.isNaN(widthNumber.value) ? undefined : widthNumber.value
   const height = Number.isNaN(heightNumber.value) ? undefined : heightNumber.value
