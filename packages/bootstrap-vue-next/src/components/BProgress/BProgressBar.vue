@@ -74,7 +74,7 @@ const computedLabel = computed<string>(() =>
 )
 
 const computedWidth = computed<string>(() =>
-  parentData?.max.value
+  parentMaxNumber.value
     ? `${(numberValue.value * 100) / parentMaxNumber.value}%`
     : numberMax.value
     ? `${(numberValue.value * 100) / numberMax.value}%`
