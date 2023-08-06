@@ -33,8 +33,8 @@
             <slot name="field-prefix" :field="field" />
             <div>
               <slot
-                v-if="$slots['head(' + field.key + ')'] || $slots['head()']"
-                :name="$slots['head(' + field.key + ')'] ? 'head(' + field.key + ')' : 'head()'"
+                v-if="$slots[`head('${field.key})`] || $slots['head()']"
+                :name="$slots[`head('${field.key})`] ? `head(${field.key})` : 'head()'"
                 :label="field.label"
                 :column="field.key"
                 :field="field"
@@ -82,14 +82,14 @@
               getFieldHeadLabel(field)
             }}</label>
             <slot
-              v-if="$slots['cell(' + field.key + ')'] || $slots['cell()']"
-              :name="$slots['cell(' + field.key + ')'] ? 'cell(' + field.key + ')' : 'cell()'"
+              v-if="$slots[`cell(${field.key})`] || $slots['cell()']"
+              :name="$slots[`cell(${field.key})`] ? `cell(${field.key})` : 'cell()'"
               :value="get(item, field.key)"
               :index="itemIndex"
               :item="item"
               :field="field"
               :items="items"
-              :toggle-details="() => toggleRowDetails(item)"
+              :toggle-details="(): void => toggleRowDetails(item)"
               :details-showing="item._showDetails"
             />
             <template v-else>{{ renderItem(item, field) }}</template>
@@ -222,7 +222,7 @@ const tableClasses = computed(() => [
   },
 ])
 
-const computedFields = computed(() => normaliseFields(props.fields, props.items))
+const computedFields = computed(() => normalizeFields(props.fields, props.items))
 const computedFieldsTotal = computed(() => computedFields.value.length + virtualFieldsNumber.value)
 
 const getFieldHeadLabel = (field: TableField) => {
@@ -232,7 +232,7 @@ const getFieldHeadLabel = (field: TableField) => {
   return field.key
 }
 
-const normaliseFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
+const normalizeFields = (origFields: TableField[], items: TableItem[]): TableFieldObject[] => {
   const fields: TableFieldObject[] = []
 
   if (!origFields?.length && items?.length) {
