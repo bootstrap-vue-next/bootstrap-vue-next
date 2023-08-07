@@ -7,17 +7,12 @@
 
 <script setup lang="ts">
 import {useBooleanish} from '../../composables'
-import type {Booleanish} from '../../types'
+import type {BInputGroupAddonProps} from '../../types'
 import BInputGroupText from './BInputGroupText.vue'
 
-const props = withDefaults(
-  defineProps<{
-    isText?: Booleanish
-  }>(),
-  {
-    isText: false,
-  }
-)
+const props = withDefaults(defineProps<BInputGroupAddonProps>(), {
+  isText: false,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

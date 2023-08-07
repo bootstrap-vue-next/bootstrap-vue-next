@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, readonly, type StyleValue, toRef} from 'vue'
+import {computed, provide, type StyleValue, toRef} from 'vue'
 import type {Booleanish, ColorVariant, Size} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
 import {useBooleanish} from '../../composables'
@@ -52,9 +52,9 @@ const paddingStyle = computed<StyleValue>(() => {
 
 provide(avatarGroupInjectionKey, {
   overlapScale,
-  size: readonly(toRef(props, 'size')),
+  size: toRef(() => props.size),
   square: squareBoolean,
-  rounded: readonly(toRef(props, 'rounded')),
-  variant: readonly(toRef(props, 'variant')),
+  rounded: toRef(() => props.rounded),
+  variant: toRef(() => props.variant),
 })
 </script>

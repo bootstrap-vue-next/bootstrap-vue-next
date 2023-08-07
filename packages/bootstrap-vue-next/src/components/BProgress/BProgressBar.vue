@@ -15,37 +15,24 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ColorVariant} from '../../types'
+import type {BProgressBarProps} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils'
+import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<{
-    animated?: Booleanish
-    label?: string
-    labelHtml?: string
-    max?: string | number
-    precision?: string | number
-    showProgress?: Booleanish
-    showValue?: Booleanish
-    striped?: Booleanish
-    value?: string | number
-    variant?: ColorVariant | null
-  }>(),
-  {
-    label: undefined,
-    labelHtml: undefined,
-    max: undefined,
-    variant: null,
-    animated: false,
-    precision: 0,
-    showProgress: false,
-    showValue: false,
-    striped: false,
-    value: 0,
-  }
-)
+const props = withDefaults(defineProps<BProgressBarProps>(), {
+  label: undefined,
+  labelHtml: undefined,
+  max: undefined,
+  variant: null,
+  animated: false,
+  precision: 0,
+  showProgress: false,
+  showValue: false,
+  striped: false,
+  value: 0,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,21 +56,10 @@ const computedClasses = computed(() => ({
   [`bg-${props.variant}`]: props.variant !== null,
 }))
 
-const numberPrecision = computed<number>(() =>
-  typeof props.precision === 'number' ? props.precision : Number.parseFloat(props.precision)
-)
-
-const numberValue = computed<number>(() =>
-  typeof props.value === 'number' ? props.value : Number.parseFloat(props.value)
-)
-
-const numberMax = computed<number | undefined>(() =>
-  typeof props.max === 'number'
-    ? props.max
-    : props.max === undefined
-    ? undefined
-    : Number.parseFloat(props.max)
-)
+const numberPrecision = useToNumber(() => props.precision)
+const numberValue = useToNumber(() => props.value)
+const numberMax = useToNumber(computed(() => props.max ?? NaN))
+const parentMaxNumber = useToNumber(computed(() => parentData?.max.value ?? NaN))
 
 const computedLabel = computed<string>(() =>
   props.labelHtml !== undefined
@@ -98,18 +74,10 @@ const computedLabel = computed<string>(() =>
 )
 
 const computedWidth = computed<string>(() =>
-  parentData?.max.value
-    ? `${
-        (numberValue.value * 100) /
-        (typeof parentData.max.value === 'number'
-          ? parentData.max.value
-          : Number.parseInt(parentData.max.value))
-      }%`
-    : props.max
-    ? `${
-        (numberValue.value * 100) /
-        (typeof props.max === 'number' ? props.max : Number.parseInt(props.max))
-      }%`
+  parentMaxNumber.value
+    ? `${(numberValue.value * 100) / parentMaxNumber.value}%`
+    : numberMax.value
+    ? `${(numberValue.value * 100) / numberMax.value}%`
     : typeof props.value === 'string'
     ? props.value
     : `${props.value}%`

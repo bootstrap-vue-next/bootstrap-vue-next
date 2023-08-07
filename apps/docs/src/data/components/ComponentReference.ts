@@ -4,7 +4,8 @@ export interface ComponentReference {
     prop: string
     type: string
     description?: string
-    default?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    default?: any
   }[]
   emits: {
     event: string

@@ -1,9 +1,11 @@
 <template>
   <component
     :is="tag"
-    :class="computedClasses"
+    :id="id"
+    :role="role"
     :aria-live="ariaLive"
     :aria-atomic="ariaLive ? true : undefined"
+    :class="computedClasses"
   >
     <slot>
       {{ text }}
@@ -13,27 +15,19 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {Booleanish} from '../../types'
+import type {BFormFeedbackSharedProps} from '../../types'
 import {useBooleanish} from '../../composables'
 
-const props = withDefaults(
-  defineProps<{
-    ariaLive?: string
-    forceShow?: Booleanish
-    text?: string
-    state?: Booleanish | null
-    tag?: string
-    tooltip?: Booleanish
-  }>(),
-  {
-    text: undefined,
-    ariaLive: undefined,
-    forceShow: false,
-    tag: 'div',
-    state: null,
-    tooltip: false,
-  }
-)
+const props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
+  id: undefined,
+  role: undefined,
+  text: undefined,
+  ariaLive: undefined,
+  forceShow: false,
+  tag: 'div',
+  state: null,
+  tooltip: false,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

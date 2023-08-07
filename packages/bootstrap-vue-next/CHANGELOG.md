@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.10.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.26...bootstrap-vue-next-v0.10.0) (2023-08-06)
+
+### ⚠ BREAKING CHANGES
+
+- standardize class props. ig labelClasses => labelClass... In addition, they have type any instead of the sometimes mix of Object or String
+- remove deprecated dark props. Use useColorMode composable or directive
+
+### feat\
+
+- remove deprecated dark props. Use useColorMode composable or directive ([002b75a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/002b75a45be96b77f2845fae746b7813c3ea97d7))
+- standardize class props. ig labelClasses =&gt; labelClass... In addition, they have type any instead of the sometimes mix of Object or String ([002b75a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/002b75a45be96b77f2845fae746b7813c3ea97d7))
+
+### Features
+
+- **BDropdown:** support boundary prop ([c58578f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c58578f0687904a7d65da1a7b7dc3d26a8b85237))
+- **BDropdown:** support boundary prop ([#1337](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1337)) ([c58578f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c58578f0687904a7d65da1a7b7dc3d26a8b85237))
+- **BModal:** add prop backdropVariant to customize the backdrop ([cb3464d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cb3464dea82fa99c56efa42dabc69ab31708da07))
+- **BModal:** passify modelValue ([6a63ee4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6a63ee46b4f8c9c99eb7f3e45f69f4758b964a8b))
+- **BOffcanvas:** wrap backdrop in a slot so you can customize it further ([cb3464d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cb3464dea82fa99c56efa42dabc69ab31708da07))
+- number props can now accept string | number for more versatility ([002b75a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/002b75a45be96b77f2845fae746b7813c3ea97d7))
+
+### Bug Fixes
+
+- **BCarousel:** carousel-item class disappears after transition ([4a6d6cc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4a6d6cc94da8094256ae1e76f6ce949d3d3c918a))
+- **BLink:** incorrectly collaping BCollapse when not in a nav fixes [#1313](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1313) ([9a6ae63](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9a6ae63d1d60f5bf84ef76c4a045bde6c8c9c7b0))
+- **BModal, BOffcanvas:** use onKeyDown vs onKeyUp ([e8b3c3c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e8b3c3c94a66d9a407c7ec0e79bd591e0cbf3679))
+- Invalid button code in dropdown component ([#1309](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1309)) ([60ce945](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/60ce945ba0f15057fec124595d51c15517df1043))
+- props.strategy for floatingui elements not being reactive ([d50d41f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d50d41facbd40a82ffedb5513c72e28edea143a0))
+
+### Reverts
+
+- BTable dark variants come back ([c8cc69d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c8cc69d71848025d631d14e3680b944eb427ff33))
+
 ## [0.9.26](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.25...bootstrap-vue-next-v0.9.26) (2023-07-16)
 
 ### Bug Fixes

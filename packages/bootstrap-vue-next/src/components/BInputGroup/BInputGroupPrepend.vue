@@ -1,21 +1,16 @@
 <template>
-  <BInputGroupAddon :is-text="isText">
+  <BInputGroupAddon v-bind="$props">
     <slot />
   </BInputGroupAddon>
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../../types'
+import type {BInputGroupAddonProps} from '../../types'
 import BInputGroupAddon from './BInputGroupAddon.vue'
 
-withDefaults(
-  defineProps<{
-    isText?: Booleanish
-  }>(),
-  {
-    isText: false,
-  }
-)
+withDefaults(defineProps<BInputGroupAddonProps>(), {
+  isText: false,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

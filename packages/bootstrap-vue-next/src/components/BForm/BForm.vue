@@ -10,24 +10,16 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish} from '../../types'
+import type {BFormProps} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed} from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    id?: string
-    floating?: Booleanish
-    novalidate?: Booleanish
-    validated?: Booleanish
-  }>(),
-  {
-    floating: false,
-    id: undefined,
-    novalidate: false,
-    validated: false,
-  }
-)
+const props = withDefaults(defineProps<BFormProps>(), {
+  floating: false,
+  id: undefined,
+  novalidate: false,
+  validated: false,
+})
 
 const emit = defineEmits<{
   submit: [value: Event]
