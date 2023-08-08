@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.0...bootstrap-vue-next-v0.10.1) (2023-08-08)
+
+### Bug Fixes
+
+- **BNavItem:** don't stop click event for toggle directive. ([4428dce](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4428dce59b3689a84731ea096ac760d287c941d1))
+
 ## [0.10.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.26...bootstrap-vue-next-v0.10.0) (2023-08-06)
 
 ### ⚠ BREAKING CHANGES
