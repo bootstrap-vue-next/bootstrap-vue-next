@@ -7,7 +7,7 @@
       :active-class="activeClass ?? 'active'"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
-      @click.stop="emit('click', $event)"
+      @click="emit('click', $event)"
     >
       <slot />
     </BLink>
