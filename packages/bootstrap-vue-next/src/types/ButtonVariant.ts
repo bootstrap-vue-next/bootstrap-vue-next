@@ -10,6 +10,7 @@ export interface BaseButtonVariant extends BaseColorVariant {
   'outline-info': unknown
   'outline-light': unknown
   'outline-dark': unknown
+  'transparent': unknown
 }
 
 export type ButtonVariant = keyof BaseButtonVariant
