@@ -1,20 +1,27 @@
 <template>
-  <BForm
-    :id="id"
-    :floating="floating"
-    :role="role"
-    :novalidate="novalidate"
-    :validated="validated"
-    class="d-flex"
-    @submit.prevent="submitted"
-  >
-    <slot />
-  </BForm>
+  <li class="container-fluid">
+    <BForm
+      v-bind="$attrs"
+      :id="id"
+      :floating="floating"
+      :role="role"
+      :novalidate="novalidate"
+      :validated="validated"
+      class="d-flex"
+      @submit.prevent="submitted"
+    >
+      <slot />
+    </BForm>
+  </li>
 </template>
 
 <script setup lang="ts">
 import type {BFormProps} from '../../types'
 import BForm from '../BForm/BForm.vue'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 withDefaults(
   defineProps<
