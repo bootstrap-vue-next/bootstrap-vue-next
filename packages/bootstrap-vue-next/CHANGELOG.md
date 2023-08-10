@@ -1,5 +1,13 @@
 # Changelog
 
+
+## [0.10.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.1...bootstrap-vue-next-v0.10.2) (2023-08-09)
+
+
+### Bug Fixes
+
+* **BFormNav:** not wrapped in li fixes [#1346](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1346)  ([#1347](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1347)) ([bf6e082](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bf6e0826aab7e0fc0152d4154e74c598b5d363fc))
+
 ## [0.10.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.0...bootstrap-vue-next-v0.10.1) (2023-08-08)
 
 ### Bug Fixes

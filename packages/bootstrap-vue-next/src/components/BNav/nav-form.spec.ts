@@ -6,22 +6,30 @@ import BForm from '../BForm/BForm.vue'
 describe('nav-form', () => {
   enableAutoUnmount(afterEach)
 
-  it('contains static class d-flex', () => {
+  it('contains li', () => {
     const wrapper = mount(BNavForm)
-    expect(wrapper.classes()).toContain('d-flex')
+    const $li = wrapper.find('li')
+    expect($li.exists()).toBe(true)
   })
 
-  it('renders default slot', () => {
-    const wrapper = mount(BNavForm, {
-      slots: {default: 'foobar'},
-    })
-    expect(wrapper.text()).toBe('foobar')
+  it('contains static class container-fluid', () => {
+    const wrapper = mount(BNavForm)
+    const $li = wrapper.get('li')
+    expect($li.classes()).toContain('container-fluid')
   })
 
   it('contains bform', () => {
     const wrapper = mount(BNavForm)
     const $bform = wrapper.findComponent(BForm)
     expect($bform.exists()).toBe(true)
+  })
+
+  it('bform renders default slot', () => {
+    const wrapper = mount(BNavForm, {
+      slots: {default: 'foobar'},
+    })
+    const $bform = wrapper.getComponent(BForm)
+    expect($bform.text()).toBe('foobar')
   })
 
   it('bform to have prop floating when prop floating', () => {
