@@ -1,24 +1,23 @@
-import {computed, type MaybeRefOrGetter, onMounted, readonly, ref, toRef, watch} from 'vue'
+import {computed, type MaybeRefOrGetter, onMounted, readonly, toRef, watch} from 'vue'
 import {useScrollLock} from '@vueuse/core'
 
 export default (isOpen: MaybeRefOrGetter<boolean>, bodyScroll: MaybeRefOrGetter<boolean>) => {
-  const modelValue = readonly(toRef(isOpen))
-  const bodyScrollingValue = readonly(toRef(bodyScroll))
+  const resolvedIsOpen = readonly(toRef(isOpen))
+  const resolvedBodyScrolling = readonly(toRef(bodyScroll))
 
   /**
    * We use the inverse because bodyScrolling === true means we allow scrolling, while bodyScrolling === false means we disallow
    */
-  const inverseBodyScrollingValue = computed(() => !bodyScrollingValue.value)
-
-  const bodyRef = ref<HTMLElement | null>(null)
+  const inverseBodyScrollingValue = computed(() => !resolvedBodyScrolling.value)
 
   onMounted(() => {
-    bodyRef.value = document.body
-  })
+    const isLocked = useScrollLock(
+      document.body,
+      resolvedIsOpen.value && inverseBodyScrollingValue.value
+    )
 
-  const isLocked = useScrollLock(bodyRef, modelValue.value && inverseBodyScrollingValue.value)
-
-  watch([modelValue, inverseBodyScrollingValue], ([modelVal, bodyVal]) => {
-    isLocked.value = modelVal && bodyVal
+    watch([resolvedIsOpen, inverseBodyScrollingValue], ([modelVal, bodyVal]) => {
+      isLocked.value = modelVal && bodyVal
+    })
   })
 }
