@@ -109,9 +109,7 @@ Or manually provide your options and option groups:
     <BFormSelectOption value="b" disabled>Option B (disabled)</BFormSelectOption>
     <BFormSelectOptionGroup label="Grouped options">
       <BFormSelectOption :value="{C: '3PO'}">Option with object value</BFormSelectOption>
-      <BFormSelectOption :value="{R: '2D2'}"
-        >Another option with object value</BFormSelectOption
-      >
+      <BFormSelectOption :value="{R: '2D2'}">Another option with object value</BFormSelectOption>
     </BFormSelectOptionGroup>
   </BFormSelect>
 
@@ -151,9 +149,7 @@ options specified by the `options` prop, use the named slot `first`.
   <BFormSelect v-model="exFirstSlotSelected" :options="exFirstSlotOptions" class="mb-3">
     <!-- This slot appears above the options from 'options' prop -->
     <template #first>
-      <BFormSelectOption :value="null" disabled
-        >-- Please select an option --</BFormSelectOption
-      >
+      <BFormSelectOption :value="null" disabled>-- Please select an option --</BFormSelectOption>
     </template>
 
     <!-- These options will appear after the ones from 'options' prop -->
@@ -481,12 +477,7 @@ an array reference as your `v-model` when in `multiple` mode.
 
 ```vue
 <template>
-  <BFormSelect
-    v-model="exMultiSelected"
-    :options="exMultiOptions"
-    multiple
-    :select-size="4"
-  />
+  <BFormSelect v-model="exMultiSelected" :options="exMultiOptions" multiple :select-size="4" />
 
   <div class="mt-3">
     Selected: <strong>{{ exMultiSelected }}</strong>
