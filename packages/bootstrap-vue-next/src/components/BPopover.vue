@@ -420,7 +420,8 @@ const hideFn = (e: Event) => {
       (e?.type === 'update:modelValue' && manualBoolean.value) ||
       (isOutside.value &&
         triggerIsOutside.value &&
-        !element.value?.contains(document?.activeElement))
+        !element.value?.contains(document?.activeElement) &&
+        !trigger.value?.contains(document?.activeElement))
     ) {
       showState.value = false
       nextTick(() => {
