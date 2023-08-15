@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.10.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.2...bootstrap-vue-next-v0.10.3) (2023-08-15)
+
+
+### Bug Fixes
+
+* **BPopover:** check if focus is on trigger [#1352](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1352) ([22989cb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/22989cbe7c10f0f99021cb1eadcbd26119a78238))
+
 ## [0.10.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.1...bootstrap-vue-next-v0.10.2) (2023-08-09)
 
 
