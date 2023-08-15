@@ -378,6 +378,7 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
+let showTimeout: ReturnType<typeof setTimeout> | undefined
 const show = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
@@ -388,7 +389,7 @@ const show = () => {
   showStateInternal.value = true
   nextTick(() => {
     update()
-    setTimeout(
+    showTimeout = setTimeout(
       () => {
         update()
         showState.value = true
@@ -407,6 +408,10 @@ const hideFn = (e: Event) => {
   if (event.defaultPrevented) {
     emit('hide-prevented')
     return
+  }
+  if (showTimeout) {
+    clearTimeout(showTimeout)
+    showTimeout = undefined
   }
   const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 100
   setTimeout(() => {
