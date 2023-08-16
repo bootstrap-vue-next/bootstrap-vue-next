@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [0.10.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.3...bootstrap-vue-next-v0.10.4) (2023-08-16)
+
+
+### Bug Fixes
+
+* **BOffcanvas:** import BButton ([65d25fa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/65d25fae8d4ae9fd3d76cb459b8117a3eb8c0586))
+* **BOffcanvas:** import BButton ([#1359](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1359)) ([65d25fa](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/65d25fae8d4ae9fd3d76cb459b8117a3eb8c0586))
+
 ## [0.10.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.2...bootstrap-vue-next-v0.10.3) (2023-08-15)
 
 
