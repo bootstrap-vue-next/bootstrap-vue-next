@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.10.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.4...bootstrap-vue-next-v0.10.5) (2023-08-16)
+
+
+### Features
+
+* **BToggle:** Add collapsed/not-collapsed classes ([#1353](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1353)) ([ff771c3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ff771c3445de3e034bcbc0fddaa9a491357ea514))
+
 ## [0.10.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.3...bootstrap-vue-next-v0.10.4) (2023-08-16)
 
 
