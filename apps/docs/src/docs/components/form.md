@@ -93,10 +93,10 @@ supported components, form layout, and more.
     </BFormGroup>
 
     <BFormGroup id="input-group-2" label="Your Name:" label-for="input-2">
-      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required/>
+      <BFormInput id="input-2" v-model="form.name" placeholder="Enter name" required />
     </BFormGroup>
     <BFormGroup id="input-group-3" label="Food:" label-for="input-3">
-      <BFormSelect id="input-3" v-model="form.food" :options="foods" required/>
+      <BFormSelect id="input-3" v-model="form.food" :options="foods" required />
     </BFormGroup>
 
     <BFormGroup id="input-group-4">

@@ -143,12 +143,7 @@ feature, set the `no-resize` prop to `true`.
   <template #html>
 
 ```vue
-<BFormTextarea
-  id="textarea-no-resize"
-  placeholder="Fixed height textarea"
-  rows="3"
-  no-resize
-/>
+<BFormTextarea id="textarea-no-resize" placeholder="Fixed height textarea" rows="3" no-resize />
 ```
 
   </template>
@@ -344,7 +339,7 @@ form field styling and preserve the correct text size, margin, padding and heigh
 </template>
 
 <script setup lang="ts">
-const textReadOnly = "This is some text.\nIt is read only and does not look like an input."
+const textReadOnly = 'This is some text.\nIt is read only and does not look like an input.'
 </script>
 ```
 

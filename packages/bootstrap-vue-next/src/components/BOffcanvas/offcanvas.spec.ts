@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import BOffcanvas from './BOffcanvas.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
+import BButton from '../BButton/BButton.vue'
 import BOverlay from '../BOverlay/BOverlay.vue'
 describe.skip('offcanvas', () => {
   enableAutoUnmount(afterEach)
@@ -155,6 +156,13 @@ describe.skip('offcanvas', () => {
     expect($closebutton.props('type')).toBe('button')
   })
 
+  it('first child div child BCloseButton has static class text-reset', () => {
+    const wrapper = mount(BOffcanvas)
+    const [, $div] = wrapper.findAll('div')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.classes()).toContain('text-reset')
+  })
+
   it('first child div child BCloseButton has prop ariaLabel to be default close', () => {
     const wrapper = mount(BOffcanvas)
     const [, $div] = wrapper.findAll('div')
@@ -162,20 +170,51 @@ describe.skip('offcanvas', () => {
     expect($closebutton.props('ariaLabel')).toBe('Close')
   })
 
-  it('first child div child BCloseButton has prop ariaLabel to be prop dismissLabel', () => {
+  it('first child div child BCloseButton has prop ariaLabel to be prop headerCloseLabel', () => {
     const wrapper = mount(BOffcanvas, {
-      props: {dismissLabel: 'foobar'},
+      props: {headerCloseLabel: 'foobar'},
     })
     const [, $div] = wrapper.findAll('div')
     const $closebutton = $div.getComponent(BCloseButton)
     expect($closebutton.props('ariaLabel')).toBe('foobar')
   })
 
-  it('first child div child BCloseButton has static class text-reset', () => {
-    const wrapper = mount(BOffcanvas)
+  it('first child div child BCloseButton has class when prop headerCloseClass', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {headerCloseClass: 'foobar'},
+    })
     const [, $div] = wrapper.findAll('div')
     const $closebutton = $div.getComponent(BCloseButton)
-    expect($closebutton.classes()).toContain('text-reset')
+    expect($closebutton.classes()).toContain('foobar')
+  })
+
+  it('first child div child BCloseButton has not variant class when headerCloseVariant', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {headerCloseVariant: 'warning'},
+    })
+    const [, $div] = wrapper.findAll('div')
+    const $closebutton = $div.getComponent(BCloseButton)
+    expect($closebutton.classes()).not.toContain('btn-warning')
+  })
+
+  it('first child div child BButton has class when prop headerCloseClass', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {headerCloseClass: 'foobar'},
+      slots: {'header-close': 'foobar'},
+    })
+    const [, $div] = wrapper.findAll('div')
+    const $bbutton = $div.getComponent(BButton)
+    expect($bbutton.classes()).toContain('foobar')
+  })
+
+  it('first child div child BButton has variant class when headerCloseVariant', () => {
+    const wrapper = mount(BOffcanvas, {
+      props: {headerCloseVariant: 'warning'},
+      slots: {'header-close': 'foobar'},
+    })
+    const [, $div] = wrapper.findAll('div')
+    const $bbutton = $div.getComponent(BButton)
+    expect($bbutton.classes()).toContain('btn-warning')
   })
 
   it('second child div has static class offcanvas-body', () => {

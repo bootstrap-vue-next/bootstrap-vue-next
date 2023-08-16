@@ -54,9 +54,7 @@ Alerts are available for any length of text, as well as an optional dismiss butt
 
   <BAlert variant="success" :model-value="true">Success Alert</BAlert>
 
-  <BAlert v-model="showDismissibleAlert" variant="danger" dismissible>
-    Dismissible Alert!
-  </BAlert>
+  <BAlert v-model="showDismissibleAlert" variant="danger" dismissible> Dismissible Alert! </BAlert>
 
   <BAlert
     v-model="dismissCountDown"
