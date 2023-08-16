@@ -55,6 +55,8 @@ const checkVisibility = (binding: DirectiveBinding<string>, el: HTMLElement) => 
     }
   })
   el.setAttribute('aria-expanded', visible ? 'true' : 'false')
+  el.classList.remove(visible ? 'collapsed' : 'not-collapsed')
+  el.classList.add(visible ? 'not-collapsed' : 'collapsed')
 }
 
 export interface WithToggle extends HTMLElement {
