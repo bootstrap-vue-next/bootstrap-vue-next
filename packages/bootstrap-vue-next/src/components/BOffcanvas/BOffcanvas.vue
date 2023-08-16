@@ -33,12 +33,17 @@
                   {{ title }}
                 </slot>
               </h5>
-              <BCloseButton
-                v-if="!noHeaderCloseBoolean"
-                class="text-reset"
-                :aria-label="dismissLabel"
-                @click="hide('close')"
-              />
+              <template v-if="!noHeaderCloseBoolean">
+                <BButton v-if="hasHeaderCloseSlot" v-bind="headerCloseAttrs" @click="hide('close')">
+                  <slot name="header-close" />
+                </BButton>
+                <BCloseButton
+                  v-else
+                  :aria-label="headerCloseLabel"
+                  v-bind="headerCloseAttrs"
+                  @click="hide('close')"
+                />
+              </template>
             </slot>
           </div>
           <div class="offcanvas-body" :class="bodyClass">
@@ -67,7 +72,7 @@
 import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
-import type {Booleanish, ClassValue, ColorVariant} from '../../types'
+import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
 import {BvTriggerableEvent, isEmptySlot} from '../../utils'
 import BOverlay from '../BOverlay/BOverlay.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -87,7 +92,6 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    dismissLabel?: string
     modelValue?: Booleanish
     bodyScrolling?: Booleanish
     backdrop?: Booleanish
@@ -104,16 +108,18 @@ const props = withDefaults(
     id?: string
     noFocus?: Booleanish
     backdropVariant?: ColorVariant | null
-    headerClass?: ClassValue
-    bodyClass?: ClassValue
-    footerClass?: ClassValue
+    headerClass?: string
+    headerCloseClass?: ClassValue
+    headerCloseLabel?: string
+    headerCloseVariant?: ButtonVariant | null
+    bodyClass?: string
+    footerClass?: string
     teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
     // TODO responsive doesn't work
     // responsive?: Breakpoint
   }>(),
   {
-    dismissLabel: 'Close',
     id: undefined,
     title: undefined,
     modelValue: false,
@@ -128,6 +134,9 @@ const props = withDefaults(
     noHeaderClose: false,
     noHeader: false,
     headerClass: undefined,
+    headerCloseClass: undefined,
+    headerCloseLabel: 'Close',
+    headerCloseVariant: 'secondary',
     bodyClass: undefined,
     footerClass: undefined,
     teleportDisabled: false,
@@ -149,23 +158,25 @@ const emit = defineEmits<{
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
+  'default'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: Record<string, never>) => any
-  header?: (props: {
-    visible: boolean
-    placement: 'top' | 'bottom' | 'start' | 'end'
-    hide: (trigger?: string) => void
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  footer?: (props: {
+  'title'?: (props: Record<string, never>) => any
+  'header'?: (props: {
     visible: boolean
     placement: 'top' | 'bottom' | 'start' | 'end'
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  backdrop?: (props: Record<string, never>) => any
+  'header-close'?: (props: Record<string, never>) => any
+  'footer'?: (props: {
+    visible: boolean
+    placement: 'top' | 'bottom' | 'start' | 'end'
+    hide: (trigger?: string) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'backdrop'?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()
@@ -213,6 +224,16 @@ const lazyShowing = computed(
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
+
+const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
+const headerCloseClasses = computed(() => [
+  {'text-reset': !hasHeaderCloseSlot.value},
+  props.headerCloseClass,
+])
+const headerCloseAttrs = computed(() => ({
+  variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
+  class: headerCloseClasses.value,
+}))
 
 const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [

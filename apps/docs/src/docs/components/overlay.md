@@ -823,9 +823,7 @@ This example also demonstrates additional accessibility markup.
         >
           <p><strong id="form-confirm-label">Are you sure?</strong></p>
           <div class="d-flex" style="column-gap: 5%;">
-            <BButton variant="outline-danger" class="me-3" @click="onFormCancel">
-              Cancel
-            </BButton>
+            <BButton variant="outline-danger" class="me-3" @click="onFormCancel"> Cancel </BButton>
             <BButton variant="outline-success" @click="onFormOK">OK</BButton>
           </div>
         </div>

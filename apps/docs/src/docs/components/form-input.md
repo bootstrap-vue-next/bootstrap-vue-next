@@ -162,14 +162,7 @@ In the example below, we double the number of steps by using step="0.5".
 ```vue
 <template>
   <label for="range-1">Example range with min and max</label>
-  <BFormInput
-    id="range-1"
-    v-model="rangeValueStep"
-    type="range"
-    min="0"
-    max="5"
-    step="0.5"
-  />
+  <BFormInput id="range-1" v-model="rangeValueStep" type="range" min="0" max="5" step="0.5" />
   <div class="mt-2">Value: {{ rangeValueStep }}</div>
 </template>
 
@@ -376,9 +369,7 @@ invalid), `true` (for valid), or `null` (no validation state).
       trim
     />
     <!-- This will only be shown if the preceding input has an invalid state -->
-    <BFormInvalidFeedback id="input-live-feedback">
-      Enter at least 3 letters
-    </BFormInvalidFeedback>
+    <BFormInvalidFeedback id="input-live-feedback"> Enter at least 3 letters </BFormInvalidFeedback>
     <!-- This is a form text block (formerly known as help block) -->
     <BFormText id="input-live-help">Your full name.</BFormText>
   </div>
@@ -612,11 +603,7 @@ these methods and properties. Support will vary based on input type.
 ```vue
 <template>
   <div role="group">
-    <BFormInput
-      ref="inputRef"
-      v-model="sampleInputText"
-      placeholder="Enter your name"
-    />
+    <BFormInput ref="inputRef" v-model="sampleInputText" placeholder="Enter your name" />
   </div>
   <div class="mt-2">
     <BButton primary @click="selectAllText">Select all text</BButton>

@@ -203,20 +203,10 @@ use the `first-number` and `last-number` props.
 ```vue
 <template>
   <h6>Goto first button number</h6>
-  <BPagination
-    v-model="ex2CurrentPage"
-    :total-rows="ex2Rows"
-    :per-page="ex2PerPage"
-    first-number
-  />
+  <BPagination v-model="ex2CurrentPage" :total-rows="ex2Rows" :per-page="ex2PerPage" first-number />
 
   <h6>Goto last button number</h6>
-  <BPagination
-    v-model="ex2CurrentPage"
-    :total-rows="ex2Rows"
-    :per-page="ex2PerPage"
-    last-number
-  />
+  <BPagination v-model="ex2CurrentPage" :total-rows="ex2Rows" :per-page="ex2PerPage" last-number />
 
   <h6>Goto first and last button number</h6>
   <BPagination

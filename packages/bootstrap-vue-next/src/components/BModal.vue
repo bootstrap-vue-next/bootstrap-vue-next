@@ -35,13 +35,17 @@
                   </slot>
                 </component>
                 <template v-if="!hideHeaderCloseBoolean">
-                  <button v-if="hasHeaderCloseSlot" type="button" @click="hide('close')">
+                  <BButton
+                    v-if="hasHeaderCloseSlot"
+                    v-bind="headerCloseAttrs"
+                    @click="hide('close')"
+                  >
                     <slot name="header-close" />
-                  </button>
+                  </BButton>
                   <BCloseButton
                     v-else
-                    ref="closeButton"
                     :aria-label="headerCloseLabel"
+                    v-bind="headerCloseAttrs"
                     @click="hide('close')"
                   />
                 </template>
@@ -139,7 +143,9 @@ const props = withDefaults(
     headerBgVariant?: ColorVariant | null
     headerBorderVariant?: ColorVariant | null
     headerClass?: ClassValue
+    headerCloseClass?: ClassValue
     headerCloseLabel?: string
+    headerCloseVariant?: ButtonVariant | null
     headerTextVariant?: ColorVariant | null
     hideBackdrop?: Booleanish
     hideFooter?: Booleanish
@@ -180,6 +186,9 @@ const props = withDefaults(
     headerBgVariant: null,
     headerBorderVariant: null,
     headerClass: undefined,
+    headerCloseClass: undefined,
+    headerCloseLabel: 'Close',
+    headerCloseVariant: 'secondary',
     footerBgVariant: null,
     footerBorderVariant: null,
     footerClass: undefined,
@@ -198,7 +207,6 @@ const props = withDefaults(
     cancelVariant: 'secondary',
     centered: false,
     fullscreen: false,
-    headerCloseLabel: 'Close',
     hideBackdrop: false,
     hideFooter: false,
     hideHeader: false,
@@ -360,6 +368,13 @@ const headerClasses = computed(() => [
     [`text-${props.headerTextVariant}`]: props.headerTextVariant !== null,
   },
 ])
+
+const headerCloseClasses = computed(() => [props.headerCloseClass])
+
+const headerCloseAttrs = computed(() => ({
+  variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
+  class: headerCloseClasses.value,
+}))
 
 const footerClasses = computed(() => [
   props.footerClass,

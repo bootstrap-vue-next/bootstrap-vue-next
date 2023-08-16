@@ -1,6 +1,8 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import BModal from './BModal.vue'
+import BCloseButton from './BButton/BCloseButton.vue'
+import BButton from './BButton/BButton.vue'
 // import BTransition from './BTransition/BTransition.vue'
 
 describe('modal', () => {
@@ -262,6 +264,67 @@ describe('modal', () => {
     const $div2 = $div.get('div')
     const $div3 = $div2.find('div')
     expect($div3.exists()).toBe(true)
+  })
+
+  it('nested div BCloseButton has class when prop headerCloseClass', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {headerCloseClass: 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.classes()).toContain('foobar')
+  })
+
+  it('nested div BCloseButton has no variant class when headerCloseVariant', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {headerCloseVariant: 'warning'},
+    })
+    const $div = wrapper.get('div')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.classes()).not.toContain('btn-warning')
+  })
+
+  it('nested div BCloseButton has aria-label to be Close by default', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+    })
+    const $div = wrapper.get('div')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.attributes('aria-label')).toBe('Close')
+  })
+
+  it('nested div BCloseButton has aria-label to be prop headerCloseLabel', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {headerCloseLabel: 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    const $bclosebutton = $div.getComponent(BCloseButton)
+    expect($bclosebutton.attributes('aria-label')).toBe('foobar')
+  })
+
+  it('nested div BButton has class when prop headerCloseClass', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {headerCloseClass: 'foobar'},
+      slots: {'header-close': 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    const $bbutton = $div.getComponent(BButton)
+    expect($bbutton.classes()).toContain('foobar')
+  })
+
+  it('nested div BButton has variant class when headerCloseVariant', () => {
+    const wrapper = mount(BModal, {
+      global: {stubs: {teleport: true}},
+      props: {headerCloseVariant: 'warning'},
+      slots: {'header-close': 'foobar'},
+    })
+    const $div = wrapper.get('div')
+    const $bbutton = $div.getComponent(BButton)
+    expect($bbutton.classes()).toContain('btn-warning')
   })
 
   // Test isActive states
