@@ -62,7 +62,6 @@
         </td>
       </tr>
     </thead>
-
     <tbody>
       <tr v-if="!stacked && $slots['top-row']">
         <slot name="top-row" />
