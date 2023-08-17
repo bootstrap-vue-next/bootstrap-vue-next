@@ -62,7 +62,12 @@
         </td>
       </tr>
     </thead>
+
     <tbody>
+      <tr v-if="$slots['top-row']">
+        <slot name="top-row" />
+      </tr>
+
       <template v-for="(item, itemIndex) in items" :key="itemIndex">
         <tr
           :class="getRowClasses(item, 'row')"
@@ -112,6 +117,9 @@
             {{ emptyText }}
           </slot>
         </td>
+      </tr>
+      <tr v-if="$slots['bottom-row']">
+        <slot name="bottom-row" />
       </tr>
     </tbody>
     <tfoot v-if="footCloneBoolean">
