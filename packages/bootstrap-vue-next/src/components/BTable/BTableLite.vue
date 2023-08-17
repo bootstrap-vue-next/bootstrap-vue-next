@@ -64,7 +64,7 @@
     </thead>
 
     <tbody>
-      <tr v-if="$slots['top-row']">
+      <tr v-if="!stacked && $slots['top-row']">
         <slot name="top-row" />
       </tr>
 
@@ -118,7 +118,7 @@
           </slot>
         </td>
       </tr>
-      <tr v-if="$slots['bottom-row']">
+      <tr v-if="!stacked && $slots['bottom-row']">
         <slot name="bottom-row" />
       </tr>
     </tbody>
