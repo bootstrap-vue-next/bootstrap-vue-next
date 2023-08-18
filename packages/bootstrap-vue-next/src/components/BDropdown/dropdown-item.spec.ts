@@ -148,6 +148,16 @@ describe('dropdown-item', () => {
     expect($button.attributes('disabled')).toBeUndefined()
   })
 
+  it('button has aria-disabled attr when prop disabled', async () => {
+    const wrapper = mount(BDropdownItem, {
+      props: {disabled: true},
+    })
+    const $button = wrapper.get('button')
+    expect($button.attributes('aria-disabled')).toBe('true')
+    await wrapper.setProps({disabled: false})
+    expect($button.attributes('aria-disabled')).toBeUndefined()
+  })
+
   it('button has aria-current attr when prop active', async () => {
     const wrapper = mount(BDropdownItem, {
       props: {active: true},
