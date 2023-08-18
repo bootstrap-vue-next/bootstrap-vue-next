@@ -5,6 +5,7 @@
       class="dropdown-item"
       :class="computedClasses"
       :disabled="disabledBoolean"
+      :aria-disabled="disabledBoolean ? true : null"
       :aria-current="activeBoolean ? true : null"
       :href="tag === 'a' ? href : null"
       :rel="rel"

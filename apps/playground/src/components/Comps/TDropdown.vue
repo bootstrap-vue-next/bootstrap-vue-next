@@ -142,6 +142,15 @@
         <BDropdown text="Auto close outside" class="m-2" auto-close="outside">
           <BDropdownItem href="#">Action</BDropdownItem>
         </BDropdown>
+
+        <BDropdown text="Various Item Attributes" class="m-2" auto-close="outside">
+          <BDropdownItem href="#">First Action</BDropdownItem>
+          <BDropdownItem>Second Action</BDropdownItem>
+          <BDropdownItem>Third Action</BDropdownItem>
+          <BDropdownDivider />
+          <BDropdownItem href="#" active>Active action</BDropdownItem>
+          <BDropdownItem href="#" disabled>Disabled action</BDropdownItem>
+        </BDropdown>
       </BCol>
     </BRow>
     <BRow>
