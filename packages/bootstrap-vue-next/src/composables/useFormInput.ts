@@ -90,13 +90,18 @@ export default (
     lazyBoolean.value === true ? NaN : debounceMaxWaitNumber.value
   )
 
-  const updateModelValue = useDebounceFn(
+  const internalUpdateModelValue = useDebounceFn(
     (value: string | number | undefined) => {
       modelValue.value = value
     },
     computedDebounceValueWithLazy,
     {maxWait: computedDebounceMaxWaitValueWithLazy}
   )
+
+  const updateModelValue = (value: string | number | undefined, force = false) => {
+    if (lazyBoolean.value === true && force === false) return
+    internalUpdateModelValue(value)
+  }
 
   const {focused} = useFocus(input, {
     initialValue: autofocusBoolean.value,
@@ -118,12 +123,6 @@ export default (
     return value
   }
 
-  const handleAutofocus = () => {
-    if (autofocusBoolean.value) {
-      focused.value = true
-    }
-  }
-
   onMounted(() => {
     if (input.value) {
       input.value.value = modelValue.value as string
@@ -132,7 +131,9 @@ export default (
 
   onActivated(() => {
     nextTick(() => {
-      handleAutofocus()
+      if (autofocusBoolean.value) {
+        focused.value = true
+      }
     })
   })
 
@@ -148,14 +149,10 @@ export default (
       return
     }
 
-    if (lazyBoolean.value) return
-
     const nextModel = _getModelValue(formattedValue)
 
-    if (modelValue.value !== nextModel) {
-      inputValue = value
-      updateModelValue(nextModel)
-    }
+    inputValue = value
+    updateModelValue(nextModel)
 
     emit('input', formattedValue)
   }
@@ -168,14 +165,10 @@ export default (
       return
     }
 
-    if (!lazyBoolean.value) return
     inputValue = value
-    updateModelValue(formattedValue)
+    updateModelValue(formattedValue, true)
 
-    const nextModel = _getModelValue(formattedValue)
-    if (modelValue.value !== nextModel) {
-      emit('change', formattedValue)
-    }
+    emit('change', formattedValue)
   }
 
   const onBlur = (evt: FocusEvent) => {
@@ -186,7 +179,7 @@ export default (
     const formattedValue = _formatValue(value, evt, true)
 
     inputValue = value
-    updateModelValue(formattedValue)
+    updateModelValue(formattedValue, true)
   }
 
   const focus = () => {
@@ -197,7 +190,7 @@ export default (
 
   const blur = () => {
     if (!disabledBoolean.value) {
-      input.value?.blur()
+      focused.value = false
     }
   }
 
