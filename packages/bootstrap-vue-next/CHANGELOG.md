@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.10.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.7...bootstrap-vue-next-v0.10.8) (2023-08-19)
+
+
+### Bug Fixes
+
+* **useFormInput:** event issues not working as intended fixes [#1089](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1089) ([0b3fcc5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b3fcc58f84f056ab25c1fb772145da8989563af))
+
 ## [0.10.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.6...bootstrap-vue-next-v0.10.7) (2023-08-19)
 
 
