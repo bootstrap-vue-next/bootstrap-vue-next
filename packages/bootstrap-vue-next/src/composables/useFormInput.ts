@@ -2,7 +2,7 @@ import type {AriaInvalid, Booleanish, Size} from '../types'
 import {computed, nextTick, onActivated, onMounted, ref, watch} from 'vue'
 import {useBooleanish, useId} from '.'
 import {resolveAriaInvalid} from '../utils'
-import {useFocus} from '@vueuse/core'
+import {useDebounceFn, useFocus, useToNumber, useVModel} from '@vueuse/core'
 
 export interface CommonInputProps {
   ariaInvalid?: AriaInvalid
@@ -10,6 +10,8 @@ export interface CommonInputProps {
   autofocus?: Booleanish
   disabled?: Booleanish
   form?: string
+  debounce?: string | number
+  debounceMaxWait?: string | number
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formatter?: (val: any, evt: any) => any
   id?: string
@@ -54,24 +56,47 @@ export interface CommonInputProps {
 //   trim: {type: Boolean, default: false},
 // }
 
-export default (props: Readonly<CommonInputProps>, emit: any) => {
+export default (
+  props: Readonly<CommonInputProps>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  emit: ((evt: 'update:modelValue', val: any) => void) &
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((evt: 'change', val: any) => void) &
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((evt: 'blur', val: any) => void) &
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((evt: 'input', val: any) => void)
+) => {
   const input = ref<HTMLInputElement | null>(null)
   let inputValue: string | null = null
   let neverFormatted = true
+
+  const modelValue = useVModel(props, 'modelValue', emit)
+
   const computedId = useId(() => props.id, 'input')
   const autofocusBoolean = useBooleanish(() => props.autofocus)
   const disabledBoolean = useBooleanish(() => props.disabled)
   const lazyBoolean = useBooleanish(() => props.lazy)
   const lazyFormatterBoolean = useBooleanish(() => props.lazyFormatter)
   const numberBoolean = useBooleanish(() => props.number)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const plaintextBoolean = useBooleanish(() => props.plaintext)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const readonlyBoolean = useBooleanish(() => props.readonly)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const requiredBoolean = useBooleanish(() => props.required)
   const stateBoolean = useBooleanish(() => props.state)
   const trimBoolean = useBooleanish(() => props.trim)
+  const debounceNumber = useToNumber(computed(() => props.debounce ?? 0))
+  const debounceMaxWaitNumber = useToNumber(computed(() => props.debounceMaxWait ?? NaN))
+  const computedDebounceValueWithLazy = computed(() =>
+    lazyBoolean.value === true ? 0 : debounceNumber.value
+  )
+  const computedDebounceMaxWaitValueWithLazy = computed(() =>
+    lazyBoolean.value === true ? NaN : debounceMaxWaitNumber.value
+  )
+
+  const updateModelValue = useDebounceFn(
+    (value: string | number | undefined) => {
+      modelValue.value = value
+    },
+    computedDebounceValueWithLazy,
+    {maxWait: computedDebounceMaxWaitValueWithLazy}
+  )
 
   const {focused} = useFocus(input, {
     initialValue: autofocusBoolean.value,
@@ -101,7 +126,7 @@ export default (props: Readonly<CommonInputProps>, emit: any) => {
 
   onMounted(() => {
     if (input.value) {
-      input.value.value = props.modelValue as string
+      input.value.value = modelValue.value as string
     }
   })
 
@@ -127,9 +152,9 @@ export default (props: Readonly<CommonInputProps>, emit: any) => {
 
     const nextModel = _getModelValue(formattedValue)
 
-    if (props.modelValue !== nextModel) {
+    if (modelValue.value !== nextModel) {
       inputValue = value
-      emit('update:modelValue', nextModel)
+      updateModelValue(nextModel)
     }
 
     emit('input', formattedValue)
@@ -145,10 +170,10 @@ export default (props: Readonly<CommonInputProps>, emit: any) => {
 
     if (!lazyBoolean.value) return
     inputValue = value
-    emit('update:modelValue', formattedValue)
+    updateModelValue(formattedValue)
 
     const nextModel = _getModelValue(formattedValue)
-    if (props.modelValue !== nextModel) {
+    if (modelValue.value !== nextModel) {
       emit('change', formattedValue)
     }
   }
@@ -161,7 +186,7 @@ export default (props: Readonly<CommonInputProps>, emit: any) => {
     const formattedValue = _formatValue(value, evt, true)
 
     inputValue = value
-    emit('update:modelValue', formattedValue)
+    updateModelValue(formattedValue)
   }
 
   const focus = () => {
@@ -176,15 +201,12 @@ export default (props: Readonly<CommonInputProps>, emit: any) => {
     }
   }
 
-  watch(
-    () => props.modelValue,
-    (newValue) => {
-      if (!input.value) return
-      input.value.value = inputValue && neverFormatted ? inputValue : (newValue as string)
-      inputValue = null
-      neverFormatted = true
-    }
-  )
+  watch(modelValue, (newValue) => {
+    if (!input.value) return
+    input.value.value = inputValue && neverFormatted ? inputValue : (newValue as string)
+    inputValue = null
+    neverFormatted = true
+  })
 
   return {
     input,

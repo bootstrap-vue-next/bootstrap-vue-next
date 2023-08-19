@@ -49,6 +49,8 @@ const props = withDefaults(
     // CommonInputProps
     ariaInvalid: undefined,
     autocomplete: undefined,
+    debounce: 0,
+    debounceMaxWait: undefined,
     autofocus: false,
     disabled: false,
     form: undefined,
