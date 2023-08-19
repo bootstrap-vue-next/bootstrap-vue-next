@@ -90,6 +90,7 @@
             no-spinner
             fixed
             no-wrap
+            :blur="null"
             @click="hide('backdrop')"
           />
         </slot>
