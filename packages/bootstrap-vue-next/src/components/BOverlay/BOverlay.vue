@@ -38,7 +38,7 @@ import BSpinner from '../BSpinner.vue'
 const props = withDefaults(
   defineProps<{
     bgColor?: string
-    blur?: string
+    blur?: string | null
     fixed?: Booleanish
     noCenter?: Booleanish
     noFade?: Booleanish
