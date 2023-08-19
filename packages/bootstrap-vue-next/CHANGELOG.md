@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.10.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.5...bootstrap-vue-next-v0.10.6) (2023-08-18)
+
+
+### Bug Fixes
+
+* **BDropdown:** set aria-disabled attr when disabled ([6c26d13](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6c26d131a660fdf77f094c754f6e4f2042262087))
+
 ## [0.10.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.4...bootstrap-vue-next-v0.10.5) (2023-08-16)
 
 
