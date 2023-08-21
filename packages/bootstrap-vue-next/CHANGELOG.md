@@ -1,6 +1,17 @@
 # Changelog
 
 
+## [0.10.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.6...bootstrap-vue-next-v0.10.7) (2023-08-19)
+
+
+### Features
+
+* **BFormInput:** debounce support fixes [#737](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/737) ([7bc0135](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7bc0135d95701002539563d69edb0d27bedac6d6))
+* **BFormInput:** debounce support fixes [#737](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/737) ([#1371](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1371)) ([7bc0135](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7bc0135d95701002539563d69edb0d27bedac6d6))
+* **BFormInput:** new add prop debounceMaxWait ([7bc0135](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7bc0135d95701002539563d69edb0d27bedac6d6))
+* **BFormTextarea:** debounce support ([7bc0135](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7bc0135d95701002539563d69edb0d27bedac6d6))
+* **BFormTextarea:** new add prop debounceMaxWait ([7bc0135](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7bc0135d95701002539563d69edb0d27bedac6d6))
+
 ## [0.10.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.5...bootstrap-vue-next-v0.10.6) (2023-08-18)
 
 
