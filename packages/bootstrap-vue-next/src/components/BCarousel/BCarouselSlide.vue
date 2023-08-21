@@ -4,6 +4,7 @@
       <BImg
         class="d-block w-100"
         :alt="imgAlt"
+        :srcset="imgSrcset"
         :src="imgSrc"
         :width="imgWidth || parentData?.width.value"
         :height="imgHeight || parentData?.height.value"
@@ -59,6 +60,7 @@ const props = withDefaults(
     contentTag?: string
     contentVisibleUp?: string
     id?: string
+    imgSrcset?: string | string[]
     imgAlt?: string
     imgBlank?: Booleanish
     imgBlankColor?: string
@@ -67,6 +69,7 @@ const props = withDefaults(
     textTag?: string
   }>(),
   {
+    imgSrcset: undefined,
     imgSrc: undefined,
     imgHeight: undefined,
     imgWidth: undefined,
