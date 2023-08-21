@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.10.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.8...bootstrap-vue-next-v0.10.9) (2023-08-21)
+
+
+### Features
+
+* **BCarouselSlide:** add prop imgSrcset ([4917666](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4917666fe10aa2b0ec4a53a96ba46fdf3424cfb3))
+
 ## [0.10.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.7...bootstrap-vue-next-v0.10.8) (2023-08-19)
 
 
