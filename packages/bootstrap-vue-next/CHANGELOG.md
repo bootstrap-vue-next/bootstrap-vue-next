@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [0.10.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.9...bootstrap-vue-next-v0.10.10) (2023-08-22)
+
+
+### Bug Fixes
+
+* **BDropdownItem:** missing BLinkProps fixes [#1383](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1383) ([4aa4a40](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4aa4a4066b8f380718b1841ce6a5e14e7c587b84))
+* prop active and activeClass across the library have been standardized and now is more in line with Bootstrap-vue fixes [#1378](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1378) ([4aa4a40](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4aa4a4066b8f380718b1841ce6a5e14e7c587b84))
+
 ## [0.10.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.8...bootstrap-vue-next-v0.10.9) (2023-08-21)
 
 
