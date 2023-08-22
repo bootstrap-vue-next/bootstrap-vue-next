@@ -81,7 +81,7 @@ const props = withDefaults(
     variant: 'secondary',
     // Link props
     active: undefined,
-    activeClass: 'router-link-active',
+    activeClass: undefined,
     append: false,
     href: undefined,
     // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},

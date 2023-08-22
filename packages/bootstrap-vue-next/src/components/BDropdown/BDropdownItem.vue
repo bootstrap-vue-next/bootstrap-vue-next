@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
 import {computed, inject, useAttrs} from 'vue'
-import type {Booleanish, ClassValue, ColorVariant, LinkTarget} from '../../types'
+import type {BLinkProps, ClassValue} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
 
@@ -31,23 +31,32 @@ defineOptions({
 })
 
 const props = withDefaults(
-  defineProps<{
-    href?: string
-    linkClass?: ClassValue
-    active?: Booleanish
-    disabled?: Booleanish
-    rel?: string
-    target?: LinkTarget
-    variant?: ColorVariant | null
-  }>(),
+  defineProps<
+    {
+      linkClass?: ClassValue
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
   {
-    active: false,
-    disabled: false,
-    rel: undefined,
-    target: '_self',
-    variant: null,
     linkClass: undefined,
+    // Link props
+    active: undefined,
+    activeClass: undefined,
+    append: false,
     href: undefined,
+    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    rel: undefined,
+    replace: false,
+    routerComponentName: 'router-link',
+    target: '_self',
+    to: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
   }
 )
 
@@ -79,7 +88,7 @@ const tag = computed<'button' | 'a' | typeof BLink>(() =>
 )
 
 const componentAttrs = computed(() => ({
-  ...(attrs.to ? {activeClass: 'active', ...attrs} : attrs),
+  ...(attrs.to ? {activeClass: props.activeClass, ...attrs} : attrs),
 }))
 
 const collapseData = inject(collapseInjectionKey, null)

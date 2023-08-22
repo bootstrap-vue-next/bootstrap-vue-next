@@ -25,7 +25,7 @@ const props = withDefaults(
     tag: 'div',
     // Link props
     active: undefined,
-    activeClass: 'router-link-active',
+    activeClass: undefined,
     append: false,
     disabled: false,
     href: undefined,

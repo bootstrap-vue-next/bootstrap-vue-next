@@ -4,7 +4,7 @@
       class="nav-link"
       :class="linkClass"
       v-bind="{...computedLinkProps, ...linkAttrs}"
-      :active-class="activeClass ?? 'active'"
+      :active-class="activeClass"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
       @click="emit('click', $event)"
@@ -37,7 +37,7 @@ const props = withDefaults(
     linkClass: undefined,
     // Link props
     active: undefined,
-    activeClass: 'router-link-active',
+    activeClass: undefined,
     append: false,
     linkAttrs: undefined,
     disabled: false,

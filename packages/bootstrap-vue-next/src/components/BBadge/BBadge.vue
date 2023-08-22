@@ -33,7 +33,7 @@ const props = withDefaults(
     variant: 'secondary',
     // Link props
     active: undefined,
-    activeClass: 'router-link-active',
+    activeClass: undefined,
     append: false,
     disabled: false,
     href: undefined,

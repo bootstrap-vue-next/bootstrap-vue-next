@@ -37,7 +37,7 @@ defineSlots<{
 
 const props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
-  activeClass: 'router-link-active',
+  activeClass: undefined,
   append: false,
   disabled: false,
   event: 'click',
@@ -151,7 +151,7 @@ const routerAttr = computed(() => ({
 }))
 
 const computedLinkClasses = computed(() => ({
-  [props.activeClass]: activeBoolean.value,
+  [props.activeClass ?? 'active']: activeBoolean.value,
   disabled: disabledBoolean.value,
 }))
 
@@ -176,7 +176,7 @@ const clicked = (e: MouseEvent): void => {
  */
 export const BLINK_PROPS = {
   active: {type: [Boolean, String, undefined] as PropType<Booleanish>, default: undefined},
-  activeClass: {type: String, default: 'router-link-active'},
+  activeClass: {type: String, default: undefined},
   append: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   event: {type: [String, Array], default: 'click'},
