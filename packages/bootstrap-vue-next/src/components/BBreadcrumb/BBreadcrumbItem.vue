@@ -37,7 +37,7 @@ const props = withDefaults(
     text: undefined,
     // Link props
     active: false,
-    activeClass: 'router-link-active',
+    activeClass: undefined,
     append: false,
     disabled: false,
     event: 'click',

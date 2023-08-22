@@ -42,14 +42,12 @@ describe('dropdown-item', () => {
     expect($blink.exists()).toBe(true)
   })
 
-  it('child is tag prefers a over blink', () => {
+  it('child prefers to be blink when href and to', () => {
     const wrapper = mount(BDropdownItem, {
       props: {href: '/abc', to: '/abc'},
     })
-    const $a = wrapper.find('a')
     const $blink = wrapper.findComponent(BLink)
-    expect($blink.exists()).toBe(false)
-    expect($a.exists()).toBe(true)
+    expect($blink.exists()).toBe(true)
   })
 
   it('child is tag prefers Blink over button', () => {

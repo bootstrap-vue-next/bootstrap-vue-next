@@ -85,7 +85,7 @@ const props = withDefaults(
     block: false,
     loadingText: 'Loading...',
     // Link props
-    activeClass: 'router-link-active',
+    activeClass: undefined,
     append: false,
     disabled: false,
     event: 'click',
