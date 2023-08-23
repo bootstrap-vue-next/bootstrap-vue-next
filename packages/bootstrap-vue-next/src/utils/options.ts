@@ -23,24 +23,17 @@ export enum ComponentName {
 }
 
 const symbol = Symbol.for('BOptions')
-
-export function injectOptions(): Record<string, any> {
+export function injectComponentOptions(key: `${ComponentName}`): Record<string, any> {
   if (!hasInjectionContext()) {
     return {}
   }
 
-  const instance = inject(symbol)
+  const instance = inject<Record<string, any> | undefined>(symbol, undefined)
   if (!instance) {
     return {}
   }
 
-  return instance as BootstrapVueOptions
-}
-
-export function injectComponentOptions<T extends Record<string, any> = Record<string, any>>(
-  key: `${ComponentName}`
-): T {
-  return injectOptions()[key] || {}
+  return instance[key] || {}
 }
 
 export function provideComponentOptions<T extends Record<string, any>>(
