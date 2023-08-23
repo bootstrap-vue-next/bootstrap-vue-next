@@ -1,5 +1,5 @@
-import type {BootstrapVueOptions, ColorVariant, ContainerPosition} from '../../types'
-import {getId} from '../../utils'
+import type {ColorVariant, ContainerPosition} from '../../types'
+import {ComponentName, getId, injectComponentOptions, provideComponentOptions} from '../../utils'
 import {
   type App,
   type ComponentPublicInstance,
@@ -26,6 +26,7 @@ export interface ToastOptions {
   pos?: ContainerPosition
   value?: boolean // show or hide
   variant?: ColorVariant | null
+  injectKey?: symbol
 }
 
 export interface Toast {
@@ -55,6 +56,14 @@ const defaultToastOptions: ToastOptions = {
   noCloseButton: false,
   pos: 'top-right',
   value: true,
+}
+
+function injectToastOptions() {
+  return injectComponentOptions(ComponentName.BToast) as ToastOptions
+}
+
+function injectToastOption<T extends keyof ToastOptions>(key: T): ToastOptions[T] {
+  return injectToastOptions()[key]
 }
 
 export class ToastInstance {
@@ -106,7 +115,12 @@ export class ToastInstance {
   }
 
   show(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
-    const topts: ToastOptions = {id: getId(), ...defaultToastOptions, ...options}
+    const topts: ToastOptions = {
+      id: getId(),
+      ...defaultToastOptions,
+      ...options,
+      ...injectToastOptions(),
+    }
 
     const toast: Toast = {
       options: reactive(topts),
@@ -186,17 +200,12 @@ export class ToastController {
 }
 
 // default global inject key to fetch the controller
-const injectkey = Symbol('toast')
-const fetchKey = Symbol('toastFetch')
+const injectKeyDefault = Symbol('toast')
 
 const defaults = {
   container: undefined,
   toasts: [],
   root: false,
-}
-
-export function getKey(): any {
-  return inject(fetchKey)
 }
 
 export function useToast(): ToastInstance | undefined
@@ -206,9 +215,16 @@ export function useToast(
   key?: symbol
 ): ToastInstance | undefined
 
-export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | undefined {
+export function useToast(vm?: any, key?: symbol): ToastInstance | undefined {
+  if (!key) {
+    key = injectToastOption('injectKey')
+  }
+  if (!key) {
+    key = injectKeyDefault
+  }
+
   //let's get our controller to fetch the toast instance
-  const controller = inject(getKey()) as ToastController
+  const controller = inject(key) as ToastController
 
   // not parameters passed, use root if defined
   if (!vm) {
@@ -223,11 +239,13 @@ export function useToast(vm?: any, key: symbol = injectkey): ToastInstance | und
 }
 
 const BToastPlugin: Plugin = {
-  install: (app: App, options?: BootstrapVueOptions) => {
-    const key =
-      typeof options?.BToast === 'object' ? options?.BToast?.injectkey ?? injectkey : injectkey
-    app.provide(fetchKey, key)
-    app.provide(key, new ToastController())
+  install: (app: App, _options: ToastOptions = {}) => {
+    const options = provideComponentOptions(app, ComponentName.BToast, _options)
+    if (!options.injectKey) {
+      options.injectKey = injectKeyDefault
+    }
+
+    app.provide(options.injectKey, new ToastController())
   },
 }
 
