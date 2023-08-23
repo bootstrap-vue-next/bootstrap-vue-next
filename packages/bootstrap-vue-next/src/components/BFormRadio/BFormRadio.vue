@@ -120,28 +120,21 @@ const localValue = computed({
       ? JSON.stringify(parentData.modelValue.value) === JSON.stringify(props.value)
       : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue: string | boolean | unknown[] | Record<string, unknown> | number | null) => {
-    const updateValue = newValue || newValue === '' || newValue === 0 ? props.value : false
+    const updateValue =
+      newValue ||
+      newValue === '' ||
+      newValue === 0 ||
+      JSON.stringify(newValue) === JSON.stringify(props.value)
+        ? props.value
+        : false
 
     emit('input', updateValue)
     modelValue.value = updateValue
     nextTick(() => {
       emit('change', updateValue)
     })
+    if (parentData !== null) parentData.set(props.value)
   },
-})
-
-watch(
-  () => parentData?.modelValue.value,
-  (newValue) => {
-    const isEqual = JSON.stringify(newValue) === JSON.stringify(props.value)
-    if (isEqual === true) return
-    localValue.value = false
-  }
-)
-
-watch(modelValue, (newValue) => {
-  if (parentData === null || newValue === false) return
-  parentData.set(props.value)
 })
 
 const computedRequired = computed(
