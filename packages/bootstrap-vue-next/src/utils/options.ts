@@ -41,7 +41,7 @@ export function provideComponentOptions<T extends Record<string, any>>(
   component: `${ComponentName}`,
   options: T
 ): T {
-  if (app && app._context && app._context.provides && app._context.provides[symbol]) {
+  if (app._context && app._context.provides && app._context.provides[symbol]) {
     const instance = app._context.provides[symbol]
     instance[component] = {
       ...(instance[component] || {}),
@@ -55,11 +55,6 @@ export function provideComponentOptions<T extends Record<string, any>>(
     [component]: options,
   }
 
-  if (app) {
-    app.provide(symbol, instance)
-    return instance[component]
-  }
-
-  provide(symbol, instance)
+  app.provide(symbol, instance)
   return instance[component]
 }
