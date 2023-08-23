@@ -43,32 +43,6 @@ export function injectComponentOptions<T extends Record<string, any> = Record<st
   return injectOptions()[key] || {}
 }
 
-const extendOptions = (
-  target: Record<string, Record<string, any>>,
-  source: Record<string, Record<string, any>>
-) => {
-  const keys = Object.keys(source)
-  for (let i = 0; i < keys.length; i++) {
-    target[keys[i]] = {
-      ...(target[keys[i]] || {}),
-      ...source[keys[i]],
-    }
-  }
-}
-export function provideOptions(app: App, options: Record<string, Record<string, any>>) {
-  if (app && app._context && app._context.provides && app._context.provides[symbol]) {
-    extendOptions(app._context.provides[symbol], options)
-    return
-  }
-
-  if (app) {
-    app.provide(symbol, options)
-    return
-  }
-
-  provide(symbol, options)
-}
-
 export function provideComponentOptions<T extends Record<string, any>>(
   app: App,
   component: `${ComponentName}`,
