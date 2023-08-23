@@ -92,7 +92,7 @@ const props = withDefaults(
     inline: false,
     size: undefined,
     value: true,
-    uncheckedValue: false,
+    uncheckedValue: undefined,
   }
 )
 
@@ -146,25 +146,44 @@ const localValue = computed({
       ? parentData.modelValue.value
           .map((el) => JSON.stringify(el))
           .includes(JSON.stringify(props.value))
+      : Array.isArray(modelValue.value)
+      ? modelValue.value?.map((el) => JSON.stringify(el)).includes(JSON.stringify(props.value))
       : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
   set: (newValue) => {
-    const updateValue = newValue ? props.value : props.uncheckedValue
-
+    const updateValue = newValue
+      ? props.value
+      : props.uncheckedValue === undefined
+      ? false
+      : props.uncheckedValue
     emit('input', updateValue)
-    modelValue.value = updateValue
+
+    if (parentData === null && Array.isArray(modelValue.value)) {
+      if (newValue) {
+        modelValue.value.push(props.value)
+        if (props.uncheckedValue !== undefined)
+          modelValue.value = modelValue.value.filter(
+            (x) => JSON.stringify(x) !== JSON.stringify(props.uncheckedValue)
+          )
+      } else {
+        if (props.uncheckedValue !== undefined) modelValue.value.push(props.uncheckedValue)
+        modelValue.value = modelValue.value.filter(
+          (x) => JSON.stringify(x) !== JSON.stringify(props.value)
+        )
+      }
+    } else {
+      modelValue.value = updateValue
+      if (parentData !== null) {
+        if (updateValue === false) {
+          parentData.remove(props.value)
+        } else {
+          parentData.set(props.value)
+        }
+      }
+    }
     nextTick(() => {
       emit('change', updateValue)
     })
   },
-})
-
-watch(modelValue, (newValue) => {
-  if (parentData === null) return
-  if (newValue === false) {
-    parentData.remove(props.value)
-    return
-  }
-  parentData.set(props.value)
 })
 
 const computedRequired = computed(
