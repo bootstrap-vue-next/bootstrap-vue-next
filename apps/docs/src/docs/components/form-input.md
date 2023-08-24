@@ -614,7 +614,7 @@ these methods and properties. Support will vary based on input type.
 // refs are unified in vue3. We need a ref variable with the same as used in the template.
 // The variable will be filled up during mount with the reference to custom component.
 // inputRef will become the reference to the b-form-input component.
-const inputRef = ref<HTMLElment | null>(null)
+const inputRef = ref<HTMLElement | null>(null)
 const sampleInputText = ref('sample text')
 
 // The inner native input is exposed as ref with name "input"
@@ -662,7 +662,7 @@ const formatInputText = ref('')
 const formatLazyInputText = ref('')
 const toLowerCaseFormatter = (value: string) => value.toLowerCase()
 
-const inputRef = ref<HTMLElment | null>(null)
+const inputRef = ref<HTMLElement | null>(null)
 const sampleInputText = ref('sample text')
 
 const selectAllText = () => inputRef.value.input.select()

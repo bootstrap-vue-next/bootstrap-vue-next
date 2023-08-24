@@ -695,7 +695,7 @@ Easily create a loading button:
 let timeout = null
 
 const loadingBuzy = ref(false)
-const buzyButton = ref<HTMLElment | null>(null)
+const buzyButton = ref<HTMLElement | null>(null)
 
 const clearTimer = () => {
   if (timeout) {
@@ -836,7 +836,7 @@ This example also demonstrates additional accessibility markup.
 const formbusy = ref(false)
 const processing = ref(false)
 const processingcounter = ref(1)
-const formdialog = ref<HTMLElment | null>(null)
+const formdialog = ref<HTMLElement | null>(null)
 let processingInterval = null
 
 const clearProcessingInterval = () => {
@@ -943,7 +943,7 @@ const showNoWrapEx = ref(false)
 const showNoWrapEx2 = ref(false)
 
 const loadingBuzy = ref(false)
-const buzyButton = ref<HTMLElment | null>(null)
+const buzyButton = ref<HTMLElement | null>(null)
 let timeout = null;
 
 const clearTimer = () => {
@@ -975,7 +975,7 @@ const onFormOverlayShown = () => {
 const formbusy = ref(false)
 const processing = ref(false)
 const processingcounter = ref(1)
-const formdialog = ref<HTMLElment | null>(null)
+const formdialog = ref<HTMLElement | null>(null)
 let processingInterval = null;
 
 const clearProcessingInterval = () => {
