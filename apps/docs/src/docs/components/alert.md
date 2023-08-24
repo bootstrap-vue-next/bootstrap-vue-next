@@ -361,7 +361,7 @@ const autoDismissingAlertCountdown = ref(0);
 
 const secondAutoDismissingAlert = ref(10000);
 const secondAutoDismissingAlertCountdown = ref(0);
-const myAlert = ref<HTMLElment | null>(null)
+const myAlert = ref<HTMLElement | null>(null)
 
 const pause = () => myAlert.value?.pause()
 const resume = () => myAlert.value?.resume()
