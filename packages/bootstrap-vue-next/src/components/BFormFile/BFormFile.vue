@@ -161,5 +161,6 @@ defineExpose({
     focused.value = false
   },
   reset,
+  input,
 })
 </script>
