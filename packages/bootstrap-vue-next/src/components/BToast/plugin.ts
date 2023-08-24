@@ -114,12 +114,12 @@ export class ToastInstance {
     return this.vm.root ?? false
   }
 
-  show(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+  show(content: ToastContent, options: ToastOptions = {}): Toast {
     const topts: ToastOptions = {
       id: getId(),
       ...defaultToastOptions,
-      ...options,
       ...injectToastOptions(),
+      ...options,
     }
 
     const toast: Toast = {
@@ -130,19 +130,19 @@ export class ToastInstance {
     return toast
   }
 
-  info(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+  info(content: ToastContent, options: ToastOptions = {}): Toast {
     return this.show(content, {variant: 'info', ...options})
   }
 
-  danger(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+  danger(content: ToastContent, options: ToastOptions = {}): Toast {
     return this.show(content, {variant: 'danger', ...options})
   }
 
-  warning(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+  warning(content: ToastContent, options: ToastOptions = {}): Toast {
     return this.show(content, {variant: 'warning', ...options})
   }
 
-  success(content: ToastContent, options: ToastOptions = defaultToastOptions): Toast {
+  success(content: ToastContent, options: ToastOptions = {}): Toast {
     return this.show(content, {variant: 'success', ...options})
   }
 
