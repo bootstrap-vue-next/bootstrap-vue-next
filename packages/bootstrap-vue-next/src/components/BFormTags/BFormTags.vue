@@ -463,5 +463,6 @@ defineExpose({
   blur: () => {
     focused.value = false
   },
+  input,
 })
 </script>
