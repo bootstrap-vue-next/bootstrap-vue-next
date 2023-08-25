@@ -29,8 +29,7 @@ const getTargets = (binding: DirectiveBinding<string>, el: HTMLElement) => {
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 
-const toggle = (binding: DirectiveBinding<string>, el: HTMLElement) => {
-  const targetIds = getTargets(binding, el)
+const toggle = (targetIds: string[], el: HTMLElement) => {
   targetIds.forEach((targetId) => {
     const target = document.getElementById(targetId)
 
@@ -38,11 +37,10 @@ const toggle = (binding: DirectiveBinding<string>, el: HTMLElement) => {
       target.dispatchEvent(new Event('bv-toggle'))
     }
   })
-  setTimeout(() => checkVisibility(binding, el), 50)
+  setTimeout(() => checkVisibility(targetIds, el), 50)
 }
 
-const checkVisibility = (binding: DirectiveBinding<string>, el: HTMLElement) => {
-  const targetIds = getTargets(binding, el)
+const checkVisibility = (targetIds: string[], el: HTMLElement) => {
   let visible = false
   targetIds.forEach((targetId) => {
     const target = document.getElementById(targetId)
@@ -59,17 +57,29 @@ const checkVisibility = (binding: DirectiveBinding<string>, el: HTMLElement) => 
   el.classList.add(visible ? 'not-collapsed' : 'collapsed')
 }
 
+const handleUpdate = (el: WithToggle, binding: DirectiveBinding<string>) => {
+  // Determine targets
+  const targets = getTargets(binding, el)
+
+  // Set up click handler
+  if (el.__toggle) {
+    el.removeEventListener('click', el.__toggle)
+  }
+  el.__toggle = () => toggle(targets, el)
+  el.addEventListener('click', el.__toggle)
+
+  // Update attributes
+  el.setAttribute('aria-controls', targets.join(' '))
+  checkVisibility(targets, el)
+}
+
 export interface WithToggle extends HTMLElement {
   __toggle: () => void
 }
 
 export default {
-  mounted(el: WithToggle, binding: DirectiveBinding<string>): void {
-    el.__toggle = () => toggle(binding, el)
-    el.addEventListener('click', el.__toggle)
-    checkVisibility(binding, el)
-    el.setAttribute('aria-controls', getTargets(binding, el).join(' '))
-  },
+  mounted: handleUpdate,
+  updated: handleUpdate,
   unmounted(el: WithToggle): void {
     el.removeEventListener('click', el.__toggle)
     el.removeAttribute('aria-controls')
