@@ -165,6 +165,8 @@ export default (
       return
     }
 
+    if (!lazyBoolean.value) return
+
     inputValue = value
     updateModelValue(formattedValue, true)
 
