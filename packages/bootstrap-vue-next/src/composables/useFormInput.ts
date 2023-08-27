@@ -165,10 +165,10 @@ export default (
       return
     }
 
-    if (!lazyBoolean.value) return
-
-    inputValue = value
-    updateModelValue(formattedValue, true)
+    if (lazyBoolean.value) {
+      inputValue = value
+      updateModelValue(formattedValue, true)
+    }
 
     emit('change', formattedValue)
   }
