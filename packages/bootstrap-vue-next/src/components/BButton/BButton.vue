@@ -40,9 +40,8 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import BSpinner from '../BSpinner.vue'
-import {useBooleanish} from '../../composables'
+import {useBLinkHelper, useBooleanish} from '../../composables'
 import type {BLinkProps, Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
-import {isLink} from '../../utils'
 import BLink from '../BLink/BLink.vue'
 import {useVModel} from '@vueuse/core'
 
@@ -72,7 +71,6 @@ const props = withDefaults(
     } & Omit<BLinkProps, 'variant'>
   >(),
   {
-    active: false,
     pill: false,
     pressed: undefined,
     size: 'md',
@@ -85,6 +83,7 @@ const props = withDefaults(
     block: false,
     loadingText: 'Loading...',
     // Link props
+    active: false,
     activeClass: undefined,
     append: false,
     disabled: false,
@@ -126,11 +125,12 @@ const squaredBoolean = useBooleanish(() => props.squared)
 const loadingBoolean = useBooleanish(() => props.loading)
 const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
+const {computedLink} = useBLinkHelper(props)
+
 const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
 const isButton = computed<boolean>(
   () => props.tag === 'button' && props.href === undefined && props.to === undefined
 )
-const computedLink = computed<boolean>(() => isLink(props))
 const isBLink = computed<boolean>(() => props.to !== undefined)
 const nonStandardTag = computed<boolean>(() => (props.href !== undefined ? false : !isButton.value))
 

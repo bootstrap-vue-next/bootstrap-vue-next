@@ -6,24 +6,24 @@ export default {
       component: 'BTransition',
       props: [
         {
-          description: '',
           prop: 'appear',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: '',
           prop: 'mode',
           type: 'TransitionMode',
+          default: undefined,
         },
         {
-          description: '',
           prop: 'noFade',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: '',
           prop: 'transProps',
-          type: 'Record<string, unknown>',
+          type: 'TransitionProps',
+          default: undefined,
         },
       ],
       emits: [],

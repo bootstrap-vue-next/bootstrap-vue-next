@@ -7,40 +7,53 @@ export default {
       props: [
         {
           prop: 'align',
-          description: 'Alignment of NavBar',
           type: 'AlignmentJustifyContent',
+          default: undefined,
         },
         {
           prop: 'cardHeader',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'fill',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'justified',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'pills',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'small',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tabs',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'ul',
         },
         {
           prop: 'vertical',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'underline',
+          type: 'Booleanish',
+          default: false,
         },
       ],
       emits: [],
@@ -58,22 +71,7 @@ export default {
         {
           prop: 'role',
           type: 'string',
-        },
-        {
-          prop: 'id',
-          type: 'string ',
-        },
-        {
-          prop: 'floating',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'novalidate',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'validated',
-          type: 'Booleanish',
+          default: undefined,
         },
       ],
       emits: [
@@ -99,7 +97,18 @@ export default {
     },
     {
       component: 'BNavItem',
-      props: [],
+      props: [
+        {
+          prop: 'linkClass',
+          type: 'ClassValue',
+          default: undefined,
+        },
+        {
+          prop: 'linkAttrs',
+          type: 'Record<string, unknown>',
+          default: undefined,
+        },
+      ],
       emits: [],
       slots: [
         {
@@ -115,62 +124,107 @@ export default {
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'toggleClass',
+          type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'size',
           type: 'Size',
+          default: 'md',
         },
         {
           prop: 'offset',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'autoClose',
           type: "boolean | 'inside' | 'outside'",
-        },
-        {
-          prop: 'dark',
-          type: 'boolean',
-        },
-        {
-          prop: 'dropleft',
-          type: 'boolean',
-        },
-        {
-          prop: 'dropright',
-          type: 'boolean',
-        },
-        {
-          prop: 'dropup',
-          type: 'boolean',
-        },
-        {
-          prop: 'right',
-          type: 'boolean',
-        },
-        {
-          prop: 'left',
-          type: 'boolean | string',
-        },
-        {
-          prop: 'split',
-          type: 'boolean',
+          default: undefined,
         },
         {
           prop: 'splitVariant',
-          type: 'ButtonVariant',
+          type: 'ButtonVariant | null',
+          default: undefined,
         },
         {
           prop: 'noCaret',
-          type: 'boolean',
+          type: 'Booleanish',
+          default: undefined,
         },
         {
           prop: 'variant',
-          type: 'ButtonVariant',
+          type: 'ButtonVariant | null',
+          default: 'link',
+        },
+        {
+          prop: 'modelValue',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'lazy',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'strategy',
+          type: 'Strategy',
+          default: undefined,
+        },
+        {
+          prop: 'floatingMiddleware',
+          type: 'Middleware[]',
+          default: undefined,
+        },
+        {
+          prop: 'noFlip',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'noShift',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'dropup',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'dropend',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'dropstart',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'center',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'end',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'menuClass',
+          type: 'ClassValue',
+          default: undefined,
         },
       ],
       emits: [],
@@ -189,6 +243,7 @@ export default {
           description: '',
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
       ],
       emits: [],

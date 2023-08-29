@@ -5,29 +5,91 @@ export default {
     {
       component: 'BFormFile',
       props: [
-        {prop: 'accept', type: 'string | string[]', description: '', default: "''"},
-        {prop: 'autofocus', type: 'Booleanish', description: '', default: 'false'},
+        {
+          prop: 'accept',
+          type: 'string | string[]',
+          default: '',
+        },
+        {
+          prop: 'autofocus',
+          type: 'Booleanish',
+          default: false,
+        },
         {
           prop: 'capture',
-          type: "Booleanish | 'user' | 'environment'",
-          description: '',
-          default: 'false',
+          type: "boolean | 'true' | 'false' | '' | 'user' | 'environment'",
+          default: false,
         },
-        {prop: 'directory', type: 'Booleanish', description: '', default: 'false'},
-        {prop: 'disabled', type: 'Booleanish', description: '', default: 'false'},
-        {prop: 'form', type: 'string', description: '', default: 'undefined'},
-        {prop: 'id', type: 'string', description: '', default: 'undefined'},
-        {prop: 'multiple', type: 'Booleanish', description: '', default: 'false'},
-        {prop: 'name', type: 'string', description: '', default: 'undefined'},
-        {prop: 'noDrop', type: 'Booleanish', description: '', default: 'false'},
-        {prop: 'noTraverse', type: 'Booleanish', description: '', default: 'false'},
-        {prop: 'required', type: 'Booleanish', description: '', default: 'false'},
-        {prop: 'size', type: 'Size', description: '', default: 'undefined'},
-        {prop: 'state', type: 'Booleanish | null', description: '', default: 'null'},
-        {prop: 'modelValue', type: 'File[] | File | null', description: '', default: 'null'},
-        {prop: 'label', type: 'string', description: '', default: "''"},
-        {prop: 'wrapperClasses', type: 'ClassValue', description: '', default: 'undefined'},
-        {prop: 'labelClasses', type: 'ClassValue', description: '', default: 'undefined'},
+        {
+          prop: 'directory',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'disabled',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'form',
+          type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'id',
+          type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'multiple',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'name',
+          type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'noDrop',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'noTraverse',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'required',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'size',
+          type: 'Size',
+          default: undefined,
+        },
+        {
+          prop: 'state',
+          type: 'Booleanish | null',
+          default: undefined,
+        },
+        {
+          prop: 'modelValue',
+          type: 'File[] | File | null',
+          default: undefined,
+        },
+        {
+          prop: 'label',
+          type: 'string',
+          default: '',
+        },
+        {
+          prop: 'labelClass',
+          type: 'ClassValue',
+          default: undefined,
+        },
       ],
       emits: [
         {

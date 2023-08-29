@@ -7,24 +7,31 @@ export default {
       props: [
         {
           prop: 'id',
-          description: '',
           type: 'string',
+          default: undefined,
         },
         {
+          prop: 'title',
           type: 'string',
-          description: '',
-          prop: 'tag',
+          default: undefined,
+          description:
+            "Value to place in the 'title' attribute of the tag. Will also be used for the tag content if no default slot provided",
+        },
+        {
+          prop: 'disabled',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'noRemove',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
           description: 'When set, the tag will not have a remove button',
         },
         {
           prop: 'pill',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
           description: 'Makes the tag have a pill appearance',
         },
         {
@@ -34,14 +41,13 @@ export default {
           description: "The value of the 'aria-label' attribute on the remove button in the tag",
         },
         {
-          prop: 'title',
+          prop: 'tag',
           type: 'string',
-          description:
-            "Value to place in the 'title' attribute of the tag. Will also be used for the tag content if no default slot provided",
+          default: 'span',
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
           default: 'secondary',
           description: 'Applies one of the Bootstrap theme color variants to the component',
         },
@@ -79,20 +85,25 @@ export default {
         },
         {
           prop: 'addButtonVariant',
-          type: 'ButtonVariant',
+          type: 'ButtonVariant | null',
           default: 'outline-secondary',
           description: "Applies one of the Bootstrap theme color variants to the 'Add' button",
         },
         {
           prop: 'addOnChange',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
           description: "When set, enables adding the tag on the input's 'change' event",
         },
         {
-          description: '',
           prop: 'autofocus',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'disabled',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'duplicateTagText',
@@ -103,23 +114,26 @@ export default {
         },
         {
           prop: 'inputAttrs',
-          type: 'Object',
+          type: 'Record<string, unknown>',
+          default: undefined,
           description: 'Additional attributes to apply to the new tag input element',
         },
         {
           prop: 'inputClass',
           type: 'ClassValue',
+          default: undefined,
           description: 'Class (or classes) to apply to the new tag input element',
         },
         {
           prop: 'inputId',
           type: 'string',
+          default: undefined,
           description:
             'Id to apply to the new tag input element. If not provided, a unique Id will be auto generated',
         },
         {
           prop: 'inputType',
-          type: 'string',
+          type: 'InputType',
           default: 'text',
           description:
             "Specifies the type of input to use: 'text', 'email', 'tel', 'url', or 'number'. Default is 'text'",
@@ -134,11 +148,13 @@ export default {
         {
           prop: 'form',
           type: 'string',
+          default: undefined,
           description: 'The value of the form prop',
         },
         {
           prop: 'limit',
-          type: 'number',
+          type: 'number | string',
+          default: undefined,
           description:
             'The maximum amount of tags that can be added. The limit can still be exceeded if manipulated outside of the component',
         },
@@ -150,27 +166,33 @@ export default {
             'The message when the limit is reached. Set to an empty string to disable the message',
         },
         {
+          prop: 'modelValue',
+          type: 'string[]',
+          default: '() => []',
+        },
+        {
           prop: 'name',
           type: 'string',
+          default: undefined,
           description:
             "Sets the value of the 'name' attribute on the form control. When set, creates a hidden input for each tag",
         },
         {
           prop: 'noAddOnEnter',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
           description: "When set, disables adding the tag on the input's 'keydown.enter' event",
         },
         {
           prop: 'noOuterFocus',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
           description: 'When set, disables the focus styling of the component root element',
         },
         {
           prop: 'noTagRemove',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
           description: 'When set, the tags will not have a remove button',
         },
         {
@@ -182,48 +204,66 @@ export default {
         {
           prop: 'removeOnDelete',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
           description:
             'When set, enables removal of last tag in tags when user presses delete or backspace and the input is empty',
         },
         {
+          prop: 'required',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
           prop: 'separator',
-          type: 'string | unknown[]',
+          type: 'string | string[]',
+          default: undefined,
           description: 'Separator character(s) that will trigger a tag to be created',
+        },
+        {
+          prop: 'state',
+          type: 'Booleanish | null',
+          default: null,
+        },
+        {
+          prop: 'size',
+          type: 'Size',
+          default: 'md',
         },
         {
           prop: 'tagClass',
           type: 'ClassValue',
+          default: undefined,
           description: 'Class (or classes) to apply to the tags',
         },
         {
           prop: 'tagPills',
-          type: 'boolean',
-          default: 'false',
+          type: 'Booleanish',
+          default: false,
           description: 'Makes the built in tags have a pill appearance',
         },
         {
           prop: 'tagRemoveLabel',
           type: 'string',
+          default: undefined,
           description: "The value of the 'aria-label' attribute on the remove button in the tag",
+        },
+        {
+          prop: 'tagRemovedLabel',
+          type: 'string',
+          default: 'Tag removed',
         },
         {
           prop: 'tagValidator',
           type: '(t: string) => boolean',
+          default: '() => true',
           description:
             "Optional tag validator method. Passed a single argument of tag being added. Should return 'true' if the tag passes validation, or 'false' if the tag cannot be added",
         },
         {
           prop: 'tagVariant',
-          type: 'string',
+          type: 'ColorVariant | null',
           default: 'secondary',
           description: 'Applies one of the Bootstrap theme color variants to the tags',
-        },
-        {
-          prop: 'value',
-          type: 'Array',
-          default: '[]',
-          description: 'Array of current tags. This is the v-model',
         },
       ],
       emits: [

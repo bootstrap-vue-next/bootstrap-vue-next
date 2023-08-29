@@ -9,6 +9,7 @@ export default {
           prop: 'items',
           description: '',
           type: 'BreadcrumbItem[]',
+          default: undefined,
         },
       ],
       emits: [],
@@ -46,24 +47,14 @@ export default {
       ],
       props: [
         {
-          description: '',
-          prop: 'active',
-          type: 'Booleanish',
-        },
-        {
-          description: '',
           prop: 'ariaCurrent',
           type: 'string',
+          default: 'location',
         },
         {
-          description: '',
-          prop: 'disabled',
-          type: 'Booleanish',
-        },
-        {
-          description: '',
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
       ],
       slots: [

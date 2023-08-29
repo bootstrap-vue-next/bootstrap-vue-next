@@ -63,7 +63,7 @@ declare module '@vue/runtime-core' {
     BFormTextarea: typeof Components.BFormTextarea
     BFormTag: typeof Components.BFormTag
     BFormTags: typeof Components.BFormTags
-    BFormSpinButton: typeof Components.BFormSpinButton
+    BFormSpinbutton: typeof Components.BFormSpinbutton
     BFormValidFeedback: typeof Components.BFormValidFeedback
     BImg: typeof Components.BImg
     BInputGroup: typeof Components.BInputGroup

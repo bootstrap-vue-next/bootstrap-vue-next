@@ -6,24 +6,24 @@ export default {
       component: 'BButtonGroup',
       props: [
         {
-          description: '',
           prop: 'ariaLabel',
           type: 'string',
+          default: 'Group',
         },
         {
-          description: 'Applies class btn-group-{size}',
           prop: 'size',
           type: 'Size',
+          default: 'md',
         },
         {
-          description: '',
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
-          description: 'Applies class btn-group-vertical',
           prop: 'vertical',
           type: 'Booleanish',
+          default: false,
         },
       ],
       slots: [

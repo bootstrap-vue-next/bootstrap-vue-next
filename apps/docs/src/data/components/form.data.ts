@@ -8,18 +8,22 @@ export default {
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'floating',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'novalidate',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'validated',
           type: 'Booleanish',
+          default: false,
         },
       ],
       emits: [
@@ -49,14 +53,17 @@ export default {
         {
           prop: 'labelFor',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'label',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
       ],
       emits: [],
@@ -79,34 +86,42 @@ export default {
         {
           prop: 'ariaLive',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'forceShow',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'role',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'state',
           type: 'Booleanish',
+          default: null,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'tooltip',
           type: 'Booleanish',
+          default: false,
         },
       ],
       emits: [],
@@ -125,6 +140,7 @@ export default {
           description: '',
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
       ],
       emits: [],
@@ -142,22 +158,27 @@ export default {
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'inline',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'small',
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'textVariant',
-          type: 'TextColorVariant',
+          type: 'TextColorVariant | null',
+          default: 'body-secondary',
         },
       ],
       emits: [],
@@ -175,34 +196,42 @@ export default {
         {
           prop: 'ariaLive',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'forceShow',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'role',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'state',
           type: 'Booleanish',
+          default: null,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'tooltip',
           type: 'Booleanish',
+          default: false,
         },
       ],
       emits: [],

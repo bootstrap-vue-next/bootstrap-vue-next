@@ -53,12 +53,12 @@ const props = withDefaults(
     closeLabel: 'Close',
     closeContent: undefined,
     noHoverPause: false,
-    interval: 1000,
     dismissible: false,
     fade: false,
     modelValue: false,
     variant: 'info',
     immediate: true,
+    interval: 1000,
     showOnPause: true,
   }
 )

@@ -41,7 +41,7 @@ export default defineComponent({
     labelIncrement: {type: String, default: 'Increment'},
     labelDecrement: {type: String, default: 'Decrement'},
     modelValue: {type: Number as PropType<number | null>, default: null}, // V-model prop
-    name: {type: String, default: 'BFormSpinButton'},
+    name: {type: String, default: 'BFormSpinbutton'},
     disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     placeholder: {type: String, default: undefined},
     locale: {type: String, default: 'locale'},

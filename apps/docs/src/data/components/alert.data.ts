@@ -6,30 +6,67 @@ export default {
       component: 'BAlert',
       props: [
         {
-          prop: 'dismissLabel',
+          prop: 'closeVariant',
+          type: 'ButtonVariant | null',
+          default: 'secondary',
+        },
+        {
+          prop: 'closeClass',
+          type: 'ClassValue',
+          default: undefined,
+        },
+        {
+          prop: 'closeLabel',
           type: 'string',
-          description: "Value for the 'aria-label' attribute on the dismiss button",
+          default: 'Close',
+        },
+        {
+          prop: 'closeContent',
+          type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'noHoverPause',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'dismissible',
           type: 'Booleanish',
+          default: false,
           description: 'When set, enables the dismiss close button',
-          default: 'abc',
-        },
-        {
-          description: '',
-          prop: 'modelValue',
-          type: 'boolean | number',
         },
         {
           prop: 'fade',
           type: 'Booleanish',
+          default: false,
           description: 'When set to true, enables the fade animation/transition on the component',
         },
         {
+          prop: 'modelValue',
+          type: 'boolean | number',
+          default: false,
+        },
+        {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: 'info',
           description: 'Applies one of the Bootstrap theme color variants to the component',
+        },
+        {
+          prop: 'immediate',
+          type: 'Booleanish',
+          default: true,
+        },
+        {
+          prop: 'interval',
+          type: 'number | string',
+          default: 1000,
+        },
+        {
+          prop: 'showOnPause',
+          type: 'Booleanish',
+          default: true,
         },
       ],
       slots: [],

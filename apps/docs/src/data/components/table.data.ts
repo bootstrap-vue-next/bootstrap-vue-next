@@ -6,104 +6,104 @@ export default {
       component: 'BTable',
       props: [
         {
-          prop: 'align',
-          type: 'VerticalAlign',
+          prop: 'provider',
+          type: 'BTableProvider',
+          default: undefined,
         },
         {
-          prop: 'caption',
-          type: 'string',
+          prop: 'sortCompare',
+          type: 'BTableSortCompare',
+          default: undefined,
         },
         {
-          prop: 'captionTop',
+          prop: 'noProvider',
+          type: 'NoProviderTypes[]',
+          default: undefined,
+        },
+        {
+          prop: 'noProviderPaging',
           type: 'Booleanish',
+          default: false,
         },
         {
-          prop: 'borderless',
+          prop: 'noProviderSorting',
           type: 'Booleanish',
+          default: false,
         },
         {
-          prop: 'bordered',
+          prop: 'noProviderFiltering',
           type: 'Booleanish',
-        },
-        {
-          prop: 'borderVariant',
-          type: 'ColorVariant',
-        },
-        {
-          prop: 'dark',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'fields',
-          type: 'TableField[]',
-        },
-        {
-          prop: 'footClone',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'hover',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'items',
-          type: 'TableItem[]',
-        },
-        {
-          prop: 'responsive',
-          type: 'boolean | Breakpoint',
-        },
-        {
-          prop: 'small',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'striped',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant',
+          default: false,
         },
         {
           prop: 'sortBy',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'sortDesc',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'sortInternal',
           type: 'Booleanish',
+          default: true,
         },
         {
           prop: 'selectable',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'stickySelect',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'selectHead',
           type: 'boolean | string',
+          default: true,
         },
         {
           prop: 'selectMode',
           type: "'multi' | 'single' | 'range'",
+          default: 'single',
         },
         {
           prop: 'selectionVariant',
-          type: 'ColorVariant',
-        },
-        {
-          prop: 'stickyHeader',
-          type: 'Booleanish',
+          type: 'ColorVariant | null',
+          default: 'primary',
         },
         {
           prop: 'busy',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'busyLoadingText',
+          type: 'string',
+          default: 'Loading...',
+        },
+        {
+          prop: 'perPage',
+          type: 'number',
+          default: undefined,
+        },
+        {
+          prop: 'currentPage',
+          type: 'number',
+          default: 1,
+        },
+        {
+          prop: 'filter',
+          type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'filterable',
+          type: 'string[]',
+          default: undefined,
         },
       ],
       emits: [
@@ -343,55 +343,144 @@ export default {
       ],
     },
     {
+      component: 'BTableLite',
+      props: [
+        {
+          prop: 'align',
+          type: 'VerticalAlign',
+          default: undefined,
+        },
+        {
+          prop: 'caption',
+          type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'fields',
+          type: 'TableField[]',
+          default: '() => []',
+        },
+        {
+          prop: 'footClone',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'items',
+          type: 'TableItem[]',
+          default: '() => []',
+        },
+        {
+          prop: 'labelStacked',
+          type: 'boolean',
+          default: false,
+        },
+        {
+          prop: 'variant',
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        {
+          prop: 'showEmpty',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'emptyText',
+          type: 'string',
+          default: 'There are no records to show',
+        },
+        {
+          prop: 'emptyFilteredText',
+          type: 'string',
+          default: 'There are no records matching your request',
+        },
+        {
+          prop: 'fieldColumnClass',
+          type: '(field: TableFieldObject) => Record<string, any>[]',
+          default: undefined,
+        },
+        {
+          prop: 'tbodyTrClass',
+          type: '(item: TableItem | null, type: string) => string | Array<any> | null | undefined',
+          default: undefined,
+        },
+        {
+          prop: 'virtualFields',
+          type: 'number | string',
+          default: 0,
+        },
+      ],
+      emits: [],
+      slots: [],
+    },
+    {
       component: 'BTableSimple',
       props: [
         {
           prop: 'bordered',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'borderless',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'borderVariant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
         {
           prop: 'captionTop',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'dark',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'hover',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'responsive',
           type: 'boolean | Breakpoint',
+          default: false,
         },
         {
           prop: 'stacked',
           type: 'boolean | Breakpoint',
+          default: false,
         },
         {
           prop: 'striped',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'small',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tableClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'tableVariant',
-          type: 'string',
+          type: 'ColorVariant | null',
+          default: null,
+        },
+        {
+          prop: 'stickyHeader',
+          type: 'Booleanish',
+          default: false,
         },
       ],
       emits: [],
@@ -409,6 +498,7 @@ export default {
         {
           prop: 'variant',
           type: 'ColorVariant',
+          default: null,
         },
       ],
       emits: [],
@@ -426,22 +516,27 @@ export default {
         {
           prop: 'colspan',
           type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'rowspan',
           type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'stackedHeading',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'stickyColumn',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
       ],
       emits: [],
@@ -458,7 +553,8 @@ export default {
       props: [
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
       ],
       emits: [],
@@ -476,22 +572,27 @@ export default {
         {
           prop: 'colspan',
           type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'rowspan',
           type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'stackedHeading',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'stickyColumn',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
       ],
       emits: [],
@@ -509,6 +610,7 @@ export default {
         {
           prop: 'variant',
           type: 'ColorVariant',
+          default: null,
         },
       ],
       emits: [],
@@ -526,6 +628,7 @@ export default {
         {
           prop: 'variant',
           type: 'ColorVariant',
+          default: null,
         },
       ],
       emits: [],

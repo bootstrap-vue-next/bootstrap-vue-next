@@ -6,35 +6,39 @@ export default {
       component: 'BPlaceholder',
       props: [
         {
-          description: 'Overrides the default component html tag',
           prop: 'tag',
           type: 'string',
+          default: 'span',
         },
         {
-          description:
-            'Specifies the width of the placeholder. Width takes priority over prop cols',
+          prop: 'wrapperTag',
+          type: 'string',
+          default: 'span',
+        },
+        {
           prop: 'width',
           type: 'string | number',
+          default: undefined,
         },
         {
-          description: 'Specifies the width of the placeholder by using grid col classes',
           prop: 'cols',
           type: 'string | number',
+          default: 12,
         },
         {
-          description: 'Applies one of the Bootstrap theme color variants to the component',
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
         {
-          description: 'Enlargens the vertical size of the Placeholder. Does not affect width',
           prop: 'size',
           type: 'PlaceholderSize',
+          default: 'md',
         },
         {
-          description: 'Displays an animation affect over the Placeholder',
           prop: 'animation',
           type: 'PlaceholderAnimation',
+          default: undefined,
         },
       ],
       emits: [],
@@ -45,100 +49,99 @@ export default {
       emits: [],
       props: [
         {
-          description: 'Removes the card header',
           prop: 'noHeader',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: 'Passes the width to the Placeholder located in the header',
           prop: 'headerWidth',
           type: 'string | number',
+          default: 100,
         },
         {
-          description: 'Passes the variant to the Placeholder located in the header',
           prop: 'headerVariant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
         },
         {
-          description: 'Passes the animation to the Placeholder located in the header',
           prop: 'headerAnimation',
           type: 'PlaceholderAnimation',
+          default: undefined,
         },
         {
-          description: 'Passes the size to the Placeholder located in the header',
           prop: 'headerSize',
           type: 'PlaceholderSize',
+          default: 'md',
         },
         {
-          description: 'Removes the card footer',
           prop: 'noFooter',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: 'Passes the width to the Placeholder located in the footer',
           prop: 'footerWidth',
           type: 'string | number',
+          default: 100,
         },
         {
-          description: 'Passes the variant to the Placeholder located in the footer',
           prop: 'footerVariant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
         },
         {
-          description: 'Passes the animation to the Placeholder located in the footer',
           prop: 'footerAnimation',
           type: 'PlaceholderAnimation',
+          default: undefined,
         },
         {
-          description: 'Passes the size to the Placeholder located in the footer',
           prop: 'footerSize',
           type: 'PlaceholderSize',
+          default: 'md',
         },
         {
-          description: 'Passes the variant to the Placeholder located in the main body position',
-          prop: 'variant',
-          type: 'ColorVariant',
-        },
-        {
-          description: 'Passes the animation to the Placeholder located in the main body position',
           prop: 'animation',
           type: 'PlaceholderAnimation',
+          default: undefined,
         },
         {
-          description: 'Passes the size to the Placeholder located in the main body position',
           prop: 'size',
           type: 'PlaceholderSize',
+          default: 'md',
         },
         {
-          description:
-            'Removes the button classes in the Card footer spot to appear as a basic Placeholder',
+          prop: 'variant',
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        {
           prop: 'noButton',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: 'Moves the image to the bottom of the Card',
           prop: 'imgBottom',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: 'Specifies the image src, overrides the blank image',
           prop: 'imgSrc',
           type: 'string',
+          default: undefined,
         },
         {
-          description: 'Changes the color to the blank image',
           prop: 'imgBlankColor',
           type: 'string',
+          default: '#868e96',
         },
         {
-          description: 'Changes the image height',
           prop: 'imgHeight',
           type: 'string | number',
+          default: 100,
         },
         {
-          description: 'Removes the image',
           prop: 'noImg',
           type: 'Booleanish',
+          default: false,
         },
       ],
       slots: [
@@ -172,6 +175,7 @@ export default {
           description: 'Determines whether the loading slot should be displayed',
           prop: 'loading',
           type: 'Booleanish',
+          default: false,
         },
       ],
       slots: [
@@ -192,100 +196,94 @@ export default {
       emits: [],
       props: [
         {
-          description: 'The number of rows to display in the body of the PlaceholderTable',
           prop: 'rows',
           type: 'string | number',
+          default: 3,
         },
         {
-          description:
-            'The number of columns to display in the body of the PlaceholderTable. If footerColumns or headerColumns are undefined, they will use this value',
           prop: 'columns',
           type: 'string | number',
+          default: 5,
         },
         {
-          description: 'Passes the width to the Placeholders located in the body',
           prop: 'cellWidth',
           type: 'string | number',
+          default: 100,
         },
         {
-          description: 'Passes the size to the Placeholders located in the body',
           prop: 'size',
           type: 'PlaceholderSize',
+          default: 'md',
         },
         {
-          description: 'Passes the animation to the Placeholders located in the body',
           prop: 'animation',
           type: 'PlaceholderAnimation',
+          default: undefined,
         },
         {
-          description: 'Passes the variant to the Placeholders located in the body',
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
         },
         {
-          description: 'The number of columns to display in the header of the PlaceholderTable',
-          prop: 'heaaderColumns',
-          type: 'string | number',
-        },
-        {
-          description: 'Hides the header',
-          prop: 'hideHeader',
-          type: 'Booleanish',
-        },
-        {
-          description: 'Passes the width to the Placeholders located in the header',
-          prop: 'headerCellWidth',
-          type: 'string | number',
-        },
-        {
-          description: 'Passes the size to the Placeholders located in the header',
-          prop: 'headerSize',
-          type: 'PlaceholderSize',
-        },
-        {
-          description: 'Passes the animation to the Placeholders located in the header',
-          prop: 'headerAnimation',
-          type: 'PlaceholderAnimation',
-        },
-        {
-          description: 'Passes the variant to the Placeholders located in the header',
-          prop: 'headerVariant',
-          type: 'ColorVariant',
-        },
-        {
-          description: 'The number of columns to display in the footer of the PlaceholderTable',
-          prop: 'footerColumns',
-          type: 'string | number',
-        },
-        {
-          description: 'The number of columns to display in the header of the PlaceholderTable',
           prop: 'headerColumns',
           type: 'string | number',
+          default: undefined,
         },
         {
-          description: 'Shows the footer',
+          prop: 'hideHeader',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'headerCellWidth',
+          type: 'string | number',
+          default: 100,
+        },
+        {
+          prop: 'headerSize',
+          type: 'PlaceholderSize',
+          default: 'md',
+        },
+        {
+          prop: 'headerAnimation',
+          type: 'PlaceholderAnimation',
+          default: undefined,
+        },
+        {
+          prop: 'headerVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        {
+          prop: 'footerColumns',
+          type: 'string | number',
+          default: undefined,
+        },
+        {
           prop: 'showFooter',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: 'Passes the width to the Placeholders located in the footer',
           prop: 'footerCellWidth',
           type: 'string | number',
+          default: 100,
         },
         {
-          description: 'Passes the size to the Placeholders located in the footer',
           prop: 'footerSize',
           type: 'PlaceholderSize',
+          default: 'md',
         },
         {
-          description: 'Passes the animation to the Placeholders located in the footer',
           prop: 'footerAnimation',
           type: 'PlaceholderAnimation',
+          default: undefined,
         },
         {
-          description: 'Passes the variant to the Placeholders located in the footer',
           prop: 'footerVariant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
         },
       ],
       slots: [
@@ -312,30 +310,29 @@ export default {
       slots: [],
       props: [
         {
-          description: 'Overrides the default component html tag',
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
-          description:
-            'Specifies the width of the placeholder. Width takes priority over prop cols',
           prop: 'width',
           type: 'string | number',
+          default: undefined,
         },
         {
-          description: 'Specifies the width of the placeholder by using grid col classes',
           prop: 'cols',
           type: 'string | number',
+          default: undefined,
         },
         {
-          description: 'Applies one of the Bootstrap theme color variants to the component',
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: 'primary',
         },
         {
-          description: 'Displays an animation affect over the Placeholder',
           prop: 'animation',
           type: 'PlaceholderAnimation',
+          default: undefined,
         },
       ],
     },

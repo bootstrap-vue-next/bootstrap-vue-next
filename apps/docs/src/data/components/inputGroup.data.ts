@@ -8,30 +8,37 @@ export default {
         {
           prop: 'append',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'appendHtml',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'prepend',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'prependHtml',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'size',
           type: 'Size',
+          default: 'md',
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
       ],
       emits: [],
@@ -57,16 +64,9 @@ export default {
       component: 'BInputGroupAppend',
       props: [
         {
-          prop: 'id',
-          type: 'string',
-        },
-        {
           prop: 'isText',
           type: 'Booleanish',
-        },
-        {
-          prop: 'tag',
-          type: 'string',
+          default: false,
         },
       ],
       emits: [],
@@ -82,16 +82,9 @@ export default {
       component: 'BInputGroupPrepend',
       props: [
         {
-          prop: 'id',
-          type: 'string',
-        },
-        {
           prop: 'isText',
           type: 'Booleanish',
-        },
-        {
-          prop: 'tag',
-          type: 'string',
+          default: false,
         },
       ],
       emits: [],
@@ -109,10 +102,12 @@ export default {
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
       ],
       emits: [],

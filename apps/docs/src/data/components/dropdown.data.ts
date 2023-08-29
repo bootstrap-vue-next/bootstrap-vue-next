@@ -102,78 +102,8 @@ export default {
         },
         {
           prop: 'offset',
-          type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}',
+          type: 'number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null',
           default: 0,
-        },
-        {
-          prop: 'role',
-          type: 'string',
-          default: 'menu',
-        },
-        {
-          prop: 'split',
-          type: 'Booleanish',
-          default: false,
-        },
-        {
-          prop: 'splitButtonType',
-          type: 'ButtonType',
-          default: 'button',
-        },
-        {
-          prop: 'splitHref',
-          type: 'string',
-          default: undefined,
-        },
-        {
-          prop: 'splitDisabled',
-          type: 'Booleanish',
-          default: undefined,
-        },
-        {
-          prop: 'noCaret',
-          type: 'Booleanish',
-          default: false,
-        },
-        {
-          prop: 'toggleText',
-          type: 'string',
-          default: 'Toggle dropdown',
-        },
-        {
-          prop: 'variant',
-          type: 'ButtonVariant | null',
-          default: 'secondary',
-        },
-        {
-          prop: 'modelValue',
-          type: 'Booleanish',
-          default: false,
-        },
-        {
-          prop: 'lazy',
-          type: 'Booleanish',
-          default: false,
-        },
-        {
-          prop: 'strategy',
-          type: 'Strategy',
-          default: 'absolute',
-        },
-        {
-          prop: 'floatingMiddleware',
-          type: 'Middleware[]',
-          default: undefined,
-        },
-        {
-          prop: 'splitTo',
-          type: 'RouteLocationRaw',
-          default: undefined,
-        },
-        {
-          prop: 'boundary',
-          type: 'Boundary | RootBoundary',
-          default: 'clippingAncestors',
         },
       ],
       emits: [
@@ -241,6 +171,7 @@ export default {
           description: '',
           prop: 'tag',
           type: 'string',
+          default: 'hr',
         },
       ],
     },
@@ -263,26 +194,32 @@ export default {
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'ariaDescribedby',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'header',
           type: 'string',
+          default: 'header',
         },
         {
           prop: 'headerClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'headerTag',
           type: 'string',
+          default: 'header',
         },
         {
           prop: 'headerVariant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
         },
       ],
       slots: [
@@ -327,32 +264,9 @@ export default {
       ],
       props: [
         {
-          prop: 'href',
-          type: 'string',
-        },
-        {
           prop: 'linkClass',
           type: 'ClassValue',
-        },
-        {
-          prop: 'active',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'disabled',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'rel',
-          type: 'string',
-        },
-        {
-          prop: 'target',
-          type: 'LinkTarget',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant',
+          default: undefined,
         },
       ],
       slots: [
@@ -382,22 +296,27 @@ export default {
         {
           prop: 'buttonClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'active',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'activeClass',
-          type: 'string',
+          type: 'ClassValue',
+          default: 'active',
         },
         {
           prop: 'disabled',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
         },
       ],
       slots: [
@@ -416,6 +335,7 @@ export default {
           description: '',
           prop: 'text',
           type: 'string',
+          default: '',
         },
       ],
       slots: [

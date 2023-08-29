@@ -1,4 +1,5 @@
 export {default as useAlignment} from './useAlignment'
+export {default as useBLinkHelper} from './useBLinkHelper'
 export {default as useBooleanish} from './useBooleanish'
 export {default as useBreadcrumb} from './useBreadcrumb'
 export {default as useColorMode} from './useColorMode'

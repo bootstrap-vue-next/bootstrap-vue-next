@@ -3,7 +3,7 @@ import type {ComponentReference} from './ComponentReference'
 export default {
   load: (): ComponentReference[] => [
     {
-      component: 'BFormSpinButton',
+      component: 'BFormSpinbutton',
       props: [],
       emits: [],
       slots: [],

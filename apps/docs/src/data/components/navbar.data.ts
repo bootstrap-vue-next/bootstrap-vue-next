@@ -8,34 +8,37 @@ export default {
         {
           prop: 'fixed',
           type: "'top' | 'bottom'",
+          default: undefined,
         },
         {
           prop: 'print',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'sticky',
           type: "'top' | 'bottom'",
+          default: undefined,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'nav',
         },
         {
           prop: 'toggleable',
-          type: "boolean | 'sm' | 'md' | 'lg' | 'xl'",
-        },
-        {
-          prop: 'dark',
-          type: 'Booleanish',
+          type: 'boolean | Breakpoint',
+          default: false,
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
         {
           prop: 'container',
           type: "'fluid' | boolean",
+          default: 'fluid',
         },
       ],
       emits: [],
@@ -51,9 +54,9 @@ export default {
       component: 'BNavbarBrand',
       props: [
         {
-          description: '',
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
       ],
       emits: [],
@@ -65,22 +68,27 @@ export default {
         {
           prop: 'align',
           type: 'AlignmentJustifyContent',
+          default: undefined,
         },
         {
           prop: 'fill',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'justified',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'small',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'ul',
         },
       ],
       emits: [],
@@ -98,14 +106,17 @@ export default {
         {
           prop: 'disabled',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'label',
           type: 'string',
+          default: 'Toggle navigation',
         },
         {
           prop: 'target',
           type: 'string | string[]',
+          default: undefined,
         },
       ],
       emits: [

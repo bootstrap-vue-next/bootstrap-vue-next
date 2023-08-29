@@ -6,14 +6,19 @@ export default {
       component: 'BButtonToolbar',
       props: [
         {
-          description: '',
           prop: 'ariaLabel',
           type: 'string',
+          default: 'Group',
         },
         {
-          description: 'Applies class justify-content-between',
           prop: 'justify',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'role',
+          type: 'string',
+          default: 'toolbar',
         },
       ],
       slots: [

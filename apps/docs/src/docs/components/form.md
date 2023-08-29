@@ -297,7 +297,7 @@ See also:
 - [`BFormCheckbox`](/docs/components/form-checkbox) Checkbox Inputs
 - ~~[`BFormFile`](/docs/components/form-file) File Input~~
 - ~~[`BFormDatepicker`](/docs/components/form-datepicker) Date picker input~~
-- ~~[`BFormSpinButton`](/docs/components/form-spinbutton) Numerical range spinbutton input~~
+- ~~[`BFormSpinbutton`](/docs/components/form-spinbutton) Numerical range spinbutton input~~
 - ~~[`BFormTags`](/docs/components/form-tags) Customizable tag input~~
 - ~~[`BFormTimepicker`](/docs/components/form-timepicker) Time picker custom form input~~
 - ~~[`BFormRating`](/docs/components/form-rating) Star rating custom form input and display~~
