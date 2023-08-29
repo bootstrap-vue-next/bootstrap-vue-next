@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.10.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.10...bootstrap-vue-next-v0.10.11) (2023-08-24)
+
+
+### Bug Fixes
+
+* **BFormInput:** expose `input` ref from BFormInput ([2eb461b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2eb461bbf90f93f94035d9b312dfe902f4aaaf84))
+
 ## [0.10.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.9...bootstrap-vue-next-v0.10.10) (2023-08-22)
 
 
