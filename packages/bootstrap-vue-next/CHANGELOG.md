@@ -1,6 +1,25 @@
 # Changelog
 
 
+## [0.11.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.11...bootstrap-vue-next-v0.11.0) (2023-08-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BFormSpinButton:** rename to BFormSpinbutton for compat
+* **BFormSpinButton:** rename to BFormSpinbutton for compat  docs: add defaults in data.ts files  refactor: BListGroupItem does not extend BLink fixes #1394  refactor(useBLinkHelper): blink decomposition fixes #1385  fix: "active" prop fixes #1395  fix(BLink): router-link-active class not being applied fixes #1395
+
+### Features
+
+* **BFormSpinButton:** rename to BFormSpinbutton for compat ([8162c61](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8162c61131779b25634f13ced57754d986d7e11c))
+* **BFormSpinButton:** rename to BFormSpinbutton for compat  docs: add defaults in data.ts files  refactor: BListGroupItem does not extend BLink fixes [#1394](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1394)  refactor(useBLinkHelper): blink decomposition fixes [#1385](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1385)  fix: "active" prop fixes [#1395](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1395)  fix(BLink): router-link-active class not being applied fixes [#1395](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1395) ([8162c61](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8162c61131779b25634f13ced57754d986d7e11c))
+
+
+### Bug Fixes
+
+* "active" prop fixes [#1395](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1395) ([8162c61](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8162c61131779b25634f13ced57754d986d7e11c))
+* **BLink:** router-link-active class not being applied fixes [#1395](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1395) ([8162c61](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8162c61131779b25634f13ced57754d986d7e11c))
+
 ## [0.10.11](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.10.10...bootstrap-vue-next-v0.10.11) (2023-08-24)
 
 
