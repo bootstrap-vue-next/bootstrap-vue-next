@@ -5,7 +5,7 @@
     :class="computedClasses"
     :aria-current="activeBoolean ? true : undefined"
     :aria-disabled="disabledBoolean ? true : undefined"
-    :target="link ? target : undefined"
+    :target="isLink ? target : undefined"
     :href="!buttonBoolean ? href : undefined"
     :to="!buttonBoolean ? to : undefined"
     v-bind="computedAttrs"
@@ -16,41 +16,45 @@
 
 <script setup lang="ts">
 import {computed, inject, useAttrs} from 'vue'
-import type {RouteLocationRaw} from 'vue-router'
-import type {Booleanish, ColorVariant, LinkTarget} from '../../types'
-import {useBooleanish} from '../../composables'
+import type {BLinkProps, Booleanish} from '../../types'
+import {useBLinkHelper, useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 import {listGroupInjectionKey} from '../../utils'
 
 const props = withDefaults(
-  defineProps<{
-    action?: Booleanish
-    active?: Booleanish
-    // activeClass?: ClassValue
-    // append?: Booleanish
-    button?: Booleanish
-    disabled?: Booleanish
-    href?: string
-    // noPrefetch?: Booleanish
-    // prefetch?: Booleanish
-    // rel?: String
-    // replace?: Booleanish
-    // routerComponentName?: String
-    tag?: string
-    target?: LinkTarget
-    to?: RouteLocationRaw
-    variant?: ColorVariant | null
-  }>(),
+  defineProps<
+    {
+      action?: Booleanish
+      button?: Booleanish
+      tag?: string
+    } & Omit<BLinkProps, 'event' | 'routerTag'>
+  >(),
   {
-    to: undefined,
-    variant: null,
-    href: undefined,
     action: false,
-    active: false,
     button: false,
-    disabled: false,
     tag: 'div',
+    // Link props
+    active: false,
+
+    activeClass: undefined,
+    append: false,
+    href: undefined,
+    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+    rel: undefined,
+    replace: false,
+    disabled: false,
+    routerComponentName: 'router-link',
     target: '_self',
+    to: undefined,
+    opacity: undefined,
+    opacityHover: undefined,
+    underlineVariant: null,
+    underlineOffset: undefined,
+    underlineOffsetHover: undefined,
+    underlineOpacity: undefined,
+    underlineOpacityHover: undefined,
+    variant: null,
   }
 )
 
@@ -68,14 +72,16 @@ const activeBoolean = useBooleanish(() => props.active)
 const buttonBoolean = useBooleanish(() => props.button)
 const disabledBoolean = useBooleanish(() => props.disabled)
 
-const link = computed<boolean>(() => !buttonBoolean.value && (!!props.href || !!props.to))
+const {computedLink} = useBLinkHelper(props)
+
+const isLink = computed<boolean>(() => !buttonBoolean.value && computedLink.value)
 
 const tagComputed = computed<string | typeof BLink>(() =>
   parentData?.numbered.value
     ? 'li'
     : buttonBoolean.value
     ? 'button'
-    : !link.value
+    : !isLink.value
     ? props.tag
     : BLink
 )
@@ -83,7 +89,7 @@ const tagComputed = computed<string | typeof BLink>(() =>
 const isAction = computed(
   () =>
     actionBoolean.value ||
-    link.value ||
+    isLink.value ||
     buttonBoolean.value ||
     ['a', 'router-link', 'button', 'b-link'].includes(props.tag)
 )

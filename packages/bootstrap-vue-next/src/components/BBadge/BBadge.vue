@@ -5,8 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {isLink, pick} from '../../utils'
-import {useBooleanish} from '../../composables'
+import {useBLinkHelper, useBooleanish} from '../../composables'
 import {computed} from 'vue'
 import type {BLinkProps, Booleanish} from '../../types'
 import BLink from '../BLink/BLink.vue'
@@ -30,8 +29,8 @@ const props = withDefaults(
     tag: 'span',
     textIndicator: false,
     dotIndicator: false,
-    variant: 'secondary',
     // Link props
+    variant: 'secondary',
     active: undefined,
     activeClass: undefined,
     append: false,
@@ -62,7 +61,27 @@ const dotIndicatorBoolean = useBooleanish(() => props.dotIndicator)
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
 
-const computedLink = computed<boolean>(() => isLink(props))
+const {computedLink, computedLinkProps} = useBLinkHelper(props, [
+  'active',
+  'activeClass',
+  'append',
+  'disabled',
+  'href',
+  'rel',
+  'replace',
+  'routerComponentName',
+  'target',
+  'to',
+  'variant',
+  'opacity',
+  'opacityHover',
+  'underlineVariant',
+  'underlineOffset',
+  'underlineOffsetHover',
+  'underlineOpacity',
+  'underlineOpacityHover',
+  'icon',
+])
 
 const computedTag = computed<string | typeof BLink>(() => (computedLink.value ? BLink : props.tag))
 
@@ -77,30 +96,4 @@ const computedClasses = computed(() => ({
   'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
   'text-decoration-none': computedLink.value,
 }))
-
-const computedLinkProps = computed(() =>
-  computedLink.value
-    ? pick(props, [
-        'active',
-        'activeClass',
-        'append',
-        'disabled',
-        'href',
-        'rel',
-        'replace',
-        'routerComponentName',
-        'target',
-        'to',
-        'variant',
-        'opacity',
-        'opacityHover',
-        'underlineVariant',
-        'underlineOffset',
-        'underlineOffsetHover',
-        'underlineOpacity',
-        'underlineOpacityHover',
-        'icon',
-      ])
-    : {}
-)
 </script>

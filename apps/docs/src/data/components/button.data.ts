@@ -6,75 +6,59 @@ export default {
       component: 'BButton',
       props: [
         {
-          prop: 'active',
-          description: '',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'disabled',
-          description: '',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'href',
-          description: '',
-          type: 'string',
-        },
-        {
           prop: 'pill',
-          description: '',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'pressed',
-          description: '',
           type: 'Booleanish',
-        },
-        {
-          prop: 'rel',
-          description: '',
-          type: 'string',
+          default: undefined,
         },
         {
           prop: 'size',
-          description: '',
           type: 'Size',
+          default: 'md',
         },
         {
           prop: 'squared',
-          description: '',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
-          description: '',
           type: 'string',
-        },
-        {
-          prop: 'target',
-          description: '',
-          type: 'LinkTarget',
+          default: 'button',
         },
         {
           prop: 'type',
-          description: '',
           type: 'ButtonType',
+          default: 'button',
         },
         {
           prop: 'variant',
-          description: '',
-          type: 'ButtonVariant',
+          type: 'ButtonVariant | null',
+          default: 'secondary',
         },
         {
           prop: 'loading',
-          description: '',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'loadingFill',
-          description: '',
           type: 'Booleanish',
-          default: 'false',
+          default: false,
+        },
+        {
+          prop: 'block',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'loadingText',
+          type: 'string',
+          default: 'Loading...',
         },
       ],
       emits: [
@@ -119,18 +103,20 @@ export default {
       props: [
         {
           description: '',
+          prop: 'ariaLabel',
+          type: 'string',
+          default: 'Close',
+        },
+        {
+          description: '',
           prop: 'disabled',
           type: 'Booleanish',
         },
         {
-          description: 'Applies class btn-close-white',
-          prop: 'white',
-          type: 'Booleanish',
-        },
-        {
+          prop: 'type',
+          default: 'button',
+          type: 'ButtonType',
           description: '',
-          prop: 'ariaLabel',
-          type: 'string',
         },
       ],
       emits: [],

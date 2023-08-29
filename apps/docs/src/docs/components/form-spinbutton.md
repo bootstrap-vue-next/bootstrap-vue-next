@@ -16,19 +16,19 @@ The Form SpinButton allows the user to adjusting a numeric range with finite con
 
 ## Overview
 
-The component `BFormSpinButton` is
+The component `BFormSpinbutton` is
 [WAI-ARIA compliant](https://www.w3.org/TR/wai-aria-practices-1.2/#spinbutton), allowing for
 [keyboard control](#accessibility), and supports both horizontal (default) and vertical layout.
 
 <HighlightCard>
   <label for="demo-sb">Spin Button</label>
-  <BFormSpinButton v-model="ex1Value" min="1" max="100" step="1" />
+  <BFormSpinbutton v-model="ex1Value" min="1" max="100" step="1" />
   <p>Value: {{ ex1Value }}</p>
   <template #html>
 
 ```vue
 <template>
-  <BFormSpinButton min="1" max="100" step="1" />
+  <BFormSpinbutton min="1" max="100" step="1" />
 </template>
 
 <script setup lang="ts">
@@ -48,11 +48,11 @@ value.
 
 <BCard class="bg-body-tertiary mb-4">
   <label for="sb-small">Spin button - Small size</label>
-  <BFormSpinButton id="sb-small" size="sm" placeholder="--" class="mb-2" />
+  <BFormSpinbutton id="sb-small" size="sm" placeholder="--" class="mb-2" />
   <label for="sb-default">Spin button - Default size</label>
-  <BFormSpinButton id="sb-default" placeholder="--" class="mb-2" />
+  <BFormSpinbutton id="sb-default" placeholder="--" class="mb-2" />
   <label for="sb-large">Spin button - Large size</label>
-  <BFormSpinButton id="sb-large" size="lg" placeholder="--" class="mb-2" />
+  <BFormSpinbutton id="sb-large" size="lg" placeholder="--" class="mb-2" />
 </BCard>
 
 ### Inline
@@ -60,13 +60,13 @@ value.
 <HighlightCard>
   <label for="demo-sb">Spin Button</label>
   <label for="sb-inline">Inline spin button</label>
-  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline />
+  <BFormSpinbutton id="sb-inline" v-model="ex1Value" inline />
   <template #html>
 
 ```vue
 <template>
   <label for="sb-inline">Inline spin button</label>
-  <BFormSpinButton id="sb-inline" v-model="ex1Value" inline />
+  <BFormSpinbutton id="sb-inline" v-model="ex1Value" inline />
 </template>
 
 <script setup lang="ts">
@@ -81,13 +81,13 @@ const ex1Value = ref(50)
 
 <HighlightCard>
   <label for="sb-vertical">Vertical spin button</label>
-  <BFormSpinButton id="sb-vertical" v-model="ex1Value" vertical />
+  <BFormSpinbutton id="sb-vertical" v-model="ex1Value" vertical />
   <template #html>
 
 ```vue
 <template>
   <label for="sb-vertical">Vertical spin button</label>
-  <BFormSpinButton id="sb-vertical" v-model="ex1Value" vertical> </BFormSpinButton>
+  <BFormSpinbutton id="sb-vertical" v-model="ex1Value" vertical> </BFormSpinbutton>
 </template>
 
 <script setup lang="ts">
@@ -103,7 +103,7 @@ const ex1Value = ref(50)
 ### Custom Formatter
 
 <HighlightCard>
-  <BFormSpinButton
+  <BFormSpinbutton
     id="sb-days"
     v-model="exDaysValue"
     :formatter-fn="dayFormatter"
@@ -115,7 +115,7 @@ const ex1Value = ref(50)
   <template #html>
 
 ```vue-html
-<BFormSpinButton
+<BFormSpinbutton
   id="sb-days"
   v-model="exDaysValue"
   :formatter-fn="dayFormatter"
@@ -135,11 +135,11 @@ const ex1Value = ref(50)
   <BRow>
     <BCol md="6" class="mb-2">
       <label for="sb-disabled">Disabled spin button</label>
-      <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled />
+      <BFormSpinbutton id="sb-disabled" v-model="ex1Value" disabled />
     </BCol>
     <BCol md="6" class="mb-2">
       <label for="sb-readonly" class="">Readonly spin button</label>
-      <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly />
+      <BFormSpinbutton id="sb-readonly" v-model="ex1Value" readonly />
     </BCol>
   </BRow>
   <template #html>
@@ -148,11 +148,11 @@ const ex1Value = ref(50)
 <BRow>
   <BCol md="6" class="mb-2">
     <label for="sb-disabled">Disabled spin button</label>
-    <BFormSpinButton id="sb-disabled" v-model="ex1Value" disabled />
+    <BFormSpinbutton id="sb-disabled" v-model="ex1Value" disabled />
   </BCol>
   <BCol md="6" class="mb-2">
     <label for="sb-readonly" class="">Readonly spin button</label>
-    <BFormSpinButton id="sb-readonly" v-model="ex1Value" readonly />
+    <BFormSpinbutton id="sb-readonly" v-model="ex1Value" readonly />
   </BCol>
 </BRow>
 ```
@@ -163,7 +163,7 @@ const ex1Value = ref(50)
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
-import {data} from '../../data/components/spinButton.data'
+import {data} from '../../data/components/formSpinbutton.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {BButton, BProgressBar, BCard, BCardBody, BProgress} from 'bootstrap-vue-next'

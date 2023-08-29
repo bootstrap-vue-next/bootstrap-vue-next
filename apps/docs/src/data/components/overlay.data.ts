@@ -8,66 +8,87 @@ export default {
         {
           prop: 'bgColor',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'blur',
-          type: 'string',
+          type: 'string | null',
+          default: '2px',
         },
         {
           prop: 'fixed',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'noCenter',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'noFade',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'noWrap',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'opacity',
           type: 'number | string',
+          default: 0.85,
         },
         {
           prop: 'overlayTag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'rounded',
           type: 'boolean | string',
+          default: false,
         },
         {
           prop: 'show',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'spinnerSmall',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'spinnerType',
-          type: 'string',
+          type: 'SpinnerType',
+          default: 'border',
         },
         {
           prop: 'spinnerVariant',
-          type: 'string',
+          type: 'ColorVariant | null',
+          default: undefined,
+        },
+        {
+          prop: 'noSpinner',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: "ColorVariant | 'white' | 'transparent' | null",
+          default: 'light',
         },
         {
           prop: 'wrapTag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'zIndex',
           type: 'number | string',
+          default: 10,
         },
       ],
       emits: [

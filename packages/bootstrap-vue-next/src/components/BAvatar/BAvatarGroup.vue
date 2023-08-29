@@ -26,9 +26,9 @@ const props = withDefaults(
   {
     overlap: 0.3,
     rounded: false,
+    size: undefined,
     square: false,
     tag: 'div',
-    size: undefined,
     variant: null,
   }
 )

@@ -184,7 +184,7 @@ The following are the form controls supported as the input-group's _main_ input 
 - [`BFormFile`](/docs/components/form-file)
 - [`BFormRating`](/docs/components/form-rating)
 - [`BFormTags`](/docs/components/form-tags)
-- [`BFormSpinButton`](/docs/components/form-spinbutton)
+- [`BFormSpinbutton`](/docs/components/form-spinbutton)
 - [`BFormDatepicker`](/docs/components/form-datepicker)
 - [`BFormTimepicker`](/docs/components/form-timepicker)
 
@@ -193,7 +193,7 @@ The following are the form controls supported as the input-group's _main_ input 
 - ~~BootstrapVueNext uses custom SCSS/CSS to handling sizing the `BFormFile` input when it is placed
   in a `BInputGroup` which has a [`size`](#control-sizing) specified~~
 - ~~BootstrapVueNext uses custom SCSS/CSS when `<BFormInput type="range">` is placed in a `BInputGroup`~~
-- ~~BootstrapVueNext's custom components (i.e. `BFormSpinButton`, `BFormRating`, `BFormTags`,
+- ~~BootstrapVueNext's custom components (i.e. `BFormSpinbutton`, `BFormRating`, `BFormTags`,
   etc.) require BootstrapVueNext's custom SCSS/CSS~~
 
 ## Checkbox and radio addons

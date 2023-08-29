@@ -64,15 +64,15 @@ const props = withDefaults(
     isNav?: Booleanish
   }>(),
   {
-    headerTag: 'h2',
     id: undefined,
     title: undefined,
-    tag: undefined,
-    horizontal: undefined,
-    toggle: undefined,
-    isNav: undefined,
     modelValue: false,
+    headerTag: 'h2',
+    tag: undefined,
+    toggle: undefined,
+    horizontal: undefined,
     visible: false,
+    isNav: undefined,
   }
 )
 

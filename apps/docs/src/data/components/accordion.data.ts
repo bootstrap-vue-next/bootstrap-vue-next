@@ -8,19 +8,27 @@ export default {
         {
           prop: 'flush',
           type: 'Booleanish',
+          default: false,
           description:
-            'remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container',
+            'Remove the default background-color, some borders, and some rounded corners to render accordions edge-to-edge with their parent container',
         },
         {
           prop: 'free',
           type: 'Booleanish',
-          description: 'accordion items stay open when another item is opened',
+          default: false,
+          description: 'Accordion items will stay open when another item is opened',
         },
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
           description:
-            'The Id to be injected to accordian items and used to in BCollapse for state managment',
+            'The Id to be injected to accordion items and used to in BCollapse for state managment',
+        },
+        {
+          prop: 'modelValue',
+          type: 'string',
+          default: undefined,
         },
       ],
       emits: [],
@@ -38,14 +46,47 @@ export default {
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'title',
           type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'modelValue',
+          type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'headerTag',
+          type: 'string',
+          default: 'h2',
+        },
+        {
+          prop: 'tag',
+          type: 'string',
+          default: undefined,
+        },
+        {
+          prop: 'toggle',
+          type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'horizontal',
+          type: 'Booleanish',
+          default: undefined,
         },
         {
           prop: 'visible',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'isNav',
+          type: 'Booleanish',
+          default: undefined,
         },
       ],
       emits: [],

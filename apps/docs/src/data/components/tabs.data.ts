@@ -8,46 +8,62 @@ export default {
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'title',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'active',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'buttonId',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'disabled',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'lazy',
           type: 'Booleanish',
+          default: undefined,
+        },
+        {
+          prop: 'lazyOnce',
+          type: 'Booleanish',
+          default: undefined,
         },
         {
           prop: 'noBody',
           type: 'boolean | string',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'titleItemClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'titleLinkAttributes',
           type: 'Record<string, unknown>',
+          default: undefined,
         },
         {
           prop: 'titleLinkClass',
           type: 'ClassValue',
+          default: undefined,
         },
       ],
       emits: [],
@@ -65,78 +81,97 @@ export default {
         {
           prop: 'activeNavItemClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'activeTabClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'align',
           type: 'AlignmentJustifyContent',
-        },
-        {
-          prop: 'card',
-          type: 'Booleanish',
+          default: undefined,
         },
         {
           prop: 'contentClass',
           type: 'ClassValue',
+          default: undefined,
+        },
+        {
+          prop: 'card',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'end',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'fill',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'justified',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'lazy',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'navClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'navWrapperClass',
           type: 'ClassValue',
+          default: undefined,
         },
         {
           prop: 'noFade',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'noNavStyle',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'pills',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'small',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'vertical',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'modelValue',
           type: 'number',
+          default: -1,
         },
       ],
       emits: [
