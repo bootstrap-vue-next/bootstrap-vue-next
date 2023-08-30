@@ -7,8 +7,8 @@
     "baseUrl": ".",
     "types": ["vitest/globals", "vite/client"],
     "paths": {
-      "@vueuse/shared": ["node_modules/@vueuse/shared"],
-      "@floating-ui/core": ["node_modules/@floating-ui/core"]
+      "@floating-ui/core": ["node_modules/@floating-ui/core"],
+      "@vue/shared": ["node_modules/@vue/shared"]
     }
   }
 }
