@@ -78,12 +78,12 @@ export interface BTableSimpleProps {
   stickyHeader?: Booleanish
 }
 
-export interface BTableLiteProps<T extends TableItem[]> {
+export interface BTableLiteProps {
   align?: VerticalAlign
   caption?: string
   fields?: TableField[]
   footClone?: Booleanish
-  items?: T
+  items?: TableItem[]
   labelStacked?: boolean
   variant?: ColorVariant | null
   showEmpty?: Booleanish

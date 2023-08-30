@@ -157,7 +157,7 @@
   </BTableSimple>
 </template>
 
-<script setup lang="ts" generic="T extends TableItem[]">
+<script setup lang="ts">
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import {get, isObject, startCase, titleCase} from '../../utils'
@@ -174,7 +174,7 @@ import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
-  defineProps<BTableLiteProps<T> & Omit<BTableSimpleProps, 'tableVariant'>>(),
+  defineProps<BTableLiteProps & Omit<BTableSimpleProps, 'tableVariant'>>(),
   {
     variant: undefined,
     borderVariant: undefined,
