@@ -2,6 +2,7 @@
   "name": "docs",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vitepress dev --port 8000",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitepress build",
@@ -30,7 +31,7 @@
     "sitemap": "^7.1.1",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.16.6",
-    "vitepress": "1.0.0-beta.7",
+    "vitepress": "1.0.0-rc.10",
     "vue": "^3.3.4"
   },
   "lint-staged": {

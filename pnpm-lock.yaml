@@ -78,8 +78,8 @@ importers:
         specifier: ^0.16.6
         version: 0.16.6
       vitepress:
-        specifier: 1.0.0-beta.7
-        version: 1.0.0-beta.7(@algolia/client-search@4.19.1)(@types/node@20.5.7)(search-insights@2.7.0)
+        specifier: 1.0.0-rc.10
+        version: 1.0.0-rc.10(@algolia/client-search@4.19.1)(@types/node@20.5.7)(search-insights@2.7.0)
       vue:
         specifier: ^3.3.4
         version: 3.3.4
@@ -133,6 +133,9 @@ importers:
         specifier: ^10.4.1
         version: 10.4.1(vue@3.3.4)
     devDependencies:
+      '@floating-ui/core':
+        specifier: ^1.4.1
+        version: 1.4.1
       '@rushstack/eslint-patch':
         specifier: ^1.3.3
         version: 1.3.3
@@ -163,6 +166,9 @@ importers:
       '@vue/tsconfig':
         specifier: ^0.4.0
         version: 0.4.0
+      '@vueuse/shared':
+        specifier: ^10.4.1
+        version: 10.4.1(vue@3.3.4)
       bootstrap:
         specifier: ^5.3.1
         version: 5.3.1(@popperjs/core@2.11.8)
@@ -1296,7 +1302,6 @@ packages:
     resolution: {integrity: sha512-jk3WqquEJRlcyu7997NtR5PibI+y5bi+LS3hPmguVClypenMsCY3CBa3LAQnozRCtCrYWSEtAdiskpamuJRFOQ==}
     dependencies:
       '@floating-ui/utils': 0.1.1
-    dev: false
 
   /@floating-ui/dom@1.4.5:
     resolution: {integrity: sha512-96KnRWkRnuBSSFbj0sFGwwOUd8EkiecINVl0O9wiZlZ64EkpyAOG3Xc2vKKNJmru0Z7RqWNymA+6b8OZqjgyyw==}
@@ -1306,7 +1311,6 @@ packages:
 
   /@floating-ui/utils@0.1.1:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
-    dev: false
 
   /@floating-ui/vue@1.0.2(vue@3.3.4):
     resolution: {integrity: sha512-sImlAl9mAoCKZLNlwWz2P2ZMJIDlOEDXrRD6aD2sIHAka1LPC+nWtB+D3lPe7IE7FGWSbwBPTnlSdlABa3Fr0A==}
@@ -3092,10 +3096,6 @@ packages:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.2
-    dev: true
-
-  /body-scroll-lock@4.0.0-beta.0:
-    resolution: {integrity: sha512-a7tP5+0Mw3YlUJcGAKUqIBkYYGlYxk2fnCasq/FUph1hadxlTRjF+gAcZksxANnaMnALjxEddmSi/H3OR8ugcQ==}
     dev: true
 
   /boolbase@1.0.0:
@@ -7470,17 +7470,15 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitepress@1.0.0-beta.7(@algolia/client-search@4.19.1)(@types/node@20.5.7)(search-insights@2.7.0):
-    resolution: {integrity: sha512-P9Rw+FXatKIU4fVdtKxqwHl6fby8E/8zE3FIfep6meNgN4BxbWqoKJ6yfuuQQR9IrpQqwnyaBh4LSabyll6tWg==}
+  /vitepress@1.0.0-rc.10(@algolia/client-search@4.19.1)(@types/node@20.5.7)(search-insights@2.7.0):
+    resolution: {integrity: sha512-+MsahIWqq5WUEmj6MR4obcKYbT7im07jZPCQPdNJExkeOSbOAJ4xypSLx88x7rvtzWHhHc5aXbOhCRvGEGjFrw==}
     hasBin: true
     dependencies:
       '@docsearch/css': 3.5.2
       '@docsearch/js': 3.5.2(@algolia/client-search@4.19.1)(search-insights@2.7.0)
-      '@vitejs/plugin-vue': 4.3.4(vite@4.4.9)(vue@3.3.4)
       '@vue/devtools-api': 6.5.0
       '@vueuse/core': 10.4.1(vue@3.3.4)
       '@vueuse/integrations': 10.4.1(focus-trap@7.5.2)(vue@3.3.4)
-      body-scroll-lock: 4.0.0-beta.0
       focus-trap: 7.5.2
       mark.js: 8.11.1
       minisearch: 6.1.0

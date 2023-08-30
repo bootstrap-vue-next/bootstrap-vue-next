@@ -8,7 +8,8 @@
     "types": ["vitest/globals", "vite/client"],
     "paths": {
       "@floating-ui/core": ["node_modules/@floating-ui/core"],
-      "@vue/shared": ["node_modules/@vue/shared"]
+      "@vue/shared": ["node_modules/@vue/shared"],
+      "@vueuse/shared": ["node_modules/@vueuse/shared"]
     }
   }
 }
