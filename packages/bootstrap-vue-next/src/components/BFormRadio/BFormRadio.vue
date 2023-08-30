@@ -137,6 +137,11 @@ const localValue = computed({
   },
 })
 
+watch(modelValue, (newValue) => {
+  if (parentData === null || newValue === false) return
+  parentData.set(props.value)
+})
+
 const computedRequired = computed(
   () =>
     !!(props.name ?? parentData?.name.value) &&

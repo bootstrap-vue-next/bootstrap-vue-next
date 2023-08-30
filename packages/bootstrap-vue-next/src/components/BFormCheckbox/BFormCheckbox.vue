@@ -98,13 +98,37 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'update:modelValue': [
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null,
+    value:
+      | unknown[]
+      | Set<unknown>
+      | boolean
+      | string
+      | Record<string, unknown>
+      | number
+      | null
+      | undefined,
   ]
   'input': [
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null,
+    value:
+      | unknown[]
+      | Set<unknown>
+      | boolean
+      | string
+      | Record<string, unknown>
+      | number
+      | null
+      | undefined,
   ]
   'change': [
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null,
+    value:
+      | unknown[]
+      | Set<unknown>
+      | boolean
+      | string
+      | Record<string, unknown>
+      | number
+      | null
+      | undefined,
   ]
 }>()
 
@@ -140,6 +164,8 @@ const {focused} = useFocus(input, {
 
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
+let internalUpdate = false
+
 const localValue = computed({
   get: () =>
     parentData !== null
@@ -152,7 +178,7 @@ const localValue = computed({
   set: (newValue) => {
     const updateValue = newValue
       ? props.value
-      : props.uncheckedValue === undefined
+      : props.uncheckedValue === undefined && props.value !== false
       ? false
       : props.uncheckedValue
     emit('input', updateValue)
@@ -171,19 +197,36 @@ const localValue = computed({
         )
       }
     } else {
-      modelValue.value = updateValue
       if (parentData !== null) {
-        if (updateValue === false) {
+        internalUpdate = true
+        modelValue.value = updateValue
+
+        if (newValue === false) {
           parentData.remove(props.value)
         } else {
           parentData.set(props.value)
         }
+      } else {
+        modelValue.value = updateValue
       }
     }
     nextTick(() => {
       emit('change', updateValue)
+      internalUpdate = false
     })
   },
+})
+
+watch(modelValue, (newValue) => {
+  if (internalUpdate) {
+    internalUpdate = false
+    return
+  }
+  if (parentData === null) return
+  if ((newValue === props.value || newValue === true) && localValue.value !== true)
+    localValue.value = true
+  else if ((newValue === props.uncheckedValue || newValue === false) && localValue.value !== false)
+    localValue.value = false
 })
 
 const computedRequired = computed(
