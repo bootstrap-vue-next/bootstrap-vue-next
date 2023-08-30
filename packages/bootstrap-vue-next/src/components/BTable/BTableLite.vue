@@ -171,7 +171,7 @@ import type {
 import BTableSimple from './BTableSimple.vue'
 import {filterEvent} from './helpers/filter-event'
 import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
-import {useToNumber} from '@vueuse/shared'
+import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<BTableLiteProps & Omit<BTableSimpleProps, 'tableVariant'>>(),
