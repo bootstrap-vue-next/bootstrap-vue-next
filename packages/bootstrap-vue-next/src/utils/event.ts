@@ -3,7 +3,9 @@ import {isObject} from './inspect'
 
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
-export const parseEventOptions = (options: any): boolean | EventListenerOptions | undefined => {
+export const parseEventOptions = (
+  options: boolean | EventListenerOptions | undefined
+): boolean | EventListenerOptions | undefined => {
   if (HAS_PASSIVE_EVENT_SUPPORT) {
     return isObject(options) ? options : {capture: !!options || false}
   }

@@ -28,7 +28,7 @@ export const filterEvent = (event: Event) => {
   }
   const el = event.target as HTMLElement
   // Exit early when element is disabled or a table element
-  if (('disabled' in el && (el as any).disabled) || TABLE_TAG_NAMES.indexOf(el.tagName) !== -1) {
+  if (('disabled' in el && el.disabled) || TABLE_TAG_NAMES.indexOf(el.tagName) !== -1) {
     return false
   }
   // Ignore the click when it was inside a dropdown menu
