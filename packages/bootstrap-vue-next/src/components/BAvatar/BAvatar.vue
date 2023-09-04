@@ -229,7 +229,7 @@ const onImgError = (e: Event) => {
 </script>
 
 <script lang="ts">
-export const computeSize = (value: any): string | null => {
+export const computeSize = (value: string | undefined): string | null => {
   const calcValue = typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value
   return typeof calcValue === 'number' ? `${calcValue}px` : calcValue || null
 }

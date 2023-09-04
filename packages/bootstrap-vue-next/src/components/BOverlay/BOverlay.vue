@@ -85,6 +85,7 @@ const emit = defineEmits<{
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   overlay?: (props: typeof spinnerAttrs.value) => any
 }>()
 
