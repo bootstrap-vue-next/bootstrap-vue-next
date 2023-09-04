@@ -10,7 +10,7 @@
     <component
       :is="routerTag"
       :href="localHref"
-      :class="[(activeBoolean ?? isActive) && activeClass]"
+      :class="[(activeBoolean ?? isActive) && `${activeClass} ${defaultActiveClass}`]"
       v-bind="$attrs"
       @click=";[navigate($event), closeCollapse(), clicked($event)]"
     >
@@ -37,7 +37,7 @@ defineSlots<{
 
 const props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
-  activeClass: undefined,
+  activeClass: 'router-link-active',
   append: false,
   disabled: false,
   event: 'click',
@@ -85,6 +85,8 @@ const closeCollapse = () => {
 }
 
 const instance = getCurrentInstance()
+
+const defaultActiveClass = 'active' as const
 
 const tag = computed<string>(() => {
   const routerName = props.routerComponentName
@@ -151,7 +153,7 @@ const routerAttr = computed(() => ({
 }))
 
 const computedLinkClasses = computed(() => ({
-  [props.activeClass ?? 'active']: activeBoolean.value,
+  [defaultActiveClass]: activeBoolean.value,
   disabled: disabledBoolean.value,
 }))
 

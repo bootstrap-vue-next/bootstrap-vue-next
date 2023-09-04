@@ -3,7 +3,7 @@ import BLink from './BLink.vue'
 import {afterEach, describe, expect, it, vitest} from 'vitest'
 import {defineComponent} from 'vue'
 import {createRouter, createWebHistory, RouterLink} from 'vue-router'
-import {createContainer} from 'tests/utils'
+import {createContainer} from '../../../tests/utils'
 
 describe('link', () => {
   enableAutoUnmount(afterEach)

@@ -8,82 +8,102 @@ export default {
         {
           prop: 'ariaInvalid',
           type: 'AriaInvalid',
+          default: undefined,
         },
         {
           prop: 'autofocus',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'disabled',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'disabledField',
           type: 'string',
+          default: 'disabled',
         },
         {
           prop: 'form',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'htmlField',
           type: 'string',
+          default: 'html',
         },
         {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'labelField',
           type: 'string',
+          default: 'label',
         },
         {
           prop: 'multiple',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'name',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'options',
           type: 'unknown[] | Record<string, unknown>',
+          default: '() => []',
         },
         {
           prop: 'optionsField',
           type: 'string',
+          default: 'options',
         },
         {
           prop: 'plain',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'required',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'selectSize',
-          type: 'number',
+          type: 'number | string',
+          default: 0,
         },
         {
           prop: 'size',
           type: 'Size',
+          default: 'md',
         },
         {
           prop: 'state',
-          type: 'Booleanish',
+          type: 'Booleanish | null',
+          default: undefined,
         },
         {
           prop: 'textField',
           type: 'string',
+          default: 'text',
         },
         {
           prop: 'valueField',
           type: 'string',
+          default: 'value',
         },
         {
           prop: 'modelValue',
-          type: 'string | unknown[] | Record<string, unknown> | number',
+          type: 'string | unknown[] | Record<string, unknown> | number | null',
+          default: '',
         },
       ],
       emits: [
@@ -139,14 +159,14 @@ export default {
       emits: [],
       props: [
         {
-          description: '',
           prop: 'value',
-          type: 'unknown',
+          type: 'any',
+          default: undefined,
         },
         {
-          description: '',
           prop: 'disabled',
           type: 'Booleanish',
+          default: false,
         },
       ],
       slots: [
@@ -163,26 +183,32 @@ export default {
         {
           prop: 'label',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'disabledField',
           type: 'string',
+          default: 'disabled',
         },
         {
           prop: 'htmlField',
           type: 'string',
+          default: 'html',
         },
         {
           prop: 'options',
           type: 'unknown[] | Record<string, unknown>',
+          default: '() => []',
         },
         {
           prop: 'textField',
           type: 'string',
+          default: 'text',
         },
         {
           prop: 'valueField',
           type: 'string',
+          default: 'value',
         },
       ],
       emits: [],

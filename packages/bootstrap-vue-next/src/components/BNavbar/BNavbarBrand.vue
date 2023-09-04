@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import {isLink, pick} from '../../utils'
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import type {BLinkProps} from '../../types'
+import {useBLinkHelper} from '../../composables'
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,32 +49,27 @@ const props = withDefaults(
   }
 )
 
-const computedLink = computed<boolean>(() => isLink(props))
-const computedTag = computed<string | typeof BLink>(() => (computedLink.value ? BLink : props.tag))
+const {computedLink, computedLinkProps} = useBLinkHelper(props, [
+  'active',
+  'activeClass',
+  'append',
+  'disabled',
+  'href',
+  'rel',
+  'replace',
+  'routerComponentName',
+  'target',
+  'to',
+  'variant',
+  'opacity',
+  'opacityHover',
+  'underlineVariant',
+  'underlineOffset',
+  'underlineOffsetHover',
+  'underlineOpacity',
+  'underlineOpacityHover',
+  'icon',
+])
 
-const computedLinkProps = computed(() =>
-  computedLink.value
-    ? pick(props, [
-        'active',
-        'activeClass',
-        'append',
-        'disabled',
-        'href',
-        'rel',
-        'replace',
-        'routerComponentName',
-        'target',
-        'to',
-        'variant',
-        'opacity',
-        'opacityHover',
-        'underlineVariant',
-        'underlineOffset',
-        'underlineOffsetHover',
-        'underlineOpacity',
-        'underlineOpacityHover',
-        'icon',
-      ])
-    : {}
-)
+const computedTag = computed<string | typeof BLink>(() => (computedLink.value ? BLink : props.tag))
 </script>

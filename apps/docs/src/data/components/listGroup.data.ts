@@ -8,18 +8,22 @@ export default {
         {
           prop: 'flush',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'horizontal',
           type: 'boolean | Breakpoint',
+          default: false,
         },
         {
           prop: 'numbered',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
       ],
       emits: [],
@@ -37,38 +41,17 @@ export default {
         {
           prop: 'action',
           type: 'Booleanish',
-        },
-        {
-          prop: 'active',
-          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'button',
           type: 'Booleanish',
-        },
-        {
-          prop: 'disabled',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'href',
-          type: 'string',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
-        },
-        {
-          prop: 'target',
-          type: 'LinkTarget',
-        },
-        {
-          prop: 'to',
-          type: 'RouteLocationRaw',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant',
+          default: 'div',
         },
       ],
       emits: [],

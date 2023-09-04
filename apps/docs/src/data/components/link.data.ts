@@ -8,62 +8,107 @@ export default {
         {
           prop: 'active',
           type: 'Booleanish',
+          default: undefined,
         },
         {
           prop: 'activeClass',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'append',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'disabled',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'event',
-          type: 'string | unknown[]',
+          type: 'string | any[]',
+          default: 'click',
         },
         {
-          prop: 'exact',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'exactActiveClass',
+          prop: 'href',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'rel',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'replace',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'routerComponentName',
           type: 'string',
+          default: 'router-link',
+        },
+        {
+          prop: 'routerTag',
+          type: 'string',
+          default: 'a',
         },
         {
           prop: 'target',
           type: 'LinkTarget',
+          default: '_self',
         },
         {
           prop: 'to',
           type: 'RouteLocationRaw',
+          default: undefined,
         },
         {
-          prop: 'href',
-          description:
-            'define an external link. Note if href and to are passed, `:to will be prioritzed ',
-          type: 'String',
+          prop: 'variant',
+          type: 'ColorVariant | null',
+          default: null,
         },
         {
-          prop: 'routerTag',
-          description:
-            'Component to be used  as the router link. This is the component that will be assigned the `href`',
-          type: 'String',
+          prop: 'opacity',
+          type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+          default: undefined,
+        },
+        {
+          prop: 'opacityHover',
+          type: "10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'",
+          default: undefined,
+        },
+        {
+          prop: 'underlineVariant',
+          type: 'ColorVariant | null',
+          default: null,
+        },
+        {
+          prop: 'underlineOffset',
+          type: "1 | 2 | 3 | '1' | '2' | '3'",
+          default: undefined,
+        },
+        {
+          prop: 'underlineOffsetHover',
+          type: "1 | 2 | 3 | '1' | '2' | '3'",
+          default: undefined,
+        },
+        {
+          prop: 'underlineOpacity',
+          type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
+          default: undefined,
+        },
+        {
+          prop: 'underlineOpacityHover',
+          type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
+          default: undefined,
+        },
+        {
+          prop: 'icon',
+          type: 'Booleanish',
+          default: false,
         },
       ],
       emits: [

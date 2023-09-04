@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.12.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.2.0...nuxt-v0.12.0) (2023-09-04)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.12.0
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.12.0
+
+## [0.2.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.1.3...nuxt-v0.2.0) (2023-08-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* release for 0.11.0
+
+### Features
+
+* release for 0.11.0 ([5be4a7e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5be4a7e942f94212ae86c364678bcc65977db7a7))
+
+
+### Bug Fixes
+
+* release 0.1.5 ([0b6efe5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b6efe59a14bf460e5bfda8c02e605d26da8890f))
+
+
+### Miscellaneous Chores
+
+* release ([18278f7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/18278f7912f4142786204633d35c94c531dd6784))
+
 ## [0.1.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.1.2...nuxt-v0.1.3) (2023-07-01)
 
 

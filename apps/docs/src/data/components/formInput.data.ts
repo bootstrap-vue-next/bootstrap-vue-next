@@ -8,18 +8,22 @@ export default {
         {
           prop: 'max',
           type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'min',
           type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'step',
           type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'type',
           type: 'InputType',
+          default: 'text',
         },
       ],
       emits: [

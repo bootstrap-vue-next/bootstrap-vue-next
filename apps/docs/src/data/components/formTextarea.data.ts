@@ -6,19 +6,19 @@ export default {
       component: 'BFormTextarea',
       props: [
         {
-          description: '',
           prop: 'noResize',
           type: 'Booleanish',
+          default: false,
         },
         {
-          description: '',
           prop: 'rows',
           type: 'string | number',
+          default: 2,
         },
         {
-          description: '',
           prop: 'wrap',
           type: 'string',
+          default: 'soft',
         },
       ],
       emits: [

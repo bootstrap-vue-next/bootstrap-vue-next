@@ -23,14 +23,8 @@
 import BLink from '../BLink/BLink.vue'
 import {computed, inject} from 'vue'
 import type {BLinkProps, ClassValue} from '../../types'
-import {useBooleanish} from '../../composables'
-import {
-  collapseInjectionKey,
-  dropdownInjectionKey,
-  isLink,
-  navbarInjectionKey,
-  pick,
-} from '../../utils'
+import {useBLinkHelper, useBooleanish} from '../../composables'
+import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
 
 defineOptions({
   inheritAttrs: false,
@@ -78,6 +72,8 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const {computedLink, computedLinkProps} = useBLinkHelper(props)
+
 const computedClasses = computed(() => [
   props.linkClass,
   {
@@ -87,34 +83,8 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedLink = computed<boolean>(() => isLink(props))
-
 const computedTag = computed<typeof BLink | 'button' | 'a'>(() =>
   computedLink.value ? BLink : props.href ? 'a' : 'button'
-)
-
-const computedLinkProps = computed(() =>
-  computedLink.value
-    ? pick(props, [
-        'active',
-        'activeClass',
-        'append',
-        'href',
-        'rel',
-        'replace',
-        'routerComponentName',
-        'target',
-        'to',
-        'variant',
-        'opacity',
-        'opacityHover',
-        'underlineVariant',
-        'underlineOffset',
-        'underlineOffsetHover',
-        'underlineOpacity',
-        'underlineOpacityHover',
-      ])
-    : {}
 )
 
 const collapseData = inject(collapseInjectionKey, null)

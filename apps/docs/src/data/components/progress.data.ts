@@ -6,40 +6,9 @@ export default {
       component: 'BProgress',
       props: [
         {
-          prop: 'variant',
-          type: 'ColorVariant',
-        },
-        {
-          prop: 'max',
-          type: 'number | string',
-        },
-        {
           prop: 'height',
           type: 'string',
-        },
-        {
-          prop: 'animated',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'precision',
-          type: 'number | string',
-        },
-        {
-          prop: 'showProgress',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'showValue',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'striped',
-          type: 'Booleanish',
-        },
-        {
-          prop: 'value',
-          type: 'number | string',
+          default: undefined,
         },
       ],
       emits: [],
@@ -57,42 +26,52 @@ export default {
         {
           prop: 'animated',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'label',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'labelHtml',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'max',
-          type: 'number | string',
+          type: 'string | number',
+          default: undefined,
         },
         {
           prop: 'precision',
-          type: 'number | string',
+          type: 'string | number',
+          default: 0,
         },
         {
           prop: 'showProgress',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'showValue',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'striped',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'value',
-          type: 'number | string',
+          type: 'string | number',
+          default: 0,
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
       ],
       emits: [],

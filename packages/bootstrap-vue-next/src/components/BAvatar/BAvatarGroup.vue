@@ -12,7 +12,7 @@ import type {Booleanish, ColorVariant, Size} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
-import {useToNumber} from '@vueuse/shared'
+import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
@@ -26,9 +26,9 @@ const props = withDefaults(
   {
     overlap: 0.3,
     rounded: false,
+    size: undefined,
     square: false,
     tag: 'div',
-    size: undefined,
     variant: null,
   }
 )

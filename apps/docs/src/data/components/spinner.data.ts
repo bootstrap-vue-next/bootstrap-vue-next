@@ -8,26 +8,32 @@ export default {
         {
           prop: 'label',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'role',
           type: 'string',
+          default: 'status',
         },
         {
           prop: 'small',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'span',
         },
         {
           prop: 'type',
           type: 'SpinnerType',
+          default: 'border',
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
       ],
       emits: [],

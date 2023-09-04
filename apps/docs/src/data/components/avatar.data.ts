@@ -8,74 +8,77 @@ export default {
         {
           prop: 'alt',
           type: 'string',
-        },
-        {
-          prop: 'ariaLabel',
-          type: 'string',
+          default: 'avatar',
         },
         {
           prop: 'badge',
           type: 'boolean | string',
+          default: false,
         },
         {
           prop: 'badgeLeft',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'badgeOffset',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'badgeTop',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'badgeVariant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: 'primary',
         },
         {
           prop: 'button',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'buttonType',
-          type: 'string',
-        },
-        {
-          prop: 'disabled',
-          type: 'Booleanish',
+          type: 'ButtonType',
+          default: 'button',
         },
         {
           prop: 'icon',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'rounded',
           type: 'boolean | string',
+          default: 'circle',
         },
         {
           prop: 'size',
-          type: "'sm' | 'md' | 'lg' | string",
+          type: 'Size | string',
+          default: undefined,
         },
         {
           prop: 'square',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'src',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'text',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'textVariant',
-          type: 'ColorVariant',
-        },
-        {
-          prop: 'variant',
-          type: 'ColorVariant',
+          type: 'TextColorVariant | null',
+          default: null,
         },
       ],
       emits: [
@@ -121,26 +124,32 @@ export default {
         {
           prop: 'overlap',
           type: 'number | string',
+          default: 0.3,
         },
         {
           prop: 'rounded',
           type: 'boolean | string',
+          default: false,
         },
         {
           prop: 'size',
-          type: "'sm' | 'md' | 'lg' | string",
+          type: 'Size | string',
+          default: undefined,
         },
         {
           prop: 'square',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'variant',
-          type: 'ColorVariant',
+          type: 'ColorVariant | null',
+          default: null,
         },
       ],
       slots: [

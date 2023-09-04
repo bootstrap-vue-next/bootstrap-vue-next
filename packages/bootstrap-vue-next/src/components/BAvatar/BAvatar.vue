@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import {avatarGroupInjectionKey, isEmptySlot, isLink, isNumeric, pick, toFloat} from '../../utils'
+import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, useSlots} from 'vue'
 import type {
   BLinkProps,
@@ -36,7 +36,7 @@ import type {
   Size,
   TextColorVariant,
 } from '../../types'
-import {useBooleanish} from '../../composables'
+import {useBLinkHelper, useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 
 const props = withDefaults(
@@ -50,7 +50,6 @@ const props = withDefaults(
       badgeVariant?: ColorVariant | null
       button?: Booleanish
       buttonType?: ButtonType
-      disabled?: Booleanish
       icon?: string
       rounded?: boolean | string
       size?: Size | string // TODO number --> compat
@@ -58,27 +57,24 @@ const props = withDefaults(
       src?: string
       text?: string
       textVariant?: TextColorVariant | null
-      variant?: ColorVariant | null
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
-    badgeOffset: undefined,
-    icon: undefined,
-    size: undefined,
-    src: undefined,
-    text: undefined,
-    textVariant: null,
     alt: 'avatar',
     badge: false,
     badgeLeft: false,
+    badgeOffset: undefined,
     badgeTop: false,
     badgeVariant: 'primary',
     button: false,
     buttonType: 'button',
-    disabled: false,
+    icon: undefined,
     rounded: 'circle',
+    size: undefined,
     square: false,
-    variant: 'secondary',
+    src: undefined,
+    text: undefined,
+    textVariant: null,
     // Link props
     active: undefined,
     activeClass: undefined,
@@ -88,6 +84,7 @@ const props = withDefaults(
     // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
     rel: undefined,
     replace: false,
+    disabled: false,
     routerComponentName: 'router-link',
     target: '_self',
     to: undefined,
@@ -98,6 +95,7 @@ const props = withDefaults(
     underlineOffsetHover: undefined,
     underlineOpacity: undefined,
     underlineOpacityHover: undefined,
+    variant: 'secondary',
   }
 )
 
@@ -114,6 +112,7 @@ defineSlots<{
 }>()
 
 const slots = useSlots()
+const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 const parentData = inject(avatarGroupInjectionKey, null)
 
@@ -132,8 +131,6 @@ const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
 
 const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 
-const computedLink = computed<boolean>(() => isLink(props))
-
 const computedSize = computed<string | null>(
   () => parentData?.size.value ?? computeSize(props.size)
 )
@@ -141,32 +138,7 @@ const computedSize = computed<string | null>(
 const computedVariant = computed<ColorVariant | null>(
   () => parentData?.variant.value ?? props.variant
 )
-
 const computedRounded = computed<string | boolean>(() => parentData?.rounded.value ?? props.rounded)
-
-const computedLinkProps = computed(() =>
-  computedLink.value
-    ? pick(props, [
-        'active',
-        'activeClass',
-        'append',
-        'href',
-        'rel',
-        'replace',
-        'routerComponentName',
-        'target',
-        'to',
-        'variant',
-        'opacity',
-        'opacityHover',
-        'underlineVariant',
-        'underlineOffset',
-        'underlineOffsetHover',
-        'underlineOpacity',
-        'underlineOpacityHover',
-      ])
-    : {}
-)
 
 const badgeClasses = computed(() => ({
   [`bg-${props.badgeVariant}`]: props.badgeVariant !== null,
@@ -257,7 +229,7 @@ const onImgError = (e: Event) => {
 </script>
 
 <script lang="ts">
-export const computeSize = (value: any): string | null => {
+export const computeSize = (value: string | undefined): string | null => {
   const calcValue = typeof value === 'string' && isNumeric(value) ? toFloat(value, 0) : value
   return typeof calcValue === 'number' ? `${calcValue}px` : calcValue || null
 }

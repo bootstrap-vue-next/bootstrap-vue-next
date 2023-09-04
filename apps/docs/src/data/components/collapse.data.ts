@@ -6,32 +6,39 @@ export default {
       component: 'BCollapse',
       props: [
         {
-          prop: 'accordion',
-          type: 'string',
-        },
-        {
           prop: 'id',
           type: 'string',
+          default: undefined,
         },
         {
           prop: 'modelValue',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
         },
         {
           prop: 'toggle',
           type: 'Booleanish',
+          default: false,
+        },
+        {
+          prop: 'horizontal',
+          type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'visible',
           type: 'Booleanish',
+          default: false,
         },
         {
           prop: 'isNav',
           type: 'Booleanish',
+          default: false,
         },
       ],
       emits: [
