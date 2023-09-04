@@ -9,6 +9,7 @@
       :aria-current="activeBoolean ? true : null"
       :href="computedTag === 'a' ? href : null"
       :rel="rel"
+      role="menuitem"
       :type="computedTag === 'button' ? 'button' : null"
       :target="target"
       v-bind="computedLinkProps"
