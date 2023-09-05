@@ -12,7 +12,7 @@
       :href="localHref"
       :class="[(activeBoolean ?? isActive) && `${activeClass} ${defaultActiveClass}`]"
       v-bind="$attrs"
-      @click=";[navigate($event), closeCollapse(), clicked($event)]"
+      @click=";[navigate($event), clicked($event)]"
     >
       <slot />
     </component>
@@ -78,11 +78,6 @@ const disabledBoolean = useBooleanish(() => props.disabled)
 const replaceBoolean = useBooleanish(() => props.replace)
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
-const closeCollapse = () => {
-  if (navbarData !== null) {
-    collapseData?.close?.()
-  }
-}
 
 const instance = getCurrentInstance()
 
@@ -164,7 +159,10 @@ const clicked = (e: MouseEvent): void => {
     return
   }
 
-  if (collapseData?.isNav?.value === true) {
+  if (
+    (collapseData?.isNav?.value === true && navbarData === null) ||
+    (navbarData !== null && navbarData?.autoClose?.value === true)
+  ) {
     collapseData?.close?.()
   }
 
