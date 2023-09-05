@@ -1,6 +1,19 @@
 <template>
   <li class="nav-item dropdown">
-    <BDropdown v-model="dropdownValue" v-bind="computedDropdownProps" is-nav>
+    <BDropdown
+      ref="dropdown"
+      v-bind="props"
+      is-nav
+      @show="emit('show', $event)"
+      @shown="emit('shown')"
+      @hide="emit('hide', $event)"
+      @hidden="emit('hidden')"
+      @hide-prevented="emit('hide-prevented')"
+      @show-prevented="emit('show-prevented')"
+      @click="emit('click', $event)"
+      @toggle="emit('toggle')"
+      @update:model-value="emit('update:modelValue', $event)"
+    >
       <template #button-content>
         <slot name="button-content" />
       </template>
@@ -15,65 +28,101 @@
 </template>
 
 <script setup lang="ts">
-import type {Middleware, Strategy} from '@floating-ui/vue'
-import {useVModel} from '@vueuse/core'
-import {computed} from 'vue'
-import {useBooleanish} from '../../composables'
-import type {Booleanish, ButtonVariant, ClassValue, Size} from '../../types'
-import {omit} from '../../utils'
+import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
+import {ref} from 'vue'
+import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
+import {BvTriggerableEvent} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
+import type {RouteLocationRaw} from 'vue-router'
 
 // TODO share props with BDropdown
 const props = withDefaults(
   defineProps<{
+    ariaLabel?: string
     id?: string
+    menuClass?: ClassValue
+    size?: Size
+    splitClass?: ClassValue
+    splitVariant?: ButtonVariant | null
     text?: string
     toggleClass?: ClassValue
-    size?: Size
-    offset?: string
     autoClose?: boolean | 'inside' | 'outside'
-    splitVariant?: ButtonVariant | null
-    noCaret?: Booleanish
-    variant?: ButtonVariant | null
-    modelValue?: Booleanish
-    lazy?: Booleanish
-    strategy?: Strategy
-    floatingMiddleware?: Middleware[]
-    noFlip?: Booleanish
-    noShift?: Booleanish
+    block?: Booleanish
+    disabled?: Booleanish
+    isNav?: Booleanish
     dropup?: Booleanish
     dropend?: Booleanish
     dropstart?: Booleanish
     center?: Booleanish
     end?: Booleanish
-    menuClass?: ClassValue
+    noFlip?: Booleanish
+    noShift?: Booleanish
+    offset?:
+      | number
+      | string
+      | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
+    role?: string
+    split?: Booleanish
+    splitButtonType?: ButtonType
+    splitHref?: string
+    splitDisabled?: Booleanish
+    noCaret?: Booleanish
+    toggleText?: string
+    variant?: ButtonVariant | null
+    modelValue?: Booleanish
+    lazy?: Booleanish
+    strategy?: Strategy
+    floatingMiddleware?: Middleware[]
+    splitTo?: RouteLocationRaw
+    boundary?: Boundary | RootBoundary
   }>(),
   {
-    lazy: undefined,
-    strategy: undefined,
-    floatingMiddleware: undefined,
-    noFlip: undefined,
-    noShift: undefined,
-    dropup: undefined,
-    dropend: undefined,
-    dropstart: undefined,
-    center: undefined,
-    end: undefined,
-    menuClass: undefined,
+    ariaLabel: undefined,
     id: undefined,
+    menuClass: undefined,
+    size: 'md',
+    splitClass: undefined,
+    splitVariant: undefined,
     text: undefined,
     toggleClass: undefined,
-    size: 'md',
-    offset: undefined,
-    autoClose: undefined,
-    splitVariant: undefined,
-    noCaret: undefined,
+    floatingMiddleware: undefined,
+    splitDisabled: undefined,
+    autoClose: true,
+    block: false,
+    disabled: false,
+    isNav: false,
+    dropup: false,
+    dropend: false,
+    dropstart: false,
+    center: false,
+    end: false,
+    noFlip: false,
+    lazy: false,
+    noShift: false,
+    offset: 0,
+    role: 'menu',
+    split: false,
+    splitButtonType: 'button',
+    splitHref: undefined,
+    noCaret: false,
+    toggleText: 'Toggle dropdown',
     variant: 'link',
     modelValue: false,
+    strategy: 'absolute',
+    splitTo: undefined,
+    boundary: 'clippingAncestors',
   }
 )
 
 const emit = defineEmits<{
+  'show': [value: BvTriggerableEvent]
+  'shown': []
+  'hide': [value: BvTriggerableEvent]
+  'hidden': []
+  'hide-prevented': []
+  'show-prevented': []
+  'click': [event: MouseEvent]
+  'toggle': []
   'update:modelValue': [value: boolean]
 }>()
 
@@ -85,27 +134,16 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'button-content'?: (props: Record<string, never>) => any
 }>()
-
-const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
-
-const modelValueBoolean = useBooleanish(modelValue)
-
-const dropdownValue = computed({
-  get: () => modelValueBoolean.value,
-  set: (value: boolean) => {
-    modelValue.value = value
-  },
-})
-const computedDropdownProps = computed(() => omit(props, ['modelValue']))
+const dropdown = ref<InstanceType<typeof BDropdown>>()
 
 const close = () => {
-  modelValue.value = false
+  dropdown.value?.close()
 }
 const open = () => {
-  modelValue.value = true
+  dropdown.value?.open()
 }
 const toggle = () => {
-  modelValue.value = !modelValueBoolean.value
+  dropdown.value?.toggle()
 }
 
 defineExpose({

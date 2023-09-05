@@ -74,7 +74,7 @@ import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
 import {computed, provide, readonly, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
-import {BvEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
+import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import type {RouteLocationRaw} from 'vue-router'
 
@@ -160,9 +160,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'show': [value: BvEvent]
+  'show': [value: BvTriggerableEvent]
   'shown': []
-  'hide': [value: BvEvent]
+  'hide': [value: BvTriggerableEvent]
   'hidden': []
   'hide-prevented': []
   'show-prevented': []
@@ -290,16 +290,7 @@ const buttonClasses = computed(() => [
 const dropdownMenuClasses = computed(() => props.menuClass)
 
 const onButtonClick = () => {
-  emit('toggle')
-  const currentModelValue = modelValueBoolean.value
-  const e = new BvEvent(currentModelValue ? 'hide' : 'show')
-  currentModelValue ? emit('hide', e) : emit('show', e)
-  if (e.defaultPrevented) {
-    currentModelValue ? emit('hide-prevented') : emit('show-prevented')
-    return
-  }
-  modelValue.value = !currentModelValue
-  currentModelValue ? emit('hidden') : emit('shown')
+  toggle()
 }
 
 const onSplitClick = (event: MouseEvent) => {
@@ -322,13 +313,22 @@ const onClickInside = () => {
 }
 
 const close = () => {
-  modelValue.value = false
+  modelValue.value && toggle()
 }
 const open = () => {
-  modelValue.value = true
+  modelValue.value || toggle()
 }
 const toggle = () => {
-  modelValue.value = !modelValueBoolean.value
+  emit('toggle')
+  const currentModelValue = modelValueBoolean.value
+  const e = new BvTriggerableEvent(currentModelValue ? 'hide' : 'show')
+  currentModelValue ? emit('hide', e) : emit('show', e)
+  if (e.defaultPrevented) {
+    currentModelValue ? emit('hide-prevented') : emit('show-prevented')
+    return
+  }
+  modelValue.value = !currentModelValue
+  currentModelValue ? emit('hidden') : emit('shown')
 }
 
 watch(modelValueBoolean, update)
