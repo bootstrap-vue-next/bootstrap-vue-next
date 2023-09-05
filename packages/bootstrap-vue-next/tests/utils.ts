@@ -5,3 +5,5 @@ export const createContainer = (tag = 'div'): HTMLElement => {
 }
 export const waitRAF = (): Promise<number> =>
   new Promise((resolve) => requestAnimationFrame(resolve))
+export const asyncTimeout = (timeout: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve.bind(null), timeout))

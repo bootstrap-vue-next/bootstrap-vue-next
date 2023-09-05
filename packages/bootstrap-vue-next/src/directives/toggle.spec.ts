@@ -2,6 +2,7 @@ import {enableAutoUnmount, flushPromises, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import {nextTick} from 'vue'
 import VBToggle from './BToggle'
+import {asyncTimeout} from '../../tests/utils'
 
 // Emitted control event for collapse (emitted to collapse)
 const EVENT_TOGGLE = 'bv-toggle'
@@ -40,6 +41,7 @@ describe('toggle directive', () => {
     expect($button.classes()).not.toContain('not-collapsed')
 
     await $button.trigger('click')
+    await asyncTimeout(50)
     expect(spy).toHaveBeenCalledTimes(1)
 
     // Since there is no target collapse to respond with the
@@ -81,6 +83,7 @@ describe('toggle directive', () => {
     expect($button.classes()).not.toContain('not-collapsed')
 
     await $button.trigger('click')
+    await asyncTimeout(50)
     expect(spy).toHaveBeenCalledTimes(1)
 
     // Since there is no target collapse to respond with the
@@ -121,6 +124,7 @@ describe('toggle directive', () => {
     expect($button.classes()).not.toContain('not-collapsed')
 
     await $button.trigger('click')
+    await asyncTimeout(50)
     expect(spy).toHaveBeenCalledTimes(1)
 
     // Since there is no target collapse to respond with the
@@ -162,6 +166,7 @@ describe('toggle directive', () => {
     expect($link.classes()).not.toContain('not-collapsed')
 
     await $link.trigger('click')
+    await asyncTimeout(50)
     expect(spy).toHaveBeenCalledTimes(1)
 
     // Since there is no target collapse to respond with the
@@ -173,8 +178,7 @@ describe('toggle directive', () => {
     expect($link.classes()).not.toContain('not-collapsed')
   })
 
-  // Does not currently support dynamic updates to target list (bootstrap-vue does)
-  it.skip('works with multiple targets, and updates when targets change', async () => {
+  it('works with multiple targets, and updates when targets change', async () => {
     const spy1 = vi.fn()
     const spy2 = vi.fn()
     const App = {
@@ -188,12 +192,12 @@ describe('toggle directive', () => {
         },
       },
       mounted() {
-        document.getElementById('test')?.addEventListener(EVENT_TOGGLE, spy1)
-        document.getElementById('test')?.addEventListener(EVENT_TOGGLE, spy2)
+        document.getElementById('test1')?.addEventListener(EVENT_TOGGLE, spy1)
+        document.getElementById('test2')?.addEventListener(EVENT_TOGGLE, spy2)
       },
       destroy() {
-        document.getElementById('test')?.removeEventListener(EVENT_TOGGLE, spy1)
-        document.getElementById('test')?.removeEventListener(EVENT_TOGGLE, spy2)
+        document.getElementById('test1')?.removeEventListener(EVENT_TOGGLE, spy1)
+        document.getElementById('test2')?.removeEventListener(EVENT_TOGGLE, spy2)
       },
       template: `<button v-b-toggle="target">button</button><div id="test1"></div><div id="test2"></div>`,
     }
@@ -227,6 +231,7 @@ describe('toggle directive', () => {
     expect(spy2).not.toHaveBeenCalled()
 
     await $button.trigger('click')
+    await asyncTimeout(50)
     expect(spy1).toHaveBeenCalledTimes(1)
     expect(spy2).toHaveBeenCalledTimes(1)
 
@@ -246,6 +251,7 @@ describe('toggle directive', () => {
     expect(spy2).toHaveBeenCalledTimes(1)
 
     await $button.trigger('click')
+    await asyncTimeout(50)
     expect(spy1).toHaveBeenCalledTimes(1)
     expect(spy2).toHaveBeenCalledTimes(2)
 
@@ -296,6 +302,7 @@ describe('toggle directive', () => {
     expect($span.text()).toBe('span')
 
     await $span.trigger('click')
+    await asyncTimeout(50)
     expect(spy).toHaveBeenCalledTimes(1)
     expect($span.attributes('role')).toBe('button')
     expect($span.attributes('tabindex')).toBe('0')
