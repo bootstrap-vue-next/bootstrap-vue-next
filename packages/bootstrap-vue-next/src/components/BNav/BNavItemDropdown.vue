@@ -28,91 +28,47 @@
 </template>
 
 <script setup lang="ts">
-import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
 import {ref} from 'vue'
-import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
 import {BvTriggerableEvent} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
-import type {RouteLocationRaw} from 'vue-router'
+import type {BDropdownProps} from 'src/types'
 
-// TODO share props with BDropdown
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    id?: string
-    menuClass?: ClassValue
-    size?: Size
-    splitClass?: ClassValue
-    splitVariant?: ButtonVariant | null
-    text?: string
-    toggleClass?: ClassValue
-    autoClose?: boolean | 'inside' | 'outside'
-    block?: Booleanish
-    disabled?: Booleanish
-    isNav?: Booleanish
-    dropup?: Booleanish
-    dropend?: Booleanish
-    dropstart?: Booleanish
-    center?: Booleanish
-    end?: Booleanish
-    noFlip?: Booleanish
-    noShift?: Booleanish
-    offset?:
-      | number
-      | string
-      | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
-    role?: string
-    split?: Booleanish
-    splitButtonType?: ButtonType
-    splitHref?: string
-    splitDisabled?: Booleanish
-    noCaret?: Booleanish
-    toggleText?: string
-    variant?: ButtonVariant | null
-    modelValue?: Booleanish
-    lazy?: Booleanish
-    strategy?: Strategy
-    floatingMiddleware?: Middleware[]
-    splitTo?: RouteLocationRaw
-    boundary?: Boundary | RootBoundary
-  }>(),
-  {
-    ariaLabel: undefined,
-    id: undefined,
-    menuClass: undefined,
-    size: 'md',
-    splitClass: undefined,
-    splitVariant: undefined,
-    text: undefined,
-    toggleClass: undefined,
-    floatingMiddleware: undefined,
-    splitDisabled: undefined,
-    autoClose: true,
-    block: false,
-    disabled: false,
-    isNav: false,
-    dropup: false,
-    dropend: false,
-    dropstart: false,
-    center: false,
-    end: false,
-    noFlip: false,
-    lazy: false,
-    noShift: false,
-    offset: 0,
-    role: 'menu',
-    split: false,
-    splitButtonType: 'button',
-    splitHref: undefined,
-    noCaret: false,
-    toggleText: 'Toggle dropdown',
-    variant: 'link',
-    modelValue: false,
-    strategy: 'absolute',
-    splitTo: undefined,
-    boundary: 'clippingAncestors',
-  }
-)
+const props = withDefaults(defineProps<BDropdownProps>(), {
+  ariaLabel: undefined,
+  id: undefined,
+  menuClass: undefined,
+  size: 'md',
+  splitClass: undefined,
+  splitVariant: undefined,
+  text: undefined,
+  toggleClass: undefined,
+  floatingMiddleware: undefined,
+  splitDisabled: undefined,
+  autoClose: true,
+  block: false,
+  disabled: false,
+  isNav: true,
+  dropup: false,
+  dropend: false,
+  dropstart: false,
+  center: false,
+  end: false,
+  noFlip: false,
+  lazy: false,
+  noShift: false,
+  offset: 0,
+  role: 'menu',
+  split: false,
+  splitButtonType: 'button',
+  splitHref: undefined,
+  noCaret: false,
+  toggleText: 'Toggle dropdown',
+  variant: 'link',
+  modelValue: false,
+  strategy: 'absolute',
+  splitTo: undefined,
+  boundary: 'clippingAncestors',
+})
 
 const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]

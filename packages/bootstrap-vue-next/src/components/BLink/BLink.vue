@@ -161,7 +161,7 @@ const clicked = (e: MouseEvent): void => {
 
   if (
     (collapseData?.isNav?.value === true && navbarData === null) ||
-    (navbarData !== null && navbarData?.autoClose?.value === true)
+    (navbarData !== null && navbarData.autoClose?.value === true)
   ) {
     collapseData?.close?.()
   }
