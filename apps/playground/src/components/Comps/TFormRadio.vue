@@ -78,31 +78,24 @@
     </BRow>
     <BRow>
       <BCol>
-        <h4>Radio bound to array</h4>
+        <h4>Radio with primitives</h4>
       </BCol>
     </BRow>
     <BRow>
       <BCol>
-        <strong>Select some cars</strong>
+        <strong>Select</strong>
       </BCol>
       <BCol>
-        <strong>Selected cars</strong>
+        <strong>Selected</strong>
       </BCol>
     </BRow>
     <BRow>
       <BCol>
-        <BFormRadio
-          v-for="(car, index) in radioAvailableCars"
-          :key="index"
-          v-model="radioSelectedCars"
-          :value="car"
-          >{{ car }}</BFormRadio
-        >
+        <BFormRadio v-model="radioPrimitives" :value="true">Yes</BFormRadio>
+        <BFormRadio v-model="radioPrimitives" :value="false">No</BFormRadio>
       </BCol>
       <BCol>
-        <ul>
-          <li v-for="(car, index) in radioSelectedCars" :key="index">{{ car }}</li>
-        </ul>
+        <strong>{{ radioPrimitives }}</strong>
       </BCol>
     </BRow>
   </BContainer>
@@ -117,7 +110,6 @@ const radioRequired = ref(false)
 const radioIndeterminate = ref(false)
 const radioString = ref('incorrect')
 const radioPlain = ref(false)
-const radioAvailableCars = ['BMW', 'Mercedes', 'Toyota']
-const radioSelectedCars = ref([])
 const radioSelected = ref()
+const radioPrimitives = ref(false)
 </script>

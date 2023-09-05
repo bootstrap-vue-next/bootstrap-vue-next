@@ -97,6 +97,30 @@
         />
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <h4>Radio with primitives</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <strong>Select</strong>
+      </BCol>
+      <BCol>
+        <strong>Selected</strong>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadioGroup v-model="radios.radioPrimitives">
+          <BFormRadio :value="true">Yes</BFormRadio>
+          <BFormRadio :value="false">No</BFormRadio>
+        </BFormRadioGroup>
+      </BCol>
+      <BCol>
+        <strong>{{ radios.radioPrimitives }}</strong>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -135,5 +159,6 @@ const radios = reactive({
       {value: {e: 1}, text: 'Option E'},
     ],
   },
+  radioPrimitives: false,
 })
 </script>
