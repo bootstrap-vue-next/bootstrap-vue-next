@@ -1,6 +1,20 @@
 # Changelog
 
 
+## [0.12.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.0...bootstrapvuenext-v0.12.1) (2023-09-06)
+
+
+### Features
+
+* **BNavbar:** add auto-close to disable collapse closing ([d6a42db](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d6a42db13e911870b8ea4187d3839c18e37990b3))
+
+
+### Bug Fixes
+
+* **BModal:** scoped slots fixes [#1418](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1418) ([186e97a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/186e97a24af88ab5a14d65b6a044590ce45df9a1))
+* **BNavForm:** incorrect grid classes causing issues fixes [#1410](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1410) ([186e97a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/186e97a24af88ab5a14d65b6a044590ce45df9a1))
+* **BNavItemDropdown:** all props and emits from dropdown ([764685d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/764685df8c6d5dcc3418326f8f5cf3729cdf00e1))
+
 ## [0.12.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.11.0...bootstrapvuenext-v0.12.0) (2023-09-04)
 
 
