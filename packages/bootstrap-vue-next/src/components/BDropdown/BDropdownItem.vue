@@ -95,7 +95,7 @@ const navbarData = inject(navbarInjectionKey, null)
 // Pretty sure this emits if computedTag is not button and is disabled
 const clicked = (e: MouseEvent): void => {
   emit('click', e)
-  if (navbarData !== null) {
+  if (navbarData !== null && navbarData?.autoClose?.value === true) {
     collapseData?.close?.()
   }
   dropdownData?.close?.()

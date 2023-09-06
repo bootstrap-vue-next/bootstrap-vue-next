@@ -8,6 +8,10 @@ import type {TableField} from './TableField'
 import type {TableFieldObject} from './TableFieldObject'
 import type {TableItem} from './TableItem'
 import type {VerticalAlign} from './VerticalAlign'
+import type {Size} from './Size'
+import type {ButtonVariant} from './ButtonVariant'
+import type {ButtonType} from './ButtonType'
+import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -120,4 +124,41 @@ export interface BFormFeedbackSharedProps {
   state?: Booleanish | null
   tag?: string
   tooltip?: Booleanish
+}
+
+export interface BDropdownProps {
+  ariaLabel?: string
+  id?: string
+  menuClass?: ClassValue
+  size?: Size
+  splitClass?: ClassValue
+  splitVariant?: ButtonVariant | null
+  text?: string
+  toggleClass?: ClassValue
+  autoClose?: boolean | 'inside' | 'outside'
+  block?: Booleanish
+  disabled?: Booleanish
+  isNav?: Booleanish
+  dropup?: Booleanish
+  dropend?: Booleanish
+  dropstart?: Booleanish
+  center?: Booleanish
+  end?: Booleanish
+  noFlip?: Booleanish
+  noShift?: Booleanish
+  offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
+  role?: string
+  split?: Booleanish
+  splitButtonType?: ButtonType
+  splitHref?: string
+  splitDisabled?: Booleanish
+  noCaret?: Booleanish
+  toggleText?: string
+  variant?: ButtonVariant | null
+  modelValue?: Booleanish
+  lazy?: Booleanish
+  strategy?: Strategy
+  floatingMiddleware?: Middleware[]
+  splitTo?: RouteLocationRaw
+  boundary?: Boundary | RootBoundary
 }
