@@ -23,28 +23,14 @@
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="contentClass">
             <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
-              <slot
-                name="header"
-                :cancel="() => hide('cancel')"
-                :close="() => hide('close')"
-                :hide="hide"
-                :ok="() => hide('ok')"
-                :visible="modelValueBoolean"
-              >
+              <slot name="header" v-bind="sharedSlots">
                 <component
                   :is="titleTag"
                   :id="`${computedId}-label`"
                   class="modal-title"
                   :class="titleClasses"
                 >
-                  <slot
-                    name="title"
-                    :cancel="() => hide('cancel')"
-                    :close="() => hide('close')"
-                    :hide="hide"
-                    :ok="() => hide('ok')"
-                    :visible="modelValueBoolean"
-                  >
+                  <slot name="title" v-bind="sharedSlots">
                     {{ title }}
                   </slot>
                 </component>
@@ -66,31 +52,11 @@
               </slot>
             </div>
             <div :id="`${computedId}-body`" class="modal-body" :class="bodyClasses">
-              <slot
-                :cancel="() => hide('cancel')"
-                :close="() => hide('close')"
-                :hide="hide"
-                :ok="() => hide('ok')"
-                :visible="modelValueBoolean"
-              />
+              <slot v-bind="sharedSlots" />
             </div>
             <div v-if="!hideFooterBoolean" class="modal-footer" :class="footerClasses">
-              <slot
-                name="footer"
-                :cancel="() => hide('cancel')"
-                :close="() => hide('close')"
-                :hide="hide"
-                :ok="() => hide('ok')"
-                :visible="modelValueBoolean"
-              >
-                <slot
-                  name="cancel"
-                  :cancel="() => hide('cancel')"
-                  :close="() => hide('close')"
-                  :hide="hide"
-                  :ok="() => hide('ok')"
-                  :visible="modelValueBoolean"
-                >
+              <slot name="footer" v-bind="sharedSlots">
+                <slot name="cancel" v-bind="sharedSlots">
                   <BButton
                     v-if="!okOnlyBoolean"
                     ref="cancelButton"
@@ -102,14 +68,7 @@
                     {{ cancelTitle }}
                   </BButton>
                 </slot>
-                <slot
-                  name="ok"
-                  :cancel="() => hide('cancel')"
-                  :close="() => hide('close')"
-                  :hide="hide"
-                  :ok="() => hide('ok')"
-                  :visible="modelValueBoolean"
-                >
+                <slot name="ok" v-bind="sharedSlots">
                   <BButton
                     ref="okButton"
                     :disabled="disableOk"
@@ -141,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, type RendererElement, useSlots} from 'vue'
+import {computed, reactive, ref, type RendererElement, useSlots} from 'vue'
 import {useBooleanish, useId, useModalManager, useSafeScrollLock} from '../composables'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
@@ -284,57 +243,29 @@ const emit = defineEmits<{
   'close': [value: BvTriggerableEvent]
 }>()
 
+type SharedSlotsData = {
+  cancel: () => void
+  close: () => void
+  hide: (trigger?: string) => void
+  ok: () => void
+  visible: boolean
+}
+
 defineSlots<{
-  'header'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: () => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'title'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: () => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'title'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'header-close'?: (props: Record<string, never>) => any
-  'default'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: () => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'footer'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: () => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'cancel'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: () => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'ok'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: () => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'footer'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'cancel'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'ok'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
 }>()
@@ -552,6 +483,14 @@ useModalManager(isActive)
 
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : showFn()
+})
+
+const sharedSlots: SharedSlotsData = reactive({
+  cancel: () => hide('cancel'),
+  close: () => hide('close'),
+  hide,
+  ok: () => hide('ok'),
+  visible: modelValueBoolean,
 })
 
 defineExpose({
