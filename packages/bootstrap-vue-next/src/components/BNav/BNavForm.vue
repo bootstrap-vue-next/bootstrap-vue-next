@@ -1,5 +1,5 @@
 <template>
-  <li class="container-fluid">
+  <li class="d-flex flex-row align-items-center flex-wrap">
     <BForm
       v-bind="$attrs"
       :id="id"
