@@ -12,10 +12,13 @@ describe('nav-form', () => {
     expect($li.exists()).toBe(true)
   })
 
-  it('contains static class container-fluid', () => {
+  it('contains static class d-flex flex-row align-items-center flex-wrap', () => {
     const wrapper = mount(BNavForm)
     const $li = wrapper.get('li')
-    expect($li.classes()).toContain('container-fluid')
+    expect($li.classes()).toContain('d-flex')
+    expect($li.classes()).toContain('flex-row')
+    expect($li.classes()).toContain('align-items-center')
+    expect($li.classes()).toContain('flex-wrap')
   })
 
   it('contains bform', () => {
