@@ -31,7 +31,7 @@
 import {ref} from 'vue'
 import {BvTriggerableEvent} from '../../utils'
 import BDropdown from '../BDropdown/BDropdown.vue'
-import type {BDropdownProps} from 'src/types'
+import type {BDropdownProps} from '../../types'
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,

@@ -72,7 +72,7 @@ import {
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
 import {computed, provide, readonly, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
-import type {BDropdownProps} from 'src/types'
+import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 // TODO add navigation through keyboard events
