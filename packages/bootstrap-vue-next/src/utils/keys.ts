@@ -104,4 +104,5 @@ export const dropdownInjectionKey: InjectionKey<{
 
 export const navbarInjectionKey: InjectionKey<{
   tag?: Readonly<Ref<string>>
+  autoClose?: Readonly<Ref<boolean>>
 }> = Symbol('navbar')

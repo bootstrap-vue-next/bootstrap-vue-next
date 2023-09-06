@@ -150,7 +150,9 @@ provide(checkboxGroupKey, {
   set: (
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ) => {
-    const localValue = [...modelValue.value]
+    let localValue = [...modelValue.value]
+    // clean up the value so we don't end up with duplicates
+    localValue = localValue.filter((x) => JSON.stringify(x) !== JSON.stringify(value))
     localValue.push(value)
 
     emit('input', localValue)
@@ -162,9 +164,9 @@ provide(checkboxGroupKey, {
   remove: (
     value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
   ) => {
-    const localValue = [...modelValue.value]
-    // TODO if the value is an array, set, or object, indexOf may not work correctly
-    localValue.splice(modelValue.value.indexOf(value), 1)
+    let localValue = [...modelValue.value]
+    // TODO if the value is an array, set, or object, filter may not work correctly
+    localValue = localValue.filter((x) => JSON.stringify(x) !== JSON.stringify(value))
 
     emit('input', localValue)
     modelValue.value = localValue
