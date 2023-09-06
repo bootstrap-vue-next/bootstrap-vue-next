@@ -109,7 +109,6 @@ import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BTransition from './BTransition/BTransition.vue'
 import BOverlay from './BOverlay/BOverlay.vue'
-import type {SharedSlotsData} from '../types/SharedSlotsData'
 
 defineOptions({
   inheritAttrs: false,
@@ -243,6 +242,14 @@ const emit = defineEmits<{
   'cancel': [value: BvTriggerableEvent]
   'close': [value: BvTriggerableEvent]
 }>()
+
+type SharedSlotsData = {
+  cancel: () => void
+  close: () => void
+  hide: (trigger?: string) => void
+  ok: () => void
+  visible: boolean
+}
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
