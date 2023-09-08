@@ -110,6 +110,8 @@ export default (
   const computedItems = computed<TableItem[]>(() => {
     const items = flags.requireItemsMapping.value
       ? mapItems(internalItems, tableProps, flags, usesProvider, sortBy)
+      : usesProvider.value
+      ? internalItems.value
       : tableProps.items ?? []
 
     if (tableProps.perPage !== undefined) {
