@@ -1,8 +1,5 @@
 import {defineConfig} from 'vitepress'
 import Icons from 'unplugin-icons/vite'
-import {createWriteStream} from 'node:fs'
-import {resolve} from 'node:path'
-import {SitemapStream} from 'sitemap'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
