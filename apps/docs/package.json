@@ -28,7 +28,6 @@
     "eslint-define-config": "^1.23.0",
     "eslint-plugin-vue": "^9.17.0",
     "prettier": "^3.0.3",
-    "sitemap": "^7.1.1",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.17.0",
     "vitepress": "1.0.0-rc.10",
