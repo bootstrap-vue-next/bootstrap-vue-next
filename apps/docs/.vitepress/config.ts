@@ -3,7 +3,6 @@ import Icons from 'unplugin-icons/vite'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
-const links: {url: string; lastmod: number | undefined}[] = []
 const baseUrl = '/bootstrap-vue-next/'
 
 // https://vitepress.dev/reference/site-config
