@@ -23,14 +23,14 @@
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="contentClass">
             <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
-              <slot name="header">
+              <slot name="header" v-bind="sharedSlots">
                 <component
                   :is="titleTag"
                   :id="`${computedId}-label`"
                   class="modal-title"
                   :class="titleClasses"
                 >
-                  <slot name="title">
+                  <slot name="title" v-bind="sharedSlots">
                     {{ title }}
                   </slot>
                 </component>
@@ -52,11 +52,11 @@
               </slot>
             </div>
             <div :id="`${computedId}-body`" class="modal-body" :class="bodyClasses">
-              <slot />
+              <slot v-bind="sharedSlots" />
             </div>
             <div v-if="!hideFooterBoolean" class="modal-footer" :class="footerClasses">
-              <slot name="footer">
-                <slot name="cancel">
+              <slot name="footer" v-bind="sharedSlots">
+                <slot name="cancel" v-bind="sharedSlots">
                   <BButton
                     v-if="!okOnlyBoolean"
                     ref="cancelButton"
@@ -68,7 +68,7 @@
                     {{ cancelTitle }}
                   </BButton>
                 </slot>
-                <slot name="ok">
+                <slot name="ok" v-bind="sharedSlots">
                   <BButton
                     ref="okButton"
                     :disabled="disableOk"
@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, type RendererElement, useSlots} from 'vue'
+import {computed, reactive, ref, type RendererElement, useSlots} from 'vue'
 import {useBooleanish, useId, useModalManager, useSafeScrollLock} from '../composables'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
@@ -243,21 +243,29 @@ const emit = defineEmits<{
   'close': [value: BvTriggerableEvent]
 }>()
 
+type SharedSlotsData = {
+  cancel: () => void
+  close: () => void
+  hide: (trigger?: string) => void
+  ok: () => void
+  visible: boolean
+}
+
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'header'?: (props: Record<string, never>) => any
+  'header'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'title'?: (props: Record<string, never>) => any
+  'title'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'header-close'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: Record<string, never>) => any
+  'default'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'footer'?: (props: Record<string, never>) => any
+  'footer'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'cancel'?: (props: Record<string, never>) => any
+  'cancel'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'ok'?: (props: Record<string, never>) => any
+  'ok'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
 }>()
@@ -475,6 +483,14 @@ useModalManager(isActive)
 
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : showFn()
+})
+
+const sharedSlots: SharedSlotsData = reactive({
+  cancel: () => hide('cancel'),
+  close: () => hide('close'),
+  hide,
+  ok: () => hide('ok'),
+  visible: modelValueBoolean,
 })
 
 defineExpose({

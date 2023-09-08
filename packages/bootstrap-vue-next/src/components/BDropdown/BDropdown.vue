@@ -67,102 +67,58 @@ import {
   type Middleware,
   type RootBoundary,
   shift,
-  type Strategy,
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
 import {computed, provide, readonly, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, ButtonType, ButtonVariant, ClassValue, Size} from '../../types'
-import {BvEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
+import type {BDropdownProps} from '../../types'
+import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
-import type {RouteLocationRaw} from 'vue-router'
-
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
 
-const props = withDefaults(
-  defineProps<{
-    ariaLabel?: string
-    id?: string
-    menuClass?: ClassValue
-    size?: Size
-    splitClass?: ClassValue
-    splitVariant?: ButtonVariant | null
-    text?: string
-    toggleClass?: ClassValue
-    autoClose?: boolean | 'inside' | 'outside'
-    block?: Booleanish
-    disabled?: Booleanish
-    isNav?: Booleanish
-    dropup?: Booleanish
-    dropend?: Booleanish
-    dropstart?: Booleanish
-    center?: Booleanish
-    end?: Booleanish
-    noFlip?: Booleanish
-    noShift?: Booleanish
-    offset?:
-      | number
-      | string
-      | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
-    role?: string
-    split?: Booleanish
-    splitButtonType?: ButtonType
-    splitHref?: string
-    splitDisabled?: Booleanish
-    noCaret?: Booleanish
-    toggleText?: string
-    variant?: ButtonVariant | null
-    modelValue?: Booleanish
-    lazy?: Booleanish
-    strategy?: Strategy
-    floatingMiddleware?: Middleware[]
-    splitTo?: RouteLocationRaw
-    boundary?: Boundary | RootBoundary
-  }>(),
-  {
-    ariaLabel: undefined,
-    id: undefined,
-    menuClass: undefined,
-    size: 'md',
-    splitClass: undefined,
-    splitVariant: undefined,
-    text: undefined,
-    toggleClass: undefined,
-    floatingMiddleware: undefined,
-    splitDisabled: undefined,
-    autoClose: true,
-    block: false,
-    disabled: false,
-    isNav: false,
-    dropup: false,
-    dropend: false,
-    dropstart: false,
-    center: false,
-    end: false,
-    noFlip: false,
-    lazy: false,
-    noShift: false,
-    offset: 0,
-    role: 'menu',
-    split: false,
-    splitButtonType: 'button',
-    splitHref: undefined,
-    noCaret: false,
-    toggleText: 'Toggle dropdown',
-    variant: 'secondary',
-    modelValue: false,
-    strategy: 'absolute',
-    splitTo: undefined,
-    boundary: 'clippingAncestors',
-  }
-)
+const props = withDefaults(defineProps<BDropdownProps>(), {
+  ariaLabel: undefined,
+  id: undefined,
+  menuClass: undefined,
+  size: 'md',
+  splitClass: undefined,
+  splitVariant: undefined,
+  text: undefined,
+  toggleClass: undefined,
+  floatingMiddleware: undefined,
+  splitDisabled: undefined,
+  autoClose: true,
+  block: false,
+  disabled: false,
+  isNav: false,
+  dropup: false,
+  dropend: false,
+  dropstart: false,
+  center: false,
+  end: false,
+  noFlip: false,
+  lazy: false,
+  noShift: false,
+  offset: 0,
+  role: 'menu',
+  split: false,
+  splitButtonType: 'button',
+  splitHref: undefined,
+  noCaret: false,
+  toggleText: 'Toggle dropdown',
+  variant: 'secondary',
+  modelValue: false,
+  strategy: 'absolute',
+  splitTo: undefined,
+  boundary: 'clippingAncestors',
+})
 
 const emit = defineEmits<{
-  'show': [value: BvEvent]
+  'show': [value: BvTriggerableEvent]
   'shown': []
-  'hide': [value: BvEvent]
+  'hide': [value: BvTriggerableEvent]
   'hidden': []
   'hide-prevented': []
   'show-prevented': []
@@ -290,16 +246,7 @@ const buttonClasses = computed(() => [
 const dropdownMenuClasses = computed(() => props.menuClass)
 
 const onButtonClick = () => {
-  emit('toggle')
-  const currentModelValue = modelValueBoolean.value
-  const e = new BvEvent(currentModelValue ? 'hide' : 'show')
-  currentModelValue ? emit('hide', e) : emit('show', e)
-  if (e.defaultPrevented) {
-    currentModelValue ? emit('hide-prevented') : emit('show-prevented')
-    return
-  }
-  modelValue.value = !currentModelValue
-  currentModelValue ? emit('hidden') : emit('shown')
+  toggle()
 }
 
 const onSplitClick = (event: MouseEvent) => {
@@ -322,13 +269,22 @@ const onClickInside = () => {
 }
 
 const close = () => {
-  modelValue.value = false
+  modelValue.value && toggle()
 }
 const open = () => {
-  modelValue.value = true
+  modelValue.value || toggle()
 }
 const toggle = () => {
-  modelValue.value = !modelValueBoolean.value
+  emit('toggle')
+  const currentModelValue = modelValueBoolean.value
+  const e = new BvTriggerableEvent(currentModelValue ? 'hide' : 'show')
+  currentModelValue ? emit('hide', e) : emit('show', e)
+  if (e.defaultPrevented) {
+    currentModelValue ? emit('hide-prevented') : emit('show-prevented')
+    return
+  }
+  modelValue.value = !currentModelValue
+  currentModelValue ? emit('hidden') : emit('shown')
 }
 
 watch(modelValueBoolean, update)

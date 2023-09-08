@@ -22,6 +22,7 @@ const props = withDefaults(
     toggleable?: boolean | Breakpoint
     variant?: ColorVariant | null
     container?: 'fluid' | boolean
+    autoClose?: boolean
   }>(),
   {
     variant: null,
@@ -31,6 +32,7 @@ const props = withDefaults(
     tag: 'nav',
     toggleable: false,
     container: 'fluid',
+    autoClose: true,
   }
 )
 
@@ -65,5 +67,6 @@ const computedClasses = computed(() => ({
 
 provide(navbarInjectionKey, {
   tag: toRef(() => props.tag),
+  autoClose: toRef(() => props.autoClose),
 })
 </script>

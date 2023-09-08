@@ -64,9 +64,9 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
+  'shown': []
   'hide': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
+  'hidden': []
   'hide-prevented': []
   'show-prevented': []
   'update:modelValue': [value: boolean]
@@ -161,7 +161,7 @@ const reveal = () => {
     }
     setTimeout(() => {
       isCollapsing.value = false
-      emit('shown', buildTriggerableEvent('shown'))
+      emit('shown')
       if (element.value === null) return
       element.value.style.height = ''
       element.value.style.width = ''
@@ -192,7 +192,7 @@ const hide = () => {
     setTimeout(() => {
       show.value = false
       isCollapsing.value = false
-      emit('hidden', buildTriggerableEvent('hidden'))
+      emit('hidden')
     }, getTransitionDelay(element.value))
   })
 }

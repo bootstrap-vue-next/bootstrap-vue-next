@@ -11,10 +11,10 @@
       :horizontal="horizontal"
       :visible="visible"
       :is-nav="isNav"
-      @show="$emit('show', $event)"
-      @shown="emit('shown', $event)"
+      @show="emit('show', $event)"
+      @shown="emit('shown')"
       @hide="emit('hide', $event)"
-      @hidden="emit('hidden', $event)"
+      @hidden="emit('hidden')"
       @hide-prevented="emit('hide-prevented')"
       @show-prevented="emit('show-prevented')"
     >
@@ -78,9 +78,9 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
+  'shown': []
   'hide': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
+  'hidden': []
   'hide-prevented': []
   'show-prevented': []
   'update:modelValue': [value: boolean]

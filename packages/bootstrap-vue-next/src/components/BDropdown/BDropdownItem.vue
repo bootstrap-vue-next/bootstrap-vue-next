@@ -9,6 +9,7 @@
       :aria-current="activeBoolean ? true : null"
       :href="computedTag === 'a' ? href : null"
       :rel="rel"
+      role="menuitem"
       :type="computedTag === 'button' ? 'button' : null"
       :target="target"
       v-bind="computedLinkProps"
@@ -94,7 +95,7 @@ const navbarData = inject(navbarInjectionKey, null)
 // Pretty sure this emits if computedTag is not button and is disabled
 const clicked = (e: MouseEvent): void => {
   emit('click', e)
-  if (navbarData !== null) {
+  if (navbarData !== null && navbarData?.autoClose?.value === true) {
     collapseData?.close?.()
   }
   dropdownData?.close?.()
