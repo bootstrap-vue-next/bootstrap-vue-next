@@ -23,28 +23,14 @@
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="contentClass">
             <div v-if="!hideHeaderBoolean" class="modal-header" :class="headerClasses">
-              <slot
-                name="header"
-                :cancel="() => hide('cancel')"
-                :close="() => hide('close')"
-                :hide="hide"
-                :ok="() => hide('ok')"
-                :visible="modelValueBoolean"
-              >
+              <slot name="header">
                 <component
                   :is="titleTag"
                   :id="`${computedId}-label`"
                   class="modal-title"
                   :class="titleClasses"
                 >
-                  <slot
-                    name="title"
-                    :cancel="() => hide('cancel')"
-                    :close="() => hide('close')"
-                    :hide="hide"
-                    :ok="() => hide('ok')"
-                    :visible="modelValueBoolean"
-                  >
+                  <slot name="title">
                     {{ title }}
                   </slot>
                 </component>
@@ -66,31 +52,11 @@
               </slot>
             </div>
             <div :id="`${computedId}-body`" class="modal-body" :class="bodyClasses">
-              <slot
-                :cancel="() => hide('cancel')"
-                :close="() => hide('close')"
-                :hide="hide"
-                :ok="() => hide('ok')"
-                :visible="modelValueBoolean"
-              />
+              <slot />
             </div>
             <div v-if="!hideFooterBoolean" class="modal-footer" :class="footerClasses">
-              <slot
-                name="footer"
-                :cancel="() => hide('cancel')"
-                :close="() => hide('close')"
-                :hide="hide"
-                :ok="() => hide('ok')"
-                :visible="modelValueBoolean"
-              >
-                <slot
-                  name="cancel"
-                  :cancel="() => hide('cancel')"
-                  :close="() => hide('close')"
-                  :hide="hide"
-                  :ok="() => hide('ok')"
-                  :visible="modelValueBoolean"
-                >
+              <slot name="footer">
+                <slot name="cancel">
                   <BButton
                     v-if="!okOnlyBoolean"
                     ref="cancelButton"
@@ -102,14 +68,7 @@
                     {{ cancelTitle }}
                   </BButton>
                 </slot>
-                <slot
-                  name="ok"
-                  :cancel="() => hide('cancel')"
-                  :close="() => hide('close')"
-                  :hide="hide"
-                  :ok="() => hide('ok')"
-                  :visible="modelValueBoolean"
-                >
+                <slot name="ok">
                   <BButton
                     ref="okButton"
                     :disabled="disableOk"
@@ -285,56 +244,20 @@ const emit = defineEmits<{
 }>()
 
 defineSlots<{
-  'header'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: (trigger?: string) => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'title'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: (trigger?: string) => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'title'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'header-close'?: (props: Record<string, never>) => any
-  'default'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: (trigger?: string) => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'footer'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: (trigger?: string) => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'cancel'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: (trigger?: string) => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
-  'ok'?: (props: {
-    cancel: () => void
-    close: () => void
-    hide: (trigger?: string) => void
-    ok: () => void
-    visible: boolean
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'footer'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'cancel'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'ok'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
 }>()
