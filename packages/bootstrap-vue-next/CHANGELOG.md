@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [0.12.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.1...bootstrapvuenext-v0.12.2) (2023-09-10)
+
+
+### Bug Fixes
+
+* regression from 0.10.8 fixes [#1398](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1398) ([3e93c5c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3e93c5c111307c01f8d40033eb8d9156fcb49fac))
+* regression from 0.10.8 fixes [#1398](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1398)  ([3e93c5c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3e93c5c111307c01f8d40033eb8d9156fcb49fac))
+
 ## [0.12.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.0...bootstrapvuenext-v0.12.1) (2023-09-06)
 
 
