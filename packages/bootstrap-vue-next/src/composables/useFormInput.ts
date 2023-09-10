@@ -165,8 +165,11 @@ export default (
       return
     }
 
-    inputValue = value
-    updateModelValue(formattedValue, true)
+    const nextModel = _getModelValue(formattedValue)
+    if (modelValue.value !== nextModel) {
+      inputValue = value
+      updateModelValue(formattedValue, true)
+    }
 
     emit('change', formattedValue)
   }
@@ -178,8 +181,11 @@ export default (
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
 
-    inputValue = value
-    updateModelValue(formattedValue, true)
+    const nextModel = _getModelValue(formattedValue)
+    if (modelValue.value !== nextModel) {
+      inputValue = value
+      updateModelValue(formattedValue, true)
+    }
   }
 
   const focus = () => {
