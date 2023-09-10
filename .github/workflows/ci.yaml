@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -26,7 +26,7 @@ jobs:
           node-version: 20.x
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2
         id: pnpm-install
 
       - name: Get PNPM Store Directory
@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -62,7 +62,7 @@ jobs:
           node-version: 20.x
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2
         id: pnpm-install
 
       - name: Get PNPM Store Directory
@@ -90,7 +90,7 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -98,7 +98,7 @@ jobs:
           node-version: 20.x
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2
         id: pnpm-install
 
       - name: Get PNPM Store Directory
@@ -126,7 +126,7 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -134,7 +134,7 @@ jobs:
           node-version: 20.x
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2
         id: pnpm-install
 
       - name: Get PNPM Store Directory
