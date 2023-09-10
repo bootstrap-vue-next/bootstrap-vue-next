@@ -65,15 +65,27 @@ const mapItems = (
   items: Ref<TableItem[]>,
   props: TableItemsProcessingProps,
   flags: Record<string, Ref<boolean>>,
+  usesProvider: Ref<boolean>,
   sortBy?: Ref<string | undefined>
 ): TableItem[] => {
   let mappedItems: TableItem[] = items.value
 
-  if ('isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter) {
-    mappedItems = filterItems(mappedItems, props.filter, props.filterable)
+  const isFilterableTable =
+    'isFilterableTable' in flags && flags.isFilterableTable.value === true && props.filter
+
+  if (
+    (isFilterableTable && !usesProvider.value) ||
+    (isFilterableTable && usesProvider.value && flags.noProviderFilteringBoolean.value)
+  ) {
+    mappedItems = filterItems(mappedItems, props.filter as string, props.filterable)
   }
 
-  if ('isSortable' in flags && flags.isSortable.value === true) {
+  const isSortable = 'isSortable' in flags && flags.isSortable.value === true
+
+  if (
+    (isSortable && !usesProvider.value) ||
+    (isSortable && usesProvider.value && flags.noProviderSortingBoolean.value)
+  ) {
     mappedItems = sortItems(
       props.fields,
       mappedItems,
@@ -96,14 +108,11 @@ export default (
   const internalItems = ref(tableProps.items ?? [])
   const displayStartEndIdx = ref([0, internalItems.value.length])
   const computedItems = computed<TableItem[]>(() => {
-    const items = usesProvider.value
+    const items = flags.requireItemsMapping.value
+      ? mapItems(internalItems, tableProps, flags, usesProvider, sortBy)
+      : usesProvider.value
       ? internalItems.value
-      : flags.requireItemsMapping.value
-      ? mapItems(internalItems, tableProps, flags, sortBy)
       : tableProps.items ?? []
-    if (usesProvider.value && !flags.noProviderPagingBoolean.value) {
-      return items
-    }
 
     if (tableProps.perPage !== undefined) {
       const startIndex = ((tableProps.currentPage ?? 0) - 1) * tableProps.perPage
@@ -118,9 +127,13 @@ export default (
   })
 
   const computedDisplayItems = computed<TableItem[]>(() => {
-    if (tableProps.perPage === undefined) {
+    if (
+      tableProps.perPage === undefined ||
+      (usesProvider.value && !flags.noProviderPagingBoolean.value)
+    ) {
       return computedItems.value
     }
+
     return computedItems.value.slice(displayStartEndIdx.value[0], displayStartEndIdx.value[1])
   })
 
