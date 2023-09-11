@@ -1,16 +1,21 @@
-import {
-  createSharedComposable,
-  getSSRHandler,
-  tryOnScopeDispose,
-  unrefElement,
-  useCounter,
-} from '@vueuse/core'
-import {type Ref, watch} from 'vue'
+import {createSharedComposable, getSSRHandler, tryOnScopeDispose, unrefElement} from '@vueuse/core'
+import {computed, getCurrentInstance, ref, type Ref, watch} from 'vue'
 
 const MODAL_OPEN_CLASS_NAME = 'modal-open'
 
-const useSharedModalCounter = createSharedComposable(() => {
-  const {count, inc, dec} = useCounter()
+declare type ModalInstance = NonNullable<ReturnType<typeof getCurrentInstance>>
+
+export const useSharedModalStack = createSharedComposable(() => {
+  const registry = ref<ModalInstance[]>([])
+  const stack = ref<ModalInstance[]>([])
+  const count = computed(() => stack.value.length)
+  const last = computed(() => stack.value[stack.value.length - 1])
+  const push = (modal: ModalInstance) => stack.value.push(modal)
+  const pop = () => stack.value.pop()
+  const remove = (modal: ModalInstance) =>
+    (stack.value = stack.value.filter((item: ModalInstance) => item.uid !== modal.uid))
+  const find = (id: string): ModalInstance | null =>
+    registry.value.find((modal: ModalInstance) => modal.proxy?.id === id) || null
 
   const updateHTMLAttrs = getSSRHandler('updateHTMLAttrs', (selector, attribute, value) => {
     const el =
@@ -34,19 +39,27 @@ const useSharedModalCounter = createSharedComposable(() => {
     updateHTMLAttrs('body', 'class', newValue > 0 ? MODAL_OPEN_CLASS_NAME : '')
   })
 
-  return {inc, dec}
+  return {registry, stack, last, count, push, pop, remove, find}
 })
 
 export default (modalOpen: Ref<boolean>): void => {
-  const {inc, dec} = useSharedModalCounter()
+  const {registry, push, remove} = useSharedModalStack()
+
+  const currentModal = getCurrentInstance()
+
+  if (!currentModal || currentModal.type.__name !== 'BModal') {
+    throw new Error('useModalManager must only use in BModal component')
+  }
+
+  registry.value.push(currentModal)
 
   watch(
     modalOpen,
     (newValue, oldValue) => {
       if (newValue) {
-        inc()
+        push(currentModal)
       } else if (oldValue && !newValue) {
-        dec()
+        remove(currentModal)
       }
     },
     {immediate: true}
