@@ -10,10 +10,11 @@ export const useSharedModalStack = createSharedComposable(() => {
   const stack = ref<ModalInstance[]>([])
   const count = computed(() => stack.value.length)
   const last = computed(() => stack.value[stack.value.length - 1])
-  const push = (modal: ModalInstance) => stack.value.push(modal)
-  const pop = () => stack.value.pop()
-  const remove = (modal: ModalInstance) =>
-    (stack.value = stack.value.filter((item: ModalInstance) => item.uid !== modal.uid))
+  const push = (modal: ModalInstance) => {stack.value.push(modal)}
+  const pop = () => {stack.value.pop()}
+  const remove = (modal: ModalInstance) => {
+    stack.value = stack.value.filter((item: ModalInstance) => item.uid !== modal.uid)
+  }
   const find = (id: string): ModalInstance | null =>
     registry.value.find((modal: ModalInstance) => modal.proxy?.id === id) || null
 
