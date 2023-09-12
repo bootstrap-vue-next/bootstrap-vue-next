@@ -335,9 +335,8 @@ export default defineComponent({
       }
     }
 
-    function isMouseEvent(evt: Event): evt is MouseEvent {
-      return evt.type === 'mouseup' || evt.type === 'mousedown'
-    }
+    const isMouseEvent = (evt: Event): evt is MouseEvent =>
+      evt.type === 'mouseup' || evt.type === 'mousedown'
     // eslint-disable-next-line no-undef
     const onMouseup: EventListener = (event: Event) => {
       // `<body>` listener, only enabled when mousedown starts

@@ -15,12 +15,8 @@ export const useSharedModalStack = createSharedComposable(() => {
   const stack: Ref<ComponentInternalInstance[]> = ref([])
   const count = computed(() => stack.value.length)
   const last = computed(() => stack.value[stack.value.length - 1])
-  const push = (modal: ComponentInternalInstance) => {
-    stack.value.push(modal)
-  }
-  const pop = () => {
-    stack.value.pop()
-  }
+  const push = (modal: ComponentInternalInstance) => stack.value.push(modal)
+  const pop = () => stack.value.pop()
   const remove = (modal: ComponentInternalInstance): void => {
     stack.value = stack.value.filter((item) => item.uid !== modal.uid)
   }
