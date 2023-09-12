@@ -30,7 +30,7 @@ export default (id: string | undefined = undefined) => {
   }
 }
 
-function findBModal(component: ComponentInternalInstance): ComponentInternalInstance | null {
+const findBModal = (component: ComponentInternalInstance): ComponentInternalInstance | null => {
   if (!component.parent) {
     return null
   }
