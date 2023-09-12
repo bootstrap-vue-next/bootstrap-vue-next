@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.12.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.2...bootstrapvuenext-v0.12.3) (2023-09-12)
+
+
+### Bug Fixes
+
+* some scoped slots fixes ([fdcb8cd](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fdcb8cdbdf87f12f98aa13a8071258b586c84bd2))
+
 ## [0.12.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.1...bootstrapvuenext-v0.12.2) (2023-09-10)
 
 
