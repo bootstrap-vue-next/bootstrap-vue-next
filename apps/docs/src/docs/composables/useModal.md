@@ -79,5 +79,5 @@ onMounted(() => {
     someConditions.value = true
 })
 
-const {show, hide, modal} = useModal('my-modal')
+const {show, hide} = useModal('my-modal')
 </script>
