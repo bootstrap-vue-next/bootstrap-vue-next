@@ -5,6 +5,7 @@ export type {
   AlignmentJustifyContent,
   AlignmentTextHorizontal,
   AlignmentVertical,
+  BModalController,
   BPopoverDelayObject,
   BreadcrumbItem,
   Breakpoint,

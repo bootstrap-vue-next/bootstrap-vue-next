@@ -496,6 +496,7 @@ const sharedSlots: SharedSlotsData = reactive({
 defineExpose({
   hide,
   show: showFn,
+  id: computedId.value,
 })
 </script>
 
