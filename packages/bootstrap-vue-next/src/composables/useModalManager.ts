@@ -12,15 +12,19 @@ const MODAL_OPEN_CLASS_NAME = 'modal-open'
 
 export const useSharedModalStack = createSharedComposable(() => {
   const registry: Ref<ComponentInternalInstance[]> = ref([])
-  const stack: Ref<ComponentInternalInstance[]> = ref([]) 
+  const stack: Ref<ComponentInternalInstance[]> = ref([])
   const count = computed(() => stack.value.length)
   const last = computed(() => stack.value[stack.value.length - 1])
-  const push = (modal: ComponentInternalInstance) => stack.value.push(modal)
-  const pop = () => stack.value.pop()
+  const push = (modal: ComponentInternalInstance) => {
+    stack.value.push(modal)
+  }
+  const pop = () => {
+    stack.value.pop()
+  }
   const remove = (modal: ComponentInternalInstance): void => {
     stack.value = stack.value.filter((item) => item.uid !== modal.uid)
   }
-  const find = (id: string) => registry.value.find((modal) => modal.exposed!.id === id) || null
+  const find = (id: string) => registry.value.find((modal) => modal.exposed?.id === id) || null
 
   const updateHTMLAttrs = getSSRHandler('updateHTMLAttrs', (selector, attribute, value) => {
     const el =
@@ -48,7 +52,7 @@ export const useSharedModalStack = createSharedComposable(() => {
 })
 
 export default (modalOpen: Ref<boolean>): void => {
-  const {registry, push, remove, stack} = useSharedModalStack()
+  const {registry, push, remove} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()
 
