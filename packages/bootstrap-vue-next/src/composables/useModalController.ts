@@ -2,7 +2,7 @@ import type {BModalController} from '../types'
 import {useSharedModalStack} from './useModalManager'
 
 export default (): BModalController => {
-  const {last} = useSharedModalStack()
+  const {last, stack} = useSharedModalStack()
 
   const hide = (trigger = '') => {
     if (last.value) {
@@ -11,8 +11,10 @@ export default (): BModalController => {
   }
 
   const hideAll = (trigger = '') => {
-    while (last.value) {
-      hide(trigger)
+    const modals = stack.value.reverse()
+
+    for (const modal of modals) {
+      modal.exposed?.hide(trigger)
     }
   }
 
