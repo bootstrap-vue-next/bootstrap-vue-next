@@ -131,7 +131,7 @@ To programmatically control your modals with global state, refer to our document
 import {data} from '../../data/components/modal.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BCard, BCardBody, BModal, BButton, BLink} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BModal, BButton} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const modal = ref(false)
