@@ -13,8 +13,8 @@ const MODAL_OPEN_CLASS_NAME = 'modal-open'
 export const useSharedModalStack = createSharedComposable(() => {
   // Currently vue-tsc will complain a type error when using `ref<ComponentInternalInstance[]>`
   // We use `as Ref<ComponentInternalInstance[]>` instead.
-  const registry = ref([]) as Ref<ComponentInternalInstance[]>
-  const stack = ref([]) as Ref<ComponentInternalInstance[]>
+  const registry: Ref<ComponentInternalInstance[]> = ref([])
+  const stack: Ref<ComponentInternalInstance[]> = ref([]) 
   const count = computed(() => stack.value.length)
   const last = computed(() => stack.value[stack.value.length - 1])
   const push = (modal: ComponentInternalInstance) => stack.value.push(modal)
