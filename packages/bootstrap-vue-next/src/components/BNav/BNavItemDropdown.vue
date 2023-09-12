@@ -21,7 +21,7 @@
         <slot name="toggle-text" />
       </template>
       <template #default>
-        <slot />
+        <slot :hide="close" :show="open" />
       </template>
     </BDropdown>
   </li>
@@ -84,7 +84,7 @@ const emit = defineEmits<{
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: Record<string, never>) => any
+  'default'?: (props: {hide: () => void; show: () => void}) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

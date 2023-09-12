@@ -122,7 +122,12 @@ const componentsList: {name: string}[] = [
   {name: 'Toast'},
 ]
 
-const composablesList: {name: string}[] = [{name: 'useBreadcrumb'}, {name: 'useColorMode'}]
+const composablesList: {name: string}[] = [
+  {name: 'useBreadcrumb'},
+  {name: 'useColorMode'},
+  {name: 'useModal'},
+  {name: 'useModalController'},
+]
 
 const directivesList: {name: string}[] = [
   {name: 'BColorMode'},
