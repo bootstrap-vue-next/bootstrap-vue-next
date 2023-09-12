@@ -98,7 +98,7 @@ Dropdown supports various positioning such as left and right aligned, dropdown a
 
 ### Menu alignment
 
-The dropdown menu can either be _start_ aligned (default) or _end_ aligned to the button above it. To have the dropdown aligned on the _end_, set the `alignEnd` prop.
+The dropdown menu can either be _start_ aligned (default) or _end_ aligned to the button above it. To have the dropdown aligned on the _end_, set the `end` prop.
 
 <HighlightCard>
   <BDropdown v-model="show4" text="Default Alignment" variant="primary" class="me-2">
@@ -106,12 +106,12 @@ The dropdown menu can either be _start_ aligned (default) or _end_ aligned to th
     <BDropdownItem href="#">Another action</BDropdownItem>
     <BDropdownItem href="#">Something else here</BDropdownItem>
   </BDropdown>
-  <BDropdown v-model="show5" alignStart text="Start Alignment" variant="primary" class="me-2">
+  <BDropdown v-model="show5" start text="Start Alignment" variant="primary" class="me-2">
     <BDropdownItem href="#">Action</BDropdownItem>
     <BDropdownItem href="#">Another action</BDropdownItem>
     <BDropdownItem href="#">Something else here</BDropdownItem>
   </BDropdown>
-  <BDropdown v-model="show6" alignEnd text="End Align" variant="primary" class="me-2">
+  <BDropdown v-model="show6" end text="End Align" variant="primary" class="me-2">
     <BDropdownItem href="#">Action</BDropdownItem>
     <BDropdownItem href="#">Another action</BDropdownItem>
     <BDropdownItem href="#">Something else here</BDropdownItem>
@@ -126,13 +126,13 @@ The dropdown menu can either be _start_ aligned (default) or _end_ aligned to th
     <BDropdownItem href="#">Something else here</BDropdownItem>
   </BDropdown>
 
-  <BDropdown v-model="show2" alignStart text="Start Alignment" variant="primary">
+  <BDropdown v-model="show2" start text="Start Alignment" variant="primary">
     <BDropdownItem href="#">Action</BDropdownItem>
     <BDropdownItem href="#">Another action</BDropdownItem>
     <BDropdownItem href="#">Something else here</BDropdownItem>
   </BDropdown>
 
-  <BDropdown v-model="show3" alignEnd text="End Align" variant="primary">
+  <BDropdown v-model="show3" end text="End Align" variant="primary">
     <BDropdownItem href="#">Action</BDropdownItem>
     <BDropdownItem href="#">Another action</BDropdownItem>
     <BDropdownItem href="#">Something else here</BDropdownItem>

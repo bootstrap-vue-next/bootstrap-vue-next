@@ -234,7 +234,13 @@ const tableClasses = computed(() => ({
   'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
 }))
 
-const requireItemsMapping = computed(() => isSortable.value && sortInternalBoolean.value === true)
+const requireItemsMapping = computed(
+  () =>
+    (isSortable.value && sortInternalBoolean.value === true) ||
+    (isSortable.value && usesProvider.value) ||
+    isFilterableTable.value
+)
+
 const addSelectableCell = computed(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
@@ -250,7 +256,9 @@ const {
   {
     sortInternalBoolean,
     isFilterableTable,
+    noProviderFilteringBoolean,
     noProviderPagingBoolean,
+    noProviderSortingBoolean,
     isSortable,
     requireItemsMapping,
     sortDescBoolean,

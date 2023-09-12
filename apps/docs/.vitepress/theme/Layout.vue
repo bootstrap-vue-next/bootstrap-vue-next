@@ -690,4 +690,16 @@ watch(
     }
   }
 }
+
+// Code Block
+[data-bs-theme='dark'] {
+  .vp-code-light {
+    display: none;
+  }
+}
+[data-bs-theme='light'] {
+  .vp-code-dark {
+    display: none;
+  }
+}
 </style>
