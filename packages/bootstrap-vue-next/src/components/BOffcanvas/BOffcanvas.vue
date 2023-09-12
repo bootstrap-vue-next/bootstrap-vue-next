@@ -29,7 +29,7 @@
           <div v-if="!noHeaderBoolean" class="offcanvas-header" :class="headerClass">
             <slot name="header" :visible="modelValueBoolean" :placement="placement" :hide="hide">
               <h5 :id="`${computedId}-offcanvas-label`" class="offcanvas-title">
-                <slot name="title">
+                <slot name="title" :visible="modelValueBoolean" :placement="placement" :hide="hide">
                   {{ title }}
                 </slot>
               </h5>
@@ -47,7 +47,7 @@
             </slot>
           </div>
           <div class="offcanvas-body" :class="bodyClass">
-            <slot />
+            <slot :visible="modelValueBoolean" :placement="placement" :hide="hide" />
           </div>
           <div v-if="hasFooterSlot" :class="footerClass">
             <slot name="footer" :visible="modelValueBoolean" :placement="placement" :hide="hide" />
@@ -158,10 +158,18 @@ const emit = defineEmits<{
 }>()
 
 defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'title'?: (props: Record<string, never>) => any
+  'default'?: (props: {
+    visible: boolean
+    placement: 'top' | 'bottom' | 'start' | 'end'
+    hide: (trigger?: string) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  'title'?: (props: {
+    visible: boolean
+    placement: 'top' | 'bottom' | 'start' | 'end'
+    hide: (trigger?: string) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
   'header'?: (props: {
     visible: boolean
     placement: 'top' | 'bottom' | 'start' | 'end'

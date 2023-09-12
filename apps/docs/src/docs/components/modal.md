@@ -121,6 +121,10 @@ const nestedModal3 = ref(false)
   </template>
 </HighlightCard>
 
+## Programmatically Control
+
+To programmatically control your modals with global state, refer to our documentation at [useModal](/docs/composables/useModal) and [useModalController](/docs/composables/useModalController)
+
 <ComponentReference :data="data" />
 
 <script setup lang="ts">
@@ -138,75 +142,3 @@ const nestedModal1 = ref(false)
 const nestedModal2 = ref(false)
 const nestedModal3 = ref(false)
 </script>
-
-## Programmatically Control
-
-### `useModal()`
-
-You can use `useModal()` to get the closest modal in child component and hide it.
-
-```vue
-<BModal>
-  <MyComponent>
-</BModal>
-```
-
-```vue
-<template>
-  <BButton @click="hideSelf">Done</BButton>
-</template>
-
-<script setup lang="ts">
-import {useModal} from 'bootstrap-vue-next'
-
-const {hide} = useModal()
-
-function hideSelf() {
-  hide()
-}
-</script>
-```
-
-You can also provide an id to get particular modal and show/hide it. Currently, we don't support using CSS selector to
-find modal since the `BModal` in lazy mode may not render at page initial.
-
-```vue
-<template>
-  <BModal v-if="someConditions" id="my-modal"> ...</BModal>
-</template>
-
-<script setup lang="ts">
-import {useModal} from 'bootstrap-vue-next'
-import {ref} from 'vue'
-
-const someConditions = ref(...)
-
-const {show, hide, modal} = useModal('my-modal')
-
-// modal variable is BModal component ref
-if (modal.value) {
-  show()
-  hide()
-
-  modal.value.show()
-  modal.value.hide()
-} else {
-  // If modal component not exists, you can still call show/hide methods but nothing happened
-  show()
-  hide()
-}
-</script>
-```
-
-### `useModalController()`
-
-`modalController` can hide modals everywhere.
-
-```ts
-import {useModalController} from 'bootstrap-vue-next'
-
-const modalController = useModalController()
-
-modalController.hide() // Hide last modal
-modalController.hideAll() // Hide all modals at once
-```

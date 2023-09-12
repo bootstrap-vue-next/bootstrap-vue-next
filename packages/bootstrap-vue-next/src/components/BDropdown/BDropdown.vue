@@ -53,7 +53,7 @@
       :role="role"
       @click="onClickInside"
     >
-      <slot />
+      <slot :hide="close" :show="open" />
     </ul>
   </div>
 </template>
@@ -129,7 +129,7 @@ const emit = defineEmits<{
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: Record<string, never>) => any
+  'default'?: (props: {hide: () => void; show: () => void}) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'button-content'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
