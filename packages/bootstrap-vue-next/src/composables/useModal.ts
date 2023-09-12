@@ -9,6 +9,7 @@ export default (id: string | undefined = undefined) => {
     if (id) {
       return find(id)
     }
+
     if (!instance) {
       return null
     }
@@ -19,17 +20,17 @@ export default (id: string | undefined = undefined) => {
   const modal = computed(() => modalComponent.value?.proxy)
 
   return {
-    show() {
-      return modalComponent.value?.exposed?.show()
+    show(): void {
+      modalComponent.value?.exposed?.show()
     },
-    hide(trigger = '') {
-      return modalComponent.value?.exposed?.hide(trigger)
+    hide(trigger = ''): void {
+      modalComponent.value?.exposed?.hide(trigger)
     },
     modal,
   }
 }
 
-function findBModal(component: ComponentInternalInstance) {
+function findBModal(component: ComponentInternalInstance): ComponentInternalInstance | null {
   if (!component.parent) {
     return null
   }

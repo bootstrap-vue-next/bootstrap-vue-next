@@ -1,9 +1,5 @@
+import type {BModalController} from '../types'
 import {useSharedModalStack} from './useModalManager'
-
-export interface BModalController {
-  hide: (trigger?: string) => void
-  hideAll: (trigger?: string) => void
-}
 
 export default (): BModalController => {
   const {last} = useSharedModalStack()
