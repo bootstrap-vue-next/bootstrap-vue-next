@@ -1,26 +1,28 @@
 import {createSharedComposable, getSSRHandler, tryOnScopeDispose, unrefElement} from '@vueuse/core'
-import {computed, getCurrentInstance, ref, type Ref, watch} from 'vue'
+import {
+  type ComponentInternalInstance,
+  computed,
+  getCurrentInstance,
+  ref,
+  type Ref,
+  watch,
+} from 'vue'
 
 const MODAL_OPEN_CLASS_NAME = 'modal-open'
 
-declare type ModalInstance = NonNullable<ReturnType<typeof getCurrentInstance>>
-
 export const useSharedModalStack = createSharedComposable(() => {
-  const registry = ref<ModalInstance[]>([])
-  const stack = ref<ModalInstance[]>([])
+  // Currently vue-tsc will complain a type error when using `ref<ComponentInternalInstance[]>`
+  // We use `as Ref<ComponentInternalInstance[]>` instead.
+  const registry = ref([]) as Ref<ComponentInternalInstance[]>
+  const stack = ref([]) as Ref<ComponentInternalInstance[]>
   const count = computed(() => stack.value.length)
   const last = computed(() => stack.value[stack.value.length - 1])
-  const push = (modal: ModalInstance) => {
-    stack.value.push(modal)
+  const push = (modal: ComponentInternalInstance) => stack.value.push(modal)
+  const pop = () => stack.value.pop()
+  const remove = (modal: ComponentInternalInstance): void => {
+    stack.value = stack.value.filter((item) => item.uid !== modal.uid)
   }
-  const pop = () => {
-    stack.value.pop()
-  }
-  const remove = (modal: ModalInstance) => {
-    stack.value = stack.value.filter((item: ModalInstance) => item.uid !== modal.uid)
-  }
-  const find = (id: string): ModalInstance | null =>
-    registry.value.find((modal: ModalInstance) => modal.proxy?.id === id) || null
+  const find = (id: string) => registry.value.find((modal) => modal.exposed!.id === id) || null
 
   const updateHTMLAttrs = getSSRHandler('updateHTMLAttrs', (selector, attribute, value) => {
     const el =
@@ -48,7 +50,7 @@ export const useSharedModalStack = createSharedComposable(() => {
 })
 
 export default (modalOpen: Ref<boolean>): void => {
-  const {registry, push, remove} = useSharedModalStack()
+  const {registry, push, remove, stack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()
 
