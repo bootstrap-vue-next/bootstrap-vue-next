@@ -119,7 +119,11 @@
         </BPopover>
       </BCol>
       <BCol>
-        <BButton ref="popoverManualButtonRef" @click="manualClickPopoverExample = !manualClickPopoverExample" >Manual popover showing</BButton>
+        <BButton
+          ref="popoverManualButtonRef"
+          @click="manualClickPopoverExample = !manualClickPopoverExample"
+          >Manual popover showing</BButton
+        >
         <BPopover
           :target="() => popoverManualButtonRef"
           manual
@@ -131,9 +135,7 @@
       </BCol>
       <BCol>
         <BPopover placement="auto">
-          <template #title>
-            Auto placement
-          </template>
+          <template #title> Auto placement </template>
           <template #target>
             <BButton id="popover-target-1">Hover Me</BButton>
           </template>
@@ -208,12 +210,24 @@
         </BPopover>
       </BCol>
       <BCol>
-        <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em;">
+        <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em">
           <div v-for="(_, i) in Array(20)" :key="i" style="height: 100px">
             <BPopover v-bind="vari">
               jee
               <template #target>
                 <BButton>hover / focus</BButton>
+              </template>
+            </BPopover>
+          </div>
+        </div>
+      </BCol>
+      <BCol>
+        <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em">
+          <div v-for="(_, i) in Array(20)" :key="i" style="height: 100px">
+            <BPopover v-bind="vari" noninteractive>
+              jee
+              <template #target>
+                <BButton>hover / focus noninteractive</BButton>
               </template>
             </BPopover>
           </div>
@@ -225,7 +239,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import type { BPopoverPlacement } from 'bootstrap-vue-next/src/types';
+import type {BPopoverPlacement} from 'bootstrap-vue-next/src/types'
 
 const popoverInput = ref('foo')
 const popoverRef = ref(null)

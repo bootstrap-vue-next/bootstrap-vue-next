@@ -146,6 +146,7 @@ const props = withDefaults(
     inline?: Booleanish
     tooltip?: Booleanish
     html?: Booleanish
+    noninteractive?: Booleanish
   }>(),
   {
     floatingMiddleware: undefined,
@@ -173,6 +174,7 @@ const props = withDefaults(
     html: false,
     reference: null,
     target: null,
+    noninteractive: false,
   }
 )
 
@@ -224,6 +226,7 @@ const hideBoolean = useBooleanish(() => props.hide)
 const realtimeBoolean = useBooleanish(() => props.realtime)
 const inlineBoolean = useBooleanish(() => props.inline)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
+const noninteractiveBoolean = useBooleanish(() => props.noninteractive)
 const isHtml = useBooleanish(() => props.html)
 const hidden = ref(false)
 
@@ -418,10 +421,12 @@ const hideFn = (e: Event) => {
     if (
       e?.type === 'click' ||
       (e?.type === 'update:modelValue' && manualBoolean.value) ||
-      (isOutside.value &&
+      (!noninteractiveBoolean.value &&
+        isOutside.value &&
         triggerIsOutside.value &&
         !element.value?.contains(document?.activeElement) &&
-        !trigger.value?.contains(document?.activeElement))
+        !trigger.value?.contains(document?.activeElement)) ||
+      (noninteractiveBoolean.value && triggerIsOutside.value)
     ) {
       showState.value = false
       nextTick(() => {
