@@ -10,7 +10,7 @@ body:
     id: feature-type
     attributes:
       label: Missing feature is from
-      description: Please source of the feature: Bootstrap-vue or Bootstrap v5.
+      description: "Please source of the feature: Bootstrap-vue or Bootstrap v5."
       options:
         - bootstrap-vue
         - Bootstrap v5
