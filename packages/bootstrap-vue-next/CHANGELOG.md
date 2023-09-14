@@ -1,6 +1,18 @@
 # Changelog
 
 
+## [0.12.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.3...bootstrapvuenext-v0.12.4) (2023-09-14)
+
+
+### Features
+
+* **BPopover:** add noninteractive prop ([cd8cbec](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cd8cbecc2dad68022f4cf22045d478b6e5ec48b4))
+
+
+### Bug Fixes
+
+* use 'floatingStyles' over manual styles ([1773407](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1773407cb9ccc9d17bc92c1b305ba61e4cfa46bd))
+
 ## [0.12.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.2...bootstrapvuenext-v0.12.3) (2023-09-12)
 
 
