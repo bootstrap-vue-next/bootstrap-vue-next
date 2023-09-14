@@ -2,7 +2,7 @@ blank_issues_enabled: true
 contact_links:
   - name: Discord Chat
     url: https://discord.gg/j2Mtcny
-    about: Ask and discuss real-time with other users on the bootstra-vue-next channel.
+    about: Ask and discuss real-time with other users on the bootstrap-vue-next channel.
   - name: Questions & Discussions
     url: https://github.com/bootstrap-vue-next/bootstrap-vue-next/discussions
     about: Use GitHub discussions for message-board style questions and discussions.
