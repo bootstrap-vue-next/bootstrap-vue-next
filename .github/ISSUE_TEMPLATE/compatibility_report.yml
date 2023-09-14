@@ -10,10 +10,18 @@ body:
     id: feature-type
     attributes:
       label: Missing feature is from
-      description: Please include a detailed description of the feature, and a web link to the Bootstrap-vue docs or to the most current version of the Bootstrap docs.
+      description: Please source of the feature: Bootstrap-vue or Bootstrap v5.
       options:
         - bootstrap-vue
         - Bootstrap v5
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Docs
+      description: Please provide a link to the Bootstrap-vue docs or the most current version of the Bootstrap v5 docs for this feature.
+      placeholder: link
     validations:
       required: true
   - type: textarea
@@ -22,14 +30,6 @@ body:
       label: Describe the missing feature
       description: A clear and concise description of what is missing. If you intend to submit a PR for this issue, tell us in the description. Thanks!
       placeholder: Feature description
-    validations:
-      required: true
-  - type: input
-    id: docs
-    attributes:
-      label: Docs
-      description: Please provide a link to the Bootstrap-vue docs or the most current version of the Bootstrap docs for this feature.
-      placeholder: link
     validations:
       required: true
   - type: checkboxes
