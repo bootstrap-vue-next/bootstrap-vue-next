@@ -1,0 +1,22 @@
+{
+  "name": "vite-vue-starter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap-styles": "*",
+    "bootstrap-vue-next": "*",
+    "vue": "*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "*",
+    "@vue/compiler-sfc": "*",
+    "sass": "*",
+    "vite": "*"
+  }
+}
