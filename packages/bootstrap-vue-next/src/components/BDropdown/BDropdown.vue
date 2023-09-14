@@ -41,12 +41,7 @@
       v-if="!lazyBoolean || modelValueBoolean"
       v-show="lazyBoolean || modelValueBoolean"
       ref="floating"
-      :style="{
-        position: strategy === 'absolute' ? undefined : 'fixed',
-        top: `${y}px`,
-        left: `${x}px`,
-        width: 'max-content',
-      }"
+      :style="floatingStyles"
       class="dropdown-menu show"
       :class="dropdownMenuClasses"
       :aria-labelledby="computedId"
@@ -216,7 +211,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   }
   return arr
 })
-const {x, y, strategy, update} = useFloating(referencePlacement, floating, {
+const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   placement: floatingPlacement,
   middleware: floatingMiddleware,
   strategy: readonly(toRef(props, 'strategy')),

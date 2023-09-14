@@ -11,12 +11,7 @@
       :class="computedClasses"
       role="tooltip"
       tabindex="-1"
-      :style="{
-        position: strategy,
-        top: `${y}px`,
-        left: `${x}px`,
-        width: 'max-content',
-      }"
+      :style="floatingStyles"
     >
       <div
         ref="arrow"
@@ -309,7 +304,7 @@ const placementRef = computed(() =>
   isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
 )
 
-const {x, y, strategy, middlewareData, placement, update} = useFloating(targetTrigger, element, {
+const {floatingStyles, middlewareData, placement, update} = useFloating(targetTrigger, element, {
   placement: placementRef,
   middleware: floatingMiddleware,
   strategy: readonly(toRef(props, 'strategy')),

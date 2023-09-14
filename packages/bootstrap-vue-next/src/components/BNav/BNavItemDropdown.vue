@@ -90,7 +90,7 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'button-content'?: (props: Record<string, never>) => any
 }>()
-const dropdown = ref<InstanceType<typeof BDropdown>>()
+const dropdown = ref<InstanceType<typeof BDropdown> | null>(null)
 
 const close = () => {
   dropdown.value?.close()
