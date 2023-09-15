@@ -411,7 +411,7 @@ const hideFn = (e: Event) => {
     clearTimeout(showTimeout)
     showTimeout = undefined
   }
-  const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 100
+  const delay = typeof props.delay === 'number' ? props.delay : props.delay?.hide || 0
   setTimeout(() => {
     if (
       e?.type === 'click' ||
@@ -436,7 +436,7 @@ const hideFn = (e: Event) => {
     } else {
       setTimeout(() => {
         hideFn(e)
-      }, delay)
+      }, delay < 50 ? 50 : delay )
     }
   }, delay)
 }
