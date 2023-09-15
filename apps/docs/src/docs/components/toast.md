@@ -10,11 +10,11 @@
 
 <div class="lead mb-5">
 
-Push notifications to your visitors with `BToast` and `BToaster`. These are lightweight components which are generally easily customizable for generating alert messages
+Push notifications to your visitors with `BToast` and `BToaster`. These are lightweight components that are generally easily customizable for generating alert messages
 
 </div>
 
-Toasts are lightweight notifications designed to mimic the push notifications that have been popularized by mobile and desktop operating systems. Toasts are intended to be small interruptions to your visitors or users, and therefore should contain minimal, to-the-point, non-interactive content. Please refer to the Accessibility tips section below for important usage information
+Toasts are lightweight notifications designed to mimic the push notifications that have been popularized by mobile and desktop operating systems. Toasts are intended to be small interruptions to your visitors or users and therefore should contain minimal, to-the-point, non-interactive content. Please refer to the Accessibility Tips section below for important usage information
 
 ## Overview
 
@@ -53,12 +53,12 @@ const {show} = useToast()
 
 ### String
 
-There are two acceptable options for the `show` function. The first set of options are a `string` followed by an `object`. The string corresponds to the body of the `Toast`. If only the string is passed, a simple `Toast` is made, and by default it is made at the `top-right` and it will expire in `5000` ms. You can pass in an optional `object` for the second parameter where you have a list of options, such as `pos`, `value`, `variant`, etc. Many of the values correspond to props for the `BToast` component. However, some props are taken out as they are reserved
+There are two acceptable options for the `show` function. The first set of options is a `string` followed by an `object`. The string corresponds to the body of the `Toast`. If only the string is passed, a simple `Toast` is made, and by default, it is made at the `top-right` and it will expire in `5000` ms. You can pass in an optional `object` for the second parameter where you have a list of options, such as `pos`, `value`, `variant`, etc. Many of the values correspond to props for the `BToast` component. However, some props are taken out as they are reserved
 
 <HighlightCard>
   <BButton
     @click="
-      show('Bar (this Toast will not auto expire)', {
+      show('Bar (this Toast will not auto-expire)', {
         title: 'Foo',
         variant: 'danger',
         pos: 'top-center',
@@ -74,7 +74,7 @@ There are two acceptable options for the `show` function. The first set of optio
 <template>
   <BButton
     @click="
-      show('Bar (this Toast will not auto expire)', {
+      show('Bar (this Toast will not auto-expire)', {
         title: 'Foo',
         variant: 'danger',
         pos: 'top-center',
@@ -103,7 +103,7 @@ The second option is to use a full object, this is similar to the string, howeve
   <BButton
     @click="
       show({
-        body: 'Bar (this Toast will not auto expire)',
+        body: 'Bar (this Toast will not auto-expire)',
         title: 'Foo',
         variant: 'danger',
         pos: 'top-center',
@@ -120,7 +120,7 @@ The second option is to use a full object, this is similar to the string, howeve
   <BButton
     @click="
       show({
-        body: 'Bar (this Toast will not auto expire)',
+        body: 'Bar (this Toast will not auto-expire)',
         title: 'Foo',
         variant: 'danger',
         pos: 'top-center',
@@ -219,7 +219,7 @@ You can place toasts in static static placements, and with more control by using
 
 ## Automatic Countdown
 
-As you may have noticed, `BToast` counts down similar to `BAlert`, in fact, it actually uses the same underlying engine that powers the countdown timer of `BAlert`, albeit with some minor adjustments. So, many of the same props are shared, including the `interval` props and others. So, similar quirks apply
+As you may have noticed, `BToast` counts down similarly to `BAlert` it uses the same underlying engine that powers the countdown timer of `BAlert`, albeit with some minor adjustments. So, many of the same props are shared, including the `interval` props and others. So, similar quirks apply
 
 <HighlightCard>
   <BButton
@@ -271,7 +271,7 @@ const {show} = useToast()
 
 ### ProgressBar Integration
 
-As you may have noticed in that example, there was a built-in progress bar. This is triggered when using a value that is a `number` and when `progressProps` is not `undefined`. This was implemented because it can be difficult do modify the behavior of `BToast` when using a pure method, and the appearance of a ticking down progress bar is a "nice to have". Although, it is not out of the box behavior by Bootstrap, so its behavior is opt-in. This functions similarly to examples in `BAlert`
+As you may have noticed in that example, there was a built-in progress bar. This is triggered when using a value that is a `number` and when `progressProps` is not `undefined`. This was implemented because it can be difficult to modify the behavior of `BToast` when using a pure method, and the appearance of a ticking down progress bar is a "nice to have". Although it is not out of the box behavior by Bootstrap, its behavior is opt-in. This functions similarly to examples in `BAlert`
 
 ## BLink Integration
 
