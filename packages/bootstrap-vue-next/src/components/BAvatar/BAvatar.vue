@@ -129,22 +129,14 @@ const squareBoolean = useBooleanish(() => props.square)
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
 
-const showBadge = computed<boolean>(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
-
-const computedSize = computed<string | null>(
-  () => parentData?.size.value ?? computeSize(props.size)
-)
-
-const computedVariant = computed<ColorVariant | null>(
-  () => parentData?.variant.value ?? props.variant
-)
-const computedRounded = computed<string | boolean>(() => parentData?.rounded.value ?? props.rounded)
-
+const showBadge = computed(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
+const computedSize = computed(() => parentData?.size.value ?? computeSize(props.size))
+const computedVariant = computed(() => parentData?.variant.value ?? props.variant)
+const computedRounded = computed(() => parentData?.rounded.value ?? props.rounded)
 const badgeClasses = computed(() => ({
   [`bg-${props.badgeVariant}`]: props.badgeVariant !== null,
 }))
-
-const badgeText = computed<string | false>(() => (props.badge === true ? '' : props.badge))
+const badgeText = computed(() => (props.badge === true ? '' : props.badge))
 
 const badgeTextClasses = computed(() => ({
   [`text-${props.badgeVariant !== null && computeContrastVariant(props.badgeVariant)}`]:
@@ -206,7 +198,7 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const computedTag = computed<typeof BLink | 'button' | 'span'>(() =>
+const computedTag = computed(() =>
   computedLink.value ? BLink : buttonBoolean.value ? 'button' : 'span'
 )
 

@@ -27,7 +27,7 @@ Indicate the current page's location within a navigational hierarchy. Separators
 import type {BreadcrumbItem} from 'bootstrap-vue-next'
 
 const breadcrumbItems = ref<BreadcrumbItem[]>([
-  {text: 'Admin', href: 'https://google.com'},
+  {text: 'Admin', href: 'https://getbootstrap.com/'},
   {text: 'Manage', href: '#'},
   {text: 'Library'},
 ])
@@ -142,7 +142,7 @@ import HighlightCard from '../../components/HighlightCard.vue'
 import type {BreadcrumbItem} from 'bootstrap-vue-next'
 
 const breadcrumbItems = ref<BreadcrumbItem[]>([
-  { text: 'Admin', href:'https://google.com'},
+  { text: 'Admin', href:'https://getbootstrap.com/'},
   { text: 'Manage', href:'#'},
   { text: 'Library'},
 ]);

@@ -1,5 +1,4 @@
 import type {App, Plugin} from 'vue'
-import {BToastPlugin} from './components'
 import type {BootstrapVueOptions} from './types'
 
 import './styles/styles.scss'
@@ -108,11 +107,9 @@ declare module '@vue/runtime-core' {
     BTr: typeof Components.BTr
     BToast: typeof Components.BToast
     BToaster: typeof Components.BToaster
-    BToastContainer: typeof Components.BToastContainer
     BTooltip: typeof Components.BTooltip
     BTabs: typeof Components.BTabs
     BTransition: typeof Components.BTransition
-    BToastPlugin: typeof Components.BToastPlugin
   }
 }
 
@@ -141,8 +138,6 @@ const plugin: Plugin = {
       const directive = Directives[name]
       app.directive(parsedName, directive)
     })
-
-    if (options?.BToast) app.use(BToastPlugin, options)
   },
 }
 
@@ -156,7 +151,6 @@ export * from './utils/exports'
 export * as Utils from './utils/exports'
 export * from './types/exports'
 export * as Types from './types/exports'
-export {useToast} from './components/BToast'
 
 export {plugin as BootstrapVueNext}
 export default plugin

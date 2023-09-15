@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {BBadge, BCard, type ColorVariant} from 'bootstrap-vue-next'
+import {BBadge, BCard} from 'bootstrap-vue-next'
 
 const props = defineProps<{
   difficulty: 'hard' | 'medium' | 'easy'
@@ -26,7 +26,7 @@ const props = defineProps<{
   fix: string
 }>()
 
-const difficultyVariant = computed<ColorVariant>(() =>
+const difficultyVariant = computed(() =>
   props.difficulty === 'hard' ? 'danger' : props.difficulty === 'medium' ? 'warning' : 'success'
 )
 </script>

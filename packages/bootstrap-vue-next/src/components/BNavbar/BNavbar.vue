@@ -43,11 +43,9 @@ defineSlots<{
 
 const printBoolean = useBooleanish(() => props.print)
 
-const computedRole = computed<undefined | 'navigation'>(() =>
-  props.tag === 'nav' ? undefined : 'navigation'
-)
+const computedRole = computed(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
-const computedNavbarExpand = computed<undefined | string>(() =>
+const computedNavbarExpand = computed(() =>
   typeof props.toggleable === 'string'
     ? `navbar-expand-${props.toggleable}`
     : props.toggleable === false

@@ -162,3 +162,27 @@ export interface BDropdownProps {
   splitTo?: RouteLocationRaw
   boundary?: Boundary | RootBoundary
 }
+
+interface BToastIntermediate {
+  delay?: string | number
+  bodyClass?: ClassValue
+  body?: string
+  headerClass?: ClassValue
+  headerTag?: string
+  animation?: Booleanish
+  id?: string
+  isStatus?: Booleanish
+  autoHide?: Booleanish
+  noCloseButton?: Booleanish
+  noFade?: Booleanish
+  noHoverPause?: Booleanish
+  solid?: Booleanish
+  title?: string
+  modelValue?: boolean | number
+  toastClass?: ClassValue
+  showOnPause?: Booleanish
+  interval?: number | string
+  progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
+}
+
+export type BToastProps = BToastIntermediate & Omit<BLinkProps, 'event' | 'routerTag'>

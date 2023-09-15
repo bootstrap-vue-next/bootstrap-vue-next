@@ -55,7 +55,6 @@ defineSlots<{
 const computedClasses = computed(() => ({
   [`input-group-${props.size}`]: props.size !== 'md',
 }))
-
-const hasAppend = computed<boolean>(() => !!props.append || !!props.appendHtml)
-const hasPrepend = computed<boolean>(() => !!props.prepend || !!props.prependHtml)
+const hasAppend = computed(() => !!props.append || !!props.appendHtml)
+const hasPrepend = computed(() => !!props.prepend || !!props.prependHtml)
 </script>

@@ -116,7 +116,7 @@ const {
   immediate: typeof modelValue.value === 'number' && immediateBoolean.value,
 })
 
-const isAlertVisible = computed<boolean>(() =>
+const isAlertVisible = computed(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
     : isActive.value || (showOnPauseBoolean.value && isPaused.value)
@@ -131,7 +131,7 @@ watchEffect(() => {
   emit('close-countdown', remainingMs.value)
 })
 
-const hide = (): void => {
+const hide = () => {
   emit('close')
 
   if (typeof modelValue.value === 'boolean') {
@@ -144,7 +144,6 @@ const hide = (): void => {
   emit('closed')
 }
 
-// TODO mouseleave/mouseenter could be replaced with useElementHover with a watcher
 const onMouseEnter = () => {
   if (noHoverPauseBoolean.value) return
   pause()

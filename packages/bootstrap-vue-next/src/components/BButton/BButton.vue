@@ -127,12 +127,12 @@ const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
 const {computedLink} = useBLinkHelper(props)
 
-const isToggle = computed<boolean>(() => typeof pressedBoolean.value === 'boolean')
-const isButton = computed<boolean>(
+const isToggle = computed(() => typeof pressedBoolean.value === 'boolean')
+const isButton = computed(
   () => props.tag === 'button' && props.href === undefined && props.to === undefined
 )
-const isBLink = computed<boolean>(() => props.to !== undefined)
-const nonStandardTag = computed<boolean>(() => (props.href !== undefined ? false : !isButton.value))
+const isBLink = computed(() => props.to !== undefined)
+const nonStandardTag = computed(() => (props.href !== undefined ? false : !isButton.value))
 
 const computedClasses = computed(() => [
   [`btn-${props.size}`],
@@ -146,9 +146,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedTag = computed<string | typeof BLink>(() =>
-  isBLink.value ? BLink : props.href ? 'a' : props.tag
-)
+const computedTag = computed(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
 
 const clicked = (e: MouseEvent): void => {
   if (disabledBoolean.value) {

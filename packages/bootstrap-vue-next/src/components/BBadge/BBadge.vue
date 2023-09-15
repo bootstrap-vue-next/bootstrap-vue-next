@@ -83,7 +83,7 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = computed<string | typeof BLink>(() => (computedLink.value ? BLink : props.tag))
+const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
 
 const computedClasses = computed(() => ({
   [`bg-${props.variant}`]: props.variant !== null,

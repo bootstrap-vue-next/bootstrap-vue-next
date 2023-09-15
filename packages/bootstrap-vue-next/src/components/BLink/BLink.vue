@@ -83,7 +83,7 @@ const instance = getCurrentInstance()
 
 const defaultActiveClass = 'active' as const
 
-const tag = computed<string>(() => {
+const tag = computed(() => {
   const routerName = props.routerComponentName
     .split('-')
     .map((e) => e.charAt(0).toUpperCase() + e.slice(1))
@@ -95,7 +95,7 @@ const tag = computed<string>(() => {
   return props.routerComponentName
 })
 
-const computedHref = computed<string>(() => {
+const computedHref = computed(() => {
   const toFallback = '#'
   if (props.href) return props.href
 

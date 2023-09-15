@@ -38,9 +38,7 @@ const forceShowBoolean = useBooleanish(() => props.forceShow)
 const stateBoolean = useBooleanish(() => props.state)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
 
-const computedShow = computed<boolean>(
-  () => forceShowBoolean.value === true || stateBoolean.value === false
-)
+const computedShow = computed(() => forceShowBoolean.value === true || stateBoolean.value === false)
 
 const computedClasses = computed(() => ({
   'd-block': computedShow.value,

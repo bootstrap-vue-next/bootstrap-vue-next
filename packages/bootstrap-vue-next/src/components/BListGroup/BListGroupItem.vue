@@ -74,9 +74,8 @@ const disabledBoolean = useBooleanish(() => props.disabled)
 
 const {computedLink} = useBLinkHelper(props)
 
-const isLink = computed<boolean>(() => !buttonBoolean.value && computedLink.value)
-
-const tagComputed = computed<string | typeof BLink>(() =>
+const isLink = computed(() => !buttonBoolean.value && computedLink.value)
+const tagComputed = computed(() =>
   parentData?.numbered.value
     ? 'li'
     : buttonBoolean.value

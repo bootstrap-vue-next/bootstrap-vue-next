@@ -399,8 +399,8 @@ const titleClasses = computed(() => [
     ['visually-hidden']: titleSrOnlyBoolean.value,
   },
 ])
-const disableCancel = computed<boolean>(() => cancelDisabledBoolean.value || busyBoolean.value)
-const disableOk = computed<boolean>(() => okDisabledBoolean.value || busyBoolean.value)
+const disableCancel = computed(() => cancelDisabledBoolean.value || busyBoolean.value)
+const disableOk = computed(() => okDisabledBoolean.value || busyBoolean.value)
 
 const buildTriggerableEvent = (
   type: string,

@@ -1,283 +1,213 @@
-<script lang="ts">
-import {
-  computed,
-  defineComponent,
-  h,
-  nextTick,
-  onMounted,
-  onUnmounted,
-  type PropType,
-  ref,
-  type VNode,
-  watch,
-} from 'vue'
-import {isLink, normalizeSlot, requestAF, toInteger} from '../../utils'
-import {useBooleanish} from '../../composables'
-import type {Booleanish, ColorVariant} from '../../types'
+<template>
+  <BTransition :no-fade="noFadeBoolean">
+    <div
+      v-if="isToastVisible"
+      :id="id"
+      ref="element"
+      class="toast"
+      :class="[toastClass, classes]"
+      tabindex="0"
+      :role="!isToastVisible ? undefined : isStatusBoolean ? 'status' : 'alert'"
+      :aria-live="!isToastVisible ? undefined : isStatusBoolean ? 'polite' : 'assertive'"
+      :aria-atomic="!isToastVisible ? undefined : true"
+    >
+      <component :is="headerTag" v-if="$slots.title || title" class="toast-header">
+        <slot name="title" :hide="hide">
+          <strong class="me-auto">
+            {{ title }}
+          </strong>
+        </slot>
+        <BCloseButton v-if="!noCloseButtonBoolean" @click="hide" />
+      </component>
+      <template v-if="$slots.default || body">
+        <component
+          :is="computedTag"
+          class="toast-body"
+          style="display: block"
+          :class="bodyClass"
+          v-bind="computedLinkProps"
+          @click="computedLink ? hide : () => {}"
+        >
+          <slot :hide="hide">
+            {{ body }}
+          </slot>
+        </component>
+      </template>
+      <BProgress
+        v-if="typeof modelValue === 'number' && progressProps !== undefined"
+        :animated="progressProps.animated"
+        :precision="progressProps.precision"
+        :show-progress="progressProps.showProgress"
+        :show-value="progressProps.showValue"
+        :striped="progressProps.striped"
+        :variant="progressProps.variant"
+        :max="modelValue"
+        :value="remainingMs"
+        height="4px"
+      />
+    </div>
+  </BTransition>
+</template>
+
+<script setup lang="ts">
+import {computed, onBeforeUnmount, ref, watch, watchEffect} from 'vue'
+import {useBLinkHelper, useBooleanish, useCountdown} from '../../composables'
+import type {BToastProps} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import BLink, {BLINK_PROPS} from '../BLink/BLink.vue'
-import type {BodyProp} from './plugin'
+import BLink from '../BLink/BLink.vue'
+import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
+import BProgress from '../BProgress/BProgress.vue'
 
-export const SLOT_NAME_TOAST_TITLE = 'toast-title'
-const MIN_DURATION = 1000
+// TODO scheduling issue -- when multiple are opened in quick succession, and closed in quick succession,
+// Find index can get lost, leading to one or multiple staying orphaned
+// TODO Then the only thing that remains is just to determine how to render the BToaster
+// TODO appendToast from BToaster
+// TODO Extract the props, then put the props into the object
+// This will make it so you can modify the props in the show method
+// Of course, you will need to update the Toaster
+// Then update the docs
 
-export default defineComponent({
-  components: {BLink},
-  props: {
-    ...BLINK_PROPS,
-    delay: {type: Number, default: 5000},
-    bodyClass: {type: String, default: undefined},
-    body: {type: [Object, String] as PropType<BodyProp>, default: undefined},
-    headerClass: {type: String, default: undefined},
-    headerTag: {type: String, default: 'div'},
-    animation: {type: [Boolean, String] as PropType<Booleanish>, default: true},
-    id: {type: String, default: undefined},
-    // Switches role to 'status' and aria-live to 'polite'
-    isStatus: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    autoHide: {type: [Boolean, String] as PropType<Booleanish>, default: true},
-    noCloseButton: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    noFade: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    noHoverPause: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    solid: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // Render the toast in place, rather than in a portal-target
-    static: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    title: {type: String, default: undefined},
-    modelValue: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    toastClass: {type: Array as PropType<string[]>, default: undefined},
-    variant: {type: String as PropType<ColorVariant | null>, default: null},
-  },
-  emits: ['destroyed', 'update:modelValue'],
-  setup(props, {emit, slots}) {
-    // TODO animation is never used
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const animationBoolean = useBooleanish(() => props.animation)
-    const isStatusBoolean = useBooleanish(() => props.isStatus)
-    const autoHideBoolean = useBooleanish(() => props.autoHide)
-    const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
-    const noFadeBoolean = useBooleanish(() => props.noFade)
-    const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
-    // TODO solid is never used
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const solidBoolean = useBooleanish(() => props.solid)
-    // TODO static is never used
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const staticBoolean = useBooleanish(() => props.static)
-    const modelValueBoolean = useBooleanish(() => props.modelValue)
-
-    const isTransitioning = ref(false)
-    const isHiding = ref(false)
-    const localShow = ref(false)
-    const classes = computed(() => ({
-      [`b-toast-${props.variant}`]: props.variant !== null,
-      show: localShow.value || isTransitioning.value,
-    }))
-
-    let dismissTimer: ReturnType<typeof setTimeout> | undefined
-    let dismissStarted: number
-    let resumeDismiss: number
-
-    const clearDismissTimer = () => {
-      if (typeof dismissTimer === 'undefined') return
-      clearTimeout(dismissTimer)
-      dismissTimer = undefined
-    }
-
-    const computedDuration = computed(() =>
-      // Minimum supported duration is 1 second
-      Math.max(toInteger(props.delay, 0), MIN_DURATION)
-    )
-
-    const hide = () => {
-      if (modelValueBoolean.value) {
-        dismissStarted = resumeDismiss = 0
-        clearDismissTimer()
-        isHiding.value = true
-        requestAF(() => {
-          localShow.value = false
-        })
-      }
-    }
-
-    const show = () => {
-      clearDismissTimer()
-      emit('update:modelValue', true)
-      dismissStarted = resumeDismiss = 0
-      isHiding.value = false
-
-      nextTick(() => {
-        // We show the toast after we have rendered the portal and b-toast wrapper
-        // so that screen readers will properly announce the toast
-        requestAF(() => {
-          localShow.value = true
-        })
-      })
-    }
-
-    const onPause = () => {
-      if (!autoHideBoolean.value || noHoverPauseBoolean.value || !dismissTimer || resumeDismiss) {
-        return
-      }
-
-      const passed = Date.now() - dismissStarted
-
-      if (passed > 0) {
-        clearDismissTimer()
-        resumeDismiss = Math.max(computedDuration.value - passed, MIN_DURATION)
-      }
-    }
-
-    const onUnPause = () => {
-      if (!autoHideBoolean.value || noHoverPauseBoolean.value || !resumeDismiss) {
-        resumeDismiss = dismissStarted = 0
-      }
-
-      startDismissTimer()
-    }
-
-    watch(modelValueBoolean, (newValue) => {
-      newValue ? show() : hide()
-    })
-
-    const startDismissTimer = () => {
-      clearDismissTimer()
-      if (autoHideBoolean.value) {
-        dismissTimer = setTimeout(hide, resumeDismiss || computedDuration.value)
-        dismissStarted = Date.now()
-        resumeDismiss = 0
-      }
-    }
-
-    const OnBeforeEnter = () => {
-      isTransitioning.value = true
-      emit('update:modelValue', true)
-    }
-
-    const OnAfterEnter = () => {
-      isTransitioning.value = false
-      startDismissTimer()
-    }
-
-    const OnBeforeLeave = () => {
-      isTransitioning.value = true
-    }
-
-    const OnAfterLeave = () => {
-      isTransitioning.value = false
-      resumeDismiss = dismissStarted = 0
-      emit('update:modelValue', false)
-    }
-
-    onUnmounted(() => {
-      //if there is time left on autoHide or no autoHide then keep toast alive
-      clearDismissTimer()
-      if (!autoHideBoolean.value) {
-        return
-      }
-
-      emit('destroyed', props.id)
-    })
-
-    onMounted(() => {
-      nextTick(() => {
-        if (modelValueBoolean.value) {
-          requestAF(() => {
-            show()
-          })
-        }
-      })
-    })
-
-    const onLinkClick = () => {
-      nextTick(() => {
-        requestAF(() => {
-          hide()
-        })
-      })
-    }
-
-    return () => {
-      const makeToast = () => {
-        const $headerContent: VNode[] = []
-
-        const $title = normalizeSlot(SLOT_NAME_TOAST_TITLE, {hide}, slots)
-
-        if ($title) {
-          $headerContent.push(h($title))
-        } else if (props.title) {
-          $headerContent.push(h('strong', {class: 'me-auto'}, props.title))
-        }
-
-        if (!noCloseButtonBoolean.value && $headerContent.length !== 0) {
-          $headerContent.push(
-            h(BCloseButton, {
-              class: ['btn-close'],
-              onClick: () => {
-                hide()
-              },
-            })
-          )
-        }
-        const $innertoast = []
-
-        if ($headerContent.length > 0) {
-          $innertoast.push(
-            h(
-              props.headerTag,
-              {
-                class: 'toast-header',
-              },
-              {default: () => $headerContent}
-            )
-          )
-        }
-        if (normalizeSlot('default', {hide}, slots) || props.body) {
-          const $body = h(
-            isLink(props) ? 'b-link' : 'div',
-            {
-              class: ['toast-body', props.bodyClass],
-              onClick: isLink(props) ? {click: onLinkClick} : {},
-            },
-            normalizeSlot('default', {hide}, slots) || props.body
-          )
-          $innertoast.push($body)
-        }
-        return h(
-          'div',
-          {
-            class: ['toast', props.toastClass, classes.value],
-            tabindex: '0',
-          },
-          $innertoast
-        )
-      }
-      //toast
-      return h(
-        'div',
-        {
-          'class': ['b-toast'],
-          'id': props.id,
-          'role': isHiding.value ? null : isStatusBoolean.value ? 'status' : 'alert',
-          'aria-live': isHiding.value ? null : isStatusBoolean.value ? 'polite' : 'assertive',
-          'aria-atomic': isHiding.value ? null : true,
-          'onmouseenter': onPause,
-          'onmouseleave': onUnPause,
-        },
-        [
-          h(
-            BTransition,
-            {
-              noFade: noFadeBoolean.value,
-              onAfterEnter: OnAfterEnter,
-              onBeforeEnter: OnBeforeEnter,
-              onAfterLeave: OnAfterLeave,
-              onBeforeLeave: OnBeforeLeave,
-            },
-            () => [localShow.value ? makeToast() : '']
-          ),
-        ]
-      )
-    }
-  },
+const props = withDefaults(defineProps<BToastProps>(), {
+  delay: 5000,
+  bodyClass: undefined,
+  body: undefined,
+  headerClass: undefined,
+  headerTag: 'div',
+  animation: true,
+  id: undefined,
+  isStatus: false,
+  autoHide: true,
+  noCloseButton: false,
+  noFade: false,
+  noHoverPause: false,
+  solid: false,
+  title: undefined,
+  modelValue: false,
+  toastClass: undefined,
+  variant: null,
+  showOnPause: true,
+  interval: 1000,
+  progressProps: undefined,
+  // Link props
+  active: undefined,
+  activeClass: undefined,
+  append: false,
+  href: undefined,
+  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
+  rel: undefined,
+  replace: false,
+  disabled: false,
+  routerComponentName: 'router-link',
+  target: '_self',
+  to: undefined,
+  opacity: undefined,
+  opacityHover: undefined,
+  underlineVariant: null,
+  underlineOffset: undefined,
+  underlineOffsetHover: undefined,
+  underlineOpacity: undefined,
+  underlineOpacityHover: undefined,
 })
+
+const emit = defineEmits<{
+  'destroyed': []
+  'close': []
+  'closed': []
+  'close-countdown': [value: number]
+  'update:modelValue': [value: boolean | number]
+}>()
+
+const element = ref<HTMLElement | null>(null)
+
+const isHovering = useElementHover(element)
+const modelValue = useVModel(props, 'modelValue', emit)
+
+const {computedLink, computedLinkProps} = useBLinkHelper(props)
+
+// TODO animation is never used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const animationBoolean = useBooleanish(() => props.animation)
+const isStatusBoolean = useBooleanish(() => props.isStatus)
+// TODO autohide is never used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const autoHideBoolean = useBooleanish(() => props.autoHide)
+const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
+const noFadeBoolean = useBooleanish(() => props.noFade)
+const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
+const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
+const intervalNumber = useToNumber(() => props.interval)
+// TODO solid is never used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const solidBoolean = useBooleanish(() => props.solid)
+const countdownLength = computed(() =>
+  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
+)
+
+const {
+  isActive,
+  pause,
+  restart,
+  resume,
+  stop,
+  isPaused,
+  value: remainingMs,
+} = useCountdown(countdownLength, intervalNumber, {
+  immediate: typeof modelValue.value === 'number',
+})
+
+watchEffect(() => {
+  emit('close-countdown', remainingMs.value)
+})
+
+const computedTag = computed(() => (computedLink.value ? BLink : 'div'))
+
+const isToastVisible = computed(() =>
+  typeof modelValue.value === 'boolean'
+    ? modelValue.value
+    : isActive.value || (showOnPauseBoolean.value && isPaused.value)
+)
+
+// Unlike the Alert counterpart, we actually want to emit to fully destroy our Toast (handled by the toaster)
+watch(isActive, (newValue) => {
+  if (newValue === false && isPaused.value === false) {
+    emit('destroyed')
+  }
+})
+
+const classes = computed(() => ({
+  [`text-bg-${props.variant}`]: props.variant !== null,
+  show: isToastVisible.value,
+}))
+
+const hide = () => {
+  emit('close')
+
+  if (typeof modelValue.value === 'boolean') {
+    modelValue.value = false
+  } else {
+    modelValue.value = 0
+    stop()
+  }
+
+  emit('closed')
+}
+
+const onMouseEnter = () => {
+  if (noHoverPauseBoolean.value) return
+  pause()
+}
+
+watch(isHovering, (newValue) => {
+  if (newValue) {
+    onMouseEnter()
+    return
+  }
+  resume()
+})
+
+onBeforeUnmount(stop)
+
+defineExpose({pause, resume, restart, stop})
 </script>

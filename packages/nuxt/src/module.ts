@@ -39,7 +39,7 @@ export default defineNuxtModule<ModuleOptions>({
           ({
             from: resolver.resolve('./runtime/composables'),
             name: el,
-          } as Import)
+          }) as Import
       )
       arr.push(...imports)
     }
