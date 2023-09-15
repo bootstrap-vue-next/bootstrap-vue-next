@@ -61,12 +61,7 @@ import BProgress from '../BProgress/BProgress.vue'
 
 // TODO scheduling issue -- when multiple are opened in quick succession, and closed in quick succession,
 // Find index can get lost, leading to one or multiple staying orphaned
-// TODO Then the only thing that remains is just to determine how to render the BToaster
 // TODO appendToast from BToaster
-// TODO Extract the props, then put the props into the object
-// This will make it so you can modify the props in the show method
-// Of course, you will need to update the Toaster
-// Then update the docs
 
 const props = withDefaults(defineProps<BToastProps>(), {
   delay: 5000,
