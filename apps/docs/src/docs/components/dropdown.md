@@ -330,6 +330,10 @@ By default, dropdowns are visually constrained to their clipping ancestors, whic
 
 **Note:** When `boundary` is any value other than the default of `clippingAncestors`, the style `position: static` is applied to the dropdown component's root element to allow the menu to "break out" of its scroll container. In some situations, this may affect your layout or positioning of the dropdown trigger button. In these cases, you may need to wrap your dropdown inside another element
 
+### Container element
+
+By default, dropdowns are next to the toggle button. However, you can specify a container element via the `container` prop where dropdowns will be teleported to instead. Supported values are CSS selector string, an actual DOM node or a reference to an HTML element.
+
 ### Dropdown auto close behavior
 
 By default, the dropdown menu is closed when clicking inside or outside the dropdown menu. You can use the `auto-close` property to change this behavior of the dropdown.
