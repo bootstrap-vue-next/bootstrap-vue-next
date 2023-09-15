@@ -1,0 +1,19 @@
+name: Issue Labeled
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  reply-labeled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: need reproduction
+        if: github.event.label.name == 'need reproduction'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: create-comment
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hello @${{ github.event.issue.user.login }}. Please provide a [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) using StackBlitz [vite with script setup](https://stackblitz.com/github/bootstrap-vue-next/bootstrap-vue-next/tree/main/templates/vite?file=src%2Fcomponents%2FComp.vue,src%2FApp.vue) / [light vue](https://stackblitz.com/fork/bootstra-vue-next-template?file=src%2Fcomponents%2FComp.vue,src%2FApp.vue) or a link to a repo.
