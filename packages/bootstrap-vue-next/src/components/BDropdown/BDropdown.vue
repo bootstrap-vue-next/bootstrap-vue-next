@@ -37,19 +37,21 @@
         </slot>
       </span>
     </BButton>
-    <ul
-      v-if="!lazyBoolean || modelValueBoolean"
-      v-show="lazyBoolean || modelValueBoolean"
-      ref="floating"
-      :style="floatingStyles"
-      class="dropdown-menu show"
-      :class="dropdownMenuClasses"
-      :aria-labelledby="computedId"
-      :role="role"
-      @click="onClickInside"
-    >
-      <slot :hide="close" :show="open" />
-    </ul>
+    <RenderComponentOrSkip :tag="'Teleport'" :to="container" :skip="!container">
+      <ul
+        v-if="!lazyBoolean || modelValueBoolean"
+        v-show="lazyBoolean || modelValueBoolean"
+        ref="floating"
+        :style="floatingStyles"
+        class="dropdown-menu show"
+        :class="dropdownMenuClasses"
+        :aria-labelledby="computedId"
+        :role="role"
+        @click="onClickInside"
+      >
+        <slot :hide="close" :show="open" />
+      </ul>
+    </RenderComponentOrSkip>
   </div>
 </template>
 
@@ -70,6 +72,8 @@ import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
+import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
+
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
 
@@ -108,6 +112,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   strategy: 'absolute',
   splitTo: undefined,
   boundary: 'clippingAncestors',
+  container: undefined,
 })
 
 const emit = defineEmits<{
