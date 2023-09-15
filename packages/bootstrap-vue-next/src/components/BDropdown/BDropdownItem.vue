@@ -84,9 +84,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedTag = computed<typeof BLink | 'button' | 'a'>(() =>
-  computedLink.value ? BLink : props.href ? 'a' : 'button'
-)
+const computedTag = computed(() => (computedLink.value ? BLink : props.href ? 'a' : 'button'))
 
 const collapseData = inject(collapseInjectionKey, null)
 const dropdownData = inject(dropdownInjectionKey, null)

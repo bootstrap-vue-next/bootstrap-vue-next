@@ -249,7 +249,7 @@ const {focused} = useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
-const _inputId = computed<string>(() => props.inputId || `${computedId.value}input__`)
+const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
 const tags = ref<string[]>(modelValue.value)
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
@@ -267,14 +267,12 @@ const computedClasses = computed(() => [
   },
 ])
 
-const isDuplicate = computed<boolean>(() => tags.value.includes(inputValue.value))
-
-const isInvalid = computed<boolean>(() =>
+const isDuplicate = computed(() => tags.value.includes(inputValue.value))
+const isInvalid = computed(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = computed<boolean>(() => tags.value.length === limitNumber.value)
-
-const disableAddButton = computed<boolean>(() => !isInvalid.value && !isDuplicate.value)
+const isLimitReached = computed(() => tags.value.length === limitNumber.value)
+const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
 
 const slotAttrs = computed(() => ({
   addButtonText: props.addButtonText,

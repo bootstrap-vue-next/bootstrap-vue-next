@@ -74,7 +74,7 @@ const computedClasses = computed(() => ({
   active: activeBoolean.value,
 }))
 
-const computedTag = computed<'span' | typeof BLink>(() => (activeBoolean.value ? 'span' : BLink))
+const computedTag = computed(() => (activeBoolean.value ? 'span' : BLink))
 
 const computedAriaCurrent = computed(() => (activeBoolean.value ? props.ariaCurrent : undefined))
 

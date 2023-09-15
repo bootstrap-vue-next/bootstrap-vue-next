@@ -53,7 +53,7 @@ const thumbnailBoolean = useBooleanish(() => props.thumbnail)
 const heightNumber = useToNumber(computed(() => props.height ?? NaN))
 const widthNumber = useToNumber(computed(() => props.width ?? NaN))
 
-const computedSrcset = computed<string | undefined>(() =>
+const computedSrcset = computed(() =>
   typeof props.srcset === 'string'
     ? props.srcset
         .split(',')
@@ -64,7 +64,7 @@ const computedSrcset = computed<string | undefined>(() =>
     : undefined
 )
 
-const computedSizes = computed<string | undefined>(() =>
+const computedSizes = computed(() =>
   typeof props.sizes === 'string'
     ? props.sizes
         .split(',')
@@ -99,7 +99,7 @@ const computedBlankImgSrc = computed(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 
-const alignment = computed<'float-start' | 'float-end' | 'mx-auto' | undefined>(() =>
+const alignment = computed(() =>
   startBoolean.value
     ? 'float-start'
     : endBoolean.value

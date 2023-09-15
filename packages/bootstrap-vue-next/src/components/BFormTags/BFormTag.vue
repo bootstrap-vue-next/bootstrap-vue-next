@@ -68,11 +68,10 @@ const disabledBoolean = useBooleanish(() => props.disabled)
 const noRemoveBoolean = useBooleanish(() => props.noRemove)
 const pillBoolean = useBooleanish(() => props.pill)
 
-const tagText = computed<string>(
+const tagText = computed(
   () => ((slots.default?.()[0].children ?? '').toString() || props.title) ?? ''
 )
-
-const taglabelId = computed<string>(() => `${computedId.value}taglabel__`)
+const taglabelId = computed(() => `${computedId.value}taglabel__`)
 
 const computedClasses = computed(() => ({
   [`bg-${props.variant}`]: props.variant !== null,

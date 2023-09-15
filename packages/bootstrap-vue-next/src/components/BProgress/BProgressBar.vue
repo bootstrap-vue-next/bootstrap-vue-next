@@ -61,7 +61,7 @@ const numberValue = useToNumber(() => props.value)
 const numberMax = useToNumber(computed(() => props.max ?? NaN))
 const parentMaxNumber = useToNumber(computed(() => parentData?.max.value ?? NaN))
 
-const computedLabel = computed<string>(() =>
+const computedLabel = computed(() =>
   props.labelHtml !== undefined
     ? props.labelHtml
     : showValueBoolean.value || parentData?.showValue.value
@@ -73,7 +73,7 @@ const computedLabel = computed<string>(() =>
     : ''
 )
 
-const computedWidth = computed<string>(() =>
+const computedWidth = computed(() =>
   parentMaxNumber.value
     ? `${(numberValue.value * 100) / parentMaxNumber.value}%`
     : numberMax.value

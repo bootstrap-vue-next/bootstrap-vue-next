@@ -1,145 +1,48 @@
-<script lang="ts">
-import type {Breakpoint, Position} from '../types'
-import {
-  computed,
-  defineComponent,
-  h,
-  onMounted,
-  type PropType,
-  ref,
-  type SlotsType,
-  type VNode,
-} from 'vue'
-import {ToastInstance, useToast} from './BToast/plugin'
-import BToaster from './BToast/BToaster.vue'
-
-export default defineComponent({
-  slots: Object as SlotsType<{
-    default?: Record<string, never>
-  }>,
-  props: {
-    gutterX: {type: String, default: null},
-    gutterY: {type: String, default: null},
-    fluid: {type: [Boolean, String] as PropType<boolean | Breakpoint>, default: false},
-    toast: {type: Object, default: undefined},
-    position: {type: String as PropType<Position>, default: undefined},
-  },
-  setup(props, {slots, expose}) {
-    const container = ref()
-    let toastInstance: ToastInstance | undefined
-
-    const classes = computed(() => ({
-      container: !props.fluid,
-      [`container-fluid`]: typeof props.fluid === 'boolean' && props.fluid,
-      [`container-${props.fluid}`]: typeof props.fluid === 'string',
-      [`gx-${props.gutterX}`]: props.gutterX !== null,
-      [`gy-${props.gutterY}`]: props.gutterY !== null,
-    }))
-
-    onMounted(() => {
-      if (props.toast) {
-        // toastInstance.setVmContainer(container)
-      }
-    })
-
-    // let this be the container for the toast
-    if (props.toast) {
-      toastInstance = useToast({container, root: props.toast.root})
-      expose({
-        // ...toastInstance?.useMethods,
-      })
-    }
-
-    return () => {
-      const subContainers: VNode[] = []
-
-      toastInstance?.containerPositions.value.forEach((position) => {
-        subContainers.push(h(BToaster, {key: position, instance: toastInstance, position}))
-      })
-
-      return h('div', {class: [classes.value, props.position], ref: container}, [
-        ...subContainers,
-        slots.default?.(),
-      ])
-    }
-  },
-  methods: {},
-})
-
-/* Reverted back for compat
-
 <template>
-  <component :is="tag" ref="container" :class="computedClasses">
-    <!-- <BToaster
-      v-for="(pos, index) in toasts"
-      :key="index"
-      :instance="toastInstance"
-      :position="pos"
-    /> -->
+  <component :is="tag" :class="computedClasses">
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
-// import type {Position} from '../types'
-// import BToaster from './BToast/BToaster.vue'
-// import {ToastInstance} from './BToast/plugin'
+import {isBooleanish, resolveBooleanish} from '../utils'
+import type {Booleanish, Breakpoint} from '../types'
+import {computed} from 'vue'
+import {useToNumber} from '@vueuse/core'
 
-interface Props {
-  gutterX?: string
-  gutterY?: string
-  fluid?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' // boolean | Breakpoint
-  // toast?: Record<string, unknown> // Make this strongly typed
-  // position?: Position
-  tag?: string
-}
+const props = withDefaults(
+  defineProps<{
+    gutterX?: string | number
+    gutterY?: string | number
+    fluid?: Booleanish | Breakpoint
+    tag?: string
+  }>(),
+  {
+    fluid: false,
+    tag: 'div',
+    gutterX: undefined,
+    gutterY: undefined,
+  }
+)
 
-const props = withDefaults(defineProps<Props>(), {
-  fluid: false,
-  tag: 'div',
-})
+const gutterXToNumber = useToNumber(
+  computed(() => props.gutterX ?? NaN),
+  {method: 'parseInt'}
+)
+const gutterYToNumber = useToNumber(
+  computed(() => props.gutterY ?? NaN),
+  {method: 'parseInt'}
+)
 
-const container = ref()
+const resolvedFluid = computed(() =>
+  isBooleanish(props.fluid) ? resolveBooleanish(props.fluid) : props.fluid
+)
 
 const computedClasses = computed(() => ({
-  container: props.fluid === false,
-  [`container-fluid`]: props.fluid === true,
-  [`container-${props.fluid}`]: typeof props.fluid === 'string',
-  [`gx-${props.gutterX}`]: props.gutterX !== undefined,
-  [`gy-${props.gutterY}`]: props.gutterY !== undefined,
+  container: resolvedFluid.value === false,
+  [`container-fluid`]: resolvedFluid.value === true,
+  [`container-${resolvedFluid.value}`]: typeof resolvedFluid.value === 'string',
+  [`gx-${gutterXToNumber.value}`]: !Number.isNaN(gutterXToNumber.value),
+  [`gy-${gutterYToNumber.value}`]: !Number.isNaN(gutterYToNumber.value),
 }))
-
-const toasts = computed(() => toastInstance?.containerPositions.value)
-    let toastInstance: ToastInstance | undefined
-
-    onMounted(() => {
-      if (props.toast) {
-        // toastInstance.setVmContainer(container)
-      }
-    })
-
-    // let this be the container for the toast
-    if (props.toast) {
-      toastInstance = useToast({container, root: props.toast.root})
-      expose({
-        // ...toastInstance?.useMethods,
-      })
-    }
-
-    return () => {
-      const subContainers: VNode[] = []
-
-      toastInstance?.containerPositions.value.forEach((position) => {
-        subContainers.push(h(BToaster, {key: position, instance: toastInstance, position}))
-      })
-
-      return h(props.tag, {class: [classes.value, props.position], ref: container}, [
-        ...subContainers,
-        slots.default?.(),
-      ])
-    }
-}
-
-*/
 </script>

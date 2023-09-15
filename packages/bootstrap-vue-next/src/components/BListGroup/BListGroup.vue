@@ -42,8 +42,7 @@ const computedClasses = computed(() => {
     'list-group-numbered': numberedBoolean.value,
   }
 })
-
-const computedTag = computed<string>(() => (numberedBoolean.value === true ? 'ol' : props.tag))
+const computedTag = computed(() => (numberedBoolean.value === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
   numbered: numberedBoolean,

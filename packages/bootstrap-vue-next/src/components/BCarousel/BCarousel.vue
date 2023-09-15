@@ -146,7 +146,7 @@ const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)
 
-const rideResolved = computed<boolean | 'carousel'>(() =>
+const rideResolved = computed(() =>
   isBooleanish(props.ride) ? resolveBooleanish(props.ride) : props.ride
 )
 

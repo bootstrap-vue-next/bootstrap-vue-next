@@ -39,7 +39,7 @@ const props = withDefaults(
   }
 )
 
-const widthString = computed<string | undefined>(() =>
+const widthString = computed(() =>
   props.width === undefined
     ? undefined
     : typeof props.width === 'number'
@@ -47,7 +47,7 @@ const widthString = computed<string | undefined>(() =>
     : props.width.replace('%', '')
 )
 
-const colsString = computed<string | undefined>(() =>
+const colsString = computed(() =>
   props.cols === undefined
     ? undefined
     : typeof props.cols === 'number'

@@ -57,13 +57,8 @@ defineSlots<{
   header?: (props: Record<string, never>) => any
 }>()
 
-const headerId = computed<string | undefined>(() =>
-  props.id ? `${props.id}_group_dd_header` : undefined
-)
-
-const headerRole = computed<'heading' | undefined>(() =>
-  props.headerTag === 'header' ? undefined : 'heading'
-)
+const headerId = computed(() => (props.id ? `${props.id}_group_dd_header` : undefined))
+const headerRole = computed(() => (props.headerTag === 'header' ? undefined : 'heading'))
 
 const computedClasses = computed(() => [
   props.headerClass,

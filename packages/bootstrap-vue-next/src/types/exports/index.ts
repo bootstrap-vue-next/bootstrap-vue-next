@@ -24,4 +24,3 @@ export type {
   TransitionMode,
   VerticalAlign,
 } from '..'
-export type {BodyProp} from '../../components/BToast/plugin'

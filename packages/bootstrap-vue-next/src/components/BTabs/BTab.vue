@@ -64,11 +64,11 @@ const lazyBoolean = useBooleanish(
 
 const lazyRenderCompleted = ref(false)
 
-const computedLazy = computed<boolean>(() => !!(parentData?.lazy.value || lazyBoolean.value))
-const computedLazyOnce = computed<boolean>(() => props.lazyOnce !== undefined)
+const computedLazy = computed(() => !!(parentData?.lazy.value || lazyBoolean.value))
+const computedLazyOnce = computed(() => props.lazyOnce !== undefined)
 
-const computedActive = computed<boolean>(() => activeBoolean.value && !disabledBoolean.value)
-const showSlot = computed<boolean>(() => {
+const computedActive = computed(() => activeBoolean.value && !disabledBoolean.value)
+const showSlot = computed(() => {
   const hasLazyRenderedOnce =
     computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value
   return computedActive.value || !computedLazy.value || hasLazyRenderedOnce

@@ -1,41 +1,47 @@
 <template>
-  <div :class="positionClass" class="b-toaster position-fixed p-3" style="z-index: 11">
-    <BToast
-      v-for="toast in instance?.toasts(position).value"
-      :id="toast.options.id"
-      :key="toast.options.id"
-      v-model="toast.options.value"
-      :auto-hide="toast.options.autoHide"
-      :delay="toast.options.delay"
-      :no-close-button="toast.options.noCloseButton"
-      :title="toast.content.title"
-      :body="toast.content.body"
-      :component="toast.content.body"
-      :variant="toast.options.variant"
-      @destroyed="handleDestroy"
-    />
-  </div>
+  <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
+    <div id="__BVID__toaster-container">
+      <div
+        v-for="(value, key) in toastPositions"
+        :key="key"
+        :class="value"
+        class="toast-container position-fixed p-3"
+      >
+        <BToast
+          v-for="toast in toasts.filter((el) => el.pos === key)"
+          :key="toast.self"
+          v-model="toast.value"
+          v-bind="pluckToastItem(toast)"
+          @destroyed="hide(toast.self)"
+        />
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-import type {ContainerPosition} from '../../types'
-import type {ToastInstance} from '../BToast/plugin'
+import type {RendererElement} from 'vue'
+import {useBooleanish, useToast} from '../../composables'
+import type {Booleanish, Toast} from '../../types'
 import BToast from './BToast.vue'
+import {omit} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    position?: ContainerPosition
-    instance?: ToastInstance
+    teleportTo?: string | RendererElement | null | undefined
+    teleportDisabled?: Booleanish
+    // TODO this
     // appendToast?: Booleanish
   }>(),
   {
-    position: 'top-right',
-    instance: undefined,
+    teleportTo: 'body',
+    teleportDisabled: false,
   }
 )
 
-const toastPositions: Record<ContainerPosition, string> = {
+const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
+
+const toastPositions = {
   'top-left': 'top-0 start-0',
   'top-center': 'top-0 start-50 translate-middle-x',
   'top-right': 'top-0 end-0',
@@ -45,12 +51,13 @@ const toastPositions: Record<ContainerPosition, string> = {
   'bottom-left': 'bottom-0 start-0',
   'bottom-center': 'bottom-0 start-50 translate-middle-x',
   'bottom-right': 'bottom-0 end-0',
-}
+} as const
 
-const positionClass = computed(() => toastPositions[props.position as ContainerPosition])
+const {hide, toasts} = useToast()
 
-const handleDestroy = (id: string) => {
-  //we made want to disable reactivity for deletes. Future Note
-  props.instance?.remove(id)
-}
+const pluckToastItem = (payload: Toast & {self: symbol}) => omit(payload, ['value', 'self', 'pos'])
+
+defineExpose({
+  hide,
+})
 </script>

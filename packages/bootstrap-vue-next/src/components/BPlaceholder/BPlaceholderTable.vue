@@ -112,13 +112,13 @@ const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
 const headerColumnsNumber = useToNumber(computedHeaderColumns)
 const footerColumnsNumber = useToNumber(computedFooterColumns)
 
-const columnsNumber = computed<number>(() => columnsToNumber.value || 5)
-const rowsNumber = computed<number>(() => rowsToNumber.value || 3)
+const columnsNumber = computed(() => columnsToNumber.value || 5)
+const rowsNumber = computed(() => rowsToNumber.value || 3)
 
-const computedHeaderColumnsLength = computed<number>(() =>
+const computedHeaderColumnsLength = computed(() =>
   props.headerColumns === undefined ? columnsNumber.value : headerColumnsNumber.value
 )
-const computedFooterColumnsLength = computed<number>(() =>
+const computedFooterColumnsLength = computed(() =>
   props.footerColumns === undefined ? columnsNumber.value : footerColumnsNumber.value
 )
 
