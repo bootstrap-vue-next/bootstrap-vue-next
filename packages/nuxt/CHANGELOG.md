@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.12.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.12.4...nuxt-v0.12.5) (2023-09-15)
+
+
+### Features
+
+* **BToast:** I did not eat today and I I have been working for 12 hours straight on this. Enjoy donate at https://opencollective.com/bootstrap-vue-next ([a393473](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a393473373337e29914d93ace838587e2d829a55))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.12.5
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.12.5
+
 ## [0.12.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.12.3...nuxt-v0.12.4) (2023-09-14)
 
 
