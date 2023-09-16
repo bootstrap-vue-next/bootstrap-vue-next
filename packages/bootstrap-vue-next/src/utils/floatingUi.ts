@@ -80,7 +80,7 @@ export const resolveContent = (
 }
 
 export const resolveDirectiveProps = (binding: DirectiveBinding, el: HTMLElement) => ({
-  target: () => el,
+  target: el,
   modelValue: binding.modifiers.show,
   inline: binding.modifiers.inline,
   click: binding.modifiers.click,

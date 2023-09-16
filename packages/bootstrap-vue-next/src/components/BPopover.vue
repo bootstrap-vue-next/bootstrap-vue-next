@@ -80,19 +80,20 @@ import {
   type ComponentPublicInstance,
   computed,
   type CSSProperties,
+  type MaybeRef,
   nextTick,
   onBeforeUnmount,
   onMounted,
   readonly,
   ref,
   toRef,
+  unref,
   type VNode,
   watch,
   watchEffect,
 } from 'vue'
 import {useBooleanish, useId} from '../composables'
 import type {Booleanish, BPopoverPlacement, ClassValue, ColorVariant} from '../types'
-
 defineOptions({
   inheritAttrs: false,
 })
@@ -101,20 +102,12 @@ const props = withDefaults(
   defineProps<{
     modelValue?: Booleanish
     container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-    target?:
-      | (() => HTMLElement | VNode)
-      | string
-      | ComponentPublicInstance<HTMLElement>
-      | HTMLSpanElement
-      | HTMLElement
-      | null
-    reference?:
-      | (() => HTMLElement | VNode)
-      | string
-      | ComponentPublicInstance<HTMLElement>
-      | HTMLSpanElement
-      | HTMLElement
-      | null
+    target?: MaybeRef<
+      string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
+    >
+    reference?: MaybeRef<
+      string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
+    >
     content?: string
     id?: string
     title?: string
@@ -230,39 +223,6 @@ const targetTrigger = ref<HTMLElement | null>(null)
 const arrow = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
 const placeholder = ref<HTMLElement | null>(null)
-
-const cleanElementProp = (
-  target:
-    | (() => HTMLElement | VNode)
-    | string
-    | ComponentPublicInstance<HTMLElement>
-    | HTMLElement
-    | undefined
-): HTMLElement | string | undefined => {
-  if (typeof target === 'string') {
-    return target
-  }
-  if (target instanceof HTMLElement) {
-    return target
-    // eslint-disable-next-line
-  }
-  if (typeof target === 'function')
-    return (target() as ComponentPublicInstance<HTMLElement>).$el
-      ? (target() as ComponentPublicInstance<HTMLElement>).$el
-      : target()
-  if (typeof target !== 'undefined')
-    return (target as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
-  return undefined
-}
-
-const getElement = (element: HTMLElement | string | undefined): HTMLElement | undefined => {
-  if (!element) return undefined
-  if (typeof element === 'string') {
-    const idElement = document.getElementById(element)
-    return idElement ? idElement : undefined
-  }
-  return element
-}
 
 const sanitizedTitle = computed(() =>
   props.title ? sanitizeHtml(props.title, DefaultAllowlist) : ''
@@ -434,9 +394,12 @@ const hideFn = (e: Event) => {
         emit('hidden', buildTriggerableEvent('hidden'))
       })
     } else {
-      setTimeout(() => {
-        hideFn(e)
-      }, delay < 50 ? 50 : delay )
+      setTimeout(
+        () => {
+          hideFn(e)
+        },
+        delay < 50 ? 50 : delay
+      )
     }
   }, delay)
 }
@@ -447,11 +410,28 @@ defineExpose({
   toggle,
 })
 
+const getElement = (
+  target: MaybeRef<
+    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
+  >
+): HTMLElement | undefined => {
+  const element = unref(target)
+  if (!element) return undefined
+  if (typeof element === 'string') {
+    const idElement = document.getElementById(element)
+    return idElement ? idElement : undefined
+  }
+  if ((element as ComponentPublicInstance<HTMLElement>).$el) {
+    return (element as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
+  }
+  return element
+}
+
 const bind = () => {
   // TODO: is this the best way to bind the events?
   // we place a span and get the next element sibling fo rthe listeners
   if (props.target) {
-    const elem = getElement(cleanElementProp(props.target))
+    const elem = getElement(props.target)
     if (elem) {
       trigger.value = elem
     } else {
@@ -462,7 +442,7 @@ const bind = () => {
     trigger.value = placeholder.value?.nextElementSibling as HTMLElement
   }
   if (props.reference) {
-    const elem = getElement(cleanElementProp(props.reference))
+    const elem = getElement(props.reference)
     if (elem) {
       targetTrigger.value = elem
     } else {
@@ -503,8 +483,10 @@ onClickOutside(
 )
 
 watch([() => props.click, () => props.target, () => props.reference], () => {
+  console.log('change')
   unbind()
   bind()
+  // update()
 })
 
 onMounted(bind)
