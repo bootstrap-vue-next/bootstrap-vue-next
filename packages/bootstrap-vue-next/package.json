@@ -13,6 +13,7 @@
       "require": "./dist/bootstrap-vue-next.umd.js"
     },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
+    "./src/*": "./src/*",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
   },
   "files": [
