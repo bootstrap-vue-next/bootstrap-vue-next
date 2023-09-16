@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.13.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.0...bootstrapvuenext-v0.13.1) (2023-09-16)
+
+
+### Bug Fixes
+
+* BModal remove aria-labelledby when not present ([6d6acca](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6d6acca4fe820896657843a9d88c2f494d9fb259))
+
 ## [0.13.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.12.4...bootstrapvuenext-v0.13.0) (2023-09-15)
 
 
