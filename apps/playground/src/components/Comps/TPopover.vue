@@ -100,11 +100,7 @@
       </BCol>
       <BCol>
         <BButton ref="popoverRef">Hover popover by ref with ref target</BButton>
-        <BPopover
-          :target="() => popoverRef"
-          :reference="() => popoverContainerRef"
-          placement="right"
-        >
+        <BPopover :target="popoverRef" :reference="popoverContainerRef" placement="right">
           <template #title>
             Popover
             <em>Title</em>
@@ -125,7 +121,7 @@
           >Manual popover showing</BButton
         >
         <BPopover
-          :target="() => popoverManualButtonRef"
+          :target="popoverManualButtonRef"
           manual
           :model-value="manualClickPopoverExample"
           placement="right"
