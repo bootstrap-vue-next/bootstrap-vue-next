@@ -1,5 +1,5 @@
 <template>
-  <BPopover ref="popover" :tooltip="true" v-bind="$props">
+  <BPopover ref="popover" tooltip v-bind="$props">
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
