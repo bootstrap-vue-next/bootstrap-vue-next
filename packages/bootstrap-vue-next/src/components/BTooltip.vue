@@ -1,5 +1,5 @@
 <template>
-  <BPopover ref="popover" tooltip>
+  <BPopover ref="popover" tooltip v-bind="$props">
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
@@ -9,6 +9,36 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import BPopover from './BPopover.vue'
+import type {BPopoverProps} from '../types'
+
+withDefaults(defineProps<BPopoverProps>(), {
+  floatingMiddleware: undefined,
+  title: undefined,
+  id: undefined,
+  content: undefined,
+  modelValue: undefined,
+  container: undefined,
+  customClass: undefined,
+  placement: undefined,
+  strategy: undefined,
+  delay: undefined,
+  click: undefined,
+  manual: undefined,
+  variant: undefined,
+  offset: undefined,
+  noFlip: undefined,
+  noShift: undefined,
+  noFade: undefined,
+  noAutoClose: undefined,
+  hide: undefined,
+  realtime: undefined,
+  inline: undefined,
+  tooltip: undefined,
+  html: undefined,
+  reference: undefined,
+  target: undefined,
+  noninteractive: undefined,
+})
 
 const popover = ref<null | InstanceType<typeof BPopover>>(null)
 

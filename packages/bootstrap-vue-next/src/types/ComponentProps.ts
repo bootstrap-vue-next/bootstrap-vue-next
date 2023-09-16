@@ -12,7 +12,8 @@ import type {Size} from './Size'
 import type {ButtonVariant} from './ButtonVariant'
 import type {ButtonType} from './ButtonType'
 import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
-import type {ComponentPublicInstance} from 'vue'
+import type {ComponentPublicInstance, MaybeRef} from 'vue'
+import type {BPopoverPlacement} from './BPopoverPlacement'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -188,3 +189,41 @@ interface BToastIntermediate {
 }
 
 export type BToastProps = BToastIntermediate & Omit<BLinkProps, 'event' | 'routerTag'>
+
+export interface BPopoverProps {
+  modelValue?: Booleanish
+  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+  target?: MaybeRef<
+    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
+  >
+  reference?: MaybeRef<
+    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
+  >
+  content?: string
+  id?: string
+  title?: string
+  delay?:
+    | number
+    | {
+        show: number
+        hide: number
+      }
+  click?: Booleanish
+  manual?: Booleanish
+  variant?: ColorVariant | null
+  offset?: number | string | null
+  customClass?: ClassValue
+  placement?: BPopoverPlacement
+  strategy?: Strategy
+  floatingMiddleware?: Middleware[]
+  noFlip?: Booleanish
+  noShift?: Booleanish
+  noFade?: Booleanish
+  noAutoClose?: Booleanish
+  hide?: Booleanish
+  realtime?: Booleanish
+  inline?: Booleanish
+  tooltip?: Booleanish
+  html?: Booleanish
+  noninteractive?: Booleanish
+}

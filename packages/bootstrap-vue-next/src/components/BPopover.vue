@@ -64,7 +64,6 @@ import {
   offset as offsetMiddleware,
   type Placement as OriginalPlacement,
   shift,
-  type Strategy,
   useFloating,
 } from '@floating-ui/vue'
 import {
@@ -88,83 +87,43 @@ import {
   ref,
   toRef,
   unref,
-  type VNode,
   watch,
   watchEffect,
 } from 'vue'
 import {useBooleanish, useId} from '../composables'
-import type {Booleanish, BPopoverPlacement, ClassValue, ColorVariant} from '../types'
+import type {BPopoverProps} from '../types'
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<{
-    modelValue?: Booleanish
-    container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-    target?: MaybeRef<
-      string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
-    >
-    reference?: MaybeRef<
-      string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
-    >
-    content?: string
-    id?: string
-    title?: string
-    delay?:
-      | number
-      | {
-          show: number
-          hide: number
-        }
-    click?: Booleanish
-    manual?: Booleanish
-    variant?: ColorVariant | null
-    offset?: number | string | null
-    customClass?: ClassValue
-    placement?: BPopoverPlacement
-    strategy?: Strategy
-    floatingMiddleware?: Middleware[]
-    noFlip?: Booleanish
-    noShift?: Booleanish
-    noFade?: Booleanish
-    noAutoClose?: Booleanish
-    hide?: Booleanish
-    realtime?: Booleanish
-    inline?: Booleanish
-    tooltip?: Booleanish
-    html?: Booleanish
-    noninteractive?: Booleanish
-  }>(),
-  {
-    floatingMiddleware: undefined,
-    title: undefined,
-    id: undefined,
-    content: undefined,
-    modelValue: false,
-    container: undefined,
-    customClass: '',
-    placement: 'top',
-    strategy: 'absolute',
-    delay: () => ({show: 100, hide: 300}),
-    click: false,
-    manual: false,
-    variant: null,
-    offset: null,
-    noFlip: false,
-    noShift: false,
-    noFade: false,
-    noAutoClose: false,
-    hide: true,
-    realtime: false,
-    inline: false,
-    tooltip: false,
-    html: false,
-    reference: null,
-    target: null,
-    noninteractive: false,
-  }
-)
+const props = withDefaults(defineProps<BPopoverProps>(), {
+  floatingMiddleware: undefined,
+  title: undefined,
+  id: undefined,
+  content: undefined,
+  modelValue: false,
+  container: undefined,
+  customClass: '',
+  placement: 'top',
+  strategy: 'absolute',
+  delay: () => ({show: 100, hide: 300}),
+  click: false,
+  manual: false,
+  variant: null,
+  offset: null,
+  noFlip: false,
+  noShift: false,
+  noFade: false,
+  noAutoClose: false,
+  hide: true,
+  realtime: false,
+  inline: false,
+  tooltip: false,
+  html: false,
+  reference: null,
+  target: null,
+  noninteractive: false,
+})
 
 const emit = defineEmits<{
   'show': [value: BvTriggerableEvent]
