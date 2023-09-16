@@ -1,5 +1,5 @@
 <template>
-  <BPopover ref="popover" tooltip v-bind="$props">
+  <BPopover ref="popover" :tooltip="true" v-bind="$props">
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
@@ -11,7 +11,7 @@ import {ref} from 'vue'
 import BPopover from './BPopover.vue'
 import type {BPopoverProps} from '../types'
 
-withDefaults(defineProps<BPopoverProps>(), {
+withDefaults(defineProps<Omit<BPopoverProps, 'tooltip'>>(), {
   floatingMiddleware: undefined,
   title: undefined,
   id: undefined,
@@ -33,7 +33,6 @@ withDefaults(defineProps<BPopoverProps>(), {
   hide: undefined,
   realtime: undefined,
   inline: undefined,
-  tooltip: undefined,
   html: undefined,
   reference: undefined,
   target: undefined,
