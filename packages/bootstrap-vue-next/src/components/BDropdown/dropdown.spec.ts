@@ -466,4 +466,12 @@ describe('dropdown', () => {
     await $bbutton.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('toggle')
   })
+  it('container prop to teleport to body', async () => {
+    const wrapper = mount(BDropdown, {
+      props: {container: 'body'},
+    })
+    expect(wrapper.exists()).toBe(true)
+    expect(wrapper.element.querySelector('ul')).toBe(null)
+    expect(document.body?.querySelector('.dropdown-menu')).not.toBe(null)
+  })
 })

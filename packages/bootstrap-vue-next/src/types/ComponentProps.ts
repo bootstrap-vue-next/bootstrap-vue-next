@@ -12,6 +12,7 @@ import type {Size} from './Size'
 import type {ButtonVariant} from './ButtonVariant'
 import type {ButtonType} from './ButtonType'
 import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
+import type {ComponentPublicInstance} from 'vue'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -161,6 +162,7 @@ export interface BDropdownProps {
   floatingMiddleware?: Middleware[]
   splitTo?: RouteLocationRaw
   boundary?: Boundary | RootBoundary
+  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
 }
 
 interface BToastIntermediate {
