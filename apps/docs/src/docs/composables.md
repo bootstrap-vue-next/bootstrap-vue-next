@@ -23,6 +23,18 @@ const composablesList: {name: string; description: string}[] = [
   {
     name: 'useColorMode',
     description: 'Implement a color scheme to reactively use light/dark or other color modes. Light and dark themes are included by default, but you can create more by reviewing the usage on the Bootstrap v5 documentation (Color Modes)'
+  },
+  {
+    name: 'useModal',
+    description: 'Conveniently hide or show modals programmatically from anywhere in the app',
+  },
+  {
+    name: 'useModalController',
+    description: 'Hide modals from anywhere in the app, or close all modals from one source using this utility',
+  },
+  {
+    name: 'useToast',
+    description: 'Conveniently orchestrate a push notification system by showing or hiding Toasts with our useToast composable system',
   }
 ]
 

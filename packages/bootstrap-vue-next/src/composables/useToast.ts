@@ -7,7 +7,10 @@ const posDefault = 'top-right'
 export default createSharedComposable(() => {
   const toasts = ref<(Toast & {self: symbol})[]>([])
 
-  const show = (...[el, obj]: [el: string, obj?: Omit<Toast, 'body'>] | [el: Toast]) => {
+  /**
+   * @returns {symbol} A symbol that corresponds to its unique id. You can pass this id to the hide function to force a Toast to hide
+   */
+  const show = (...[el, obj]: [el: string, obj?: Omit<Toast, 'body'>] | [el: Toast]): symbol => {
     const payload: Toast = {pos: posDefault}
     if (typeof el === 'string') {
       Object.assign(payload, obj, {
@@ -17,12 +20,15 @@ export default createSharedComposable(() => {
     } else {
       Object.assign(payload, el, {value: el.value || 5000} satisfies Toast)
     }
-    toasts.value.push({...payload, self: Symbol()})
+    const self = Symbol()
+
+    toasts.value.push({...payload, self})
+
+    return self
   }
 
   /**
-   * It's not a good idea to call this method. It should only be used internally. First off, it requires a symbol. Second off, even if it supplied an index,
-   * it could be out of order. You don't exactly know which order a Toast came in
+   * You can get the symbol param from the return value from the show method
    */
   const hide = (self: symbol) => {
     const ind = toasts.value.findIndex((el) => el.self === self)
