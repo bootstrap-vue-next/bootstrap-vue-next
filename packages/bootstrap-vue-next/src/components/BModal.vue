@@ -15,7 +15,7 @@
         class="modal"
         :class="modalClasses"
         role="dialog"
-        :aria-labelledby="`${computedId}-label`"
+        :aria-labelledby="!hideHeaderBoolean ? `${computedId}-label` : undefined"
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
