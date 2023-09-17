@@ -299,6 +299,52 @@ const {show} = useToast()
 
 </HighlightCard>
 
+## Programmatically Hiding a Toast
+
+Hiding a `Toast` programmatically is very simple. Simply use the return value from the show method, and pass it into the hide function
+
+<HighlightCard>
+  <BButtonGroup>
+    <BButton @click="showMe" variant="success">
+      Show the Toast
+    </BButton>
+    <BButton @click="hideMe" variant="danger">
+      Hide the Toast
+    </BButton>
+  </BButtonGroup>
+  <template #html>
+
+```vue
+<template>
+  <BButtonGroup>
+    <BButton @click="showMe" variant="success"> Show the Toast </BButton>
+    <BButton @click="hideMe" variant="danger"> Hide the Toast </BButton>
+  </BButtonGroup>
+</template>
+
+<script setup lang="ts">
+const {show, hide} = useToast()
+
+let showValue: undefined | symbol
+
+const showMe = () => {
+  if (typeof showValue === 'symbol') return
+  // `show` returns a symbol
+  showValue = show('Showing', {value: true, variant: 'success', pos: 'bottom-center'})
+}
+
+const hideMe = () => {
+  if (showValue === undefined) return
+  hide(showValue)
+  showValue = undefined
+}
+</script>
+```
+
+  </template>
+
+</HighlightCard>
+
 ## Accessibility
 
 Toasts are intended to be **small interruptions** to your visitors or users, so to help those with screen readers and similar assistive technologies, toasts are wrapped in an aria-live region. Changes to live regions (such as injecting/updating a toast component) are automatically announced by screen readers without needing to move the user's focus or otherwise interrupt the user. Additionally, `aria-atomic="true"` is automatically set to ensure that the entire toast is always announced as a single (atomic) unit, rather than announcing what was changed (which could lead to problems if you only update part of the toast's content, or if displaying the same toast content at a later point in time).
@@ -314,7 +360,7 @@ import {BButtonGroup, BButton, BToast, useToast} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 import {ref} from 'vue'
 
-const {show, toasts} = useToast()
+const {show, hide, toasts} = useToast()
 
 const active = ref(true)
 
@@ -333,4 +379,17 @@ const chunks = [
   all[ch] = [].concat(all[ch] || [], one)
   return all
 }, [])
+
+let showValue: undefined | symbol
+
+const showMe = () => {
+  if (typeof showValue === 'symbol') return
+  showValue = show('Showing', {value: true, variant: 'success', pos: 'bottom-center'})
+}
+
+const hideMe = () => {
+  if (showValue === undefined) return
+  hide(showValue)
+  showValue = undefined
+}
 </script>

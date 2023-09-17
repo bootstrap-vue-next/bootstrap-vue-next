@@ -61,6 +61,19 @@ pnpm add unplugin-vue-components -D
   </BCard>
 
   </BTab>
+  <BTab title="BUN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
+bun add bootstrap bootstrap-vue-next
+
+bun add unplugin-vue-components -D
+```
+
+  </BCard>
+
+  </BTab>
   <BTab title="YARN">
 
   <BCard class="bg-body-tertiary">
@@ -159,6 +172,17 @@ pnpm add bootstrap bootstrap-vue-next
   </BCard>
 
   </BTab>
+  <BTab title="BUN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
+bun add bootstrap bootstrap-vue-next
+```
+
+  </BCard>
+
+  </BTab>
   <BTab title="YARN">
 
   <BCard class="bg-body-tertiary">
@@ -221,6 +245,17 @@ In your Nuxt3 application, install the necessary packages for `bootstrap-vue-nex
 
 ```bash
 pnpm add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
+```
+
+  </BCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
+bun add bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt -D
 ```
 
   </BCard>
