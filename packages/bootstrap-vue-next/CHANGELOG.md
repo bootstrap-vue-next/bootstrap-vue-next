@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.13.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.1...bootstrapvuenext-v0.13.2) (2023-09-17)
+
+
+### Features
+
+* **BTooltip:** add type interfaces for BPopover props ([#1463](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1463)) ([6dff95a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6dff95af11bbb5eb0d5a562ce0b14dd029d70511))
+
 ## [0.13.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.0...bootstrapvuenext-v0.13.1) (2023-09-16)
 
 
