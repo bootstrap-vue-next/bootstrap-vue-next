@@ -41,6 +41,17 @@ pnpm add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
   </BCard>
 
   </BTab>
+  <BTab title="BUN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
+bun add unplugin-icons unplugin-vue-components @vue/compiler-sfc -D
+```
+
+  </BCard>
+
+  </BTab>
   <BTab title="YARN">
 
   <BCard class="bg-body-tertiary">
@@ -141,6 +152,17 @@ Of course, there is always the ability to slim down. To slim down the installati
 
 ```bash
 pnpm add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
+```
+
+  </BCard>
+
+  </BTab>
+  <BTab title="BUN">
+
+  <BCard class="bg-body-tertiary">
+
+```bash
+bun add unplugin-icons @vue/compiler-sfc @iconify-json/bi -D
 ```
 
   </BCard>
