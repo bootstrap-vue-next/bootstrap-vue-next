@@ -168,12 +168,12 @@ const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
 
 defineExpose({
+  ...input,
   focus: () => {
     focused.value = true
   },
   blur: () => {
     focused.value = false
   },
-  input,
 })
 </script>

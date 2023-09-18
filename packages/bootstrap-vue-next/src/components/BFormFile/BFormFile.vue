@@ -154,6 +154,7 @@ watch(modelValue, (newValue) => {
 })
 
 defineExpose({
+  ...input,
   focus: () => {
     focused.value = true
   },
@@ -161,6 +162,5 @@ defineExpose({
     focused.value = false
   },
   reset,
-  input,
 })
 </script>

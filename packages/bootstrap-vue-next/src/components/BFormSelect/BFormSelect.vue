@@ -159,12 +159,12 @@ const localValue = computed({
 })
 
 defineExpose({
+  ...input,
   focus: () => {
     focused.value = true
   },
   blur: () => {
     focused.value = false
   },
-  input,
 })
 </script>
