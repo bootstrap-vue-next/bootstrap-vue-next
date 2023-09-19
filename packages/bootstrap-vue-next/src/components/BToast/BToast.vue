@@ -204,5 +204,10 @@ watch(isHovering, (newValue) => {
 
 onBeforeUnmount(stop)
 
-defineExpose({pause, resume, restart, stop})
+defineExpose({
+  pause,
+  resume,
+  restart,
+  stop,
+})
 </script>

@@ -101,8 +101,8 @@ const computedStyles = computed<CSSProperties>(() => ({
 }))
 
 defineExpose({
+  element: input,
   focus,
   blur,
-  input,
 })
 </script>
