@@ -112,9 +112,9 @@ const computedClasses = computed(() => {
 })
 
 defineExpose({
+  element: input,
   focus,
   blur,
-  input,
 })
 
 // const highlight = () => {

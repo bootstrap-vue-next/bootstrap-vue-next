@@ -315,7 +315,12 @@ watch(isHovering, (newValue) => {
   onMouseLeave()
 })
 
-defineExpose({pause, resume, prev, next})
+defineExpose({
+  pause,
+  resume,
+  prev,
+  next,
+})
 
 provide(carouselInjectionKey, {
   background: toRef(() => props.background),

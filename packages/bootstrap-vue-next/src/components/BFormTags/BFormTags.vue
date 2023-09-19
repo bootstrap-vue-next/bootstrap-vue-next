@@ -455,12 +455,12 @@ const removeTag = (tag?: string): void => {
 
 // TODO these focus/blur events aren't quite in line with use useFormInput implementation. Perhaps we should bring them together?
 defineExpose({
+  element: input,
   focus: () => {
     focused.value = true
   },
   blur: () => {
     focused.value = false
   },
-  input,
 })
 </script>
