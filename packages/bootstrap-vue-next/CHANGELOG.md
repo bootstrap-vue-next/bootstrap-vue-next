@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.13.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.2...bootstrapvuenext-v0.13.3) (2023-09-19)
+
+
+### Bug Fixes
+
+* **BForm:** expose the form so you can programatically submit fixes bootstrap-vue-next[#913](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/913) ([4269fa5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4269fa5498820ef134f21656877f02929650543b))
+
 ## [0.13.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.1...bootstrapvuenext-v0.13.2) (2023-09-17)
 
 
