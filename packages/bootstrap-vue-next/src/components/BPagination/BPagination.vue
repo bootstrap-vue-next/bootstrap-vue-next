@@ -1,6 +1,6 @@
 <script lang="ts">
 import {BvEvent, normalizeSlot, toInteger} from '../../utils'
-import {computed, defineComponent, h, type PropType, reactive, watch} from 'vue'
+import {computed, defineComponent, h, type PropType, reactive, toRef, watch} from 'vue'
 import type {
   AlignmentJustifyContent,
   Booleanish,
@@ -80,13 +80,11 @@ export default defineComponent({
     const lastNumberBoolean = useBooleanish(() => props.lastNumber)
     const pillsBoolean = useBooleanish(() => props.pills)
 
-    const justifyAlign = computed<AlignmentJustifyContent>(() =>
-      props.align === 'fill' ? 'start' : props.align
-    )
+    const justifyAlign = toRef(() => (props.align === 'fill' ? 'start' : props.align))
     const alignment = useAlignment(justifyAlign)
 
     // Use Active to on page-item to denote active tab
-    const numberOfPages = computed(() =>
+    const numberOfPages = toRef(() =>
       Math.ceil(sanitizeTotalRows(props.totalRows) / sanitizePerPage(props.perPage))
     )
 
@@ -234,8 +232,8 @@ export default defineComponent({
       // })
     }
 
-    const btnSize = computed(() => (props.size ? `pagination-${props.size}` : ''))
-    const styleClass = computed(() => (pillsBoolean.value ? 'b-pagination-pills' : ''))
+    const btnSize = toRef(() => (props.size ? `pagination-${props.size}` : ''))
+    const styleClass = toRef(() => (pillsBoolean.value ? 'b-pagination-pills' : ''))
 
     watch(modelValue, (newValue) => {
       const calculatedValue = sanitizeCurrentPage(newValue, numberOfPages.value)

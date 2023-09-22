@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {toRef} from 'vue'
 import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 import {useBooleanish} from '../../composables'
 import BTableSimple from '../BTable/BTableSimple.vue'
@@ -107,18 +107,18 @@ defineSlots<{
 
 const columnsToNumber = useToNumber(() => props.columns)
 const rowsToNumber = useToNumber(() => props.rows)
-const computedHeaderColumns = computed(() => props.headerColumns ?? NaN)
-const computedFooterColumns = computed(() => props.footerColumns ?? NaN)
+const computedHeaderColumns = toRef(() => props.headerColumns ?? NaN)
+const computedFooterColumns = toRef(() => props.footerColumns ?? NaN)
 const headerColumnsNumber = useToNumber(computedHeaderColumns)
 const footerColumnsNumber = useToNumber(computedFooterColumns)
 
-const columnsNumber = computed(() => columnsToNumber.value || 5)
-const rowsNumber = computed(() => rowsToNumber.value || 3)
+const columnsNumber = toRef(() => columnsToNumber.value || 5)
+const rowsNumber = toRef(() => rowsToNumber.value || 3)
 
-const computedHeaderColumnsLength = computed(() =>
+const computedHeaderColumnsLength = toRef(() =>
   props.headerColumns === undefined ? columnsNumber.value : headerColumnsNumber.value
 )
-const computedFooterColumnsLength = computed(() =>
+const computedFooterColumnsLength = toRef(() =>
   props.footerColumns === undefined ? columnsNumber.value : footerColumnsNumber.value
 )
 

@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, watch} from 'vue'
+import {computed, ref, toRef, watch} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId, useStateClass} from '../../composables'
 import type {
@@ -239,7 +239,7 @@ const removeOnDeleteBoolean = useBooleanish(() => props.removeOnDelete)
 const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
 const tagPillsBoolean = useBooleanish(() => props.tagPills)
-const limitNumber = useToNumber(computed(() => props.limit ?? NaN))
+const limitNumber = useToNumber(toRef(() => props.limit ?? NaN))
 
 const stateClass = useStateClass(stateBoolean)
 
@@ -249,7 +249,7 @@ const {focused} = useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
-const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
+const _inputId = toRef(() => props.inputId || `${computedId.value}input__`)
 const tags = ref<string[]>(modelValue.value)
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
@@ -271,8 +271,8 @@ const isDuplicate = computed(() => tags.value.includes(inputValue.value))
 const isInvalid = computed(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = computed(() => tags.value.length === limitNumber.value)
-const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
+const isLimitReached = toRef(() => tags.value.length === limitNumber.value)
+const disableAddButton = toRef(() => !isInvalid.value && !isDuplicate.value)
 
 const slotAttrs = computed(() => ({
   addButtonText: props.addButtonText,

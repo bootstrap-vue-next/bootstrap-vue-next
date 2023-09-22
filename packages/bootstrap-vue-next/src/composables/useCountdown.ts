@@ -1,15 +1,5 @@
 import {useIntervalFn, type UseIntervalFnOptions} from '@vueuse/core'
-import {
-  computed,
-  type ComputedRef,
-  type MaybeRefOrGetter,
-  readonly,
-  ref,
-  type Ref,
-  toRef,
-  watch,
-  watchEffect,
-} from 'vue'
+import {type MaybeRefOrGetter, readonly, ref, type Ref, toRef, watch, watchEffect} from 'vue'
 
 type VoidFn = () => void
 
@@ -20,7 +10,7 @@ interface CountdownReturn {
   stop: VoidFn
   resume: VoidFn
   pause: VoidFn
-  value: ComputedRef<number>
+  value: Readonly<Ref<number>>
 }
 
 /**
@@ -44,9 +34,9 @@ export default (
 
   const intervalsPassed = ref(0)
 
-  const amountOfIntervals = computed(() => Math.ceil(resolvedLength.value / resolvedInterval.value))
+  const amountOfIntervals = toRef(() => Math.ceil(resolvedLength.value / resolvedInterval.value))
 
-  const value = computed(() =>
+  const value = toRef(() =>
     isActive.value || isPaused.value
       ? Math.round(resolvedLength.value - intervalsPassed.value * resolvedInterval.value)
       : 0

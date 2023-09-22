@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, useSlots} from 'vue'
+import {computed, toRef, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
@@ -72,8 +72,8 @@ const slots = useSlots()
 const overlayBoolean = useBooleanish(() => props.overlay)
 const resolvedBackgroundClasses = useBackgroundVariant(props)
 
-const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
-const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))
+const hasTitleSlot = toRef(() => !isEmptySlot(slots.title))
+const hasSubtitleSlot = toRef(() => !isEmptySlot(slots.subtitle))
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,

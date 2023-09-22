@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, ref, type RendererElement, useSlots} from 'vue'
+import {computed, nextTick, ref, type RendererElement, toRef, useSlots} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
@@ -223,18 +223,16 @@ const {focused} = useFocus(element, {
 const isActive = ref(modelValueBoolean.value)
 const lazyLoadCompleted = ref(false)
 
-const showBackdrop = computed(
-  () => backdropBoolean.value === true && modelValueBoolean.value === true
-)
+const showBackdrop = toRef(() => backdropBoolean.value === true && modelValueBoolean.value === true)
 
-const lazyShowing = computed(
+const lazyShowing = toRef(
   () =>
     lazyBoolean.value === false ||
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
 const headerCloseClasses = computed(() => [
   {'text-reset': !hasHeaderCloseSlot.value},
   props.headerCloseClass,
@@ -244,7 +242,7 @@ const headerCloseAttrs = computed(() => ({
   class: headerCloseClasses.value,
 }))
 
-const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
+const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
 const computedClasses = computed(() => [
   // props.responsive === undefined ? 'offcanvas' : `offcanvas-${props.responsive}`,
   'offcanvas', // Remove when above check is fixed

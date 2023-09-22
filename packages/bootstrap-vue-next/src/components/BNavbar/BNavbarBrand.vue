@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import type {BLinkProps} from '../../types'
 import {useBLinkHelper} from '../../composables'
@@ -71,5 +71,5 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
+const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
 </script>

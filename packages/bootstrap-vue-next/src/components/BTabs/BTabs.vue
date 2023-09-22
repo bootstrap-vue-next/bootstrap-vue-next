@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, provide, ref, useSlots, type VNode, watch} from 'vue'
+import {computed, onMounted, provide, ref, toRef, useSlots, type VNode, watch} from 'vue'
 import {BvEvent, getId, getSlotElements, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {AlignmentJustifyContent, Booleanish, ClassValue} from '../../types'
@@ -250,7 +250,7 @@ const tabs = computed(() =>
   })
 )
 
-const showEmpty = computed(() => !(tabs?.value && tabs.value.length > 0))
+const showEmpty = toRef(() => !(tabs?.value && tabs.value.length > 0))
 
 const computedClasses = computed(() => ({
   'd-flex': verticalBoolean.value,

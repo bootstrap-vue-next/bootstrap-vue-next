@@ -158,7 +158,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 import {get, isObject, startCase, titleCase} from '../../utils'
 import type {
@@ -230,7 +230,7 @@ const tableClasses = computed(() => [
 ])
 
 const computedFields = computed(() => normalizeFields(props.fields, props.items))
-const computedFieldsTotal = computed(() => computedFields.value.length + virtualFieldsNumber.value)
+const computedFieldsTotal = toRef(() => computedFields.value.length + virtualFieldsNumber.value)
 
 const getFieldHeadLabel = (field: TableField) => {
   if (typeof field === 'string') return titleCase(field)

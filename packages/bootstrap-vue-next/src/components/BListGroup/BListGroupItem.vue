@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, useAttrs} from 'vue'
+import {computed, inject, toRef, useAttrs} from 'vue'
 import type {BLinkProps, Booleanish} from '../../types'
 import {useBLinkHelper, useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
@@ -74,7 +74,7 @@ const disabledBoolean = useBooleanish(() => props.disabled)
 
 const {computedLink} = useBLinkHelper(props)
 
-const isLink = computed(() => !buttonBoolean.value && computedLink.value)
+const isLink = toRef(() => !buttonBoolean.value && computedLink.value)
 const tagComputed = computed(() =>
   parentData?.numbered.value
     ? 'li'

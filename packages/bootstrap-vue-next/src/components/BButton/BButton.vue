@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import BSpinner from '../BSpinner.vue'
 import {useBLinkHelper, useBooleanish} from '../../composables'
 import type {BLinkProps, Booleanish, ButtonType, ButtonVariant, Size} from '../../types'
@@ -127,12 +127,12 @@ const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
 const {computedLink} = useBLinkHelper(props)
 
-const isToggle = computed(() => typeof pressedBoolean.value === 'boolean')
-const isButton = computed(
+const isToggle = toRef(() => typeof pressedBoolean.value === 'boolean')
+const isButton = toRef(
   () => props.tag === 'button' && props.href === undefined && props.to === undefined
 )
-const isBLink = computed(() => props.to !== undefined)
-const nonStandardTag = computed(() => (props.href !== undefined ? false : !isButton.value))
+const isBLink = toRef(() => props.to !== undefined)
+const nonStandardTag = toRef(() => (props.href !== undefined ? false : !isButton.value))
 
 const computedClasses = computed(() => [
   [`btn-${props.size}`],
@@ -146,7 +146,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedTag = computed(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
+const computedTag = toRef(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
 
 const clicked = (e: MouseEvent): void => {
   if (disabledBoolean.value) {

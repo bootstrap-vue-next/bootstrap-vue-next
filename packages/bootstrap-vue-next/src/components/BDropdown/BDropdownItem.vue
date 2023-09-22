@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
-import {computed, inject} from 'vue'
+import {computed, inject, toRef} from 'vue'
 import type {BLinkProps, ClassValue} from '../../types'
 import {useBLinkHelper, useBooleanish} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
@@ -84,7 +84,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedTag = computed(() => (computedLink.value ? BLink : props.href ? 'a' : 'button'))
+const computedTag = toRef(() => (computedLink.value ? BLink : props.href ? 'a' : 'button'))
 
 const collapseData = inject(collapseInjectionKey, null)
 const dropdownData = inject(dropdownInjectionKey, null)

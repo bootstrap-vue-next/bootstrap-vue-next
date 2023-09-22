@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import type {BProgressBarProps} from '../../types'
 import {useBackgroundVariant, useBooleanish} from '../../composables'
-import {computed, inject} from 'vue'
+import {computed, inject, toRef} from 'vue'
 import {progressInjectionKey} from '../../utils'
 import {useToNumber} from '@vueuse/core'
 
@@ -63,8 +63,8 @@ const computedClasses = computed(() => [
 
 const numberPrecision = useToNumber(() => props.precision)
 const numberValue = useToNumber(() => props.value)
-const numberMax = useToNumber(computed(() => props.max ?? NaN))
-const parentMaxNumber = useToNumber(computed(() => parentData?.max.value ?? NaN))
+const numberMax = useToNumber(toRef(() => props.max ?? NaN))
+const parentMaxNumber = useToNumber(toRef(() => parentData?.max.value ?? NaN))
 
 const computedLabel = computed(() =>
   props.labelHtml !== undefined

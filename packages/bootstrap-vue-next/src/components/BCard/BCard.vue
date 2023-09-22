@@ -67,7 +67,7 @@ import type {
   TextColorVariant,
 } from '../../types'
 import {isEmptySlot} from '../../utils'
-import {computed, useSlots} from 'vue'
+import {computed, toRef, useSlots} from 'vue'
 import {useBackgroundVariant, useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
@@ -182,8 +182,8 @@ const imgEndBoolean = useBooleanish(() => props.imgEnd)
 const imgStartBoolean = useBooleanish(() => props.imgStart)
 const noBodyBoolean = useBooleanish(() => props.noBody)
 
-const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
-const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
+const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
+const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
 
 const resolvedBackgroundClasses = useBackgroundVariant(props)
 

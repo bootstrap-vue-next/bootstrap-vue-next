@@ -116,7 +116,7 @@ provide(radioGroupKey, {
       emit('change', value)
     })
   },
-  modelValue: computed(() => modelValue.value),
+  modelValue: toRef(() => modelValue.value),
   buttonVariant: toRef(() => props.buttonVariant),
   form: toRef(() => props.form),
   name: computedName,
@@ -124,7 +124,7 @@ provide(radioGroupKey, {
   state: stateBoolean,
   plain: plainBoolean,
   size: toRef(() => props.size),
-  inline: computed(() => !stackedBoolean.value),
+  inline: toRef(() => !stackedBoolean.value),
   required: requiredBoolean,
   disabled: disabledBoolean,
 })

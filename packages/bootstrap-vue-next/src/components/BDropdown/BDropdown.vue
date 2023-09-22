@@ -44,7 +44,7 @@
         ref="floating"
         :style="floatingStyles"
         class="dropdown-menu show"
-        :class="dropdownMenuClasses"
+        :class="menuClass"
         :aria-labelledby="computedId"
         :role="role"
         @click="onClickInside"
@@ -155,7 +155,7 @@ const noShiftBoolean = useBooleanish(() => props.noShift)
 const lazyBoolean = useBooleanish(() => props.lazy)
 const splitDisabledBoolean = useBooleanish(() => props.splitDisabled)
 
-const computedOffset = computed(() =>
+const computedOffset = toRef(() =>
   typeof props.offset === 'string' || typeof props.offset === 'number' ? props.offset : NaN
 )
 const offsetToNumber = useToNumber(computedOffset)
@@ -179,7 +179,7 @@ onKeyStroke(
   {target: splitButton}
 )
 
-const referencePlacement = computed(() => (!splitBoolean.value ? splitButton.value : button.value))
+const referencePlacement = toRef(() => (!splitBoolean.value ? splitButton.value : button.value))
 const floatingPlacement = computed(() =>
   resolveFloatingPlacement({
     top: dropupBoolean.value,
@@ -242,8 +242,6 @@ const buttonClasses = computed(() => [
     'show': splitBoolean.value ? undefined : modelValueBoolean.value,
   },
 ])
-
-const dropdownMenuClasses = computed(() => props.menuClass)
 
 const onButtonClick = () => {
   toggle()

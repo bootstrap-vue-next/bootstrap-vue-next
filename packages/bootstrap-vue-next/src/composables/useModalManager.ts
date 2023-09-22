@@ -1,20 +1,13 @@
 import {createSharedComposable, getSSRHandler, tryOnScopeDispose, unrefElement} from '@vueuse/core'
-import {
-  type ComponentInternalInstance,
-  computed,
-  getCurrentInstance,
-  ref,
-  type Ref,
-  watch,
-} from 'vue'
+import {type ComponentInternalInstance, getCurrentInstance, type Ref, ref, toRef, watch} from 'vue'
 
 const MODAL_OPEN_CLASS_NAME = 'modal-open'
 
 export const useSharedModalStack = createSharedComposable(() => {
   const registry: Ref<ComponentInternalInstance[]> = ref([])
   const stack: Ref<ComponentInternalInstance[]> = ref([])
-  const count = computed(() => stack.value.length)
-  const last = computed(() => stack.value[stack.value.length - 1])
+  const count = toRef(() => stack.value.length)
+  const last = toRef(() => stack.value[stack.value.length - 1])
   const push = (modal: ComponentInternalInstance) => stack.value.push(modal)
   const pop = () => stack.value.pop()
   const remove = (modal: ComponentInternalInstance): void => {

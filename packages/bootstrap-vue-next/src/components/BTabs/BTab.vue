@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, ref, watch} from 'vue'
+import {computed, inject, ref, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'
 import {tabsInjectionKey} from '../../utils'
@@ -64,10 +64,10 @@ const lazyBoolean = useBooleanish(
 
 const lazyRenderCompleted = ref(false)
 
-const computedLazy = computed(() => !!(parentData?.lazy.value || lazyBoolean.value))
-const computedLazyOnce = computed(() => props.lazyOnce !== undefined)
+const computedLazy = toRef(() => !!(parentData?.lazy.value || lazyBoolean.value))
+const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
 
-const computedActive = computed(() => activeBoolean.value && !disabledBoolean.value)
+const computedActive = toRef(() => activeBoolean.value && !disabledBoolean.value)
 const showSlot = computed(() => {
   const hasLazyRenderedOnce =
     computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value

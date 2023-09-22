@@ -27,7 +27,7 @@ import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
-import {computed, onBeforeUnmount, ref, useSlots, watch, watchEffect} from 'vue'
+import {computed, onBeforeUnmount, ref, toRef, useSlots, watch, watchEffect} from 'vue'
 import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
@@ -91,11 +91,9 @@ const showOnPauseBoolean = useBooleanish(() => props.showOnPause)
 const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
 const intervalNumber = useToNumber(() => props.interval)
 
-const hasCloseSlot = computed(() => !isEmptySlot(slots.close))
+const hasCloseSlot = toRef(() => !isEmptySlot(slots.close))
 
-const countdownLength = computed(() =>
-  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
-)
+const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
 
 const computedClasses = computed(() => ({
   [`alert-${props.variant}`]: props.variant !== null,
@@ -116,7 +114,7 @@ const {
   immediate: typeof modelValue.value === 'number' && immediateBoolean.value,
 })
 
-const isAlertVisible = computed(() =>
+const isAlertVisible = toRef(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
     : isActive.value || (showOnPauseBoolean.value && isPaused.value)

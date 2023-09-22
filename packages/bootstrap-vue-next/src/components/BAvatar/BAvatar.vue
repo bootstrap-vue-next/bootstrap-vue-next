@@ -132,8 +132,8 @@ const buttonBoolean = useBooleanish(() => props.button)
 const disabledBoolean = useBooleanish(() => props.disabled)
 const squareBoolean = useBooleanish(() => props.square)
 
-const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
-const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
+const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
+const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 
 const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 const computedSize = toRef(() => parentData?.size.value ?? computeSize(props.size))
@@ -207,7 +207,7 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const computedTag = computed(() =>
+const computedTag = toRef(() =>
   computedLink.value ? BLink : buttonBoolean.value ? 'button' : 'span'
 )
 

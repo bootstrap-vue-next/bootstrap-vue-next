@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import {useBackgroundVariant, useBLinkHelper, useBooleanish} from '../../composables'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {BackgroundColorExtendables, BLinkProps, Booleanish} from '../../types'
 import BLink from '../BLink/BLink.vue'
 
@@ -86,7 +86,7 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
+const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,

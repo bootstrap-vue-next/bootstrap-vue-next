@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import type {BFormFeedbackSharedProps} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -38,7 +38,7 @@ const forceShowBoolean = useBooleanish(() => props.forceShow)
 const stateBoolean = useBooleanish(() => props.state)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
 
-const computedShow = computed(() => forceShowBoolean.value === true || stateBoolean.value === true)
+const computedShow = toRef(() => forceShowBoolean.value === true || stateBoolean.value === true)
 
 const computedClasses = computed(() => ({
   'd-block': computedShow.value,

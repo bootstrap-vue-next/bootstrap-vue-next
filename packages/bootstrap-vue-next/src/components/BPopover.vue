@@ -190,8 +190,8 @@ const sanitizedTitle = computed(() =>
 const sanitizedContent = computed(() =>
   props.content ? sanitizeHtml(props.content, DefaultAllowlist) : ''
 )
-const isAutoPlacement = computed(() => props.placement.startsWith('auto'))
-const offsetNumber = useToNumber(computed(() => props.offset ?? NaN))
+const isAutoPlacement = toRef(() => props.placement.startsWith('auto'))
+const offsetNumber = useToNumber(toRef(() => props.offset ?? NaN))
 
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
@@ -222,7 +222,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   return arr
 })
 
-const placementRef = computed(() =>
+const placementRef = toRef(() =>
   isAutoPlacement.value ? undefined : (props.placement as OriginalPlacement)
 )
 
@@ -442,7 +442,6 @@ onClickOutside(
 )
 
 watch([() => props.click, () => props.target, () => props.reference], () => {
-  console.log('change')
   unbind()
   bind()
   // update()

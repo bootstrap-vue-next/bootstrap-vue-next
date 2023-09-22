@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import type {BImgProps} from '../types'
 import {useBooleanish} from '../composables'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(defineProps<BImgProps>(), {
@@ -50,8 +50,8 @@ const startBoolean = useBooleanish(() => props.start)
 const endBoolean = useBooleanish(() => props.end)
 const thumbnailBoolean = useBooleanish(() => props.thumbnail)
 
-const heightNumber = useToNumber(computed(() => props.height ?? NaN))
-const widthNumber = useToNumber(computed(() => props.width ?? NaN))
+const heightNumber = useToNumber(toRef(() => props.height ?? NaN))
+const widthNumber = useToNumber(toRef(() => props.width ?? NaN))
 
 const computedSrcset = computed(() =>
   typeof props.srcset === 'string'

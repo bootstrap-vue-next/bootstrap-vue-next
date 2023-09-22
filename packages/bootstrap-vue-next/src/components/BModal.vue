@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, ref, type RendererElement, useSlots} from 'vue'
+import {computed, reactive, ref, type RendererElement, toRef, useSlots} from 'vue'
 import {
   useBackgroundVariant,
   useBooleanish,
@@ -351,14 +351,14 @@ const modalClasses = computed(() => [
   },
 ])
 
-const lazyShowing = computed(
+const lazyShowing = toRef(
   () =>
     lazyBoolean.value === false ||
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const computedBackdropVariant = computed(() =>
+const computedBackdropVariant = toRef(() =>
   props.backdropVariant !== undefined
     ? props.backdropVariant
     : hideBackdropBoolean.value
@@ -366,7 +366,7 @@ const computedBackdropVariant = computed(() =>
     : 'dark'
 )
 
-const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,
@@ -428,8 +428,8 @@ const titleClasses = computed(() => [
     ['visually-hidden']: titleSrOnlyBoolean.value,
   },
 ])
-const disableCancel = computed(() => cancelDisabledBoolean.value || busyBoolean.value)
-const disableOk = computed(() => okDisabledBoolean.value || busyBoolean.value)
+const disableCancel = toRef(() => cancelDisabledBoolean.value || busyBoolean.value)
+const disableOk = toRef(() => okDisabledBoolean.value || busyBoolean.value)
 
 const buildTriggerableEvent = (
   type: string,

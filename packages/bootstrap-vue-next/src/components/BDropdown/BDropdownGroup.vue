@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import type {ClassValue, ColorVariant} from '../../types'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -57,8 +57,8 @@ defineSlots<{
   header?: (props: Record<string, never>) => any
 }>()
 
-const headerId = computed(() => (props.id ? `${props.id}_group_dd_header` : undefined))
-const headerRole = computed(() => (props.headerTag === 'header' ? undefined : 'heading'))
+const headerId = toRef(() => (props.id ? `${props.id}_group_dd_header` : undefined))
+const headerRole = toRef(() => (props.headerTag === 'header' ? undefined : 'heading'))
 
 const computedClasses = computed(() => [
   props.headerClass,
