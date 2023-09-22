@@ -54,14 +54,14 @@ describe('badge', () => {
     expect(wrapper.element.tagName).toBe('SPAN')
   })
 
-  it('contains class bg-{type} when prop varaint', async () => {
+  it('contains class text-bg-{type} when prop variant', async () => {
     const wrapper = mount(BBadge, {
       props: {variant: 'primary'},
     })
-    expect(wrapper.classes()).toContain('bg-primary')
+    expect(wrapper.classes()).toContain('text-bg-primary')
     await wrapper.setProps({variant: 'secondary'})
-    expect(wrapper.classes()).toContain('bg-secondary')
-    expect(wrapper.classes()).not.toContain('bg-primary')
+    expect(wrapper.classes()).toContain('text-bg-secondary')
+    expect(wrapper.classes()).not.toContain('text-bg-primary')
   })
 
   it('contains class active when prop active', async () => {
@@ -80,21 +80,6 @@ describe('badge', () => {
     expect(wrapper.classes()).toContain('disabled')
     await wrapper.setProps({disabled: false})
     expect(wrapper.classes()).not.toContain('disabled')
-  })
-
-  it('contains class text-dark when prop variant is warning|info|light', async () => {
-    const wrapper = mount(BBadge, {
-      props: {variant: 'primary'},
-    })
-    expect(wrapper.classes()).not.toContain('text-dark')
-    await wrapper.setProps({variant: 'warning'})
-    expect(wrapper.classes()).toContain('text-dark')
-    await wrapper.setProps({variant: 'info'})
-    expect(wrapper.classes()).toContain('text-dark')
-    await wrapper.setProps({variant: 'light'})
-    expect(wrapper.classes()).toContain('text-dark')
-    await wrapper.setProps({variant: 'primary'})
-    expect(wrapper.classes()).not.toContain('text-dark')
   })
 
   it('contains class rounded-pill when prop pill', async () => {
