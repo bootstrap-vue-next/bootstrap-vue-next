@@ -10,6 +10,8 @@
         :striped="striped"
         :value="value"
         :variant="variant"
+        :text-variant="textVariant"
+        :bg-variant="bgVariant"
       />
     </slot>
   </div>
@@ -36,6 +38,8 @@ const props = withDefaults(
     precision: 0,
     showProgress: false,
     showValue: false,
+    bgVariant: undefined,
+    textVariant: undefined,
     striped: false,
     value: 0,
   }

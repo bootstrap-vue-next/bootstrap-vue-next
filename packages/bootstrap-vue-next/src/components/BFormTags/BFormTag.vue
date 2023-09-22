@@ -74,8 +74,7 @@ const tagText = computed(
 const taglabelId = computed(() => `${computedId.value}taglabel__`)
 
 const computedClasses = computed(() => ({
-  [`bg-${props.variant}`]: props.variant !== null,
-  'text-dark': props.variant !== null && ['warning', 'info', 'light'].includes(props.variant),
+  [`text-bg-${props.variant}`]: props.variant !== null,
   'rounded-pill': pillBoolean.value,
   'disabled': disabledBoolean.value,
 }))

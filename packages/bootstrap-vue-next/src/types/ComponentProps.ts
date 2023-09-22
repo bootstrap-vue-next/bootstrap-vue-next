@@ -14,6 +14,7 @@ import type {ButtonType} from './ButtonType'
 import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, MaybeRef} from 'vue'
 import type {BPopoverPlacement} from './BPopoverPlacement'
+import type {BackgroundColorExtendables} from './BackgroundColorExtendables'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -100,7 +101,7 @@ export interface BTableLiteProps {
   virtualFields?: number | string
 }
 
-export interface BProgressBarProps {
+export interface BProgressBarProps extends BackgroundColorExtendables {
   animated?: Booleanish
   label?: string
   labelHtml?: string
@@ -110,7 +111,6 @@ export interface BProgressBarProps {
   showValue?: Booleanish
   striped?: Booleanish
   value?: string | number
-  variant?: ColorVariant | null
 }
 
 export interface BInputGroupAddonProps {
@@ -166,7 +166,7 @@ export interface BDropdownProps {
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
 }
 
-interface BToastIntermediate {
+interface BToastIntermediate extends BackgroundColorExtendables {
   delay?: string | number
   bodyClass?: ClassValue
   body?: string

@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import type {BProgressBarProps} from '../../types'
-import {useBooleanish} from '../../composables'
+import {useBackgroundVariant, useBooleanish} from '../../composables'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils'
 import {useToNumber} from '@vueuse/core'
@@ -32,6 +32,8 @@ const props = withDefaults(defineProps<BProgressBarProps>(), {
   showValue: false,
   striped: false,
   value: 0,
+  bgVariant: null,
+  textVariant: null,
 })
 
 defineSlots<{
@@ -45,16 +47,19 @@ const animatedBoolean = useBooleanish(() => props.animated)
 const showProgressBoolean = useBooleanish(() => props.showProgress)
 const showValueBoolean = useBooleanish(() => props.showValue)
 const stripedBoolean = useBooleanish(() => props.striped)
+const resolvedBackgroundClasses = useBackgroundVariant(props)
 
-const computedClasses = computed(() => ({
-  'progress-bar-animated': animatedBoolean.value || parentData?.animated.value,
-  'progress-bar-striped':
-    stripedBoolean.value ||
-    parentData?.striped.value ||
-    animatedBoolean.value ||
-    parentData?.animated.value,
-  [`bg-${props.variant}`]: props.variant !== null,
-}))
+const computedClasses = computed(() => [
+  resolvedBackgroundClasses.value,
+  {
+    'progress-bar-animated': animatedBoolean.value || parentData?.animated.value,
+    'progress-bar-striped':
+      stripedBoolean.value ||
+      parentData?.striped.value ||
+      animatedBoolean.value ||
+      parentData?.animated.value,
+  },
+])
 
 const numberPrecision = useToNumber(() => props.precision)
 const numberValue = useToNumber(() => props.value)

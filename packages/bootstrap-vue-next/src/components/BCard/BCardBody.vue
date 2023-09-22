@@ -1,5 +1,5 @@
 <template>
-  <component :is="bodyTag" class="card-body" :class="computedClasses">
+  <component :is="tag" class="card-body" :class="computedClasses">
     <BCardTitle v-if="!!title || hasTitleSlot" :tag="titleTag">
       <slot name="title">
         {{ title }}
@@ -27,29 +27,30 @@ import {computed, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
-import type {Booleanish, ColorVariant, TextColorVariant} from '../../types'
-import {useBooleanish} from '../../composables'
+import type {BackgroundColorExtendables, Booleanish, TextColorVariant} from '../../types'
+import {useBackgroundVariant, useBooleanish} from '../../composables'
 
 const props = withDefaults(
-  defineProps<{
-    bodyBgVariant?: ColorVariant | null
-    bodyTag?: string
-    bodyTextVariant?: TextColorVariant | null
-    overlay?: Booleanish
-    subtitle?: string
-    subtitleTag?: string
-    subtitleTextVariant?: TextColorVariant | null
-    title?: string
-    titleTag?: string
-    text?: string
-  }>(),
+  defineProps<
+    {
+      tag?: string
+      overlay?: Booleanish
+      subtitle?: string
+      subtitleTag?: string
+      subtitleTextVariant?: TextColorVariant | null
+      title?: string
+      titleTag?: string
+      text?: string
+    } & BackgroundColorExtendables
+  >(),
   {
-    bodyTag: 'div',
+    variant: null,
+    tag: 'div',
     overlay: false,
     titleTag: 'h4',
     subtitleTag: 'h4',
-    bodyBgVariant: null,
-    bodyTextVariant: null,
+    bgVariant: null,
+    textVariant: null,
     subtitleTextVariant: undefined,
     subtitle: undefined,
     title: undefined,
@@ -69,13 +70,15 @@ defineSlots<{
 const slots = useSlots()
 
 const overlayBoolean = useBooleanish(() => props.overlay)
+const resolvedBackgroundClasses = useBackgroundVariant(props)
 
 const hasTitleSlot = computed(() => !isEmptySlot(slots.title))
 const hasSubtitleSlot = computed(() => !isEmptySlot(slots.subtitle))
 
-const computedClasses = computed(() => ({
-  'card-img-overlay': overlayBoolean.value,
-  [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== null,
-  [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== null,
-}))
+const computedClasses = computed(() => [
+  resolvedBackgroundClasses.value,
+  {
+    'card-img-overlay': overlayBoolean.value,
+  },
+])
 </script>
