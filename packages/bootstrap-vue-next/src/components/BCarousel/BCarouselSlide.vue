@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type CSSProperties, inject, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, toRef, useSlots} from 'vue'
 import type {Booleanish} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
@@ -105,9 +105,9 @@ const slots = useSlots()
 
 const parentData = inject(carouselInjectionKey, null)
 
-const hasText = computed(() => props.text || props.textHtml || !isEmptySlot(slots.text))
-const hasCaption = computed(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
-const hasContent = computed(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
+const hasText = toRef(() => props.text || props.textHtml || !isEmptySlot(slots.text))
+const hasCaption = toRef(() => props.caption || props.captionHtml || !isEmptySlot(slots.caption))
+const hasContent = toRef(() => hasText.value || hasCaption.value || !isEmptySlot(slots.default))
 
 const computedStyle = computed<CSSProperties>(() => ({
   background: `${

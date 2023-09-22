@@ -43,7 +43,7 @@ defineSlots<{
 
 const printBoolean = useBooleanish(() => props.print)
 
-const computedRole = computed(() => (props.tag === 'nav' ? undefined : 'navigation'))
+const computedRole = toRef(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
 const computedNavbarExpand = computed(() =>
   typeof props.toggleable === 'string'
@@ -53,7 +53,7 @@ const computedNavbarExpand = computed(() =>
     : undefined
 )
 
-const containerClass = computed(() => (props.container === true ? 'container' : `container-fluid`))
+const containerClass = toRef(() => (props.container === true ? 'container' : `container-fluid`))
 
 const computedClasses = computed(() => ({
   'd-print': printBoolean.value,

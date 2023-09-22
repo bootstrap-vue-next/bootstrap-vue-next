@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import {useBLinkHelper, useBooleanish} from '../../composables'
-import {computed} from 'vue'
-import type {BLinkProps, Booleanish} from '../../types'
+import {useBackgroundVariant, useBLinkHelper, useBooleanish} from '../../composables'
+import {computed, toRef} from 'vue'
+import type {BackgroundColorExtendables, BLinkProps, Booleanish} from '../../types'
 import BLink from '../BLink/BLink.vue'
 
 defineSlots<{
@@ -22,9 +22,12 @@ const props = withDefaults(
       tag?: string
       textIndicator?: Booleanish
       dotIndicator?: Booleanish
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'event' | 'routerTag'> &
+      BackgroundColorExtendables
   >(),
   {
+    bgVariant: null,
+    textVariant: null,
     pill: false,
     tag: 'span',
     textIndicator: false,
@@ -60,6 +63,7 @@ const textIndicatorBoolean = useBooleanish(() => props.textIndicator)
 const dotIndicatorBoolean = useBooleanish(() => props.dotIndicator)
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
+const resolvedBackgroundClasses = useBackgroundVariant(props)
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',
@@ -82,16 +86,18 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'icon',
 ])
 
-const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
+const computedTag = toRef(() => (computedLink.value ? BLink : props.tag))
 
-const computedClasses = computed(() => ({
-  [`text-bg-${props.variant}`]: props.variant !== null,
-  'active': activeBoolean.value,
-  'disabled': disabledBoolean.value,
-  'rounded-pill': pillBoolean.value,
-  'position-absolute top-0 start-100 translate-middle':
-    textIndicatorBoolean.value || dotIndicatorBoolean.value,
-  'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
-  'text-decoration-none': computedLink.value,
-}))
+const computedClasses = computed(() => [
+  resolvedBackgroundClasses.value,
+  {
+    'active': activeBoolean.value,
+    'disabled': disabledBoolean.value,
+    'rounded-pill': pillBoolean.value,
+    'position-absolute top-0 start-100 translate-middle':
+      textIndicatorBoolean.value || dotIndicatorBoolean.value,
+    'p-2 border border-light rounded-circle': dotIndicatorBoolean.value,
+    'text-decoration-none': computedLink.value,
+  },
+])
 </script>

@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import {pick} from '../../utils'
 import {useBooleanish} from '../../composables'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import type {BLinkProps} from '../../types'
 
@@ -74,9 +74,9 @@ const computedClasses = computed(() => ({
   active: activeBoolean.value,
 }))
 
-const computedTag = computed(() => (activeBoolean.value ? 'span' : BLink))
+const computedTag = toRef(() => (activeBoolean.value ? 'span' : BLink))
 
-const computedAriaCurrent = computed(() => (activeBoolean.value ? props.ariaCurrent : undefined))
+const computedAriaCurrent = toRef(() => (activeBoolean.value ? props.ariaCurrent : undefined))
 
 const computedLinkProps = computed(() =>
   computedTag.value !== 'span'

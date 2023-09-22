@@ -174,7 +174,7 @@ provide(checkboxGroupKey, {
       emit('change', localValue)
     })
   },
-  modelValue: computed(() => modelValue.value),
+  modelValue: toRef(() => modelValue.value),
   switch: switchesBoolean,
   buttonVariant: toRef(() => props.buttonVariant),
   form: toRef(() => props.form),
@@ -182,7 +182,7 @@ provide(checkboxGroupKey, {
   state: stateBoolean,
   plain: plainBoolean,
   size: toRef(() => props.size),
-  inline: computed(() => !stackedBoolean.value),
+  inline: toRef(() => !stackedBoolean.value),
   required: requiredBoolean,
   buttons: buttonsBoolean,
   disabled: disabledBoolean,

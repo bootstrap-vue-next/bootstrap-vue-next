@@ -15,20 +15,21 @@
     <span v-else-if="!!src" class="b-avatar-img">
       <img :src="src" :alt="alt" @error="onImgError" />
     </span>
-    <span v-else-if="!!text" class="b-avatar-text" :class="textClasses" :style="textFontStyle">
+    <span v-else-if="!!text" class="b-avatar-text" :style="textFontStyle">
       {{ text }}
     </span>
     <span v-if="showBadge" class="b-avatar-badge" :class="badgeClasses" :style="badgeStyle">
       <slot v-if="hasBadgeSlot" name="badge" />
-      <span v-else :class="badgeTextClasses">{{ badgeText }}</span>
+      <span v-else>{{ badgeText }}</span>
     </span>
   </component>
 </template>
 
 <script setup lang="ts">
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
-import {computed, type CSSProperties, inject, type StyleValue, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {
+  BackgroundColorExtendables,
   BLinkProps,
   Booleanish,
   ButtonType,
@@ -36,7 +37,7 @@ import type {
   Size,
   TextColorVariant,
 } from '../../types'
-import {useBLinkHelper, useBooleanish} from '../../composables'
+import {useBackgroundVariant, useBLinkHelper, useBooleanish} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 
 const props = withDefaults(
@@ -48,6 +49,8 @@ const props = withDefaults(
       badgeOffset?: string
       badgeTop?: Booleanish
       badgeVariant?: ColorVariant | null
+      badgeTextVariant?: TextColorVariant | null
+      badgeBgVariant?: ColorVariant | null
       button?: Booleanish
       buttonType?: ButtonType
       icon?: string
@@ -56,16 +59,19 @@ const props = withDefaults(
       square?: Booleanish
       src?: string
       text?: string
-      textVariant?: TextColorVariant | null
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'event' | 'routerTag'> &
+      BackgroundColorExtendables
   >(),
   {
+    bgVariant: null,
     alt: 'avatar',
     badge: false,
     badgeLeft: false,
     badgeOffset: undefined,
     badgeTop: false,
     badgeVariant: 'primary',
+    badgeBgVariant: null,
+    badgeTextVariant: null,
     button: false,
     buttonType: 'button',
     icon: undefined,
@@ -126,46 +132,49 @@ const buttonBoolean = useBooleanish(() => props.button)
 const disabledBoolean = useBooleanish(() => props.disabled)
 const squareBoolean = useBooleanish(() => props.square)
 
-const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
-const hasBadgeSlot = computed(() => !isEmptySlot(slots.badge))
+const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
+const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 
-const showBadge = computed(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
-const computedSize = computed(() => parentData?.size.value ?? computeSize(props.size))
-const computedVariant = computed(() => parentData?.variant.value ?? props.variant)
-const computedRounded = computed(() => parentData?.rounded.value ?? props.rounded)
-const badgeClasses = computed(() => ({
-  [`bg-${props.badgeVariant}`]: props.badgeVariant !== null,
-}))
-const badgeText = computed(() => (props.badge === true ? '' : props.badge))
+const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
+const computedSize = toRef(() => parentData?.size.value ?? computeSize(props.size))
+const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
+const computedRounded = toRef(() => parentData?.rounded.value ?? props.rounded)
 
-const badgeTextClasses = computed(() => ({
-  [`text-${props.badgeVariant !== null && computeContrastVariant(props.badgeVariant)}`]:
-    props.badgeVariant !== null,
+const badgeClasses = useBackgroundVariant(() => ({
+  variant: props.badgeVariant,
+  bgVariant: props.badgeBgVariant,
+  textVariant: props.badgeTextVariant,
 }))
 
-const computedClasses = computed(() => ({
-  [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
-  [`bg-${computedVariant.value}`]: computedVariant.value !== null,
-  [`badge`]: !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
-  rounded: computedRounded.value === '' || computedRounded.value === true,
-  [`rounded-circle`]: !squareBoolean.value && computedRounded.value === 'circle',
-  [`rounded-0`]: squareBoolean.value || computedRounded.value === '0',
-  [`rounded-1`]: !squareBoolean.value && computedRounded.value === 'sm',
-  [`rounded-3`]: !squareBoolean.value && computedRounded.value === 'lg',
-  [`rounded-top`]: !squareBoolean.value && computedRounded.value === 'top',
-  [`rounded-bottom`]: !squareBoolean.value && computedRounded.value === 'bottom',
-  [`rounded-start`]: !squareBoolean.value && computedRounded.value === 'left',
-  [`rounded-end`]: !squareBoolean.value && computedRounded.value === 'right',
-  btn: buttonBoolean.value,
-  [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value !== null : false,
+const badgeText = toRef(() => (props.badge === true ? '' : props.badge))
+
+const computedTextVariant = toRef(() => parentData?.textVariant.value ?? props.textVariant)
+const computedBgVariant = toRef(() => parentData?.bgVariant.value ?? props.bgVariant)
+
+const resolvedBackgroundClasses = useBackgroundVariant(() => ({
+  bgVariant: computedBgVariant.value,
+  textVariant: computedTextVariant.value,
+  variant: computedVariant.value,
 }))
 
-const textClasses = computed(() => ({
-  [`text-${
-    props.textVariant ||
-    (computedVariant.value !== null && computeContrastVariant(computedVariant.value))
-  }`]: props.textVariant || computedVariant.value !== null,
-}))
+const computedClasses = computed(() => [
+  resolvedBackgroundClasses.value,
+  {
+    [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
+    [`badge`]: !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
+    rounded: computedRounded.value === '' || computedRounded.value === true,
+    [`rounded-circle`]: !squareBoolean.value && computedRounded.value === 'circle',
+    [`rounded-0`]: squareBoolean.value || computedRounded.value === '0',
+    [`rounded-1`]: !squareBoolean.value && computedRounded.value === 'sm',
+    [`rounded-3`]: !squareBoolean.value && computedRounded.value === 'lg',
+    [`rounded-top`]: !squareBoolean.value && computedRounded.value === 'top',
+    [`rounded-bottom`]: !squareBoolean.value && computedRounded.value === 'bottom',
+    [`rounded-start`]: !squareBoolean.value && computedRounded.value === 'left',
+    [`rounded-end`]: !squareBoolean.value && computedRounded.value === 'right',
+    btn: buttonBoolean.value,
+    [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value !== null : false,
+  },
+])
 
 const badgeStyle = computed<StyleValue>(() => {
   const offset = props.badgeOffset || '0px'
@@ -198,7 +207,7 @@ const marginStyle = computed(() => {
   return value ? {marginLeft: value, marginRight: value} : {}
 })
 
-const computedTag = computed(() =>
+const computedTag = toRef(() =>
   computedLink.value ? BLink : buttonBoolean.value ? 'button' : 'span'
 )
 
@@ -207,9 +216,6 @@ const computedStyle = computed<CSSProperties>(() => ({
   width: computedSize.value ?? undefined,
   height: computedSize.value ?? undefined,
 }))
-
-const computeContrastVariant = (colorVariant: ColorVariant): 'dark' | 'light' =>
-  colorVariant === 'light' || colorVariant === 'warning' ? 'dark' : 'light'
 
 const clicked = (e: MouseEvent): void => {
   if (!disabledBoolean.value && (computedLink.value || buttonBoolean.value)) emit('click', e)

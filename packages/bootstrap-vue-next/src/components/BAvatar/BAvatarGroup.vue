@@ -8,21 +8,22 @@
 
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
-import type {Booleanish, ColorVariant, Size} from '../../types'
+import type {BackgroundColorExtendables, Booleanish, Size} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
-  defineProps<{
-    overlap?: number | string
-    rounded?: boolean | string
-    size?: Size | string
-    square?: Booleanish
-    tag?: string
-    variant?: ColorVariant | null
-  }>(),
+  defineProps<
+    {
+      overlap?: number | string
+      rounded?: boolean | string
+      size?: Size | string
+      square?: Booleanish
+      tag?: string
+    } & BackgroundColorExtendables
+  >(),
   {
     overlap: 0.3,
     rounded: false,
@@ -30,6 +31,8 @@ const props = withDefaults(
     square: false,
     tag: 'div',
     variant: null,
+    bgVariant: null,
+    textVariant: null,
   }
 )
 
@@ -55,5 +58,7 @@ provide(avatarGroupInjectionKey, {
   square: squareBoolean,
   rounded: toRef(() => props.rounded),
   variant: toRef(() => props.variant),
+  bgVariant: toRef(() => props.bgVariant),
+  textVariant: toRef(() => props.textVariant),
 })
 </script>

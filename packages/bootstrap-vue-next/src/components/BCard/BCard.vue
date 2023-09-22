@@ -6,6 +6,7 @@
     <BCardHeader
       v-if="header || hasHeaderSlot || headerHtml"
       :bg-variant="headerBgVariant"
+      :variant="headerVariant"
       :border-variant="headerBorderVariant"
       :html="headerHtml"
       :tag="headerTag"
@@ -19,9 +20,9 @@
     <BCardBody
       v-if="!noBodyBoolean"
       :overlay="overlay"
-      :body-bg-variant="bodyBgVariant"
-      :body-tag="bodyTag"
-      :body-text-variant="bodyTextVariant"
+      :bg-variant="bodyBgVariant"
+      :tag="bodyTag"
+      :text-variant="bodyTextVariant"
       :subtitle="subtitle"
       :subtitle-tag="subtitleTag"
       :subtitle-text-variant="subtitleTextVariant"
@@ -40,6 +41,7 @@
       v-if="footer || hasFooterSlot || footerHtml"
       :bg-variant="footerBgVariant"
       :border-variant="footerBorderVariant"
+      :variant="footerVariant"
       :html="footerHtml"
       :tag="footerTag"
       :text-variant="footerTextVariant"
@@ -58,62 +60,68 @@
 <script setup lang="ts">
 import type {
   AlignmentTextHorizontal,
+  BackgroundColorExtendables,
   Booleanish,
   ClassValue,
   ColorVariant,
   TextColorVariant,
 } from '../../types'
 import {isEmptySlot} from '../../utils'
-import {computed, useSlots} from 'vue'
-import {useBooleanish} from '../../composables'
+import {computed, toRef, useSlots} from 'vue'
+import {useBackgroundVariant, useBooleanish} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 
 const props = withDefaults(
-  defineProps<{
-    align?: AlignmentTextHorizontal
-    bgVariant?: ColorVariant | null
-    bodyBgVariant?: ColorVariant | null
-    bodyClass?: ClassValue
-    bodyTag?: string
-    bodyTextVariant?: TextColorVariant | null
-    borderVariant?: ColorVariant | null
-    footer?: string
-    footerBgVariant?: ColorVariant | null
-    footerBorderVariant?: ColorVariant | null
-    footerClass?: ClassValue
-    footerHtml?: string
-    footerTag?: string
-    footerTextVariant?: TextColorVariant | null
-    header?: string
-    headerBgVariant?: ColorVariant | null
-    headerBorderVariant?: ColorVariant | null
-    headerClass?: ClassValue
-    headerHtml?: string
-    headerTag?: string
-    headerTextVariant?: TextColorVariant | null
-    imgAlt?: string
-    imgBottom?: Booleanish
-    imgEnd?: Booleanish
-    imgHeight?: string | number
-    imgSrc?: string
-    imgStart?: Booleanish
-    imgTop?: Booleanish
-    imgWidth?: string | number
-    noBody?: Booleanish
-    overlay?: Booleanish
-    subtitle?: string
-    subtitleTag?: string
-    subtitleTextVariant?: TextColorVariant | null
-    tag?: string
-    textVariant?: TextColorVariant | null
-    title?: string
-    titleTag?: string
-    bodyText?: string
-  }>(),
+  defineProps<
+    {
+      align?: AlignmentTextHorizontal
+      bodyBgVariant?: ColorVariant | null
+      bodyTextVariant?: TextColorVariant | null
+      bodyClass?: ClassValue
+      bodyTag?: string
+      borderVariant?: ColorVariant | null
+      footer?: string
+      footerVariant?: ColorVariant | null
+      footerBgVariant?: ColorVariant | null
+      footerBorderVariant?: ColorVariant | null
+      footerClass?: ClassValue
+      footerHtml?: string
+      footerTag?: string
+      footerTextVariant?: TextColorVariant | null
+      header?: string
+      headerBgVariant?: ColorVariant | null
+      headerBorderVariant?: ColorVariant | null
+      headerClass?: ClassValue
+      headerHtml?: string
+      headerTag?: string
+      headerVariant?: ColorVariant | null
+      headerTextVariant?: TextColorVariant | null
+      imgAlt?: string
+      imgBottom?: Booleanish
+      imgEnd?: Booleanish
+      imgHeight?: string | number
+      imgSrc?: string
+      imgStart?: Booleanish
+      imgTop?: Booleanish
+      imgWidth?: string | number
+      noBody?: Booleanish
+      overlay?: Booleanish
+      subtitle?: string
+      subtitleTag?: string
+      subtitleTextVariant?: TextColorVariant | null
+      tag?: string
+      title?: string
+      titleTag?: string
+      bodyText?: string
+    } & BackgroundColorExtendables
+  >(),
   {
+    footerVariant: null,
+    headerVariant: null,
+    variant: null,
     align: undefined,
     bgVariant: null,
     bodyBgVariant: undefined,
@@ -174,17 +182,20 @@ const imgEndBoolean = useBooleanish(() => props.imgEnd)
 const imgStartBoolean = useBooleanish(() => props.imgStart)
 const noBodyBoolean = useBooleanish(() => props.noBody)
 
-const hasHeaderSlot = computed(() => !isEmptySlot(slots.header))
-const hasFooterSlot = computed(() => !isEmptySlot(slots.footer))
+const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
+const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
 
-const computedClasses = computed(() => ({
-  [`text-${props.align}`]: props.align !== undefined,
-  [`text-${props.textVariant}`]: props.textVariant !== null,
-  [`bg-${props.bgVariant}`]: props.bgVariant !== null,
-  [`border-${props.borderVariant}`]: props.borderVariant !== null,
-  'flex-row': imgStartBoolean.value,
-  'flex-row-reverse': imgEndBoolean.value,
-}))
+const resolvedBackgroundClasses = useBackgroundVariant(props)
+
+const computedClasses = computed(() => [
+  resolvedBackgroundClasses.value,
+  {
+    [`text-${props.align}`]: props.align !== undefined,
+    [`border-${props.borderVariant}`]: props.borderVariant !== null,
+    'flex-row': imgStartBoolean.value,
+    'flex-row-reverse': imgEndBoolean.value,
+  },
+])
 
 const imgAttr = computed(() => ({
   src: props.imgSrc,

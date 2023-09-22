@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, useSlots, watch} from 'vue'
+import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, Size} from '../../types'
 import {useBooleanish, useId, useStateClass} from '../../composables'
@@ -110,8 +110,8 @@ const input = ref<HTMLInputElement | null>(null)
 
 const {focused} = useFocus(input, {initialValue: autofocusBoolean.value})
 
-const hasLabelSlot = computed(() => !isEmptySlot(slots['label']))
-const computedAccept = computed(() =>
+const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
+const computedAccept = toRef(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
 )
 const computedCapture = computed(() =>

@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, useSlots} from 'vue'
+import {computed, toRef, useSlots} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -71,11 +71,10 @@ const pillBoolean = useBooleanish(() => props.pill)
 const tagText = computed(
   () => ((slots.default?.()[0].children ?? '').toString() || props.title) ?? ''
 )
-const taglabelId = computed(() => `${computedId.value}taglabel__`)
+const taglabelId = toRef(() => `${computedId.value}taglabel__`)
 
 const computedClasses = computed(() => ({
-  [`bg-${props.variant}`]: props.variant !== null,
-  'text-dark': props.variant !== null && ['warning', 'info', 'light'].includes(props.variant),
+  [`text-bg-${props.variant}`]: props.variant !== null,
   'rounded-pill': pillBoolean.value,
   'disabled': disabledBoolean.value,
 }))

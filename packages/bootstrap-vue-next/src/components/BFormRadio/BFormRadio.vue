@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, nextTick, ref, useSlots, watch} from 'vue'
+import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
@@ -112,7 +112,7 @@ const {focused} = useFocus(input, {
   initialValue: autofocusBoolean.value,
 })
 
-const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
+const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
   get: () =>
@@ -148,9 +148,7 @@ const computedRequired = computed(
     (requiredBoolean.value || parentData?.required.value)
 )
 
-const isButtonGroup = computed(
-  () => buttonGroupBoolean.value || (parentData?.buttons.value ?? false)
-)
+const isButtonGroup = toRef(() => buttonGroupBoolean.value || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
   plain: plainBoolean.value || (parentData?.plain.value ?? false),

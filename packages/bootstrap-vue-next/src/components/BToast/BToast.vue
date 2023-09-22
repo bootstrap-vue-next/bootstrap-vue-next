@@ -5,7 +5,7 @@
       :id="id"
       ref="element"
       class="toast"
-      :class="[toastClass, classes]"
+      :class="[toastClass, computedClasses]"
       tabindex="0"
       :role="!isToastVisible ? undefined : isStatusBoolean ? 'status' : 'alert'"
       :aria-live="!isToastVisible ? undefined : isStatusBoolean ? 'polite' : 'assertive'"
@@ -50,8 +50,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onBeforeUnmount, ref, watch, watchEffect} from 'vue'
-import {useBLinkHelper, useBooleanish, useCountdown} from '../../composables'
+import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
+import {useBackgroundVariant, useBLinkHelper, useBooleanish, useCountdown} from '../../composables'
 import type {BToastProps} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -64,6 +64,8 @@ import BProgress from '../BProgress/BProgress.vue'
 // TODO appendToast from BToaster
 
 const props = withDefaults(defineProps<BToastProps>(), {
+  bgVariant: null,
+  textVariant: null,
   delay: 5000,
   bodyClass: undefined,
   body: undefined,
@@ -136,9 +138,8 @@ const intervalNumber = useToNumber(() => props.interval)
 // TODO solid is never used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const solidBoolean = useBooleanish(() => props.solid)
-const countdownLength = computed(() =>
-  typeof modelValue.value === 'boolean' ? 0 : modelValue.value
-)
+const resolvedBackgroundClasses = useBackgroundVariant(props)
+const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
 
 const {
   isActive,
@@ -156,9 +157,9 @@ watchEffect(() => {
   emit('close-countdown', remainingMs.value)
 })
 
-const computedTag = computed(() => (computedLink.value ? BLink : 'div'))
+const computedTag = toRef(() => (computedLink.value ? BLink : 'div'))
 
-const isToastVisible = computed(() =>
+const isToastVisible = toRef(() =>
   typeof modelValue.value === 'boolean'
     ? modelValue.value
     : isActive.value || (showOnPauseBoolean.value && isPaused.value)
@@ -171,10 +172,12 @@ watch(isActive, (newValue) => {
   }
 })
 
-const classes = computed(() => ({
-  [`text-bg-${props.variant}`]: props.variant !== null,
-  show: isToastVisible.value,
-}))
+const computedClasses = computed(() => [
+  resolvedBackgroundClasses.value,
+  {
+    show: isToastVisible.value,
+  },
+])
 
 const hide = () => {
   emit('close')

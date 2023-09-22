@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import type {Booleanish, ColorVariant} from '../../types'
 import {useBooleanish} from '../../composables'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -48,5 +48,5 @@ const computedClasses = computed(() => ({
   'table-b-table-default': stickyColumnBoolean.value && props.variant === null,
 }))
 
-const scope = computed(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
+const scope = toRef(() => (props.colspan ? 'colspan' : props.rowspan ? 'rowspan' : 'col'))
 </script>

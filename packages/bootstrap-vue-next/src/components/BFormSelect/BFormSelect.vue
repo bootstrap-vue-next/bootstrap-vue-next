@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
-import {computed, nextTick, ref} from 'vue'
+import {computed, nextTick, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {normalizeOptions, useBooleanish, useId, useStateClass} from '../../composables'
@@ -133,7 +133,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const computedSelectSize = computed(() =>
+const computedSelectSize = toRef(() =>
   selectSizeNumber.value || plainBoolean.value ? selectSizeNumber.value : undefined
 )
 

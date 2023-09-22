@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide} from 'vue'
+import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils'
 import type {Booleanish, Breakpoint} from '../../types'
 import {useBooleanish} from '../../composables'
@@ -42,7 +42,7 @@ const computedClasses = computed(() => {
     'list-group-numbered': numberedBoolean.value,
   }
 })
-const computedTag = computed(() => (numberedBoolean.value === true ? 'ol' : props.tag))
+const computedTag = toRef(() => (numberedBoolean.value === true ? 'ol' : props.tag))
 
 provide(listGroupInjectionKey, {
   numbered: numberedBoolean,

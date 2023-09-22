@@ -1,4 +1,4 @@
-import {type ComponentInternalInstance, computed, getCurrentInstance} from 'vue'
+import {type ComponentInternalInstance, computed, getCurrentInstance, toRef} from 'vue'
 import {useSharedModalStack} from './useModalManager'
 
 export default (id: string | undefined = undefined) => {
@@ -17,7 +17,7 @@ export default (id: string | undefined = undefined) => {
     return findBModal(instance)
   })
 
-  const modal = computed(() => modalComponent.value?.proxy)
+  const modal = toRef(() => modalComponent.value?.proxy)
 
   return {
     show(): void {

@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {isBooleanish, resolveBooleanish} from '../utils'
 import type {Booleanish, Breakpoint} from '../types'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
@@ -26,11 +26,11 @@ const props = withDefaults(
 )
 
 const gutterXToNumber = useToNumber(
-  computed(() => props.gutterX ?? NaN),
+  toRef(() => props.gutterX ?? NaN),
   {method: 'parseInt'}
 )
 const gutterYToNumber = useToNumber(
-  computed(() => props.gutterY ?? NaN),
+  toRef(() => props.gutterY ?? NaN),
   {method: 'parseInt'}
 )
 

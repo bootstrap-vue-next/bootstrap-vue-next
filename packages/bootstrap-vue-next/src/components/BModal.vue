@@ -100,10 +100,23 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, ref, type RendererElement, useSlots} from 'vue'
-import {useBooleanish, useId, useModalManager, useSafeScrollLock} from '../composables'
+import {computed, reactive, ref, type RendererElement, toRef, useSlots} from 'vue'
+import {
+  useBackgroundVariant,
+  useBooleanish,
+  useId,
+  useModalManager,
+  useSafeScrollLock,
+} from '../composables'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
-import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Size} from '../types'
+import type {
+  Booleanish,
+  ButtonVariant,
+  ClassValue,
+  ColorVariant,
+  Size,
+  TextColorVariant,
+} from '../types'
 import {BvTriggerableEvent, isEmptySlot} from '../utils'
 import BButton from './BButton/BButton.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
@@ -123,9 +136,10 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
+    bodyVariant?: ColorVariant | null
     bodyBgVariant?: ColorVariant | null
     bodyClass?: ClassValue
-    bodyTextVariant?: ColorVariant | null
+    bodyTextVariant?: TextColorVariant | null
     busy?: Booleanish
     lazy?: Booleanish
     buttonSize?: Size
@@ -135,10 +149,11 @@ const props = withDefaults(
     centered?: Booleanish
     contentClass?: ClassValue
     dialogClass?: ClassValue
+    footerVariant?: ColorVariant | null
     footerBgVariant?: ColorVariant | null
     footerBorderVariant?: ColorVariant | null
     footerClass?: ClassValue
-    footerTextVariant?: ColorVariant | null
+    footerTextVariant?: TextColorVariant | null
     fullscreen?: boolean | string
     headerBgVariant?: ColorVariant | null
     headerBorderVariant?: ColorVariant | null
@@ -146,7 +161,8 @@ const props = withDefaults(
     headerCloseClass?: ClassValue
     headerCloseLabel?: string
     headerCloseVariant?: ButtonVariant | null
-    headerTextVariant?: ColorVariant | null
+    headerVariant?: ColorVariant | null
+    headerTextVariant?: TextColorVariant | null
     hideBackdrop?: Booleanish
     hideFooter?: Booleanish
     hideHeader?: Booleanish
@@ -179,8 +195,10 @@ const props = withDefaults(
     backdropVariant: undefined,
     bodyBgVariant: null,
     bodyClass: undefined,
+    bodyVariant: null,
     bodyTextVariant: null,
     contentClass: undefined,
+    headerVariant: null,
     headerTextVariant: null,
     dialogClass: undefined,
     headerBgVariant: null,
@@ -192,6 +210,7 @@ const props = withDefaults(
     footerBgVariant: null,
     footerBorderVariant: null,
     footerClass: undefined,
+    footerVariant: null,
     footerTextVariant: null,
     autoFocusButton: undefined,
     titleClass: undefined,
@@ -332,14 +351,14 @@ const modalClasses = computed(() => [
   },
 ])
 
-const lazyShowing = computed(
+const lazyShowing = toRef(
   () =>
     lazyBoolean.value === false ||
     (lazyBoolean.value === true && lazyLoadCompleted.value === true) ||
     (lazyBoolean.value === true && modelValueBoolean.value === true)
 )
 
-const computedBackdropVariant = computed(() =>
+const computedBackdropVariant = toRef(() =>
   props.backdropVariant !== undefined
     ? props.backdropVariant
     : hideBackdropBoolean.value
@@ -347,7 +366,7 @@ const computedBackdropVariant = computed(() =>
     : 'dark'
 )
 
-const hasHeaderCloseSlot = computed(() => !isEmptySlot(slots['header-close']))
+const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
 
 const modalDialogClasses = computed(() => [
   props.dialogClass,
@@ -360,20 +379,25 @@ const modalDialogClasses = computed(() => [
   },
 ])
 
-const bodyClasses = computed(() => [
-  props.bodyClass,
-  {
-    [`bg-${props.bodyBgVariant}`]: props.bodyBgVariant !== null,
-    [`text-${props.bodyTextVariant}`]: props.bodyTextVariant !== null,
-  },
-])
+const resolvedBodyBgClasses = useBackgroundVariant(() => ({
+  bgVariant: props.bodyBgVariant,
+  textVariant: props.bodyTextVariant,
+  variant: props.bodyVariant,
+}))
+
+const bodyClasses = computed(() => [props.bodyClass, resolvedBodyBgClasses.value])
+
+const resolvedHeaderBgClasses = useBackgroundVariant(() => ({
+  bgVariant: props.headerBgVariant,
+  textVariant: props.headerTextVariant,
+  variant: props.headerVariant,
+}))
 
 const headerClasses = computed(() => [
   props.headerClass,
+  resolvedHeaderBgClasses.value,
   {
-    [`bg-${props.headerBgVariant}`]: props.headerBgVariant !== null,
     [`border-${props.headerBorderVariant}`]: props.headerBorderVariant !== null,
-    [`text-${props.headerTextVariant}`]: props.headerTextVariant !== null,
   },
 ])
 
@@ -384,12 +408,17 @@ const headerCloseAttrs = computed(() => ({
   class: headerCloseClasses.value,
 }))
 
+const resolvedFooterBgClasses = useBackgroundVariant(() => ({
+  bgVariant: props.footerBgVariant,
+  textVariant: props.footerTextVariant,
+  variant: props.footerVariant,
+}))
+
 const footerClasses = computed(() => [
   props.footerClass,
+  resolvedFooterBgClasses.value,
   {
-    [`bg-${props.footerBgVariant}`]: props.footerBgVariant !== null,
     [`border-${props.footerBorderVariant}`]: props.footerBorderVariant !== null,
-    [`text-${props.footerTextVariant}`]: props.footerTextVariant !== null,
   },
 ])
 
@@ -399,8 +428,8 @@ const titleClasses = computed(() => [
     ['visually-hidden']: titleSrOnlyBoolean.value,
   },
 ])
-const disableCancel = computed(() => cancelDisabledBoolean.value || busyBoolean.value)
-const disableOk = computed(() => okDisabledBoolean.value || busyBoolean.value)
+const disableCancel = toRef(() => cancelDisabledBoolean.value || busyBoolean.value)
+const disableOk = toRef(() => okDisabledBoolean.value || busyBoolean.value)
 
 const buildTriggerableEvent = (
   type: string,

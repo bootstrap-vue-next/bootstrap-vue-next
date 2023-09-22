@@ -1,5 +1,5 @@
 import type {InjectionKey, Ref} from 'vue'
-import type {ButtonVariant, ColorVariant, Size} from '../types'
+import type {ButtonVariant, ColorVariant, Size, TextColorVariant} from '../types'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -35,6 +35,8 @@ export const avatarGroupInjectionKey: InjectionKey<{
   square: Readonly<Ref<boolean>>
   rounded: Readonly<Ref<boolean | string>>
   variant: Readonly<Ref<ColorVariant | null>>
+  bgVariant: Readonly<Ref<ColorVariant | null>>
+  textVariant: Readonly<Ref<TextColorVariant | null>>
 }> = Symbol('avatarGroup')
 
 // BAccordion

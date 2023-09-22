@@ -1,5 +1,5 @@
 import type {AriaInvalid, Booleanish, Size} from '../types'
-import {computed, nextTick, onActivated, onMounted, ref, watch} from 'vue'
+import {computed, nextTick, onActivated, onMounted, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '.'
 import {resolveAriaInvalid} from '../utils'
 import {useDebounceFn, useFocus, useToNumber, useVModel} from '@vueuse/core'
@@ -81,12 +81,12 @@ export default (
   const numberBoolean = useBooleanish(() => props.number)
   const stateBoolean = useBooleanish(() => props.state)
   const trimBoolean = useBooleanish(() => props.trim)
-  const debounceNumber = useToNumber(computed(() => props.debounce ?? 0))
-  const debounceMaxWaitNumber = useToNumber(computed(() => props.debounceMaxWait ?? NaN))
-  const computedDebounceValueWithLazy = computed(() =>
+  const debounceNumber = useToNumber(toRef(() => props.debounce ?? 0))
+  const debounceMaxWaitNumber = useToNumber(toRef(() => props.debounceMaxWait ?? NaN))
+  const computedDebounceValueWithLazy = toRef(() =>
     lazyBoolean.value === true ? 0 : debounceNumber.value
   )
-  const computedDebounceMaxWaitValueWithLazy = computed(() =>
+  const computedDebounceMaxWaitValueWithLazy = toRef(() =>
     lazyBoolean.value === true ? NaN : debounceMaxWaitNumber.value
   )
 

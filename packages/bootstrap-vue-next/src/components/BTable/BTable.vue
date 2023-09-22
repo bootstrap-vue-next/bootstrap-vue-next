@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useTableItems} from '../../composables'
 import type {
   Booleanish,
@@ -212,17 +212,17 @@ const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering
 const selectableBoolean = useBooleanish(() => props.selectable)
 const stickySelectBoolean = useBooleanish(() => props.stickySelect)
 
-const isFilterableTable = computed(() => props.filter !== undefined && props.filter !== '')
+const isFilterableTable = toRef(() => props.filter !== undefined && props.filter !== '')
 
 const selectedItems = ref<Set<TableItem>>(new Set([]))
-const isSelecting = computed(() => selectedItems.value.size > 0)
+const isSelecting = toRef(() => selectedItems.value.size > 0)
 
 const isSortable = computed(() => {
   const hasSortableFields =
     props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
   return hasSortableFields || props.sortBy !== undefined
 })
-const usesProvider = computed(() => props.provider !== undefined)
+const usesProvider = toRef(() => props.provider !== undefined)
 
 const tableClasses = computed(() => ({
   'b-table-sortable': isSortable.value,
@@ -234,14 +234,14 @@ const tableClasses = computed(() => ({
   'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
 }))
 
-const requireItemsMapping = computed(
+const requireItemsMapping = toRef(
   () =>
     (isSortable.value && sortInternalBoolean.value === true) ||
     (isSortable.value && usesProvider.value) ||
     isFilterableTable.value
 )
 
-const addSelectableCell = computed(
+const addSelectableCell = toRef(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
 

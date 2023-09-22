@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="card-subtitle mb-2" :class="coomputedClasses">
+  <component :is="tag" class="card-subtitle mb-2" :class="computedClasses">
     <slot>
       {{ text }}
     </slot>
@@ -28,7 +28,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const coomputedClasses = computed(() => ({
+const computedClasses = computed(() => ({
   [`text-${props.textVariant}`]: props.textVariant !== null,
 }))
 </script>

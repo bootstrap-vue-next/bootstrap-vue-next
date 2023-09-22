@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type {Size} from '../../types'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -55,6 +55,6 @@ defineSlots<{
 const computedClasses = computed(() => ({
   [`input-group-${props.size}`]: props.size !== 'md',
 }))
-const hasAppend = computed(() => !!props.append || !!props.appendHtml)
-const hasPrepend = computed(() => !!props.prepend || !!props.prependHtml)
+const hasAppend = toRef(() => !!props.append || !!props.appendHtml)
+const hasPrepend = toRef(() => !!props.prepend || !!props.prependHtml)
 </script>

@@ -5,19 +5,20 @@
 </template>
 
 <script setup lang="ts">
-import type {ColorVariant, TextColorVariant} from '../../types'
+import type {BackgroundColorExtendables, ColorVariant} from '../../types'
 import BCardHeadFoot from './BCardHeadFoot.vue'
 
 const props = withDefaults(
-  defineProps<{
-    text?: string
-    bgVariant?: ColorVariant | null
-    borderVariant?: ColorVariant | null
-    html?: string
-    tag?: string
-    textVariant?: TextColorVariant | null
-  }>(),
+  defineProps<
+    {
+      text?: string
+      bgVariant?: ColorVariant | null
+      html?: string
+      tag?: string
+    } & BackgroundColorExtendables
+  >(),
   {
+    variant: undefined,
     tag: 'div',
     text: undefined,
     bgVariant: undefined,
