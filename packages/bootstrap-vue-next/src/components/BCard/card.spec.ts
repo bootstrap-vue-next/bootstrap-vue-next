@@ -343,7 +343,7 @@ describe('card', () => {
       props: {bodyBgVariant: 'danger'},
     })
     const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('bodyBgVariant')).toBe('danger')
+    expect($body.props('bgVariant')).toBe('danger')
   })
 
   it('child BCardHeader has internal prop bodyTag as prop bodyTag', () => {
@@ -351,7 +351,7 @@ describe('card', () => {
       props: {bodyTag: 'span'},
     })
     const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('bodyTag')).toBe('span')
+    expect($body.props('tag')).toBe('span')
   })
 
   it('child BCardHeader has internal prop bodyTextVariant as prop bodyTextVariant', () => {
@@ -359,7 +359,7 @@ describe('card', () => {
       props: {bodyTextVariant: 'danger'},
     })
     const $body = wrapper.getComponent(BCardBody)
-    expect($body.props('bodyTextVariant')).toBe('danger')
+    expect($body.props('textVariant')).toBe('danger')
   })
 
   it('child BCardHeader has internal prop subtitle as prop subtitle', () => {

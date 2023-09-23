@@ -12,7 +12,7 @@ const props = withDefaults(
   defineProps<
     {
       text?: string
-      bgVariant?: ColorVariant | null
+      borderVariant?: ColorVariant | null
       html?: string
       tag?: string
     } & BackgroundColorExtendables
