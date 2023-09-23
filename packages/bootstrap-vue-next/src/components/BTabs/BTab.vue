@@ -5,7 +5,7 @@
     class="tab-pane"
     :class="computedClasses"
     role="tabpanel"
-    aria-labelledby="profile-tab"
+    :aria-labelledby="buttonId"
   >
     <slot v-if="showSlot" />
   </component>
