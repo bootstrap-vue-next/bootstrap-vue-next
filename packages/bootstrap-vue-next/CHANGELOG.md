@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.1...bootstrapvuenext-v0.14.2) (2023-09-23)
+
+
+### Features
+
+* **nuxt:** automatically transform asset urls for vite fixes [#1470](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1470)  ([#1478](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1478)) ([3b61ee1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3b61ee181313a5fb0897b36a89fdb1fed456ef41))
+
 ## [0.14.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.0...bootstrapvuenext-v0.14.1) (2023-09-23)
 
 
