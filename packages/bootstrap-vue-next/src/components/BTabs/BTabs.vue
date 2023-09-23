@@ -60,11 +60,12 @@
     <div v-if="!endBoolean" class="tab-content" :class="contentClass">
       <component
         :is="tabComponent()"
-        v-for="({tabComponent, contentId, tabClasses, active}, i) in tabs"
+        v-for="({tabComponent, contentId, tabClasses, active, buttonId}, i) in tabs"
         :id="contentId"
         :key="i"
         :class="tabClasses"
         :active="active"
+        :button-id="buttonId"
       />
       <div
         v-if="showEmpty"
