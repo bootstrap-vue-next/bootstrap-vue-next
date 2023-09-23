@@ -23,11 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import type {BLinkProps, Booleanish, ColorVariant, LinkTarget} from '../../types'
+import type {BLinkProps} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
-import {computed, getCurrentInstance, inject, type PropType, useAttrs} from 'vue'
-import type {RouteLocation, RouteLocationRaw} from 'vue-router'
+import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
+import type {RouteLocation} from 'vue-router'
 
 // TODO this component will likely have an issue with inheritAttrs
 defineSlots<{
@@ -167,28 +167,5 @@ const clicked = (e: MouseEvent): void => {
   }
 
   emit('click', e)
-}
-</script>
-
-<script lang="ts">
-/**
- * @deprecated will be removed when BToast is refactored
- */
-export const BLINK_PROPS = {
-  active: {type: [Boolean, String, undefined] as PropType<Booleanish>, default: undefined},
-  activeClass: {type: String, default: undefined},
-  append: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  disabled: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  event: {type: [String, Array], default: 'click'},
-  href: {type: String},
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-  rel: {type: String, default: null},
-  replace: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  routerComponentName: {type: String, default: 'router-link'},
-  routerTag: {type: String, default: 'a'},
-  target: {type: String as PropType<LinkTarget>, default: '_self'},
-  to: {type: [String, Object] as PropType<RouteLocationRaw>, default: null},
-  variant: {type: String as PropType<ColorVariant | null>, default: null},
 }
 </script>
