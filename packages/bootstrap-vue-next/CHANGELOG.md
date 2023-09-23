@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.0...bootstrapvuenext-v0.14.1) (2023-09-23)
+
+
+### Bug Fixes
+
+* **BTab:** aria-labelledby static fixes [#1457](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1457) ([88fe921](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/88fe9212c81bf23843a157c7b7572179debcfa3a))
+
 ## [0.14.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.3...bootstrapvuenext-v0.14.0) (2023-09-23)
 
 
