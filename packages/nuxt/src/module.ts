@@ -42,8 +42,8 @@ export default defineNuxtModule<ModuleOptions>({
       }
     } else if (nuxt.options.vite.vue.template.transformAssetUrls === undefined) {
       nuxt.options.vite.vue.template.transformAssetUrls = transformAssetUrls
-      // Do not overwrite user options
     } else if (
+      // Do not overwrite user options
       !(
         typeof nuxt.options.vite.vue.template.transformAssetUrls !== 'boolean' &&
         ('BImg' in nuxt.options.vite.vue.template.transformAssetUrls ||
