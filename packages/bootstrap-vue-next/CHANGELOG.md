@@ -1,6 +1,34 @@
 # Changelog
 
 
+## [0.14.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.3...bootstrapvuenext-v0.14.0) (2023-09-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BCardBody:** rename prop bodyBgVariant to bgVariant to fit with the expected prop structure
+* **BCardBody:** rename prop bodyTextVariant to textVariant to fit with the expected prop structure
+* **BCardBody:** rename prop bodyTag to tag to fit with the expected prop structure
+* **BCardBody:** rename prop bodyBgVariant to bgVariant to fit with the expected prop structure
+
+### Features
+
+* build on top of [#1474](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1474) , globally extend multiple components to include textVariant, bgVariant, and basic variant props. Where variant props override bg & text variant props. Variant props use text-bg- classes & bg & text variant props use bg- & text- classes. This allows more control over how you want to develop colors ([0b6595b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b6595b475ba1af0ce6103a72755ccdf4bbdb9e4))
+
+
+### Bug Fixes
+
+* **BBadge:** use text-bg-variant classes for setting badge background and foreground color ([aec73a6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/aec73a64d22a80938835908388207effde1117f8))
+* **BCardBody:** rename prop bodyBgVariant to bgVariant to fit with the expected prop structure ([0b6595b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b6595b475ba1af0ce6103a72755ccdf4bbdb9e4))
+* **BCardBody:** rename prop bodyBgVariant to bgVariant to fit with the expected prop structure ([0b6595b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b6595b475ba1af0ce6103a72755ccdf4bbdb9e4))
+* **BCardBody:** rename prop bodyTag to tag to fit with the expected prop structure ([0b6595b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b6595b475ba1af0ce6103a72755ccdf4bbdb9e4))
+* **BCardBody:** rename prop bodyTextVariant to textVariant to fit with the expected prop structure ([0b6595b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b6595b475ba1af0ce6103a72755ccdf4bbdb9e4))
+
+
+### Performance Improvements
+
+* toRef &gt; computed improvements ([0b6595b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0b6595b475ba1af0ce6103a72755ccdf4bbdb9e4))
+
 ## [0.13.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.13.2...bootstrapvuenext-v0.13.3) (2023-09-19)
 
 
