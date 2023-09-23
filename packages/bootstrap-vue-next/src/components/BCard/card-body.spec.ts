@@ -19,26 +19,26 @@ describe('card-body', () => {
 
   it('tag is prop bodyTag', () => {
     const wrapper = mount(BCardBody, {
-      props: {bodyTag: 'span'},
+      props: {tag: 'span'},
     })
     expect(wrapper.element.tagName).toBe('SPAN')
   })
 
-  it('has class text-{type} when prop bodyTextVariant', async () => {
+  it('has class text-{type} when prop textVariant', async () => {
     const wrapper = mount(BCardBody, {
-      props: {bodyTextVariant: 'primary'},
+      props: {textVariant: 'primary'},
     })
     expect(wrapper.classes()).toContain('text-primary')
-    await wrapper.setProps({bodyTextVariant: undefined})
+    await wrapper.setProps({textVariant: undefined})
     expect(wrapper.classes()).not.toContain('text-primary')
   })
 
-  it('has class bg-{type} when prop bodyBgVariant', async () => {
+  it('has class bg-{type} when prop bgVariant', async () => {
     const wrapper = mount(BCardBody, {
-      props: {bodyBgVariant: 'primary'},
+      props: {bgVariant: 'primary'},
     })
     expect(wrapper.classes()).toContain('bg-primary')
-    await wrapper.setProps({bodyBgVariant: undefined})
+    await wrapper.setProps({bgVariant: undefined})
     expect(wrapper.classes()).not.toContain('bg-primary')
   })
 

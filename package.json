@@ -33,7 +33,6 @@
     "test": "turbo run test",
     "test:lint:ci": "turbo run test:lint:ci",
     "test:unit:ci": "turbo run test:unit:ci",
-    "test:coverage:ci": "turbo run test:coverage:ci",
     "test:ci": "turbo run test:ci"
   },
   "devDependencies": {
