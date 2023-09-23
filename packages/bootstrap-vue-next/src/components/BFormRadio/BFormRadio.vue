@@ -53,7 +53,7 @@ const props = withDefaults(
     inline?: Booleanish
     required?: Booleanish
     state?: Booleanish | null
-    value?: string | boolean | Record<string, unknown> | number
+    value?: boolean | string | unknown[] | Record<string, unknown> | number | null
   }>(),
   {
     ariaLabel: undefined,
