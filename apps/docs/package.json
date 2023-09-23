@@ -30,7 +30,7 @@
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.17.0",
-    "vitepress": "1.0.0-rc.10",
+    "vitepress": "1.0.0-rc.15",
     "vue": "^3.3.4"
   },
   "lint-staged": {

@@ -66,12 +66,14 @@
       </BNav>
     </div>
   </BNavbar>
-  <div class="py-4 px-3 text-end" v-if="!isLargeScreen">
-    <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
-      On this page
-      <ChevronRight aria-hidden />
-    </BNavbarToggle>
-  </div>
+  <ClientOnly>
+    <div class="py-4 px-3 text-end" v-if="!isLargeScreen">
+      <BNavbarToggle v-b-toggle.otp-menu class="otp-menu-toggle">
+        On this page
+        <ChevronRight aria-hidden />
+      </BNavbarToggle>
+    </div>
+  </ClientOnly>
   <BContainer fluid class="container-lg mt-3 my-md-4 bd-layout">
     <aside class="bd-sidebar">
       <ClientOnly>
