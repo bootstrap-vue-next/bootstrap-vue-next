@@ -39,7 +39,6 @@
     "test:coverage": "vitest --coverage",
     "test:lint:ci": "pnpm run test:lint",
     "test:unit:ci": "vitest run",
-    "test:coverage:ci": "vitest run --coverage",
     "test": "pnpm run test:lint && pnpm run test:unit",
     "test:ci": "pnpm run test:lint:ci && pnpm run test:unit:ci"
   },
