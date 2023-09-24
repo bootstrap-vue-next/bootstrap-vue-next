@@ -13,6 +13,7 @@
     :table-class="tableClasses"
     :table-variant="variant"
     :sticky-header="stickyHeader"
+    :striped-columns="stripedColumns"
   >
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
@@ -191,6 +192,7 @@ const props = withDefaults(
     responsive: false,
     small: false,
     striped: false,
+    stripedColumns: false,
     labelStacked: false,
     stacked: false,
     stickyHeader: false,

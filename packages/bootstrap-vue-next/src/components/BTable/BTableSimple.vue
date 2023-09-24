@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<BTableSimpleProps>(), {
   responsive: false,
   stacked: false,
   striped: false,
+  stripedColumns: false,
   small: false,
   stickyHeader: false,
 })
@@ -44,6 +45,7 @@ const hoverBoolean = useBooleanish(() => props.hover)
 const smallBoolean = useBooleanish(() => props.small)
 const stripedBoolean = useBooleanish(() => props.striped)
 const stickyHeaderBoolean = useBooleanish(() => props.stickyHeader)
+const stripedColumnsBoolean = useBooleanish(() => props.stripedColumns)
 
 const computedClasses = computed(() => [
   props.tableClass,
@@ -61,6 +63,7 @@ const computedClasses = computed(() => [
     'table-striped': stripedBoolean.value,
     'table-sm': smallBoolean.value,
     [`table-${props.tableVariant}`]: props.tableVariant !== null,
+    'table-striped-columns': stripedColumnsBoolean.value,
   },
 ])
 

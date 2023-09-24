@@ -79,6 +79,7 @@ export interface BTableSimpleProps {
   responsive?: boolean | Breakpoint
   stacked?: boolean | Breakpoint
   striped?: Booleanish
+  stripedColumns?: Booleanish
   small?: Booleanish
   tableClass?: ClassValue
   tableVariant?: ColorVariant | null

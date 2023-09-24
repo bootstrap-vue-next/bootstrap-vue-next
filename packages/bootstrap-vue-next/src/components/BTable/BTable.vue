@@ -153,6 +153,7 @@ const props = withDefaults(
     responsive: false,
     small: false,
     striped: false,
+    stripedColumns: false,
     labelStacked: false,
     stacked: false,
     sortDesc: false,
