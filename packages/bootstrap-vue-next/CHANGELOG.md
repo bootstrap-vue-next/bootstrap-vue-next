@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.2...bootstrapvuenext-v0.14.3) (2023-09-24)
+
+
+### Bug Fixes
+
+* **BTableLite:** slot typo in head for dynamic slot ([341d054](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/341d054aee4729540a84d62659b970380d23bbb9))
+
 ## [0.14.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.1...bootstrapvuenext-v0.14.2) (2023-09-23)
 
 
