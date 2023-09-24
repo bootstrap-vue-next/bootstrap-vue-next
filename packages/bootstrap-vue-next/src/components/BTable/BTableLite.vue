@@ -33,8 +33,8 @@
             <slot name="field-prefix" :field="field" />
             <div>
               <slot
-                v-if="$slots[`head('${field.key})`] || $slots['head()']"
-                :name="$slots[`head('${field.key})`] ? `head(${field.key})` : 'head()'"
+                v-if="$slots[`head(${field.key})`] || $slots['head()']"
+                :name="$slots[`head(${field.key})`] ? `head(${field.key})` : 'head()'"
                 :label="field.label"
                 :column="field.key"
                 :field="field"
