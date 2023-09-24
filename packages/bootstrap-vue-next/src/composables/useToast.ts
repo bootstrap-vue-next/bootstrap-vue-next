@@ -1,10 +1,10 @@
-import {createSharedComposable} from '@vueuse/core'
+import {createGlobalState} from '@vueuse/core'
 import {ref} from 'vue'
 import type {Toast} from '../types'
 
 const posDefault = 'top-right'
 
-export default createSharedComposable(() => {
+export default createGlobalState(() => {
   const toasts = ref<(Toast & {self: symbol})[]>([])
 
   /**
