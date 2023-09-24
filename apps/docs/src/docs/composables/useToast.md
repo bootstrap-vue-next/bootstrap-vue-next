@@ -108,7 +108,7 @@ const {show, toasts} = useToast()
 
 <script setup lang="ts">
 import {data} from '../../data/components/toast.data'
-import {BButton, useToast} from 'bootstrap-vue-next'
+import {BButton, useToast, BButtonGroup} from 'bootstrap-vue-next'
 import HighlightCard from '../../components/HighlightCard.vue'
 
 const {show, hide, toasts} = useToast()
