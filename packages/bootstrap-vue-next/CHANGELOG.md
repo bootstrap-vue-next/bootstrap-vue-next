@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.3...bootstrapvuenext-v0.14.4) (2023-09-24)
+
+
+### Features
+
+* **BTable:** striped columns ([3ea84f6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3ea84f6cc258f6094ea13e856b3eeb3aada54203))
+
 ## [0.14.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.2...bootstrapvuenext-v0.14.3) (2023-09-24)
 
 
