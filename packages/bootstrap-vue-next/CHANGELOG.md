@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.4...bootstrapvuenext-v0.14.5) (2023-09-24)
+
+
+### Bug Fixes
+
+* **useToast:** global sharing system minor improvements ([d0d9458](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d0d94586208400170b8e6249e451ebf81d8c857f))
+
 ## [0.14.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.3...bootstrapvuenext-v0.14.4) (2023-09-24)
 
 
