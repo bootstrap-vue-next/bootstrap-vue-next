@@ -124,6 +124,7 @@
     </tbody>
     <tfoot v-if="footCloneBoolean">
       <tr>
+        <slot name="tfoot-tr-prefix" />
         <th
           v-for="field in computedFields"
           :key="field.key"
