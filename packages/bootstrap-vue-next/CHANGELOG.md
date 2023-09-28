@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.5...bootstrapvuenext-v0.14.6) (2023-09-28)
+
+
+### Bug Fixes
+
+* **BTable:** fix reactivity when using mapping ([5e5d3dc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5e5d3dce2d24e428e2bf0bec24b45dee799d6d4b))
+
 ## [0.14.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.4...bootstrapvuenext-v0.14.5) (2023-09-24)
 
 
