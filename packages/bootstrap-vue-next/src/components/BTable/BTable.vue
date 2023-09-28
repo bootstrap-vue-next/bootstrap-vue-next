@@ -268,6 +268,11 @@ const {
   sortByModel
 )
 
+watch(
+  () => props.items,
+  (v) => updateInternalItems(v)
+)
+
 filteredHandler.value = async (items) => {
   if (usesProvider.value) {
     await callItemsProvider()
