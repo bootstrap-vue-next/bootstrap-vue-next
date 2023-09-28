@@ -1,5 +1,5 @@
 <template>
-  <BContainer id="container" ref="container" :toast="{root: true}" class="mt-4" fluid="sm">
+  <BContainer id="container" ref="container" class="mt-4" fluid="sm">
     <RouterView />
   </BContainer>
 </template>
@@ -33,8 +33,12 @@ details.accordion-item .details-button {
   border: 0;
   border-radius: 0;
   overflow-anchor: none;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out,
+    border-radius 0.15s ease;
 }
 
 details.accordion-item .details-button::after {
