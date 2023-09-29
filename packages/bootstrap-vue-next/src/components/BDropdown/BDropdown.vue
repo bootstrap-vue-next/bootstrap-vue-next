@@ -67,7 +67,7 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
-import {computed, provide, readonly, ref, toRef, watch} from 'vue'
+import {computed, nextTick, provide, readonly, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
@@ -171,15 +171,34 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
 )
 
-onKeyStroke(
-  'Escape',
-  () => {
-    modelValue.value = !modelValueBoolean
-  },
-  {target: splitButton}
-)
-
 const referencePlacement = toRef(() => (!splitBoolean.value ? splitButton.value : button.value))
+
+onKeyStroke('Escape', () => (modelValue.value = !modelValueBoolean), {target: referencePlacement})
+onKeyStroke('Escape', () => (modelValue.value = !modelValueBoolean), {target: floating})
+
+function keynav(e: Event, v: number) {
+  e.preventDefault()
+  if (!modelValueBoolean.value) {
+    open()
+    nextTick(() => keynav(e, v))
+    return
+  }
+  const list = floating.value?.querySelectorAll('.dropdown-item:not(.disabled):not(:disabled)')
+  if (!list) return
+  if (floating.value?.contains(document.activeElement)) {
+    const active = floating.value.querySelector('.dropdown-item:focus')
+    const index = Array.prototype.indexOf.call(list, active) + v
+    if (index >= 0 && index < list?.length) (list[index] as HTMLElement)?.focus()
+  } else {
+    ;(list[v === -1 ? list.length - 1 : 0] as HTMLElement)?.focus()
+  }
+}
+
+onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: referencePlacement})
+onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: referencePlacement})
+onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floating})
+onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floating})
+
 const floatingPlacement = computed(() =>
   resolveFloatingPlacement({
     top: dropupBoolean.value,
