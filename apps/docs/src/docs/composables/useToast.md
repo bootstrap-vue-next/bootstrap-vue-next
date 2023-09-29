@@ -1,4 +1,4 @@
-# useModal
+# useToast
 
 <ClientOnly>
   <Teleport to=".bd-toc">
