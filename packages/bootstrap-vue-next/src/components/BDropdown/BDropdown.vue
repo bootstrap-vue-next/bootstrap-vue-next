@@ -173,10 +173,22 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
 
 const referencePlacement = toRef(() => (!splitBoolean.value ? splitButton.value : button.value))
 
-onKeyStroke('Escape', () => (modelValue.value = !modelValueBoolean), {target: referencePlacement})
-onKeyStroke('Escape', () => (modelValue.value = !modelValueBoolean), {target: floating})
+onKeyStroke(
+  'Escape',
+  () => {
+    modelValue.value = !modelValueBoolean
+  },
+  {target: referencePlacement}
+)
+onKeyStroke(
+  'Escape',
+  () => {
+    modelValue.value = !modelValueBoolean
+  },
+  {target: floating}
+)
 
-function keynav(e: Event, v: number) {
+const keynav = (e: Event, v: number) => {
   e.preventDefault()
   if (!modelValueBoolean.value) {
     open()
