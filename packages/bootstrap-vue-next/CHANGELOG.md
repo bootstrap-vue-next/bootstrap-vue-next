@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.6...bootstrapvuenext-v0.14.7) (2023-10-01)
+
+
+### Features
+
+* **BDropdown:** add keyboard navigation ([3f8c9bf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3f8c9bfbc3dc9dc1225886b5be31fb4e8e15ee5a))
+
 ## [0.14.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.5...bootstrapvuenext-v0.14.6) (2023-09-28)
 
 
