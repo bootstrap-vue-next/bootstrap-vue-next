@@ -108,9 +108,6 @@ importers:
       bootstrap:
         specifier: ^5.3.1
         version: 5.3.1(@popperjs/core@2.11.8)
-      rollup-plugin-visualizer:
-        specifier: ^5.9.2
-        version: 5.9.2(rollup@3.29.0)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -184,9 +181,6 @@ importers:
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
-      rollup-plugin-visualizer:
-        specifier: ^5.9.2
-        version: 5.9.2(rollup@3.29.0)
       sass:
         specifier: ^1.66.1
         version: 1.66.1
