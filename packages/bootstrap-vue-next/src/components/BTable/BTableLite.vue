@@ -124,18 +124,32 @@
     </tbody>
     <tfoot v-if="footCloneBoolean">
       <tr>
+        <slot name="tfoot-tr-prefix" />
         <th
           v-for="field in computedFields"
           :key="field.key"
-          v-bind="field.thAttr"
           scope="col"
-          :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+          :class="getFieldColumnClasses(field)"
           :title="field.headerTitle"
           :abbr="field.headerAbbr"
           :style="field.thStyle"
-          @click="headerClicked(field, $event, true)"
+          v-bind="field.thAttr"
+          @click="headerClicked(field, $event)"
         >
-          {{ field.label }}
+          <div class="d-inline-flex flex-nowrap align-items-center gap-1">
+            <slot name="field-prefix" :field="field" />
+            <div>
+              <slot
+                v-if="$slots[`foot(${field.key})`] || $slots['foot()']"
+                :name="$slots[`foot(${field.key})`] ? `foot(${field.key})` : 'foot()'"
+                :label="field.label"
+                :column="field.key"
+                :field="field"
+                :is-foot="true"
+              />
+              <template v-else>{{ getFieldHeadLabel(field) }}</template>
+            </div>
+          </div>
         </th>
       </tr>
     </tfoot>
