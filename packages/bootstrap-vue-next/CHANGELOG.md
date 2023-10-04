@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.7...bootstrapvuenext-v0.14.8) (2023-10-04)
+
+
+### Bug Fixes
+
+* **BModal:** Fix recent regression breaking body scroll locking ([ca0bc3e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ca0bc3e6c68811ad2549d0efcabdd06745ed7d6d))
+
 ## [0.14.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.6...bootstrapvuenext-v0.14.7) (2023-10-01)
 
 
