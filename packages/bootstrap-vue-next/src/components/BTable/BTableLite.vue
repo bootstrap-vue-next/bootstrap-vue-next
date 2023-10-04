@@ -17,7 +17,7 @@
   >
     <thead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
-      <tr>
+      <tr :class="theadTrClass">
         <slot name="thead-tr-prefix" />
         <th
           v-for="field in computedFields"
@@ -217,6 +217,7 @@ const props = withDefaults(
     tableClass: undefined,
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
+    theadTrClass: 'table-danger',
   }
 )
 
@@ -320,7 +321,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   field.class,
   field.thClass,
   {
-    [`table-${field.variant}`]: field.variant !== null,
+    [`table-${field.variant}`]: !!field.variant,
     'b-table-sticky-column': field.stickyColumn,
   },
   ...(props.fieldColumnClass ? props.fieldColumnClass(field) : []),
@@ -333,7 +334,7 @@ const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
     ? `table-${tr?._cellVariants[field.key]}`
     : undefined,
   {
-    [`table-${field.variant}`]: field.variant !== null,
+    [`table-${field.variant}`]: !!field.variant,
     'b-table-sticky-column': field.stickyColumn,
   },
 ]
@@ -345,7 +346,8 @@ const getRowClasses = (item: TableItem, type = 'row') => {
   ]
 
   if (props.tbodyTrClass) {
-    const extraClasses = props.tbodyTrClass(item, type)
+    const extraClasses =
+      typeof props.tbodyTrClass === 'string' ? props.tbodyTrClass : props.tbodyTrClass(item, type)
     if (extraClasses) {
       classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
     }

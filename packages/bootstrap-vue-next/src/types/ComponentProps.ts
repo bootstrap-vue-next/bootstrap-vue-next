@@ -98,7 +98,10 @@ export interface BTableLiteProps {
   emptyText?: string
   emptyFilteredText?: string
   fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
-  tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
+  tbodyTrClass?:
+    | string
+    | ((item: TableItem | null, type: string) => string | Array<any> | null | undefined)
+  theadTrClass?: ClassValue
   virtualFields?: number | string
 }
 
