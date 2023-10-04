@@ -179,7 +179,6 @@ const props = withDefaults(
     okTitle?: string
     okVariant?: ButtonVariant | null
     scrollable?: Booleanish
-    show?: Booleanish
     size?: Size | 'xl'
     title?: string
     titleClass?: ClassValue
@@ -240,7 +239,6 @@ const props = withDefaults(
     okTitle: 'Ok',
     okVariant: 'primary',
     scrollable: false,
-    show: false,
     titleSrOnly: false,
     titleTag: 'h5',
     teleportDisabled: false,

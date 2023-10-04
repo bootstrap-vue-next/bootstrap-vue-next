@@ -206,11 +206,6 @@ export default {
           default: false,
         },
         {
-          prop: 'show',
-          type: 'Booleanish',
-          default: false,
-        },
-        {
           prop: 'size',
           type: "Size | 'xl'",
           default: 'md',
