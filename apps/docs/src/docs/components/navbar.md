@@ -15,7 +15,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 </div>
 
 <HighlightCard>
-  <BNavbar toggleable="lg" type="dark" variant="dark">
+  <BNavbar toggleable="lg" data-bs-theme="dark" variant="dark">
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-collapse" />
     <BCollapse id="nav-collapse" is-nav>
@@ -49,7 +49,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
   <template #html>
 
 ```vue-html
-<BNavbar toggleable="lg" type="dark" variant="dark">
+<BNavbar toggleable="lg" data-bs-theme="dark" variant="dark">
   <BNavbarBrand href="#">NavBar</BNavbarBrand>
   <BNavbarToggle target="nav-collapse" />
   <BCollapse id="nav-collapse" is-nav>
@@ -87,9 +87,9 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 
 ## Color schemes
 
-`BNavbar` supports the standard Bootstrap v4 available background color variants. Set the variant prop to one of the following values to change the background color: primary, success, info, warning, danger, dark, or light.
+`BNavbar` supports the standard Bootstrap v5 available background color variants. Set the variant prop to one of the following values to change the background color: primary, secondary, success, info, warning, danger, dark, light, or any of the \*-subtle variants.
 
-Control the text color by setting `type` prop to `light` for use with light background color variants, or dark for dark background color variants.
+Control the text color by setting `data-bs-theme` prop to `dark` for use with dark background color variants, or `light` for light background color variants.
 
 ## Placement
 
@@ -118,14 +118,14 @@ Navbars come with built-in support for a handful of sub-components. Choose from 
 The `BNavbarBrand` generates a link if href is provided, or a `RouterLink` if to is provided. If neither is given it renders as a `<div>` tag. You can override the tag type by setting the tag prop to the element you would like rendered:
 
 <HighlightCard>
-  <BNavbar variant="faded" type="light">
+  <BNavbar variant="faded" data-bs-theme="light">
     <BNavbarBrand href="#">BootstrapVueNext</BNavbarBrand>
   </BNavbar>
   <template #html>
 
 ```vue-html
 <!-- As a link -->
-<BNavbar variant="faded" type="light">
+<BNavbar variant="faded" data-bs-theme="light">
   <BNavbarBrand href="#">BootstrapVueNext</BNavbarBrand>
 </BNavbar>
 ```
@@ -134,14 +134,14 @@ The `BNavbarBrand` generates a link if href is provided, or a `RouterLink` if to
 </HighlightCard>
 
 <HighlightCard>
-  <BNavbar variant="faded" type="light">
+  <BNavbar variant="faded" data-bs-theme="light">
     <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
   </BNavbar>
   <template #html>
 
 ```vue-html
 <!-- As a heading -->
-<BNavbar variant="faded" type="light">
+<BNavbar variant="faded" data-bs-theme="light">
   <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
 </BNavbar>
 ```
@@ -152,7 +152,7 @@ The `BNavbarBrand` generates a link if href is provided, or a `RouterLink` if to
 Adding images to the `BNavbarBrand` will likely always require custom styles or utilities to properly size. Here are some examples to demonstrate:
 
 <HighlightCard>
-  <BNavbar variant="faded" type="light">
+  <BNavbar variant="faded" data-bs-theme="light">
     <BNavbarBrand href="#">
       <img src="https://placekitten.com/g/30/30" alt="Kitten">
     </BNavbarBrand>
@@ -161,7 +161,7 @@ Adding images to the `BNavbarBrand` will likely always require custom styles or 
 
 ```vue-html
 <!-- Just an image -->
-<BNavbar variant="faded" type="light">
+<BNavbar variant="faded" data-bs-theme="light">
   <BNavbarBrand href="#">
     <img src="https://placekitten.com/g/30/30" alt="Kitten">
   </BNavbarBrand>
@@ -172,7 +172,7 @@ Adding images to the `BNavbarBrand` will likely always require custom styles or 
 </HighlightCard>
 
 <HighlightCard>
-  <BNavbar variant="faded" type="light">
+  <BNavbar variant="faded" data-bs-theme="light">
     <BNavbarBrand href="#">
       <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
       BootstrapVue
@@ -182,7 +182,7 @@ Adding images to the `BNavbarBrand` will likely always require custom styles or 
 
 ```vue-html
 <!-- Image and text -->
-<BNavbar variant="faded" type="light">
+<BNavbar variant="faded" data-bs-theme="light">
   <BNavbarBrand href="#">
     <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
     BootstrapVue
@@ -217,7 +217,7 @@ Handle click events by specifying a handler for the @click event on `BNavItem`.
 Navbars may contain bits of text with the help of `BNavText`. This component adjusts vertical alignment and horizontal spacing for strings of text.
 
 <HighlightCard>
-  <BNavbar toggleable="sm" type="light" variant="light">
+  <BNavbar toggleable="sm" data-bs-theme="light" variant="light">
     <BNavbarToggle target="nav-text-collapse" />
     <BNavbarBrand>BootstrapVue</BNavbarBrand>
     <BCollapse id="nav-text-collapse" is-nav>
@@ -229,7 +229,7 @@ Navbars may contain bits of text with the help of `BNavText`. This component adj
   <template #html>
 
 ```vue-html
-<BNavbar toggleable="sm" type="light" variant="light">
+<BNavbar toggleable="sm" data-bs-theme="light" variant="light">
   <BNavbarToggle target="nav-text-collapse" />
 
   <BNavbarBrand>BootstrapVue</BNavbarBrand>
@@ -250,7 +250,7 @@ Navbars may contain bits of text with the help of `BNavText`. This component adj
 For `BNavItemDropdown` usage, see the `BDropdown` docs. Note split dropdowns are not supported in `BNavbar` and `BNavbarNav`.
 
 <HighlightCard>
-  <BNavbar type="dark" variant="dark">
+  <BNavbar data-bs-theme="dark" variant="dark">
     <BNavbarNav>
       <BNavItem href="#">Home</BNavItem>
       <BNavItemDropdown text="Lang" right>
@@ -268,7 +268,7 @@ For `BNavItemDropdown` usage, see the `BDropdown` docs. Note split dropdowns are
   <template #html>
 
 ```vue-html
-<BNavbar type="dark" variant="dark">
+<BNavbar data-bs-theme="dark" variant="dark">
   <BNavbarNav>
     <BNavItem href="#">Home</BNavItem>
 
@@ -296,7 +296,7 @@ For `BNavItemDropdown` usage, see the `BDropdown` docs. Note split dropdowns are
 Use `BNavForm` to place inline form controls into your navbar
 
 <HighlightCard>
-  <BNavbar type="light" variant="light">
+  <BNavbar data-bs-theme="light" variant="light">
     <BNavForm>
       <BFormInput class="me-sm-2" placeholder="Search" />
       <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
@@ -305,7 +305,7 @@ Use `BNavForm` to place inline form controls into your navbar
   <template #html>
 
 ```vue-html
-<BNavbar type="light" variant="light">
+<BNavbar data-bs-theme="light" variant="light">
   <BNavForm>
     <BFormInput class="me-sm-2" placeholder="Search" />
     <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
@@ -319,7 +319,7 @@ Use `BNavForm` to place inline form controls into your navbar
 Input Groups work as well:
 
 <HighlightCard>
-  <BNavbar type="light" variant="light">
+  <BNavbar data-bs-theme="light" variant="light">
     <BNavForm>
       <BInputGroup prepend="@">
         <BFormInput placeholder="Username" />
@@ -329,7 +329,7 @@ Input Groups work as well:
   <template #html>
 
 ```vue-html
-<BNavbar type="light" variant="light">
+<BNavbar data-bs-theme="light" variant="light">
   <BNavForm>
     <BInputGroup prepend="@">
       <BFormInput placeholder="Username" />
@@ -361,12 +361,12 @@ Internally, `BNavbarToggle` uses the v-b-toggle directive.
 
 ### Custom navbar toggle
 
-`BNavbarToggle` renders the default Bootstrap v4 hamburger (which is a background SVG image). You can supply your own content (such as an icon) via the optionally scoped default slot. The default slot scope contains the property expanded, which will be true when the collapse is expanded, or false when the collapse is collapsed.
+`BNavbarToggle` renders the default Bootstrap v5 hamburger (which is a background SVG image). You can supply your own content (such as an icon) via the optionally scoped default slot. The default slot scope contains the property expanded, which will be true when the collapse is expanded, or false when the collapse is collapsed.
 
 Note that the expanded scope property only works when supplying the target prop as a string, and not an array.
 
 <HighlightCard>
-  <BNavbar toggleable type="dark" variant="dark">
+  <BNavbar toggleable data-bs-theme="dark" variant="dark">
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
     <BNavbarToggle target="navbar-toggle-collapse">
       <template #default="{ expanded }">
@@ -385,7 +385,7 @@ Note that the expanded scope property only works when supplying the target prop 
   <template #html>
 
 ```vue-html
-<BNavbar toggleable type="dark" variant="dark">
+<BNavbar toggleable data-bs-theme="dark" variant="dark">
   <BNavbarBrand href="#">NavBar</BNavbarBrand>
 
   <BNavbarToggle target="navbar-toggle-collapse">
