@@ -15,7 +15,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 </div>
 
 <HighlightCard>
-  <BNavbar toggleable="lg" data-bs-theme="dark" variant="primary">
+  <BNavbar toggleable="lg" variant="primary" v-b-color-mode="'dark'">
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-collapse" />
     <BCollapse id="nav-collapse" is-nav>
@@ -49,7 +49,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
   <template #html>
 
 ```vue-html
-<BNavbar toggleable="lg" data-bs-theme="dark" variant="primary">
+<BNavbar toggleable="lg" variant="primary" v-b-color-mode="'dark'">
   <BNavbarBrand href="#">NavBar</BNavbarBrand>
   <BNavbarToggle target="nav-collapse" />
   <BCollapse id="nav-collapse" is-nav>
@@ -90,8 +90,20 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 `BNavbar` supports the standard Bootstrap v5 available background color variants. Set the `variant` prop to one of the
 following values to change the background color: primary, secondary, success, info, warning, danger, dark, light, or any of the \*-subtle variants.
 
-If the `variant` property is set, control the text color by setting `data-bs-theme` prop to `dark` for use with dark
-background color variants, or `light` for light background color variants.
+If the `variant` property is set, it may be necessary to control the text color so that it contrasts with the variant
+irrespective of the theme. This can be done in one of two ways.
+
+Use the `v-b-color-mode` directive:
+
+```vue-html
+<BNavbar toggleable="lg" variant="primary" v-b-color-mode="'dark'">
+```
+
+Or use the raw `data-bs-theme` attribute:
+
+```vue-html
+<BNavbar toggleable="lg" variant="primary" data-bs-theme="dark">
+```
 
 `BNavbar` will conform to the current color theme if the `variant` prop is not set.
 
@@ -221,7 +233,7 @@ Handle click events by specifying a handler for the @click event on `BNavItem`.
 Navbars may contain bits of text with the help of `BNavText`. This component adjusts vertical alignment and horizontal spacing for strings of text.
 
 <HighlightCard>
-  <BNavbar toggleable="sm" data-bs-theme="light" variant="light">
+  <BNavbar toggleable="sm" variant="primary" v-b-color-mode="'dark'">
     <BNavbarToggle target="nav-text-collapse" />
     <BNavbarBrand>BootstrapVue</BNavbarBrand>
     <BCollapse id="nav-text-collapse" is-nav>
@@ -233,7 +245,7 @@ Navbars may contain bits of text with the help of `BNavText`. This component adj
   <template #html>
 
 ```vue-html
-<BNavbar toggleable="sm" data-bs-theme="light" variant="light">
+<BNavbar toggleable="sm" variant="primary" v-b-color-mode="'dark'">
   <BNavbarToggle target="nav-text-collapse" />
 
   <BNavbarBrand>BootstrapVue</BNavbarBrand>
@@ -254,7 +266,7 @@ Navbars may contain bits of text with the help of `BNavText`. This component adj
 For `BNavItemDropdown` usage, see the `BDropdown` docs. Note split dropdowns are not supported in `BNavbar` and `BNavbarNav`.
 
 <HighlightCard>
-  <BNavbar data-bs-theme="dark" variant="dark">
+  <BNavbar variant="dark" v-b-color-mode="'dark'">
     <BNavbarNav>
       <BNavItem href="#">Home</BNavItem>
       <BNavItemDropdown text="Lang" right>
@@ -272,7 +284,7 @@ For `BNavItemDropdown` usage, see the `BDropdown` docs. Note split dropdowns are
   <template #html>
 
 ```vue-html
-<BNavbar data-bs-theme="dark" variant="dark">
+<BNavbar variant="dark" v-b-color-mode="'dark'">
   <BNavbarNav>
     <BNavItem href="#">Home</BNavItem>
 
@@ -300,7 +312,7 @@ For `BNavItemDropdown` usage, see the `BDropdown` docs. Note split dropdowns are
 Use `BNavForm` to place inline form controls into your navbar
 
 <HighlightCard>
-  <BNavbar data-bs-theme="light" variant="light">
+  <BNavbar variant="primary" v-b-color-mode="'dark'">
     <BNavForm>
       <BFormInput class="me-sm-2" placeholder="Search" />
       <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
@@ -309,7 +321,7 @@ Use `BNavForm` to place inline form controls into your navbar
   <template #html>
 
 ```vue-html
-<BNavbar data-bs-theme="light" variant="light">
+<BNavbar variant="primary" v-b-color-mode="'dark'">
   <BNavForm>
     <BFormInput class="me-sm-2" placeholder="Search" />
     <BButton variant="outline-success" class="my-2 my-sm-0" type="submit">Search</BButton>
@@ -323,7 +335,7 @@ Use `BNavForm` to place inline form controls into your navbar
 Input Groups work as well:
 
 <HighlightCard>
-  <BNavbar data-bs-theme="light" variant="light">
+  <BNavbar variant="primary" v-b-color-mode="'dark'">
     <BNavForm>
       <BInputGroup prepend="@">
         <BFormInput placeholder="Username" />
@@ -333,7 +345,7 @@ Input Groups work as well:
   <template #html>
 
 ```vue-html
-<BNavbar data-bs-theme="light" variant="light">
+<BNavbar variant="primary" v-b-color-mode="'dark'">
   <BNavForm>
     <BInputGroup prepend="@">
       <BFormInput placeholder="Username" />
@@ -370,7 +382,7 @@ Internally, `BNavbarToggle` uses the v-b-toggle directive.
 Note that the expanded scope property only works when supplying the target prop as a string, and not an array.
 
 <HighlightCard>
-  <BNavbar toggleable data-bs-theme="dark" variant="dark">
+  <BNavbar toggleable variant="dark" v-b-color-mode="'dark'">
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
     <BNavbarToggle target="navbar-toggle-collapse">
       <template #default="{ expanded }">
@@ -389,7 +401,7 @@ Note that the expanded scope property only works when supplying the target prop 
   <template #html>
 
 ```vue-html
-<BNavbar toggleable data-bs-theme="dark" variant="dark">
+<BNavbar toggleable variant="dark" v-b-color-mode="'dark'">
   <BNavbarBrand href="#">NavBar</BNavbarBrand>
 
   <BNavbarToggle target="navbar-toggle-collapse">
@@ -430,7 +442,7 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 import {data} from '../../data/components/navbar.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BNavText, BInputGroup, BNavbar, BNavbarBrand, BNavbarToggle, BCollapse, BNavbarNav, BNavForm, BNavItem, BFormInput, BNavbarItem, BNavItemDropdown, BDropdownItem, BButton} from 'bootstrap-vue-next'
+import {BNavText, BInputGroup, BNavbar, BNavbarBrand, BNavbarToggle, BCollapse, BNavbarNav, BNavForm, BNavItem, BFormInput, BNavbarItem, BNavItemDropdown, BDropdownItem, BButton, vBColorMode} from 'bootstrap-vue-next'
 import ChevronBarUpIcon from '~icons/bi/chevron-bar-up'
 import ChevronBarDownIcon from '~icons/bi/chevron-bar-down'
 </script>
