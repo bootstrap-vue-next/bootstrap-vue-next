@@ -24,7 +24,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
         <BNavItem href="#" disabled>Disabled</BNavItem>
       </BNavbarNav>
       <!-- Right aligned nav items -->
-      <BNavbarNav class="me-auto mb-2 mb-lg-0">
+      <BNavbarNav class="ms-auto mb-2 mb-lg-0">
         <BNavItemDropdown text="Lang" right>
           <BDropdownItem href="#">EN</BDropdownItem>
           <BDropdownItem href="#">ES</BDropdownItem>
@@ -58,7 +58,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
       <BNavItem href="#" disabled>Disabled</BNavItem>
     </BNavbarNav>
     <!-- Right aligned nav items -->
-    <BNavbarNav class="me-auto mb-2 mb-lg-0">
+    <BNavbarNav class="ms-auto mb-2 mb-lg-0">
       <BNavItemDropdown text="Lang" right>
         <BDropdownItem href="#">EN</BDropdownItem>
         <BDropdownItem href="#">ES</BDropdownItem>
