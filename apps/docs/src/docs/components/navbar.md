@@ -15,7 +15,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 </div>
 
 <HighlightCard>
-  <BNavbar toggleable="lg" data-bs-theme="dark" variant="dark">
+  <BNavbar toggleable="lg" data-bs-theme="dark" variant="primary">
     <BNavbarBrand href="#">NavBar</BNavbarBrand>
     <BNavbarToggle target="nav-collapse" />
     <BCollapse id="nav-collapse" is-nav>
@@ -49,7 +49,7 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
   <template #html>
 
 ```vue-html
-<BNavbar toggleable="lg" data-bs-theme="dark" variant="dark">
+<BNavbar toggleable="lg" data-bs-theme="dark" variant="primary">
   <BNavbarBrand href="#">NavBar</BNavbarBrand>
   <BNavbarToggle target="nav-collapse" />
   <BCollapse id="nav-collapse" is-nav>
@@ -87,9 +87,13 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 
 ## Color schemes
 
-`BNavbar` supports the standard Bootstrap v5 available background color variants. Set the variant prop to one of the following values to change the background color: primary, secondary, success, info, warning, danger, dark, light, or any of the \*-subtle variants.
+`BNavbar` supports the standard Bootstrap v5 available background color variants. Set the `variant` prop to one of the
+following values to change the background color: primary, secondary, success, info, warning, danger, dark, light, or any of the \*-subtle variants.
 
-Control the text color by setting `data-bs-theme` prop to `dark` for use with dark background color variants, or `light` for light background color variants.
+If the `variant` property is set, control the text color by setting `data-bs-theme` prop to `dark` for use with dark
+background color variants, or `light` for light background color variants.
+
+`BNavbar` will conform to the current color theme if the `variant` prop is not set.
 
 ## Placement
 
@@ -118,14 +122,14 @@ Navbars come with built-in support for a handful of sub-components. Choose from 
 The `BNavbarBrand` generates a link if href is provided, or a `RouterLink` if to is provided. If neither is given it renders as a `<div>` tag. You can override the tag type by setting the tag prop to the element you would like rendered:
 
 <HighlightCard>
-  <BNavbar variant="faded" data-bs-theme="light">
+  <BNavbar variant="faded">
     <BNavbarBrand href="#">BootstrapVueNext</BNavbarBrand>
   </BNavbar>
   <template #html>
 
 ```vue-html
 <!-- As a link -->
-<BNavbar variant="faded" data-bs-theme="light">
+<BNavbar variant="faded">
   <BNavbarBrand href="#">BootstrapVueNext</BNavbarBrand>
 </BNavbar>
 ```
@@ -134,14 +138,14 @@ The `BNavbarBrand` generates a link if href is provided, or a `RouterLink` if to
 </HighlightCard>
 
 <HighlightCard>
-  <BNavbar variant="faded" data-bs-theme="light">
+  <BNavbar variant="faded">
     <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
   </BNavbar>
   <template #html>
 
 ```vue-html
 <!-- As a heading -->
-<BNavbar variant="faded" data-bs-theme="light">
+<BNavbar variant="faded">
   <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
 </BNavbar>
 ```
@@ -152,7 +156,7 @@ The `BNavbarBrand` generates a link if href is provided, or a `RouterLink` if to
 Adding images to the `BNavbarBrand` will likely always require custom styles or utilities to properly size. Here are some examples to demonstrate:
 
 <HighlightCard>
-  <BNavbar variant="faded" data-bs-theme="light">
+  <BNavbar variant="faded">
     <BNavbarBrand href="#">
       <img src="https://placekitten.com/g/30/30" alt="Kitten">
     </BNavbarBrand>
@@ -161,7 +165,7 @@ Adding images to the `BNavbarBrand` will likely always require custom styles or 
 
 ```vue-html
 <!-- Just an image -->
-<BNavbar variant="faded" data-bs-theme="light">
+<BNavbar variant="faded">
   <BNavbarBrand href="#">
     <img src="https://placekitten.com/g/30/30" alt="Kitten">
   </BNavbarBrand>
@@ -172,7 +176,7 @@ Adding images to the `BNavbarBrand` will likely always require custom styles or 
 </HighlightCard>
 
 <HighlightCard>
-  <BNavbar variant="faded" data-bs-theme="light">
+  <BNavbar variant="faded">
     <BNavbarBrand href="#">
       <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
       BootstrapVue
@@ -182,7 +186,7 @@ Adding images to the `BNavbarBrand` will likely always require custom styles or 
 
 ```vue-html
 <!-- Image and text -->
-<BNavbar variant="faded" data-bs-theme="light">
+<BNavbar variant="faded">
   <BNavbarBrand href="#">
     <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
     BootstrapVue
