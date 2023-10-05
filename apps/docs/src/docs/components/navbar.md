@@ -91,19 +91,39 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 following values to change the background color: primary, secondary, success, info, warning, danger, dark, light, or any of the \*-subtle variants.
 
 If the `variant` property is set, it may be necessary to control the text color so that it contrasts with the variant
-irrespective of the theme. This can be done in one of two ways.
+irrespective of the theme. This can be done by use the `v-b-color-mode` directive or the `data-bs-theme` attribute.
 
-Use the `v-b-color-mode` directive:
-
-```vue-html
-<BNavbar toggleable="lg" variant="primary" v-b-color-mode="'dark'">
-```
-
-Or use the raw `data-bs-theme` attribute:
+<HighlightCard>
+  <BNavbar variant="primary" v-b-color-mode="'dark'">
+    <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
+  </BNavbar>
+  <template #html>
 
 ```vue-html
-<BNavbar toggleable="lg" variant="primary" data-bs-theme="dark">
+<!-- Using the v-b-color-mode directive -->
+<BNavbar variant="faded">
+  <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
+</BNavbar>
 ```
+
+</template>
+</HighlightCard>
+
+<HighlightCard>
+  <BNavbar variant="primary" data-bs-theme="dark">
+    <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
+  </BNavbar>
+  <template #html>
+
+```vue-html
+<!-- Using the data-bs-theme attribute -->
+<BNavbar data-bs-theme="dark">
+  <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
+</BNavbar>
+```
+
+  </template>
+</HighlightCard>
 
 `BNavbar` will conform to the current color theme if the `variant` prop is not set.
 
