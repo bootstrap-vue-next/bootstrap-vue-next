@@ -217,7 +217,7 @@ const props = withDefaults(
     tableClass: undefined,
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
-    theadTrClass: 'table-danger',
+    theadTrClass: undefined,
   }
 )
 
