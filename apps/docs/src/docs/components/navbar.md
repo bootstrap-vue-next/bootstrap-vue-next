@@ -93,21 +93,25 @@ following values to change the background color: primary, secondary, success, in
 If the `variant` property is set, it may be necessary to control the text color so that it contrasts with the variant
 irrespective of the theme. This can be done by use the `v-b-color-mode` directive or the `data-bs-theme` attribute.
 
+An example using `v-b-colorMode`. Form more information see the [BColorMode directive](/docs/directives/BColorMode).
+
 <HighlightCard>
-  <BNavbar variant="primary" v-b-color-mode="'dark'">
-    <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
-  </BNavbar>
+<BNavbar variant="primary" v-b-color-mode="'dark'">
+  <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
+</BNavbar>
   <template #html>
 
 ```vue-html
-<!-- Using the v-b-color-mode directive -->
-<BNavbar variant="faded">
+<BNavbar variant="primary" v-b-color-mode="'dark'">
   <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
 </BNavbar>
 ```
 
-</template>
+  </template>
 </HighlightCard>
+
+An example using `data-bs-theme`. For more information see the
+[bootstrap documentation](https://getbootstrap.com/docs/5.3/components/navbar/#color-schemes).
 
 <HighlightCard>
   <BNavbar variant="primary" data-bs-theme="dark">
@@ -116,7 +120,6 @@ irrespective of the theme. This can be done by use the `v-b-color-mode` directiv
   <template #html>
 
 ```vue-html
-<!-- Using the data-bs-theme attribute -->
 <BNavbar variant="primary" data-bs-theme="dark">
   <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
 </BNavbar>
