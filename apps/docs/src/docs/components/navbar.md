@@ -117,7 +117,7 @@ irrespective of the theme. This can be done by use the `v-b-color-mode` directiv
 
 ```vue-html
 <!-- Using the data-bs-theme attribute -->
-<BNavbar data-bs-theme="dark">
+<BNavbar variant="primary" data-bs-theme="dark">
   <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
 </BNavbar>
 ```
