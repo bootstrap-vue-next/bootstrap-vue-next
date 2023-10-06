@@ -96,10 +96,11 @@ irrespective of the theme. This can be done by use the `v-b-color-mode` directiv
 An example using `v-b-colorMode`. Form more information see the [BColorMode directive](/docs/directives/BColorMode).
 
 <HighlightCard>
-<BNavbar variant="primary" v-b-color-mode="'dark'">
-  <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
-</BNavbar>
-  <template #html>
+  <BNavbar variant="primary" v-b-color-mode="'dark'">
+    <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
+  </BNavbar>
+
+<template #html>
 
 ```vue-html
 <BNavbar variant="primary" v-b-color-mode="'dark'">
