@@ -110,6 +110,7 @@ An example using `v-b-colorMode`. For more information see the [BColorMode direc
 
   </template>
 </HighlightCard>
+
 `BNavbar` will conform to the current color theme if the `variant` prop is not set.
 
 ## Placement
