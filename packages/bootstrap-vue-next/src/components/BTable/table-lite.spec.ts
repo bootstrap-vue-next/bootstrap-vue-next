@@ -4,6 +4,8 @@ import type {TableField, TableItem} from '../../types'
 import BTable from './BTable.vue'
 import BTableSimple from './BTableSimple.vue'
 
+// TODO REDO ALL TABLE TESTS. This fucking file is testing BTable -_- can't trust any of these tests
+
 const fields: TableField[] = [{key: 'name'}, {key: 'age'}]
 const items: TableItem[] = [
   {name: 'hossam', age: 1},
@@ -99,14 +101,14 @@ describe('table', () => {
     expect($tablesimple.props('small')).toBe(false)
   })
 
-  it('tablesimple is given prop tableVariant as prop variant', async () => {
+  it('tablesimple is given prop variant as prop variant', async () => {
     const wrapper = mount(BTable, {
       props: {variant: 'info'},
     })
     const $tablesimple = wrapper.getComponent(BTableSimple)
-    expect($tablesimple.props('tableVariant')).toBe('info')
+    expect($tablesimple.props('variant')).toBe('info')
     await wrapper.setProps({variant: undefined})
-    expect($tablesimple.props('tableVariant')).toBeNull()
+    expect($tablesimple.props('variant')).toBeNull()
   })
 
   it('tablesimple is given prop stickyHeader', async () => {

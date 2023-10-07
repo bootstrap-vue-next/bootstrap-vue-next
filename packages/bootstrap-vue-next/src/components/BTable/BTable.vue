@@ -493,7 +493,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   },
 ]
 
-const getRowClasses = computed((item: TableItem | null, type: string) => [
+const getRowClasses = (item: TableItem | null, type: string) => [
   {
     [`selected table-${props.selectionVariant}`]:
       selectableBoolean.value && item && selectedItemsModel.value.has(item),
@@ -503,7 +503,7 @@ const getRowClasses = computed((item: TableItem | null, type: string) => [
       ? props.tbodyTrClass(item, type)
       : props.tbodyTrClass
     : null,
-])
+]
 
 const getBusyRowClasses = computed(() => [
   {
