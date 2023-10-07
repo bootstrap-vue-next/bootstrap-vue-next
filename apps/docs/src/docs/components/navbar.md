@@ -110,25 +110,6 @@ An example using `v-b-colorMode`. Form more information see the [BColorMode dire
 
   </template>
 </HighlightCard>
-
-An example using `data-bs-theme`. For more information see the
-[bootstrap documentation](https://getbootstrap.com/docs/5.3/components/navbar/#color-schemes).
-
-<HighlightCard>
-  <BNavbar variant="primary" data-bs-theme="dark">
-    <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
-  </BNavbar>
-  <template #html>
-
-```vue-html
-<BNavbar variant="primary" data-bs-theme="dark">
-  <BNavbarBrand tag="h1" class="mb-0">BootstrapVue</BNavbarBrand>
-</BNavbar>
-```
-
-  </template>
-</HighlightCard>
-
 `BNavbar` will conform to the current color theme if the `variant` prop is not set.
 
 ## Placement
