@@ -11,20 +11,21 @@
     :stacked="stacked"
     :small="small"
     :table-class="tableClasses"
-    :table-variant="variant"
+    :variant="variant"
     :sticky-header="stickyHeader"
     :striped-columns="stripedColumns"
   >
-    <thead>
+    <BThead>
       <slot v-if="$slots['thead-top']" name="thead-top" />
-      <tr>
+      <BTr>
         <slot name="thead-tr-prefix" />
-        <th
+        <BTh
           v-for="field in computedFields"
           :key="field.key"
           scope="col"
           :class="getFieldColumnClasses(field)"
           :title="field.headerTitle"
+          :variant="field.variant"
           :abbr="field.headerAbbr"
           :style="field.thStyle"
           v-bind="field.thAttr"
@@ -34,98 +35,98 @@
             <slot name="field-prefix" :field="field" />
             <div>
               <slot
-                v-if="$slots[`head(${field.key})`] || $slots['head()']"
                 :name="$slots[`head(${field.key})`] ? `head(${field.key})` : 'head()'"
                 :label="field.label"
                 :column="field.key"
                 :field="field"
                 :is-foot="false"
-              />
-              <template v-else>{{ getFieldHeadLabel(field) }}</template>
+              >
+                {{ getFieldHeadLabel(field) }}
+              </slot>
             </div>
           </div>
-        </th>
-      </tr>
-      <tr v-if="$slots['thead-sub']">
-        <td
+        </BTh>
+      </BTr>
+      <BTr v-if="$slots['thead-sub']">
+        <BTd
           v-for="field in computedFields"
           :key="field.key"
           scope="col"
-          :class="[field.class, field.thClass, field.variant ? `table-${field.variant}` : '']"
+          :variant="field.variant"
+          :class="[field.class, field.thClass]"
         >
-          <slot
-            v-if="$slots['thead-sub']"
-            name="thead-sub"
-            :items="computedFields"
-            v-bind="field"
-          />
-          <template v-else>{{ field.label }}</template>
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-if="!stacked && $slots['top-row']">
+          <slot name="thead-sub" :items="computedFields" v-bind="field">
+            {{ field.label }}
+          </slot>
+        </BTd>
+      </BTr>
+    </BThead>
+    <BTbody>
+      <BTr v-if="!stacked && $slots['top-row']">
         <slot name="top-row" />
-      </tr>
+      </BTr>
 
       <template v-for="(item, itemIndex) in items" :key="itemIndex">
-        <tr
+        <BTr
           :class="getRowClasses(item, 'row')"
+          :variant="item._rowVariant"
           @click="!filterEvent($event) && onRowClick(item, itemIndex, $event)"
           @dblclick="!filterEvent($event) && onRowDblClick(item, itemIndex, $event)"
           @mouseenter="!filterEvent($event) && onRowMouseEnter(item, itemIndex, $event)"
           @mouseleave="!filterEvent($event) && onRowMouseLeave(item, itemIndex, $event)"
         >
           <slot name="tbody-tr-prefix" :item="item" />
-          <td
+          <BTd
             v-for="field in computedFields"
             :key="field.key"
-            v-bind="field.tdAttr"
+            :variant="item._cellVariants && item._cellVariants[field.key] ? null : field.variant"
             :class="getFieldRowClasses(field, item)"
+            v-bind="field.tdAttr"
           >
-            <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">{{
-              getFieldHeadLabel(field)
-            }}</label>
+            <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">
+              {{ getFieldHeadLabel(field) }}
+            </label>
             <slot
-              v-if="$slots[`cell(${field.key})`] || $slots['cell()']"
               :name="$slots[`cell(${field.key})`] ? `cell(${field.key})` : 'cell()'"
               :value="get(item, field.key)"
               :index="itemIndex"
               :item="item"
               :field="field"
               :items="items"
-              :toggle-details="(): void => toggleRowDetails(item)"
+              :toggle-details="toggleRowDetails(item)"
               :details-showing="item._showDetails"
-            />
-            <template v-else>{{ renderItem(item, field) }}</template>
-          </td>
-        </tr>
+            >
+              {{ renderItem(item, field) }}
+            </slot>
+          </BTd>
+        </BTr>
 
-        <tr
+        <BTr
           v-if="item._showDetails === true && $slots['row-details']"
           :class="getRowClasses(item, 'row-details')"
+          :variant="item._rowVariant"
         >
-          <td :colspan="computedFieldsTotal">
-            <slot name="row-details" :item="item" :toggle-details="() => toggleRowDetails(item)" />
-          </td>
-        </tr>
+          <BTd :colspan="computedFieldsTotal">
+            <slot name="row-details" :item="item" :toggle-details="toggleRowDetails(item)" />
+          </BTd>
+        </BTr>
       </template>
       <slot name="tbody-prefix" :fields-total="computedFieldsTotal" />
-      <tr v-if="showEmptyBoolean && items.length === 0" class="b-table-empty-slot">
-        <td :colspan="computedFieldsTotal">
+      <BTr v-if="showEmptyBoolean && items.length === 0" class="b-table-empty-slot">
+        <BTd :colspan="computedFieldsTotal">
           <slot name="empty" :items="items">
             {{ emptyText }}
           </slot>
-        </td>
-      </tr>
-      <tr v-if="!stacked && $slots['bottom-row']">
+        </BTd>
+      </BTr>
+      <BTr v-if="!stacked && $slots['bottom-row']">
         <slot name="bottom-row" />
-      </tr>
-    </tbody>
-    <tfoot v-if="footCloneBoolean">
-      <tr>
+      </BTr>
+    </BTbody>
+    <BTfoot v-if="footCloneBoolean">
+      <BTr>
         <slot name="tfoot-tr-prefix" />
-        <th
+        <BTh
           v-for="field in computedFields"
           :key="field.key"
           scope="col"
@@ -133,6 +134,7 @@
           :title="field.headerTitle"
           :abbr="field.headerAbbr"
           :style="field.thStyle"
+          :variant="field.variant"
           v-bind="field.thAttr"
           @click="headerClicked(field, $event)"
         >
@@ -140,42 +142,39 @@
             <slot name="field-prefix" :field="field" />
             <div>
               <slot
-                v-if="$slots[`foot(${field.key})`] || $slots['foot()']"
                 :name="$slots[`foot(${field.key})`] ? `foot(${field.key})` : 'foot()'"
                 :label="field.label"
                 :column="field.key"
                 :field="field"
                 :is-foot="true"
-              />
-              <template v-else>{{ getFieldHeadLabel(field) }}</template>
+              >
+                {{ getFieldHeadLabel(field) }}
+              </slot>
             </div>
           </div>
-        </th>
-      </tr>
-    </tfoot>
-    <tfoot v-else-if="$slots['custom-foot']">
+        </BTh>
+      </BTr>
+    </BTfoot>
+    <BTfoot v-else-if="$slots['custom-foot']">
       <slot
         name="custom-foot"
         :fields="computedFields"
         :items="items"
         :columns="computedFields?.length"
       />
-    </tfoot>
-    <caption v-if="$slots['table-caption']">
-      <slot name="table-caption" />
-    </caption>
-    <caption v-else-if="caption">
-      {{
-        caption
-      }}
+    </BTfoot>
+    <caption v-if="$slots['table-caption'] || caption">
+      <slot name="table-caption">
+        {{ caption }}
+      </slot>
     </caption>
   </BTableSimple>
 </template>
 
 <script setup lang="ts">
+import {useToNumber} from '@vueuse/core'
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
-import {get, isObject, startCase, titleCase} from '../../utils'
 import type {
   BTableLiteProps,
   BTableSimpleProps,
@@ -183,42 +182,45 @@ import type {
   TableFieldObject,
   TableItem,
 } from '../../types'
-import BTableSimple from './BTableSimple.vue'
-import {filterEvent} from './helpers/filter-event'
 import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
-import {useToNumber} from '@vueuse/core'
+import {get, isObject, startCase, titleCase} from '../../utils'
+import BTableSimple from './BTableSimple.vue'
+import BTbody from './BTbody.vue'
+import BTd from './BTd.vue'
+import BTfoot from './BTfoot.vue'
+import BTh from './BTh.vue'
+import BThead from './BThead.vue'
+import BTr from './BTr.vue'
+import {filterEvent} from './helpers/filter-event'
 
-const props = withDefaults(
-  defineProps<BTableLiteProps & Omit<BTableSimpleProps, 'tableVariant'>>(),
-  {
-    variant: undefined,
-    borderVariant: undefined,
-    caption: undefined,
-    align: undefined,
-    captionTop: false,
-    borderless: false,
-    bordered: false,
-    dark: false,
-    fields: () => [],
-    footClone: false,
-    hover: false,
-    items: () => [],
-    responsive: false,
-    small: false,
-    striped: false,
-    stripedColumns: false,
-    labelStacked: false,
-    stacked: false,
-    stickyHeader: false,
-    showEmpty: false,
-    emptyText: 'There are no records to show',
-    emptyFilteredText: 'There are no records matching your request',
-    virtualFields: 0,
-    tableClass: undefined,
-    fieldColumnClass: undefined,
-    tbodyTrClass: undefined,
-  }
-)
+const props = withDefaults(defineProps<BTableLiteProps & BTableSimpleProps>(), {
+  variant: undefined,
+  borderVariant: undefined,
+  caption: undefined,
+  align: undefined,
+  captionTop: false,
+  borderless: false,
+  bordered: false,
+  dark: false,
+  fields: () => [],
+  footClone: false,
+  hover: false,
+  items: () => [],
+  responsive: false,
+  small: false,
+  striped: false,
+  stripedColumns: false,
+  labelStacked: false,
+  stacked: false,
+  stickyHeader: false,
+  showEmpty: false,
+  emptyText: 'There are no records to show',
+  emptyFilteredText: 'There are no records matching your request',
+  virtualFields: 0,
+  tableClass: undefined,
+  fieldColumnClass: undefined,
+  tbodyTrClass: undefined,
+})
 
 const emit = defineEmits<{
   'head-clicked': [
@@ -270,7 +272,7 @@ const normalizeFields = (origFields: TableField[], items: TableItem[]): TableFie
       } else if (isObject(f) && f.key && typeof f.key === 'string') {
         fields.push({...f})
       }
-      // todo handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
+      // TODO handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
     })
     return fields
   }
@@ -320,36 +322,28 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   field.class,
   field.thClass,
   {
-    [`table-${field.variant}`]: field.variant !== null,
     'b-table-sticky-column': field.stickyColumn,
   },
-  ...(props.fieldColumnClass ? props.fieldColumnClass(field) : []),
+  props.fieldColumnClass
+    ? typeof props.fieldColumnClass === 'function'
+      ? props.fieldColumnClass(field)
+      : props.fieldColumnClass
+    : null,
 ]
 
 const getFieldRowClasses = (field: TableFieldObject, tr: TableItem) => [
   field.class,
   field.tdClass,
-  tr?._cellVariants && tr?._cellVariants[field.key]
-    ? `table-${tr?._cellVariants[field.key]}`
-    : undefined,
+  tr._cellVariants && tr._cellVariants[field.key] ? `table-${tr._cellVariants[field.key]}` : null,
   {
-    [`table-${field.variant}`]: field.variant !== null,
     'b-table-sticky-column': field.stickyColumn,
   },
 ]
 
-const getRowClasses = (item: TableItem, type = 'row') => {
-  const classesArray = [
-    item._rowVariant ? `table-${item._rowVariant}` : null,
-    item._rowVariant ? `table-${item._rowVariant}` : null,
-  ]
-
-  if (props.tbodyTrClass) {
-    const extraClasses = props.tbodyTrClass(item, type)
-    if (extraClasses) {
-      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
-    }
-  }
-  return classesArray
-}
+const getRowClasses = (item: TableItem, type = 'row') =>
+  props.tbodyTrClass
+    ? typeof props.tbodyTrClass === 'function'
+      ? props.tbodyTrClass(item, type)
+      : props.tbodyTrClass
+    : null
 </script>

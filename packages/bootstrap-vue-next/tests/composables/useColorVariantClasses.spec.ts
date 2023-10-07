@@ -1,11 +1,11 @@
 import type {ColorVariant, TextColorVariant} from '../../src/types'
-import {useBackgroundVariant} from '../../src/composables'
+import {useColorVariantClasses} from '../../src/composables'
 import {describe, expect, it} from 'vitest'
 import {reactive} from 'vue'
 
-describe('useBackgroundVariant blackbox test', () => {
+describe('useColorVariantClasses blackbox test', () => {
   it('value to contain property value', () => {
-    const backgroundVariant = useBackgroundVariant(() => ({
+    const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: 'danger',
       textVariant: 'danger',
       variant: 'danger',
@@ -14,7 +14,7 @@ describe('useBackgroundVariant blackbox test', () => {
   })
 
   it('value returns text-bg-{type} when prop variant', () => {
-    const backgroundVariant = useBackgroundVariant(() => ({
+    const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: null,
       textVariant: null,
       variant: 'danger',
@@ -27,7 +27,7 @@ describe('useBackgroundVariant blackbox test', () => {
   })
 
   it('value returns bg-{type} when prop bgVariant', () => {
-    const backgroundVariant = useBackgroundVariant(() => ({
+    const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: 'danger',
       textVariant: null,
       variant: null,
@@ -40,7 +40,7 @@ describe('useBackgroundVariant blackbox test', () => {
   })
 
   it('value returns text-{type} when prop textVariant', () => {
-    const backgroundVariant = useBackgroundVariant(() => ({
+    const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: null,
       textVariant: 'danger',
       variant: null,
@@ -53,7 +53,7 @@ describe('useBackgroundVariant blackbox test', () => {
   })
 
   it('value returns text-{type} bg-{type} when prop textVariant & prop bgVariant', () => {
-    const backgroundVariant = useBackgroundVariant(() => ({
+    const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: 'danger',
       textVariant: 'danger',
       variant: null,
@@ -66,7 +66,7 @@ describe('useBackgroundVariant blackbox test', () => {
   })
 
   it('value returns text-bg-{type} when everything is active, but prop variant takes priority over all', () => {
-    const backgroundVariant = useBackgroundVariant(() => ({
+    const backgroundVariant = useColorVariantClasses(() => ({
       bgVariant: 'danger',
       textVariant: 'danger',
       variant: 'danger',
@@ -84,7 +84,7 @@ describe('useBackgroundVariant blackbox test', () => {
       textVariant: 'danger' as TextColorVariant | null,
       variant: null as ColorVariant | null,
     })
-    const backgroundVariant = useBackgroundVariant(() => react)
+    const backgroundVariant = useColorVariantClasses(() => react)
     expect(backgroundVariant.value).toEqual({
       'text-bg-null': false,
       'text-danger': true,

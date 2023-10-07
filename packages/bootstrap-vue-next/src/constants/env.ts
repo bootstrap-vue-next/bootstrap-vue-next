@@ -12,21 +12,19 @@ export const DOCUMENT = HAS_DOCUMENT_SUPPORT ? document : ({} as Record<string, 
 // Determine if the browser supports the option passive for events
 export const HAS_PASSIVE_EVENT_SUPPORT = (() => {
   let passiveEventSupported = false
-  if (IS_BROWSER) {
-    try {
-      const options = {
-        // This function will be called when the browser
-        // attempts to access the passive property
-        get passive() {
-          passiveEventSupported = true
-          return passiveEventSupported
-        },
-      }
-      WINDOW.addEventListener('test', options, options)
-      WINDOW.removeEventListener('test', options, options)
-    } catch {
-      passiveEventSupported = false
+  if (!IS_BROWSER) return passiveEventSupported
+  try {
+    const options = {
+      // This function will be called when the browser
+      // attempts to access the passive property
+      get passive() {
+        passiveEventSupported = true
+        return passiveEventSupported
+      },
     }
+    WINDOW.addEventListener('test', options, options)
+    WINDOW.removeEventListener('test', options, options)
+  } catch {
+    passiveEventSupported = false
   }
-  return passiveEventSupported
 })()

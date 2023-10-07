@@ -15,15 +15,20 @@ import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {BTableSimpleProps} from '../../types'
 
+// TODO some props are not used. ex id, fixed, etc
 const props = withDefaults(defineProps<BTableSimpleProps>(), {
   borderVariant: null,
   tableClass: undefined,
-  tableVariant: null,
+  variant: null,
   bordered: false,
   borderless: false,
   captionTop: false,
   dark: false,
   hover: false,
+  id: undefined,
+  noBorderCollapse: false,
+  outlined: false,
+  fixed: false,
   responsive: false,
   stacked: false,
   striped: false,
@@ -62,7 +67,7 @@ const computedClasses = computed(() => [
     [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
     'table-striped': stripedBoolean.value,
     'table-sm': smallBoolean.value,
-    [`table-${props.tableVariant}`]: props.tableVariant !== null,
+    [`table-${props.variant}`]: props.variant !== null,
     'table-striped-columns': stripedColumnsBoolean.value,
   },
 ])

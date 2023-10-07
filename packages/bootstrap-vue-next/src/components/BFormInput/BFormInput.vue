@@ -32,8 +32,6 @@ import type {InputType} from '../../types'
 const props = withDefaults(
   defineProps<
     {
-      // debounce: {type: [String, Number], default: 0}, TODO: not implemented yet
-      // The above is likely a CommonInputProp
       max?: string | number
       min?: string | number
       // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
@@ -50,7 +48,7 @@ const props = withDefaults(
     ariaInvalid: undefined,
     autocomplete: undefined,
     debounce: 0,
-    debounceMaxWait: undefined,
+    debounceMaxWait: NaN,
     autofocus: false,
     disabled: false,
     form: undefined,

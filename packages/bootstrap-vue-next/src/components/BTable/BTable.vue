@@ -34,7 +34,7 @@
       </slot>
     </template>
     <template #thead-tr-prefix>
-      <th
+      <BTh
         v-if="addSelectableCell"
         class="b-table-selection-column"
         :class="{
@@ -44,10 +44,10 @@
         <slot name="select-head">
           {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
         </slot>
-      </th>
+      </BTh>
     </template>
     <template #tbody-tr-prefix="scope">
-      <td
+      <BTd
         v-if="addSelectableCell"
         class="b-table-selection-column"
         :class="{
@@ -57,30 +57,34 @@
         <slot name="select-cell">
           <span
             class="b-table-selection-icon"
-            :class="selectedItems.has(scope.item) ? `text-${props.selectionVariant} selected` : ''"
-            >🗹</span
+            :class="
+              selectedItemsModel.has(scope.item) ? `text-${props.selectionVariant} selected` : ''
+            "
           >
+            🗹
+          </span>
         </slot>
-      </td>
+      </BTd>
     </template>
     <template #tbody-prefix="scope">
-      <tr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses()">
-        <td :colspan="scope.fieldsTotal">
+      <BTr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses">
+        <BTd :colspan="scope.fieldsTotal">
           <slot name="table-busy">
             <div class="d-flex align-items-center justify-content-center gap-2">
               <BSpinner class="align-middle" />
               <strong>{{ busyLoadingText }}</strong>
             </div>
           </slot>
-        </td>
-      </tr>
+        </BTd>
+      </BTr>
     </template>
   </BTableLite>
 </template>
 
 <script setup lang="ts">
+import {useToNumber, useVModel} from '@vueuse/core'
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {useBooleanish, useTableItems} from '../../composables'
+import {useBooleanish} from '../../composables'
 import type {
   Booleanish,
   BTableLiteProps,
@@ -93,9 +97,11 @@ import type {
   TableFieldObject,
   TableItem,
 } from '../../types'
-import BTableLite from './BTableLite.vue'
-import {useVModel} from '@vueuse/core'
 import BSpinner from '../BSpinner.vue'
+import BTableLite from './BTableLite.vue'
+import BTd from './BTd.vue'
+import BTh from './BTh.vue'
+import BTr from './BTr.vue'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -118,16 +124,44 @@ const props = withDefaults(
       selectionVariant?: ColorVariant | null
       busy?: Booleanish
       busyLoadingText?: string
-      // TODO number | string => with useToNumber
-      perPage?: number
-      // TODO number | string => with useToNumber
-      currentPage?: number
+      perPage?: number | string
+      currentPage?: number | string
       filter?: string
       filterable?: string[]
-    } & Omit<BTableSimpleProps, 'tableClass' | 'tableVariant'> &
+      // TODO
+      // apiUrl?: string
+      // emptyFilteredHtml?: string
+      // emptyFilteredText?: string
+      // emptyHtml?: string
+      // emptyText?: string
+      filterDebounce?: string | number
+      filterDebounceMaxWait?: string | number
+      // filterFunction?: () => any
+      // filterIgnoredFields?: any[]
+      // filterIncludedFields?: any[]
+      // headRowVariant?: ColorVariant | null
+      // headVariant?: ColorVariant | null
+      // labelSortAsc?: string
+      // labelSortClear?: string
+      // labelSortDesc?: string
+      // noFooterSorting?: Booleanish
+      // noLocalSorting?: Booleanish
+      // noSelectOnClick?: Booleanish
+      // noSortReset?: Booleanish
+      // selectedVariant?: ColorVariant | null
+      // showEmpty?: Booleanish
+      // sortCompareLocale?: () => any
+      // sortCompareOptions?: Record<string, any>
+      // sortDirection?: 'asc' | 'desc' | 'last'
+      // sortIconLeft?: Booleanish
+      // sortNullLast?: Booleanish
+      selectedItems?: Set<TableItem> // TODO make this not a Set
+    } & Omit<BTableSimpleProps, 'tableClass'> &
       Omit<BTableLiteProps, 'virtualFields'>
   >(),
   {
+    filterDebounce: 0,
+    filterDebounceMaxWait: NaN,
     perPage: undefined,
     sortBy: undefined,
     variant: undefined,
@@ -172,6 +206,7 @@ const props = withDefaults(
     emptyFilteredText: 'There are no records matching your request',
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
+    selectedItems: () => new Set<TableItem>([]),
   }
 )
 
@@ -192,6 +227,7 @@ const emit = defineEmits<{
   'update:busy': [value: boolean]
   'update:sortBy': [value: string]
   'update:sortDesc': [value: boolean]
+  'update:selectedItems': [value: Set<TableItem>]
   'sorted': [sortBy: string, isDesc: boolean]
   'filtered': [value: TableItem[]]
 }>()
@@ -199,6 +235,7 @@ const emit = defineEmits<{
 const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
 const busyModel = useVModel(props, 'busy', emit, {passive: true})
 const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
+const selectedItemsModel = useVModel(props, 'selectedItems', emit, {passive: true})
 
 const slots = useSlots()
 
@@ -212,11 +249,17 @@ const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const stickySelectBoolean = useBooleanish(() => props.stickySelect)
+// TODO debounce implementation
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const filterDebounceNumber = useToNumber(() => props.filterDebounce)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const filterDebounceMaxWaitNumber = useToNumber(() => props.filterDebounceMaxWait)
+const perPageNumber = useToNumber(() => props.perPage ?? NaN)
+const currentPageNumber = useToNumber(() => props.currentPage)
 
 const isFilterableTable = toRef(() => props.filter !== undefined && props.filter !== '')
 
-const selectedItems = ref<Set<TableItem>>(new Set([]))
-const isSelecting = toRef(() => selectedItems.value.size > 0)
+const isSelecting = toRef(() => selectedItemsModel.value.size > 0)
 
 const isSortable = computed(() => {
   const hasSortableFields =
@@ -246,27 +289,125 @@ const addSelectableCell = toRef(
   () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
 )
 
-const {
-  computedItems,
-  computedDisplayItems,
-  updateInternalItems,
-  filteredHandler,
-  notifyFilteredItems,
-} = useTableItems(
-  props,
-  {
-    sortInternalBoolean,
-    isFilterableTable,
-    noProviderFilteringBoolean,
-    noProviderPagingBoolean,
-    noProviderSortingBoolean,
-    isSortable,
-    requireItemsMapping,
-    sortDescBoolean,
-  },
-  usesProvider,
-  sortByModel
-)
+const filteredHandler = ref<(items: TableItem[]) => void>()
+
+const notifyFilteredItems = () => {
+  if (filteredHandler.value) {
+    filteredHandler.value(computedItems.value)
+  }
+}
+
+const internalItems = ref(props.items)
+
+const displayStartEndIdx = ref([0, internalItems.value.length])
+
+const computedItems = computed<TableItem[]>(() => {
+  const mapItems = (): TableItem[] => {
+    const sortItems = () => {
+      if (
+        props.fields === undefined ||
+        mappedItems === undefined ||
+        sortByModel.value === undefined ||
+        sortDescBoolean.value === undefined
+      ) {
+        return mappedItems ?? []
+      }
+
+      const sortKey = sortByModel.value
+      return mappedItems.sort((a, b) => {
+        if (props.sortCompare !== undefined)
+          return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
+
+        const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
+
+        const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
+        if (aHigher) return sortDescBoolean.value ? -1 : 1
+
+        const bHigher = realVal(b[sortKey]) > realVal(a[sortKey])
+        if (bHigher) return sortDescBoolean.value ? 1 : -1
+
+        return 0
+      })
+    }
+
+    const filterItems = () =>
+      internalItems.value.filter(
+        (item) =>
+          Object.entries(item).filter((item) => {
+            const [key, val] = item
+            if (
+              !val ||
+              key[0] === '_' ||
+              (props.filterable && props.filterable.length > 0 && !props.filterable.includes(key))
+            )
+              return false
+            const itemValue: string =
+              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
+          }).length > 0
+      )
+
+    let mappedItems: TableItem[] = internalItems.value
+
+    const canFilterTable = isFilterableTable.value === true && props.filter
+
+    if (
+      (canFilterTable && !usesProvider.value) ||
+      (canFilterTable && usesProvider.value && noProviderFilteringBoolean.value)
+    ) {
+      mappedItems = filterItems()
+    }
+
+    if (
+      (isSortable.value === true && !usesProvider.value) ||
+      (isSortable.value === true && usesProvider.value && noProviderSortingBoolean.value)
+    ) {
+      mappedItems = sortItems()
+    }
+
+    return mappedItems
+  }
+
+  const items = requireItemsMapping.value
+    ? mapItems()
+    : usesProvider.value
+    ? internalItems.value
+    : props.items ?? []
+
+  if (!Number.isNaN(perPageNumber.value)) {
+    const startIndex =
+      ((Number.isNaN(perPageNumber.value) ? 0 : perPageNumber.value) - 1) * perPageNumber.value
+    const endIndex =
+      startIndex + perPageNumber.value > items.length
+        ? items.length
+        : startIndex + perPageNumber.value
+
+    // TODO fix this
+    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+    displayStartEndIdx.value = [startIndex, endIndex]
+  }
+
+  return items
+})
+
+const updateInternalItems = async (
+  items: TableItem<Record<string, any>>[]
+): Promise<TableItem[] | undefined> => {
+  try {
+    internalItems.value = items
+    return internalItems.value
+  } catch (err) {
+    return undefined
+  }
+}
+
+const computedDisplayItems = computed<TableItem[]>(() => {
+  if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
+    return computedItems.value
+  }
+
+  return computedItems.value.slice(displayStartEndIdx.value[0], displayStartEndIdx.value[1])
+})
 
 watch(
   () => props.items,
@@ -312,24 +453,16 @@ const handleFieldSorting = (field: TableField) => {
 const callItemsProvider = async () => {
   if (!usesProvider.value || !props.provider || busyBoolean.value) return
   busyModel.value = true
-  const context = new Proxy(
+  const response = props.provider(
     {
-      currentPage: props.currentPage,
+      currentPage: currentPageNumber.value,
       filter: props.filter,
       sortBy: props.sortBy,
       sortDesc: props.sortDesc,
-      perPage: props.perPage,
+      perPage: perPageNumber.value,
     },
-    {
-      get: (target: any, prop) => (prop in target ? target[prop] : undefined),
-      set: () => {
-        // eslint-disable-next-line no-console
-        console.error('BTable provider context is a read-only object.')
-        return true
-      },
-    }
+    updateInternalItems
   )
-  const response = props.provider(context, updateInternalItems)
   if (response === undefined) return
   if (response instanceof Promise) {
     try {
@@ -360,37 +493,32 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   },
 ]
 
-const getRowClasses = (item: TableItem | null, type: string): string | any[] | null | undefined => {
-  const classesArray = [
-    selectableBoolean.value && item && selectedItems.value.has(item)
-      ? `selected table-${props.selectionVariant}`
-      : null,
-  ]
+const getRowClasses = computed((item: TableItem | null, type: string) => [
+  {
+    [`selected table-${props.selectionVariant}`]:
+      selectableBoolean.value && item && selectedItemsModel.value.has(item),
+  },
+  props.tbodyTrClass
+    ? typeof props.tbodyTrClass === 'function'
+      ? props.tbodyTrClass(item, type)
+      : props.tbodyTrClass
+    : null,
+])
 
-  if (props.tbodyTrClass) {
-    const extraClasses = props.tbodyTrClass(item, type)
-    if (extraClasses) {
-      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
-    }
-  }
-  return classesArray
-}
-
-const getBusyRowClasses = () => {
-  const classesArray = [{'b-table-static-busy': computedItems.value.length === 0}]
-
-  if (props.tbodyTrClass) {
-    const extraClasses = props.tbodyTrClass(null, 'table-busy')
-    if (extraClasses) {
-      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
-    }
-  }
-  return classesArray
-}
+const getBusyRowClasses = computed(() => [
+  {
+    'b-table-static-busy': computedItems.value.length === 0,
+  },
+  props.tbodyTrClass
+    ? typeof props.tbodyTrClass === 'function'
+      ? props.tbodyTrClass(null, 'table-busy')
+      : props.tbodyTrClass
+    : null,
+])
 
 const notifySelectionEvent = () => {
   if (!selectableBoolean.value) return
-  emit('selection', Array.from(selectedItems.value))
+  emit('selection', Array.from(selectedItemsModel.value))
 }
 
 const handleRowSelection = (
@@ -402,38 +530,38 @@ const handleRowSelection = (
 ) => {
   if (!selectableBoolean.value) return
 
-  if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
-    const lastSelectedItem = Array.from(selectedItems.value).pop()
+  if (shiftClicked && props.selectMode === 'range' && selectedItemsModel.value.size > 0) {
+    const lastSelectedItem = Array.from(selectedItemsModel.value).pop()
     const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
     const selectStartIndex = Math.min(lastSelectedIndex, index)
     const selectEndIndex = Math.max(lastSelectedIndex, index)
     props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-      if (!selectedItems.value.has(item)) {
-        selectedItems.value.add(item)
+      if (!selectedItemsModel.value.has(item)) {
+        selectedItemsModel.value.add(item)
         emit('row-selected', item)
       }
     })
   } else if (ctrlClicked || metaClicked) {
-    if (selectedItems.value.has(row)) {
-      selectedItems.value.delete(row)
+    if (selectedItemsModel.value.has(row)) {
+      selectedItemsModel.value.delete(row)
       emit('row-unselected', row)
     } else if (props.selectMode === 'range' || props.selectMode === 'multi') {
-      selectedItems.value.add(row)
+      selectedItemsModel.value.add(row)
       emit('row-selected', row)
     } else {
-      selectedItems.value.forEach((item) => {
+      selectedItemsModel.value.forEach((item) => {
         emit('row-unselected', item)
       })
-      selectedItems.value.clear()
-      selectedItems.value.add(row)
+      selectedItemsModel.value.clear()
+      selectedItemsModel.value.add(row)
       emit('row-selected', row)
     }
   } else {
-    selectedItems.value.forEach((item) => {
+    selectedItemsModel.value.forEach((item) => {
       emit('row-unselected', item)
     })
-    selectedItems.value.clear()
-    selectedItems.value.add(row)
+    selectedItemsModel.value.clear()
+    selectedItemsModel.value.add(row)
     emit('row-selected', row)
   }
 
@@ -442,9 +570,10 @@ const handleRowSelection = (
 
 const selectAllRows = () => {
   if (!selectableBoolean.value) return
-  const unselectableItems = selectedItems.value.size > 0 ? Array.from(selectedItems.value) : []
-  selectedItems.value = new Set([...props.items])
-  selectedItems.value.forEach((item) => {
+  const unselectableItems =
+    selectedItemsModel.value.size > 0 ? Array.from(selectedItemsModel.value) : []
+  selectedItemsModel.value = new Set([...props.items])
+  selectedItemsModel.value.forEach((item) => {
     if (unselectableItems.includes(item)) return
     emit('row-selected', item)
   })
@@ -453,18 +582,18 @@ const selectAllRows = () => {
 
 const clearSelected = () => {
   if (!selectableBoolean.value) return
-  selectedItems.value.forEach((item) => {
+  selectedItemsModel.value.forEach((item) => {
     emit('row-unselected', item)
   })
-  selectedItems.value = new Set([])
+  selectedItemsModel.value = new Set([])
   notifySelectionEvent()
 }
 
 const selectRow = (index: number) => {
   if (!selectableBoolean.value) return
   const item = props.items[index]
-  if (!item || selectedItems.value.has(item)) return
-  selectedItems.value.add(item)
+  if (!item || selectedItemsModel.value.has(item)) return
+  selectedItemsModel.value.add(item)
   emit('row-selected', item)
   notifySelectionEvent()
 }
@@ -472,13 +601,13 @@ const selectRow = (index: number) => {
 const unselectRow = (index: number) => {
   if (!selectableBoolean.value) return
   const item = props.items[index]
-  if (!item || !selectedItems.value.has(item)) return
-  selectedItems.value.delete(item)
+  if (!item || !selectedItemsModel.value.has(item)) return
+  selectedItemsModel.value.delete(item)
   emit('row-unselected', item)
   notifySelectionEvent()
 }
 
-const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
+const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
   if (val === oldVal) return
 
   //stop provide when paging
@@ -494,9 +623,7 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
     ['sortBy', 'sortDesc'].includes(prop) &&
     (inNoProvider('sorting') || noProviderSortingBoolean.value === true)
 
-  if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) {
-    return
-  }
+  if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) return
 
   await callItemsProvider()
 
@@ -506,6 +633,8 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
 watch(
   () => props.filter,
   (filter, oldFilter) => {
+    providerPropsWatch('filter', filter, oldFilter)
+
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
       emit('filtered', computedItems.value)
@@ -513,26 +642,10 @@ watch(
   }
 )
 
-watch(
-  () => props.filter,
-  (val, oldVal) => providerPropsWatch('filter', val, oldVal)
-)
-watch(
-  () => props.currentPage,
-  (val, oldVal) => providerPropsWatch('currentPage', val, oldVal)
-)
-watch(
-  () => props.perPage,
-  (val, oldVal) => providerPropsWatch('perPage', val, oldVal)
-)
-watch(
-  () => props.sortBy,
-  (val, oldVal) => providerPropsWatch('sortBy', val, oldVal)
-)
-watch(
-  () => props.sortDesc,
-  (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
-)
+watch(currentPageNumber, (val, oldVal) => providerPropsWatch('currentPage', val, oldVal))
+watch(perPageNumber, (val, oldVal) => providerPropsWatch('perPage', val, oldVal))
+watch(sortByModel, (val, oldVal) => providerPropsWatch('sortBy', val, oldVal))
+watch(sortDescBoolean, (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal))
 
 onMounted(callItemsProvider)
 

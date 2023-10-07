@@ -51,7 +51,12 @@
 
 <script setup lang="ts">
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
-import {useBackgroundVariant, useBLinkHelper, useBooleanish, useCountdown} from '../../composables'
+import {
+  useBLinkHelper,
+  useBooleanish,
+  useColorVariantClasses,
+  useCountdown,
+} from '../../composables'
 import type {BToastProps} from '../../types'
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -138,7 +143,7 @@ const intervalNumber = useToNumber(() => props.interval)
 // TODO solid is never used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const solidBoolean = useBooleanish(() => props.solid)
-const resolvedBackgroundClasses = useBackgroundVariant(props)
+const resolvedBackgroundClasses = useColorVariantClasses(props)
 const countdownLength = toRef(() => (typeof modelValue.value === 'boolean' ? 0 : modelValue.value))
 
 const {

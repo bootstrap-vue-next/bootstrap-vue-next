@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
-import type {BackgroundColorExtendables, Booleanish, Size} from '../../types'
+import type {Booleanish, ColorExtendables, Size} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
@@ -22,7 +22,7 @@ const props = withDefaults(
       size?: Size | string
       square?: Booleanish
       tag?: string
-    } & BackgroundColorExtendables
+    } & ColorExtendables
   >(),
   {
     overlap: 0.3,

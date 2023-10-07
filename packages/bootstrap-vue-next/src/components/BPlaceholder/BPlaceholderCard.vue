@@ -32,8 +32,13 @@
     </slot>
     <template v-if="!noFooterBoolean" #footer>
       <slot name="footer">
-        <BPlaceholderButton v-if="!noButtonBoolean" v-bind="footerAttrs" />
-        <BPlaceholder v-else v-bind="footerAttrs" />
+        <component
+          :is="footerComponent"
+          :width="footerWidth"
+          :animation="footerAnimation"
+          :size="noButtonBoolean ? footerSize : undefined"
+          :variant="footerVariant"
+        />
       </slot>
     </template>
   </BCard>
@@ -109,16 +114,11 @@ const noHeaderBoolean = useBooleanish(() => props.noHeader)
 const noFooterBoolean = useBooleanish(() => props.noFooter)
 const noImgBoolean = useBooleanish(() => props.noImg)
 
-const footerAttrs = computed(() => ({
-  width: props.footerWidth,
-  animation: props.footerAnimation,
-  size: noButtonBoolean.value ? props.footerSize : undefined,
-  variant: props.footerVariant,
-}))
-
 const defaultAttrs = computed(() => ({
   animation: props.animation,
   size: props.size,
   variant: props.variant,
 }))
+
+const footerComponent = computed(() => (!noButtonBoolean.value ? BPlaceholderButton : BPlaceholder))
 </script>

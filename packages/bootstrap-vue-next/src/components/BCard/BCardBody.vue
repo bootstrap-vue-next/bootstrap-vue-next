@@ -27,8 +27,8 @@ import {computed, toRef, useSlots} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
-import type {BackgroundColorExtendables, Booleanish, TextColorVariant} from '../../types'
-import {useBackgroundVariant, useBooleanish} from '../../composables'
+import type {Booleanish, ColorExtendables, TextColorVariant} from '../../types'
+import {useBooleanish, useColorVariantClasses} from '../../composables'
 
 const props = withDefaults(
   defineProps<
@@ -41,7 +41,7 @@ const props = withDefaults(
       title?: string
       titleTag?: string
       text?: string
-    } & BackgroundColorExtendables
+    } & ColorExtendables
   >(),
   {
     variant: null,
@@ -70,7 +70,7 @@ defineSlots<{
 const slots = useSlots()
 
 const overlayBoolean = useBooleanish(() => props.overlay)
-const resolvedBackgroundClasses = useBackgroundVariant(props)
+const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const hasTitleSlot = toRef(() => !isEmptySlot(slots.title))
 const hasSubtitleSlot = toRef(() => !isEmptySlot(slots.subtitle))

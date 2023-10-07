@@ -492,7 +492,7 @@ describe('table', () => {
       if (typeof field === 'object') {
         return {
           key: field.key,
-          formatter: (value: any, key?: string, item?: any): string =>
+          formatter: (value: unknown): string =>
             typeof value === 'string' ? value.toUpperCase() : `${value} years`,
         }
       }

@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BackgroundColorExtendables, ColorVariant} from '../../types'
+import type {ColorExtendables, ColorVariant} from '../../types'
 import BCardHeadFoot from './BCardHeadFoot.vue'
 
 const props = withDefaults(
@@ -17,7 +17,7 @@ const props = withDefaults(
       borderVariant?: ColorVariant | null
       html?: string
       tag?: string
-    } & BackgroundColorExtendables
+    } & ColorExtendables
   >(),
   {
     variant: undefined,
