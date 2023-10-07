@@ -90,8 +90,8 @@ The component `BNavbar` is a wrapper that positions branding, navigation, and ot
 `BNavbar` supports the standard Bootstrap v5 available background color variants. Set the `variant` prop to one of the
 following values to change the background color: primary, secondary, success, info, warning, danger, dark, light, or any of the \*-subtle variants.
 
-If the `variant` property is set, it may be necessary to control the text color so that it contrasts with the variant
-irrespective of the theme. This can be done by use the `v-b-color-mode` directive or the `data-bs-theme` attribute.
+If the `variant` prop is set, it may be necessary to control the text color so that it contrasts with the variant
+irrespective of the theme. This can be done by use the `v-b-color-mode` directive or `useColorMode` composable
 
 An example using `v-b-colorMode`. Form more information see the [BColorMode directive](/docs/directives/BColorMode).
 
