@@ -83,9 +83,6 @@ import {
 import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
 
-// TODO check if the attrs are correct
-// TODO events and vueuse replacements & enhancements
-// After that, just need to make sure everything looks correct with compat
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
