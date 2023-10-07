@@ -93,7 +93,7 @@ following values to change the background color: primary, secondary, success, in
 If the `variant` prop is set, it may be necessary to control the text color so that it contrasts with the variant
 irrespective of the theme. This can be done by use the `v-b-color-mode` directive or `useColorMode` composable
 
-An example using `v-b-colorMode`. Form more information see the [BColorMode directive](/docs/directives/BColorMode).
+An example using `v-b-colorMode`. For more information see the [BColorMode directive](/docs/directives/BColorMode).
 
 <HighlightCard>
   <BNavbar variant="primary" v-b-color-mode="'dark'">
