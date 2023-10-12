@@ -30,19 +30,19 @@ withDefaults(defineProps<Omit<BPopoverProps, 'tooltip'>>(), {
   noShift: undefined,
   noFade: undefined,
   noAutoClose: undefined,
-  hide: undefined,
+  noHide: undefined,
   realtime: undefined,
   inline: undefined,
   html: undefined,
   reference: undefined,
   target: undefined,
-  noninteractive: undefined,
+  noninteractive: true,
 })
 
 const popover = ref<null | InstanceType<typeof BPopover>>(null)
 
 defineExpose({
-  hide: popover.value?.hideFn,
+  hide: popover.value?.hide,
   show: popover.value?.show,
   toggle: popover.value?.toggle,
 })
