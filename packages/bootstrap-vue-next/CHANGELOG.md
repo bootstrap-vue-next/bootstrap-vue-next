@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.8...bootstrapvuenext-v0.14.9) (2023-10-14)
+
+
+### Bug Fixes
+
+* **BTooltip:** close when opening dropdown, and other changes ([71b5397](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/71b5397609e8f34d4602921d04c8173772525f93))
+
 ## [0.14.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.7...bootstrapvuenext-v0.14.8) (2023-10-04)
 
 
