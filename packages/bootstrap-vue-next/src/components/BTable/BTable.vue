@@ -443,7 +443,7 @@ const handleRowSelection = (
 const selectAllRows = () => {
   if (!selectableBoolean.value) return
   const unselectableItems = selectedItems.value.size > 0 ? Array.from(selectedItems.value) : []
-  selectedItems.value = new Set([...props.items])
+  selectedItems.value = new Set([...computedItems.value])
   selectedItems.value.forEach((item) => {
     if (unselectableItems.includes(item)) return
     emit('row-selected', item)
