@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [0.14.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.9...bootstrapvuenext-v0.14.10) (2023-10-16)
+
+
+### Bug Fixes
+
+* **BModal:** Fix new modals stacking behind active modals ([6744503](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6744503ec7206cf52e1945d366e766ff1fce6a50))
+* **BModal:** Fix new modals stacking behind active modals fixes [#1516](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1516) ([6744503](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6744503ec7206cf52e1945d366e766ff1fce6a50))
+
 ## [0.14.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.8...bootstrapvuenext-v0.14.9) (2023-10-14)
 
 
