@@ -75,6 +75,6 @@ export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
 
   return {
     activePosition: computed(() => stack.value.findIndex((el) => el.exposed?.id === toValue(id))),
-    activeModalCount: computed(() => stack.value.length),
+    activeModalCount: toRef(() => stack.value.length),
   }
 }
