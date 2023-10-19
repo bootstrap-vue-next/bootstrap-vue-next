@@ -1,15 +1,7 @@
 <template>
   <component :is="tag" :id="id" class="tabs" :class="computedClasses">
-    <!-- Tab Content Above Tabs -->
     <div v-if="endBoolean" class="tab-content" :class="contentClass">
-      <component
-        :is="tabComponent()"
-        v-for="({tabComponent, contentId, tabClasses, active}, i) in tabs"
-        :id="contentId"
-        :key="i"
-        :class="tabClasses"
-        :active="active"
-      />
+      <slot />
       <div
         v-if="showEmpty"
         key="bv-empty-tab"
@@ -22,34 +14,37 @@
     <div
       :class="[navWrapperClass, {'card-header': cardBoolean, 'ms-auto': vertical && endBoolean}]"
     >
-      <!-- Render Tabs -->
-      <ul class="nav" :class="[navTabsClasses, navClass]" role="tablist">
+      <ul
+        class="nav"
+        :class="[navTabsClasses, navClass]"
+        role="tablist"
+        :aria-orientation="vertical ? 'vertical' : 'horizontal'"
+      >
         <slot name="tabs-start" />
         <li
-          v-for="({tab, buttonId, contentId, navItemClasses, active, target}, idx) in tabs"
-          :key="idx"
+          v-for="(tab, idx) in tabs"
+          :key="tab.id"
           class="nav-item"
-          :class="tab?.props?.['title-item-class']"
+          :class="tab.titleItemClass"
           role="presentation"
         >
           <button
-            :id="buttonId"
+            :id="tab.buttonId"
             class="nav-link"
-            :class="navItemClasses"
-            data-bs-toggle="tab"
-            :data-bs-target="target"
+            :class="tab.navItemClasses"
             role="tab"
-            :aria-controls="contentId"
-            :aria-selected="active"
-            v-bind="tab?.props?.['title-link-attributes']"
+            :aria-controls="tab.id"
+            :aria-selected="tab.active"
+            v-bind="tab.titleLinkAttributes"
+            @keydown.left.stop.prevent="keynav(-1)"
+            @keydown.right.stop.prevent="keynav(1)"
+            @keydown.page-up.stop.prevent="keynav(-999)"
+            @keydown.page-down.stop.prevent="keynav(999)"
             @click.stop.prevent="(e) => handleClick(e, idx)"
           >
-            <component
-              :is="(tab.children as any).title"
-              v-if="tab.children && (tab.children as any).title"
-            />
+            <component :is="tab.titleComponent" v-if="tab.titleComponent" />
             <template v-else>
-              {{ tab?.props?.title }}
+              {{ tab.title }}
             </template>
           </button>
         </li>
@@ -58,15 +53,7 @@
     </div>
     <!-- Tab Content Below Tabs-->
     <div v-if="!endBoolean" class="tab-content" :class="contentClass">
-      <component
-        :is="tabComponent()"
-        v-for="({tabComponent, contentId, tabClasses, active, buttonId}, i) in tabs"
-        :id="contentId"
-        :key="i"
-        :class="tabClasses"
-        :active="active"
-        :button-id="buttonId"
-      />
+      <slot />
       <div
         v-if="showEmpty"
         key="bv-empty-tab"
@@ -80,10 +67,10 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, provide, ref, toRef, useSlots, type VNode, watch} from 'vue'
-import {BvEvent, getId, getSlotElements, tabsInjectionKey} from '../../utils'
+import {computed, nextTick, provide, type Ref, ref, toRef, unref, watch} from 'vue'
+import {BvEvent, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
-import type {AlignmentJustifyContent, Booleanish, ClassValue} from '../../types'
+import type {AlignmentJustifyContent, Booleanish, ClassValue, TabType} from '../../types'
 import {useVModel} from '@vueuse/core'
 // TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
 
@@ -109,6 +96,7 @@ const props = withDefaults(
     tag?: string
     vertical?: Booleanish
     modelValue?: number
+    activeId?: string
   }>(),
   {
     navClass: undefined,
@@ -130,11 +118,13 @@ const props = withDefaults(
     tag: 'div',
     vertical: false,
     modelValue: -1,
+    activeId: undefined,
   }
 )
 
 const emit = defineEmits<{
   'update:modelValue': [value: number]
+  'update:activeId': [value: string]
   'activate-tab': [v1: number, v2: number, v3: BvEvent]
   'click': [] // TODO click event is never used
 }>()
@@ -146,11 +136,12 @@ defineSlots<{
   'empty'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'tabs-end'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: Record<string, never>) => any
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
-
-const slots = useSlots()
+const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
+const activeId = useVModel(props, 'activeId', emit, {passive: true})
 
 const cardBoolean = useBooleanish(() => props.card)
 const endBoolean = useBooleanish(() => props.end)
@@ -163,89 +154,23 @@ const pillsBoolean = useBooleanish(() => props.pills)
 const smallBoolean = useBooleanish(() => props.small)
 const verticalBoolean = useBooleanish(() => props.vertical)
 
-const _tabIndex = ref(modelValue.value)
-const _currentTabButton = ref('')
-
-const tabIndex = computed({
-  get: () => _tabIndex.value,
-  set: (value: number) => {
-    _tabIndex.value = value
-    if (tabs.value.length > 0 && value >= 0 && value < tabs.value.length) {
-      _currentTabButton.value = tabs.value[value].buttonId
-    } else {
-      _currentTabButton.value = ''
-    }
-    modelValue.value = value
-  },
-})
-const tabsInternal = ref<
-  {
-    buttonId: string
-    contentId: string
-    disabled: boolean
-    target: string
-    title: string
-    titleItemClass: ClassValue
-    titleLinkAttributes: Record<string, unknown>
-    onClick: (e: Event) => void
-    tab: VNode
-    tabComponent: () => VNode
-  }[]
->([])
-
-// TODO simplify this! YOu cannot do things like nest BTab in a wrapper component!
-watch(
-  () => slots.default?.(),
-  () => {
-    tabsInternal.value =
-      slots.default === undefined
-        ? []
-        : getSlotElements(slots.default, 'BTab').map((tab, idx) => {
-            if (!tab.props) tab.props = {}
-            const buttonId = tab.props['button-id'] || getId('tab')
-            const contentId = tab.props.id || getId()
-            const titleItemClass = tab.props['title-item-class']
-            const titleLinkAttributes = tab.props['title-link-attributes']
-
-            return {
-              buttonId,
-              contentId,
-              disabled: tab.props.disabled === '' || tab.props.disabled === true,
-              target: `#${contentId}`,
-              title: tab.props.title,
-              titleItemClass,
-              titleLinkAttributes,
-              onClick: tab.props.onClick,
-              tab,
-              tabComponent: () => getSlotElements(slots.default, 'BTab')[idx],
-            }
-          })
-  },
-  {immediate: true}
-)
+const tabsInternal = ref<Ref<TabType>[]>([])
 
 const tabs = computed(() =>
-  tabsInternal.value.map((item, idx) => {
-    const {tab} = item
-    if (!tab.props) tab.props = {}
-    const active = tabIndex.value > -1 ? idx === tabIndex.value : tab.props.active === ''
+  tabsInternal.value.map((_tab) => {
+    const tab = unref(_tab)
+    const active = tab.id === activeId.value
 
     return {
-      ...item,
+      ...tab,
       active,
       navItemClasses: [
         {
           active,
-          disabled: tab.props.disabled === '' || tab.props.disabled === true,
+          disabled: tab.disabled,
         },
         active && props.activeNavItemClass ? props.activeNavItemClass : null,
-        tab.props['title-link-class'],
-      ],
-      tabClasses: [
-        {
-          fade: !noFadeBoolean.value,
-        },
-        active && props.activeTabClass ? props.activeTabClass : null,
+        tab.titleLinkClass,
       ],
     }
   })
@@ -271,27 +196,23 @@ const navTabsClasses = computed(() => ({
   'small': smallBoolean.value,
 }))
 
-const activateTab = (index: number): boolean => {
-  let result = false
+const activateTab = (index: number): void => {
   if (index !== undefined) {
+    const id = tabs.value[index]?.id
     if (
       index > -1 &&
       index < tabs.value.length &&
       !tabs.value[index].disabled &&
-      (tabIndex.value < 0 || tabs.value[index].buttonId !== _currentTabButton.value)
+      (modelValue.value < 0 || activeId.value !== id || modelValue.value !== index)
     ) {
       const tabEvent = new BvEvent('activate-tab', {cancelable: true})
-      emit('activate-tab', index, tabIndex.value, tabEvent)
+      emit('activate-tab', index, modelValue.value, tabEvent)
       if (!tabEvent.defaultPrevented) {
-        tabIndex.value = index
-        result = true
+        if (activeId.value !== id) activeId.value = id
+        if (modelValue.value !== index) modelValue.value = index
       }
     }
   }
-  if (!result && modelValue.value !== tabIndex.value) {
-    modelValue.value = tabIndex.value
-  }
-  return result
 }
 
 const handleClick = (event: MouseEvent, index: number) => {
@@ -302,75 +223,111 @@ const handleClick = (event: MouseEvent, index: number) => {
     tabs.value[index]?.onClick &&
     typeof tabs.value[index].onClick === 'function'
   ) {
-    tabs.value[index].onClick(event)
+    tabs.value[index].onClick?.(event)
   }
 }
 
-activateTab(_tabIndex.value)
+const keynav = (direction: number) => {
+  if (tabs.value.length <= 0) return
+  modelValue.value = nextIndex(modelValue.value + direction, direction)
+  document.getElementById(tabs.value[modelValue.value]?.buttonId)?.focus()
+}
+
+const nextIndex = (start: number, direction: number) => {
+  if (tabs.value.length <= 0) return -1
+  let index = start
+  const maxIdx = tabs.value.map((tab) => !tab.disabled).lastIndexOf(true)
+  const minIdx = tabs.value.map((tab) => !tab.disabled).indexOf(true)
+  while (index >= minIdx && index <= maxIdx && tabs.value[index].disabled) {
+    index += direction
+  }
+  if (index < minIdx) index = minIdx
+  if (index >= maxIdx) index = maxIdx
+  return index
+}
 
 watch(modelValue, (newValue, oldValue) => {
   if (newValue === oldValue) return
-  newValue = Math.max(newValue, -1)
-  oldValue = Math.max(oldValue, -1)
-
   if (tabs.value.length <= 0) {
-    tabIndex.value = -1
     return
   }
 
-  const goForward = newValue > oldValue
-  let index = newValue
-  const maxIdx = tabs.value.length - 1
-  while (index >= 0 && index <= maxIdx && tabs.value[index].disabled) {
-    index += goForward ? 1 : -1
-  }
+  const index = nextIndex(newValue, newValue > oldValue ? 1 : -1)
+  nextTick(() => {
+    activateTab(index)
+  })
+})
 
-  if (index < 0) {
-    activateTab(0)
+watch(activeId, (newValue, oldValue) => {
+  const index = tabs.value.findIndex((t) => t.id === newValue)
+  if (newValue === oldValue) return
+  if (tabs.value.length <= 0) {
     return
   }
-  if (index >= tabs.value.length) {
-    activateTab(tabs.value.length - 1)
+  if (index === -1) {
+    activateTab(nextIndex(0, 1))
     return
   }
   activateTab(index)
 })
 
-watch(tabs, () => {
-  // find last active tab
-  let activeTabIndex = tabs.value.map((tab) => tab.active && !tab.disabled).lastIndexOf(true)
-
-  if (activeTabIndex < 0) {
-    if (tabIndex.value >= tabs.value.length) {
-      // handle last tab removed, so find the last non-disabled tab
-      activeTabIndex = tabs.value.map((tab) => !tab.disabled).lastIndexOf(true)
-    } else {
-      if (tabs.value[tabIndex.value] && !tabs.value[tabIndex.value].disabled)
-        activeTabIndex = tabIndex.value
-    }
+const registerTab = (tab: Ref<TabType>) => {
+  if (!tabsInternal.value.find((t) => t.value.id === tab.value.id)) {
+    tabsInternal.value.push(tab)
+  } else {
+    tabsInternal.value[tabsInternal.value.findIndex((t) => t.value.id === tab.value.id)] = tab
   }
-  // still no active tab found, find first non-disabled tab
-  if (activeTabIndex < 0) {
-    activeTabIndex = tabs.value.map((tab) => !tab.disabled).indexOf(true)
-  }
-  // ensure only one tab active at a time
-  tabs.value.forEach((tab, idx) => {
-    tab.active = idx === activeTabIndex
+  tabsInternal.value = tabsInternal.value.sort((a, b) => {
+    // console.log('sort', a.value.el, b.value.el)
+    if (!Node || !a.value.el || !b.value.el) return 0
+    const position = a.value.el.compareDocumentPosition(b.value.el)
+    if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1
+    if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1
+    return 0
   })
-
-  activateTab(activeTabIndex)
-})
-
-onMounted(() => {
-  // If there are tabs available, make sure a tab is set active
-  if (tabIndex.value < 0 && tabs.value.length > 0 && !tabs.value.some((tab) => tab.active)) {
-    const firstTab = tabs.value.map((t) => !t.disabled).indexOf(true)
-    activateTab(firstTab >= 0 ? firstTab : -1)
+}
+const unregisterTab = (id: string) => {
+  if (tabsInternal.value.find((t) => t.value.id === id)) {
+    tabsInternal.value.splice(
+      tabsInternal.value.findIndex((t) => t.value.id === id),
+      1
+    )
   }
-})
+}
+
+watch(tabsInternal, () => findActive(), {deep: true})
+
+const findActive = () => {
+  if (tabs.value.length === 0) {
+    modelValue.value = -1
+    activeId.value = undefined
+    return
+  }
+  if (modelValue.value >= 0 && !activeId.value) {
+    activeId.value = tabs.value[modelValue.value]?.id
+  }
+  if (tabs.value.find((t) => t.id === activeId.value)) {
+    activateTab(tabs.value.findIndex((t) => t.id === activeId.value))
+    return
+  }
+  activateTab(tabs.value.map((tab) => !tab.disabled).indexOf(true))
+}
 
 provide(tabsInjectionKey, {
   lazy: lazyBoolean,
   card: cardBoolean,
+  noFade: noFadeBoolean,
+  activeTabClass: toRef(() => props.activeTabClass),
+  registerTab,
+  unregisterTab,
+  activeId,
+  activateTab: (id) => {
+    const idx = tabs.value.findIndex((t) => t.id === id)
+    if (id === undefined || idx === -1) {
+      activateTab(nextIndex(0, 1))
+      return
+    }
+    activateTab(idx)
+  },
 })
 </script>

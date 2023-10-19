@@ -1,5 +1,12 @@
 import type {InjectionKey, Ref} from 'vue'
-import type {ButtonVariant, ColorVariant, Size, TextColorVariant} from '../types'
+import type {
+  ButtonVariant,
+  ClassValue,
+  ColorVariant,
+  Size,
+  TabType,
+  TextColorVariant,
+} from '../types'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -12,6 +19,12 @@ export const carouselInjectionKey: InjectionKey<{
 export const tabsInjectionKey: InjectionKey<{
   lazy: Readonly<Ref<boolean>>
   card: Readonly<Ref<boolean>>
+  noFade: Readonly<Ref<boolean>>
+  registerTab: (tab: Readonly<Ref<TabType>>) => void
+  unregisterTab: (id: string) => void
+  activateTab: (id: string | undefined) => void
+  activeTabClass: Readonly<Ref<ClassValue>>
+  activeId: Readonly<Ref<string | undefined>>
 }> = Symbol('tabs')
 
 // BProgress
