@@ -51,7 +51,6 @@ const props = withDefaults(
     isNav?: Booleanish
   }>(),
   {
-    accordion: undefined,
     id: undefined,
     modelValue: false,
     tag: 'div',
