@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" class="btn-group">
+  <div ref="wrapper" :class="computedClasses" class="btn-group">
     <BButton
       :id="computedId"
       ref="splitButton"
@@ -163,6 +163,7 @@ const offsetToNumber = useToNumber(computedOffset)
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
 const splitButton = ref<HTMLElement | null>(null)
+const wrapper = ref<HTMLElement | null>(null)
 
 const boundary = computed<Boundary | undefined>(() =>
   props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
@@ -314,6 +315,7 @@ const toggle = () => {
   }
   modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
+  wrapper.value?.dispatchEvent(new Event('forceHide'))
 }
 
 watch(modelValueBoolean, update)

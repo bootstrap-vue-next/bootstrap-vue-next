@@ -1,6 +1,6 @@
 <template>
   <span ref="placeholder" />
-  <slot name="target" :show="show" :hide="hideFn" :toggle="toggle" :show-state="showState" />
+  <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
   <!-- TODO: fix this clunky solution when https://github.com/vuejs/core/issues/6152 is fixed -->
   <RenderComponentOrSkip :tag="'Teleport'" :to="container" :skip="!container">
     <div
@@ -114,7 +114,7 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   noShift: false,
   noFade: false,
   noAutoClose: false,
-  hide: true,
+  noHide: false,
   realtime: false,
   inline: false,
   tooltip: false,
@@ -157,7 +157,7 @@ watchEffect(() => {
 
 watch(modelValueBoolean, () => {
   if (modelValueBoolean.value === showState.value) return
-  modelValueBoolean.value ? show() : hideFn(new Event('update:modelValue'))
+  modelValueBoolean.value ? show() : hide(new Event('update:modelValue'))
 })
 
 const computedId = useId(() => props.id, 'popover')
@@ -168,7 +168,7 @@ const noShiftBoolean = useBooleanish(() => props.noShift)
 const noFlipBoolean = useBooleanish(() => props.noFlip)
 const noFadeBoolean = useBooleanish(() => props.noFade)
 const noAutoCloseBoolean = useBooleanish(() => props.noAutoClose)
-const hideBoolean = useBooleanish(() => props.hide)
+const noHideBoolean = useBooleanish(() => props.noHide)
 const realtimeBoolean = useBooleanish(() => props.realtime)
 const inlineBoolean = useBooleanish(() => props.inline)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
@@ -212,7 +212,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   if (noShiftBoolean.value === false) {
     arr.push(shift())
   }
-  if (hideBoolean.value === true) {
+  if (noHideBoolean.value === false) {
     arr.push(hideMiddleware({padding: 10}))
   }
   if (inlineBoolean.value === true) {
@@ -240,7 +240,7 @@ const {floatingStyles, middlewareData, placement, update} = useFloating(targetTr
 const arrowStyle = ref<CSSProperties>({position: 'absolute'})
 
 watch(middlewareData, () => {
-  if (hideBoolean.value === true) {
+  if (noHideBoolean.value === false) {
     if (middlewareData.value.hide?.referenceHidden) {
       hidden.value = true
     } else {
@@ -279,7 +279,7 @@ const {isOutside: triggerIsOutside} = useMouseInElement(trigger)
 
 const toggle = (e: Event) => {
   const event = e ?? new Event('click')
-  showState.value ? hideFn(event) : show()
+  showState.value ? hide(event) : show()
 }
 
 const buildTriggerableEvent = (
@@ -319,7 +319,7 @@ const show = () => {
   })
 }
 
-const hideFn = (e: Event) => {
+const hide = (e: Event) => {
   const event = buildTriggerableEvent('hide', {cancelable: true})
   emit('hide', event)
   if (event.defaultPrevented) {
@@ -334,6 +334,7 @@ const hideFn = (e: Event) => {
   setTimeout(() => {
     if (
       e?.type === 'click' ||
+      e?.type === 'forceHide' ||
       (e?.type === 'update:modelValue' && manualBoolean.value) ||
       (!noninteractiveBoolean.value &&
         isOutside.value &&
@@ -355,7 +356,7 @@ const hideFn = (e: Event) => {
     } else {
       setTimeout(
         () => {
-          hideFn(e)
+          hide(e)
         },
         delay < 50 ? 50 : delay
       )
@@ -364,7 +365,7 @@ const hideFn = (e: Event) => {
 }
 
 defineExpose({
-  hideFn,
+  hide,
   show,
   toggle,
 })
@@ -415,20 +416,22 @@ const bind = () => {
     return
   }
   if (!IS_BROWSER) return
+  trigger.value.addEventListener('forceHide', hide)
   clickBoolean.value && trigger.value.addEventListener('click', toggle)
   !clickBoolean.value && trigger.value.addEventListener('pointerenter', show)
-  !clickBoolean.value && trigger.value.addEventListener('pointerleave', hideFn)
+  !clickBoolean.value && trigger.value.addEventListener('pointerleave', hide)
   !clickBoolean.value && trigger.value.addEventListener('focus', show)
-  !clickBoolean.value && trigger.value.addEventListener('blur', hideFn)
+  !clickBoolean.value && trigger.value.addEventListener('blur', hide)
 }
 
 const unbind = () => {
   if (trigger.value) {
+    trigger.value.removeEventListener('forceHide', hide)
     trigger.value.removeEventListener('click', toggle)
     trigger.value.removeEventListener('pointerenter', show)
-    trigger.value.removeEventListener('pointerleave', hideFn)
+    trigger.value.removeEventListener('pointerleave', hide)
     trigger.value.removeEventListener('focus', show)
-    trigger.value.removeEventListener('blur', hideFn)
+    trigger.value.removeEventListener('blur', hide)
   }
 }
 
@@ -436,7 +439,7 @@ onClickOutside(
   element,
   () => {
     if (showState.value && clickBoolean.value && !noAutoCloseBoolean.value && !manualBoolean.value)
-      hideFn(new Event('clickOutside'))
+      hide(new Event('clickOutside'))
   },
   {ignore: [trigger]}
 )
