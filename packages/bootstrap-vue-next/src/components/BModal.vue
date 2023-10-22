@@ -19,6 +19,7 @@
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
+        :style="computedZIndex"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="contentClass">
@@ -100,7 +101,15 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, ref, type RendererElement, toRef, useSlots} from 'vue'
+import {
+  computed,
+  type CSSProperties,
+  reactive,
+  ref,
+  type RendererElement,
+  toRef,
+  useSlots,
+} from 'vue'
 import {
   useBooleanish,
   useColorVariantClasses,
@@ -506,7 +515,17 @@ const onAfterLeave = () => {
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 
-useModalManager(isActive)
+const {activePosition, activeModalCount} = useModalManager(isActive, computedId)
+const defaultModalDialogZIndex = 1056
+const computedZIndex = computed<CSSProperties>(() => ({
+  // Make sure that newly opened modals have a higher z-index than currently active ones.
+  // All active modals have a z-index of ('defaultZIndex' - 'stackSize' - 'positionInStack').
+  //
+  // This means inactive modals will already be higher than active ones when opened.
+  'z-index': isActive.value
+    ? defaultModalDialogZIndex - (activeModalCount.value - activePosition.value)
+    : defaultModalDialogZIndex,
+}))
 
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : showFn()
@@ -537,6 +556,7 @@ defineExpose({
 .modal {
   display: block;
 }
+
 .modal-dialog {
   z-index: 1051;
 }

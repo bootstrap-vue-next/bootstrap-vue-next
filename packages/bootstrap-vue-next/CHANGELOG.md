@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.9...bootstrapvuenext-v0.14.10) (2023-10-16)
+
+### Bug Fixes
+
+- **BModal:** Fix new modals stacking behind active modals ([6744503](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6744503ec7206cf52e1945d366e766ff1fce6a50))
+- **BModal:** Fix new modals stacking behind active modals fixes [#1516](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1516) ([6744503](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6744503ec7206cf52e1945d366e766ff1fce6a50))
+
 ## [0.14.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.8...bootstrapvuenext-v0.14.9) (2023-10-14)
 
 ### Bug Fixes
@@ -417,27 +424,29 @@
 
 - **BDropdown:** dropdown not automatically flipping ([9157407](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/915740738ea398759dc0031e6cac40b22e3ab4b1))
 
-## [0.9.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.24...bootstrap-vue-next-v0.9.25) (2023-07-15)
+## [0.9.25](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.24...bootstrapfeat(BFormCheckbox): use a different value/uncheckedValue system under the hood streamlining the code and process
 
-### Bug Fixes
+ci: use node 20
 
-- **BNavItem:** BNavItem emitting click event when disabled fixes [#1284](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1284) ([8eb7371](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8eb73718c91f1577b07e6bb7ee862e5f34b32a87))
-- **omit:** can properly omit number values ([6902826](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6902826a2ac3370dc17f85ea2f8ff094c2c9c8c4))
+chore: update packages
 
-## [0.9.24](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.23...bootstrap-vue-next-v0.9.24) (2023-07-13)
+refactor: use toRef in more places
 
-### Features
+refactor: useBooleanish opened up to all types -- allows for more complex type resolving
 
-- **BTable:** added tbodyTrClass prop to update the tbody &gt; rows styles based on function results ([2ca32a8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2ca32a8ba34458d736fd1dc8fdade7cd527440fb))
-- **BTable:** the sort-by prop is now has a shell value to be more flexible and can be used as a v-model, read-only prop, or don't be passed at all. ([480ac8b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/480ac8b09e56a27aa360aca4b1909d09a101a109))
+fix: BFormRadio use native @change & @input events
 
-### Bug Fixes
+refactor: create useAriaInvalid composable & use it
 
-- **BLink:** fixed :active-class prop not beign added to the classes when the :active prop is set to true ([0ae54ae](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0ae54aee7cd29224cf16086f6c22fba57e941506))
-- **BLink:** prevented blink from having 'active' class when the link is active and have :active-class prop passed to it ([e9874d8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e9874d88b755aca4adf296b04fed5b37edf81f1a))
-- **BNavItem:** fixed :active-class prop not beign added to the classes when the :active prop is set to true ([92690de](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/92690decfaa3ccf3958a035e7d8af1b1d7b01a62))
+fix(Directives): use TS satisfies over TS as -- surprisingly had an affect
 
-## [0.9.23](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrap-vue-next-v0.9.22...bootstrap-vue-next-v0.9.23) (2023-07-08)
+feat(BToaster): expose show method
+
+feat(BTable): WIP fix reactivity engine
+
+feat(BTable): selectedItems becomes a v-modelable prop
+
+fix(BTable): selectModel default value single => multi-vue-next-v0.9.23) (2023-07-08)
 
 ### Features
 
