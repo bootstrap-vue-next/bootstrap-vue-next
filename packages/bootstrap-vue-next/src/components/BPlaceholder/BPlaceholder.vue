@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type CSSProperties} from 'vue'
+import {computed, type CSSProperties, toRef} from 'vue'
 import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
 defineOptions({
@@ -39,7 +39,7 @@ const props = withDefaults(
   }
 )
 
-const widthString = computed(() =>
+const widthString = toRef(() =>
   props.width === undefined
     ? undefined
     : typeof props.width === 'number'
@@ -47,7 +47,7 @@ const widthString = computed(() =>
     : props.width.replace('%', '')
 )
 
-const colsString = computed(() =>
+const colsString = toRef(() =>
   props.cols === undefined
     ? undefined
     : typeof props.cols === 'number'

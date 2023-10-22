@@ -1,5 +1,5 @@
 <script lang="ts">
-import {useBooleanish, useId, useStateClass} from '../../composables'
+import {useAriaInvalid, useBooleanish, useId, useStateClass} from '../../composables'
 import {RX_SPACE_SPLIT} from '../../constants/regex'
 import {
   attemptFocus,
@@ -10,7 +10,6 @@ import {
   isVisible,
   normalizeSlot,
   removeAttr,
-  resolveAriaInvalid,
   select,
   selectAll,
   setAttr,
@@ -172,8 +171,9 @@ export default defineComponent({
 
     const stateClass = useStateClass(stateBoolean)
 
-    const computedAriaInvalid = computed(() =>
-      resolveAriaInvalid(attrs.ariaInvalid as unknown as AriaInvalid, stateBoolean.value)
+    const computedAriaInvalid = useAriaInvalid(
+      () => attrs.ariaInvalid as unknown as AriaInvalid,
+      stateBoolean
     )
 
     watch(

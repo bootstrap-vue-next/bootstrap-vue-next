@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-// import type {Breakpoint} from '../../types'
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {BTableSimpleProps} from '../../types'
@@ -51,6 +50,8 @@ const smallBoolean = useBooleanish(() => props.small)
 const stripedBoolean = useBooleanish(() => props.striped)
 const stickyHeaderBoolean = useBooleanish(() => props.stickyHeader)
 const stripedColumnsBoolean = useBooleanish(() => props.stripedColumns)
+const resolvedResponsive = useBooleanish(() => props.responsive)
+const resolvedStacked = useBooleanish(() => props.stacked)
 
 const computedClasses = computed(() => [
   props.tableClass,
@@ -63,8 +64,8 @@ const computedClasses = computed(() => [
     'caption-top': captionTopBoolean.value,
     'table-dark': darkBoolean.value,
     'table-hover': hoverBoolean.value,
-    'b-table-stacked': typeof props.stacked === 'boolean' && props.stacked,
-    [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
+    'b-table-stacked': resolvedStacked.value === true,
+    [`b-table-stacked-${resolvedStacked.value}`]: typeof resolvedStacked.value === 'string',
     'table-striped': stripedBoolean.value,
     'table-sm': smallBoolean.value,
     [`table-${props.variant}`]: props.variant !== null,
@@ -73,8 +74,8 @@ const computedClasses = computed(() => [
 ])
 
 const responsiveClasses = computed(() => ({
-  'table-responsive': props.responsive === true,
-  [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+  'table-responsive': resolvedResponsive.value === true,
+  [`table-responsive-${resolvedResponsive.value}`]: typeof resolvedResponsive.value === 'string',
   'b-table-sticky-header': stickyHeaderBoolean.value,
 }))
 </script>

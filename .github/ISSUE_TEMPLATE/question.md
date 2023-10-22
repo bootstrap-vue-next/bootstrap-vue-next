@@ -16,4 +16,4 @@ assignees: ''
 
 - OS: [e.g. Windows 11, Pop!_OS]
 - Package Version: [e.g. 0.8.12]
-- Npm/Yarn/Pnpm Version: [e.g. npm@9.6.6, pnpm@8.5.1]
+- Npm/Yarn/Pnpm/Bun Version: [e.g. npm@9.6.6, pnpm@8.5.1]

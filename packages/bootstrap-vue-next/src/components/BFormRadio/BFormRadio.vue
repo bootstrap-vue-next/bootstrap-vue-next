@@ -16,6 +16,8 @@
       :aria-labelledby="ariaLabelledby"
       :value="value"
       :aria-required="computedRequired || undefined"
+      @change="modelValue !== undefined && emit('change', modelValue)"
+      @input="modelValue !== undefined && emit('input', modelValue)"
     />
     <label v-if="hasDefaultSlot || plainBoolean === false" :for="computedId" :class="labelClasses">
       <slot />
@@ -142,7 +144,7 @@ watch(modelValue, (newValue) => {
   parentData.set(props.value)
 })
 
-const computedRequired = computed(
+const computedRequired = toRef(
   () =>
     !!(props.name ?? parentData?.name.value) &&
     (requiredBoolean.value || parentData?.required.value)
@@ -155,11 +157,8 @@ const classesObject = computed(() => ({
   button: buttonBoolean.value || (parentData?.buttons.value ?? false),
   inline: inlineBoolean.value || (parentData?.inline.value ?? false),
   state: stateBoolean.value || parentData?.state.value,
-  size: props.size !== undefined ? props.size : parentData?.size.value ?? 'md', // This is where the true default is made
-  buttonVariant:
-    props.buttonVariant !== null
-      ? props.buttonVariant
-      : parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
+  size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
+  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
 }))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)

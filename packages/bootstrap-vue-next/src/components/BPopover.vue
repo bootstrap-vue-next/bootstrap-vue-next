@@ -174,6 +174,7 @@ const inlineBoolean = useBooleanish(() => props.inline)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
 const noninteractiveBoolean = useBooleanish(() => props.noninteractive)
 const isHtml = useBooleanish(() => props.html)
+
 const hidden = ref(false)
 
 const element = ref<HTMLElement | null>(null)

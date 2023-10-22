@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, nextTick, provide, ref, toRef} from 'vue'
+import {computed, nextTick, provide, readonly, ref, toRef} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -116,7 +116,7 @@ provide(radioGroupKey, {
       emit('change', value)
     })
   },
-  modelValue: toRef(() => modelValue.value),
+  modelValue: readonly(modelValue),
   buttonVariant: toRef(() => props.buttonVariant),
   form: toRef(() => props.form),
   name: computedName,

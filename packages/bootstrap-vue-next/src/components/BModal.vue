@@ -399,7 +399,7 @@ const headerClasses = computed(() => [
   },
 ])
 
-const headerCloseClasses = computed(() => [props.headerCloseClass])
+const headerCloseClasses = toRef(() => props.headerCloseClass)
 
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
@@ -513,10 +513,16 @@ useEventListener(element, 'bv-toggle', () => {
 })
 
 const sharedSlots: SharedSlotsData = reactive({
-  cancel: () => hide('cancel'),
-  close: () => hide('close'),
+  cancel: () => {
+    hide('cancel')
+  },
+  close: () => {
+    hide('close')
+  },
   hide,
-  ok: () => hide('ok'),
+  ok: () => {
+    hide('ok')
+  },
   visible: modelValueBoolean,
 })
 

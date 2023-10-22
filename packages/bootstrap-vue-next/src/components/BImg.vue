@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import type {BImgProps} from '../types'
 import {useBooleanish} from '../composables'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(defineProps<BImgProps>(), {
@@ -49,7 +49,6 @@ const fluidGrowBoolean = useBooleanish(() => props.fluidGrow)
 const startBoolean = useBooleanish(() => props.start)
 const endBoolean = useBooleanish(() => props.end)
 const thumbnailBoolean = useBooleanish(() => props.thumbnail)
-
 const heightNumber = useToNumber(() => props.height ?? NaN)
 const widthNumber = useToNumber(() => props.width ?? NaN)
 
@@ -95,11 +94,11 @@ const computedDimentions = computed<{height: number | undefined; width: number |
   }
 })
 
-const computedBlankImgSrc = computed(() =>
+const computedBlankImgSrc = toRef(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 
-const alignment = computed(() =>
+const alignment = toRef(() =>
   startBoolean.value
     ? 'float-start'
     : endBoolean.value

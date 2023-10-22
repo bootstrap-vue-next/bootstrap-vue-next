@@ -83,7 +83,6 @@ import {
 import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {useBooleanish, useId} from '../../composables'
 
-
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
 const props = withDefaults(
@@ -263,12 +262,12 @@ const computedStepMultiplier = toRef(() =>
   )
 )
 
-const computedPrecision = computed(() => {
+const computedPrecision = toRef(() => {
   const step = computedStep.value
   return Math.floor(step) === step ? 0 : (step.toString().split('.')[1] || '').length
 })
 
-const computedMultiplier = computed(() => Math.pow(10, computedPrecision.value || 0))
+const computedMultiplier = toRef(() => Math.pow(10, computedPrecision.value || 0))
 
 const valueAsFixed = toRef(() =>
   modelValue.value === null ? '' : modelValue.value.toFixed(computedPrecision.value)

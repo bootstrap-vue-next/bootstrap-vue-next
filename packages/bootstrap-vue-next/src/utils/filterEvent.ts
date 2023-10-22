@@ -1,10 +1,10 @@
-import {closest, getAttr, getById, matches, select} from '../../../utils/dom'
+import {closest, getAttr, getById, matches, select} from './dom'
 
 const TABLE_TAG_NAMES = ['TD', 'TH', 'TR']
 
 // Filter CSS selector for click/dblclick/etc. events
 // If any of these selectors match the clicked element, we ignore the event
-export const EVENT_FILTER = [
+const eventFilter = [
   'a',
   'a *', // Include content inside links
   'button',
@@ -21,7 +21,7 @@ export const EVENT_FILTER = [
 
 // Returns `true` if we should ignore the click/double-click/keypress event
 // Avoids having the user need to use `@click.stop` on the form control
-export const filterEvent = (event: Event) => {
+export default (event: Event) => {
   // Exit early when we don't have a target element
   if (!event || !event.target) {
     return false
@@ -49,5 +49,5 @@ export const filterEvent = (event: Event) => {
   // Otherwise check if the event target matches one of the selectors in the
   // event filter (i.e. anchors, non disabled inputs, etc.)
   // Return `true` if we should ignore the event
-  return matches(el, EVENT_FILTER)
+  return matches(el, eventFilter)
 }

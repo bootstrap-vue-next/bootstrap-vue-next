@@ -138,7 +138,7 @@ const routerAttr = computed(() => ({
   'to': props.to,
   'href': computedHref.value,
   'target': props.target,
-  'rel': props.target === '_blank' && props.rel === undefined ? 'noopener' : props.rel || undefined,
+  'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,
   'tabindex': disabledBoolean.value
     ? '-1'
     : typeof attrs.tabindex === 'undefined'

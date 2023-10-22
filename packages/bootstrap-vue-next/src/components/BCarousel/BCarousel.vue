@@ -50,13 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BvCarouselEvent,
-  carouselInjectionKey,
-  getSlotElements,
-  isBooleanish,
-  resolveBooleanish,
-} from '../../utils'
+import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
 import {computed, provide, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
@@ -136,6 +130,7 @@ const noTouchBoolean = useBooleanish(() => props.noTouch)
 const noWrapBoolean = useBooleanish(() => props.noWrap)
 const touchThresholdNumber = useToNumber(() => props.touchThreshold)
 const intervalNumber = useToNumber(() => props.interval)
+const rideResolved = useBooleanish(() => props.ride)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
@@ -146,22 +141,18 @@ const previousModelValue = ref(modelValue.value)
 
 const isHovering = useElementHover(element)
 
-const rideResolved = computed(() =>
-  isBooleanish(props.ride) ? resolveBooleanish(props.ride) : props.ride
-)
-
 // Class carousel-item is a static property
 // If you make it static, the direction can be reversed -- properly (atm it does the carousel-item-${} logic backwards for entering, a weird hack)
 // So all that would be great. However, when you do this, it will break the transition flow. Something about it breaks and I'm not sure why!
 // Try it by removing carousel-item from below and making `!direction.value` => `direction.value` for enter
 // Then reviewing the behavior
-const enterClasses = computed(
+const enterClasses = toRef(
   () =>
     `carousel-item carousel-item-${!direction.value ? 'next' : 'prev'} carousel-item-${
       !direction.value ? 'start' : 'end'
     }`
 )
-const leaveClasses = computed(
+const leaveClasses = toRef(
   () => `carousel-item active carousel-item-${direction.value ? 'start' : 'end'}`
 )
 
@@ -173,7 +164,7 @@ const {pause, resume} = useIntervalFn(
   {immediate: rideResolved.value === 'carousel'}
 )
 
-const isRiding = computed(
+const isRiding = toRef(
   () =>
     (rideResolved.value === true && rideStarted.value === true) || rideResolved.value === 'carousel'
 )

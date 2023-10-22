@@ -80,9 +80,9 @@ export interface BTableSimpleProps {
   id?: string
   noBorderCollapse?: Booleanish
   outlined?: Booleanish
-  responsive?: boolean | Breakpoint
+  responsive?: Booleanish | Breakpoint
   small?: Booleanish
-  stacked?: boolean | Breakpoint
+  stacked?: Booleanish | Breakpoint
   stickyHeader?: Booleanish
   striped?: Booleanish
   tableClass?: ClassValue
@@ -130,7 +130,6 @@ export interface BTableLiteProps {
     | Record<PropertyKey, any>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | any[]
-  virtualFields?: number | string
 }
 
 export interface BProgressBarProps extends ColorExtendables {

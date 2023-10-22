@@ -16,7 +16,7 @@
     :is-nav="isNavBoolean"
     v-bind="$attrs"
   >
-    <slot :visible="modelValueBoolean" :toggle="toggle" :open="open" :close="close" />
+    <slot :visible="modelValueBoolean" :toggle="toggleFn" :open="open" :close="close" />
   </component>
   <slot
     :id="computedId"

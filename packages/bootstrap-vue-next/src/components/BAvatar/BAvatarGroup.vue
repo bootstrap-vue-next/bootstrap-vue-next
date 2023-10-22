@@ -45,7 +45,7 @@ const squareBoolean = useBooleanish(() => props.square)
 const overlapNumber = useToNumber(() => props.overlap)
 
 const computedSize = computed(() => computeSize(props.size))
-const overlapScale = computed(() => Math.min(Math.max(overlapNumber.value, 0), 1) / 2)
+const overlapScale = toRef(() => Math.min(Math.max(overlapNumber.value, 0), 1) / 2)
 
 const paddingStyle = computed<StyleValue>(() => {
   const value = computedSize.value ? `calc(${computedSize.value} * ${overlapScale.value})` : null
