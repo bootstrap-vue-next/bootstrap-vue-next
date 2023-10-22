@@ -83,7 +83,6 @@ import {
   nextTick,
   onBeforeUnmount,
   onMounted,
-  readonly,
   ref,
   toRef,
   unref,
@@ -175,6 +174,7 @@ const inlineBoolean = useBooleanish(() => props.inline)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
 const noninteractiveBoolean = useBooleanish(() => props.noninteractive)
 const isHtml = useBooleanish(() => props.html)
+
 const hidden = ref(false)
 
 const element = ref<HTMLElement | null>(null)
@@ -191,7 +191,7 @@ const sanitizedContent = computed(() =>
   props.content ? sanitizeHtml(props.content, DefaultAllowlist) : ''
 )
 const isAutoPlacement = toRef(() => props.placement.startsWith('auto'))
-const offsetNumber = useToNumber(toRef(() => props.offset ?? NaN))
+const offsetNumber = useToNumber(() => props.offset ?? NaN)
 
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
@@ -229,7 +229,7 @@ const placementRef = toRef(() =>
 const {floatingStyles, middlewareData, placement, update} = useFloating(targetTrigger, element, {
   placement: placementRef,
   middleware: floatingMiddleware,
-  strategy: readonly(toRef(props, 'strategy')),
+  strategy: toRef(() => props.strategy),
   whileElementsMounted: (...args) => {
     const cleanup = autoUpdate(...args, {animationFrame: realtimeBoolean.value})
     // Important! Always return the cleanup function.

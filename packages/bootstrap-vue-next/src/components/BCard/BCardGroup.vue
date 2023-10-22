@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 
@@ -30,7 +30,7 @@ defineSlots<{
 const columnsBoolean = useBooleanish(() => props.columns)
 const deckBoolean = useBooleanish(() => props.deck)
 
-const cardTypeClass = computed(() =>
+const cardTypeClass = toRef(() =>
   deckBoolean.value ? 'card-deck' : columnsBoolean.value ? 'card-columns' : 'card-group'
 )
 </script>

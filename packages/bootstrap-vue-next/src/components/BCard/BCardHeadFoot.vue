@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BackgroundColorExtendables, ColorVariant} from '../../types'
-import {useBackgroundVariant} from '../../composables'
+import type {ColorExtendables, ColorVariant} from '../../types'
+import {useColorVariantClasses} from '../../composables'
 
 const props = withDefaults(
   defineProps<
@@ -20,7 +20,7 @@ const props = withDefaults(
       borderVariant?: ColorVariant | null
       html?: string
       tag?: string
-    } & BackgroundColorExtendables
+    } & ColorExtendables
   >(),
   {
     tag: 'div',
@@ -38,7 +38,7 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
-const resolvedBackgroundClasses = useBackgroundVariant(props)
+const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,

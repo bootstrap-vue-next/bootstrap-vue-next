@@ -10,20 +10,24 @@
 </template>
 
 <script setup lang="ts">
-// import type {Breakpoint} from '../../types'
 import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {BTableSimpleProps} from '../../types'
 
+// TODO some props are not used. ex id, fixed, etc
 const props = withDefaults(defineProps<BTableSimpleProps>(), {
   borderVariant: null,
   tableClass: undefined,
-  tableVariant: null,
+  variant: null,
   bordered: false,
   borderless: false,
   captionTop: false,
   dark: false,
   hover: false,
+  id: undefined,
+  noBorderCollapse: false,
+  outlined: false,
+  fixed: false,
   responsive: false,
   stacked: false,
   striped: false,
@@ -46,6 +50,8 @@ const smallBoolean = useBooleanish(() => props.small)
 const stripedBoolean = useBooleanish(() => props.striped)
 const stickyHeaderBoolean = useBooleanish(() => props.stickyHeader)
 const stripedColumnsBoolean = useBooleanish(() => props.stripedColumns)
+const resolvedResponsive = useBooleanish(() => props.responsive)
+const resolvedStacked = useBooleanish(() => props.stacked)
 
 const computedClasses = computed(() => [
   props.tableClass,
@@ -58,18 +64,18 @@ const computedClasses = computed(() => [
     'caption-top': captionTopBoolean.value,
     'table-dark': darkBoolean.value,
     'table-hover': hoverBoolean.value,
-    'b-table-stacked': typeof props.stacked === 'boolean' && props.stacked,
-    [`b-table-stacked-${props.stacked}`]: typeof props.stacked === 'string',
+    'b-table-stacked': resolvedStacked.value === true,
+    [`b-table-stacked-${resolvedStacked.value}`]: typeof resolvedStacked.value === 'string',
     'table-striped': stripedBoolean.value,
     'table-sm': smallBoolean.value,
-    [`table-${props.tableVariant}`]: props.tableVariant !== null,
+    [`table-${props.variant}`]: props.variant !== null,
     'table-striped-columns': stripedColumnsBoolean.value,
   },
 ])
 
 const responsiveClasses = computed(() => ({
-  'table-responsive': props.responsive === true,
-  [`table-responsive-${props.responsive}`]: typeof props.responsive === 'string',
+  'table-responsive': resolvedResponsive.value === true,
+  [`table-responsive-${resolvedResponsive.value}`]: typeof resolvedResponsive.value === 'string',
   'b-table-sticky-header': stickyHeaderBoolean.value,
 }))
 </script>

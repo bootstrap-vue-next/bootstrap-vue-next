@@ -111,8 +111,8 @@ import {
   useSlots,
 } from 'vue'
 import {
-  useBackgroundVariant,
   useBooleanish,
+  useColorVariantClasses,
   useId,
   useModalManager,
   useSafeScrollLock,
@@ -386,7 +386,7 @@ const modalDialogClasses = computed(() => [
   },
 ])
 
-const resolvedBodyBgClasses = useBackgroundVariant(() => ({
+const resolvedBodyBgClasses = useColorVariantClasses(() => ({
   bgVariant: props.bodyBgVariant,
   textVariant: props.bodyTextVariant,
   variant: props.bodyVariant,
@@ -394,7 +394,7 @@ const resolvedBodyBgClasses = useBackgroundVariant(() => ({
 
 const bodyClasses = computed(() => [props.bodyClass, resolvedBodyBgClasses.value])
 
-const resolvedHeaderBgClasses = useBackgroundVariant(() => ({
+const resolvedHeaderBgClasses = useColorVariantClasses(() => ({
   bgVariant: props.headerBgVariant,
   textVariant: props.headerTextVariant,
   variant: props.headerVariant,
@@ -408,14 +408,14 @@ const headerClasses = computed(() => [
   },
 ])
 
-const headerCloseClasses = computed(() => [props.headerCloseClass])
+const headerCloseClasses = toRef(() => props.headerCloseClass)
 
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
   class: headerCloseClasses.value,
 }))
 
-const resolvedFooterBgClasses = useBackgroundVariant(() => ({
+const resolvedFooterBgClasses = useColorVariantClasses(() => ({
   bgVariant: props.footerBgVariant,
   textVariant: props.footerTextVariant,
   variant: props.footerVariant,
@@ -532,10 +532,16 @@ useEventListener(element, 'bv-toggle', () => {
 })
 
 const sharedSlots: SharedSlotsData = reactive({
-  cancel: () => hide('cancel'),
-  close: () => hide('close'),
+  cancel: () => {
+    hide('cancel')
+  },
+  close: () => {
+    hide('close')
+  },
   hide,
-  ok: () => hide('ok'),
+  ok: () => {
+    hide('ok')
+  },
   visible: modelValueBoolean,
 })
 

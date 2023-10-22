@@ -473,7 +473,7 @@ export default {
           default: undefined,
         },
         {
-          prop: 'tableVariant',
+          prop: 'variant',
           type: 'ColorVariant | null',
           default: null,
         },

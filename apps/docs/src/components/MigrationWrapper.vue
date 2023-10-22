@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {toRef} from 'vue'
 import {BBadge, BCard} from 'bootstrap-vue-next'
 
 const props = defineProps<{
@@ -26,7 +26,7 @@ const props = defineProps<{
   fix: string
 }>()
 
-const difficultyVariant = computed(() =>
+const difficultyVariant = toRef(() =>
   props.difficulty === 'hard' ? 'danger' : props.difficulty === 'medium' ? 'warning' : 'success'
 )
 </script>

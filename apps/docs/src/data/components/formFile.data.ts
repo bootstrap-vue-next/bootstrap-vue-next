@@ -17,7 +17,7 @@ export default {
         },
         {
           prop: 'capture',
-          type: "boolean | 'true' | 'false' | '' | 'user' | 'environment'",
+          type: "'Booleanish' | 'user' | 'environment'",
           default: false,
         },
         {

@@ -67,7 +67,7 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
-import {computed, nextTick, provide, readonly, ref, toRef, watch} from 'vue'
+import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
@@ -251,7 +251,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
 const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   placement: floatingPlacement,
   middleware: floatingMiddleware,
-  strategy: readonly(toRef(props, 'strategy')),
+  strategy: toRef(() => props.strategy),
   whileElementsMounted: autoUpdate,
 })
 

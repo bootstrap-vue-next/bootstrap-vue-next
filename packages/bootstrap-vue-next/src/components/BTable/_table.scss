@@ -94,6 +94,10 @@
   }
 }
 
+.table.b-table[aria-busy=true] {
+  opacity:.55
+}
+
 @supports (position: sticky) {
   // Positioning of sticky headers
   .b-table-sticky-header > .table.b-table > thead > tr > th {
@@ -160,28 +164,10 @@
   }
 
   &.b-table-busy {
-    position: relative;
-
     .b-table-busy-slot {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffffa8;
-
       & > td {
         border: none;
         padding: 0;
-      }
-
-      &.b-table-static-busy {
-        position: initial;
-        width: 100%;
-        display: table-row;
       }
     }
   }

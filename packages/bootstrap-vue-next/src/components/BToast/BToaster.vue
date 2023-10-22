@@ -53,11 +53,12 @@ const toastPositions = {
   'bottom-right': 'bottom-0 end-0',
 } as const
 
-const {hide, toasts} = useToast()
+const {hide, toasts, show} = useToast()
 
 const pluckToastItem = (payload: Toast & {self: symbol}) => omit(payload, ['value', 'self', 'pos'])
 
 defineExpose({
   hide,
+  show,
 })
 </script>

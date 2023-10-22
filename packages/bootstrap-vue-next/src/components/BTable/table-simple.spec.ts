@@ -136,13 +136,13 @@ describe('table-simple', () => {
     expect($table.classes()).not.toContain('table-sm')
   })
 
-  it('table has class table-{type} when prop tableVariant', async () => {
+  it('table has class table-{type} when prop variant', async () => {
     const wrapper = mount(BTableSimple, {
-      props: {tableVariant: 'info'},
+      props: {variant: 'info'},
     })
     const $table = wrapper.get('table')
     expect($table.classes()).toContain('table-info')
-    await wrapper.setProps({tableVariant: undefined})
+    await wrapper.setProps({variant: undefined})
     expect($table.classes()).not.toContain('table-info')
   })
 
@@ -334,14 +334,14 @@ describe('table-simple', () => {
     expect($table.classes()).not.toContain('table-sm')
   })
 
-  it('when prop responsive table has class table-{type} when prop tableVariant', async () => {
+  it('when prop responsive table has class table-{type} when prop variant', async () => {
     const wrapper = mount(BTableSimple, {
-      props: {responsive: true, tableVariant: 'info'},
+      props: {responsive: true, variant: 'info'},
     })
     const $div = wrapper.get('div')
     const $table = $div.get('table')
     expect($table.classes()).toContain('table-info')
-    await wrapper.setProps({tableVariant: undefined})
+    await wrapper.setProps({variant: undefined})
     expect($table.classes()).not.toContain('table-info')
   })
 

@@ -60,15 +60,15 @@
 <script setup lang="ts">
 import type {
   AlignmentTextHorizontal,
-  BackgroundColorExtendables,
   Booleanish,
   ClassValue,
+  ColorExtendables,
   ColorVariant,
   TextColorVariant,
 } from '../../types'
 import {isEmptySlot} from '../../utils'
 import {computed, toRef, useSlots} from 'vue'
-import {useBackgroundVariant, useBooleanish} from '../../composables'
+import {useBooleanish, useColorVariantClasses} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
@@ -116,7 +116,7 @@ const props = withDefaults(
       title?: string
       titleTag?: string
       bodyText?: string
-    } & BackgroundColorExtendables
+    } & ColorExtendables
   >(),
   {
     footerVariant: null,
@@ -185,7 +185,7 @@ const noBodyBoolean = useBooleanish(() => props.noBody)
 const hasHeaderSlot = toRef(() => !isEmptySlot(slots.header))
 const hasFooterSlot = toRef(() => !isEmptySlot(slots.footer))
 
-const resolvedBackgroundClasses = useBackgroundVariant(props)
+const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
