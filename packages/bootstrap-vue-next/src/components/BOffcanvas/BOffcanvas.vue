@@ -268,14 +268,6 @@ const buildTriggerableEvent = (
 const hide = (trigger = '') => {
   const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
 
-  if (trigger === 'close') {
-    emit(trigger, event)
-  }
-  if (trigger === 'esc') {
-    emit(trigger, event)
-  }
-  emit('hide', event)
-
   if (
     event.defaultPrevented ||
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
@@ -284,6 +276,15 @@ const hide = (trigger = '') => {
     emit('hide-prevented')
     return
   }
+
+  if (trigger === 'close') {
+    emit(trigger, event)
+  }
+  if (trigger === 'esc') {
+    emit(trigger, event)
+  }
+  emit('hide', event)
+
   modelValue.value = false
 }
 
