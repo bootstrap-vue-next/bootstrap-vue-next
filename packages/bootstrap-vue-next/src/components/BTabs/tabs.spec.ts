@@ -581,7 +581,6 @@ describe('tabs', () => {
     expect($buttons[1].text()).toBe('t1')
     expect($buttons[1].classes()).toContain('active')
     expect(wrapper.vm.index).toBe(1)
-    console.log(wrapper.vm.index)
   })
 
   it('active tab follow v-models', async () => {
