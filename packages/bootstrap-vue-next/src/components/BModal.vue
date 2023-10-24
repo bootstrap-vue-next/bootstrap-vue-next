@@ -477,7 +477,6 @@ const hide = (trigger = '') => {
     return
   }
 
-  emit('hide', event)
 
   modelValue.value = false
 }
