@@ -471,6 +471,7 @@ const hide = (trigger = '') => {
   if (trigger === 'close') {
     emit(trigger, event)
   }
+    emit('hide', event)
   if (event.defaultPrevented) {
     emit('hide-prevented')
     return
