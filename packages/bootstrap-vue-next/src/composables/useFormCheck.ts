@@ -34,7 +34,7 @@ interface InputClassesItemsInput {
 const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
   const resolvedItems = toRef(items)
 
-  const stateClass = useStateClass(toRef(() => resolvedItems.value.state ?? null))
+  const stateClass = useStateClass(() => resolvedItems.value.state ?? null)
 
   return computed(() => [
     stateClass.value,

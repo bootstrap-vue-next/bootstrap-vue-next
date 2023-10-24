@@ -16,7 +16,7 @@
     :is-nav="isNavBoolean"
     v-bind="$attrs"
   >
-    <slot :visible="modelValueBoolean" :toggle="toggle" :open="open" :close="close" />
+    <slot :visible="modelValueBoolean" :toggle="toggleFn" :open="open" :close="close" />
   </component>
   <slot
     :id="computedId"
@@ -51,7 +51,6 @@ const props = withDefaults(
     isNav?: Booleanish
   }>(),
   {
-    accordion: undefined,
     id: undefined,
     modelValue: false,
     tag: 'div',

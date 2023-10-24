@@ -45,7 +45,7 @@ const printBoolean = useBooleanish(() => props.print)
 
 const computedRole = toRef(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
-const computedNavbarExpand = computed(() =>
+const computedNavbarExpand = toRef(() =>
   typeof props.toggleable === 'string'
     ? `navbar-expand-${props.toggleable}`
     : props.toggleable === false

@@ -1,6 +1,7 @@
 import type {InjectionKey, Ref} from 'vue'
 import type {
   ButtonVariant,
+  CheckboxValue,
   ClassValue,
   ColorVariant,
   Size,
@@ -61,15 +62,7 @@ export const accordionInjectionKey: InjectionKey<{
 
 // BFormCheckboxGroup
 export const checkboxGroupKey: InjectionKey<{
-  set: (
-    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ) => void
-  remove: (
-    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ) => void
-  modelValue: Readonly<
-    Ref<(unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]>
-  >
+  modelValue: Ref<CheckboxValue[]>
   switch: Readonly<Ref<boolean>>
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
@@ -85,7 +78,9 @@ export const checkboxGroupKey: InjectionKey<{
 
 export const radioGroupKey: InjectionKey<{
   set: (value: string | boolean | unknown[] | Record<string, unknown> | number | null) => void
-  modelValue: Readonly<Ref<string | boolean | unknown[] | Record<string, unknown> | number | null>>
+  modelValue: Readonly<
+    Ref<string | boolean | readonly unknown[] | Record<string, unknown> | number | null>
+  >
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>

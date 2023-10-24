@@ -239,7 +239,7 @@ const removeOnDeleteBoolean = useBooleanish(() => props.removeOnDelete)
 const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
 const tagPillsBoolean = useBooleanish(() => props.tagPills)
-const limitNumber = useToNumber(toRef(() => props.limit ?? NaN))
+const limitNumber = useToNumber(() => props.limit ?? NaN)
 
 const stateClass = useStateClass(stateBoolean)
 

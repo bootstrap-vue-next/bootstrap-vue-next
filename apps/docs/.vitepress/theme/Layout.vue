@@ -154,7 +154,7 @@ import {
   vBColorMode,
   BToaster,
 } from 'bootstrap-vue-next'
-import {computed, inject, ref, watch} from 'vue'
+import {inject, ref, toRef, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'
@@ -234,7 +234,7 @@ const map = {
 
 const options = Object.keys(map) as (keyof typeof map)[]
 
-const currentIcon = computed(() => map[dark.value])
+const currentIcon = toRef(() => map[dark.value])
 
 const set = (newValue: keyof typeof map) => {
   dark.value = newValue

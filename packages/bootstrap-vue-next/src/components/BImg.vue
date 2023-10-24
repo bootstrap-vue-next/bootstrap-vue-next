@@ -49,9 +49,8 @@ const fluidGrowBoolean = useBooleanish(() => props.fluidGrow)
 const startBoolean = useBooleanish(() => props.start)
 const endBoolean = useBooleanish(() => props.end)
 const thumbnailBoolean = useBooleanish(() => props.thumbnail)
-
-const heightNumber = useToNumber(toRef(() => props.height ?? NaN))
-const widthNumber = useToNumber(toRef(() => props.width ?? NaN))
+const heightNumber = useToNumber(() => props.height ?? NaN)
+const widthNumber = useToNumber(() => props.width ?? NaN)
 
 const computedSrcset = computed(() =>
   typeof props.srcset === 'string'
@@ -95,11 +94,11 @@ const computedDimentions = computed<{height: number | undefined; width: number |
   }
 })
 
-const computedBlankImgSrc = computed(() =>
+const computedBlankImgSrc = toRef(() =>
   makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
 )
 
-const alignment = computed(() =>
+const alignment = toRef(() =>
   startBoolean.value
     ? 'float-start'
     : endBoolean.value

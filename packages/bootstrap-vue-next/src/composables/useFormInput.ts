@@ -81,8 +81,8 @@ export default (
   const numberBoolean = useBooleanish(() => props.number)
   const stateBoolean = useBooleanish(() => props.state)
   const trimBoolean = useBooleanish(() => props.trim)
-  const debounceNumber = useToNumber(toRef(() => props.debounce ?? 0))
-  const debounceMaxWaitNumber = useToNumber(toRef(() => props.debounceMaxWait ?? NaN))
+  const debounceNumber = useToNumber(() => props.debounce ?? 0)
+  const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? NaN)
   const computedDebounceValueWithLazy = toRef(() =>
     lazyBoolean.value === true ? 0 : debounceNumber.value
   )

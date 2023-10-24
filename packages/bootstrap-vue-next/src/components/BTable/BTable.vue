@@ -1,13 +1,11 @@
 <template>
   <BTableLite
-    ref="liteTable"
     v-bind="props"
-    v-model:busy="busyModel"
+    :aria-busy="busyBoolean"
     :items="computedDisplayItems"
     :table-class="tableClasses"
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
-    :virtual-fields="selectableBoolean ? 1 : 0"
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
   >
@@ -34,7 +32,7 @@
       </slot>
     </template>
     <template #thead-tr-prefix>
-      <th
+      <BTh
         v-if="addSelectableCell"
         class="b-table-selection-column"
         :class="{
@@ -44,10 +42,10 @@
         <slot name="select-head">
           {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
         </slot>
-      </th>
+      </BTh>
     </template>
     <template #tbody-tr-prefix="scope">
-      <td
+      <BTd
         v-if="addSelectableCell"
         class="b-table-selection-column"
         :class="{
@@ -57,30 +55,37 @@
         <slot name="select-cell">
           <span
             class="b-table-selection-icon"
-            :class="selectedItems.has(scope.item) ? `text-${props.selectionVariant} selected` : ''"
-            >🗹</span
+            :class="
+              selectedItemsSetUtilities.has(scope.item)
+                ? `text-${props.selectionVariant} selected`
+                : ''
+            "
           >
+            🗹
+          </span>
         </slot>
-      </td>
+      </BTd>
     </template>
-    <template #tbody-prefix="scope">
-      <tr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses()">
-        <td :colspan="scope.fieldsTotal">
+    <template #custom-body="scope">
+      <BTr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses">
+        <BTd :colspan="scope.fields.length">
           <slot name="table-busy">
             <div class="d-flex align-items-center justify-content-center gap-2">
               <BSpinner class="align-middle" />
               <strong>{{ busyLoadingText }}</strong>
             </div>
           </slot>
-        </td>
-      </tr>
+        </BTd>
+      </BTr>
     </template>
   </BTableLite>
 </template>
 
 <script setup lang="ts">
+import {useToNumber, useVModel} from '@vueuse/core'
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
-import {useBooleanish, useTableItems} from '../../composables'
+import {useBooleanish} from '../../composables'
+import {isEmptySlot} from '../../utils'
 import type {
   Booleanish,
   BTableLiteProps,
@@ -93,9 +98,11 @@ import type {
   TableFieldObject,
   TableItem,
 } from '../../types'
-import BTableLite from './BTableLite.vue'
-import {useVModel} from '@vueuse/core'
 import BSpinner from '../BSpinner.vue'
+import BTableLite from './BTableLite.vue'
+import BTd from './BTd.vue'
+import BTh from './BTh.vue'
+import BTr from './BTr.vue'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
@@ -118,16 +125,44 @@ const props = withDefaults(
       selectionVariant?: ColorVariant | null
       busy?: Booleanish
       busyLoadingText?: string
-      // TODO number | string => with useToNumber
-      perPage?: number
-      // TODO number | string => with useToNumber
-      currentPage?: number
+      perPage?: number | string
+      currentPage?: number | string
       filter?: string
       filterable?: string[]
-    } & Omit<BTableSimpleProps, 'tableClass' | 'tableVariant'> &
-      Omit<BTableLiteProps, 'virtualFields'>
+      // TODO
+      // apiUrl?: string
+      // emptyFilteredHtml?: string
+      // emptyFilteredText?: string
+      // emptyHtml?: string
+      // emptyText?: string
+      filterDebounce?: string | number
+      filterDebounceMaxWait?: string | number
+      // filterFunction?: () => any
+      // filterIgnoredFields?: any[]
+      // filterIncludedFields?: any[]
+      // headRowVariant?: ColorVariant | null
+      // headVariant?: ColorVariant | null
+      // labelSortAsc?: string
+      // labelSortClear?: string
+      // labelSortDesc?: string
+      // noFooterSorting?: Booleanish
+      // noLocalSorting?: Booleanish
+      // noSelectOnClick?: Booleanish
+      // noSortReset?: Booleanish
+      // selectedVariant?: ColorVariant | null
+      // showEmpty?: Booleanish
+      // sortCompareLocale?: () => any
+      // sortCompareOptions?: Record<string, any>
+      // sortDirection?: 'asc' | 'desc' | 'last'
+      // sortIconLeft?: Booleanish
+      // sortNullLast?: Booleanish
+      selectedItems?: TableItem[]
+    } & Omit<BTableSimpleProps, 'tableClass'> &
+      BTableLiteProps
   >(),
   {
+    filterDebounce: 0,
+    filterDebounceMaxWait: NaN,
     perPage: undefined,
     sortBy: undefined,
     variant: undefined,
@@ -161,7 +196,7 @@ const props = withDefaults(
     selectable: false,
     stickySelect: false,
     selectHead: true,
-    selectMode: 'single',
+    selectMode: 'multi',
     selectionVariant: 'primary',
     stickyHeader: false,
     busy: false,
@@ -172,6 +207,7 @@ const props = withDefaults(
     emptyFilteredText: 'There are no records matching your request',
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
+    selectedItems: () => [],
   }
 )
 
@@ -192,6 +228,7 @@ const emit = defineEmits<{
   'update:busy': [value: boolean]
   'update:sortBy': [value: string]
   'update:sortDesc': [value: boolean]
+  'update:selectedItems': [value: Set<TableItem>]
   'sorted': [sortBy: string, isDesc: boolean]
   'filtered': [value: TableItem[]]
 }>()
@@ -199,10 +236,50 @@ const emit = defineEmits<{
 const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
 const busyModel = useVModel(props, 'busy', emit, {passive: true})
 const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
+const selectedItemsModel = useVModel(props, 'selectedItems', emit, {passive: true})
+
+const selectedItemsToSet = computed({
+  get: () => new Set([...selectedItemsModel.value]),
+  set: (val) => {
+    selectedItemsModel.value = [...val]
+  },
+})
+
+/**
+ * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
+ * The utils also conveniently emit the proper events after
+ */
+const selectedItemsSetUtilities = {
+  add: (item: TableItem) => {
+    const value = new Set(selectedItemsToSet.value)
+    value.add(item)
+    selectedItemsToSet.value = value
+    emit('row-selected', item)
+  },
+  clear: () => {
+    selectedItemsToSet.value.forEach((item) => {
+      emit('row-unselected', item)
+    })
+    selectedItemsToSet.value = new Set()
+  },
+  delete: (item: TableItem) => {
+    const value = new Set(selectedItemsToSet.value)
+    value.delete(item)
+    selectedItemsToSet.value = value
+    emit('row-unselected', item)
+  },
+  /* TODO
+  This has method and the delete method suffer from an error when using a non-reactive source as the items prop
+  ```ts
+  const items = [{first_name: 'Geneva', last_name: 'Wilson', age: 89},{first_name: 'Jami', last_name: 'Carney', age: 38}]
+  ```
+  For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
+  Getting the reference properly will fix all outstanding issues
+  */
+  has: (item: TableItem) => selectedItemsToSet.value.has(item),
+} as const
 
 const slots = useSlots()
-
-const liteTable = ref<null | InstanceType<typeof BTableLite>>(null)
 
 const sortDescBoolean = useBooleanish(sortDescModel)
 const sortInternalBoolean = useBooleanish(() => props.sortInternal)
@@ -212,11 +289,17 @@ const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const stickySelectBoolean = useBooleanish(() => props.stickySelect)
+// TODO debounce implementation
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const filterDebounceNumber = useToNumber(() => props.filterDebounce)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const filterDebounceMaxWaitNumber = useToNumber(() => props.filterDebounceMaxWait)
+const perPageNumber = useToNumber(() => props.perPage ?? NaN)
+const currentPageNumber = useToNumber(() => props.currentPage)
 
-const isFilterableTable = toRef(() => props.filter !== undefined && props.filter !== '')
+const isFilterableTable = toRef(() => !!props.filter)
 
-const selectedItems = ref<Set<TableItem>>(new Set([]))
-const isSelecting = toRef(() => selectedItems.value.size > 0)
+const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
 
 const isSortable = computed(() => {
   const hasSortableFields =
@@ -243,57 +326,184 @@ const requireItemsMapping = toRef(
 )
 
 const addSelectableCell = toRef(
-  () => selectableBoolean.value && (!!props.selectHead || slots.selectHead !== undefined)
+  () => selectableBoolean.value && (!!props.selectHead || !isEmptySlot(slots.selectHead))
 )
 
-const {
-  computedItems,
-  computedDisplayItems,
-  updateInternalItems,
-  filteredHandler,
-  notifyFilteredItems,
-} = useTableItems(
-  props,
-  {
-    sortInternalBoolean,
-    isFilterableTable,
-    noProviderFilteringBoolean,
-    noProviderPagingBoolean,
-    noProviderSortingBoolean,
-    isSortable,
-    requireItemsMapping,
-    sortDescBoolean,
-  },
-  usesProvider,
-  sortByModel
-)
+const filteredHandler = ref<(items: TableItem[]) => void>()
 
-watch(
-  () => props.items,
-  (v) => updateInternalItems(v)
-)
-
-filteredHandler.value = async (items) => {
-  if (usesProvider.value) {
-    await callItemsProvider()
-    return
+const notifyFilteredItems = () => {
+  if (filteredHandler.value) {
+    filteredHandler.value(computedItems.value)
   }
-  emit('filtered', items)
+}
+
+const internalItems = ref(props.items)
+
+const displayStartEndIdx = ref([0, internalItems.value.length])
+
+const computedItems = computed<TableItem[]>(() => {
+  const mapItems = (): TableItem[] => {
+    const sortItems = () => {
+      if (
+        props.fields === undefined ||
+        mappedItems === undefined ||
+        sortByModel.value === undefined ||
+        sortDescBoolean.value === undefined
+      ) {
+        return mappedItems ?? []
+      }
+
+      const sortKey = sortByModel.value
+      return mappedItems.sort((a, b) => {
+        if (props.sortCompare !== undefined)
+          return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
+
+        const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
+
+        const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
+        if (aHigher) return sortDescBoolean.value ? -1 : 1
+
+        const bHigher = realVal(b[sortKey]) > realVal(a[sortKey])
+        if (bHigher) return sortDescBoolean.value ? 1 : -1
+
+        return 0
+      })
+    }
+
+    const filterItems = () =>
+      internalItems.value.filter(
+        (item) =>
+          Object.entries(item).filter((item) => {
+            const [key, val] = item
+            if (
+              !val ||
+              key[0] === '_' ||
+              (props.filterable && props.filterable.length > 0 && !props.filterable.includes(key))
+            )
+              return false
+            const itemValue: string =
+              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+            return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
+          }).length > 0
+      )
+
+    let mappedItems: TableItem[] = internalItems.value
+
+    const canFilterTable = isFilterableTable.value === true && props.filter
+
+    if (
+      (canFilterTable && !usesProvider.value) ||
+      (canFilterTable && usesProvider.value && noProviderFilteringBoolean.value)
+    ) {
+      mappedItems = filterItems()
+    }
+
+    if (
+      (isSortable.value === true && !usesProvider.value) ||
+      (isSortable.value === true && usesProvider.value && noProviderSortingBoolean.value)
+    ) {
+      mappedItems = sortItems()
+    }
+
+    return mappedItems
+  }
+
+  const items = requireItemsMapping.value
+    ? mapItems()
+    : usesProvider.value
+    ? internalItems.value
+    : props.items ?? []
+
+  if (!Number.isNaN(perPageNumber.value)) {
+    const startIndex =
+      ((Number.isNaN(perPageNumber.value) ? 0 : perPageNumber.value) - 1) * perPageNumber.value
+    const endIndex =
+      startIndex + perPageNumber.value > items.length
+        ? items.length
+        : startIndex + perPageNumber.value
+
+    // TODO fix this
+    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+    displayStartEndIdx.value = [startIndex, endIndex]
+  }
+
+  return items
+})
+
+// TODO fix this. It's not even async
+const updateInternalItems = async (items: TableItem<Record<string, any>>[]) => {
+  try {
+    internalItems.value = items
+    return internalItems.value
+  } catch (err) {
+    return undefined
+  }
+}
+
+const computedDisplayItems = computed<TableItem[]>(() => {
+  if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
+    return computedItems.value
+  }
+
+  return computedItems.value.slice(displayStartEndIdx.value[0], displayStartEndIdx.value[1])
+})
+
+const handleRowSelection = (
+  row: TableItem,
+  index: number,
+  shiftClicked = false,
+  ctrlClicked = false,
+  metaClicked = false
+) => {
+  if (!selectableBoolean.value) return
+
+  if (props.selectMode === 'single' || props.selectMode === 'multi') {
+    // Do nothing when these items are held
+    if (shiftClicked || ctrlClicked) return
+    // Delete if item is in
+    if (selectedItemsSetUtilities.has(row)) {
+      selectedItemsSetUtilities.delete(row)
+    } else {
+      // If it is single, we clear out everything first
+      if (props.selectMode === 'single') {
+        selectedItemsSetUtilities.clear()
+      }
+      // Then set the item
+      selectedItemsSetUtilities.add(row)
+    }
+  } else {
+    if (ctrlClicked || metaClicked) {
+      // Delete if in the object
+      if (selectedItemsSetUtilities.has(row)) {
+        selectedItemsSetUtilities.delete(row)
+        // Otherwise add. Functions similarly to 'multi' at this point
+      } else {
+        selectedItemsSetUtilities.add(row)
+      }
+      // This is where range is different, due to the difference in shift
+    } else if (shiftClicked) {
+      const lastSelectedItem = [...selectedItemsToSet.value].pop()
+      const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
+      const selectStartIndex = Math.min(lastSelectedIndex, index)
+      const selectEndIndex = Math.max(lastSelectedIndex, index)
+      props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
+        if (!selectedItemsSetUtilities.has(item)) {
+          selectedItemsSetUtilities.add(item)
+        }
+      })
+      // If nothing is being held, then we just behave like it's single mode
+    } else {
+      selectedItemsSetUtilities.clear()
+      selectedItemsSetUtilities.add(row)
+    }
+  }
+  // Notify
+  notifySelectionEvent()
 }
 
 const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
   handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
   emit('row-clicked', row, index, e)
-}
-
-const onFieldHeadClick = (
-  fieldKey: LiteralUnion<string>,
-  field: TableField,
-  event: MouseEvent,
-  isFooter = false
-) => {
-  emit('head-clicked', fieldKey, field, event, isFooter)
-  handleFieldSorting(field)
 }
 
 const handleFieldSorting = (field: TableField) => {
@@ -309,27 +519,29 @@ const handleFieldSorting = (field: TableField) => {
   }
 }
 
+const onFieldHeadClick = (
+  fieldKey: LiteralUnion<string>,
+  field: TableField,
+  event: MouseEvent,
+  isFooter = false
+) => {
+  emit('head-clicked', fieldKey, field, event, isFooter)
+  handleFieldSorting(field)
+}
+
 const callItemsProvider = async () => {
   if (!usesProvider.value || !props.provider || busyBoolean.value) return
   busyModel.value = true
-  const context = new Proxy(
+  const response = props.provider(
     {
-      currentPage: props.currentPage,
+      currentPage: currentPageNumber.value,
       filter: props.filter,
       sortBy: props.sortBy,
       sortDesc: props.sortDesc,
-      perPage: props.perPage,
+      perPage: perPageNumber.value,
     },
-    {
-      get: (target: any, prop) => (prop in target ? target[prop] : undefined),
-      set: () => {
-        // eslint-disable-next-line no-console
-        console.error('BTable provider context is a read-only object.')
-        return true
-      },
-    }
+    updateInternalItems
   )
-  const response = props.provider(context, updateInternalItems)
   if (response === undefined) return
   if (response instanceof Promise) {
     try {
@@ -360,125 +572,32 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
   },
 ]
 
-const getRowClasses = (item: TableItem | null, type: string): string | any[] | null | undefined => {
-  const classesArray = [
-    selectableBoolean.value && item && selectedItems.value.has(item)
-      ? `selected table-${props.selectionVariant}`
-      : null,
-  ]
+const getRowClasses = (item: TableItem | null, type: string) => [
+  {
+    [`selected table-${props.selectionVariant}`]:
+      selectableBoolean.value && item && selectedItemsSetUtilities.has(item),
+  },
+  props.tbodyTrClass
+    ? typeof props.tbodyTrClass === 'function'
+      ? props.tbodyTrClass(item, type)
+      : props.tbodyTrClass
+    : null,
+]
 
-  if (props.tbodyTrClass) {
-    const extraClasses = props.tbodyTrClass(item, type)
-    if (extraClasses) {
-      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
-    }
-  }
-  return classesArray
-}
-
-const getBusyRowClasses = () => {
-  const classesArray = [{'b-table-static-busy': computedItems.value.length === 0}]
-
-  if (props.tbodyTrClass) {
-    const extraClasses = props.tbodyTrClass(null, 'table-busy')
-    if (extraClasses) {
-      classesArray.push(...(typeof extraClasses === 'string' ? [extraClasses] : extraClasses))
-    }
-  }
-  return classesArray
-}
+const getBusyRowClasses = computed(() => [
+  props.tbodyTrClass
+    ? typeof props.tbodyTrClass === 'function'
+      ? props.tbodyTrClass(null, 'table-busy')
+      : props.tbodyTrClass
+    : null,
+])
 
 const notifySelectionEvent = () => {
   if (!selectableBoolean.value) return
-  emit('selection', Array.from(selectedItems.value))
+  emit('selection', [...selectedItemsToSet.value])
 }
 
-const handleRowSelection = (
-  row: TableItem,
-  index: number,
-  shiftClicked = false,
-  ctrlClicked = false,
-  metaClicked = false
-) => {
-  if (!selectableBoolean.value) return
-
-  if (shiftClicked && props.selectMode === 'range' && selectedItems.value.size > 0) {
-    const lastSelectedItem = Array.from(selectedItems.value).pop()
-    const lastSelectedIndex = props.items.findIndex((i) => i === lastSelectedItem)
-    const selectStartIndex = Math.min(lastSelectedIndex, index)
-    const selectEndIndex = Math.max(lastSelectedIndex, index)
-    props.items.slice(selectStartIndex, selectEndIndex + 1).forEach((item) => {
-      if (!selectedItems.value.has(item)) {
-        selectedItems.value.add(item)
-        emit('row-selected', item)
-      }
-    })
-  } else if (ctrlClicked || metaClicked) {
-    if (selectedItems.value.has(row)) {
-      selectedItems.value.delete(row)
-      emit('row-unselected', row)
-    } else if (props.selectMode === 'range' || props.selectMode === 'multi') {
-      selectedItems.value.add(row)
-      emit('row-selected', row)
-    } else {
-      selectedItems.value.forEach((item) => {
-        emit('row-unselected', item)
-      })
-      selectedItems.value.clear()
-      selectedItems.value.add(row)
-      emit('row-selected', row)
-    }
-  } else {
-    selectedItems.value.forEach((item) => {
-      emit('row-unselected', item)
-    })
-    selectedItems.value.clear()
-    selectedItems.value.add(row)
-    emit('row-selected', row)
-  }
-
-  notifySelectionEvent()
-}
-
-const selectAllRows = () => {
-  if (!selectableBoolean.value) return
-  const unselectableItems = selectedItems.value.size > 0 ? Array.from(selectedItems.value) : []
-  selectedItems.value = new Set([...props.items])
-  selectedItems.value.forEach((item) => {
-    if (unselectableItems.includes(item)) return
-    emit('row-selected', item)
-  })
-  notifySelectionEvent()
-}
-
-const clearSelected = () => {
-  if (!selectableBoolean.value) return
-  selectedItems.value.forEach((item) => {
-    emit('row-unselected', item)
-  })
-  selectedItems.value = new Set([])
-  notifySelectionEvent()
-}
-
-const selectRow = (index: number) => {
-  if (!selectableBoolean.value) return
-  const item = props.items[index]
-  if (!item || selectedItems.value.has(item)) return
-  selectedItems.value.add(item)
-  emit('row-selected', item)
-  notifySelectionEvent()
-}
-
-const unselectRow = (index: number) => {
-  if (!selectableBoolean.value) return
-  const item = props.items[index]
-  if (!item || !selectedItems.value.has(item)) return
-  selectedItems.value.delete(item)
-  emit('row-unselected', item)
-  notifySelectionEvent()
-}
-
-const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
+const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
   if (val === oldVal) return
 
   //stop provide when paging
@@ -494,9 +613,7 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
     ['sortBy', 'sortDesc'].includes(prop) &&
     (inNoProvider('sorting') || noProviderSortingBoolean.value === true)
 
-  if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) {
-    return
-  }
+  if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) return
 
   await callItemsProvider()
 
@@ -504,43 +621,66 @@ const providerPropsWatch = async (prop: string, val: any, oldVal: any) => {
 }
 
 watch(
+  () => props.items,
+  (v) => updateInternalItems(v)
+)
+
+filteredHandler.value = async (items) => {
+  if (usesProvider.value) {
+    await callItemsProvider()
+    return
+  }
+  emit('filtered', items)
+}
+watch(
   () => props.filter,
   (filter, oldFilter) => {
+    providerPropsWatch('filter', filter, oldFilter)
+
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
       emit('filtered', computedItems.value)
     }
   }
 )
-
-watch(
-  () => props.filter,
-  (val, oldVal) => providerPropsWatch('filter', val, oldVal)
-)
-watch(
-  () => props.currentPage,
-  (val, oldVal) => providerPropsWatch('currentPage', val, oldVal)
-)
-watch(
-  () => props.perPage,
-  (val, oldVal) => providerPropsWatch('perPage', val, oldVal)
-)
-watch(
-  () => props.sortBy,
-  (val, oldVal) => providerPropsWatch('sortBy', val, oldVal)
-)
-watch(
-  () => props.sortDesc,
-  (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal)
-)
+watch(currentPageNumber, (val, oldVal) => providerPropsWatch('currentPage', val, oldVal))
+watch(perPageNumber, (val, oldVal) => providerPropsWatch('perPage', val, oldVal))
+watch(sortByModel, (val, oldVal) => providerPropsWatch('sortBy', val, oldVal))
+watch(sortDescBoolean, (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal))
 
 onMounted(callItemsProvider)
 
 defineExpose({
-  selectAllRows,
-  clearSelected,
-  selectRow,
-  unselectRow,
+  // The row selection methods are really for compat. Users should probably use the v-model though
+  selectAllRows: () => {
+    if (!selectableBoolean.value) return
+    const unselectableItems = selectedItemsToSet.value.size > 0 ? [...selectedItemsToSet.value] : []
+    selectedItemsToSet.value = new Set([...computedItems.value])
+    selectedItemsToSet.value.forEach((item) => {
+      if (unselectableItems.includes(item)) return
+      emit('row-selected', item)
+    })
+    notifySelectionEvent()
+  },
+  clearSelected: () => {
+    if (!selectableBoolean.value) return
+    selectedItemsSetUtilities.clear()
+    notifySelectionEvent()
+  },
+  selectRow: (index: number) => {
+    if (!selectableBoolean.value) return
+    const item = props.items[index]
+    if (!item || selectedItemsSetUtilities.has(item)) return
+    selectedItemsSetUtilities.add(item)
+    notifySelectionEvent()
+  },
+  unselectRow: (index: number) => {
+    if (!selectableBoolean.value) return
+    const item = props.items[index]
+    if (!item || !selectedItemsSetUtilities.has(item)) return
+    selectedItemsSetUtilities.delete(item)
+    notifySelectionEvent()
+  },
   refresh: callItemsProvider,
 })
 </script>

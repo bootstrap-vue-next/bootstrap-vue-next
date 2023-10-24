@@ -7,7 +7,7 @@ import BImg from '../BImg.vue'
 import type {BImgProps, Booleanish} from '../../types'
 import {useBooleanish} from '../../composables'
 import {omit} from '../../utils'
-import {computed} from 'vue'
+import {computed, toRef} from 'vue'
 
 const props = withDefaults(
   defineProps<
@@ -27,7 +27,7 @@ const endBoolean = useBooleanish(() => props.end)
 const startBoolean = useBooleanish(() => props.start)
 const topBoolean = useBooleanish(() => props.top)
 
-const baseClass = computed(() =>
+const baseClass = toRef(() =>
   topBoolean.value
     ? 'card-img-top'
     : endBoolean.value

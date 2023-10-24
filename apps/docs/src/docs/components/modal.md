@@ -75,6 +75,95 @@ const preventableModal = ref(false)
   </template>
 </HighlightCard>
 
+## Scrolling long content
+
+When modals become too long for the user's viewport or device, they scroll independent of the page
+itself. Try the demo below to see what we mean.
+
+<HighlightCard>
+  <BButton v-b-modal.modal-tall>Launch overflowing modal</BButton>
+
+  <BModal id="modal-tall" title="Overflowing Content">
+    <p class="my-4" v-for="i in 20" :key="i">
+      Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+      in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    </p>
+  </BModal>
+  <template #html>
+
+```vue
+<template>
+  <BButton v-b-modal.modal-tall>Launch overflowing modal</BButton>
+
+  <BModal id="modal-tall" title="Overflowing Content">
+    <p class="my-4" v-for="i in 20" :key="i">
+      Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+      egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    </p>
+  </BModal>
+</template>
+```
+
+  </template>
+</HighlightCard>
+
+You can also create a scrollable modal that allows the scrolling of the modal body by setting the
+prop `scrollable` to `true`.
+
+<HighlightCard>
+  <BButton v-b-modal.modal-scrollable>Launch scrolling modal</BButton>
+
+  <BModal id="modal-scrollable" scrollable title="Scrollable Content">
+    <p class="my-4" v-for="i in 20" :key="i">
+      Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+      in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    </p>
+  </BModal>
+  <template #html>
+
+```vue
+<template>
+  <BButton v-b-modal.modal-scrollable>Launch scrolling modal</BButton>
+
+  <BModal id="modal-scrollable" scrollable title="Scrollable Content">
+    <p class="my-4" v-for="i in 20" :key="i">
+      Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+      egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    </p>
+  </BModal>
+</template>
+```
+
+  </template>
+</HighlightCard>
+
+## Vertically centered modal
+
+Vertically center your modal in the viewport by setting the `centered` prop.
+
+<HighlightCard>
+  <BButton v-b-modal.modal-center>Launch centered modal</BButton>
+
+  <BModal id="modal-center" centered title="BootstrapVue">
+    <p class="my-4">Vertically centered modal!</p>
+  </BModal>
+  <template #html>
+
+```vue
+<template>
+  <BButton v-b-modal.modal-center>Launch centered modal</BButton>
+
+  <BModal id="modal-center" centered title="BootstrapVue">
+    <p class="my-4">Vertically centered modal!</p>
+  </BModal>
+</template>
+```
+
+  </template>
+</HighlightCard>
+
+Feel free to mix vertically `centered` with `scrollable`.
+
 ## Multiple Modal Support
 
 <HighlightCard>
@@ -131,7 +220,7 @@ To programmatically control your modals with global state, refer to our document
 import {data} from '../../data/components/modal.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BCard, BCardBody, BModal, BButton} from 'bootstrap-vue-next'
+import {BCard, BCardBody, BModal, BButton, vBModal} from 'bootstrap-vue-next'
 import {ref} from 'vue'
 
 const modal = ref(false)

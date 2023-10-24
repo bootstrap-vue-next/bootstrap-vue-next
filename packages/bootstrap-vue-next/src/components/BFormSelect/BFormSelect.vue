@@ -35,12 +35,17 @@
 </template>
 
 <script setup lang="ts">
-import {resolveAriaInvalid} from '../../utils'
 import type {AriaInvalid, Booleanish, Size} from '../../types'
 import {computed, nextTick, ref, toRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {normalizeOptions, useBooleanish, useId, useStateClass} from '../../composables'
+import {
+  normalizeOptions,
+  useAriaInvalid,
+  useBooleanish,
+  useId,
+  useStateClass,
+} from '../../composables'
 import {useFocus, useToNumber, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
@@ -137,9 +142,7 @@ const computedSelectSize = toRef(() =>
   selectSizeNumber.value || plainBoolean.value ? selectSizeNumber.value : undefined
 )
 
-const computedAriaInvalid = computed(() =>
-  resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
-)
+const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
 
 // TODO this needs to be redone to fit the structure of BFormCheckboxGroup
 // It also doesn't work for array syntaxes. Review second example from https://bootstrap-vue.org/docs/components/form-select

@@ -43,7 +43,7 @@ const props = withDefaults(
     ariaInvalid: undefined,
     autocomplete: undefined,
     debounce: 0,
-    debounceMaxWait: undefined,
+    debounceMaxWait: NaN,
     autofocus: false,
     disabled: false,
     form: undefined,

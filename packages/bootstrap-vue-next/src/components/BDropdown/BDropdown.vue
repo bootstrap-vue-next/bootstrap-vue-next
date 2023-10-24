@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" class="btn-group">
+  <div ref="wrapper" :class="computedClasses" class="btn-group">
     <BButton
       :id="computedId"
       ref="splitButton"
@@ -67,7 +67,7 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
-import {computed, provide, readonly, ref, toRef, watch} from 'vue'
+import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
@@ -163,6 +163,7 @@ const offsetToNumber = useToNumber(computedOffset)
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
 const splitButton = ref<HTMLElement | null>(null)
+const wrapper = ref<HTMLElement | null>(null)
 
 const boundary = computed<Boundary | undefined>(() =>
   props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
@@ -171,15 +172,46 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
 )
 
+const referencePlacement = toRef(() => (!splitBoolean.value ? splitButton.value : button.value))
+
 onKeyStroke(
   'Escape',
   () => {
     modelValue.value = !modelValueBoolean
   },
-  {target: splitButton}
+  {target: referencePlacement}
+)
+onKeyStroke(
+  'Escape',
+  () => {
+    modelValue.value = !modelValueBoolean
+  },
+  {target: floating}
 )
 
-const referencePlacement = toRef(() => (!splitBoolean.value ? splitButton.value : button.value))
+const keynav = (e: Event, v: number) => {
+  e.preventDefault()
+  if (!modelValueBoolean.value) {
+    open()
+    nextTick(() => keynav(e, v))
+    return
+  }
+  const list = floating.value?.querySelectorAll('.dropdown-item:not(.disabled):not(:disabled)')
+  if (!list) return
+  if (floating.value?.contains(document.activeElement)) {
+    const active = floating.value.querySelector('.dropdown-item:focus')
+    const index = Array.prototype.indexOf.call(list, active) + v
+    if (index >= 0 && index < list?.length) (list[index] as HTMLElement)?.focus()
+  } else {
+    ;(list[v === -1 ? list.length - 1 : 0] as HTMLElement)?.focus()
+  }
+}
+
+onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: referencePlacement})
+onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: referencePlacement})
+onKeyStroke('ArrowUp', (e) => keynav(e, -1), {target: floating})
+onKeyStroke('ArrowDown', (e) => keynav(e, 1), {target: floating})
+
 const floatingPlacement = computed(() =>
   resolveFloatingPlacement({
     top: dropupBoolean.value,
@@ -219,7 +251,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
 const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   placement: floatingPlacement,
   middleware: floatingMiddleware,
-  strategy: readonly(toRef(props, 'strategy')),
+  strategy: toRef(() => props.strategy),
   whileElementsMounted: autoUpdate,
 })
 
@@ -283,6 +315,7 @@ const toggle = () => {
   }
   modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
+  wrapper.value?.dispatchEvent(new Event('forceHide'))
 }
 
 watch(modelValueBoolean, update)

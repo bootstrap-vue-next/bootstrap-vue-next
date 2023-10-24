@@ -1,9 +1,10 @@
-import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {DOMWrapper, enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import BModal from './BModal.vue'
 import BCloseButton from './BButton/BCloseButton.vue'
 import BButton from './BButton/BButton.vue'
-// import BTransition from './BTransition/BTransition.vue'
+import {BvTriggerableEvent} from '../utils'
+import {nextTick} from 'vue'
 
 describe('modal', () => {
   enableAutoUnmount(afterEach)
@@ -17,6 +18,7 @@ describe('modal', () => {
   afterEach(() => {
     const el = document.getElementById('body-teleports')
     if (el) document.body.removeChild(el)
+    document.body.style.overflow = ''
   })
 
   it('has body teleports element set by to property', () => {
@@ -325,6 +327,175 @@ describe('modal', () => {
     const $div = wrapper.get('div')
     const $bbutton = $div.getComponent(BButton)
     expect($bbutton.classes()).toContain('btn-warning')
+  })
+
+  it('setting modelValue to true shows modal', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}},
+      props: {
+        id: 'test',
+      },
+    })
+
+    expect(wrapper.vm).toBeDefined()
+
+    const $modal = wrapper.find('div.modal')
+    expect($modal.exists()).toBe(true)
+
+    expect($modal.isVisible()).toBe(false)
+
+    await wrapper.setProps({modelValue: true})
+
+    expect($modal.isVisible()).toBe(true)
+
+    wrapper.unmount()
+  })
+
+  it('body scrolling is unlocked after modal is closed', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {stubs: {teleport: true}},
+      props: {
+        id: 'test',
+      },
+    })
+
+    await nextTick()
+
+    // initial closed state
+    let $modal = wrapper.find('div.modal')
+    expect($modal.isVisible()).toBe(false)
+    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').toBe('')
+
+    // open stated
+    await wrapper.setProps({modelValue: true})
+    expect($modal.isVisible()).toBe(true)
+    expect(document.body.attributes.getNamedItem('style')?.textContent).toBe('overflow: hidden;')
+
+    // closed state
+    $modal = wrapper.find('div.modal')
+    await $modal.trigger('keydown.Escape')
+    expect($modal.isVisible()).toBe(false)
+    expect(document.body.attributes.getNamedItem('style')?.textContent ?? '').toBe('')
+
+    wrapper.unmount()
+  })
+
+  describe('button and event functionality', () => {
+    it('header close button triggers modal close and is preventable', async () => {
+      let cancelHide = true
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}},
+        props: {
+          id: 'test',
+          modelValue: true,
+        },
+        attrs: {
+          onClose: (bvEvent: BvTriggerableEvent) => {
+            if (cancelHide) {
+              bvEvent.preventDefault()
+            }
+          },
+        },
+      })
+
+      expect(wrapper.vm).toBeDefined()
+
+      const $modal = wrapper.find('div.modal')
+      expect($modal.exists()).toBe(true)
+      expect($modal.isVisible()).toBe(true)
+
+      const $buttons = wrapper.findAll('.modal-header button')
+      expect($buttons.length).toBe(1)
+
+      // Close button
+      const $close = $buttons.at(0) as DOMWrapper<HTMLButtonElement>
+      expect($close.attributes('type')).toBe('button')
+      expect($close.attributes('aria-label')).toBe('Close')
+      expect($close.classes()).toContain('btn-close')
+
+      expect(wrapper.emitted('hide')).toBeUndefined()
+
+      // Try and close modal (but we prevent it)
+      await $close.trigger('click')
+      let closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
+      expect(closeEvent).toHaveLength(1)
+      expect(closeEvent?.[0][0]).toBeInstanceOf(BvTriggerableEvent)
+
+      // Modal should still be open
+      expect($modal.isVisible()).toBe(true)
+
+      // Try and close modal (and not prevent it)
+      cancelHide = false
+      await $close.trigger('click')
+      closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
+      expect(closeEvent).toHaveLength(2)
+      expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
+
+      // Modal should now be closed
+      expect($modal.isVisible()).toBe(false)
+
+      wrapper.unmount()
+    })
+
+    it('header close button triggers modal close and is preventable', async () => {
+      let cancelHide = true
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}},
+        props: {
+          id: 'test',
+          modelValue: true,
+        },
+        attrs: {
+          onClose: (bvEvent: BvTriggerableEvent) => {
+            if (cancelHide) {
+              bvEvent.preventDefault()
+            }
+          },
+        },
+      })
+
+      expect(wrapper.vm).toBeDefined()
+
+      const $modal = wrapper.find('div.modal')
+      expect($modal.exists()).toBe(true)
+      expect($modal.isVisible()).toBe(true)
+
+      const $buttons = wrapper.findAll('.modal-header button')
+      expect($buttons.length).toBe(1)
+
+      // Close button
+      const $close = $buttons.at(0) as DOMWrapper<HTMLButtonElement>
+      expect($close.attributes('type')).toBe('button')
+      expect($close.attributes('aria-label')).toBe('Close')
+      expect($close.classes()).toContain('btn-close')
+
+      expect(wrapper.emitted('hide')).toBeUndefined()
+
+      // Try and close modal (but we prevent it)
+      await $close.trigger('click')
+      let closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
+      expect(closeEvent).toHaveLength(1)
+      expect(closeEvent?.[0][0]).toBeInstanceOf(BvTriggerableEvent)
+
+      // Modal should still be open
+      expect($modal.isVisible()).toBe(true)
+
+      // Try and close modal (and not prevent it)
+      cancelHide = false
+      await $close.trigger('click')
+      closeEvent = wrapper.emitted<BvTriggerableEvent[]>('close')
+      expect(closeEvent).toHaveLength(2)
+      expect(closeEvent?.[1][0]).toBeInstanceOf(BvTriggerableEvent)
+
+      // Modal should now be closed
+      expect($modal.isVisible()).toBe(false)
+
+      wrapper.unmount()
+    })
   })
 
   // Test isActive states

@@ -89,7 +89,7 @@ defineSlots<{
   overlay?: (props: typeof spinnerAttrs.value) => any
 }>()
 
-const positionStyles = {top: 0, left: 0, bottom: 0, right: 0}
+const positionStyles = {top: 0, left: 0, bottom: 0, right: 0} as const
 
 const fixedBoolean = useBooleanish(() => props.fixed)
 const noSpinnerBoolean = useBooleanish(() => props.noSpinner)

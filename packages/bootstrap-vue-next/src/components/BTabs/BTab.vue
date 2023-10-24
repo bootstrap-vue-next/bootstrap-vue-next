@@ -84,9 +84,7 @@ const buttonId = useId(() => props.buttonId, 'tab')
 
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
-const lazyBoolean = useBooleanish(
-  computed(() => (props.lazyOnce !== undefined ? props.lazyOnce : props.lazy))
-)
+const lazyBoolean = useBooleanish(() => props.lazyOnce ?? props.lazy)
 
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
@@ -129,7 +127,8 @@ const computedLazy = toRef(() => !!(parentData?.lazy.value || lazyBoolean.value)
 const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
 
 const computedActive = toRef(() => isActive.value && !disabledBoolean.value)
-const showSlot = computed(() => {
+const showSlot = toRef(() => {
+
   const hasLazyRenderedOnce =
     computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value
   return computedActive.value || !computedLazy.value || hasLazyRenderedOnce
