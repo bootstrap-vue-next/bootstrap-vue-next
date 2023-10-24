@@ -28,7 +28,7 @@
         >
           <button
             class="accordion-button"
-            :class="{collapsed: !toggleVisible, [buttonClass]: !!buttonClass}"
+            :class="[buttonClass, {collapsed: !toggleVisible}]"
             type="button"
             :aria-expanded="toggleVisible ? 'true' : 'false'"
             :aria-controls="computedId"
