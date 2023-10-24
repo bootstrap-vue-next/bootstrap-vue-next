@@ -285,6 +285,10 @@ const hide = (trigger = '') => {
   }
   emit('hide', event)
 
+if(event.defaultPrevented) {
+    emit('hide-prevented')
+    return
+}
   modelValue.value = false
 }
 
