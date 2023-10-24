@@ -14,19 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  getCurrentInstance,
-  inject,
-  nextTick,
-  onMounted,
-  onUnmounted,
-  onUpdated,
-  ref,
-  toRef,
-  useAttrs,
-  watch,
-} from 'vue'
+import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ClassValue, TabType} from '../../types'
 import {tabsInjectionKey} from '../../utils'
@@ -128,7 +116,6 @@ const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
 
 const computedActive = toRef(() => isActive.value && !disabledBoolean.value)
 const showSlot = toRef(() => {
-
   const hasLazyRenderedOnce =
     computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value
   return computedActive.value || !computedLazy.value || hasLazyRenderedOnce
