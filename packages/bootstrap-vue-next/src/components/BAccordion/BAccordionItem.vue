@@ -1,11 +1,10 @@
 <template>
-  <div class="accordion-item" :class="wrapperClass">
+  <div class="accordion-item">
     <BCollapse
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
-      :class="collapseClass"
-      v-bind="attrs"
+      v-bind="collapseAttrs"
       :aria-labelledby="`${computedId}-heading`"
       :tag="tag"
       :toggle="toggle"
@@ -24,11 +23,12 @@
           :is="headerTag"
           :id="`${computedId}-heading`"
           class="accordion-header"
-          :class="headerClass"
+          v-bind="headerAttrs"
         >
           <button
             class="accordion-button"
-            :class="[buttonClass, {collapsed: !toggleVisible}]"
+            v-bind="buttonAttrs"
+            :class="{collapsed: !toggleVisible}"
             type="button"
             :aria-expanded="toggleVisible ? 'true' : 'false'"
             :aria-controls="computedId"
@@ -38,7 +38,7 @@
           </button>
         </component>
       </template>
-      <div class="accordion-body" :class="bodyClass">
+      <div class="accordion-body" v-bind="bodyAttrs">
         <slot />
       </div>
     </BCollapse>
@@ -46,17 +46,17 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, useAttrs, watch} from 'vue'
+import {type HTMLAttributes, inject, onMounted, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
 import {useId} from '../../composables'
 import type {Booleanish, ClassValue} from '../../types'
 
-defineOptions({
-  inheritAttrs: false,
-})
-const {class: wrapperClass, ...attrs} = useAttrs()
+interface AttrsValue extends HTMLAttributes {
+  class?: ClassValue
+  // TODO: is this the best way to type this?
+}
 
 const props = withDefaults(
   defineProps<{
@@ -69,10 +69,10 @@ const props = withDefaults(
     horizontal?: Booleanish
     visible?: Booleanish
     isNav?: Booleanish
-    headerClass?: ClassValue
-    buttonClass?: ClassValue
-    collapseClass?: ClassValue
-    bodyClass?: ClassValue
+    headerAttrs?: AttrsValue
+    buttonAttrs?: AttrsValue
+    collapseAttrs?: AttrsValue
+    bodyAttrs?: AttrsValue
   }>(),
   {
     id: undefined,
@@ -84,10 +84,10 @@ const props = withDefaults(
     horizontal: undefined,
     visible: false,
     isNav: undefined,
-    headerClass: undefined,
-    buttonClass: undefined,
-    collapseClass: undefined,
-    bodyClass: undefined,
+    headerAttrs: undefined,
+    buttonAttrs: undefined,
+    collapseAttrs: undefined,
+    bodyAttrs: undefined,
   }
 )
 
