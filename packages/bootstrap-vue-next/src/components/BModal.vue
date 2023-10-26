@@ -452,8 +452,6 @@ const buildTriggerableEvent = (
   })
 
 const hide = (trigger = '') => {
-  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
-
   if (
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
     (trigger === 'esc' && noCloseOnEscBoolean.value)
@@ -461,6 +459,8 @@ const hide = (trigger = '') => {
     emit('hide-prevented')
     return
   }
+
+  const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
 
   if (trigger === 'ok') {
     emit(trigger, event)
