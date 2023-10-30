@@ -27,6 +27,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     const transformAssetUrls = {
       BImg: ['src'],
+      img: ['src'],
     }
 
     // Set transformAssetUrls
@@ -50,7 +51,10 @@ export default defineNuxtModule<ModuleOptions>({
           'b-img' in nuxt.options.vite.vue.template.transformAssetUrls)
       )
     ) {
-      Object.assign(nuxt.options.vite.vue.template.transformAssetUrls, transformAssetUrls)
+      Object.assign(nuxt.options.vite.vue.template.transformAssetUrls, {
+        // In this case we can't assume that the user did not override {img: ['src']}. So we only include BImg
+        BImg: transformAssetUrls.BImg,
+      })
     }
 
     nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
