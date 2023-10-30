@@ -452,17 +452,14 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
-watch(
-  modelValueBoolean,
-  (newValue, oldValue) => {
-    if (newValue === oldValue) return
-    if (newValue === true) {
-      showFn()
-    } else {
-      hide()
-    }
+watch(modelValueBoolean, (newValue, oldValue) => {
+  if (newValue === oldValue) return
+  if (newValue === true) {
+    showFn()
+  } else {
+    hide()
   }
-)
+})
 
 const hide = (trigger = '') => {
   if (
