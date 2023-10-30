@@ -61,6 +61,10 @@ export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
 
   registry.value.push(currentModal)
 
+  tryOnScopeDispose(() => {
+    remove(currentModal)
+  })
+
   watch(
     modalOpen,
     (newValue, oldValue) => {
