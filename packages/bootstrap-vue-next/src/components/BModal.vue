@@ -453,7 +453,7 @@ const buildTriggerableEvent = (
   })
 
 watch(
-  () => modelValueBoolean.value,
+  modelValueBoolean,
   (newValue, oldValue) => {
     if (newValue === oldValue) return
     if (newValue === true) {
