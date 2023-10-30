@@ -417,11 +417,14 @@ const bind = () => {
   }
   if (!IS_BROWSER) return
   trigger.value.addEventListener('forceHide', hide)
-  clickBoolean.value && trigger.value.addEventListener('click', toggle)
-  !clickBoolean.value && trigger.value.addEventListener('pointerenter', show)
-  !clickBoolean.value && trigger.value.addEventListener('pointerleave', hide)
-  !clickBoolean.value && trigger.value.addEventListener('focus', show)
-  !clickBoolean.value && trigger.value.addEventListener('blur', hide)
+  if (clickBoolean.value) {
+    trigger.value.addEventListener('click', toggle)
+    return
+  }
+  trigger.value.addEventListener('pointerenter', show)
+  trigger.value.addEventListener('pointerleave', hide)
+  trigger.value.addEventListener('focus', show)
+  trigger.value.addEventListener('blur', hide)
 }
 
 const unbind = () => {
