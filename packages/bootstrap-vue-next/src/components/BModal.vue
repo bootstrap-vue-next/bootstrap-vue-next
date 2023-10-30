@@ -491,8 +491,7 @@ const hide = (trigger = '') => {
     if (!modelValue.value) modelValue.value = true
     return
   }
-
-  modelValue.value = false
+  if (modelValue.value) modelValue.value = false
 }
 
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
@@ -501,11 +500,11 @@ const showFn = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    modelValue.value = false
+    if (modelValue.value) modelValue.value = false
     emit('show-prevented')
     return
   }
-  modelValue.value = true
+  if (!modelValue.value) modelValue.value = true
 }
 
 const pickFocusItem = () => {
