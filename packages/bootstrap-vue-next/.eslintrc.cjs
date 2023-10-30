@@ -24,7 +24,7 @@ module.exports = defineConfig({
       },
     ],
     'no-alert': 'warn',
-    'no-console': 'warn',
+    'no-console': 'error',
     'no-debugger': 'warn',
     'arrow-body-style': 'warn',
     'arrow-parens': 'warn',
