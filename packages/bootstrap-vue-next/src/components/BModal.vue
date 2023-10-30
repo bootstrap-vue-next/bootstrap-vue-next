@@ -109,6 +109,7 @@ import {
   type RendererElement,
   toRef,
   useSlots,
+  watch,
 } from 'vue'
 import {
   useBooleanish,
@@ -451,6 +452,18 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
+watch(
+  () => modelValueBoolean.value,
+  (newValue, oldValue) => {
+    if (newValue === oldValue) return
+    if (newValue === true) {
+      showFn()
+    } else {
+      hide()
+    }
+  }
+)
+
 const hide = (trigger = '') => {
   if (
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
@@ -475,6 +488,7 @@ const hide = (trigger = '') => {
 
   if (event.defaultPrevented) {
     emit('hide-prevented')
+    if (!modelValue.value) modelValue.value = true
     return
   }
 
