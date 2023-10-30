@@ -109,6 +109,7 @@ import {
   type RendererElement,
   toRef,
   useSlots,
+  watch,
 } from 'vue'
 import {
   useBooleanish,
@@ -451,6 +452,18 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
+watch(
+  modelValueBoolean,
+  (newValue, oldValue) => {
+    if (newValue === oldValue) return
+    if (newValue === true) {
+      showFn()
+    } else {
+      hide()
+    }
+  }
+)
+
 const hide = (trigger = '') => {
   if (
     (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
@@ -475,10 +488,10 @@ const hide = (trigger = '') => {
 
   if (event.defaultPrevented) {
     emit('hide-prevented')
+    if (!modelValue.value) modelValue.value = true
     return
   }
-
-  modelValue.value = false
+  if (modelValue.value) modelValue.value = false
 }
 
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
@@ -487,11 +500,11 @@ const showFn = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    modelValue.value = false
+    if (modelValue.value) modelValue.value = false
     emit('show-prevented')
     return
   }
-  modelValue.value = true
+  if (!modelValue.value) modelValue.value = true
 }
 
 const pickFocusItem = () => {
