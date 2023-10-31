@@ -1,11 +1,12 @@
 <template>
-  <div class="accordion-item">
+  <div class="accordion-item" v-bind="wrapperAttrs" :class="wrapperClass">
     <BCollapse
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
-      v-bind="$attrs"
+      :class="collapseClass"
       :aria-labelledby="`${computedId}-heading`"
+      v-bind="collapseAttrs"
       :tag="tag"
       :toggle="toggle"
       :horizontal="horizontal"
@@ -19,10 +20,17 @@
       @show-prevented="emit('show-prevented')"
     >
       <template #header="{visible: toggleVisible, toggle: slotToggle}">
-        <component :is="headerTag" :id="`${computedId}-heading`" class="accordion-header">
+        <component
+          :is="headerTag"
+          :id="`${computedId}-heading`"
+          class="accordion-header"
+          :class="headerClass"
+          v-bind="headerAttrs"
+        >
           <button
             class="accordion-button"
-            :class="{collapsed: !toggleVisible}"
+            v-bind="buttonAttrs"
+            :class="[{collapsed: !toggleVisible}, buttonClass]"
             type="button"
             :aria-expanded="toggleVisible ? 'true' : 'false'"
             :aria-controls="computedId"
@@ -32,7 +40,7 @@
           </button>
         </component>
       </template>
-      <div class="accordion-body">
+      <div class="accordion-body" v-bind="bodyAttrs" :class="bodyClass">
         <slot />
       </div>
     </BCollapse>
@@ -40,16 +48,17 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, watch} from 'vue'
+import {type HTMLAttributes, inject, onMounted, useAttrs, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
 import {useId} from '../../composables'
-import type {Booleanish} from '../../types'
+import type {Booleanish, ClassValue} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
 })
+const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
 const props = withDefaults(
   defineProps<{
@@ -62,6 +71,14 @@ const props = withDefaults(
     horizontal?: Booleanish
     visible?: Booleanish
     isNav?: Booleanish
+    wrapperAttrs?: HTMLAttributes
+    headerAttrs?: HTMLAttributes
+    headerClass?: ClassValue
+    buttonAttrs?: HTMLAttributes
+    buttonClass?: ClassValue
+    collapseClass?: ClassValue
+    bodyAttrs?: HTMLAttributes
+    bodyClass?: ClassValue
   }>(),
   {
     id: undefined,
@@ -73,6 +90,14 @@ const props = withDefaults(
     horizontal: undefined,
     visible: false,
     isNav: undefined,
+    wrapperAttrs: undefined,
+    headerAttrs: undefined,
+    headerClass: undefined,
+    buttonAttrs: undefined,
+    buttonClass: undefined,
+    collapseClass: undefined,
+    bodyAttrs: undefined,
+    bodyClass: undefined,
   }
 )
 
