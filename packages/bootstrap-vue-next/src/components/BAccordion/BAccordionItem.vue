@@ -1,12 +1,12 @@
 <template>
-  <div class="accordion-item" v-bind="wrapperAttrs" :class="[wrapperClass, directWrapperClass]">
+  <div class="accordion-item" v-bind="wrapperAttrs" :class="wrapperClass">
     <BCollapse
       :id="computedId"
       v-model="modelValue"
       class="accordion-collapse"
       :class="collapseClass"
       :aria-labelledby="`${computedId}-heading`"
-      v-bind="{...attrs, ...collapseAttrs}"
+      v-bind="collapseAttrs"
       :tag="tag"
       :toggle="toggle"
       :horizontal="horizontal"
@@ -58,7 +58,7 @@ import type {Booleanish, ClassValue} from '../../types'
 defineOptions({
   inheritAttrs: false,
 })
-const {class: directWrapperClass, ...attrs} = useAttrs()
+const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
 const props = withDefaults(
   defineProps<{
@@ -72,12 +72,10 @@ const props = withDefaults(
     visible?: Booleanish
     isNav?: Booleanish
     wrapperAttrs?: HTMLAttributes
-    wrapperClass?: ClassValue
     headerAttrs?: HTMLAttributes
     headerClass?: ClassValue
     buttonAttrs?: HTMLAttributes
     buttonClass?: ClassValue
-    collapseAttrs?: HTMLAttributes
     collapseClass?: ClassValue
     bodyAttrs?: HTMLAttributes
     bodyClass?: ClassValue
@@ -93,12 +91,10 @@ const props = withDefaults(
     visible: false,
     isNav: undefined,
     wrapperAttrs: undefined,
-    wrapperClass: undefined,
     headerAttrs: undefined,
     headerClass: undefined,
     buttonAttrs: undefined,
     buttonClass: undefined,
-    collapseAttrs: undefined,
     collapseClass: undefined,
     bodyAttrs: undefined,
     bodyClass: undefined,
