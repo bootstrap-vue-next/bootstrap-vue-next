@@ -478,7 +478,7 @@ describe('tabs', () => {
       <HelloWorld v-slot="{msg}" class="mt-3">
         out of tabs: {{ msg }}
         <BTabs>
-         <BTab title="First" active><p>{{msg}}</p></BTab>
+          <BTab title="First" active><p>{{msg}}</p></BTab>
         </BTabs>
       </HelloWorld>
       `,
@@ -498,5 +498,108 @@ describe('tabs', () => {
     await HelloWorldComponent.setData({msg: 'bar'})
 
     expect(wrapper.findComponent({name: 'b-tab'}).find('p').text()).toBe('bar')
+  })
+
+  const ChildComp = {
+    template: ` 
+    <BTab :title="title">
+      {{ content }}
+    </BTab>`,
+    props: {
+      title: {
+        type: String,
+        default: '',
+      },
+      content: {
+        type: String,
+        default: '',
+      },
+    },
+    components: {
+      BTab,
+    },
+  }
+  const ParentComp = {
+    template: ` 
+    <BTabs>
+      <slot />
+    </BTabs>`,
+    components: {
+      BTabs,
+    },
+  }
+
+  const ComplexComponent = {
+    template: `
+    <ParentComp v-model="index" v-model:active-id="id">
+      <ChildComp v-for="tab in tabs" :id="tab.id" :key="tab.title" :title="tab.title" :content="tab.content" />
+      <BTab id="i3" :title="'t3'" >c3</BTab>
+    </ParentComp>
+    <a href="#" id="add" @click="tabs.unshift({title: 't0', content: 'c0'})">add</a>
+    <a href="#" id="change" @click="id = 'i3'">change</a>
+    <a href="#" id="change2" @click="index = 1">change2</a>
+    `,
+    data() {
+      return {
+        tabs: [
+          {id: 'i1', title: 't1', content: 'c1'},
+          {id: 'i2', title: 't2', content: 'c2'},
+        ],
+        index: 0,
+        id: undefined,
+      }
+    },
+    components: {
+      ParentComp,
+      ChildComp,
+      BTab,
+    },
+  }
+  it('renders in complex structure', async () => {
+    const wrapper = await mount(ComplexComponent, {})
+    expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
+    const $panes = wrapper.findAll('div.tab-pane')
+    expect($panes[0].text()).toBe('c1')
+    expect($panes[1].text()).toBe('c2')
+    expect($panes[2].text()).toBe('c3')
+    const $buttons = wrapper.findAll('button')
+    expect($buttons[0].text()).toBe('t1')
+    expect($buttons[0].classes()).toContain('active')
+    expect($buttons[1].text()).toBe('t2')
+    expect($buttons[1].classes()).not.toContain('active')
+    expect($buttons[2].text()).toBe('t3')
+    expect($buttons[2].classes()).not.toContain('active')
+  })
+
+  it('reactive in v-for and active to stay the same tab', async () => {
+    const wrapper = await mount(ComplexComponent, {})
+    expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
+    await wrapper.find('#add').trigger('click')
+    const $buttons = wrapper.findAll('button')
+    expect($buttons[0].text()).toBe('t0')
+    expect($buttons[0].classes()).not.toContain('active')
+    expect($buttons[1].text()).toBe('t1')
+    expect($buttons[1].classes()).toContain('active')
+    expect(wrapper.vm.index).toBe(1)
+  })
+
+  it('active tab follow v-models', async () => {
+    const wrapper = await mount(ComplexComponent, {})
+    expect(wrapper.findComponent({name: 'b-tab'}).text()).toBe('c1')
+    await wrapper.find('#change').trigger('click')
+
+    let $buttons = wrapper.findAll('button')
+    expect($buttons[0].classes()).not.toContain('active')
+    expect($buttons[1].classes()).not.toContain('active')
+    expect($buttons[2].classes()).toContain('active')
+    expect(wrapper.vm.index).toBe(2)
+    expect(wrapper.vm.id).toBe('i3')
+    await wrapper.find('#change2').trigger('click')
+    $buttons = wrapper.findAll('button')
+    expect($buttons[0].classes()).not.toContain('active')
+    expect($buttons[1].classes()).toContain('active')
+    expect($buttons[2].classes()).not.toContain('active')
+    expect(wrapper.vm.index).toBe(1)
+    expect(wrapper.vm.id).toBe('i2')
   })
 })
