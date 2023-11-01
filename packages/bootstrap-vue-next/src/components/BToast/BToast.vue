@@ -94,6 +94,8 @@ const props = withDefaults(defineProps<BToastProps>(), {
   // Link props
   active: undefined,
   activeClass: undefined,
+  exactActiveClass: undefined,
+  icon: false,
   append: false,
   href: undefined,
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},

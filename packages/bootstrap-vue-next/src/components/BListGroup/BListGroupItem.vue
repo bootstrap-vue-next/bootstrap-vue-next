@@ -35,9 +35,10 @@ const props = withDefaults(
     tag: 'div',
     // Link props
     active: false,
-
     activeClass: undefined,
     append: false,
+    exactActiveClass: undefined,
+    icon: false,
     href: undefined,
     // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},

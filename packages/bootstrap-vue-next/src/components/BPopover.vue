@@ -1,8 +1,7 @@
 <template>
   <span ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <!-- TODO: fix this clunky solution when https://github.com/vuejs/core/issues/6152 is fixed -->
-  <RenderComponentOrSkip :tag="'Teleport'" :to="container" :skip="!container">
+  <Teleport :to="container" :disabled="!container">
     <div
       v-if="showStateInternal"
       :id="id"
@@ -48,7 +47,7 @@
         <!-- eslint-enable vue/no-v-html -->
       </template>
     </div>
-  </RenderComponentOrSkip>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -74,7 +73,6 @@ import {
 } from '../utils'
 import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
 import {onClickOutside, useMouseInElement, useToNumber} from '@vueuse/core'
-import RenderComponentOrSkip from './RenderComponentOrSkip.vue'
 import {
   type ComponentPublicInstance,
   computed,

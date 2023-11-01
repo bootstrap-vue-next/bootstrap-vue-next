@@ -19,6 +19,7 @@ import type {VerticalAlign} from './VerticalAlign'
 export interface BLinkProps {
   active?: Booleanish
   activeClass?: string
+  exactActiveClass?: string
   append?: Booleanish
   disabled?: Booleanish
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -88,6 +89,10 @@ export interface BTableSimpleProps {
   tableClass?: ClassValue
   variant?: ColorVariant | null
   stripedColumns?: Booleanish
+  role?: string
+  responsiveClass?: ClassValue
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  responsiveAttrs?: any
 }
 
 export interface BTableLiteProps {
