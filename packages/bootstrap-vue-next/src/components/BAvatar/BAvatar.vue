@@ -84,6 +84,7 @@ const props = withDefaults(
     // Link props
     active: undefined,
     activeClass: undefined,
+    exactActiveClass: undefined,
     append: false,
     href: undefined,
     // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},

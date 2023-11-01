@@ -37,7 +37,7 @@
         </slot>
       </span>
     </BButton>
-    <RenderComponentOrSkip :tag="'Teleport'" :to="container" :skip="!container">
+    <Teleport :to="container" :disabled="!container">
       <ul
         v-if="!lazyBoolean || modelValueBoolean"
         v-show="lazyBoolean || modelValueBoolean"
@@ -51,7 +51,7 @@
       >
         <slot :hide="close" :show="open" />
       </ul>
-    </RenderComponentOrSkip>
+    </Teleport>
   </div>
 </template>
 
@@ -72,7 +72,6 @@ import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally

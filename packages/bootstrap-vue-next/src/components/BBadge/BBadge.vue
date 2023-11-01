@@ -36,6 +36,7 @@ const props = withDefaults(
     variant: 'secondary',
     active: undefined,
     activeClass: undefined,
+    exactActiveClass: undefined,
     append: false,
     disabled: false,
     href: undefined,
