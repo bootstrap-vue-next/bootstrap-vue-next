@@ -16,7 +16,7 @@
           <BRow>
             <BCol>
               <ul>
-                <li v-for="section in sections" :key="section">
+                <li v-for="section in sectionAvailable(component)" :key="section">
                   <BLink :to="buildCompReferenceLink(`${component.component}-${section}`)">
                     &lt;{{ component.component }}&gt; {{ section }}
                   </BLink>
@@ -24,7 +24,7 @@
               </ul>
             </BCol>
           </BRow>
-          <BRow v-for="section in sections" :key="section" class="my-3">
+          <BRow v-for="section in sectionAvailable(component)" :key="section" class="my-3">
             <BCol>
               <BContainer fluid>
                 <BRow>
@@ -118,6 +118,9 @@ const sortData = computed(() =>
 const sections = ['Properties', 'Events', 'Slots'] as const
 
 const buildCompReferenceLink = (str: string): string => `#comp-reference-${str}`.toLowerCase()
+
+const sectionAvailable = (component: ComponentReference) =>
+  sections.filter((x) => !!component[sectionToComponentItem(x)]?.length)
 
 const sectionToComponentItem = (
   el: (typeof sections)[number]
