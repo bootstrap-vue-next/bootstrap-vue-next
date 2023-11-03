@@ -19,9 +19,9 @@
     :variant="variant"
     :striped-columns="stripedColumns"
   >
-    <BThead>
+    <BThead :variant="headVariant" :class="theadClass">
       <slot v-if="$slots['thead-top']" name="thead-top" />
-      <BTr>
+      <BTr :variant="headRowVariant" :class="theadTrClass">
         <BTh
           v-for="field in computedFields"
           :key="field.key"
@@ -63,7 +63,7 @@
         </BTd>
       </BTr>
     </BThead>
-    <BTbody>
+    <BTbody :class="tbodyClass">
       <slot
         name="custom-body"
         :fields="computedFields"
@@ -142,8 +142,8 @@
         </BTr>
       </slot>
     </BTbody>
-    <BTfoot v-if="footCloneBoolean">
-      <BTr>
+    <BTfoot v-if="footCloneBoolean" :variant="footVariant" :class="tfootClass">
+      <BTr :variant="footRowVariant" :class="tfootTrClass">
         <BTh
           v-for="field in computedFields"
           :key="field.key"
