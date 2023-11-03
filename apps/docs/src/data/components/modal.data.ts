@@ -27,7 +27,8 @@ export default {
         {
           prop: 'bodyTextVariant',
           type: 'ColorVariant | null',
-          default: 'Applies one of the Bootstrap theme color variants to the body text',
+          default: undefined,
+          description: 'Applies one of the Bootstrap theme color variants to the body text',
         },
         {
           prop: 'busy',
@@ -200,7 +201,7 @@ export default {
           type: 'string',
           default: undefined,
           description:
-            'Used to set the `id` attribute on the rendered content, and used as the base to generate any additional element IDs as needed',
+            "Used to set the 'id' attribute on the rendered content, and used as the base to generate any additional element IDs as needed",
         },
         {
           prop: 'modalClass',
