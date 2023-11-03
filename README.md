@@ -62,6 +62,8 @@ Read our [Contribution Guide](https://github.com/bootstrap-vue-next/bootstrap-vu
 
 [Documentation](https://bootstrap-vue-next.github.io/bootstrap-vue-next/)
 
+Adding a (hopefully) completely neutral change to test ci validation.
+
 <h2 align="center">License</h2>
 
 Released under the MIT [License](./LICENSE). Copyright (c) BootstrapVueNext
