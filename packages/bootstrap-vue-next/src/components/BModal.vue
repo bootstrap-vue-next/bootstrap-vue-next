@@ -191,7 +191,6 @@ const props = withDefaults(
     backdropVariant?: ColorVariant | null
   }>(),
   {
-    backdropVariant: undefined,
     bodyBgVariant: null,
     bodyClass: undefined,
     bodyVariant: null,
@@ -244,6 +243,7 @@ const props = withDefaults(
     teleportDisabled: false,
     teleportTo: 'body',
     bodyScrolling: false,
+    backdropVariant: undefined,
   }
 )
 
