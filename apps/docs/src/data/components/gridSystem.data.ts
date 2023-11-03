@@ -8,26 +8,25 @@ export default {
         {
           prop: 'gutterX',
           type: 'string',
+          description: 'Horizontal gutter',
         },
         {
           prop: 'gutterY',
           type: 'string',
+          description: 'Vertical gutter',
         },
         {
           prop: 'fluid',
-          type: 'boolean | Breakpoint',
-        },
-        {
-          prop: 'toast',
-          type: 'Record<string, unknown>',
-        },
-        {
-          prop: 'position',
-          type: 'Position',
+          type: 'Booleanish | Breakpoint',
+          default: false,
+          description:
+            'When set to true, makes the row 100% wide all the time, or set to one of the Bootstrap breakpoint names for 100% width up to the breakpoint',
         },
         {
           prop: 'tag',
           type: 'string',
+          default: 'div',
+          description: 'Specify the HTML tag to render instead of the default tag',
         },
       ],
       emits: [],

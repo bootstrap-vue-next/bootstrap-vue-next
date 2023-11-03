@@ -1,5 +1,15 @@
 import {createSharedComposable, getSSRHandler, tryOnScopeDispose, unrefElement} from '@vueuse/core'
-import {type ComponentInternalInstance, getCurrentInstance, type Ref, ref, toRef, watch} from 'vue'
+import {
+  type ComponentInternalInstance,
+  computed,
+  getCurrentInstance,
+  type MaybeRefOrGetter,
+  ref,
+  type Ref,
+  toRef,
+  toValue,
+  watch,
+} from 'vue'
 
 const MODAL_OPEN_CLASS_NAME = 'modal-open'
 
@@ -40,8 +50,8 @@ export const useSharedModalStack = createSharedComposable(() => {
   return {registry, stack, last, count, push, pop, remove, find}
 })
 
-export default (modalOpen: Ref<boolean>): void => {
-  const {registry, push, remove} = useSharedModalStack()
+export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
+  const {registry, push, remove, stack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()
 
@@ -50,6 +60,10 @@ export default (modalOpen: Ref<boolean>): void => {
   }
 
   registry.value.push(currentModal)
+
+  tryOnScopeDispose(() => {
+    remove(currentModal)
+  })
 
   watch(
     modalOpen,
@@ -62,4 +76,9 @@ export default (modalOpen: Ref<boolean>): void => {
     },
     {immediate: true}
   )
+
+  return {
+    activePosition: computed(() => stack.value.findIndex((el) => el.exposed?.id === toValue(id))),
+    activeModalCount: toRef(() => stack.value.length),
+  }
 }

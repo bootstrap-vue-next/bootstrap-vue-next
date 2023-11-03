@@ -8,7 +8,7 @@ export default <T extends Record<string, unknown>, const B extends ReadonlyArray
   const pickPropsResolved = toRef(pickProps)
   const resolvedProps = toRef(props)
 
-  const computedLink = computed(() => isLink(resolvedProps.value))
+  const computedLink = toRef(() => isLink(resolvedProps.value))
   const computedLinkProps = computed(() =>
     computedLink.value
       ? pick(

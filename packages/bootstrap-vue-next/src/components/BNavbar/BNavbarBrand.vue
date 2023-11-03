@@ -26,6 +26,7 @@ const props = withDefaults(
     // Link props
     active: undefined,
     activeClass: undefined,
+    exactActiveClass: undefined,
     append: false,
     disabled: false,
     href: undefined,

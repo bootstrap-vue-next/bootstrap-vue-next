@@ -60,4 +60,34 @@ describe('useBooleanish blackbox test', () => {
     const value = useBooleanish(() => prop.value)
     expect(value.value).toBeUndefined()
   })
+
+  it('returns value undefined when null', () => {
+    const prop = reactive<{value: Booleanish | null}>({value: null})
+    const value = useBooleanish(() => prop.value)
+    expect(value.value).toBeNull()
+  })
+
+  it('returns value when not Booleanish number variant', () => {
+    const prop = reactive<{value: Booleanish | number}>({value: 1})
+    const value = useBooleanish(() => prop.value)
+    expect(value.value).toBe(1)
+  })
+
+  it('returns value when not Booleanish string variant', () => {
+    const prop = reactive<{value: Booleanish | string}>({value: '1'})
+    const value = useBooleanish(() => prop.value)
+    expect(value.value).toBe('1')
+  })
+
+  it('returns value when not Booleanish object variant', () => {
+    const prop = reactive<{value: Booleanish | Record<string, unknown>}>({value: {a: 1}})
+    const value = useBooleanish(() => prop.value)
+    expect(value.value).toEqual({a: 1})
+  })
+
+  it('returns value when not Booleanish array variant', () => {
+    const prop = reactive<{value: Booleanish | string[]}>({value: ['1']})
+    const value = useBooleanish(() => prop.value)
+    expect(value.value).toEqual(['1'])
+  })
 })

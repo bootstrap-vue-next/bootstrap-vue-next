@@ -29,15 +29,15 @@
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
 import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
 import type {
-  BackgroundColorExtendables,
   BLinkProps,
   Booleanish,
   ButtonType,
+  ColorExtendables,
   ColorVariant,
   Size,
   TextColorVariant,
 } from '../../types'
-import {useBackgroundVariant, useBLinkHelper, useBooleanish} from '../../composables'
+import {useBLinkHelper, useBooleanish, useColorVariantClasses} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 
 const props = withDefaults(
@@ -60,7 +60,7 @@ const props = withDefaults(
       src?: string
       text?: string
     } & Omit<BLinkProps, 'event' | 'routerTag'> &
-      BackgroundColorExtendables
+      ColorExtendables
   >(),
   {
     bgVariant: null,
@@ -84,6 +84,7 @@ const props = withDefaults(
     // Link props
     active: undefined,
     activeClass: undefined,
+    exactActiveClass: undefined,
     append: false,
     href: undefined,
     // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
@@ -140,7 +141,7 @@ const computedSize = toRef(() => parentData?.size.value ?? computeSize(props.siz
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
 const computedRounded = toRef(() => parentData?.rounded.value ?? props.rounded)
 
-const badgeClasses = useBackgroundVariant(() => ({
+const badgeClasses = useColorVariantClasses(() => ({
   variant: props.badgeVariant,
   bgVariant: props.badgeBgVariant,
   textVariant: props.badgeTextVariant,
@@ -151,7 +152,7 @@ const badgeText = toRef(() => (props.badge === true ? '' : props.badge))
 const computedTextVariant = toRef(() => parentData?.textVariant.value ?? props.textVariant)
 const computedBgVariant = toRef(() => parentData?.bgVariant.value ?? props.bgVariant)
 
-const resolvedBackgroundClasses = useBackgroundVariant(() => ({
+const resolvedBackgroundClasses = useColorVariantClasses(() => ({
   bgVariant: computedBgVariant.value,
   textVariant: computedTextVariant.value,
   variant: computedVariant.value,

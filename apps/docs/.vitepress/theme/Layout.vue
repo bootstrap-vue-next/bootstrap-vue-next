@@ -154,7 +154,7 @@ import {
   vBColorMode,
   BToaster,
 } from 'bootstrap-vue-next'
-import {computed, inject, ref, watch} from 'vue'
+import {inject, ref, computed, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/simple-icons/opencollective'
 import DiscordIcon from '~icons/bi/discord'

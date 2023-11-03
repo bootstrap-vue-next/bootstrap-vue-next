@@ -18,6 +18,7 @@ export default {
     if (!text.content && !text.title) return
 
     el.$__state = ref({
+      noninteractive: true,
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,
@@ -37,6 +38,7 @@ export default {
       // This happens when mounting occurs, but binding does not happen ie (if (!text.content && !text.title) return)
       // So mounting occurs without a title or content set
       el.$__state = ref({
+        noninteractive: true,
         ...resolveDirectiveProps(binding, el),
         title: text.title ?? text.content ?? '',
         tooltip: isActive,
@@ -45,6 +47,7 @@ export default {
       return
     }
     el.$__state.value = {
+      noninteractive: true,
       ...resolveDirectiveProps(binding, el),
       title: text.title ?? text.content ?? '',
       tooltip: isActive,

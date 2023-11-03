@@ -101,6 +101,7 @@ const componentsList: {name: string}[] = [
   {name: 'Form Radio'},
   {name: 'Form Select'},
   {name: 'Form Tags'},
+  {name: 'Form Spinbutton'},
   {name: 'Form Textarea'},
   {name: 'Grid System'},
   {name: 'Image'},

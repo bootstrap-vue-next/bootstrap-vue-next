@@ -1,24 +1,25 @@
+import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
+import type {ComponentPublicInstance, MaybeRef} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
+import type {BPopoverPlacement} from './BPopoverPlacement'
 import type {Booleanish} from './Booleanish'
 import type {Breakpoint} from './Breakpoint'
+import type {ButtonType} from './ButtonType'
+import type {ButtonVariant} from './ButtonVariant'
 import type {ClassValue} from './ClassValue'
+import type {ColorExtendables} from './ColorExtendables'
 import type {ColorVariant} from './ColorVariant'
 import type {LinkTarget} from './LinkTarget'
+import type {Size} from './Size'
 import type {TableField} from './TableField'
 import type {TableFieldObject} from './TableFieldObject'
 import type {TableItem} from './TableItem'
 import type {VerticalAlign} from './VerticalAlign'
-import type {Size} from './Size'
-import type {ButtonVariant} from './ButtonVariant'
-import type {ButtonType} from './ButtonType'
-import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
-import type {ComponentPublicInstance, MaybeRef} from 'vue'
-import type {BPopoverPlacement} from './BPopoverPlacement'
-import type {BackgroundColorExtendables} from './BackgroundColorExtendables'
 
 export interface BLinkProps {
   active?: Booleanish
   activeClass?: string
+  exactActiveClass?: string
   append?: Booleanish
   disabled?: Booleanish
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,34 +76,68 @@ export interface BTableSimpleProps {
   borderVariant?: ColorVariant | null
   captionTop?: Booleanish
   dark?: Booleanish
+  fixed?: Booleanish
   hover?: Booleanish
-  responsive?: boolean | Breakpoint
-  stacked?: boolean | Breakpoint
-  striped?: Booleanish
-  stripedColumns?: Booleanish
+  id?: string
+  noBorderCollapse?: Booleanish
+  outlined?: Booleanish
+  responsive?: Booleanish | Breakpoint
   small?: Booleanish
-  tableClass?: ClassValue
-  tableVariant?: ColorVariant | null
+  stacked?: Booleanish | Breakpoint
   stickyHeader?: Booleanish
+  striped?: Booleanish
+  tableClass?: ClassValue
+  variant?: ColorVariant | null
+  stripedColumns?: Booleanish
+  role?: string
+  responsiveClass?: ClassValue
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  responsiveAttrs?: any
 }
 
 export interface BTableLiteProps {
   align?: VerticalAlign
   caption?: string
+  captionHtml?: string
+  detailsTdClass?: ClassValue
   fields?: TableField[]
   footClone?: Booleanish
+  footRowVariant?: ColorVariant | null
+  footVariant?: ColorVariant | null
+  headRowVariant?: ColorVariant | null
+  headVariant?: ColorVariant | null
   items?: TableItem[]
-  labelStacked?: boolean
-  variant?: ColorVariant | null
+  primaryKey?: string
+  tbodyClass?: ClassValue
+  tbodyTrAttr?: any
+  // tbodyTransitionHandlers
+  // tbodyTransitionProps
+  tfootClass?: ClassValue
+  tfootTrClass?: ClassValue
+  theadClass?: ClassValue
+  theadTrClass?: ClassValue
+  modelValue?: any
+  labelStacked?: Booleanish
   showEmpty?: Booleanish
   emptyText?: string
   emptyFilteredText?: string
-  fieldColumnClass?: (field: TableFieldObject) => Record<string, any>[]
-  tbodyTrClass?: (item: TableItem | null, type: string) => string | Array<any> | null | undefined
-  virtualFields?: number | string
+  fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | ((field: TableFieldObject) => Record<string, any>[])
+    | string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | Record<PropertyKey, any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | any[]
+  tbodyTrClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | ((item: TableItem | null, type: string) => string | Array<any> | null | undefined)
+    | string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | Record<PropertyKey, any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | any[]
 }
 
-export interface BProgressBarProps extends BackgroundColorExtendables {
+export interface BProgressBarProps extends ColorExtendables {
   animated?: Booleanish
   label?: string
   labelHtml?: string
@@ -167,7 +202,7 @@ export interface BDropdownProps {
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
 }
 
-interface BToastIntermediate extends BackgroundColorExtendables {
+interface BToastIntermediate extends ColorExtendables {
   delay?: string | number
   bodyClass?: ClassValue
   body?: string

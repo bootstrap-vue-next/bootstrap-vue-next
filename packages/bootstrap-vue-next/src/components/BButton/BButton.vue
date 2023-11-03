@@ -2,6 +2,7 @@
   <component
     :is="computedTag"
     class="btn"
+    v-bind="linkProps"
     :class="computedClasses"
     :aria-disabled="nonStandardTag ? disabledBoolean : null"
     :aria-pressed="isToggle ? pressedBoolean : null"
@@ -14,11 +15,6 @@
     :type="isButton ? type : null"
     :to="!isButton ? to : null"
     :append="computedLink ? append : null"
-    :active-class="isBLink ? activeClass : null"
-    :event="isBLink ? event : null"
-    :replace="isBLink ? replace : null"
-    :router-component-name="isBLink ? routerComponentName : null"
-    :router-tag="isBLink ? routerTag : null"
     @click="clicked"
   >
     <template v-if="loadingBoolean">
@@ -85,6 +81,7 @@ const props = withDefaults(
     // Link props
     active: false,
     activeClass: undefined,
+    exactActiveClass: undefined,
     append: false,
     disabled: false,
     event: 'click',
@@ -125,7 +122,14 @@ const squaredBoolean = useBooleanish(() => props.squared)
 const loadingBoolean = useBooleanish(() => props.loading)
 const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
-const {computedLink} = useBLinkHelper(props)
+const {computedLink, computedLinkProps} = useBLinkHelper(props, [
+  'active-class',
+  'exact-active-class',
+  'event',
+  'replace',
+  'router-component-name',
+  'router-tag',
+])
 
 const isToggle = toRef(() => typeof pressedBoolean.value === 'boolean')
 const isButton = toRef(
@@ -133,6 +137,8 @@ const isButton = toRef(
 )
 const isBLink = toRef(() => props.to !== undefined)
 const nonStandardTag = toRef(() => (props.href !== undefined ? false : !isButton.value))
+
+const linkProps = computed(() => (isBLink.value ? computedLinkProps.value : []))
 
 const computedClasses = computed(() => [
   [`btn-${props.size}`],

@@ -19,6 +19,7 @@
         :aria-describedby="`${computedId}-body`"
         tabindex="-1"
         v-bind="$attrs"
+        :style="computedZIndex"
       >
         <div class="modal-dialog" :class="modalDialogClasses">
           <div v-if="lazyShowing" class="modal-content" :class="contentClass">
@@ -100,10 +101,19 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, ref, type RendererElement, toRef, useSlots} from 'vue'
 import {
-  useBackgroundVariant,
+  computed,
+  type CSSProperties,
+  reactive,
+  ref,
+  type RendererElement,
+  toRef,
+  useSlots,
+  watch,
+} from 'vue'
+import {
   useBooleanish,
+  useColorVariantClasses,
   useId,
   useModalManager,
   useSafeScrollLock,
@@ -377,7 +387,7 @@ const modalDialogClasses = computed(() => [
   },
 ])
 
-const resolvedBodyBgClasses = useBackgroundVariant(() => ({
+const resolvedBodyBgClasses = useColorVariantClasses(() => ({
   bgVariant: props.bodyBgVariant,
   textVariant: props.bodyTextVariant,
   variant: props.bodyVariant,
@@ -385,7 +395,7 @@ const resolvedBodyBgClasses = useBackgroundVariant(() => ({
 
 const bodyClasses = computed(() => [props.bodyClass, resolvedBodyBgClasses.value])
 
-const resolvedHeaderBgClasses = useBackgroundVariant(() => ({
+const resolvedHeaderBgClasses = useColorVariantClasses(() => ({
   bgVariant: props.headerBgVariant,
   textVariant: props.headerTextVariant,
   variant: props.headerVariant,
@@ -399,14 +409,14 @@ const headerClasses = computed(() => [
   },
 ])
 
-const headerCloseClasses = computed(() => [props.headerCloseClass])
+const headerCloseClasses = toRef(() => props.headerCloseClass)
 
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
   class: headerCloseClasses.value,
 }))
 
-const resolvedFooterBgClasses = useBackgroundVariant(() => ({
+const resolvedFooterBgClasses = useColorVariantClasses(() => ({
   bgVariant: props.footerBgVariant,
   textVariant: props.footerTextVariant,
   variant: props.footerVariant,
@@ -442,7 +452,24 @@ const buildTriggerableEvent = (
     componentId: computedId.value,
   })
 
+watch(modelValueBoolean, (newValue, oldValue) => {
+  if (newValue === oldValue) return
+  if (newValue === true) {
+    showFn()
+  } else {
+    hide()
+  }
+})
+
 const hide = (trigger = '') => {
+  if (
+    (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
+    (trigger === 'esc' && noCloseOnEscBoolean.value)
+  ) {
+    emit('hide-prevented')
+    return
+  }
+
   const event = buildTriggerableEvent('hide', {cancelable: trigger !== '', trigger})
 
   if (trigger === 'ok') {
@@ -456,15 +483,12 @@ const hide = (trigger = '') => {
   }
   emit('hide', event)
 
-  if (
-    event.defaultPrevented ||
-    (trigger === 'backdrop' && noCloseOnBackdropBoolean.value) ||
-    (trigger === 'esc' && noCloseOnEscBoolean.value)
-  ) {
+  if (event.defaultPrevented) {
     emit('hide-prevented')
+    if (!modelValue.value) modelValue.value = true
     return
   }
-  modelValue.value = false
+  if (modelValue.value) modelValue.value = false
 }
 
 // TODO: If a show is prevented, it will briefly show the animation. This is a bug
@@ -473,11 +497,11 @@ const showFn = () => {
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
-    modelValue.value = false
+    if (modelValue.value) modelValue.value = false
     emit('show-prevented')
     return
   }
-  modelValue.value = true
+  if (!modelValue.value) modelValue.value = true
 }
 
 const pickFocusItem = () => {
@@ -506,24 +530,40 @@ const onAfterLeave = () => {
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 
-useModalManager(isActive)
+const {activePosition, activeModalCount} = useModalManager(isActive, computedId)
+const defaultModalDialogZIndex = 1056
+const computedZIndex = computed<CSSProperties>(() => ({
+  // Make sure that newly opened modals have a higher z-index than currently active ones.
+  // All active modals have a z-index of ('defaultZIndex' - 'stackSize' - 'positionInStack').
+  //
+  // This means inactive modals will already be higher than active ones when opened.
+  'z-index': isActive.value
+    ? defaultModalDialogZIndex - (activeModalCount.value - activePosition.value)
+    : defaultModalDialogZIndex,
+}))
 
 useEventListener(element, 'bv-toggle', () => {
   modelValueBoolean.value ? hide() : showFn()
 })
 
 const sharedSlots: SharedSlotsData = reactive({
-  cancel: () => hide('cancel'),
-  close: () => hide('close'),
+  cancel: () => {
+    hide('cancel')
+  },
+  close: () => {
+    hide('close')
+  },
   hide,
-  ok: () => hide('ok'),
+  ok: () => {
+    hide('ok')
+  },
   visible: modelValueBoolean,
 })
 
 defineExpose({
   hide,
   show: showFn,
-  id: computedId.value,
+  id: computedId,
 })
 </script>
 
@@ -531,6 +571,7 @@ defineExpose({
 .modal {
   display: block;
 }
+
 .modal-dialog {
   z-index: 1051;
 }

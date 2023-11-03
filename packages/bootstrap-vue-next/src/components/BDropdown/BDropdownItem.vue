@@ -42,8 +42,12 @@ const props = withDefaults(
     // Link props
     active: undefined,
     activeClass: undefined,
+    exactActiveClass: undefined,
     append: false,
     href: undefined,
+    disabled: false,
+    icon: false,
+    variant: 'secondary',
     // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
     rel: undefined,

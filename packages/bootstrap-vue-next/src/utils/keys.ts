@@ -1,5 +1,13 @@
 import type {InjectionKey, Ref} from 'vue'
-import type {ButtonVariant, ColorVariant, Size, TextColorVariant} from '../types'
+import type {
+  ButtonVariant,
+  CheckboxValue,
+  ClassValue,
+  ColorVariant,
+  Size,
+  TabType,
+  TextColorVariant,
+} from '../types'
 
 // BCarousel
 export const carouselInjectionKey: InjectionKey<{
@@ -12,6 +20,12 @@ export const carouselInjectionKey: InjectionKey<{
 export const tabsInjectionKey: InjectionKey<{
   lazy: Readonly<Ref<boolean>>
   card: Readonly<Ref<boolean>>
+  noFade: Readonly<Ref<boolean>>
+  registerTab: (tab: Readonly<Ref<TabType>>) => void
+  unregisterTab: (id: string) => void
+  activateTab: (id: string | undefined) => void
+  activeTabClass: Readonly<Ref<ClassValue>>
+  activeId: Readonly<Ref<string | undefined>>
 }> = Symbol('tabs')
 
 // BProgress
@@ -48,15 +62,7 @@ export const accordionInjectionKey: InjectionKey<{
 
 // BFormCheckboxGroup
 export const checkboxGroupKey: InjectionKey<{
-  set: (
-    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ) => void
-  remove: (
-    payload: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ) => void
-  modelValue: Readonly<
-    Ref<(unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null)[]>
-  >
+  modelValue: Ref<CheckboxValue[]>
   switch: Readonly<Ref<boolean>>
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
@@ -72,7 +78,9 @@ export const checkboxGroupKey: InjectionKey<{
 
 export const radioGroupKey: InjectionKey<{
   set: (value: string | boolean | unknown[] | Record<string, unknown> | number | null) => void
-  modelValue: Readonly<Ref<string | boolean | unknown[] | Record<string, unknown> | number | null>>
+  modelValue: Readonly<
+    Ref<string | boolean | readonly unknown[] | Record<string, unknown> | number | null>
+  >
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>

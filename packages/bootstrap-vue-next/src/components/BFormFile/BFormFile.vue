@@ -31,7 +31,7 @@ import {computed, ref, toRef, useSlots, watch} from 'vue'
 import {useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, Size} from '../../types'
 import {useBooleanish, useId, useStateClass} from '../../composables'
-import {isEmptySlot, resolveBooleanish} from '../../utils'
+import {isEmptySlot} from '../../utils'
 
 defineOptions({
   inheritAttrs: false,
@@ -46,7 +46,7 @@ const props = withDefaults(
   defineProps<{
     accept?: string | string[]
     autofocus?: Booleanish
-    capture?: boolean | 'true' | 'false' | '' | 'user' | 'environment' // Booleanish | 'user' | 'environment'
+    capture?: Booleanish | 'user' | 'environment'
     directory?: Booleanish
     disabled?: Booleanish
     form?: string
@@ -65,6 +65,7 @@ const props = withDefaults(
   {
     accept: '',
     autofocus: false,
+    // eslint-disable-next-line vue/require-valid-default-prop
     capture: false,
     directory: false,
     disabled: false,
@@ -103,6 +104,7 @@ const noDropBoolean = useBooleanish(() => props.noDrop)
 const noTraverseBoolean = useBooleanish(() => props.noTraverse)
 const requiredBoolean = useBooleanish(() => props.required)
 const stateBoolean = useBooleanish(() => props.state)
+const computedCapture = useBooleanish(() => props.capture)
 
 const stateClass = useStateClass(stateBoolean)
 
@@ -113,11 +115,6 @@ const {focused} = useFocus(input, {initialValue: autofocusBoolean.value})
 const hasLabelSlot = toRef(() => !isEmptySlot(slots['label']))
 const computedAccept = toRef(() =>
   typeof props.accept === 'string' ? props.accept : props.accept.join(',')
-)
-const computedCapture = computed(() =>
-  props.capture === 'user' || props.capture === 'environment'
-    ? props.capture
-    : resolveBooleanish(props.capture)
 )
 
 const computedClasses = computed(() => [

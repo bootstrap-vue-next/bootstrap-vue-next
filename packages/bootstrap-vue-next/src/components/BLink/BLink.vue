@@ -3,14 +3,18 @@
     :is="tag"
     v-if="tag === 'router-link'"
     v-slot="//@ts-ignore 
-    {href: localHref, navigate, isActive}"
+    {href: localHref, navigate, isActive, isExactActive}"
     v-bind="routerAttr"
     custom
   >
     <component
       :is="routerTag"
       :href="localHref"
-      :class="[(activeBoolean ?? isActive) && `${activeClass} ${defaultActiveClass}`]"
+      :class="{
+        [defaultActiveClass]: activeBoolean,
+        [activeClass]: isActive,
+        [exactActiveClass]: isExactActive,
+      }"
       v-bind="$attrs"
       @click=";[navigate($event), clicked($event)]"
     >
@@ -27,7 +31,6 @@ import type {BLinkProps} from '../../types'
 import {useBooleanish} from '../../composables'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils'
 import {computed, getCurrentInstance, inject, useAttrs} from 'vue'
-import type {RouteLocation} from 'vue-router'
 
 // TODO this component will likely have an issue with inheritAttrs
 defineSlots<{
@@ -38,6 +41,7 @@ defineSlots<{
 const props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
+  exactActiveClass: 'router-link-exact-active',
   append: false,
   disabled: false,
   event: 'click',
@@ -95,30 +99,9 @@ const tag = computed(() => {
   return props.routerComponentName
 })
 
-const computedHref = computed(() => {
-  const toFallback = '#'
-  if (props.href) return props.href
-
-  if (typeof props.to === 'string') return props.to || toFallback
-
-  const to = props.to as RouteLocation
-
-  if (
-    Object.prototype.toString.call(to) === '[object Object]' &&
-    (to.path || to.query || to.hash)
-  ) {
-    const path = to.path || ''
-    const query = to.query
-      ? `?${Object.keys(to.query)
-          .map((e) => `${e}=${to.query[e]}`)
-          .join('=')}`
-      : ''
-    const hash = !to.hash || to.hash.charAt(0) === '#' ? to.hash || '' : `#${to.hash}`
-    return `${path}${query}${hash}` || toFallback
-  }
-
-  return toFallback
-})
+const computedLocation = computed(() =>
+  tag.value === 'router-link' ? {to: props.href || props.to || '#'} : {href: props.href || '#'}
+)
 
 const computedClasses = computed(() => ({
   [`link-${props.variant}`]: props.variant !== null,
@@ -135,16 +118,15 @@ const computedClasses = computed(() => ({
 
 const routerAttr = computed(() => ({
   'class': computedClasses.value,
-  'to': props.to,
-  'href': computedHref.value,
   'target': props.target,
-  'rel': props.target === '_blank' && props.rel === undefined ? 'noopener' : props.rel || undefined,
+  'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,
   'tabindex': disabledBoolean.value
     ? '-1'
     : typeof attrs.tabindex === 'undefined'
     ? null
     : attrs.tabindex,
   'aria-disabled': disabledBoolean.value ? true : null,
+  ...computedLocation.value,
 }))
 
 const computedLinkClasses = computed(() => ({

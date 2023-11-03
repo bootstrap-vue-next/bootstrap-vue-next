@@ -190,6 +190,10 @@ const componentList: {name: string; description: string}[] = [
     description:
       'Push notifications to your visitors with a toast, a lightweight and easily customizable alert message',
   },
+  {
+    name: 'Form Spinbutton',
+    description: ''
+  }
 ]
 
 const computedComponentsList = computed(() =>

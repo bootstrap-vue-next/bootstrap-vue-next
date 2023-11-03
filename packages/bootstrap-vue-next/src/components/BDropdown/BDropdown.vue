@@ -1,5 +1,5 @@
 <template>
-  <div :class="computedClasses" class="btn-group">
+  <div ref="wrapper" :class="computedClasses" class="btn-group">
     <BButton
       :id="computedId"
       ref="splitButton"
@@ -37,7 +37,7 @@
         </slot>
       </span>
     </BButton>
-    <RenderComponentOrSkip :tag="'Teleport'" :to="container" :skip="!container">
+    <Teleport :to="container" :disabled="!container">
       <ul
         v-if="!lazyBoolean || modelValueBoolean"
         v-show="lazyBoolean || modelValueBoolean"
@@ -51,7 +51,7 @@
       >
         <slot :hide="close" :show="open" />
       </ul>
-    </RenderComponentOrSkip>
+    </Teleport>
   </div>
 </template>
 
@@ -67,12 +67,11 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
-import {computed, nextTick, provide, readonly, ref, toRef, watch} from 'vue'
+import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
 import BButton from '../BButton/BButton.vue'
-import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
 // TODO add navigation through keyboard events
 // TODO standardize keydown vs keyup events globally
@@ -163,6 +162,7 @@ const offsetToNumber = useToNumber(computedOffset)
 const floating = ref<HTMLElement | null>(null)
 const button = ref<HTMLElement | null>(null)
 const splitButton = ref<HTMLElement | null>(null)
+const wrapper = ref<HTMLElement | null>(null)
 
 const boundary = computed<Boundary | undefined>(() =>
   props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
@@ -250,7 +250,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
 const {update, floatingStyles} = useFloating(referencePlacement, floating, {
   placement: floatingPlacement,
   middleware: floatingMiddleware,
-  strategy: readonly(toRef(props, 'strategy')),
+  strategy: toRef(() => props.strategy),
   whileElementsMounted: autoUpdate,
 })
 
@@ -314,6 +314,7 @@ const toggle = () => {
   }
   modelValue.value = !currentModelValue
   currentModelValue ? emit('hidden') : emit('shown')
+  wrapper.value?.dispatchEvent(new Event('forceHide'))
 }
 
 watch(modelValueBoolean, update)

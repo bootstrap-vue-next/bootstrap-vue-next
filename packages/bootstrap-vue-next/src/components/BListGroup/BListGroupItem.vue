@@ -35,9 +35,10 @@ const props = withDefaults(
     tag: 'div',
     // Link props
     active: false,
-
     activeClass: undefined,
     append: false,
+    exactActiveClass: undefined,
+    icon: false,
     href: undefined,
     // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
@@ -75,7 +76,7 @@ const disabledBoolean = useBooleanish(() => props.disabled)
 const {computedLink} = useBLinkHelper(props)
 
 const isLink = toRef(() => !buttonBoolean.value && computedLink.value)
-const tagComputed = computed(() =>
+const tagComputed = toRef(() =>
   parentData?.numbered.value
     ? 'li'
     : buttonBoolean.value

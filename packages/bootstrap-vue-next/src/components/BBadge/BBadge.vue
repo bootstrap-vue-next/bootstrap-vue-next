@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import {useBackgroundVariant, useBLinkHelper, useBooleanish} from '../../composables'
+import {useBLinkHelper, useBooleanish, useColorVariantClasses} from '../../composables'
 import {computed, toRef} from 'vue'
-import type {BackgroundColorExtendables, BLinkProps, Booleanish} from '../../types'
+import type {BLinkProps, Booleanish, ColorExtendables} from '../../types'
 import BLink from '../BLink/BLink.vue'
 
 defineSlots<{
@@ -23,7 +23,7 @@ const props = withDefaults(
       textIndicator?: Booleanish
       dotIndicator?: Booleanish
     } & Omit<BLinkProps, 'event' | 'routerTag'> &
-      BackgroundColorExtendables
+      ColorExtendables
   >(),
   {
     bgVariant: null,
@@ -36,6 +36,7 @@ const props = withDefaults(
     variant: 'secondary',
     active: undefined,
     activeClass: undefined,
+    exactActiveClass: undefined,
     append: false,
     disabled: false,
     href: undefined,
@@ -63,7 +64,7 @@ const textIndicatorBoolean = useBooleanish(() => props.textIndicator)
 const dotIndicatorBoolean = useBooleanish(() => props.dotIndicator)
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
-const resolvedBackgroundClasses = useBackgroundVariant(props)
+const resolvedBackgroundClasses = useColorVariantClasses(props)
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active',

@@ -19,9 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, provide, ref, toRef} from 'vue'
+import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
-import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
+import type {AriaInvalid, Booleanish, ButtonVariant, CheckboxValue, Size} from '../../types'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
 import {checkboxGroupKey} from '../../utils'
 import {useFocus, useVModel} from '@vueuse/core'
@@ -30,15 +30,7 @@ const props = withDefaults(
   defineProps<{
     id?: string
     form?: string
-    modelValue?: (
-      | unknown[]
-      | Set<unknown>
-      | boolean
-      | string
-      | Record<string, unknown>
-      | number
-      | null
-    )[]
+    modelValue?: CheckboxValue[]
     ariaInvalid?: AriaInvalid
     autofocus?: Booleanish
     buttonVariant?: ButtonVariant | null
@@ -84,39 +76,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'input': [
-    value: (
-      | unknown[]
-      | Set<unknown>
-      | boolean
-      | string
-      | Record<string, unknown>
-      | number
-      | null
-    )[],
-  ]
-  'update:modelValue': [
-    value: (
-      | unknown[]
-      | Set<unknown>
-      | boolean
-      | string
-      | Record<string, unknown>
-      | number
-      | null
-    )[],
-  ]
-  'change': [
-    value: (
-      | unknown[]
-      | Set<unknown>
-      | boolean
-      | string
-      | Record<string, unknown>
-      | number
-      | null
-    )[],
-  ]
+  'input': [value: CheckboxValue[]]
+  'update:modelValue': [value: CheckboxValue[]]
+  'change': [value: CheckboxValue[]]
 }>()
 
 defineSlots<{
@@ -147,34 +109,7 @@ const {focused} = useFocus(element, {
 })
 
 provide(checkboxGroupKey, {
-  set: (
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ) => {
-    let localValue = [...modelValue.value]
-    // clean up the value so we don't end up with duplicates
-    localValue = localValue.filter((x) => JSON.stringify(x) !== JSON.stringify(value))
-    localValue.push(value)
-
-    emit('input', localValue)
-    modelValue.value = localValue
-    nextTick(() => {
-      emit('change', localValue)
-    })
-  },
-  remove: (
-    value: unknown[] | Set<unknown> | boolean | string | Record<string, unknown> | number | null
-  ) => {
-    let localValue = [...modelValue.value]
-    // TODO if the value is an array, set, or object, filter may not work correctly
-    localValue = localValue.filter((x) => JSON.stringify(x) !== JSON.stringify(value))
-
-    emit('input', localValue)
-    modelValue.value = localValue
-    nextTick(() => {
-      emit('change', localValue)
-    })
-  },
-  modelValue: toRef(() => modelValue.value),
+  modelValue,
   switch: switchesBoolean,
   buttonVariant: toRef(() => props.buttonVariant),
   form: toRef(() => props.form),
@@ -224,6 +159,14 @@ const classesObject = computed(() => ({
 }))
 const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)
+
+watch(modelValue, (newValue) => {
+  emit('input', newValue)
+  modelValue.value = newValue
+  nextTick(() => {
+    emit('change', newValue)
+  })
+})
 
 defineExpose({
   focus: () => {
