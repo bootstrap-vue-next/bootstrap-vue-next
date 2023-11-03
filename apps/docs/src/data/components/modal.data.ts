@@ -33,7 +33,8 @@ export default {
           prop: 'busy',
           type: 'Booleanish',
           default: false,
-          default: 'Places the built in default footer OK and Cancel buttons in the disabled state',
+          description:
+            'Places the built in default footer OK and Cancel buttons in the disabled state',
         },
         {
           prop: 'lazy',
@@ -82,6 +83,13 @@ export default {
           type: 'ClassValue',
           default: undefined,
           description: "CSS class (or classes) to apply to the '.modal-dialog' wrapper element",
+        },
+        {
+          prop: 'footerVariant',
+          type: 'ColorVariant | null',
+          default: null,
+          description:
+            'Applies one of the Bootstrap theme color variants to the footer (this takes priority over footerBgVariant and footerTextVariant)',
         },
         {
           prop: 'footerBgVariant',
@@ -149,6 +157,13 @@ export default {
           type: 'ButtonVariant | null',
           default: 'secondary',
           description: 'Deprecated by BS V5',
+        },
+        {
+          prop: 'headerVariant',
+          type: 'ColorVariant | null',
+          default: null,
+          description:
+            'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
         },
         {
           prop: 'headerTextVariant',
@@ -296,17 +311,19 @@ export default {
           prop: 'teleportDisabled',
           type: 'Booleanish',
           default: false,
+          description: 'Renders the modal in the exact place it was defined',
         },
         {
           prop: 'teleportTo',
           type: 'string | RendererElement | null | undefined',
           default: 'body',
+          description: 'Overrides the default teleport location',
         },
         {
           prop: 'bodyScrolling',
           type: 'Booleanish',
           default: false,
-          default: 'Enables/disables scrolling the body while modal is open',
+          description: 'Enables/disables scrolling the body while modal is open',
         },
         {
           prop: 'backdropVariant',
@@ -317,28 +334,18 @@ export default {
       ],
       emits: [
         {
+          event: 'update:modelValue',
           args: [
             {
               arg: 'value',
-              description: '',
+              description: "The new value of the modal's visible state",
               type: 'boolean',
             },
           ],
-          description: '',
-          event: 'update:modelValue',
+          description: 'Emitted when modal visibility changes',
         },
         {
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-          description: '',
           event: 'show',
-        },
-        {
           args: [
             {
               arg: 'value',
@@ -346,10 +353,10 @@ export default {
               type: 'BvTriggerableEvent',
             },
           ],
-          description: '',
+          description: 'Always emits just before modal is shown. Cancelable',
+        },
+        {
           event: 'shown',
-        },
-        {
           args: [
             {
               arg: 'value',
@@ -357,10 +364,10 @@ export default {
               type: 'BvTriggerableEvent',
             },
           ],
-          description: '',
+          description: 'Always emits just before modal is shown. Cancelable',
+        },
+        {
           event: 'hide',
-        },
-        {
           args: [
             {
               arg: 'value',
@@ -368,31 +375,34 @@ export default {
               type: 'BvTriggerableEvent',
             },
           ],
-          description: '',
+          description:
+            "Always emits just before modal has hidden. Cancelable (as long as modal wasn't forcibly hidden)",
+        },
+        {
           event: 'hidden',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: 'Always emits after modal is hidden',
         },
         {
-          args: [],
-          description: '',
           event: 'hide-prevented',
-        },
-        {
           args: [],
-          description: '',
+          description:
+            'Emitted when the modal tried to close, but was prevented from closing.  This occurs when preventDefault() is called on the event, the user clicks escape and no-close-onbackdrop is set to true, or the user clicks on the backdrop and no-close-onbackdrop is set to true.',
+        },
+        {
           event: 'show-prevented',
+          args: [],
+          description:
+            'Emitted when the modal tried to open, but was prevented from opening. THis occurs when preventDrault() is called on the event',
         },
         {
-          args: [
-            {
-              arg: 'value',
-              description: '',
-              type: 'BvTriggerableEvent',
-            },
-          ],
-          description: '',
           event: 'ok',
-        },
-        {
           args: [
             {
               arg: 'value',
@@ -400,10 +410,10 @@ export default {
               type: 'BvTriggerableEvent',
             },
           ],
-          description: '',
+          description: 'Emitted when the default footer ok button is clicked. Cancelable',
+        },
+        {
           event: 'cancel',
-        },
-        {
           args: [
             {
               arg: 'value',
@@ -411,8 +421,18 @@ export default {
               type: 'BvTriggerableEvent',
             },
           ],
-          description: '',
+          description: 'Emitted when the default footer cancel button is clicked. Cancelable',
+        },
+        {
           event: 'close',
+          args: [
+            {
+              arg: 'value',
+              description: '',
+              type: 'BvTriggerableEvent',
+            },
+          ],
+          description: 'Emitted when the default header close button is clicked. Cancelable',
         },
       ],
       slots: [
