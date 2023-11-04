@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
 import type {Booleanish, Breakpoint, ColorVariant} from '../../types'
-import {useBooleanish} from '../../composables'
+import {useBooleanish, useContainerClasses} from '../../composables'
 import {navbarInjectionKey} from '../../utils'
 
 const props = withDefaults(
@@ -19,10 +19,10 @@ const props = withDefaults(
     print?: Booleanish
     sticky?: 'top' | 'bottom'
     tag?: string
-    toggleable?: boolean | Breakpoint
+    toggleable?: Booleanish | Breakpoint
     variant?: ColorVariant | null
-    container?: 'fluid' | boolean
-    autoClose?: boolean
+    container?: 'fluid' | Booleanish | Breakpoint
+    autoClose?: Booleanish
   }>(),
   {
     variant: null,
@@ -41,30 +41,26 @@ defineSlots<{
   default?: (props: Record<string, never>) => any
 }>()
 
+const containerBoolean = useBooleanish(() => props.container)
+const autoCloseBoolean = useBooleanish(() => props.autoClose)
 const printBoolean = useBooleanish(() => props.print)
+const computedNavbarExpand = useBooleanish(() => props.toggleable)
 
 const computedRole = toRef(() => (props.tag === 'nav' ? undefined : 'navigation'))
 
-const computedNavbarExpand = toRef(() =>
-  typeof props.toggleable === 'string'
-    ? `navbar-expand-${props.toggleable}`
-    : props.toggleable === false
-    ? 'navbar-expand'
-    : undefined
-)
-
-const containerClass = toRef(() => (props.container === true ? 'container' : `container-fluid`))
+const containerClass = useContainerClasses(containerBoolean)
 
 const computedClasses = computed(() => ({
   'd-print': printBoolean.value,
   [`sticky-${props.sticky}`]: props.sticky !== undefined,
   [`bg-${props.variant}`]: props.variant !== null,
   [`fixed-${props.fixed}`]: props.fixed !== undefined,
-  [`${computedNavbarExpand.value}`]: computedNavbarExpand.value !== undefined,
+  'navbar-expand': computedNavbarExpand.value === false,
+  [`navbar-expand-${computedNavbarExpand.value}`]: typeof computedNavbarExpand.value === 'string',
 }))
 
 provide(navbarInjectionKey, {
   tag: toRef(() => props.tag),
-  autoClose: toRef(() => props.autoClose),
+  autoClose: autoCloseBoolean,
 })
 </script>

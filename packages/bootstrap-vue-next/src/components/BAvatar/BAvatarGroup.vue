@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
-import type {Booleanish, ColorExtendables, Size} from '../../types'
+import type {Booleanish, ColorExtendables, RadiusElementExtendables, Size} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
@@ -18,15 +18,19 @@ const props = withDefaults(
   defineProps<
     {
       overlap?: number | string
-      rounded?: boolean | string
       size?: Size | string
       square?: Booleanish
       tag?: string
-    } & ColorExtendables
+    } & ColorExtendables &
+      RadiusElementExtendables
   >(),
   {
     overlap: 0.3,
     rounded: false,
+    roundedTop: undefined,
+    roundedBottom: undefined,
+    roundedStart: undefined,
+    roundedEnd: undefined,
     size: undefined,
     square: false,
     tag: 'div',
@@ -42,6 +46,11 @@ defineSlots<{
 }>()
 
 const squareBoolean = useBooleanish(() => props.square)
+const roundedBoolean = useBooleanish(() => props.rounded)
+const roundedTopBoolean = useBooleanish(() => props.roundedTop)
+const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
+const roundedStartBoolean = useBooleanish(() => props.roundedStart)
+const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
 const overlapNumber = useToNumber(() => props.overlap)
 
 const computedSize = computed(() => computeSize(props.size))
@@ -56,7 +65,11 @@ provide(avatarGroupInjectionKey, {
   overlapScale,
   size: toRef(() => props.size),
   square: squareBoolean,
-  rounded: toRef(() => props.rounded),
+  rounded: roundedBoolean,
+  roundedTop: roundedTopBoolean,
+  roundedBottom: roundedBottomBoolean,
+  roundedStart: roundedStartBoolean,
+  roundedEnd: roundedEndBoolean,
   variant: toRef(() => props.variant),
   bgVariant: toRef(() => props.bgVariant),
   textVariant: toRef(() => props.textVariant),

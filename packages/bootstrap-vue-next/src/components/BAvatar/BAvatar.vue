@@ -19,8 +19,9 @@
       {{ text }}
     </span>
     <span v-if="showBadge" class="b-avatar-badge" :class="badgeClasses" :style="badgeStyle">
-      <slot v-if="hasBadgeSlot" name="badge" />
-      <span v-else>{{ badgeText }}</span>
+      <slot name="badge">
+        {{ badgeText }}
+      </slot>
     </span>
   </component>
 </template>
@@ -34,18 +35,24 @@ import type {
   ButtonType,
   ColorExtendables,
   ColorVariant,
+  RadiusElementExtendables,
   Size,
   TextColorVariant,
 } from '../../types'
-import {useBLinkHelper, useBooleanish, useColorVariantClasses} from '../../composables'
+import {
+  useBLinkHelper,
+  useBooleanish,
+  useColorVariantClasses,
+  useRadiusElementClasses,
+} from '../../composables'
 import BLink from '../BLink/BLink.vue'
 
 const props = withDefaults(
   defineProps<
     {
       alt?: string
-      badge?: boolean | string
-      badgeLeft?: Booleanish
+      badge?: boolean | string // Can't make this Booleanish. string is valid text
+      badgeStart?: Booleanish
       badgeOffset?: string
       badgeTop?: Booleanish
       badgeVariant?: ColorVariant | null
@@ -54,19 +61,19 @@ const props = withDefaults(
       button?: Booleanish
       buttonType?: ButtonType
       icon?: string
-      rounded?: boolean | string
       size?: Size | string // TODO number --> compat
       square?: Booleanish
       src?: string
       text?: string
     } & Omit<BLinkProps, 'event' | 'routerTag'> &
-      ColorExtendables
+      ColorExtendables &
+      RadiusElementExtendables
   >(),
   {
     bgVariant: null,
     alt: 'avatar',
     badge: false,
-    badgeLeft: false,
+    badgeStart: false,
     badgeOffset: undefined,
     badgeTop: false,
     badgeVariant: 'primary',
@@ -75,7 +82,12 @@ const props = withDefaults(
     button: false,
     buttonType: 'button',
     icon: undefined,
-    rounded: 'circle',
+    // eslint-disable-next-line vue/require-valid-default-prop
+    rounded: false,
+    roundedTop: undefined,
+    roundedBottom: undefined,
+    roundedStart: undefined,
+    roundedEnd: undefined,
     size: undefined,
     square: false,
     src: undefined,
@@ -127,11 +139,16 @@ const SIZES = ['sm', null, 'lg']
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
-const badgeLeftBoolean = useBooleanish(() => props.badgeLeft)
+const badgeStartBoolean = useBooleanish(() => props.badgeStart)
 const badgeTopBoolean = useBooleanish(() => props.badgeTop)
 const buttonBoolean = useBooleanish(() => props.button)
 const disabledBoolean = useBooleanish(() => props.disabled)
 const squareBoolean = useBooleanish(() => props.square)
+const roundedBoolean = useBooleanish(() => props.rounded)
+const roundedTopBoolean = useBooleanish(() => props.roundedTop)
+const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
+const roundedStartBoolean = useBooleanish(() => props.roundedStart)
+const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
 
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
@@ -139,8 +156,23 @@ const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
 const computedSize = toRef(() => parentData?.size.value ?? computeSize(props.size))
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
-const computedRounded = toRef(() => parentData?.rounded.value ?? props.rounded)
+const computedRounded = toRef(() => parentData?.rounded.value ?? roundedBoolean.value)
+const computedRoundedTop = toRef(() => parentData?.roundedTop.value ?? roundedTopBoolean.value)
+const computedRoundedBottom = toRef(
+  () => parentData?.roundedBottom.value ?? roundedBottomBoolean.value
+)
+const computedRoundedStart = toRef(
+  () => parentData?.roundedStart.value ?? roundedStartBoolean.value
+)
+const computedRoundedEnd = toRef(() => parentData?.roundedEnd.value ?? roundedEndBoolean.value)
 
+const radiusElementClasses = useRadiusElementClasses(() => ({
+  rounded: computedRounded.value,
+  roundedTop: computedRoundedTop.value,
+  roundedBottom: computedRoundedBottom.value,
+  roundedStart: computedRoundedStart.value,
+  roundedEnd: computedRoundedEnd.value,
+}))
 const badgeClasses = useColorVariantClasses(() => ({
   variant: props.badgeVariant,
   bgVariant: props.badgeBgVariant,
@@ -160,20 +192,15 @@ const resolvedBackgroundClasses = useColorVariantClasses(() => ({
 
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
+  // Square overwrites all else
+  squareBoolean.value === true ? undefined : radiusElementClasses.value,
   {
     [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
-    [`badge`]: !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
-    rounded: computedRounded.value === '' || computedRounded.value === true,
-    [`rounded-circle`]: !squareBoolean.value && computedRounded.value === 'circle',
-    [`rounded-0`]: squareBoolean.value || computedRounded.value === '0',
-    [`rounded-1`]: !squareBoolean.value && computedRounded.value === 'sm',
-    [`rounded-3`]: !squareBoolean.value && computedRounded.value === 'lg',
-    [`rounded-top`]: !squareBoolean.value && computedRounded.value === 'top',
-    [`rounded-bottom`]: !squareBoolean.value && computedRounded.value === 'bottom',
-    [`rounded-start`]: !squareBoolean.value && computedRounded.value === 'left',
-    [`rounded-end`]: !squareBoolean.value && computedRounded.value === 'right',
-    btn: buttonBoolean.value,
     [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value !== null : false,
+    'badge': !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
+    'btn': buttonBoolean.value,
+    // Square is the same as rounded-0 class
+    'rounded-0': squareBoolean.value === true,
   },
 ])
 
@@ -187,8 +214,8 @@ const badgeStyle = computed<StyleValue>(() => {
     fontSize: fontSize || '',
     top: badgeTopBoolean.value ? offset : '',
     bottom: badgeTopBoolean.value ? '' : offset,
-    left: badgeLeftBoolean.value ? offset : '',
-    right: badgeLeftBoolean.value ? '' : offset,
+    left: badgeStartBoolean.value ? offset : '',
+    right: badgeStartBoolean.value ? '' : offset,
   }
 })
 

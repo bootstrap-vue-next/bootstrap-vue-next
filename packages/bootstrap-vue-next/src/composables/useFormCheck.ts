@@ -1,6 +1,6 @@
 import type {AriaInvalid, ButtonVariant, Size} from '../types'
 import {computed, type MaybeRefOrGetter, toRef, toValue} from 'vue'
-import {resolveAriaInvalid} from '../utils'
+import useAriaInvalid from './useAriaInvalid'
 import useStateClass from './useStateClass'
 
 interface ClassesItemsInput {
@@ -74,14 +74,17 @@ interface GroupAttrItemsInput {
   state?: boolean | null
 }
 
-const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) =>
-  computed(() => {
-    const resolvedItems = toValue(items)
-    return {
-      'aria-invalid': resolveAriaInvalid(resolvedItems.ariaInvalid, resolvedItems.state),
-      'aria-required': resolvedItems.required === true ? true : undefined,
-    }
-  })
+const getGroupAttr = (items: MaybeRefOrGetter<GroupAttrItemsInput>) => {
+  const resolvedItems = toRef(items)
+  const computedAriaInvalid = useAriaInvalid(
+    () => resolvedItems.value.ariaInvalid,
+    () => resolvedItems.value.state
+  )
+  return computed(() => ({
+    'aria-invalid': computedAriaInvalid.value as Exclude<AriaInvalid, ''> | undefined,
+    'aria-required': resolvedItems.value.required === true ? true : undefined,
+  }))
+}
 
 interface GroupClassesItemsInput {
   validated?: boolean
