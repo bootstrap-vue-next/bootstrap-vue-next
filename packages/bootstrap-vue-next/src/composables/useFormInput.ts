@@ -1,7 +1,8 @@
 import type {AriaInvalid, Booleanish, Size} from '../types'
-import {computed, nextTick, onActivated, onMounted, ref, toRef, watch} from 'vue'
-import {useBooleanish, useId} from '.'
-import {resolveAriaInvalid} from '../utils'
+import {nextTick, onActivated, onMounted, ref, toRef, watch} from 'vue'
+import useAriaInvalid from './useAriaInvalid'
+import useBooleanish from './useBooleanish'
+import useId from './useId'
 import {useDebounceFn, useFocus, useToNumber, useVModel} from '@vueuse/core'
 
 export interface CommonInputProps {
@@ -137,9 +138,7 @@ export default (
     })
   })
 
-  const computedAriaInvalid = computed(() =>
-    resolveAriaInvalid(props.ariaInvalid, stateBoolean.value)
-  )
+  const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
 
   const onInput = (evt: Event) => {
     const {value} = evt.target as HTMLInputElement

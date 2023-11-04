@@ -55,7 +55,6 @@ export interface BImgProps {
   height?: number | string
   start?: Booleanish
   end?: Booleanish
-  rounded?: boolean | string
   sizes?: string | string[]
   src?: string
   srcset?: string | string[]

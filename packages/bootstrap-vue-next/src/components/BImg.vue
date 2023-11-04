@@ -11,12 +11,12 @@
 </template>
 
 <script setup lang="ts">
-import type {BImgProps} from '../types'
-import {useBooleanish} from '../composables'
+import type {BImgProps, RadiusElementExtendables} from '../types'
+import {useBooleanish, useRadiusElementClasses} from '../composables'
 import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BImgProps>(), {
+const props = withDefaults(defineProps<BImgProps & RadiusElementExtendables>(), {
   sizes: undefined,
   src: undefined,
   srcset: undefined,
@@ -32,6 +32,10 @@ const props = withDefaults(defineProps<BImgProps>(), {
   end: false,
   start: false,
   rounded: false,
+  roundedTop: undefined,
+  roundedBottom: undefined,
+  roundedStart: undefined,
+  roundedEnd: undefined,
   thumbnail: false,
 })
 
@@ -51,6 +55,19 @@ const endBoolean = useBooleanish(() => props.end)
 const thumbnailBoolean = useBooleanish(() => props.thumbnail)
 const heightNumber = useToNumber(() => props.height ?? NaN)
 const widthNumber = useToNumber(() => props.width ?? NaN)
+const roundedBoolean = useBooleanish(() => props.rounded)
+const roundedTopBoolean = useBooleanish(() => props.roundedTop)
+const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
+const roundedStartBoolean = useBooleanish(() => props.roundedStart)
+const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
+
+const radiusElementClasses = useRadiusElementClasses(() => ({
+  rounded: roundedBoolean.value,
+  roundedTop: roundedTopBoolean.value,
+  roundedBottom: roundedBottomBoolean.value,
+  roundedStart: roundedStartBoolean.value,
+  roundedEnd: roundedEndBoolean.value,
+}))
 
 const computedSrcset = computed(() =>
   typeof props.srcset === 'string'
@@ -108,15 +125,16 @@ const alignment = toRef(() =>
     : undefined
 )
 
-const computedClasses = computed(() => ({
-  'img-thumbnail': thumbnailBoolean.value,
-  'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
-  'w-100': fluidGrowBoolean.value,
-  'rounded': props.rounded === '' || props.rounded === true,
-  [`rounded-${props.rounded}`]: typeof props.rounded === 'string' && props.rounded !== '',
-  [`${alignment.value}`]: alignment.value !== undefined,
-  'd-block': blockBoolean.value || centerBoolean.value,
-}))
+const computedClasses = computed(() => [
+  radiusElementClasses.value,
+  {
+    'img-thumbnail': thumbnailBoolean.value,
+    'img-fluid': fluidBoolean.value || fluidGrowBoolean.value,
+    'w-100': fluidGrowBoolean.value,
+    [`${alignment.value}`]: alignment.value !== undefined,
+    'd-block': blockBoolean.value || centerBoolean.value,
+  },
+])
 
 const makeBlankImgSrc = (
   width: number | undefined,

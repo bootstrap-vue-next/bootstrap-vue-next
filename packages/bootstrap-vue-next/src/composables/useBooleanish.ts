@@ -1,15 +1,22 @@
 import type {Booleanish} from '../types'
-import {type MaybeRefOrGetter, type Ref, toValue} from 'vue'
-import {isBooleanish, resolveBooleanish} from '../utils'
-import {computedEager} from '@vueuse/core'
+import {computed, type ComputedRef, type MaybeRefOrGetter, toValue} from 'vue'
+
+const isBooleanish = (input: unknown): input is Booleanish =>
+  typeof input === 'boolean' || input === '' || input === 'true' || input === 'false'
 
 /**
  * Resolves a Booleanish type reactively to type boolean
  */
-export default <T>(el: MaybeRefOrGetter<T>): Readonly<Ref<T extends Booleanish ? boolean : T>> =>
-  computedEager(() => {
+export default <T>(el: MaybeRefOrGetter<T>): ComputedRef<T extends Booleanish ? boolean : T> =>
+  computed(() => {
     const value = toValue(el)
-    return (isBooleanish(value) ? resolveBooleanish(value) : value) as T extends Booleanish
-      ? boolean
-      : T
+    return (
+      !isBooleanish(value)
+        ? value
+        : typeof value === 'boolean'
+        ? value
+        : value === '' || value === 'true'
+        ? true
+        : false
+    ) as T extends Booleanish ? boolean : T
   })

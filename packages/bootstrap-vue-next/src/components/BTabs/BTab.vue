@@ -28,7 +28,7 @@ const props = withDefaults(
     disabled?: Booleanish
     lazy?: Booleanish
     lazyOnce?: Booleanish
-    noBody?: boolean | string
+    noBody?: Booleanish
     tag?: string
     titleItemClass?: ClassValue
     titleLinkAttributes?: Record<string, unknown>
@@ -73,6 +73,7 @@ const buttonId = useId(() => props.buttonId, 'tab')
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
 const lazyBoolean = useBooleanish(() => props.lazyOnce ?? props.lazy)
+const noBodyBoolean = useBooleanish(() => props.noBody)
 
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
@@ -147,7 +148,7 @@ const computedClasses = computed(() => [
   {
     'active': isActive.value,
     'show': show.value,
-    'card-body': parentData?.card.value && props.noBody === false,
+    'card-body': parentData?.card.value && noBodyBoolean.value === false,
     'fade': !parentData?.noFade.value,
   },
   show.value && parentData?.activeTabClass ? parentData.activeTabClass : null,

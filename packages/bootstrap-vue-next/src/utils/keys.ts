@@ -4,6 +4,7 @@ import type {
   CheckboxValue,
   ClassValue,
   ColorVariant,
+  RadiusElement,
   Size,
   TabType,
   TextColorVariant,
@@ -47,7 +48,11 @@ export const avatarGroupInjectionKey: InjectionKey<{
   overlapScale: Readonly<Ref<number>>
   size: Readonly<Ref<Size | string | undefined>>
   square: Readonly<Ref<boolean>>
-  rounded: Readonly<Ref<boolean | string>>
+  rounded: Readonly<Ref<RadiusElement | boolean>>
+  roundedTop: Readonly<Ref<RadiusElement | boolean | undefined>>
+  roundedBottom: Readonly<Ref<RadiusElement | boolean | undefined>>
+  roundedStart: Readonly<Ref<RadiusElement | boolean | undefined>>
+  roundedEnd: Readonly<Ref<RadiusElement | boolean | undefined>>
   variant: Readonly<Ref<ColorVariant | null>>
   bgVariant: Readonly<Ref<ColorVariant | null>>
   textVariant: Readonly<Ref<TextColorVariant | null>>
