@@ -1,3 +1,5 @@
+export type ComponentSection = 'Properties' | 'Events' | 'Slots'
+
 export interface ComponentReference {
   component: string
   props: {
@@ -17,4 +19,5 @@ export interface ComponentReference {
     name: string
     description?: string
   }[]
+  sections?: ComponentSection[]
 }
