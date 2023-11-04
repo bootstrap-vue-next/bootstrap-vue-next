@@ -154,6 +154,7 @@ const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 const hasBadgeSlot = toRef(() => !isEmptySlot(slots.badge))
 
 const showBadge = toRef(() => !!props.badge || props.badge === '' || hasBadgeSlot.value)
+const computedSquare = toRef(() => parentData?.size.value ?? squareBoolean.value)
 const computedSize = toRef(() => parentData?.size.value ?? computeSize(props.size))
 const computedVariant = toRef(() => parentData?.variant.value ?? props.variant)
 const computedRounded = toRef(() => parentData?.rounded.value ?? roundedBoolean.value)
@@ -193,14 +194,14 @@ const resolvedBackgroundClasses = useColorVariantClasses(() => ({
 const computedClasses = computed(() => [
   resolvedBackgroundClasses.value,
   // Square overwrites all else
-  squareBoolean.value === true ? undefined : radiusElementClasses.value,
+  computedSquare.value === true ? undefined : radiusElementClasses.value,
   {
     [`b-avatar-${props.size}`]: !!props.size && SIZES.indexOf(computeSize(props.size)) !== -1,
     [`btn-${computedVariant.value}`]: buttonBoolean.value ? computedVariant.value !== null : false,
     'badge': !buttonBoolean.value && computedVariant.value !== null && hasDefaultSlot.value,
     'btn': buttonBoolean.value,
     // Square is the same as rounded-0 class
-    'rounded-0': squareBoolean.value === true,
+    'rounded-0': computedSquare.value === true,
   },
 ])
 
