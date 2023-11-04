@@ -82,7 +82,6 @@ const props = withDefaults(
     button: false,
     buttonType: 'button',
     icon: undefined,
-    // eslint-disable-next-line vue/require-valid-default-prop
     rounded: false,
     roundedTop: undefined,
     roundedBottom: undefined,
