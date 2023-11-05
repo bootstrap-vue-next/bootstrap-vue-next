@@ -16,7 +16,7 @@
           <BRow>
             <BCol>
               <ul>
-                <li v-for="section in sections" :key="section">
+                <li v-for="section in component.sections" :key="section">
                   <BLink :to="buildCompReferenceLink(`${component.component}-${section}`)">
                     &lt;{{ component.component }}&gt; {{ section }}
                   </BLink>
@@ -24,7 +24,7 @@
               </ul>
             </BCol>
           </BRow>
-          <BRow v-for="section in sections" :key="section" class="my-3">
+          <BRow v-for="section in component.sections" :key="section" class="my-3">
             <BCol>
               <BContainer fluid>
                 <BRow>
@@ -76,7 +76,7 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import {BCol, BContainer, BLink, BRow, BTable, type TableField} from 'bootstrap-vue-next'
-import type {ComponentReference} from '../data/components/ComponentReference'
+import type {ComponentReference, ComponentSection} from '../data/components/ComponentReference'
 
 const props = defineProps<{data: ComponentReference[]}>()
 
@@ -84,8 +84,8 @@ const props = defineProps<{data: ComponentReference[]}>()
  * Sorts the items inside so they're uniform structure
  */
 const sortData = computed(() =>
-  [...props.data].map(
-    (el: ComponentReference): ComponentReference => ({
+  [...props.data].map((el: ComponentReference): ComponentReference => {
+    const data: ComponentReference = {
       component: el.component,
       props: el.props
         .map((inner) => ({
@@ -111,17 +111,21 @@ const sortData = computed(() =>
           scope: inner.scope,
         }))
         .sort((a, b) => a.name.localeCompare(b.name)),
-    })
-  )
-)
+    }
 
-const sections = ['Properties', 'Events', 'Slots'] as const
+    data.sections = (['Properties', 'Events', 'Slots'] as ComponentSection[]).filter(
+      (x) => !!data?.[sectionToComponentItem(x)]?.length
+    )
+
+    return data
+  })
+)
 
 const buildCompReferenceLink = (str: string): string => `#comp-reference-${str}`.toLowerCase()
 
 const sectionToComponentItem = (
-  el: (typeof sections)[number]
-): Exclude<keyof ComponentReference, 'component'> =>
+  el: ComponentSection
+): Exclude<keyof ComponentReference, 'component' | 'sections'> =>
   el === 'Properties' ? 'props' : el === 'Events' ? 'emits' : 'slots'
 
 const fields: TableField[] = ['prop', 'type', 'default', 'description']
