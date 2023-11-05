@@ -78,59 +78,59 @@ import BButton from '../BButton/BButton.vue'
 
 const props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
-  id: undefined,
-  menuClass: undefined,
-  size: 'md',
-  splitClass: undefined,
-  splitVariant: undefined,
-  text: undefined,
-  toggleClass: undefined,
-  floatingMiddleware: undefined,
-  splitDisabled: undefined,
   autoClose: true,
   block: false,
+  boundary: 'clippingAncestors',
+  center: false,
+  container: undefined,
   disabled: false,
-  isNav: false,
-  dropup: false,
   dropend: false,
   dropstart: false,
-  center: false,
+  dropup: false,
   end: false,
-  noFlip: false,
+  floatingMiddleware: undefined,
+  id: undefined,
+  isNav: false,
   lazy: false,
+  menuClass: undefined,
+  modelValue: false,
+  noCaret: false,
+  noFlip: false,
   noShift: false,
   offset: 0,
   role: 'menu',
+  size: 'md',
   split: false,
   splitButtonType: 'button',
+  splitClass: undefined,
+  splitDisabled: undefined,
   splitHref: undefined,
-  noCaret: false,
+  splitTo: undefined,
+  splitVariant: undefined,
+  strategy: 'absolute',
+  text: undefined,
+  toggleClass: undefined,
   toggleText: 'Toggle dropdown',
   variant: 'secondary',
-  modelValue: false,
-  strategy: 'absolute',
-  splitTo: undefined,
-  boundary: 'clippingAncestors',
-  container: undefined,
 })
 
 const emit = defineEmits<{
-  'show': [value: BvTriggerableEvent]
-  'shown': []
-  'hide': [value: BvTriggerableEvent]
-  'hidden': []
-  'hide-prevented': []
-  'show-prevented': []
   'click': [event: MouseEvent]
+  'hidden': []
+  'hide': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show': [value: BvTriggerableEvent]
+  'show-prevented': []
+  'shown': []
   'toggle': []
   'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: {hide: () => void; show: () => void}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'button-content'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: {hide: () => void; show: () => void}) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'toggle-text'?: (props: Record<string, never>) => any
 }>()

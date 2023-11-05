@@ -19,13 +19,13 @@ import type {BFormFeedbackSharedProps} from '../../types'
 import {useBooleanish} from '../../composables'
 
 const props = withDefaults(defineProps<BFormFeedbackSharedProps>(), {
-  id: undefined,
-  role: undefined,
-  text: undefined,
   ariaLive: undefined,
   forceShow: false,
-  tag: 'div',
+  id: undefined,
+  role: undefined,
   state: null,
+  tag: 'div',
+  text: undefined,
   tooltip: false,
 })
 

@@ -52,12 +52,12 @@ const props = withDefaults(
     {
       alt?: string
       badge?: boolean | string // Can't make this Booleanish. string is valid text
-      badgeStart?: Booleanish
+      badgeBgVariant?: ColorVariant | null
       badgeOffset?: string
+      badgeStart?: Booleanish
+      badgeTextVariant?: TextColorVariant | null
       badgeTop?: Booleanish
       badgeVariant?: ColorVariant | null
-      badgeTextVariant?: TextColorVariant | null
-      badgeBgVariant?: ColorVariant | null
       button?: Booleanish
       buttonType?: ButtonType
       icon?: string
@@ -70,50 +70,55 @@ const props = withDefaults(
       RadiusElementExtendables
   >(),
   {
-    bgVariant: null,
     alt: 'avatar',
     badge: false,
-    badgeStart: false,
+    badgeBgVariant: null,
     badgeOffset: undefined,
+    badgeStart: false,
+    badgeTextVariant: null,
     badgeTop: false,
     badgeVariant: 'primary',
-    badgeBgVariant: null,
-    badgeTextVariant: null,
     button: false,
     buttonType: 'button',
-    icon: undefined,
-    rounded: false,
-    roundedTop: undefined,
-    roundedBottom: undefined,
-    roundedStart: undefined,
-    roundedEnd: undefined,
     size: undefined,
     square: false,
     src: undefined,
     text: undefined,
-    textVariant: null,
     // Link props
+    variant: 'secondary',
+    // All others use defaults
     active: undefined,
     activeClass: undefined,
+    append: undefined,
+    disabled: undefined,
     exactActiveClass: undefined,
-    append: false,
     href: undefined,
-    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: undefined,
-    replace: false,
-    disabled: false,
-    routerComponentName: 'router-link',
-    target: '_self',
-    to: undefined,
+    icon: undefined,
     opacity: undefined,
     opacityHover: undefined,
-    underlineVariant: null,
+    rel: undefined,
+    replace: undefined,
+    routerComponentName: undefined,
+    target: undefined,
+    to: undefined,
     underlineOffset: undefined,
     underlineOffsetHover: undefined,
     underlineOpacity: undefined,
     underlineOpacityHover: undefined,
-    variant: 'secondary',
+    underlineVariant: undefined,
+    // End link props
+    // ColorExtendables props
+    // Variant is here as well
+    bgVariant: null,
+    textVariant: null,
+    // End ColorExtendables props
+    // RadiusElementExtendables props
+    rounded: false,
+    roundedBottom: undefined,
+    roundedEnd: undefined,
+    roundedStart: undefined,
+    roundedTop: undefined,
+    // End RadiusElementExtendables props
   }
 )
 
@@ -124,9 +129,9 @@ const emit = defineEmits<{
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   badge?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()

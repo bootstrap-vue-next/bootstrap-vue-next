@@ -55,44 +55,44 @@ import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
-    rows?: string | number
-    columns?: string | number
-    cellWidth?: string | number
-    size?: PlaceholderSize
     animation?: PlaceholderAnimation
-    variant?: ColorVariant | null
-    headerColumns?: string | number
-    hideHeader?: Booleanish
-    headerCellWidth?: string | number
-    headerSize?: PlaceholderSize
-    headerAnimation?: PlaceholderAnimation
-    headerVariant?: ColorVariant | null
-    footerColumns?: string | number
-    showFooter?: Booleanish
-    footerCellWidth?: string | number
-    footerSize?: PlaceholderSize
+    cellWidth?: string | number
+    columns?: string | number
     footerAnimation?: PlaceholderAnimation
+    footerCellWidth?: string | number
+    footerColumns?: string | number
+    footerSize?: PlaceholderSize
     footerVariant?: ColorVariant | null
+    headerAnimation?: PlaceholderAnimation
+    headerCellWidth?: string | number
+    headerColumns?: string | number
+    headerSize?: PlaceholderSize
+    headerVariant?: ColorVariant | null
+    hideHeader?: Booleanish
+    rows?: string | number
+    showFooter?: Booleanish
+    size?: PlaceholderSize
+    variant?: ColorVariant | null
   }>(),
   {
-    headerSize: 'md',
-    headerAnimation: undefined,
-    headerVariant: undefined,
+    animation: undefined,
+    cellWidth: 100,
+    columns: 5,
+    footerAnimation: undefined,
+    footerCellWidth: 100,
     footerColumns: undefined,
     footerSize: 'md',
-    footerAnimation: undefined,
     footerVariant: undefined,
-    size: 'md',
-    animation: undefined,
-    variant: undefined,
-    headerColumns: undefined,
-    columns: 5,
-    rows: 3,
-    cellWidth: 100,
-    showFooter: false,
-    footerCellWidth: 100,
-    hideHeader: false,
+    headerAnimation: undefined,
     headerCellWidth: 100,
+    headerColumns: undefined,
+    headerSize: 'md',
+    headerVariant: undefined,
+    hideHeader: false,
+    rows: 3,
+    showFooter: false,
+    size: 'md',
+    variant: undefined,
   }
 )
 
@@ -100,9 +100,9 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  thead?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tfoot?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  thead?: (props: Record<string, never>) => any
 }>()
 
 const columnsToNumber = useToNumber(() => props.columns)

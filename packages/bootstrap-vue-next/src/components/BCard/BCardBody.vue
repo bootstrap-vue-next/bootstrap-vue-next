@@ -33,28 +33,30 @@ import {useBooleanish, useColorVariantClasses} from '../../composables'
 const props = withDefaults(
   defineProps<
     {
-      tag?: string
       overlay?: Booleanish
       subtitle?: string
       subtitleTag?: string
       subtitleTextVariant?: TextColorVariant | null
+      tag?: string
+      text?: string
       title?: string
       titleTag?: string
-      text?: string
     } & ColorExtendables
   >(),
   {
-    variant: null,
-    tag: 'div',
     overlay: false,
-    titleTag: 'h4',
+    subtitle: undefined,
     subtitleTag: 'h4',
+    subtitleTextVariant: undefined,
+    tag: 'div',
+    text: undefined,
+    title: undefined,
+    titleTag: 'h4',
+    // ColorExtendables props
     bgVariant: null,
     textVariant: null,
-    subtitleTextVariant: undefined,
-    subtitle: undefined,
-    title: undefined,
-    text: undefined,
+    variant: null,
+    // End ColorExtendables props
   }
 )
 
@@ -62,9 +64,9 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   subtitle?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  title?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()

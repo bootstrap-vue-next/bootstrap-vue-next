@@ -38,30 +38,30 @@ const props = withDefaults(
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
-    linkClass: undefined,
     // Link props
+    linkClass: undefined,
+    variant: 'secondary',
+    // All others use defaults
     active: undefined,
     activeClass: undefined,
+    append: undefined,
+    disabled: undefined,
     exactActiveClass: undefined,
-    append: false,
     href: undefined,
-    disabled: false,
-    icon: false,
-    variant: 'secondary',
-    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: undefined,
-    replace: false,
-    routerComponentName: 'router-link',
-    target: '_self',
-    to: undefined,
+    icon: undefined,
     opacity: undefined,
     opacityHover: undefined,
-    underlineVariant: null,
+    rel: undefined,
+    replace: undefined,
+    routerComponentName: undefined,
+    target: undefined,
+    to: undefined,
     underlineOffset: undefined,
     underlineOffsetHover: undefined,
     underlineOpacity: undefined,
     underlineOpacityHover: undefined,
+    underlineVariant: undefined,
+    // End link props
   }
 )
 

@@ -49,10 +49,6 @@ import BImg from '../BImg.vue'
 
 const props = withDefaults(
   defineProps<{
-    imgSrc?: string
-    imgHeight?: string | number
-    imgWidth?: string | number
-    interval?: string | number
     background?: string
     caption?: string
     captionHtml?: string
@@ -60,43 +56,47 @@ const props = withDefaults(
     contentTag?: string
     contentVisibleUp?: string
     id?: string
-    imgSrcset?: string | string[]
     imgAlt?: string
     imgBlank?: Booleanish
     imgBlankColor?: string
+    imgHeight?: string | number
+    imgSrc?: string
+    imgSrcset?: string | string[]
+    imgWidth?: string | number
+    interval?: string | number
     text?: string
     textHtml?: string
     textTag?: string
   }>(),
   {
-    imgSrcset: undefined,
-    imgSrc: undefined,
-    imgHeight: undefined,
-    imgWidth: undefined,
-    interval: undefined,
-    text: undefined,
-    textHtml: undefined,
-    id: undefined,
-    imgAlt: undefined,
-    contentVisibleUp: undefined,
     background: undefined,
     caption: undefined,
     captionHtml: undefined,
     captionTag: 'h3',
     contentTag: 'div',
+    contentVisibleUp: undefined,
+    id: undefined,
+    imgAlt: undefined,
     imgBlank: false,
     imgBlankColor: 'transparent',
+    imgHeight: undefined,
+    imgSrc: undefined,
+    imgSrcset: undefined,
+    imgWidth: undefined,
+    interval: undefined,
+    text: undefined,
+    textHtml: undefined,
     textTag: 'p',
   }
 )
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  caption?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   img?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  caption?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   text?: (props: Record<string, never>) => any
 }>()

@@ -18,8 +18,8 @@ const props = withDefaults(
     tag?: string
   }>(),
   {
-    fill: false,
     align: undefined,
+    fill: false,
     justified: false,
     small: false,
     tag: 'ul',

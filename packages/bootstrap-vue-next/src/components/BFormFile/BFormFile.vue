@@ -51,6 +51,9 @@ const props = withDefaults(
     disabled?: Booleanish
     form?: string
     id?: string
+    label?: string
+    labelClass?: ClassValue
+    modelValue?: File[] | File | null
     multiple?: Booleanish
     name?: string
     noDrop?: Booleanish
@@ -58,9 +61,6 @@ const props = withDefaults(
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
-    modelValue?: File[] | File | null
-    label?: string
-    labelClass?: ClassValue
   }>(),
   {
     accept: '',
@@ -71,6 +71,9 @@ const props = withDefaults(
     disabled: false,
     form: undefined,
     id: undefined,
+    label: '',
+    labelClass: undefined,
+    modelValue: null,
     multiple: false,
     name: undefined,
     noDrop: false,
@@ -78,15 +81,12 @@ const props = withDefaults(
     required: false,
     size: undefined,
     state: null,
-    modelValue: null,
-    label: '',
-    labelClass: undefined,
   }
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: File | File[] | null]
   'change': [value: Event]
+  'update:modelValue': [value: File | File[] | null]
 }>()
 
 const slots = useSlots()
@@ -151,12 +151,12 @@ watch(modelValue, (newValue) => {
 })
 
 defineExpose({
+  blur: () => {
+    focused.value = false
+  },
   element: input,
   focus: () => {
     focused.value = true
-  },
-  blur: () => {
-    focused.value = false
   },
   reset,
 })

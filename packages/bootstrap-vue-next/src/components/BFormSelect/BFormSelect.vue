@@ -58,6 +58,7 @@ const props = withDefaults(
     htmlField?: string
     id?: string
     labelField?: string
+    modelValue?: string | unknown[] | Record<string, unknown> | number | null
     multiple?: Booleanish
     name?: string
     options?: unknown[] | Record<string, unknown>
@@ -69,36 +70,35 @@ const props = withDefaults(
     state?: Booleanish | null
     textField?: string
     valueField?: string
-    modelValue?: string | unknown[] | Record<string, unknown> | number | null
   }>(),
   {
-    form: undefined,
-    id: undefined,
-    name: undefined,
-    size: 'md',
     ariaInvalid: undefined,
     autofocus: false,
     disabled: false,
     disabledField: 'disabled',
+    form: undefined,
     htmlField: 'html',
-    state: null,
+    id: undefined,
     labelField: 'label',
+    modelValue: '',
     multiple: false,
+    name: undefined,
     options: () => [],
     optionsField: 'options',
     plain: false,
     required: false,
     selectSize: 0,
+    size: 'md',
+    state: null,
     textField: 'text',
     valueField: 'value',
-    modelValue: '',
   }
 )
 
 const emit = defineEmits<{
+  'change': [value: unknown]
   'input': [value: unknown]
   'update:modelValue': [value: unknown]
-  'change': [value: unknown]
 }>()
 
 defineSlots<{
@@ -162,12 +162,12 @@ const localValue = computed({
 })
 
 defineExpose({
+  blur: () => {
+    focused.value = false
+  },
   element: input,
   focus: () => {
     focused.value = true
-  },
-  blur: () => {
-    focused.value = false
   },
 })
 </script>

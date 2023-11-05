@@ -18,9 +18,9 @@ const props = withDefaults(
   }>(),
   {
     appear: false,
+    mode: undefined,
     noFade: false,
     transProps: undefined,
-    mode: undefined,
   }
 )
 

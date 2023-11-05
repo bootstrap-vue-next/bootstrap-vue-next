@@ -43,53 +43,53 @@ const props = withDefaults(
   defineProps<{
     ariaLabel?: string
     ariaLabelledBy?: string
-    form?: string
-    indeterminate?: Booleanish
-    name?: string
-    id?: string
     autofocus?: Booleanish
-    plain?: Booleanish
     button?: Booleanish
     buttonGroup?: Booleanish
-    switch?: Booleanish
-    disabled?: Booleanish
     buttonVariant?: ButtonVariant | null
+    disabled?: Booleanish
+    form?: string
+    id?: string
+    indeterminate?: Booleanish
     inline?: Booleanish
+    modelValue?: CheckboxValue | CheckboxValue[]
+    name?: string
+    plain?: Booleanish
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
+    switch?: Booleanish
     uncheckedValue?: CheckboxValue
     value?: CheckboxValue
-    modelValue?: CheckboxValue | CheckboxValue[]
   }>(),
   {
     ariaLabel: undefined,
     ariaLabelledBy: undefined,
-    form: undefined,
-    indeterminate: undefined,
-    name: undefined,
     autofocus: false,
-    plain: false,
     button: false,
     buttonGroup: false,
-    id: undefined,
-    required: undefined,
-    state: null,
-    modelValue: undefined,
-    switch: false,
-    disabled: false,
     buttonVariant: null,
+    disabled: false,
+    form: undefined,
+    id: undefined,
+    indeterminate: undefined,
     inline: false,
+    modelValue: undefined,
+    name: undefined,
+    plain: false,
+    required: undefined,
     size: undefined,
-    value: true,
+    state: null,
+    switch: false,
     uncheckedValue: undefined,
+    value: true,
   }
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
-  'input': [value: CheckboxValue | CheckboxValue[]]
   'change': [value: CheckboxValue | CheckboxValue[]]
+  'input': [value: CheckboxValue | CheckboxValue[]]
+  'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
 }>()
 
 defineSlots<{
@@ -169,12 +169,12 @@ const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
 
 defineExpose({
+  blur: () => {
+    focused.value = false
+  },
   element: input,
   focus: () => {
     focused.value = true
-  },
-  blur: () => {
-    focused.value = false
   },
 })
 </script>

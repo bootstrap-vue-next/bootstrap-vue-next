@@ -14,7 +14,10 @@ import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {BTableSimpleProps} from '../../types'
 
+// TODO alphabetize the lists for tables
+// TODO all table things do not declare their props
 // TODO some props are not used. ex id, fixed, etc
+// TODO Attrs fallthrough will attach to either responsive or table, but you can't assign attrs to table if it is responsive. So we will need an attrs & class
 const props = withDefaults(defineProps<BTableSimpleProps>(), {
   borderVariant: null,
   tableClass: undefined,

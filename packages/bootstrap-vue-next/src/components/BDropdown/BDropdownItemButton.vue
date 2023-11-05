@@ -24,18 +24,18 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    buttonClass?: ClassValue
     active?: Booleanish
     activeClass?: ClassValue
+    buttonClass?: ClassValue
     disabled?: Booleanish
     variant?: ColorVariant | null
   }>(),
   {
     active: false,
     activeClass: 'active',
+    buttonClass: undefined,
     disabled: false,
     variant: null,
-    buttonClass: undefined,
   }
 )
 

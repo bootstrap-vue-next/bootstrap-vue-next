@@ -41,11 +41,14 @@ defineSlots<{
 const props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
-  exactActiveClass: 'router-link-exact-active',
   append: false,
   disabled: false,
   event: 'click',
+  exactActiveClass: 'router-link-exact-active',
   href: undefined,
+  icon: false,
+  opacity: undefined,
+  opacityHover: undefined,
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
   rel: undefined,
@@ -54,15 +57,12 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   routerTag: 'a',
   target: undefined,
   to: undefined,
-  variant: null,
-  opacity: undefined,
-  opacityHover: undefined,
-  underlineVariant: null,
   underlineOffset: undefined,
   underlineOffsetHover: undefined,
   underlineOpacity: undefined,
   underlineOpacityHover: undefined,
-  icon: false,
+  underlineVariant: null,
+  variant: null,
 })
 
 const emit = defineEmits<{

@@ -47,9 +47,9 @@ const props = withDefaults(
     // CommonInputProps
     ariaInvalid: undefined,
     autocomplete: undefined,
+    autofocus: false,
     debounce: 0,
     debounceMaxWait: NaN,
-    autofocus: false,
     disabled: false,
     form: undefined,
     formatter: undefined,
@@ -67,17 +67,18 @@ const props = withDefaults(
     size: undefined,
     state: null,
     trim: false,
+    // End CommonInputProps
   }
 )
 
 const emit = defineEmits<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'update:modelValue': [val: any]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'change': [val: any]
   'blur': [val: FocusEvent]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'change': [val: any]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'input': [val: any]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'update:modelValue': [val: any]
 }>()
 
 const {input, computedId, computedAriaInvalid, onInput, onChange, onBlur, focus, blur} =
@@ -110,9 +111,9 @@ const computedClasses = computed(() => {
 })
 
 defineExpose({
+  blur,
   element: input,
   focus,
-  blur,
 })
 
 // const highlight = () => {
