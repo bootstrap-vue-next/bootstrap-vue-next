@@ -17,7 +17,7 @@
             <BCol>
               <ul>
                 <li v-for="section in sections" :key="section">
-                  <BLink :to="buildCompReferenceLink(`${component.component}-${section}`)">
+                  <BLink :href="buildCompReferenceLink(`${component.component}-${section}`)">
                     &lt;{{ component.component }}&gt; {{ section }}
                   </BLink>
                 </li>

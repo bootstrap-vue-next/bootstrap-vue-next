@@ -1,7 +1,7 @@
 <template>
   <BCard :body-text="description">
     <template #header>
-      <BLink :to="route">
+      <BLink :href="route">
         <h3 class="m-0">
           {{ name }}
         </h3>

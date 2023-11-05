@@ -3,7 +3,7 @@
     <BToaster />
     <div class="d-flex gap-2 align-items-center">
       <BNavbarToggle v-b-toggle.sidebar-menu />
-      <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
+      <BNavbarBrand :href="withBase('/')" class="p-0 me-0 me-lg-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 953 953"
@@ -30,7 +30,7 @@
         <BNav>
           <BNavItem
             v-for="link in headerLinks"
-            :to="link.route"
+            :href="link.route"
             :active="route.path === `${link.route}.html`"
             class="py-2"
             active-class="active fw-bold"

@@ -4,7 +4,7 @@
       <strong class="bd-links-heading"> <GearIcon aria-hidden /> General </strong>
       <BListGroupItem v-for="link in headerLinks" :key="link.label">
         <BLink
-          :to="link.route"
+          :href="link.route"
           :active="routerRoute.path === `${link.route}.html`"
           class="px-2 ms-2 rounded"
           active-class="bg-primary text-light"
@@ -14,13 +14,13 @@
     </BListGroup>
     <BListGroup v-for="group in groupComputedList" :key="group.label">
       <strong class="bd-links-heading">
-        <BLink :to="withBase(group.uri)">
+        <BLink :href="withBase(group.uri)">
           <component :is="group.icon()" /> {{ group.label }}
         </BLink>
       </strong>
       <BListGroupItem v-for="component in group.children" :key="component.name">
         <BLink
-          :to="component.route"
+          :href="component.route"
           :active="routerRoute.path === `${component.route}.html`"
           class="px-2 ms-2 rounded"
           active-class="bg-primary text-light"
