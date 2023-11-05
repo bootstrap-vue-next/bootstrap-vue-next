@@ -430,14 +430,8 @@ const computedItems = computed<TableItem[]>(() => {
   return items
 })
 
-// TODO fix this. It's not even async
-const updateInternalItems = async (items: TableItem<Record<string, any>>[]) => {
-  try {
-    internalItems.value = items
-    return internalItems.value
-  } catch (err) {
-    return undefined
-  }
+const updateInternalItems = (items: TableItem[]) => {
+  internalItems.value = items
 }
 
 const computedDisplayItems = computed<TableItem[]>(() => {
@@ -532,33 +526,19 @@ const onFieldHeadClick = (
 const callItemsProvider = async () => {
   if (!usesProvider.value || !props.provider || busyBoolean.value) return
   busyModel.value = true
-  const response = props.provider(
-    {
-      currentPage: currentPageNumber.value,
-      filter: props.filter,
-      sortBy: props.sortBy,
-      sortDesc: props.sortDesc,
-      perPage: perPageNumber.value,
-    },
-    updateInternalItems
-  )
-  if (response === undefined) return
-  if (response instanceof Promise) {
-    try {
-      const items = await response
-      if (!Array.isArray(items)) return
-      const internalItems = await updateInternalItems(items)
-      return internalItems
-    } finally {
-      if (busyBoolean.value) {
-        busyModel.value = false
-      }
-    }
-  }
-
+  const response = props.provider({
+    currentPage: currentPageNumber.value,
+    filter: props.filter,
+    sortBy: props.sortBy,
+    sortDesc: props.sortDesc,
+    perPage: perPageNumber.value,
+  })
   try {
-    const internalItems = await updateInternalItems(response)
-    return internalItems
+    const items = response instanceof Promise ? await response : response
+
+    if (items === undefined) return
+
+    updateInternalItems(items)
   } finally {
     if (busyBoolean.value) {
       busyModel.value = false
@@ -622,7 +602,7 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
 
 watch(
   () => props.items,
-  (v) => updateInternalItems(v)
+  (newValue) => updateInternalItems(newValue)
 )
 
 filteredHandler.value = async (items) => {
