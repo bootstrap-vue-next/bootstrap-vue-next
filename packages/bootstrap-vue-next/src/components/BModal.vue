@@ -412,11 +412,9 @@ const headerClasses = computed(() => [
   },
 ])
 
-const headerCloseClasses = toRef(() => props.headerCloseClass)
-
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
-  class: headerCloseClasses.value,
+  class: props.headerCloseClass,
 }))
 
 const resolvedFooterBgClasses = useColorVariantClasses(() => ({
