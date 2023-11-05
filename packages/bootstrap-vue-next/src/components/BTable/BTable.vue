@@ -430,7 +430,7 @@ const computedItems = computed<TableItem[]>(() => {
   return items
 })
 
-const updateInternalItems = (items: TableItem<Record<string, any>>[]) => {
+const updateInternalItems = (items: TableItem[]) => {
   internalItems.value = items
 }
 
