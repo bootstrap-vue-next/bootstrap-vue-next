@@ -19,8 +19,8 @@ const props = withDefaults(
     small?: Booleanish
     tabs?: Booleanish
     tag?: string
-    vertical?: Booleanish
     underline?: Booleanish
+    vertical?: Booleanish
   }>(),
   {
     align: undefined,
@@ -31,8 +31,8 @@ const props = withDefaults(
     small: false,
     tabs: false,
     tag: 'ul',
-    vertical: false,
     underline: false,
+    vertical: false,
   }
 )
 

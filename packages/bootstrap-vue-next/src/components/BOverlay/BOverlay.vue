@@ -43,6 +43,7 @@ const props = withDefaults(
       fixed?: Booleanish
       noCenter?: Booleanish
       noFade?: Booleanish
+      noSpinner?: Booleanish
       noWrap?: Booleanish
       opacity?: number | string
       overlayTag?: string
@@ -50,7 +51,6 @@ const props = withDefaults(
       spinnerSmall?: Booleanish
       spinnerType?: SpinnerType
       spinnerVariant?: ColorVariant | null
-      noSpinner?: Booleanish
       variant?: ColorVariant | 'white' | 'transparent' | null
       wrapTag?: string
       zIndex?: number | string
@@ -59,21 +59,27 @@ const props = withDefaults(
   {
     blur: '2px',
     bgColor: undefined,
-    spinnerVariant: undefined,
     fixed: false,
     noCenter: false,
-    noSpinner: false,
     noFade: false,
+    noSpinner: false,
     noWrap: false,
     opacity: 0.85,
     overlayTag: 'div',
-    rounded: false,
     show: false,
     spinnerSmall: false,
     spinnerType: 'border',
+    spinnerVariant: undefined,
     variant: 'light',
     wrapTag: 'div',
     zIndex: 10,
+    // RadiusElementExtendables props
+    rounded: false,
+    roundedBottom: undefined,
+    roundedEnd: undefined,
+    roundedStart: undefined,
+    roundedTop: undefined,
+    // End RadiusElementExtendables props
   }
 )
 

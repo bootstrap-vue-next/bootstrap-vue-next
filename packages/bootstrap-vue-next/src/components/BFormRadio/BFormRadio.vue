@@ -41,46 +41,46 @@ const props = withDefaults(
   defineProps<{
     ariaLabel?: string
     ariaLabelledby?: string
-    form?: string
-    id?: string
-    name?: string
-    size?: Size
     autofocus?: Booleanish
-    modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
-    plain?: Booleanish
     button?: Booleanish
     buttonGroup?: Booleanish
-    disabled?: Booleanish
     buttonVariant?: ButtonVariant | null
+    disabled?: Booleanish
+    form?: string
+    id?: string
     inline?: Booleanish
+    modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
+    name?: string
+    plain?: Booleanish
     required?: Booleanish
+    size?: Size
     state?: Booleanish | null
     value?: boolean | string | unknown[] | Record<string, unknown> | number | null
   }>(),
   {
     ariaLabel: undefined,
     ariaLabelledby: undefined,
-    form: undefined,
-    id: undefined,
-    name: undefined,
     autofocus: false,
-    plain: false,
     button: false,
     buttonGroup: false,
-    disabled: false,
-    modelValue: undefined,
-    state: null,
-    size: undefined,
     buttonVariant: null,
+    disabled: false,
+    form: undefined,
+    id: undefined,
     inline: false,
+    modelValue: undefined,
+    name: undefined,
+    plain: false,
     required: false,
+    size: undefined,
+    state: null,
     value: true,
   }
 )
 
 const emit = defineEmits<{
-  'input': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
   'change': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
+  'input': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
   'update:modelValue': [
     value: boolean | string | unknown[] | Record<string, unknown> | number | null,
   ]
@@ -165,12 +165,12 @@ const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)
 
 defineExpose({
+  blur: () => {
+    focused.value = false
+  },
   element: input,
   focus: () => {
     focused.value = true
-  },
-  blur: () => {
-    focused.value = false
   },
 })
 </script>

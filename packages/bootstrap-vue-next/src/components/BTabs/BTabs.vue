@@ -76,68 +76,69 @@ import {useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
+    activeId?: string
     activeNavItemClass?: ClassValue
     activeTabClass?: ClassValue
     align?: AlignmentJustifyContent
-    contentClass?: ClassValue
     card?: Booleanish
+    contentClass?: ClassValue
     end?: Booleanish
     fill?: Booleanish
     id?: string
     justified?: Booleanish
     lazy?: Booleanish
+    modelValue?: number
     navClass?: ClassValue
     navWrapperClass?: ClassValue
     noFade?: Booleanish
-    // noKeyNav?: Booleanish
+    // noKeyNav?: Booleanish,
     noNavStyle?: Booleanish
     pills?: Booleanish
     small?: Booleanish
     tag?: string
     vertical?: Booleanish
-    modelValue?: number
-    activeId?: string
   }>(),
   {
-    navClass: undefined,
-    navWrapperClass: undefined,
-    id: undefined,
+    activeId: undefined,
     activeNavItemClass: undefined,
     activeTabClass: undefined,
     align: undefined,
-    contentClass: undefined,
     card: false,
+    contentClass: undefined,
     end: false,
     fill: false,
+    id: undefined,
     justified: false,
     lazy: false,
+    modelValue: -1,
+    navClass: undefined,
+    navWrapperClass: undefined,
     noFade: false,
+    // noKeyNav: false,
     noNavStyle: false,
     pills: false,
     small: false,
     tag: 'div',
     vertical: false,
-    modelValue: -1,
-    activeId: undefined,
   }
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: number]
-  'update:activeId': [value: string]
   'activate-tab': [v1: number, v2: number, v3: BvEvent]
   'click': [] // TODO click event is never used
+  'update:activeId': [value: string]
+  'update:modelValue': [value: number]
 }>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'tabs-start'?: (props: Record<string, never>) => any
+  'default'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'empty'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'tabs-end'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: Record<string, never>) => any
+  'tabs-start'?: (props: Record<string, never>) => any
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})

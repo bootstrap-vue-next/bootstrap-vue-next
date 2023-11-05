@@ -33,20 +33,20 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    id?: string
     ariaDescribedby?: string
     header?: string
     headerClass?: ClassValue
     headerTag?: string
     headerVariant?: ColorVariant | null
+    id?: string
   }>(),
   {
-    headerTag: 'header',
-    id: undefined,
     ariaDescribedby: undefined,
     header: undefined,
     headerClass: undefined,
+    headerTag: 'header',
     headerVariant: null,
+    id: undefined,
   }
 )
 

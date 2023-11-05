@@ -42,57 +42,57 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     // appear?: Booleanish
+    horizontal?: Booleanish
     id?: string
+    isNav?: Booleanish
     modelValue?: Booleanish
     tag?: string
     toggle?: Booleanish
-    horizontal?: Booleanish
     visible?: Booleanish
-    isNav?: Booleanish
   }>(),
   {
+    horizontal: false,
     id: undefined,
+    isNav: false,
     modelValue: false,
     tag: 'div',
     toggle: false,
-    horizontal: false,
     visible: false,
-    isNav: false,
   }
 )
 
 const emit = defineEmits<{
-  'show': [value: BvTriggerableEvent]
-  'shown': []
-  'hide': [value: BvTriggerableEvent]
   'hidden': []
+  'hide': [value: BvTriggerableEvent]
   'hide-prevented': []
+  'show': [value: BvTriggerableEvent]
   'show-prevented': []
+  'shown': []
   'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
-  header?: (props: {
-    visible: boolean
-    toggle: () => void
-    open: () => void
-    close: () => void
-    id: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) => any
   default?: (props: {
-    visible: boolean
-    toggle: () => void
-    open: () => void
     close: () => void
+    open: () => void
+    toggle: () => void
+    visible: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
   footer?: (props: {
-    visible: boolean
-    toggle: () => void
-    open: () => void
     close: () => void
     id: string
+    open: () => void
+    toggle: () => void
+    visible: boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) => any
+  header?: (props: {
+    close: () => void
+    id: string
+    open: () => void
+    toggle: () => void
+    visible: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
 }>()
@@ -229,10 +229,10 @@ useEventListener(element, 'bv-toggle', () => {
 
 defineExpose({
   close,
+  isNav: isNavBoolean,
   open,
   toggle: toggleFn,
   visible: readonly(show),
-  isNav: isNavBoolean,
 })
 
 provide(collapseInjectionKey, {

@@ -18,8 +18,8 @@ const props = withDefaults(
   }>(),
   {
     tag: 'h6',
-    textVariant: 'body-secondary',
     text: undefined,
+    textVariant: 'body-secondary',
   }
 )
 

@@ -21,33 +21,32 @@ import {tabsInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    id?: string
-    title?: string
     active?: Booleanish
     buttonId?: string
     disabled?: Booleanish
+    id?: string
     lazy?: Booleanish
     lazyOnce?: Booleanish
     noBody?: Booleanish
     tag?: string
+    title?: string
     titleItemClass?: ClassValue
     titleLinkAttributes?: Record<string, unknown>
     titleLinkClass?: ClassValue
   }>(),
   {
-    titleItemClass: undefined,
-    titleLinkClass: undefined,
-    id: undefined,
-    title: undefined,
     active: false,
-    // TODO this is unused - Compat issue
     buttonId: undefined,
     disabled: false,
+    id: undefined,
     lazy: undefined,
     lazyOnce: undefined,
     noBody: false,
     tag: 'div',
+    title: undefined,
+    titleItemClass: undefined,
     titleLinkAttributes: undefined,
+    titleLinkClass: undefined,
   }
 )
 

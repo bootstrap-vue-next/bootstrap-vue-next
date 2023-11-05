@@ -34,28 +34,28 @@ const props = withDefaults(
     button: false,
     tag: 'div',
     // Link props
-    active: false,
+    active: false, // Why is this active: false?
+    // All others use defaults
     activeClass: undefined,
-    append: false,
+    append: undefined,
+    disabled: undefined,
     exactActiveClass: undefined,
-    icon: false,
     href: undefined,
-    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: undefined,
-    replace: false,
-    disabled: false,
-    routerComponentName: 'router-link',
-    target: '_self',
-    to: undefined,
+    icon: undefined,
     opacity: undefined,
     opacityHover: undefined,
-    underlineVariant: null,
+    rel: undefined,
+    replace: undefined,
+    routerComponentName: undefined,
+    target: undefined,
+    to: undefined,
     underlineOffset: undefined,
     underlineOffsetHover: undefined,
     underlineOpacity: undefined,
     underlineOpacityHover: undefined,
-    variant: null,
+    underlineVariant: undefined,
+    variant: undefined,
+    // End link props
   }
 )
 

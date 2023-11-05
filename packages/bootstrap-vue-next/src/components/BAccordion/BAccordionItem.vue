@@ -62,52 +62,52 @@ const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
 const props = withDefaults(
   defineProps<{
-    id?: string
-    title?: string
-    modelValue?: Booleanish
-    headerTag?: string
-    tag?: string
-    toggle?: Booleanish
-    horizontal?: Booleanish
-    visible?: Booleanish
-    isNav?: Booleanish
-    wrapperAttrs?: HTMLAttributes
-    headerAttrs?: HTMLAttributes
-    headerClass?: ClassValue
+    bodyAttrs?: HTMLAttributes
+    bodyClass?: ClassValue
     buttonAttrs?: HTMLAttributes
     buttonClass?: ClassValue
     collapseClass?: ClassValue
-    bodyAttrs?: HTMLAttributes
-    bodyClass?: ClassValue
+    headerAttrs?: HTMLAttributes
+    headerClass?: ClassValue
+    headerTag?: string
+    horizontal?: Booleanish
+    id?: string
+    isNav?: Booleanish
+    modelValue?: boolean
+    tag?: string
+    title?: string
+    toggle?: Booleanish
+    visible?: Booleanish
+    wrapperAttrs?: HTMLAttributes
   }>(),
   {
-    id: undefined,
-    title: undefined,
-    modelValue: false,
-    headerTag: 'h2',
-    tag: undefined,
-    toggle: undefined,
-    horizontal: undefined,
-    visible: false,
-    isNav: undefined,
-    wrapperAttrs: undefined,
-    headerAttrs: undefined,
-    headerClass: undefined,
+    bodyAttrs: undefined,
+    bodyClass: undefined,
     buttonAttrs: undefined,
     buttonClass: undefined,
     collapseClass: undefined,
-    bodyAttrs: undefined,
-    bodyClass: undefined,
+    headerAttrs: undefined,
+    headerClass: undefined,
+    headerTag: 'h2',
+    horizontal: undefined,
+    id: undefined,
+    isNav: undefined,
+    modelValue: false,
+    tag: undefined,
+    title: undefined,
+    toggle: undefined,
+    visible: false,
+    wrapperAttrs: undefined,
   }
 )
 
 const emit = defineEmits<{
-  'show': [value: BvTriggerableEvent]
-  'shown': []
-  'hide': [value: BvTriggerableEvent]
   'hidden': []
+  'hide': [value: BvTriggerableEvent]
   'hide-prevented': []
+  'show': [value: BvTriggerableEvent]
   'show-prevented': []
+  'shown': []
   'update:modelValue': [value: boolean]
 }>()
 

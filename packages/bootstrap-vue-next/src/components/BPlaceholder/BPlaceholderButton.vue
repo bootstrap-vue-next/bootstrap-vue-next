@@ -16,18 +16,18 @@ import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    tag?: string
-    width?: string | number
-    cols?: string | number
-    variant?: ColorVariant | null
     animation?: PlaceholderAnimation
+    cols?: string | number
+    tag?: string
+    variant?: ColorVariant | null
+    width?: string | number
   }>(),
   {
-    tag: 'div',
-    width: undefined,
-    cols: undefined,
     animation: undefined,
+    cols: undefined,
+    tag: 'div',
     variant: 'primary',
+    width: undefined,
   }
 )
 

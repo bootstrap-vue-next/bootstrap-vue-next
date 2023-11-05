@@ -28,16 +28,16 @@ import {useFocus, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
-    id?: string
-    form?: string
-    modelValue?: CheckboxValue[]
     ariaInvalid?: AriaInvalid
     autofocus?: Booleanish
     buttonVariant?: ButtonVariant | null
     buttons?: Booleanish
     disabled?: Booleanish
     disabledField?: string
+    form?: string
     htmlField?: string
+    id?: string
+    modelValue?: CheckboxValue[]
     name?: string
     options?: (string | number | Record<string, unknown>)[]
     plain?: Booleanish
@@ -51,23 +51,23 @@ const props = withDefaults(
     valueField?: string
   }>(),
   {
-    id: undefined,
-    size: 'md',
-    name: undefined,
-    form: undefined,
-    modelValue: () => [],
+    ariaInvalid: undefined,
     autofocus: false,
     buttonVariant: 'secondary',
     buttons: false,
-    ariaInvalid: undefined,
-    state: null,
     disabled: false,
     disabledField: 'disabled',
+    form: undefined,
     htmlField: 'html',
+    id: undefined,
+    modelValue: () => [],
+    name: undefined,
     options: () => [],
     plain: false,
     required: false,
+    size: 'md',
     stacked: false,
+    state: null,
     switches: false,
     textField: 'text',
     validated: false,
@@ -76,9 +76,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
+  'change': [value: CheckboxValue[]]
   'input': [value: CheckboxValue[]]
   'update:modelValue': [value: CheckboxValue[]]
-  'change': [value: CheckboxValue[]]
 }>()
 
 defineSlots<{
@@ -169,11 +169,11 @@ watch(modelValue, (newValue) => {
 })
 
 defineExpose({
-  focus: () => {
-    focused.value = true
-  },
   blur: () => {
     focused.value = false
+  },
+  focus: () => {
+    focused.value = true
   },
 })
 </script>

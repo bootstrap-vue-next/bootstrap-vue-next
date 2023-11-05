@@ -18,9 +18,9 @@ const props = withDefaults(
   }>(),
   {
     ariaLabel: 'Group',
+    size: 'md',
     tag: 'div',
     vertical: false,
-    size: 'md',
   }
 )
 

@@ -9,8 +9,8 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    text?: string
     tag?: string
+    text?: string
   }>(),
   {
     tag: 'p',

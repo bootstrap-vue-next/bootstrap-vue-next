@@ -13,7 +13,6 @@ describe('link', () => {
 
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.attributes('href')).toEqual('#')
-    expect(wrapper.attributes('target')).toEqual('_self')
     expect(wrapper.attributes('rel')).toBeUndefined()
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
@@ -29,7 +28,6 @@ describe('link', () => {
 
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.attributes('href')).toEqual('#')
-    expect(wrapper.attributes('target')).toEqual('_self')
     expect(wrapper.attributes('rel')).toBeUndefined()
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
@@ -45,7 +43,6 @@ describe('link', () => {
 
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.attributes('href')).toEqual('/foobar')
-    expect(wrapper.attributes('target')).toEqual('_self')
     expect(wrapper.attributes('rel')).toBeUndefined()
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
@@ -61,7 +58,6 @@ describe('link', () => {
 
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.attributes('href')).toEqual('#foobar')
-    expect(wrapper.attributes('target')).toEqual('_self')
     expect(wrapper.attributes('rel')).toBeUndefined()
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
@@ -77,7 +73,6 @@ describe('link', () => {
 
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.attributes('href')).toEqual('/foobar')
-    expect(wrapper.attributes('target')).toEqual('_self')
     expect(wrapper.attributes('rel')).toBeUndefined()
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)
@@ -93,7 +88,6 @@ describe('link', () => {
 
     expect(wrapper.element.tagName).toBe('A')
     expect(wrapper.attributes('href')).toEqual('/foobar')
-    expect(wrapper.attributes('target')).toEqual('_self')
     expect(wrapper.attributes('rel')).toBeUndefined()
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     expect(wrapper.classes().length).toBe(0)

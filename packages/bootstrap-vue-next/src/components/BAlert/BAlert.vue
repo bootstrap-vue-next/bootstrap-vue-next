@@ -34,47 +34,47 @@ import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
-    closeVariant?: ButtonVariant | null
     closeClass?: ClassValue
-    closeLabel?: string
     closeContent?: string
-    noHoverPause?: Booleanish
+    closeLabel?: string
+    closeVariant?: ButtonVariant | null
     dismissible?: Booleanish
     fade?: Booleanish
-    modelValue?: boolean | number
-    variant?: ColorVariant | null
     immediate?: Booleanish
     interval?: number | string
+    modelValue?: boolean | number
+    noHoverPause?: Booleanish
     showOnPause?: Booleanish
+    variant?: ColorVariant | null
   }>(),
   {
-    closeVariant: 'secondary',
     closeClass: undefined,
-    closeLabel: 'Close',
     closeContent: undefined,
-    noHoverPause: false,
+    closeLabel: 'Close',
+    closeVariant: 'secondary',
     dismissible: false,
     fade: false,
-    modelValue: false,
-    variant: 'info',
     immediate: true,
     interval: 1000,
+    modelValue: false,
+    noHoverPause: false,
     showOnPause: true,
+    variant: 'info',
   }
 )
 
 const emit = defineEmits<{
   'close': []
-  'closed': []
   'close-countdown': [value: number]
+  'closed': []
   'update:modelValue': [value: boolean | number]
 }>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   close?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()
@@ -159,8 +159,8 @@ onBeforeUnmount(stop)
 
 defineExpose({
   pause,
-  resume,
   restart,
+  resume,
   stop,
 })
 </script>

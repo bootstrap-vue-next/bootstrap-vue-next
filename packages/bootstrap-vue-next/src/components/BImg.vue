@@ -11,32 +11,34 @@
 </template>
 
 <script setup lang="ts">
-import type {BImgProps, RadiusElementExtendables} from '../types'
+import type {BImgProps} from '../types'
 import {useBooleanish, useRadiusElementClasses} from '../composables'
 import {computed, toRef} from 'vue'
 import {useToNumber} from '@vueuse/core'
 
-const props = withDefaults(defineProps<BImgProps & RadiusElementExtendables>(), {
-  sizes: undefined,
-  src: undefined,
-  srcset: undefined,
-  width: undefined,
-  height: undefined,
+const props = withDefaults(defineProps<BImgProps>(), {
   blank: false,
-  lazy: false,
   blankColor: 'transparent',
   block: false,
   center: false,
+  end: false,
   fluid: false,
   fluidGrow: false,
-  end: false,
+  height: undefined,
+  lazy: false,
+  sizes: undefined,
+  src: undefined,
+  srcset: undefined,
   start: false,
-  rounded: false,
-  roundedTop: undefined,
-  roundedBottom: undefined,
-  roundedStart: undefined,
-  roundedEnd: undefined,
   thumbnail: false,
+  width: undefined,
+  // RadiusElementExtendables props
+  rounded: false,
+  roundedBottom: undefined,
+  roundedEnd: undefined,
+  roundedStart: undefined,
+  roundedTop: undefined,
+  // End RadiusElementExtendables props
 })
 
 const BLANK_TEMPLATE =

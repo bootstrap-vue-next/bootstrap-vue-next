@@ -65,52 +65,53 @@ import {
 
 const props = withDefaults(
   defineProps<{
-    ride?: true | false | 'true' | 'false' | '' | 'carousel' // Booleanish | 'carousel'
-    noHoverPause?: Booleanish
-    rideReverse?: Booleanish
+    background?: string
+    controls?: Booleanish
+    controlsNextText?: string
+    controlsPrevText?: string
     fade?: Booleanish
     id?: string
     imgHeight?: string
     imgWidth?: string
-    background?: string
-    modelValue?: number
-    controls?: Booleanish
     indicators?: Booleanish
+    indicatorsButtonLabel?: string
     interval?: number | string
+    keyboard?: Booleanish
+    modelValue?: number
+    noHoverPause?: Booleanish
     noTouch?: Booleanish
     noWrap?: Booleanish
-    controlsPrevText?: string
-    controlsNextText?: string
-    indicatorsButtonLabel?: string
-    keyboard?: Booleanish
+    ride?: Booleanish | 'carousel'
+    rideReverse?: Booleanish
     touchThreshold?: number | string
   }>(),
   {
+    background: undefined,
+    controls: false,
+    controlsNextText: 'Next',
+    controlsPrevText: 'Previous',
+    fade: false,
     id: undefined,
     imgHeight: undefined,
     imgWidth: undefined,
-    background: undefined,
-    ride: false,
-    noHoverPause: false,
-    rideReverse: false,
-    modelValue: 0,
-    fade: false,
-    controls: false,
     indicators: false,
-    keyboard: true,
+    indicatorsButtonLabel: 'Slide',
     interval: 5000,
+    keyboard: true,
+    modelValue: 0,
+    noHoverPause: false,
     noTouch: false,
     noWrap: false,
-    controlsNextText: 'Next',
-    controlsPrevText: 'Previous',
-    indicatorsButtonLabel: 'Slide',
+    // eslint-disable-next-line vue/require-valid-default-prop
+    ride: false,
+    rideReverse: false,
     touchThreshold: 50,
   }
 )
 
 const emit = defineEmits<{
-  'slid': [value: BvCarouselEvent]
   'slide': [value: BvCarouselEvent]
+  'slid': [value: BvCarouselEvent]
   'update:modelValue': [value: number]
 }>()
 
@@ -307,10 +308,10 @@ watch(isHovering, (newValue) => {
 })
 
 defineExpose({
-  pause,
-  resume,
-  prev,
   next,
+  pause,
+  prev,
+  resume,
 })
 
 provide(carouselInjectionKey, {

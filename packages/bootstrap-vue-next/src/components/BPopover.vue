@@ -94,45 +94,47 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<BPopoverProps>(), {
-  floatingMiddleware: undefined,
-  title: undefined,
-  id: undefined,
-  content: undefined,
-  modelValue: false,
-  container: undefined,
-  customClass: '',
-  placement: 'top',
-  strategy: 'absolute',
-  delay: () => ({show: 100, hide: 300}),
   click: false,
-  manual: false,
-  variant: null,
-  offset: null,
-  noFlip: false,
-  noShift: false,
-  noFade: false,
-  noAutoClose: false,
-  noHide: false,
-  realtime: false,
-  inline: false,
-  tooltip: false,
+  container: undefined,
+  content: undefined,
+  customClass: '',
+  delay: () => ({show: 100, hide: 300}),
+  floatingMiddleware: undefined,
+  hide: undefined,
   html: false,
-  reference: null,
-  target: null,
+  id: undefined,
+  inline: false,
+  manual: false,
+  modelValue: false,
+  noAutoClose: false,
+  noFade: false,
+  noFlip: false,
+  noHide: false,
+  noShift: false,
   noninteractive: false,
+  offset: null,
+  placement: 'top',
+  realtime: false,
+  reference: null,
+  strategy: 'absolute',
+  target: null,
+  title: undefined,
+  tooltip: false,
+  variant: null,
 })
 
 const emit = defineEmits<{
-  'show': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
   'hidden': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
   'hide-prevented': []
+  'show': [value: BvTriggerableEvent]
   'show-prevented': []
+  'shown': [value: BvTriggerableEvent]
   'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
+  default?: (props: Record<string, never>) => any
   target?: (props: {
     show: () => void
     hide: (e: Event) => void
@@ -140,9 +142,6 @@ defineSlots<{
     showState: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   title?: (props: Record<string, never>) => any
 }>()
 

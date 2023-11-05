@@ -12,16 +12,16 @@ import {useBooleanish} from '..//composables'
 
 const props = withDefaults(
   defineProps<{
+    fluid?: Booleanish | Breakpoint
     gutterX?: string | number
     gutterY?: string | number
-    fluid?: Booleanish | Breakpoint
     tag?: string
   }>(),
   {
     fluid: false,
-    tag: 'div',
     gutterX: undefined,
     gutterY: undefined,
+    tag: 'div',
   }
 )
 
