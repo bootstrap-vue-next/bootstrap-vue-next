@@ -20,22 +20,22 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    tag?: string
-    wrapperTag?: string
-    width?: string | number
-    cols?: string | number
-    variant?: ColorVariant | null
-    size?: PlaceholderSize
     animation?: PlaceholderAnimation
+    cols?: string | number
+    size?: PlaceholderSize
+    tag?: string
+    variant?: ColorVariant | null
+    width?: string | number
+    wrapperTag?: string
   }>(),
   {
-    variant: null,
-    size: 'md',
     animation: undefined,
-    width: undefined,
-    tag: 'span',
-    wrapperTag: 'span',
     cols: 12,
+    size: 'md',
+    tag: 'span',
+    variant: null,
+    width: undefined,
+    wrapperTag: 'span',
   }
 )
 

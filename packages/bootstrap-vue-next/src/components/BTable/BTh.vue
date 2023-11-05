@@ -29,9 +29,9 @@ const props = withDefaults(
   {
     colspan: undefined,
     rowspan: undefined,
-    variant: null,
     stackedHeading: undefined,
     stickyColumn: false,
+    variant: null,
   }
 )
 

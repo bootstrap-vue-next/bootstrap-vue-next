@@ -26,11 +26,11 @@ const props = withDefaults(
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  append?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prepend?: (props: Record<string, never>) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  append?: (props: Record<string, never>) => any
 }>()
 
 const breadcrumb = useBreadcrumb()

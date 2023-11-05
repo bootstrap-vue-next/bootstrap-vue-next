@@ -90,7 +90,6 @@ import type {
   Booleanish,
   BTableLiteProps,
   BTableProvider,
-  BTableSimpleProps,
   BTableSortCompare,
   ColorVariant,
   LiteralUnion,
@@ -157,18 +156,13 @@ const props = withDefaults(
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
       selectedItems?: TableItem[]
-    } & Omit<BTableSimpleProps, 'tableClass'> &
-      BTableLiteProps
+    } & Omit<BTableLiteProps, 'tableClass'>
   >(),
   {
     filterDebounce: 0,
     filterDebounceMaxWait: NaN,
     perPage: undefined,
     sortBy: undefined,
-    variant: undefined,
-    borderVariant: undefined,
-    caption: undefined,
-    align: undefined,
     filter: undefined,
     filterable: undefined,
     provider: undefined,
@@ -177,20 +171,6 @@ const props = withDefaults(
     noProviderPaging: false,
     noProviderSorting: false,
     noProviderFiltering: false,
-    captionTop: false,
-    borderless: false,
-    bordered: false,
-    dark: false,
-    fields: () => [],
-    footClone: false,
-    hover: false,
-    items: () => [],
-    responsive: false,
-    small: false,
-    striped: false,
-    stripedColumns: false,
-    labelStacked: false,
-    stacked: false,
     sortDesc: false,
     sortInternal: true,
     selectable: false,
@@ -198,20 +178,61 @@ const props = withDefaults(
     selectHead: true,
     selectMode: 'multi',
     selectionVariant: 'primary',
-    stickyHeader: false,
     busy: false,
     busyLoadingText: 'Loading...',
-    showEmpty: false,
     currentPage: 1,
-    emptyText: 'There are no records to show',
-    emptyFilteredText: 'There are no records matching your request',
+    selectedItems: () => [],
+    // BTableLite props
+    caption: undefined,
+    align: undefined,
+    fields: undefined,
+    footClone: undefined,
+    items: undefined,
+    labelStacked: undefined,
+    showEmpty: undefined,
+    emptyText: undefined,
+    emptyFilteredText: undefined,
     fieldColumnClass: undefined,
     tbodyTrClass: undefined,
-    selectedItems: () => [],
+    captionHtml: undefined,
+    detailsTdClass: undefined,
+    headVariant: undefined,
+    headRowVariant: undefined,
+    footRowVariant: undefined,
+    footVariant: undefined,
+    modelValue: undefined,
+    primaryKey: undefined,
+    tbodyClass: undefined,
+    tbodyTrAttr: undefined,
+    tfootClass: undefined,
+    tfootTrClass: undefined,
+    theadClass: undefined,
+    theadTrClass: undefined,
+    // End BTableLite props
+    // BTableSimple props
+    borderVariant: undefined,
+    variant: undefined,
+    bordered: undefined,
+    borderless: undefined,
+    captionTop: undefined,
+    dark: undefined,
+    hover: undefined,
+    id: undefined,
+    noBorderCollapse: undefined,
+    outlined: undefined,
+    fixed: undefined,
+    responsive: undefined,
+    stacked: undefined,
+    striped: undefined,
+    stripedColumns: undefined,
+    small: undefined,
+    stickyHeader: undefined,
+    // End BTableSimple props
   }
 )
 
 const emit = defineEmits<{
+  'filtered': [value: TableItem[]]
   'head-clicked': [
     key: TableFieldObject['key'],
     field: TableField,
@@ -221,16 +242,15 @@ const emit = defineEmits<{
   'row-clicked': [item: TableItem, index: number, event: MouseEvent]
   'row-dbl-clicked': [item: TableItem, index: number, event: MouseEvent]
   'row-hovered': [item: TableItem, index: number, event: MouseEvent]
-  'row-unhovered': [item: TableItem, index: number, event: MouseEvent]
   'row-selected': [value: TableItem]
+  'row-unhovered': [item: TableItem, index: number, event: MouseEvent]
   'row-unselected': [value: TableItem]
   'selection': [value: TableItem[]]
-  'update:busy': [value: boolean]
-  'update:sortBy': [value: string]
-  'update:sortDesc': [value: boolean]
-  'update:selectedItems': [value: Set<TableItem>]
   'sorted': [sortBy: string, isDesc: boolean]
-  'filtered': [value: TableItem[]]
+  'update:busy': [value: boolean]
+  'update:selectedItems': [value: Set<TableItem>]
+  'update:sortDesc': [value: boolean]
+  'update:sortBy': [value: string]
 }>()
 
 const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
@@ -430,14 +450,8 @@ const computedItems = computed<TableItem[]>(() => {
   return items
 })
 
-// TODO fix this. It's not even async
-const updateInternalItems = async (items: TableItem<Record<string, any>>[]) => {
-  try {
-    internalItems.value = items
-    return internalItems.value
-  } catch (err) {
-    return undefined
-  }
+const updateInternalItems = (items: TableItem[]) => {
+  internalItems.value = items
 }
 
 const computedDisplayItems = computed<TableItem[]>(() => {
@@ -532,33 +546,19 @@ const onFieldHeadClick = (
 const callItemsProvider = async () => {
   if (!usesProvider.value || !props.provider || busyBoolean.value) return
   busyModel.value = true
-  const response = props.provider(
-    {
-      currentPage: currentPageNumber.value,
-      filter: props.filter,
-      sortBy: props.sortBy,
-      sortDesc: props.sortDesc,
-      perPage: perPageNumber.value,
-    },
-    updateInternalItems
-  )
-  if (response === undefined) return
-  if (response instanceof Promise) {
-    try {
-      const items = await response
-      if (!Array.isArray(items)) return
-      const internalItems = await updateInternalItems(items)
-      return internalItems
-    } finally {
-      if (busyBoolean.value) {
-        busyModel.value = false
-      }
-    }
-  }
-
+  const response = props.provider({
+    currentPage: currentPageNumber.value,
+    filter: props.filter,
+    sortBy: props.sortBy,
+    sortDesc: props.sortDesc,
+    perPage: perPageNumber.value,
+  })
   try {
-    const internalItems = await updateInternalItems(response)
-    return internalItems
+    const items = response instanceof Promise ? await response : response
+
+    if (items === undefined) return
+
+    updateInternalItems(items)
   } finally {
     if (busyBoolean.value) {
       busyModel.value = false
@@ -622,7 +622,7 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
 
 watch(
   () => props.items,
-  (v) => updateInternalItems(v)
+  (newValue) => updateInternalItems(newValue)
 )
 
 filteredHandler.value = async (items) => {
@@ -652,6 +652,12 @@ onMounted(callItemsProvider)
 
 defineExpose({
   // The row selection methods are really for compat. Users should probably use the v-model though
+  clearSelected: () => {
+    if (!selectableBoolean.value) return
+    selectedItemsSetUtilities.clear()
+    notifySelectionEvent()
+  },
+  refresh: callItemsProvider,
   selectAllRows: () => {
     if (!selectableBoolean.value) return
     const unselectableItems = selectedItemsToSet.value.size > 0 ? [...selectedItemsToSet.value] : []
@@ -660,11 +666,6 @@ defineExpose({
       if (unselectableItems.includes(item)) return
       emit('row-selected', item)
     })
-    notifySelectionEvent()
-  },
-  clearSelected: () => {
-    if (!selectableBoolean.value) return
-    selectedItemsSetUtilities.clear()
     notifySelectionEvent()
   },
   selectRow: (index: number) => {
@@ -681,6 +682,5 @@ defineExpose({
     selectedItemsSetUtilities.delete(item)
     notifySelectionEvent()
   },
-  refresh: callItemsProvider,
 })
 </script>

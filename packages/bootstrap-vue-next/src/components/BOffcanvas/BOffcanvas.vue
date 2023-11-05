@@ -93,78 +93,79 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    modelValue?: Booleanish
-    bodyScrolling?: Booleanish
     backdrop?: Booleanish
-    noCloseOnBackdrop?: Booleanish
-    noCloseOnEsc?: Booleanish
-    // TODO standardize this. Create a dedicated type
-    // Then in components that use individual props (BImg)
-    // Make them just use prop placement
-    placement?: 'top' | 'bottom' | 'start' | 'end'
-    title?: string
-    noHeaderClose?: Booleanish
-    noHeader?: Booleanish
-    lazy?: Booleanish
-    id?: string
-    noFocus?: Booleanish
     backdropVariant?: ColorVariant | null
+    bodyClass?: string
+    bodyScrolling?: Booleanish
+    footerClass?: string
     headerClass?: string
     headerCloseClass?: ClassValue
     headerCloseLabel?: string
     headerCloseVariant?: ButtonVariant | null
-    bodyClass?: string
-    footerClass?: string
+    id?: string
+    lazy?: Booleanish
+    modelValue?: Booleanish
+    noCloseOnBackdrop?: Booleanish
+    noCloseOnEsc?: Booleanish
+    noFocus?: Booleanish
+    noHeader?: Booleanish
+    noHeaderClose?: Booleanish
+    // TODO standardize this. Create a dedicated type
+    // Then in components that use individual props (BImg)
+    // Make them just use prop placement
+    placement?: 'top' | 'bottom' | 'start' | 'end'
     teleportDisabled?: Booleanish
     teleportTo?: string | RendererElement | null | undefined
-    // TODO responsive doesn't work
+    title?: string
     // responsive?: Breakpoint
+    // TODO responsive doesn't work
   }>(),
   {
-    id: undefined,
-    title: undefined,
-    modelValue: false,
-    backdropVariant: 'dark',
-    noFocus: false,
-    bodyScrolling: false,
-    noCloseOnBackdrop: false,
-    noCloseOnEsc: false,
     backdrop: true,
-    lazy: false,
-    placement: 'start',
-    noHeaderClose: false,
-    noHeader: false,
+    backdropVariant: 'dark',
+    bodyClass: undefined,
+    bodyScrolling: false,
+    footerClass: undefined,
     headerClass: undefined,
     headerCloseClass: undefined,
     headerCloseLabel: 'Close',
     headerCloseVariant: 'secondary',
-    bodyClass: undefined,
-    footerClass: undefined,
+    id: undefined,
+    lazy: false,
+    modelValue: false,
+    noCloseOnBackdrop: false,
+    noCloseOnEsc: false,
+    noFocus: false,
+    noHeader: false,
+    noHeaderClose: false,
+    placement: 'start',
     teleportDisabled: false,
     teleportTo: 'body',
+    title: undefined,
   }
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-  'show': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show-prevented': []
-  'esc': [value: BvTriggerableEvent]
   'close': [value: BvTriggerableEvent]
+  'esc': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'show': [value: BvTriggerableEvent]
+  'show-prevented': []
+  'shown': [value: BvTriggerableEvent]
+  'update:modelValue': [value: boolean]
 }>()
 
 defineSlots<{
+  'backdrop'?: (props: Record<string, never>) => any
   'default'?: (props: {
     visible: boolean
     placement: 'top' | 'bottom' | 'start' | 'end'
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
-  'title'?: (props: {
+  'footer'?: (props: {
     visible: boolean
     placement: 'top' | 'bottom' | 'start' | 'end'
     hide: (trigger?: string) => void
@@ -176,16 +177,13 @@ defineSlots<{
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'header-close'?: (props: Record<string, never>) => any
-  'footer'?: (props: {
+  'title'?: (props: {
     visible: boolean
     placement: 'top' | 'bottom' | 'start' | 'end'
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'backdrop'?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()

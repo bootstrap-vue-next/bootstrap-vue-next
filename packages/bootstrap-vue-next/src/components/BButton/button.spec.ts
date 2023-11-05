@@ -266,20 +266,6 @@ describe.skip('button', () => {
     expect(wrapper.attributes('role')).toBeUndefined()
   })
 
-  it('has prop target when prop to', () => {
-    const wrapper = mount(BButton, {
-      props: {to: '/abc'},
-    })
-    expect(wrapper.attributes('target')).toBe('_self')
-  })
-
-  it('has prop target when prop href', () => {
-    const wrapper = mount(BButton, {
-      props: {to: '/abc'},
-    })
-    expect(wrapper.attributes('target')).toBe('_self')
-  })
-
   it('has prop target when prop to and prop target', () => {
     const wrapper = mount(BButton, {
       props: {to: '/abc', target: '_blank'},

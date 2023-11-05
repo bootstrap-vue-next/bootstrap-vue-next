@@ -79,26 +79,27 @@ const props = withDefaults(
     {
       align?: AlignmentTextHorizontal
       bodyBgVariant?: ColorVariant | null
-      bodyTextVariant?: TextColorVariant | null
       bodyClass?: ClassValue
       bodyTag?: string
+      bodyText?: string
+      bodyTextVariant?: TextColorVariant | null
       borderVariant?: ColorVariant | null
       footer?: string
-      footerVariant?: ColorVariant | null
       footerBgVariant?: ColorVariant | null
       footerBorderVariant?: ColorVariant | null
       footerClass?: ClassValue
       footerHtml?: string
       footerTag?: string
       footerTextVariant?: TextColorVariant | null
+      footerVariant?: ColorVariant | null
       header?: string
       headerBgVariant?: ColorVariant | null
       headerBorderVariant?: ColorVariant | null
       headerClass?: ClassValue
       headerHtml?: string
       headerTag?: string
-      headerVariant?: ColorVariant | null
       headerTextVariant?: TextColorVariant | null
+      headerVariant?: ColorVariant | null
       imgAlt?: string
       imgBottom?: Booleanish
       imgEnd?: Booleanish
@@ -115,52 +116,53 @@ const props = withDefaults(
       tag?: string
       title?: string
       titleTag?: string
-      bodyText?: string
     } & ColorExtendables
   >(),
   {
-    footerVariant: null,
-    headerVariant: null,
-    variant: null,
     align: undefined,
-    bgVariant: null,
     bodyBgVariant: undefined,
     bodyClass: undefined,
+    bodyTag: 'div',
+    bodyText: '',
     bodyTextVariant: undefined,
     borderVariant: null,
     footer: undefined,
     footerBgVariant: undefined,
     footerBorderVariant: undefined,
     footerClass: undefined,
+    footerHtml: '',
+    footerTag: 'div',
     footerTextVariant: undefined,
+    footerVariant: null,
     header: undefined,
     headerBgVariant: undefined,
     headerBorderVariant: undefined,
     headerClass: undefined,
-    textVariant: null,
-    headerTextVariant: undefined,
-    imgAlt: undefined,
-    title: undefined,
-    subtitle: undefined,
-    imgWidth: undefined,
-    imgHeight: undefined,
-    imgSrc: undefined,
-    bodyTag: 'div',
-    footerHtml: '',
-    footerTag: 'div',
     headerHtml: '',
     headerTag: 'div',
+    headerTextVariant: undefined,
+    headerVariant: null,
+    imgAlt: undefined,
     imgBottom: false,
     imgEnd: false,
+    imgHeight: undefined,
+    imgSrc: undefined,
     imgStart: false,
-    bodyText: '',
     imgTop: false,
+    imgWidth: undefined,
     noBody: false,
     overlay: false,
+    subtitle: undefined,
     subtitleTag: 'h6',
     subtitleTextVariant: 'body-secondary',
     tag: 'div',
+    title: undefined,
     titleTag: 'h4',
+    // ColorExtendables props
+    bgVariant: null,
+    textVariant: null,
+    variant: null,
+    // End ColorExtendables props
   }
 )
 
@@ -168,11 +170,11 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  img?: (props: Record<string, never>) => any
+  footer?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   header?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  footer?: (props: Record<string, never>) => any
+  img?: (props: Record<string, never>) => any
 }>()
 
 const slots = useSlots()

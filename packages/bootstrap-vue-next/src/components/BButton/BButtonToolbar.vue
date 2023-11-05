@@ -12,14 +12,14 @@ import {useBooleanish} from '../../composables'
 const props = withDefaults(
   defineProps<{
     ariaLabel?: string
+    // keyNav?: Booleanish
     justify?: Booleanish
     role?: string
-    // keyNav?: Booleanish
   }>(),
   {
-    role: 'toolbar',
     ariaLabel: 'Group',
     justify: false,
+    role: 'toolbar',
   }
 )
 

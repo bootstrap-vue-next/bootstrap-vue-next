@@ -10,9 +10,9 @@ import type {Booleanish} from '../../types'
 
 const props = withDefaults(
   defineProps<{
+    disabled?: Booleanish
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value?: any
-    disabled?: Booleanish
   }>(),
   {
     disabled: false,

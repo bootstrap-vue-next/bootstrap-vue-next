@@ -15,24 +15,24 @@ import {navbarInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
+    autoClose?: Booleanish
+    container?: 'fluid' | Booleanish | Breakpoint
     fixed?: 'top' | 'bottom'
     print?: Booleanish
     sticky?: 'top' | 'bottom'
     tag?: string
     toggleable?: Booleanish | Breakpoint
     variant?: ColorVariant | null
-    container?: 'fluid' | Booleanish | Breakpoint
-    autoClose?: Booleanish
   }>(),
   {
-    variant: null,
-    sticky: undefined,
+    autoClose: true,
+    container: 'fluid',
     fixed: undefined,
     print: false,
+    sticky: undefined,
     tag: 'nav',
     toggleable: false,
-    container: 'fluid',
-    autoClose: true,
+    variant: null,
   }
 )
 

@@ -3,10 +3,9 @@
     <BLink
       class="nav-link"
       :class="linkClass"
-      v-bind="{...computedLinkProps, ...linkAttrs}"
-      :active-class="activeClass"
       :tabindex="disabledBoolean ? -1 : undefined"
       :aria-disabled="disabledBoolean ? true : undefined"
+      v-bind="{...computedLinkProps, ...linkAttrs}"
       @click="emit('click', $event)"
     >
       <slot />
@@ -29,36 +28,34 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      linkClass?: ClassValue
       linkAttrs?: Record<string, unknown>
+      linkClass?: ClassValue
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
-    linkClass: undefined,
     // Link props
     active: undefined,
     activeClass: undefined,
+    append: undefined,
+    disabled: undefined,
     exactActiveClass: undefined,
-    append: false,
-    linkAttrs: undefined,
-    disabled: false,
     href: undefined,
-    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: undefined,
-    replace: false,
-    routerComponentName: 'router-link',
-    target: '_self',
-    to: undefined,
-    variant: undefined,
+    icon: undefined,
+    linkAttrs: undefined,
+    linkClass: undefined,
     opacity: undefined,
     opacityHover: undefined,
-    underlineVariant: null,
+    rel: undefined,
+    replace: undefined,
+    routerComponentName: undefined,
+    target: undefined,
+    to: undefined,
     underlineOffset: undefined,
     underlineOffsetHover: undefined,
     underlineOpacity: undefined,
     underlineOpacityHover: undefined,
-    icon: false,
+    underlineVariant: undefined,
+    variant: undefined,
     // End link props
   }
 )
@@ -92,4 +89,5 @@ const computedLinkProps = computed(() =>
     'variant',
   ])
 )
+computedLinkProps.value.activeClass
 </script>

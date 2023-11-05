@@ -53,6 +53,10 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
+      block?: Booleanish
+      loading?: Booleanish
+      loadingFill?: Booleanish
+      loadingText?: string
       pill?: Booleanish
       pressed?: Booleanish
       size?: Size
@@ -60,48 +64,43 @@ const props = withDefaults(
       tag?: string
       type?: ButtonType
       variant?: ButtonVariant | null
-      loading?: Booleanish
-      loadingFill?: Booleanish
-      block?: Booleanish
-      loadingText?: string
     } & Omit<BLinkProps, 'variant'>
   >(),
   {
+    block: false,
+    loading: false,
+    loadingFill: false,
+    loadingText: 'Loading...',
     pill: false,
     pressed: undefined,
     size: 'md',
     squared: false,
     tag: 'button',
     type: 'button',
-    variant: 'secondary',
-    loading: false,
-    loadingFill: false,
-    block: false,
-    loadingText: 'Loading...',
     // Link props
-    active: false,
+    active: false, // Why is this active: false?
+    variant: 'secondary',
+    // All others use defaults
     activeClass: undefined,
+    append: undefined,
+    disabled: undefined,
+    event: undefined,
     exactActiveClass: undefined,
-    append: false,
-    disabled: false,
-    event: 'click',
     href: undefined,
-    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: undefined,
-    replace: false,
-    routerComponentName: 'router-link',
-    routerTag: 'a',
-    target: '_self',
-    to: undefined,
+    icon: undefined,
     opacity: undefined,
     opacityHover: undefined,
-    underlineVariant: null,
+    rel: undefined,
+    replace: undefined,
+    routerComponentName: undefined,
+    routerTag: undefined,
+    target: undefined,
+    to: undefined,
     underlineOffset: undefined,
     underlineOffsetHover: undefined,
     underlineOpacity: undefined,
     underlineOpacityHover: undefined,
-    icon: false,
+    underlineVariant: undefined,
     // End link props
   }
 )

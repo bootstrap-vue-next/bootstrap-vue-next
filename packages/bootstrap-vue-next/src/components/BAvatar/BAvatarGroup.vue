@@ -26,17 +26,21 @@ const props = withDefaults(
   >(),
   {
     overlap: 0.3,
-    rounded: false,
-    roundedTop: undefined,
-    roundedBottom: undefined,
-    roundedStart: undefined,
-    roundedEnd: undefined,
     size: undefined,
     square: false,
     tag: 'div',
-    variant: null,
+    // RadiusElementExtendables props
+    rounded: false,
+    roundedBottom: undefined,
+    roundedEnd: undefined,
+    roundedStart: undefined,
+    roundedTop: undefined,
+    // End RadiusElementExtendables props
+    // ColorExtendables props
     bgVariant: null,
     textVariant: null,
+    variant: null,
+    // End ColorExtendables props
   }
 )
 

@@ -14,14 +14,14 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    labelFor?: string
     label?: string
+    labelFor?: string
     text?: string
   }>(),
   {
     label: undefined,
-    text: undefined,
     labelFor: undefined,
+    text: undefined,
   }
 )
 

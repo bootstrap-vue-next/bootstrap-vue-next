@@ -31,17 +31,19 @@ const props = withDefaults(
     } & Omit<BProgressBarProps, 'label' | 'labelHtml'>
   >(),
   {
-    variant: undefined,
-    max: 100,
     height: undefined,
-    animated: false,
-    precision: 0,
-    showProgress: false,
-    showValue: false,
+    // BProgressBar props
+    animated: undefined,
     bgVariant: undefined,
+    max: 100,
+    precision: undefined,
+    showProgress: undefined,
+    showValue: undefined,
+    striped: undefined,
     textVariant: undefined,
-    striped: false,
-    value: 0,
+    value: undefined,
+    variant: undefined,
+    // End BProgressBar props
   }
 )
 

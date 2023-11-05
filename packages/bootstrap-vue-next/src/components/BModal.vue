@@ -147,12 +147,15 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    bodyVariant?: ColorVariant | null
+    autoFocus?: Booleanish
+    autoFocusButton?: 'ok' | 'cancel' | 'close'
+    backdropVariant?: ColorVariant | null
     bodyBgVariant?: ColorVariant | null
     bodyClass?: ClassValue
+    bodyScrolling?: Booleanish
     bodyTextVariant?: TextColorVariant | null
+    bodyVariant?: ColorVariant | null
     busy?: Booleanish
-    lazy?: Booleanish
     buttonSize?: Size
     cancelDisabled?: Booleanish
     cancelTitle?: string
@@ -160,11 +163,11 @@ const props = withDefaults(
     centered?: Booleanish
     contentClass?: ClassValue
     dialogClass?: ClassValue
-    footerVariant?: ColorVariant | null
     footerBgVariant?: ColorVariant | null
     footerBorderVariant?: ColorVariant | null
     footerClass?: ClassValue
     footerTextVariant?: TextColorVariant | null
+    footerVariant?: ColorVariant | null
     fullscreen?: Booleanish | Breakpoint
     headerBgVariant?: ColorVariant | null
     headerBorderVariant?: ColorVariant | null
@@ -172,103 +175,100 @@ const props = withDefaults(
     headerCloseClass?: ClassValue
     headerCloseLabel?: string
     headerCloseVariant?: ButtonVariant | null
-    headerVariant?: ColorVariant | null
     headerTextVariant?: TextColorVariant | null
+    headerVariant?: ColorVariant | null
     hideBackdrop?: Booleanish
     hideFooter?: Booleanish
     hideHeader?: Booleanish
     hideHeaderClose?: Booleanish
     id?: string
+    lazy?: Booleanish
     modalClass?: ClassValue
     modelValue?: Booleanish
     noCloseOnBackdrop?: Booleanish
     noCloseOnEsc?: Booleanish
     noFade?: Booleanish
-    autoFocus?: Booleanish
     okDisabled?: Booleanish
     okOnly?: Booleanish
     okTitle?: string
     okVariant?: ButtonVariant | null
     scrollable?: Booleanish
     size?: Size | 'xl'
+    teleportDisabled?: Booleanish
+    teleportTo?: string | RendererElement | null | undefined
     title?: string
     titleClass?: ClassValue
     titleSrOnly?: Booleanish
     titleTag?: string
-    autoFocusButton?: 'ok' | 'cancel' | 'close'
-    teleportDisabled?: Booleanish
-    teleportTo?: string | RendererElement | null | undefined
-    bodyScrolling?: Booleanish
-    backdropVariant?: ColorVariant | null
   }>(),
   {
+    autoFocus: true,
+    autoFocusButton: undefined,
     backdropVariant: undefined,
     bodyBgVariant: null,
     bodyClass: undefined,
-    bodyVariant: null,
+    bodyScrolling: false,
     bodyTextVariant: null,
+    bodyVariant: null,
+    busy: false,
+    buttonSize: 'md',
+    cancelDisabled: false,
+    cancelTitle: 'Cancel',
+    cancelVariant: 'secondary',
+    centered: false,
     contentClass: undefined,
-    headerVariant: null,
-    headerTextVariant: null,
     dialogClass: undefined,
+    footerBgVariant: null,
+    footerBorderVariant: null,
+    footerClass: undefined,
+    footerTextVariant: null,
+    footerVariant: null,
+    fullscreen: false,
     headerBgVariant: null,
     headerBorderVariant: null,
     headerClass: undefined,
     headerCloseClass: undefined,
     headerCloseLabel: 'Close',
     headerCloseVariant: 'secondary',
-    footerBgVariant: null,
-    footerBorderVariant: null,
-    footerClass: undefined,
-    footerVariant: null,
-    footerTextVariant: null,
-    autoFocusButton: undefined,
-    titleClass: undefined,
-    title: undefined,
-    size: 'md',
-    modalClass: undefined,
-    id: undefined,
-    busy: false,
-    lazy: false,
-    buttonSize: 'md',
-    cancelDisabled: false,
-    cancelTitle: 'Cancel',
-    cancelVariant: 'secondary',
-    centered: false,
-    fullscreen: false,
+    headerTextVariant: null,
+    headerVariant: null,
     hideBackdrop: false,
     hideFooter: false,
     hideHeader: false,
     hideHeaderClose: false,
+    id: undefined,
+    lazy: false,
+    modalClass: undefined,
     modelValue: false,
     noCloseOnBackdrop: false,
     noCloseOnEsc: false,
     noFade: false,
-    autoFocus: true,
     okDisabled: false,
     okOnly: false,
     okTitle: 'Ok',
     okVariant: 'primary',
     scrollable: false,
-    titleSrOnly: false,
-    titleTag: 'h5',
+    size: 'md',
     teleportDisabled: false,
     teleportTo: 'body',
-    bodyScrolling: false,
+    title: undefined,
+    titleClass: undefined,
+    titleSrOnly: false,
+    titleTag: 'h5',
   }
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-  'show': [value: BvTriggerableEvent]
-  'shown': [value: BvTriggerableEvent]
-  'hide': [value: BvTriggerableEvent]
-  'hidden': [value: BvTriggerableEvent]
-  'hide-prevented': []
-  'show-prevented': []
-  'ok': [value: BvTriggerableEvent]
   'cancel': [value: BvTriggerableEvent]
   'close': [value: BvTriggerableEvent]
+  'hidden': [value: BvTriggerableEvent]
+  'hide': [value: BvTriggerableEvent]
+  'hide-prevented': []
+  'ok': [value: BvTriggerableEvent]
+  'show': [value: BvTriggerableEvent]
+  'show-prevented': []
+  'shown': [value: BvTriggerableEvent]
+  'update:modelValue': [value: boolean]
 }>()
 
 type SharedSlotsData = {
@@ -281,21 +281,21 @@ type SharedSlotsData = {
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'header'?: (props: SharedSlotsData) => any
+  'backdrop'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'title'?: (props: SharedSlotsData) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'header-close'?: (props: Record<string, never>) => any
+  'cancel'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'default'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'footer'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'cancel'?: (props: SharedSlotsData) => any
+  'header'?: (props: SharedSlotsData) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'header-close'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'ok'?: (props: SharedSlotsData) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'backdrop'?: (props: Record<string, never>) => any
+  'title'?: (props: SharedSlotsData) => any
 }>()
 
 const slots = useSlots()
@@ -412,11 +412,9 @@ const headerClasses = computed(() => [
   },
 ])
 
-const headerCloseClasses = toRef(() => props.headerCloseClass)
-
 const headerCloseAttrs = computed(() => ({
   variant: hasHeaderCloseSlot.value ? props.headerCloseVariant : undefined,
-  class: headerCloseClasses.value,
+  class: props.headerCloseClass,
 }))
 
 const resolvedFooterBgClasses = useColorVariantClasses(() => ({
@@ -565,8 +563,8 @@ const sharedSlots: SharedSlotsData = reactive({
 
 defineExpose({
   hide,
-  show: showFn,
   id: computedId,
+  show: showFn,
 })
 </script>
 

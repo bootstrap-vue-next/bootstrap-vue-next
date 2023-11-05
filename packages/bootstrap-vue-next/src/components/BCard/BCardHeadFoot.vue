@@ -10,28 +10,20 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {ColorExtendables, ColorVariant} from '../../types'
+import type {BCardHeadFootProps} from '../../types'
 import {useColorVariantClasses} from '../../composables'
 
-const props = withDefaults(
-  defineProps<
-    {
-      text?: string
-      borderVariant?: ColorVariant | null
-      html?: string
-      tag?: string
-    } & ColorExtendables
-  >(),
-  {
-    tag: 'div',
-    text: undefined,
-    bgVariant: null,
-    borderVariant: null,
-    html: undefined,
-    textVariant: null,
-    variant: null,
-  }
-)
+const props = withDefaults(defineProps<BCardHeadFootProps>(), {
+  borderVariant: null,
+  html: undefined,
+  tag: 'div',
+  text: undefined,
+  // ColorExtendables props
+  bgVariant: null,
+  textVariant: null,
+  variant: null,
+  // End ColorExtendables props
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

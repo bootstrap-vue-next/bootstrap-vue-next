@@ -22,18 +22,18 @@ import {progressInjectionKey} from '../../utils'
 import {useToNumber} from '@vueuse/core'
 
 const props = withDefaults(defineProps<BProgressBarProps>(), {
+  animated: false,
+  bgVariant: null,
   label: undefined,
   labelHtml: undefined,
   max: undefined,
-  variant: null,
-  animated: false,
   precision: 0,
   showProgress: false,
   showValue: false,
   striped: false,
-  value: 0,
-  bgVariant: null,
   textVariant: null,
+  value: 0,
+  variant: null,
 })
 
 defineSlots<{

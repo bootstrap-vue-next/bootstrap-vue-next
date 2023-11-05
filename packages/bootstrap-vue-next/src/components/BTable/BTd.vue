@@ -28,10 +28,10 @@ const props = withDefaults(
   }>(),
   {
     colspan: undefined,
-    variant: null,
     rowspan: undefined,
     stackedHeading: undefined,
     stickyColumn: false,
+    variant: null,
   }
 )
 

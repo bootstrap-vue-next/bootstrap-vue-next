@@ -18,44 +18,46 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
+      dotIndicator?: Booleanish
       pill?: Booleanish
       tag?: string
       textIndicator?: Booleanish
-      dotIndicator?: Booleanish
     } & Omit<BLinkProps, 'event' | 'routerTag'> &
       ColorExtendables
   >(),
   {
-    bgVariant: null,
-    textVariant: null,
+    dotIndicator: false,
     pill: false,
     tag: 'span',
     textIndicator: false,
-    dotIndicator: false,
     // Link props
     variant: 'secondary',
+    // All others use defaults
     active: undefined,
     activeClass: undefined,
+    append: undefined,
+    disabled: undefined,
     exactActiveClass: undefined,
-    append: false,
-    disabled: false,
     href: undefined,
-    // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-    // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-    rel: undefined,
-    replace: false,
-    routerComponentName: 'router-link',
-    target: '_self',
-    to: undefined,
+    icon: undefined,
     opacity: undefined,
     opacityHover: undefined,
-    underlineVariant: null,
+    rel: undefined,
+    replace: undefined,
+    routerComponentName: undefined,
+    target: undefined,
+    to: undefined,
     underlineOffset: undefined,
     underlineOffsetHover: undefined,
     underlineOpacity: undefined,
     underlineOpacityHover: undefined,
-    icon: false,
+    underlineVariant: undefined,
     // End link props
+    // ColorExtendables props
+    // Variant is here as well
+    textVariant: null,
+    bgVariant: null,
+    // End ColorExtendables props
   }
 )
 
