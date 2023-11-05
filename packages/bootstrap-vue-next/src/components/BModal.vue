@@ -121,6 +121,7 @@ import {
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import type {
   Booleanish,
+  Breakpoint,
   ButtonVariant,
   ClassValue,
   ColorVariant,
@@ -164,7 +165,7 @@ const props = withDefaults(
     footerBorderVariant?: ColorVariant | null
     footerClass?: ClassValue
     footerTextVariant?: TextColorVariant | null
-    fullscreen?: boolean | string
+    fullscreen?: Booleanish | Breakpoint
     headerBgVariant?: ColorVariant | null
     headerBorderVariant?: ColorVariant | null
     headerClass?: ClassValue
@@ -322,6 +323,7 @@ const scrollableBoolean = useBooleanish(() => props.scrollable)
 const titleSrOnlyBoolean = useBooleanish(() => props.titleSrOnly)
 const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 const bodyScrollingBoolean = useBooleanish(() => props.bodyScrolling)
+const computedFullScreen = useBooleanish(() => props.fullscreen)
 
 const element = ref<HTMLElement | null>(null)
 const okButton = ref<HTMLElement | null>(null)
@@ -379,8 +381,9 @@ const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
 const modalDialogClasses = computed(() => [
   props.dialogClass,
   {
-    'modal-fullscreen': props.fullscreen === true,
-    [`modal-fullscreen-${props.fullscreen}-down`]: typeof props.fullscreen === 'string',
+    'modal-fullscreen': computedFullScreen.value === true,
+    [`modal-fullscreen-${computedFullScreen.value}-down`]:
+      typeof computedFullScreen.value === 'string',
     [`modal-${props.size}`]: props.size !== 'md',
     'modal-dialog-centered': centeredBoolean.value,
     'modal-dialog-scrollable': scrollableBoolean.value,

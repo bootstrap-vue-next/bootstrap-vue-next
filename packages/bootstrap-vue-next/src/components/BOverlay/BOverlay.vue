@@ -30,31 +30,32 @@
 
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
-import type {Booleanish, ColorVariant, SpinnerType} from '../../types'
-import {useBooleanish} from '../../composables'
+import type {Booleanish, ColorVariant, RadiusElementExtendables, SpinnerType} from '../../types'
+import {useBooleanish, useRadiusElementClasses} from '../../composables'
 import BTransition from '../BTransition/BTransition.vue'
 import BSpinner from '../BSpinner.vue'
 
 const props = withDefaults(
-  defineProps<{
-    bgColor?: string
-    blur?: string | null
-    fixed?: Booleanish
-    noCenter?: Booleanish
-    noFade?: Booleanish
-    noWrap?: Booleanish
-    opacity?: number | string
-    overlayTag?: string
-    rounded?: boolean | string
-    show?: Booleanish
-    spinnerSmall?: Booleanish
-    spinnerType?: SpinnerType
-    spinnerVariant?: ColorVariant | null
-    noSpinner?: Booleanish
-    variant?: ColorVariant | 'white' | 'transparent' | null
-    wrapTag?: string
-    zIndex?: number | string
-  }>(),
+  defineProps<
+    {
+      bgColor?: string
+      blur?: string | null
+      fixed?: Booleanish
+      noCenter?: Booleanish
+      noFade?: Booleanish
+      noWrap?: Booleanish
+      opacity?: number | string
+      overlayTag?: string
+      show?: Booleanish
+      spinnerSmall?: Booleanish
+      spinnerType?: SpinnerType
+      spinnerVariant?: ColorVariant | null
+      noSpinner?: Booleanish
+      variant?: ColorVariant | 'white' | 'transparent' | null
+      wrapTag?: string
+      zIndex?: number | string
+    } & RadiusElementExtendables
+  >(),
   {
     blur: '2px',
     bgColor: undefined,
@@ -97,14 +98,19 @@ const noCenterBoolean = useBooleanish(() => props.noCenter)
 const noWrapBoolean = useBooleanish(() => props.noWrap)
 const showBoolean = useBooleanish(() => props.show)
 const spinnerSmallBoolean = useBooleanish(() => props.spinnerSmall)
+const roundedBoolean = useBooleanish(() => props.rounded)
+const roundedTopBoolean = useBooleanish(() => props.roundedTop)
+const roundedBottomBoolean = useBooleanish(() => props.roundedBottom)
+const roundedStartBoolean = useBooleanish(() => props.roundedStart)
+const roundedEndBoolean = useBooleanish(() => props.roundedEnd)
 
-const computedRounded = toRef(() =>
-  props.rounded === true || props.rounded === ''
-    ? 'rounded'
-    : props.rounded === false
-    ? ''
-    : `rounded-${props.rounded}`
-)
+const radiusElementClasses = useRadiusElementClasses(() => ({
+  rounded: roundedBoolean.value,
+  roundedTop: roundedTopBoolean.value,
+  roundedBottom: roundedBottomBoolean.value,
+  roundedStart: roundedStartBoolean.value,
+  roundedEnd: roundedEndBoolean.value,
+}))
 
 const computedVariant = toRef(() =>
   props.variant !== null && !props.bgColor ? `bg-${props.variant}` : ''
@@ -128,7 +134,7 @@ const overlayClasses = computed(() => ({
   'position-fixed': noWrapBoolean.value && fixedBoolean.value,
 }))
 
-const blurClasses = computed(() => [computedVariant.value, computedRounded.value])
+const blurClasses = computed(() => [computedVariant.value, radiusElementClasses.value])
 
 const blurStyles = computed(() => ({
   ...positionStyles,

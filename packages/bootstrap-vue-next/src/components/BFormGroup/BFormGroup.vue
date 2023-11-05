@@ -40,6 +40,7 @@ export const SLOT_NAME_DEFAULT = 'default'
 export default defineComponent({
   components: {BCol, BFormInvalidFeedback, BFormRow, BFormText, BFormValidFeedback},
   props: {
+    ariaInvalid: {type: [Boolean, String] as PropType<AriaInvalid>, default: undefined},
     contentCols: {type: [Boolean, String, Number], default: undefined},
     contentColsLg: {type: [Boolean, String, Number], default: undefined},
     contentColsMd: {type: [Boolean, String, Number], default: undefined},
@@ -71,7 +72,7 @@ export default defineComponent({
     validated: {type: [Boolean, String] as PropType<Booleanish>, default: false},
     floating: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   },
-  setup(props, {attrs}) {
+  setup(props) {
     const disabledBoolean = useBooleanish(() => props.disabled)
     const labelSrOnlyBoolean = useBooleanish(() => props.labelSrOnly)
     const stateBoolean = useBooleanish(() => props.state)
@@ -171,10 +172,7 @@ export default defineComponent({
 
     const stateClass = useStateClass(stateBoolean)
 
-    const computedAriaInvalid = useAriaInvalid(
-      () => attrs.ariaInvalid as unknown as AriaInvalid,
-      stateBoolean
-    )
+    const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean)
 
     watch(
       () => ariaDescribedby,

@@ -1,14 +1,23 @@
-import {resolveAriaInvalid} from '../utils'
+import useBooleanish from './useBooleanish'
 import type {AriaInvalid} from '../types'
 import {computed, type MaybeRefOrGetter, toRef} from 'vue'
 
 export default (
   ariaInvalid: MaybeRefOrGetter<AriaInvalid | undefined>,
   state: MaybeRefOrGetter<boolean | null | undefined>
-) =>
-  computed(() => {
-    const resolvedAriaInvalid = toRef(ariaInvalid)
-    const resolvedState = toRef(state)
+) => {
+  const resolvedAriaInvalid = useBooleanish(ariaInvalid)
+  const resolvedState = toRef(state)
 
-    return resolveAriaInvalid(resolvedAriaInvalid.value, resolvedState.value)
-  })
+  return computed(() =>
+    resolvedAriaInvalid.value === true
+      ? 'true'
+      : typeof resolvedAriaInvalid.value === 'string'
+      ? resolvedAriaInvalid.value
+      : resolvedState.value === false
+      ? 'true'
+      : resolvedAriaInvalid.value === false
+      ? 'false'
+      : undefined
+  )
+}
