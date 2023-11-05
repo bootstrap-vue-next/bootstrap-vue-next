@@ -31,7 +31,7 @@ export interface BLinkProps {
   replace?: Booleanish
   routerComponentName?: string
   routerTag?: string
-  target?: LinkTarget | null
+  target?: LinkTarget
   to?: RouteLocationRaw
   variant?: ColorVariant | null
   opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'

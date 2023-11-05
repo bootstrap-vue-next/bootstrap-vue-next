@@ -7,7 +7,6 @@
           :to="link.route"
           :active="routerRoute.path === `${link.route}.html`"
           class="px-2 ms-2 rounded"
-          :target="null"
           active-class="bg-primary text-light"
           >{{ link.label }}</BLink
         >
@@ -15,14 +14,13 @@
     </BListGroup>
     <BListGroup v-for="group in groupComputedList" :key="group.label">
       <strong class="bd-links-heading">
-        <BLink :to="withBase(group.uri)" :target="null">
+        <BLink :to="withBase(group.uri)">
           <component :is="group.icon()" /> {{ group.label }}
         </BLink>
       </strong>
       <BListGroupItem v-for="component in group.children" :key="component.name">
         <BLink
           :to="component.route"
-          :target="null"
           :active="routerRoute.path === `${component.route}.html`"
           class="px-2 ms-2 rounded"
           active-class="bg-primary text-light"
