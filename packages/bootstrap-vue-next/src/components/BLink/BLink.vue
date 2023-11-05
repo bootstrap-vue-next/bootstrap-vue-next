@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<BLinkProps>(), {
   replace: false,
   routerComponentName: 'router-link',
   routerTag: 'a',
-  target: '_self',
+  target: undefined,
   to: undefined,
   variant: null,
   opacity: undefined,
@@ -139,7 +139,7 @@ const routerAttr = computed(() => ({
   'class': computedClasses.value,
   'to': props.to,
   'href': computedHref.value,
-  'target': props.target ?? undefined,
+  'target': props.target,
   'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,
   'tabindex': disabledBoolean.value
     ? '-1'
