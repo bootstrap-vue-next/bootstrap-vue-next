@@ -33,7 +33,7 @@ describe('table', () => {
   })
 
   it('has items when using a provider function', async () => {
-    const myProvider = (ctx: any, callback: (items: any) => any) => items
+    const myProvider = () => items
 
     const wrapper = mount(BTable, {
       props: {
@@ -51,7 +51,7 @@ describe('table', () => {
   })
 
   it('has items when using a provider promise', async () => {
-    const myProvider = async (ctx: any, callback: (items: any) => any) =>
+    const myProvider = async () =>
       new Promise<TableItem[] | undefined>((resolve) => {
         resolve(items)
       })
