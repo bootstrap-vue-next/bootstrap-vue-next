@@ -6,11 +6,23 @@ export default {
       component: 'BModal',
       props: [
         {
-          prop: 'bodyVariant',
-          type: 'ColorVariant | null',
-          default: null,
+          prop: 'autoFocus',
+          type: 'Booleanish',
+          default: true,
+          description: "When set to 'false', disables auto focusing the modal when opened",
+        },
+        {
+          prop: 'autoFocusButton',
+          type: "'ok' | 'cancel' | 'close'",
+          default: undefined,
           description:
-            'Applies one of the Bootstrap theme color variants to the body (this takes priority over bodyBgVariant and bodyTextVariant)',
+            "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
+        },
+        {
+          prop: 'backdropVariant',
+          type: 'ColorVariant | null',
+          default: undefined,
+          description: 'Applies one of the Bootstrap theme color variants to the backdrop',
         },
         {
           prop: 'bodyBgVariant',
@@ -25,10 +37,23 @@ export default {
           description: "CSS class (or classes) to apply to the '.modal-body' wrapper element",
         },
         {
+          prop: 'bodyScrolling',
+          type: 'Booleanish',
+          default: false,
+          description: 'Enables/disables scrolling the body while modal is open',
+        },
+        {
           prop: 'bodyTextVariant',
           type: 'ColorVariant | null',
           default: undefined,
           description: 'Applies one of the Bootstrap theme color variants to the body text',
+        },
+        {
+          prop: 'bodyVariant',
+          type: 'ColorVariant | null',
+          default: null,
+          description:
+            'Applies one of the Bootstrap theme color variants to the body (this takes priority over bodyBgVariant and bodyTextVariant)',
         },
         {
           prop: 'busy',
@@ -36,18 +61,6 @@ export default {
           default: false,
           description:
             'Places the built in default footer OK and Cancel buttons in the disabled state',
-        },
-        {
-          prop: 'lazy',
-          type: 'Booleanish',
-          default: false,
-          description: 'Renders the modal content lazily',
-        },
-        {
-          prop: 'buttonSize',
-          type: 'Size',
-          default: 'md',
-          description: "Size of the built in footer buttons: 'sm', 'md'  or 'lg'",
         },
         {
           prop: 'cancelDisabled',
@@ -86,13 +99,6 @@ export default {
           description: "CSS class (or classes) to apply to the '.modal-dialog' wrapper element",
         },
         {
-          prop: 'footerVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description:
-            'Applies one of the Bootstrap theme color variants to the footer (this takes priority over footerBgVariant and footerTextVariant)',
-        },
-        {
           prop: 'footerBgVariant',
           type: 'ColorVariant | null',
           default: null,
@@ -115,6 +121,13 @@ export default {
           type: 'ColorVariant | null',
           default: null,
           description: 'Applies one of the Bootstrap theme color variants to the footer text',
+        },
+        {
+          prop: 'footerVariant',
+          type: 'ColorVariant | null',
+          default: null,
+          description:
+            'Applies one of the Bootstrap theme color variants to the footer (this takes priority over footerBgVariant and footerTextVariant)',
         },
         {
           prop: 'fullscreen',
@@ -145,7 +158,7 @@ export default {
           prop: 'headerCloseClass',
           type: 'ClassValue',
           default: undefined,
-          description: 'Deprecated by BS V5',
+          description: 'CSS class (or classes) to apply to the header close button',
         },
         {
           prop: 'headerCloseLabel',
@@ -160,17 +173,17 @@ export default {
           description: 'Deprecated by BS V5',
         },
         {
+          prop: 'headerTextVariant',
+          type: 'ColorVariant | null',
+          default: null,
+          description: 'Applies one of the Bootstrap theme color variants to the header text',
+        },
+        {
           prop: 'headerVariant',
           type: 'ColorVariant | null',
           default: null,
           description:
             'Applies one of the Bootstrap theme color variants to the header (this takes priority over headerBgVariant and headerTextVariant)',
-        },
-        {
-          prop: 'headerTextVariant',
-          type: 'ColorVariant | null',
-          default: null,
-          description: 'Applies one of the Bootstrap theme color variants to the header text',
         },
         {
           prop: 'hideBackdrop',
@@ -204,6 +217,12 @@ export default {
             "Used to set the 'id' attribute on the rendered content, and used as the base to generate any additional element IDs as needed",
         },
         {
+          prop: 'lazy',
+          type: 'Booleanish',
+          default: false,
+          description: 'Renders the modal content lazily',
+        },
+        {
           prop: 'modalClass',
           type: 'ClassValue',
           default: undefined,
@@ -234,12 +253,6 @@ export default {
           default: false,
           description:
             "When set to 'true', disables the fade animation/transition on the component",
-        },
-        {
-          prop: 'autoFocus',
-          type: 'Booleanish',
-          default: true,
-          description: "When set to 'false', disables auto focusing the modal when opened",
         },
         {
           prop: 'okDisabled',
@@ -278,6 +291,18 @@ export default {
           description: "Set the size of the modal's width. 'sm', 'md' (default), 'lg', or 'xl'",
         },
         {
+          prop: 'teleportDisabled',
+          type: 'Booleanish',
+          default: false,
+          description: 'Renders the modal in the exact place it was defined',
+        },
+        {
+          prop: 'teleportTo',
+          type: 'string | RendererElement | null | undefined',
+          default: 'body',
+          description: 'Overrides the default teleport location',
+        },
+        {
           prop: 'title',
           type: 'string',
           default: undefined,
@@ -302,35 +327,10 @@ export default {
           description: 'Specify the HTML tag to render instead of the default tag for the title',
         },
         {
-          prop: 'autoFocusButton',
-          type: "'ok' | 'cancel' | 'close'",
+          prop: 'type',
+          type: 'string',
           default: undefined,
-          description:
-            "Specify which built-in button to focus once the modal opens: 'ok', 'cancel', or 'close'",
-        },
-        {
-          prop: 'teleportDisabled',
-          type: 'Booleanish',
-          default: false,
-          description: 'Renders the modal in the exact place it was defined',
-        },
-        {
-          prop: 'teleportTo',
-          type: 'string | RendererElement | null | undefined',
-          default: 'body',
-          description: 'Overrides the default teleport location',
-        },
-        {
-          prop: 'bodyScrolling',
-          type: 'Booleanish',
-          default: false,
-          description: 'Enables/disables scrolling the body while modal is open',
-        },
-        {
-          prop: 'backdropVariant',
-          type: 'ColorVariant | null',
-          default: undefined,
-          description: 'Applies one of the Bootstrap theme color variants to the backdrop',
+          description: 'Type of the component',
         },
       ],
       emits: [
