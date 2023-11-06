@@ -41,28 +41,28 @@ defineSlots<{
 const props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
-  exactActiveClass: 'router-link-exact-active',
   append: false,
   disabled: false,
   event: 'click',
+  exactActiveClass: 'router-link-exact-active',
   href: undefined,
+  icon: false,
+  opacity: undefined,
+  opacityHover: undefined,
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
   // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
   rel: undefined,
   replace: false,
   routerComponentName: 'router-link',
   routerTag: 'a',
-  target: '_self',
+  target: undefined,
   to: undefined,
-  variant: null,
-  opacity: undefined,
-  opacityHover: undefined,
-  underlineVariant: null,
   underlineOffset: undefined,
   underlineOffsetHover: undefined,
   underlineOpacity: undefined,
   underlineOpacityHover: undefined,
-  icon: false,
+  underlineVariant: null,
+  variant: null,
 })
 
 const emit = defineEmits<{
@@ -99,9 +99,28 @@ const tag = computed(() => {
   return props.routerComponentName
 })
 
-const computedLocation = computed(() =>
-  tag.value === 'router-link' ? {to: props.href || props.to || '#'} : {href: props.href || '#'}
-)
+const computedHref = computed(() => {
+  const toFallback = '#'
+  if (props.href) return props.href
+
+  if (typeof props.to === 'string') return props.to || toFallback
+
+  const {to} = props
+
+  if (to !== undefined && 'path' in to) {
+    const path = to.path || ''
+    const query = to.query
+      ? `?${Object.keys(to.query)
+          .map((e) => `${e}=${to.query?.[e]}`)
+          .join('=')}`
+      : ''
+    const hash = !to.hash || to.hash.charAt(0) === '#' ? to.hash || '' : `#${to.hash}`
+    return `${path}${query}${hash}` || toFallback
+  }
+  // There is no resolver for `RouteLocationNamedRaw`. Which, I'm not sure there can be one in this context.
+
+  return toFallback
+})
 
 const computedClasses = computed(() => ({
   [`link-${props.variant}`]: props.variant !== null,
@@ -118,6 +137,8 @@ const computedClasses = computed(() => ({
 
 const routerAttr = computed(() => ({
   'class': computedClasses.value,
+  'to': props.to,
+  'href': computedHref.value,
   'target': props.target,
   'rel': props.target === '_blank' ? props.rel ?? 'noopener' : undefined,
   'tabindex': disabledBoolean.value
@@ -126,7 +147,6 @@ const routerAttr = computed(() => ({
     ? null
     : attrs.tabindex,
   'aria-disabled': disabledBoolean.value ? true : null,
-  ...computedLocation.value,
 }))
 
 const computedLinkClasses = computed(() => ({

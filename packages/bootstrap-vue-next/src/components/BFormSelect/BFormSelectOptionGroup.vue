@@ -24,17 +24,17 @@ import {normalizeOptions} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
-    label?: string
     disabledField?: string
     htmlField?: string
+    label?: string
     options?: unknown[] | Record<string, unknown>
     textField?: string
     valueField?: string
   }>(),
   {
     disabledField: 'disabled',
-    label: undefined,
     htmlField: 'html',
+    label: undefined,
     options: () => [],
     textField: 'text',
     valueField: 'value',

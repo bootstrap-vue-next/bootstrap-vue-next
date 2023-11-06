@@ -87,73 +87,73 @@ const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PA
 
 const props = withDefaults(
   defineProps<{
-    id?: string
     ariaControls?: string
     ariaLabel?: string
-    labelIncrement?: string
+    disabled?: Booleanish
+    form?: string
+    formatterFn?: (value: number) => string
+    id?: string
+    inline?: Booleanish
     labelDecrement?: string
+    labelIncrement?: string
+    locale?: string
+    max?: string | number
+    min?: string | number
     modelValue?: number | null
     name?: string
-    disabled?: Booleanish
     placeholder?: string
-    locale?: string
-    form?: string
-    inline?: Booleanish
-    size?: Size
-    formatterFn?: (value: number) => string
     readonly?: Booleanish
-    vertical?: Booleanish
     repeatDelay?: string | number
     repeatInterval?: string | number
     repeatStepMultiplier?: string | number
     repeatThreshold?: string | number
     required?: Booleanish
-    step?: string | number
-    min?: string | number
-    max?: string | number
-    wrap?: Booleanish
+    size?: Size
     state?: Booleanish | null
+    step?: string | number
+    vertical?: Booleanish
+    wrap?: Booleanish
   }>(),
   {
-    id: undefined,
     ariaControls: undefined,
     ariaLabel: undefined,
-    labelIncrement: 'Increment',
+    disabled: false,
+    form: undefined,
+    formatterFn: undefined,
+    id: undefined,
+    inline: false,
     labelDecrement: 'Decrement',
+    labelIncrement: 'Increment',
+    locale: 'locale',
+    max: defaultValues.max,
+    min: defaultValues.min,
     modelValue: null,
     name: undefined,
-    disabled: false,
     placeholder: undefined,
-    locale: 'locale',
-    form: undefined,
-    inline: false,
-    size: undefined,
-    formatterFn: undefined,
     readonly: false,
-    vertical: false,
     repeatDelay: defaultValues.repeatDelay,
     repeatInterval: defaultValues.repeatInterval,
     repeatStepMultiplier: defaultValues.repeatMultiplier,
     repeatThreshold: defaultValues.repeatThreshold,
     required: false,
-    step: defaultValues.step,
-    min: defaultValues.min,
-    max: defaultValues.max,
-    wrap: false,
+    size: undefined,
     state: null,
+    step: defaultValues.step,
+    vertical: false,
+    wrap: false,
   }
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: number | null]
   'change': [value: number | null]
+  'update:modelValue': [value: number | null]
 }>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  increment?: (props: {hasFocus: boolean}) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   decrement?: (props: {hasFocus: boolean}) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  increment?: (props: {hasFocus: boolean}) => any
 }>()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})

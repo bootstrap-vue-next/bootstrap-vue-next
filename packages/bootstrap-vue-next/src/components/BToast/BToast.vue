@@ -69,57 +69,57 @@ import BProgress from '../BProgress/BProgress.vue'
 // TODO appendToast from BToaster
 
 const props = withDefaults(defineProps<BToastProps>(), {
+  animation: true,
+  autoHide: true,
   bgVariant: null,
-  textVariant: null,
-  delay: 5000,
-  bodyClass: undefined,
   body: undefined,
+  bodyClass: undefined,
+  delay: 5000,
   headerClass: undefined,
   headerTag: 'div',
-  animation: true,
   id: undefined,
+  interval: 1000,
   isStatus: false,
-  autoHide: true,
+  modelValue: false,
   noCloseButton: false,
   noFade: false,
   noHoverPause: false,
-  solid: false,
-  title: undefined,
-  modelValue: false,
-  toastClass: undefined,
-  variant: null,
-  showOnPause: true,
-  interval: 1000,
   progressProps: undefined,
+  showOnPause: true,
+  solid: false,
+  textVariant: null,
+  title: undefined,
+  toastClass: undefined,
   // Link props
+  // All others use defaults
   active: undefined,
   activeClass: undefined,
+  append: undefined,
+  disabled: undefined,
   exactActiveClass: undefined,
-  icon: false,
-  append: false,
   href: undefined,
-  // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
-  // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
-  rel: undefined,
-  replace: false,
-  disabled: false,
-  routerComponentName: 'router-link',
-  target: '_self',
-  to: undefined,
+  icon: undefined,
   opacity: undefined,
   opacityHover: undefined,
-  underlineVariant: null,
+  rel: undefined,
+  replace: undefined,
+  routerComponentName: undefined,
+  target: undefined,
+  to: undefined,
   underlineOffset: undefined,
   underlineOffsetHover: undefined,
   underlineOpacity: undefined,
   underlineOpacityHover: undefined,
+  underlineVariant: undefined,
+  variant: undefined,
+  // End link props
 })
 
 const emit = defineEmits<{
-  'destroyed': []
   'close': []
-  'closed': []
   'close-countdown': [value: number]
+  'closed': []
+  'destroyed': []
   'update:modelValue': [value: boolean | number]
 }>()
 
@@ -216,8 +216,8 @@ onBeforeUnmount(stop)
 
 defineExpose({
   pause,
-  resume,
   restart,
+  resume,
   stop,
 })
 </script>

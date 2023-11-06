@@ -28,21 +28,21 @@ import {useFocus, useVModel} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
-    size?: Size
-    form?: string
-    id?: string
-    name?: string
-    modelValue?: string | boolean | unknown[] | Record<string, unknown> | number | null
     ariaInvalid?: AriaInvalid
     autofocus?: Booleanish
     buttonVariant?: ButtonVariant | null
     buttons?: Booleanish
     disabled?: Booleanish
     disabledField?: string
+    form?: string
     htmlField?: string
+    id?: string
+    modelValue?: string | boolean | unknown[] | Record<string, unknown> | number | null
+    name?: string
     options?: (string | number | Record<string, unknown>)[]
     plain?: Booleanish
     required?: Booleanish
+    size?: Size
     stacked?: Booleanish
     state?: Booleanish | null
     textField?: string
@@ -50,23 +50,23 @@ const props = withDefaults(
     valueField?: string
   }>(),
   {
-    size: 'md',
-    form: undefined,
-    id: undefined,
-    name: undefined,
-    modelValue: null,
+    ariaInvalid: undefined,
     autofocus: false,
     buttonVariant: 'secondary',
     buttons: false,
-    ariaInvalid: undefined,
-    state: null,
     disabled: false,
     disabledField: 'disabled',
+    form: undefined,
     htmlField: 'html',
+    id: undefined,
+    modelValue: null,
+    name: undefined,
     options: () => [],
     plain: false,
     required: false,
+    size: 'md',
     stacked: false,
+    state: null,
     textField: 'text',
     validated: false,
     valueField: 'value',
@@ -74,11 +74,11 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
+  'change': [value: string | boolean | unknown[] | Record<string, unknown> | number | null]
   'input': [value: string | boolean | unknown[] | Record<string, unknown> | number | null]
   'update:modelValue': [
     value: string | boolean | unknown[] | Record<string, unknown> | number | null,
   ]
-  'change': [value: string | boolean | unknown[] | Record<string, unknown> | number | null]
 }>()
 
 defineSlots<{
@@ -167,11 +167,11 @@ const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)
 
 defineExpose({
-  focus: () => {
-    focused.value = true
-  },
   blur: () => {
     focused.value = false
+  },
+  focus: () => {
+    focused.value = true
   },
 })
 </script>

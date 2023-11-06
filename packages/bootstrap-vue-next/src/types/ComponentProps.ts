@@ -15,17 +15,21 @@ import type {TableField} from './TableField'
 import type {TableFieldObject} from './TableFieldObject'
 import type {TableItem} from './TableItem'
 import type {VerticalAlign} from './VerticalAlign'
+import type {RadiusElementExtendables} from './RadiusElement'
 
 export interface BLinkProps {
   active?: Booleanish
   activeClass?: string
-  exactActiveClass?: string
   append?: Booleanish
   disabled?: Booleanish
+  exactActiveClass?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   event?: string | any[]
   href?: string
+  icon?: Booleanish
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
+  opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
+  opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
   // prefetch: {type: [Boolean, String] as PropType<Booleanish>, default: null},
   rel?: string
   replace?: Booleanish
@@ -33,39 +37,35 @@ export interface BLinkProps {
   routerTag?: string
   target?: LinkTarget
   to?: RouteLocationRaw
-  variant?: ColorVariant | null
-  opacity?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  opacityHover?: 10 | 25 | 50 | 75 | 100 | '10' | '25' | '50' | '75' | '100'
-  underlineVariant?: ColorVariant | null
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
   underlineOffsetHover?: 1 | 2 | 3 | '1' | '2' | '3'
   underlineOpacity?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
   underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
-  icon?: Booleanish
+  underlineVariant?: ColorVariant | null
+  variant?: ColorVariant | null
 }
 
-export interface BImgProps {
+export interface BImgProps extends RadiusElementExtendables {
   blank?: Booleanish
   blankColor?: string
   block?: Booleanish
   center?: Booleanish
+  end?: Booleanish
   fluid?: Booleanish
-  lazy?: Booleanish
   fluidGrow?: Booleanish
   height?: number | string
-  start?: Booleanish
-  end?: Booleanish
-  rounded?: boolean | string
+  lazy?: Booleanish
   sizes?: string | string[]
   src?: string
   srcset?: string | string[]
+  start?: Booleanish
   thumbnail?: Booleanish
   width?: number | string
 }
 
 export interface BFormProps {
-  id?: string
   floating?: Booleanish
+  id?: string
   novalidate?: Booleanish
   validated?: Booleanish
 }
@@ -86,41 +86,18 @@ export interface BTableSimpleProps {
   stacked?: Booleanish | Breakpoint
   stickyHeader?: Booleanish
   striped?: Booleanish
+  stripedColumns?: Booleanish
   tableClass?: ClassValue
   variant?: ColorVariant | null
-  stripedColumns?: Booleanish
-  role?: string
-  responsiveClass?: ClassValue
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  responsiveAttrs?: any
 }
 
-export interface BTableLiteProps {
+export interface BTableLiteProps extends BTableSimpleProps {
   align?: VerticalAlign
   caption?: string
   captionHtml?: string
   detailsTdClass?: ClassValue
-  fields?: TableField[]
-  footClone?: Booleanish
-  footRowVariant?: ColorVariant | null
-  footVariant?: ColorVariant | null
-  headRowVariant?: ColorVariant | null
-  headVariant?: ColorVariant | null
-  items?: TableItem[]
-  primaryKey?: string
-  tbodyClass?: ClassValue
-  tbodyTrAttr?: any
-  // tbodyTransitionHandlers
-  // tbodyTransitionProps
-  tfootClass?: ClassValue
-  tfootTrClass?: ClassValue
-  theadClass?: ClassValue
-  theadTrClass?: ClassValue
-  modelValue?: any
-  labelStacked?: Booleanish
-  showEmpty?: Booleanish
-  emptyText?: string
   emptyFilteredText?: string
+  emptyText?: string
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((field: TableFieldObject) => Record<string, any>[])
     | string
@@ -128,6 +105,21 @@ export interface BTableLiteProps {
     | Record<PropertyKey, any>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | any[]
+  fields?: TableField[]
+  footClone?: Booleanish
+  footRowVariant?: ColorVariant | null
+  footVariant?: ColorVariant | null
+  headRowVariant?: ColorVariant | null
+  headVariant?: ColorVariant | null
+  items?: TableItem[]
+  labelStacked?: Booleanish
+  modelValue?: any
+  primaryKey?: string
+  showEmpty?: Booleanish
+  tbodyClass?: ClassValue
+  tbodyTrAttr?: any
+  // tbodyTransitionHandlers
+  // tbodyTransitionProps
   tbodyTrClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((item: TableItem | null, type: string) => string | Array<any> | null | undefined)
     | string
@@ -135,8 +127,11 @@ export interface BTableLiteProps {
     | Record<PropertyKey, any>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | any[]
+  tfootClass?: ClassValue
+  tfootTrClass?: ClassValue
+  theadClass?: ClassValue
+  theadTrClass?: ClassValue
 }
-
 export interface BProgressBarProps extends ColorExtendables {
   animated?: Booleanish
   label?: string
@@ -156,110 +151,117 @@ export interface BInputGroupAddonProps {
 export interface BFormFeedbackSharedProps {
   ariaLive?: string
   forceShow?: Booleanish
-  text?: string
   id?: string
   role?: string
   state?: Booleanish | null
   tag?: string
+  text?: string
   tooltip?: Booleanish
 }
 
 export interface BDropdownProps {
   ariaLabel?: string
-  id?: string
-  menuClass?: ClassValue
-  size?: Size
-  splitClass?: ClassValue
-  splitVariant?: ButtonVariant | null
-  text?: string
-  toggleClass?: ClassValue
   autoClose?: boolean | 'inside' | 'outside'
   block?: Booleanish
-  disabled?: Booleanish
-  isNav?: Booleanish
-  dropup?: Booleanish
-  dropend?: Booleanish
-  dropstart?: Booleanish
+  boundary?: Boundary | RootBoundary
   center?: Booleanish
+  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+  disabled?: Booleanish
+  dropend?: Booleanish
+  dropdown?: Booleanish
+  dropstart?: Booleanish
   end?: Booleanish
+  floatingMiddleware?: Middleware[]
+  id?: string
+  isNav?: Booleanish
+  lazy?: Booleanish
+  menuClass?: ClassValue
+  modelValue?: Booleanish
+  noCaret?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
   offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
   role?: string
+  size?: Size
   split?: Booleanish
   splitButtonType?: ButtonType
-  splitHref?: string
+  splitClass?: ClassValue
   splitDisabled?: Booleanish
-  noCaret?: Booleanish
+  splitHref?: string
+  splitTo?: RouteLocationRaw
+  splitVariant?: ButtonVariant | null
+  strategy?: Strategy
+  text?: string
+  toggleClass?: ClassValue
   toggleText?: string
   variant?: ButtonVariant | null
-  modelValue?: Booleanish
-  lazy?: Booleanish
-  strategy?: Strategy
-  floatingMiddleware?: Middleware[]
-  splitTo?: RouteLocationRaw
-  boundary?: Boundary | RootBoundary
-  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
 }
 
 interface BToastIntermediate extends ColorExtendables {
-  delay?: string | number
-  bodyClass?: ClassValue
+  animation?: Booleanish
+  autoHide?: Booleanish
   body?: string
+  bodyClass?: ClassValue
+  delay?: string | number
   headerClass?: ClassValue
   headerTag?: string
-  animation?: Booleanish
   id?: string
+  interval?: number | string
   isStatus?: Booleanish
-  autoHide?: Booleanish
+  modelValue?: boolean | number
   noCloseButton?: Booleanish
   noFade?: Booleanish
   noHoverPause?: Booleanish
+  progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
+  showOnPause?: Booleanish
   solid?: Booleanish
   title?: string
-  modelValue?: boolean | number
   toastClass?: ClassValue
-  showOnPause?: Booleanish
-  interval?: number | string
-  progressProps?: Omit<BProgressBarProps, 'label' | 'labelHtml' | 'max' | 'value'>
 }
 
 export type BToastProps = BToastIntermediate & Omit<BLinkProps, 'event' | 'routerTag'>
 
 export interface BPopoverProps {
-  modelValue?: Booleanish
+  click?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
-  target?: MaybeRef<
-    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
-  >
-  reference?: MaybeRef<
-    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
-  >
   content?: string
-  id?: string
-  title?: string
+  customClass?: ClassValue
   delay?:
     | number
     | {
         show: number
         hide: number
       }
-  click?: Booleanish
-  manual?: Booleanish
-  variant?: ColorVariant | null
-  offset?: number | string | null
-  customClass?: ClassValue
-  placement?: BPopoverPlacement
-  strategy?: Strategy
   floatingMiddleware?: Middleware[]
+  hide?: Booleanish
+  html?: Booleanish
+  id?: string
+  inline?: Booleanish
+  manual?: Booleanish
+  modelValue?: Booleanish
+  noAutoClose?: Booleanish
+  noFade?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
-  noFade?: Booleanish
-  noAutoClose?: Booleanish
-  hide?: Booleanish
-  realtime?: Booleanish
-  inline?: Booleanish
-  tooltip?: Booleanish
-  html?: Booleanish
   noninteractive?: Booleanish
+  offset?: number | string | null
+  placement?: BPopoverPlacement
+  realtime?: Booleanish
+  reference?: MaybeRef<
+    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
+  >
+  strategy?: Strategy
+  target?: MaybeRef<
+    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
+  >
+  title?: string
+  tooltip?: Booleanish
+  variant?: ColorVariant | null
+}
+
+export interface BCardHeadFootProps extends ColorExtendables {
+  borderVariant?: ColorVariant | null
+  html?: string
+  tag?: string
+  text?: string
 }

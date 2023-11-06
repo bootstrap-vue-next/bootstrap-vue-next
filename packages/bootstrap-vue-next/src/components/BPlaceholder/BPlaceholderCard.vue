@@ -55,46 +55,46 @@ import {useBooleanish} from '../../composables'
 
 const props = withDefaults(
   defineProps<{
-    noHeader?: Booleanish
-    headerWidth?: string | number
-    headerVariant?: ColorVariant | null
-    headerAnimation?: PlaceholderAnimation
-    headerSize?: PlaceholderSize
-    noFooter?: Booleanish
-    footerWidth?: string | number
-    footerVariant?: ColorVariant | null
+    animation?: PlaceholderAnimation
     footerAnimation?: PlaceholderAnimation
     footerSize?: PlaceholderSize
-    animation?: PlaceholderAnimation
+    footerVariant?: ColorVariant | null
+    footerWidth?: string | number
+    headerAnimation?: PlaceholderAnimation
+    headerSize?: PlaceholderSize
+    headerVariant?: ColorVariant | null
+    headerWidth?: string | number
+    imgBlankColor?: string
+    imgBottom?: Booleanish
+    imgHeight?: string | number
+    imgSrc?: string
+    noButton?: Booleanish
+    noFooter?: Booleanish
+    noHeader?: Booleanish
+    noImg?: Booleanish
     size?: PlaceholderSize
     variant?: ColorVariant | null
-    noButton?: Booleanish
-    imgBottom?: Booleanish
-    imgSrc?: string
-    imgBlankColor?: string
-    imgHeight?: string | number
-    noImg?: Booleanish
   }>(),
   {
-    footerVariant: undefined,
+    animation: undefined,
     footerAnimation: undefined,
     footerSize: 'md',
-    animation: undefined,
-    size: 'md',
-    variant: undefined,
-    imgSrc: undefined,
+    footerVariant: undefined,
+    footerWidth: 100,
     headerAnimation: undefined,
     headerSize: 'md',
     headerVariant: undefined,
-    noButton: false,
     headerWidth: 100,
-    footerWidth: 100,
-    noHeader: false,
-    noFooter: false,
     imgBlankColor: '#868e96',
-    imgHeight: 100,
     imgBottom: false,
+    imgHeight: 100,
+    imgSrc: undefined,
+    noButton: false,
+    noFooter: false,
+    noHeader: false,
     noImg: false,
+    size: 'md',
+    variant: undefined,
   }
 )
 
@@ -102,11 +102,11 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  img?: (props: Record<string, never>) => any
+  footer?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   header?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  footer?: (props: Record<string, never>) => any
+  img?: (props: Record<string, never>) => any
 }>()
 
 const noButtonBoolean = useBooleanish(() => props.noButton)

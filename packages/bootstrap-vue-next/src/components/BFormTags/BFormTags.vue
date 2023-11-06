@@ -138,12 +138,12 @@ const props = withDefaults(
     autofocus?: Booleanish
     disabled?: Booleanish
     duplicateTagText?: string
+    form?: string
     inputAttrs?: Record<string, unknown>
     inputClass?: ClassValue
     inputId?: string
     inputType?: InputType
     invalidTagText?: string
-    form?: string
     limit?: number | string
     limitTagsText?: string
     modelValue?: string[]
@@ -155,8 +155,8 @@ const props = withDefaults(
     removeOnDelete?: Booleanish
     required?: Booleanish
     separator?: string | string[]
-    state?: Booleanish | null
     size?: Size
+    state?: Booleanish | null
     tagClass?: ClassValue
     tagPills?: Booleanish
     tagRemoveLabel?: string
@@ -165,34 +165,34 @@ const props = withDefaults(
     tagVariant?: ColorVariant | null
   }>(),
   {
-    inputAttrs: undefined,
-    tagRemoveLabel: undefined,
-    tagClass: undefined,
-    separator: undefined,
-    size: 'md',
-    name: undefined,
-    limit: undefined,
-    form: undefined,
-    inputClass: undefined,
-    inputId: undefined,
     addButtonText: 'Add',
     addButtonVariant: 'outline-secondary',
     addOnChange: false,
     autofocus: false,
     disabled: false,
     duplicateTagText: 'Duplicate tag(s)',
+    form: undefined,
+    inputAttrs: undefined,
+    inputClass: undefined,
+    inputId: undefined,
     inputType: 'text',
     invalidTagText: 'Invalid tag(s)',
+    limit: undefined,
     limitTagsText: 'Tag limit reached',
     modelValue: () => [],
+    name: undefined,
     noAddOnEnter: false,
     noOuterFocus: false,
     noTagRemove: false,
     placeholder: 'Add tag...',
     removeOnDelete: false,
     required: false,
+    separator: undefined,
+    size: 'md',
     state: null,
+    tagClass: undefined,
     tagPills: false,
+    tagRemoveLabel: undefined,
     tagRemovedLabel: 'Tag removed',
     tagValidator: () => true,
     tagVariant: 'secondary',
@@ -200,20 +200,20 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string[]]
-  'input': [value: string[]]
-  'tag-state': [...args: string[][]]
+  'blur': [value: FocusEvent]
   'focus': [value: FocusEvent]
   'focusin': [value: FocusEvent]
   'focusout': [value: FocusEvent]
-  'blur': [value: FocusEvent]
+  'input': [value: string[]]
+  'tag-state': [...args: string[][]]
+  'update:modelValue': [value: string[]]
 }>()
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'default'?: (props: typeof slotAttrs.value) => any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'add-button-text'?: (props: Record<string, never>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  'default'?: (props: typeof slotAttrs.value) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'tag'?: (props: {
     tag: string
@@ -455,12 +455,12 @@ const removeTag = (tag?: string): void => {
 
 // TODO these focus/blur events aren't quite in line with use useFormInput implementation. Perhaps we should bring them together?
 defineExpose({
+  blur: () => {
+    focused.value = false
+  },
   element: input,
   focus: () => {
     focused.value = true
-  },
-  blur: () => {
-    focused.value = false
   },
 })
 </script>

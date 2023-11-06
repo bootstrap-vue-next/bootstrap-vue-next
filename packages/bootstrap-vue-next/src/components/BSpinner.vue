@@ -27,12 +27,12 @@ const props = withDefaults(
     variant?: ColorVariant | null
   }>(),
   {
+    label: undefined,
     role: 'status',
     small: false,
-    variant: null,
-    label: undefined,
     tag: 'span',
     type: 'border',
+    variant: null,
   }
 )
 

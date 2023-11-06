@@ -20,10 +20,10 @@ const props = withDefaults(
     textVariant?: TextColorVariant | null
   }>(),
   {
-    inline: false,
     id: undefined,
-    text: undefined,
+    inline: false,
     tag: 'small',
+    text: undefined,
     textVariant: 'body-secondary',
   }
 )

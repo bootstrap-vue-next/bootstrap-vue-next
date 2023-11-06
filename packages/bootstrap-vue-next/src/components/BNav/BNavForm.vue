@@ -31,10 +31,12 @@ withDefaults(
   >(),
   {
     role: undefined,
+    // BForm props
+    floating: undefined,
     id: undefined,
-    floating: false,
-    novalidate: false,
-    validated: false,
+    novalidate: undefined,
+    validated: undefined,
+    // End BForm props
   }
 )
 

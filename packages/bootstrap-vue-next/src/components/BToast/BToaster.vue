@@ -28,14 +28,14 @@ import {omit} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    teleportTo?: string | RendererElement | null | undefined
     teleportDisabled?: Booleanish
+    teleportTo?: string | RendererElement | null | undefined
     // TODO this
     // appendToast?: Booleanish
   }>(),
   {
-    teleportTo: 'body',
     teleportDisabled: false,
+    teleportTo: 'body',
   }
 )
 

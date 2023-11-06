@@ -19,6 +19,28 @@ const props = withDefaults(
   {
     bottom: false,
     top: false,
+    // BImg props
+    blank: undefined,
+    blankColor: undefined,
+    block: undefined,
+    center: undefined,
+    end: undefined,
+    fluid: undefined,
+    fluidGrow: undefined,
+    height: undefined,
+    lazy: undefined,
+    rounded: undefined,
+    roundedBottom: undefined,
+    roundedEnd: undefined,
+    roundedStart: undefined,
+    roundedTop: undefined,
+    sizes: undefined,
+    src: undefined,
+    srcset: undefined,
+    start: undefined,
+    thumbnail: undefined,
+    width: undefined,
+    // End BImg props
   }
 )
 

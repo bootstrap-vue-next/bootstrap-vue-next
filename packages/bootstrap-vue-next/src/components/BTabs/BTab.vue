@@ -21,33 +21,32 @@ import {tabsInjectionKey} from '../../utils'
 
 const props = withDefaults(
   defineProps<{
-    id?: string
-    title?: string
     active?: Booleanish
     buttonId?: string
     disabled?: Booleanish
+    id?: string
     lazy?: Booleanish
     lazyOnce?: Booleanish
-    noBody?: boolean | string
+    noBody?: Booleanish
     tag?: string
+    title?: string
     titleItemClass?: ClassValue
     titleLinkAttributes?: Record<string, unknown>
     titleLinkClass?: ClassValue
   }>(),
   {
-    titleItemClass: undefined,
-    titleLinkClass: undefined,
-    id: undefined,
-    title: undefined,
     active: false,
-    // TODO this is unused - Compat issue
     buttonId: undefined,
     disabled: false,
+    id: undefined,
     lazy: undefined,
     lazyOnce: undefined,
     noBody: false,
     tag: 'div',
+    title: undefined,
+    titleItemClass: undefined,
     titleLinkAttributes: undefined,
+    titleLinkClass: undefined,
   }
 )
 
@@ -73,6 +72,7 @@ const buttonId = useId(() => props.buttonId, 'tab')
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
 const lazyBoolean = useBooleanish(() => props.lazyOnce ?? props.lazy)
+const noBodyBoolean = useBooleanish(() => props.noBody)
 
 const lazyRenderCompleted = ref(false)
 const el = ref<HTMLElement | null>(null)
@@ -147,7 +147,7 @@ const computedClasses = computed(() => [
   {
     'active': isActive.value,
     'show': show.value,
-    'card-body': parentData?.card.value && props.noBody === false,
+    'card-body': parentData?.card.value && noBodyBoolean.value === false,
     'fade': !parentData?.noFade.value,
   },
   show.value && parentData?.activeTabClass ? parentData.activeTabClass : null,

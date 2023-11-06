@@ -13,7 +13,7 @@ import {useBooleanish} from '../../composables'
 const props = withDefaults(
   defineProps<{
     flush?: Booleanish
-    horizontal?: boolean | Breakpoint
+    horizontal?: Booleanish | Breakpoint
     numbered?: Booleanish
     tag?: string
   }>(),
@@ -32,9 +32,10 @@ defineSlots<{
 
 const flushBoolean = useBooleanish(() => props.flush)
 const numberedBoolean = useBooleanish(() => props.numbered)
+const computedHorizontal = useBooleanish(() => props.horizontal)
 
 const computedClasses = computed(() => {
-  const horizontal = flushBoolean.value ? false : props.horizontal
+  const horizontal = flushBoolean.value ? false : computedHorizontal.value
   return {
     'list-group-flush': flushBoolean.value,
     'list-group-horizontal': horizontal === true,

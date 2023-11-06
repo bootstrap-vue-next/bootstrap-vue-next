@@ -191,13 +191,7 @@
 <script setup lang="ts">
 import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
-import type {
-  BTableLiteProps,
-  BTableSimpleProps,
-  TableField,
-  TableFieldObject,
-  TableItem,
-} from '../../types'
+import type {BTableLiteProps, TableField, TableFieldObject, TableItem} from '../../types'
 import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
 import {filterEvent, get, isObject, startCase, titleCase} from '../../utils'
 import BTableSimple from './BTableSimple.vue'
@@ -208,32 +202,52 @@ import BTh from './BTh.vue'
 import BThead from './BThead.vue'
 import BTr from './BTr.vue'
 
-const props = withDefaults(defineProps<BTableLiteProps & BTableSimpleProps>(), {
-  variant: undefined,
-  borderVariant: undefined,
+const props = withDefaults(defineProps<BTableLiteProps>(), {
   caption: undefined,
   align: undefined,
-  captionTop: false,
-  borderless: false,
-  bordered: false,
-  dark: false,
   fields: () => [],
   footClone: false,
-  hover: false,
   items: () => [],
-  responsive: false,
-  small: false,
-  striped: false,
-  stripedColumns: false,
   labelStacked: false,
-  stacked: false,
-  stickyHeader: false,
   showEmpty: false,
   emptyText: 'There are no records to show',
   emptyFilteredText: 'There are no records matching your request',
-  tableClass: undefined,
   fieldColumnClass: undefined,
   tbodyTrClass: undefined,
+  captionHtml: undefined,
+  detailsTdClass: undefined,
+  headVariant: undefined,
+  headRowVariant: undefined,
+  footRowVariant: undefined,
+  footVariant: undefined,
+  modelValue: undefined,
+  primaryKey: undefined,
+  tbodyClass: undefined,
+  tbodyTrAttr: undefined,
+  tfootClass: undefined,
+  tfootTrClass: undefined,
+  theadClass: undefined,
+  theadTrClass: undefined,
+  // BTableSimpleProps props
+  borderVariant: undefined,
+  tableClass: undefined,
+  variant: undefined,
+  bordered: undefined,
+  borderless: undefined,
+  captionTop: undefined,
+  dark: undefined,
+  hover: undefined,
+  id: undefined,
+  noBorderCollapse: undefined,
+  outlined: undefined,
+  fixed: undefined,
+  responsive: undefined,
+  stacked: undefined,
+  striped: undefined,
+  stripedColumns: undefined,
+  small: undefined,
+  stickyHeader: undefined,
+  // End BTableSimpleProps props
 })
 
 const emit = defineEmits<{

@@ -30,23 +30,23 @@ import BCloseButton from '../BButton/BCloseButton.vue'
 
 const props = withDefaults(
   defineProps<{
-    id?: string
-    title?: string
     disabled?: Booleanish
+    id?: string
     noRemove?: Booleanish
     pill?: Booleanish
     removeLabel?: string
     tag?: string
+    title?: string
     variant?: ColorVariant | null
   }>(),
   {
-    id: undefined,
-    title: undefined,
     disabled: false,
+    id: undefined,
     noRemove: false,
     pill: false,
     removeLabel: 'Remove tag',
     tag: 'span',
+    title: undefined,
     variant: 'secondary',
   }
 )
