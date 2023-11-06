@@ -360,10 +360,6 @@ If you are using one of the preferred installation methods, JS will be tree-shak
 
 BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue.
 
-<!-- To follow this, we'll implement a parity list where you can view the progress of covered components. This section is not ready yet. -->
-
-You can view the planned compatibility list in the following [section](./reference/parityList.md). It is _not_ a migration guide, which will be finalized upon v1.0.0.
-
 <script setup lang="ts">
 import {BCard, BCardBody, BAlert, BTab, BTabs} from 'bootstrap-vue-next'
 import {useLocalStorage} from '@vueuse/core'
