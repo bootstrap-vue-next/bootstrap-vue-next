@@ -131,10 +131,10 @@ export default {
         },
         {
           prop: 'fullscreen',
-          type: 'boolean | string',
+          type: 'Booleanish | Breakpoint',
           default: false,
           description:
-            "A boolean value will enable/disable full screen mode. A string value will set the breakpoint to enable full screen mode below the value of the breakpoint. Breakpoint values are: 'sm', 'md', 'lg', 'xl', 'xxl'",
+            "A Booleanish value will enable/disable full screen mode. A Breakpoint value will set the breakpoint to enable full screen mode below the value of the breakpoint. Breakpoint values are: 'sm', 'md', 'lg', 'xl', 'xxl'",
         },
         {
           prop: 'headerBgVariant',
