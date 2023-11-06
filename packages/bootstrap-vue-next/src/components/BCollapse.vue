@@ -46,6 +46,7 @@ const props = withDefaults(
     id?: string
     isNav?: Booleanish
     modelValue?: Booleanish
+    skipAnimation?: Booleanish
     tag?: string
     toggle?: Booleanish
     visible?: Booleanish
@@ -55,6 +56,7 @@ const props = withDefaults(
     id: undefined,
     isNav: false,
     modelValue: false,
+    skipAnimation: false,
     tag: 'div',
     toggle: false,
     visible: false,
@@ -117,6 +119,7 @@ const toggleBoolean = useBooleanish(() => props.toggle)
 const horizontalBoolean = useBooleanish(() => props.horizontal)
 const isNavBoolean = useBooleanish(() => props.isNav)
 const visibleBoolean = useBooleanish(() => props.visible)
+const skipAnimationBoolean = useBooleanish(() => props.skipAnimation)
 
 const computedId = useId(() => props.id, 'collapse')
 
@@ -142,15 +145,22 @@ const toggleFn = () => {
   modelValue.value = !modelValueBoolean.value
 }
 
+let revealTimeout: ReturnType<typeof setTimeout> | undefined
+let hideTimeout: ReturnType<typeof setTimeout> | undefined
+let _skipAnimation = skipAnimationBoolean.value
+
 const reveal = () => {
-  show.value = true
-  isCollapsing.value = true
   const event = buildTriggerableEvent('show', {cancelable: true})
   emit('show', event)
   if (event.defaultPrevented) {
     emit('show-prevented')
     return
   }
+  clearTimeout(hideTimeout)
+  clearTimeout(revealTimeout)
+  show.value = true
+  if (_skipAnimation) return
+  isCollapsing.value = true
   nextTick(() => {
     if (element.value === null) return
     if (horizontalBoolean.value) {
@@ -158,7 +168,7 @@ const reveal = () => {
     } else {
       element.value.style.height = `${element.value.scrollHeight}px`
     }
-    setTimeout(() => {
+    revealTimeout = setTimeout(() => {
       isCollapsing.value = false
       emit('shown')
       if (element.value === null) return
@@ -175,11 +185,23 @@ const hide = () => {
     emit('hide-prevented')
     return
   }
+  clearTimeout(revealTimeout)
+  clearTimeout(hideTimeout)
   if (element.value === null) return
-  if (horizontalBoolean.value) {
-    element.value.style.width = `${element.value.scrollWidth}px`
+  if (_skipAnimation) {
+    show.value = false
+    return
+  }
+  if (isCollapsing.value) {
+    element.value.style.height = ``
+    element.value.style.width = ``
+    // return
   } else {
-    element.value.style.height = `${element.value.scrollHeight}px`
+    if (horizontalBoolean.value) {
+      element.value.style.width = `${element.value.scrollWidth}px`
+    } else {
+      element.value.style.height = `${element.value.scrollHeight}px`
+    }
   }
   // element.value.style.height = `${element.value.scrollHeight}px`
   element.value.offsetHeight // force reflow
@@ -188,7 +210,7 @@ const hide = () => {
     if (element.value === null) return
     element.value.style.height = ``
     element.value.style.width = ``
-    setTimeout(() => {
+    hideTimeout = setTimeout(() => {
       show.value = false
       isCollapsing.value = false
       emit('hidden')
@@ -196,13 +218,8 @@ const hide = () => {
   })
 }
 
-watch([modelValue, show], () => {
-  if (modelValueBoolean.value === true) {
-    if (show.value) return
-    reveal()
-    return
-  }
-  hide()
+watch(modelValue, () => {
+  modelValueBoolean.value ? reveal() : hide()
 })
 
 onMounted(() => {
@@ -214,13 +231,24 @@ onMounted(() => {
   }
 })
 
+watch(skipAnimationBoolean, (newval) => {
+  _skipAnimation = newval
+})
+
 if (visibleBoolean.value) {
+  _skipAnimation = true
   modelValue.value = true
-  show.value = true
+  nextTick(() => {
+    _skipAnimation = skipAnimationBoolean.value
+  })
 }
 
 watch(visibleBoolean, (newval) => {
+  _skipAnimation = true
   newval ? open() : close()
+  nextTick(() => {
+    _skipAnimation = skipAnimationBoolean.value
+  })
 })
 
 useEventListener(element, 'bv-toggle', () => {
