@@ -400,7 +400,7 @@ export default {
           event: 'show-prevented',
           args: [],
           description:
-            'Emitted when the modal tried to open, but was prevented from opening. THis occurs when preventDrault() is called on the event',
+            'Emitted when the modal tried to open, but was prevented from opening. This occurs when preventDefault() is called on the event',
         },
         {
           event: 'ok',
