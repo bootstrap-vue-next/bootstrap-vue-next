@@ -44,7 +44,7 @@
                   <BCol>
                     <BTable
                       :items="component[sectionToComponentItem(section)]"
-                      :fields="component.fields?.[sectionToComponentItem(section)]"
+                      :fields="fields[sectionToComponentItem(section)]"
                       hover
                       small
                       responsive
@@ -94,7 +94,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {BCol, BContainer, BLink, BRow, BTable} from 'bootstrap-vue-next'
+import {BCol, BContainer, BLink, BRow, BTable, type TableField} from 'bootstrap-vue-next'
 import type {
   ComponentItem,
   ComponentReference,
@@ -136,11 +136,6 @@ const sortData = computed(() =>
           scope: inner.scope,
         }))
         .sort((a, b) => a.name.localeCompare(b.name)),
-      fields: {
-        props: ['prop', 'type', 'default', 'description'],
-        emits: ['event', 'args', 'description'],
-        slots: ['name', 'scope', 'description'],
-      },
     }
 
     data.sections = (['Properties', 'Events', 'Slots'] as ComponentSection[]).filter(
@@ -155,6 +150,12 @@ const buildCompReferenceLink = (str: string): string => `#comp-reference-${str}`
 
 const sectionToComponentItem = (el: ComponentSection): ComponentItem =>
   el === 'Properties' ? 'props' : el === 'Events' ? 'emits' : 'slots'
+
+const fields: {[P in ComponentItem]: TableField[]} = {
+  props: ['prop', 'type', 'default', 'description'],
+  emits: ['event', 'args', 'description'],
+  slots: ['name', 'scope', 'description'],
+}
 
 const normalizeDefault = (val: unknown) =>
   val === undefined || val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val
