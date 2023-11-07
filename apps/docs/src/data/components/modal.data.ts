@@ -170,7 +170,7 @@ export default {
           prop: 'headerCloseVariant',
           type: 'ButtonVariant | null',
           default: 'secondary',
-          description: 'Deprecated by BS V5',
+          description: 'Applies a variant to the header close button when the header close button uses the header-close slot',
         },
         {
           prop: 'headerTextVariant',
