@@ -1,4 +1,7 @@
+export type ComponentItem = Exclude<keyof ComponentReference, 'component' | 'sections'>
 export type ComponentSection = 'Properties' | 'Events' | 'Slots'
+export type EmitArgReference = {arg: string; type: string; description?: string}
+export type SlotScopeReference = {prop: string; type: string | string[]; description?: string}
 
 export interface ComponentReference {
   component: string
@@ -6,16 +9,15 @@ export interface ComponentReference {
     prop: string
     type: string
     description?: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    default?: any
+    default?: unknown
   }[]
   emits: {
     event: string
-    args: {arg: string; type: string; description?: string}[]
+    args: EmitArgReference[]
     description?: string
   }[]
   slots: {
-    scope: {prop: string; type: string | string[]; description?: string}[]
+    scope: SlotScopeReference[]
     name: string
     description?: string
   }[]

@@ -44,7 +44,7 @@
                   <BCol>
                     <BTable
                       :items="component[sectionToComponentItem(section)]"
-                      :fields="fields"
+                      :fields="fields[sectionToComponentItem(section)]"
                       hover
                       small
                       responsive
@@ -55,6 +55,25 @@
                         <code>
                           {{ d.item.type }}
                         </code>
+                      </template>
+                      <template #cell(scope)="d">
+                        <!-- eslint-disable-next-line prettier/prettier -->
+                        <div
+                          v-for="scope in d.item.scope as SlotScopeReference[]"
+                          :key="scope.prop"
+                        >
+                          <code>{{ scope.prop }}</code>
+                          <code>: {{ scope.type }}</code>
+                          <span v-if="!!scope.description"> - {{ scope.description }}</span>
+                        </div>
+                      </template>
+                      <template #cell(args)="d">
+                        <!-- eslint-disable-next-line prettier/prettier -->
+                        <div v-for="arg in d.item.args as EmitArgReference[]" :key="arg.arg">
+                          <code>{{ arg.arg }}</code>
+                          <code>: {{ arg.type }}</code>
+                          <span v-if="!!arg.description"> - {{ arg.description }}</span>
+                        </div>
                       </template>
                       <template #cell(default)="d">
                         <code>
@@ -76,7 +95,13 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import {BCol, BContainer, BLink, BRow, BTable, type TableField} from 'bootstrap-vue-next'
-import type {ComponentReference, ComponentSection} from '../data/components/ComponentReference'
+import type {
+  ComponentItem,
+  ComponentReference,
+  ComponentSection,
+  EmitArgReference,
+  SlotScopeReference,
+} from '../data/components/ComponentReference'
 
 const props = defineProps<{data: ComponentReference[]}>()
 
@@ -123,12 +148,14 @@ const sortData = computed(() =>
 
 const buildCompReferenceLink = (str: string): string => `#comp-reference-${str}`.toLowerCase()
 
-const sectionToComponentItem = (
-  el: ComponentSection
-): Exclude<keyof ComponentReference, 'component' | 'sections'> =>
+const sectionToComponentItem = (el: ComponentSection): ComponentItem =>
   el === 'Properties' ? 'props' : el === 'Events' ? 'emits' : 'slots'
 
-const fields: TableField[] = ['prop', 'type', 'default', 'description']
+const fields: {[P in ComponentItem]: TableField[]} = {
+  props: ['prop', 'type', 'default', 'description'],
+  emits: ['event', 'args', 'description'],
+  slots: ['name', 'scope', 'description'],
+}
 
 const normalizeDefault = (val: unknown) =>
   val === undefined || val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val
