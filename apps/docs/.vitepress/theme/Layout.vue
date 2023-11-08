@@ -39,31 +39,39 @@
         </BNav>
       </BNavbarNav>
     </BCollapse>
-    <div class="d-flex gap-2 flex-wrap socials">
-      <BNav class="d-flex">
-        <BNavItem
-          v-for="link in headerExternalLinks"
-          :href="link.url"
-          :link-attrs="{'aria-label': link.label}"
-          target="_blank"
-          rel="noopener"
-          link-classes="py-1 px-0"
-        >
-          <component :is="link.icon()" height="1.1rem" aria-hidden />
-        </BNavItem>
-        <div class="border border-secondary ms-2 me-3" />
-        <ClientOnly>
-          <BNavItemDropdown toggle-class="px-0">
-            <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
-            <template #button-content>
-              <component :is="currentIcon" height="1.1rem" :aria-label="`Toggle theme (${dark})`" />
-            </template>
-            <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
-              <component :is="map[el]" /> {{ el }}
-            </BDropdownItem>
-          </BNavItemDropdown>
-        </ClientOnly>
-      </BNav>
+    <div class="d-flex align-items-center gap-2">
+      <VPNavBarSearch />
+      <div class="d-flex gap-2 flex-wrap socials">
+        <BNav class="d-flex">
+          <BNavItem
+            v-for="link in headerExternalLinks"
+            :href="link.url"
+            :link-attrs="{'aria-label': link.label}"
+            target="_blank"
+            rel="noopener"
+            link-classes="py-1 px-0"
+          >
+            <component :is="link.icon()" height="1.1rem" aria-hidden />
+          </BNavItem>
+          <div class="border border-secondary ms-2 me-3" />
+          <ClientOnly>
+            <BNavItemDropdown toggle-class="px-0">
+              <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
+              <template #button-content>
+                <component
+                  :is="currentIcon"
+                  height="1.1rem"
+                  :aria-label="`Toggle theme (${dark})`"
+                  class="d-inline-block"
+                />
+              </template>
+              <BDropdownItem v-for="el in options" :key="el" :active="dark === el" @click="set(el)">
+                <component :is="map[el]" /> {{ el }}
+              </BDropdownItem>
+            </BNavItemDropdown>
+          </ClientOnly>
+        </BNav>
+      </div>
     </div>
   </BNavbar>
   <ClientOnly>
@@ -166,6 +174,8 @@ import {useData, useRoute, withBase} from 'vitepress'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
+// @ts-ignore
+import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
@@ -224,6 +234,14 @@ const headerExternalLinks = [
 
 const dark = useColorMode({
   persist: true,
+  onChanged(mode, defaultHandler) {
+    defaultHandler(mode)
+    if (mode === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  },
 })
 
 const map = {
@@ -261,17 +279,28 @@ watch(
 </script>
 
 <style lang="scss">
+@import 'vitepress/dist/client/theme-default/styles/vars.css';
+@import 'vitepress/dist/client/theme-default/styles/base.css';
+@import 'vitepress/dist/client/theme-default/styles/utils.css';
+
+:root {
+  --vp-c-brand-1: hsla(237, 31%, 35%, 1);
+}
+
 #app {
-  --bvn-primary: hsla(237, 31%, 35%, 1);
   --black: #000000;
   --white: #ffffff;
   --pink: #e83e8c;
   --bvn-bg-primary: linear-gradient(
     45deg,
-    var(--bvn-primary) 0%,
+    var(--vp-c-brand-1) 0%,
     hsla(230, 25%, 18%, 1) 72%,
     hsla(220, 19%, 13%, 1) 100%
   );
+
+  svg {
+    display: inline;
+  }
 
   .bg-primary {
     background: var(--bvn-bg-primary) !important;
@@ -693,6 +722,19 @@ watch(
       max-width: 15rem;
     }
   }
+}
+
+// Search
+.DocSearch-Button .DocSearch-Search-Icon {
+  @media (max-width: 767px) {
+    color: var(--white);
+  }
+}
+.VPLocalSearchBox {
+  z-index: 1021 !important;
+}
+.search-keyboard-shortcuts kbd {
+  color: inherit;
 }
 
 // Code Block
