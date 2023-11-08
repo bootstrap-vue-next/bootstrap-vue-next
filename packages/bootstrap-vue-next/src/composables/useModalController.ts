@@ -1,19 +1,16 @@
-import type {BModalController} from '../types'
 import {useSharedModalStack} from './useModalManager'
 
-export default (): BModalController => {
-  const {last, stack} = useSharedModalStack()
+export default () => {
+  const {lastStack, stack} = useSharedModalStack()
 
   const hide = (trigger = '') => {
-    if (last.value) {
-      last.value.exposed?.hide(trigger)
+    if (lastStack.value) {
+      lastStack.value.exposed?.hide(trigger)
     }
   }
 
   const hideAll = (trigger = '') => {
-    const modals = stack.value.reverse()
-
-    for (const modal of modals) {
+    for (const modal of stack.value) {
       modal.exposed?.hide(trigger)
     }
   }
@@ -21,7 +18,6 @@ export default (): BModalController => {
   return {
     hide,
     hideAll,
-
     // Todo: Supports listening events globally in the future
   }
 }

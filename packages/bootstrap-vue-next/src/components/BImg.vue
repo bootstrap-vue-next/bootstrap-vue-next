@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<BImgProps>(), {
   thumbnail: false,
   width: undefined,
   // RadiusElementExtendables props
-  rounded: false,
+  rounded: 'none',
   roundedBottom: undefined,
   roundedEnd: undefined,
   roundedStart: undefined,
