@@ -162,7 +162,6 @@ export interface BFormFeedbackSharedProps {
 export interface BDropdownProps {
   ariaLabel?: string
   autoClose?: boolean | 'inside' | 'outside'
-  block?: Booleanish
   boundary?: Boundary | RootBoundary
   center?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
