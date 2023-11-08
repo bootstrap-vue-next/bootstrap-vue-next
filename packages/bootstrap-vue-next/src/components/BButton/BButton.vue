@@ -53,7 +53,6 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      block?: Booleanish
       loading?: Booleanish
       loadingFill?: Booleanish
       loadingText?: string
@@ -67,7 +66,6 @@ const props = withDefaults(
     } & Omit<BLinkProps, 'variant'>
   >(),
   {
-    block: false,
     loading: false,
     loadingFill: false,
     loadingText: 'Loading...',
@@ -113,7 +111,6 @@ const emit = defineEmits<{
 const pressedValue = useVModel(props, 'pressed', emit)
 
 const activeBoolean = useBooleanish(() => props.active)
-const blockBoolean = useBooleanish(() => props.block)
 const disabledBoolean = useBooleanish(() => props.disabled)
 const pillBoolean = useBooleanish(() => props.pill)
 const pressedBoolean = useBooleanish(() => props.pressed)
@@ -143,7 +140,6 @@ const computedClasses = computed(() => [
   [`btn-${props.size}`],
   {
     [`btn-${props.variant}`]: props.variant !== null,
-    'btn-block': blockBoolean.value,
     'active': activeBoolean.value || pressedBoolean.value,
     'rounded-pill': pillBoolean.value,
     'rounded-0': squaredBoolean.value,
