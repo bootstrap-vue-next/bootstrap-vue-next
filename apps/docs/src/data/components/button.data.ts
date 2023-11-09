@@ -81,19 +81,19 @@ export default {
           prop: 'activeClass',
           type: 'string',
           default: undefined,
-          description: `<router-link> prop: Configure the active CSS class applied when the link is active`,
+          description: `<RouterLink> prop: Configure the active CSS class applied when the link is active`,
         },
         {
           prop: 'exactActiveClass',
           type: 'string',
           default: undefined,
-          description: `<router-link> prop: Configure the active CSS class applied when the link is active with exact match`,
+          description: `<RouterLink> prop: Configure the active CSS class applied when the link is active with exact match`,
         },
         {
           prop: 'append',
           type: 'Booleanish',
           default: undefined,
-          description: `<router-link> prop: Setting append prop always appends the relative path to the current path`,
+          description: `<RouterLink> prop: Setting append prop always appends the relative path to the current path`,
         },
         {
           prop: 'disabled',
@@ -105,7 +105,7 @@ export default {
           prop: 'event',
           type: 'string | any[]',
           default: undefined,
-          description: `<router-link> prop: Specify the event that triggers the link. In most cases you should leave this as the default`,
+          description: `<RouterLink> prop: Specify the event that triggers the link. In most cases you should leave this as the default`,
         },
         {
           prop: 'href',
@@ -123,19 +123,19 @@ export default {
           prop: 'replace',
           type: 'Booleanish',
           default: undefined,
-          description: `<router-link> prop: Setting the replace prop will call 'router.replace()' instead of 'router.push()' when clicked, so the navigation will not leave a history record`,
+          description: `<RouterLink> prop: Setting the replace prop will call 'router.replace()' instead of 'router.push()' when clicked, so the navigation will not leave a history record`,
         },
         {
           prop: 'routerComponentName',
           type: 'string',
           default: undefined,
-          description: `<b-link> prop: Auto detects between '<router-link>' and '<nuxt-link>'. In cases where you want to use a 3rd party link component based on '<router-link>', set this prop to the component name. e.g. set it to 'g-link' if you are using Gridsome (note only <router-link>' specific props are passed to the component)`,
+          description: `<BLink> prop: Auto detects between '<RouterLink>' and '<NuxtLink>'. In cases where you want to use a 3rd party link component based on '<RouterLink>', set this prop to the component name. e.g. set it to 'g-link' if you are using Gridsome (note only <RouterLink>' specific props are passed to the component)`,
         },
         {
           prop: 'routerTag',
           type: 'string',
           default: undefined,
-          description: `<router-link> prop: Specify which tag to render, and it will still listen to click events for navigation. 'router-tag' translates to the tag prop on the final rendered '<router-link>'. Typically you should use the default value`,
+          description: `<RouterLink> prop: Specify which tag to render, and it will still listen to click events for navigation. 'router-tag' translates to the tag prop on the final rendered '<RouterLink>'. Typically you should use the default value`,
         },
         {
           prop: 'target',
@@ -147,7 +147,7 @@ export default {
           prop: 'to',
           type: 'RouteLocationRaw',
           default: undefined,
-          description: `<router-link> prop: Denotes the target route of the link. When clicked, the value of the to prop will be passed to 'router.push()' internally, so the value can be either a string or a Location descriptor object`,
+          description: `<RouterLink> prop: Denotes the target route of the link. When clicked, the value of the to prop will be passed to 'router.push()' internally, so the value can be either a string or a Location descriptor object`,
         },
         {
           prop: 'opacity',
