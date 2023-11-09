@@ -79,7 +79,6 @@ import BButton from '../BButton/BButton.vue'
 const props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
   autoClose: true,
-  block: false,
   boundary: 'clippingAncestors',
   center: false,
   container: undefined,
@@ -140,7 +139,6 @@ const computedId = useId(() => props.id, 'dropdown')
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 
 const modelValueBoolean = useBooleanish(modelValue)
-const blockBoolean = useBooleanish(() => props.block)
 const dropupBoolean = useBooleanish(() => props.dropup)
 const dropendBoolean = useBooleanish(() => props.dropend)
 const isNavBoolean = useBooleanish(() => props.isNav)
@@ -255,11 +253,9 @@ const {update, floatingStyles} = useFloating(referencePlacement, floating, {
 })
 
 const computedClasses = computed(() => ({
-  'd-grid': blockBoolean.value,
   'dropup': dropupBoolean.value,
   'dropend': dropendBoolean.value,
   'dropstart': dropstartBoolean.value,
-  'd-flex': blockBoolean.value && splitBoolean.value,
   'position-static': props.boundary !== 'clippingAncestors' && !isNavBoolean.value,
 }))
 
@@ -269,7 +265,6 @@ const buttonClasses = computed(() => [
     'nav-link': isNavBoolean.value,
     'dropdown-toggle': !splitBoolean.value,
     'dropdown-toggle-no-caret': noCaretBoolean.value && !splitBoolean.value,
-    'w-100': splitBoolean.value && blockBoolean.value,
     'show': splitBoolean.value ? undefined : modelValueBoolean.value,
   },
 ])

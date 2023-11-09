@@ -28,7 +28,7 @@ Modals are streamlined, but flexible dialog prompts powered by JavaScript and CS
 ```vue
 <template>
   <BButton @click="modal = !modal"> Toggle modal </BButton>
-  <BModal v-model="modal"> Foo bar </BModal>
+  <BModal v-model="modal" title="Hello, World!"> Foobar? </BModal>
 </template>
 
 <script setup lang="ts">
