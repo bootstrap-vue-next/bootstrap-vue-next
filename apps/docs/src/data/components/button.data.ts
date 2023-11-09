@@ -60,12 +60,6 @@ export default {
           description: `Only render spinner when loading`,
         },
         {
-          prop: 'block',
-          type: 'Booleanish',
-          default: false,
-          description: `Renders a 100% width button (expands to the width of its parent container)`,
-        },
-        {
           prop: 'loadingText',
           type: 'string',
           default: 'Loading...',
