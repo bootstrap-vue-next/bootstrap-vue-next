@@ -326,14 +326,18 @@ describe('', () => {
     expect($second.classes()).toContain('rounded-3')
   })
 
-  it('child BTransition child div first child div does not have class rounded when prop rounded false', async () => {
+  it('child BTransition child div first child div does not have any rounded* class when prop rounded false', async () => {
     const wrapper = mount(BOverlay, {
       props: {show: true, rounded: false},
     })
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const $second = $div.get('div')
+    // First check the explicit calsses that have caused this to break, which will give a more readable error message
     expect($second.classes()).not.toContain('rounded')
+    expect($second.classes()).not.toContain('rounded-circle')
+    // Then add a catch-all to make sure we don't have any classes that start with rounded
+    expect($second.classes().find((str) => str.startsWith('rounded'))).toBeUndefined()
   })
 
   it('child BTransition child div first child div has class bg-{variant} when prop variant', async () => {

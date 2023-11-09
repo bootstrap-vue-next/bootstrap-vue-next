@@ -9,7 +9,11 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
   ): string => {
     const strValue = str === null ? '' : `${str}-`
 
-    return value === 'circle' || value === false
+    return value === false
+      ? ''
+      : value === true
+      ? 'rounded'
+      : value === 'circle'
       ? `${strValue}rounded-circle`
       : value === 'pill'
       ? `${strValue}rounded-pill`
@@ -25,8 +29,6 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
       ? `${strValue}rounded-0`
       : value === 'sm'
       ? `${strValue}rounded-1`
-      : value === true
-      ? `${strValue}rounded-3`
       : `${strValue}rounded-5` // lg is last
   }
 
