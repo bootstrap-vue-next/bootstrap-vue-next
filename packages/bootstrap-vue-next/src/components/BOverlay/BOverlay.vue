@@ -74,7 +74,7 @@ const props = withDefaults(
     wrapTag: 'div',
     zIndex: 10,
     // RadiusElementExtendables props
-    rounded: false,
+    rounded: 'none',
     roundedBottom: undefined,
     roundedEnd: undefined,
     roundedStart: undefined,

@@ -4,26 +4,52 @@ import {
   computed,
   getCurrentInstance,
   type MaybeRefOrGetter,
-  ref,
   type Ref,
+  shallowRef,
   toRef,
   toValue,
   watch,
 } from 'vue'
 
-const MODAL_OPEN_CLASS_NAME = 'modal-open'
+const modalOpenClassName = 'modal-open'
 
 export const useSharedModalStack = createSharedComposable(() => {
-  const registry: Ref<ComponentInternalInstance[]> = ref([])
-  const stack: Ref<ComponentInternalInstance[]> = ref([])
-  const count = toRef(() => stack.value.length)
-  const last = toRef(() => stack.value[stack.value.length - 1])
-  const push = (modal: ComponentInternalInstance) => stack.value.push(modal)
-  const pop = () => stack.value.pop()
-  const remove = (modal: ComponentInternalInstance): void => {
+  /**
+   * A collection of all currently active modals
+   */
+  const stack: Ref<ComponentInternalInstance[]> = shallowRef([])
+
+  const countStack = toRef(() => stack.value.length)
+  const lastStack = toRef(() => stack.value[stack.value.length - 1])
+
+  const pushStack = (modal: ComponentInternalInstance) => {
+    stack.value = [...stack.value, modal]
+  }
+  const removeStack = (modal: ComponentInternalInstance) => {
     stack.value = stack.value.filter((item) => item.uid !== modal.uid)
   }
-  const find = (id: string) => registry.value.find((modal) => modal.exposed?.id === id) || null
+
+  /**
+   * A collection of all registered modals
+   */
+  const registry: Ref<ComponentInternalInstance[]> = shallowRef([])
+
+  // Utility getters not made, would not be used (count, last)
+
+  const pushRegistry = (modal: ComponentInternalInstance) => {
+    registry.value = [...registry.value, modal]
+  }
+  const removeRegistry = (modal: ComponentInternalInstance) => {
+    registry.value = registry.value.filter((item) => item.uid !== modal.uid)
+  }
+
+  /**
+   * Removes an item from both the stack and registry
+   */
+  const dispose = (modal: ComponentInternalInstance): void => {
+    removeStack(modal)
+    removeRegistry(modal)
+  }
 
   const updateHTMLAttrs = getSSRHandler('updateHTMLAttrs', (selector, attribute, value) => {
     const el =
@@ -33,7 +59,7 @@ export const useSharedModalStack = createSharedComposable(() => {
     if (!el) return
 
     if (attribute === 'class') {
-      el.classList.toggle(MODAL_OPEN_CLASS_NAME, value === MODAL_OPEN_CLASS_NAME)
+      el.classList.toggle(modalOpenClassName, value === modalOpenClassName)
     } else {
       el.setAttribute(attribute, value)
     }
@@ -43,15 +69,25 @@ export const useSharedModalStack = createSharedComposable(() => {
     updateHTMLAttrs('body', 'class', '')
   })
 
-  watch(count, (newValue) => {
-    updateHTMLAttrs('body', 'class', newValue > 0 ? MODAL_OPEN_CLASS_NAME : '')
+  watch(countStack, (newValue) => {
+    updateHTMLAttrs('body', 'class', newValue > 0 ? modalOpenClassName : '')
   })
 
-  return {registry, stack, last, count, push, pop, remove, find}
+  return {
+    registry,
+    stack,
+    lastStack,
+    countStack,
+    pushStack,
+    removeStack,
+    pushRegistry,
+    removeRegistry,
+    dispose,
+  }
 })
 
 export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
-  const {registry, push, remove, stack} = useSharedModalStack()
+  const {pushRegistry, pushStack, removeStack, stack, dispose, countStack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()
 
@@ -59,19 +95,19 @@ export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
     throw new Error('useModalManager must only use in BModal component')
   }
 
-  registry.value.push(currentModal)
+  pushRegistry(currentModal)
 
   tryOnScopeDispose(() => {
-    remove(currentModal)
+    dispose(currentModal)
   })
 
   watch(
     modalOpen,
     (newValue, oldValue) => {
       if (newValue) {
-        push(currentModal)
+        pushStack(currentModal)
       } else if (oldValue && !newValue) {
-        remove(currentModal)
+        removeStack(currentModal)
       }
     },
     {immediate: true}
@@ -79,6 +115,6 @@ export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
 
   return {
     activePosition: computed(() => stack.value.findIndex((el) => el.exposed?.id === toValue(id))),
-    activeModalCount: toRef(() => stack.value.length),
+    activeModalCount: countStack,
   }
 }
