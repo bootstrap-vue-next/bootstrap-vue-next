@@ -3,11 +3,9 @@ import {
   type ComponentInternalInstance,
   computed,
   getCurrentInstance,
-  type MaybeRefOrGetter,
   type Ref,
   shallowRef,
   toRef,
-  toValue,
   watch,
 } from 'vue'
 
@@ -86,7 +84,7 @@ export const useSharedModalStack = createSharedComposable(() => {
   }
 })
 
-export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
+export default (modalOpen: Ref<boolean>) => {
   const {pushRegistry, pushStack, removeStack, stack, dispose, countStack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()
@@ -114,7 +112,9 @@ export default (modalOpen: Ref<boolean>, id: MaybeRefOrGetter<string>) => {
   )
 
   return {
-    activePosition: computed(() => stack.value.findIndex((el) => el.exposed?.id === toValue(id))),
+    activePosition: computed(() =>
+      stack.value.findIndex((el) => el.exposed?.id === currentModal.exposed?.id)
+    ),
     activeModalCount: countStack,
   }
 }
