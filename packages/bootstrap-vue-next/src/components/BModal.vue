@@ -531,7 +531,7 @@ const onAfterLeave = () => {
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 
-const {activePosition, activeModalCount} = useModalManager(isActive, computedId)
+const {activePosition, activeModalCount} = useModalManager(isActive)
 const defaultModalDialogZIndex = 1056
 const computedZIndex = computed<CSSProperties>(() => ({
   // Make sure that newly opened modals have a higher z-index than currently active ones.
