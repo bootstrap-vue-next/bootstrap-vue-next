@@ -9,11 +9,7 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
   ): string => {
     const strValue = str === null ? '' : `${str}-`
 
-    return value === false
-      ? ''
-      : value === true
-      ? 'rounded'
-      : value === 'circle'
+    return value === 'circle'
       ? `${strValue}rounded-circle`
       : value === 'pill'
       ? `${strValue}rounded-pill`
@@ -29,6 +25,8 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
       ? `${strValue}rounded-0`
       : value === 'sm'
       ? `${strValue}rounded-1`
+      : value === true
+      ? `${strValue}rounded-3`
       : `${strValue}rounded-5` // lg is last
   }
 
@@ -40,14 +38,14 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
   const roundedEndBoolean = useBooleanish(() => props.value.roundedEnd)
   return computed(() => ({
     [`${resolveRadiusElement(roundedBoolean.value as boolean | RadiusElement, null)}`]:
-      roundedBoolean.value !== undefined,
+      !!roundedBoolean.value,
     [`${resolveRadiusElement(roundedTopBoolean.value as boolean | RadiusElement, 'top')}`]:
-      roundedTopBoolean.value !== undefined,
+      !!roundedTopBoolean.value,
     [`${resolveRadiusElement(roundedBottomBoolean.value as boolean | RadiusElement, 'bottom')}`]:
-      roundedBottomBoolean.value !== undefined,
+      !!roundedBottomBoolean.value,
     [`${resolveRadiusElement(roundedStartBoolean.value as boolean | RadiusElement, 'start')}`]:
-      roundedStartBoolean.value !== undefined,
+      !!roundedStartBoolean.value,
     [`${resolveRadiusElement(roundedEndBoolean.value as boolean | RadiusElement, 'end')}`]:
-      roundedEndBoolean.value !== undefined,
+      !!roundedEndBoolean.value,
   }))
 }
