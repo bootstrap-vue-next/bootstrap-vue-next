@@ -322,8 +322,9 @@ const isFilterableTable = toRef(() => !!props.filter)
 const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
 
 const isSortable = computed(() => {
-  const hasSortableFields =
-    props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
+  const hasSortableFields = props.fields.some((field) =>
+    typeof field === 'string' ? false : field.sortable
+  )
   return hasSortableFields || props.sortBy !== undefined
 })
 const usesProvider = toRef(() => props.provider !== undefined)
@@ -391,20 +392,19 @@ const computedItems = computed<TableItem[]>(() => {
     }
 
     const filterItems = () =>
-      internalItems.value.filter(
-        (item) =>
-          Object.entries(item).filter((item) => {
-            const [key, val] = item
-            if (
-              !val ||
-              key[0] === '_' ||
-              (props.filterable && props.filterable.length > 0 && !props.filterable.includes(key))
-            )
-              return false
-            const itemValue: string =
-              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
-            return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
-          }).length > 0
+      internalItems.value.filter((item) =>
+        Object.entries(item).some((item) => {
+          const [key, val] = item
+          if (
+            !val ||
+            key[0] === '_' ||
+            (props.filterable && props.filterable.length > 0 && !props.filterable.includes(key))
+          )
+            return false
+          const itemValue: string =
+            typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+          return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
+        })
       )
 
     let mappedItems: TableItem[] = internalItems.value
