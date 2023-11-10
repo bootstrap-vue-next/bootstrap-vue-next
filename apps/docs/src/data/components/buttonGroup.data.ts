@@ -9,7 +9,7 @@ export default {
           prop: 'ariaLabel',
           type: 'string',
           default: 'Group',
-          description: `Sets the ARIA attribute 'role' to a specific value`,
+          description: `Sets the ARIA attribute 'label' to a specific value`,
         },
         {
           prop: 'size',
@@ -32,7 +32,7 @@ export default {
       ],
       slots: [
         {
-          description: 'Content (buttons) to place in the button group',
+          description: `Content (buttons) to place in the button group`,
           name: 'default',
           scope: [],
         },
