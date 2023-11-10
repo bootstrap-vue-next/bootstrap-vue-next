@@ -1,13 +1,21 @@
-import {type ComponentInternalInstance, computed, getCurrentInstance, toRef} from 'vue'
+import {
+  type ComponentInternalInstance,
+  computed,
+  getCurrentInstance,
+  type MaybeRefOrGetter,
+  toRef,
+  toValue,
+} from 'vue'
 import {useSharedModalStack} from './useModalManager'
 
-export default (id: string | undefined = undefined) => {
-  const {find} = useSharedModalStack()
+export default (id: MaybeRefOrGetter<string | undefined> = undefined) => {
+  const {registry} = useSharedModalStack()
   const instance = getCurrentInstance()
 
   const modalComponent = computed(() => {
-    if (id) {
-      return find(id)
+    const resolvedId = toValue(id)
+    if (resolvedId) {
+      return registry.value.find((modal) => modal.exposed?.id.value === resolvedId) || null
     }
 
     if (!instance) {
@@ -20,10 +28,10 @@ export default (id: string | undefined = undefined) => {
   const modal = toRef(() => modalComponent.value?.proxy)
 
   return {
-    show(): void {
+    show() {
       modalComponent.value?.exposed?.show()
     },
-    hide(trigger = ''): void {
+    hide(trigger = '') {
       modalComponent.value?.exposed?.hide(trigger)
     },
     modal,
