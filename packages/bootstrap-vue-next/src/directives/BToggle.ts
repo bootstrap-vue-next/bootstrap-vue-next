@@ -59,7 +59,7 @@ const checkVisibility = (targetIds: string[], el: HTMLElement) => {
 
 const handleUpdate = (el: WithToggle, binding: DirectiveBinding<string | string[] | undefined>) => {
   // Determine targets
-  if (binding.value === undefined) return
+  if (binding.value === undefined && Object.keys(binding.modifiers || {}).length === 0) return
   const targets = getTargets(binding as DirectiveBinding<string | string[]>, el)
 
   // Set up click handler
