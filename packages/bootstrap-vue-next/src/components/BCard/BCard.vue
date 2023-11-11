@@ -67,7 +67,7 @@ import type {
   TextColorVariant,
 } from '../../types'
 import {isEmptySlot} from '../../utils'
-import {computed, toRef, useSlots} from 'vue'
+import {computed, toRef} from 'vue'
 import {useBooleanish, useColorVariantClasses} from '../../composables'
 import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
@@ -166,7 +166,7 @@ const props = withDefaults(
   }
 )
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -176,8 +176,6 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   img?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const imgBottomBoolean = useBooleanish(() => props.imgBottom)
 const imgEndBoolean = useBooleanish(() => props.imgEnd)

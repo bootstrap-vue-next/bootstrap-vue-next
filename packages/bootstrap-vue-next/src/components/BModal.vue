@@ -101,16 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  type CSSProperties,
-  reactive,
-  ref,
-  type RendererElement,
-  toRef,
-  useSlots,
-  watch,
-} from 'vue'
+import {computed, type CSSProperties, reactive, ref, type RendererElement, toRef, watch} from 'vue'
 import {
   useBooleanish,
   useColorVariantClasses,
@@ -279,7 +270,7 @@ type SharedSlotsData = {
   visible: boolean
 }
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -297,8 +288,6 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'title'?: (props: SharedSlotsData) => any
 }>()
-
-const slots = useSlots()
 
 const computedId = useId(() => props.id, 'modal')
 

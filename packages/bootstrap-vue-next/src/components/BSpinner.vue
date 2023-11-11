@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef, useSlots} from 'vue'
+import {computed, toRef} from 'vue'
 import type {Booleanish, ColorVariant, SpinnerType} from '../types'
 import {useBooleanish} from '../composables'
 import {isEmptySlot} from '../utils'
@@ -36,12 +36,10 @@ const props = withDefaults(
   }
 )
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   label?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const smallBoolean = useBooleanish(() => props.small)
 

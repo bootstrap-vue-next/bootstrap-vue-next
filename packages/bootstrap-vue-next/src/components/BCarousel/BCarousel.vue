@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
-import {computed, provide, ref, toRef, useSlots, watch} from 'vue'
+import {computed, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish} from '../../types'
 import {
@@ -115,7 +115,10 @@ const emit = defineEmits<{
   'update:modelValue': [value: number]
 }>()
 
-const slots = useSlots()
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: Record<string, never>) => any
+}>()
 
 const computedId = useId(() => props.id, 'carousel')
 
