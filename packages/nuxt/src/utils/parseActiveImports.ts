@@ -1,4 +1,4 @@
-import {ConfigurationOption} from '../types/ModuleOptions'
+import type {ConfigurationOption} from '../types/ModuleOptions'
 
 export default <Type extends string, Base extends ConfigurationOption<Type>>(
   options: Base,
