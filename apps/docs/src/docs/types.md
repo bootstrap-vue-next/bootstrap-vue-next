@@ -60,21 +60,6 @@ type BodyProp =
 
 </BCard>
 
-## BPopoverDelayObject
-
-This type is only used for the Popover component.
-
-<BCard class="bg-body-tertiary">
-
-```ts
-interface BPopoverDelayObject {
-  show: number
-  hide: number
-}
-```
-
-</BCard>
-
 ## BreadcrumbItem
 
 This type is only used for the Breadcrumb component.

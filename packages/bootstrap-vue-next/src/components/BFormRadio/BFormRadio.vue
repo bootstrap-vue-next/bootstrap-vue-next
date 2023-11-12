@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, nextTick, ref, toRef, useSlots, watch} from 'vue'
+import {computed, inject, nextTick, ref, toRef, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, Size} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
@@ -86,12 +86,10 @@ const emit = defineEmits<{
   ]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 

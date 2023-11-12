@@ -27,7 +27,7 @@ import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
-import {computed, onBeforeUnmount, ref, toRef, useSlots, watch, watchEffect} from 'vue'
+import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
 import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
 import {useElementHover, useToNumber, useVModel} from '@vueuse/core'
@@ -70,14 +70,12 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean | number]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   close?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const element = ref<HTMLElement | null>(null)
 

@@ -115,11 +115,12 @@ const computedLazy = toRef(() => !!(parentData?.lazy.value || lazyBoolean.value)
 const computedLazyOnce = toRef(() => props.lazyOnce !== undefined)
 
 const computedActive = toRef(() => isActive.value && !disabledBoolean.value)
-const showSlot = toRef(() => {
-  const hasLazyRenderedOnce =
-    computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value
-  return computedActive.value || !computedLazy.value || hasLazyRenderedOnce
-})
+const showSlot = toRef(
+  () =>
+    computedActive.value ||
+    !computedLazy.value ||
+    (computedLazy.value && computedLazyOnce.value && lazyRenderCompleted.value)
+)
 
 watch(isActive, (active) => {
   if (active) {

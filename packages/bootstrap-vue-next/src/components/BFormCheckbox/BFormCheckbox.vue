@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, ref, toRef, useSlots, watch} from 'vue'
+import {computed, inject, ref, toRef, watch} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, CheckboxValue, Size} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -92,12 +92,10 @@ const emit = defineEmits<{
   'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 

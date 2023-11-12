@@ -2,6 +2,7 @@
   <input
     :id="computedId"
     ref="input"
+    :value="modelValue"
     :class="computedClasses"
     :name="name || undefined"
     :form="form || undefined"
