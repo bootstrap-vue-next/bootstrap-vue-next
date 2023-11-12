@@ -105,7 +105,7 @@
                     toggleRowDetails(item)
                   }
                 "
-                :details-showing="item._showDetails"
+                :details-showing="item._showDetails ?? false"
               >
                 {{ formatItem(item, field.key, field.formatter) }}
               </slot>
@@ -126,6 +126,8 @@
                     toggleRowDetails(item)
                   }
                 "
+                :fields="fields"
+                :index="itemIndex"
               />
             </BTd>
           </BTr>
@@ -211,7 +213,7 @@ const props = withDefaults(defineProps<BTableLiteProps>(), {
   labelStacked: false,
   showEmpty: false,
   emptyText: 'There are no records to show',
-  emptyFilteredText: 'There are no records matching your request',
+  emptyFilteredText: 'There are no records matching your request', // TODO not implemented
   fieldColumnClass: undefined,
   tbodyTrClass: undefined,
   captionHtml: undefined,

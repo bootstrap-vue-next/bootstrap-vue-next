@@ -1,7 +1,7 @@
 <template>
   <img
     :class="computedClasses"
-    :src="!blankBoolean ? props.src : computedBlankImgSrc"
+    :src="!blankBoolean ? src : computedBlankImgSrc"
     :width="computedDimentions.width || undefined"
     :height="computedDimentions.height || undefined"
     :srcset="!blankBoolean ? computedSrcset : undefined"
