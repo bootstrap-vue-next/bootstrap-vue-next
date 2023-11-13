@@ -3,7 +3,7 @@ import {describe, expect, it} from 'vitest'
 
 // Produced a string array of the rounded properties of the obj that have a truthy value
 function findRoundedProperties(obj: Record<string, boolean>, str = ''): string[] {
-  return Object.keys(obj).filter((key) => key.startsWith(`${str}rounded-`) && obj[key])
+  return Object.keys(obj).filter((key) => key.startsWith(`${str}rounded`) && obj[key])
 }
 
 describe('useRadiusElementClasses blackbox test', () => {
@@ -17,19 +17,19 @@ describe('useRadiusElementClasses blackbox test', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: true,
       }))
-      expect(radiusElementClasses.value['rounded-3']).toEqual(true)
+      expect(radiusElementClasses.value['rounded']).toEqual(true)
     })
 
-    it('radiusElementClasses contains property rounded-3=true', () => {
+    it('radiusElementClasses contains property rounded=true', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: true,
       }))
-      expect(radiusElementClasses.value['rounded-3']).toEqual(true)
+      expect(radiusElementClasses.value['rounded']).toEqual(true)
     })
   })
 
   describe('when prop rounded=false', () => {
-    it('radiusElementClasses does not contain any property rounded-*=true', () => {
+    it('radiusElementClasses does not contain any property rounded*=true', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: false,
       }))
@@ -52,7 +52,7 @@ describe('useRadiusElementClasses blackbox test', () => {
       expect(radiusElementClasses.value).toHaveProperty('rounded-circle')
     })
 
-    it('radiusElementClasses contains exactly one rounded-*=true property', () => {
+    it('radiusElementClasses contains exactly one rounded*=true property', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: 'circle',
       }))
@@ -75,7 +75,7 @@ describe('useRadiusElementClasses blackbox test', () => {
       expect(radiusElementClasses.value).toHaveProperty('rounded-pill')
     })
 
-    it('radiusElementClasses contains exactly one rounded-*=true property', () => {
+    it('radiusElementClasses contains exactly one rounded*=true property', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: 'pill',
       }))
@@ -98,7 +98,7 @@ describe('useRadiusElementClasses blackbox test', () => {
       expect(radiusElementClasses.value).toHaveProperty('rounded-2')
     })
 
-    it('radiusElementClasses contains exactly one rounded-*=true property', () => {
+    it('radiusElementClasses contains exactly one rounded*=true property', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: '2',
       }))
@@ -121,7 +121,7 @@ describe('useRadiusElementClasses blackbox test', () => {
       expect(radiusElementClasses.value).toHaveProperty('rounded-4')
     })
 
-    it('radiusElementClasses contains exactly one rounded-*=true property', () => {
+    it('radiusElementClasses contains exactly one rounded*=true property', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: 4,
       }))
@@ -160,7 +160,7 @@ describe('useRadiusElementClasses blackbox test', () => {
       expect(radiusElementClasses.value).toHaveProperty('rounded-1')
     })
 
-    it('radiusElementClasses contains exactly one rounded-*=true property', () => {
+    it('radiusElementClasses contains exactly one rounded*=true property', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: 'sm',
       }))
@@ -183,7 +183,7 @@ describe('useRadiusElementClasses blackbox test', () => {
       expect(radiusElementClasses.value).toHaveProperty('rounded-5')
     })
 
-    it('radiusElementClasses contains exactly one rounded-*=true property', () => {
+    it('radiusElementClasses contains exactly one rounded*=true property', () => {
       const radiusElementClasses = useRadiusElementClasses(() => ({
         rounded: 'lg',
       }))
@@ -200,7 +200,7 @@ describe('useRadiusElementClasses blackbox test', () => {
     }))
 
     expect(radiusElementClasses.value).toEqual({
-      'rounded-5': false,
+      'rounded': false,
       'top-rounded-5': true,
       'bottom-rounded-1': true,
       'start-rounded-2': true,

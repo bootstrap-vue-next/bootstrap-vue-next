@@ -25,9 +25,9 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
       ? `${strValue}rounded-0`
       : value === 'sm'
       ? `${strValue}rounded-1`
-      : value === true
-      ? `${strValue}rounded-3`
-      : `${strValue}rounded-5` // lg is last
+      : value === 'lg'
+      ? `${strValue}rounded-5`
+      : `${strValue}rounded` // true is last
   }
 
   const props = readonly(toRef(obj))
