@@ -306,24 +306,24 @@ describe('', () => {
     expect($second.classes()).toContain('position-absolute')
   })
 
-  it('child BTransition child div first child div has class rounded when prop rounded true', async () => {
+  it('child BTransition child div first child div has class rounded-3 when prop rounded true', async () => {
     const wrapper = mount(BOverlay, {
       props: {show: true, rounded: true},
     })
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const $second = $div.get('div')
-    expect($second.classes()).toContain('rounded')
+    expect($second.classes()).toContain('rounded-3')
   })
 
-  it('child BTransition child div first child div has class rounded-3 when prop rounded is string 3', async () => {
+  it('child BTransition child div first child div has class rounded-4 when prop rounded is string 4', async () => {
     const wrapper = mount(BOverlay, {
-      props: {show: true, rounded: '3'},
+      props: {show: true, rounded: '4'},
     })
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const $second = $div.get('div')
-    expect($second.classes()).toContain('rounded-3')
+    expect($second.classes()).toContain('rounded-4')
   })
 
   it('child BTransition child div first child div does not have class rounded when prop rounded false', async () => {
