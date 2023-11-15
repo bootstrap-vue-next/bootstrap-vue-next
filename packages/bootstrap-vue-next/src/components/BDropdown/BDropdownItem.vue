@@ -1,5 +1,5 @@
 <template>
-  <li role="presentation">
+  <li role="presentation" :class="wrapperClass" v-bind="wrapperAttrs">
     <component
       :is="computedTag"
       class="dropdown-item"
@@ -12,7 +12,7 @@
       role="menuitem"
       :type="computedTag === 'button' ? 'button' : null"
       :target="target"
-      v-bind="computedLinkProps"
+      v-bind="{...computedLinkProps, ...attrs}"
       @click="clicked"
     >
       <slot />
@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
-import {computed, inject, toRef} from 'vue'
-import type {BLinkProps, ClassValue} from '../../types'
+import {computed, inject, toRef, useAttrs} from 'vue'
+import type {AttrsValue, BLinkProps, ClassValue} from '../../types'
 import {useBLinkHelper, useBooleanish} from '../../composables'
 import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils'
 
@@ -35,9 +35,11 @@ const props = withDefaults(
   defineProps<
     {
       linkClass?: ClassValue
+      wrapperAttrs?: AttrsValue
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
+    wrapperAttrs: undefined,
     // Link props
     linkClass: undefined,
     variant: 'secondary',
@@ -68,6 +70,8 @@ const props = withDefaults(
 const emit = defineEmits<{
   click: [value: MouseEvent]
 }>()
+
+const {class: wrapperClass, ...attrs} = useAttrs()
 
 const activeBoolean = useBooleanish(() => props.active)
 const disabledBoolean = useBooleanish(() => props.disabled)
