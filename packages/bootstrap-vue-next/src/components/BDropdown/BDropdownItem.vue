@@ -39,9 +39,9 @@ const props = withDefaults(
     } & Omit<BLinkProps, 'event' | 'routerTag'>
   >(),
   {
+    wrapperAttrs: undefined,
     // Link props
     linkClass: undefined,
-    wrapperAttrs: undefined,
     variant: 'secondary',
     // All others use defaults
     active: undefined,
