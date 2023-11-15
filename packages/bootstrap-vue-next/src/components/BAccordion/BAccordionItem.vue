@@ -48,12 +48,12 @@
 </template>
 
 <script setup lang="ts">
-import {type HTMLAttributes, inject, onMounted, useAttrs, watch} from 'vue'
+import {inject, onMounted, useAttrs, watch} from 'vue'
 import {useVModel} from '@vueuse/core'
 import BCollapse from '../BCollapse.vue'
 import {accordionInjectionKey, BvTriggerableEvent} from '../../utils'
 import {useId} from '../../composables'
-import type {Booleanish, ClassValue} from '../../types'
+import type {AttrsValue, Booleanish, ClassValue} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -62,12 +62,12 @@ const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
 const props = withDefaults(
   defineProps<{
-    bodyAttrs?: HTMLAttributes
+    bodyAttrs?: AttrsValue
     bodyClass?: ClassValue
-    buttonAttrs?: HTMLAttributes
+    buttonAttrs?: AttrsValue
     buttonClass?: ClassValue
     collapseClass?: ClassValue
-    headerAttrs?: HTMLAttributes
+    headerAttrs?: AttrsValue
     headerClass?: ClassValue
     headerTag?: string
     horizontal?: Booleanish
@@ -78,7 +78,7 @@ const props = withDefaults(
     title?: string
     toggle?: Booleanish
     visible?: Booleanish
-    wrapperAttrs?: HTMLAttributes
+    wrapperAttrs?: AttrsValue
   }>(),
   {
     bodyAttrs: undefined,
