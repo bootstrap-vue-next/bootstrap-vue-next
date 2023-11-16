@@ -1,7 +1,7 @@
 import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, MaybeRef} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
-import type {BPopoverPlacement} from './BPopoverPlacement'
+import type {PopoverPlacement} from './PopoverPlacement'
 import type {Booleanish} from './Booleanish'
 import type {Breakpoint} from './Breakpoint'
 import type {ButtonType} from './ButtonType'
@@ -244,7 +244,7 @@ export interface BPopoverProps {
   noShift?: Booleanish
   noninteractive?: Booleanish
   offset?: number | string | null
-  placement?: BPopoverPlacement
+  placement?: PopoverPlacement
   realtime?: Booleanish
   reference?: MaybeRef<
     string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null

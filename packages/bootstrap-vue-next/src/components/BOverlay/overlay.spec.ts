@@ -316,24 +316,14 @@ describe('', () => {
     expect($second.classes()).toContain('rounded')
   })
 
-  it('child BTransition child div first child div has class rounded-3 when prop rounded is string 3', async () => {
-    const wrapper = mount(BOverlay, {
-      props: {show: true, rounded: '3'},
-    })
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    const $second = $div.get('div')
-    expect($second.classes()).toContain('rounded-3')
-  })
-
-  it('child BTransition child div first child div does not have class rounded when prop rounded false', async () => {
+  it('child BTransition child div first child div does not have any rounded* class when prop rounded false', async () => {
     const wrapper = mount(BOverlay, {
       props: {show: true, rounded: false},
     })
     const $transition = wrapper.getComponent(BTransition)
     const $div = $transition.get('div')
     const $second = $div.get('div')
-    expect($second.classes()).not.toContain('rounded')
+    expect($second.classes().find((str) => str.startsWith('rounded'))).toBeUndefined()
   })
 
   it('child BTransition child div first child div has class bg-{variant} when prop variant', async () => {

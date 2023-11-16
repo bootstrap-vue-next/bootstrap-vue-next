@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import {avatarGroupInjectionKey, isEmptySlot, isNumeric, toFloat} from '../../utils'
-import {computed, type CSSProperties, inject, type StyleValue, toRef, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, type StyleValue, toRef} from 'vue'
 import type {
   BLinkProps,
   Booleanish,
@@ -127,14 +127,13 @@ const emit = defineEmits<{
   'img-error': [value: Event]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   badge?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
 
-const slots = useSlots()
 const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 const parentData = inject(avatarGroupInjectionKey, null)

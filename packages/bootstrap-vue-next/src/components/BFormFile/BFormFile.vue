@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, useSlots, watch} from 'vue'
+import {computed, ref, toRef, watch} from 'vue'
 import {useFocus, useVModel} from '@vueuse/core'
 import type {Booleanish, ClassValue, Size} from '../../types'
 import {useBooleanish, useId, useStateClass} from '../../composables'
@@ -37,7 +37,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   label?: (props: Record<string, never>) => any
 }>()
@@ -88,8 +88,6 @@ const emit = defineEmits<{
   'change': [value: Event]
   'update:modelValue': [value: File | File[] | null]
 }>()
-
-const slots = useSlots()
 
 const modelValue = useVModel(props, 'modelValue', emit)
 const computedId = useId(() => props.id)

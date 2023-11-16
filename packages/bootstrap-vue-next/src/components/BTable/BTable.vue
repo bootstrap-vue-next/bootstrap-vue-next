@@ -82,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import {useToNumber, useVModel} from '@vueuse/core'
+import {useOffsetPagination, useToNumber, useVModel} from '@vueuse/core'
 import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import {isEmptySlot} from '../../utils'
@@ -116,7 +116,6 @@ const props = withDefaults(
       noProviderFiltering?: Booleanish
       sortBy?: string
       sortDesc?: Booleanish
-      sortInternal?: Booleanish
       selectable?: Booleanish
       stickySelect?: Booleanish
       selectHead?: boolean | string
@@ -130,12 +129,6 @@ const props = withDefaults(
       filterable?: string[]
       // TODO
       // apiUrl?: string
-      // emptyFilteredHtml?: string
-      // emptyFilteredText?: string
-      // emptyHtml?: string
-      // emptyText?: string
-      filterDebounce?: string | number
-      filterDebounceMaxWait?: string | number
       // filterFunction?: () => any
       // filterIgnoredFields?: any[]
       // filterIncludedFields?: any[]
@@ -151,7 +144,7 @@ const props = withDefaults(
       // selectedVariant?: ColorVariant | null
       // showEmpty?: Booleanish
       // sortCompareLocale?: () => any
-      // sortCompareOptions?: Record<string, any>
+      // sortCompareOptions?: Record<string, any> // TODO make this explicit
       // sortDirection?: 'asc' | 'desc' | 'last'
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
@@ -159,9 +152,7 @@ const props = withDefaults(
     } & Omit<BTableLiteProps, 'tableClass'>
   >(),
   {
-    filterDebounce: 0,
-    filterDebounceMaxWait: NaN,
-    perPage: undefined,
+    perPage: Infinity,
     sortBy: undefined,
     filter: undefined,
     filterable: undefined,
@@ -172,7 +163,6 @@ const props = withDefaults(
     noProviderSorting: false,
     noProviderFiltering: false,
     sortDesc: false,
-    sortInternal: true,
     selectable: false,
     stickySelect: false,
     selectHead: true,
@@ -183,11 +173,12 @@ const props = withDefaults(
     currentPage: 1,
     selectedItems: () => [],
     // BTableLite props
+    items: () => [],
+    fields: () => [],
+    // All others use defaults
     caption: undefined,
     align: undefined,
-    fields: undefined,
     footClone: undefined,
-    items: undefined,
     labelStacked: undefined,
     showEmpty: undefined,
     emptyText: undefined,
@@ -248,10 +239,12 @@ const emit = defineEmits<{
   'selection': [value: TableItem[]]
   'sorted': [sortBy: string, isDesc: boolean]
   'update:busy': [value: boolean]
-  'update:selectedItems': [value: Set<TableItem>]
+  'update:selectedItems': [value: TableItem[]]
   'update:sortDesc': [value: boolean]
   'update:sortBy': [value: string]
 }>()
+
+const slots = useSlots()
 
 const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
 const busyModel = useVModel(props, 'busy', emit, {passive: true})
@@ -264,7 +257,6 @@ const selectedItemsToSet = computed({
     selectedItemsModel.value = [...val]
   },
 })
-
 /**
  * This is to avoid the issue of directly mutating the array structure and to properly trigger the computed setter.
  * The utils also conveniently emit the proper events after
@@ -299,34 +291,34 @@ const selectedItemsSetUtilities = {
   has: (item: TableItem) => selectedItemsToSet.value.has(item),
 } as const
 
-const slots = useSlots()
+/**
+ * Only stores data that is fetched when using the provider
+ */
+const internalItems = ref<TableItem[]>([])
 
 const sortDescBoolean = useBooleanish(sortDescModel)
-const sortInternalBoolean = useBooleanish(() => props.sortInternal)
 const busyBoolean = useBooleanish(busyModel)
 const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
 const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 const selectableBoolean = useBooleanish(() => props.selectable)
 const stickySelectBoolean = useBooleanish(() => props.stickySelect)
-// TODO debounce implementation
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const filterDebounceNumber = useToNumber(() => props.filterDebounce)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const filterDebounceMaxWaitNumber = useToNumber(() => props.filterDebounceMaxWait)
-const perPageNumber = useToNumber(() => props.perPage ?? NaN)
+
+const perPageNumber = useToNumber(() => props.perPage)
 const currentPageNumber = useToNumber(() => props.currentPage)
 
 const isFilterableTable = toRef(() => !!props.filter)
-
-const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
-
-const isSortable = computed(() => {
-  const hasSortableFields =
-    props.fields.filter((field) => (typeof field === 'string' ? false : field.sortable)).length > 0
-  return hasSortableFields || props.sortBy !== undefined
-})
 const usesProvider = toRef(() => props.provider !== undefined)
+const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
+const addSelectableCell = toRef(
+  () => selectableBoolean.value && (!!props.selectHead || !isEmptySlot(slots.selectHead))
+)
+
+const isSortable = computed(
+  () =>
+    sortByModel.value !== undefined ||
+    props.fields.some((field) => (typeof field === 'string' ? false : field.sortable))
+)
 
 const tableClasses = computed(() => ({
   'b-table-sortable': isSortable.value,
@@ -337,129 +329,117 @@ const tableClasses = computed(() => ({
   [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
   'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
 }))
-
-const requireItemsMapping = toRef(
-  () =>
-    (isSortable.value && sortInternalBoolean.value === true) ||
-    (isSortable.value && usesProvider.value) ||
-    isFilterableTable.value
-)
-
-const addSelectableCell = toRef(
-  () => selectableBoolean.value && (!!props.selectHead || !isEmptySlot(slots.selectHead))
-)
-
-const filteredHandler = ref<(items: TableItem[]) => void>()
-
-const notifyFilteredItems = () => {
-  if (filteredHandler.value) {
-    filteredHandler.value(computedItems.value)
-  }
-}
-
-const internalItems = ref(props.items)
-
-const displayStartEndIdx = ref([0, internalItems.value.length])
+// All three of these are similar, even though the two following are not computeds
+const getBusyRowClasses = computed(() => [
+  props.tbodyTrClass
+    ? typeof props.tbodyTrClass === 'function'
+      ? props.tbodyTrClass(null, 'table-busy')
+      : props.tbodyTrClass
+    : null,
+])
+const getFieldColumnClasses = (field: TableFieldObject) => [
+  {
+    'b-table-sortable-column': isSortable.value && field.sortable,
+  },
+]
+const getRowClasses = (item: TableItem | null, type: string) => [
+  {
+    [`selected table-${props.selectionVariant}`]:
+      selectableBoolean.value && item && selectedItemsSetUtilities.has(item),
+  },
+  props.tbodyTrClass
+    ? typeof props.tbodyTrClass === 'function'
+      ? props.tbodyTrClass(item, type)
+      : props.tbodyTrClass
+    : null,
+]
 
 const computedItems = computed<TableItem[]>(() => {
-  const mapItems = (): TableItem[] => {
-    const sortItems = () => {
-      if (
-        props.fields === undefined ||
-        mappedItems === undefined ||
-        sortByModel.value === undefined ||
-        sortDescBoolean.value === undefined
-      ) {
-        return mappedItems ?? []
+  const sortItems = (items: TableItem[]) => {
+    const sortKey = sortByModel.value
+
+    if (sortKey === undefined) {
+      return items
+    }
+
+    const sortField = props.fields.find((el) => {
+      if (typeof el === 'string') return false
+      return el.key === sortKey
+    })
+
+    // Explicit field? === false check because undefined means it's sortable. Only strict === means its not sortable (no falsy)
+    if (typeof sortField !== 'string' && sortField?.sortable === false) {
+      return items
+    }
+
+    return [...items].sort((a, b) => {
+      if (props.sortCompare !== undefined)
+        return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
+
+      const realVal = (ob: unknown): string =>
+        typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
+
+      if (realVal(a[sortKey]) > realVal(b[sortKey])) {
+        return sortDescBoolean.value ? -1 : 1
       }
 
-      const sortKey = sortByModel.value
-      return mappedItems.sort((a, b) => {
-        if (props.sortCompare !== undefined)
-          return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
+      if (realVal(b[sortKey]) > realVal(a[sortKey])) {
+        return sortDescBoolean.value ? 1 : -1
+      }
 
-        const realVal = (ob: any) => (typeof ob === 'object' ? JSON.stringify(ob) : ob)
+      return 0
+    })
+  }
 
-        const aHigher = realVal(a[sortKey]) > realVal(b[sortKey])
-        if (aHigher) return sortDescBoolean.value ? -1 : 1
-
-        const bHigher = realVal(b[sortKey]) > realVal(a[sortKey])
-        if (bHigher) return sortDescBoolean.value ? 1 : -1
-
-        return 0
+  const filterItems = (items: TableItem[]) =>
+    items.filter((item) =>
+      Object.entries(item).some((item) => {
+        const [key, val] = item
+        if (!val || key[0] === '_' || !props.filterable?.includes(key)) return false
+        const itemValue: string =
+          typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
+        return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
       })
-    }
+    )
 
-    const filterItems = () =>
-      internalItems.value.filter(
-        (item) =>
-          Object.entries(item).filter((item) => {
-            const [key, val] = item
-            if (
-              !val ||
-              key[0] === '_' ||
-              (props.filterable && props.filterable.length > 0 && !props.filterable.includes(key))
-            )
-              return false
-            const itemValue: string =
-              typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
-            return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
-          }).length > 0
-      )
+  let mappedItems = usesProvider.value ? internalItems.value : props.items
 
-    let mappedItems: TableItem[] = internalItems.value
-
-    const canFilterTable = isFilterableTable.value === true && props.filter
-
-    if (
-      (canFilterTable && !usesProvider.value) ||
-      (canFilterTable && usesProvider.value && noProviderFilteringBoolean.value)
-    ) {
-      mappedItems = filterItems()
-    }
-
-    if (
-      (isSortable.value === true && !usesProvider.value) ||
-      (isSortable.value === true && usesProvider.value && noProviderSortingBoolean.value)
-    ) {
-      mappedItems = sortItems()
-    }
-
-    return mappedItems
+  if (
+    (isFilterableTable.value === true && !usesProvider.value) ||
+    (isFilterableTable.value === true && usesProvider.value && noProviderFilteringBoolean.value)
+  ) {
+    mappedItems = filterItems(mappedItems)
   }
 
-  const items = requireItemsMapping.value
-    ? mapItems()
-    : usesProvider.value
-    ? internalItems.value
-    : props.items ?? []
-
-  if (!Number.isNaN(perPageNumber.value)) {
-    const startIndex =
-      ((Number.isNaN(perPageNumber.value) ? 0 : perPageNumber.value) - 1) * perPageNumber.value
-    const endIndex =
-      startIndex + perPageNumber.value > items.length
-        ? items.length
-        : startIndex + perPageNumber.value
-
-    // TODO fix this
-    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-    displayStartEndIdx.value = [startIndex, endIndex]
+  if (
+    (isSortable.value === true && !usesProvider.value) ||
+    (isSortable.value === true && usesProvider.value && noProviderSortingBoolean.value)
+  ) {
+    mappedItems = sortItems(mappedItems)
   }
 
-  return items
+  return mappedItems
 })
 
-const updateInternalItems = (items: TableItem[]) => {
-  internalItems.value = items
-}
+const {currentPage: resolvedCurrentPage, currentPageSize: resolvedCurrentPageSize} =
+  useOffsetPagination({
+    total: () => computedItems.value.length,
+    page: currentPageNumber,
+    pageSize: () => perPageNumber.value || Infinity,
+  })
 
 const computedDisplayItems = computed<TableItem[]>(() => {
-  if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
+  if (
+    Number.isNaN(resolvedCurrentPageSize.value) ||
+    (usesProvider.value && !noProviderPagingBoolean.value)
+  ) {
     return computedItems.value
   }
 
-  return computedItems.value.slice(displayStartEndIdx.value[0], displayStartEndIdx.value[1])
+  return computedItems.value.slice(
+    (resolvedCurrentPage.value - 1) * resolvedCurrentPageSize.value,
+    resolvedCurrentPage.value * resolvedCurrentPageSize.value
+  )
 })
 
 const handleRowSelection = (
@@ -547,18 +527,18 @@ const callItemsProvider = async () => {
   if (!usesProvider.value || !props.provider || busyBoolean.value) return
   busyModel.value = true
   const response = props.provider({
-    currentPage: currentPageNumber.value,
+    currentPage: resolvedCurrentPage.value,
     filter: props.filter,
-    sortBy: props.sortBy,
+    sortBy: sortByModel.value,
     sortDesc: props.sortDesc,
-    perPage: perPageNumber.value,
+    perPage: resolvedCurrentPageSize.value,
   })
   try {
     const items = response instanceof Promise ? await response : response
 
     if (items === undefined) return
 
-    updateInternalItems(items)
+    internalItems.value = items
   } finally {
     if (busyBoolean.value) {
       busyModel.value = false
@@ -566,35 +546,16 @@ const callItemsProvider = async () => {
   }
 }
 
-const getFieldColumnClasses = (field: TableFieldObject) => [
-  {
-    'b-table-sortable-column': isSortable.value && field.sortable,
-  },
-]
-
-const getRowClasses = (item: TableItem | null, type: string) => [
-  {
-    [`selected table-${props.selectionVariant}`]:
-      selectableBoolean.value && item && selectedItemsSetUtilities.has(item),
-  },
-  props.tbodyTrClass
-    ? typeof props.tbodyTrClass === 'function'
-      ? props.tbodyTrClass(item, type)
-      : props.tbodyTrClass
-    : null,
-]
-
-const getBusyRowClasses = computed(() => [
-  props.tbodyTrClass
-    ? typeof props.tbodyTrClass === 'function'
-      ? props.tbodyTrClass(null, 'table-busy')
-      : props.tbodyTrClass
-    : null,
-])
-
 const notifySelectionEvent = () => {
   if (!selectableBoolean.value) return
   emit('selection', [...selectedItemsToSet.value])
+}
+const notifyFilteredItems = async () => {
+  if (usesProvider.value) {
+    await callItemsProvider()
+    return
+  }
+  emit('filtered', computedItems.value)
 }
 
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
@@ -621,18 +582,6 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
 }
 
 watch(
-  () => props.items,
-  (newValue) => updateInternalItems(newValue)
-)
-
-filteredHandler.value = async (items) => {
-  if (usesProvider.value) {
-    await callItemsProvider()
-    return
-  }
-  emit('filtered', items)
-}
-watch(
   () => props.filter,
   (filter, oldFilter) => {
     providerPropsWatch('filter', filter, oldFilter)
@@ -643,10 +592,31 @@ watch(
     }
   }
 )
-watch(currentPageNumber, (val, oldVal) => providerPropsWatch('currentPage', val, oldVal))
-watch(perPageNumber, (val, oldVal) => providerPropsWatch('perPage', val, oldVal))
-watch(sortByModel, (val, oldVal) => providerPropsWatch('sortBy', val, oldVal))
-watch(sortDescBoolean, (val, oldVal) => providerPropsWatch('sortDesc', val, oldVal))
+watch(resolvedCurrentPage, (val, oldVal) => {
+  providerPropsWatch('currentPage', val, oldVal)
+})
+watch(resolvedCurrentPageSize, (val, oldVal) => {
+  providerPropsWatch('perPage', val, oldVal)
+})
+watch(sortByModel, (val, oldVal) => {
+  providerPropsWatch('sortBy', val, oldVal)
+})
+watch(sortDescBoolean, (val, oldVal) => {
+  providerPropsWatch('sortDesc', val, oldVal)
+})
+
+watch(
+  () => props.provider,
+  (newValue) => {
+    // Reset the internal values if the provider stops getting used
+    if (newValue === undefined) {
+      internalItems.value = []
+      return
+    }
+    // Otherwise we should refresh the table on such a change
+    callItemsProvider()
+  }
+)
 
 onMounted(callItemsProvider)
 
@@ -670,14 +640,14 @@ defineExpose({
   },
   selectRow: (index: number) => {
     if (!selectableBoolean.value) return
-    const item = props.items[index]
+    const item = computedItems.value[index]
     if (!item || selectedItemsSetUtilities.has(item)) return
     selectedItemsSetUtilities.add(item)
     notifySelectionEvent()
   },
   unselectRow: (index: number) => {
     if (!selectableBoolean.value) return
-    const item = props.items[index]
+    const item = computedItems.value[index]
     if (!item || !selectedItemsSetUtilities.has(item)) return
     selectedItemsSetUtilities.delete(item)
     notifySelectionEvent()

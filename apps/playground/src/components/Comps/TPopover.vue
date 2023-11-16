@@ -235,7 +235,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import type {BPopoverPlacement} from 'bootstrap-vue-next/src/types'
+import type {PopoverPlacement} from 'bootstrap-vue-next'
 
 const popoverInput = ref('foo')
 const popoverRef = ref(null)
@@ -245,7 +245,7 @@ const manualClickPopoverExample = ref(false)
 const popoverManualButtonRef = ref(null)
 
 const textValue = ref('test <b onmouseover="alert(\'XSS testing!\')">with html</b>')
-const popoverPlacemet = ref<BPopoverPlacement>('left')
+const popoverPlacemet = ref<PopoverPlacement>('left')
 
 const vari = ref({
   title: 'foo',

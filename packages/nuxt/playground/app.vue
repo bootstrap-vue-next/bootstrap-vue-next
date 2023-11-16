@@ -12,4 +12,8 @@
 const show = ref(false)
 
 const f = useBreadcrumb()
+useColorMode()
+useModal()
+useModalController()
+useToast()
 </script>

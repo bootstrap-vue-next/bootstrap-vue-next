@@ -25,7 +25,7 @@
     "dev": "nuxi dev playground --port 3030",
     "build": "pnpm run dev:build && pnpm run prepack",
     "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore --fix",
     "test:lint": "eslint --ext .js,.ts,.vue --ignore-path ../../.gitignore"
   },

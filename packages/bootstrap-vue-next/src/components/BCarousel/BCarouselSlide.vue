@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type CSSProperties, inject, toRef, useSlots} from 'vue'
+import {computed, type CSSProperties, inject, toRef} from 'vue'
 import type {Booleanish} from '../../types'
 import {carouselInjectionKey, isEmptySlot} from '../../utils'
 import BImg from '../BImg.vue'
@@ -90,7 +90,7 @@ const props = withDefaults(
   }
 )
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   caption?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,8 +100,6 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   text?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const parentData = inject(carouselInjectionKey, null)
 
