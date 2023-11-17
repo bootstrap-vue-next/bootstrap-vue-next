@@ -22,15 +22,6 @@ body:
       placeholder: Reproduction
     validations:
       required: true
-  - type: textarea
-    id: system-info
-    attributes:
-      label: System Info
-      description: Output of `npx envinfo --system --binaries --browsers`
-      render: Shell
-      placeholder: System, Binaries, Browsers
-    validations:
-      required: true
   - type: dropdown
     id: package-manager
     attributes:
@@ -38,9 +29,9 @@ body:
       description: Select the used package manager
       options:
         - pnpm
-        - npm
-        - yarn
         - bun
+        - yarn
+        - npm
         - n/a
     validations:
       required: true

@@ -1,5 +1,5 @@
 import type {StyleValue} from 'vue'
-import type {ClassValue} from './ClassValue'
+import type {ClassValue} from './AnyValuedAttributes'
 import type {LiteralUnion} from './LiteralUnion'
 import type {ColorVariant} from './ColorVariant'
 
