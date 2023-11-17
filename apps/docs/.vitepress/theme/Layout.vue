@@ -695,6 +695,17 @@ watch(
   }
 }
 
+.table-hover > tbody > .custom-row:hover > * {
+  --bs-table-hover-bg: transparent;
+}
+
+.table .custom-row {
+  td {
+    font-weight: bold !important;
+    color: #000 !important;
+  }
+}
+
 // Code Block
 [data-bs-theme='dark'] {
   .vp-code-light {

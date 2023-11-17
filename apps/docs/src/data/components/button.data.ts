@@ -1,4 +1,5 @@
 import type {ComponentReference} from './ComponentReference'
+import linkData from './link.data'
 
 export default {
   load: (): ComponentReference[] => [
@@ -184,6 +185,12 @@ export default {
           type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
           default: undefined,
           description: `The underline’s opacity on hover`,
+        },
+        {
+          prop: 'BLink',
+          type: "0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'",
+          description: `The underline’s opacity on hover`,
+          children: linkData.load()[0].props,
         },
         {
           prop: 'icon',
