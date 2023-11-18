@@ -330,13 +330,9 @@ const computedFields = computed<TableField[]>(() =>
 )
 
 const tableClasses = computed(() => ({
-  'b-table-sortable': isSortable.value,
-  'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
-  'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
   'b-table-busy': busyBoolean.value,
   'b-table-selectable': selectableBoolean.value,
-  [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
-  'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
+  'user-select-none': selectableBoolean.value && isSelecting.value,
 }))
 // All three of these are similar, even though the two following are not computeds
 const getBusyRowClasses = computed(() => [

@@ -6,6 +6,7 @@
     :width="width"
     :cols="cols"
     :tag="tag"
+    :style="{'cursor': 'wait', 'pointer-events': 'auto'}"
   />
 </template>
 

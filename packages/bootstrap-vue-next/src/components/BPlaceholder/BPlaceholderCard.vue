@@ -9,6 +9,7 @@
           :src="imgSrc"
           :top="!imgBottom"
           :bottom="imgBottom"
+          :style="{cursor: 'wait'}"
         />
       </slot>
     </template>
