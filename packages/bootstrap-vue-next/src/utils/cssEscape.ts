@@ -6,6 +6,7 @@ const escapeChar = (value: string) => `\\${value}`
  * The `cssEscape()` util is based on this `CSS.escape()` polyfill: https://github.com/mathiasbynens/CSS.escape
  *
  * @param {unknown} value
+ * @deprecated
  */
 export default (value: unknown): string => {
   const val = toString(value)

@@ -1,12 +1,15 @@
 type PropDefinition = {
-  type: any[]
-  default: any
+  type: unknown[]
+  default: unknown
 }
 
 export interface ComponentProps {
   [key: string]: PropDefinition
 }
 
+/**
+ * @deprecated
+ */
 export default (
   prefix: string,
   breakpoints: string[],

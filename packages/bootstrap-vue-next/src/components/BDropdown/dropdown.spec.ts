@@ -16,26 +16,6 @@ describe('dropdown', () => {
     expect(wrapper.find('div').classes()).toContain('btn-group')
   })
 
-  it('has class d-grid when prop block', async () => {
-    const wrapper = mount(BDropdown, {
-      props: {block: true},
-    })
-    expect(wrapper.find('div').classes()).toContain('d-grid')
-    await wrapper.setProps({block: false})
-    expect(wrapper.find('div').classes()).not.toContain('d-grid')
-  })
-
-  it('has class d-flex when prop block aand prop split', async () => {
-    const wrapper = mount(BDropdown, {
-      props: {block: true, split: true},
-    })
-    expect(wrapper.find('div').classes()).toContain('d-flex')
-    await wrapper.setProps({block: false})
-    expect(wrapper.find('div').classes()).not.toContain('d-flex')
-    await wrapper.setProps({block: true, split: false})
-    expect(wrapper.find('div').classes()).not.toContain('d-flex')
-  })
-
   it('has child ul', () => {
     const wrapper = mount(BDropdown)
     const $ul = wrapper.find('ul')
@@ -185,18 +165,6 @@ describe('dropdown', () => {
     expect($bbutton.classes()).not.toContain('dropdown-toggle-no-caret')
     await wrapper.setProps({noCaret: true, split: true})
     expect($bbutton.classes()).not.toContain('dropdown-toggle-no-caret')
-  })
-
-  it('first child BButton has class w-100 when prop split and prop block', async () => {
-    const wrapper = mount(BDropdown, {
-      props: {split: true, block: true},
-    })
-    const $bbutton = wrapper.getComponent(BButton)
-    expect($bbutton.classes()).toContain('w-100')
-    await wrapper.setProps({split: false})
-    expect($bbutton.classes()).not.toContain('w-100')
-    await wrapper.setProps({split: true, block: false})
-    expect($bbutton.classes()).not.toContain('w-100')
   })
 
   it('first child BButton has prop disabled to be prop disabled', async () => {

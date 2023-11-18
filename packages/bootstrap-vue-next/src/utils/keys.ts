@@ -31,11 +31,11 @@ export const tabsInjectionKey: InjectionKey<{
 
 // BProgress
 export const progressInjectionKey: InjectionKey<{
-  animated: Readonly<Ref<boolean>>
+  animated: Readonly<Ref<boolean | undefined>>
   max: Readonly<Ref<number | string>>
-  showProgress: Readonly<Ref<boolean>>
-  showValue: Readonly<Ref<boolean>>
-  striped: Readonly<Ref<boolean>>
+  showProgress: Readonly<Ref<boolean | undefined>>
+  showValue: Readonly<Ref<boolean | undefined>>
+  striped: Readonly<Ref<boolean | undefined>>
 }> = Symbol('progress')
 
 // BListGroup
