@@ -1,7 +1,8 @@
-export interface ComponentProps {
-  [key: string]: {type: any[]; default: any}
-}
+import type {ComponentProps} from './getBreakpointProps'
 
+/**
+ * @deprecated
+ */
 export default (
   props: Record<PropertyKey, unknown>,
   els: ComponentProps,

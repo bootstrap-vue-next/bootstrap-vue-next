@@ -95,7 +95,7 @@ const isAction = computed(
 )
 
 const computedClasses = computed(() => ({
-  [`list-group-item-${props.variant}`]: props.variant !== null,
+  [`list-group-item-${props.variant}`]: props.variant !== null && props.variant !== undefined,
   'list-group-item-action': isAction.value,
   'active': activeBoolean.value,
   'disabled': disabledBoolean.value,

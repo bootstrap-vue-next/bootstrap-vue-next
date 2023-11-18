@@ -4,6 +4,7 @@
  * @param value
  * @param defaultValue
  * @returns
+ * @deprecated
  */
 export const toInteger = (value: number, defaultValue = NaN): number =>
   Number.isInteger(value) ? value : defaultValue
@@ -12,6 +13,7 @@ export const toInteger = (value: number, defaultValue = NaN): number =>
  * @param value
  * @param defaultValue
  * @returns
+ * @deprecated
  */
 export const stringToInteger = (value: string, defaultValue = NaN): number => {
   const integer = Number.parseInt(value, 10)
@@ -24,6 +26,7 @@ export const stringToInteger = (value: string, defaultValue = NaN): number => {
  * @param value
  * @param defaultValue
  * @returns
+ * @deprecated
  */
 export const toFloat = (value: number | string, defaultValue = NaN): number => {
   const float = Number.parseFloat(value.toString())

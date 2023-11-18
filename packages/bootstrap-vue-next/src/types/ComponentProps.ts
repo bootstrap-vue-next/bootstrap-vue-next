@@ -113,10 +113,12 @@ export interface BTableLiteProps extends BTableSimpleProps {
   headVariant?: ColorVariant | null
   items?: TableItem[]
   labelStacked?: Booleanish
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
   showEmpty?: Booleanish
   tbodyClass?: ClassValue
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tbodyTrAttr?: any
   // tbodyTransitionHandlers
   // tbodyTransitionProps
