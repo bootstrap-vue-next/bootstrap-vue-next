@@ -33,7 +33,7 @@
                       <BLink
                         :id="buildCompReferenceLink(`${component.component}-${section}`).slice(1)"
                         variant="info"
-                        :href="buildCompReferenceLink(`${component.component}-${section}`)"
+                        :to="buildCompReferenceLink(`${component.component}-${section}`)"
                       >
                         {{ section }}
                       </BLink>

@@ -849,7 +849,7 @@ Disabled the dropdown item by setting the `disabled` prop.
     <BDropdownItem variant="primary">Second Action</BDropdownItem>
     <BDropdownItem active>Active action</BDropdownItem>
     <BDropdownItem disabled>Disabled action</BDropdownItem>
-    <BDropdownItem href="Badge">Badge</BDropdownItem>
+    <BDropdownItem to="/docs/components/badge">Badge</BDropdownItem>
   </BDropdown>
   <template #html>
 
@@ -860,7 +860,7 @@ Disabled the dropdown item by setting the `disabled` prop.
     <BDropdownItem variant="primary">Second Action</BDropdownItem>
     <BDropdownItem active>Active action</BDropdownItem>
     <BDropdownItem disabled>Disabled action</BDropdownItem>
-    <BDropdownItem href="Badge">Badge</BDropdownItem>
+    <BDropdownItem href="/docs/components/badge">Badge</BDropdownItem>
   </BDropdown>
 </template>
 

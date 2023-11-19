@@ -275,7 +275,7 @@ As you may have noticed in that example, there was a built-in progress bar. This
 
 ## BLink Integration
 
-`Toast` can accept `Blink` props which will modify its behavior
+`Toast` can accept `BLink` props which will modify its behavior
 
 <HighlightCard>
   <BButton @click="show('I am a BLink', {href: 'https://getbootstrap.com/', target: '_blank'})">
