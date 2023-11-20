@@ -81,7 +81,7 @@ const props = withDefaults(
     size: undefined,
     state: null,
     switch: false,
-    uncheckedValue: undefined,
+    uncheckedValue: false,
     value: true,
   }
 )
