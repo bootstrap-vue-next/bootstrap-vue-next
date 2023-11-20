@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.15.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.0...bootstrapvuenext-v0.15.1) (2023-11-20)
+
+
+### Bug Fixes
+
+* **BPlaceholderButton:** pointwer: wait fixes [#1602](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1602) ([9724aac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9724aac227dbd60f7a692e42ff1c6ffdbd9e5153))
+* **BPlaceholderCard:** pointer: wait for img ([9724aac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9724aac227dbd60f7a692e42ff1c6ffdbd9e5153))
+* **checkbox:** single checkbox not working by default fixes [#1610](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1610) ([54276ec](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/54276ec4fa98c40280e8df5e291d0b136dd59f31))
+
 ## [0.15.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.14.10...bootstrapvuenext-v0.15.0) (2023-11-18)
 
 
