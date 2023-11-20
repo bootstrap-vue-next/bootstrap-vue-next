@@ -58,10 +58,10 @@ const props = withDefaults(
     htmlField?: string
     id?: string
     labelField?: string
-    modelValue?: string | unknown[] | Record<string, unknown> | number | null
+    modelValue?: string | ReadonlyArray<unknown> | Record<string, unknown> | number | null
     multiple?: Booleanish
     name?: string
-    options?: unknown[] | Record<string, unknown> // TODO It was declared deprecated in useFormSelect to use a Record. https://bootstrap-vue.org/docs/components/form-select#options-as-an-object
+    options?: ReadonlyArray<unknown> | Record<string, unknown> // TODO It was declared deprecated in useFormSelect to use a Record. https://bootstrap-vue.org/docs/components/form-select#options-as-an-object
     optionsField?: string
     plain?: Booleanish
     required?: Booleanish

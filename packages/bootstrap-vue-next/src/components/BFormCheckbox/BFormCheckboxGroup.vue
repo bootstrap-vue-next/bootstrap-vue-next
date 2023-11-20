@@ -37,9 +37,9 @@ const props = withDefaults(
     form?: string
     htmlField?: string
     id?: string
-    modelValue?: CheckboxValue[]
+    modelValue?: ReadonlyArray<CheckboxValue>
     name?: string
-    options?: (string | number | Record<string, unknown>)[]
+    options?: ReadonlyArray<string | number | Record<string, unknown>>
     plain?: Booleanish
     required?: Booleanish
     size?: Size
@@ -76,9 +76,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: CheckboxValue[]]
-  'input': [value: CheckboxValue[]]
-  'update:modelValue': [value: CheckboxValue[]]
+  'change': [value: ReadonlyArray<CheckboxValue>]
+  'input': [value: ReadonlyArray<CheckboxValue>]
+  'update:modelValue': [value: ReadonlyArray<CheckboxValue>]
 }>()
 
 defineSlots<{

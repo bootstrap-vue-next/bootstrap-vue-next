@@ -52,7 +52,7 @@ const props = withDefaults(
     id?: string
     indeterminate?: Booleanish
     inline?: Booleanish
-    modelValue?: CheckboxValue | CheckboxValue[]
+    modelValue?: CheckboxValue | ReadonlyArray<CheckboxValue>
     name?: string
     plain?: Booleanish
     required?: Booleanish
@@ -87,9 +87,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: CheckboxValue | CheckboxValue[]]
-  'input': [value: CheckboxValue | CheckboxValue[]]
-  'update:modelValue': [value: CheckboxValue | CheckboxValue[]]
+  'change': [value: CheckboxValue | ReadonlyArray<CheckboxValue>]
+  'input': [value: CheckboxValue | ReadonlyArray<CheckboxValue>]
+  'update:modelValue': [value: CheckboxValue | ReadonlyArray<CheckboxValue>]
 }>()
 
 const slots = defineSlots<{
@@ -124,13 +124,13 @@ const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
   get: () => parentData?.modelValue.value ?? modelValue.value,
-  set: (val: CheckboxValue[] | CheckboxValue | undefined) => {
+  set: (val: ReadonlyArray<CheckboxValue> | CheckboxValue | undefined) => {
     if (val === undefined) return
     if (parentData !== null && Array.isArray(val)) {
       // The type cast isn't perfect. Array.isArray detects CheckboxValue.unknown[],
       // but since it's parentData, it should always be CheckboxValue[]
       // It doesn't quite work when props.value is an [], but this is more of a Vue issue
-      parentData.modelValue.value = val as CheckboxValue[]
+      parentData.modelValue.value = val as ReadonlyArray<CheckboxValue>
       return
     }
     modelValue.value = val
