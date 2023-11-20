@@ -1,4 +1,37 @@
-import type {ComponentReference} from './ComponentReference'
+import type {ComponentReference, SlotScopeReference} from './ComponentReference'
+
+const sharedSlots: SlotScopeReference[] = [
+  {
+    prop: 'cancel',
+    type: 'Function',
+    description:
+      "Closes the modal and fires the 'cancel' and 'hide' events, with `bvModalEvent.trigger = 'cancel'`",
+  },
+  {
+    prop: 'close',
+    type: 'Function',
+    description:
+      "Closes the modal and fires the close and hide events, with `bvModalEvent.trigger = 'headerclose'`",
+  },
+  {
+    prop: 'hide',
+    type: 'Function',
+    description:
+      "Accepts one argument 'trigger'. Closes the modal and fires the 'hide' event, with the `bvModalEvent.trigger = trigger` (`trigger` is optional)",
+  },
+  {
+    prop: 'ok',
+    type: 'Function',
+    description:
+      "Closes the modal and fires the 'ok' and 'hide' events, with `bvModalEvent.trigger = 'ok'`",
+  },
+  {
+    prop: 'visible',
+    type: 'Booleanish',
+    description:
+      "The visibility state of the modal. 'true' if the modal is visible and 'false' if not visible",
+  },
+]
 
 export default {
   load: (): ComponentReference[] => [
@@ -170,7 +203,8 @@ export default {
           prop: 'headerCloseVariant',
           type: 'ButtonVariant | null',
           default: 'secondary',
-          description: 'Applies a variant to the header close button when the header close button uses the header-close slot',
+          description:
+            'Applies a variant to the header close button when the header close button uses the header-close slot',
         },
         {
           prop: 'headerTextVariant',
@@ -438,44 +472,48 @@ export default {
       ],
       slots: [
         {
-          description: '',
-          name: 'title',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'header-close',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'header',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'default',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'footer',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'cancel',
-          scope: [],
-        },
-        {
-          description: '',
-          name: 'ok',
-          scope: [],
-        },
-        {
-          description: '',
           name: 'backdrop',
+          description: 'Modal Backdrop content',
           scope: [],
+        },
+        {
+          name: 'cancel',
+          description: 'Modal CANCEL button content. Optionally scoped',
+          scope: sharedSlots,
+        },
+        {
+          name: 'default',
+          description: 'Content of modal body. Optionally scoped',
+          scope: sharedSlots,
+        },
+        {
+          name: 'footer',
+          description:
+            'Modal footer content. Also removes default OK and Cancel buttons. Optionally scoped',
+          scope: sharedSlots,
+        },
+        {
+          name: 'header',
+          description:
+            'Entire modal header container contents. Also removes the top right X close button. Optionally scoped',
+          scope: sharedSlots,
+        },
+        {
+          name: 'header-close',
+          description:
+            "Content of Modal header close button. If 'header' slot is used, this slot will not be shown",
+          scope: [],
+        },
+        {
+          name: 'ok',
+          description: 'Modal OK button content. Optionally scoped',
+          scope: sharedSlots,
+        },
+        {
+          name: 'title',
+          description:
+            "Modal title. If 'header' slot is used, this slot will not be shown. Optionally scoped",
+          scope: sharedSlots,
         },
       ],
     },

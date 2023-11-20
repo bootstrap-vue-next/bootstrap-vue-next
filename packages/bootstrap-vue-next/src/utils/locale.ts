@@ -20,6 +20,9 @@ const RTL_LANGS = [
 ].map((locale) => locale.toLowerCase())
 
 // Returns true if the locale is RTL
+/**
+ * @deprecated -- there's probably a better way to do this, but I also don't know what its for
+ */
 export const isLocaleRTL = (locale: string) => {
   // Determines if the locale is RTL (only single locale supported)
   const parts = toString(locale).toLowerCase().replace(RX_STRIP_LOCALE_MODS, '').split('-')

@@ -1,8 +1,8 @@
 import {defineNuxtModule, createResolver, addImports} from '@nuxt/kit'
-import type {Import} from 'unimport'
 import useComponents from './composables/useComponents'
 import type {ModuleOptions} from './types/ModuleOptions'
 import parseActiveImports from './utils/parseActiveImports'
+import {Composables} from 'bootstrap-vue-next'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -20,7 +20,7 @@ export default defineNuxtModule<ModuleOptions>({
     // @ts-ignore
     const resolver = createResolver(import.meta.url)
 
-    const normalizedComposables =
+    const normalizedComposableOptions =
       typeof options.composables === 'boolean' ? {all: options.composables} : options.composables
 
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
@@ -57,27 +57,13 @@ export default defineNuxtModule<ModuleOptions>({
 
     useComponents()
 
-    const arr: Import[] = []
-    if (Object.values(normalizedComposables).some((el) => el === true)) {
-      const imports = parseActiveImports(normalizedComposables, [
-        // Add the list from composables.ts here
-        // Not super strongly typed tho. Just add
-        'useBreadcrumb',
-        'useColorMode',
-        'useModal',
-        'useModalController',
-        'useToast',
-      ]).map(
-        (el) =>
-          ({
-            from: resolver.resolve('./runtime/composables'),
-            name: el,
-          }) satisfies Import
+    if (Object.values(normalizedComposableOptions).some((el) => el === true)) {
+      parseActiveImports(normalizedComposableOptions, Object.keys(Composables)).map((name) =>
+        addImports({
+          from: 'bootstrap-vue-next',
+          name,
+        })
       )
-      arr.push(...imports)
-    }
-    if (arr.length) {
-      addImports(arr)
     }
   },
 })

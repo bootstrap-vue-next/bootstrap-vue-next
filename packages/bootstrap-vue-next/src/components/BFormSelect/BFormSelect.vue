@@ -61,7 +61,7 @@ const props = withDefaults(
     modelValue?: string | unknown[] | Record<string, unknown> | number | null
     multiple?: Booleanish
     name?: string
-    options?: unknown[] | Record<string, unknown>
+    options?: unknown[] | Record<string, unknown> // TODO It was declared deprecated in useFormSelect to use a Record. https://bootstrap-vue.org/docs/components/form-select#options-as-an-object
     optionsField?: string
     plain?: Booleanish
     required?: Booleanish
@@ -122,7 +122,7 @@ const selectSizeNumber = useToNumber(() => props.selectSize)
 
 const stateClass = useStateClass(stateBoolean)
 
-const input = ref<HTMLElement>()
+const input = ref<HTMLElement | null>(null)
 
 const {focused} = useFocus(input, {
   initialValue: autofocusBoolean.value,

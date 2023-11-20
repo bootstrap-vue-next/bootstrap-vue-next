@@ -1,8 +1,9 @@
-import type {StyleValue, TdHTMLAttributes, ThHTMLAttributes} from 'vue'
-import type {ClassValue} from './ClassValue'
+import type {StyleValue} from 'vue'
+import type {ClassValue} from './AnyValuedAttributes'
 import type {LiteralUnion} from './LiteralUnion'
 import type {ColorVariant} from './ColorVariant'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableFieldObjectFormatter<T = any> =
   | string
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)
@@ -23,8 +24,8 @@ export interface TableFieldObject<T = Record<string, unknown>> {
   thClass?: ClassValue
   thStyle?: StyleValue
   variant?: ColorVariant | null
-  tdAttr?: TdHTMLAttributes
-  thAttr?: ThHTMLAttributes
+  tdAttr?: Record<string, unknown>
+  thAttr?: Record<string, unknown>
   isRowHeader?: boolean
   stickyColumn?: boolean
 }

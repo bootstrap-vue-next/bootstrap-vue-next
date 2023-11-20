@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef, useSlots} from 'vue'
+import {computed, toRef} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils'
 import BCardSubtitle from './BCardSubtitle.vue'
@@ -60,7 +60,7 @@ const props = withDefaults(
   }
 )
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,8 +68,6 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   title?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const overlayBoolean = useBooleanish(() => props.overlay)
 const resolvedBackgroundClasses = useColorVariantClasses(props)

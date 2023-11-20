@@ -26,10 +26,7 @@ For cross browser consistency, `BFormCheckboxGroup` and `BFormCheckbox` use Boot
 
 If both `html` and `text` are provided, `html` will take precedence. Only basic/native HTML is supported in the `html` field (components will not work). Note that not all browsers will render inline html (i.e. `<i>`, `<strong>`, etc.) inside `<option>` elements of a `<select>`.
 
-<BAlert :model-value="true" variant="danger">
-  <strong>Be cautious</strong> of placing user supplied content in the <code>html</code> field, as it may make you vulnerable to <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
-  <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first <a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the user supplied string.
-</BAlert>
+<CrossSiteScriptingWarning />
 
 <BCard class="bg-body-tertiary">
 
@@ -751,6 +748,7 @@ import {data} from '../../data/components/formCheckbox.data'
 import {ref, computed} from 'vue'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
+import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
 import {BFormCheckboxGroup, BFormCheckbox, BCard, BCardBody, BAlert} from 'bootstrap-vue-next'
 
 const button1Checked = ref(false);

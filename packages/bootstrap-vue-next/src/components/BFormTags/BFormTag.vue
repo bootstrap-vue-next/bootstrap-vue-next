@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef, useSlots} from 'vue'
+import {computed, toRef} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {Booleanish, ColorVariant} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -55,12 +55,10 @@ const emit = defineEmits<{
   remove: [value: string]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
 }>()
-
-const slots = useSlots()
 
 const computedId = useId(() => props.id)
 
@@ -69,7 +67,7 @@ const noRemoveBoolean = useBooleanish(() => props.noRemove)
 const pillBoolean = useBooleanish(() => props.pill)
 
 const tagText = computed(
-  () => ((slots.default?.()[0].children ?? '').toString() || props.title) ?? ''
+  () => ((slots.default?.({})[0].children ?? '').toString() || props.title) ?? ''
 )
 const taglabelId = toRef(() => `${computedId.value}taglabel__`)
 

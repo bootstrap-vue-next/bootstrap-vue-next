@@ -12,7 +12,7 @@
     :outlined="outlined"
     :responsive="responsive"
     :small="small"
-    :stacked="stacked"
+    :stacked="computedStacked"
     :sticky-header="stickyHeader"
     :striped="striped"
     :table-class="computedTableClasses"
@@ -34,19 +34,15 @@
           v-bind="field.thAttr"
           @click="headerClicked(field, $event)"
         >
-          <div class="d-inline-flex flex-nowrap align-items-center gap-1">
-            <div>
-              <slot
-                :name="$slots[`head(${field.key})`] ? `head(${field.key})` : 'head()'"
-                :label="field.label"
-                :column="field.key"
-                :field="field"
-                :is-foot="false"
-              >
-                {{ getFieldHeadLabel(field) }}
-              </slot>
-            </div>
-          </div>
+          <slot
+            :name="$slots[`head(${field.key})`] ? `head(${field.key})` : 'head()'"
+            :label="field.label"
+            :column="field.key"
+            :field="field"
+            :is-foot="false"
+          >
+            {{ getTableFieldHeadLabel(field) }}
+          </slot>
         </BTh>
       </BTr>
       <BTr v-if="$slots['thead-sub']">
@@ -70,7 +66,7 @@
         :items="items"
         :columns="computedFields.length"
       >
-        <BTr v-if="!stacked && $slots['top-row']">
+        <BTr v-if="!computedStacked && $slots['top-row']">
           <slot name="top-row" />
         </BTr>
 
@@ -90,8 +86,8 @@
               :class="getFieldRowClasses(field, item)"
               v-bind="field.tdAttr"
             >
-              <label v-if="stacked && labelStackedBoolean" class="b-table-stacked-label">
-                {{ getFieldHeadLabel(field) }}
+              <label v-if="computedStacked && labelStackedBoolean" class="b-table-stacked-label">
+                {{ getTableFieldHeadLabel(field) }}
               </label>
               <slot
                 :name="$slots[`cell(${field.key})`] ? `cell(${field.key})` : 'cell()'"
@@ -105,7 +101,7 @@
                     toggleRowDetails(item)
                   }
                 "
-                :details-showing="item._showDetails"
+                :details-showing="item._showDetails ?? false"
               >
                 {{ formatItem(item, field.key, field.formatter) }}
               </slot>
@@ -126,6 +122,8 @@
                     toggleRowDetails(item)
                   }
                 "
+                :fields="fields"
+                :index="itemIndex"
               />
             </BTd>
           </BTr>
@@ -137,7 +135,7 @@
             </slot>
           </BTd>
         </BTr>
-        <BTr v-if="!stacked && $slots['bottom-row']">
+        <BTr v-if="!computedStacked && $slots['bottom-row']">
           <slot name="bottom-row" />
         </BTr>
       </slot>
@@ -165,7 +163,7 @@
                 :field="field"
                 :is-foot="true"
               >
-                {{ getFieldHeadLabel(field) }}
+                {{ getTableFieldHeadLabel(field) }}
               </slot>
             </div>
           </div>
@@ -193,7 +191,7 @@ import {computed, toRef} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {BTableLiteProps, TableField, TableFieldObject, TableItem} from '../../types'
 import type {TableFieldObjectFormatter} from '../../types/TableFieldObject'
-import {filterEvent, get, isObject, startCase, titleCase} from '../../utils'
+import {filterEvent, get, getTableFieldHeadLabel, startCase} from '../../utils'
 import BTableSimple from './BTableSimple.vue'
 import BTbody from './BTbody.vue'
 import BTd from './BTd.vue'
@@ -211,7 +209,7 @@ const props = withDefaults(defineProps<BTableLiteProps>(), {
   labelStacked: false,
   showEmpty: false,
   emptyText: 'There are no records to show',
-  emptyFilteredText: 'There are no records matching your request',
+  emptyFilteredText: 'There are no records matching your request', // TODO not implemented
   fieldColumnClass: undefined,
   tbodyTrClass: undefined,
   captionHtml: undefined,
@@ -266,6 +264,7 @@ const emit = defineEmits<{
 const footCloneBoolean = useBooleanish(() => props.footClone)
 const labelStackedBoolean = useBooleanish(() => props.labelStacked)
 const showEmptyBoolean = useBooleanish(() => props.showEmpty)
+const computedStacked = useBooleanish(() => props.stacked)
 
 const computedTableClasses = computed(() => [
   props.tableClass,
@@ -274,37 +273,36 @@ const computedTableClasses = computed(() => [
   },
 ])
 
-const computedFields = computed(() => {
-  const fields: TableFieldObject[] = []
-
+const computedFields = computed<TableFieldObject[]>(() => {
   if (!props.fields.length && props.items.length) {
-    Object.keys(props.items[0]).forEach((k) => fields.push({key: k, label: startCase(k)}))
-    return fields
+    return Object.keys(props.items[0]).map((k) => {
+      const label = startCase(k)
+      return {
+        key: k,
+        label,
+        tdAttr: computedStacked.value === true ? {'data-label': label} : undefined,
+      }
+    })
   }
 
-  if (Array.isArray(props.fields)) {
-    props.fields.forEach((f) => {
-      if (typeof f === 'string') {
-        fields.push({key: f, label: startCase(f)})
-      } else if (isObject(f) && f.key && typeof f.key === 'string') {
-        fields.push({...f})
+  return props.fields.map((f) => {
+    if (typeof f === 'string') {
+      const label = startCase(f)
+      return {
+        key: f,
+        label,
+        tdAttr: computedStacked.value === true ? {'data-label': label} : undefined,
       }
-      // TODO handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
-    })
-    return fields
-  }
-  return fields
+    }
+    return {
+      ...f,
+      tdAttr:
+        computedStacked.value === true ? {'data-label': startCase(f.key), ...f.tdAttr} : f.tdAttr,
+    }
+    // TODO handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
+  })
 })
 const computedFieldsTotal = toRef(() => computedFields.value.length)
-
-const getFieldHeadLabel = (field: TableField) =>
-  typeof field === 'string'
-    ? titleCase(field)
-    : field.label !== undefined
-    ? field.label
-    : typeof field.key === 'string'
-    ? titleCase(field.key)
-    : field.key
 
 const formatItem = (
   item: TableItem,

@@ -16,7 +16,7 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
 
 <BRow cols="2" cols-lg="2">
   <BCol class="text-center">
-    <BLink class="card-link" to="https://getbootstrap.com">
+    <BLink class="card-link" href="https://getbootstrap.com" target="_blank" rel="noopener">
       <BCard class="p-3">
         <BootstrapIcon aria-hidden class="icon-lg" />
         <BCardText class="mt-4">
@@ -26,7 +26,7 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
     </BLink>
   </BCol>
   <BCol class="text-center">
-    <BLink class="card-link" to="https://vuejs.org">
+    <BLink class="card-link" href="https://vuejs.org" target="_blank" rel="noopener">
       <BCard class="p-3">
         <VueIcon aria-hidden class="icon-lg" />
         <BCardText class="mt-4">
@@ -38,8 +38,8 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
 </BRow>
 
 <p class="mb-2 d-flex small">Current Version:</p>
-<a href="https://www.npmjs.com/package/bootstrap-vue-next">
-<img src="https://flat.badgen.net/npm/v/bootstrap-vue-next" alt="Current version">
+<a href="https://www.npmjs.com/package/bootstrap-vue-next" target="_blank" rel="noopener">
+  <img src="https://flat.badgen.net/npm/v/bootstrap-vue-next" alt="Current version">
 </a>
 
 ## Overview

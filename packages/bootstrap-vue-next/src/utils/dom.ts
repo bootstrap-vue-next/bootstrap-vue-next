@@ -4,21 +4,25 @@ import type {AnimationFrame} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from './env'
 import {toString} from './stringUtils'
 
+/**
+ * @deprecated
+ */
 const ELEMENT_PROTO = HAS_ELEMENT_SUPPORT ? Element.prototype : undefined
 
 /**
- * @link https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+ * @deprecated
  */
-export const matchesEl =
-  ELEMENT_PROTO?.matches ||
-  (ELEMENT_PROTO as any)?.msMatchesSelector ||
-  ELEMENT_PROTO?.webkitMatchesSelector
+export const isElement = (el: unknown): el is HTMLElement =>
+  !!(el && typeof el === 'object' && 'nodeType' in el && el.nodeType === Node.ELEMENT_NODE)
 
-export const isElement = (el: HTMLElement | Element): boolean =>
-  !!(el && el.nodeType === Node.ELEMENT_NODE)
-
+/**
+ * @deprecated
+ */
 export const getBCR = (el: HTMLElement) => (isElement(el) ? el.getBoundingClientRect() : null)
 
+/**
+ * @deprecated
+ */
 export const getActiveElement = (excludes = []): Element | null => {
   const {activeElement} = document
   return activeElement && !excludes.some((el: HTMLElement) => el === activeElement)
@@ -26,9 +30,15 @@ export const getActiveElement = (excludes = []): Element | null => {
     : null
 }
 
+/**
+ * @deprecated
+ */
 export const isActiveElement = (el: HTMLElement): boolean =>
   isElement(el) && el === getActiveElement()
 
+/**
+ * @deprecated
+ */
 export const attemptFocus = (el: HTMLElement, options = {}): boolean => {
   try {
     el.focus(options)
@@ -44,6 +54,7 @@ export const attemptFocus = (el: HTMLElement, options = {}): boolean => {
  *
  * @param el
  * @returns
+ * @deprecated
  */
 export const attemptBlur = (el: HTMLElement): boolean => {
   try {
@@ -55,11 +66,20 @@ export const attemptBlur = (el: HTMLElement): boolean => {
   return !isActiveElement(el)
 }
 
+/**
+ * @deprecated
+ */
 export const getStyle = (el: HTMLElement, prop: string) =>
   prop && isElement(el) ? el.getAttribute(prop) || null : null
 
+/**
+ * @deprecated
+ */
 export const contains = (parent: Node, child: Node): boolean => parent.contains(child)
 
+/**
+ * @deprecated
+ */
 export const isVisible = (el: HTMLElement): boolean => {
   //if (!isElement(el) || !el.parentNode || !contains(DOCUMENT.body, el)) {
   // Note this can fail for shadow dom elements since they
@@ -77,6 +97,9 @@ export const isVisible = (el: HTMLElement): boolean => {
   return !!(bcr && bcr.height > 0 && bcr.width > 0)
 }
 
+/**
+ * @deprecated
+ */
 export const isEmptySlot = (el: Slot | undefined): boolean => (el?.() ?? []).length === 0
 
 /**
@@ -85,22 +108,33 @@ export const isEmptySlot = (el: Slot | undefined): boolean => (el?.() ?? []).len
  * @param selector
  * @param root
  * @returns
+ * @deprecated
  */
-export const select = (selector: any, root: any) =>
+export const select = (selector: string, root: Element) =>
   (isElement(root) ? root : DOCUMENT).querySelector(selector) || null
 
-export const selectAll = (selector: any, root: any) =>
+/**
+ * @deprecated
+ */
+export const selectAll = (selector: string, root: Element) =>
   Array.from([(isElement(root) ? root : DOCUMENT).querySelectorAll(selector)])
 
+/**
+ * @deprecated
+ */
 export const getAttr = (el: HTMLElement | Element, attr: string): string | null =>
   attr && isElement(el) ? el.getAttribute(attr) : null
 
 /**
  * Get an element given an ID
+ * @deprecated
  */
 export const getById = (id: string) =>
   DOCUMENT.getElementById(/^#/.test(id) ? id.slice(1) : id) || null
 
+/**
+ * @deprecated
+ */
 export const setAttr = (el: HTMLElement, attr: string, value: string): void => {
   if (attr && isElement(el)) {
     el.setAttribute(attr, value)
@@ -112,6 +146,7 @@ export const setAttr = (el: HTMLElement, attr: string, value: string): void => {
  *
  * @param el
  * @param attr
+ * @deprecated
  */
 export const removeAttr = (el: HTMLElement, attr: string): void => {
   if (attr && isElement(el)) {
@@ -119,9 +154,15 @@ export const removeAttr = (el: HTMLElement, attr: string): void => {
   }
 }
 
-export const isTag = (tag: any, name: any): boolean =>
+/**
+ * @deprecated
+ */
+export const isTag = (tag: string, name: string): boolean =>
   toString(tag).toLowerCase() === toString(name).toLowerCase()
 
+/**
+ * @deprecated
+ */
 export const requestAF: AnimationFrame = HAS_WINDOW_SUPPORT
   ? window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -133,24 +174,27 @@ export const requestAF: AnimationFrame = HAS_WINDOW_SUPPORT
     ((cb) => setTimeout(cb, 16))
   : (cb) => setTimeout(cb, 0)
 
+/**
+ * @deprecated
+ */
 export const matches = (el: Element, selector: string) =>
-  isElement(el) ? matchesEl.call(el, selector) : false
+  isElement(el) ? el.matches(selector) : false
 
 /**
  * @link https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+ * @deprecated
  */
 /* eslint-disable @typescript-eslint/no-this-alias */
 export const closestEl =
   ELEMENT_PROTO?.closest ||
   function (this: Element, sel: string) {
-    let el = this
+    let el: ParentNode | null | Element = this
     if (!el) return null
     do {
       // Use our "patched" matches function
-      if (matches(el, sel)) {
-        return el
-      }
-      el = el.parentElement || (el.parentNode as any)
+      if (isElement(el) && el.matches(sel)) return el
+
+      el = el.parentElement || el.parentNode
     } while (el !== null && el.nodeType === Node.ELEMENT_NODE)
     return null
   }
@@ -161,6 +205,7 @@ export const closestEl =
  * @param selector
  * @param root
  * @param includeRoot
+ * @deprecated
  */
 export const closest = (selector: string, root: Element, includeRoot = false) => {
   if (!isElement(root)) {
@@ -173,6 +218,9 @@ export const closest = (selector: string, root: Element, includeRoot = false) =>
   return includeRoot ? el : el === root ? null : el
 }
 
+/**
+ * @deprecated
+ */
 export const getTransitionDelay = (element: HTMLElement) => {
   const style = window.getComputedStyle(element)
   // if multiple durations are defined, we take the first

@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, ref, type RendererElement, toRef, useSlots} from 'vue'
+import {computed, nextTick, ref, type RendererElement, toRef} from 'vue'
 import {onKeyStroke, useEventListener, useFocus, useVModel} from '@vueuse/core'
 import {useBooleanish, useId, useSafeScrollLock} from '../../composables'
 import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
@@ -157,7 +157,8 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-defineSlots<{
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
   'default'?: (props: {
     visible: boolean
@@ -177,6 +178,7 @@ defineSlots<{
     hide: (trigger?: string) => void
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'header-close'?: (props: Record<string, never>) => any
   'title'?: (props: {
     visible: boolean
@@ -185,8 +187,6 @@ defineSlots<{
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
 }>()
-
-const slots = useSlots()
 
 const modelValue = useVModel(props, 'modelValue', emit, {passive: true})
 

@@ -1,4 +1,3 @@
-import {isPlainObject} from './inspect'
 import {
   RX_FIRST_START_SPACE_WORD,
   RX_LOWER_UPPER,
@@ -14,13 +13,16 @@ import {
  * @param val
  * @param spaces
  * @returns
+ * @deprecated
  */
 export const toString = (val: unknown, spaces = 2): string =>
   typeof val === 'string'
     ? val
     : val === undefined || val === null
     ? ''
-    : Array.isArray(val) || (isPlainObject(val) && val.toString === Object.prototype.toString)
+    : Array.isArray(val) ||
+      (Object.prototype.toString.call(val) === '[object Object]' &&
+        val.toString === Object.prototype.toString)
     ? JSON.stringify(val, null, spaces)
     : String(val)
 

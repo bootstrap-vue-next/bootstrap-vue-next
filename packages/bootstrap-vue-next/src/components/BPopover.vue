@@ -134,6 +134,7 @@ const emit = defineEmits<{
 }>()
 
 defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default?: (props: Record<string, never>) => any
   target?: (props: {
     show: () => void
@@ -142,6 +143,7 @@ defineSlots<{
     showState: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   title?: (props: Record<string, never>) => any
 }>()
 

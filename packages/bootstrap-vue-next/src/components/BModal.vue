@@ -101,16 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  type CSSProperties,
-  reactive,
-  ref,
-  type RendererElement,
-  toRef,
-  useSlots,
-  watch,
-} from 'vue'
+import {computed, type CSSProperties, reactive, ref, type RendererElement, toRef, watch} from 'vue'
 import {
   useBooleanish,
   useColorVariantClasses,
@@ -279,7 +270,7 @@ type SharedSlotsData = {
   visible: boolean
 }
 
-defineSlots<{
+const slots = defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'backdrop'?: (props: Record<string, never>) => any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -297,8 +288,6 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   'title'?: (props: SharedSlotsData) => any
 }>()
-
-const slots = useSlots()
 
 const computedId = useId(() => props.id, 'modal')
 
@@ -531,7 +520,7 @@ const onAfterLeave = () => {
   if (lazyBoolean.value === true) lazyLoadCompleted.value = false
 }
 
-const {activePosition, activeModalCount} = useModalManager(isActive, computedId)
+const {activePosition, activeModalCount} = useModalManager(isActive)
 const defaultModalDialogZIndex = 1056
 const computedZIndex = computed<CSSProperties>(() => ({
   // Make sure that newly opened modals have a higher z-index than currently active ones.

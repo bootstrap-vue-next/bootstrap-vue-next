@@ -229,7 +229,13 @@
             About
           </BDropdownItem>
           <RouterLink v-slot="{href, navigate, isActive}" to="/test" custom>
-            <BDropdownItem :active="isActive" :href="href" @click="navigate">
+            <BDropdownItem
+              :active="isActive"
+              :href="href"
+              target="_blank"
+              rel="noopener"
+              @click="navigate"
+            >
               test slot
             </BDropdownItem>
           </RouterLink>

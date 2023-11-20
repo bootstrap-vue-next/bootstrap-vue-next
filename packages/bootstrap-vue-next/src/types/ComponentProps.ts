@@ -1,12 +1,12 @@
 import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, MaybeRef} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
-import type {BPopoverPlacement} from './BPopoverPlacement'
+import type {PopoverPlacement} from './PopoverPlacement'
 import type {Booleanish} from './Booleanish'
 import type {Breakpoint} from './Breakpoint'
 import type {ButtonType} from './ButtonType'
 import type {ButtonVariant} from './ButtonVariant'
-import type {ClassValue} from './ClassValue'
+import type {ClassValue} from './AnyValuedAttributes'
 import type {ColorExtendables} from './ColorExtendables'
 import type {ColorVariant} from './ColorVariant'
 import type {LinkTarget} from './LinkTarget'
@@ -113,10 +113,12 @@ export interface BTableLiteProps extends BTableSimpleProps {
   headVariant?: ColorVariant | null
   items?: TableItem[]
   labelStacked?: Booleanish
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
   showEmpty?: Booleanish
   tbodyClass?: ClassValue
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tbodyTrAttr?: any
   // tbodyTransitionHandlers
   // tbodyTransitionProps
@@ -244,7 +246,7 @@ export interface BPopoverProps {
   noShift?: Booleanish
   noninteractive?: Booleanish
   offset?: number | string | null
-  placement?: BPopoverPlacement
+  placement?: PopoverPlacement
   realtime?: Booleanish
   reference?: MaybeRef<
     string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null

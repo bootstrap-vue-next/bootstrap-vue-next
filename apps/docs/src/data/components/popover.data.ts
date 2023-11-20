@@ -67,7 +67,7 @@ export default {
         },
         {
           prop: 'placement',
-          type: 'BPopoverPlacement',
+          type: 'PopoverPlacement',
           default: 'top',
         },
         {

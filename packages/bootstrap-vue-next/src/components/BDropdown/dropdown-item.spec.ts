@@ -50,7 +50,7 @@ describe('dropdown-item', () => {
     expect($blink.exists()).toBe(true)
   })
 
-  it('child is tag prefers Blink over button', () => {
+  it('child is tag prefers BLink over button', () => {
     const wrapper = mount(BDropdownItem, {
       props: {to: '/abc'},
     })

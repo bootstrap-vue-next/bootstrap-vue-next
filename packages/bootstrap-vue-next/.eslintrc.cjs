@@ -15,7 +15,7 @@ module.exports = defineConfig({
     ecmaVersion: 2020,
   },
   rules: {
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-non-null-assertion': 'error',
     'prettier/prettier': [
       'warn',
@@ -23,7 +23,7 @@ module.exports = defineConfig({
         endOfLine: 'auto',
       },
     ],
-    'no-alert': 'warn',
+    'no-alert': 'error',
     'no-console': 'error',
     'no-debugger': 'warn',
     'arrow-body-style': 'warn',
