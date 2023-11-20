@@ -83,6 +83,7 @@ export default defineComponent({
     const ariaDescribedby: string | null = null as string | null
     const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getAlignClasses = (props: any, prefix: string) =>
       breakPoints.reduce((result: string[], breakpoint) => {
         const suffix = suffixPropName(breakpoint === 'xs' ? '' : breakpoint, `${prefix}Align`)
@@ -96,7 +97,9 @@ export default defineComponent({
         return result
       }, [])
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getColProps = (props: any, prefix: string) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       breakPoints.reduce((result: any, breakpoint: string) => {
         const suffix = suffixPropName(breakpoint === 'xs' ? '' : breakpoint, `${prefix}Cols`)
         let propValue = props[suffix]
@@ -126,15 +129,15 @@ export default defineComponent({
         return result
       }, {})
 
-    const content = ref()
+    const content = ref<HTMLElement | null>(null)
 
     // Sets the `aria-describedby` attribute on the input if `labelFor` is set
     // Optionally accepts a string of Ids to remove as the second parameter
     // Preserves any `aria-describedby` value(s) user may have on input
     const updateAriaDescribedby = (newValue: string | null, oldValue: string | null = null) => {
-      if (IS_BROWSER && props.labelFor) {
+      if (IS_BROWSER && props.labelFor && content.value !== null) {
         // We need to escape `labelFor` since it can be user-provided
-        const $input = select(`#${cssEscape(props.labelFor)}`, content)
+        const $input = select(`#${cssEscape(props.labelFor)}`, content.value)
         if ($input) {
           const attr = 'aria-describedby'
           const newIds = (newValue || '').split(RX_SPACE_SPLIT)
@@ -193,21 +196,17 @@ export default defineComponent({
 
     const onLegendClick = (event: MouseEvent) => {
       // Don't do anything if `labelFor` is set
-      if (props.labelFor) {
-        return
-      }
+      if (props.labelFor || content.value === null) return
 
       const {target} = event
       const tagName = target ? (target as HTMLElement).tagName : ''
 
       // If clicked an interactive element inside legend,
       // we just let the default happen
-      if (LEGEND_INTERACTIVE_ELEMENTS.indexOf(tagName) !== -1) {
-        return
-      }
+      if (LEGEND_INTERACTIVE_ELEMENTS.indexOf(tagName) !== -1) return
 
       // If only a single input, focus it, emulating label behaviour
-      const inputs = selectAll(INPUT_SELECTOR, content).filter(isVisible)
+      const inputs = selectAll(INPUT_SELECTOR, content.value).filter(isVisible)
       if (inputs.length === 1) {
         attemptFocus(inputs[0])
       }
@@ -237,6 +236,7 @@ export default defineComponent({
     const id = useId()
     const isFieldset = !props.labelFor
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let $label: any = null
     const labelContent = normalizeSlot(SLOT_NAME_LABEL, {}, slots) || props.label
     const labelId = labelContent ? getId('_BV_label_') : null

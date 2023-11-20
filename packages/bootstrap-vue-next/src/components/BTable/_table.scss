@@ -94,8 +94,8 @@
   }
 }
 
-.table.b-table[aria-busy=true] {
-  opacity:.55
+.table.b-table[aria-busy="true"] {
+  opacity: 0.55;
 }
 
 @supports (position: sticky) {
@@ -169,16 +169,6 @@
         border: none;
         padding: 0;
       }
-    }
-  }
-
-  &.b-table-sortable {
-    &.b-table-sort-asc .sorted.b-table-sort-icon::before {
-      content: "▲";
-    }
-
-    &.b-table-sort-desc .sorted.b-table-sort-icon::before {
-      content: "▼";
     }
   }
 }

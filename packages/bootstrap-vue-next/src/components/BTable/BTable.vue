@@ -3,6 +3,7 @@
     v-bind="props"
     :aria-busy="busyBoolean"
     :items="computedDisplayItems"
+    :fields="computedFields"
     :table-class="tableClasses"
     :tbody-tr-class="getRowClasses"
     :field-column-class="getFieldColumnClasses"
@@ -12,68 +13,57 @@
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
-    <template #field-prefix="scope">
-      <slot
-        name="sort-icon"
-        :field="scope.field"
-        :sort-by="sortByModel"
-        :selected="scope.field.key === sortByModel"
-        :is-desc="sortDescBoolean"
-        :direction="sortDescBoolean ? 'desc' : 'asc'"
-      >
-        <span
-          v-if="isSortable && scope.field.sortable"
-          class="b-table-sort-icon"
-          :class="{
-            sorted: scope.field.key === sortByModel,
-            [`sorted-${sortDescBoolean ? 'desc' : 'asc'}`]: scope.field.key === sortByModel,
-          }"
-        />
-      </slot>
-    </template>
-    <template #thead-tr-prefix>
-      <BTh
-        v-if="addSelectableCell"
-        class="b-table-selection-column"
-        :class="{
-          'b-table-sticky-column': stickySelectBoolean,
-        }"
-      >
-        <slot name="select-head">
-          {{ typeof selectHead === 'boolean' ? 'Selected' : selectHead }}
-        </slot>
-      </BTh>
-    </template>
-    <template #tbody-tr-prefix="scope">
-      <BTd
-        v-if="addSelectableCell"
-        class="b-table-selection-column"
-        :class="{
-          'b-table-sticky-column': stickySelectBoolean,
-        }"
-      >
-        <slot name="select-cell">
-          <span
-            class="b-table-selection-icon"
-            :class="
-              selectedItemsSetUtilities.has(scope.item)
-                ? `text-${props.selectionVariant} selected`
-                : ''
-            "
+    <template #head()="scope">
+      {{ getTableFieldHeadLabel(scope.field) }}
+      <template v-if="isSortable && scope.field.sortable && noSortableIconBoolean === false">
+        <slot v-if="!sortDescBoolean" v-bind="{...scope}" name="sortAsc">
+          <svg
+            :style="getIconStyle(scope.field)"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-up-short"
+            viewBox="0 0 16 16"
+            aria-hidden
           >
-            🗹
-          </span>
+            <path
+              fill-rule="evenodd"
+              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
+            />
+          </svg>
         </slot>
-      </BTd>
+        <slot v-else v-bind="{...scope}" name="sortDesc">
+          <svg
+            :style="getIconStyle(scope.field)"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-down-short"
+            viewBox="0 0 16 16"
+            aria-hidden
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+        </slot>
+      </template>
     </template>
     <template #custom-body="scope">
       <BTr v-if="busyBoolean" class="b-table-busy-slot" :class="getBusyRowClasses">
         <BTd :colspan="scope.fields.length">
           <slot name="table-busy">
-            <div class="d-flex align-items-center justify-content-center gap-2">
-              <BSpinner class="align-middle" />
-              <strong>{{ busyLoadingText }}</strong>
-            </div>
+            <BOverlay show>
+              <template #overlay>
+                <div class="d-flex align-items-center gap-2 mt-5">
+                  <BSpinner />
+                  <strong>{{ busyLoadingText }}</strong>
+                </div>
+              </template>
+            </BOverlay>
           </slot>
         </BTd>
       </BTr>
@@ -83,9 +73,8 @@
 
 <script setup lang="ts">
 import {useOffsetPagination, useToNumber, useVModel} from '@vueuse/core'
-import {computed, onMounted, ref, toRef, useSlots, watch} from 'vue'
+import {computed, onMounted, ref, type StyleValue, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
-import {isEmptySlot} from '../../utils'
 import type {
   Booleanish,
   BTableLiteProps,
@@ -98,13 +87,15 @@ import type {
   TableItem,
 } from '../../types'
 import BSpinner from '../BSpinner.vue'
+import BOverlay from '../BOverlay/BOverlay.vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
-import BTh from './BTh.vue'
 import BTr from './BTr.vue'
+import {getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
+// TODO sort props list alphabetically when everything is done
 const props = withDefaults(
   defineProps<
     {
@@ -149,9 +140,11 @@ const props = withDefaults(
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
       selectedItems?: TableItem[]
+      noSortableIcon?: Booleanish
     } & Omit<BTableLiteProps, 'tableClass'>
   >(),
   {
+    noSortableIcon: false,
     perPage: Infinity,
     sortBy: undefined,
     filter: undefined,
@@ -244,8 +237,6 @@ const emit = defineEmits<{
   'update:sortBy': [value: string]
 }>()
 
-const slots = useSlots()
-
 const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
 const busyModel = useVModel(props, 'busy', emit, {passive: true})
 const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
@@ -302,7 +293,7 @@ const noProviderPagingBoolean = useBooleanish(() => props.noProviderPaging)
 const noProviderSortingBoolean = useBooleanish(() => props.noProviderSorting)
 const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering)
 const selectableBoolean = useBooleanish(() => props.selectable)
-const stickySelectBoolean = useBooleanish(() => props.stickySelect)
+const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
 
 const perPageNumber = useToNumber(() => props.perPage)
 const currentPageNumber = useToNumber(() => props.currentPage)
@@ -310,9 +301,6 @@ const currentPageNumber = useToNumber(() => props.currentPage)
 const isFilterableTable = toRef(() => !!props.filter)
 const usesProvider = toRef(() => props.provider !== undefined)
 const isSelecting = toRef(() => selectedItemsToSet.value.size > 0)
-const addSelectableCell = toRef(
-  () => selectableBoolean.value && (!!props.selectHead || !isEmptySlot(slots.selectHead))
-)
 
 const isSortable = computed(
   () =>
@@ -320,14 +308,31 @@ const isSortable = computed(
     props.fields.some((field) => (typeof field === 'string' ? false : field.sortable))
 )
 
+const computedFields = computed<TableField[]>(() =>
+  props.fields.map((el) =>
+    typeof el === 'string'
+      ? el
+      : {
+          ...el,
+          thAttr: {
+            'aria-sort':
+              isSortable.value === false
+                ? undefined
+                : sortByModel.value !== el.key
+                ? 'none'
+                : sortDescBoolean.value === true
+                ? 'descending'
+                : 'ascending',
+            ...el.thAttr,
+          },
+        }
+  )
+)
+
 const tableClasses = computed(() => ({
-  'b-table-sortable': isSortable.value,
-  'b-table-sort-desc': isSortable.value && sortDescBoolean.value === true,
-  'b-table-sort-asc': isSortable.value && sortDescBoolean.value === false,
   'b-table-busy': busyBoolean.value,
   'b-table-selectable': selectableBoolean.value,
-  [`b-table-select-${props.selectMode}`]: selectableBoolean.value,
-  'b-table-selecting user-select-none': selectableBoolean.value && isSelecting.value,
+  'user-select-none': selectableBoolean.value && isSelecting.value,
 }))
 // All three of these are similar, even though the two following are not computeds
 const getBusyRowClasses = computed(() => [
@@ -342,6 +347,10 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
     'b-table-sortable-column': isSortable.value && field.sortable,
   },
 ]
+// TODO this class has issues if the table has a variant already applied
+// Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
+// But functional tbodyTrAttrs are not supported yet
+// Also the stuff for resolving functions could probably be made a util
 const getRowClasses = (item: TableItem | null, type: string) => [
   {
     [`selected table-${props.selectionVariant}`]:
@@ -353,6 +362,8 @@ const getRowClasses = (item: TableItem | null, type: string) => [
       : props.tbodyTrClass
     : null,
 ]
+const getIconStyle = (field: TableFieldObject): StyleValue =>
+  sortByModel.value !== field.key ? {opacity: 0.5} : {}
 
 const computedItems = computed<TableItem[]>(() => {
   const sortItems = (items: TableItem[]) => {
@@ -362,7 +373,7 @@ const computedItems = computed<TableItem[]>(() => {
       return items
     }
 
-    const sortField = props.fields.find((el) => {
+    const sortField = computedFields.value.find((el) => {
       if (typeof el === 'string') return false
       return el.key === sortKey
     })
@@ -393,8 +404,7 @@ const computedItems = computed<TableItem[]>(() => {
 
   const filterItems = (items: TableItem[]) =>
     items.filter((item) =>
-      Object.entries(item).some((item) => {
-        const [key, val] = item
+      Object.entries(item).some(([key, val]) => {
         if (!val || key[0] === '_' || !props.filterable?.includes(key)) return false
         const itemValue: string =
           typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
@@ -421,10 +431,12 @@ const computedItems = computed<TableItem[]>(() => {
   return mappedItems
 })
 
+// The benefit of this is that it doesn't allow you a page out of bounds even if the user does it manually
 const {currentPage: resolvedCurrentPage, currentPageSize: resolvedCurrentPageSize} =
   useOffsetPagination({
     total: () => computedItems.value.length,
     page: currentPageNumber,
+    // If its zero, it does all
     pageSize: () => perPageNumber.value || Infinity,
   })
 
@@ -505,12 +517,21 @@ const handleFieldSorting = (field: TableField) => {
 
   const fieldKey = typeof field === 'string' ? field : field.key
   const fieldSortable = typeof field === 'string' ? false : field.sortable
-  if (isSortable.value === true && fieldSortable === true) {
-    const sortDesc = !sortDescBoolean.value
+
+  if (!(isSortable.value === true && fieldSortable === true)) return
+
+  if (sortByModel.value !== fieldKey) {
     sortByModel.value = fieldKey
-    sortDescModel.value = sortDesc
-    emit('sorted', fieldKey, sortDesc)
+    sortDescModel.value = false
+  } else {
+    if (sortDescBoolean.value === false) {
+      sortDescModel.value = true
+    } else {
+      sortByModel.value = undefined
+      sortDescModel.value = false
+    }
   }
+  emit('sorted', fieldKey, sortByModel.value === undefined ? false : !sortDescBoolean.value)
 }
 
 const onFieldHeadClick = (
@@ -524,7 +545,7 @@ const onFieldHeadClick = (
 }
 
 const callItemsProvider = async () => {
-  if (!usesProvider.value || !props.provider || busyBoolean.value) return
+  if (!usesProvider.value || props.provider === undefined || busyBoolean.value) return
   busyModel.value = true
   const response = props.provider({
     currentPage: resolvedCurrentPage.value,
@@ -537,12 +558,9 @@ const callItemsProvider = async () => {
     const items = response instanceof Promise ? await response : response
 
     if (items === undefined) return
-
     internalItems.value = items
   } finally {
-    if (busyBoolean.value) {
-      busyModel.value = false
-    }
+    busyModel.value = false
   }
 }
 
@@ -562,23 +580,21 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
   if (val === oldVal) return
 
   //stop provide when paging
-  const inNoProvider = (key: NoProviderTypes) => props.noProvider && props.noProvider.includes(key)
-  const notifyFiltered = !['currentPage', 'perPage'].includes(prop)
+  const inNoProvider = (key: NoProviderTypes) => props.noProvider?.includes(key) === true
   const noProvideWhenPaging =
-    ['currentPage', 'perPage'].includes(prop) &&
+    (prop === 'currentPage' || prop === 'perPage') &&
     (inNoProvider('paging') || noProviderPagingBoolean.value === true)
   const noProvideWhenFiltering =
-    ['filter'].includes(prop) &&
-    (inNoProvider('filtering') || noProviderFilteringBoolean.value === true)
+    prop === 'filter' && (inNoProvider('filtering') || noProviderFilteringBoolean.value === true)
   const noProvideWhenSorting =
-    ['sortBy', 'sortDesc'].includes(prop) &&
+    (prop === 'sortBy' || prop === 'sortDesc') &&
     (inNoProvider('sorting') || noProviderSortingBoolean.value === true)
 
   if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) return
 
   await callItemsProvider()
 
-  if (notifyFiltered) notifyFilteredItems()
+  if (!(prop === 'currentPage' || prop === 'perPage')) notifyFilteredItems()
 }
 
 watch(

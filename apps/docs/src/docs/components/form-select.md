@@ -189,14 +189,7 @@ If both `html` and `text` are provided, `html` will take precedence. Only basic/
 supported in the `html` field (components will not work). Note that not all browsers will render
 inline html (i.e. `<i>`, `<strong>`, etc.) inside `<option>` elements of a `<select>`.
 
-<BAlert variant="danger" :model-value="true" class="mt-4">
-  <strong>Be cautious</strong> of placing user supplied content in the <code>html</code> field,
-  as it may make you vulnerable to
-  <a class="alert-link" href="https://en.wikipedia.org/wiki/Cross-site_scripting">
-  <abbr title="Cross Site Scripting Attacks">XSS attacks</abbr></a>, if you do not first
-  <a class="alert-link" href="https://en.wikipedia.org/wiki/HTML_sanitization">sanitize</a> the
-  user supplied string.
-</BAlert>
+<CrossSiteScriptingWarning />
 
 ### Options as an array
 
@@ -561,6 +554,7 @@ When `state` is set to `false`, aria-invalid will also be set to true.
 import {data} from '../../data/components/formSelect.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
+import CrossSiteScriptingWarning from '../../components/CrossSiteScriptingWarning.vue'
 import {BFormSelectOptionGroup, BFormSelectOption, BCard, BCardBody, BFormSelect, BAlert, BBadge} from 'bootstrap-vue-next'
 import {ref, computed} from 'vue'
 

@@ -6,7 +6,7 @@ import type {Booleanish} from './Booleanish'
 import type {Breakpoint} from './Breakpoint'
 import type {ButtonType} from './ButtonType'
 import type {ButtonVariant} from './ButtonVariant'
-import type {ClassValue} from './ClassValue'
+import type {ClassValue} from './AnyValuedAttributes'
 import type {ColorExtendables} from './ColorExtendables'
 import type {ColorVariant} from './ColorVariant'
 import type {LinkTarget} from './LinkTarget'
@@ -113,10 +113,12 @@ export interface BTableLiteProps extends BTableSimpleProps {
   headVariant?: ColorVariant | null
   items?: TableItem[]
   labelStacked?: Booleanish
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
   primaryKey?: string
   showEmpty?: Booleanish
   tbodyClass?: ClassValue
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tbodyTrAttr?: any
   // tbodyTransitionHandlers
   // tbodyTransitionProps

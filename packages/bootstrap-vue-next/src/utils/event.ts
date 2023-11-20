@@ -3,6 +3,9 @@ import {isObject} from './inspect'
 
 // Normalize event options based on support of passive option
 // Exported only for testing purposes
+/**
+ * @deprecated
+ */
 export const parseEventOptions = (
   options: boolean | EventListenerOptions | undefined
 ): boolean | EventListenerOptions | undefined => {
@@ -14,6 +17,9 @@ export const parseEventOptions = (
 }
 
 // Attach an event listener to an element
+/**
+ * @deprecated
+ */
 export const eventOn = (
   el: Element,
   eventName: string,
@@ -26,6 +32,9 @@ export const eventOn = (
 }
 
 // Remove an event listener from an element
+/**
+ * @deprecated
+ */
 export const eventOff = (
   el: Element,
   eventName: string,
@@ -39,12 +48,18 @@ export const eventOff = (
 
 // Utility method to add/remove a event listener based on first argument (boolean)
 // It passes all other arguments to the `eventOn()` or `eventOff` method
+/**
+ * @deprecated
+ */
 export const eventOnOff = (on: boolean, eventParams: Parameters<typeof eventOff>) => {
   const method = on ? eventOn : eventOff
   method(...eventParams)
 }
 
 // Utility method to prevent the default event handling and propagation
+/**
+ * @deprecated
+ */
 export const stopEvent = (
   event: Event,
   {preventDefault = true, propagation = true, immediatePropagation = false} = {}

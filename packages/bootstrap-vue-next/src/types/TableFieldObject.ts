@@ -1,8 +1,9 @@
 import type {StyleValue} from 'vue'
-import type {ClassValue} from './ClassValue'
+import type {ClassValue} from './AnyValuedAttributes'
 import type {LiteralUnion} from './LiteralUnion'
 import type {ColorVariant} from './ColorVariant'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableFieldObjectFormatter<T = any> =
   | string
   | ((value: unknown, key?: LiteralUnion<keyof T>, item?: T) => string)

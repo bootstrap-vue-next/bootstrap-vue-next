@@ -50,6 +50,7 @@ defineSlots<{
 
 // TODO this needs to be redone to fit the structure of BFormCheckboxGroup
 const formOptions = computed(() =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   normalizeOptions(props.options as any[], 'BFormSelectOptionGroup', props)
 )
 </script>

@@ -423,7 +423,7 @@ component reference (i.e. assign a `ref` to your `<BFormTextarea ref="foo" ...>`
 
 <script setup lang="ts">
 const textSelectEx = ref('')
-const textArea = ref<HTMLElement>(null)
+const textArea = ref<HTMLElement | null>(null)
 
 const selectText = () => {
   textArea.value.input.select()
@@ -481,7 +481,7 @@ const formatter = (value) => value.toLowerCase()
 const textReadOnly = "This is some text.\nIt is read only and does not look like an input."
 
 const textSelectEx = ref('')
-const textArea = ref<HTMLElement>(null)
+const textArea = ref<HTMLElement | null>(null)
 const selectText = () => {
   textArea.value.input.select()
 }

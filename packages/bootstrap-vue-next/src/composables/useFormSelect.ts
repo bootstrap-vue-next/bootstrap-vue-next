@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const _getNested = (obj: any, path: string): any => {
   if (!obj) return obj
   if (path in obj) return obj[path]
@@ -8,9 +9,11 @@ const _getNested = (obj: any, path: string): any => {
 }
 
 const _normalizeOption = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   option: any,
   key: string | null = null,
   componentName: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props: any
 ) => {
   if (Object.prototype.toString.call(option) === '[object Object]') {
@@ -42,9 +45,11 @@ const _normalizeOption = (
 }
 
 const normalizeOptions = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any[],
   componentName: string,
   props: Record<string, unknown>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
   if (Array.isArray(options)) {
     return options.map((option) => _normalizeOption(option, null, componentName, props))
@@ -55,6 +60,7 @@ const normalizeOptions = (
     )
 
     return Object.keys(options).map((key: string) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const el: any = options[key]
       switch (typeof el) {
         case 'object':

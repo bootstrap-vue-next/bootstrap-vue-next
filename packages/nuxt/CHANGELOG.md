@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.15.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.14.10...nuxt-v0.15.0) (2023-11-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BImg:** rounded none by default
+* **BOverlay:** rounded none by default
+
+### Features
+
+* **BFormCheckbox:** use a different value/uncheckedValue system under the hood streamlining the code and process ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* **BFormSpinbutton:** remove render functions, fix docs ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* **BTable:** selectedItems becomes a v-modelable prop ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* **BTable:** WIP fix reactivity engine ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* **BToaster:** expose show method ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* WIP table improvements ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+
+
+### Bug Fixes
+
+* BFormRadio use native [@change](https://github.com/change) & [@input](https://github.com/input) events ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* **BImg:** rounded none by default ([f259f78](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f259f78cbaef9bb56a813351a64a52c315a56806))
+* **BOverlay:** rounded none by default ([f259f78](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f259f78cbaef9bb56a813351a64a52c315a56806))
+* **BTable:** selectModel default value single =&gt; multi ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* **Directives:** use TS satisfies over TS as -- surprisingly had an affect ([fc1edfb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fc1edfb672c665c320618a85b16a90c96c798b8d))
+* **nuxt:** do not transformasseturls for img -- Fixed by nuxt ([f259f78](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f259f78cbaef9bb56a813351a64a52c315a56806))
+* **nuxt:** resolution of img not working fixes [#1539](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1539) ([ff63f2c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ff63f2c490e3068f61760e5ba59b283c40acedc7))
+* **useModal:** not working due to registry value not existing when code ran ([f259f78](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f259f78cbaef9bb56a813351a64a52c315a56806))
+
+
+### Performance Improvements
+
+* **useModalManager:** use shallowRef for stack & registry ([f259f78](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f259f78cbaef9bb56a813351a64a52c315a56806))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.15.0
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.15.0
+
 ## [0.14.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.14.9...nuxt-v0.14.10) (2023-10-16)
 
 ### Miscellaneous Chores
