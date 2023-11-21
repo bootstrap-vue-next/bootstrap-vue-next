@@ -60,11 +60,11 @@ import {
   autoUpdate,
   type Boundary,
   flip,
-  offset as floatingOffset,
   type Middleware,
+  offset as offsetMiddleware,
   type RootBoundary,
   shift,
-  size,
+  size as sizeMiddleware,
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
@@ -231,7 +231,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     typeof props.offset === 'string' || typeof props.offset === 'number'
       ? offsetToNumber.value
       : props.offset
-  const arr: Middleware[] = [floatingOffset(localOffset)]
+  const arr: Middleware[] = [offsetMiddleware(localOffset)]
   if (noFlipBoolean.value === false) {
     arr.push(
       flip({
@@ -252,7 +252,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   }
   if (noSizeBoolean.value === false) {
     arr.push(
-      size({
+      sizeMiddleware({
         boundary: boundary.value,
         rootBoundary: rootBoundary.value,
         padding: props.boundaryPadding,

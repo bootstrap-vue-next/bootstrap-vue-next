@@ -72,7 +72,7 @@ import {
   type Placement as OriginalPlacement,
   type RootBoundary,
   shift,
-  size,
+  size as sizeMiddleware,
   useFloating,
 } from '@floating-ui/vue'
 import {
@@ -263,7 +263,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   arr.push(arrowMiddleware({element: arrow, padding: 10}))
   if (noSizeBoolean.value === false) {
     arr.push(
-      size({
+      sizeMiddleware({
         boundary: boundary.value,
         rootBoundary: rootBoundary.value,
         padding: props.boundaryPadding,
