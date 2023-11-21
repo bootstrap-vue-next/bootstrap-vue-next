@@ -122,6 +122,26 @@
     </BRow>
     <BRow>
       <BCol>
+        <h4 class="m-2">Size</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BDropdown dropup text="Size enabled" class="m-2">
+          <BDropdownItem v-for="(_, i) in Array(200)" :key="i" href="#"
+            >Action {{ i }}</BDropdownItem
+          >
+        </BDropdown>
+
+        <BDropdown dropup text="Size disabled" class="m-2" no-size>
+          <BDropdownItem v-for="(_, i) in Array(200)" :key="i" href="#"
+            >Action {{ i }}</BDropdownItem
+          >
+        </BDropdown>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
         <h4 class="m-2">Misc</h4>
       </BCol>
     </BRow>

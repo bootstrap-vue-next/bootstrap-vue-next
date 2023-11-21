@@ -42,8 +42,8 @@
         v-if="!lazyBoolean || modelValueBoolean"
         v-show="lazyBoolean || modelValueBoolean"
         ref="floating"
-        :style="floatingStyles"
-        class="dropdown-menu show"
+        :style="[floatingStyles, sizeStyles]"
+        class="dropdown-menu show overflow-auto"
         :class="menuClass"
         :aria-labelledby="computedId"
         :role="role"
@@ -64,6 +64,7 @@ import {
   type Middleware,
   type RootBoundary,
   shift,
+  size,
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
@@ -96,6 +97,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   noCaret: false,
   noFlip: false,
   noShift: false,
+  noSize: false,
   offset: 0,
   role: 'menu',
   size: 'md',
@@ -149,6 +151,7 @@ const splitBoolean = useBooleanish(() => props.split)
 const noCaretBoolean = useBooleanish(() => props.noCaret)
 const noFlipBoolean = useBooleanish(() => props.noFlip)
 const noShiftBoolean = useBooleanish(() => props.noShift)
+const noSizeBoolean = useBooleanish(() => props.noSize)
 const lazyBoolean = useBooleanish(() => props.lazy)
 const splitDisabledBoolean = useBooleanish(() => props.splitDisabled)
 
@@ -218,6 +221,7 @@ const floatingPlacement = computed(() =>
     alignEnd: endBoolean.value,
   })
 )
+const sizeStyles = ref<{maxHeight?: string; maxWidth?: string}>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
@@ -240,6 +244,19 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       shift({
         boundary: boundary.value,
         rootBoundary: rootBoundary.value,
+      })
+    )
+  }
+  if (noSizeBoolean.value === false) {
+    arr.push(
+      size({
+        boundary: boundary.value,
+        apply({availableWidth, availableHeight}) {
+          sizeStyles.value = {
+            maxHeight: availableHeight ? `${availableHeight}px` : undefined,
+            maxWidth: availableWidth ? `${availableWidth}px` : undefined,
+          }
+        },
       })
     )
   }

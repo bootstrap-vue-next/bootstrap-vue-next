@@ -55,6 +55,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   noCaret: false,
   noFlip: false,
   noShift: false,
+  noSize: false,
   offset: 0,
   role: 'menu',
   size: 'md',

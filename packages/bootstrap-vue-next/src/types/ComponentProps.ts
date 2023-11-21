@@ -169,7 +169,7 @@ export interface BDropdownProps {
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
   disabled?: Booleanish
   dropend?: Booleanish
-  dropdown?: Booleanish
+  dropup?: Booleanish
   dropstart?: Booleanish
   end?: Booleanish
   floatingMiddleware?: Middleware[]
@@ -181,6 +181,7 @@ export interface BDropdownProps {
   noCaret?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
+  noSize?: Booleanish
   offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
   role?: string
   size?: Size
