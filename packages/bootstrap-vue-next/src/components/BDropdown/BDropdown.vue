@@ -81,6 +81,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
   autoClose: true,
   boundary: 'clippingAncestors',
+  boundaryPadding: undefined,
   center: false,
   container: undefined,
   disabled: false,
@@ -236,6 +237,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       flip({
         boundary: boundary.value,
         rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
       })
     )
   }
@@ -244,6 +246,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       shift({
         boundary: boundary.value,
         rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
       })
     )
   }
@@ -251,6 +254,8 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     arr.push(
       size({
         boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
             maxHeight: availableHeight ? `${availableHeight}px` : undefined,

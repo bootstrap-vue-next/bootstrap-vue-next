@@ -63,12 +63,14 @@ import {
   arrow as arrowMiddleware,
   autoPlacement,
   autoUpdate,
+  type Boundary,
   flip,
   hide as hideMiddleware,
   inline as inlineMiddleware,
   type Middleware,
   offset as offsetMiddleware,
   type Placement as OriginalPlacement,
+  type RootBoundary,
   shift,
   size,
   useFloating,
@@ -102,6 +104,8 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<BPopoverProps>(), {
+  boundary: 'clippingAncestors',
+  boundaryPadding: undefined,
   click: false,
   container: undefined,
   content: undefined,
@@ -202,6 +206,13 @@ const sanitizedContent = computed(() =>
 const isAutoPlacement = toRef(() => props.placement.startsWith('auto'))
 const offsetNumber = useToNumber(() => props.offset ?? NaN)
 
+const boundary = computed<Boundary | undefined>(() =>
+  props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
+)
+const rootBoundary = computed<RootBoundary | undefined>(() =>
+  props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
+)
+
 const sizeStyles = ref<{maxHeight?: string; maxWidth?: string}>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
@@ -210,20 +221,41 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   const off = props.offset !== null ? offsetNumber.value : tooltipBoolean.value ? 0 : 10
   const arr: Middleware[] = [offsetMiddleware(off)]
   if (noFlipBoolean.value === false && !isAutoPlacement.value) {
-    arr.push(flip())
+    arr.push(
+      flip({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+      })
+    )
   }
   if (isAutoPlacement.value) {
     arr.push(
       autoPlacement({
         alignment: (props.placement.split('-')[1] as Alignment) || undefined,
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
       })
     )
   }
   if (noShiftBoolean.value === false) {
-    arr.push(shift())
+    arr.push(
+      shift({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+      })
+    )
   }
   if (noHideBoolean.value === false) {
-    arr.push(hideMiddleware({padding: 10}))
+    arr.push(
+      hideMiddleware({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+      })
+    )
   }
   if (inlineBoolean.value === true) {
     arr.push(inlineMiddleware())
@@ -232,8 +264,9 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   if (noSizeBoolean.value === false) {
     arr.push(
       size({
-        // boundary: boundary.value,
-        // rootBoundary: rootBoundary.value,
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
             maxHeight: availableHeight ? `${availableHeight}px` : undefined,
