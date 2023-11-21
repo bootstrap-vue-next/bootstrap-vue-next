@@ -245,6 +245,7 @@ export interface BPopoverProps {
   noFade?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
+  noSize?: Booleanish
   noninteractive?: Booleanish
   offset?: number | string | null
   placement?: PopoverPlacement

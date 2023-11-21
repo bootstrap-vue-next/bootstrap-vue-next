@@ -18,34 +18,41 @@
         :style="arrowStyle"
         data-popper-arrow
       />
-      <template v-if="title || $slots.title">
-        <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'">
-          <slot name="title">
-            {{ title }}
-          </slot>
-        </div>
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          v-else
-          :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
-          v-html="sanitizedTitle"
-        />
-        <!-- eslint-enable vue/no-v-html -->
-      </template>
-      <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
-        <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
-          <slot>
-            {{ content }}
-          </slot>
-        </div>
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          v-else
-          :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
-          v-html="sanitizedContent"
-        />
-        <!-- eslint-enable vue/no-v-html -->
-      </template>
+      <div class="overflow-auto" :style="sizeStyles">
+        <template v-if="title || $slots.title">
+          <div
+            v-if="!isHtml"
+            class="position-sticky top-0"
+            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+          >
+            <slot name="title">
+              {{ title }}
+            </slot>
+          </div>
+          <!-- eslint-disable vue/no-v-html -->
+          <div
+            v-else
+            class="position-sticky top-0"
+            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+            v-html="sanitizedTitle"
+          />
+          <!-- eslint-enable vue/no-v-html -->
+        </template>
+        <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
+          <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
+            <slot>
+              {{ content }}
+            </slot>
+          </div>
+          <!-- eslint-disable vue/no-v-html -->
+          <div
+            v-else
+            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
+            v-html="sanitizedContent"
+          />
+          <!-- eslint-enable vue/no-v-html -->
+        </template>
+      </div>
     </div>
   </Teleport>
 </template>
@@ -63,6 +70,7 @@ import {
   offset as offsetMiddleware,
   type Placement as OriginalPlacement,
   shift,
+  size,
   useFloating,
 } from '@floating-ui/vue'
 import {
@@ -111,6 +119,7 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   noFlip: false,
   noHide: false,
   noShift: false,
+  noSize: false,
   noninteractive: false,
   offset: null,
   placement: 'top',
@@ -164,6 +173,7 @@ const computedId = useId(() => props.id, 'popover')
 const clickBoolean = useBooleanish(() => props.click)
 const manualBoolean = useBooleanish(() => props.manual)
 const noShiftBoolean = useBooleanish(() => props.noShift)
+const noSizeBoolean = useBooleanish(() => props.noSize)
 const noFlipBoolean = useBooleanish(() => props.noFlip)
 const noFadeBoolean = useBooleanish(() => props.noFade)
 const noAutoCloseBoolean = useBooleanish(() => props.noAutoClose)
@@ -192,6 +202,7 @@ const sanitizedContent = computed(() =>
 const isAutoPlacement = toRef(() => props.placement.startsWith('auto'))
 const offsetNumber = useToNumber(() => props.offset ?? NaN)
 
+const sizeStyles = ref<{maxHeight?: string; maxWidth?: string}>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
@@ -218,6 +229,20 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     arr.push(inlineMiddleware())
   }
   arr.push(arrowMiddleware({element: arrow, padding: 10}))
+  if (noSizeBoolean.value === false) {
+    arr.push(
+      size({
+        // boundary: boundary.value,
+        // rootBoundary: rootBoundary.value,
+        apply({availableWidth, availableHeight}) {
+          sizeStyles.value = {
+            maxHeight: availableHeight ? `${availableHeight}px` : undefined,
+            maxWidth: availableWidth ? `${availableWidth}px` : undefined,
+          }
+        },
+      })
+    )
+  }
   return arr
 })
 
