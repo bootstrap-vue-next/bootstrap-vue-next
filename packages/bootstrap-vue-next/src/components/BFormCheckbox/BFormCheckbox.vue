@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, ref, toRef, watch} from 'vue'
+import {computed, inject, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
 import type {Booleanish, ButtonVariant, CheckboxValue, Size} from '../../types'
 import {checkboxGroupKey, isEmptySlot} from '../../utils'
@@ -124,25 +124,17 @@ const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
   get: () => parentData?.modelValue.value ?? modelValue.value,
-  set: (val: CheckboxValue[] | CheckboxValue | undefined) => {
-    if (val === undefined) return
-    if (parentData !== null && Array.isArray(val)) {
+  set: (newVal) => {
+    if (newVal === undefined) return
+    if (parentData !== null && Array.isArray(newVal)) {
       // The type cast isn't perfect. Array.isArray detects CheckboxValue.unknown[],
       // but since it's parentData, it should always be CheckboxValue[]
       // It doesn't quite work when props.value is an [], but this is more of a Vue issue
-      parentData.modelValue.value = val as CheckboxValue[]
+      parentData.modelValue.value = newVal as CheckboxValue[]
       return
     }
-    modelValue.value = val
+    modelValue.value = newVal as CheckboxValue
   },
-})
-
-watch(localValue, (newVal) => {
-  // Sync up the internal modalValue to parentData
-  // Can't be in localValue. If you have two options in a checkbox group, one changes, the setter in the other is not triggered
-  if (parentData !== null) {
-    modelValue.value = newVal
-  }
 })
 
 const computedRequired = toRef(
