@@ -123,6 +123,13 @@ provide(checkboxGroupKey, {
   disabled: disabledBoolean,
 })
 
+watch(modelValue, (newValue) => {
+  emit('input', newValue)
+  nextTick(() => {
+    emit('change', newValue)
+  })
+})
+
 const normalizeOptions = computed(() =>
   props.options.map((el, ind) =>
     typeof el === 'string' || typeof el === 'number'
@@ -159,13 +166,6 @@ const classesObject = computed(() => ({
 }))
 const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)
-
-watch(modelValue, (newValue) => {
-  emit('input', newValue)
-  nextTick(() => {
-    emit('change', newValue)
-  })
-})
 
 defineExpose({
   blur: () => {

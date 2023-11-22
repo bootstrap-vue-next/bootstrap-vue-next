@@ -5,7 +5,6 @@
       v-bind="$attrs"
       ref="input"
       v-model="localValue"
-      :checked="localValue"
       :class="inputClasses"
       type="radio"
       :disabled="disabledBoolean || parentData?.disabled.value"
@@ -27,9 +26,9 @@
 
 <script setup lang="ts">
 import {useFocus, useVModel} from '@vueuse/core'
-import {computed, inject, nextTick, ref, toRef, watch} from 'vue'
+import {computed, inject, ref, toRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses, useBooleanish, useId} from '../../composables'
-import type {Booleanish, ButtonVariant, Size} from '../../types'
+import type {Booleanish, ButtonVariant, RadioValue, Size} from '../../types'
 import {isEmptySlot, radioGroupKey} from '../../utils'
 import RenderComponentOrSkip from '../RenderComponentOrSkip.vue'
 
@@ -49,13 +48,13 @@ const props = withDefaults(
     form?: string
     id?: string
     inline?: Booleanish
-    modelValue?: boolean | string | unknown[] | Record<string, unknown> | number | null
+    modelValue?: RadioValue
     name?: string
     plain?: Booleanish
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
-    value?: boolean | string | unknown[] | Record<string, unknown> | number | null
+    value?: RadioValue
   }>(),
   {
     ariaLabel: undefined,
@@ -79,11 +78,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
-  'input': [value: boolean | string | unknown[] | Record<string, unknown> | number | null]
-  'update:modelValue': [
-    value: boolean | string | unknown[] | Record<string, unknown> | number | null,
-  ]
+  'change': [value: RadioValue]
+  'input': [value: RadioValue]
+  'update:modelValue': [value: RadioValue]
 }>()
 
 const slots = defineSlots<{
@@ -115,31 +112,15 @@ const {focused} = useFocus(input, {
 const hasDefaultSlot = toRef(() => !isEmptySlot(slots.default))
 
 const localValue = computed({
-  get: () =>
-    parentData !== null
-      ? JSON.stringify(parentData.modelValue.value) === JSON.stringify(props.value)
-      : JSON.stringify(modelValue.value) === JSON.stringify(props.value),
-  set: (newValue: string | boolean | unknown[] | Record<string, unknown> | number | null) => {
-    const updateValue =
-      newValue ||
-      newValue === '' ||
-      newValue === 0 ||
-      JSON.stringify(newValue) === JSON.stringify(props.value)
-        ? props.value
-        : false
-
-    emit('input', updateValue)
-    modelValue.value = updateValue
-    nextTick(() => {
-      emit('change', updateValue)
-    })
-    if (parentData !== null) parentData.set(props.value)
+  get: () => parentData?.modelValue.value ?? modelValue.value,
+  set: (newValue) => {
+    if (newValue === undefined) return
+    if (parentData !== null) {
+      parentData.modelValue.value = newValue as RadioValue
+      return
+    }
+    modelValue.value = newValue as RadioValue
   },
-})
-
-watch(modelValue, (newValue) => {
-  if (parentData === null || newValue === false) return
-  parentData.set(props.value)
 })
 
 const computedRequired = toRef(

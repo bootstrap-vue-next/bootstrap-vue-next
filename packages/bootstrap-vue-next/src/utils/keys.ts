@@ -4,6 +4,7 @@ import type {
   CheckboxValue,
   ClassValue,
   ColorVariant,
+  RadioValue,
   RadiusElement,
   Size,
   TabType,
@@ -82,10 +83,7 @@ export const checkboxGroupKey: InjectionKey<{
 }> = Symbol('checkboxGroup')
 
 export const radioGroupKey: InjectionKey<{
-  set: (value: string | boolean | unknown[] | Record<string, unknown> | number | null) => void
-  modelValue: Readonly<
-    Ref<string | boolean | readonly unknown[] | Record<string, unknown> | number | null>
-  >
+  modelValue: Ref<RadioValue>
   buttonVariant: Readonly<Ref<ButtonVariant | null>>
   form: Readonly<Ref<string | undefined>>
   name: Readonly<Ref<string>>

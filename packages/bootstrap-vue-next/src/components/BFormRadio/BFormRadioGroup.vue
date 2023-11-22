@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import type {AriaInvalid, Booleanish, ButtonVariant, Size} from '../../types'
-import {computed, nextTick, provide, readonly, ref, toRef} from 'vue'
+import type {AriaInvalid, Booleanish, ButtonVariant, RadioValue, Size} from '../../types'
+import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
 import {radioGroupKey} from '../../utils'
 import BFormRadio from './BFormRadio.vue'
 import {getGroupAttr, getGroupClasses, useBooleanish, useId} from '../../composables'
@@ -37,7 +37,7 @@ const props = withDefaults(
     form?: string
     htmlField?: string
     id?: string
-    modelValue?: string | boolean | unknown[] | Record<string, unknown> | number | null
+    modelValue?: RadioValue
     name?: string
     options?: (string | number | Record<string, unknown>)[]
     plain?: Booleanish
@@ -74,11 +74,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'change': [value: string | boolean | unknown[] | Record<string, unknown> | number | null]
-  'input': [value: string | boolean | unknown[] | Record<string, unknown> | number | null]
-  'update:modelValue': [
-    value: string | boolean | unknown[] | Record<string, unknown> | number | null,
-  ]
+  'change': [value: RadioValue]
+  'input': [value: RadioValue]
+  'update:modelValue': [value: RadioValue]
 }>()
 
 defineSlots<{
@@ -109,14 +107,7 @@ const {focused} = useFocus(element, {
 })
 
 provide(radioGroupKey, {
-  set: (value: string | boolean | unknown[] | Record<string, unknown> | number | null) => {
-    emit('input', value)
-    modelValue.value = value
-    nextTick(() => {
-      emit('change', value)
-    })
-  },
-  modelValue: readonly(modelValue),
+  modelValue,
   buttonVariant: toRef(() => props.buttonVariant),
   form: toRef(() => props.form),
   name: computedName,
@@ -127,6 +118,13 @@ provide(radioGroupKey, {
   inline: toRef(() => !stackedBoolean.value),
   required: requiredBoolean,
   disabled: disabledBoolean,
+})
+
+watch(modelValue, (newValue) => {
+  emit('input', newValue)
+  nextTick(() => {
+    emit('change', newValue)
+  })
 })
 
 const normalizeOptions = computed(() =>
