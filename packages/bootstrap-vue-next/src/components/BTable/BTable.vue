@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import {useOffsetPagination, useToNumber, useVModel} from '@vueuse/core'
+import {useToNumber, useVModel} from '@vueuse/core'
 import {computed, onMounted, ref, type StyleValue, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {
@@ -295,8 +295,8 @@ const noProviderFilteringBoolean = useBooleanish(() => props.noProviderFiltering
 const selectableBoolean = useBooleanish(() => props.selectable)
 const noSortableIconBoolean = useBooleanish(() => props.noSortableIcon)
 
-const perPageNumber = useToNumber(() => props.perPage)
-const currentPageNumber = useToNumber(() => props.currentPage)
+const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
+const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
 
 const isFilterableTable = toRef(() => !!props.filter)
 const usesProvider = toRef(() => props.provider !== undefined)
@@ -432,25 +432,23 @@ const computedItems = computed<TableItem[]>(() => {
 })
 
 // The benefit of this is that it doesn't allow you a page out of bounds even if the user does it manually
-const {currentPage: resolvedCurrentPage, currentPageSize: resolvedCurrentPageSize} =
-  useOffsetPagination({
-    total: () => computedItems.value.length,
-    page: currentPageNumber,
-    // If its zero, it does all
-    pageSize: () => perPageNumber.value || Infinity,
-  })
+// This does not work due to https://github.com/vueuse/vueuse/issues/3542
+// const {currentPage: resolvedCurrentPage, currentPageSize: resolvedCurrentPageSize} =
+//   useOffsetPagination({
+//     total: () => computedItems.value.length,
+//     page: currentPageNumber,
+//     // If its zero, it does all
+//     pageSize: () => perPageNumber.value || Infinity,
+//   })
 
 const computedDisplayItems = computed<TableItem[]>(() => {
-  if (
-    Number.isNaN(resolvedCurrentPageSize.value) ||
-    (usesProvider.value && !noProviderPagingBoolean.value)
-  ) {
+  if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
     return computedItems.value
   }
 
   return computedItems.value.slice(
-    (resolvedCurrentPage.value - 1) * resolvedCurrentPageSize.value,
-    resolvedCurrentPage.value * resolvedCurrentPageSize.value
+    (currentPageNumber.value - 1) * (perPageNumber.value || Infinity),
+    currentPageNumber.value * (perPageNumber.value || Infinity)
   )
 })
 
@@ -548,11 +546,11 @@ const callItemsProvider = async () => {
   if (!usesProvider.value || props.provider === undefined || busyBoolean.value) return
   busyModel.value = true
   const response = props.provider({
-    currentPage: resolvedCurrentPage.value,
+    currentPage: currentPageNumber.value,
     filter: props.filter,
     sortBy: sortByModel.value,
     sortDesc: props.sortDesc,
-    perPage: resolvedCurrentPageSize.value,
+    perPage: perPageNumber.value,
   })
   try {
     const items = response instanceof Promise ? await response : response
@@ -608,10 +606,10 @@ watch(
     }
   }
 )
-watch(resolvedCurrentPage, (val, oldVal) => {
+watch(currentPageNumber, (val, oldVal) => {
   providerPropsWatch('currentPage', val, oldVal)
 })
-watch(resolvedCurrentPageSize, (val, oldVal) => {
+watch(perPageNumber, (val, oldVal) => {
   providerPropsWatch('perPage', val, oldVal)
 })
 watch(sortByModel, (val, oldVal) => {
