@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.15.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.1...bootstrapvuenext-v0.15.2) (2023-11-22)
+
+
+### Features
+
+* expose Toast type ([a2dfbfe](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a2dfbfefe6e9a2de6a79fc3f0b5737ede39c6f11))
+
+
+### Bug Fixes
+
+* **BTable:** current page not working causing no pagination fixes [#1613](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1613) ([9f2ef8b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f2ef8b982e3757044cb9aa6177a3484ca034688))
+
+
+### Performance Improvements
+
+* **BImg:** improve blank img resolution ([84ce349](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/84ce349cf4bbaa5833b1bef4ce67400c0ad783e8))
+
 ## [0.15.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.0...bootstrapvuenext-v0.15.1) (2023-11-20)
 
 
