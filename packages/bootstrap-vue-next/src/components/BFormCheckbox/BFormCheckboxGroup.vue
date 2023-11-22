@@ -162,7 +162,6 @@ const computedClasses = getGroupClasses(classesObject)
 
 watch(modelValue, (newValue) => {
   emit('input', newValue)
-  modelValue.value = newValue
   nextTick(() => {
     emit('change', newValue)
   })
