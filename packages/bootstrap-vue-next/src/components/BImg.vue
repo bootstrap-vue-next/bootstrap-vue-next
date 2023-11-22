@@ -98,9 +98,7 @@ const computedDimentions = computed<{height: number | undefined; width: number |
     if (width === undefined && height !== undefined) {
       return {height, width: height}
     }
-    if (width === undefined && height === undefined) {
-      return {height: 1, width: 1}
-    }
+    return {height: 1, width: 1}
   }
   return {
     width,
