@@ -41,11 +41,6 @@ const props = withDefaults(defineProps<BImgProps>(), {
   // End RadiusElementExtendables props
 })
 
-const BLANK_TEMPLATE =
-  '<svg width="%{w}" height="%{h}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %{w} %{h}" preserveAspectRatio="none">' +
-  '<rect width="100%" height="100%" style="fill:%{f};"></rect>' +
-  '</svg>'
-
 const lazyBoolean = useBooleanish(() => props.lazy)
 const blankBoolean = useBooleanish(() => props.blank)
 const blockBoolean = useBooleanish(() => props.block)
@@ -138,16 +133,8 @@ const computedClasses = computed(() => [
   },
 ])
 
-const makeBlankImgSrc = (
-  width: number | undefined,
-  height: number | undefined,
-  color: string
-): string => {
-  const src = encodeURIComponent(
-    BLANK_TEMPLATE.replace('%{w}', String(width))
-      .replace('%{h}', String(height))
-      .replace('%{f}', color)
-  )
-  return `data:image/svg+xml;charset=UTF-8,${src}`
-}
+const makeBlankImgSrc = (width: number | undefined, height: number | undefined, color: string) =>
+  `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
+    <rect width="100%" height="100%" style="fill:${color};"></rect>
+    </svg>`)}`
 </script>
