@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.3...bootstrapvuenext-v0.15.4) (2023-11-22)
+
+
+### Bug Fixes
+
+* further changes to [#1623](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1623) ([febd812](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/febd81277e538b6926a74f179cc42be7a8fda0bb))
+
 ## [0.15.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.2...bootstrapvuenext-v0.15.3) (2023-11-22)
 
 
