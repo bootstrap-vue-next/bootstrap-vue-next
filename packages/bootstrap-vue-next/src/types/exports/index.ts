@@ -22,6 +22,7 @@ export type {
   TableField,
   TableItem,
   TextColorVariant,
+  Toast,
   TransitionMode,
   VerticalAlign,
 } from '..'
