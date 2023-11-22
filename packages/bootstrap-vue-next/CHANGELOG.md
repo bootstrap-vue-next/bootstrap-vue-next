@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.2...bootstrapvuenext-v0.15.3) (2023-11-22)
+
+
+### Bug Fixes
+
+* **BFormCheckboxGroup:** updates to modelValue being recursive fixes [#1623](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1623) ([7991073](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/799107302f13f822b8663539b2594196b2aab054))
+
 ## [0.15.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.1...bootstrapvuenext-v0.15.2) (2023-11-22)
 
 
