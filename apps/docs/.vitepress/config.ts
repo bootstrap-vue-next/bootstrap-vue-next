@@ -34,4 +34,9 @@ export default defineConfig({
   sitemap: {
     hostname: `https://bootstrap-vue-next.github.io${baseUrl}`,
   },
+  themeConfig: {
+    search: {
+      provider: 'local',
+    },
+  },
 })
