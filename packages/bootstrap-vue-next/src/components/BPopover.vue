@@ -213,7 +213,7 @@ const rootBoundary = computed<RootBoundary | undefined>(() =>
   props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
 )
 
-const sizeStyles = ref<{maxHeight?: string; maxWidth?: string}>({})
+const sizeStyles = ref<CSSProperties>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware

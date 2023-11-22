@@ -66,7 +66,7 @@
           <template #target>
             <BButton>click longlist</BButton>
           </template>
-          <div v-for="(_, i) in Array(200)" :key="i">foobar {{ i }}</div>
+          <div v-for="i in 200" :key="i">foobar {{ i }}</div>
         </BPopover>
       </BCol>
     </BRow>
@@ -216,7 +216,7 @@
       </BCol>
       <BCol>
         <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em">
-          <div v-for="(_, i) in Array(20)" :key="i" style="height: 100px">
+          <div v-for="i in 20" :key="i" style="height: 100px">
             <BPopover v-bind="vari">
               jee
               <template #target>
@@ -228,7 +228,7 @@
       </BCol>
       <BCol>
         <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em">
-          <div v-for="(_, i) in Array(20)" :key="i" style="height: 100px">
+          <div v-for="i in 20" :key="i" style="height: 100px">
             <BPopover v-bind="vari" noninteractive>
               jee
               <template #target>

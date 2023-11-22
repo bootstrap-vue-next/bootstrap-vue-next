@@ -68,7 +68,7 @@ import {
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
-import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
+import {computed, type CSSProperties, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
@@ -222,7 +222,7 @@ const floatingPlacement = computed(() =>
     alignEnd: endBoolean.value,
   })
 )
-const sizeStyles = ref<{maxHeight?: string; maxWidth?: string}>({})
+const sizeStyles = ref<CSSProperties>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
