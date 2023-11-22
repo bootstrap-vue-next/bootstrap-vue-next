@@ -295,12 +295,9 @@ onKeyStroke(
   {target: element}
 )
 
-watch(
-  () => props.ride,
-  () => {
-    rideStarted.value = false
-  }
-)
+watch(rideResolved, () => {
+  rideStarted.value = false
+})
 
 watch(isHovering, (newValue) => {
   if (newValue) {

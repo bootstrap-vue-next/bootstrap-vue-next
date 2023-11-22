@@ -312,7 +312,9 @@ const toggle = () => {
   wrapper.value?.dispatchEvent(new Event('forceHide'))
 }
 
-watch(modelValueBoolean, update)
+watch(modelValueBoolean, () => {
+  update()
+})
 
 defineExpose({
   close,

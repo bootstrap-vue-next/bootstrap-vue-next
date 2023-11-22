@@ -295,7 +295,13 @@ const unregisterTab = (id: string) => {
   }
 }
 
-watch(tabsInternal, () => findActive(), {deep: true})
+watch(
+  tabsInternal,
+  () => {
+    findActive()
+  },
+  {deep: true}
+)
 
 const findActive = () => {
   if (tabs.value.length === 0) {
