@@ -15,12 +15,12 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
-    "@types/node": "^20.9.0",
-    "@vitejs/plugin-vue": "^4.4.1",
+    "@types/node": "^20.9.4",
+    "@vitejs/plugin-vue": "^4.5.0",
     "@vue/tsconfig": "^0.4.0",
     "bootstrap": "^5.3.2",
-    "typescript": "^5.2.2",
-    "vite": "^4.5.0",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.2",
     "vue-tsc": "^1.8.22"
   },
   "lint-staged": {
