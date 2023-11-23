@@ -126,6 +126,7 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   noSize: false,
   noninteractive: false,
   offset: null,
+  persistent: false,
   placement: 'top',
   realtime: false,
   reference: null,
@@ -134,7 +135,6 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   title: undefined,
   tooltip: false,
   variant: null,
-  persistent: false,
 })
 
 const emit = defineEmits<{
