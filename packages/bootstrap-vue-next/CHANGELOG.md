@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.15.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.4...bootstrapvuenext-v0.15.5) (2023-11-23)
+
+
+### Features
+
+* **BDropdown:** add boundaryPadding prop ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BDropdown:** overflow auto and sizing middleware to limit the size to visible viewport ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** add boundary prop ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** add boundaryPadding prop ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** add peristent option to popover ([a195b5d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a195b5d1ec8c0f8152740fc285aaa96810909a06))
+* **BPopover:** overflow auto and sizing middleware to limit the size to visible viewport ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+
+
+### Bug Fixes
+
+* **BDropdown:** fix dropup prop ignored ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** default offset has changed in bootstrap css ([a195b5d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a195b5d1ec8c0f8152740fc285aaa96810909a06))
+* **BPopover:** hide not working ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+
 ## [0.15.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.3...bootstrapvuenext-v0.15.4) (2023-11-22)
 
 
