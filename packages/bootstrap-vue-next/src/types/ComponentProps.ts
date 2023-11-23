@@ -253,6 +253,7 @@ export interface BPopoverProps {
   noninteractive?: Booleanish
   offset?: number | string | null
   placement?: PopoverPlacement
+  persistent?: Booleanish
   realtime?: Booleanish
   reference?: MaybeRef<
     string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null

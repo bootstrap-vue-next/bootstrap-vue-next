@@ -3,7 +3,7 @@
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
   <Teleport :to="container" :disabled="!container">
     <div
-      v-if="showStateInternal"
+      v-if="showStateInternal || persistentBoolean"
       :id="id"
       v-bind="$attrs"
       ref="element"
@@ -134,6 +134,7 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   title: undefined,
   tooltip: false,
   variant: null,
+  persistent: false,
 })
 
 const emit = defineEmits<{
@@ -184,6 +185,7 @@ const noAutoCloseBoolean = useBooleanish(() => props.noAutoClose)
 const noHideBoolean = useBooleanish(() => props.noHide)
 const realtimeBoolean = useBooleanish(() => props.realtime)
 const inlineBoolean = useBooleanish(() => props.inline)
+const persistentBoolean = useBooleanish(() => props.persistent)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
 const noninteractiveBoolean = useBooleanish(() => props.noninteractive)
 const isHtml = useBooleanish(() => props.html)
@@ -218,7 +220,7 @@ const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
-  const off = props.offset !== null ? offsetNumber.value : tooltipBoolean.value ? 0 : 10
+  const off = props.offset !== null ? offsetNumber.value : tooltipBoolean.value ? 6 : 8
   const arr: Middleware[] = [offsetMiddleware(off)]
   if (noFlipBoolean.value === false && !isAutoPlacement.value) {
     arr.push(
