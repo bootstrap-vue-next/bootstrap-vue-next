@@ -42,8 +42,8 @@
         v-if="!lazyBoolean || modelValueBoolean"
         v-show="lazyBoolean || modelValueBoolean"
         ref="floating"
-        :style="floatingStyles"
-        class="dropdown-menu show"
+        :style="[floatingStyles, sizeStyles]"
+        class="dropdown-menu show overflow-auto"
         :class="menuClass"
         :aria-labelledby="computedId"
         :role="role"
@@ -60,14 +60,15 @@ import {
   autoUpdate,
   type Boundary,
   flip,
-  offset as floatingOffset,
   type Middleware,
+  offset as offsetMiddleware,
   type RootBoundary,
   shift,
+  size as sizeMiddleware,
   useFloating,
 } from '@floating-ui/vue'
 import {onClickOutside, onKeyStroke, useToNumber, useVModel} from '@vueuse/core'
-import {computed, nextTick, provide, ref, toRef, watch} from 'vue'
+import {computed, type CSSProperties, nextTick, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
 import type {BDropdownProps} from '../../types'
 import {BvTriggerableEvent, dropdownInjectionKey, resolveFloatingPlacement} from '../../utils'
@@ -80,6 +81,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   ariaLabel: undefined,
   autoClose: true,
   boundary: 'clippingAncestors',
+  boundaryPadding: undefined,
   center: false,
   container: undefined,
   disabled: false,
@@ -96,6 +98,7 @@ const props = withDefaults(defineProps<BDropdownProps>(), {
   noCaret: false,
   noFlip: false,
   noShift: false,
+  noSize: false,
   offset: 0,
   role: 'menu',
   size: 'md',
@@ -149,6 +152,7 @@ const splitBoolean = useBooleanish(() => props.split)
 const noCaretBoolean = useBooleanish(() => props.noCaret)
 const noFlipBoolean = useBooleanish(() => props.noFlip)
 const noShiftBoolean = useBooleanish(() => props.noShift)
+const noSizeBoolean = useBooleanish(() => props.noSize)
 const lazyBoolean = useBooleanish(() => props.lazy)
 const splitDisabledBoolean = useBooleanish(() => props.splitDisabled)
 
@@ -218,6 +222,7 @@ const floatingPlacement = computed(() =>
     alignEnd: endBoolean.value,
   })
 )
+const sizeStyles = ref<CSSProperties>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
@@ -226,12 +231,13 @@ const floatingMiddleware = computed<Middleware[]>(() => {
     typeof props.offset === 'string' || typeof props.offset === 'number'
       ? offsetToNumber.value
       : props.offset
-  const arr: Middleware[] = [floatingOffset(localOffset)]
+  const arr: Middleware[] = [offsetMiddleware(localOffset)]
   if (noFlipBoolean.value === false) {
     arr.push(
       flip({
         boundary: boundary.value,
         rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
       })
     )
   }
@@ -240,6 +246,22 @@ const floatingMiddleware = computed<Middleware[]>(() => {
       shift({
         boundary: boundary.value,
         rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+      })
+    )
+  }
+  if (noSizeBoolean.value === false) {
+    arr.push(
+      sizeMiddleware({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+        apply({availableWidth, availableHeight}) {
+          sizeStyles.value = {
+            maxHeight: availableHeight ? `${availableHeight}px` : undefined,
+            maxWidth: availableWidth ? `${availableWidth}px` : undefined,
+          }
+        },
       })
     )
   }

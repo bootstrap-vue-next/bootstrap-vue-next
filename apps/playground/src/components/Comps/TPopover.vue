@@ -18,7 +18,7 @@
         <button
           v-b-tooltip.show.realtime="{
             title: textValue,
-            placement: popoverPlacemet,
+            placement: popoverPlacement,
             manual: true,
           }"
         >
@@ -59,6 +59,15 @@
           </template>
           <template #default> <b>Tooltip</b> content </template>
         </BTooltip>
+      </BCol>
+      <BCol>
+        <BPopover click :placement="popoverPlacement">
+          <template #title> Click </template>
+          <template #target>
+            <BButton>click longlist</BButton>
+          </template>
+          <div v-for="i in 200" :key="i">foobar {{ i }}</div>
+        </BPopover>
       </BCol>
     </BRow>
     <BRow class="my-5">
@@ -164,10 +173,10 @@
           </template>
         </BPopover>
         <BFormRadioGroup>
-          <BFormRadio v-model="popoverPlacemet" value="top">top</BFormRadio>
-          <BFormRadio v-model="popoverPlacemet" value="bottom">bottom</BFormRadio>
-          <BFormRadio v-model="popoverPlacemet" value="left">left</BFormRadio>
-          <BFormRadio v-model="popoverPlacemet" value="right">right</BFormRadio>
+          <BFormRadio v-model="popoverPlacement" value="top">top</BFormRadio>
+          <BFormRadio v-model="popoverPlacement" value="bottom">bottom</BFormRadio>
+          <BFormRadio v-model="popoverPlacement" value="left">left</BFormRadio>
+          <BFormRadio v-model="popoverPlacement" value="right">right</BFormRadio>
         </BFormRadioGroup>
         <BFormCheckbox v-model="value"> show based on v-model</BFormCheckbox>
       </BCol>
@@ -207,7 +216,7 @@
       </BCol>
       <BCol>
         <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em">
-          <div v-for="(_, i) in Array(20)" :key="i" style="height: 100px">
+          <div v-for="i in 20" :key="i" style="height: 100px">
             <BPopover v-bind="vari">
               jee
               <template #target>
@@ -219,7 +228,7 @@
       </BCol>
       <BCol>
         <div style="height: 50vh; width: 400px; overflow-y: scroll; padding: 5em">
-          <div v-for="(_, i) in Array(20)" :key="i" style="height: 100px">
+          <div v-for="i in 20" :key="i" style="height: 100px">
             <BPopover v-bind="vari" noninteractive>
               jee
               <template #target>
@@ -245,7 +254,7 @@ const manualClickPopoverExample = ref(false)
 const popoverManualButtonRef = ref(null)
 
 const textValue = ref('test <b onmouseover="alert(\'XSS testing!\')">with html</b>')
-const popoverPlacemet = ref<PopoverPlacement>('left')
+const popoverPlacement = ref<PopoverPlacement>('left')
 
 const vari = ref({
   title: 'foo',

@@ -1,4 +1,4 @@
-import type {Boundary, Middleware, RootBoundary, Strategy} from '@floating-ui/vue'
+import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
 import type {ComponentPublicInstance, MaybeRef} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {PopoverPlacement} from './PopoverPlacement'
@@ -165,12 +165,13 @@ export interface BDropdownProps {
   ariaLabel?: string
   autoClose?: boolean | 'inside' | 'outside'
   boundary?: Boundary | RootBoundary
+  boundaryPadding?: Padding
   center?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
   disabled?: Booleanish
   dropend?: Booleanish
-  dropdown?: Booleanish
   dropstart?: Booleanish
+  dropup?: Booleanish
   end?: Booleanish
   floatingMiddleware?: Middleware[]
   id?: string
@@ -181,6 +182,7 @@ export interface BDropdownProps {
   noCaret?: Booleanish
   noFlip?: Booleanish
   noShift?: Booleanish
+  noSize?: Booleanish
   offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
   role?: string
   size?: Size
@@ -223,6 +225,8 @@ interface BToastIntermediate extends ColorExtendables {
 export type BToastProps = BToastIntermediate & Omit<BLinkProps, 'event' | 'routerTag'>
 
 export interface BPopoverProps {
+  boundary?: Boundary | RootBoundary
+  boundaryPadding?: Padding
   click?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
   content?: string
@@ -243,7 +247,9 @@ export interface BPopoverProps {
   noAutoClose?: Booleanish
   noFade?: Booleanish
   noFlip?: Booleanish
+  noHide?: Booleanish
   noShift?: Booleanish
+  noSize?: Booleanish
   noninteractive?: Booleanish
   offset?: number | string | null
   placement?: PopoverPlacement
