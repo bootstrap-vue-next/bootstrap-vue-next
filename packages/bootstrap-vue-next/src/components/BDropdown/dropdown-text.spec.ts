@@ -15,34 +15,16 @@ describe('dropdown-text', () => {
     expect(wrapper.attributes('role')).toBe('presentation')
   })
 
-  it('has a child p tag', () => {
+  it('has a child span tag', () => {
     const wrapper = mount(BDropdownText)
-    const $p = wrapper.find('p')
+    const $p = wrapper.find('span')
     expect($p.exists()).toBe(true)
   })
 
-  it('child p tag has static class px-4', () => {
+  it('child span tag has static class dropdown-item-text', () => {
     const wrapper = mount(BDropdownText)
-    const $p = wrapper.get('p')
-    expect($p.classes()).toContain('px-4')
-  })
-
-  it('child p tag has static class mb-0', () => {
-    const wrapper = mount(BDropdownText)
-    const $p = wrapper.get('p')
-    expect($p.classes()).toContain('mb-0')
-  })
-
-  it('child p tag has static class text-body-secondary', () => {
-    const wrapper = mount(BDropdownText)
-    const $p = wrapper.get('p')
-    expect($p.classes()).toContain('text-body-secondary')
-  })
-
-  it('child p tag has static class py-1', () => {
-    const wrapper = mount(BDropdownText)
-    const $p = wrapper.get('p')
-    expect($p.classes()).toContain('py-1')
+    const $p = wrapper.get('span')
+    expect($p.classes()).toContain('dropdown-item-text')
   })
 
   it('renders default slot', () => {

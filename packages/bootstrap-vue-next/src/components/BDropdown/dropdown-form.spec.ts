@@ -21,16 +21,10 @@ describe('dropdown-form', () => {
     expect($form.exists()).toBe(true)
   })
 
-  it('child form has static class px-4', () => {
+  it('child form has static class dropdown-item-text', () => {
     const wrapper = mount(BDropdownForm)
     const $form = wrapper.get('form')
-    expect($form.classes()).toContain('px-4')
-  })
-
-  it('child form has static class py-3', () => {
-    const wrapper = mount(BDropdownForm)
-    const $form = wrapper.get('form')
-    expect($form.classes()).toContain('py-3')
+    expect($form.classes()).toContain('dropdown-item-text')
   })
 
   it('child form renders default slot', () => {
