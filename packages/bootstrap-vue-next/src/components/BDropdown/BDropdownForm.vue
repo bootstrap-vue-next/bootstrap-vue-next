@@ -1,6 +1,6 @@
 <template>
   <li role="presentation">
-    <form class="px-4 py-3">
+    <form class="dropdown-item-text" v-bind="$attrs">
       <slot />
     </form>
   </li>
