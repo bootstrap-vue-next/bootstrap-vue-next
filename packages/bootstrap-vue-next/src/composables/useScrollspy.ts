@@ -1,13 +1,14 @@
 import {
   type ComponentPublicInstance,
+  computed,
   getCurrentInstance,
   type MaybeRefOrGetter,
   nextTick,
   onMounted,
   readonly,
-  ref,
   type Ref,
-  toRef,
+  ref,
+  toValue,
   watch,
 } from 'vue'
 import {useIntersectionObserver, useMutationObserver} from '@vueuse/core'
@@ -45,8 +46,18 @@ export default (
   target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>,
   options: Partial<ScrollspyOptions> = {}
 ): ScrollspyReturn => {
-  const resolvedContent = toRef(() => getElement(content))
-  const resolvedTarget = toRef(() => getElement(target))
+  // Cludge to get elements with dom query after mount
+  // because we can't trigger watch on mount with string values
+  const resolvedContent = ref(getElement(content))
+  const resolvedTarget = ref(getElement(target))
+  const updateElements = () => {
+    resolvedContent.value = getElement(content)
+    resolvedTarget.value = getElement(target)
+  }
+  watch([content, target], () => {
+    updateElements()
+    updateList()
+  })
   const {
     contentQuery = ':scope > [id]',
     targetQuery = '[href]',
@@ -56,7 +67,6 @@ export default (
     threshold = [0.1, 0.5, 1],
     watchChanges = true,
   } = options
-  // const inverseBodyScrollingValue = toRef(() => !resolvedBodyScrolling.value)
   const current = ref<string | null>(null)
   const list = ref<ScrollspyList>([])
   const nodeList = ref<HTMLElement[]>([])
@@ -69,17 +79,14 @@ export default (
     })
   } else {
     onMounted(() => {
+      if (typeof toValue(content) === 'string' && resolvedContent.value === undefined)
+        resolvedContent.value = getElement(content)
+      if (typeof toValue(target) === 'string' && resolvedTarget.value === undefined)
+        resolvedTarget.value = getElement(target)
       updateList()
     })
   }
 
-  let isScrollingDown = true
-  let previousScrollTop = 0
-  const scrollRoot = toRef(() =>
-    resolvedContent.value && getComputedStyle(resolvedContent.value).overflowY === 'visible'
-      ? null
-      : resolvedContent.value
-  )
   const updateList = () => {
     nodeList.value = resolvedContent.value
       ? (Array.from(resolvedContent.value.querySelectorAll(contentQuery)) as HTMLElement[])
@@ -91,6 +98,14 @@ export default (
       text: el.textContent,
     }))
   }
+
+  let isScrollingDown = true
+  let previousScrollTop = 0
+  const scrollRoot = computed(() =>
+    resolvedContent.value && getComputedStyle(resolvedContent.value).overflowY === 'visible'
+      ? null
+      : resolvedContent.value
+  )
 
   const iobs = useIntersectionObserver(
     nodeList,
@@ -127,7 +142,7 @@ export default (
       }
     },
     {
-      root: root ? getElement(root) : scrollRoot.value,
+      root: root ? getElement(root) : scrollRoot,
       rootMargin,
       threshold,
     }

@@ -1,4 +1,4 @@
-import {type ComponentPublicInstance, type MaybeRefOrGetter, type Slot, toRef, unref} from 'vue'
+import {type ComponentPublicInstance, type MaybeRefOrGetter, type Slot, toValue} from 'vue'
 import {DOCUMENT, HAS_ELEMENT_SUPPORT} from '../constants/env'
 import type {AnimationFrame} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from './env'
@@ -239,14 +239,12 @@ export const getTransitionDelay = (element: HTMLElement) => {
 export const getElement = (
   target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
 ): HTMLElement | undefined => {
-  const element = unref(toRef(target))
+  const element = toValue(target)
   if (!element) return undefined
   if (typeof element === 'string') {
-    const idElement = DOCUMENT.getElementById(element)
-    return idElement ? idElement : (DOCUMENT.querySelector(element) as HTMLElement) || undefined
+    if (typeof document === 'undefined') return undefined
+    const idElement = document.getElementById(element)
+    return idElement ? idElement : (document.querySelector(element) as HTMLElement) || undefined
   }
-  if ((element as ComponentPublicInstance).$el) {
-    return (element as ComponentPublicInstance).$el as HTMLElement
-  }
-  return element as HTMLElement
+  return (element as ComponentPublicInstance).$el ?? element
 }

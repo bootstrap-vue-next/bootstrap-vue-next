@@ -41,7 +41,7 @@
           </b-card-body>
         </b-card>
         <div class="split" />
-        <p>current: {{ nestedCurrent }}</p>
+        <p>curren: {{ nestedCurrent }}</p>
         <b-card id="nested">
           <b-row>
             <b-col cols="4">
@@ -171,6 +171,16 @@
               {{ e.id }}
             </b-list-group-item>
           </b-list-group>
+          <b-form-radio-group
+            v-model="tocContent"
+            :options="[
+              {text: 'toc', value: 'root-element'},
+              {text: 'basic', value: 'nav-scroller'},
+              {text: 'nested', value: contentNested},
+              {text: 'list', value: 'listgroup-ex'},
+              {text: 'directive', value: 'directive-list'},
+            ]"
+          />
         </div>
       </div>
     </div>
@@ -187,10 +197,11 @@ const contentNested = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | n
 const targetNested = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
 const contentList = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
 
+const tocContent = ref('root-element')
 const {current, scrollIntoView} = useScrollspy(content, target)
 const {current: currentList, list} = useScrollspy(contentList, null, {manual: true})
 const {current: nestedCurrent} = useScrollspy(contentNested, targetNested)
-const {current: tocCurrent, list: tocList} = useScrollspy('root-element', null, {manual: true})
+const {current: tocCurrent, list: tocList} = useScrollspy(tocContent, null, {manual: true})
 
 const text = ref(`
           Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla
