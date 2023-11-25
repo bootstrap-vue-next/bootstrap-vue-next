@@ -77,6 +77,7 @@ import {
 } from '@floating-ui/vue'
 import {
   BvTriggerableEvent,
+  getElement,
   getTransitionDelay,
   IS_BROWSER,
   resolveBootstrapPlacement,
@@ -84,16 +85,13 @@ import {
 import {DefaultAllowlist, sanitizeHtml} from '../utils/sanitizer'
 import {onClickOutside, useMouseInElement, useToNumber} from '@vueuse/core'
 import {
-  type ComponentPublicInstance,
   computed,
   type CSSProperties,
-  type MaybeRef,
   nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
   toRef,
-  unref,
   watch,
   watchEffect,
 } from 'vue'
@@ -428,23 +426,6 @@ defineExpose({
   show,
   toggle,
 })
-
-const getElement = (
-  target: MaybeRef<
-    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
-  >
-): HTMLElement | undefined => {
-  const element = unref(target)
-  if (!element) return undefined
-  if (typeof element === 'string') {
-    const idElement = document.getElementById(element)
-    return idElement ? idElement : undefined
-  }
-  if ((element as ComponentPublicInstance<HTMLElement>).$el) {
-    return (element as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
-  }
-  return element
-}
 
 const bind = () => {
   // TODO: is this the best way to bind the events?

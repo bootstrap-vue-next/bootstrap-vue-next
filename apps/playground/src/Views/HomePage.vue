@@ -83,6 +83,7 @@ import TOffcanvas from '../components/Comps/TOffcanvas.vue'
 import TOverlay from '../components/Comps/TOverlay.vue'
 import TPagination from '../components/Comps/TPagination.vue'
 import TPopover from '../components/Comps/TPopover.vue'
+import TScrollspy from '../components/Comps/TScrollspy.vue'
 import TTable from '../components/Comps/TTable.vue'
 import TTableSimple from '../components/Comps/TTableSimple.vue'
 import TTabs from '../components/Comps/TTabs.vue'
@@ -123,6 +124,7 @@ const comps: {name: string; is: unknown; disabled?: true}[] = [
   {name: 'Overlay', is: TOverlay},
   {name: 'Pagination', is: TPagination},
   {name: 'Popover', is: TPopover},
+  {name: 'Scrollspy', is: TScrollspy},
   {name: 'Table', is: TTable},
   {name: 'TableSimple', is: TTableSimple},
   {name: 'Tabs', is: TTabs},
