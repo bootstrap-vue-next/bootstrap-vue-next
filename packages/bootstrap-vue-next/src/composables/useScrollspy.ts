@@ -54,7 +54,7 @@ export default (
     resolvedContent.value = getElement(content)
     resolvedTarget.value = getElement(target)
   }
-  watch([content, target], () => {
+  watch([() => toValue(content), () => toValue(target)], () => {
     updateElements()
     updateList()
   })
