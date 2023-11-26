@@ -5,7 +5,7 @@ export default (field: TableField) =>
   typeof field === 'string'
     ? titleCase(field)
     : field.label !== undefined
-    ? field.label
-    : typeof field.key === 'string'
-    ? titleCase(field.key)
-    : field.key
+      ? field.label
+      : typeof field.key === 'string'
+        ? titleCase(field.key)
+        : field.key

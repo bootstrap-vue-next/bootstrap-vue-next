@@ -13,11 +13,11 @@ export default (
     resolvedAriaInvalid.value === true
       ? 'true'
       : typeof resolvedAriaInvalid.value === 'string'
-      ? resolvedAriaInvalid.value
-      : resolvedState.value === false
-      ? 'true'
-      : resolvedAriaInvalid.value === false
-      ? 'false'
-      : undefined
+        ? resolvedAriaInvalid.value
+        : resolvedState.value === false
+          ? 'true'
+          : resolvedAriaInvalid.value === false
+            ? 'false'
+            : undefined
   )
 }

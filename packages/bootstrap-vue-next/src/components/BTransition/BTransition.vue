@@ -61,13 +61,13 @@ const computedAttrs = computed(() =>
         ...props.transProps,
       }
     : appearBoolean.value
-    ? {
-        ...baseProperties.value,
-        appear: true,
-        appearActiveClass: fadeProperties.value.enterActiveClass,
-        appearToClass: fadeProperties.value.enterToClass,
-      }
-    : baseProperties.value
+      ? {
+          ...baseProperties.value,
+          appear: true,
+          appearActiveClass: fadeProperties.value.enterActiveClass,
+          appearToClass: fadeProperties.value.enterToClass,
+        }
+      : baseProperties.value
 )
 </script>
 

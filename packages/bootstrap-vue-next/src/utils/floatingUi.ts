@@ -88,12 +88,12 @@ export const resolveDirectiveProps = (binding: DirectiveBinding, el: HTMLElement
   placement: binding.modifiers.left
     ? 'left'
     : binding.modifiers.right
-    ? 'right'
-    : binding.modifiers.bottom
-    ? 'bottom'
-    : binding.modifiers.top
-    ? 'top'
-    : undefined,
+      ? 'right'
+      : binding.modifiers.bottom
+        ? 'bottom'
+        : binding.modifiers.top
+          ? 'top'
+          : undefined,
   html: true,
   ...(typeof binding.value === 'object' ? binding.value : {}),
   title: null,

@@ -361,8 +361,8 @@ const computedBackdropVariant = toRef(() =>
   props.backdropVariant !== undefined
     ? props.backdropVariant
     : hideBackdropBoolean.value
-    ? 'transparent'
-    : 'dark'
+      ? 'transparent'
+      : 'dark'
 )
 
 const hasHeaderCloseSlot = toRef(() => !isEmptySlot(slots['header-close']))
@@ -499,10 +499,10 @@ const pickFocusItem = () => {
   props.autoFocusButton === 'ok'
     ? (okButtonFocus.value = true)
     : props.autoFocusButton === 'close'
-    ? (closeButtonFocus.value = true)
-    : props.autoFocusButton === 'cancel'
-    ? (cancelButtonFocus.value = true)
-    : (modalFocus.value = true)
+      ? (closeButtonFocus.value = true)
+      : props.autoFocusButton === 'cancel'
+        ? (cancelButtonFocus.value = true)
+        : (modalFocus.value = true)
 }
 
 const onBeforeEnter = () => showFn()

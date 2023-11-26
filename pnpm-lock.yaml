@@ -75,8 +75,8 @@ importers:
         specifier: ^0.17.4
         version: 0.17.4
       vitepress:
-        specifier: 1.0.0-rc.30
-        version: 1.0.0-rc.30(@algolia/client-search@4.20.0)(@types/node@20.9.4)(search-insights@2.9.0)(typescript@5.3.2)
+        specifier: 1.0.0-rc.31
+        version: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.4)(search-insights@2.9.0)(typescript@5.3.2)
       vue:
         specifier: ^3.3.8
         version: 3.3.8(typescript@5.3.2)
@@ -8002,14 +8002,14 @@ packages:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: true
 
-  /shikiji-transformers@0.7.2:
-    resolution: {integrity: sha512-Nxg79GL++TvMjprCwhKzXWA4UFTP4fP3jZrkJAkUnSchqV20T2emyy/NgNhNjeX69JoUqTbB82rfVASj5Vec9Q==}
+  /shikiji-transformers@0.7.4:
+    resolution: {integrity: sha512-oykilNekcW2FnRGbvZm+RNWHYroSeCVMOaMMwAbxozZgpTdcJtHoA+1+MDFw6/o2hCkX88kKbxG6FwAZoUZ6WQ==}
     dependencies:
-      shikiji: 0.7.2
+      shikiji: 0.7.4
     dev: true
 
-  /shikiji@0.7.2:
-    resolution: {integrity: sha512-gOaq7lqi3zSqGm+pMVxDD9NXA6myj5/7s7ZXgJcGdM5eHa49FrUPV46C5nl13rZnN3ZDjEmqF8ZPpNJjXeiBrQ==}
+  /shikiji@0.7.4:
+    resolution: {integrity: sha512-N5dmPvyhH/zfcsuWysUEAMwRJDMz26LUns2VEUs5y4Ozbf5jkAODU0Yswjcf/tZAwpFnk5x3y34dupFMnF2+NA==}
     dependencies:
       hast-util-to-html: 9.0.0
     dev: true
@@ -9276,8 +9276,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitepress@1.0.0-rc.30(@algolia/client-search@4.20.0)(@types/node@20.9.4)(search-insights@2.9.0)(typescript@5.3.2):
-    resolution: {integrity: sha512-OolAbFU2hjs0KuIpPq0wRd4vJlTMvrFgHSh/hB+XQid7U31KtB6F1NxWihMwKkwncpxu9mt2Somet5AGiyTgPA==}
+  /vitepress@1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.4)(search-insights@2.9.0)(typescript@5.3.2):
+    resolution: {integrity: sha512-ikH9pIjOOAbyoYAGBVfTz8TzuXp+UoWaIRMU4bw/oiTg8R65SbAaGKY84xx6TuL+f4VqUJ8lhzW82YyxSLvstA==}
     hasBin: true
     peerDependencies:
       markdown-it-mathjax3: ^4.3.2
@@ -9299,8 +9299,8 @@ packages:
       mark.js: 8.11.1
       minisearch: 6.3.0
       mrmime: 1.0.1
-      shikiji: 0.7.2
-      shikiji-transformers: 0.7.2
+      shikiji: 0.7.4
+      shikiji-transformers: 0.7.4
       vite: 5.0.2(@types/node@20.9.4)(sass@1.69.5)
       vue: 3.3.8(typescript@5.3.2)
     transitivePeerDependencies:

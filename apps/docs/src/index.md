@@ -14,8 +14,8 @@ With BootstrapVueNext you can build fast, responsive, and ARIA accessible projec
 
 </div>
 
-<BRow cols="2" cols-lg="2">
-  <BCol class="text-center">
+<BRow>
+  <BCol class="text-center" cols="12" sm="6">
     <BLink class="card-link" href="https://getbootstrap.com" target="_blank" rel="noopener">
       <BCard class="p-3">
         <BootstrapIcon aria-hidden class="icon-lg" />

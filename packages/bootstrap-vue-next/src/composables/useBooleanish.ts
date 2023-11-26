@@ -14,9 +14,9 @@ export default <T>(el: MaybeRefOrGetter<T>): ComputedRef<T extends Booleanish ? 
       !isBooleanish(value)
         ? value
         : typeof value === 'boolean'
-        ? value
-        : value === '' || value === 'true'
-        ? true
-        : false
+          ? value
+          : value === '' || value === 'true'
+            ? true
+            : false
     ) as T extends Booleanish ? boolean : T
   })
