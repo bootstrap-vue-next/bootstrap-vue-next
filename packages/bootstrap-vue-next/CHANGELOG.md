@@ -1,5 +1,55 @@
 # Changelog
 
+## [0.15.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.4...bootstrapvuenext-v0.15.5) (2023-11-23)
+
+
+### Features
+
+* **BDropdown:** add boundaryPadding prop ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BDropdown:** overflow auto and sizing middleware to limit the size to visible viewport ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** add boundary prop ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** add boundaryPadding prop ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** add peristent option to popover ([a195b5d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a195b5d1ec8c0f8152740fc285aaa96810909a06))
+* **BPopover:** overflow auto and sizing middleware to limit the size to visible viewport ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+
+
+### Bug Fixes
+
+* **BDropdown:** fix dropup prop ignored ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+* **BPopover:** default offset has changed in bootstrap css ([a195b5d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a195b5d1ec8c0f8152740fc285aaa96810909a06))
+* **BPopover:** hide not working ([efc1ce9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efc1ce91ece776e295680f636e44359408b4eeb7))
+
+## [0.15.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.3...bootstrapvuenext-v0.15.4) (2023-11-22)
+
+
+### Bug Fixes
+
+* further changes to [#1623](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1623) ([febd812](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/febd81277e538b6926a74f179cc42be7a8fda0bb))
+
+## [0.15.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.2...bootstrapvuenext-v0.15.3) (2023-11-22)
+
+
+### Bug Fixes
+
+* **BFormCheckboxGroup:** updates to modelValue being recursive fixes [#1623](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1623) ([7991073](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/799107302f13f822b8663539b2594196b2aab054))
+
+## [0.15.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.1...bootstrapvuenext-v0.15.2) (2023-11-22)
+
+
+### Features
+
+* expose Toast type ([a2dfbfe](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a2dfbfefe6e9a2de6a79fc3f0b5737ede39c6f11))
+
+
+### Bug Fixes
+
+* **BTable:** current page not working causing no pagination fixes [#1613](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1613) ([9f2ef8b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f2ef8b982e3757044cb9aa6177a3484ca034688))
+
+
+### Performance Improvements
+
+* **BImg:** improve blank img resolution ([84ce349](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/84ce349cf4bbaa5833b1bef4ce67400c0ad783e8))
+
 ## [0.15.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.15.0...bootstrapvuenext-v0.15.1) (2023-11-20)
 
 

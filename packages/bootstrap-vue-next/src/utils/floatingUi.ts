@@ -85,6 +85,7 @@ export const resolveDirectiveProps = (binding: DirectiveBinding, el: HTMLElement
   inline: binding.modifiers.inline,
   click: binding.modifiers.click,
   realtime: binding.modifiers.realtime,
+  persistent: binding.modifiers.persistent,
   placement: binding.modifiers.left
     ? 'left'
     : binding.modifiers.right

@@ -3,7 +3,7 @@
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
   <Teleport :to="container" :disabled="!container">
     <div
-      v-if="showStateInternal"
+      v-if="showStateInternal || persistentBoolean"
       :id="id"
       v-bind="$attrs"
       ref="element"
@@ -18,34 +18,41 @@
         :style="arrowStyle"
         data-popper-arrow
       />
-      <template v-if="title || $slots.title">
-        <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'">
-          <slot name="title">
-            {{ title }}
-          </slot>
-        </div>
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          v-else
-          :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
-          v-html="sanitizedTitle"
-        />
-        <!-- eslint-enable vue/no-v-html -->
-      </template>
-      <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
-        <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
-          <slot>
-            {{ content }}
-          </slot>
-        </div>
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          v-else
-          :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
-          v-html="sanitizedContent"
-        />
-        <!-- eslint-enable vue/no-v-html -->
-      </template>
+      <div class="overflow-auto" :style="sizeStyles">
+        <template v-if="title || $slots.title">
+          <div
+            v-if="!isHtml"
+            class="position-sticky top-0"
+            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+          >
+            <slot name="title">
+              {{ title }}
+            </slot>
+          </div>
+          <!-- eslint-disable vue/no-v-html -->
+          <div
+            v-else
+            class="position-sticky top-0"
+            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-header'"
+            v-html="sanitizedTitle"
+          />
+          <!-- eslint-enable vue/no-v-html -->
+        </template>
+        <template v-if="(tooltipBoolean && !$slots.title && !title) || !tooltipBoolean">
+          <div v-if="!isHtml" :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'">
+            <slot>
+              {{ content }}
+            </slot>
+          </div>
+          <!-- eslint-disable vue/no-v-html -->
+          <div
+            v-else
+            :class="tooltipBoolean ? 'tooltip-inner' : 'popover-body'"
+            v-html="sanitizedContent"
+          />
+          <!-- eslint-enable vue/no-v-html -->
+        </template>
+      </div>
     </div>
   </Teleport>
 </template>
@@ -56,13 +63,16 @@ import {
   arrow as arrowMiddleware,
   autoPlacement,
   autoUpdate,
+  type Boundary,
   flip,
   hide as hideMiddleware,
   inline as inlineMiddleware,
   type Middleware,
   offset as offsetMiddleware,
   type Placement as OriginalPlacement,
+  type RootBoundary,
   shift,
+  size as sizeMiddleware,
   useFloating,
 } from '@floating-ui/vue'
 import {
@@ -94,6 +104,8 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<BPopoverProps>(), {
+  boundary: 'clippingAncestors',
+  boundaryPadding: undefined,
   click: false,
   container: undefined,
   content: undefined,
@@ -111,8 +123,10 @@ const props = withDefaults(defineProps<BPopoverProps>(), {
   noFlip: false,
   noHide: false,
   noShift: false,
+  noSize: false,
   noninteractive: false,
   offset: null,
+  persistent: false,
   placement: 'top',
   realtime: false,
   reference: null,
@@ -164,12 +178,14 @@ const computedId = useId(() => props.id, 'popover')
 const clickBoolean = useBooleanish(() => props.click)
 const manualBoolean = useBooleanish(() => props.manual)
 const noShiftBoolean = useBooleanish(() => props.noShift)
+const noSizeBoolean = useBooleanish(() => props.noSize)
 const noFlipBoolean = useBooleanish(() => props.noFlip)
 const noFadeBoolean = useBooleanish(() => props.noFade)
 const noAutoCloseBoolean = useBooleanish(() => props.noAutoClose)
 const noHideBoolean = useBooleanish(() => props.noHide)
 const realtimeBoolean = useBooleanish(() => props.realtime)
 const inlineBoolean = useBooleanish(() => props.inline)
+const persistentBoolean = useBooleanish(() => props.persistent)
 const tooltipBoolean = useBooleanish(() => props.tooltip)
 const noninteractiveBoolean = useBooleanish(() => props.noninteractive)
 const isHtml = useBooleanish(() => props.html)
@@ -192,32 +208,76 @@ const sanitizedContent = computed(() =>
 const isAutoPlacement = toRef(() => props.placement.startsWith('auto'))
 const offsetNumber = useToNumber(() => props.offset ?? NaN)
 
+const boundary = computed<Boundary | undefined>(() =>
+  props.boundary === 'document' || props.boundary === 'viewport' ? undefined : props.boundary
+)
+const rootBoundary = computed<RootBoundary | undefined>(() =>
+  props.boundary === 'document' || props.boundary === 'viewport' ? props.boundary : undefined
+)
+
+const sizeStyles = ref<CSSProperties>({})
 const floatingMiddleware = computed<Middleware[]>(() => {
   if (props.floatingMiddleware !== undefined) {
     return props.floatingMiddleware
   }
-  const off = props.offset !== null ? offsetNumber.value : tooltipBoolean.value ? 0 : 10
+  const off = props.offset !== null ? offsetNumber.value : tooltipBoolean.value ? 6 : 8
   const arr: Middleware[] = [offsetMiddleware(off)]
   if (noFlipBoolean.value === false && !isAutoPlacement.value) {
-    arr.push(flip())
+    arr.push(
+      flip({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+      })
+    )
   }
   if (isAutoPlacement.value) {
     arr.push(
       autoPlacement({
         alignment: (props.placement.split('-')[1] as Alignment) || undefined,
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
       })
     )
   }
   if (noShiftBoolean.value === false) {
-    arr.push(shift())
+    arr.push(
+      shift({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+      })
+    )
   }
   if (noHideBoolean.value === false) {
-    arr.push(hideMiddleware({padding: 10}))
+    arr.push(
+      hideMiddleware({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+      })
+    )
   }
   if (inlineBoolean.value === true) {
     arr.push(inlineMiddleware())
   }
   arr.push(arrowMiddleware({element: arrow, padding: 10}))
+  if (noSizeBoolean.value === false) {
+    arr.push(
+      sizeMiddleware({
+        boundary: boundary.value,
+        rootBoundary: rootBoundary.value,
+        padding: props.boundaryPadding,
+        apply({availableWidth, availableHeight}) {
+          sizeStyles.value = {
+            maxHeight: availableHeight ? `${availableHeight}px` : undefined,
+            maxWidth: availableWidth ? `${availableWidth}px` : undefined,
+          }
+        },
+      })
+    )
+  }
   return arr
 })
 

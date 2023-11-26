@@ -42,7 +42,7 @@ const props = withDefaults(
     wrapperAttrs: undefined,
     // Link props
     linkClass: undefined,
-    variant: 'secondary',
+    variant: null,
     // All others use defaults
     active: undefined,
     activeClass: undefined,

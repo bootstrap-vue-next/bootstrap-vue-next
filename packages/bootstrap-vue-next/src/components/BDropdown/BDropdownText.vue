@@ -1,10 +1,10 @@
 <template>
   <li role="presentation">
-    <p class="px-4 py-1 mb-0 text-body-secondary">
+    <span class="dropdown-item-text" v-bind="$attrs">
       <slot>
         {{ text }}
       </slot>
-    </p>
+    </span>
   </li>
 </template>
 
