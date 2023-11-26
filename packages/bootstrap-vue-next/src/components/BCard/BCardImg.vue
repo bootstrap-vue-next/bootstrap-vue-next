@@ -53,12 +53,12 @@ const baseClass = toRef(() =>
   topBoolean.value
     ? 'card-img-top'
     : endBoolean.value
-    ? 'card-img-right'
-    : bottomBoolean.value
-    ? 'card-img-bottom'
-    : startBoolean.value
-    ? 'card-img-left'
-    : 'card-img'
+      ? 'card-img-right'
+      : bottomBoolean.value
+        ? 'card-img-bottom'
+        : startBoolean.value
+          ? 'card-img-left'
+          : 'card-img'
 )
 
 const computedImgProps = computed(() => omit(props, ['bottom', 'top', 'end', 'start']))

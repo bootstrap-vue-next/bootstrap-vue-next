@@ -19,12 +19,12 @@ export const toString = (val: unknown, spaces = 2): string =>
   typeof val === 'string'
     ? val
     : val === undefined || val === null
-    ? ''
-    : Array.isArray(val) ||
-      (Object.prototype.toString.call(val) === '[object Object]' &&
-        val.toString === Object.prototype.toString)
-    ? JSON.stringify(val, null, spaces)
-    : String(val)
+      ? ''
+      : Array.isArray(val) ||
+          (Object.prototype.toString.call(val) === '[object Object]' &&
+            val.toString === Object.prototype.toString)
+        ? JSON.stringify(val, null, spaces)
+        : String(val)
 
 /**
  * @param str

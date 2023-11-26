@@ -448,7 +448,7 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 import {data} from '../../data/components/navbar.data'
 import ComponentReference from '../../components/ComponentReference.vue'
 import HighlightCard from '../../components/HighlightCard.vue'
-import {BNavText, BInputGroup, BNavbar, BNavbarBrand, BNavbarToggle, BCollapse, BNavbarNav, BNavForm, BNavItem, BFormInput, BNavbarItem, BNavItemDropdown, BDropdownItem, BButton, vBColorMode} from 'bootstrap-vue-next'
+import {BNavText, BInputGroup, BNavbar, BNavbarBrand, BNavbarToggle, BCollapse, BNavbarNav, BNavForm, BNavItem, BFormInput, BNavItemDropdown, BDropdownItem, BButton, vBColorMode} from 'bootstrap-vue-next'
 import ChevronBarUpIcon from '~icons/bi/chevron-bar-up'
 import ChevronBarDownIcon from '~icons/bi/chevron-bar-down'
 </script>

@@ -144,8 +144,8 @@ const routerAttr = computed(() => ({
   'tabindex': disabledBoolean.value
     ? '-1'
     : typeof attrs.tabindex === 'undefined'
-    ? null
-    : attrs.tabindex,
+      ? null
+      : attrs.tabindex,
   'aria-disabled': disabledBoolean.value ? true : null,
 }))
 

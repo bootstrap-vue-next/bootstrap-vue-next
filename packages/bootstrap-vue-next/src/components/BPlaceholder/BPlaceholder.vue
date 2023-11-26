@@ -43,16 +43,16 @@ const widthString = toRef(() =>
   props.width === undefined
     ? undefined
     : typeof props.width === 'number'
-    ? props.width.toString()
-    : props.width.replace('%', '')
+      ? props.width.toString()
+      : props.width.replace('%', '')
 )
 
 const colsString = toRef(() =>
   props.cols === undefined
     ? undefined
     : typeof props.cols === 'number'
-    ? props.cols.toString()
-    : props.cols
+      ? props.cols.toString()
+      : props.cols
 )
 
 const computedClasses = computed(() => ({

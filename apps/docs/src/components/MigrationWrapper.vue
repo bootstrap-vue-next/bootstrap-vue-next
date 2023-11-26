@@ -1,32 +1,14 @@
 <template>
-  <BCard>
-    <template #header>
-      <h3>{{ component }} - {{ change }}</h3>
-      <BBadge :variant="difficultyVariant">{{ difficulty }}</BBadge>
-    </template>
-    <h4>Rationale:</h4>
-    {{ rationale }}
-    <h4>Fix:</h4>
+  <div class="py-3">
+    <h3>{{ component }} - {{ change }}</h3>
     {{ fix }}
-  </BCard>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {toRef} from 'vue'
-import {BBadge, BCard} from 'bootstrap-vue-next'
-
-const props = defineProps<{
-  difficulty: 'hard' | 'medium' | 'easy'
+defineProps<{
   component: string
   change: string
-  /**
-   * The rationale for the change
-   */
-  rationale: string
   fix: string
 }>()
-
-const difficultyVariant = toRef(() =>
-  props.difficulty === 'hard' ? 'danger' : props.difficulty === 'medium' ? 'warning' : 'success'
-)
 </script>

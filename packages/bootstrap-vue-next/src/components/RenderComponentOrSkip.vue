@@ -32,8 +32,8 @@ export default defineComponent({
       props.skip
         ? slots.default?.()
         : props.tag === 'Teleport'
-        ? h(Teleport, {to: props.to}, [slots.default?.()])
-        : h(props.tag, {...attrs}, [slots.default?.()])
+          ? h(Teleport, {to: props.to}, [slots.default?.()])
+          : h(props.tag, {...attrs}, [slots.default?.()])
   },
 })
 </script>

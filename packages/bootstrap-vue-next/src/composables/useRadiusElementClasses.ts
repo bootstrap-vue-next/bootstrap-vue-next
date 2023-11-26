@@ -12,22 +12,22 @@ export default (obj: MaybeRefOrGetter<RadiusElementExtendables>) => {
     return value === 'circle'
       ? `${strValue}rounded-circle`
       : value === 'pill'
-      ? `${strValue}rounded-pill`
-      : typeof value === 'number' ||
-        value === '0' ||
-        value === '1' ||
-        value === '2' ||
-        value === '3' ||
-        value === '4' ||
-        value === '5'
-      ? `${strValue}rounded-${value}`
-      : value === 'none'
-      ? `${strValue}rounded-0`
-      : value === 'sm'
-      ? `${strValue}rounded-1`
-      : value === 'lg'
-      ? `${strValue}rounded-5`
-      : `${strValue}rounded` // true is last
+        ? `${strValue}rounded-pill`
+        : typeof value === 'number' ||
+            value === '0' ||
+            value === '1' ||
+            value === '2' ||
+            value === '3' ||
+            value === '4' ||
+            value === '5'
+          ? `${strValue}rounded-${value}`
+          : value === 'none'
+            ? `${strValue}rounded-0`
+            : value === 'sm'
+              ? `${strValue}rounded-1`
+              : value === 'lg'
+                ? `${strValue}rounded-5`
+                : `${strValue}rounded` // true is last
   }
 
   const props = readonly(toRef(obj))

@@ -70,21 +70,21 @@ const computedLabel = computed(() =>
   props.labelHtml !== undefined
     ? props.labelHtml
     : showValueBoolean.value || parentData?.showValue.value
-    ? numberValue.value.toFixed(numberPrecision.value)
-    : showProgressBoolean.value || parentData?.showProgress.value
-    ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
-    : props.label !== undefined
-    ? props.label
-    : ''
+      ? numberValue.value.toFixed(numberPrecision.value)
+      : showProgressBoolean.value || parentData?.showProgress.value
+        ? ((numberValue.value * 100) / (numberMax.value || 100)).toFixed(numberPrecision.value)
+        : props.label !== undefined
+          ? props.label
+          : ''
 )
 
 const computedWidth = computed(() =>
   parentMaxNumber.value
     ? `${(numberValue.value * 100) / parentMaxNumber.value}%`
     : numberMax.value
-    ? `${(numberValue.value * 100) / numberMax.value}%`
-    : typeof props.value === 'string'
-    ? props.value
-    : `${props.value}%`
+      ? `${(numberValue.value * 100) / numberMax.value}%`
+      : typeof props.value === 'string'
+        ? props.value
+        : `${props.value}%`
 )
 </script>

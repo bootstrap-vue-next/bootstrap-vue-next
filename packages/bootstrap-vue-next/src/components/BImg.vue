@@ -73,8 +73,8 @@ const computedSrcset = computed(() =>
         .filter((x) => x)
         .join(',')
     : Array.isArray(props.srcset)
-    ? props.srcset.filter((x) => x).join(',')
-    : undefined
+      ? props.srcset.filter((x) => x).join(',')
+      : undefined
 )
 
 const computedSizes = computed(() =>
@@ -84,8 +84,8 @@ const computedSizes = computed(() =>
         .filter((x) => x)
         .join(',')
     : Array.isArray(props.sizes)
-    ? props.sizes.filter((x) => x).join(',')
-    : undefined
+      ? props.sizes.filter((x) => x).join(',')
+      : undefined
 )
 
 const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
@@ -114,10 +114,10 @@ const alignment = toRef(() =>
   startBoolean.value
     ? 'float-start'
     : endBoolean.value
-    ? 'float-end'
-    : centerBoolean.value
-    ? 'mx-auto'
-    : undefined
+      ? 'float-end'
+      : centerBoolean.value
+        ? 'mx-auto'
+        : undefined
 )
 
 const computedClasses = computed(() => [

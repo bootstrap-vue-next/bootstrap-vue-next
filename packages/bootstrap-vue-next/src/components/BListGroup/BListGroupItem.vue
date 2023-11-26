@@ -80,10 +80,10 @@ const tagComputed = toRef(() =>
   parentData?.numbered.value
     ? 'li'
     : buttonBoolean.value
-    ? 'button'
-    : !isLink.value
-    ? props.tag
-    : BLink
+      ? 'button'
+      : !isLink.value
+        ? props.tag
+        : BLink
 )
 
 const isAction = computed(
