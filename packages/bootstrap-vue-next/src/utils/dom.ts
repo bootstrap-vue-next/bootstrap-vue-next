@@ -1,4 +1,4 @@
-import {type ComponentPublicInstance, type MaybeRefOrGetter, type Slot, toValue} from 'vue'
+import type {Slot} from 'vue'
 import {DOCUMENT, HAS_ELEMENT_SUPPORT} from '../constants/env'
 import type {AnimationFrame} from '../types/safeTypes'
 import {HAS_WINDOW_SUPPORT} from './env'
@@ -229,22 +229,4 @@ export const getTransitionDelay = (element: HTMLElement) => {
   const transitionDelayMs = Number(transitionDelay.slice(0, -1)) * 1000
   const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
   return transitionDelayMs + transitionDurationMs
-}
-
-/**
- * convert unknown input to HTMLElement
- *
- * @param target
- */
-export const getElement = (
-  target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
-): HTMLElement | undefined => {
-  const element = toValue(target)
-  if (!element) return undefined
-  if (typeof element === 'string') {
-    if (typeof document === 'undefined') return undefined
-    const idElement = document.getElementById(element)
-    return idElement ? idElement : (document.querySelector(element) as HTMLElement) || undefined
-  }
-  return (element as ComponentPublicInstance).$el ?? element
 }

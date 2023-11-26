@@ -12,7 +12,6 @@ import {
   watch,
 } from 'vue'
 import {useIntersectionObserver, useMutationObserver} from '@vueuse/core'
-import {getElement} from '../utils'
 
 type ScrollspyList = {
   id: string | null
@@ -223,4 +222,17 @@ export default (
     updateList,
     cleanup,
   }
+}
+
+export const getElement = (
+  target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
+): HTMLElement | undefined => {
+  const element = toValue(target)
+  if (!element) return undefined
+  if (typeof element === 'string') {
+    if (typeof document === 'undefined') return undefined
+    const idElement = document.getElementById(element)
+    return idElement ? idElement : (document.querySelector(element) as HTMLElement) || undefined
+  }
+  return (element as ComponentPublicInstance).$el ?? element
 }
