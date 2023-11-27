@@ -70,7 +70,6 @@ import BProgress from '../BProgress/BProgress.vue'
 
 const props = withDefaults(defineProps<BToastProps>(), {
   animation: true,
-  autoHide: true,
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
@@ -133,9 +132,6 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const animationBoolean = useBooleanish(() => props.animation)
 const isStatusBoolean = useBooleanish(() => props.isStatus)
-// TODO autohide is never used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const autoHideBoolean = useBooleanish(() => props.autoHide)
 const noCloseButtonBoolean = useBooleanish(() => props.noCloseButton)
 const noFadeBoolean = useBooleanish(() => props.noFade)
 const noHoverPauseBoolean = useBooleanish(() => props.noHoverPause)
