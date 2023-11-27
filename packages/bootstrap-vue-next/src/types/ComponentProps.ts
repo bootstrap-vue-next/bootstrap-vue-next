@@ -202,7 +202,6 @@ export interface BDropdownProps {
 
 export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'event' | 'routerTag'> {
   animation?: Booleanish
-  autoHide?: Booleanish
   body?: string
   bodyClass?: ClassValue
   headerClass?: ClassValue
