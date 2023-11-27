@@ -136,7 +136,7 @@
         <b-card id="directive">
           <b-row>
             <b-col cols="4">
-              <b-list-group v-b-scrollspy.directive-list="{}">
+              <b-list-group v-b-scrollspy:directive-list>
                 <b-list-group-item v-for="(e, idx) in items" :key="idx" :href="'#' + e.id">
                   {{ e.text }}
                 </b-list-group-item>

@@ -8,12 +8,16 @@ export interface ElementWithScrollspy extends HTMLElement {
 
 const bind = (el: ElementWithScrollspy, binding: DirectiveBinding) => {
   if (el.$__scrollspy) el.$__scrollspy.cleanup()
-  const {modifiers, value} = binding
+  const {arg, value} = binding
   const isObject = typeof value === 'object'
-  const mods = Object.keys(modifiers || {})
-  const content =
-    typeof value === 'string' ? value : mods.length > 0 ? mods[0] : isObject ? value.content : null
-  el.$__scrollspy = useScrollspy(content, el, isObject ? omit(value, ['content']) : {})
+  const content = arg
+    ? arg
+    : typeof value === 'string'
+    ? value
+    : isObject
+    ? value.content || value.element
+    : null
+  el.$__scrollspy = useScrollspy(content, el, isObject ? omit(value, ['content', 'element']) : {})
 }
 
 export default {

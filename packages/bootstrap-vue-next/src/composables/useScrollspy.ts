@@ -155,7 +155,7 @@ export default (
     nodes.forEach((node) => {
       const parentDropdown = node.closest('.dropdown')
 
-      if (node.getAttribute('href') === `#${newId}`) {
+      if (node.getAttribute('href')?.includes(`#${newId}`)) {
         activeElement = node as HTMLElement
         node.classList.add('active')
         if (parentDropdown) {
