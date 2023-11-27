@@ -200,12 +200,11 @@ export interface BDropdownProps {
   variant?: ButtonVariant | null
 }
 
-interface BToastIntermediate extends ColorExtendables {
+export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'event' | 'routerTag'> {
   animation?: Booleanish
   autoHide?: Booleanish
   body?: string
   bodyClass?: ClassValue
-  delay?: string | number
   headerClass?: ClassValue
   headerTag?: string
   id?: string
@@ -221,8 +220,6 @@ interface BToastIntermediate extends ColorExtendables {
   title?: string
   toastClass?: ClassValue
 }
-
-export type BToastProps = BToastIntermediate & Omit<BLinkProps, 'event' | 'routerTag'>
 
 export interface BPopoverProps {
   boundary?: Boundary | RootBoundary
