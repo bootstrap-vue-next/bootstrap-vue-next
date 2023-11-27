@@ -74,7 +74,6 @@ const props = withDefaults(defineProps<BToastProps>(), {
   bgVariant: null,
   body: undefined,
   bodyClass: undefined,
-  delay: 5000,
   headerClass: undefined,
   headerTag: 'div',
   id: undefined,
