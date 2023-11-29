@@ -581,7 +581,9 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
 
   if (noProvideWhenPaging || noProvideWhenFiltering || noProvideWhenSorting) return
 
-  await callItemsProvider()
+  if (usesProvider.value === true) {
+    await callItemsProvider()
+  }
 
   if (!(prop === 'currentPage' || prop === 'perPage')) {
     emit('filtered', computedItems.value)
