@@ -134,8 +134,8 @@ const props = withDefaults(
       // noSortReset?: Booleanish
       // selectedVariant?: ColorVariant | null
       // showEmpty?: Booleanish
-      // sortCompareLocale?: () => any
-      // sortCompareOptions?: Record<string, any> // TODO make this explicit
+      sortCompareLocale?: string | string[]
+      sortCompareOptions?: Intl.CollatorOptions
       // sortDirection?: 'asc' | 'desc' | 'last'
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
@@ -144,6 +144,8 @@ const props = withDefaults(
     } & Omit<BTableLiteProps, 'tableClass'>
   >(),
   {
+    sortCompareLocale: undefined,
+    sortCompareOptions: () => ({numeric: true}),
     noSortableIcon: false,
     perPage: Infinity,
     sortBy: undefined,
@@ -390,15 +392,11 @@ const computedItems = computed<TableItem[]>(() => {
       const realVal = (ob: unknown): string =>
         typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
 
-      if (realVal(a[sortKey]) > realVal(b[sortKey])) {
-        return sortDescBoolean.value ? -1 : 1
-      }
-
-      if (realVal(b[sortKey]) > realVal(a[sortKey])) {
-        return sortDescBoolean.value ? 1 : -1
-      }
-
-      return 0
+      return realVal(a[sortKey]).localeCompare(
+        realVal(b[sortKey]),
+        props.sortCompareLocale,
+        props.sortCompareOptions
+      )
     })
   }
 
