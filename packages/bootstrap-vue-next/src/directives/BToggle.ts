@@ -2,7 +2,7 @@ import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
 import {getAttr, isTag} from '../utils'
 import type {Directive, DirectiveBinding} from 'vue'
 
-const getTargets = (binding: DirectiveBinding<string | string[]>, el: HTMLElement) => {
+const getTargets = (binding: DirectiveBinding<string | string[] | undefined>, el: HTMLElement) => {
   const {modifiers, arg, value} = binding
   // Any modifiers are considered target Ids
   const targets = Object.keys(modifiers || {})
@@ -59,8 +59,8 @@ const checkVisibility = (targetIds: string[], el: HTMLElement) => {
 
 const handleUpdate = (el: WithToggle, binding: DirectiveBinding<string | string[] | undefined>) => {
   // Determine targets
-  if (binding.value === undefined && Object.keys(binding.modifiers || {}).length === 0) return
-  const targets = getTargets(binding as DirectiveBinding<string | string[]>, el)
+  const targets = getTargets(binding, el)
+  if (targets.length === 0) return
 
   // Set up click handler
   if (el.__toggle) {
