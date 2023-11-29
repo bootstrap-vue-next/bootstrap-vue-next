@@ -1,3 +1,4 @@
+import {useIntersectionObserver, useMutationObserver} from '@vueuse/core'
 import {
   type ComponentPublicInstance,
   computed,
@@ -8,10 +9,10 @@ import {
   readonly,
   type Ref,
   ref,
-  toValue,
+  toRef,
   watch,
 } from 'vue'
-import {useIntersectionObserver, useMutationObserver} from '@vueuse/core'
+import {getElement} from '../utils'
 
 type ScrollspyList = {
   id: string | null
@@ -45,16 +46,15 @@ export default (
   target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>,
   options: Partial<ScrollspyOptions> = {}
 ): ScrollspyReturn => {
+  const cont = toRef(content)
+  const tar = toRef(target)
+
   // Cludge to get elements with dom query after mount
   // because we can't trigger watch on mount with string values
-  const resolvedContent = ref(getElement(content))
-  const resolvedTarget = ref(getElement(target))
-  const updateElements = () => {
-    resolvedContent.value = getElement(content)
-    resolvedTarget.value = getElement(target)
-  }
-  watch([() => toValue(content), () => toValue(target)], () => {
-    updateElements()
+  const resolvedContent = computed(() => getElement(cont.value))
+  const resolvedTarget = computed(() => getElement(tar.value))
+
+  watch([cont, tar], () => {
     updateList()
   })
   const {
@@ -78,10 +78,6 @@ export default (
     })
   } else {
     onMounted(() => {
-      if (typeof toValue(content) === 'string' && resolvedContent.value === undefined)
-        resolvedContent.value = getElement(content)
-      if (typeof toValue(target) === 'string' && resolvedTarget.value === undefined)
-        resolvedTarget.value = getElement(target)
       updateList()
     })
   }
@@ -222,17 +218,4 @@ export default (
     updateList,
     cleanup,
   }
-}
-
-export const getElement = (
-  target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
-): HTMLElement | undefined => {
-  const element = toValue(target)
-  if (!element) return undefined
-  if (typeof element === 'string') {
-    if (typeof document === 'undefined') return undefined
-    const idElement = document.getElementById(element)
-    return idElement ? idElement : (document.querySelector(element) as HTMLElement) || undefined
-  }
-  return (element as ComponentPublicInstance).$el ?? element
 }

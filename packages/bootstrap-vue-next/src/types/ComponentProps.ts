@@ -1,5 +1,5 @@
 import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
-import type {ComponentPublicInstance, MaybeRefOrGetter} from 'vue'
+import type {ComponentPublicInstance} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {Booleanish} from './Booleanish'
@@ -251,9 +251,9 @@ export interface BPopoverProps {
   placement?: PopoverPlacement
   persistent?: Booleanish
   realtime?: Booleanish
-  reference?: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
+  reference?: string | ComponentPublicInstance | HTMLElement | null
   strategy?: Strategy
-  target?: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
+  target?: string | ComponentPublicInstance | HTMLElement | null
   title?: string
   tooltip?: Booleanish
   variant?: ColorVariant | null
