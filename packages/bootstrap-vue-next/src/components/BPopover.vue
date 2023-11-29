@@ -87,13 +87,13 @@ import {
   type ComponentPublicInstance,
   computed,
   type CSSProperties,
-  type MaybeRef,
+  type MaybeRefOrGetter,
   nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
   toRef,
-  unref,
+  toValue,
   watch,
   watchEffect,
 } from 'vue'
@@ -430,20 +430,16 @@ defineExpose({
 })
 
 const getElement = (
-  target: MaybeRef<
-    string | ComponentPublicInstance<HTMLElement> | HTMLSpanElement | HTMLElement | null
-  >
+  target: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
 ): HTMLElement | undefined => {
-  const element = unref(target)
+  const element = toValue(target)
   if (!element) return undefined
   if (typeof element === 'string') {
+    if (typeof document === 'undefined') return undefined
     const idElement = document.getElementById(element)
-    return idElement ? idElement : undefined
+    return idElement ? idElement : (document.querySelector(element) as HTMLElement) || undefined
   }
-  if ((element as ComponentPublicInstance<HTMLElement>).$el) {
-    return (element as ComponentPublicInstance<HTMLElement>).$el as HTMLElement
-  }
-  return element
+  return (element as ComponentPublicInstance).$el ?? element
 }
 
 const bind = () => {

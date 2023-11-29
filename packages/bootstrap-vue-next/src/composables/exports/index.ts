@@ -1,1 +1,1 @@
-export {useBreadcrumb, useColorMode, useModal, useModalController, useToast} from '..'
+export {useBreadcrumb, useColorMode, useModal, useModalController, useScrollspy, useToast} from '..'

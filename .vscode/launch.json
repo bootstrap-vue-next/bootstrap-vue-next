@@ -1,0 +1,32 @@
+{
+  "configurations": [
+    {
+      "name": "Launch nuxt dev",
+      "request": "launch",
+      "runtimeArgs": [
+        "dev",
+        "--filter",
+        "nuxt"
+      ],
+      "runtimeExecutable": "pnpm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
+      "name": "Launch app dev",
+      "request": "launch",
+      "runtimeArgs": [
+        "dev",
+        "--filter",
+        "bootstrap-vue-next"
+      ],
+      "runtimeExecutable": "pnpm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+  ]
+}
