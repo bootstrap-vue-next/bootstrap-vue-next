@@ -564,13 +564,6 @@ const notifySelectionEvent = () => {
   if (!selectableBoolean.value) return
   emit('selection', [...selectedItemsToSet.value])
 }
-const notifyFilteredItems = async () => {
-  if (usesProvider.value) {
-    await callItemsProvider()
-    return
-  }
-  emit('filtered', computedItems.value)
-}
 
 const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) => {
   if (val === oldVal) return
@@ -590,7 +583,9 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
 
   await callItemsProvider()
 
-  if (!(prop === 'currentPage' || prop === 'perPage')) notifyFilteredItems()
+  if (!(prop === 'currentPage' || prop === 'perPage')) {
+    emit('filtered', computedItems.value)
+  }
 }
 
 watch(
