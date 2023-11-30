@@ -119,12 +119,12 @@ const loadingBoolean = useBooleanish(() => props.loading)
 const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
-  'active-class',
-  'exact-active-class',
+  'activeClass',
+  'exactActiveClass',
   'event',
   'replace',
-  'router-component-name',
-  'router-tag',
+  'routerComponentName',
+  'routerTag',
 ])
 
 const isToggle = toRef(() => typeof pressedBoolean.value === 'boolean')
