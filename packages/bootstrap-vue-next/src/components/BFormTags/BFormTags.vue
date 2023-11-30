@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, toRef, watch} from 'vue'
+import {computed, ref, toRef} from 'vue'
 import BFormTag from './BFormTag.vue'
 import {useBooleanish, useId, useStateClass} from '../../composables'
 import type {
@@ -127,7 +127,7 @@ import type {
   InputType,
   Size,
 } from '../../types'
-import {onKeyStroke, useFocus, useToNumber, useVModel} from '@vueuse/core'
+import {onKeyStroke, syncRef, useFocus, useToNumber, useVModel} from '@vueuse/core'
 import {escapeRegExpChars} from '../../utils'
 
 const props = withDefaults(
@@ -258,6 +258,10 @@ const validTags = ref<string[]>([])
 const invalidTags = ref<string[]>([])
 const duplicateTags = ref<string[]>([])
 
+syncRef(modelValue, tags, {
+  direction: 'ltr',
+})
+
 const computedClasses = computed(() => [
   stateClass.value,
   {
@@ -317,10 +321,6 @@ const slotAttrs = computed(() => ({
   tagVariant: props.tagVariant,
   tags: tags.value,
 }))
-
-watch(modelValue, (newVal) => {
-  tags.value = newVal
-})
 
 const onFocusin = (e: FocusEvent): void => {
   if (disabledBoolean.value) {
