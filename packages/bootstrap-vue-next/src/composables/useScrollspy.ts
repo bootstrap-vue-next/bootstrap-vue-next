@@ -1,4 +1,4 @@
-import {useIntersectionObserver, useMutationObserver} from '@vueuse/core'
+import {syncRef, useIntersectionObserver, useMutationObserver} from '@vueuse/core'
 import {
   type ComponentPublicInstance,
   computed,
@@ -49,10 +49,8 @@ export default (
   const cont = toRef(content)
   const tar = toRef(target)
 
-  // Cludge to get elements with dom query after mount
-  // because we can't trigger watch on mount with string values
-  const resolvedContent = computed(() => getElement(cont.value))
-  const resolvedTarget = computed(() => getElement(tar.value))
+  const resolvedContent = ref(getElement(cont.value))
+  const resolvedTarget = ref(getElement(tar.value))
 
   watch([cont, tar], () => {
     updateList()
@@ -78,6 +76,20 @@ export default (
     })
   } else {
     onMounted(() => {
+      syncRef(cont, resolvedContent, {
+        transform: {
+          ltr: (v) => getElement(v),
+        },
+        direction: 'ltr',
+        immediate: true,
+      })
+      syncRef(tar, resolvedTarget, {
+        transform: {
+          ltr: (v) => getElement(v),
+        },
+        direction: 'ltr',
+        immediate: true,
+      })
       updateList()
     })
   }
