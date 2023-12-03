@@ -121,8 +121,8 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',
   'exact-active-class',
   'replace',
-  'router-component-name',
-  'router-tag',
+  'routerComponentName',
+  'routerTag',
 ])
 
 const isToggle = toRef(() => typeof pressedBoolean.value === 'boolean')

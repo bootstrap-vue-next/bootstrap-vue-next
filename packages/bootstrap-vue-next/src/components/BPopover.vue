@@ -1,7 +1,7 @@
 <template>
   <span ref="placeholder" />
   <slot name="target" :show="show" :hide="hide" :toggle="toggle" :show-state="showState" />
-  <Teleport :to="container" :disabled="!container">
+  <Teleport :to="container || 'body'" :disabled="!container">
     <div
       v-if="showStateInternal || persistentBoolean"
       :id="id"
