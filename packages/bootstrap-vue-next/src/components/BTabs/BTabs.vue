@@ -1,16 +1,20 @@
 <template>
   <component :is="tag" :id="id" class="tabs" :class="computedClasses">
-    <div v-if="endBoolean" class="tab-content" :class="contentClass">
-      <slot />
-      <div
-        v-if="showEmpty"
-        key="bv-empty-tab"
-        class="tab-pane active"
-        :class="{'card-body': cardBoolean}"
-      >
-        <slot name="empty" />
+    <ReusableEmptyTab.define>
+      <div class="tab-content" :class="contentClass">
+        <slot />
+        <div
+          v-if="showEmpty"
+          key="bv-empty-tab"
+          class="tab-pane active"
+          :class="{'card-body': cardBoolean}"
+        >
+          <slot name="empty" />
+        </div>
       </div>
-    </div>
+    </ReusableEmptyTab.define>
+
+    <ReusableEmptyTab.reuse v-if="endBoolean" />
     <div
       :class="[navWrapperClass, {'card-header': cardBoolean, 'ms-auto': vertical && endBoolean}]"
     >
@@ -51,18 +55,7 @@
         <slot name="tabs-end" />
       </ul>
     </div>
-    <!-- Tab Content Below Tabs-->
-    <div v-if="!endBoolean" class="tab-content" :class="contentClass">
-      <slot />
-      <div
-        v-if="showEmpty"
-        key="bv-empty-tab"
-        class="tab-pane active"
-        :class="{'card-body': cardBoolean}"
-      >
-        <slot name="empty" />
-      </div>
-    </div>
+    <ReusableEmptyTab.reuse v-if="!endBoolean" />
   </component>
 </template>
 
@@ -71,7 +64,7 @@ import {computed, nextTick, provide, type Ref, ref, toRef, unref, watch} from 'v
 import {BvEvent, tabsInjectionKey} from '../../utils'
 import {useAlignment, useBooleanish} from '../../composables'
 import type {AlignmentJustifyContent, Booleanish, ClassValue, TabType} from '../../types'
-import {useVModel} from '@vueuse/core'
+import {createReusableTemplate, useVModel} from '@vueuse/core'
 // TODO this component needs a desperate refactoring to use provide/inject and not the complicated slot manipulation logic it's doing now
 
 const props = withDefaults(
@@ -154,6 +147,8 @@ const noNavStyleBoolean = useBooleanish(() => props.noNavStyle)
 const pillsBoolean = useBooleanish(() => props.pills)
 const smallBoolean = useBooleanish(() => props.small)
 const verticalBoolean = useBooleanish(() => props.vertical)
+
+const ReusableEmptyTab = createReusableTemplate()
 
 const tabsInternal = ref<Ref<TabType>[]>([])
 

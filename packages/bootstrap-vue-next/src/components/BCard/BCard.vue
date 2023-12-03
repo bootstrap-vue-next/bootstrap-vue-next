@@ -1,8 +1,12 @@
 <template>
   <component :is="tag" class="card" :class="computedClasses">
-    <slot v-if="!imgBottomBoolean" name="img">
-      <BCardImg v-if="imgSrc" v-bind="imgAttr" />
-    </slot>
+    <ReusableImg.define>
+      <slot name="img">
+        <BCardImg v-if="imgSrc" v-bind="imgAttr" />
+      </slot>
+    </ReusableImg.define>
+
+    <ReusableImg.reuse v-if="!imgBottomBoolean" />
     <BCardHeader
       v-if="header || hasHeaderSlot || headerHtml"
       :bg-variant="headerBgVariant"
@@ -51,9 +55,7 @@
         {{ footer }}
       </slot>
     </BCardFooter>
-    <slot v-if="imgBottomBoolean" name="img">
-      <BCardImg v-if="imgSrc" v-bind="imgAttr" />
-    </slot>
+    <ReusableImg.reuse v-if="imgBottomBoolean" />
   </component>
 </template>
 
@@ -73,6 +75,7 @@ import BCardImg from './BCardImg.vue'
 import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
+import {createReusableTemplate} from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<
@@ -207,4 +210,6 @@ const imgAttr = computed(() => ({
   start: props.imgStart,
   top: props.imgTop,
 }))
+
+const ReusableImg = createReusableTemplate()
 </script>
