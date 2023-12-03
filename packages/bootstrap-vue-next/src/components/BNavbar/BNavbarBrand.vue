@@ -19,7 +19,7 @@ const props = withDefaults(
   defineProps<
     {
       tag?: string
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'routerTag'>
   >(),
   {
     tag: 'div',

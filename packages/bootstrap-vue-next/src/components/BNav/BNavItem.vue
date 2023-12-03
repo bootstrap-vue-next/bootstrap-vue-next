@@ -30,7 +30,7 @@ const props = withDefaults(
     {
       linkAttrs?: Record<string, unknown>
       linkClass?: ClassValue
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'routerTag'>
   >(),
   {
     // Link props

@@ -82,7 +82,6 @@ const props = withDefaults(
     activeClass: undefined,
     append: undefined,
     disabled: undefined,
-    event: undefined,
     exactActiveClass: undefined,
     href: undefined,
     icon: undefined,
@@ -121,7 +120,6 @@ const loadingFillBoolean = useBooleanish(() => props.loadingFill)
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'active-class',
   'exact-active-class',
-  'event',
   'replace',
   'router-component-name',
   'router-tag',

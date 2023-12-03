@@ -36,7 +36,7 @@ const props = withDefaults(
     {
       linkClass?: ClassValue
       wrapperAttrs?: AttrsValue
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'routerTag'>
   >(),
   {
     wrapperAttrs: undefined,

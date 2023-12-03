@@ -65,7 +65,7 @@ const props = withDefaults(
       square?: Booleanish
       src?: string
       text?: string
-    } & Omit<BLinkProps, 'event' | 'routerTag'> &
+    } & Omit<BLinkProps, 'routerTag'> &
       ColorExtendables &
       RadiusElementExtendables
   >(),

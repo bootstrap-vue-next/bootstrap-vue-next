@@ -30,7 +30,7 @@ const props = withDefaults(
     {
       ariaCurrent?: string
       text?: string
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+    } & Omit<BLinkProps, 'routerTag'>
   >(),
   {
     ariaCurrent: 'location',
@@ -41,7 +41,6 @@ const props = withDefaults(
     activeClass: undefined,
     append: undefined,
     disabled: undefined,
-    event: undefined,
     exactActiveClass: undefined,
     href: undefined,
     icon: undefined,

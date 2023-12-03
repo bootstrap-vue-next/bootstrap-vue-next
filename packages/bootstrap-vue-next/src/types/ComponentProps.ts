@@ -23,8 +23,6 @@ export interface BLinkProps {
   append?: Booleanish
   disabled?: Booleanish
   exactActiveClass?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  event?: string | any[]
   href?: string
   icon?: Booleanish
   // noPrefetch: {type: [Boolean, String] as PropType<Booleanish>, default: false},
