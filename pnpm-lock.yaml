@@ -45,8 +45,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       '@vueuse/core':
-        specifier: ^10.6.1
-        version: 10.6.1(vue@3.3.8)
+        specifier: ^10.7.0
+        version: 10.7.0(vue@3.3.8)
       bootstrap:
         specifier: ^5.3.2
         version: 5.3.2(@popperjs/core@2.11.8)
@@ -124,8 +124,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(vue@3.3.8)
       '@vueuse/core':
-        specifier: ^10.6.1
-        version: 10.6.1(vue@3.3.8)
+        specifier: ^10.7.0
+        version: 10.7.0(vue@3.3.8)
     devDependencies:
       '@floating-ui/core':
         specifier: ^1.5.0
@@ -161,8 +161,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       '@vueuse/shared':
-        specifier: ^10.6.1
-        version: 10.6.1(vue@3.3.8)
+        specifier: ^10.7.0
+        version: 10.7.0(vue@3.3.8)
       bootstrap:
         specifier: ^5.3.2
         version: 5.3.2(@popperjs/core@2.11.8)
@@ -3559,6 +3559,18 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+    dev: true
+
+  /@vueuse/core@10.7.0(vue@3.3.8):
+    resolution: {integrity: sha512-4EUDESCHtwu44ZWK3Gc/hZUVhVo/ysvdtwocB5vcauSV4B7NiGY5972WnsojB3vRNdxvAt7kzJWE2h9h7C9d5w==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 10.7.0
+      '@vueuse/shared': 10.7.0(vue@3.3.8)
+      vue-demi: 0.14.6(vue@3.3.8)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
 
   /@vueuse/integrations@10.6.1(focus-trap@7.5.4)(vue@3.3.8):
     resolution: {integrity: sha512-mPDupuofMJ4DPmtX/FfP1MajmWRzYDv8WSaTCo8LQ5kFznjWgmUQ16ApjYqgMquqffNY6+IRMdMgosLDRZOSZA==}
@@ -3612,9 +3624,22 @@ packages:
 
   /@vueuse/metadata@10.6.1:
     resolution: {integrity: sha512-qhdwPI65Bgcj23e5lpGfQsxcy0bMjCAsUGoXkJ7DsoeDUdasbZ2DBa4dinFCOER3lF4gwUv+UD2AlA11zdzMFw==}
+    dev: true
+
+  /@vueuse/metadata@10.7.0:
+    resolution: {integrity: sha512-GlaH7tKP2iBCZ3bHNZ6b0cl9g0CJK8lttkBNUX156gWvNYhTKEtbweWLm9rxCPIiwzYcr/5xML6T8ZUEt+DkvA==}
 
   /@vueuse/shared@10.6.1(vue@3.3.8):
     resolution: {integrity: sha512-TECVDTIedFlL0NUfHWncf3zF9Gc4VfdxfQc8JFwoVZQmxpONhLxFrlm0eHQeidHj4rdTPL3KXJa0TZCk1wnc5Q==}
+    dependencies:
+      vue-demi: 0.14.6(vue@3.3.8)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: true
+
+  /@vueuse/shared@10.7.0(vue@3.3.8):
+    resolution: {integrity: sha512-kc00uV6CiaTdc3i1CDC4a3lBxzaBE9AgYNtFN87B5OOscqeWElj/uza8qVDmk7/U8JbqoONLbtqiLJ5LGRuqlw==}
     dependencies:
       vue-demi: 0.14.6(vue@3.3.8)
     transitivePeerDependencies:
@@ -9293,7 +9318,7 @@ packages:
       '@types/markdown-it': 13.0.7
       '@vitejs/plugin-vue': 4.5.0(vite@5.0.2)(vue@3.3.8)
       '@vue/devtools-api': 6.5.1
-      '@vueuse/core': 10.6.1(vue@3.3.8)
+      '@vueuse/core': 10.7.0(vue@3.3.8)
       '@vueuse/integrations': 10.6.1(focus-trap@7.5.4)(vue@3.3.8)
       focus-trap: 7.5.4
       mark.js: 8.11.1
