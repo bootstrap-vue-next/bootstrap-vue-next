@@ -3,6 +3,6 @@
     <Comp />
   </div>
 </template>
-<script setup>
-import Comp from './components/Comp.vue';
+<script setup lang="ts">
+import Comp from "./components/Comp.vue";
 </script>
