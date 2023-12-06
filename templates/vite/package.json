@@ -1,5 +1,5 @@
 {
-  "name": "bsvn-vite-ts",
+  "name": "vite-vue-starter",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,11 +11,11 @@
   "dependencies": {
     "bootstrap-styles": "*",
     "bootstrap-vue-next": "*",
-    "sass": "*",
     "vue": "*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "*",
+    "sass": "*",
     "typescript": "*",
     "vite": "*",
     "vue-tsc": "*"
