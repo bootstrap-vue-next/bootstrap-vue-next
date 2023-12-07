@@ -145,7 +145,7 @@ const props = withDefaults(
   >(),
   {
     sortCompareLocale: undefined,
-    sortCompareOptions: () => ({numeric: true}),
+    sortCompareOptions: () => ({numeric: true, usage: 'sort'}),
     noSortableIcon: false,
     perPage: Infinity,
     sortBy: undefined,
@@ -321,10 +321,10 @@ const computedFields = computed<TableField[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                  ? 'none'
-                  : sortDescBoolean.value === true
-                    ? 'descending'
-                    : 'ascending',
+                ? 'none'
+                : sortDescBoolean.value === true
+                ? 'descending'
+                : 'ascending',
             ...el.thAttr,
           },
         }
@@ -385,7 +385,7 @@ const computedItems = computed<TableItem[]>(() => {
       return items
     }
 
-    return [...items].sort((a, b) => {
+    const sorted = [...items].sort((a, b) => {
       if (props.sortCompare !== undefined)
         return props.sortCompare(a, b, sortKey, sortDescBoolean.value)
 
@@ -398,12 +398,15 @@ const computedItems = computed<TableItem[]>(() => {
         props.sortCompareOptions
       )
     })
+
+    return sortDescBoolean.value && props.sortCompare === undefined ? sorted.reverse() : sorted
   }
 
   const filterItems = (items: TableItem[]) =>
     items.filter((item) =>
       Object.entries(item).some(([key, val]) => {
-        if (!val || key[0] === '_' || !props.filterable?.includes(key)) return false
+        if (key[0] === '_' || (!props.filterable?.includes(key) && !!props.filterable?.length))
+          return false
         const itemValue: string =
           typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
         return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
