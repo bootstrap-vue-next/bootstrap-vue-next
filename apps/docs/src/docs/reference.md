@@ -75,7 +75,7 @@ const componentList: {name: string; description: string}[] = [
 ]
 
 const computedComponentsList = computed(() =>
-  [...componentList]
+  componentList
     .map((el) => ({
       name: el.name,
       description: el.description,

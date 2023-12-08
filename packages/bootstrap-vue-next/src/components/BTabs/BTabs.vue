@@ -273,7 +273,7 @@ const registerTab = (tab: Ref<TabType>) => {
   } else {
     tabsInternal.value[tabsInternal.value.findIndex((t) => t.value.id === tab.value.id)] = tab
   }
-  tabsInternal.value = tabsInternal.value.sort((a, b) => {
+  tabsInternal.value.sort((a, b) => {
     if (!Node || !a.value.el || !b.value.el) return 0
     const position = a.value.el.compareDocumentPosition(b.value.el)
     if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1

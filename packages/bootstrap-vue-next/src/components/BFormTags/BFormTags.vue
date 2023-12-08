@@ -449,7 +449,8 @@ const addTag = (tag?: string): void => {
 
 const removeTag = (tag?: string): void => {
   const tagIndex = tags.value.indexOf(tag?.toString() ?? '')
-  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
+  if (tagIndex === -1) return
+  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString() // TODO this seems strange, if index === -1 you'll remove the last el
   modelValue.value = tags.value
 }
 
