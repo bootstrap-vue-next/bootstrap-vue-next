@@ -151,7 +151,8 @@ const computedClasses = computed(() => [
     'card-body': parentData?.card.value && noBodyBoolean.value === false,
     'fade': !parentData?.noFade.value,
   },
-  show.value && parentData?.activeTabClass ? parentData.activeTabClass : null,
+  show.value ? parentData?.activeTabClass : parentData?.inactiveTabClass,
+  parentData?.tabClass,
 ])
 
 watch(showSlot, (shown) => {

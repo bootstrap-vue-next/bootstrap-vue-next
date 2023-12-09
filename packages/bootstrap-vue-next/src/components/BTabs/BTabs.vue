@@ -85,10 +85,13 @@ const props = withDefaults(
     end?: Booleanish
     fill?: Booleanish
     id?: string
+    inactiveNavItemClass?: ClassValue
+    inactiveTabClass?: ClassValue
     justified?: Booleanish
     lazy?: Booleanish
     modelValue?: number
     navClass?: ClassValue
+    navItemClass?: ClassValue
     navWrapperClass?: ClassValue
     noFade?: Booleanish
     // noKeyNav?: Booleanish,
@@ -96,6 +99,7 @@ const props = withDefaults(
     pills?: Booleanish
     small?: Booleanish
     tag?: string
+    tabClass?: ClassValue
     vertical?: Booleanish
   }>(),
   {
@@ -108,10 +112,13 @@ const props = withDefaults(
     end: false,
     fill: false,
     id: undefined,
+    inactiveNavItemClass: undefined,
+    inactiveTabClass: undefined,
     justified: false,
     lazy: false,
     modelValue: -1,
     navClass: undefined,
+    navItemClass: undefined,
     navWrapperClass: undefined,
     noFade: false,
     // noKeyNav: false,
@@ -119,6 +126,7 @@ const props = withDefaults(
     pills: false,
     small: false,
     tag: 'div',
+    tabClass: undefined,
     vertical: false,
   }
 )
@@ -170,7 +178,8 @@ const tabs = computed(() =>
           active,
           disabled: tab.disabled,
         },
-        active && props.activeNavItemClass ? props.activeNavItemClass : null,
+        active ? props.activeNavItemClass : props.inactiveNavItemClass,
+        props.navItemClass,
         tab.titleLinkClass,
       ],
     }
@@ -324,6 +333,8 @@ provide(tabsInjectionKey, {
   card: cardBoolean,
   noFade: noFadeBoolean,
   activeTabClass: toRef(() => props.activeTabClass),
+  inactiveTabClass: toRef(() => props.inactiveTabClass),
+  tabClass: toRef(() => props.tabClass),
   registerTab,
   unregisterTab,
   activeId,

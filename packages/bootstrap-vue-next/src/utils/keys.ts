@@ -27,6 +27,8 @@ export const tabsInjectionKey: InjectionKey<{
   unregisterTab: (id: string) => void
   activateTab: (id: string | undefined) => void
   activeTabClass: Readonly<Ref<ClassValue>>
+  inactiveTabClass: Readonly<Ref<ClassValue>>
+  tabClass: Readonly<Ref<ClassValue>>
   activeId: Readonly<Ref<string | undefined>>
 }> = Symbol('tabs')
 
