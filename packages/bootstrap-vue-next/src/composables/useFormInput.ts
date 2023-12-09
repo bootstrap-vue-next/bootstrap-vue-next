@@ -18,7 +18,7 @@ export interface CommonInputProps {
   lazy?: Booleanish
   lazyFormatter?: Booleanish
   list?: string
-  modelValue?: string | number
+  modelValue?: string | number | null
   name?: string
   number?: Booleanish
   placeholder?: string
