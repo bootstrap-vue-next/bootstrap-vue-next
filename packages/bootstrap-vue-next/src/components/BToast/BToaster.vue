@@ -11,6 +11,7 @@
           v-for="toast in toasts.filter((el) => el.pos === key)"
           :key="toast.self"
           v-model="toast.value"
+          :transition-props="{appear: true}"
           v-bind="pluckToastItem(toast)"
           @destroyed="hide(toast.self)"
         />

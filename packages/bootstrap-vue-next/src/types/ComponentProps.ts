@@ -1,5 +1,5 @@
 import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
-import type {ComponentPublicInstance} from 'vue'
+import type {ComponentPublicInstance, RendererElement, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {PopoverPlacement} from './PopoverPlacement'
 import type {Booleanish} from './Booleanish'
@@ -16,6 +16,8 @@ import type {TableFieldObject} from './TableFieldObject'
 import type {TableItem} from './TableItem'
 import type {VerticalAlign} from './VerticalAlign'
 import type {RadiusElementExtendables} from './RadiusElement'
+import type {TextColorVariant} from './TextColorVariant'
+import type {TransitionMode} from './TransitionMode'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -41,6 +43,13 @@ export interface BLinkProps {
   underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
+}
+
+export interface BTransitionProps {
+  appear?: Booleanish
+  mode?: TransitionMode
+  noFade?: Booleanish
+  transProps?: TransitionProps
 }
 
 export interface BImgProps extends RadiusElementExtendables {
@@ -216,6 +225,7 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'event' 
   solid?: Booleanish
   title?: string
   toastClass?: ClassValue
+  transitionProps?: BTransitionProps
 }
 
 export interface BPopoverProps {
@@ -262,4 +272,62 @@ export interface BCardHeadFootProps extends ColorExtendables {
   html?: string
   tag?: string
   text?: string
+}
+
+export interface BModalProps {
+  autoFocus?: Booleanish
+  autoFocusButton?: 'ok' | 'cancel' | 'close'
+  body?: string
+  backdropVariant?: ColorVariant | null
+  bodyBgVariant?: ColorVariant | null
+  bodyClass?: ClassValue
+  bodyScrolling?: Booleanish
+  bodyTextVariant?: TextColorVariant | null
+  bodyVariant?: ColorVariant | null
+  busy?: Booleanish
+  buttonSize?: Size
+  cancelDisabled?: Booleanish
+  cancelTitle?: string
+  cancelVariant?: ButtonVariant | null
+  centered?: Booleanish
+  contentClass?: ClassValue
+  dialogClass?: ClassValue
+  footerBgVariant?: ColorVariant | null
+  footerBorderVariant?: ColorVariant | null
+  footerClass?: ClassValue
+  footerTextVariant?: TextColorVariant | null
+  footerVariant?: ColorVariant | null
+  fullscreen?: Booleanish | Breakpoint
+  headerBgVariant?: ColorVariant | null
+  headerBorderVariant?: ColorVariant | null
+  headerClass?: ClassValue
+  headerCloseClass?: ClassValue
+  headerCloseLabel?: string
+  headerCloseVariant?: ButtonVariant | null
+  headerTextVariant?: TextColorVariant | null
+  headerVariant?: ColorVariant | null
+  hideBackdrop?: Booleanish
+  hideFooter?: Booleanish
+  hideHeader?: Booleanish
+  hideHeaderClose?: Booleanish
+  id?: string
+  lazy?: Booleanish
+  modalClass?: ClassValue
+  modelValue?: Booleanish
+  noCloseOnBackdrop?: Booleanish
+  noCloseOnEsc?: Booleanish
+  noFade?: Booleanish
+  okDisabled?: Booleanish
+  okOnly?: Booleanish
+  okTitle?: string
+  okVariant?: ButtonVariant | null
+  scrollable?: Booleanish
+  size?: Size | 'xl'
+  teleportDisabled?: Booleanish
+  teleportTo?: string | RendererElement | null | undefined
+  title?: string
+  titleClass?: ClassValue
+  titleSrOnly?: Booleanish
+  titleTag?: string
+  transitionProps?: BTransitionProps
 }
