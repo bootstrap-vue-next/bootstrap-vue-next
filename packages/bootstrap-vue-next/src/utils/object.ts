@@ -6,8 +6,8 @@ export const omit = <
   A extends Record<PropertyKey, unknown>,
   const B extends ReadonlyArray<PropertyKey>,
 >(
-  objToPluck: A,
-  keysToPluck: B | (keyof A)[]
+  objToPluck: Readonly<A>,
+  keysToPluck: Readonly<B> | readonly (keyof A)[]
 ): Omit<A, B[number]> =>
   Object.keys(objToPluck)
     .filter((key) => !keysToPluck.map((el) => el.toString()).includes(key))
@@ -21,8 +21,8 @@ export const pick = <
   A extends Record<PropertyKey, unknown>,
   const B extends ReadonlyArray<PropertyKey>,
 >(
-  objToPluck: A,
-  keysToPluck: B | (keyof A)[]
+  objToPluck: Readonly<A>,
+  keysToPluck: Readonly<B> | readonly (keyof A)[]
 ): Pick<A, B[number]> =>
   [...keysToPluck].reduce(
     (memo, prop) => {
@@ -43,7 +43,7 @@ export const get = <TDefault = unknown>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any,
   path: string,
-  defaultValue?: TDefault
+  defaultValue?: Readonly<TDefault>
 ): TDefault => {
   const segments = path.split(/[.[\]]/g)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -14,14 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, ColorVariant} from '../../types'
+import type {Booleanish, ColorVariant, Numberish} from '../../types'
 import {useBooleanish} from '../../composables'
 import {computed, toRef} from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    colspan?: string | number
-    rowspan?: string | number
+    colspan?: Numberish
+    rowspan?: Numberish
     stackedHeading?: string
     stickyColumn?: Booleanish
     variant?: ColorVariant | null

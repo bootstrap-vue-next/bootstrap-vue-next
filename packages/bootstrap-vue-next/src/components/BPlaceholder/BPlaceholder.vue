@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, toRef} from 'vue'
-import type {ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {ColorVariant, Numberish, PlaceholderAnimation, PlaceholderSize} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -21,11 +21,11 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     animation?: PlaceholderAnimation
-    cols?: string | number
+    cols?: Numberish
     size?: PlaceholderSize
     tag?: string
     variant?: ColorVariant | null
-    width?: string | number
+    width?: Numberish
     wrapperTag?: string
   }>(),
   {

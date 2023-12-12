@@ -47,7 +47,13 @@
 
 <script setup lang="ts">
 import {toRef} from 'vue'
-import type {Booleanish, ColorVariant, PlaceholderAnimation, PlaceholderSize} from '../../types'
+import type {
+  Booleanish,
+  ColorVariant,
+  Numberish,
+  PlaceholderAnimation,
+  PlaceholderSize,
+} from '../../types'
 import {useBooleanish} from '../../composables'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
@@ -56,20 +62,20 @@ import {useToNumber} from '@vueuse/core'
 const props = withDefaults(
   defineProps<{
     animation?: PlaceholderAnimation
-    cellWidth?: string | number
-    columns?: string | number
+    cellWidth?: Numberish
+    columns?: Numberish
     footerAnimation?: PlaceholderAnimation
-    footerCellWidth?: string | number
-    footerColumns?: string | number
+    footerCellWidth?: Numberish
+    footerColumns?: Numberish
     footerSize?: PlaceholderSize
     footerVariant?: ColorVariant | null
     headerAnimation?: PlaceholderAnimation
-    headerCellWidth?: string | number
-    headerColumns?: string | number
+    headerCellWidth?: Numberish
+    headerColumns?: Numberish
     headerSize?: PlaceholderSize
     headerVariant?: ColorVariant | null
     hideHeader?: Booleanish
-    rows?: string | number
+    rows?: Numberish
     showFooter?: Booleanish
     size?: PlaceholderSize
     variant?: ColorVariant | null

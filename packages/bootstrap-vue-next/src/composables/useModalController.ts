@@ -18,7 +18,7 @@ export default () => {
     })[]
   >([])
 
-  const baseCreate = (el?: Modal & {_isConfirm?: boolean}) => {
+  const baseCreate = (el?: Readonly<Modal & {_isConfirm?: boolean}>) => {
     let resolveFunc: (value: boolean | null) => void = () => {
       /* empty */
     }
@@ -45,9 +45,9 @@ export default () => {
     return promise
   }
 
-  const show = (el?: Modal) => baseCreate(el)
+  const show = (el?: Readonly<Modal>) => baseCreate(el)
 
-  const confirm = (el?: Modal) => baseCreate({...el, _isConfirm: true})
+  const confirm = (el?: Readonly<Modal>) => baseCreate({...el, _isConfirm: true})
 
   const hide = (trigger = '') => {
     if (lastStack.value) {

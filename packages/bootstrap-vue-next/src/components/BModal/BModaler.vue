@@ -48,7 +48,7 @@ import BModal from './BModal.vue'
 const props = withDefaults(
   defineProps<{
     teleportDisabled?: Booleanish
-    teleportTo?: string | RendererElement | null | undefined
+    teleportTo?: string | Readonly<RendererElement> | null | undefined
     // TODO this
     // appendToast?: Booleanish
   }>(),
@@ -62,7 +62,7 @@ const teleportDisabledBoolean = useBooleanish(() => props.teleportDisabled)
 
 const {modals, show, confirm} = useModalController()
 
-const pluckModalItem = (payload: (typeof modals)['value'][number]) =>
+const pluckModalItem = (payload: Readonly<(typeof modals)['value'][number]>) =>
   omit(payload, ['_promise', 'self', '_isConfirm', '_modelValue'])
 
 defineExpose({

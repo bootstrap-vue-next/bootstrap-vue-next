@@ -103,7 +103,7 @@ const computedLinkProps = computed(() =>
     : {}
 )
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (disabledBoolean.value || activeBoolean.value) {
     e.preventDefault()
     e.stopImmediatePropagation()

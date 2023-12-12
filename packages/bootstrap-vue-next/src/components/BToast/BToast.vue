@@ -1,5 +1,5 @@
 <template>
-  <BTransition :no-fade="noFadeBoolean" v-bind="transitionProps">
+  <BTransition :no-fade="noFadeBoolean" v-bind="transProps">
     <div
       v-if="isToastVisible"
       :id="id"
@@ -88,7 +88,7 @@ const props = withDefaults(defineProps<BToastProps>(), {
   textVariant: null,
   title: undefined,
   toastClass: undefined,
-  transitionProps: undefined,
+  transProps: undefined,
   // Link props
   // All others use defaults
   active: undefined,

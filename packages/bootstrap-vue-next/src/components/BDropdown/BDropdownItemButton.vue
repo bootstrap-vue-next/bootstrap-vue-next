@@ -60,7 +60,7 @@ const computedClasses = computed(() => [
   },
 ])
 
-const clicked = (e: MouseEvent) => {
+const clicked = (e: Readonly<MouseEvent>) => {
   emit('click', e)
 }
 </script>

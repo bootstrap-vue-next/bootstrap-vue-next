@@ -2,7 +2,10 @@ import {RX_HASH, RX_HASH_ID, RX_SPACE_SPLIT} from '../constants/regex'
 import {getAttr, isTag} from '../utils'
 import type {Directive, DirectiveBinding} from 'vue'
 
-const getTargets = (binding: DirectiveBinding<string | string[] | undefined>, el: HTMLElement) => {
+const getTargets = (
+  binding: DirectiveBinding<string | readonly string[] | undefined>,
+  el: Readonly<HTMLElement>
+) => {
   const {modifiers, arg, value} = binding
   // Any modifiers are considered target Ids
   const targets = Object.keys(modifiers || {})
@@ -29,7 +32,7 @@ const getTargets = (binding: DirectiveBinding<string | string[] | undefined>, el
   return targets.filter((t, index, arr) => t && arr.indexOf(t) === index)
 }
 
-const toggle = (targetIds: string[], el: HTMLElement) => {
+const toggle = (targetIds: readonly string[], el: Readonly<HTMLElement>) => {
   targetIds.forEach((targetId) => {
     const target = document.getElementById(targetId)
 
@@ -40,7 +43,7 @@ const toggle = (targetIds: string[], el: HTMLElement) => {
   setTimeout(() => checkVisibility(targetIds, el), 50)
 }
 
-const checkVisibility = (targetIds: string[], el: HTMLElement) => {
+const checkVisibility = (targetIds: readonly string[], el: Readonly<HTMLElement>) => {
   let visible = false
   targetIds.forEach((targetId) => {
     const target = document.getElementById(targetId)
@@ -57,7 +60,10 @@ const checkVisibility = (targetIds: string[], el: HTMLElement) => {
   el.classList.add(visible ? 'not-collapsed' : 'collapsed')
 }
 
-const handleUpdate = (el: WithToggle, binding: DirectiveBinding<string | string[] | undefined>) => {
+const handleUpdate = (
+  el: WithToggle,
+  binding: DirectiveBinding<string | readonly string[] | undefined>
+) => {
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return

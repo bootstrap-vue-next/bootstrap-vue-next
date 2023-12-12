@@ -1,7 +1,9 @@
+import type {Numberish} from './CommonTypes'
+
 export interface RowColsBreakpointProps {
-  colsSm?: string | number
-  colsMd?: string | number
-  colsLg?: string | number
-  colsXl?: string | number
-  colsXxl?: string | number
+  colsSm?: Numberish
+  colsMd?: Numberish
+  colsLg?: Numberish
+  colsXl?: Numberish
+  colsXxl?: Numberish
 }

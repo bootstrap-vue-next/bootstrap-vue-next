@@ -28,15 +28,15 @@
 import {computed, ref} from 'vue'
 import {useBooleanish, useFormInput, useStateClass} from '../../composables'
 import type {CommonInputProps} from '../../composables/useFormInput'
-import type {InputType} from '../../types'
+import type {InputType, Numberish} from '../../types'
 
 const props = withDefaults(
   defineProps<
     {
-      max?: string | number
-      min?: string | number
+      max?: Numberish
+      min?: Numberish
       // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
-      step?: string | number
+      step?: Numberish
       type?: InputType
     } & CommonInputProps
   >(),

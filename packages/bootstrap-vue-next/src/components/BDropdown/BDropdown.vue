@@ -190,7 +190,7 @@ onKeyStroke(
   {target: floating}
 )
 
-const keynav = (e: Event, v: number) => {
+const keynav = (e: Readonly<Event>, v: number) => {
   e.preventDefault()
   if (!modelValueBoolean.value) {
     open()
@@ -295,7 +295,7 @@ const onButtonClick = () => {
   toggle()
 }
 
-const onSplitClick = (event: MouseEvent) => {
+const onSplitClick = (event: Readonly<MouseEvent>) => {
   splitBoolean.value ? emit('click', event) : onButtonClick()
 }
 

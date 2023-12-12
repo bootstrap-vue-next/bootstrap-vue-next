@@ -39,7 +39,7 @@
             role="tab"
             :aria-controls="tab.id"
             :aria-selected="tab.active"
-            v-bind="tab.titleLinkAttributes"
+            v-bind="tab.titleLinkAttrs"
             @keydown.left.stop.prevent="keynav(-1)"
             @keydown.right.stop.prevent="keynav(1)"
             @keydown.page-up.stop.prevent="keynav(-999)"
@@ -220,7 +220,7 @@ const activateTab = (index: number): void => {
   }
 }
 
-const handleClick = (event: MouseEvent, index: number) => {
+const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   activateTab(index)
   if (
     index >= 0 &&

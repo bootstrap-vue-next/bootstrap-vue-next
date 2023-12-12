@@ -30,7 +30,7 @@ import {omit} from '../../utils'
 const props = withDefaults(
   defineProps<{
     teleportDisabled?: Booleanish
-    teleportTo?: string | RendererElement | null | undefined
+    teleportTo?: string | Readonly<RendererElement> | null | undefined
     // TODO this
     // appendToast?: Booleanish
   }>(),
@@ -56,7 +56,8 @@ const toastPositions = {
 
 const {hide, toasts, show} = useToast()
 
-const pluckToastItem = (payload: Toast & {self: symbol}) => omit(payload, ['value', 'self', 'pos'])
+const pluckToastItem = (payload: Readonly<Toast & {self: symbol}>) =>
+  omit(payload, ['value', 'self', 'pos'])
 
 defineExpose({
   hide,

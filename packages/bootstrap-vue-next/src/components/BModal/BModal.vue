@@ -2,8 +2,8 @@
   <Teleport :to="teleportTo" :disabled="teleportDisabledBoolean">
     <BTransition
       :no-fade="true"
-      v-bind="transitionProps"
-      :trans-props="{enterToClass: 'show', ...transitionProps?.transProps}"
+      v-bind="transProps"
+      :trans-props="{enterToClass: 'show', ...transProps?.transProps}"
       @before-enter="onBeforeEnter"
       @after-enter="onAfterEnter"
       @leave="onLeave"
@@ -186,7 +186,7 @@ const props = withDefaults(defineProps<BModalProps>(), {
   titleClass: undefined,
   titleSrOnly: false,
   titleTag: 'h5',
-  transitionProps: undefined,
+  transProps: undefined,
 })
 
 const emit = defineEmits<{
@@ -371,7 +371,7 @@ const disableOk = toRef(() => okDisabledBoolean.value || busyBoolean.value)
 
 const buildTriggerableEvent = (
   type: string,
-  opts: Partial<BvTriggerableEvent> = {}
+  opts: Readonly<Partial<BvTriggerableEvent>> = {}
 ): BvTriggerableEvent =>
   new BvTriggerableEvent(type, {
     cancelable: false,

@@ -26,7 +26,7 @@
 import BTransition from '../BTransition/BTransition.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BButton from '../BButton/BButton.vue'
-import type {Booleanish, ButtonVariant, ClassValue, ColorVariant} from '../../types'
+import type {Booleanish, ButtonVariant, ClassValue, ColorVariant, Numberish} from '../../types'
 import {computed, onBeforeUnmount, ref, toRef, watch, watchEffect} from 'vue'
 import {useBooleanish, useCountdown} from '../../composables'
 import {isEmptySlot} from '../../utils'
@@ -41,7 +41,7 @@ const props = withDefaults(
     dismissible?: Booleanish
     fade?: Booleanish
     immediate?: Booleanish
-    interval?: number | string
+    interval?: Numberish
     modelValue?: boolean | number
     noHoverPause?: Booleanish
     showOnPause?: Booleanish

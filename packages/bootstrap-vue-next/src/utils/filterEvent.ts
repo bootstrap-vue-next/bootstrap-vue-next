@@ -21,7 +21,7 @@ const eventFilter = [
 
 // Returns `true` if we should ignore the click/double-click/keypress event
 // Avoids having the user need to use `@click.stop` on the form control
-export default (event: Event) => {
+export default (event: Readonly<Event>) => {
   // Exit early when we don't have a target element
   if (!event || !event.target) {
     return false
