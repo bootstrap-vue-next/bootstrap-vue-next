@@ -103,9 +103,9 @@ const computedClasses = computed(() => {
     {
       'form-control-highlighted': isHighlighted.value,
       'form-range': isRange,
-      'form-control': isColor || (!props.plaintext && !isRange),
+      'form-control': isColor || (!plaintextBoolean.value && !isRange),
       'form-control-color': isColor,
-      'form-control-plaintext': props.plaintext && !isRange && !isColor,
+      'form-control-plaintext': plaintextBoolean.value && !isRange && !isColor,
       [`form-control-${props.size}`]: !!props.size,
     },
   ]

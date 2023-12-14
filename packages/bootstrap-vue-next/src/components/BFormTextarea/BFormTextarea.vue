@@ -91,9 +91,8 @@ const stateClass = useStateClass(stateBoolean)
 
 const computedClasses = computed(() => [
   stateClass.value,
+  plaintextBoolean.value ? 'form-control-plaintext' : 'form-control',
   {
-    'form-control': !props.plaintext,
-    'form-control-plaintext': props.plaintext,
     [`form-control-${props.size}`]: !!props.size,
   },
 ])
