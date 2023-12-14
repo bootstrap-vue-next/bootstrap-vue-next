@@ -7,7 +7,7 @@ import {isObject} from './inspect'
  * @deprecated
  */
 export const parseEventOptions = (
-  options: boolean | EventListenerOptions | undefined
+  options: boolean | Readonly<EventListenerOptions> | undefined
 ): boolean | EventListenerOptions | undefined => {
   if (HAS_PASSIVE_EVENT_SUPPORT) {
     return isObject(options) ? options : {capture: !!options || false}
@@ -21,10 +21,10 @@ export const parseEventOptions = (
  * @deprecated
  */
 export const eventOn = (
-  el: Element,
+  el: Readonly<Element>,
   eventName: string,
   handler: EventListener,
-  options: boolean | EventListenerOptions | undefined
+  options: boolean | Readonly<EventListenerOptions> | undefined
 ) => {
   if (el && el.addEventListener) {
     el.addEventListener(eventName, handler, parseEventOptions(options))
@@ -36,10 +36,10 @@ export const eventOn = (
  * @deprecated
  */
 export const eventOff = (
-  el: Element,
+  el: Readonly<Element>,
   eventName: string,
   handler: EventListener,
-  options: boolean | EventListenerOptions | undefined
+  options: boolean | Readonly<EventListenerOptions> | undefined
 ) => {
   if (el && el.removeEventListener) {
     el.removeEventListener(eventName, handler, options)
@@ -61,7 +61,7 @@ export const eventOnOff = (on: boolean, eventParams: Parameters<typeof eventOff>
  * @deprecated
  */
 export const stopEvent = (
-  event: Event,
+  event: Readonly<Event>,
   {preventDefault = true, propagation = true, immediatePropagation = false} = {}
 ) => {
   if (preventDefault) {

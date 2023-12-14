@@ -153,7 +153,7 @@ const computedLinkClasses = computed(() => ({
   disabled: disabledBoolean.value,
 }))
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (disabledBoolean.value) {
     e.preventDefault()
     e.stopImmediatePropagation()

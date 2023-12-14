@@ -8,7 +8,13 @@
 
 <script setup lang="ts">
 import {computed, provide, type StyleValue, toRef} from 'vue'
-import type {Booleanish, ColorExtendables, RadiusElementExtendables, Size} from '../../types'
+import type {
+  Booleanish,
+  ColorExtendables,
+  Numberish,
+  RadiusElementExtendables,
+  Size,
+} from '../../types'
 import {avatarGroupInjectionKey} from '../../utils'
 import {useBooleanish} from '../../composables'
 import {computeSize} from './BAvatar.vue'
@@ -17,7 +23,7 @@ import {useToNumber} from '@vueuse/core'
 const props = withDefaults(
   defineProps<
     {
-      overlap?: number | string
+      overlap?: Numberish
       size?: Size | string
       square?: Booleanish
       tag?: string

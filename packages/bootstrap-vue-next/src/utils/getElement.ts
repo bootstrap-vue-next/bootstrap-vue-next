@@ -1,7 +1,7 @@
 import type {ComponentPublicInstance} from 'vue'
 
 export default (
-  element: string | ComponentPublicInstance | HTMLElement | null
+  element: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
 ): HTMLElement | undefined => {
   if (!element) return undefined
   if (typeof element === 'string') {

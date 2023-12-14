@@ -17,7 +17,7 @@
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
 import {useBooleanish} from '../../composables'
-import type {BLinkProps, ClassValue} from '../../types'
+import type {AttrsValue, BLinkProps, ClassValue} from '../../types'
 import {pick} from '../../utils'
 
 defineSlots<{
@@ -28,7 +28,7 @@ defineSlots<{
 const props = withDefaults(
   defineProps<
     {
-      linkAttrs?: Record<string, unknown>
+      linkAttrs?: Readonly<AttrsValue>
       linkClass?: ClassValue
     } & Omit<BLinkProps, 'routerTag'>
   >(),

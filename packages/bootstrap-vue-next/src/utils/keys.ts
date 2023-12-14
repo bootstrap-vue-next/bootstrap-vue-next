@@ -4,6 +4,7 @@ import type {
   CheckboxValue,
   ClassValue,
   ColorVariant,
+  Numberish,
   RadioValue,
   RadiusElement,
   Size,
@@ -27,13 +28,15 @@ export const tabsInjectionKey: InjectionKey<{
   unregisterTab: (id: string) => void
   activateTab: (id: string | undefined) => void
   activeTabClass: Readonly<Ref<ClassValue>>
+  inactiveTabClass: Readonly<Ref<ClassValue>>
+  tabClass: Readonly<Ref<ClassValue>>
   activeId: Readonly<Ref<string | undefined>>
 }> = Symbol('tabs')
 
 // BProgress
 export const progressInjectionKey: InjectionKey<{
   animated: Readonly<Ref<boolean | undefined>>
-  max: Readonly<Ref<number | string>>
+  max: Readonly<Ref<Numberish>>
   showProgress: Readonly<Ref<boolean | undefined>>
   showValue: Readonly<Ref<boolean | undefined>>
   striped: Readonly<Ref<boolean | undefined>>

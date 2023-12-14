@@ -249,11 +249,11 @@ const computedStyle = computed<CSSProperties>(() => ({
   height: computedSize.value ?? undefined,
 }))
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (!disabledBoolean.value && (computedLink.value || buttonBoolean.value)) emit('click', e)
 }
 
-const onImgError = (e: Event) => {
+const onImgError = (e: Readonly<Event>) => {
   emit('img-error', e)
 }
 </script>

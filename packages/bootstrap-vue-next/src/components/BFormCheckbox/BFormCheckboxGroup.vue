@@ -37,9 +37,9 @@ const props = withDefaults(
     form?: string
     htmlField?: string
     id?: string
-    modelValue?: CheckboxValue[]
+    modelValue?: readonly CheckboxValue[]
     name?: string
-    options?: (string | number | Record<string, unknown>)[]
+    options?: readonly (string | number | Record<string, unknown>)[]
     plain?: Booleanish
     required?: Booleanish
     size?: Size

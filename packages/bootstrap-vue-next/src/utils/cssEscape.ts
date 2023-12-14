@@ -8,7 +8,7 @@ const escapeChar = (value: string) => `\\${value}`
  * @param {unknown} value
  * @deprecated
  */
-export default (value: unknown): string => {
+export default (value: Readonly<unknown>): string => {
   const val = toString(value)
 
   const {length} = val

@@ -15,7 +15,7 @@ import {
  * @returns
  * @deprecated
  */
-export const toString = (val: unknown, spaces = 2): string =>
+export const toString = (val: Readonly<unknown>, spaces = 2): string =>
   typeof val === 'string'
     ? val
     : val === undefined || val === null

@@ -20,10 +20,10 @@ export const useSharedModalStack = createSharedComposable(() => {
   const countStack = toRef(() => stack.value.length)
   const lastStack = toRef(() => stack.value[stack.value.length - 1])
 
-  const pushStack = (modal: ComponentInternalInstance) => {
+  const pushStack = (modal: Readonly<ComponentInternalInstance>) => {
     stack.value = [...stack.value, modal]
   }
-  const removeStack = (modal: ComponentInternalInstance) => {
+  const removeStack = (modal: Readonly<ComponentInternalInstance>) => {
     stack.value = stack.value.filter((item) => item.uid !== modal.uid)
   }
 
@@ -34,17 +34,17 @@ export const useSharedModalStack = createSharedComposable(() => {
 
   // Utility getters not made, would not be used (count, last)
 
-  const pushRegistry = (modal: ComponentInternalInstance) => {
+  const pushRegistry = (modal: Readonly<ComponentInternalInstance>) => {
     registry.value = [...registry.value, modal]
   }
-  const removeRegistry = (modal: ComponentInternalInstance) => {
+  const removeRegistry = (modal: Readonly<ComponentInternalInstance>) => {
     registry.value = registry.value.filter((item) => item.uid !== modal.uid)
   }
 
   /**
    * Removes an item from both the stack and registry
    */
-  const dispose = (modal: ComponentInternalInstance): void => {
+  const dispose = (modal: Readonly<ComponentInternalInstance>): void => {
     removeStack(modal)
     removeRegistry(modal)
   }
@@ -84,7 +84,7 @@ export const useSharedModalStack = createSharedComposable(() => {
   }
 })
 
-export default (modalOpen: Ref<boolean>) => {
+export default (modalOpen: Readonly<Ref<boolean>>) => {
   const {pushRegistry, pushStack, removeStack, stack, dispose, countStack} = useSharedModalStack()
 
   const currentModal = getCurrentInstance()

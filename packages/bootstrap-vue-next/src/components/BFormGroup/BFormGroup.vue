@@ -194,7 +194,7 @@ export default defineComponent({
       })
     })
 
-    const onLegendClick = (event: MouseEvent) => {
+    const onLegendClick = (event: Readonly<MouseEvent>) => {
       // Don't do anything if `labelFor` is set
       if (props.labelFor || content.value === null) return
 

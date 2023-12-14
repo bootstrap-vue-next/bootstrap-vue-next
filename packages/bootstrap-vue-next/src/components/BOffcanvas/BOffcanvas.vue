@@ -94,7 +94,7 @@ const props = withDefaults(
     // Make them just use prop placement
     placement?: 'top' | 'bottom' | 'start' | 'end'
     teleportDisabled?: Booleanish
-    teleportTo?: string | RendererElement | null | undefined
+    teleportTo?: string | Readonly<RendererElement> | null | undefined
     title?: string
     responsive?: Breakpoint
   }>(),
@@ -256,7 +256,7 @@ const computedClasses = computed(() => [
 
 const buildTriggerableEvent = (
   type: string,
-  opts: Partial<BvTriggerableEvent> = {}
+  opts: Readonly<Partial<BvTriggerableEvent>> = {}
 ): BvTriggerableEvent =>
   new BvTriggerableEvent(type, {
     cancelable: false,

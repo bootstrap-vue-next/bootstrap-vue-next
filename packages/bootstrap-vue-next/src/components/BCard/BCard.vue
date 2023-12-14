@@ -66,6 +66,7 @@ import type {
   ClassValue,
   ColorExtendables,
   ColorVariant,
+  Numberish,
   TextColorVariant,
 } from '../../types'
 import {isEmptySlot} from '../../utils'
@@ -106,11 +107,11 @@ const props = withDefaults(
       imgAlt?: string
       imgBottom?: Booleanish
       imgEnd?: Booleanish
-      imgHeight?: string | number
+      imgHeight?: Numberish
       imgSrc?: string
       imgStart?: Booleanish
       imgTop?: Booleanish
-      imgWidth?: string | number
+      imgWidth?: Numberish
       noBody?: Booleanish
       overlay?: Booleanish
       subtitle?: string

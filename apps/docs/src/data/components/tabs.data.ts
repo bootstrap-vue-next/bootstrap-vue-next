@@ -119,6 +119,16 @@ export default {
           default: undefined,
         },
         {
+          prop: 'inactiveNavItemClass',
+          type: 'ClassValue',
+          default: undefined,
+        },
+        {
+          prop: 'inactiveTabClass',
+          type: 'ClassValue',
+          default: undefined,
+        },
+        {
           prop: 'justified',
           type: 'Booleanish',
           default: false,
@@ -130,6 +140,11 @@ export default {
         },
         {
           prop: 'navClass',
+          type: 'ClassValue',
+          default: undefined,
+        },
+        {
+          prop: 'navItemClass',
           type: 'ClassValue',
           default: undefined,
         },

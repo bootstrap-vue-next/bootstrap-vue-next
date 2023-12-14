@@ -147,7 +147,7 @@ const computedClasses = computed(() => [
 
 const computedTag = toRef(() => (isBLink.value ? BLink : props.href ? 'a' : props.tag))
 
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   if (disabledBoolean.value) {
     e.preventDefault()
     e.stopPropagation()

@@ -1,28 +1,20 @@
 <template>
-  <Transition v-bind="computedAttrs">
+  <Transition v-bind="{...baseProperties, ...transProps}" :appear="appearBoolean">
     <slot />
   </Transition>
 </template>
 
 <script setup lang="ts">
-import type {Booleanish, TransitionMode} from '../../types'
-import {computed, type TransitionProps} from 'vue'
+import type {BTransitionProps} from '../../types'
+import {computed} from 'vue'
 import {useBooleanish} from '../../composables'
 
-const props = withDefaults(
-  defineProps<{
-    appear?: Booleanish
-    mode?: TransitionMode
-    noFade?: Booleanish
-    transProps?: TransitionProps
-  }>(),
-  {
-    appear: false,
-    mode: undefined,
-    noFade: false,
-    transProps: undefined,
-  }
-)
+const props = withDefaults(defineProps<BTransitionProps>(), {
+  appear: false,
+  mode: undefined,
+  noFade: false,
+  transProps: undefined,
+})
 
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,24 +43,6 @@ const fadeProperties = computed(() => {
 })
 
 const baseProperties = computed(() => ({mode: props.mode, css: true, ...fadeProperties.value}))
-
-const computedAttrs = computed(() =>
-  props.transProps !== undefined
-    ? {
-        // Order matters here since the props.transProps would get overwritten if it came first
-        // But the goal of props.transProps is to overwrite base properties
-        ...baseProperties.value,
-        ...props.transProps,
-      }
-    : appearBoolean.value
-      ? {
-          ...baseProperties.value,
-          appear: true,
-          appearActiveClass: fadeProperties.value.enterActiveClass,
-          appearToClass: fadeProperties.value.enterToClass,
-        }
-      : baseProperties.value
-)
 </script>
 
 <style lang="scss">

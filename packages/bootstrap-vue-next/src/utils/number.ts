@@ -1,3 +1,5 @@
+import type {Numberish} from 'src/types'
+
 /**
  * Validates a number is an integer. If not return NaN
  *
@@ -28,7 +30,7 @@ export const stringToInteger = (value: string, defaultValue = NaN): number => {
  * @returns
  * @deprecated
  */
-export const toFloat = (value: number | string, defaultValue = NaN): number => {
+export const toFloat = (value: Numberish, defaultValue = NaN): number => {
   const float = Number.parseFloat(value.toString())
   return Number.isNaN(float) ? defaultValue : float
 }

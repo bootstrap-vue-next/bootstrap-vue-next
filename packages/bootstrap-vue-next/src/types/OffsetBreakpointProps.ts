@@ -1,7 +1,9 @@
+import type {Numberish} from './CommonTypes'
+
 export interface OffsetBreakpointProps {
-  offsetSm?: string | number
-  offsetMd?: string | number
-  offsetLg?: string | number
-  offsetXl?: string | number
-  offsetXxl?: string | number
+  offsetSm?: Numberish
+  offsetMd?: Numberish
+  offsetLg?: Numberish
+  offsetXl?: Numberish
+  offsetXxl?: Numberish
 }

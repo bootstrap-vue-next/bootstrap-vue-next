@@ -1,8 +1,8 @@
 import type {Boundary, Middleware, Padding, RootBoundary, Strategy} from '@floating-ui/vue'
-import type {ComponentPublicInstance} from 'vue'
+import type {ComponentPublicInstance, RendererElement, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {PopoverPlacement} from './PopoverPlacement'
-import type {Booleanish} from './Booleanish'
+import type {Booleanish, Numberish} from './CommonTypes'
 import type {Breakpoint} from './Breakpoint'
 import type {ButtonType} from './ButtonType'
 import type {ButtonVariant} from './ButtonVariant'
@@ -16,6 +16,8 @@ import type {TableFieldObject} from './TableFieldObject'
 import type {TableItem} from './TableItem'
 import type {VerticalAlign} from './VerticalAlign'
 import type {RadiusElementExtendables} from './RadiusElement'
+import type {TextColorVariant} from './TextColorVariant'
+import type {TransitionMode} from './TransitionMode'
 
 export interface BLinkProps {
   active?: Booleanish
@@ -34,13 +36,20 @@ export interface BLinkProps {
   routerComponentName?: string
   routerTag?: string
   target?: LinkTarget
-  to?: RouteLocationRaw
+  to?: Readonly<RouteLocationRaw>
   underlineOffset?: 1 | 2 | 3 | '1' | '2' | '3'
   underlineOffsetHover?: 1 | 2 | 3 | '1' | '2' | '3'
   underlineOpacity?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
   underlineOpacityHover?: 0 | 10 | 25 | 50 | 75 | 100 | '0' | '10' | '25' | '50' | '75' | '100'
   underlineVariant?: ColorVariant | null
   variant?: ColorVariant | null
+}
+
+export interface BTransitionProps {
+  appear?: Booleanish
+  mode?: TransitionMode
+  noFade?: Booleanish
+  transProps?: Readonly<TransitionProps>
 }
 
 export interface BImgProps extends RadiusElementExtendables {
@@ -51,14 +60,14 @@ export interface BImgProps extends RadiusElementExtendables {
   end?: Booleanish
   fluid?: Booleanish
   fluidGrow?: Booleanish
-  height?: number | string
+  height?: Numberish
   lazy?: Booleanish
-  sizes?: string | string[]
+  sizes?: string | readonly string[]
   src?: string
-  srcset?: string | string[]
+  srcset?: string | readonly string[]
   start?: Booleanish
   thumbnail?: Booleanish
-  width?: number | string
+  width?: Numberish
 }
 
 export interface BFormProps {
@@ -97,19 +106,19 @@ export interface BTableLiteProps extends BTableSimpleProps {
   emptyFilteredText?: string
   emptyText?: string
   fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((field: TableFieldObject) => Record<string, any>[])
+  | ((field: TableFieldObject) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | Record<PropertyKey, any>
+    | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | any[]
-  fields?: TableField[]
+    | readonly any[]
+  fields?: readonly TableField[]
   footClone?: Booleanish
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null
   headRowVariant?: ColorVariant | null
   headVariant?: ColorVariant | null
-  items?: TableItem[]
+  items?: readonly TableItem[]
   labelStacked?: Booleanish
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modelValue?: any
@@ -121,12 +130,12 @@ export interface BTableLiteProps extends BTableSimpleProps {
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ((item: TableItem | null, type: string) => string | Array<any> | null | undefined)
+  | ((item: TableItem | null, type: string) => string | readonly any[] | null | undefined)
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | Record<PropertyKey, any>
+    | Readonly<Record<PropertyKey, any>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | any[]
+    | readonly any[]
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
   theadClass?: ClassValue
@@ -136,12 +145,12 @@ export interface BProgressBarProps extends ColorExtendables {
   animated?: Booleanish
   label?: string
   labelHtml?: string
-  max?: string | number
-  precision?: string | number
+  max?: Numberish
+  precision?: Numberish
   showProgress?: Booleanish
   showValue?: Booleanish
   striped?: Booleanish
-  value?: string | number
+  value?: Numberish
 }
 
 export interface BInputGroupAddonProps {
@@ -162,8 +171,8 @@ export interface BFormFeedbackSharedProps {
 export interface BDropdownProps {
   ariaLabel?: string
   autoClose?: boolean | 'inside' | 'outside'
-  boundary?: Boundary | RootBoundary
-  boundaryPadding?: Padding
+  boundary?: Readonly<Boundary> | Readonly<RootBoundary>
+  boundaryPadding?: Readonly<Padding>
   center?: Booleanish
   container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
   disabled?: Booleanish
@@ -171,7 +180,7 @@ export interface BDropdownProps {
   dropstart?: Booleanish
   dropup?: Booleanish
   end?: Booleanish
-  floatingMiddleware?: Middleware[]
+  floatingMiddleware?: readonly Middleware[]
   id?: string
   isNav?: Booleanish
   lazy?: Booleanish
@@ -181,7 +190,10 @@ export interface BDropdownProps {
   noFlip?: Booleanish
   noShift?: Booleanish
   noSize?: Booleanish
-  offset?: number | string | {mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}
+  offset?:
+    | number
+    | string
+    | Readonly<{mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null}>
   role?: string
   size?: Size
   split?: Booleanish
@@ -189,7 +201,7 @@ export interface BDropdownProps {
   splitClass?: ClassValue
   splitDisabled?: Booleanish
   splitHref?: string
-  splitTo?: RouteLocationRaw
+  splitTo?: Readonly<RouteLocationRaw>
   splitVariant?: ButtonVariant | null
   strategy?: Strategy
   text?: string
@@ -198,14 +210,14 @@ export interface BDropdownProps {
   variant?: ButtonVariant | null
 }
 
-export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'event' | 'routerTag'> {
+export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'routerTag'> {
   animation?: Booleanish
   body?: string
   bodyClass?: ClassValue
   headerClass?: ClassValue
   headerTag?: string
   id?: string
-  interval?: number | string
+  interval?: Numberish
   isStatus?: Booleanish
   modelValue?: boolean | number
   noCloseButton?: Booleanish
@@ -216,22 +228,23 @@ export interface BToastProps extends ColorExtendables, Omit<BLinkProps, 'event' 
   solid?: Booleanish
   title?: string
   toastClass?: ClassValue
+  transProps?: Readonly<BTransitionProps>
 }
 
 export interface BPopoverProps {
-  boundary?: Boundary | RootBoundary
-  boundaryPadding?: Padding
+  boundary?: Readonly<Boundary> | Readonly<RootBoundary>
+  boundaryPadding?: Readonly<Padding>
   click?: Booleanish
-  container?: string | ComponentPublicInstance<HTMLElement> | HTMLElement | undefined
+  container?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | undefined
   content?: string
   customClass?: ClassValue
   delay?:
     | number
-    | {
+    | Readonly<{
         show: number
         hide: number
-      }
-  floatingMiddleware?: Middleware[]
+      }>
+  floatingMiddleware?: readonly Middleware[]
   hide?: Booleanish
   html?: Booleanish
   id?: string
@@ -245,13 +258,13 @@ export interface BPopoverProps {
   noShift?: Booleanish
   noSize?: Booleanish
   noninteractive?: Booleanish
-  offset?: number | string | null
-  placement?: PopoverPlacement
+  offset?: Numberish | null
+  placement?: Readonly<PopoverPlacement>
   persistent?: Booleanish
   realtime?: Booleanish
-  reference?: string | ComponentPublicInstance | HTMLElement | null
+  reference?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   strategy?: Strategy
-  target?: string | ComponentPublicInstance | HTMLElement | null
+  target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   title?: string
   tooltip?: Booleanish
   variant?: ColorVariant | null
@@ -262,4 +275,62 @@ export interface BCardHeadFootProps extends ColorExtendables {
   html?: string
   tag?: string
   text?: string
+}
+
+export interface BModalProps {
+  autoFocus?: Booleanish
+  autoFocusButton?: 'ok' | 'cancel' | 'close'
+  body?: string
+  backdropVariant?: ColorVariant | null
+  bodyBgVariant?: ColorVariant | null
+  bodyClass?: ClassValue
+  bodyScrolling?: Booleanish
+  bodyTextVariant?: TextColorVariant | null
+  bodyVariant?: ColorVariant | null
+  busy?: Booleanish
+  buttonSize?: Size
+  cancelDisabled?: Booleanish
+  cancelTitle?: string
+  cancelVariant?: ButtonVariant | null
+  centered?: Booleanish
+  contentClass?: ClassValue
+  dialogClass?: ClassValue
+  footerBgVariant?: ColorVariant | null
+  footerBorderVariant?: ColorVariant | null
+  footerClass?: ClassValue
+  footerTextVariant?: TextColorVariant | null
+  footerVariant?: ColorVariant | null
+  fullscreen?: Booleanish | Breakpoint
+  headerBgVariant?: ColorVariant | null
+  headerBorderVariant?: ColorVariant | null
+  headerClass?: ClassValue
+  headerCloseClass?: ClassValue
+  headerCloseLabel?: string
+  headerCloseVariant?: ButtonVariant | null
+  headerTextVariant?: TextColorVariant | null
+  headerVariant?: ColorVariant | null
+  hideBackdrop?: Booleanish
+  hideFooter?: Booleanish
+  hideHeader?: Booleanish
+  hideHeaderClose?: Booleanish
+  id?: string
+  lazy?: Booleanish
+  modalClass?: ClassValue
+  modelValue?: Booleanish
+  noCloseOnBackdrop?: Booleanish
+  noCloseOnEsc?: Booleanish
+  noFade?: Booleanish
+  okDisabled?: Booleanish
+  okOnly?: Booleanish
+  okTitle?: string
+  okVariant?: ButtonVariant | null
+  scrollable?: Booleanish
+  size?: Size | 'xl'
+  teleportDisabled?: Booleanish
+  teleportTo?: string | Readonly<RendererElement> | null | undefined
+  title?: string
+  titleClass?: ClassValue
+  titleSrOnly?: Booleanish
+  titleTag?: string
+  transProps?: Readonly<BTransitionProps>
 }

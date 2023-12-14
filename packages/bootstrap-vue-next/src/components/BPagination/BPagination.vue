@@ -90,7 +90,7 @@
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
 import {computed, toRef, watch} from 'vue'
-import type {AlignmentJustifyContent, Booleanish, ClassValue, Size} from '../../types'
+import type {AlignmentJustifyContent, Booleanish, ClassValue, Numberish, Size} from '../../types'
 import {useAlignment, useBooleanish} from '../../composables'
 import {createReusableTemplate, useToNumber, useVModel} from '@vueuse/core'
 
@@ -119,16 +119,16 @@ const props = withDefaults(
     lastNumber?: Booleanish
     lastText?: string
     limit?: number
-    modelValue?: string | number
+    modelValue?: Numberish
     nextClass?: ClassValue
     nextText?: string
     pageClass?: ClassValue
-    perPage?: string | number
+    perPage?: Numberish
     pills?: Booleanish
     prevClass?: ClassValue
     prevText?: string
     size?: Size
-    totalRows?: string | number
+    totalRows?: Numberish
   }>(),
   {
     align: 'start',
@@ -216,8 +216,8 @@ const getEndButtonProps = ({
 }: {
   dis: boolean
   classVal: ClassValue
-  text: {name: string; value: string}
-  clickHandler: (e: MouseEvent, val: number) => void
+  text: Readonly<{name: string; value: string}>
+  clickHandler: (e: Readonly<MouseEvent>, val: number) => void
 }) => ({
   li: {
     class: [
@@ -260,7 +260,7 @@ const prevButtonProps = computed(() =>
     dis: prevDisabled.value,
     classVal: props.prevClass,
     text: {name: 'prev-text', value: props.prevText},
-    clickHandler: (e: MouseEvent) => pageClick(e, modelValueNumber.value - 1),
+    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value - 1),
   })
 )
 const nextButtonProps = computed(() =>
@@ -268,7 +268,7 @@ const nextButtonProps = computed(() =>
     dis: nextDisabled.value,
     classVal: props.nextClass,
     text: {name: 'next-text', value: props.nextText},
-    clickHandler: (e: MouseEvent) => pageClick(e, modelValueNumber.value + 1),
+    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, modelValueNumber.value + 1),
   })
 )
 const lastEndButtonProps = computed(() =>
@@ -276,7 +276,7 @@ const lastEndButtonProps = computed(() =>
     dis: lastDisabled.value,
     classVal: props.lastClass,
     text: {name: 'last-text', value: props.lastText},
-    clickHandler: (e: MouseEvent) => pageClick(e, numberOfPages.value),
+    clickHandler: (e: Readonly<MouseEvent>) => pageClick(e, numberOfPages.value),
   })
 )
 
@@ -421,7 +421,7 @@ const pagination = computed(() => ({
   numberOfPages: numberOfPages.value,
 }))
 
-const pageClick = (event: MouseEvent, pageNumber: number) => {
+const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
   if (pageNumber === modelValueNumber.value) return
 
   const clickEvent = new BvEvent('page-click', {

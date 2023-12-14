@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import {computed, inject, onMounted, onUnmounted, ref, toRef, useAttrs, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish, ClassValue, TabType} from '../../types'
+import type {AttrsValue, Booleanish, ClassValue, TabType} from '../../types'
 import {tabsInjectionKey} from '../../utils'
 
 const props = withDefaults(
@@ -31,7 +31,7 @@ const props = withDefaults(
     tag?: string
     title?: string
     titleItemClass?: ClassValue
-    titleLinkAttributes?: Record<string, unknown>
+    titleLinkAttrs?: Readonly<AttrsValue>
     titleLinkClass?: ClassValue
   }>(),
   {
@@ -45,7 +45,7 @@ const props = withDefaults(
     tag: 'div',
     title: undefined,
     titleItemClass: undefined,
-    titleLinkAttributes: undefined,
+    titleLinkAttrs: undefined,
     titleLinkClass: undefined,
   }
 )
@@ -88,7 +88,7 @@ const tab = computed(
       title: props.title,
       titleComponent: slots.title,
       titleItemClass: props.titleItemClass,
-      titleLinkAttributes: props.titleLinkAttributes,
+      titleLinkAttrs: props.titleLinkAttrs,
       titleLinkClass: props.titleLinkClass,
       onClick,
       el: el.value,
@@ -151,7 +151,8 @@ const computedClasses = computed(() => [
     'card-body': parentData?.card.value && noBodyBoolean.value === false,
     'fade': !parentData?.noFade.value,
   },
-  show.value && parentData?.activeTabClass ? parentData.activeTabClass : null,
+  show.value ? parentData?.activeTabClass : parentData?.inactiveTabClass,
+  parentData?.tabClass,
 ])
 
 watch(showSlot, (shown) => {

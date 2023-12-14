@@ -48,13 +48,13 @@ const props = withDefaults(
     form?: string
     id?: string
     inline?: Booleanish
-    modelValue?: RadioValue
+    modelValue?: Readonly<RadioValue>
     name?: string
     plain?: Booleanish
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
-    value?: RadioValue
+    value?: Readonly<RadioValue>
   }>(),
   {
     ariaLabel: undefined,
