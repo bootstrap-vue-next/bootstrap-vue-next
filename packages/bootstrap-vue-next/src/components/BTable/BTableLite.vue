@@ -103,7 +103,7 @@
                 "
                 :details-showing="item._showDetails ?? false"
               >
-                <template v-if="!$slots[`cell(${field.key})`]">
+                <template v-if="!$slots[`cell(${field.key})`] && !$slots['cell()']">
                   {{ formatItem(item, field.key, field.formatter) }}
                 </template>
               </slot>
