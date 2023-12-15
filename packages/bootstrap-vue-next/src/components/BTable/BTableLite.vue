@@ -103,7 +103,9 @@
                 "
                 :details-showing="item._showDetails ?? false"
               >
-                {{ formatItem(item, field.key, field.formatter) }}
+                <template v-if="!$slots[`cell(${field.key})`]">
+                  {{ formatItem(item, field.key, field.formatter) }}
+                </template>
               </slot>
             </BTd>
           </BTr>
