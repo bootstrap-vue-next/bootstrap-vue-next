@@ -1,5 +1,5 @@
 <template>
-  <table v-if="!responsive" :class="computedClasses">
+  <table v-if="!responsive" :id="id" :class="computedClasses">
     <slot />
   </table>
   <div v-else :class="responsiveClasses">
