@@ -3,7 +3,7 @@
     <slot />
   </table>
   <div v-else :class="responsiveClasses">
-    <table :class="computedClasses">
+    <table :id="id" :class="computedClasses">
       <slot />
     </table>
   </div>
