@@ -71,9 +71,9 @@
   </BTableLite>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T = Record<string, unknown>">
 import {useToNumber, useVModel} from '@vueuse/core'
-import {computed, onMounted, ref, type StyleValue, toRef, watch} from 'vue'
+import {computed, onMounted, ref, type Ref, type StyleValue, toRef, watch} from 'vue'
 import {useBooleanish} from '../../composables'
 import type {
   Booleanish,
@@ -95,12 +95,14 @@ import {getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
+// TODONEXT: Figure out what is going on with emits and the last couple of TS errors in this file
+//  Then move the App.Vue code to the Table playground and put up a PR
 // TODO sort props list alphabetically when everything is done
 const props = withDefaults(
   defineProps<
     {
-      provider?: BTableProvider
-      sortCompare?: BTableSortCompare
+      provider?: BTableProvider<T>
+      sortCompare?: BTableSortCompare<T>
       noProvider?: NoProviderTypes[]
       noProviderPaging?: Booleanish
       noProviderSorting?: Booleanish
@@ -141,7 +143,7 @@ const props = withDefaults(
       // sortNullLast?: Booleanish
       selectedItems?: TableItem[]
       noSortableIcon?: Booleanish
-    } & Omit<BTableLiteProps, 'tableClass'>
+    } & Omit<BTableLiteProps<T>, 'tableClass'>
   >(),
   {
     sortCompareLocale: undefined,
@@ -218,23 +220,23 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'filtered': [value: TableItem[]]
+  'filtered': [value: TableItem<T>[]]
   'head-clicked': [
     key: TableFieldObject['key'],
     field: TableField,
     event: MouseEvent,
     isFooter: boolean,
   ]
-  'row-clicked': [item: TableItem, index: number, event: MouseEvent]
-  'row-dbl-clicked': [item: TableItem, index: number, event: MouseEvent]
-  'row-hovered': [item: TableItem, index: number, event: MouseEvent]
-  'row-selected': [value: TableItem]
-  'row-unhovered': [item: TableItem, index: number, event: MouseEvent]
-  'row-unselected': [value: TableItem]
-  'selection': [value: TableItem[]]
+  'row-clicked': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-dbl-clicked': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-hovered': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-selected': [value: TableItem<T>]
+  'row-unhovered': [item: TableItem<T>, index: number, event: MouseEvent]
+  'row-unselected': [value: TableItem<T>]
+  'selection': [value: TableItem<T>[]]
   'sorted': [sortBy: string, isDesc: boolean]
   'update:busy': [value: boolean]
-  'update:selectedItems': [value: TableItem[]]
+  'update:selectedItems': [value: TableItem<T>[]]
   'update:sortDesc': [value: boolean]
   'update:sortBy': [value: string]
 }>()
@@ -242,7 +244,9 @@ const emit = defineEmits<{
 const sortByModel = useVModel(props, 'sortBy', emit, {passive: true})
 const busyModel = useVModel(props, 'busy', emit, {passive: true})
 const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
-const selectedItemsModel = useVModel(props, 'selectedItems', emit, {passive: true})
+const selectedItemsModel = useVModel(props, 'selectedItems', emit, {
+  passive: true,
+}) as unknown as Ref<TableItem<T>[]>
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),
@@ -255,7 +259,7 @@ const selectedItemsToSet = computed({
  * The utils also conveniently emit the proper events after
  */
 const selectedItemsSetUtilities = {
-  add: (item: TableItem) => {
+  add: (item: TableItem<T>) => {
     const value = new Set(selectedItemsToSet.value)
     value.add(item)
     selectedItemsToSet.value = value
@@ -267,7 +271,7 @@ const selectedItemsSetUtilities = {
     })
     selectedItemsToSet.value = new Set()
   },
-  delete: (item: TableItem) => {
+  delete: (item: TableItem<T>) => {
     const value = new Set(selectedItemsToSet.value)
     value.delete(item)
     selectedItemsToSet.value = value
@@ -281,13 +285,13 @@ const selectedItemsSetUtilities = {
   For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
   Getting the reference properly will fix all outstanding issues
   */
-  has: (item: TableItem) => selectedItemsToSet.value.has(item),
+  has: (item: TableItem<T>) => selectedItemsToSet.value.has(item),
 } as const
 
 /**
  * Only stores data that is fetched when using the provider
  */
-const internalItems = ref<TableItem[]>([])
+const internalItems = ref<TableItem<T>[]>([]) as Ref<TableItem<T>[]>
 
 const sortDescBoolean = useBooleanish(sortDescModel)
 const busyBoolean = useBooleanish(busyModel)
@@ -353,7 +357,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
 // Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: TableItem | null, type: string) => [
+const getRowClasses = (item: TableItem<T> | null, type: string) => [
   {
     [`selected table-${props.selectionVariant}`]:
       selectableBoolean.value && item && selectedItemsSetUtilities.has(item),
@@ -367,8 +371,8 @@ const getRowClasses = (item: TableItem | null, type: string) => [
 const getIconStyle = (field: TableFieldObject): StyleValue =>
   sortByModel.value !== field.key ? {opacity: 0.5} : {}
 
-const computedItems = computed<TableItem[]>(() => {
-  const sortItems = (items: TableItem[]) => {
+const computedItems = computed<TableItem<T>[]>(() => {
+  const sortItems = (items: TableItem<T>[]) => {
     const sortKey = sortByModel.value
 
     if (sortKey === undefined) {
@@ -392,15 +396,15 @@ const computedItems = computed<TableItem[]>(() => {
       const realVal = (ob: unknown): string =>
         typeof ob === 'object' && ob !== null ? JSON.stringify(ob) : ob?.toString() ?? ''
 
-      return realVal(a[sortKey]).localeCompare(
-        realVal(b[sortKey]),
+      return realVal(a[sortKey as keyof T]).localeCompare(
+        realVal(b[sortKey as keyof T]),
         props.sortCompareLocale,
         props.sortCompareOptions
       )
     })
   }
 
-  const filterItems = (items: TableItem[]) =>
+  const filterItems = (items: TableItem<T>[]) =>
     items.filter((item) =>
       Object.entries(item).some(([key, val]) => {
         if (!val || key[0] === '_' || !props.filterable?.includes(key)) return false
@@ -410,7 +414,7 @@ const computedItems = computed<TableItem[]>(() => {
       })
     )
 
-  let mappedItems = usesProvider.value ? internalItems.value : props.items
+  let mappedItems = (usesProvider.value ? internalItems.value : props.items) as TableItem<T>[]
 
   if (
     (isFilterableTable.value === true && !usesProvider.value) ||
@@ -439,7 +443,7 @@ const computedItems = computed<TableItem[]>(() => {
 //     pageSize: () => perPageNumber.value || Infinity,
 //   })
 
-const computedDisplayItems = computed<TableItem[]>(() => {
+const computedDisplayItems = computed<TableItem<T>[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
     return computedItems.value
   }
@@ -451,7 +455,7 @@ const computedDisplayItems = computed<TableItem[]>(() => {
 })
 
 const handleRowSelection = (
-  row: TableItem,
+  row: TableItem<T>,
   index: number,
   shiftClicked = false,
   ctrlClicked = false,
@@ -503,7 +507,7 @@ const handleRowSelection = (
   notifySelectionEvent()
 }
 
-const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
+const onRowClick = (row: TableItem<T>, index: number, e: MouseEvent) => {
   handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
   emit('row-clicked', row, index, e)
 }
