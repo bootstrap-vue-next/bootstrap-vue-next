@@ -403,7 +403,12 @@ const computedItems = computed<TableItem[]>(() => {
   const filterItems = (items: TableItem[]) =>
     items.filter((item) =>
       Object.entries(item).some(([key, val]) => {
-        if (key[0] === '_' || (!props.filterable?.includes(key) && !!props.filterable?.length))
+        if (
+          val === null ||
+          val === undefined ||
+          key[0] === '_' ||
+          (!props.filterable?.includes(key) && !!props.filterable?.length)
+        )
           return false
         const itemValue: string =
           typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
