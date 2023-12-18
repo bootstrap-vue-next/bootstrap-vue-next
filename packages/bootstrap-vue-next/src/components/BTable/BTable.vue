@@ -321,10 +321,10 @@ const computedFields = computed<TableField[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                  ? 'none'
-                  : sortDescBoolean.value === true
-                    ? 'descending'
-                    : 'ascending',
+                ? 'none'
+                : sortDescBoolean.value === true
+                ? 'descending'
+                : 'ascending',
             ...el.thAttr,
           },
         }
@@ -403,7 +403,8 @@ const computedItems = computed<TableItem[]>(() => {
   const filterItems = (items: TableItem[]) =>
     items.filter((item) =>
       Object.entries(item).some(([key, val]) => {
-        if (!val || key[0] === '_' || !props.filterable?.includes(key)) return false
+        if (key[0] === '_' || (!props.filterable?.includes(key) && !!props.filterable?.length))
+          return false
         const itemValue: string =
           typeof val === 'object' ? JSON.stringify(Object.values(val)) : val.toString()
         return itemValue.toLowerCase().includes(props.filter?.toLowerCase() ?? '')
