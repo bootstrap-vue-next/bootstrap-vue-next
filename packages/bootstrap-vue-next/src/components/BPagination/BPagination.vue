@@ -30,6 +30,19 @@
         </slot>
       </component>
     </li>
+    <!-- First Number -->
+    <li v-if="firstNumberBoolean && pages[0] && pages[0].number !== 1" v-bind="pageButtonProps.li">
+      <component
+        v-bind="pageButtonProps.button"
+        :is="pageButtonProps.button.is"
+        :aria-label="labelPage ? `${labelPage} 1` : undefined"
+        :aria-posinset="1"
+        :tabindex="getTabIndex(1)"
+        @click="pageClick($event, 1)"
+      >
+        <slot name="page" :disabled="disabledBoolean" :page="1" :index="0" :content="1"> 1 </slot>
+      </component>
+    </li>
     <!-- Ellipsis start -->
     <li v-if="showFirstDots" v-bind="ellipsisProps.li">
       <span v-bind="ellipsisProps.span">
@@ -42,31 +55,16 @@
     <li
       v-for="page in pages"
       :key="`page-${page.number}`"
-      :class="[
-        'page-item',
-        {
-          'disabled': disabledBoolean,
-          'active': isActivePage(page.number),
-          'flex-fill': computedFill,
-          'd-flex': computedFill && !disabledBoolean,
-        },
-        pageClass,
-      ]"
-      role="presentation"
-      :aria-hidden="disabledBoolean || undefined"
+      v-bind="pageButtonProps.li"
+      :class="{active: isActivePage(page.number)}"
     >
       <component
-        :is="disabledBoolean ? 'span' : 'button'"
+        v-bind="pageButtonProps.button"
+        :is="pageButtonProps.button.is"
         :key="`page-${page.number}`"
-        :class="['page-link', {'flex-grow-1': !disabledBoolean && computedFill}]"
-        :aria-controls="ariaControls || undefined"
-        :aria-disabled="disabledBoolean ? true : undefined"
         :aria-label="labelPage ? `${labelPage} ${page.number}` : undefined"
         :aria-posinset="page.number"
         :aria-checked="isActivePage(page.number)"
-        :aria-setsize="numberOfPages"
-        role="menuitemradio"
-        :type="disabledBoolean ? undefined : 'button'"
         :tabindex="getTabIndex(page.number)"
         @click="pageClick($event, page.number)"
       >
@@ -90,6 +88,34 @@
           {{ ellipsisText || '...' }}
         </slot>
       </span>
+    </li>
+    <!-- Last Number -->
+    <li
+      v-if="
+        lastNumberBoolean &&
+        pages[pages.length - 1] &&
+        pages[pages.length - 1].number !== numberOfPages
+      "
+      v-bind="pageButtonProps.li"
+    >
+      <component
+        v-bind="pageButtonProps.button"
+        :is="pageButtonProps.button.is"
+        :aria-label="labelPage ? `${labelPage} ${numberOfPages}` : undefined"
+        :aria-posinset="numberOfPages"
+        :tabindex="getTabIndex(numberOfPages)"
+        @click="pageClick($event, numberOfPages)"
+      >
+        <slot
+          name="page"
+          :disabled="disabledBoolean"
+          :page="numberOfPages"
+          :index="numberOfPages - 1"
+          :content="numberOfPages"
+        >
+          {{ numberOfPages }}
+        </slot>
+      </component>
     </li>
     <!-- Next -->
     <li v-bind="nextButtonProps.li">
@@ -236,10 +262,11 @@ const checkDisabled = (num: number) =>
 
 const firstDisabled = computed(() => checkDisabled(1))
 const prevDisabled = computed(() => checkDisabled(modelValueNumber.value - 1))
+const pageDisabled = computed(() => disabledBoolean.value)
 const lastDisabled = computed(() => checkDisabled(numberOfPages.value))
 const nextDisabled = computed(() => checkDisabled(modelValueNumber.value + 1))
 
-const getEndButtonProps = (dis: boolean, classVal: ClassValue) => ({
+const getButtonProps = (dis: boolean, classVal: ClassValue) => ({
   li: {
     class: [
       'page-item',
@@ -263,10 +290,35 @@ const getEndButtonProps = (dis: boolean, classVal: ClassValue) => ({
   },
 })
 
-const firstButtonProps = computed(() => getEndButtonProps(firstDisabled.value, props.firstClass))
-const prevButtonProps = computed(() => getEndButtonProps(prevDisabled.value, props.prevClass))
-const nextButtonProps = computed(() => getEndButtonProps(nextDisabled.value, props.nextClass))
-const lastEndButtonProps = computed(() => getEndButtonProps(lastDisabled.value, props.lastClass))
+const getPageButtonProps = (dis: boolean, classVal: ClassValue) => ({
+  li: {
+    'class': [
+      'page-item',
+      {
+        'disabled': dis,
+        'flex-fill': computedFill.value,
+        'd-flex': computedFill.value && !dis,
+      },
+      classVal,
+    ],
+    'role': 'presentation',
+    'aria-hidden': dis,
+  },
+  button: {
+    'is': dis ? 'span' : 'button',
+    'class': ['page-link', {'flex-grow-1': !dis && computedFill.value}],
+    'aria-controls': props.ariaControls || undefined,
+    'aria-disabled': dis ? true : undefined,
+    'role': 'menuitemradio',
+    'type': dis ? undefined : 'button',
+  },
+})
+
+const firstButtonProps = computed(() => getButtonProps(firstDisabled.value, props.firstClass))
+const prevButtonProps = computed(() => getButtonProps(prevDisabled.value, props.prevClass))
+const pageButtonProps = computed(() => getPageButtonProps(pageDisabled.value, props.pageClass))
+const nextButtonProps = computed(() => getButtonProps(nextDisabled.value, props.nextClass))
+const lastEndButtonProps = computed(() => getButtonProps(lastDisabled.value, props.lastClass))
 
 const ellipsisProps = computed(() => ({
   li: {
