@@ -1,10 +1,10 @@
 <template>
   <!-- tables definitions are shared. Can't use createReusableTemplate cause it becomes a non-root node -->
-  <table v-if="!resolvedResponsive" :class="computedClasses">
+  <table v-if="!resolvedResponsive" :id="id" :class="computedClasses">
     <slot />
   </table>
   <div v-else :class="responsiveClasses">
-    <table :class="computedClasses">
+    <table :id="id" :class="computedClasses">
       <slot />
     </table>
   </div>

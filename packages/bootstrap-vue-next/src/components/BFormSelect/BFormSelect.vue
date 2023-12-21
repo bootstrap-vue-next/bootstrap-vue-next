@@ -58,7 +58,13 @@ const props = withDefaults(
     htmlField?: string
     id?: string
     labelField?: string
-    modelValue?: string | readonly unknown[] | Readonly<Record<string, unknown>> | number | null
+    modelValue?:
+      | string
+      | readonly unknown[]
+      | Readonly<Record<string, unknown>>
+      | number
+      | boolean
+      | null
     multiple?: Booleanish
     name?: string
     options?: readonly unknown[] | Readonly<Record<string, unknown>> // TODO It was declared deprecated in useFormSelect to use a Record. https://bootstrap-vue.org/docs/components/form-select#options-as-an-object
@@ -83,6 +89,7 @@ const props = withDefaults(
     modelValue: '',
     multiple: false,
     name: undefined,
+    // eslint-disable-next-line vue/require-valid-default-prop
     options: () => [],
     optionsField: 'options',
     plain: false,
@@ -148,7 +155,7 @@ const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, stateBoolean
 // It also doesn't work for array syntaxes. Review second example from https://bootstrap-vue.org/docs/components/form-select
 // For more info on how it should behave
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formOptions = computed(() => normalizeOptions(props.options, 'BFormSelect', props))
+const formOptions = computed(() => normalizeOptions(props.options as any, 'BFormSelect', props))
 const localValue = computed({
   get: () => modelValue.value,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
