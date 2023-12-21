@@ -5,7 +5,7 @@
     :class="computedClasses"
     :name="name || undefined"
     :form="form || undefined"
-    :value="modelValue"
+    :value="modelValue ?? undefined"
     :disabled="disabledBoolean"
     :placeholder="placeholder"
     :required="requiredBoolean || undefined"
