@@ -62,7 +62,7 @@ export {default as BLink} from './BLink/BLink.vue'
 export {default as BListGroup} from './BListGroup/BListGroup.vue'
 export {default as BListGroupItem} from './BListGroup/BListGroupItem.vue'
 export {default as BModal} from './BModal/BModal.vue'
-export {default as BModaler} from './BModal/BModaler.vue'abc // TODO better name?
+export {default as BModaler} from './BModal/BModaler.vue'
 export {default as BNav} from './BNav/BNav.vue'
 export {default as BNavForm} from './BNav/BNavForm.vue'
 export {default as BNavItem} from './BNav/BNavItem.vue'

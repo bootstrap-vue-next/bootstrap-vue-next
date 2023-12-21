@@ -1,4 +1,5 @@
 <template>
+  <!-- tables definitions are shared. Can't use createReusableTemplate cause it becomes a non-root node -->
   <table v-if="!resolvedResponsive" :class="computedClasses">
     <slot />
   </table>
