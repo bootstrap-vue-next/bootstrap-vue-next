@@ -10,16 +10,19 @@ export interface ComponentReference {
     type: string
     description?: string
     default?: unknown
+    children?: Omit<ComponentReference['props'][number], 'children'>[]
   }[]
   emits: {
     event: string
     args: EmitArgReference[]
     description?: string
+    children?: Omit<ComponentReference['emits'][number], 'children'>[]
   }[]
   slots: {
     scope: SlotScopeReference[]
     name: string
     description?: string
+    children?: Omit<ComponentReference['slots'][number], 'children'>[]
   }[]
   sections?: ComponentSection[]
 }

@@ -45,6 +45,7 @@
                     <BTable
                       :items="component[sectionToComponentItem(section)]"
                       :fields="fields[sectionToComponentItem(section)]"
+                      :tbody-tr-class="(item) => (item.isParent ? 'custom-row' : undefined)"
                       hover
                       small
                       responsive
@@ -105,6 +106,32 @@ import type {
 
 const props = defineProps<{data: ComponentReference[]}>()
 
+const sortItems = ({
+  arr,
+  name,
+}:
+  | {arr: ComponentReference['props']; name: 'prop'}
+  | {arr: ComponentReference['emits']; name: 'event'}
+  | {arr: ComponentReference['slots']; name: 'name'}) => {
+  const withoutChild: ComponentReference['props'] = []
+  const withChild: ComponentReference['props'] = []
+
+  // Use for...of loop instead of forEach
+  arr.forEach((obj) => {
+    if (obj.children) {
+      withChild.push(obj)
+    } else {
+      withoutChild.push(obj)
+    }
+  })
+
+  withoutChild.sort((a, b) => (a[name] as string).localeCompare(b[name]))
+
+  withChild.sort((a, b) => a[name].localeCompare(b[name]))
+
+  return [...withoutChild, ...withChild]
+}
+
 /**
  * Sorts the items inside so they're uniform structure
  */
@@ -112,30 +139,11 @@ const sortData = computed(() =>
   [...props.data].map((el: ComponentReference): ComponentReference => {
     const data: ComponentReference = {
       component: el.component,
-      props: el.props
-        .map((inner) => ({
-          prop: inner.prop,
-          type: inner.type,
-          default: inner.default,
-          description: inner.description,
-        }))
-        .sort((a, b) => a.prop.localeCompare(b.prop)),
-      emits: el.emits
-        .map((inner) => ({
-          event: inner.event,
-          description: inner.description,
-          // Does not render inner object correctly
-          args: inner.args,
-        }))
-        .sort((a, b) => a.event.localeCompare(b.event)),
-      slots: el.slots
-        .map((inner) => ({
-          name: inner.name,
-          description: inner.description,
-          // Does not render inner object correctly
-          scope: inner.scope,
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      props: sortItems({arr: el.props, name: 'prop'}).flatMap((x) =>
+        !x?.children ? x : [{prop: x?.prop, type: x?.type, isParent: true}, ...x.children]
+      ),
+      emits: el.emits.sort((a, b) => a.event.localeCompare(b.event)),
+      slots: el.slots.sort((a, b) => a.name.localeCompare(b.name)),
     }
 
     data.sections = (['Properties', 'Events', 'Slots'] as ComponentSection[]).filter(
@@ -158,5 +166,5 @@ const fields: {[P in ComponentItem]: TableField[]} = {
 }
 
 const normalizeDefault = (val: unknown) =>
-  val === undefined || val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val
+  val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val
 </script>

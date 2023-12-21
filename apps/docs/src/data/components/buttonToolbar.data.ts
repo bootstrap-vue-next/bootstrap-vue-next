@@ -9,21 +9,24 @@ export default {
           prop: 'ariaLabel',
           type: 'string',
           default: 'Group',
+          description: `Sets the ARIA attribute 'label' to a specific value`,
         },
         {
           prop: 'justify',
           type: 'Booleanish',
           default: false,
+          description: `Make the toolbar span the maximum available width, by increasing spacing between the button groups, input groups and dropdowns`,
         },
         {
           prop: 'role',
           type: 'string',
           default: 'toolbar',
+          description: `Sets the ARIA attribute 'role' to a specific value`,
         },
       ],
       slots: [
         {
-          description: '',
+          description: `Content to place in the button toolbar`,
           name: 'default',
           scope: [],
         },
