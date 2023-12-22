@@ -399,7 +399,7 @@ export default {
               type: 'BvTriggerableEvent',
             },
           ],
-          description: 'Always emits just after modal is shown. Cancelable',
+          description: 'Always emits just before modal is shown. Cancelable',
         },
         {
           event: 'hide',
