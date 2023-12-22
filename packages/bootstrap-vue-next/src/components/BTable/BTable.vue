@@ -321,10 +321,10 @@ const computedFields = computed<TableField[]>(() =>
               isSortable.value === false
                 ? undefined
                 : sortByModel.value !== el.key
-                ? 'none'
-                : sortDescBoolean.value === true
-                ? 'descending'
-                : 'ascending',
+                  ? 'none'
+                  : sortDescBoolean.value === true
+                    ? 'descending'
+                    : 'ascending',
             ...el.thAttr,
           },
         }
