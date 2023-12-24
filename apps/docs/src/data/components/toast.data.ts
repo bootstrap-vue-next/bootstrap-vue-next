@@ -128,7 +128,7 @@ export default {
       ],
     },
     {
-      component: 'BToaster',
+      component: 'BToastOrchestrator',
       emits: [],
       slots: [],
       props: [
