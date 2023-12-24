@@ -193,7 +193,6 @@
                   </template>
                 </BFormSelect>
 
-                <!-- TODO: This should be fixed by PR #1667 - https://github.com/bootstrap-vue-next/bootstrap-vue-next/pull/1667 -->
                 <BFormSelect
                   v-model="sortDesc"
                   :disabled="!sortBy"
@@ -292,15 +291,7 @@
           </BCol>
         </BRow>
 
-        <!-- Main table element -->
-        <!-- TODO: 
-      I can get rid of the warning on item and filtered by doing the following casts, but then
-      Volar gets completely messed up. I could probably fix this by creating differently
-      typed verssions of item and onFiltered, but it seems like the better solution is to
-      make the table component generic.
-      :items="items as unknown as TableItem[]"
-      @filtered="onFiltered as unknown as () => void"
-     -->
+        <!-- Main table element for typed table-->
         <BTable
           v-model:sort-by="sortBy"
           v-model:sort-desc="sortDesc"
@@ -314,19 +305,16 @@
           :filterable="filterOn"
           :small="true"
           @filtered="onFiltered"
+          @row-clicked="onRowClicked"
         >
+          <!-- TODO: is typing of dynamic slots possible? -->
           <template #cell(name)="row">
             {{ (row.value as PersonName).first }}
             {{ (row.value as PersonName).last }}
           </template>
 
           <template #cell(actions)="row">
-            <!-- TODO: the cast in the click handler should not be necessary if table is generic -->
-            <BButton
-              size="sm"
-              class="mr-1"
-              @click="info(row.item as unknown as TableItem<Person>, row.index)"
-            >
+            <BButton size="sm" class="mr-1" @click="info(row.item, row.index)">
               Info modal
             </BButton>
             <BButton size="sm" @click="row.toggleDetails">
@@ -363,8 +351,10 @@
 import {computed, reactive, ref} from 'vue'
 import type {BTable, ColorVariant, TableField, TableItem} from 'bootstrap-vue-next'
 
+type LiteralUnion<T, U = string> = T | (U & Record<never, never>)
+
 const stringTableDefinitions = ref(['last_name', 'first_name', 'age'])
-const objectTableDefinitions = ref<TableField[]>([
+const objectTableDefinitions = ref<Exclude<TableField, string>[]>([
   {
     key: 'last_name',
     label: 'Family name',
@@ -452,7 +442,7 @@ const itemsTyped: TableItem<Person>[] = [
 ]
 
 // TODO: This would be cleaner if we export TableFieldObject
-const fieldsTyped: Exclude<TableField, string>[] = [
+const fieldsTyped: Exclude<TableField<Person>, string>[] = [
   {
     key: 'name',
     label: 'Person full name',
@@ -464,10 +454,8 @@ const fieldsTyped: Exclude<TableField, string>[] = [
     label: 'Person sortable name',
     sortable: true,
     sortDirection: 'desc',
-    // TODO: Linter rule for _ meaning unused?  If we get generic tables working can item
-    //  be typed to TableItem<Person> here?
-    formatter: (_value: any, _key: any, item: any) => `${item.name.last}, ${item.name.first}`,
-    // formatter: (value: unknown, key: unknown, item: TableItem<Person></Person>) => `${item.name.last}, ${item.name.first}`,
+    formatter: (_value: unknown, _key?: LiteralUnion<keyof Person>, item?: Person) =>
+      item ? `${item.name.last}, ${item.name.first}` : 'Something went wrong',
     sortByFormatted: true,
     filterByFormatted: true,
   },
@@ -485,7 +473,7 @@ const fieldsTyped: Exclude<TableField, string>[] = [
 
 const pageOptions = [5, 10, 15, {value: 100, text: 'Show a lot'}]
 
-const totalRows = ref(items.length)
+const totalRows = ref(itemsTyped.length)
 const currentPage = ref(1)
 const perPage = ref(5)
 const sortBy = ref('')
@@ -505,8 +493,6 @@ const sortOptions = computed(() =>
   fieldsTyped.filter((f) => f.sortable).map((f) => ({text: f.label, value: f.key}))
 )
 
-// function info(item: TableItem<Person>, index: number, button: HTMLButtonElement)
-
 function info(item: TableItem<Person>, index: number) {
   infoModal.title = `Row index: ${index}`
   infoModal.content = JSON.stringify(item, null, 2)
@@ -522,5 +508,18 @@ function onFiltered(filteredItems: TableItem<Person>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length
   currentPage.value = 1
+
+  // The following logging is just to prove that typing is working
+  filteredItems.forEach((item) => {
+    // eslint-disable-next-line no-console
+    console.log(
+      `${item.name.first} ${item.name.last} is ${item.age} years old and is active = ${item.isActive}`
+    )
+  })
+}
+
+function onRowClicked(row: TableItem<Person>, index: number) {
+  // eslint-disable-next-line no-console
+  console.log(`clicked on row ${index}: ${row.name.first} ${row.name.last}`)
 }
 </script>

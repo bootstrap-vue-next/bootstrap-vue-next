@@ -105,7 +105,7 @@ export interface BTableLiteProps<T = Record<string, unknown>> extends BTableSimp
     | Record<PropertyKey, any>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | any[]
-  fields?: TableField[]
+  fields?: TableField<T>[]
   footClone?: Booleanish
   footRowVariant?: ColorVariant | null
   footVariant?: ColorVariant | null

@@ -95,8 +95,6 @@ import {getTableFieldHeadLabel} from '../../utils'
 
 type NoProviderTypes = 'paging' | 'sorting' | 'filtering'
 
-// TODONEXT: Figure out what is going on with emits and the last couple of TS errors in this file
-//  Then move the App.Vue code to the Table playground and put up a PR
 // TODO sort props list alphabetically when everything is done
 const props = withDefaults(
   defineProps<
@@ -141,7 +139,7 @@ const props = withDefaults(
       // sortDirection?: 'asc' | 'desc' | 'last'
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
-      selectedItems?: TableItem[]
+      selectedItems?: TableItem<T>[]
       noSortableIcon?: Booleanish
     } & Omit<BTableLiteProps<T>, 'tableClass'>
   >(),
@@ -222,8 +220,8 @@ const props = withDefaults(
 const emit = defineEmits<{
   'filtered': [value: TableItem<T>[]]
   'head-clicked': [
-    key: TableFieldObject['key'],
-    field: TableField,
+    key: TableFieldObject<T>['key'],
+    field: TableField<T>,
     event: MouseEvent,
     isFooter: boolean,
   ]
@@ -246,7 +244,7 @@ const busyModel = useVModel(props, 'busy', emit, {passive: true})
 const sortDescModel = useVModel(props, 'sortDesc', emit, {passive: true})
 const selectedItemsModel = useVModel(props, 'selectedItems', emit, {
   passive: true,
-}) as unknown as Ref<TableItem<T>[]>
+}) as Ref<TableItem<T>[]>
 
 const selectedItemsToSet = computed({
   get: () => new Set([...selectedItemsModel.value]),
@@ -269,7 +267,6 @@ const selectedItemsSetUtilities = {
     selectedItemsToSet.value.forEach((item) => {
       emit('row-unselected', item)
     })
-    selectedItemsToSet.value = new Set()
   },
   delete: (item: TableItem<T>) => {
     const value = new Set(selectedItemsToSet.value)
@@ -314,7 +311,7 @@ const isSortable = computed(
     props.fields.some((field) => (typeof field === 'string' ? false : field.sortable))
 )
 
-const computedFields = computed<TableField[]>(() =>
+const computedFields = computed<TableField<T>[]>(() =>
   props.fields.map((el) =>
     typeof el === 'string'
       ? el
@@ -348,7 +345,7 @@ const getBusyRowClasses = computed(() => [
       : props.tbodyTrClass
     : null,
 ])
-const getFieldColumnClasses = (field: TableFieldObject) => [
+const getFieldColumnClasses = (field: TableFieldObject<T>) => [
   {
     'b-table-sortable-column': isSortable.value && field.sortable,
   },
@@ -368,7 +365,7 @@ const getRowClasses = (item: TableItem<T> | null, type: string) => [
       : props.tbodyTrClass
     : null,
 ]
-const getIconStyle = (field: TableFieldObject): StyleValue =>
+const getIconStyle = (field: TableFieldObject<T>): StyleValue =>
   sortByModel.value !== field.key ? {opacity: 0.5} : {}
 
 const computedItems = computed<TableItem<T>[]>(() => {
@@ -420,7 +417,7 @@ const computedItems = computed<TableItem<T>[]>(() => {
       })
     )
 
-  let mappedItems = (usesProvider.value ? internalItems.value : props.items) as TableItem<T>[]
+  let mappedItems = usesProvider.value ? internalItems.value : props.items
 
   if (
     (isFilterableTable.value === true && !usesProvider.value) ||
@@ -518,10 +515,10 @@ const onRowClick = (row: TableItem<T>, index: number, e: MouseEvent) => {
   emit('row-clicked', row, index, e)
 }
 
-const handleFieldSorting = (field: TableField) => {
+const handleFieldSorting = (field: TableField<T>) => {
   if (!isSortable.value) return
 
-  const fieldKey = typeof field === 'string' ? field : field.key
+  const fieldKey = (typeof field === 'string' ? field : field.key) as string
   const fieldSortable = typeof field === 'string' ? false : field.sortable
 
   if (!(isSortable.value === true && fieldSortable === true)) return
@@ -541,8 +538,8 @@ const handleFieldSorting = (field: TableField) => {
 }
 
 const onFieldHeadClick = (
-  fieldKey: LiteralUnion<string>,
-  field: TableField,
+  fieldKey: LiteralUnion<keyof T>,
+  field: TableField<T>,
   event: MouseEvent,
   isFooter = false
 ) => {

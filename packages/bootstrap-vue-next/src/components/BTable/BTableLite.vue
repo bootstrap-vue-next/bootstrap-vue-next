@@ -306,7 +306,7 @@ const computedFields = computed<TableFieldObject<T>[]>(() => {
         computedStacked.value === true
           ? {'data-label': startCase(f.key as string), ...f.tdAttr}
           : f.tdAttr,
-    } as TableFieldObject<T> // DWG-TODO: I don't think this cast should be necessary
+    }
     // TODO handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
   })
 })
@@ -343,9 +343,6 @@ const getFieldColumnClasses = (field: TableFieldObject<T>) => [
     : null,
 ]
 
-// DWG-TODO: I don't think the "as keyof T" casts should be necessary, but I'm getting the following error without them:
-// Type 'LiteralUnion<keyof T>' cannot be used to index type 'Partial<Record<keyof T, keyof BaseColorVariant>>'.ts(2536)
-// I ended up using this same hack in multiple places for the same reason.
 const getFieldRowClasses = (field: TableFieldObject<T>, tr: TableItem<T>) => [
   field.class,
   field.tdClass,
