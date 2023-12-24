@@ -12,8 +12,8 @@ export interface ComponentProps {
  */
 export default (
   prefix: string,
-  breakpoints: string[],
-  definition: PropDefinition
+  breakpoints: readonly string[],
+  definition: Readonly<PropDefinition>
 ): ComponentProps =>
   breakpoints.concat(['sm', 'md', 'lg', 'xl', 'xxl']).reduce((props, breakpoint) => {
     props[

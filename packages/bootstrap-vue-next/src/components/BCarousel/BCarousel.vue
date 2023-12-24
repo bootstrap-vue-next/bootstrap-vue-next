@@ -53,7 +53,7 @@
 import {BvCarouselEvent, carouselInjectionKey, getSlotElements} from '../../utils'
 import {computed, provide, ref, toRef, watch} from 'vue'
 import {useBooleanish, useId} from '../../composables'
-import type {Booleanish} from '../../types'
+import type {Booleanish, Numberish} from '../../types'
 import {
   onKeyStroke,
   useElementHover,
@@ -75,7 +75,7 @@ const props = withDefaults(
     imgWidth?: string
     indicators?: Booleanish
     indicatorsButtonLabel?: string
-    interval?: number | string
+    interval?: Numberish
     keyboard?: Booleanish
     modelValue?: number
     noHoverPause?: Booleanish
@@ -83,7 +83,7 @@ const props = withDefaults(
     noWrap?: Booleanish
     ride?: Booleanish | 'carousel'
     rideReverse?: Booleanish
-    touchThreshold?: number | string
+    touchThreshold?: Numberish
   }>(),
   {
     background: undefined,
@@ -274,7 +274,7 @@ const onAfterLeave = () => {
 // carousel-item class is removed from the slide during the transition,
 // as is included within enter classes.
 // The first slide recovers carousel-item class,
-const onAfterEnter = (el: Element) => {
+const onAfterEnter = (el: Readonly<Element>) => {
   if (modelValue.value !== 0) {
     el.classList.add('carousel-item')
   }

@@ -33,7 +33,10 @@ const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#
 const DATA_URL_PATTERN =
   /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[\d+/a-z]+=*$/i
 
-const allowedAttribute = (attribute: Attr, allowedAttributeList: (string | RegExp)[]) => {
+const allowedAttribute = (
+  attribute: Readonly<Attr>,
+  allowedAttributeList: readonly (string | RegExp)[]
+) => {
   const attributeName = attribute.nodeName.toLowerCase()
 
   if (allowedAttributeList.includes(attributeName)) {
@@ -89,7 +92,7 @@ export const DefaultAllowlist = {
 
 export const sanitizeHtml = (
   unsafeHtml: string,
-  allowList: Record<string, (string | RegExp)[]>,
+  allowList: Readonly<Record<string, (string | RegExp)[]>>,
   sanitizeFunction?: (unsafeHtml: string) => string
 ) => {
   if (!unsafeHtml.length) {

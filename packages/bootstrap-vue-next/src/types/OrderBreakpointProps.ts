@@ -1,7 +1,9 @@
+import type {Numberish} from './CommonTypes'
+
 export interface OrderBreakpointProps {
-  OrderSm?: string | number
-  OrderMd?: string | number
-  OrderLg?: string | number
-  OrderXl?: string | number
-  OrderXxl?: string | number
+  OrderSm?: Numberish
+  OrderMd?: Numberish
+  OrderLg?: Numberish
+  OrderXl?: Numberish
+  OrderXxl?: Numberish
 }

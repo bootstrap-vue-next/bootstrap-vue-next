@@ -7,4 +7,5 @@ export const isObject = (obj: unknown): obj is Record<PropertyKey, unknown> =>
 /**
  * @deprecated
  */
-export const isNumeric = (value: unknown): boolean => /^[0-9]*\.?[0-9]+$/.test(String(value))
+export const isNumeric = (value: Readonly<unknown>): boolean =>
+  /^[0-9]*\.?[0-9]+$/.test(String(value))

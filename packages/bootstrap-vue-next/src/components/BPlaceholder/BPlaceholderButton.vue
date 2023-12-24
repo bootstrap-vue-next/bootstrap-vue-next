@@ -12,16 +12,16 @@
 
 <script setup lang="ts">
 import BPlaceholder from './BPlaceholder.vue'
-import type {ColorVariant, PlaceholderAnimation} from '../../types'
+import type {ColorVariant, Numberish, PlaceholderAnimation} from '../../types'
 import {computed} from 'vue'
 
 const props = withDefaults(
   defineProps<{
     animation?: PlaceholderAnimation
-    cols?: string | number
+    cols?: Numberish
     tag?: string
     variant?: ColorVariant | null
-    width?: string | number
+    width?: Numberish
   }>(),
   {
     animation: undefined,

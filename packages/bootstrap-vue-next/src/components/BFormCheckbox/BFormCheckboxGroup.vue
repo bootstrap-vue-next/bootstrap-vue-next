@@ -37,9 +37,9 @@ const props = withDefaults(
     form?: string
     htmlField?: string
     id?: string
-    modelValue?: CheckboxValue[]
+    modelValue?: readonly CheckboxValue[]
     name?: string
-    options?: (string | number | Record<string, unknown>)[]
+    options?: readonly (string | number | Record<string, unknown>)[]
     plain?: Booleanish
     required?: Booleanish
     size?: Size
@@ -124,9 +124,9 @@ provide(checkboxGroupKey, {
 })
 
 watch(modelValue, (newValue) => {
-  emit('input', newValue)
+  emit('input', [...newValue])
   nextTick(() => {
-    emit('change', newValue)
+    emit('change', [...newValue])
   })
 })
 

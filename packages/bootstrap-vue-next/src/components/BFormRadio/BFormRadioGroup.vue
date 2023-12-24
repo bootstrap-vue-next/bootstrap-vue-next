@@ -39,7 +39,7 @@ const props = withDefaults(
     id?: string
     modelValue?: RadioValue
     name?: string
-    options?: (string | number | Record<string, unknown>)[]
+    options?: readonly (string | number | Record<string, unknown>)[]
     plain?: Booleanish
     required?: Booleanish
     size?: Size

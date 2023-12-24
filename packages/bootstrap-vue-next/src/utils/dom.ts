@@ -12,34 +12,36 @@ const ELEMENT_PROTO = HAS_ELEMENT_SUPPORT ? Element.prototype : undefined
 /**
  * @deprecated
  */
-export const isElement = (el: unknown): el is HTMLElement =>
+export const isElement = (el: Readonly<unknown>): el is HTMLElement =>
   !!(el && typeof el === 'object' && 'nodeType' in el && el.nodeType === Node.ELEMENT_NODE)
 
 /**
  * @deprecated
  */
-export const getBCR = (el: HTMLElement) => (isElement(el) ? el.getBoundingClientRect() : null)
+export const getBCR = (el: Readonly<HTMLElement>) =>
+  isElement(el) ? el.getBoundingClientRect() : null
 
 /**
  * @deprecated
  */
-export const getActiveElement = (excludes = []): Element | null => {
+export const getActiveElement = (excludes: readonly HTMLElement[] = []): Element | null => {
   const {activeElement} = document
-  return activeElement && !excludes.some((el: HTMLElement) => el === activeElement)
-    ? activeElement
-    : null
+  return activeElement && !excludes.some((el) => el === activeElement) ? activeElement : null
 }
 
 /**
  * @deprecated
  */
-export const isActiveElement = (el: HTMLElement): boolean =>
+export const isActiveElement = (el: Readonly<HTMLElement>): boolean =>
   isElement(el) && el === getActiveElement()
 
 /**
  * @deprecated
  */
-export const attemptFocus = (el: HTMLElement, options = {}): boolean => {
+export const attemptFocus = (
+  el: Readonly<HTMLElement>,
+  options: Readonly<FocusOptions> = {}
+): boolean => {
   try {
     el.focus(options)
   } catch (e) {
@@ -56,7 +58,7 @@ export const attemptFocus = (el: HTMLElement, options = {}): boolean => {
  * @returns
  * @deprecated
  */
-export const attemptBlur = (el: HTMLElement): boolean => {
+export const attemptBlur = (el: Readonly<HTMLElement>): boolean => {
   try {
     el.blur()
   } catch (e) {
@@ -69,18 +71,19 @@ export const attemptBlur = (el: HTMLElement): boolean => {
 /**
  * @deprecated
  */
-export const getStyle = (el: HTMLElement, prop: string) =>
+export const getStyle = (el: Readonly<HTMLElement>, prop: string) =>
   prop && isElement(el) ? el.getAttribute(prop) || null : null
 
 /**
  * @deprecated
  */
-export const contains = (parent: Node, child: Node): boolean => parent.contains(child)
+export const contains = (parent: Readonly<Node>, child: Readonly<Node>): boolean =>
+  parent.contains(child)
 
 /**
  * @deprecated
  */
-export const isVisible = (el: HTMLElement): boolean => {
+export const isVisible = (el: Readonly<HTMLElement>): boolean => {
   //if (!isElement(el) || !el.parentNode || !contains(DOCUMENT.body, el)) {
   // Note this can fail for shadow dom elements since they
   // are not a direct descendant of document.body
@@ -110,20 +113,22 @@ export const isEmptySlot = (el: Slot | undefined): boolean => (el?.() ?? []).len
  * @returns
  * @deprecated
  */
-export const select = (selector: string, root: Element) =>
+export const select = (selector: string, root: Readonly<Element>) =>
   (isElement(root) ? root : DOCUMENT).querySelector(selector) || null
 
 /**
  * @deprecated
  */
-export const selectAll = (selector: string, root: Element) =>
+export const selectAll = (selector: string, root: Readonly<Element>) =>
   Array.from([(isElement(root) ? root : DOCUMENT).querySelectorAll(selector)])
 
 /**
  * @deprecated
  */
-export const getAttr = (el: HTMLElement | Element, attr: string): string | null =>
-  attr && isElement(el) ? el.getAttribute(attr) : null
+export const getAttr = (
+  el: Readonly<HTMLElement> | Readonly<Element>,
+  attr: string
+): string | null => (attr && isElement(el) ? el.getAttribute(attr) : null)
 
 /**
  * Get an element given an ID
@@ -135,7 +140,7 @@ export const getById = (id: string) =>
 /**
  * @deprecated
  */
-export const setAttr = (el: HTMLElement, attr: string, value: string): void => {
+export const setAttr = (el: Readonly<HTMLElement>, attr: string, value: string): void => {
   if (attr && isElement(el)) {
     el.setAttribute(attr, value)
   }
@@ -148,7 +153,7 @@ export const setAttr = (el: HTMLElement, attr: string, value: string): void => {
  * @param attr
  * @deprecated
  */
-export const removeAttr = (el: HTMLElement, attr: string): void => {
+export const removeAttr = (el: Readonly<HTMLElement>, attr: string): void => {
   if (attr && isElement(el)) {
     el.removeAttribute(attr)
   }
@@ -177,7 +182,7 @@ export const requestAF: AnimationFrame = HAS_WINDOW_SUPPORT
 /**
  * @deprecated
  */
-export const matches = (el: Element, selector: string) =>
+export const matches = (el: Readonly<Element>, selector: string) =>
   isElement(el) ? el.matches(selector) : false
 
 /**
@@ -207,7 +212,7 @@ export const closestEl =
  * @param includeRoot
  * @deprecated
  */
-export const closest = (selector: string, root: Element, includeRoot = false) => {
+export const closest = (selector: string, root: Readonly<Element>, includeRoot = false) => {
   if (!isElement(root)) {
     return null
   }
@@ -221,7 +226,7 @@ export const closest = (selector: string, root: Element, includeRoot = false) =>
 /**
  * @deprecated
  */
-export const getTransitionDelay = (element: HTMLElement) => {
+export const getTransitionDelay = (element: Readonly<HTMLElement>) => {
   const style = window.getComputedStyle(element)
   // if multiple durations are defined, we take the first
   const transitionDelay = style.transitionDelay.split(',')[0] || ''

@@ -18,7 +18,7 @@ export default (
     }
   }
 
-  const resolveClassList = (val: string | string[]) =>
+  const resolveClassList = (val: string | readonly string[]) =>
     typeof val === 'string' ? val.split(/\s+/) : val
 
   const startTransition = (onEnd?: () => void) => {

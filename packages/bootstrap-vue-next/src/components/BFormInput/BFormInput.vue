@@ -28,15 +28,15 @@
 import {computed, ref} from 'vue'
 import {useBooleanish, useFormInput, useStateClass} from '../../composables'
 import type {CommonInputProps} from '../../composables/useFormInput'
-import type {InputType} from '../../types'
+import type {InputType, Numberish} from '../../types'
 
 const props = withDefaults(
   defineProps<
     {
-      max?: string | number
-      min?: string | number
+      max?: Numberish
+      min?: Numberish
       // noWheel: {type: [Boolean, String] as PropType<Booleanish>, default: false}, TODO: not implemented yet
-      step?: string | number
+      step?: Numberish
       type?: InputType
     } & CommonInputProps
   >(),
@@ -103,9 +103,9 @@ const computedClasses = computed(() => {
     {
       'form-control-highlighted': isHighlighted.value,
       'form-range': isRange,
-      'form-control': isColor || (!props.plaintext && !isRange),
+      'form-control': isColor || (!plaintextBoolean.value && !isRange),
       'form-control-color': isColor,
-      'form-control-plaintext': props.plaintext && !isRange && !isColor,
+      'form-control-plaintext': plaintextBoolean.value && !isRange && !isColor,
       [`form-control-${props.size}`]: !!props.size,
     },
   ]

@@ -44,7 +44,7 @@ const slots = defineSlots<{
 
 const props = withDefaults(
   defineProps<{
-    accept?: string | string[]
+    accept?: string | readonly string[]
     autofocus?: Booleanish
     capture?: Booleanish | 'user' | 'environment'
     directory?: Booleanish
@@ -53,7 +53,7 @@ const props = withDefaults(
     id?: string
     label?: string
     labelClass?: ClassValue
-    modelValue?: File[] | File | null
+    modelValue?: readonly File[] | File | null
     multiple?: Booleanish
     name?: string
     noDrop?: Booleanish
@@ -122,14 +122,14 @@ const computedClasses = computed(() => [
   },
 ])
 
-const onChange = (e: Event) => {
+const onChange = (e: Readonly<Event>) => {
   const value =
     input.value?.files === null || input.value?.files === undefined ? null : [...input.value.files]
   modelValue.value = value === null ? null : multipleBoolean.value === true ? value : value[0]
   emit('change', e)
 }
 
-const onDrop = (e: Event) => {
+const onDrop = (e: Readonly<Event>) => {
   if (noDropBoolean.value === true) {
     e.preventDefault()
   }

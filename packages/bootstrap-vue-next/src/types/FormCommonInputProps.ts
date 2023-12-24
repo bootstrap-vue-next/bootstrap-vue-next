@@ -1,3 +1,4 @@
+import type {Numberish} from './CommonTypes'
 import type {AriaInvalid} from './AriaInvalid'
 import type {Size} from './Size'
 
@@ -12,7 +13,7 @@ export interface FormCommonInputProps {
   lazy?: boolean
   lazyFormatter?: boolean
   list?: string
-  modelValue?: string | number
+  modelValue?: Numberish
   name?: string
   number?: boolean
   placeholder?: string

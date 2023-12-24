@@ -35,8 +35,8 @@ const props = withDefaults(
   defineProps<
     {
       linkClass?: ClassValue
-      wrapperAttrs?: AttrsValue
-    } & Omit<BLinkProps, 'event' | 'routerTag'>
+      wrapperAttrs?: Readonly<AttrsValue>
+    } & Omit<BLinkProps, 'routerTag'>
   >(),
   {
     wrapperAttrs: undefined,
@@ -99,7 +99,7 @@ const dropdownData = inject(dropdownInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
 
 // Pretty sure this emits if computedTag is not button and is disabled
-const clicked = (e: MouseEvent): void => {
+const clicked = (e: Readonly<MouseEvent>): void => {
   emit('click', e)
   if (navbarData !== null && navbarData?.autoClose?.value === true) {
     collapseData?.close?.()

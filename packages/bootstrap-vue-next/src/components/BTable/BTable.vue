@@ -83,7 +83,7 @@ import type {
   BTableProvider,
   BTableSortCompare,
   ColorVariant,
-  LiteralUnion,
+  Numberish,
   TableField,
   TableFieldObject,
   TableItem,
@@ -103,7 +103,7 @@ const props = withDefaults(
     {
       provider?: BTableProvider
       sortCompare?: BTableSortCompare
-      noProvider?: NoProviderTypes[]
+      noProvider?: readonly NoProviderTypes[]
       noProviderPaging?: Booleanish
       noProviderSorting?: Booleanish
       noProviderFiltering?: Booleanish
@@ -116,10 +116,10 @@ const props = withDefaults(
       selectionVariant?: ColorVariant | null
       busy?: Booleanish
       busyLoadingText?: string
-      perPage?: number | string
-      currentPage?: number | string
+      perPage?: Numberish
+      currentPage?: Numberish
       filter?: string
-      filterable?: string[]
+      filterable?: readonly string[]
       // TODO
       // apiUrl?: string
       // filterFunction?: () => any
@@ -141,7 +141,7 @@ const props = withDefaults(
       // sortDirection?: 'asc' | 'desc' | 'last'
       // sortIconLeft?: Booleanish
       // sortNullLast?: Booleanish
-      selectedItems?: TableItem[]
+      selectedItems?: readonly TableItem[]
       noSortableIcon?: Booleanish
     } & Omit<BTableLiteProps, 'tableClass'>
   >(),
@@ -257,7 +257,7 @@ const selectedItemsToSet = computed({
  * The utils also conveniently emit the proper events after
  */
 const selectedItemsSetUtilities = {
-  add: (item: TableItem) => {
+  add: (item: Readonly<TableItem>) => {
     const value = new Set(selectedItemsToSet.value)
     value.add(item)
     selectedItemsToSet.value = value
@@ -269,7 +269,7 @@ const selectedItemsSetUtilities = {
     })
     selectedItemsToSet.value = new Set()
   },
-  delete: (item: TableItem) => {
+  delete: (item: Readonly<TableItem>) => {
     const value = new Set(selectedItemsToSet.value)
     value.delete(item)
     selectedItemsToSet.value = value
@@ -283,7 +283,7 @@ const selectedItemsSetUtilities = {
   For some reason, the reference of the object gets lost. However, when you use an actual ref(), it works just fine
   Getting the reference properly will fix all outstanding issues
   */
-  has: (item: TableItem) => selectedItemsToSet.value.has(item),
+  has: (item: Readonly<TableItem>) => selectedItemsToSet.value.has(item),
 } as const
 
 /**
@@ -346,7 +346,7 @@ const getBusyRowClasses = computed(() => [
       : props.tbodyTrClass
     : null,
 ])
-const getFieldColumnClasses = (field: TableFieldObject) => [
+const getFieldColumnClasses = (field: Readonly<TableFieldObject>) => [
   {
     'b-table-sortable-column': isSortable.value && field.sortable,
   },
@@ -355,7 +355,7 @@ const getFieldColumnClasses = (field: TableFieldObject) => [
 // Also the row should technically have aria-selected . Both things could probably just use a function with tbodyTrAttrs
 // But functional tbodyTrAttrs are not supported yet
 // Also the stuff for resolving functions could probably be made a util
-const getRowClasses = (item: TableItem | null, type: string) => [
+const getRowClasses = (item: Readonly<TableItem> | null, type: string) => [
   {
     [`selected table-${props.selectionVariant}`]:
       selectableBoolean.value && item && selectedItemsSetUtilities.has(item),
@@ -366,11 +366,11 @@ const getRowClasses = (item: TableItem | null, type: string) => [
       : props.tbodyTrClass
     : null,
 ]
-const getIconStyle = (field: TableFieldObject): StyleValue =>
+const getIconStyle = (field: Readonly<TableFieldObject>): StyleValue =>
   sortByModel.value !== field.key ? {opacity: 0.5} : {}
 
-const computedItems = computed<TableItem[]>(() => {
-  const sortItems = (items: TableItem[]) => {
+const computedItems = computed<readonly TableItem[]>(() => {
+  const sortItems = (items: readonly TableItem[]) => {
     const sortKey = sortByModel.value
 
     if (sortKey === undefined) {
@@ -402,7 +402,7 @@ const computedItems = computed<TableItem[]>(() => {
     })
   }
 
-  const filterItems = (items: TableItem[]) =>
+  const filterItems = (items: readonly TableItem[]) =>
     items.filter((item) =>
       Object.entries(item).some(([key, val]) => {
         if (
@@ -447,7 +447,7 @@ const computedItems = computed<TableItem[]>(() => {
 //     pageSize: () => perPageNumber.value || Infinity,
 //   })
 
-const computedDisplayItems = computed<TableItem[]>(() => {
+const computedDisplayItems = computed<readonly TableItem[]>(() => {
   if (Number.isNaN(perPageNumber.value) || (usesProvider.value && !noProviderPagingBoolean.value)) {
     return computedItems.value
   }
@@ -459,7 +459,7 @@ const computedDisplayItems = computed<TableItem[]>(() => {
 })
 
 const handleRowSelection = (
-  row: TableItem,
+  row: Readonly<TableItem>,
   index: number,
   shiftClicked = false,
   ctrlClicked = false,
@@ -511,12 +511,12 @@ const handleRowSelection = (
   notifySelectionEvent()
 }
 
-const onRowClick = (row: TableItem, index: number, e: MouseEvent) => {
+const onRowClick = (row: Readonly<TableItem>, index: number, e: Readonly<MouseEvent>) => {
   handleRowSelection(row, index, e.shiftKey, e.ctrlKey, e.metaKey)
   emit('row-clicked', row, index, e)
 }
 
-const handleFieldSorting = (field: TableField) => {
+const handleFieldSorting = (field: Readonly<TableField>) => {
   if (!isSortable.value) return
 
   const fieldKey = typeof field === 'string' ? field : field.key
@@ -539,9 +539,9 @@ const handleFieldSorting = (field: TableField) => {
 }
 
 const onFieldHeadClick = (
-  fieldKey: LiteralUnion<string>,
-  field: TableField,
-  event: MouseEvent,
+  fieldKey: string,
+  field: Readonly<TableField>,
+  event: Readonly<MouseEvent>,
   isFooter = false
 ) => {
   emit('head-clicked', fieldKey, field, event, isFooter)
@@ -594,7 +594,7 @@ const providerPropsWatch = async (prop: string, val: unknown, oldVal: unknown) =
   }
 
   if (!(prop === 'currentPage' || prop === 'perPage')) {
-    emit('filtered', computedItems.value)
+    emit('filtered', [...computedItems.value])
   }
 }
 
@@ -605,7 +605,7 @@ watch(
 
     if (filter === oldFilter || usesProvider.value) return
     if (!filter) {
-      emit('filtered', computedItems.value)
+      emit('filtered', [...computedItems.value])
     }
   }
 )

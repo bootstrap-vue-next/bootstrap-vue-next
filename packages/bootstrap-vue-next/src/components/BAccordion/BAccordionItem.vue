@@ -62,12 +62,12 @@ const {class: wrapperClass, ...collapseAttrs} = useAttrs()
 
 const props = withDefaults(
   defineProps<{
-    bodyAttrs?: AttrsValue
+    bodyAttrs?: Readonly<AttrsValue>
     bodyClass?: ClassValue
-    buttonAttrs?: AttrsValue
+    buttonAttrs?: Readonly<AttrsValue>
     buttonClass?: ClassValue
     collapseClass?: ClassValue
-    headerAttrs?: AttrsValue
+    headerAttrs?: Readonly<AttrsValue>
     headerClass?: ClassValue
     headerTag?: string
     horizontal?: Booleanish
@@ -78,7 +78,7 @@ const props = withDefaults(
     title?: string
     toggle?: Booleanish
     visible?: Booleanish
-    wrapperAttrs?: AttrsValue
+    wrapperAttrs?: Readonly<AttrsValue>
   }>(),
   {
     bodyAttrs: undefined,

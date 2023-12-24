@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import {computed, ref, toRef} from 'vue'
-import type {Booleanish, ButtonType, Size} from '../../types'
+import type {Booleanish, ButtonType, Numberish, Size} from '../../types'
 import {isLocaleRTL} from '../../utils/locale'
 import {eventOnOff, stopEvent} from '../../utils/event'
 import {
@@ -97,20 +97,20 @@ const props = withDefaults(
     labelDecrement?: string
     labelIncrement?: string
     locale?: string
-    max?: string | number
-    min?: string | number
+    max?: Numberish
+    min?: Numberish
     modelValue?: number | null
     name?: string
     placeholder?: string
     readonly?: Booleanish
-    repeatDelay?: string | number
-    repeatInterval?: string | number
-    repeatStepMultiplier?: string | number
-    repeatThreshold?: string | number
+    repeatDelay?: Numberish
+    repeatInterval?: Numberish
+    repeatStepMultiplier?: Numberish
+    repeatThreshold?: Numberish
     required?: Booleanish
     size?: Size
     state?: Booleanish | null
-    step?: string | number
+    step?: Numberish
     vertical?: Booleanish
     wrap?: Booleanish
   }>(),
@@ -382,7 +382,7 @@ onKeyStroke(
 
 onKeyStroke(
   KEY_CODES,
-  (event: KeyboardEvent) => {
+  (event: Readonly<KeyboardEvent>) => {
     // Emit a change event when the keyup happens
 
     const {altKey, ctrlKey, metaKey} = event
@@ -398,7 +398,7 @@ onKeyStroke(
 )
 
 // takes in a mount or Keyboard Event
-const handleStepRepeat = (event: Event, stepper: (step: number) => void) => {
+const handleStepRepeat = (event: Readonly<Event>, stepper: (step: number) => void) => {
   const {type} = event || {}
 
   if (!disabledBoolean.value && !readonlyBoolean.value) {
@@ -429,10 +429,10 @@ const handleStepRepeat = (event: Event, stepper: (step: number) => void) => {
   }
 }
 
-const isMouseEvent = (evt: Event): evt is MouseEvent =>
+const isMouseEvent = (evt: Readonly<Event>): evt is MouseEvent =>
   evt.type === 'mouseup' || evt.type === 'mousedown'
 
-const onMouseup: EventListener = (event: Event) => {
+const onMouseup: EventListener = (event: Readonly<Event>) => {
   // `<body>` listener, only enabled when mousedown starts
 
   if (isMouseEvent(event)) {
@@ -507,7 +507,7 @@ const buttons = computed(() => {
     'scale': focused.value ? 1.5 : 1.25,
   }
 
-  const handler = (event: Event, stepper: (multiplier?: number) => void) => {
+  const handler = (event: Readonly<Event>, stepper: (multiplier?: number) => void) => {
     if (!disabledBoolean.value && !readonlyBoolean.value) {
       stopEvent(event, {propagation: false})
       setMouseup(true)
@@ -553,7 +553,7 @@ const buttons = computed(() => {
     slot: {
       name: 'decrement',
     },
-    handler: (e: Event) => handler(e, stepDown),
+    handler: (e: Readonly<Event>) => handler(e, stepDown),
   }
 
   return {
