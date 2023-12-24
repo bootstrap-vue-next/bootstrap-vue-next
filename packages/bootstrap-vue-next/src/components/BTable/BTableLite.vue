@@ -105,7 +105,9 @@
                 "
                 :details-showing="item._showDetails ?? false"
               >
-                {{ formatItem(item, String(field.key), field.formatter) }}
+                <template v-if="!$slots[`cell(${String(field.key)})`] && !$slots['cell()']">
+                  {{ formatItem(item, String(field.key), field.formatter) }}
+                </template>
               </slot>
             </BTd>
           </BTr>
@@ -301,7 +303,9 @@ const computedFields = computed<TableFieldObject<T>[]>(() => {
     return {
       ...f,
       tdAttr:
-        computedStacked.value === true ? {'data-label': startCase(f.key), ...f.tdAttr} : f.tdAttr,
+        computedStacked.value === true
+          ? {'data-label': startCase(f.key as string), ...f.tdAttr}
+          : f.tdAttr,
     } as TableFieldObject<T> // DWG-TODO: I don't think this cast should be necessary
     // TODO handle Shortcut object (i.e. { 'foo_bar': 'This is Foo Bar' }
   })
