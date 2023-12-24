@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-`useToast` is used to create `Toasts` on demand. You must have initialized the `BToaster` component once in your application. This is covered mostly under the [components docs](/docs/components/toast) section. So, this will be more in depth as to what the composable does. The following examples are shown in the component documentation
+`useToast` is used to create `Toasts` on demand. You must have initialized the `BToastOrchestrator` component once in your application. This is covered mostly under the [components docs](/docs/components/toast) section. So, this will be more in depth as to what the composable does. The following examples are shown in the component documentation
 
 </div>
 
@@ -85,7 +85,7 @@ const hideMe = () => {
 
 ## The `toasts` Value
 
-Not covered in the component docs is the value `toasts` returned by the composable. This is mostly an internal value used by the `BToaster` component for actually rendering your `BToast` component. This is actually how the entire thing functions! It is simply the array of `Toasts`. Its not a very useful property externally. Keep in mind, this is all global. If you add a Toast from one place, it will always be added from to this array. There is no separation. Functionally it is quite similar to `useBreadcrumb`
+Not covered in the component docs is the value `toasts` returned by the composable. This is mostly an internal value used by the `BToastOrchestrator` component for actually rendering your `BToast` component. This is actually how the entire thing functions! It is simply the array of `Toasts`. Its not a very useful property externally. Keep in mind, this is all global. If you add a Toast from one place, it will always be added from to this array. There is no separation. Functionally it is quite similar to `useBreadcrumb`
 
 <HighlightCard>
   <BButton @click="show('Hello World!')">Show</BButton>

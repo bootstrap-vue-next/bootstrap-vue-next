@@ -10,7 +10,7 @@
 
 <div class="lead mb-5">
 
-Push notifications to your visitors with `BToast` and `BToaster`. These are lightweight components that are generally easily customizable for generating alert messages
+Push notifications to your visitors with `BToast` and `BToastOrchestrator`. These are lightweight components that are generally easily customizable for generating alert messages
 
 </div>
 
@@ -18,19 +18,19 @@ Toasts are lightweight notifications designed to mimic the push notifications th
 
 ## Overview
 
-Toasts are usually used in a global context with the `BToaster` component. You should create this component **once** usually in your `app` root component. This component is not initialized by default
+Toasts are usually used in a global context with the `BToastOrchestrator` component. You should create this component **once** usually in your `app` root component. This component is not initialized by default
 
 <HighlightCard>
 
 ```vue
 <template>
-  <BToaster />
+  <BToastOrchestrator />
 </template>
 ```
 
 </HighlightCard>
 
-After you create `BToaster` you can start using the provided composable. The main usage is the returned `show` function
+After you create `BToastOrchestrator` you can start using the provided composable. The main usage is the returned `show` function
 
 <HighlightCard>
   <BButton @click="show('Hello World!')">Show</BButton>

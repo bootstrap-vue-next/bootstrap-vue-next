@@ -74,6 +74,7 @@ declare module '@vue/runtime-core' {
     BListGroup: typeof Components.BListGroup
     BListGroupItem: typeof Components.BListGroupItem
     BModal: typeof Components.BModal
+    BModalOrchestrator: typeof Components.BModalOrchestrator
     BNav: typeof Components.BNav
     BNavForm: typeof Components.BNavForm
     BNavText: typeof Components.BNavText
@@ -106,7 +107,7 @@ declare module '@vue/runtime-core' {
     BThead: typeof Components.BThead
     BTr: typeof Components.BTr
     BToast: typeof Components.BToast
-    BToaster: typeof Components.BToaster
+    BToastOrchestrator: typeof Components.BToastOrchestrator
     BTooltip: typeof Components.BTooltip
     BTabs: typeof Components.BTabs
     BTransition: typeof Components.BTransition
