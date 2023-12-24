@@ -9,6 +9,16 @@
     :field-column-class="getFieldColumnClasses"
     @head-clicked="onFieldHeadClick"
     @row-clicked="onRowClick"
+    @row-hovered="
+      (row, index, e) => {
+        emit('row-hovered', row, index, e)
+      }
+    "
+    @row-unhovered="
+      (row, index, e) => {
+        emit('row-unhovered', row, index, e)
+      }
+    "
   >
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />

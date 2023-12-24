@@ -38,6 +38,11 @@ export default {
           name: 'default',
           description: 'Content to place in the Accordion',
         },
+        {
+          scope: [],
+          name: 'title',
+          description: 'Content to place in the header of the Accordion',
+        },
       ],
     },
     {
